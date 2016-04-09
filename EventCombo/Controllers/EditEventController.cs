@@ -1771,15 +1771,49 @@ namespace EventCombo.Controllers
                     }
                     // Tickets
 
+                    string customize = "0";
+                    var customizefee = false;
+                    var customizeamt = false;
                     if (model.Ticket != null)
                     {
                         Ticket ticket = new Ticket();
-                       // objEnt.Ticket_Quantity_Detail.RemoveRange(objEnt.Ticket_Quantity_Detail.Where(x => x.TQD_Event_Id == lEventId));
-                      //  objEnt.Tickets.RemoveRange(objEnt.Tickets.Where(x => x.E_Id == lEventId));
+                        // objEnt.Ticket_Quantity_Detail.RemoveRange(objEnt.Ticket_Quantity_Detail.Where(x => x.TQD_Event_Id == lEventId));
+                        //  objEnt.Tickets.RemoveRange(objEnt.Tickets.Where(x => x.E_Id == lEventId));
+                       var  ids = new List<long>();
                         foreach (Ticket tick in model.Ticket)
                         {
-                            ticket = new Ticket();
 
+                            if (tick.T_Id == 0)
+                            {
+                                ticket = new Ticket();
+
+                                ticket.T_Customize = "0";
+                                var mainfee = (from db in objEnt.Fee_Structure select db).FirstOrDefault();
+                                ticket.EC_Fee = tick.Customer_Fee;
+                                ticket.T_Ecpercent = mainfee.FS_Percentage;
+                                ticket.T_EcAmount = mainfee.FS_Amount;
+                                if (tick.TicketTypeID == 2)
+                                {
+                                    ticket.Customer_Fee = tick.Customer_Fee;
+                                }
+                                else
+                                {
+                                    ticket.Customer_Fee = 0;
+                                }
+
+                            }
+                            else
+                            {
+                                ticket = (from obj in objEnt.Tickets where obj.T_Id == tick.T_Id && obj.E_Id == lEventId select obj).FirstOrDefault();
+                                customize = ticket.T_Customize;
+                                if (tick.TicketTypeID == 2)
+                                {
+                                    ticket.Customer_Fee = tick.Customer_Fee;
+                                }
+
+                            }
+
+                            //ids = new List<long>();
                             if (tick.Isadmin == "Y")
                             {
                                 if (tick.TicketTypeID != 1)
@@ -1798,8 +1832,8 @@ namespace EventCombo.Controllers
                                     }
                                     var oldamount = Decimal.Round(oldamnt, 2);
 
-                                    var customizefee = false;
-                                    var customizeamt = false;
+                                    //var customizefee = false;
+                                    //var customizeamt = false;
 
                                     if (mainfee.FS_Percentage == tick.T_Ecpercent && mainfee.FS_Amount == tick.T_EcAmount)
                                     {
@@ -1872,18 +1906,28 @@ namespace EventCombo.Controllers
                             ticket.Max_T_Qty = tick.Max_T_Qty;
                             ticket.T_Disable = tick.T_Disable;
                             ticket.T_Mark_SoldOut = tick.T_Mark_SoldOut;
-                            ticket.EC_Fee = tick.EC_Fee;
-                            ticket.Customer_Fee = tick.Customer_Fee;
+                            ticket.T_Displayremaining = tick.T_Displayremaining;
+                            if (tick.Isadmin == "Y")
+                            {
+                                ticket.EC_Fee = tick.EC_Fee;
+                                ticket.Customer_Fee = tick.Customer_Fee;
+                            }
+                            //ticket.EC_Fee = tick.EC_Fee;
+                            //ticket.Customer_Fee = tick.Customer_Fee;
                             ticket.TotalPrice = tick.TotalPrice;
                             ticket.T_Discount = tick.T_Discount;
-                            ticket.T_Displayremaining = tick.T_Displayremaining;
-                            ticket.T_EcAmount=tick.T_EcAmount;
-                            ticket.T_Ecpercent = tick.T_Ecpercent;
-                            ticket.T_Customize = tick.T_Customize;
-                            objEnt.Tickets.Add(ticket);
+                            if (tick.T_Id == 0)
+                            {
+                                objEnt.Tickets.Add(ticket);
+                            }
+                            ids.Add(ticket.T_Id);
+                            //ticket.T_EcAmount=tick.T_EcAmount;
+                            //ticket.T_Ecpercent = tick.T_Ecpercent;
+                            //ticket.T_Customize = tick.T_Customize;
+                            //objEnt.Tickets.Add(ticket);
                         }
                     }
-
+                  
                     if (model.EventImage != null)
                     {
                         EventImage Image = new EventImage();
@@ -3060,6 +3104,24 @@ namespace EventCombo.Controllers
             }
 
 
+
+
+        }
+        public JsonResult Checkticketstatus( string ticketid)
+        {
+            long str = 0;
+            string strQuery = "SELECT isnull(sum(TPD_Purchased_Qty),0) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id    where isnull(TPD_Order_Id,'') !=''  AND b.TQD_Ticket_Id = " + ticketid + "  ";
+            var vEvent = db.Database.SqlQuery<long>(strQuery).FirstOrDefault();
+            if(vEvent==0)
+            {
+                str = 0;
+            }
+            else
+            {
+                str = vEvent;
+            }
+            return Json(new { Ticketsale = str });
+           
 
 
         }

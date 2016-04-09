@@ -217,7 +217,7 @@
     });
 </script>
 @*<script src="~/Scripts/jquery.numberformatter-1.2.4.jsmin.js"></script>*@
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "CreateEvent" }))
 {
     <div class="event_container">
         <div class="event_inner_container event_top createeventtop" id="eventtopscoll">
@@ -248,7 +248,7 @@
 
                 </div>
                 <div class="col-sm-9 col-xs-12 pt10 text-right no_pad">
-                    <button class="cbtSave btn ev_live_sub_btn mb5 cdisable"  type="button" disabled="disabled">
+                    <button class="cbtSave btn ev_live_sub_btn mb5 cdisable"  type="submit" disabled="disabled">
                         SAVE &#10;
                         <span> > </span>
                     </button>
@@ -1265,7 +1265,7 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-sm-12 text-right mb10 make_live_btn">
-                    <button type="button" id="btSave" class="cbtSave btn ev_live_sub_btn mb5 cdisable"  disabled="disabled">
+                    <button type="submit" id="btSave" class="cbtSave btn ev_live_sub_btn mb5 cdisable"  disabled="disabled">
                         SAVE
                         <span> > </span>
                     </button>
@@ -1300,7 +1300,7 @@
         </div>
     </div>
     //----------Model Starts Here------------------
-  
+}
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -1479,6 +1479,22 @@
 
 
     <script type="text/javascript">
+
+        $('#CreateEvent').on('keyup keypress', function (e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                e.preventDefault();
+                //alert("A The action has occurred without submitting the form!");
+                return false;
+            }
+        });
+
+        $("#CreateEvent").submit(function (e) {
+            e.preventDefault();
+            alert("The action has occurred without submitting the form!");
+        });
+
+
 
         var lastmodulecalled = "";
         var map_canvas ;
@@ -2122,21 +2138,22 @@
 
                 save("Live");
             });
-            $('.cbtSave').click(function () {
-                var msg = validatemain();
-                if (msg != "") {
-                    $('#diverroacc').css('display', 'block');
-                    $('#diverroacc').focus();
-                    $('#erraccmsg').html(msg);
-                    $('html,body').animate({ scrollTop: 0 });
-                    return false;
 
-                }
+            //$('.cbtSave').click(function () {
+            //    var msg = validatemain();
+            //    if (msg != "") {
+            //        $('#diverroacc').css('display', 'block');
+            //        $('#diverroacc').focus();
+            //        $('#erraccmsg').html(msg);
+            //        $('html,body').animate({ scrollTop: 0 });
+            //        return false;
 
-                save("Save");
+            //    }
+
+            //    save("Save");
 
 
-            });
+            //});
 
             $("#btOKAccess").click(function () {
                 history.back();
@@ -6077,4 +6094,4 @@
 
     </script>
 
-}
+

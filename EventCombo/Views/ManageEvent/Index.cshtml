@@ -1252,6 +1252,7 @@ else
 
                 $("#btDaySale").click(function () {
                     var EventId = $("#hdEventid").val();
+                    debugger;
                  //   alert(EventId);
                     $.ajax({
                         url: '@Url.Action("GetEventSaleChart", "ManageEvent")',
