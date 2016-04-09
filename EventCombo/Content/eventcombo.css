@@ -825,6 +825,7 @@ span.evnt_toltip{
 
 #eventtopscoll.viewevent_container .xs-viewevent-inner{ margin-top: -24px !important;}
 .xs-viewevent-inner{margin-top: -10px;}
+.desc_pl_0{ padding-left:0px !important}
 }
 @media (width: 320px) {
 .ev_loc_icn{ left:-10px !important; }
@@ -909,6 +910,7 @@ span.evnt_toltip{
 
 .xs-100{width:100%; float:left;}
 .d_xs_pad_l0{ padding-left:0px;}
+.desc_pl_0{ padding-left:0px !important}
 }
 
 @media (width: 360px) {
@@ -970,6 +972,7 @@ span.evnt_toltip{
 @media (min-width: 375px) and (max-width: 667px){
 .xs-signup-height{ min-height:50px;}
 .xs-desk-show{ display: none; }
+.desc_pl_0{ padding-left:0px !important}
 }
 @media (width: 375px) {
 #scrollhome.con_scr0l_home{margin-top:215px !important;}
@@ -1052,6 +1055,7 @@ span.evnt_toltip{
 @media (min-width: 414px) and (max-width: 736px){
 .xs-signup-height{ min-height:50px;}
 .xs-desk-show{ display: none; }
+.desc_pl_0{ padding-left:0px !important}
 }
 
 
