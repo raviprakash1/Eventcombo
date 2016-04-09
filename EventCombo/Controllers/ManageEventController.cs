@@ -491,10 +491,8 @@ namespace EventCombo.Controllers
         [Authorize]
         public ActionResult EmailInvitations(long EventId, int? page)
         {
-            StringBuilder strResult = new StringBuilder();
             using (EventComboEntities objEnt = new EventComboEntities())
             {
-                
                 var invitations = from invite_list in objEnt.Event_Email_List
                                   group invite_list by invite_list.L_I_Id into result1
                                   join invites in objEnt.Event_Email_Invitation on result1.FirstOrDefault().L_I_Id equals invites.I_Id
@@ -507,14 +505,10 @@ namespace EventCombo.Controllers
                                       CreatedOn = invites.I_CreateDate,
                                       NoOfRecipients = result1.Count()
                                   };
-
-
-
                 int pageSize = 9;
                 int pageNumber = (page ?? 1);
                 return View(invitations.ToPagedList(pageNumber, pageSize));
             }
-
             return View();
         }
 

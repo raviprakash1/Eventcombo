@@ -1,4 +1,5 @@
 ﻿@model PagedList.IPagedList<EventCombo.ViewModels.EmailInvitation>
+@using PagedList.Mvc;
 @{
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
@@ -86,10 +87,19 @@
                         }
 
                     </div>
+                    <div class="col-sm-12 col-xs-12 text-center mb10">
+                        <nav class="home-pagination">
+                            @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+
+                            @Html.PagedListPager(Model, page => Url.Action("EmailInvitations", "ManageEvent",
+                                new { page, lat = ViewBag.lat, lng = ViewBag.lng }))
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="sectionB" class="tab-pane"> 2222222222222222
+        <div id="sectionB" class="tab-pane">
+            2222222222222222
         </div>
     </div>
 </div>
