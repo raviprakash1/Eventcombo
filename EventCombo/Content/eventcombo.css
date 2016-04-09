@@ -843,6 +843,7 @@ span.evnt_toltip{
 .cont_margin{ margin-top: 3px; margin-bottom: 0px;}
 
 #eventtopscoll.viewevent_container .xs-viewevent-inner{ margin-top: -20px !important;}
+.promo_code_btn{ margin-top:10px;}
 }
 @media (width: 480px){
 #navtop.affix-top {top:108px !important;}
