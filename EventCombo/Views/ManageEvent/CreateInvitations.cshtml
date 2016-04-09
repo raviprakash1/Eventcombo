@@ -1,0 +1,402 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/DateTimePicker.css" rel="stylesheet" />
+
+<div class="col-sm-12 ">
+    <h3 class="acnt_title inv_eml_title">Great! your private event is now live.</h3>
+    <p class="inv_em_url">The URL for the event is <a href="#" target="_blank">http://eventcombo.com</a></p>
+    <p class="inv_em_url">Don't forget to send out email invitations to your guests, below. </p>
+</div>
+<div class="clearfix"></div>
+<div class="col-sm-10 mb10 col-xs-12" id="diverro1acc" style="display:none ">
+    <div class="er_UI_main">
+
+
+        <div class="er_sys_img"></div>
+        <div class="er_suc" id="erraccsucc"></div>
+        <button class="close" type="button" onclick="$('#diverro1acc').css('display', 'none');" id="btndiverro1acc" tabindex="-1">&#215;</button>
+    </div>
+
+</div>
+<div class="clearfix"></div>
+<div class="col-sm-12 col-xs-12 mt20">
+    <div class="col-sm-12 no_pad">
+        <h3 class="acnt_title inv_eml_title_crt">Create an email invite</h3>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-sm-12 no_pad mt10">
+        <div class="col-sm-2 col-xs-12 no_pad">
+            <div class="form-group">
+                <input class="form-control invite_mail_inp_cont " type="text" placeholder="">
+                <p class="bottom-label">Sender's Name</p>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-sm-12 no_pad mt10">
+        <div class="col-sm-3 col-xs-12 no_pad">
+            <div class="form-group">
+                <input class="form-control invite_mail_inp_cont " type="text" placeholder="">
+                <p class="bottom-label">Subject Line</p>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-sm-12 no_pad mt10">
+        <div class="col-sm-6 col-xs-12 no_pad email_box_container">
+            <div class="col-sm-2 col-xs-3 no_pad inv_mail_side_logo text-center"><img src="images/logo_vertical.png"></div>
+            <div class="col-sm-10 col-xs-9 no_pad email_box_container_right">
+                <h4> Hello [Attendee]!</h4>
+                <p class="inv_mail_joinus"> Please join us for</p>
+
+                <h5 class="awsom_title"> An awesome event title </h5>
+                <div class="clearfix"></div>
+                <div class="col-sm-12 col-xs-12 no_pad mt20">
+                    <div class="col-xs-12 no_pad">
+                        <div class="col-sm-5 col-xs-12 no_pad"><img class="invite_mail_img" src="images/ev1.jpg"></div>
+                        <div class="col-sm-7 col-xs-12 no_pad">
+                            <div class="col-xs-12 no_pad mb10">
+                                <p class="inv_mail_date">Date:</p>
+                                <p class="inv_mail_date_add">Saturday Aug 17th 2011,8:30pm (weekly)</p>
+                            </div>
+                            <div class="col-xs-12 no_pad mb10">
+                                <p class="inv_mail_date">Organizer:</p>
+                                <p class="inv_mail_date_add def_color">Saroosh's Great Events</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 no_pad mt10 mb10">
+                        <div class="col-sm-5 col-xs-12 no_pad"><img class="invite_mail_img" src="images/gmap-email.png"></div>
+                        <div class="col-sm-7 col-xs-12 no_pad">
+                            <div class="col-xs-12 no_pad mb10">
+                                <p class="inv_mail_date">Club Illusions:</p>
+                                <p class="inv_mail_date_add">260 california palo alto CA </p>
+                            </div>
+                            <div class="col-xs-12 no_pad mb10">
+                                <p class="inv_mail_date def_color">Get Directions</p>
+
+                            </div>
+                            <div class="col-xs-12 no_pad mb10">
+                                <p class="inv_mail_date ">Share:</p>
+                                <p>
+                                    <a href="#"><img src="images/fb.png" /></a>
+                                    <a href="#"><img src="images/tw.png" /></a>
+                                    <a href="#"><img src="images/linkid.png" /></a>
+                                    <a href="#"><img src="images/msg.png" /></a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-sm-12 col-xs-12 mt20 text-center ">
+                <div class="col-sm-12 col-xs-12 invite_email_btn_bor ">
+                    <button class="btn def_btn acnt_btn invite_email_attend_btn " title="" type="button">Attend</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-sm-12 col-xs-12 mt10 ">
+                <p class="inv_mail_abt mb0">About the event:</p>
+                <p class="inv_mail_abt mb0"> Your event password : 123456789</p>
+                <p>
+                    ( Event registration is by invitation only with the provided password. Register with your email address
+                    and the password above to attend this event. )
+                </p>
+                <p>
+                    <button class="btn def_btn acnt_btn edit_editor_btn" type="button" title="" data-toggle="modal" data-target="#invite_email_desc">Edit</button>
+                </p>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-sm-12">
+                <p class="inv_mail_desc">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was pop
+                    <br> <br>
+                    Hope to see you there!
+                    <br> <br>
+                    Saroosh's Great Events
+                </p>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-sm-6 col-xs-12 no_pad ">
+            <div class="col-sm-12 no_pad">
+                <div class="col-sm-6 col-xs-12 no_pad ">
+                    <div class="form-group">
+                        <input class="form-control invite_mail_inp_cont " type="text" placeholder="">
+                        <p class="bottom-label">Send test to email address</p>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-12 no_pad  text-center">
+                    <button class="btn def_btn acnt_btn send_test_btn" type="button" data-toggle="modal" data-target="#test_inv_email">Send Test</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-sm-12 no_pad mt10 mb20">
+        <div class="col-md-6 col-sm-12 no_pad mb20">
+            <div class="col-sm-12 apply_code_head">
+                Invite Guest
+            </div>
+            <div class="col-sm-12 col-xs-12 no_pad">
+                <div class="col-sm-12 col-xs-12 no_pad">
+                    <div class="col-sm-6 col-xs-6 no_pad">
+                        <button class="InvAddlist btn def_btn acnt_btn send_test_btn" type="submit">Add List + </button>
+                    </div>
+                    <div class="col-sm-6 col-xs-6 no_pad">
+                        <button class="btn def_btn acnt_btn send_test_btn" id="btDeleteEmail" type="button">Delete </button>
+                    </div>
+
+                </div>
+                <div class="col-sm-12 col-xs-12 no_pad mt20">
+                    <div class="InvAddlistbox col-sm-12 no_pad">
+                        <div class="col-sm-6 col-xs-12 no_pad ">
+                            <div class="form-group">
+                                <input class="form-control invite_mail_inp_cont " id="txtAddEmail" type="text" placeholder="Add List ">
+                            </div>
+                        </div>
+                        <div class="col-sm-2 col-xs-12 no_pad  text-center">
+                            <button class="btn def_btn acnt_btn send_test_btn" id="btAddEmail" type="button">Add</button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-sm-12 col-xs-12 no_pad mt10">
+                        <div class="col-sm-12 no_pad">
+                            <ul class="inv_mail_list_head">
+                                <li><input id="chkSelectAll" type="checkbox"></li>
+                                <li>  EmailId 
+                                    <span class="crt_evnt_drop_up crt_invit_drop_down_a"> <a href="#"><i class="fa fa-angle-up"></i></a> </span>
+                                    <span class="crt_evnt_drop_down crt_invit_drop_down"> <a href="#"><i class="fa fa-angle-down"></i></a> </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-12 no_pad">
+                            <div id="dvEmaillist" class="col-sm-12 no_pad inv_mail_scroll">
+                                @*<ul class="inv_mail_list">
+                                    <li><input type="checkbox"></li>
+                                    <li>  abc@gmail.com </li>
+                                </ul>
+                                <ul class="inv_mail_list">
+                                    <li><input type="checkbox"></li>
+                                    <li>  abc@gmail.com </li>
+                                </ul>*@
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+
+
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-6 col-sm-12 no_pad">
+            <div class="col-sm-12 apply_code_head">
+                Schedule email
+            </div>
+            <div class="col-sm-12 no_pad promo_checkbox">
+                <div class="col-sm-12 no_pad">
+                    <div class="squaredOne">
+                        <input type="checkbox" value="None" id="befendevnt" name="check" />
+                        <label for="befendevnt"></label>
+                    </div>
+                    <div class="prm_cd_level"> before event</div>
+                </div>
+                <div class="col-sm-4 no_pad">
+                    <div class="form-group">
+                        <input type="text" class="form-control evnt_inp_cont fillDateTime" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-6 col-sm-12 no_pad mt20 inv_send_btn_bottom">
+            <div class="col-sm-4 col-xs-6 no_pad ">
+                <button class="btn def_btn acnt_btn send_test_btn" type="submit">Send Now</button>
+            </div>
+            <div class="col-sm-4 col-xs-6 no_pad">
+                <button class="btn def_btn acnt_btn send_test_btn" type="submit">Save Draft</button>
+                <input type="hidden" id="hdListId"  />
+            </div>
+        </div>
+    </div>
+
+
+    <div class="clearfix"></div>
+    <div class="col-sm-12 no_pad mt10 mb10">
+
+    </div>
+</div>
+
+<div class="modal fade" id="test_inv_email" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body clearfix">
+                <div class="col-sm-12 text-center">
+                    <h3>Success! </h3>
+                    <p class="email_send_desc">The Email has been send. </p>
+                    <button type="button" class="btn def_btn acnt_btn send_test_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Ok</span></button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="invite_email_desc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title text-center"> About the events </h3>
+            </div>
+            <div class="modal-body clearfix">
+                <div class="col-sm-12">
+                    <div class="summernote">summernote 1</div>
+
+                    <div class="col-sm-12 text-center">
+                        <button type="button" class="btn def_btn acnt_btn send_test_btn">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+
+      $(document).ready(function()
+      {
+        var bIsPopup = displayPopup();
+
+        $("#dtBox").DateTimePicker(
+
+        {
+          isPopup: bIsPopup,
+
+          addEventHandlers: function()
+          {
+            var dtPickerObj = this;
+
+            $(window).resize(function()
+            {
+              bIsPopup = displayPopup();
+              dtPickerObj.setIsPopup(bIsPopup);
+            });
+
+            dtPickerObj.setDateTimeStringInInputField($(".fillDateTime"));
+          }
+        });
+
+
+      });
+
+
+
+      function displayPopup()
+      {
+        if($(document).width() >= 768)
+          return false;
+        else
+          return true;
+      }
+
+
+
+</script>
+<script type="text/javascript">
+
+      $(document).ready(function()
+      {
+          $(".InvAddlistbox").css("display", "none");
+          $(".InvAddlist").click(function () {
+            $('.InvAddlistbox').slideToggle("slow");
+          });
+
+          $('.summernote').summernote({
+              height: 70,   //set editable area's height
+          });
+
+
+
+
+
+
+
+      });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#btAddEmail").click(function () {
+            var vValue = $("#txtAddEmail").val().trim();
+            if (vValue != "")
+            {
+                AddEmail(vValue);
+                $("#txtAddEmail").val("");
+                $("#txtAddEmail").focus();
+            }
+        });
+        $("#btDeleteEmail").click(function () {
+            //$("#UlTest").remove();
+            var vIds = parseFloat($("#hdListId").val());
+            if (isNaN(vIds) == true) vIds = 0;
+
+            if (vIds >0)
+            {
+                for (i=0;i<=vIds;i++)
+                {
+                    if ($("#chk_" + i).is(":checked") == true)
+                    {
+                        $("#UL_" + i).remove();
+                    }
+                }
+            }
+
+        });
+
+        $("#chkSelectAll").click(function () {
+
+            var vIds = parseFloat($("#hdListId").val());
+            if (isNaN(vIds) == true) vIds = 0;
+            var vflag = false;
+            if (vIds > 0) {
+                if ($("#chkSelectAll").is(":checked") == true) {
+                    vflag = true;
+                }
+                //alert(vflag);
+                for (i = 0; i <= vIds; i++) {
+                  //  alert(vIds);
+                    $("#chk_" + i).attr("checked", vflag);
+                }
+            }
+
+        });
+
+    });
+
+    function AddEmail(vValue)
+    {
+        var vId = parseFloat($("#hdListId").val());
+        if (isNaN(vId) == true) vId = 0;
+        vId = vId + 1;
+        $("#hdListId").val(vId);
+        var vHtml = '<ul id="UL_' + vId + '" class="inv_mail_list"><li><input id="chk_' + vId + '" type="checkbox"></li><li>' + vValue + '</li></ul>';
+       // alert(vHtml);
+        $("#dvEmaillist").append(vHtml);
+    }
+
+
+</script>

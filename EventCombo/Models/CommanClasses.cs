@@ -103,6 +103,8 @@ namespace EventCombo.Models
 
         public int EventFeature { get; set; }
 
+        public DateTime FeatureDateTime { get; set; }
+
         //public DiscoverEvent[] DiscoverEventList { get; set; }
 
     }

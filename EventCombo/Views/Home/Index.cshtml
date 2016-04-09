@@ -1,24 +1,22 @@
 ﻿@{
-    ViewBag.Title = "Eventcombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free";
+    ViewBag.Title = "EventCombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free";
 }
-
 
 <div class="container-fluid cont_margin no-padding con_scr0l_home" id="scrollhome">
     <div id="dvEventListing" class="col-sm-9 col-xs-12 ot_main_pad mb10">
-        
+       @{Html.RenderPartial("~/Views/Home/HomeEventList.cshtml"); }
     </div>
 
-    <div class="col-sm-3 col-xs-12 ot_main_pad">
+        <div class="col-sm-3 col-xs-12 ot_main_pad">
         <div class="col-sm-12 no-padding">
             <div class="the_buz "><h2>What's the BUZZ?</h2></div>
-
             <div class="col-sm-12 no_pad mb10">
                 <div class="col-sm-12 no_pad">
                     <div class="home-buzz-img"> <img class="" src="../images/event1.jpg" alt=""> </div>
                 </div>
                 <div class="col-sm-12 no_pad">
                     <h1 class="list_event_desc_title">
-                        <a href="#">
+                        <a href = "#" >
                             Sun National Bank Arena
                             81 Hamilton Avenue
                             Trenton, NJ , 08611
@@ -28,8 +26,8 @@
                 </div>
                 <div class="col-sm-12 no_pad ">
                     <ul class="nav nav-pills list_inner_cat_tag buzz_bot_title">
-                        <li><i class="fa fa-user"></i> Cheris Mcdonald </li>
-                        <li><i class="fa fa-clock-o"></i> 15 minutes ago </li>
+                        <li><i class="fa fa-user"></i> Cheris Mcdonald</li>
+                        <li><i class="fa fa-clock-o"></i> 15 minutes ago</li>
 
                     </ul>
                 </div>
@@ -41,7 +39,7 @@
                 </div>
                 <div class="col-sm-12 no_pad">
                     <h1 class="list_event_desc_title">
-                        <a href="#">
+                        <a href = "#" >
                             Sun National Bank Arena
                             81 Hamilton Avenue
                             Trenton, NJ , 08611
@@ -51,8 +49,8 @@
                 </div>
                 <div class="col-sm-12 no_pad ">
                     <ul class="nav nav-pills list_inner_cat_tag buzz_bot_title">
-                        <li><i class="fa fa-user"></i> Cheris Mcdonald </li>
-                        <li><i class="fa fa-clock-o"></i> 15 minutes ago </li>
+                        <li><i class="fa fa-user"></i> Cheris Mcdonald</li>
+                        <li><i class="fa fa-clock-o"></i> 15 minutes ago</li>
 
                     </ul>
                 </div>
@@ -64,7 +62,7 @@
                 </div>
                 <div class="col-sm-12 no_pad">
                     <h1 class="list_event_desc_title">
-                        <a href="#">
+                        <a href = "#" >
                             Sun National Bank Arena
                             81 Hamilton Avenue
                             Trenton, NJ , 08611
@@ -74,8 +72,8 @@
                 </div>
                 <div class="col-sm-12 no_pad ">
                     <ul class="nav nav-pills list_inner_cat_tag buzz_bot_title">
-                        <li><i class="fa fa-user"></i> Cheris Mcdonald </li>
-                        <li><i class="fa fa-clock-o"></i> 15 minutes ago </li>
+                        <li><i class="fa fa-user"></i> Cheris Mcdonald</li>
+                        <li><i class="fa fa-clock-o"></i> 15 minutes ago</li>
 
                     </ul>
                 </div>
@@ -92,7 +90,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content sharmodal_pop">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type = "button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h3 class="modal-title text-center"> Share with friends </h3>
             </div>
             <div class="modal-body">
@@ -125,43 +123,58 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script>
-    $(document).prop('title', 'Eventcombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free');
+    $(document).prop('title', 'K - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free');
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
+
     $(document).ready(function () {
         //url = url.replace("-parameter", vEventId);
 
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (p) {
-                var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
-                var geocoder = new google.maps.Geocoder;
-                var infowindow = new google.maps.InfoWindow;
+        var pg = getUrlParameter('page');
+        if (!pg) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (p) {
+                    var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+                    var geocoder = new google.maps.Geocoder;
+                    var infowindow = new google.maps.InfoWindow;
 
-                var mapOptions = {
-                    center: { lat: p.coords.latitude, lng: p.coords.longitude },
-                    zoom: 13,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-                var vLat = p.coords.latitude;
-                var vLong = p.coords.longitude;
-                
-                var vUrl = '@Html.Raw(Url.Action("HomeEventList", "Home", new {strPageIndex="1",strLat= "lat", strLong= "long"}))';
-                vUrl = vUrl.replace("lat", vLat);
-                vUrl = vUrl.replace("long", vLong);
-               // alert(vUrl);
-                $('#dvEventListing').load(vUrl);
-                
-            }, function (p) {
-                alert("error");
-                var vUrl = '@Html.Raw(Url.Action("HomeEventList", "Home", new {strPageIndex="1",strLat="",strLong=""}))';
-                $('#dvEventListing').load(vUrl);
+                    var mapOptions = {
+                        center: { lat: p.coords.latitude, lng: p.coords.longitude },
+                        zoom: 13,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+                    var vLat = p.coords.latitude;
+                    var vLong = p.coords.longitude;
 
-            });
+                    var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat= "strLat", lng= "strLong", page = "1"}))';
+                    vUrl = vUrl.replace("strLat", vLat);
+                    vUrl = vUrl.replace("strLong", vLong);
+                    window.location.replace(vUrl);
 
-        } else {
-            alert('Geo Location feature is not supported in this browser.');
+                }, function (p) {
+                    var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = "", lng = "", page = "1" }))';
+                    window.location.replace(vUrl);
+                });
+
+            } else {
+                var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = "", lng = "", page = "1" }))';
+                window.location.replace(vUrl);
+            }
+
         }
-
-
 
 
 

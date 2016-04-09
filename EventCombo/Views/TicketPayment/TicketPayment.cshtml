@@ -156,18 +156,18 @@
                                 </label>
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" value="@Html.DisplayFor(m=>m.FName)" maxlength=35 id="accfname" />
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" value="@Html.DisplayFor(m=>m.FName)" maxlength=50 id="accfname" />
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" value="@Html.DisplayFor(m=>m.LName)" id="accLname" maxlength=35 />
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" value="@Html.DisplayFor(m=>m.LName)" id="accLname" maxlength=50 />
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="EMAIL" value="@Html.DisplayFor(m=>m.Email)" id="Email" maxlength=256 />
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="EMAIL" value="@Html.DisplayFor(m=>m.Email)" id="Email" maxlength=256 autocomplete="off"  />
                             </div>
                             @if (HttpContext.Current.Session["AppId"] == null)
                             {
                                 <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CONFIRM EMAIL" id="confirmEmail" maxlength=256>
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CONFIRM EMAIL" id="confirmEmail" maxlength=256 autocomplete="off">
                                 </div>
                             }
                         </div>
@@ -175,16 +175,16 @@
                         @if (HttpContext.Current.Session["AppId"] == null)
                         {
                             <div class="form-group ">
-                                <div class="col-sm-12 col-xs-12 no_pad">
+                                @*<div class="col-sm-12 col-xs-12 no_pad">
                                     <label class="control-label ev_payment_lebel pl0">
                                         <span class="ev_pay_span">Password</span>
                                     </label>
-                                </div>
+                                </div>*@
                                 <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                    <input class="form-control evnt_inp_cont" type="password" id="password" placeholder="PASSWORD" maxlength=15>
+                                    <input class="form-control evnt_inp_cont" type="password" id="password" placeholder="PASSWORD" maxlength=15 style="display:none;"> 
                                 </div>
                             </div>
-                            <div class="clearfix"></div>
+                            @*<div class="clearfix"></div>
                             <div class="form-group ">
                                 <div class="col-sm-12 col-xs-12 no_pad">
                                     <label class="control-label ev_payment_lebel pl0">
@@ -194,10 +194,10 @@
                                 <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                     <input class="form-control evnt_inp_cont" type="password" placeholder="CONFIRM PASSWORD" id="confirmpassword" maxlength=15>
                                 </div>
-                            </div>
+                            </div>*@
                             <div class="clearfix"></div>
                         }
-                        <div class="form-group ">
+                        @*<div class="form-group ">
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <input class="form-control evnt_inp_cont" type="text" placeholder="PHONE NUMBER" value="@Html.DisplayFor(m=>m.PhnNo)" id="accountphnno">
                             </div>
@@ -223,7 +223,7 @@
 
                             </div>
 
-                        </div>
+                        </div>*@
 
 
                         <div class="form-group mt10 divvisible">
@@ -233,7 +233,8 @@
                                 </label>
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad dropheight">
-
+@if (HttpContext.Current.Session["AppId"] != null)
+{
 
                                 <select class="form-control selectpicker" id="selectcard" onchange="showcardetails(this.id)">
                                     @foreach (var item in (List<Cardview>)ViewBag.Detailscard)
@@ -241,8 +242,21 @@
                                         <option value="@item.value">@item.text</option>
 
                                     }
+                                   
                                 </select>
-                            </div>
+}
+else
+{
+    <select class="form-control selectpicker" id="selectcard" onchange="showcardetails(this.id)">
+        <option value="-1">Select</option>
+        <option value="A">Enter new card</option>
+        <option value="P">Use Paypal</option>
+
+
+    </select>
+
+}
+</div>
                             <div id="cardshow" style="display:none;">
                                 <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                     <input class="form-control evnt_inp_cont" type="text" placeholder="CREDIT CARD NUMBER" id="cardno" onkeyup="getcardvisa(this.id)">
@@ -274,19 +288,26 @@
                                 </label>
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" maxlength=35 id="billfname">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" maxlength=50 id="billfname">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" maxlength=35 id="billLname">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" maxlength=50 id="billLname">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <input class="form-control evnt_inp_cont" type="text" placeholder="PHONE NUMBER" id="billingphno">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 1" maxlength=256 id="billaddress1">
-                            </div>
-                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 2" maxlength=256 id="billaddress2">
+                                <div class="col-sm-6 col-xs-12 pl0 xs375zip dropheight">
+                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control selectpicker", @id = "billcountry" })
+
+
+                                </div>
+                                <div class="col-sm-6 col-xs-12 no_pad">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength=5 id="billzip">
+                                </div>
+                                
+
+
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <div class="col-sm-6 col-xs-12 pl0 xs375zip">
@@ -298,26 +319,21 @@
 
 
                             </div>
+                            
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <div class="col-sm-6 col-xs-12 pl0 xs375zip">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength=5 id="billzip">
-                                </div>
-                                <div class="col-sm-6 col-xs-12 no_pad dropheight">
-                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control selectpicker", @id = "billcountry" })
-
-
-                                </div>
-
-
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 1" maxlength=256 id="billaddress1">
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 2" maxlength=256 id="billaddress2">
                             </div>
                         </div>
                         <div class="clearfix divvisible"></div>
                         @if (Html.DisplayFor(x => x.Ticketdeliveraddress).ToString() == "Y")
                         {
-                            <div class="form-group mt10 divvisible">
-                                <input type="checkbox" class="billingaddress" id="shippinginfo" /> <span class="ev_pay_span">Enter Delivery Address</span>
-                                <div class="clearfix"></div>
-                                <input type="checkbox" id="sameshipping" /> <span class="ev_pay_span">Delivery Address Same as Billing Address</span>
+                            <div class="form-group mt10 divvisible" id="divshippinginfo">
+                                <input type="checkbox" class="billingaddress" id="shippinginfo" /> <span class="ev_pay_span">Delivery address different from Billing Address</span>
+                                @*<div class="clearfix"></div>
+                                <input type="checkbox" id="sameshipping" /> <span class="ev_pay_span">Delivery Address Di as Billing Address</span>*@
 
                             </div>
                         }
@@ -330,19 +346,27 @@
                                 </label>
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" maxlength=35 id="shipfname">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" maxlength=50 id="shipfname">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" maxlength=35 id="shipLname">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" maxlength=50 id="shipLname">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <input class="form-control evnt_inp_cont" type="text" placeholder="PHONE NUMBER" id="shippingphnno">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 1" maxlength=256 id="shipaddress1">
-                            </div>
-                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 2" maxlength=256 id="shipaddress2">
+                               
+                                    <div class="col-sm-6 col-xs-12 pl0 dropheight">
+                                        @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control  selectpicker", @id = "shipcountry" })
+
+
+                                    </div>
+                                    <div class="col-sm-6 col-xs-12 no_pad ">
+                                        <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength=5 id="shipzip">
+                                    </div>
+                                  
+                              
+
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <div class="col-sm-6 col-xs-12 pl0">
@@ -354,17 +378,12 @@
 
 
                             </div>
+                            
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <div class="col-sm-6 col-xs-12 pl0">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength=5 id="shipzip">
-                                </div>
-                                <div class="col-sm-6 col-xs-12 no_pad dropheight">
-                                    @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control selectpicker", @id = "shipcountry" })
-
-
-                                </div>
-
-
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 1" maxlength=256 id="shipaddress1">
+                            </div>
+                            <div class="col-sm-10 col-xs-12 mb10 no_pad">
+                                <input class="form-control evnt_inp_cont" type="text" placeholder="ADDRESS 2" maxlength=256 id="shipaddress2">
                             </div>
                         </div>
 
@@ -383,9 +402,9 @@
                                     <input class="form-control evnt_inp_cont" type="text" placeholder="NAME OF THE TICKET BEARER" id="nameofticket">
 
                                 </div>
-                                <label class="control-label ev_tickt_recp_lebel ev_not_me">
+                                @*<label class="control-label ev_tickt_recp_lebel ev_not_me">
                                     <span class="Notify"> Notify by email</span>
-                                </label>
+                                </label>*@
 
                                 <div class="col-sm-12 col-xs-12 no_pad mt10">
                                     <div class="Notifybox col-sm-8 col-xs-8 no_pad mt10 mb10" id="divemail">
@@ -545,6 +564,8 @@
 
     </div>
 
+    <input type="hidden" id="hdemailexist" value="0" />
+
 }
 <script src="~/Scripts/Commonfunction.js"></script>
 <script src="~/Scripts/flipclock.js"></script>
@@ -552,713 +573,138 @@
 <script src="~/Scripts/jquery-ui.js"></script>
 <link href="~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet" />
 <script async src="//www.paypalobjects.com/api/checkout.js"></script>
-@*<script src="~/Scripts/jquery.countdownTimer.js"></script>*@
-
-<script type="text/javascript">
-    window.paypalCheckoutReady = function () {
-        paypal.checkout.setup("@PayPalSettings.MerchantAccountID", {
-            environment: '@PayPalSettings.Environment',
-            click: function (event) {
-                event.preventDefault();
-                paypal.checkout.initXO();
-                $.support.cors = true;
-
-                $.ajax({
-                    url: '@Html.Raw(Url.Action("PayPaltoken", "Cart"))',
-                    type: "GET",
-                    async: true,
-                    crossDomain: true,
-                    //Load the minibrowser with the redirection url in the success handler
-                    success: function (token) {
-                        var url = paypal.checkout.urlPrefix + token;
-                        //Loading Mini browser with redirect url, true for async AJAX calls
-                        paypal.checkout.startFlow(url);
-                    },
-                    error: function (responseData, textStatus, errorThrown) {
-                        alert("Something going wrong ");
-                        //Gracefully Close the minibrowser in case of AJAX errors
-                        paypal.checkout.closeFlow();
-                    }
-                });
-            },
-            button: ['btPaypalCheckout']
-        });
-    }
-    function SavePaypaldetail() {
-        var flag = true;
-        var Emaillogin = $("#Email").val();
-
-
-        var NameList = [];
-
-        if ($("#confirmEmail").length > 0) {
-            $.ajax({
-                url: "/Home/IsValid",
-                async: true,
-                data: 'Email=' + Emaillogin,
-                dataType: "text",
-                success: function (data, textStatus, xhr) {
-                    if (data != '') {
-                        if (data == "NotFound") {
-                            flag = true;
-
-                            $('#hdemailexist').val(true);
-
-                        } else if (data == "Found") {
-
-                            $('#Email').focus();
-                            $("#Email").addClass('err-bor');
-
-
-                            ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidateEmailSy'))
-
-                            $('#hdemailexist').val(false);
-
-                        }
-                    }
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
-                }
-            });
-        }
-
-
-
-
-
-        var confirmemail = "", cardno = "", expirydate = "", cvv = "", cardtype = "";
-        var type = '';
-
-
-        $("#tblListitem tr").each(function () {
-            var Sno = $(this).find("td:first").html();
-
-            // Multiple Address
-            if (Sno != '') {
-                NameList.push({
-                    Name: $("#TicketName_" + Sno).text(),
-                    Email: $("#TicketEmail_" + Sno).text(),
-                });
-            }
-        });
-        debugger;
-
-        if ($('#shippinginfo').is(":checked") == true) {
-
-
-
-        }
-        var totalorder = $('#hdOrderTotal').val();
-        var type = '';
-        if (totalorder > 0) {
-
-            type = 'Paid';
-        } else {
-
-            type = 'Free';
-
-        }
-
-        //-------------------------------------Saving Payment Detail---------------------------------------
-
-
-        var vOrderTotal = $("#hdOrderTotal").val();
-        var vGrandTotal = $("#hdGrandTotal").val();
-        var vPromoId = $("#hdPromoId").val();
-        var vVarChanges = $("#hdVarChanges").val();
-        var vVarId = $("#hdVarId").val();
-        debugger;
-        var model = {
-
-            'AccFname': $('#accfname').val(),
-            'AccLname': $('#accLname').val(),
-            'AccEmail': $('#Email').val(),
-            'AccconfirmEmail': $('#confirmEmail').val(),
-            'Accpassword': $('#password').val(),
-            'Accconfirmpassword': $('#confirmpassword').val(),
-            'Accountphnno': $('#accountphnno').val(),
-            'AccCity': $('#accCity').val(),
-            'AccState': $('#accState').val(),
-            'Acczip': $('#accZip').val(),
-            'Acccountry': $('#accCountry').val(),
-            'cardno': $('#cardno').val(),
-            'card_type': cardtype,
-            'expirydate': $('#expirationdate').val(),
-            'cvv': $('#cvvcode').val(),
-            'billfname': $('#billfname').val(),
-            'billLname': $('#billLname').val(),
-            'billingphno': $('#billingphno').val(),
-            'billaddress1': $('#billaddress1').val(),
-            'billaddress2': $('#billaddress2').val(),
-            'billcity': $('#billcity').val(),
-            'billzip': $('#billzip').val(),
-            'billstate': $('#billstate').val(),
-            'billcountry': $('#billcountry').val(),
-            'shipfname': $('#shipfname').val(),
-            'shipLname': $('#shipLname').val(),
-            'shipphno': $('#shippingphnno').val(),
-            'shipaddress1': $('#shipaddress1').val(),
-            'shipaddress2': $('#shipaddress2').val(),
-            'shipcity': $('#shipcity').val(),
-            'shipzip': $('#shipzip').val(),
-            'shipstate': $('#shipstate').val(),
-            'shipcountry': $('#shipcountry').val(),
-            'NameList': NameList,
-            'Savecarddetail': ($("#chkcarddetails").is(":checked") == true ? "Y" : "N"),
-            'Saveshipdetail': ($("#shippinginfo").is(":checked") == true ? "Y" : "N"),
-            'sameshipbilldetail': ($("#sameshipping").is(":checked") == true ? "Y" : "N"),
-            'Ticketname': type,
-            'strOrderTotal': vOrderTotal,
-            'strGrandTotal': vGrandTotal,
-            'strPromId': vPromoId,
-            'strVarChanges': vVarChanges,
-            'strVarId': vVarId,
-            'strPaymentType': PaymentType
-        }
-
-        var Eventid = $('#hdEventid').val();
-        var PaymentType = $("#selectcard").val();
-
-        $.ajax({
-            url: '@Url.Action("SetSessionPaypaldetail", "Cart")',
-            data: { model: model },
-            type: "Post",
-            success: function (response) {
-                if (response == "Y") {
-                    $("#btPaypalCheckout").click();
-                }
-            }
-        });
-    }
-    $('#btPaypal').click(function () {
-
-        $("#hdIsPostBack").val("Y");
-        var msg = validationpage();
-
-        if (msg != "") {
-            ShowMessage('E', msg)
-            //$('#diverroacc').css('display', 'block');
-            //$('#erraccmsg').html(msg);
-            return false;
-        }
-        else {
-            SavePaypaldetail();
-        }
-    });
-</script>
-
+<script src="~/Scripts/jquery.maskedinput.min.js"></script>
 
 <script>
-    function CalculatePromoCode() {
-        //$("#imgPromoLoader").removeClass("PromoLoaderHide");
-        //$("#imgPromoLoader").addClass("PromoLoaderShow");
-
-        var vProCode = $("#txtPromoCode").val().trim();
-        var vEventid = $('#hdEventid').val();
-        if (vProCode != '') {
-            $.ajax({
-                url: '@Url.Action("CalculatePromoCode", "TicketPayment")',
-                data: { strTicketId: '', strCode: vProCode, lEventId: vEventid },
-                type: "Post",
-                success: function (response) {
-                    debugger;
-                    if (response == "OL" || response == "EDI" || response == "FDI") {
-                        $("#spValidation").text("Promo Code Expired.");
-                        $("#spValidation").removeClass("promoerrorgreen");
-                        $("#spValidation").addClass("promoerrorred");
-
-                        //$("#imgPromoLoader").addClass("PromoLoaderHide");
-                        //$("#imgPromoLoader").removeClass("PromoLoaderShow");
-
-                        $("#spGrdTotal").text($("#spSubTotal").text());
-                        $("#hdGrandTotal").val($("#spSubTotal").text());
-
-                        $("#hdPromoCodetotal").val("0");
-                        return false;
-                    }
-                    else if (response == "INV") {
-                        $("#spValidation").text("Invalid Promo Code.");
-                        $("#spValidation").removeClass("promoerrorgreen");
-                        $("#spValidation").addClass("promoerrorred");
-
-                        $("#spGrdTotal").text($("#spSubTotal").text());
-                        $("#hdGrandTotal").val($("#spSubTotal").text());
-
-                        $("#hdPromoCodetotal").val("0");
-                        return false;
-
-                    }
-                    else {
-                        var vResult = response.split('~');
-                        var vTickets = vResult[0].toString();
-                        var vProType = vResult[1].toString();
-                        var vProMoAmt = parseFloat(vResult[2].toString());
-                      //alert(vProMoAmt);
-                        if (isNaN(vProMoAmt) == true) vProMoAmt = 0;
-
-                        if (vProMoAmt > 0) {
-                          
-                            var vTicIds = $("#hidTicketIds").val().split(',');
-                            var vVarChanges = parseFloat($("#hdVarChanges").val()); if (isNaN(vVarChanges) == true) vVarChanges = 0;
-
-                            var vTotalAmt = 0;
-                            var vGrandAmt = 0;
-                            var vAppliedTickets;
-                            if (vTickets != "A") {
-                                vAppliedTickets = vTickets.split(',');
-                            }
-                            var vflag = true;
-
-                            for (i = 0; i < vTicIds.length; i++) {
-                                if (vTickets != "A") {
-                                    vflag = false;
-                                    for (icnt = 0; icnt < vAppliedTickets.length; icnt++) {
-                                      //  alert(vTicIds[i] + " " + vAppliedTickets[icnt]);
-                                        if (vTicIds[i] == vAppliedTickets[icnt]) {
-                                            vflag = true;
-                                            break;
-                                        }
-                                    }
-                                }
-                                vPrice = parseFloat($("#spPrice_" + vTicIds[i]).text());
-                                vQty = parseFloat($("#spQty_" + vTicIds[i]).text());
-                                vFee = parseFloat($("#spFee_" + vTicIds[i]).text());
-                                vDonation = parseFloat($("#spDonation_" + vTicIds[i]).text());
-                                vTQDId = parseFloat($("#spTQDId_" + vTicIds[i]).text());
-                                if (isNaN(vPrice) == true) vPrice = 0;
-                                if (isNaN(vTQDId) == true) vTQDId = 0;
-
-                                vQty = parseFloat(vQty); if (isNaN(vQty) == true) vQty = 0;
-                                vFee = parseFloat(vFee); if (isNaN(vFee) == true) vFee = 0;
-                                vDonation = parseFloat(vDonation); if (isNaN(vDonation) == true) vDonation = 0;
-                                if (vflag == true) {
-                                 //   alert(vflag)
-                                    if (vProType == "P") {
-                                        vProMoAmt = (vProMoAmt * vPrice) / 100;
-                                    }
-                                   // alert(vProMoAmt);
-                                    
-                                    vPrice = (vPrice - vProMoAmt);
-                                    //alert(vPrice);
-                                    $.ajax({
-                                        url: '@Url.Action("LockPromoCode", "TicketPayment")',
-                                        data: { dAmt: vProMoAmt, lTQDId: vTQDId },
-                                        type: "Post",
-                                        success: function (response) {
-                                        }
-                                    });
-                                }
-                                
-                                //alert(vQty); alert(vPrice); alert(vFee);
-                                vTotalAmt = ((vQty * (vPrice + vFee)) + vDonation).toFixed(2);
-                               // alert(vTotalAmt);
-                                if (isNaN(vTotalAmt) == true) vTotalAmt = 0;
-                                vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);
-                            }
-                            $("#hdPromoCodetotal").val(vGrandAmt);
-                            if (vVarChanges > 0)
-                                vGrandAmt = vGrandAmt + vVarChanges;
-
-                            $("#spGrdTotal").text(vGrandAmt.toFixed(2));
-                            $("#hdGrandTotal").val(vGrandAmt.toFixed(2));
-
-
-                            $("#spValidation").text("Promo Code Applied.");
-                            $("#spValidation").removeClass("promoerrorred");
-                            $("#spValidation").addClass("promoerrorgreen");
-                        }
-
-                        //$("#imgPromoLoader").addClass("PromoLoaderHide");
-                        //$("#imgPromoLoader").removeClass("PromoLoaderShow");
-                    }
-                }
-            });
-        }
-        else {
-
-            $("#spValidation").text("Invalid Promo Code.");
-            $("#spValidation").removeClass("promoerrorgreen");
-            $("#spValidation").addClass("promoerrorred");
-
-            $("#spGrdTotal").text($("#spSubTotal").text());
-            $("#hdGrandTotal").val($("#spSubTotal").text());
-
-            $("#hdPromoCodetotal").val("0");
-        }
-        //$("#imgPromoLoader").addClass("PromoLoaderHide");
-        //$("#imgPromoLoader").removeClass("PromoLoaderShow");
-
-    }
-
-    function calculateTickTotal(vAmount, vvarId) {
-
-        $("#hdVChg").val(vvarId);
-        debugger;
-        var vOrderTotal = parseFloat($("#hdOrderTotal").val());
-        var vPromoTotal = parseFloat($("#hdPromoCodetotal").val());
-
-        var vQty = parseInt($("#hidQty").val());
-        vAmt = parseFloat(vAmount);
-        if (isNaN(vAmt) == true) vAmt = 0;
-        if (isNaN(vOrderTotal) == true) vOrderTotal = 0;
-        if (isNaN(vPromoTotal) == true) vPromoTotal = 0;
-        vOrderTotal = parseFloat(vOrderTotal + vAmt).toFixed(2);
-        var vGrdTotal =0
-        if (vPromoTotal > 0)
-        {
-            vGrdTotal = parseFloat(vPromoTotal + vAmt).toFixed(2);
-        }
-        else {
-            vGrdTotal = parseFloat(vOrderTotal + vAmt).toFixed(2);
-        }
-
-        $("#spGrdTotal").text(vGrdTotal);
-        $("#hdGrandTotal").val(vGrdTotal);
-
-        $("#spSubTotal").text(vOrderTotal);
-        var totqty = $('#hidQty').val();
-
-        if (vOrderTotal > 0) {
-            $('.divvisible').show();
-
-            if (totqty <= 0) {
-
-                $('.divqtyvisible').hide();
-            } else {
-                $('.divqtyvisible').show();
-            }
-            //$('#cardshow').css('display', 'block');
-        }
-        else {
-            $('.divqtyvisible').hide();
-            $('.divvisible').hide();
-            //$('#cardshow').css('display', 'none');
-        }
-
-    }
-    function calculateTickTotalOptional(vCount) {
-
-        var vVarValue = $("#hdVarId").val().split(',');
-        var vOrderTotal = parseFloat($("#hdOrderTotal").val());
-        var vPromoTotal = parseFloat($("#hdPromoCodetotal").val());
-        if (isNaN(vPromoTotal) == true) vPromoTotal = 0;
-        var vPromoCalc = vPromoTotal;
-        var vSel = '';
-        if (isNaN(vOrderTotal) == true) vOrderTotal = 0;
-        var vVariChanges = 0;
-        for (i = 0; i <= vVarValue.length; i++) {
-            if ($("#chk_" + vVarValue[i]).is(":checked") == true) {
-                if (vSel == '')
-                    vSel = vVarValue[i];
-                else
-                    vSel = vSel + ',' + vVarValue[i];
-
-                vAmt = parseFloat($("#sp_" + vVarValue[i]).text());
-                if (isNaN(vAmt) == true) vAmt = 0;
-
-                vOrderTotal = vOrderTotal + vAmt;
-                vPromoTotal = vPromoTotal + vAmt;
-                vVariChanges = vVariChanges + vAmt;
-                
-            }
-        }
-        $("#hdVarChanges").val(vVariChanges);
-
-        $("#hdVChg").val(vSel);
-
-        //for (i = 1; i <= vCount; i++) {
-        //    if ($("#chk_" + i.toString()).is(":checked") == true) {
-        //        vAmt = parseFloat($("#sp_" + i.toString()).text());
-        //        if (isNaN(vAmt) == true) vAmt = 0; vOrderTotal = vOrderTotal + vAmt;
-        //    }
-        //}
-
-        if (vPromoCalc > 0) {
-            $("#spGrdTotal").text(vPromoTotal.toFixed(2));
-            $("#hdGrandTotal").val(vPromoTotal.toFixed(2));
-        }
-        else {
-            $("#spGrdTotal").text(vOrderTotal.toFixed(2));
-            $("#hdGrandTotal").val(vOrderTotal.toFixed(2))
-        }
-
-        $("#spSubTotal").text(vOrderTotal.toFixed(2));
-        var totqty = $('#hidQty').val();
-        if (vOrderTotal > 0) {
-            $('.divvisible').show();
-            if (totqty <= 0) {
-                $('.divqtyvisible').hide();
-            } else {
-                $('.divqtyvisible').show();
-            }
-            //$('#cardshow').css('display', 'block');
-        }
-        else {
-            $('.divvisible').hide();
-            $('.divqtyvisible').hide();
-            //$('#cardshow').css('display', 'none');
-        }
-    }
-
-    //function afterStop() {
-    //    alert("Time Khatam");
-    //}
-    //$(document).ready(function () {
-
-
-    //    var total = $('#hdOrderTotal').val();
-    //    if (total > 0) {
-
-    //        $('.divvisible').css('display', 'block');
-    //    } else {
-
-    //        $('.divvisible').css('display', 'none');
-
-    //    }
-
-    //});
-
-    function ajaxsetup(strname, strFormTag) {
-        var msgnew = "";
-
-        var request = $.ajax({
-            url: '@Url.Action("Index", "ValidationMessage")',
-            async: false,
-            data: { strFormName: strname, strFormTag: strFormTag },
-            type: 'Post'
-        });
-        request.done(function (msg) {
-            msgnew += msg;
-        });
-
-        request.fail(function (jqXHR, textStatus) {
-            msgnew += "Some Error occur!!";
-        });
-        return msgnew;
-    }
-    function validationpage() {
-        var msglogin = "", emailerr = "", pasword = "";
-        var accfname = $("#accfname").val();
-        var Emaillogin = $("#Email").val();
-        var confirmlogin = $("#confirmEmail").val();
-        var Passowrdlogin = $("#password").val();
-        var confirmpassword = $("#confirmpassword").val();
-
-        var total = $('#hdOrderTotal').val();
-
-
-        if (accfname == '') {
-            $("#accfname").addClass('err-bor');
-            msglogin += ajaxsetup('TicketPayment', 'TPayFnameValidateUI') + "</br>";
-        }
-
-        if (!validateEmail(Emaillogin)) {
-            $('#Email').focus();
-            $('#Email').addClass('err-bor');
-            emailerr += "Invalid Email" + "\n";
-        }
-        if ($("#confirmEmail").length > 0) {
-            if (!validateEmail(confirmlogin)) {
-                $('#confirmEmail').focus();
-                $('#confirmEmail').addClass('err-bor');
-                emailerr += "Invalid Confirm Email" + "\n";
-            }
-
-            if (confirmlogin != Emaillogin) {
-                $('#confirmEmail').focus();
-                $('#confirmEmail').addClass('err-bor');
-                msglogin += ajaxsetup('TicketPayment', 'TPayValidateConfirmMatchEmailUI') + "</br>";
-
-            }
-
-
-        }
-        if (emailerr != "") {
-            msglogin += ajaxsetup('TicketPayment', 'TPayValidateEmailUI') + "</br>";
-
-        }
-        if ($("#password").length > 0) {
-            if (Passowrdlogin.length < 4) {
-                $("#password").focus();
-                $('#password').addClass('err-bor');
-                pasword += "Invalid Password" + "\n";
-            }
-
-            if (confirmpassword.length < 4) {
-                $("#confirmpassword").focus();
-                $('#confirmpassword').addClass('err-bor');
-                pasword += "Invalid Confirm Password" + "\n";
-            }
-            if (Passowrdlogin != confirmpassword) {
-                $("#confirmpassword").focus();
-                $('#confirmpassword').addClass('err-bor');
-                msglogin += ajaxsetup('TicketPayment', 'TPayValidatePwdUI') + "</br>";
-
-            }
-        }
-
-        if (pasword != "") {
-            msglogin += ajaxsetup('TicketPayment', 'TPayValidatePwdUI') + "</br>";
-
-        }
-        var resultvar = "";
-        if (total > 0) {
-            var shippingerr = "";
-            if ($("#selectcard").val() != "P") {
-                var result = $("#cardno").validateCreditCard({ accept: ['visa', 'mastercard', 'discover', 'amex'] });
-                if (result.card_type == null) {
-                    resultvar += "Invalid Card Number" + "\n";
-                    $("#cardno").focus();
-                    $("#cardno").addClass('err-bor');
-
-                }
-                if (result.length_valid == false) {
-                    resultvar += "Invalid Card Number" + "\n";
-                    $("#cardno").focus();
-                    $("#cardno").addClass('err-bor');
-
-                }
-                if (result.luhn_valid == false) {
-                    resultvar += "Invalid Card Number" + "\n";
-                    $("#cardno").focus();
-                    $("#cardno").addClass('err-bor');
-
-                }
-                if (resultvar != "") {
-                    msglogin += ajaxsetup('TicketPayment', 'TPayCardValidationUI') + "</br>";
-                }
-
-                var billerr = "";
-                var billfname = $('#billfname').val();
-                var billLname = $('#billLname').val();
-                var billingphno = $('#billingphno').val();
-                var billaddress1 = $('#billaddress1').val();
-
-                var billcity = $('#billcity').val();
-                var billzip = $('#billzip').val();
-                var billstate = $('#billstate').val();
-                var billcountry = $('#billcountry').val();
-
-                if (billfname == "") {
-                    billerr += "Please Enter Billing First name" + "\n";
-                    $("#billfname").focus();
-                    $("#billfname").addClass('err-bor');
-
-                }
-                if (billingphno == "") {
-                    billerr += "Please Enter Billing Phone number" + "\n";
-                    $("#billingphno").focus();
-                    $("#billingphno").addClass('err-bor');
-
-                }
-                if (billaddress1 == "") {
-                    billerr += "Please Enter Billing Address" + "\n";
-                    $("#billaddress1").focus();
-                    $("#billaddress1").addClass('err-bor');
-
-                }
-
-                if (billcity == "") {
-                    billerr += "Please Enter Billing City" + "\n";
-                    $("#billcity").focus();
-                    $("#billcity").addClass('err-bor');
-
-                }
-                if (billzip == "") {
-                    billerr += "Please Enter Billing Zip" + "\n";
-                    $("#billzip").focus();
-                    $("#billzip").addClass('err-bor');
-
-                }
-                if (billstate == "") {
-                    billerr += "Please Enter Billing State" + "\n";
-                    $("#billstate").focus();
-                    $("#billstate").addClass('err-bor');
-
-                }
-                if (billcountry == "") {
-                    billerr += "Please Enter Billing Country" + "\n";
-                    $("#billcountry").focus();
-                    $("#billcountry").addClass('err-bor');
-
-                }
-                if (billerr != "") {
-                    msglogin += ajaxsetup('TicketPayment', 'TPayValidateBillingAddressUI') + "</br>";
-                }
-
-                if ($("#shippinginfo").is(":checked")) {
-                    if ($('#shipfname').val() == "") {
-                        shippingerr += "Please Enter Shipping First name" + "\n";
-                        $("#shipfname").focus();
-                        $("#shipfname").addClass('err-bor');
-
-                    }
-                    if ($('#shippingphnno').val() == "") {
-                        shippingerr += "Please Enter Shipping Phone number" + "\n";
-                        $("#shippingphnno").focus();
-                        $("#shippingphnno").addClass('err-bor');
-                    }
-                    if ($('#shipaddress1').val() == "") {
-                        shippingerr += "Please Enter Shipping Address" + "\n";
-                        $("#shipaddress1").focus();
-                        $("#shipaddress1").addClass('err-bor');
-
-                    }
-                    if ($('#shipcity').val() == "") {
-                        shippingerr += "Please Enter Shipping City" + "\n";
-                        $("#shipcity").focus();
-                        $("#shipcity").addClass('err-bor');
-
-                    }
-                    if ($('#shipzip').val() == "") {
-                        shippingerr += "Please Enter Shipping Zip" + "\n";
-                        $("#shipzip").focus();
-                        $("#shipzip").addClass('err-bor');
-
-                    }
-                    if ($('#shipstate').val() == "") {
-                        shippingerr += "Please Enter Shipping state" + "\n";
-                        $("#shipstate").focus();
-                        $("#shipstate").addClass('err-bor');
-
-                    }
-                    if ($('#shipcountry').val() == "") {
-                        shippingerr += "Please Enter Shipping country" + "\n";
-                        $("#shipcountry").focus();
-                        $("#shipcountry").addClass('err-bor');
-
-                    }
-                }
-            }
-            //alert(shippingerr);
-            if (shippingerr != "") {
-                msglogin += ajaxsetup('TicketPayment', 'TPayValidateShippingAddressUI') + "</br>";
-            }
-
-        }
-        return msglogin;
-    }
-
-
-
-    function ShowMessage(Type, Mess) {
-        if (Type == 'S') {
-            $('#divaccsuc').css('display', 'block');
-            $('#divaccsuc').focus();
-            $('#diverroacc').css('display', 'none');
-            $('#succaccmsg').html(Mess);
-        }
-        else {
-            $('#divaccsuc').css('display', 'none');
-            $('#diverroacc').css('display', 'block');
-            $('#diverroacc').focus();
-            $('#erraccmsg').html(Mess);
-
-        }
-    }
     $(document).ready(function () {
+        var Eventid = $('#hdEventid').val();
         $("#btPaypal").hide();
+        $("#Email").on("blur", function ()
+        {
+            var email = $("#Email").val();
+            if (email != '') {
+                if (!validateEmail(email)) {
+                    $("#Email").addClass('err-bor');
+                    ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidatebeareremailUI'));
+                    $("#password").hide();
+                    $("#password").val('');
+                    $("#hdemailexist").val(0);
+                    return false;
+                } else {
+                    $("#Email").removeClass('err-bor');
+                    $('#divaccsuc').hide();
+                    $('#diverroacc').hide();
+                 
+
+                    $.ajax({
+                        url: '@Url.Action("Getuserdetails", "Home")',
+                        data: { 'Email': email },
+                        type: "Post",
+                        success: function (response) {
+                            console.log(response);
+                            if (response.Message == "F") {
+                              
+                                $("#accfname").val(response.Fname);
+                                $("#accLname").val(response.Lname);
+                                $("#password").hide();
+                                $("#password").val('');
+                                $("#hdemailexist").val(0);
+                            } else {
+                                if (response.Message == "N") {
+                                      $("#password").show();
+                                      $("#hdemailexist").val(1);
+
+                                }
+                            }
+
+                         
+                        }
+                    });
+
+
+
+                }
+            }
+            else
+            {
+                $("#Email").removeClass('err-bor');
+                $('#divaccsuc').hide();
+                $('#diverroacc').hide();
+                $("#password").hide();
+                $("#hdemailexist").val(0);
+            }
+
+
+        });
+        $("#confirmEmail").on("blur", function ()
+        {
+            var email = $("#Email").val();
+            var confirmemail = $(this).val();
+            if (confirmemail != '' && email != '') {
+
+
+                if (!validateEmail(confirmemail)) {
+                    $("#confirmEmail").addClass('err-bor');
+                    ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidatebeareremailUI'));
+                    return false;
+                } else {
+                    $("#confirmEmail").removeClass('err-bor');
+                    $('#divaccsuc').hide();
+                    $('#diverroacc').hide();
+                }
+
+                if (confirmemail != email) {
+                    $("#confirmEmail").addClass('err-bor');
+                    $("#Email").addClass('err-bor');
+                    ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidateConfirmMatchEmailUI'));
+
+
+                } else
+                {
+                    $("#Email").removeClass('err-bor');
+                    $("#confirmEmail").removeClass('err-bor');
+                    $('#divaccsuc').hide();
+                    $('#diverroacc').hide();
+                }
+            } else {
+                if (confirmemail != '' && email == '') {
+                    $("#Email").addClass('err-bor');
+                    ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidatebeareremailUI'));
+                    $("#password").hide();
+                    $("#hdemailexist").val(0);
+                    return false;
+                }
+            }
+
+
+        });
+        if ($('#ddlListitem option').length <= 0) {
+            $('#blocklist').css('display', 'none');
+
+        } else {
+            $('#blocklist').css('display', 'block');
+        }
+
+        $("#expirationdate").mask("99/99");
+        $("#shippingphnno").mask("999-999-9999");
+        $("#billingphno").mask("999-999-9999");
+        $("#accountphnno").mask("999-999-9999");
+        $('#btPaypal').click(function () {
+
+            $("#hdIsPostBack").val("Y");
+            var msg = validationpage();
+
+            if (msg != "") {
+                ShowMessage('E', msg)
+                //$('#diverroacc').css('display', 'block');
+                //$('#erraccmsg').html(msg);
+                return false;
+            }
+            else {
+                SavePaypaldetail();
+            }
+        });
+
         $("#btAddList").click(function () {
 
             if ($("#nameofticket").val().trim() == '') {
@@ -1267,9 +713,7 @@
 
                 return false;
             }
-
-            if ($('.Notifybox').css('display') == 'block') {
-                var email = $('#emailbearer').val();
+            var email = $('#emailbearer').val();
                 if (!validateEmail(email)) {
                     $('#emailbearer').addClass('err-bor');
                     ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidatebeareremailUI'));
@@ -1284,12 +728,16 @@
 
                     $('#blocklist').css('display', 'block');
                 }
+            //if ($('.Notifybox').css('display') == 'block') {
+            //   
+         
 
-            }
-            else {
+            //}
+            //else {
 
-                $('#blocklist').css('display', 'block');
-            }
+            //    $('#blocklist').css('display', 'block');
+            //}
+
 
 
 
@@ -1321,13 +769,11 @@
             $("#hidTicketbearer").val('');
             $("#nameofticket").val('');
             $("#emailbearer").val('');
-            if ($('.Notifybox').css('display') == 'block') {
-                $('.Notifybox').css('display', 'none');
-            }
+            //if ($('.Notifybox').css('display') == 'block') {
+            //    $('.Notifybox').css('display', 'none');
+            //}
 
         });
-
-
 
         $("#selectcard").change(function () {
             if ($("#selectcard").val() == "P") {
@@ -1342,26 +788,8 @@
 
             }
         });
-
-
-        $(window).unload(function () {
-            if ($("#hdIsPostBack").val() != "Y") {
-                $("#hdIsPostBack").val("N");
-                $.ajax({
-                    url: '@Url.Action("ReleaseTickets", "TicketPayment")',
-                    type: "Post",
-                    success: function (response) {
-                    }
-                });
-            }
-        });
         $("#login").click(function () {
             $("#hdIsPostBack").val("Y");
-        });
-
-        history.pushState(null, null, 'TicketPayment');
-        window.addEventListener('popstate', function (event) {
-            history.pushState(null, null, 'TicketPayment');
         });
 
         $('#btBack').click(function () {
@@ -1382,61 +810,130 @@
 
         });
 
-        $(document).click(function () {
-            $('#diverroacc').css('display', 'none');
-            $('#divaccsuc').css('display', 'none');
-            $("input").removeClass('err-bor');
+
+        $('#shipzip').change(function () {
+            var country = $("#shipcountry option:selected").text().trim();
+
+            var city = "";
+            var state = "";
+
+            var pincode = $(this).val();
+
+
+            $.ajax({
+                url: 'http://maps.googleapis.com/maps/api/geocode/json',
+                data: '&address=' + pincode + '&sensor=true',
+                dataType: 'json',
+                cache: false,
+                success: function (data) {
+
+
+                    if (data.status == 'OK') {
+
+                        for (var i = 0; i < data.results[0].address_components.length; i++) {
+                            var obj = data.results[0].address_components[i];
+
+                            var obj2 = obj['types'];
+
+                            for (var j = 0; j < obj2.length; j++) {
+                                if (obj2[j] == 'locality') {
+                                    city = obj['long_name'];
+
+
+                                }
+
+                                if (obj2[j] == 'sublocality_level_1') {
+                                    city = obj['long_name'];
+
+
+                                }
+                                if (obj2[j] == 'sublocality_level_2') {
+                                    city = obj['long_name'];
+
+
+                                }
+                                if (obj2[j] == 'sublocality_level_3') {
+                                    city = obj['long_name'];
+
+
+                                }
+                                if (obj2[j] == 'sublocality_level_4') {
+                                    city = obj['long_name'];
+
+
+                                }
+                                if (obj2[j] == 'sublocality_level_5') {
+                                    city = obj['long_name'];
+
+
+                                }
+                                if (obj2[j] == 'ward') {
+                                    city = obj['long_name'];
+
+
+                                }
+                                if (obj2[j] == 'sublocality_level_5') {
+                                    city = obj['long_name'];
+
+
+                                }
+                                if (obj2[j] == 'postal_town') {
+                                    city = obj['long_name'];
+
+
+                                }
+                                if (obj2[j] == 'administrative_area_level_1') {
+                                    state = obj['long_name'];
+
+                                }
+
+
+                                if (obj2[j] == 'country') {
+                                    if (obj['long_name'] == country) {
+
+
+                                        $('#shipcity').val(city);
+                                        $('#shipstate').val(state);
+                                    } else {
+                                        $('#shipcity').val('');
+                                        $('#shipstate').val('');
+                                    }
+
+                                }
+
+                            }
+
+
+
+                        }
+
+                    }
+
+
+
+                    else {
+                        var msg = ajaxsetup('MyAccount', 'MyAccountZipValidationUI');
+                        $("#shipstate").val("");
+                        $("#shipcity").val("");
+                        $('#shipzip').val("");
+                        $('#shipzip').addClass('err-bor');
+                        ShowMessage('E', msg)
+
+                        return false;
+                    }
+                },
+                error: function (data) { alert(data) }
+            });
+
+
         });
-        //$("#PaypalCart").dialog({
-        //    autoOpen: false,
-        //    title: 'Title',
-        //    width: 500,
-        //    height: 'auto',
-        //    modal: true
-        //});
-        //function openPopup() {
-        //    alert("CHal Pya");
-        //    //$("#result").dialog("open");
-        //}
 
 
 
         $('#completeorder').click(function () {
-            // $("#dvAjxSave").show();
-            //var vPromocode = $("#hdPromoCodetotal").val();
-            //var vProCode = $("#txtPromoCode").val().trim();
+            
 
-            @*debugger;
-            var vProCode = $("#txtPromoCode").val().trim();
-            var vEvtid = $('#hdEventid').val();
-            if (vProCode != '') {
-                $.ajax({
-                    url: '@Url.Action("ValidatePromoCode", "TicketPayment")',
-                    data: { lEventId: vEvtid, strCode: vProCode },
-                    type: "Post",
-                    success: function (response) {
-                        if (response == "OL")
-                        {
-                            $("#spValidation").text("Promo Code Expired.");
-                            $("#spValidation").removeClass("promoerrorgreen");
-                            $("#spValidation").addClass("promoerrorred");
-
-                            $("#imgPromoLoader").addClass("PromoLoaderHide");
-                            $("#imgPromoLoader").removeClass("PromoLoaderShow");
-
-                            $("#spGrdTotal").text($("#spSubTotal").text());
-                            $("#hdGrandTotal").val($("#spSubTotal").text());
-
-                            $("#hdPromoCodetotal").val("0");
-                            window.location.hash = "dvHash";
-                            return false;
-                        }
-                    }
-                });
-            }*@
-            //ValidatePromoCode
-            alert("After Promo Code");
-            debugger;
+           
             var flag = true;
             var Emaillogin = $("#Email").val();
             var msg = validationpage();
@@ -1448,41 +945,41 @@
                 //$('#erraccmsg').html(msg);
                 return false;
             }
-            else {
-                if ($("#confirmEmail").length > 0) {
-                    $.ajax({
-                        url: "/Home/IsValid",
-                        async: true,
-                        data: 'Email=' + Emaillogin,
-                        dataType: "text",
-                        success: function (data, textStatus, xhr) {
-                            if (data != '') {
-                                if (data == "NotFound") {
-                                    flag = true;
+            //else {
+            //    if ($("#confirmEmail").length > 0) {
+            //        $.ajax({
+            //            url: "/Home/IsValid",
+            //            async: true,
+            //            data: 'Email=' + Emaillogin,
+            //            dataType: "text",
+            //            success: function (data, textStatus, xhr) {
+            //                if (data != '') {
+            //                    if (data == "NotFound") {
+            //                        flag = true;
 
-                                    $('#hdemailexist').val(true);
+            //                        $('#hdemailexist').val(true);
 
-                                } else if (data == "Found") {
+            //                    } else if (data == "Found") {
 
-                                    $('#Email').focus();
-                                    $("#Email").addClass('err-bor');
-
-
-                                    ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidateEmailSy'))
-
-                                    $('#hdemailexist').val(false);
-
-                                }
-                            }
-                        },
-                        error: function (xhr, textStatus, errorThrown) {
-                            alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
-                        }
-                    });
-                }
+            //                        $('#Email').focus();
+            //                        $("#Email").addClass('err-bor');
 
 
-            }
+            //                        ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidateEmailSy'))
+
+            //                        $('#hdemailexist').val(false);
+
+            //                    }
+            //                }
+            //            },
+            //            error: function (xhr, textStatus, errorThrown) {
+            //                alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
+            //            }
+            //        });
+            //    }
+
+
+            //}
 
 
             var confirmemail = "", cardno = "", expirydate = "", cvv = "", cardtype = "";
@@ -1638,111 +1135,11 @@
                 });
             }
         });
-        var Eventid = $('#hdEventid').val();
-        $('#login').click(function () {
-            $("#hdIsPostBack").val("Y");
-            $.ajax({
-                url: '@Url.Action("setsession", "TicketPayment")',
-                data: { id: 'TicketPayment', Eventid: Eventid },
-                type: "Post",
-                success: function (data) {
-
-                },
-                error: function (data) {
-                    alert("Sorry there is some problem.");
-                    return false
-                }
-            });
-            $("#loginPopup").click();
-
-        });
-
-        $(".Notifybox").css("display", "none");
-        $(".Notify").click(function () {
-            $('.Notifybox').slideToggle("fast");
-        });
-        //--------------Fire when User Click on Continue in Previous Page ------------------------------------
-        $("#btMessOk").click(function () {
-            window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.URLTitle.Replace(" ","-") , strEventId = Model.EventId.ToString()})';
-        });
-
-        //
-
-        @*var TList = [];
-
-        TList.push({
-            'TLD_Ticket_Id': 1,
-            'TLD_Locked_Qty':10
-        });
-        var model = {
-            'TLD_Ticket_Id': '0',
-            'TLD_Locked_Qty': '0',
-            'TLD_List': TList
-        }
-
-
-        $.ajax({
-            url: '@Url.Action("LockTickets", "TicketPayment")',
-            data: model,
-            type: "Post",
-            success: function (response) {
-                alert("chal pya");
-            }
-        });*@
-
-        //*************************Fire when User Click on Continue in Previous Page *****************************************
-
-        // var vTicketid = '19,20';
-        // var Eid = $('#hdEventid').val();
-
-        clock = $('#divTime').FlipClock(600, {
-            clockFace: 'MinuteCounter',
-            countdown: true,
-            callbacks: {
-                stop: function () {
-
-                    $.ajax({
-                        url: '@Url.Action("ReleaseTickets", "TicketPayment")',
-                        type: "Get",
-                        success: function (response) {
-                            $("#btOkMes").click();
-                        },
-                        error: function () {
-                            window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.Title.Replace(" ","") , strEventId = Model.EventId.ToString()})';
-                        }
-                    });
-                }
-            }
-        });
 
 
 
-        $(".Timezone").click(function () {
-
-            $(".TmezoneSet").slideToggle("fast");
-
-            //
-
-        });
-        $(".closetimemodal").click(function () {
-            $(".TmezoneSet").hide();
-
-        });
-
-        $(".billingaddress").change(function () {
-            $("#sameshipping").attr('checked', false);
-            if ($(this).is(":checked") == true) {
-
-                $(".shippingaddress").css('display', 'block');
-            } else {
-
-                $(".shippingaddress").css('display', 'none');
-
-            }
-
-        });
         //------------------------------------------------LoadSelectedTickets--------------------------------------------------
-        debugger;
+
         $.ajax({
             url: '@Url.Action("LoadTickets", "TicketPayment")',
             beforeSend: function () { $('#dvAjxLoader').show(); },
@@ -1781,12 +1178,970 @@
             },
         });
 
+        //----------------------------------------------------------------------------------------------------//
+
+        $('#billzip').change(function () {
+            debugger;
+            var country = $("#billcountry option:selected").text().trim();
+
+            var city = "";
+            var state = "";
+
+            var pincode = $(this).val();
 
 
+            $.ajax({
+                url: 'http://maps.googleapis.com/maps/api/geocode/json?address=' + pincode + '',
+                dataType: 'json',
+                cache: false,
+                success: function (data) {
+
+
+                    if (data.status == 'OK') {
+
+                        for (var i = 0; i < data.results[0].address_components.length; i++) {
+                            var obj = data.results[0].address_components[i];
+
+                            var obj2 = obj['types'];
+
+                            for (var j = 0; j < obj2.length; j++) {
+                                if (obj2[j] == 'locality') {
+                                    city = obj['long_name'];
+
+
+                                }
+
+                                if (obj2[j] == 'sublocality_level_1') {
+                                    city = obj['long_name'];
+
+
+                                }
+                                if (obj2[j] == 'sublocality_level_2') {
+                                    city = obj['long_name'];
+
+
+                                }
+                                if (obj2[j] == 'sublocality_level_3') {
+                                    city = obj['long_name'];
+
+
+                                }
+                                if (obj2[j] == 'sublocality_level_4') {
+                                    city = obj['long_name'];
+
+
+                                }
+                                if (obj2[j] == 'sublocality_level_5') {
+                                    city = obj['long_name'];
+
+
+                                }
+                                if (obj2[j] == 'ward') {
+                                    city = obj['long_name'];
+
+
+                                }
+                                if (obj2[j] == 'sublocality_level_5') {
+                                    city = obj['long_name'];
+
+
+                                }
+                                if (obj2[j] == 'postal_town') {
+                                    city = obj['long_name'];
+
+
+                                }
+                                if (obj2[j] == 'administrative_area_level_1') {
+                                    state = obj['long_name'];
+
+                                }
+
+
+                                if (obj2[j] == 'country') {
+                                    if (obj['long_name'] == country) {
+
+
+                                        $('#billcity').val(city);
+                                        $('#billstate').val(state);
+                                    } else {
+                                        $('#billcity').val('');
+                                        $('#billstate').val('');
+                                    }
+
+                                }
+
+                            }
+
+
+
+                        }
+
+                    }
+
+
+
+                    else {
+                        var msg = ajaxsetup('MyAccount', 'MyAccountZipValidationUI');
+                        $("#billstate").val("");
+                        $("#billcity").val("");
+                        $('#billzip').val("");
+                        $('#billzip').addClass('err-bor');
+                        ShowMessage('E', msg)
+
+                        return false;
+                    }
+                },
+                error: function (data) { alert(data) }
+            });
+
+
+        });
+        $("#billcountry").change(function () {
+            $("#billzip").val("");
+            $("#billstate").val("");
+            $("#billcity").val("");
+
+
+        });
+
+        $("#shipcountry").change(function () {
+            $("#shipzip").val("");
+            $("#shipstate").val("");
+            $("#shipcity").val("");
+
+
+        });
+
+        $("#editlist").click(function () {
+            var Sno = $("#ddlListitem").val();
+
+            $("#hidTicketbearer").val(Sno);
+            var vOrgName = $("#TicketName_" + Sno).text();
+            var vOrgDes = $("#TicketEmail_" + Sno).text();
+            //if (vOrgDes != "") {
+            //    if ($('.Notifybox').css('display') == 'none') {
+            //        $('.Notifybox').css('display', 'block');
+            //    }
+            //}
+
+            $("#nameofticket").val(vOrgName);
+            $("#emailbearer").val(vOrgDes);
+        });
+        var cardlength = $("#cardno").val();
+        if (cardlength == "") {
+            $('#imgcard').css('display', 'none');
+
+        }
+        $(".billingaddress").change(function () {
+            $("#sameshipping").attr('checked', false);
+            if ($(this).is(":checked") == true) {
+
+                $(".shippingaddress").css('display', 'block');
+            } else {
+
+                $(".shippingaddress").css('display', 'none');
+
+            }
+
+        });
+
+
+        $(".Timezone").click(function () {
+
+            $(".TmezoneSet").slideToggle("fast");
+
+            //
+
+        });
+        $('#login').click(function () {
+            $("#hdIsPostBack").val("Y");
+            $.ajax({
+                url: '@Url.Action("setsession", "TicketPayment")',
+                data: { id: 'TicketPayment', Eventid: Eventid },
+                type: "Post",
+                success: function (data) {
+
+                },
+                error: function (data) {
+                    alert("Sorry there is some problem.");
+                    return false
+                }
+            });
+            $("#loginPopup").click();
+
+        });
+
+        //$(".Notifybox").css("display", "none");
+        //$(".Notify").click(function () {
+        //    $('.Notifybox').slideToggle("fast");
+        //});
+
+
+        //--------------Fire when User Click on Continue in Previous Page ------------------------------------
+        $("#btMessOk").click(function () {
+            window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.URLTitle.Replace(" ","-") , strEventId = Model.EventId.ToString()})';
+        });
+
+        //
+        $(".closetimemodal").click(function () {
+            $(".TmezoneSet").hide();
+
+        });
+
+        $("#btndivaccerr").click(function () {
+
+            $('#divaccsuc').css('display', 'none');
+            $('#diverroacc').css('display', 'none');
+        });
+        $("#deletelist").click(function () {
+            var Sno = $("#ddlListitem").val();
+            $('#tblListitem tr').each(function () {
+                if (Sno == $(this).find("td:first").html()) {
+                    $(this).remove();
+                }
+            });
+
+            //$("#dllOrganizer")
+            $("#ddlListitem option").each(function (i) {
+                if (Sno == $(this).val()) {
+                    $(this).remove();
+                }
+            });
+
+
+
+            $("#hidTicketbearer").val('');
+            $("#nameofticket").val('');
+            $("#emailbearer").val('');
+            if ($('#ddlListitem option').length <= 0) {
+                $('#blocklist').css('display', 'none');
+
+            } else {
+                $('#blocklist').css('display', 'block');
+            }
+
+
+        });
+
+        //*************************Fire when User Click on Continue in Previous Page *****************************************
+
+        // var vTicketid = '19,20';
+        // var Eid = $('#hdEventid').val();
+
+        clock = $('#divTime').FlipClock(600, {
+            clockFace: 'MinuteCounter',
+            countdown: true,
+            callbacks: {
+                stop: function () {
+
+                    $.ajax({
+                        url: '@Url.Action("ReleaseTickets", "TicketPayment")',
+                        type: "Get",
+                        success: function (response) {
+                            $("#btOkMes").click();
+                        },
+                        error: function () {
+                            window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.Title.Replace(" ","") , strEventId = Model.EventId.ToString()})';
+                        }
+                    });
+                }
+            }
+        });
 
 
 
     });
+
+    $(window).unload(function () {
+        if ($("#hdIsPostBack").val() != "Y") {
+            $("#hdIsPostBack").val("N");
+            $.ajax({
+                url: '@Url.Action("ReleaseTickets", "TicketPayment")',
+                type: "Post",
+                success: function (response) {
+                }
+            });
+        }
+    });
+    history.pushState(null, null, 'TicketPayment');
+    window.addEventListener('popstate', function (event) {
+        history.pushState(null, null, 'TicketPayment');
+    });
+    window.paypalCheckoutReady = function () {
+        paypal.checkout.setup("@PayPalSettings.MerchantAccountID", {
+            environment: '@PayPalSettings.Environment',
+            click: function (event) {
+                event.preventDefault();
+                paypal.checkout.initXO();
+                $.support.cors = true;
+
+                $.ajax({
+                    url: '@Html.Raw(Url.Action("PayPaltoken", "Cart"))',
+                    type: "GET",
+                    async: true,
+                    crossDomain: true,
+                    //Load the minibrowser with the redirection url in the success handler
+                    success: function (token) {
+                        var url = paypal.checkout.urlPrefix + token;
+                        //Loading Mini browser with redirect url, true for async AJAX calls
+                        paypal.checkout.startFlow(url);
+                    },
+                    error: function (responseData, textStatus, errorThrown) {
+                        alert("Something going wrong ");
+                        //Gracefully Close the minibrowser in case of AJAX errors
+                        paypal.checkout.closeFlow();
+                    }
+                });
+            },
+            button: ['btPaypalCheckout']
+        });
+    }
+    function SavePaypaldetail() {
+        var flag = true;
+        var Emaillogin = $("#Email").val();
+
+
+        var NameList = [];
+
+        //if ($("#confirmEmail").length > 0) {
+        //    $.ajax({
+        //        url: "/Home/IsValid",
+        //        async: true,
+        //        data: 'Email=' + Emaillogin,
+        //        dataType: "text",
+        //        success: function (data, textStatus, xhr) {
+        //            if (data != '') {
+        //                if (data == "NotFound") {
+        //                    flag = true;
+
+        //                    $('#hdemailexist').val(true);
+
+        //                } else if (data == "Found") {
+
+        //                    $('#Email').focus();
+        //                    $("#Email").addClass('err-bor');
+
+
+        //                    ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidateEmailSy'))
+
+        //                    $('#hdemailexist').val(false);
+
+        //                }
+        //            }
+        //        },
+        //        error: function (xhr, textStatus, errorThrown) {
+        //            alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
+        //        }
+        //    });
+        //}
+
+
+
+
+
+        var confirmemail = "", cardno = "", expirydate = "", cvv = "", cardtype = "";
+        var type = '';
+
+
+        $("#tblListitem tr").each(function () {
+            var Sno = $(this).find("td:first").html();
+
+            // Multiple Address
+            if (Sno != '') {
+                NameList.push({
+                    Name: $("#TicketName_" + Sno).text(),
+                    Email: $("#TicketEmail_" + Sno).text(),
+                });
+            }
+        });
+        debugger;
+
+        if ($('#shippinginfo').is(":checked") == true) {
+
+
+
+        }
+        var totalorder = $('#hdOrderTotal').val();
+        var type = '';
+        if (totalorder > 0) {
+
+            type = 'Paid';
+        } else {
+
+            type = 'Free';
+
+        }
+
+        //-------------------------------------Saving Payment Detail---------------------------------------
+
+
+        var vOrderTotal = $("#hdOrderTotal").val();
+        var vGrandTotal = $("#hdGrandTotal").val();
+        var vPromoId = $("#hdPromoId").val();
+        var vVarChanges = $("#hdVarChanges").val();
+        var vVarId = $("#hdVarId").val();
+        debugger;
+        var model = {
+
+            'AccFname': $('#accfname').val(),
+            'AccLname': $('#accLname').val(),
+            'AccEmail': $('#Email').val(),
+            'AccconfirmEmail': $('#confirmEmail').val(),
+            'Accpassword': $('#password').val(),
+            'Accconfirmpassword': $('#confirmpassword').val(),
+            'Accountphnno': $('#accountphnno').val(),
+            'AccCity': $('#accCity').val(),
+            'AccState': $('#accState').val(),
+            'Acczip': $('#accZip').val(),
+            'Acccountry': $('#accCountry').val(),
+            'cardno': $('#cardno').val(),
+            'card_type': cardtype,
+            'expirydate': $('#expirationdate').val(),
+            'cvv': $('#cvvcode').val(),
+            'billfname': $('#billfname').val(),
+            'billLname': $('#billLname').val(),
+            'billingphno': $('#billingphno').val(),
+            'billaddress1': $('#billaddress1').val(),
+            'billaddress2': $('#billaddress2').val(),
+            'billcity': $('#billcity').val(),
+            'billzip': $('#billzip').val(),
+            'billstate': $('#billstate').val(),
+            'billcountry': $('#billcountry').val(),
+            'shipfname': $('#shipfname').val(),
+            'shipLname': $('#shipLname').val(),
+            'shipphno': $('#shippingphnno').val(),
+            'shipaddress1': $('#shipaddress1').val(),
+            'shipaddress2': $('#shipaddress2').val(),
+            'shipcity': $('#shipcity').val(),
+            'shipzip': $('#shipzip').val(),
+            'shipstate': $('#shipstate').val(),
+            'shipcountry': $('#shipcountry').val(),
+            'NameList': NameList,
+            'Savecarddetail': ($("#chkcarddetails").is(":checked") == true ? "Y" : "N"),
+            'Saveshipdetail': ($("#shippinginfo").is(":checked") == true ? "Y" : "N"),
+            'sameshipbilldetail': ($("#sameshipping").is(":checked") == true ? "Y" : "N"),
+            'Ticketname': type,
+            'strOrderTotal': vOrderTotal,
+            'strGrandTotal': vGrandTotal,
+            'strPromId': vPromoId,
+            'strVarChanges': vVarChanges,
+            'strVarId': vVarId,
+            'strPaymentType': PaymentType
+        }
+
+        var Eventid = $('#hdEventid').val();
+        var PaymentType = $("#selectcard").val();
+
+        $.ajax({
+            url: '@Url.Action("SetSessionPaypaldetail", "Cart")',
+            data: { model: model },
+            type: "Post",
+            success: function (response) {
+                if (response == "Y") {
+                    $("#btPaypalCheckout").click();
+                }
+            }
+        });
+    }
+
+
+    function CalculatePromoCode() {
+        //$("#imgPromoLoader").removeClass("PromoLoaderHide");
+        //$("#imgPromoLoader").addClass("PromoLoaderShow");
+
+        var vProCode = $("#txtPromoCode").val().trim();
+        var vEventid = $('#hdEventid').val();
+        if (vProCode != '') {
+            $.ajax({
+                url: '@Url.Action("CalculatePromoCode", "TicketPayment")',
+                data: { strTicketId: '', strCode: vProCode, lEventId: vEventid },
+                type: "Post",
+                success: function (response) {
+                    debugger;
+                    if (response == "OL" || response == "EDI" || response == "FDI") {
+                        $("#spValidation").text("Promo Code Expired.");
+                        $("#spValidation").removeClass("promoerrorgreen");
+                        $("#spValidation").addClass("promoerrorred");
+
+                        //$("#imgPromoLoader").addClass("PromoLoaderHide");
+                        //$("#imgPromoLoader").removeClass("PromoLoaderShow");
+
+                        $("#spGrdTotal").text($("#spSubTotal").text());
+                        $("#hdGrandTotal").val($("#spSubTotal").text());
+
+                        $("#hdPromoCodetotal").val("0");
+                        return false;
+                    }
+                    else if (response == "INV") {
+                        $("#spValidation").text("Invalid Promo Code.");
+                        $("#spValidation").removeClass("promoerrorgreen");
+                        $("#spValidation").addClass("promoerrorred");
+
+                        $("#spGrdTotal").text($("#spSubTotal").text());
+                        $("#hdGrandTotal").val($("#spSubTotal").text());
+
+                        $("#hdPromoCodetotal").val("0");
+                        return false;
+
+                    }
+                    else {
+                        var vResult = response.split('~');
+                        var vTickets = vResult[0].toString();
+                        var vProType = vResult[1].toString();
+                        var vProMoAmt = parseFloat(vResult[2].toString());
+                        //alert(vProMoAmt);
+                        if (isNaN(vProMoAmt) == true) vProMoAmt = 0;
+
+                        if (vProMoAmt > 0) {
+
+                            var vTicIds = $("#hidTicketIds").val().split(',');
+                            var vVarChanges = parseFloat($("#hdVarChanges").val()); if (isNaN(vVarChanges) == true) vVarChanges = 0;
+
+                            var vTotalAmt = 0;
+                            var vGrandAmt = 0;
+                            var vAppliedTickets;
+                            if (vTickets != "A") {
+                                vAppliedTickets = vTickets.split(',');
+                            }
+                            var vflag = true;
+
+                            for (i = 0; i < vTicIds.length; i++) {
+                                if (vTickets != "A") {
+                                    vflag = false;
+                                    for (icnt = 0; icnt < vAppliedTickets.length; icnt++) {
+                                        //  alert(vTicIds[i] + " " + vAppliedTickets[icnt]);
+                                        if (vTicIds[i] == vAppliedTickets[icnt]) {
+                                            vflag = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                vPrice = parseFloat($("#spPrice_" + vTicIds[i]).text());
+                                // alert(vPrice);
+                                vQty = parseFloat($("#spQty_" + vTicIds[i]).text());
+                                vFee = parseFloat($("#spFee_" + vTicIds[i]).text());
+                                vDonation = parseFloat($("#spDonation_" + vTicIds[i]).text());
+                                vTQDId = parseFloat($("#spTQDId_" + vTicIds[i]).text());
+                                if (isNaN(vPrice) == true) vPrice = 0;
+                                if (isNaN(vTQDId) == true) vTQDId = 0;
+
+                                vQty = parseFloat(vQty); if (isNaN(vQty) == true) vQty = 0;
+                                vFee = parseFloat(vFee); if (isNaN(vFee) == true) vFee = 0;
+                                vDonation = parseFloat(vDonation); if (isNaN(vDonation) == true) vDonation = 0;
+                                if (vflag == true) {
+                                    //   alert(vflag)
+                                    if (vProType == "P") {
+                                        vProMoAmt = (vProMoAmt * vPrice) / 100;
+                                    }
+                                    // alert(vProMoAmt);
+
+                                    vPrice = (vPrice - vProMoAmt);
+                                    //alert(vPrice);
+                                    $.ajax({
+                                        url: '@Url.Action("LockPromoCode", "TicketPayment")',
+                                        data: { dAmt: vProMoAmt, lTQDId: vTQDId },
+                                        type: "Post",
+                                        success: function (response) {
+                                        }
+                                    });
+                                }
+
+                                //alert(vQty); alert(vPrice); alert(vFee);
+                                if (vPrice > 0) {
+                                    // alert(vPrice);
+                                    vTotalAmt = ((vQty * (vPrice + vFee)) + vDonation).toFixed(2);
+                                    if (isNaN(vTotalAmt) == true) vTotalAmt = 0;
+                                    vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);
+                                }
+                                else if (vDonation > 0) {
+                                    // alert(vDonation);
+                                    vPrice = 0;
+                                    vTotalAmt = ((vQty * (vPrice + vFee)) + vDonation).toFixed(2);
+                                    if (isNaN(vTotalAmt) == true) vTotalAmt = 0;
+                                    vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);
+
+                                }
+                            }
+                            //alert(vGrandAmt);
+                            $("#hdPromoCodetotal").val(vGrandAmt);
+                            if (vVarChanges > 0)
+                                vGrandAmt = vGrandAmt + vVarChanges;
+
+                            $("#spGrdTotal").text(vGrandAmt.toFixed(2));
+                            $("#hdGrandTotal").val(vGrandAmt.toFixed(2));
+
+
+                            $("#spValidation").text("Promo Code Applied.");
+                            $("#spValidation").removeClass("promoerrorred");
+                            $("#spValidation").addClass("promoerrorgreen");
+                        }
+
+                        //$("#imgPromoLoader").addClass("PromoLoaderHide");
+                        //$("#imgPromoLoader").removeClass("PromoLoaderShow");
+                    }
+                }
+            });
+        }
+        else {
+
+            $("#spValidation").text("Invalid Promo Code.");
+            $("#spValidation").removeClass("promoerrorgreen");
+            $("#spValidation").addClass("promoerrorred");
+
+            $("#spGrdTotal").text($("#spSubTotal").text());
+            $("#hdGrandTotal").val($("#spSubTotal").text());
+
+            $("#hdPromoCodetotal").val("0");
+        }
+        //$("#imgPromoLoader").addClass("PromoLoaderHide");
+        //$("#imgPromoLoader").removeClass("PromoLoaderShow");
+
+    }
+    function calculateTickTotal(vAmount, vvarId) {
+
+        $("#hdVChg").val(vvarId);
+        debugger;
+        var vOrderTotal = parseFloat($("#hdOrderTotal").val());
+        var vPromoTotal = parseFloat($("#hdPromoCodetotal").val());
+
+        var vQty = parseInt($("#hidQty").val());
+        vAmt = parseFloat(vAmount);
+        if (isNaN(vAmt) == true) vAmt = 0;
+        if (isNaN(vOrderTotal) == true) vOrderTotal = 0;
+        if (isNaN(vPromoTotal) == true) vPromoTotal = 0;
+        vOrderTotal = parseFloat(vOrderTotal + vAmt).toFixed(2);
+        var vGrdTotal = 0
+        if (vPromoTotal > 0) {
+            vGrdTotal = parseFloat(vPromoTotal + vAmt).toFixed(2);
+        }
+        else {
+            vGrdTotal = parseFloat(vOrderTotal + vAmt).toFixed(2);
+        }
+
+        $("#spGrdTotal").text(vGrdTotal);
+        $("#hdGrandTotal").val(vGrdTotal);
+
+        $("#spSubTotal").text(vOrderTotal);
+        var totqty = $('#hidQty').val();
+
+        if (vOrderTotal > 0) {
+            $('.divvisible').show();
+
+            if (totqty <= 0) {
+
+                $('.divqtyvisible').hide();
+            } else {
+                $('.divqtyvisible').show();
+            }
+            //$('#cardshow').css('display', 'block');
+        }
+        else {
+            $('.divqtyvisible').hide();
+            $('.divvisible').hide();
+            //$('#cardshow').css('display', 'none');
+        }
+
+    }
+
+    function calculateTickTotalOptional(vCount) {
+
+        var vVarValue = $("#hdVarId").val().split(',');
+        var vOrderTotal = parseFloat($("#hdOrderTotal").val());
+        var vPromoTotal = parseFloat($("#hdPromoCodetotal").val());
+        if (isNaN(vPromoTotal) == true) vPromoTotal = 0;
+        var vPromoCalc = vPromoTotal;
+        var vSel = '';
+        if (isNaN(vOrderTotal) == true) vOrderTotal = 0;
+        var vVariChanges = 0;
+        for (i = 0; i <= vVarValue.length; i++) {
+            if ($("#chk_" + vVarValue[i]).is(":checked") == true) {
+                if (vSel == '')
+                    vSel = vVarValue[i];
+                else
+                    vSel = vSel + ',' + vVarValue[i];
+
+                vAmt = parseFloat($("#sp_" + vVarValue[i]).text());
+                if (isNaN(vAmt) == true) vAmt = 0;
+
+                vOrderTotal = vOrderTotal + vAmt;
+                vPromoTotal = vPromoTotal + vAmt;
+                vVariChanges = vVariChanges + vAmt;
+
+            }
+        }
+        $("#hdVarChanges").val(vVariChanges);
+
+        $("#hdVChg").val(vSel);
+
+        //for (i = 1; i <= vCount; i++) {
+        //    if ($("#chk_" + i.toString()).is(":checked") == true) {
+        //        vAmt = parseFloat($("#sp_" + i.toString()).text());
+        //        if (isNaN(vAmt) == true) vAmt = 0; vOrderTotal = vOrderTotal + vAmt;
+        //    }
+        //}
+
+        if (vPromoCalc > 0) {
+            $("#spGrdTotal").text(vPromoTotal.toFixed(2));
+            $("#hdGrandTotal").val(vPromoTotal.toFixed(2));
+        }
+        else {
+            $("#spGrdTotal").text(vOrderTotal.toFixed(2));
+            $("#hdGrandTotal").val(vOrderTotal.toFixed(2))
+        }
+
+        $("#spSubTotal").text(vOrderTotal.toFixed(2));
+        var totqty = $('#hidQty').val();
+        if (vOrderTotal > 0) {
+            $('.divvisible').show();
+            if (totqty <= 0) {
+                $('.divqtyvisible').hide();
+            } else {
+                $('.divqtyvisible').show();
+            }
+            //$('#cardshow').css('display', 'block');
+        }
+        else {
+            $('.divvisible').hide();
+            $('.divqtyvisible').hide();
+            //$('#cardshow').css('display', 'none');
+        }
+    }
+    function ajaxsetup(strname, strFormTag) {
+        var msgnew = "";
+
+        var request = $.ajax({
+            url: '@Url.Action("Index", "ValidationMessage")',
+            async: false,
+            data: { strFormName: strname, strFormTag: strFormTag },
+            type: 'Post'
+        });
+        request.done(function (msg) {
+            msgnew += msg;
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            msgnew += "Some Error occur!!";
+        });
+        return msgnew;
+    }
+    function validationpage() {
+        var msglogin = "", emailerr = "", pasword = "";
+        var accfname = $("#accfname").val();
+        var Emaillogin = $("#Email").val();
+        var confirmlogin = $("#confirmEmail").val();
+       
+        //var confirmpassword = $("#confirmpassword").val();
+
+        var total = $('#hdOrderTotal').val();
+
+
+        if (accfname == '') {
+            $("#accfname").addClass('err-bor');
+            msglogin += ajaxsetup('TicketPayment', 'TPayFnameValidateUI') + "</br>";
+        }
+
+        if (!validateEmail(Emaillogin)) {
+            $('#Email').focus();
+            $('#Email').addClass('err-bor');
+            emailerr += "Invalid Email" + "\n";
+        }
+        if ($('#confirmEmail').css('display') == 'block') {
+            if (!validateEmail(confirmlogin)) {
+                $('#confirmEmail').focus();
+                $('#confirmEmail').addClass('err-bor');
+                emailerr += "Invalid Confirm Email" + "\n";
+            }
+
+            if (confirmlogin != Emaillogin) {
+                $('#confirmEmail').focus();
+                $('#confirmEmail').addClass('err-bor');
+                msglogin += ajaxsetup('TicketPayment', 'TPayValidateConfirmMatchEmailUI') + "</br>";
+
+            }
+        }
+
+
+        
+        if (emailerr != "") {
+            msglogin += ajaxsetup('TicketPayment', 'TPayValidateEmailUI') + "</br>";
+
+        }
+        if ($('#password').css('display') == 'block' ) {
+            var Passowrdlogin = $("#password").val();
+            if (Passowrdlogin.length < 4) {
+                $("#password").focus();
+                $('#password').addClass('err-bor');
+                pasword += "Invalid Password" + "\n";
+            }
+
+        }
+       
+           
+            //if (confirmpassword.length < 4) {
+            //    $("#confirmpassword").focus();
+            //    $('#confirmpassword').addClass('err-bor');
+            //    pasword += "Invalid Confirm Password" + "\n";
+            //}
+            //if (Passowrdlogin != confirmpassword) {
+            //    $("#confirmpassword").focus();
+            //    $('#confirmpassword').addClass('err-bor');
+            //    msglogin += ajaxsetup('TicketPayment', 'TPayValidatePwdUI') + "</br>";
+
+            //}
+        
+
+        if (pasword != "") {
+            msglogin += ajaxsetup('TicketPayment', 'TPayValidatePwdUI') + "</br>";
+
+        }
+        var resultvar = "";
+        if (total > 0) {
+            var shippingerr = "";
+            if ($("#selectcard").val() != "P") {
+                var result = $("#cardno").validateCreditCard({ accept: ['visa', 'mastercard', 'discover', 'amex'] });
+                if (result.card_type == null || result.length_valid == false || result.luhn_valid == false) {
+                    resultvar += "Invalid Card Number" + "\n";
+                    $("#cardno").focus();
+                    $("#cardno").addClass('err-bor');
+
+                }
+              
+                if (resultvar != "") {
+                    msglogin += ajaxsetup('TicketPayment', 'TPayCardValidationUI') + "</br>";
+                }
+
+                var billerr = "";
+                var billfname = $('#billfname').val();
+                var billLname = $('#billLname').val();
+                var billingphno = $('#billingphno').val();
+                var billaddress1 = $('#billaddress1').val();
+
+                var billcity = $('#billcity').val();
+                var billzip = $('#billzip').val();
+                var billstate = $('#billstate').val();
+                var billcountry = $('#billcountry').val();
+
+                if (billfname == "") {
+                    billerr += "Please Enter Billing First name" + "\n";
+                    $("#billfname").focus();
+                    $("#billfname").addClass('err-bor');
+
+                }
+                if (billingphno == "") {
+                    billerr += "Please Enter Billing Phone number" + "\n";
+                    $("#billingphno").focus();
+                    $("#billingphno").addClass('err-bor');
+
+                }
+                if (billaddress1 == "") {
+                    billerr += "Please Enter Billing Address" + "\n";
+                    $("#billaddress1").focus();
+                    $("#billaddress1").addClass('err-bor');
+
+                }
+
+                if (billcity == "") {
+                    billerr += "Please Enter Billing City" + "\n";
+                    $("#billcity").focus();
+                    $("#billcity").addClass('err-bor');
+
+                }
+                if (billzip == "") {
+                    billerr += "Please Enter Billing Zip" + "\n";
+                    $("#billzip").focus();
+                    $("#billzip").addClass('err-bor');
+
+                }
+                if (billstate == "") {
+                    billerr += "Please Enter Billing State" + "\n";
+                    $("#billstate").focus();
+                    $("#billstate").addClass('err-bor');
+
+                }
+                if (billcountry == "") {
+                    billerr += "Please Enter Billing Country" + "\n";
+                    $("#billcountry").focus();
+                    $("#billcountry").addClass('err-bor');
+
+                }
+                if (billerr != "") {
+                    msglogin += ajaxsetup('TicketPayment', 'TPayValidateBillingAddressUI') + "</br>";
+                }
+
+                if ($("#shippinginfo").is(":checked")) {
+                    if ($('#shipfname').val() == "") {
+                        shippingerr += "Please Enter Shipping First name" + "\n";
+                        $("#shipfname").focus();
+                        $("#shipfname").addClass('err-bor');
+
+                    }
+                    if ($('#shippingphnno').val() == "") {
+                        shippingerr += "Please Enter Shipping Phone number" + "\n";
+                        $("#shippingphnno").focus();
+                        $("#shippingphnno").addClass('err-bor');
+                    }
+                    if ($('#shipaddress1').val() == "") {
+                        shippingerr += "Please Enter Shipping Address" + "\n";
+                        $("#shipaddress1").focus();
+                        $("#shipaddress1").addClass('err-bor');
+
+                    }
+                    if ($('#shipcity').val() == "") {
+                        shippingerr += "Please Enter Shipping City" + "\n";
+                        $("#shipcity").focus();
+                        $("#shipcity").addClass('err-bor');
+
+                    }
+                    if ($('#shipzip').val() == "") {
+                        shippingerr += "Please Enter Shipping Zip" + "\n";
+                        $("#shipzip").focus();
+                        $("#shipzip").addClass('err-bor');
+
+                    }
+                    if ($('#shipstate').val() == "") {
+                        shippingerr += "Please Enter Shipping state" + "\n";
+                        $("#shipstate").focus();
+                        $("#shipstate").addClass('err-bor');
+
+                    }
+                    if ($('#shipcountry').val() == "") {
+                        shippingerr += "Please Enter Shipping country" + "\n";
+                        $("#shipcountry").focus();
+                        $("#shipcountry").addClass('err-bor');
+
+                    }
+                }
+            }
+            //alert(shippingerr);
+            if (shippingerr != "") {
+                msglogin += ajaxsetup('TicketPayment', 'TPayValidateShippingAddressUI') + "</br>";
+            }
+
+        }
+        return msglogin;
+    }
+
+
+    function ShowMessage(Type, Mess) {
+        if (Type == 'S') {
+            $('#divaccsuc').css('display', 'block');
+            $('#divaccsuc').focus();
+            $('#diverroacc').css('display', 'none');
+            $('html,body').animate({ scrollTop: 0 });
+            $('#succaccmsg').html(Mess);
+        }
+        else {
+            $('#divaccsuc').css('display', 'none');
+            $('#diverroacc').css('display', 'block');
+            $('#diverroacc').focus();
+            $('html,body').animate({ scrollTop: 0 });
+            $('#erraccmsg').html(Mess);
+
+        }
+    }
+
+
+
     function checkMore(QtyId) {
         $("#Sp_" + QtyId.toString()).slideToggle("fast");
         //$(".TktdescDetl").slideToggle("fast");
@@ -1807,12 +2162,6 @@
         }
 
     }
-
-
-
-
-
-
     function AddTicket() {
 
 
@@ -1846,55 +2195,81 @@
         }
 
     }
-    $("#editlist").click(function () {
-        var Sno = $("#ddlListitem").val();
+    function showcardetails(e) {
+        debugger;
+        var selectvalue = $('#' + e).val();
 
-        $("#hidTicketbearer").val(Sno);
-        var vOrgName = $("#TicketName_" + Sno).text();
-        var vOrgDes = $("#TicketEmail_" + Sno).text();
-        if (vOrgDes != "") {
-            if ($('.Notifybox').css('display') == 'none') {
-                $('.Notifybox').css('display', 'block');
-            }
+        if (selectvalue == "A") {
+            $('#cardshow').css('display', 'block');
+            $('#cardno').val("");
+            $('#expirationdate').val("");
+            $('#cvvcode').val("");
+            $('#divshippinginfo').css('display', 'block');
         }
+        else if (selectvalue == "-1") {
+            $('#cardshow').css('display', 'none');
+            $('#divshippinginfo').css('display', 'block');
+        }
+        else if (selectvalue == "P") {
+            $('#cardshow').css('display', 'none');
+            $('#divshippinginfo').css('display', 'none');
+            //$(".divvisible").css('display', 'none');
 
-        $("#nameofticket").val(vOrgName);
-        $("#emailbearer").val(vOrgDes);
-    });
-    var cardlength = $("#cardno").val();
-    if (cardlength == "") {
-        $('#imgcard').css('display', 'none');
+        }
+        else {
+
+            $('#cardshow').css('display', 'block');
+            $('#divshippinginfo').css('display', 'block');
+            //$(".divvisible").css('display', 'none');
+            $.ajax({
+                url: '@Url.Action("returncardetail", "TicketPayment")',
+                data: { 'cardid': selectvalue },
+                type: "Get",
+                success: function (response) {
+                    var value = response;
+
+                    var res = value.split('*');
+
+                    $('#cardno').val(res[0]);
+                    $('#expirationdate').val(res[1]);
+                    $('#cvvcode').val(res[2]);
+                },
+            });
+
+        }
 
     }
-    $("#deletelist").click(function () {
-        var Sno = $("#ddlListitem").val();
-        $('#tblListitem tr').each(function () {
-            if (Sno == $(this).find("td:first").html()) {
-                $(this).remove();
+    function getcardvisa(e) {
+        if ($("#" + e).val() != '') {
+            var result = $("#" + e).validateCreditCard();
+
+            if (result.card_type.name == 'visa' || result.card_type.name == 'mastercard' || result.card_type.name == 'discover' || result.card_type.name == 'amex') {
+                $('#imgcard').css('display', 'block');
+                $('#imgcard').attr('src', '/Images/' + result.card_type.name + '.png');
+
+            } else {
+
+                $('#imgcard').css('display', 'none');
             }
-        });
-
-        //$("#dllOrganizer")
-        $("#ddlListitem option").each(function (i) {
-            if (Sno == $(this).val()) {
-                $(this).remove();
-            }
-        });
-
-
-
-        $("#hidTicketbearer").val('');
-        $("#nameofticket").val('');
-        $("#emailbearer").val('');
-        if ($('#ddlListitem option').length <= 0) {
-            $('#blocklist').css('display', 'none');
-
         } else {
-            $('#blocklist').css('display', 'block');
+            $('#imgcard').css('display', 'none');
+
         }
 
+    }
+    function NullSession(e) {
+        $("#hdIsPostBack").val("Y");
+        $.ajax({
+            url: '@Url.Action("Nullsession", "TicketPayment")',
+            type: "Get",
+            success: function (response) {
 
-    });
+            }
+        });
+        var eventid = $('#hdEventid').val();
+        window.location.href = '@Url.Action("TicketPayment", "TicketPayment", new { })' + '?Eventid=' + eventid;
+
+    }
     function UpdateTicket() {
         var Sno = $("#ddlListitem").val();
         //    alert(Sno);
@@ -1920,485 +2295,6 @@
 
 
     }
-    jQuery(function ($) {
-        if ($('#ddlListitem option').length <= 0) {
-            $('#blocklist').css('display', 'none');
-
-        } else {
-            $('#blocklist').css('display', 'block');
-        }
-
-        $("#expirationdate").mask("99/99");
-        $("#shippingphnno").mask("999-999-9999");
-        $("#billingphno").mask("999-999-9999");
-        $("#accountphnno").mask("999-999-9999");
-
-
-
-
-    });
-    function NullSession(e) {
-        $("#hdIsPostBack").val("Y");
-        $.ajax({
-            url: '@Url.Action("Nullsession", "TicketPayment")',
-            type: "Get",
-            success: function (response) {
-
-            }
-        });
-        var eventid = $('#hdEventid').val();
-        window.location.href = '@Url.Action("TicketPayment", "TicketPayment", new { })' + '?Eventid=' + eventid;
-
-    }
-    function getcardvisa(e) {
-        if ($("#" + e).val() != '') {
-            var result = $("#" + e).validateCreditCard();
-
-            if (result.card_type.name == 'visa' || result.card_type.name == 'mastercard' || result.card_type.name == 'discover' || result.card_type.name == 'amex') {
-                $('#imgcard').css('display', 'block');
-                $('#imgcard').attr('src', '/Images/' + result.card_type.name + '.png');
-
-            } else {
-
-                $('#imgcard').css('display', 'none');
-            }
-        } else {
-            $('#imgcard').css('display', 'none');
-
-        }
-
-    }
-    function showcardetails(e) {
-        debugger;
-        var selectvalue = $('#' + e).val();
-
-        if (selectvalue == "A") {
-            $('#cardshow').css('display', 'block');
-            $('#cardno').val("");
-            $('#expirationdate').val("");
-            $('#cvvcode').val("");
-        }
-        else if (selectvalue == "-1") {
-            $('#cardshow').css('display', 'none');
-
-        }
-        else if (selectvalue == "P") {
-            $('#cardshow').css('display', 'none');
-
-        }
-        else {
-
-            $('#cardshow').css('display', 'block');
-            $.ajax({
-                url: '@Url.Action("returncardetail", "TicketPayment")',
-                data: { 'cardid': selectvalue },
-                type: "Get",
-                success: function (response) {
-                    var value = response;
-
-                    var res = value.split('*');
-
-                    $('#cardno').val(res[0]);
-                    $('#expirationdate').val(res[1]);
-                    $('#cvvcode').val(res[2]);
-                },
-            });
-
-        }
-
-    }
-
-
-    $("#accCountry").change(function () {
-        $("#accZip").val("");
-        $("#accState").val("");
-        $("#accCity").val("");
-
-
-    });
-
-
-
-
-
-    $("#accCountry").change(function () {
-        $("#accZip").val("");
-        $("#accState").val("");
-        $("#accCity").val("");
-
-
-    });
-    $('#accZip').change(function () {
-        var country = $("#accCountry option:selected").text().trim();
-
-        var city = "";
-        var state = "";
-
-        var pincode = $(this).val();
-
-
-        $.ajax({
-            url: 'http://maps.googleapis.com/maps/api/geocode/json',
-            data: '&address=' + pincode + '&sensor=true',
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-
-
-                if (data.status == 'OK') {
-
-                    for (var i = 0; i < data.results[0].address_components.length; i++) {
-                        var obj = data.results[0].address_components[i];
-
-                        var obj2 = obj['types'];
-
-                        for (var j = 0; j < obj2.length; j++) {
-                            if (obj2[j] == 'locality') {
-                                city = obj['long_name'];
-
-
-                            }
-
-                            if (obj2[j] == 'sublocality_level_1') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'sublocality_level_2') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'sublocality_level_3') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'sublocality_level_4') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'sublocality_level_5') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'ward') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'sublocality_level_5') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'postal_town') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'administrative_area_level_1') {
-                                state = obj['long_name'];
-
-                            }
-                            //if (obj2[j] == 'administrative_area_level_2') {
-                            //    state = obj['long_name'];
-
-                            //}
-
-
-                            if (obj2[j] == 'country') {
-                                if (obj['long_name'] == country) {
-
-
-                                    $('#accCity').val(city);
-                                    $('#accState').val(state);
-                                } else {
-                                    $('#accCity').val('');
-                                    $('#accState').val('');
-                                }
-
-                            }
-
-                        }
-
-
-
-                    }
-
-                }
-
-
-
-                else {
-                    var msg = ajaxsetup('MyAccount', 'MyAccountZipValidationUI');
-                    $("#accState").val("");
-                    $("#accCity").val("");
-                    $('#accZip').val("");
-                    $('#accZip').addClass('err-bor');
-                    ShowMessage('E', msg)
-
-                    return false;
-                }
-            },
-            error: function (data) { alert(data) }
-        });
-
-
-    });
-    $("#billcountry").change(function () {
-        $("#billzip").val("");
-        $("#billstate").val("");
-        $("#billcity").val("");
-
-
-    });
-    $('#billzip').change(function () {
-        debugger;
-        var country = $("#billcountry option:selected").text().trim();
-
-        var city = "";
-        var state = "";
-
-        var pincode = $(this).val();
-
-
-        $.ajax({
-            url: 'http://maps.googleapis.com/maps/api/geocode/json?address=' + pincode + '',
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-
-
-                if (data.status == 'OK') {
-
-                    for (var i = 0; i < data.results[0].address_components.length; i++) {
-                        var obj = data.results[0].address_components[i];
-
-                        var obj2 = obj['types'];
-
-                        for (var j = 0; j < obj2.length; j++) {
-                            if (obj2[j] == 'locality') {
-                                city = obj['long_name'];
-
-
-                            }
-
-                            if (obj2[j] == 'sublocality_level_1') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'sublocality_level_2') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'sublocality_level_3') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'sublocality_level_4') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'sublocality_level_5') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'ward') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'sublocality_level_5') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'postal_town') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'administrative_area_level_1') {
-                                state = obj['long_name'];
-
-                            }
-
-
-                            if (obj2[j] == 'country') {
-                                if (obj['long_name'] == country) {
-
-
-                                    $('#billcity').val(city);
-                                    $('#billstate').val(state);
-                                } else {
-                                    $('#billcity').val('');
-                                    $('#billstate').val('');
-                                }
-
-                            }
-
-                        }
-
-
-
-                    }
-
-                }
-
-
-
-                else {
-                    var msg = ajaxsetup('MyAccount', 'MyAccountZipValidationUI');
-                    $("#billstate").val("");
-                    $("#billcity").val("");
-                    $('#billzip').val("");
-                    $('#billzip').addClass('err-bor');
-                    ShowMessage('E', msg)
-
-                    return false;
-                }
-            },
-            error: function (data) { alert(data) }
-        });
-
-
-    });
-    $("#shipcountry").change(function () {
-        $("#shipzip").val("");
-        $("#shipstate").val("");
-        $("#shipcity").val("");
-
-
-    });
-    $('#shipzip').change(function () {
-        var country = $("#shipcountry option:selected").text().trim();
-
-        var city = "";
-        var state = "";
-
-        var pincode = $(this).val();
-
-
-        $.ajax({
-            url: 'http://maps.googleapis.com/maps/api/geocode/json',
-            data: '&address=' + pincode + '&sensor=true',
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-
-
-                if (data.status == 'OK') {
-
-                    for (var i = 0; i < data.results[0].address_components.length; i++) {
-                        var obj = data.results[0].address_components[i];
-
-                        var obj2 = obj['types'];
-
-                        for (var j = 0; j < obj2.length; j++) {
-                            if (obj2[j] == 'locality') {
-                                city = obj['long_name'];
-
-
-                            }
-
-                            if (obj2[j] == 'sublocality_level_1') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'sublocality_level_2') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'sublocality_level_3') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'sublocality_level_4') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'sublocality_level_5') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'ward') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'sublocality_level_5') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'postal_town') {
-                                city = obj['long_name'];
-
-
-                            }
-                            if (obj2[j] == 'administrative_area_level_1') {
-                                state = obj['long_name'];
-
-                            }
-
-
-                            if (obj2[j] == 'country') {
-                                if (obj['long_name'] == country) {
-
-
-                                    $('#shipcity').val(city);
-                                    $('#shipstate').val(state);
-                                } else {
-                                    $('#shipcity').val('');
-                                    $('#shipstate').val('');
-                                }
-
-                            }
-
-                        }
-
-
-
-                    }
-
-                }
-
-
-
-                else {
-                    var msg = ajaxsetup('MyAccount', 'MyAccountZipValidationUI');
-                    $("#shipstate").val("");
-                    $("#shipcity").val("");
-                    $('#shipzip').val("");
-                    $('#shipzip').addClass('err-bor');
-                    ShowMessage('E', msg)
-
-                    return false;
-                }
-            },
-            error: function (data) { alert(data) }
-        });
-
-
-    });
-
-
-
-
 
 
 </script>
-<script src="~/Scripts/jquery.maskedinput.min.js"></script>

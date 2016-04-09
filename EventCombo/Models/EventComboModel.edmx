@@ -199,6 +199,29 @@
           <Property Name="ShowMap" Type="varchar" MaxLength="1" />
           <Property Name="Parent_EventID" Type="bigint" />
           <Property Name="EventCancel" Type="varchar" MaxLength="2" />
+          <Property Name="FeatureUpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Event_Email_Invitation">
+          <Key>
+            <PropertyRef Name="I_Id" />
+          </Key>
+          <Property Name="I_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="I_Event_Id" Type="bigint" />
+          <Property Name="I_SenderName" Type="varchar" MaxLength="500" />
+          <Property Name="I_SubjectLine" Type="varchar" MaxLength="1000" />
+          <Property Name="I_EmailContent" Type="nvarchar(max)" />
+          <Property Name="I_ScheduleDate" Type="datetime" />
+          <Property Name="I_CreateDate" Type="datetime" />
+          <Property Name="I_ModifyDate" Type="datetime" />
+          <Property Name="I_Mode" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Event_Email_List">
+          <Key>
+            <PropertyRef Name="L_Id" />
+          </Key>
+          <Property Name="L_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="L_I_Id" Type="bigint" />
+          <Property Name="L_EmailId" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -351,6 +374,9 @@
           <Property Name="O_PayPal_TokenId" Type="varchar" MaxLength="100" />
           <Property Name="O_PayPal_PayerId" Type="varchar" MaxLength="100" />
           <Property Name="O_PayPal_TrancId" Type="varchar" MaxLength="100" />
+          <Property Name="O_First_Name" Type="varchar" MaxLength="100" />
+          <Property Name="O_Last_Name" Type="varchar" MaxLength="100" />
+          <Property Name="O_Email" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Organizer_Master">
           <Key>
@@ -561,9 +587,7 @@
           <Property Name="TLD_Donate" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TicketAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="TLD_PromoCodeId" Type="int" />
-
           <Property Name="TLD_PromoCodeAmount" Type="numeric" Precision="18" Scale="2" />
-
         </EntityType>
         <EntityType Name="Ticket_Purchased_Detail">
           <Key>
@@ -795,6 +819,18 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Event_Email_List_Event_Email_Invitation">
+          <End Role="Event_Email_Invitation" Type="Self.Event_Email_Invitation" Multiplicity="0..1" />
+          <End Role="Event_Email_List" Type="Self.Event_Email_List" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event_Email_Invitation">
+              <PropertyRef Name="I_Id" />
+            </Principal>
+            <Dependent Role="Event_Email_List">
+              <PropertyRef Name="L_I_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Event_Orgnizer_Detail_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
           <End Role="Event_Orgnizer_Detail" Type="Self.Event_Orgnizer_Detail" Multiplicity="*" />
@@ -997,6 +1033,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySet Name="Email_Tag" EntityType="Self.Email_Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Email_Template" EntityType="Self.Email_Template" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event_Email_Invitation" EntityType="Self.Event_Email_Invitation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event_Email_List" EntityType="Self.Event_Email_List" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_OrganizerMessages" EntityType="Self.Event_OrganizerMessages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_Orgnizer_Detail" EntityType="Self.Event_Orgnizer_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_VariableDesc" EntityType="Self.Event_VariableDesc" Schema="dbo" store:Type="Tables" />
@@ -1099,6 +1137,10 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_Email_List_Event_Email_Invitation" Association="Self.FK_Event_Email_List_Event_Email_Invitation">
+            <End Role="Event_Email_Invitation" EntitySet="Event_Email_Invitation" />
+            <End Role="Event_Email_List" EntitySet="Event_Email_List" />
           </AssociationSet>
           <AssociationSet Name="FK_Event_Orgnizer_Detail_Event" Association="Self.FK_Event_Orgnizer_Detail_Event">
             <End Role="Event" EntitySet="Event" />
@@ -1351,6 +1393,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <NavigationProperty Name="MultipleEvents" Relationship="Self.FK_MultipleEvent_Event" FromRole="Event" ToRole="MultipleEvent" />
           <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
           <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="EventComboModel.FK_Event_Orgnizer_Detail_Event" FromRole="Event" ToRole="Event_Orgnizer_Detail" />
+          <Property Name="FeatureUpdateDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -1491,6 +1534,9 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="O_PayPal_TokenId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_PayPal_PayerId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_PayPal_TrancId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_First_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_Last_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Payment_Info">
           <Key>
@@ -2076,6 +2122,12 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             <Parameter Name="lat2" Mode="In" Type="Double" />
             <Parameter Name="long2" Mode="In" Type="Double" />
           </FunctionImport>
+          <EntitySet Name="Event_Email_Invitation" EntityType="EventComboModel.Event_Email_Invitation" />
+          <EntitySet Name="Event_Email_List" EntityType="EventComboModel.Event_Email_List" />
+          <AssociationSet Name="FK_Event_Email_List_Event_Email_Invitation" Association="EventComboModel.FK_Event_Email_List_Event_Email_Invitation">
+            <End Role="Event_Email_Invitation" EntitySet="Event_Email_Invitation" />
+            <End Role="Event_Email_List" EntitySet="Event_Email_List" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -2281,6 +2333,42 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="Parent_EventID" Type="Int64" />
           <Property Name="EventCancel" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Event_Email_Invitation">
+          <Key>
+            <PropertyRef Name="I_Id" />
+          </Key>
+          <Property Name="I_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="I_Event_Id" Type="Int64" />
+          <Property Name="I_SenderName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="I_SubjectLine" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="I_EmailContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="I_ScheduleDate" Type="DateTime" Precision="3" />
+          <Property Name="I_CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="I_ModifyDate" Type="DateTime" Precision="3" />
+          <Property Name="I_Mode" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Event_Email_List" Relationship="EventComboModel.FK_Event_Email_List_Event_Email_Invitation" FromRole="Event_Email_Invitation" ToRole="Event_Email_List" />
+        </EntityType>
+        <EntityType Name="Event_Email_List">
+          <Key>
+            <PropertyRef Name="L_Id" />
+          </Key>
+          <Property Name="L_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="L_I_Id" Type="Int64" />
+          <Property Name="L_EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Event_Email_Invitation" Relationship="EventComboModel.FK_Event_Email_List_Event_Email_Invitation" FromRole="Event_Email_List" ToRole="Event_Email_Invitation" />
+        </EntityType>
+        <Association Name="FK_Event_Email_List_Event_Email_Invitation">
+          <End Type="EventComboModel.Event_Email_Invitation" Role="Event_Email_Invitation" Multiplicity="0..1" />
+          <End Type="EventComboModel.Event_Email_List" Role="Event_Email_List" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event_Email_Invitation">
+              <PropertyRef Name="I_Id" />
+            </Principal>
+            <Dependent Role="Event_Email_List">
+              <PropertyRef Name="L_I_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2444,6 +2532,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="EventComboModel.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="FeatureUpdateDate" ColumnName="FeatureUpdateDate" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
                 <ScalarProperty Name="EventCategoryID" ColumnName="EventCategoryID" />
@@ -2614,6 +2703,9 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySetMapping Name="Order_Detail_T">
             <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
               <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="O_Email" ColumnName="O_Email" />
+                <ScalarProperty Name="O_Last_Name" ColumnName="O_Last_Name" />
+                <ScalarProperty Name="O_First_Name" ColumnName="O_First_Name" />
                 <ScalarProperty Name="O_PayPal_TrancId" ColumnName="O_PayPal_TrancId" />
                 <ScalarProperty Name="O_PayPal_PayerId" ColumnName="O_PayPal_PayerId" />
                 <ScalarProperty Name="O_PayPal_TokenId" ColumnName="O_PayPal_TokenId" />
@@ -3101,6 +3193,30 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetLantLongDistance" FunctionName="EventComboModel.Store.GetLantLongDistance" />
+          <EntitySetMapping Name="Event_Email_Invitation">
+            <EntityTypeMapping TypeName="EventComboModel.Event_Email_Invitation">
+              <MappingFragment StoreEntitySet="Event_Email_Invitation">
+                <ScalarProperty Name="I_Mode" ColumnName="I_Mode" />
+                <ScalarProperty Name="I_ModifyDate" ColumnName="I_ModifyDate" />
+                <ScalarProperty Name="I_CreateDate" ColumnName="I_CreateDate" />
+                <ScalarProperty Name="I_ScheduleDate" ColumnName="I_ScheduleDate" />
+                <ScalarProperty Name="I_EmailContent" ColumnName="I_EmailContent" />
+                <ScalarProperty Name="I_SubjectLine" ColumnName="I_SubjectLine" />
+                <ScalarProperty Name="I_SenderName" ColumnName="I_SenderName" />
+                <ScalarProperty Name="I_Event_Id" ColumnName="I_Event_Id" />
+                <ScalarProperty Name="I_Id" ColumnName="I_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Event_Email_List">
+            <EntityTypeMapping TypeName="EventComboModel.Event_Email_List">
+              <MappingFragment StoreEntitySet="Event_Email_List">
+                <ScalarProperty Name="L_EmailId" ColumnName="L_EmailId" />
+                <ScalarProperty Name="L_I_Id" ColumnName="L_I_Id" />
+                <ScalarProperty Name="L_Id" ColumnName="L_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
 
         </EntityContainerMapping>
       </Mapping>
