@@ -4165,7 +4165,7 @@ else
 
                     $('#id_auto_hide_until_Date-' + el).focus();
                     $('#id_auto_hide_until_Date-' + el).val("");
-                  
+
                 }
 
                 //} else {
@@ -4213,7 +4213,7 @@ else
                         }
                     }
 
-                   
+
                 }
 
             }
@@ -4487,8 +4487,8 @@ else
             if(tickettype=="Paid")
             {
                 var fee=parseFloat(parseFloat($('#' + id).val().replace(',','')).toFixed(2));
-              
-              
+
+
                 if (isNaN(fee) == true) fee = 0;
                 if(fee==0)
                 {
@@ -4507,12 +4507,12 @@ else
                 var price=parseFloat(parseFloat($('#id_cost-' + num).val().replace(',','')).toFixed(2));
                 var val = $('#id_feetype-' + num).val();
                 if (val == 0) {
-               
+
 
                     ccpamount = fee;
                     ccpamount = ccpamount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     ccpfinal = (parseFloat(fee) + parseFloat(price)).toFixed(2);
-               
+
                     ccpfinal = ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + price + "<br/>" + "Fee    &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;    $" + ccpamount + "<br/>" + "Buyer(s) Total   &nbsp;&nbsp; &nbsp;       $" + ccpfinal;
@@ -4522,7 +4522,7 @@ else
                     fee = ccpamount;
                 }
                 if (val == 1) {
-               
+
                     ccpamount = fee;
                     ccpamount = ccpamount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     ccpfinal = price;
@@ -4552,8 +4552,8 @@ else
                 {
                     var feepercentage=$('#' + id).val();
                     if (isNaN(feepercentage) == true) feepercentage = 0;
-                   
-                   
+
+
                     if(feepercentage>0)
                     {
                         $('#' + id).removeClass('err-bor');
@@ -4764,7 +4764,7 @@ else
                     {
 
                         var hdchange=$('#hd_customchange-'+ num).val();
-                    
+
                         if(hdchange=="1")
                         {
                             ccp=parseFloat($('#id_customerfee-'+num).val()).toFixed(2);
@@ -5330,12 +5330,12 @@ else
                 $("#id_saleend-" + divlength).datepicker('hide');
             });
 
-          
+
 
             $("#id_saletimestart-" + divlength).timepicker();
 
             $("#id_saletimeend-" + divlength).timepicker();
-           
+
             //var today = formatdate();
             //var time = formatAMPM();
             //if ($("#hdSchType").val() == '') {
@@ -5462,12 +5462,12 @@ else
                 $("#id_saleend-" + divlength).datepicker('hide');
             });
 
-         
-           
+
+
             $("#id_saletimestart-" + divlength).timepicker();
 
             $("#id_saletimeend-" + divlength).timepicker();
-         
+
             //var today = formatdate();
             //var time = formatAMPM();
             //if ($("#hdSchType").val() == '') {
@@ -5582,7 +5582,7 @@ else
                 $("#id_saleend-" + divlength).datepicker('hide');
             });
 
-         
+
 
             $("#id_saletimestart-" + divlength).timepicker();
 
@@ -5725,7 +5725,9 @@ else
         }
         function deletediv(e) {
             {
-
+                var id = e;
+                var deltedy=0;
+                var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
                 var divlength = $("#MasterDiv> div").size();
                 var status = $('#status').val();
                 console.log(status);
@@ -5739,9 +5741,41 @@ else
                 }
 
 
-                var id = e;
-                var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
 
+
+                var ticketId=parseInt($("#id_ticket_id-"+el).val());
+                if(ticketId!=0)
+                {
+                    $.ajax({
+                        url: '@Url.Action("Checkticketstatus", "EditEvent")',
+                        data: { ticketid: ticketId },
+                        type: "Post",
+                        async:false,
+                        success: function (data) {
+                           
+                            if (data.Ticketsale == 0) {
+
+                                deltedy=0;
+
+                           
+                            } else {
+                                deltedy=data.Ticketsale;
+                               
+                            }
+
+                        }
+                    });
+                }
+                //alert(deltedy);
+                if(deltedy!=0)
+                {
+                    $('#nodeleteH4').text("You cannot delete this ticket since it has already been purchased/registered or donated.")
+                    $('#anodelete').click();
+                    $(".tab-content").hide();
+                               
+                    return false;
+                }
+               
                 var div = document.getElementById("clonediv-" + el);
                 // var div = document.getElementById("clonediv-0");
                 var toatlqty = $("#id_totalqty").html();
@@ -5900,7 +5934,7 @@ else
 
                     $('#id_saletimestart-' + el).focus();
                     $('#id_saletimestart-' + el).val("7:00pm");
-                
+
 
                 }
                 else
@@ -5910,7 +5944,7 @@ else
                     var enddate = convertTo24Hour($('#id_saletimeend-' + el).val());
 
                     var dateOne = new Date($('#id_saleend-' + el).val() + " " + enddate);
-                   
+
                     if (todayDate > dateOne) {
                         $('#id_saleend-' + el).val($("#id_salestart-" + el).val());
                         $('#id_saletimeend-' + el).val($("#id_saletimestart-" + el).val());
@@ -5933,42 +5967,42 @@ else
                             $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
                         }
                     }
-                   
-                   
+
+
 
                 }
             }
-            if (al == "id_saletimeend") 
+            if (al == "id_saletimeend")
             {
                 errorMsg = checkTime(e);
-                if (errorMsg != "") 
+                if (errorMsg != "")
                 {
                     if ($("#hdSchType").val() == '') {
                         $('#id_saletimeend-' + el).val($('#id_saletimestart-' + el).val());
                     }
 
                     if ($("#hdSchType").val() == 'Single') {
-                      
+
                         $('#id_saletimeend-' + el).val($("#txtEndTime").val());
 
                     }
                     if ($("#hdSchType").val() == 'Multiple') {
-                       
+
                         $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
                     }
 
-                } 
+                }
                 else
                 {
-                   
+
                     var starttimetime1 = convertTo24Hour($("#id_saletimestart-" + el).val());
                     var todayDate = new Date($("#id_salestart-"+el).val() + " " + starttimetime1);
                     var enddatetime = convertTo24Hour($('#id_saletimeend-' + el).val());
 
                     var dateOne = new Date($('#id_saleend-' + el).val() + " " + enddatetime);
-                  
+
                     if (todayDate > dateOne) {
-                       
+
                         $('#id_saleend-' + el).val($("#id_salestart-"+el).val());
                         $('#id_saletimeend-' + el).val($("#id_saletimestart-" + el).val());
                     }
@@ -5985,7 +6019,7 @@ else
                     //$('#id_auto_hide_after_Time-' + el).val("7:00pm");
 
                 } else {
-                
+
                     $('#id_hdautohideuntil-' + el).val($('#' + e).val());
                     //$('#id_hdautohideafter-' + el).val($('#' + e).val());
                     //$('#id_auto_hide_after_Time-' + el).val($('#' + e).val());
@@ -5998,14 +6032,14 @@ else
                 if (errorMsg != "") {
                     $("#id_auto_hide_after_Time-" + el).val("");
                     //$('#id_auto_hide_after_Time-' + el).val($('#id_auto_hide_until_time-' + el).val());
-                  
+
                     //$('#id_auto_hide_after_Time-' + el).focus();
 
                     $('#id_hdautohideafter-' + el).val("");
 
                 } else {
                     $('#id_hdautohideafter-' + el).val($('#' + e).val());
-                    
+
                 }
             }
 
@@ -6047,10 +6081,10 @@ else
                         $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
                     }
 
-                    
 
 
-              
+
+
 
 
                 }
@@ -6064,9 +6098,9 @@ else
                     $('#id_saleend-' + el).val(startdate);
                     $('#id_saletimeend-' + el).val($("#id_saletimestart-" + el).val());
                 }
-              
 
-               
+
+
             }
             if (al == "id_auto_hide_after_Date") {
                 var startdate = $('#id_auto_hide_until_Date-' + el).val();
@@ -6081,7 +6115,7 @@ else
 
                 }
 
-              
+
 
 
             }
@@ -6193,7 +6227,7 @@ else
 
                 $("#id_hideuntil-"+ el).attr("checked", false);
                 $("#id_hideafter-"+ el).attr("checked", false);
-            
+
                 $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
@@ -6211,7 +6245,7 @@ else
                 $("#id_auto_hide_type_0-" + el).prop('checked', false);
                 $("#id_hideuntil-"+ el).attr("checked", false);
                 $("#id_hideafter-"+ el).attr("checked", false);
-            
+
                 $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
@@ -6231,7 +6265,7 @@ else
 
                 $("#id_hideuntil-" + el).attr("checked", false);
                 $("#id_hideafter-" + el).attr("checked", false);
-             
+
                 $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
@@ -6343,7 +6377,7 @@ else
             var countmax = 0;
             var countdiscount = 0;
             var eccount=0;
-
+            var purcsed=0;
             var hidecount = 0;
             var title = $('#txtEventTitle').val();
 
@@ -6405,7 +6439,40 @@ else
                             $('#id_quantity_total-' + i).removeClass('err-bor');
                         }
                     }
+                    debugger;
+                    var ticketId=parseInt($("#id_ticket_id-"+i).val());
+                    var deltedy=0;
+                    if(ticketId!=0)
+                    {
+                        $.ajax({
+                            url: '@Url.Action("Checkticketstatus", "EditEvent")',
+                            data: { ticketid: ticketId },
+                            type: "Post",
+                            async:false,
+                            success: function (data) {
+                           
+                                if (data.Ticketsale == 0) {
 
+                                    deltedy=0;
+
+                           
+                                } else {
+                                    deltedy=data.Ticketsale;
+                               
+                                }
+
+                            }
+                        });
+                    }
+                    if(deltedy!=0)
+                    {
+                        if(ticket_Qty<=deltedy)
+                        {
+
+                            $('#id_quantity_total-' + i).addClass('err-bor');
+                            purcsed++;
+                        }
+                    }
                     if ($('#id_paid-' + i).css('display') == "block") {
 
                         var price = parseFloat($('#id_cost-' + i).val());
@@ -6568,6 +6635,10 @@ else
             if (countmax > 0)
             {
                 msg+="Please Enter valid qty <br/>";
+            }
+            if(purcsed>0)
+            {
+                msg+="Please Enter valid qty. <br/>";
             }
             if (countprice > 0) {
                 msg += ajaxsetup("CreateEvent", "PriceNotzeroUI") + "<br/>";

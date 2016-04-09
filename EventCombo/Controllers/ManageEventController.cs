@@ -910,7 +910,10 @@ namespace EventCombo.Controllers
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
                     //var vEvent = objEnt.Events_Hit.SqlQuery("Select EventHit_Id from Events_Hit").Count();
-                    string strQuery = "SELECT sum(TPD_Purchased_Qty) as SaleQty,Convert(date,O_OrderDateTime) AS orderDate FROM Ticket_Purchased_Detail LEFT JOIN Order_Detail_T On Ticket_Purchased_Detail.TPD_Order_Id = Order_Detail_T.O_Order_Id where isnull(TPD_Order_Id,'') !='' AND ISNULL(O_OrderDateTime,'') !='' AND TPD_Event_Id = " + eventId + " and COnvert(date,O_OrderDateTime) = convert(date,'" + dt + "') group by Convert(date,O_OrderDateTime) ";
+                    var ticketid = (from v in db.Tickets where v.E_Id == eventId select v.T_Id).ToList();
+                    string joined = string.Join(",", ticketid.ToArray());
+
+                    string strQuery = "SELECT sum(TPD_Purchased_Qty) as SaleQty,Convert(date,O_OrderDateTime) AS orderDate FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id  LEFT JOIN Order_Detail_T On a.TPD_Order_Id = Order_Detail_T.O_Order_Id where isnull(TPD_Order_Id,'') !='' AND ISNULL(O_OrderDateTime,'') !='' AND b.TQD_Ticket_Id in (" + joined + ") and COnvert(date,O_OrderDateTime) = convert(date,'" + dt + "') group by Convert(date,O_OrderDateTime) ";
                     var vEvent = objEnt.Database.SqlQuery<SaleTickets>(strQuery).FirstOrDefault();
                     //var vEvent = (from myEnt in objEnt.Events_Hit where myEnt.EventHit_EventId == eventId && myEnt.EventHitDateTime == dt  select myEnt.EventHit_Id).Count();
                     objResult = vEvent;
@@ -931,9 +934,11 @@ namespace EventCombo.Controllers
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
 
-                 //   var vEvent = objEnt.Database.SqlQuery<long>("Select EventHit_Id from Events_Hit where EventHit_EventId = " + eventId + " and Month(convert(date,EventHitDatetime)) = " + iMonth.ToString() + " And Year(convert(date,EventHitDatetime)) = " + iYear.ToString()).Count();
+                    //   var vEvent = objEnt.Database.SqlQuery<long>("Select EventHit_Id from Events_Hit where EventHit_EventId = " + eventId + " and Month(convert(date,EventHitDatetime)) = " + iMonth.ToString() + " And Year(convert(date,EventHitDatetime)) = " + iYear.ToString()).Count();
+                    var ticketid = (from v in db.Tickets where v.E_Id == eventId select v.T_Id).ToList();
+                    string joined = string.Join(",", ticketid.ToArray());
 
-                    string strQuery = "SELECT sum(TPD_Purchased_Qty) as SaleQty,Convert(date,O_OrderDateTime) AS orderDate FROM Ticket_Purchased_Detail LEFT JOIN Order_Detail_T On Ticket_Purchased_Detail.TPD_Order_Id = Order_Detail_T.O_Order_Id where isnull(TPD_Order_Id,'') !='' AND ISNULL(O_OrderDateTime,'') !='' AND TPD_Event_Id = " + eventId + " and Month(Convert(date,O_OrderDateTime)) = " + iMonth.ToString() + " and Year(Convert(date,O_OrderDateTime)) = " + iYear.ToString() + " group by Convert(date,O_OrderDateTime) ";
+                    string strQuery = "SELECT sum(TPD_Purchased_Qty) as SaleQty,Convert(date,O_OrderDateTime) AS orderDate FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id LEFT JOIN Order_Detail_T On a.TPD_Order_Id = Order_Detail_T.O_Order_Id where isnull(TPD_Order_Id,'') !='' AND ISNULL(O_OrderDateTime,'') !='' AND b.TQD_Ticket_Id in (" + joined + ") and Month(Convert(date,O_OrderDateTime)) = " + iMonth.ToString() + " and Year(Convert(date,O_OrderDateTime)) = " + iYear.ToString() + " group by Convert(date,O_OrderDateTime) ";
                     var vEvent = objEnt.Database.SqlQuery<SaleTickets>(strQuery).FirstOrDefault();
                     
                     objResult = vEvent;
@@ -955,7 +960,9 @@ namespace EventCombo.Controllers
             {
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
-                    string strQuery = "SELECT sum(TPD_Purchased_Qty) as SaleQty,Convert(date,O_OrderDateTime) AS orderDate FROM Ticket_Purchased_Detail LEFT JOIN Order_Detail_T On Ticket_Purchased_Detail.TPD_Order_Id = Order_Detail_T.O_Order_Id where isnull(TPD_Order_Id,'') !='' AND ISNULL(O_OrderDateTime,'') !='' AND TPD_Event_Id = " + eventId + " and COnvert(date,O_OrderDateTime) = convert(date,'" + dt + "')  And datepart(hour,O_OrderDateTime) = " + iHour.ToString() + " group by Convert(date,O_OrderDateTime) ";
+                    var ticketid = (from v in db.Tickets where v.E_Id == eventId select v.T_Id).ToList();
+                    string joined = string.Join(",", ticketid.ToArray());
+                    string strQuery = "SELECT sum(TPD_Purchased_Qty) as SaleQty,Convert(date,O_OrderDateTime) AS orderDate FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id LEFT JOIN Order_Detail_T On a.TPD_Order_Id = Order_Detail_T.O_Order_Id where isnull(TPD_Order_Id,'') !='' AND ISNULL(O_OrderDateTime,'') !='' AND  b.TQD_Ticket_Id in (" + joined + ") and COnvert(date,O_OrderDateTime) = convert(date,'" + dt + "')  And datepart(hour,O_OrderDateTime) = " + iHour.ToString() + " group by Convert(date,O_OrderDateTime) ";
 
                     var vEvent = objEnt.Database.SqlQuery<SaleTickets>(strQuery).FirstOrDefault();
 
