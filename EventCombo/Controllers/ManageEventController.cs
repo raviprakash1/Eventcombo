@@ -489,13 +489,20 @@ namespace EventCombo.Controllers
         }
 
         [Authorize]
-        public ActionResult EmailInvitations(long EventId, int? page)
+        public ActionResult EmailInvitations(long eventId, string sortOrder, int? page)
         {
+            EmailInvitations ei = new EmailInvitations();
+
+            ViewBag.CurrentSort = (sortOrder ?? "subject");
+
+            ViewBag.EventId = eventId;
             using (EventComboEntities objEnt = new EventComboEntities())
             {
                 var invitations = from invite_list in objEnt.Event_Email_List
-                                  group invite_list by invite_list.L_I_Id into result1
+                                  group invite_list by invite_list.L_I_Id 
+                                  into result1
                                   join invites in objEnt.Event_Email_Invitation on result1.FirstOrDefault().L_I_Id equals invites.I_Id
+                                  where invites.I_Event_Id == eventId && invites.I_Mode == "S"
                                   orderby invites.I_ModifyDate
                                   select new EmailInvitation
                                   {
@@ -505,10 +512,98 @@ namespace EventCombo.Controllers
                                       CreatedOn = invites.I_CreateDate,
                                       NoOfRecipients = result1.Count()
                                   };
+                ViewBag.scheduledCount = invitations.Count();
+
+                switch (sortOrder)
+                {
+                    case "subject_desc":
+                        invitations = invitations.OrderByDescending(s => s.Subject);
+                        break;
+                    case "created_date":
+                        invitations = invitations.OrderBy(s => s.CreatedOn);
+                        break;
+                    case "created_date_desc":
+                        invitations = invitations.OrderByDescending(s => s.CreatedOn);
+                        break;
+                    case "send_date":
+                        invitations = invitations.OrderBy(s => s.SendOn);
+                        break;
+                    case "send_date_desc":
+                        invitations = invitations.OrderByDescending(s => s.SendOn);
+                        break;
+                    case "recipient":
+                        invitations = invitations.OrderBy(s => s.NoOfRecipients);
+                        break;
+                    case "recipient_desc":
+                        invitations = invitations.OrderByDescending(s => s.NoOfRecipients);
+                        break;
+                    default:
+                        invitations = invitations.OrderBy(s => s.Subject);
+                        break;
+                }
+
                 int pageSize = 9;
                 int pageNumber = (page ?? 1);
-                return View(invitations.ToPagedList(pageNumber, pageSize));
+                ViewBag.scheduled = invitations.ToPagedList(pageNumber, pageSize);
+                
+                //return View(invitations.ToPagedList(pageNumber, pageSize));
             }
+
+            using (EventComboEntities objEnt = new EventComboEntities())
+            {
+                var invitations = from invite_list in objEnt.Event_Email_List
+                                  group invite_list by invite_list.L_I_Id
+                                  into result1
+                                  join invites in objEnt.Event_Email_Invitation on result1.FirstOrDefault().L_I_Id equals invites.I_Id
+                                  where invites.I_Event_Id == eventId && invites.I_Mode=="D"
+                                  orderby invites.I_ModifyDate
+                                  select new EmailInvitation
+                                  {
+                                      EventID = invites.I_Event_Id,
+                                      Subject = invites.I_SubjectLine,
+                                      SendOn = invites.I_ScheduleDate,
+                                      CreatedOn = invites.I_CreateDate,
+                                      NoOfRecipients = result1.Count()
+                                  };
+
+                ViewBag.draftCount = invitations.Count();
+
+                switch (sortOrder)
+                {
+                    case "subject_desc":
+                        invitations = invitations.OrderByDescending(s => s.Subject);
+                        break;
+                    case "created_date":
+                        invitations = invitations.OrderBy(s => s.CreatedOn);
+                        break;
+                    case "created_date_desc":
+                        invitations = invitations.OrderByDescending(s => s.CreatedOn);
+                        break;
+                    case "send_date":
+                        invitations = invitations.OrderBy(s => s.SendOn);
+                        break;
+                    case "send_date_desc":
+                        invitations = invitations.OrderByDescending(s => s.SendOn);
+                        break;
+                    case "recipient":
+                        invitations = invitations.OrderBy(s => s.NoOfRecipients);
+                        break;
+                    case "recipient_desc":
+                        invitations = invitations.OrderByDescending(s => s.NoOfRecipients);
+                        break;
+                    default:
+                        invitations = invitations.OrderBy(s => s.Subject);
+                        break;
+                }
+
+                int pageSize = 9;
+                int pageNumber = (page ?? 1);
+                ViewBag.draft = invitations.ToPagedList(pageNumber, pageSize);
+
+                //return View(invitations.ToPagedList(pageNumber, pageSize));
+            }
+
+
             return View();
         }
 
