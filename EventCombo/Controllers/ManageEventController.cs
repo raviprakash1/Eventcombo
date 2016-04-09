@@ -2069,7 +2069,8 @@ namespace EventCombo.Controllers
             Event_Email_Invitation objEEI = new Event_Email_Invitation();
             using (EventComboEntities objEnt = new EventComboEntities())
             {
-                objEEI = (from EEI in objEnt.Event_Email_Invitation where EEI.I_Event_Id == lEventId select EEI).FirstOrDefault();
+                var vObj = (from EEI in objEnt.Event_Email_Invitation where EEI.I_Event_Id == lEventId select EEI).FirstOrDefault();
+                if (vObj != null) objEEI = vObj;
             }
             TempData["Eventid"] = lEventId;
             return View(objEEI);

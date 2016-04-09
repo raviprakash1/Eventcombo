@@ -234,11 +234,11 @@
                     <div class="form-group">
                         @if (Model != null && Model.I_ScheduleDate != null)
                         {
-                            <input type="text" class="form-control evnt_inp_cont fillDateTime" value="@Model.I_ScheduleDate" id="txtSchDate" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime">
+                            <input type="text" class="form-control evnt_inp_cont fillDateTime" value="" id="txtSchDate" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" />
                         }
                         else
                         {
-                            <input type="text" class="form-control evnt_inp_cont fillDateTime" data-format="MM-dd-yyyy HH:mm AA" id="txtSchDate" data-field="datetime">
+                            <input type="text" class="form-control evnt_inp_cont fillDateTime" data-format="MM-dd-yyyy HH:mm AA" id="txtSchDate" data-field="datetime" />
                         }
                     </div>
 
@@ -368,6 +368,11 @@
 </script>
 <script>
     $(document).ready(function () {
+        @if(Model.EmailList != null)
+        {
+
+        }
+
         $("#btAddEmail").click(function () {
             var vValue = $("#txtAddEmail").val().trim();
             if (vValue != "")
