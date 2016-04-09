@@ -10,10 +10,11 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Data.Entity.SqlServer;
 using PagedList;
+using EventCombo.ViewModels;
 
 namespace EventCombo.Controllers
 {
-   
+
     [OutputCacheAttribute(VaryByParam = "None", Duration = 0, NoStore = true)]
     public class ManageEventController : Controller
     {
@@ -21,9 +22,9 @@ namespace EventCombo.Controllers
         EventComboEntities db = new EventComboEntities();
 
         [Authorize]
-        public ActionResult Index(long Eventid,string type)
+        public ActionResult Index(long Eventid, string type)
         {
-            var TopAddress = ""; var Topvenue = ""; 
+            var TopAddress = ""; var Topvenue = "";
             string sDate_new = "", eDate_new = "";
             string startday = "", endday = "", starttime = "", endtime = "";
             ManageEvent Mevent = new ManageEvent();
@@ -142,7 +143,7 @@ namespace EventCombo.Controllers
             //Get Event Date
             //Trn
             var transaction = db.Ticket_Purchased_Detail.Any(i => i.TPD_Event_Id == Eventid);
-            if(transaction)
+            if (transaction)
             {
                 Mevent.Eventtransaction = "Y";
             }
@@ -154,8 +155,8 @@ namespace EventCombo.Controllers
             var url = Request.Url;
             var baseurl = url.GetLeftPart(UriPartial.Authority);
             string title = Regex.Replace(Edetails.EventTitle.Trim().Replace(" ", " - "), "[^ a - zA - Z0 - 9_ -] + ", "");
-            var urldb= GetEventURL(Eventid);
-            if(urldb.Contains("/"))
+            var urldb = GetEventURL(Eventid);
+            if (urldb.Contains("/"))
             {
                 Mevent.url = baseurl + urldb;
             }
@@ -163,7 +164,7 @@ namespace EventCombo.Controllers
             {
                 Mevent.url = baseurl + "/ev/" + urldb;
             }
-          
+
             Mevent.Descritption = Edetails.EventDescription;
             Mevent.Eventid = Eventid;
             Mevent.Eventstatus = Edetails.EventStatus;
@@ -178,10 +179,10 @@ namespace EventCombo.Controllers
             Session["Fromname"] = "myevents";
             ValidationMessageController vmc = new ValidationMessageController();
             vmc.ControllerContext = new ControllerContext(this.Request.RequestContext, vmc);
-          
-            if (type=="P")
+
+            if (type == "P")
             {
-                TempData["Success"] = vmc.Index("ManageEvent", "MEPublisheventSucc"); 
+                TempData["Success"] = vmc.Index("ManageEvent", "MEPublisheventSucc");
             }
             else
             {
@@ -189,35 +190,35 @@ namespace EventCombo.Controllers
             }
             OrderAttendees CO = new OrderAttendees();
             Mevent.Order = (from o in db.Order_Detail_T
-                          join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
-                          join a in db.Profiles on p.TPD_User_Id equals a.UserID
-                          where p.TPD_Event_Id == Eventid
-                          group new
-                          {
-                              OrderId = o.O_Order_Id,
-                              Price = o.O_TotalAmount,
-                              Qty = p.TPD_Purchased_Qty,
-                              Name = a.FirstName + " " + a.LastName,
-                              Date = o.O_OrderDateTime
-                          }
-                          by new
-                          {
-                              o.O_Order_Id,
-                              o.O_TotalAmount,
-                              p.TPD_Purchased_Qty,
-                              a.FirstName,
-                              a.LastName,
-                              o.O_OrderDateTime
-                          } into gc
-                     orderby gc.Key.O_Order_Id descending
-                    select new OrderAttendees()
-                    {
-                            OrderId = gc.Key.O_Order_Id,
-                        Amount  = gc.Key.O_TotalAmount.ToString(),
-                              Qty = gc.ToList().Sum(a => a.Qty).ToString(),
-                              Name = gc.Key.FirstName + " " + gc.Key.LastName,
-                        Date = gc.Key.O_OrderDateTime.ToString()
-                    }).Take(3).ToList();
+                            join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
+                            join a in db.Profiles on p.TPD_User_Id equals a.UserID
+                            where p.TPD_Event_Id == Eventid
+                            group new
+                            {
+                                OrderId = o.O_Order_Id,
+                                Price = o.O_TotalAmount,
+                                Qty = p.TPD_Purchased_Qty,
+                                Name = a.FirstName + " " + a.LastName,
+                                Date = o.O_OrderDateTime
+                            }
+                            by new
+                            {
+                                o.O_Order_Id,
+                                o.O_TotalAmount,
+                                p.TPD_Purchased_Qty,
+                                a.FirstName,
+                                a.LastName,
+                                o.O_OrderDateTime
+                            } into gc
+                            orderby gc.Key.O_Order_Id descending
+                            select new OrderAttendees()
+                            {
+                                OrderId = gc.Key.O_Order_Id,
+                                Amount = gc.Key.O_TotalAmount.ToString(),
+                                Qty = gc.ToList().Sum(a => a.Qty).ToString(),
+                                Name = gc.Key.FirstName + " " + gc.Key.LastName,
+                                Date = gc.Key.O_OrderDateTime.ToString()
+                            }).Take(3).ToList();
 
 
 
@@ -231,7 +232,7 @@ namespace EventCombo.Controllers
                                     Price = o.O_TotalAmount,
                                     Qty = p.TPD_Purchased_Qty,
                                     Name = a.FirstName + " " + a.LastName,
-                                    Date=o.O_OrderDateTime
+                                    Date = o.O_OrderDateTime
                                 }
                                 by new
                                 {
@@ -242,14 +243,14 @@ namespace EventCombo.Controllers
                                     a.LastName,
                                     o.O_OrderDateTime
                                 } into gc
-                                orderby gc.Key.O_Order_Id descending,gc.Key.FirstName ascending
+                                orderby gc.Key.O_Order_Id descending, gc.Key.FirstName ascending
                                 select new OrderAttendees()
                                 {
                                     OrderId = gc.Key.O_Order_Id,
                                     Amount = gc.Key.O_TotalAmount.ToString(),
                                     Qty = gc.ToList().Sum(a => a.Qty).ToString(),
                                     Name = gc.Key.FirstName + " " + gc.Key.LastName,
-                                    Date    =gc.Key.O_OrderDateTime.ToString()
+                                    Date = gc.Key.O_OrderDateTime.ToString()
                                 }).Take(3).ToList();
 
 
@@ -303,13 +304,13 @@ namespace EventCombo.Controllers
             TempData["FreeTicket"] = GetTicketQtyPer(Eventid, "F");
             TempData["EventUrl"] = GetEventURL(Eventid);
 
-            TempData["ForSale"] = GetSaleAmount(Eventid,"FORSALE");
+            TempData["ForSale"] = GetSaleAmount(Eventid, "FORSALE");
             TempData["NETSale"] = GetSaleAmount(Eventid, "NETSALE");
 
             return View(Mevent);
         }
 
-        public string GetEventHitsChart(string strDurataion,long lEventId)
+        public string GetEventHitsChart(string strDurataion, long lEventId)
         {
             DateTime dt = new DateTime();
             StringBuilder strDates = new StringBuilder();
@@ -346,7 +347,7 @@ namespace EventCombo.Controllers
             else if (strDurataion == "Year")
             {
                 dt = DateTime.Today.AddMonths(-11);
-                
+
                 for (int i = 1; i <= 12; i++)
                 {
                     if (strDates.ToString().Equals(""))
@@ -354,7 +355,7 @@ namespace EventCombo.Controllers
                     else
                         strDates.Append("," + dt.ToString("MM/yy"));
 
-                    lHitCount = GetEventHitDayCount(lEventId, dt.Month,dt.Year);
+                    lHitCount = GetEventHitDayCount(lEventId, dt.Month, dt.Year);
                     strDates.Append("-");
                     if (lHitCount > 0)
                     {
@@ -369,7 +370,7 @@ namespace EventCombo.Controllers
             }
             else if (strDurataion == "Day")
             {
-                
+
                 dt = DateTime.Now.AddHours(-23);
 
                 for (int i = 1; i <= 24; i++)
@@ -487,14 +488,46 @@ namespace EventCombo.Controllers
             return strSaleQty.ToString();
         }
 
+        [Authorize]
+        public ActionResult EmailInvitations(long EventId, int? page)
+        {
+            StringBuilder strResult = new StringBuilder();
+            using (EventComboEntities objEnt = new EventComboEntities())
+            {
+                
+                var invitations = from invite_list in objEnt.Event_Email_List
+                                  group invite_list by invite_list.L_I_Id into result1
+                                  join invites in objEnt.Event_Email_Invitation on result1.FirstOrDefault().L_I_Id equals invites.I_Id
+                                  orderby invites.I_ModifyDate
+                                  select new EmailInvitation
+                                  {
+                                      EventID = invites.I_Event_Id,
+                                      Subject = invites.I_SubjectLine,
+                                      SendOn = invites.I_ScheduleDate,
+                                      CreatedOn = invites.I_CreateDate,
+                                      NoOfRecipients = result1.Count()
+                                  };
+
+
+
+                int pageSize = 9;
+                int pageNumber = (page ?? 1);
+                return View(invitations.ToPagedList(pageNumber, pageSize));
+            }
+
+            return View();
+        }
+
+
+
         public string GetAllTicketSale(long EventId)
         {
             StringBuilder strResult = new StringBuilder();
             using (EventComboEntities objEnt = new EventComboEntities())
             {
                 var vEvent = (from myRow in objEnt.Events
-                                where myRow.EventID == EventId
-                                select myRow).FirstOrDefault();
+                              where myRow.EventID == EventId
+                              select myRow).FirstOrDefault();
 
                 var timezone = "";
                 DateTime dateTime = new DateTime();
@@ -548,7 +581,7 @@ namespace EventCombo.Controllers
                                    select myRow).FirstOrDefault();
                     if (vRemQty != null)
                     {
-                        dSoldQty = ((vRemQty.TQD_Quantity != null ? Convert.ToInt64(vRemQty.TQD_Quantity) :0) - (vRemQty.TQD_Remaining_Quantity != null ? Convert.ToInt64(vRemQty.TQD_Remaining_Quantity) : 0));
+                        dSoldQty = ((vRemQty.TQD_Quantity != null ? Convert.ToInt64(vRemQty.TQD_Quantity) : 0) - (vRemQty.TQD_Remaining_Quantity != null ? Convert.ToInt64(vRemQty.TQD_Remaining_Quantity) : 0));
                         strResult.Append("<td>"); strResult.Append(dSoldQty.ToString() + "/" + (vRemQty.TQD_Quantity != null ? vRemQty.TQD_Quantity.ToString() : "0")); strResult.Append("</td>");
                     }
                     else
@@ -556,11 +589,11 @@ namespace EventCombo.Controllers
                         strResult.Append("<td>"); strResult.Append("0/0"); strResult.Append("</td>");
                     }
 
-                    strHideUntil =  (obj.Hide_Untill_Date != null ? obj.Hide_Untill_Date.ToString():"");
+                    strHideUntil = (obj.Hide_Untill_Date != null ? obj.Hide_Untill_Date.ToString() : "");
                     strHideUntilTime = (obj.Hide_Untill_Time != null ? obj.Hide_Untill_Time.ToString() : "");
 
                     strHideAfter = (obj.Hide_After_Date != null ? obj.Hide_After_Date.ToString() : "");
-                    strHideAfterTime = (obj.Hide_After_Time != null ? obj.Hide_After_Time .ToString() : "");
+                    strHideAfterTime = (obj.Hide_After_Time != null ? obj.Hide_After_Time.ToString() : "");
 
                     if (!strHideUntil.Equals(string.Empty))
                     {
@@ -573,7 +606,7 @@ namespace EventCombo.Controllers
                     }
 
 
-                    if (vRemQty != null &&  dSoldQty == vRemQty.TQD_Quantity)
+                    if (vRemQty != null && dSoldQty == vRemQty.TQD_Quantity)
                     {
                         strResult.Append("<td>"); strResult.Append("Sold Out"); strResult.Append("</td>");
                     }
@@ -585,11 +618,11 @@ namespace EventCombo.Controllers
                     {
                         strResult.Append("<td>"); strResult.Append("Hidden"); strResult.Append("</td>");
                     }
-                    else 
+                    else
                     {
                         strResult.Append("<td>"); strResult.Append("On Sale"); strResult.Append("</td>");
                     }
-                    strResult.Append("<td>"); strResult.Append((obj.Sale_End_Date != null ?  obj.Sale_End_Date.ToString() :"")); strResult.Append("</td>");
+                    strResult.Append("<td>"); strResult.Append((obj.Sale_End_Date != null ? obj.Sale_End_Date.ToString() : "")); strResult.Append("</td>");
                     strResult.Append("<td>"); strResult.Append(""); strResult.Append("</td>");
                     strResult.Append("</tr>");
                 }
@@ -599,19 +632,19 @@ namespace EventCombo.Controllers
             return strResult.ToString();
         }
 
-        public string GetSaleAmount(long lEventId,string strAmtType)
+        public string GetSaleAmount(long lEventId, string strAmtType)
         {
             string strResult = "";
             CultureInfo us = new CultureInfo("en-US");
             using (EventComboEntities objEnt = new EventComboEntities())
             {
                 var vTotalAmt = (from myRow in objEnt.Ticket_Purchased_Detail
-                              where myRow.TPD_Event_Id == lEventId
-                              select myRow.TPD_Amount).Sum();
+                                 where myRow.TPD_Event_Id == lEventId
+                                 select myRow.TPD_Amount).Sum();
 
                 if (strAmtType == "FORSALE")
                 {
-                    strResult = Math.Round((vTotalAmt == null ? 0 : Convert.ToDouble(vTotalAmt)), 2).ToString("N",us);
+                    strResult = Math.Round((vTotalAmt == null ? 0 : Convert.ToDouble(vTotalAmt)), 2).ToString("N", us);
                 }
                 else if (strAmtType == "NETSALE")
                 {
@@ -619,18 +652,18 @@ namespace EventCombo.Controllers
                                   where myRow.TPD_Event_Id == lEventId
                                   select myRow.TPD_EC_Fee).Sum();
 
-                    double dResult = Math.Round((vTotalAmt == null ? 0 : Convert.ToDouble(vTotalAmt)) - (vEcFee == null ? 0 : Convert.ToDouble(vEcFee)),2);
+                    double dResult = Math.Round((vTotalAmt == null ? 0 : Convert.ToDouble(vTotalAmt)) - (vEcFee == null ? 0 : Convert.ToDouble(vEcFee)), 2);
                     strResult = dResult.ToString("N", us);
                 }
             }
-            return strResult; 
+            return strResult;
         }
-        public string SaveEventUrl(long lEventId,string strEventUrl)
+        public string SaveEventUrl(long lEventId, string strEventUrl)
         {
             string strResult = "N";
             try
             {
-                if (CheckEventUrl(strEventUrl,lEventId) == "Y")
+                if (CheckEventUrl(strEventUrl, lEventId) == "Y")
                 {
                     strResult = "N";
                 }
@@ -652,7 +685,7 @@ namespace EventCombo.Controllers
             }
             return strResult;
         }
-        public string CheckEventUrl(string strUserUrl,long EventId)
+        public string CheckEventUrl(string strUserUrl, long EventId)
         {
             try
             {
@@ -685,7 +718,7 @@ namespace EventCombo.Controllers
                     var vEvent = (from myRow in objEnt.Events
                                   where myRow.EventID == lEventId
                                   select myRow).FirstOrDefault();
-                    
+
 
                     if (vEvent.EventUrl != null && vEvent.EventUrl.Trim() != string.Empty)
                     {
@@ -706,9 +739,9 @@ namespace EventCombo.Controllers
         public string DeleteEvent(long eventid)
         {
             string msg = "";
-           
-                using (var transaction=db.Database.BeginTransaction())
-                {
+
+            using (var transaction = db.Database.BeginTransaction())
+            {
                 try
                 {
                     db.Event_Orgnizer_Detail.RemoveRange(db.Event_Orgnizer_Detail.Where(x => x.Orgnizer_Event_Id == eventid).ToList());
@@ -725,13 +758,13 @@ namespace EventCombo.Controllers
                     db.Tickets.RemoveRange(db.Tickets.Where(x => x.E_Id == eventid).ToList());
                     db.Events.RemoveRange(db.Events.Where(x => x.EventID == eventid).ToList());
 
-                
 
 
 
 
-                   
-                
+
+
+
                     db.SaveChanges();
                     transaction.Commit();
                     msg = "Y";
@@ -742,10 +775,10 @@ namespace EventCombo.Controllers
                     msg = "N";
                 }
             }
-          
-                return msg;
+
+            return msg;
         }
-    
+
         public long GetEventHitDayCount(long eventId, DateTime dt)
         {
             long lResult = 0;
@@ -766,16 +799,16 @@ namespace EventCombo.Controllers
 
             return lResult;
         }
-        public long GetEventHitDayCount(long eventId, int iMonth,int iYear)
+        public long GetEventHitDayCount(long eventId, int iMonth, int iYear)
         {
             long lResult = 0;
             try
             {
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
-                    
+
                     var vEvent = objEnt.Database.SqlQuery<long>("Select EventHit_Id from Events_Hit where EventHit_EventId = " + eventId + " and Month(convert(date,EventHitDatetime)) = " + iMonth.ToString() + " And Year(convert(date,EventHitDatetime)) = " + iYear.ToString()).Count();
-                    
+
                     lResult = vEvent;
                 }
             }
@@ -833,7 +866,7 @@ namespace EventCombo.Controllers
                     var vremqty = (from myRow in objEnt.Ticket_Quantity_Detail where myRow.TQD_Event_Id == eventId select myRow.TQD_Remaining_Quantity).Sum();
                     double ltotalqty = (vtotalqty != null ? Convert.ToInt64(vtotalqty) : 0);
                     double lremqty = (vremqty != null ? Convert.ToInt64(vremqty) : 0);
-                    dResult = Math.Round(((ltotalqty - lremqty) * 100) / ltotalqty,2);
+                    dResult = Math.Round(((ltotalqty - lremqty) * 100) / ltotalqty, 2);
                 }
             }
             catch (Exception ex)
@@ -843,7 +876,7 @@ namespace EventCombo.Controllers
             return dResult;
         }
 
-        public double GetTicketQtyPer(long eventId,string strTicketType)
+        public double GetTicketQtyPer(long eventId, string strTicketType)
         {
             double dResult = 0;
             try
@@ -856,7 +889,8 @@ namespace EventCombo.Controllers
                         var vremqty = objEnt.Database.SqlQuery<long>("SELECT sum(TQD_Remaining_Quantity) TRQty From (Ticket_Quantity_Detail TQD LEFT JOIN  Ticket T on TQD.TQD_Ticket_Id = T.T_Id)  where TQD_Event_Id = " + eventId + " and T.TicketTypeID in (1,2)").FirstOrDefault();
                         dResult = ((vtotalqty - vremqty) * 100) / vtotalqty;
                     }
-                    else {
+                    else
+                    {
                         var vtotalqty = objEnt.Database.SqlQuery<long>("SELECT sum(TQD_Quantity) TQty From (Ticket_Quantity_Detail TQD LEFT JOIN  Ticket T on TQD.TQD_Ticket_Id = T.T_Id)  where TQD_Event_Id = " + eventId + " and T.TicketTypeID = 1").FirstOrDefault();
                         var vremqty = objEnt.Database.SqlQuery<long>("SELECT sum(TQD_Remaining_Quantity) TRQty From (Ticket_Quantity_Detail TQD LEFT JOIN  Ticket T on TQD.TQD_Ticket_Id = T.T_Id)  where TQD_Event_Id = " + eventId + " and T.TicketTypeID = 1").FirstOrDefault();
                         dResult = ((vtotalqty - vremqty) * 100) / vtotalqty;
@@ -872,14 +906,14 @@ namespace EventCombo.Controllers
         }
 
 
-        public long GetQuantity(long eventId,string strQtyType)
+        public long GetQuantity(long eventId, string strQtyType)
         {
             long lResult = 0;
             try
             {
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
-                    if (strQtyType =="R")
+                    if (strQtyType == "R")
                     {
                         var vtotalqty = (from myRow in objEnt.Ticket_Quantity_Detail where myRow.TQD_Event_Id == eventId select myRow.TQD_Quantity).Sum();
                         var vremqty = (from myRow in objEnt.Ticket_Quantity_Detail where myRow.TQD_Event_Id == eventId select myRow.TQD_Remaining_Quantity).Sum();
@@ -935,12 +969,15 @@ namespace EventCombo.Controllers
                 {
 
                     //   var vEvent = objEnt.Database.SqlQuery<long>("Select EventHit_Id from Events_Hit where EventHit_EventId = " + eventId + " and Month(convert(date,EventHitDatetime)) = " + iMonth.ToString() + " And Year(convert(date,EventHitDatetime)) = " + iYear.ToString()).Count();
+<<<<<<< HEAD
                     var ticketid = (from v in db.Tickets where v.E_Id == eventId select v.T_Id).ToList();
                     string joined = string.Join(",", ticketid.ToArray());
+=======
+>>>>>>> 76bd1279bada0011e46eaaa1f2faeaac4a094057
 
                     string strQuery = "SELECT sum(TPD_Purchased_Qty) as SaleQty,Convert(date,O_OrderDateTime) AS orderDate FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id LEFT JOIN Order_Detail_T On a.TPD_Order_Id = Order_Detail_T.O_Order_Id where isnull(TPD_Order_Id,'') !='' AND ISNULL(O_OrderDateTime,'') !='' AND b.TQD_Ticket_Id in (" + joined + ") and Month(Convert(date,O_OrderDateTime)) = " + iMonth.ToString() + " and Year(Convert(date,O_OrderDateTime)) = " + iYear.ToString() + " group by Convert(date,O_OrderDateTime) ";
                     var vEvent = objEnt.Database.SqlQuery<SaleTickets>(strQuery).FirstOrDefault();
-                    
+
                     objResult = vEvent;
                 }
             }
@@ -985,9 +1022,9 @@ namespace EventCombo.Controllers
                 Event objEvt = db.Events.First(i => i.EventID == id);
                 if (Tag == "P")
                 {
-                   
+
                     objEvt.EventStatus = "Live";
-                  
+
                     result = "Y";
                 }
 
@@ -1015,18 +1052,18 @@ namespace EventCombo.Controllers
 
         public ActionResult CopyEvent(long Eventid)
         {
-            string strTitle="";
+            string strTitle = "";
             using (EventComboEntities objEnt = new EventComboEntities())
             {
                 var vEvent = (from myEnt in objEnt.Events where myEnt.EventID == Eventid select myEnt).FirstOrDefault();
-                strTitle = "Copy of "  +  vEvent.EventTitle;
+                strTitle = "Copy of " + vEvent.EventTitle;
             }
             TempData["Title"] = strTitle;
             TempData["EventId"] = Eventid.ToString();
             return View();
         }
 
-        public long SaveEvent(long Eventid,string strEventTitle)
+        public long SaveEvent(long Eventid, string strEventTitle)
         {
             try
             {
@@ -1053,7 +1090,7 @@ namespace EventCombo.Controllers
                     ObjEC.EventCategoryID = vEvent.EventCategoryID;
                     ObjEC.EventSubCategoryID = vEvent.EventSubCategoryID;
                     ObjEC.UserID = strUserId;
-                    ObjEC.EventTitle  = strEventTitle;
+                    ObjEC.EventTitle = strEventTitle;
                     ObjEC.DisplayStartTime = vEvent.DisplayStartTime;
                     ObjEC.DisplayEndTime = vEvent.DisplayEndTime;
                     ObjEC.DisplayTimeZone = vEvent.DisplayTimeZone;
@@ -1114,7 +1151,7 @@ namespace EventCombo.Controllers
                         //    objAdd.EventId = ObjEC.EventID;
                         //    objEnt.Addresses.Add(objAdd);
                         //}
-                     }
+                    }
                     var vEventVenue = (from myEnt in objEnt.EventVenues where myEnt.EventID == Eventid select myEnt).ToList();
                     if (vEventVenue != null)
                     {
@@ -1161,7 +1198,7 @@ namespace EventCombo.Controllers
                         {
                             objEOrg = new Event_Orgnizer_Detail();
                             objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
-                           
+
                             objEOrg.DefaultOrg = objOr.DefaultOrg;
                             objEOrg.OrganizerMaster_Id = objOr.OrganizerMaster_Id;
 
@@ -1169,7 +1206,7 @@ namespace EventCombo.Controllers
                             objEnt.Event_Orgnizer_Detail.Add(objEOrg);
                         }
                     }
-                  
+
                     var vTicket = (from myEnt in objEnt.Tickets where myEnt.E_Id == Eventid select myEnt).ToList();
                     if (vTicket != null)
                     {
@@ -1243,7 +1280,7 @@ namespace EventCombo.Controllers
                     objEnt.SaveChanges();
                     Eventid = (from myEvt in objEnt.Events select myEvt.EventID).Max();
                     CreateEventController objCE = new CreateEventController();
-                    objCE.ControllerContext = new ControllerContext(this.Request.RequestContext,objCE);
+                    objCE.ControllerContext = new ControllerContext(this.Request.RequestContext, objCE);
                     objCE.PublishEvent(Eventid);
                 }
             }
@@ -1259,20 +1296,21 @@ namespace EventCombo.Controllers
             TempData["Scroll"] = "PrivaPub";
         }
 
-   
+
 
 
         public string CancelEvent(long eventid)
         {
             string msg = "";
 
-            try {
+            try
+            {
                 Event objEvt = db.Events.First(i => i.EventID == eventid);
                 objEvt.EventCancel = "Y";
                 db.SaveChanges();
                 msg = "Y";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 msg = "N";
             }
@@ -1281,7 +1319,7 @@ namespace EventCombo.Controllers
 
         }
         [Authorize]
-        public ActionResult PromotionalCodes(long Eventid, string strPageIndex="page",string searchquery="")
+        public ActionResult PromotionalCodes(long Eventid, string strPageIndex = "page", string searchquery = "")
         {
             if (Session["AppId"] != null)
             {
@@ -1298,40 +1336,40 @@ namespace EventCombo.Controllers
                 sc.Eventtitle = Eventdetail.EventTitle;
                 if (!string.IsNullOrWhiteSpace(searchquery))
                 {
-                     ls = (from x in db.Promo_Code
-                              orderby x.SavedDate descending
-                              where x.PC_Eventid == Eventid && x.PC_Code.Contains(searchquery)
-                              select new Promocode
-                              {
-                                  code = x.PC_Code,
-                                  Amount = (x.PC_Amount!=null || x.PC_Percentage!=null)? (x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%"):"-",
-                                  Start = (x.PC_Startdatetype != null && x.PC_Startdatetype == "1") ? x.PC_Start + " before event" : SqlFunctions.DateDiff("s", x.PC_Start, DateTime.Now) == 0 ? "Started" : x.PC_Start,
-                                  End = (x.Pc_Enddatetype != null && x.Pc_Enddatetype == "1") ? x.PC_End + " before event" : x.PC_End,
-                                  Limit = x.PC_Uses != null ? x.PC_Uses.ToString() : "No Limit",
-                                  PCID = x.PC_id,
+                    ls = (from x in db.Promo_Code
+                          orderby x.SavedDate descending
+                          where x.PC_Eventid == Eventid && x.PC_Code.Contains(searchquery)
+                          select new Promocode
+                          {
+                              code = x.PC_Code,
+                              Amount = (x.PC_Amount != null || x.PC_Percentage != null) ? (x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%") : "-",
+                              Start = (x.PC_Startdatetype != null && x.PC_Startdatetype == "1") ? x.PC_Start + " before event" : SqlFunctions.DateDiff("s", x.PC_Start, DateTime.Now) == 0 ? "Started" : x.PC_Start,
+                              End = (x.Pc_Enddatetype != null && x.Pc_Enddatetype == "1") ? x.PC_End + " before event" : x.PC_End,
+                              Limit = x.PC_Uses != null ? x.PC_Uses.ToString() : "No Limit",
+                              PCID = x.PC_id,
 
 
 
-                              }).ToList();
-                   
+                          }).ToList();
+
                 }
                 else
                 {
-                     ls = (from x in db.Promo_Code
-                              orderby x.SavedDate descending
-                              where x.PC_Eventid == Eventid
-                              select new Promocode
-                              {
-                                  code = x.PC_Code,
-                                  Amount = (x.PC_Amount != null || x.PC_Percentage != null) ? (x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%") : "-",
-                                  Start = (x.PC_Startdatetype!=null && x.PC_Startdatetype=="1")?x.PC_Start+" before event" :SqlFunctions.DateDiff("s", x.PC_Start, DateTime.Now) == 0 ? "Started" : x.PC_Start,
-                                  End = (x.Pc_Enddatetype != null && x.Pc_Enddatetype == "1") ? x.PC_End + " before event" :x.PC_End,
-                                  Limit = x.PC_Uses != null ? x.PC_Uses : "No Limit",
-                                  PCID = x.PC_id
+                    ls = (from x in db.Promo_Code
+                          orderby x.SavedDate descending
+                          where x.PC_Eventid == Eventid
+                          select new Promocode
+                          {
+                              code = x.PC_Code,
+                              Amount = (x.PC_Amount != null || x.PC_Percentage != null) ? (x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%") : "-",
+                              Start = (x.PC_Startdatetype != null && x.PC_Startdatetype == "1") ? x.PC_Start + " before event" : SqlFunctions.DateDiff("s", x.PC_Start, DateTime.Now) == 0 ? "Started" : x.PC_Start,
+                              End = (x.Pc_Enddatetype != null && x.Pc_Enddatetype == "1") ? x.PC_End + " before event" : x.PC_End,
+                              Limit = x.PC_Uses != null ? x.PC_Uses : "No Limit",
+                              PCID = x.PC_id
 
 
-                              }).ToList();
-                    
+                          }).ToList();
+
                 }
                 double dPageCount = ls.Count;
                 double dTotalPages = dPageCount / pageSize;
@@ -1339,7 +1377,7 @@ namespace EventCombo.Controllers
                 if (dTotalPages.ToString().Contains(".") == true)
                     lTotalPages = lTotalPages + 1;
                 sc.Promocode = ls.ToPagedList(pageIndex, pageSize);
-              
+
                 TempData["TotalPages"] = lTotalPages;
                 sc.searchquery = searchquery;
                 sc.discountcode = Discountcode;
@@ -1347,7 +1385,7 @@ namespace EventCombo.Controllers
                 return View(sc);
             }
             else
-            { 
+            {
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -1378,29 +1416,29 @@ namespace EventCombo.Controllers
                 {
                     var y = (from x in db.EventVenues where x.EventID == Eventid select x).FirstOrDefault();
                     end_date = DateTime.Parse(y.EventStartDate + " " + y.EventEndTime);
-                    startdatesave= DateTime.Parse(y.EventStartDate + " " + y.EventEndTime).ToString("MM-dd-yyyy hh:mm:ss tt");
-                   
+                    startdatesave = DateTime.Parse(y.EventStartDate + " " + y.EventEndTime).ToString("MM-dd-yyyy hh:mm:ss tt");
+
                 }
                 else
                 {
                     var y = (from x in db.MultipleEvents where x.EventID == Eventid select x).FirstOrDefault();
                     end_date = DateTime.Parse(y.StartingFrom + " " + y.StartTime);
-                    startdatesave= DateTime.Parse(y.StartingFrom + " " + y.StartTime).ToString("MM-dd-yyyy hh:mm:ss tt");
-                   
+                    startdatesave = DateTime.Parse(y.StartingFrom + " " + y.StartTime).ToString("MM-dd-yyyy hh:mm:ss tt");
+
                 }
                 if (Promocode == 0)
                 {
                     pm.Ticketdata = (from x in db.Tickets where x.E_Id == Eventid select x).ToList();
-                    foreach(var item in pm.Ticketdata)
+                    foreach (var item in pm.Ticketdata)
                     {
-                        if(item.TicketTypeID==2)
+                        if (item.TicketTypeID == 2)
                         {
                             ttype = 1;
                         }
                     }
                     pm.ticketype = ttype;
                     pm.Formtype = "S";
-                   
+
                     startdate = DateTime.UtcNow.ToString("MM-dd-yyyy hh:mm:ss tt");
 
 
@@ -1414,13 +1452,13 @@ namespace EventCombo.Controllers
                     if (end_date < DateTime.Now)
                     {
                         pm.startdays = "0 Days 0 Hrs 0 Min";
-                       
+
                     }
                     else
                     {
                         TimeSpan span = (end_date - DateTime.Now);
-                        pm.startdays = span.Days.ToString()+" Days " + span.Hours.ToString()+" Hrs "+ span.Minutes.ToString()+" Min";
-                       
+                        pm.startdays = span.Days.ToString() + " Days " + span.Hours.ToString() + " Hrs " + span.Minutes.ToString() + " Min";
+
                     }
                     pm.enddays = "0 Days 0 Hrs 0 Min";
                 }
@@ -1443,21 +1481,21 @@ namespace EventCombo.Controllers
                     if (p.PC_Startdatetype != null && p.PC_Startdatetype == "1")
                     {
                         pm.startdays = p.PC_Start;
-                        string[] words= p.PC_Start.Split(' ');
-                        if(end_date< DateTime.Now)
+                        string[] words = p.PC_Start.Split(' ');
+                        if (end_date < DateTime.Now)
                         {
                             pm.PC_Start = DateTime.Now.ToString("MM-dd-yyyy hh:mm:ss tt");
                         }
                         else
                         {
-                           var datenew=  end_date.AddDays(-double.Parse(words[0]));
+                            var datenew = end_date.AddDays(-double.Parse(words[0]));
                             datenew = datenew.AddHours(-double.Parse(words[2]));
 
                             datenew = datenew.AddMinutes(-double.Parse(words[4]));
-                            pm.PC_Start= datenew.ToString("MM-dd-yyyy hh:mm:ss tt");
+                            pm.PC_Start = datenew.ToString("MM-dd-yyyy hh:mm:ss tt");
                         }
-                       
-                       
+
+
                     }
                     else
                     {
@@ -1467,7 +1505,7 @@ namespace EventCombo.Controllers
                     }
                     if (p.Pc_Enddatetype != null && p.Pc_Enddatetype == "1")
                     {
-                       
+
                         pm.enddays = p.PC_End;
                         string[] words = p.PC_End.Split(' ');
                         var datenew = end_date.AddDays(-double.Parse(words[0]));
@@ -1487,8 +1525,8 @@ namespace EventCombo.Controllers
                     pm.PC_Percentage = p.PC_Percentage;
                     pm.Formtype = "E";
                     pm.PC_Apply = p.PC_Apply;
-                   
-                    pm.PC_URL = baseurl+ urldb+"?discount="+ p.PC_Code;
+
+                    pm.PC_URL = baseurl + urldb + "?discount=" + p.PC_Code;
                     pm.PC_Startdatetype = p.PC_Startdatetype != null ? p.PC_Startdatetype : "0";
                     pm.Pc_Enddatetype = p.Pc_Enddatetype != null ? p.Pc_Enddatetype : "0";
                 }
@@ -1502,7 +1540,7 @@ namespace EventCombo.Controllers
         }
         [Authorize]
         [HttpPost]
-        public ActionResult CreatePromotionalCodes(HttpPostedFileBase file,Promo_Code model)
+        public ActionResult CreatePromotionalCodes(HttpPostedFileBase file, Promo_Code model)
         {
             var msg = "";
             var containsspecial = 0;
@@ -1514,7 +1552,7 @@ namespace EventCombo.Controllers
 
                     if (Regex.IsMatch(model.PC_Code.ToString(), "^[a-zA-Z0-9@_,-]+$"))
                     {
-                        var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() && v.PC_id!=model.PC_id && v.PC_Eventid==model.PC_Eventid select v).Any();
+                        var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() && v.PC_id != model.PC_id && v.PC_Eventid == model.PC_Eventid select v).Any();
                         if (ifany)
                         {
                             if (!string.IsNullOrEmpty(model.PC_Code))
@@ -1528,18 +1566,18 @@ namespace EventCombo.Controllers
                                     Invalidrepeatcode += "," + model.PC_Code;
                                 }
                             }
-                            
+
                         }
                         else
                         {
-                            Promo_Code org = (from x in db.Promo_Code where x.PC_id == model.PC_id  select x).FirstOrDefault();
+                            Promo_Code org = (from x in db.Promo_Code where x.PC_id == model.PC_id select x).FirstOrDefault();
                             org.PC_Eventid = model.PC_Eventid;
                             org.PC_Type = model.PC_Type;
                             org.PC_Code = model.PC_Code;
                             if (model.Discount_Type == "A")
                             {
                                 org.PC_Amount = model.PC_Amount;
-                                org.PC_Percentage =null;
+                                org.PC_Percentage = null;
                             }
                             else
                             {
@@ -1567,7 +1605,7 @@ namespace EventCombo.Controllers
                             {
                                 org.PC_End = model.PC_End;
                             }
-                       
+
                             org.PC_Apply = model.PC_Apply;
                             org.PC_Eventid = model.PC_Eventid;
                             org.SavedDate = DateTime.Now;
@@ -1575,7 +1613,7 @@ namespace EventCombo.Controllers
 
 
 
-                   
+
                             try
                             {
                                 int i = db.SaveChanges();
@@ -1626,7 +1664,7 @@ namespace EventCombo.Controllers
                                 }
                             }
                             else
-                             {
+                            {
                                 Promo_Code org = new Promo_Code();
                                 org.PC_Eventid = model.PC_Eventid;
                                 org.PC_Type = model.PC_Type;
@@ -1789,7 +1827,7 @@ namespace EventCombo.Controllers
                                                         Invalidrepeatcode += "," + item.Trim();
                                                     }
                                                 }
-                                           
+
                                                 containsspecial++;
                                             }
                                         }
@@ -1812,7 +1850,7 @@ namespace EventCombo.Controllers
                                                         Invalidrepeatcode += "," + line.Trim();
                                                     }
                                                 }
-                                                
+
                                             }
                                             else
                                             {
@@ -1923,13 +1961,13 @@ namespace EventCombo.Controllers
                     org.PC_Code = model.PC_Code;
                     org.PC_Amount = model.PC_Amount;
                     org.PC_Percentage = model.PC_Percentage;
-              
+
                     org.PC_Uses = model.PC_Uses;
-                    org.PC_Start = model.PC_Start; 
+                    org.PC_Start = model.PC_Start;
                     org.PC_End = model.PC_End;
                     org.PC_Apply = model.PC_Apply;
                     org.PC_Eventid = model.PC_Eventid;
-                   
+
 
 
 
@@ -1947,7 +1985,7 @@ namespace EventCombo.Controllers
                     }
                 }
 
-                    return "s";
+                return "s";
             }
             else
             {
@@ -1956,7 +1994,7 @@ namespace EventCombo.Controllers
             }
         }
 
-        public string datechange(string date,string type,string starttype,string typeofs)
+        public string datechange(string date, string type, string starttype, string typeofs)
         {
             string str = "";
             DateTime endadte = DateTime.Parse(starttype);
@@ -2042,12 +2080,12 @@ namespace EventCombo.Controllers
 
 
 
-              
+
                 Promo_Code prof = db.Promo_Code.Where(i => i.PC_id == promocode).FirstOrDefault();
                 db.Promo_Code.Remove(prof);
                 db.SaveChanges();
 
-               
+
 
 
                 return "D";
@@ -2063,12 +2101,12 @@ namespace EventCombo.Controllers
 
 
         #region EmailInvitations
-        [Authorize]
-        public ActionResult EmailInvitations()
-        {
+        //[Authorize]
+        //public ActionResult EmailInvitations()
+        //{
 
-            return View();
-        }
+        //    return View();
+        //}
 
         [Authorize]
         public ActionResult CreateInvitations()
