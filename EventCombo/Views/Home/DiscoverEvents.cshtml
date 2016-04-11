@@ -1104,7 +1104,7 @@
                 });
 
             } else {
-                alert('Geo Location feature is not supported in this browser.');
+                //alert('Geo Location feature is not supported in this browser.');
             }
         }
         else {
@@ -1138,22 +1138,7 @@
                 }
             });
         }
-        //title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
-
-
-        //function initMap() {
-        //    var map = new google.maps.Map(document.getElementById('dvMap'), {
-        //        zoom: 8,
-        //        center: { lat: 40.731, lng: -73.997 }
-        //    });
-        //    var geocoder = new google.maps.Geocoder;
-        //    var infowindow = new google.maps.InfoWindow;
-
-        //    document.getElementById('submit').addEventListener('click', function () {
-        //        geocodeLatLng(geocoder, map, infowindow);
-        //    });
-        //}
-
+        
         function geocodeLatLng(geocoder, map, infowindow) {
             var input = document.getElementById('txtAddress').value;
             var latlngStr = input.split(',', 2);

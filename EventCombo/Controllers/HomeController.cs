@@ -338,6 +338,14 @@ namespace EventCombo.Controllers
 
         public ActionResult DiscoverEvents(string strEt, string strEc, string strPrice, string strPageIndex, string strLat, string strLong, string strSort, string strDateFilter,string strTextSearch)
         {
+
+            if (string.IsNullOrEmpty(strLat))
+            {
+                strLat = "28.6139";
+                strLong = "77.2090";
+            }
+
+
             if ((Session["AppId"] != null))
             {
                 HomeController hmc = new HomeController();
