@@ -492,15 +492,20 @@ namespace EventCombo.Controllers
         }
 
         [Authorize]
-        public ActionResult EmailInvitations(long EventId, int? page)
+        public ActionResult EmailInvitations(long eventId, string tab, string sortOrder, int? page)
         {
-            StringBuilder strResult = new StringBuilder();
+            
+            ViewBag.CurrentSort = (sortOrder ?? "subject");
+
+            ViewBag.tab = tab;
+            ViewBag.EventId = eventId;
             using (EventComboEntities objEnt = new EventComboEntities())
             {
-                
                 var invitations = from invite_list in objEnt.Event_Email_List
-                                  group invite_list by invite_list.L_I_Id into result1
+                                  group invite_list by invite_list.L_I_Id 
+                                  into result1
                                   join invites in objEnt.Event_Email_Invitation on result1.FirstOrDefault().L_I_Id equals invites.I_Id
+                                  where invites.I_Event_Id == eventId && invites.I_Mode == "S"
                                   orderby invites.I_ModifyDate
                                   select new EmailInvitation
                                   {
@@ -508,15 +513,101 @@ namespace EventCombo.Controllers
                                       Subject = invites.I_SubjectLine,
                                       SendOn = invites.I_ScheduleDate,
                                       CreatedOn = invites.I_CreateDate,
+                                      I_Id = invites.I_Id,
                                       NoOfRecipients = result1.Count()
                                   };
+                ViewBag.scheduledCount = invitations.Count();
 
-
+                switch (sortOrder)
+                {
+                    case "subject_desc":
+                        invitations = invitations.OrderByDescending(s => s.Subject);
+                        break;
+                    case "created_date":
+                        invitations = invitations.OrderBy(s => s.CreatedOn);
+                        break;
+                    case "created_date_desc":
+                        invitations = invitations.OrderByDescending(s => s.CreatedOn);
+                        break;
+                    case "send_date":
+                        invitations = invitations.OrderBy(s => s.SendOn);
+                        break;
+                    case "send_date_desc":
+                        invitations = invitations.OrderByDescending(s => s.SendOn);
+                        break;
+                    case "recipient":
+                        invitations = invitations.OrderBy(s => s.NoOfRecipients);
+                        break;
+                    case "recipient_desc":
+                        invitations = invitations.OrderByDescending(s => s.NoOfRecipients);
+                        break;
+                    default:
+                        invitations = invitations.OrderBy(s => s.Subject);
+                        break;
+                }
 
                 int pageSize = 9;
                 int pageNumber = (page ?? 1);
-                return View(invitations.ToPagedList(pageNumber, pageSize));
+                ViewBag.scheduled = invitations.ToPagedList(pageNumber, pageSize);
+                
+                //return View(invitations.ToPagedList(pageNumber, pageSize));
             }
+
+            using (EventComboEntities objEnt = new EventComboEntities())
+            {
+                var invitations = from invite_list in objEnt.Event_Email_List
+                                  group invite_list by invite_list.L_I_Id
+                                  into result1
+                                  join invites in objEnt.Event_Email_Invitation on result1.FirstOrDefault().L_I_Id equals invites.I_Id
+                                  where invites.I_Event_Id == eventId && invites.I_Mode=="D"
+                                  orderby invites.I_ModifyDate
+                                  select new EmailInvitation
+                                  {
+                                      EventID = invites.I_Event_Id,
+                                      Subject = invites.I_SubjectLine,
+                                      SendOn = invites.I_ScheduleDate,
+                                      CreatedOn = invites.I_CreateDate,
+                                      I_Id = invites.I_Id,
+                                      NoOfRecipients = result1.Count()
+                                  };
+
+                ViewBag.draftCount = invitations.Count();
+
+                switch (sortOrder)
+                {
+                    case "subject_desc":
+                        invitations = invitations.OrderByDescending(s => s.Subject);
+                        break;
+                    case "created_date":
+                        invitations = invitations.OrderBy(s => s.CreatedOn);
+                        break;
+                    case "created_date_desc":
+                        invitations = invitations.OrderByDescending(s => s.CreatedOn);
+                        break;
+                    case "send_date":
+                        invitations = invitations.OrderBy(s => s.SendOn);
+                        break;
+                    case "send_date_desc":
+                        invitations = invitations.OrderByDescending(s => s.SendOn);
+                        break;
+                    case "recipient":
+                        invitations = invitations.OrderBy(s => s.NoOfRecipients);
+                        break;
+                    case "recipient_desc":
+                        invitations = invitations.OrderByDescending(s => s.NoOfRecipients);
+                        break;
+                    default:
+                        invitations = invitations.OrderBy(s => s.Subject);
+                        break;
+                }
+
+                int pageSize = 9;
+                int pageNumber = (page ?? 1);
+                ViewBag.draft = invitations.ToPagedList(pageNumber, pageSize);
+
+                //return View(invitations.ToPagedList(pageNumber, pageSize));
+            }
+
 
             return View();
         }
@@ -2120,10 +2211,101 @@ namespace EventCombo.Controllers
         //}
 
         [Authorize]
-        public ActionResult CreateInvitations()
+       
+        public ActionResult CreateInvitations(long lId)
         {
-
-            return View();
+            Event_Email_Invitation objEEI = new Event_Email_Invitation();
+            int iElistCnt = 0;
+            long lEventId = 0;
+            string strPassword = "";
+            
+            using (EventComboEntities objEnt = new EventComboEntities())
+            {
+                var vObj = (from EEI in objEnt.Event_Email_Invitation where EEI.I_Id == lId select EEI).FirstOrDefault();
+                if (vObj != null) objEEI = vObj;
+                iElistCnt = (objEEI.Event_Email_List != null ? objEEI.Event_Email_List.Count() : 0);
+                lEventId = (objEEI.I_Event_Id != null ? Convert.ToInt64(objEEI.I_Event_Id):0);
+                
+                if (lEventId > 0)
+                {
+                    var vEvent = (from myEvent in objEnt.Events where myEvent.EventID == lEventId select myEvent).FirstOrDefault();
+                    if (vEvent != null && vEvent.Private_Password != null) strPassword = vEvent.Private_Password.Trim();
+                }
+            }
+           
+            TempData["lId"] = lId;
+            TempData["EmailListCount"] = iElistCnt;
+            TempData["Eventid"] = lEventId;
+            TempData["PPassword"] = strPassword;
+            return View(objEEI);
+        }
+       
+        public long SaveInvitation(Event_Email_Invitation Model)
+        {
+            long lResult = 0;
+            try
+            {
+                string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    if (Model.I_Id <= 0)
+                    {
+                        Event_Email_Invitation objEInt = new Event_Email_Invitation();
+                        objEInt.I_SenderName = Model.I_SenderName;
+                        objEInt.I_SubjectLine = Model.I_SubjectLine;
+                        objEInt.I_Event_Id = Model.I_Event_Id;
+                        objEInt.I_EmailContent = Model.I_EmailContent;
+                        objEInt.I_ScheduleDate = Model.I_ScheduleDate;
+                        objEInt.I_Mode  = Model.I_Mode;
+                        objEInt.I_CreateDate = DateTime.Now;
+                        if (Model.EmailList != null)
+                        {
+                            Event_Email_List objEList = new Event_Email_List();
+                            foreach (Event_Email_List objEv in Model.EmailList)
+                            {
+                                objEList = new Event_Email_List();
+                                objEList.L_I_Id = objEInt.I_Id;
+                                objEList.L_EmailId = objEv.L_EmailId;
+                                objEnt.Event_Email_List.Add(objEList);
+                            }
+                        }
+                        objEnt.Event_Email_Invitation.Add(objEInt);
+                        objEnt.SaveChanges();
+                        lResult = objEInt.I_Id;
+                    }
+                    else
+                    {
+                        Event_Email_Invitation objEInt = objEnt.Event_Email_Invitation.First(i => i.I_Id  == Model.I_Id);
+                        objEInt.I_SenderName = Model.I_SenderName;
+                        objEInt.I_SubjectLine = Model.I_SubjectLine;
+                        objEInt.I_Event_Id = Model.I_Event_Id;
+                        objEInt.I_EmailContent = Model.I_EmailContent;
+                        objEInt.I_ScheduleDate = Model.I_ScheduleDate;
+                        objEInt.I_Mode = Model.I_Mode;
+                        objEInt.I_ModifyDate = DateTime.Now;
+                        objEnt.Event_Email_List.RemoveRange(objEnt.Event_Email_List.Where(x => x.L_I_Id == Model.I_Id));
+                        if (Model.EmailList != null)
+                        {
+                            Event_Email_List objEList = new Event_Email_List();
+                            foreach (Event_Email_List objEv in Model.EmailList)
+                            {
+                                objEList = new Event_Email_List();
+                                objEList.L_I_Id = Model.I_Id;
+                                objEList.L_EmailId = objEv.L_EmailId.Trim();
+                                objEnt.Event_Email_List.Add(objEList);
+                            }
+                        }
+                        objEnt.SaveChanges();
+                        lResult = objEInt.I_Id;
+                    }
+                }
+                return lResult;
+            }
+            catch (Exception ex)
+            {
+                return lResult;
+            }
+            
         }
 
 

@@ -11,7 +11,7 @@ namespace EventCombo.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Web.Mvc;
     public partial class Event_Email_Invitation
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,6 +24,7 @@ namespace EventCombo.Models
         public Nullable<long> I_Event_Id { get; set; }
         public string I_SenderName { get; set; }
         public string I_SubjectLine { get; set; }
+        [AllowHtml]
         public string I_EmailContent { get; set; }
         public Nullable<System.DateTime> I_ScheduleDate { get; set; }
         public Nullable<System.DateTime> I_CreateDate { get; set; }
