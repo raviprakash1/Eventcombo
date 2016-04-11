@@ -86,11 +86,14 @@ WriteLiteral(" class=\"event_container \"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"event_inner_container event_top\"");
+WriteLiteral(" class=\"event_inner_container event_top view_evnt_top viewevent_container xs-paym" +
+"entconf-top\"");
+
+WriteLiteral(" id=\"eventtopscoll\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"event_detail_container\"");
+WriteLiteral(" class=\"event_detail_container xs-paymentconf-inner\"");
 
 WriteLiteral(">\r\n            <div");
 
@@ -106,16 +109,16 @@ WriteLiteral(" class=\"col-sm-3 pl0\"");
 
 WriteLiteral(">\r\n                        <img");
 
-WriteLiteral(" class=\"ev1\"");
+WriteLiteral(" class=\"ev1 img-responsive\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 670), Tuple.Create("\"", 705)
+WriteAttribute("src", Tuple.Create(" src=\"", 778), Tuple.Create("\"", 813)
             
             #line 19 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-, Tuple.Create(Tuple.Create("", 676), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.imgurl)
+, Tuple.Create(Tuple.Create("", 784), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.imgurl)
             
             #line default
             #line hidden
-, 676), false)
+, 784), false)
 );
 
 WriteLiteral(" >\r\n                    </div>\r\n                    <div");
@@ -218,14 +221,14 @@ WriteLiteral(" data-target=\"#schcalender\"");
 
 WriteLiteral(" data-toggle=\"modal\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 2371), Tuple.Create("\"", 2384)
+WriteAttribute("id", Tuple.Create(" id=\"", 2479), Tuple.Create("\"", 2492)
             
             #line 42 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-, Tuple.Create(Tuple.Create("", 2376), Tuple.Create<System.Object, System.Int32>(item.id
+, Tuple.Create(Tuple.Create("", 2484), Tuple.Create<System.Object, System.Int32>(item.id
             
             #line default
             #line hidden
-, 2376), false)
+, 2484), false)
 );
 
 WriteLiteral(" onclick=\"showevent(this.id)\"");
@@ -298,7 +301,7 @@ WriteLiteral(" class=\"fb_dis_head pt5\"");
 
 WriteLiteral(">THANK YOU FOR YOUR ORDER</h2>\r\n            </div>\r\n            <div");
 
-WriteLiteral(" class=\"col-sm-6 col-xs-6 text-right ev_social_share_btn\"");
+WriteLiteral(" class=\"col-sm-6 col-xs-6 text-right pl0 ev_social_share_btn\"");
 
 WriteLiteral(">\r\n                <a");
 
@@ -362,7 +365,16 @@ WriteLiteral(">Your order has been saved to My E-Tickets </p>\r\n               
 
 WriteLiteral(" id=\"spOrderNo\"");
 
-WriteLiteral("></span></p>\r\n                    <p>Your tickets have been sent to ");
+WriteLiteral(">");
+
+            
+            #line 97 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                                       Write(Model.Orderdetail);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</span></p>\r\n                    <p>Your tickets have been sent to ");
 
             
             #line 98 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
@@ -385,14 +397,14 @@ WriteLiteral("</p>\r\n                    <p>\r\n                        <label>
 
 WriteLiteral(" type=\"checkbox\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 5448), Tuple.Create("\"", 5496)
+WriteAttribute("value", Tuple.Create(" value=\"", 5578), Tuple.Create("\"", 5626)
             
             #line 102 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-, Tuple.Create(Tuple.Create("", 5456), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.sendlatestdetails)
+, Tuple.Create(Tuple.Create("", 5586), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.sendlatestdetails)
             
             #line default
             #line hidden
-, 5456), false)
+, 5586), false)
 );
 
 WriteLiteral(" ");
@@ -531,14 +543,14 @@ WriteLiteral(" class=\"col-sm-12 col-xs-12 no_pad\"");
 
 WriteLiteral(">\r\n                       \r\n                            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 8077), Tuple.Create("\'", 8124)
+WriteAttribute("href", Tuple.Create(" href=\'", 8207), Tuple.Create("\'", 8254)
             
             #line 161 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-, Tuple.Create(Tuple.Create("", 8084), Tuple.Create<System.Object, System.Int32>(Url.Action("CreateEvent","CreateEvent")
+, Tuple.Create(Tuple.Create("", 8214), Tuple.Create<System.Object, System.Int32>(Url.Action("CreateEvent","CreateEvent")
             
             #line default
             #line hidden
-, 8084), false)
+, 8214), false)
 );
 
 WriteLiteral("  class=\"btn ev_live_btn cap_l fs18\"");
@@ -604,7 +616,7 @@ WriteLiteral(" class=\"col-sm-12 col-xs-12 no_pad\"");
 
 WriteLiteral(">\r\n                        <div");
 
-WriteLiteral(" class=\"col-sm-2 col-xs-5 no_pad\"");
+WriteLiteral(" class=\"col-sm-2 col-xs-5 no_pad xs-100-f-l\"");
 
 WriteLiteral(">\r\n                            <a");
 
@@ -620,15 +632,15 @@ WriteLiteral(">Contact Us</a>\r\n                            ");
 
 WriteLiteral("\r\n                        </div>\r\n                        <div");
 
-WriteLiteral(" class=\"col-sm-1 col-xs-2 text-center mt5 fs18\"");
+WriteLiteral(" class=\"col-sm-1 col-xs-2 text-center mt5 fs18 xs-100-f-l\"");
 
 WriteLiteral(">Or</div>\r\n                        <div");
 
-WriteLiteral(" class=\"col-sm-9 col-xs-5 no_pad\"");
+WriteLiteral(" class=\"col-sm-9 col-xs-5 no_pad xs-100-f-l\"");
 
 WriteLiteral(">\r\n                            <button");
 
-WriteLiteral(" class=\"btn ev_live_btn cap_l fs18\"");
+WriteLiteral(" class=\"btn ev_live_btn cap_l fs18 xs-100-f-l\"");
 
 WriteLiteral(" type=\"button\"");
 
@@ -968,26 +980,9 @@ WriteLiteral(@"',
 
         });
   
-        $.ajax({
-            url: '");
+        ");
 
-            
-            #line 381 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-             Write(Url.Action("GetOrderDetailForConfirmation", "TicketPayment"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral(@"',
-            type: ""Post"",
-            success: function (data) {
-                //ary = data.split('~');
-                //strOrderDetail = ""Order "" + ary[0] + "" , "" + ary[1] + "" tickets for $"" + ary[2];
-                $(""#spOrderNo"").text(data);
-            },
-            error: function (data) {
-            }
-        });
+WriteLiteral(@"
 
     });
 
@@ -1045,16 +1040,14 @@ WriteLiteral("\';\r\n            var url = \'");
             #line default
             #line hidden
 WriteLiteral(@"';
-
             window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[summary]=' + encodeURIComponent(description) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
-
         });
         $('#fbshare').click(function () {
             var title='");
 
             
-            #line 429 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 427 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                   Write(Html.DisplayFor(m => m.Tilte).ToString().Trim());
 
             
@@ -1063,7 +1056,7 @@ WriteLiteral(@"';
 WriteLiteral("\';\r\n            var description=\'");
 
             
-            #line 430 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 428 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                         Write(Html.DisplayFor(m => m.description).ToString().Trim());
 
             
@@ -1072,26 +1065,22 @@ WriteLiteral("\';\r\n            var description=\'");
 WriteLiteral("\';\r\n            var url=\'");
 
             
-            #line 431 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 429 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                 Write(Html.DisplayFor(m => m.url).ToString().Trim());
 
             
             #line default
             #line hidden
 WriteLiteral(@"';
-
             window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[summary]=' + encodeURIComponent(description) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
-
-
-
         });
 
         $('#twittershare').click(function () {
             var title = '");
 
             
-            #line 441 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 435 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                     Write(Html.DisplayFor(m => m.Tilte).ToString().Trim());
 
             
@@ -1100,7 +1089,7 @@ WriteLiteral(@"';
 WriteLiteral("\';\r\n            var description = \'");
 
             
-            #line 442 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 436 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                           Write(Html.DisplayFor(m => m.description).ToString().Trim());
 
             
@@ -1109,7 +1098,7 @@ WriteLiteral("\';\r\n            var description = \'");
 WriteLiteral("\';\r\n            var url = \'");
 
             
-            #line 443 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 437 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                   Write(Html.DisplayFor(m => m.url).ToString().Trim());
 
             
@@ -1128,7 +1117,7 @@ WriteLiteral(@"';
             var title = '");
 
             
-            #line 453 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 447 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                     Write(Html.DisplayFor(m => m.Tilte).ToString().Trim());
 
             
@@ -1137,7 +1126,7 @@ WriteLiteral(@"';
 WriteLiteral("\';\r\n            var description = \'");
 
             
-            #line 454 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 448 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                           Write(Html.DisplayFor(m => m.description).ToString().Trim());
 
             
@@ -1146,7 +1135,7 @@ WriteLiteral("\';\r\n            var description = \'");
 WriteLiteral("\';\r\n            var url = \'");
 
             
-            #line 455 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 449 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                   Write(Html.DisplayFor(m => m.url).ToString().Trim());
 
             
@@ -1178,7 +1167,7 @@ WriteLiteral(@"';
             url: '");
 
             
-            #line 478 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 472 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
              Write(Url.Action("getlatestsetting", "TicketPayment"));
 
             
@@ -1220,7 +1209,7 @@ WriteLiteral("\',\r\n            data: { get: check },\r\n            type: \"Po
 "       var variable = fullDateReal;\r\n        $(\"#ioutlook\").attr(\"href\", \'");
 
             
-            #line 560 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 554 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                                 Write(Url.Action("Calendar", "CreateEvent",new {}));
 
             
@@ -1231,7 +1220,7 @@ WriteLiteral("\' + \'?beginDate=\' + isodatestart + \'&endDate=\' + isodateend +
 "(\"href\", \'");
 
             
-            #line 561 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 555 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                                  Write(Url.Action("Calendar", "CreateEvent",new {}));
 
             
