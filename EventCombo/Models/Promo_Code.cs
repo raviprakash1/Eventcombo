@@ -24,7 +24,7 @@ namespace EventCombo.Models
         public string PC_End { get; set; }
         public string PC_Apply { get; set; }
         public string PC_URL { get; set; }
-        public Nullable<long> PC_Eventid { get; set; }
+        public long PC_Eventid { get; set; }
         public Nullable<System.DateTime> SavedDate { get; set; }
         public string PC_Startdatetype { get; set; }
         public string Pc_Enddatetype { get; set; }

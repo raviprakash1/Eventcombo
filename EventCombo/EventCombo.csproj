@@ -503,11 +503,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventConfirmation.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EventList\EventList.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EventList.cshtml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Home\DiscoverEvents.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1171,7 +1166,6 @@
       <LastGenOutput>EditEvent.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\EventList\EventList.cshtml">
-      <Generator>RazorGenerator</Generator>
       <LastGenOutput>EventList.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Account\Loginresult.cshtml">

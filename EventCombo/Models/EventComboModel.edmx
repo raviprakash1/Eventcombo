@@ -487,7 +487,7 @@
           <Property Name="PC_End" Type="varchar" MaxLength="50" />
           <Property Name="PC_Apply" Type="varchar" MaxLength="50" />
           <Property Name="PC_URL" Type="varchar" MaxLength="150" />
-          <Property Name="PC_Eventid" Type="bigint" />
+          <Property Name="PC_Eventid" Type="bigint" Nullable="false" />
           <Property Name="SavedDate" Type="datetime" />
           <Property Name="PC_Startdatetype" Type="nchar" MaxLength="1" />
           <Property Name="Pc_Enddatetype" Type="nchar" MaxLength="1" />
@@ -2276,7 +2276,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="PC_End" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PC_Apply" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PC_URL" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="PC_Eventid" Type="Int64" />
+          <Property Name="PC_Eventid" Type="Int64" Nullable="false" />
           <Property Name="SavedDate" Type="DateTime" Precision="3" />
           <Property Name="PC_Startdatetype" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
           <Property Name="Pc_Enddatetype" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />

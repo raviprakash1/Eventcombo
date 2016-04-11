@@ -467,7 +467,23 @@
 
         
     //}
+    $('body').on('keyup keypress', function (e) {
 
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            if ($("#myModal").css('display') == 'block') {
+                if ($('#login_up').css('display') == 'block') {
+
+                    $("#btnSavelogin").click();
+                }
+
+
+                if ($('#sign_up').css('display') == 'block') {
+                    $("#btnsave").click();
+                }
+            }
+        }
+    });
 
     var WindowObjectReference;
     function invokeLogin() {

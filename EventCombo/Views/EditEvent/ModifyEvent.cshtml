@@ -16,7 +16,7 @@
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 <link href="~/Content/MapPlaces.css" rel="stylesheet" />
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post,new {id="ModifyeventEnter"}))
 {
     <input type="hidden" id="hdimage" />
     <div class="event_container">
@@ -1345,7 +1345,17 @@ else
 
         </div>
     </div>
-    //----------Model Starts Here------------------
+
+    @*<input type="submit" name="btnSubmit" id="SubmitButton" value="Submit" />*@
+
+    <div id="imagetostore">
+
+
+
+    </div>
+}
+
+  @*Model Start here*@
 
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -1465,22 +1475,18 @@ else
         </div>
     </div>
 
-    <div id="imagetostore" >
-
-
-
-    </div>
+   
 
 
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 
     @*<script src = "~/Scripts/gmap.js" ></script>*@
-    // ---------------------Event Creation Script -------------------
+    @*// ---------------------Event Creation Script -------------------*@
 
     <script type="text/javascript">
 
-       
+
 
         var map_canvas ;
         var mapProp;
@@ -1536,7 +1542,7 @@ else
                     marker.setVisible(true);
                     console.log(place)
                     var address = '';
-                   
+
                     if (place.address_components) {
                         address = [
                           (place.address_components[0] && place.address_components[0].short_name || ''),
@@ -1550,9 +1556,9 @@ else
                         console.log(place.address_components[i].types[0]);
                         if(place.address_components[i].types[0].trim()=="postal_code")
                         {
-                            if (typeof place.address_components[i] === "undefined") 
+                            if (typeof place.address_components[i] === "undefined")
                             {
-                        
+
                             }else
                             {
                                 $("#Zip").val(place.address_components[i].long_name);
@@ -1560,9 +1566,9 @@ else
                         }
                         if(place.address_components[i].types[0].trim()=="locality" || place.address_components[i].types[0].trim()=="administrative_area_level_3")
                         {
-                            if (typeof place.address_components[i] === "undefined") 
+                            if (typeof place.address_components[i] === "undefined")
                             {
-                        
+
                             }else
                             {
                                 $("#City").val(place.address_components[i].long_name);
@@ -1570,9 +1576,9 @@ else
                         }
                         if(place.address_components[i].types[0].trim()=="administrative_area_level_1")
                         {
-                            if (typeof place.address_components[i] === "undefined") 
+                            if (typeof place.address_components[i] === "undefined")
                             {
-                        
+
                             }else
                             {
                                 $("#State").val(place.address_components[i].long_name);
@@ -1580,9 +1586,9 @@ else
                         }
                         if(place.address_components[i].types[0].trim()=="country")
                         {
-                            if (typeof place.address_components[i] === "undefined") 
+                            if (typeof place.address_components[i] === "undefined")
                             {
-                        
+
                             }else
                             {
                                 $('#CountryID option').each(function(){
@@ -1590,27 +1596,27 @@ else
                                         $(this).prop('selected', true).trigger('change');
                                     }
                                 });
-                             
+
                             }
                         }
-                       
-                       
+
+
 
                     }
-                   
-                  
-                   
-                    if (typeof place.address_components[0] === "undefined") 
+
+
+
+                    if (typeof place.address_components[0] === "undefined")
                     {
-                        
+
                     }else
                     {
                         $("#VenueName").val(place.address_components[0].long_name);
                     }
-                   
-             
-               
-               
+
+
+
+
 
                 $("#VenueName").val(address.toString());
                 $("#Address1").val(address[1].toString());
@@ -1720,9 +1726,9 @@ else
                 $(".adminvis").css('display','block');
             }
 
-       
 
-           
+
+
             $.getJSON('@Url.Action("GetEventChildData", "EditEvent")',
                 { lEventId: lEventId},
                 function (data) {
@@ -1969,14 +1975,14 @@ else
             var isValid = false;
             var sno = $("#hidOrgnizer").val();
             var name = $('#txtOrgnizer').val();
-                
-            var regex = /^[a-zA-Z ]*$/; 
+
+            var regex = /^[a-zA-Z ]*$/;
             isValid = regex.test(name);
             if (isValid) {
                 var orgid = 0;
 
                 orgid = $('#OrgId_' + sno).html();
-                 
+
                 if (typeof orgid === "undefined") {
                     orgid = 0;
                 }
@@ -1988,17 +1994,17 @@ else
                     success: function (data) {
 
                         if (data == "True") {
-                              
+
                             $('#erraccmsg').html("Organizer name already exist!");
                             $('#diverroacc').css('display', 'block');
                             $('#txtOrgnizer').addClass('err-bor');
                             $('#txtOrgnizer').val('');
                             $('html,body').animate({ scrollTop: 0 });
-                              
+
                             return false;
                         } else {
                             $('#txtOrgnizer').removeClass('err-bor');
-                               
+
                         }
 
                     }
@@ -2029,7 +2035,7 @@ else
         });
         $(".cbtPreview").click(function () {
             var msg = validatemain();
-       
+
             if (msg != "") {
 
                 $('#diverroacc').css('display', 'block');
@@ -2048,7 +2054,7 @@ else
 
     </script>
 
-    // ---------------------Event Creation Script -------------------
+   @* // ---------------------Event Creation Script -------------------*@
     <script>
 
         $(".chkvalidation").blur(function () {
@@ -2297,14 +2303,14 @@ else
                     }
 
 
-                      
+
 
                 });
             } else
             {
-                
+
             }
-        
+
             $('#tblOrgnizer tr').each(function () {
                 if (Sno.trim() == $(this).find("td:first").html().trim()) {
                     $(this).remove();
@@ -2410,7 +2416,7 @@ else
             var strHTML = '<tr>';
             strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
             strHTML = strHTML + '<td width="92%"><label id=OrgName_' + Sno + '>' + vOrgName + '</label></td>';
-         
+
             strHTML = strHTML + '<td style="display:none"><label id=OrgId_' + Sno + '>0</label><label id=OrgEdit_' + Sno + '>0</label><label id=OrgDes_' + Sno + '>' + vOrgDes + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgFB_' + Sno + '>' + vOrgFB + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgTw_' + Sno + '>' + vOrgTw + '</label></td>';
@@ -2513,7 +2519,7 @@ else
                         EventImage.push({
                             EventImageUrl: imagename,
                             ImageType: imagetype,
-                        }); 
+                        });
                 });
 
                 //$("input[id^='image_hidden']").each(function (i, el) {
@@ -2528,7 +2534,7 @@ else
                 //        EventImageUrl: imagename,
                 //        ImageType: imagetype,
                 //    });
-                   
+
                 //});
 
                 //var count = ($("#image_count").val());
@@ -2749,7 +2755,7 @@ else
 
             //  alert($("#tblAddress tr").length);
             var addressstatus=$('#hidAddressStatus').val();
-        
+
             if(addressstatus=="")
             {
                 if($("#txtEventLocation").val()!="")
@@ -2788,9 +2794,9 @@ else
                     //  alert(Sno);
                     // Multiple Address
                     if (Sno != '' && Sno != undefined && Sno != null) {
-                       
+
                         SubmitAddress.push({
-                            AddressId:$("#VenueId"+Sno).val(),  
+                            AddressId:$("#VenueId"+Sno).val(),
                             VenueName: $("#VenueName" + Sno).val(),
                             Address1: ($("#Address1" + Sno).val() != null ? $("#Address1" + Sno).val() : ''),
                             Address2: ($("#Address2" + Sno).val() != null ? $("#Address2" + Sno).val() : ''),
@@ -4136,7 +4142,7 @@ else
     </script>
 
 
-    //Ticket Section Starts
+    @*//Ticket Section Starts*@
     <script>
         function CannotFindLocation() {
             $("#dvAddFooter").hide();
@@ -5752,15 +5758,15 @@ else
                         type: "Post",
                         async:false,
                         success: function (data) {
-                           
+
                             if (data.Ticketsale == 0) {
 
                                 deltedy=0;
 
-                           
+
                             } else {
                                 deltedy=data.Ticketsale;
-                               
+
                             }
 
                         }
@@ -5772,10 +5778,10 @@ else
                     $('#nodeleteH4').text("You cannot delete this ticket since it has already been purchased/registered or donated.")
                     $('#anodelete').click();
                     $(".tab-content").hide();
-                               
+
                     return false;
                 }
-               
+
                 var div = document.getElementById("clonediv-" + el);
                 // var div = document.getElementById("clonediv-0");
                 var toatlqty = $("#id_totalqty").html();
@@ -6638,7 +6644,7 @@ else
             }
             if(purcsed>0)
             {
-                msg+="Please Enter valid qty. <br/>";
+                msg+= ajaxsetup("CreateEvent", "CreateEventQtyPurchaseValidateUI") + "<br/>";
             }
             if (countprice > 0) {
                 msg += ajaxsetup("CreateEvent", "PriceNotzeroUI") + "<br/>";
@@ -7018,8 +7024,32 @@ else
     </script>
 
     <script>
-        $(document).ready(function () {
+
       
+        $(document).ready(function () {
+            $('body').on('keyup keypress', function (e) {
+                debugger;
+                var keyCode = e.keyCode || e.which;
+                if (keyCode === 13) {
+                    var msg = validatemain();
+               
+                    if (msg != "") {
+                        $('#diverroacc').css('display', 'block');
+                        $('#erraccmsg').html(msg);
+                        $('#divaccsuc').css('display', 'none');
+                        $('html,body').animate({ scrollTop: 0 });
+                        return false;
+
+                    }
+                    //if ($("#status").val().trim().toUpperCase() == "LIVE")
+                    //    save("Live");
+                    //else
+                    save("Save");
+                    //e.preventDefault();
+                   
+                    //return false;
+                }
+            });
             $("#btndeleteorg").click(function()
             {
                 $("#hId").html(ajaxsetup('OrganizerMaster', 'OrgDeleteMessage'));
@@ -7439,9 +7469,7 @@ else
 
         }
     </script>
-
-}
-
+   
 
 
 
