@@ -1480,26 +1480,13 @@
 
     <script type="text/javascript">
 
-        //$('#CreateEvent').on('keyup keypress', function (e) {
-        //    var keyCode = e.keyCode || e.which;
-        //    if (keyCode === 13) {
-        //        e.preventDefault();
-        //        //alert("A The action has occurred without submitting the form!");
-        //        return false;
-        //    }
-        //});
-
-        //$("#CreateEvent").submit(function (e) {
-        //    e.preventDefault();
-        //    alert("The action has occurred without submitting the form!");
-        //});
 
 
 
         var lastmodulecalled = "";
         var map_canvas ;
         var mapProp;
-    google.maps.event.addDomListener(window, 'load', initialize);
+        google.maps.event.addDomListener(window, 'load', initialize);
         function initialize() {
             var autocomplete = new google.maps.places.Autocomplete(document.getElementById('VenueName'));
             mapProp = {
