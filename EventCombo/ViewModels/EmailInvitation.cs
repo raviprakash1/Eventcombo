@@ -16,7 +16,8 @@ namespace EventCombo.ViewModels
         public Nullable<DateTime> CreatedOn { get; set; }
         public Nullable<DateTime> SendOn { get; set; }
 
-       
+        public long I_Id   { get; set; }
+
     }
       
 }

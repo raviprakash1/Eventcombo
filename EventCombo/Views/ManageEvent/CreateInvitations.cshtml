@@ -1,11 +1,30 @@
 ﻿@model EventCombo.Models.Event_Email_Invitation
+@using EventCombo.Models
 @{
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/DateTimePicker.css" rel="stylesheet" />
+<div class="pt10 bggrey clearfix">
+    <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
+        <div class="er_UI_main">
+            <div class="er_UI_img"></div>
+            <div class="er_suc" id="erraccmsg"></div>
+            <button class="close" type="button" id="btndiverrsuc">&#215;</button>
 
+        </div>
+    </div>
+    <div class="Moderor" id="divaccsuc" style="display: none;" tabindex="-1">
+        <div class="er_suc_main">
+
+            <div class="er_suc_img"></div>
+            <div class="er_suc" id="succaccmsg"> </div>
+            <button class="close" type="button" id="btndivaccsuc">&#215;</button>
+
+        </div>
+    </div>
+</div>
 <div class="col-sm-12 ">
     <h3 class="acnt_title inv_eml_title">Great! your private event is now live.</h3>
     <p class="inv_em_url">The URL for the event is <a href="#" target="_blank">http://eventcombo.com</a></p>
@@ -117,30 +136,29 @@
             <div class="clearfix"></div>
             <div class="col-sm-12 col-xs-12 mt10 ">
                 <p class="inv_mail_abt mb0">About the event:</p>
-                <p class="inv_mail_abt mb0"> Your event password : 123456789</p>
+                @if (TempData["PPassword"].ToString() != string.Empty)
+                {
+                    <p class="inv_mail_abt mb0"> Your event password : @TempData["PPassword"].ToString()</p>
+                }
                 <p>
                     ( Event registration is by invitation only with the provided password. Register with your email address
                     and the password above to attend this event. )
                 </p>
                 <p>
-                    <button class="btn def_btn acnt_btn edit_editor_btn" type="button" title="" data-toggle="modal" data-target="#invite_email_desc">Edit</button>
+                    <button class="btn def_btn acnt_btn edit_editor_btn" type="button" title="" data-toggle="modal" id="btEditEditor" data-target="#invite_email_desc">Edit</button>
                 </p>
             </div>
             <div class="clearfix"></div>
-            <div class="col-sm-12">
-                @if (Model != null && !String.IsNullOrEmpty(Model.I_EmailContent))
-                {
-                    <p id="emailcontent" class="inv_mail_desc">
-                        @Model.I_EmailContent
-                    </p>
-                }
-                else
-                {
-                    <p id="emailcontent" class="inv_mail_desc">
-
-                    </p>
-                }
-            </div>
+            @if (Model != null && !String.IsNullOrEmpty(Model.I_EmailContent))
+            {
+                <div id="dvemailcontent" class="col-sm-12">
+                    @Model.I_EmailContent
+                </div>
+            }
+            else
+            {
+                <div id="dvemailcontent" class="col-sm-12"></div>
+            }
         </div>
         <div class="clearfix"></div>
         <div class="col-sm-6 col-xs-12 no_pad ">
@@ -189,7 +207,8 @@
                         <div class="col-sm-12 no_pad">
                             <ul class="inv_mail_list_head">
                                 <li><input id="chkSelectAll" type="checkbox"></li>
-                                <li>  EmailId 
+                                <li>
+                                    EmailId
                                     <span class="crt_evnt_drop_up crt_invit_drop_down_a"> <a href="#"><i class="fa fa-angle-up"></i></a> </span>
                                     <span class="crt_evnt_drop_down crt_invit_drop_down"> <a href="#"><i class="fa fa-angle-down"></i></a> </span>
                                 </li>
@@ -198,14 +217,25 @@
                         <div class="clearfix"></div>
                         <div class="col-sm-12 no_pad">
                             <div id="dvEmaillist" class="col-sm-12 no_pad inv_mail_scroll">
+                                @{ int icnt = 0;
+
+                                    foreach (Event_Email_List eel in Model.Event_Email_List)
+                                    {
+                                        icnt = icnt + 1;
+                                        <ul id="UL_@icnt" class="inv_mail_list">
+                                            <li><input id="chk_@icnt" type="checkbox"></li>
+                                            <li>@eel.L_EmailId </li>
+                                        </ul>
+                                    }
+                                }
                                 @*<ul class="inv_mail_list">
-                                    <li><input type="checkbox"></li>
-                                    <li>  abc@gmail.com </li>
-                                </ul>
-                                <ul class="inv_mail_list">
-                                    <li><input type="checkbox"></li>
-                                    <li>  abc@gmail.com </li>
-                                </ul>*@
+                                        <li><input type="checkbox"></li>
+                                        <li>  abc@gmail.com </li>
+                                    </ul>
+                                    <ul class="inv_mail_list">
+                                        <li><input type="checkbox"></li>
+                                        <li>  abc@gmail.com </li>
+                                    </ul>*@
                             </div>
                         </div>
 
@@ -252,9 +282,17 @@
             </div>
             <div class="col-sm-4 col-xs-6 no_pad">
                 <button class="btn def_btn acnt_btn send_test_btn" id="btSaveDraft" onclick="SaveDetail('D');" type="button">Save Draft</button>
-                <input type="hidden" id="hdListId"  />
+                <input type="hidden" id="hdListId" value="@TempData["EmailListCount"]" />
                 <input type="hidden" id="hdId" value="@Model.I_Id" />
                 <input type="hidden" id="hdEventId" value="@TempData["Eventid"]" />
+                @if (Model != null && !String.IsNullOrEmpty(Model.I_EmailContent))
+                {
+                    <input type="hidden" id="hdEmailContent" value="@Model.I_EmailContent" />
+                }
+                else
+                {
+                    <input type="hidden" id="hdEmailContent" value="" />
+                }
             </div>
         </div>
     </div>
@@ -290,10 +328,10 @@
             </div>
             <div class="modal-body clearfix">
                 <div class="col-sm-12">
-                    <div class="summernote">summernote 1</div>
+                    <div class="summernote" id="dvEditor"></div>
 
                     <div class="col-sm-12 text-center">
-                        <button type="button"  class="btn def_btn acnt_btn send_test_btn">
+                        <button type="button" id="btSaveEditor" class="btn def_btn acnt_btn send_test_btn" data-dismiss="modal" aria-label="Close">
                             Save
                         </button>
                     </div>
@@ -368,15 +406,27 @@
 </script>
 <script>
     $(document).ready(function () {
-        @if(Model.EmailList != null)
+        var vEditorVal = $("#hdEmailContent").val().trim();
+        if (vEditorVal != "")
         {
-
+            $("#dvemailcontent").empty();
+            $("#dvemailcontent").append(vEditorVal)
         }
+
+        $("#btSaveEditor").click(function () {
+            var vEditorValue = $("#dvEditor").code();
+            $("#dvemailcontent").empty();
+            $("#dvemailcontent").append(vEditorValue)
+        });
+
+        $("#btEditEditor").click(function () {
+            var vEditorHtml = $("#dvemailcontent").html();
+            $("#dvEditor").code(vEditorHtml);
+        });
 
         $("#btAddEmail").click(function () {
             var vValue = $("#txtAddEmail").val().trim();
-            if (vValue != "")
-            {
+            if (vValue != "") {
                 AddEmail(vValue);
                 $("#txtAddEmail").val("");
                 $("#txtAddEmail").focus();
@@ -387,12 +437,9 @@
             var vIds = parseFloat($("#hdListId").val());
             if (isNaN(vIds) == true) vIds = 0;
 
-            if (vIds >0)
-            {
-                for (i=0;i<=vIds;i++)
-                {
-                    if ($("#chk_" + i).is(":checked") == true)
-                    {
+            if (vIds > 0) {
+                for (i = 0; i <= vIds; i++) {
+                    if ($("#chk_" + i).is(":checked") == true) {
                         $("#UL_" + i).remove();
                     }
                 }
@@ -411,7 +458,7 @@
                 }
                 //alert(vflag);
                 for (i = 0; i <= vIds; i++) {
-                  //  alert(vIds);
+                    //  alert(vIds);
                     $("#chk_" + i).attr("checked", vflag);
                 }
             }
@@ -420,15 +467,46 @@
 
 
     });
+    function ajaxsetup(strname, strFormTag) {
+        var msgnew = "";
 
-    function SaveDetail(Mode)
-    {
+        var request = $.ajax({
+            url: '@Url.Action("Index", "ValidationMessage")',
+            async: false,
+            data: { strFormName: strname, strFormTag: strFormTag },
+            type: 'Post'
+        });
+        request.done(function (msg) {
+            msgnew += msg;
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            msgnew += "Some Error occur!!";
+        });
+        return msgnew;
+    }
+    function ShowMessage(Type, Mess) {
+        if (Type == 'S') {
+            $('#divaccsuc').css('display', 'block');
+            $('#divaccsuc').focus();
+            $('#diverroacc').css('display', 'none');
+            $('#succaccmsg').html(Mess);
+        }
+        else {
+            $('#divaccsuc').css('display', 'none');
+            $('#diverroacc').css('display', 'block');
+            $('#diverroacc').focus();
+            $('#erraccmsg').html(Mess);
+
+        }
+    }
+    function SaveDetail(Mode) {
         var EmailList = [];
         var vIds = parseFloat($("#hdListId").val());
         if (vIds > 0) {
             for (i = 0; i <= vIds; i++) {
                 vVal = $("#UL_" + i).text();
-                alert(vVal);
+                //  alert(vVal);
                 if (vVal.trim() != '') {
                     EmailList.push({
                         L_Id: "0",
@@ -443,7 +521,7 @@
             'I_Event_Id': $("#hdEventId").val(),
             'I_SenderName': $("#txtSenderName").val(),
             'I_SubjectLine': $("#txtSubjectLine").val(),
-            'I_EmailContent': $("#emailcontent").text(),
+            'I_EmailContent': $("#dvemailcontent").html(),
             'I_ScheduleDate': $("#txtSchDate").val(),
             'I_Mode': Mode,
             'EmailList': EmailList
@@ -451,7 +529,7 @@
 
         $.ajax({
             url: '@Url.Action("SaveInvitation", "ManageEvent")',
-            data: { model: model},
+            data: { model: model },
             type: "Post",
             success: function (response) {
                 $("#hdId").val(response);
@@ -460,15 +538,19 @@
 
     }
 
-    function AddEmail(vValue)
-    {
-        var vId = parseFloat($("#hdListId").val());
-        if (isNaN(vId) == true) vId = 0;
-        vId = vId + 1;
-        $("#hdListId").val(vId);
-        var vHtml = '<ul id="UL_' + vId + '" class="inv_mail_list"><li><input id="chk_' + vId + '" type="checkbox"></li><li>' + vValue + '</li></ul>';
-       // alert(vHtml);
-        $("#dvEmaillist").append(vHtml);
+    function AddEmail(vValue) {
+        if (validateEmail(vValue) == true) {
+            var vId = parseFloat($("#hdListId").val());
+            if (isNaN(vId) == true) vId = 0;
+            vId = vId + 1;
+            $("#hdListId").val(vId);
+            var vHtml = '<ul id="UL_' + vId + '" class="inv_mail_list"><li><input id="chk_' + vId + '" type="checkbox"></li><li>' + vValue + '</li></ul>';
+            // alert(vHtml);
+            $("#dvEmaillist").append(vHtml);
+        }
+        else {
+            ShowMessage('E', ajaxsetup('CreateInvitations', 'EmailValidationUI'));
+        }
     }
 
 

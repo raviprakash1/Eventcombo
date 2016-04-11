@@ -107,7 +107,7 @@
                                 @Html.DisplayFor(modelItem => item.SendOn)
                             </div>
                             <div class="crt_inv_mid_cell create_invite_action ">
-                                <a href="#">Edit </a>  <a href="#">Copy</a>  <a href="#">Delete</a>
+                                @Html.ActionLink("Edit", "CreateInvitations", "ManageEvent", new { lId = item.I_Id }, null)  <a href="#">Copy</a>  <a href="#">Delete</a>
                             </div>
                         }
 
@@ -177,7 +177,7 @@
                                 @Html.DisplayFor(modelItem => item.SendOn)
                             </div>
                             <div class="crt_inv_mid_cell create_invite_action ">
-                                <a href="#">Edit </a>  <a href="#">Copy</a>  <a href="#">Delete</a>
+                                @Html.ActionLink("Edit", "CreateInvitations", "ManageEvent", new { lId = item.I_Id }, null)  <a href="#">Copy</a>  <a href="#">Delete</a>
                             </div>
                         }
                     </div>
@@ -200,8 +200,8 @@
 <script>
     $(document).ready(function () {
         $("#btCreateInv").click(function () {
-            var vUrl = '@Url.Action("CreateInvitations", "ManageEvent",new { lEventId="eventurlid" },null)';
-            vUrl = vUrl.replace("eventurlid","101");
+            var vUrl = '@Url.Action("CreateInvitations", "ManageEvent",new { lId = "0" },null)';
+            //vUrl = vUrl.replace("eventurlid","101");
             window.location.href = vUrl;
         });
     });

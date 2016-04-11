@@ -510,6 +510,7 @@ namespace EventCombo.Controllers
                                       Subject = invites.I_SubjectLine,
                                       SendOn = invites.I_ScheduleDate,
                                       CreatedOn = invites.I_CreateDate,
+                                      I_Id = invites.I_Id,
                                       NoOfRecipients = result1.Count()
                                   };
                 ViewBag.scheduledCount = invitations.Count();
@@ -563,6 +564,7 @@ namespace EventCombo.Controllers
                                       Subject = invites.I_SubjectLine,
                                       SendOn = invites.I_ScheduleDate,
                                       CreatedOn = invites.I_CreateDate,
+                                      I_Id = invites.I_Id,
                                       NoOfRecipients = result1.Count()
                                   };
 
@@ -2195,17 +2197,35 @@ namespace EventCombo.Controllers
         //}
 
         [Authorize]
-        public ActionResult CreateInvitations(long lEventId)
+       
+        public ActionResult CreateInvitations(long lId)
         {
             Event_Email_Invitation objEEI = new Event_Email_Invitation();
+            int iElistCnt = 0;
+            long lEventId = 0;
+            string strPassword = "";
+            
             using (EventComboEntities objEnt = new EventComboEntities())
             {
-                var vObj = (from EEI in objEnt.Event_Email_Invitation where EEI.I_Event_Id == lEventId select EEI).FirstOrDefault();
+                var vObj = (from EEI in objEnt.Event_Email_Invitation where EEI.I_Id == lId select EEI).FirstOrDefault();
                 if (vObj != null) objEEI = vObj;
+                iElistCnt = (objEEI.Event_Email_List != null ? objEEI.Event_Email_List.Count() : 0);
+                lEventId = (objEEI.I_Event_Id != null ? Convert.ToInt64(objEEI.I_Event_Id):0);
+                
+                if (lEventId > 0)
+                {
+                    var vEvent = (from myEvent in objEnt.Events where myEvent.EventID == lEventId select myEvent).FirstOrDefault();
+                    if (vEvent != null && vEvent.Private_Password != null) strPassword = vEvent.Private_Password.Trim();
+                }
             }
+           
+            TempData["lId"] = lId;
+            TempData["EmailListCount"] = iElistCnt;
             TempData["Eventid"] = lEventId;
+            TempData["PPassword"] = strPassword;
             return View(objEEI);
         }
+       
         public long SaveInvitation(Event_Email_Invitation Model)
         {
             long lResult = 0;
@@ -2257,7 +2277,7 @@ namespace EventCombo.Controllers
                             {
                                 objEList = new Event_Email_List();
                                 objEList.L_I_Id = Model.I_Id;
-                                objEList.L_EmailId = objEv.L_EmailId;
+                                objEList.L_EmailId = objEv.L_EmailId.Trim();
                                 objEnt.Event_Email_List.Add(objEList);
                             }
                         }
@@ -2267,7 +2287,7 @@ namespace EventCombo.Controllers
                 }
                 return lResult;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return lResult;
             }

@@ -117,5 +117,11 @@ namespace EventCombo.Models
     public partial class Event_Email_Invitation
     {
         public Event_Email_List[] EmailList { get; set; }
+        public string EventTitle  {get;set;}
+
+        public string EventDate { get; set; }
+        public string EventOrgnizer { get; set; }
+
+
     }
 }
