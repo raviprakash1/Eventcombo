@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace EventCombo.Models
 {
@@ -114,6 +115,23 @@ namespace EventCombo.Models
 
 
     }
+
+    public class EmailContent
+    {
+        public string To { get; set; }
+        public string From { get; set; }
+        [AllowHtml]
+        public string Body { get; set; }
+
+        public string Subject { get; set; }
+
+        public string Cc { get; set; }
+        public string Bcc { get; set; }
+        public string Fromname { get; set; }
+        
+
+    }
+
     public partial class Event_Email_Invitation
     {
         public Event_Email_List[] EmailList { get; set; }
@@ -121,7 +139,11 @@ namespace EventCombo.Models
 
         public string EventDate { get; set; }
         public string EventOrgnizer { get; set; }
-
+        public string EventAddress { get; set; }
+        public string EventLat { get; set; }
+        public string EventLong { get; set; }
+        public string EventImg { get; set; }
+        
 
     }
 }

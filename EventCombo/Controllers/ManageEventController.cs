@@ -11,6 +11,8 @@ using System.IO;
 using System.Data.Entity.SqlServer;
 using PagedList;
 using EventCombo.ViewModels;
+using System.Net.Mail;
+using System.Configuration;
 
 namespace EventCombo.Controllers
 {
@@ -2204,6 +2206,7 @@ namespace EventCombo.Controllers
             int iElistCnt = 0;
             long lEventId = 0;
             string strPassword = "";
+            string strDateTime = "";
             
             using (EventComboEntities objEnt = new EventComboEntities())
             {
@@ -2215,17 +2218,100 @@ namespace EventCombo.Controllers
                 if (lEventId > 0)
                 {
                     var vEvent = (from myEvent in objEnt.Events where myEvent.EventID == lEventId select myEvent).FirstOrDefault();
-                    if (vEvent != null && vEvent.Private_Password != null) strPassword = vEvent.Private_Password.Trim();
+                    if (vEvent != null)
+                    {
+                        strPassword = (vEvent.Private_Password != null ? vEvent.Private_Password.Trim() : "");
+                        objEEI.EventTitle = vEvent.EventTitle;
+                        var vDatetime = (from myDt in objEnt.EventVenues where myDt.EventID == lEventId select myDt).FirstOrDefault();
+                        if (vDatetime == null)
+                        {
+                            var vMultiDateTime = (from myDt in objEnt.MultipleEvents where myDt.EventID == lEventId select myDt).FirstOrDefault();
+                            if (vMultiDateTime != null)
+                            {
+                                strDateTime = Convert.ToDateTime(vMultiDateTime.StartingFrom).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.StartTime.ToString() + "(" + vMultiDateTime.Frequency + ")";
+                            }
+                        }
+                        else
+                        {
+                            strDateTime = Convert.ToDateTime(vDatetime.EventStartDate).ToString("ddd MMM dd, yyyy") + "," + vDatetime.EventStartTime.ToString();
+                        }
+                        objEEI.EventDate = strDateTime;
+                        var vOrgnizer = (from Ord in objEnt.Event_Orgnizer_Detail join orm in objEnt.Organizer_Master on Ord.OrganizerMaster_Id equals orm.Orgnizer_Id where Ord.Orgnizer_Event_Id == lEventId select orm.Orgnizer_Name).FirstOrDefault();
+                        objEEI.EventOrgnizer = (vOrgnizer != null ? vOrgnizer.ToString() : "");
+                        var vAddress = (from eAdd in objEnt.Addresses where eAdd.EventId == lEventId select eAdd).FirstOrDefault();
+                        if (vAddress != null)
+                        {
+                            if (vAddress.ConsolidateAddress != null && vAddress.ConsolidateAddress.Trim() != "")
+                                objEEI.EventAddress = vAddress.ConsolidateAddress;
+                            else
+                                objEEI.EventAddress = vAddress.VenueName + " " + vAddress.Address1 + " " + vAddress.Address2 + " " + vAddress.City + " " + vAddress.State + " " + vAddress.Zip;
+
+                            objEEI.EventLat = vAddress.Latitude;
+                            objEEI.EventLong = vAddress.Longitude;
+                        }
+                    }
+                    CreateEventController objCEv = new CreateEventController();
+                    string strImageUrl = objCEv.GetImages(lEventId).FirstOrDefault();
+                    if (strImageUrl != null && strImageUrl != "")
+                    {
+                        if (!System.IO.File.Exists(strImageUrl)) // Need to check on server
+                            strImageUrl = "/Images/default_event_image.jpg";
+                    }
+                    else
+                        strImageUrl = "/Images/default_event_image.jpg";
+
+                    objEEI.EventImg = strImageUrl;
                 }
             }
-           
+
+            TempData["Lat"] = (objEEI.EventLat != null ? objEEI.EventLat.Trim() : "");
+            TempData["Long"] = (objEEI.EventLong != null ? objEEI.EventLong.Trim() : ""); 
             TempData["lId"] = lId;
             TempData["EmailListCount"] = iElistCnt;
             TempData["Eventid"] = lEventId;
             TempData["PPassword"] = strPassword;
             return View(objEEI);
         }
-       
+
+        //public string TestMethod(EmailContent model)
+        //{
+
+        //    return "Test";
+        //}
+        public void SendHtmlFormattedEmail(EmailContent model)
+        {
+            MailMessage mailMessage = new MailMessage();
+
+            mailMessage.From = new MailAddress(model.From, model.Fromname);
+
+
+            mailMessage.Subject = model.Subject;
+            mailMessage.Body = model.Body;
+            if (!string.IsNullOrEmpty(model.Cc))
+            {
+                mailMessage.CC.Add(model.Cc);
+            }
+            if (!string.IsNullOrEmpty(model.Bcc))
+            {
+                mailMessage.Bcc.Add(model.Bcc);
+            }
+
+            mailMessage.IsBodyHtml = true;
+            mailMessage.To.Add(new MailAddress(model.To));
+      
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = ConfigurationManager.AppSettings["Host"];
+            smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
+            System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+            NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"];
+            NetworkCred.Password = ConfigurationManager.AppSettings["Password"];
+            smtp.UseDefaultCredentials = true;
+            smtp.Credentials = NetworkCred;
+            smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]);
+            smtp.Send(mailMessage);
+
+        }
+
         public long SaveInvitation(Event_Email_Invitation Model)
         {
             long lResult = 0;
