@@ -1594,7 +1594,19 @@
 
 
 
+    $("#rdPublic").click(function () {
+       
+        //$("#rdPrivate").prop("checked","false");
 
+        $("#chkShareOnFB").prop("checked", false);
+        $("#chkGuestonly").prop("checked", false);
+        $("#chkReqPassword").prop("checked", false);
+        $("#txtReqPassword").val('');
+        $('#txtReqPassword').attr('readonly', true);
+        $(".priv_cont").hide();
+
+
+    });
 
 
         $(".chkvalidation").blur(function () {
@@ -1899,6 +1911,7 @@
 
             }
 
+            
 
             $('#tblOrgnizer tr').each(function () {
 
@@ -2606,11 +2619,11 @@
                             $("#hdEventId").val(response);
                             if (type == "Save") {
                                 $('#dvdraft').css('display', 'block');
-                                if ($("#chkGuestonly").is(":checked")) {
+                                @*if ($("#chkGuestonly").is(":checked") && $("#rdPrivate").is(":checked")) {
                                     window.location.href = '@Url.Action("CreateInvitations", "ManageEvent", new {  })?lId=0&lEvtId=' + response + '&strMode="E"';
-                                } else {
+                                } else {*@
                                     window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
-                                }
+                                //}
 
                             }
                             if(type=="Preview")
@@ -2632,7 +2645,7 @@
                             if(type=="Live")
                             {
                                 var eventid = response;
-                                if ($("#chkGuestonly").is(":checked")) {
+                                if ($("#chkGuestonly").is(":checked") && $("#rdPrivate").is(":checked")) {
                                     window.location.href = '@Url.Action("CreateInvitations", "ManageEvent", new {  })?lId=0&lEvtId='+response+'&strMode="E"';
                                 } else {
                                     window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' + response + '';
