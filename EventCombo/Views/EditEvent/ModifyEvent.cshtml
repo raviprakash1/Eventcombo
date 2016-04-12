@@ -16,7 +16,7 @@
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 <link href="~/Content/MapPlaces.css" rel="stylesheet" />
 
-@using (Html.BeginForm(null, null, FormMethod.Post,new {id="ModifyeventEnter"}))
+@using (Html.BeginForm())
 {
     <input type="hidden" id="hdimage" />
     <div class="event_container">
@@ -3002,6 +3002,7 @@ else
                             // alert(type);
 
                             var vMasterEventId =$("#hdParentEventId").val();
+                       
                             $("#hdEventId").val(response);
                             if(type=="Save")
                             {
@@ -3041,7 +3042,12 @@ else
                             if(type=="Live")
                             {
                                 @*window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' +response;*@
-                                window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' +response;
+                                if ($("#chkGuestonly").is(":checked") && $("#rdPrivate").is(":checked")) {
+                                    window.location.href = '@Url.Action("CreateInvitations", "ManageEvent", new {  })?lId=0&lEvtId='+response+'&strMode="E"';
+                                } else {
+                                    window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' + response + '';
+                                }
+                               // window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' +response;
                             }
                         }
                     }

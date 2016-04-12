@@ -156,12 +156,19 @@ namespace EventCombo.Controllers
             {
                 try {
                     var vRefferer = ControllerContext.HttpContext.Request.UrlReferrer;
-                    if (vRefferer.ToString().ToLower().Contains("createevent") == true)
-                        TempData["IsNewEvent"] = "Y";
-                    else if (vRefferer.ToString().ToLower().Contains("modifyevent") == true)
-                        TempData["IsNewEvent"] = "M";
-                    else
+                    if (vRefferer == null)
+                    {
                         TempData["IsNewEvent"] = "N";
+                    }
+                    else
+                    {
+                        if (vRefferer.ToString().ToLower().Contains("createevent") == true)
+                            TempData["IsNewEvent"] = "Y";
+                        else if (vRefferer.ToString().ToLower().Contains("modifyevent") == true)
+                            TempData["IsNewEvent"] = "M";
+                        else
+                            TempData["IsNewEvent"] = "N";
+                    }
 
 
 
@@ -1982,6 +1989,8 @@ namespace EventCombo.Controllers
                     {
                         CreateEventController objCE = new CreateEventController();
                         objCE.ControllerContext = new ControllerContext(this.Request.RequestContext, objCE);
+                        model.EventTitle = "Copy of " + model.EventTitle;
+                        model.EventUrl = "Copy of " + model.EventUrl;
                         lEventId = objCE.SaveEvent(model);
                         return lEventId;
                     }
@@ -1996,11 +2005,11 @@ namespace EventCombo.Controllers
                                 ValidationMessageController vmc = new ValidationMessageController();
                                 model.EventID = vmc.GetLatestEventId(lEventId);
                                 lEventId = EditEventInfo(model);
-                                if (ObjEC.Parent_EventID == null || ObjEC.Parent_EventID == 0)
-                                    Parent_EventID = lEventId;
-                                else
-                                    Parent_EventID = (long)ObjEC.Parent_EventID;
-
+                                //if (ObjEC.Parent_EventID == null || ObjEC.Parent_EventID == 0)
+                                //    Parent_EventID = lEventId;
+                                //else
+                                //    Parent_EventID = (long)ObjEC.Parent_EventID;
+                                Parent_EventID = ValidationMessageController.GetParentEventId(lEventId);
                             }
                             else
                             {
@@ -2551,10 +2560,11 @@ namespace EventCombo.Controllers
                                 objEnt.SaveChanges();
                                 lEventId = ObjEC.EventID;
 
-                                if (ObjEC.Parent_EventID == null || ObjEC.Parent_EventID == 0)
-                                    Parent_EventID = lEventId;
-                                else
-                                    Parent_EventID = (long)ObjEC.Parent_EventID;
+                                //if (ObjEC.Parent_EventID == null || ObjEC.Parent_EventID == 0)
+                                //    Parent_EventID = lEventId;
+                                //else
+                                //    Parent_EventID = (long)ObjEC.Parent_EventID;
+                                Parent_EventID = ValidationMessageController.GetParentEventId(lEventId);
                                 //Parent_EventID = (ObjEC.Parent_EventID ==null? lEventId : (long)ObjEC.Parent_EventID);
 
                                 PublishEvent(lEventId);

@@ -517,10 +517,10 @@
 
         $("#btAddEmail").click(function () {
             var vValue = $("#txtAddEmail").val().trim();
+
             if (vValue != "") {
                 AddEmail(vValue);
-                $("#txtAddEmail").val("");
-                $("#txtAddEmail").focus();
+              
             }
         });
         $("#btDeleteEmail").click(function () {
@@ -630,17 +630,41 @@
     }
 
     function AddEmail(vValue) {
-        if (validateEmail(vValue) == true) {
-            var vId = parseFloat($("#hdListId").val());
-            if (isNaN(vId) == true) vId = 0;
-            vId = vId + 1;
-            $("#hdListId").val(vId);
-            var vHtml = '<ul id="UL_' + vId + '" class="inv_mail_list"><li><input id="chk_' + vId + '" type="checkbox"></li><li>' + vValue + '</li></ul>';
-            // alert(vHtml);
-            $("#dvEmaillist").append(vHtml);
+        debugger;
+        var vAry = vValue.split(',');
+        var vInvalidData = '';
+        for (i = 0; i < vAry.length; i++)
+        {
+            var vData = vAry[i];
+            if (validateEmail(vData) == true) {
+                var vId = parseFloat($("#hdListId").val());
+                if (isNaN(vId) == true) vId = 0;
+                vId = vId + 1;
+                $("#hdListId").val(vId);
+                var vHtml = '<ul id="UL_' + vId + '" class="inv_mail_list"><li><input id="chk_' + vId + '" type="checkbox"></li><li>' + vData + '</li></ul>';
+                $("#dvEmaillist").append(vHtml);
+            }
+            else
+            {
+                if (vInvalidData == '')
+                {
+                    vInvalidData = vData;
+                }
+                else
+                {
+                    vInvalidData = vInvalidData + "," + vData;
+                }
+            }
         }
-        else {
+        if (vInvalidData != '') {
+            $("#txtAddEmail").val(vInvalidData);
+            $("#txtAddEmail").focus();
             ShowMessage('E', ajaxsetup('CreateInvitations', 'EmailValidationUI'));
+        }
+        else
+        {
+            $("#txtAddEmail").val("");
+            $("#txtAddEmail").focus();
         }
     }
 

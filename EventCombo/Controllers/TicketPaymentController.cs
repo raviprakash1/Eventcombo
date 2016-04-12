@@ -1064,31 +1064,52 @@ namespace EventCombo.Controllers
                                      join o in db.Ticket_Quantity_Detail on p.TPD_TQD_Id equals o.TQD_Id
                                      join t in db.Tickets on o.TQD_Ticket_Id equals t.T_Id
                                      where p.TPD_GUID == guid && p.TPD_Event_Id == eventid
-                                     group new { t.T_Id, p.TPD_Purchased_Qty, t.TotalPrice, t.T_Discount, t.T_name, t.TicketTypeID, p.TPD_Donate }
-                                     by new { t.T_Id, p.TPD_Purchased_Qty, t.TotalPrice, t.T_Discount, t.T_name, t.TicketTypeID, p.TPD_Donate } into g
+                                     group new { p.TPD_Event_Id, p.TPD_PromoCodeAmount, p.TPD_PromoCodeID, t.T_Id, p.TPD_Purchased_Qty, t.TotalPrice, t.T_Discount, t.T_name, t.TicketTypeID, p.TPD_Donate }
+                                     by new { p.TPD_Event_Id, p.TPD_PromoCodeAmount, p.TPD_PromoCodeID, t.T_Id, p.TPD_Purchased_Qty, t.TotalPrice, t.T_Discount, t.T_name, t.TicketTypeID, p.TPD_Donate } into g
                                      select new
                                      {
                                          Qty = g.Sum(x => x.TPD_Purchased_Qty),
                                          amount = (g.Key.TotalPrice == null ? 0 : g.Key.TotalPrice) - (g.Key.T_Discount == null ? 0 : g.Key.T_Discount),
                                          Tname = g.Key.T_name,
                                          TicketType = g.Key.TicketTypeID,
-                                         donate = g.Sum(x => x.TPD_Donate)
+                                         donate = g.Sum(x => x.TPD_Donate),
+                                         ticketid = g.Key.T_Id,
+                                         Promocodeamt = g.Key.TPD_PromoCodeAmount,
+                                         Promocode = g.Key.TPD_PromoCodeID,
+                                         eventid = g.Key.TPD_Event_Id
                                      }).ToList();
                         string orderdet = "", freetype = "", paidtype = "", donatertype = "";
                         orderdet = " " + userdetail.FirstName + " has  ";
                         foreach (var i in query)
                         {
+                            var promocode = (from v in db.Promo_Code where v.PC_Eventid == i.eventid && v.PC_id == i.Promocode select v.PC_Code).FirstOrDefault();
                             if (i.TicketType == 1)
                             {
                                 freetype = " " + i.Qty + " * " + i.Tname + " free type for $0.00 ";
+                                if (i.Promocodeamt != null && i.Promocode != null)
+                                {
+
+                                    freetype = freetype + " after applying promotion code " + promocode + "  per ticket ";
+                                }
                             }
                             if (i.TicketType == 2)
                             {
                                 paidtype = " " + i.Qty + " * " + i.Tname + " paid type for $ " + i.amount;
+                                if (i.Promocodeamt != null && i.Promocode != null)
+                                {
+
+                                    paidtype = paidtype + " after applying promotion code " + promocode + "  per ticket ";
+                                }
+
                             }
                             if (i.TicketType == 3)
                             {
                                 donatertype = "  Donated for " + i.Tname + " type for $ " + i.donate;
+                                if (i.Promocodeamt != null && i.Promocode != null)
+                                {
+
+                                    donatertype = donatertype + " after applying promotion code " + promocode + "  per ticket ";
+                                }
                             }
 
                         }
@@ -1285,8 +1306,8 @@ namespace EventCombo.Controllers
                                      join o in db.Ticket_Quantity_Detail on p.TPD_TQD_Id equals o.TQD_Id
                                      join t in db.Tickets on o.TQD_Ticket_Id equals t.T_Id
                                      where p.TPD_GUID == guid && p.TPD_Event_Id == eventid
-                                     group new { t.T_Id, p.TPD_Purchased_Qty, t.TotalPrice, t.T_Discount, t.T_name, t.TicketTypeID, p.TPD_Donate }
-                                     by new { t.T_Id, p.TPD_Purchased_Qty, t.TotalPrice, t.T_Discount, t.T_name, t.TicketTypeID, p.TPD_Donate } into g
+                                     group new {p.TPD_Event_Id,p.TPD_PromoCodeAmount,p.TPD_PromoCodeID, t.T_Id, p.TPD_Purchased_Qty, t.TotalPrice, t.T_Discount, t.T_name, t.TicketTypeID, p.TPD_Donate }
+                                     by new { p.TPD_Event_Id, p.TPD_PromoCodeAmount, p.TPD_PromoCodeID, t.T_Id, p.TPD_Purchased_Qty, t.TotalPrice, t.T_Discount, t.T_name, t.TicketTypeID, p.TPD_Donate } into g
                                      select new
                                      {
                                          Qty = g.Sum(x => x.TPD_Purchased_Qty),
@@ -1294,24 +1315,43 @@ namespace EventCombo.Controllers
                                          Tname = g.Key.T_name,
                                          TicketType = g.Key.TicketTypeID,
                                          donate = g.Sum(x => x.TPD_Donate),
-                                         ticketid = g.Key.T_Id
+                                         ticketid = g.Key.T_Id,
+                                         Promocodeamt=g.Key.TPD_PromoCodeAmount,
+                                         Promocode=g.Key.TPD_PromoCodeID,
+                                         eventid=g.Key.TPD_Event_Id
                                      }).ToList();
                         string orderdet = "", freetype = "", paidtype = "", donatertype = "";
                         orderdet = " " + userdetail.FirstName + " has  ";
                         foreach (var i in query)
                         {
+                            var promocode = (from v in db.Promo_Code where v.PC_Eventid == i.eventid && v.PC_id == i.Promocode select v.PC_Code).FirstOrDefault();
                             if (i.TicketType == 1)
                             {
                                 freetype = " " + i.Qty + " * " + i.Tname + " free type for $0.00 ";
+                                if(i.Promocodeamt!=null && i.Promocode!=null)
+                                {
+
+                                    freetype = freetype + " after applying promotion code "+ promocode+"  per ticket ";
+                                }
                             }
                             if (i.TicketType == 2)
                             {
                                 paidtype = " " + i.Qty + " * " + i.Tname + " paid type for $ " + i.amount;
+                                if (i.Promocodeamt != null && i.Promocode != null)
+                                {
+
+                                    paidtype = paidtype + " after applying promotion code " + promocode + "  per ticket ";
+                                }
 
                             }
                             if (i.TicketType == 3)
                             {
                                 donatertype = "  Donated for " + i.Tname + " type for $ " + i.donate;
+                                if (i.Promocodeamt != null && i.Promocode != null)
+                                {
+
+                                    donatertype = donatertype + " after applying promotion code " + promocode + "  per ticket ";
+                                }
                             }
 
                         }
@@ -1729,6 +1769,8 @@ namespace EventCombo.Controllers
                     var baseurl = url.GetLeftPart(UriPartial.Authority);
                     ps.url = baseurl + Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + Eventdetails.EventTitle.Trim() + "౼" + Eventid + "౼N";
                     ps.Guestlist = emailonpayment;
+                    ps.EventPrivacy = Eventdetails.EventPrivacy;
+                    ps.Shareonfb = Eventdetails.Private_ShareOnFB;
                     ps.Orderdetail = GetOrderDetailForConfirmation(strGUID);
                     ViewBag.Timecal = Dateofevent;
                     System.GC.Collect();
@@ -1896,7 +1938,7 @@ namespace EventCombo.Controllers
             var myaddress = (from p in db.Ticket_Quantity_Detail where itemQuery.Contains(p.TQD_Id) select p).ToList();
             StringBuilder strHTML = new StringBuilder();
 
-            strHTML.Append("<table style='width: 100 %; '><tr><h1 style='font-size:22px;margin-bottom:5px;margin-top:0px;font-weight:normal;'> Order Summary </h1>");
+            strHTML.Append("<table style='width: 100 %;'><tr><h1 style='font-size:22px;margin-bottom:5px;margin-top:0px;font-weight:normal;'> Order Summary </h1>");
             strHTML.Append("<p style='margin:0px;padding:0px;margin-bottom:5px;font-size:15px;'>Order#:" + myOrderId + "</p></tr>");
             var eventtype = "";
             var eventname = "";
@@ -1973,6 +2015,9 @@ namespace EventCombo.Controllers
                                              where p.TQD_StartDate == vdate && TP.TPD_GUID == gUID && TP.TPD_Event_Id == Eventid
                                              select new
                                              {
+                                                 eventid=TP.TPD_Event_Id,
+                                                 Promocode=TP.TPD_PromoCodeID,
+                                                 Promocodeamt=TP.TPD_PromoCodeAmount,
                                                  username = l.FirstName,
                                                  Ticketname = t.T_name,
                                                  Quantity = TP.TPD_Purchased_Qty,
@@ -1983,18 +2028,37 @@ namespace EventCombo.Controllers
                             strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'><span style='float:right;'>" + vdate + " </span></p ></tr > ");
                             strHTML.Append("<tr align='left' style='color:#696564;'> ");
                             strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
-                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;' > Type </th>");
+                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Type </th>");
                             strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Quantity </th>");
                             strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </th>");
                             strHTML.Append("</tr>");
                             foreach (var qty in itemtoadd)
                             {
-                                strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                                strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.username + "</td>");
-                                strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
-                                strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
-                                strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
-                                strHTML.Append("</tr>");
+                                if (qty.Promocode != null && qty.Promocodeamt != null)
+                                {
+                                    strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                                    strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.username + "</td>");
+                                    strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
+                                    strHTML.Append("<td style='width:10%font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
+                                    strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Price + "</td>");
+                                    strHTML.Append("</tr>");
+                                    var promocode = (from v in db.Promo_Code where v.PC_Eventid == qty.eventid && v.PC_id == qty.Promocode select v.PC_Code).FirstOrDefault();
+                                    strHTML.Append("<tr align='left'>");
+                                    strHTML.Append("<td colspan='3' style='font-size:15px; padding:0px 5px 10px 5px;color: green; border-bottom:1px dashed #ccc;'>" + promocode + "</td>");
+                                    strHTML.Append("<td colspan='1' style='font-size:15px; color: green;padding:0px 5px 10px 5px; border-bottom:1px dashed #ccc;'>-" + qty.Promocodeamt + "</td>");
+                                    strHTML.Append("</tr>");
+                                }
+                                else
+                                {
+                                    strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                                    strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.username + "</td>");
+                                    strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
+                                    strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
+                                    strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
+                                    strHTML.Append("</tr>");
+                                }
+
+
 
                             }
 
@@ -2011,6 +2075,9 @@ namespace EventCombo.Controllers
                                          where p.TQD_AddressId == item && TP.TPD_GUID == gUID && TP.TPD_Event_Id == Eventid
                                          select new
                                          {
+                                             eventid = TP.TPD_Event_Id,
+                                             Promocode = TP.TPD_PromoCodeID,
+                                             Promocodeamt = TP.TPD_PromoCodeAmount,
                                              username = l.FirstName,
                                              Ticketname = t.T_name,
                                              Quantity = TP.TPD_Purchased_Qty,
@@ -2033,13 +2100,29 @@ namespace EventCombo.Controllers
 
                         foreach (var qty in itemtoadd)
                         {
-                            strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                            strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.username + "</td>");
-                            strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
-                            strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
-                            strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
-                            strHTML.Append("</tr>");
-
+                            if (qty.Promocode != null && qty.Promocodeamt != null)
+                            {
+                                strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.username + "</td>");
+                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
+                                strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
+                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.Price + "</td>");
+                                strHTML.Append("</tr>");
+                                var promocode = (from v in db.Promo_Code where v.PC_Eventid == qty.eventid && v.PC_id == qty.Promocode select v.PC_Code).FirstOrDefault();
+                                strHTML.Append("<tr align='left'>");
+                                strHTML.Append("<td colspan='3' style='font-size:15px; padding:0px 5px 10px 5px;color: green; border-bottom:1px dashed #ccc;'>" + promocode + "</td>");
+                                strHTML.Append("<td colspan='1' style='font-size:15px; color: green;padding:0px 5px 10px 5px; border-bottom:1px dashed #ccc;'>-" + qty.Promocodeamt + "</td>");
+                                strHTML.Append("</tr>");
+                            }
+                            else
+                            {
+                                strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.username + "</td>");
+                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
+                                strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
+                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
+                                strHTML.Append("</tr>");
+                            }
                         }
                     }
 
@@ -2061,6 +2144,9 @@ namespace EventCombo.Controllers
                                      where p.TQD_AddressId == item && TP.TPD_GUID == gUID && TP.TPD_Event_Id == Eventid && p.TQD_AddressId == item
                                      select new
                                      {
+                                         eventid = TP.TPD_Event_Id,
+                                         Promocode = TP.TPD_PromoCodeID,
+                                         Promocodeamt = TP.TPD_PromoCodeAmount,
                                          username = l.FirstName,
                                          Ticketname = t.T_name,
                                          Quantity = TP.TPD_Purchased_Qty,
@@ -2083,13 +2169,30 @@ namespace EventCombo.Controllers
 
                     foreach (var qty in itemtoadd)
                     {
-                        strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                        strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.username + "</td>");
-                        strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
-                        strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
-                        strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
-                        strHTML.Append("</tr>");
-
+                       
+                        if (qty.Promocode != null && qty.Promocodeamt != null)
+                        {
+                            strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                            strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.username + "</td>");
+                            strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
+                            strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
+                            strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.Price + "</td>");
+                            strHTML.Append("</tr>");
+                            var promocode = (from v in db.Promo_Code where v.PC_Eventid == qty.eventid && v.PC_id == qty.Promocode select v.PC_Code).FirstOrDefault();
+                            strHTML.Append("<tr align='left'>");
+                            strHTML.Append("<td colspan='3' style='font-size:15px; padding:0px 5px 10px 5px;color: green; border-bottom:1px dashed #ccc;'>" + promocode + "</td>");
+                             strHTML.Append("<td colspan='1' style='font-size:15px; color: green;padding:0px 5px 10px 5px; border-bottom:1px dashed #ccc;'>-" + qty.Promocodeamt + "</td>");
+                            strHTML.Append("</tr>");
+                        }
+                        else
+                        {
+                            strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                            strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.username + "</td>");
+                            strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
+                            strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
+                            strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
+                            strHTML.Append("</tr>");
+                        }
                     }
 
                 }
@@ -2312,7 +2415,7 @@ namespace EventCombo.Controllers
                                            {
                                                totalOrder = TPDgrp.Sum(s => s.TPD_Purchased_Qty)
                                            }
-                                           ).SingleOrDefault();
+                                           ).FirstOrDefault();
 
                         var PurchaseDetail = (from TPD in objEnt.Ticket_Purchased_Detail
                                               where TPD.TPD_GUID == strGuid
@@ -2324,10 +2427,10 @@ namespace EventCombo.Controllers
                         {
                             var vTId = (from TQD in objEnt.Ticket_Quantity_Detail
                                         where TQD.TQD_Id == TPD.TPD_TQD_Id
-                                        select TQD.TQD_Ticket_Id).SingleOrDefault();
+                                        select TQD.TQD_Ticket_Id).FirstOrDefault();
                             var vTType = (from Tkt in objEnt.Tickets
                                           where Tkt.T_Id == vTId
-                                          select Tkt.TicketTypeID).SingleOrDefault();
+                                          select Tkt.TicketTypeID).FirstOrDefault();
 
                             if (vTType == 2) iPaidCount = iPaidCount + TPD.TPD_Purchased_Qty;
                             if (vTType == 1) iFreeCount = iFreeCount + TPD.TPD_Purchased_Qty;
@@ -2342,7 +2445,8 @@ namespace EventCombo.Controllers
                         var OrderAmt = (from OD in objEnt.Order_Detail_T
                                         where OD.O_Order_Id == OrderNo
                                         select OD.O_TotalAmount
-                                        ).SingleOrDefault();
+                                        ).FirstOrDefault();
+                        var Promocode = (from p in objEnt.Order_Detail_T join k in objEnt.Promo_Code on p.O_PromoCodeId equals k.PC_id where p.O_Order_Id== OrderNo select k.PC_Code).FirstOrDefault();
 
                         if (iPaidCount == 1)
                         {
@@ -2365,7 +2469,10 @@ namespace EventCombo.Controllers
                             OrderAmt = (OrderAmt != null ? OrderAmt : 0);
                             strResult = "Order " + OrderNo.ToString() + " , " + TicketCount.totalOrder.ToString() + " ticket for $" + OrderAmt.ToString();
                         }
-
+                        if(!string.IsNullOrWhiteSpace(Promocode))
+                        {
+                            strResult = strResult+"." + Environment.NewLine+ "You have applied " + Promocode + " as promo code for this transaction";
+                        }
 
                         //strResult = OrderNo + "~" + TicketCount.totalOrder + "~" + OrderAmt;
                     }
