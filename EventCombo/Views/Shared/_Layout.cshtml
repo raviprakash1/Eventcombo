@@ -650,31 +650,24 @@
                     vUrl = vUrl.replace("long", vLong);
                     window.location.href = vUrl;
                 }, function (p) {
-                    alert("error");
-                    navigator.geolocation.getCurrentPosition(onPositionUpdate);
-
-                    //var watchID = navigator.geolocation.watchPosition(gotPos, gotErr, options);
-                    //alert(watchID);
-                    //var geo = google.gears.factory.create('beta.geolocation');
-                    //geo.getCurrentPosition(function (position) {
-                    //    alert(position.latitude);
-                    //}, function () {
-                    //    alert("Again Error");
-                    //});
-                    //var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
-
-
+                    //alert("error");
+                    var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "", strLong = "", strSort="rel", strDateFilter="none" })';
+                    window.location.href = vUrl;
+                    
                 });
 
             } else {
-                alert('Geo Location feature is not supported in this browser.');
+                //alert('Geo Location feature is not supported in this browser.');
+                var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "", strLong = "", strSort="rel", strDateFilter="none" })';
+                window.location.href = vUrl;
+
             }
 
 
             function onPositionUpdate(position) {
                 var lat = position.coords.latitude;
                 var lng = position.coords.longitude;
-                alert("Current position: " + lat + " " + lng);
+                //alert("Current position: " + lat + " " + lng);
             }
             @*window.location.href = '@Url.Action("DiscoverEvents", "Home")';*@
 
@@ -715,7 +708,7 @@
     });
 
 
-   
+
 
 
     function checksession() {

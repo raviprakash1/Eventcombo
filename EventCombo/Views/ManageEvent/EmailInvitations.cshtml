@@ -200,7 +200,7 @@
 <script>
     $(document).ready(function () {
         $("#btCreateInv").click(function () {
-            var vUrl = '@Url.Action("CreateInvitations", "ManageEvent",new { lId = "0" },null)';
+            var vUrl = '@Html.Raw(@Url.Action("CreateInvitations", "ManageEvent",new { lId = "0", lEvtId= ViewBag.EventId, strMode="C" },null))';
             //vUrl = vUrl.replace("eventurlid","101");
             window.location.href = vUrl;
         });
