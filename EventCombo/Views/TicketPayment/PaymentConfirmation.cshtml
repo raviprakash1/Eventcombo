@@ -94,7 +94,7 @@
 
                 <div class="col-sm-12 no_pad chek_out_desc">
                     <p id="ordertag">Your order has been saved to My E-Tickets </p>
-                    <p><span id="spOrderNo"></span></p>
+                    <p><span id="spOrderNo">@Model.Orderdetail</span></p>
                     <p>Your tickets have been sent to @Html.DisplayFor(x=>x.Email) </p>
                     <p>@Model.Guestlist</p>
                     <p>
@@ -377,7 +377,7 @@
 
         });
   
-        $.ajax({
+        @*$.ajax({
             url: '@Url.Action("GetOrderDetailForConfirmation", "TicketPayment")',
             type: "Post",
             success: function (data) {
@@ -387,7 +387,7 @@
             },
             error: function (data) {
             }
-        });
+        });*@
 
     });
 

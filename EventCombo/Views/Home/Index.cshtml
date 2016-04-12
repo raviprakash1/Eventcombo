@@ -86,44 +86,11 @@
 
 </div>
 
-<div class="modal fade" id="sharemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content sharmodal_pop">
-            <div class="modal-header">
-                <button type = "button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h3 class="modal-title text-center"> Share with friends </h3>
-            </div>
-            <div class="modal-body">
 
-
-                <div class="col-md-12 social-buttons text-center mt20">
-                    <div class="col-sm-12  text-center">
-                        <button class="btn soc_btn_fb fb_color" id="fbshare"><i class="fa fa-facebook"></i></button>
-                        <button class="btn soc_btn_fb " id="twittershare"><i class="fa fa-twitter"></i></button>
-                        <button class="btn soc_btn_fb linkd_color" id="linkshare"><i class="fa fa-linkedin"></i></button>
-                        <button class="btn soc_btn_fb msg_color"><i class="fa fa-envelope"></i></button>
-                    </div>
-                </div>
-                <div class="col-md-12 mt10">
-                    <form class="form-horizontal">
-                        <div class="col-sm-12 ">
-                            <div class="form-group">
-                                <input class="form-control sharesocilform" id="txtEventUrl" readonly="readonly" placeholder="" type="text">
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <input type="hidden" id="hdcity" />
-</div>
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script>
-    $(document).prop('title', 'K - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free');
+    $(document).prop('title', 'Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free');
     var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),
             sURLVariables = sPageURL.split('&'),

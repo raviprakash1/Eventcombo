@@ -98,6 +98,42 @@
     
 
     </div>
+
+<div class="modal fade" id="sharemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content sharmodal_pop">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title text-center"> Share with friends </h3>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="col-md-12 social-buttons text-center mt20">
+                    <div class="col-sm-12  text-center">
+                        <button class="btn soc_btn_fb fb_color" id="fbshare"><i class="fa fa-facebook"></i></button>
+                        <button class="btn soc_btn_fb " id="twittershare"><i class="fa fa-twitter"></i></button>
+                        <button class="btn soc_btn_fb linkd_color" id="linkshare"><i class="fa fa-linkedin"></i></button>
+                        <button class="btn soc_btn_fb msg_color"><i class="fa fa-envelope"></i></button>
+                    </div>
+                </div>
+                <div class="col-md-12 mt10">
+                    <form class="form-horizontal">
+                        <div class="col-sm-12 ">
+                            <div class="form-group">
+                                <input class="form-control sharesocilform" id="txtEventUrl" readonly="readonly" placeholder="" type="text">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <input type="hidden" id="hdcity" />
+</div>
+
 <script>
     $('.home-pagination').find('.pagination').addClass('desc_pagination');
 
@@ -130,12 +166,12 @@
     }
 
     function FilterEventType(vEvTypeId) {
-        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = TempData["tLat"], strLong = TempData["tLng"], strSort = "rel", strDateFilter = "none" })';
+        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = ViewBag.lat, strLong = ViewBag.lng, strSort = "rel", strDateFilter = "none" })';
         vUrl = vUrl.replace("evt", vEvTypeId);
         window.location.href = vUrl;
     }
     function FilterEventCategory(vEvCatId) {
-        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = TempData["tLat"], strLong = TempData["tLng"], strSort = "rel", strDateFilter = "none" })';
+        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = ViewBag.lat, strLong = ViewBag.lng, strSort = "rel", strDateFilter = "none" })';
         vUrl = vUrl.replace("evc", vEvCatId);
         window.location.href = vUrl;
     }

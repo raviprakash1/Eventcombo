@@ -1,4 +1,5 @@
 ﻿@model EventCombo.Models.Promo_Code
+@using EventCombo.Controllers;
 @{
     ViewBag.Title = "CreatePromotionalCodes";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
@@ -44,7 +45,7 @@
                 </a>
             </div>
             <div class="panel panel-default menu_list">
-                <a class="menu_title" href="@Url.Action("Index","Manageevent", new { })?Eventid=@Model.PC_Eventid&type=N">
+                <a class="menu_title" href="@Url.Action("Index","Manageevent", new { })?Eventlid = ValidationMessageController.GetParentEventId(@Model.PC_Eventid)&type=N">
                     <div class="panel-heading">
                         Event Dashboard
                     </div>
@@ -70,11 +71,11 @@
                         <p>Email Invitations</p>
                         @if (Model.discountcode > 0)
                         {
-                            <p>@Html.ActionLink("Promotional Code", "PromotionalCodes", "ManageEvent", new { Eventid = Model.PC_Eventid }, null)</p>
+                            <p>@Html.ActionLink("Promotional Code", "PromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.PC_Eventid)  }, null)</p>
                         }
                         else
                         {
-                            <p>@Html.ActionLink("Promotional Code", "CreatePromotionalCodes", "ManageEvent", new { Eventid = Model.PC_Eventid }, null)</p>
+                            <p>@Html.ActionLink("Promotional Code", "CreatePromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.PC_Eventid) }, null)</p>
                         }
                         <p>Facebook Integration</p>
                         <p>Website Integration</p>
@@ -624,7 +625,7 @@ else
             
                 $('#btnokpop').click(function () {
 
-                    window.location.href = '@Url.Action("PromotionalCodes", "ManageEvent", new { })?Eventid='+@Model.PC_Eventid;
+                    window.location.href = '@Url.Action("PromotionalCodes", "ManageEvent", new {Eventlid = ValidationMessageController.GetParentEventId(@Model.PC_Eventid) })';
 
                 });
                 $('#twitshare').click(function () {

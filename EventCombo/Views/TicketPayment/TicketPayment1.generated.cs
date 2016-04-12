@@ -2603,65 +2603,66 @@ WriteLiteral(@"',
 WriteLiteral("\',\r\n                data: { strTicketId: \'\', strCode: vProCode, lEventId: vEventi" +
 "d },\r\n                type: \"Post\",\r\n                success: function (response" +
 ") {\r\n                    debugger;\r\n                    if (response == \"OL\" || " +
-"response == \"EDI\" || response == \"FDI\") {\r\n                        $(\"#spValidat" +
-"ion\").text(\"Promo Code Expired.\");\r\n                        $(\"#spValidation\").r" +
-"emoveClass(\"promoerrorgreen\");\r\n                        $(\"#spValidation\").addCl" +
-"ass(\"promoerrorred\");\r\n\r\n                        //$(\"#imgPromoLoader\").addClass" +
-"(\"PromoLoaderHide\");\r\n                        //$(\"#imgPromoLoader\").removeClass" +
-"(\"PromoLoaderShow\");\r\n\r\n                        $(\"#spGrdTotal\").text($(\"#spSubT" +
-"otal\").text());\r\n                        $(\"#hdGrandTotal\").val($(\"#spSubTotal\")" +
-".text());\r\n\r\n                        $(\"#hdPromoCodetotal\").val(\"0\");\r\n         " +
-"               return false;\r\n                    }\r\n                    else if" +
-" (response == \"INV\") {\r\n                        $(\"#spValidation\").text(\"Invalid" +
-" Promo Code.\");\r\n                        $(\"#spValidation\").removeClass(\"promoer" +
-"rorgreen\");\r\n                        $(\"#spValidation\").addClass(\"promoerrorred\"" +
-");\r\n\r\n                        $(\"#spGrdTotal\").text($(\"#spSubTotal\").text());\r\n " +
-"                       $(\"#hdGrandTotal\").val($(\"#spSubTotal\").text());\r\n\r\n     " +
-"                   $(\"#hdPromoCodetotal\").val(\"0\");\r\n                        ret" +
-"urn false;\r\n\r\n                    }\r\n                    else {\r\n               " +
-"         var vResult = response.split(\'~\');\r\n                        var vTicket" +
-"s = vResult[0].toString();\r\n                        var vProType = vResult[1].to" +
-"String();\r\n                        var vProMoAmt = parseFloat(vResult[2].toStrin" +
-"g());\r\n                        //alert(vProMoAmt);\r\n                        if (" +
-"isNaN(vProMoAmt) == true) vProMoAmt = 0;\r\n\r\n                        if (vProMoAm" +
-"t > 0) {\r\n\r\n                            var vTicIds = $(\"#hidTicketIds\").val().s" +
-"plit(\',\');\r\n                            var vVarChanges = parseFloat($(\"#hdVarCh" +
-"anges\").val()); if (isNaN(vVarChanges) == true) vVarChanges = 0;\r\n\r\n            " +
-"                var vTotalAmt = 0;\r\n                            var vGrandAmt = " +
-"0;\r\n                            var vAppliedTickets;\r\n                          " +
-"  if (vTickets != \"A\") {\r\n                                vAppliedTickets = vTic" +
-"kets.split(\',\');\r\n                            }\r\n                            var" +
-" vflag = true;\r\n\r\n                            for (i = 0; i < vTicIds.length; i+" +
-"+) {\r\n                                if (vTickets != \"A\") {\r\n                  " +
-"                  vflag = false;\r\n                                    for (icnt " +
-"= 0; icnt < vAppliedTickets.length; icnt++) {\r\n                                 " +
-"       //  alert(vTicIds[i] + \" \" + vAppliedTickets[icnt]);\r\n                   " +
-"                     if (vTicIds[i] == vAppliedTickets[icnt]) {\r\n               " +
-"                             vflag = true;\r\n                                    " +
-"        break;\r\n                                        }\r\n                     " +
-"               }\r\n                                }\r\n                           " +
-"     vPrice = parseFloat($(\"#spPrice_\" + vTicIds[i]).text());\r\n                 " +
-"               // alert(vPrice);\r\n                                vQty = parseFl" +
-"oat($(\"#spQty_\" + vTicIds[i]).text());\r\n                                vFee = p" +
-"arseFloat($(\"#spFee_\" + vTicIds[i]).text());\r\n                                vD" +
-"onation = parseFloat($(\"#spDonation_\" + vTicIds[i]).text());\r\n                  " +
-"              vTQDId = parseFloat($(\"#spTQDId_\" + vTicIds[i]).text());\r\n        " +
-"                        if (isNaN(vPrice) == true) vPrice = 0;\r\n                " +
-"                if (isNaN(vTQDId) == true) vTQDId = 0;\r\n\r\n                      " +
-"          vQty = parseFloat(vQty); if (isNaN(vQty) == true) vQty = 0;\r\n         " +
-"                       vFee = parseFloat(vFee); if (isNaN(vFee) == true) vFee = " +
-"0;\r\n                                vDonation = parseFloat(vDonation); if (isNaN" +
-"(vDonation) == true) vDonation = 0;\r\n                                if (vflag =" +
-"= true) {\r\n                                    //   alert(vflag)\r\n              " +
-"                      if (vProType == \"P\") {\r\n                                  " +
-"      vProMoAmt = (vProMoAmt * vPrice) / 100;\r\n                                 " +
-"   }\r\n                                    // alert(vProMoAmt);\r\n\r\n              " +
-"                      vPrice = (vPrice - vProMoAmt);\r\n                          " +
-"          //alert(vPrice);\r\n                                    $.ajax({\r\n      " +
-"                                  url: \'");
+"response == \"EDI\") {\r\n                        $(\"#spValidation\").text(\"Promo Cod" +
+"e Expired\");\r\n                        $(\"#spValidation\").removeClass(\"promoerror" +
+"green\");\r\n                        $(\"#spValidation\").addClass(\"promoerrorred\");\r" +
+"\n                        $(\"#spGrdTotal\").text($(\"#spSubTotal\").text());\r\n      " +
+"                  $(\"#hdGrandTotal\").val($(\"#spSubTotal\").text());\r\n            " +
+"            $(\"#hdPromoCodetotal\").val(\"0\");\r\n                        return fal" +
+"se;\r\n                    } else if (response == \"FDI\") {\r\n                      " +
+"  $(\"#spValidation\").text(\"Promo Code Cannot Be Applied Now\");\r\n                " +
+"        $(\"#spValidation\").removeClass(\"promoerrorgreen\");\r\n                    " +
+"    $(\"#spValidation\").addClass(\"promoerrorred\");\r\n                        $(\"#s" +
+"pGrdTotal\").text($(\"#spSubTotal\").text());\r\n                        $(\"#hdGrandT" +
+"otal\").val($(\"#spSubTotal\").text());\r\n                        $(\"#hdPromoCodetot" +
+"al\").val(\"0\");\r\n                        return false;\r\n                    }\r\n  " +
+"                  else if (response == \"INV\") {\r\n                        $(\"#spV" +
+"alidation\").text(\"Invalid Promo Code\");\r\n                        $(\"#spValidatio" +
+"n\").removeClass(\"promoerrorgreen\");\r\n                        $(\"#spValidation\")." +
+"addClass(\"promoerrorred\");\r\n                        $(\"#spGrdTotal\").text($(\"#sp" +
+"SubTotal\").text());\r\n                        $(\"#hdGrandTotal\").val($(\"#spSubTot" +
+"al\").text());\r\n                        $(\"#hdPromoCodetotal\").val(\"0\");\r\n       " +
+"                 return false;\r\n                    }\r\n                    else " +
+"{\r\n                        var vResult = response.split(\'~\');\r\n                 " +
+"       var vTickets = vResult[0].toString();\r\n                        var vProTy" +
+"pe = vResult[1].toString();\r\n                        var vProMoAmt = parseFloat(" +
+"vResult[2].toString());\r\n                        if (isNaN(vProMoAmt) == true) v" +
+"ProMoAmt = 0;\r\n                        if (vProMoAmt > 0) {\r\n                   " +
+"         var vTicIds = $(\"#hidTicketIds\").val().split(\',\');\r\n                   " +
+"         var vVarChanges = parseFloat($(\"#hdVarChanges\").val()); if (isNaN(vVarC" +
+"hanges) == true) vVarChanges = 0;\r\n                            var vTotalAmt = 0" +
+";\r\n                            var vGrandAmt = 0;\r\n                            v" +
+"ar vAppliedTickets;\r\n                            if (vTickets != \"A\") {\r\n       " +
+"                         vAppliedTickets = vTickets.split(\',\');\r\n               " +
+"             }\r\n                            var vflag = true;\r\n                 " +
+"           var vLoopFlag = true;\r\n\r\n                            for (i = 0; i < " +
+"vTicIds.length; i++) {\r\n                                if (vTickets != \"A\") {\r\n" +
+"                                    vflag = false;\r\n                            " +
+"        for (icnt = 0; icnt < vAppliedTickets.length; icnt++) {\r\n               " +
+"                         if (vTicIds[i] == vAppliedTickets[icnt]) {\r\n           " +
+"                                 vLoopFlag = false;\r\n                           " +
+"                 vflag = true;\r\n                                            brea" +
+"k;\r\n                                        }\r\n                                 " +
+"   }\r\n                                }\r\n                                vPrice " +
+"= parseFloat($(\"#spPrice_\" + vTicIds[i]).text());\r\n                             " +
+"   vQty = parseFloat($(\"#spQty_\" + vTicIds[i]).text());\r\n                       " +
+"         vFee = parseFloat($(\"#spFee_\" + vTicIds[i]).text());\r\n                 " +
+"               vDonation = parseFloat($(\"#spDonation_\" + vTicIds[i]).text());\r\n " +
+"                               vTQDId = parseFloat($(\"#spTQDId_\" + vTicIds[i]).t" +
+"ext());\r\n                                if (isNaN(vPrice) == true) vPrice = 0;\r" +
+"\n                                if (isNaN(vTQDId) == true) vTQDId = 0;\r\n\r\n     " +
+"                           vQty = parseFloat(vQty); if (isNaN(vQty) == true) vQt" +
+"y = 0;\r\n                                vFee = parseFloat(vFee); if (isNaN(vFee)" +
+" == true) vFee = 0;\r\n                                vDonation = parseFloat(vDon" +
+"ation); if (isNaN(vDonation) == true) vDonation = 0;\r\n                          " +
+"      if (vflag == true) {\r\n                                    if (vProType == " +
+"\"P\") {\r\n                                        vProMoAmt = (vProMoAmt * vPrice)" +
+" / 100;\r\n                                    }\r\n                                " +
+"    vPrice = (vPrice - vProMoAmt);\r\n                                    $.ajax({" +
+"\r\n                                        url: \'");
 
             
-            #line 1741 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1733 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                                          Write(Url.Action("LockPromoCode", "TicketPayment"));
 
             
@@ -2671,88 +2672,89 @@ WriteLiteral("\',\r\n                                        data: { dAmt: vProM
 "Id },\r\n                                        type: \"Post\",\r\n                  " +
 "                      success: function (response) {\r\n                          " +
 "              }\r\n                                    });\r\n                      " +
-"          }\r\n\r\n                                //alert(vQty); alert(vPrice); ale" +
-"rt(vFee);\r\n                                if (vPrice > 0) {\r\n                  " +
-"                  // alert(vPrice);\r\n                                    vTotalA" +
-"mt = ((vQty * (vPrice + vFee)) + vDonation).toFixed(2);\r\n                       " +
-"             if (isNaN(vTotalAmt) == true) vTotalAmt = 0;\r\n                     " +
-"               vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);\r\n             " +
-"                   }\r\n                                else if (vDonation > 0) {\r" +
-"\n                                    // alert(vDonation);\r\n                     " +
-"               vPrice = 0;\r\n                                    vTotalAmt = ((vQ" +
-"ty * (vPrice + vFee)) + vDonation).toFixed(2);\r\n                                " +
-"    if (isNaN(vTotalAmt) == true) vTotalAmt = 0;\r\n                              " +
-"      vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);\r\n\r\n                    " +
-"            }\r\n                            }\r\n                            //aler" +
-"t(vGrandAmt);\r\n                            $(\"#hdPromoCodetotal\").val(vGrandAmt)" +
+"          }\r\n                                if (vPrice > 0) {\r\n                " +
+"                    vTotalAmt = ((vQty * (vPrice + vFee)) + vDonation).toFixed(2" +
+");\r\n                                    if (isNaN(vTotalAmt) == true) vTotalAmt " +
+"= 0;\r\n                                    vGrandAmt = Number(vGrandAmt) + Number" +
+"(vTotalAmt);\r\n                                }\r\n                               " +
+" else if (vDonation > 0) {\r\n                                    vPrice = 0;\r\n   " +
+"                                 vTotalAmt = ((vQty * (vPrice + vFee)) + vDonati" +
+"on).toFixed(2);\r\n                                    if (isNaN(vTotalAmt) == tru" +
+"e) vTotalAmt = 0;\r\n                                    vGrandAmt = Number(vGrand" +
+"Amt) + Number(vTotalAmt);\r\n\r\n                                }\r\n                " +
+"            }\r\n                            $(\"#hdPromoCodetotal\").val(vGrandAmt)" +
 ";\r\n                            if (vVarChanges > 0)\r\n                           " +
 "     vGrandAmt = vGrandAmt + vVarChanges;\r\n\r\n                            $(\"#spG" +
 "rdTotal\").text(vGrandAmt.toFixed(2));\r\n                            $(\"#hdGrandTo" +
-"tal\").val(vGrandAmt.toFixed(2));\r\n\r\n\r\n                            $(\"#spValidati" +
-"on\").text(\"Promo Code Applied.\");\r\n                            $(\"#spValidation\"" +
-").removeClass(\"promoerrorred\");\r\n                            $(\"#spValidation\")." +
-"addClass(\"promoerrorgreen\");\r\n                        }\r\n\r\n                     " +
-"   //$(\"#imgPromoLoader\").addClass(\"PromoLoaderHide\");\r\n                        " +
-"//$(\"#imgPromoLoader\").removeClass(\"PromoLoaderShow\");\r\n                    }\r\n " +
-"               }\r\n            });\r\n        }\r\n        else {\r\n\r\n            $(\"#" +
-"spValidation\").text(\"Invalid Promo Code.\");\r\n            $(\"#spValidation\").remo" +
-"veClass(\"promoerrorgreen\");\r\n            $(\"#spValidation\").addClass(\"promoerror" +
-"red\");\r\n\r\n            $(\"#spGrdTotal\").text($(\"#spSubTotal\").text());\r\n         " +
-"   $(\"#hdGrandTotal\").val($(\"#spSubTotal\").text());\r\n\r\n            $(\"#hdPromoCo" +
-"detotal\").val(\"0\");\r\n        }\r\n        //$(\"#imgPromoLoader\").addClass(\"PromoLo" +
-"aderHide\");\r\n        //$(\"#imgPromoLoader\").removeClass(\"PromoLoaderShow\");\r\n\r\n " +
-"   }\r\n    function calculateTickTotal(vAmount, vvarId) {\r\n\r\n        $(\"#hdVChg\")" +
-".val(vvarId);\r\n        debugger;\r\n        var vOrderTotal = parseFloat($(\"#hdOrd" +
-"erTotal\").val());\r\n        var vPromoTotal = parseFloat($(\"#hdPromoCodetotal\").v" +
-"al());\r\n\r\n        var vQty = parseInt($(\"#hidQty\").val());\r\n        vAmt = parse" +
-"Float(vAmount);\r\n        if (isNaN(vAmt) == true) vAmt = 0;\r\n        if (isNaN(v" +
-"OrderTotal) == true) vOrderTotal = 0;\r\n        if (isNaN(vPromoTotal) == true) v" +
-"PromoTotal = 0;\r\n        vOrderTotal = parseFloat(vOrderTotal + vAmt).toFixed(2)" +
-";\r\n        var vGrdTotal = 0\r\n        if (vPromoTotal > 0) {\r\n            vGrdTo" +
-"tal = parseFloat(vPromoTotal + vAmt).toFixed(2);\r\n        }\r\n        else {\r\n   " +
-"         vGrdTotal = parseFloat(vOrderTotal + vAmt).toFixed(2);\r\n        }\r\n\r\n  " +
-"      $(\"#spGrdTotal\").text(vGrdTotal);\r\n        $(\"#hdGrandTotal\").val(vGrdTota" +
-"l);\r\n\r\n        $(\"#spSubTotal\").text(vOrderTotal);\r\n        var totqty = $(\'#hid" +
-"Qty\').val();\r\n\r\n        if (vOrderTotal > 0) {\r\n            $(\'.divvisible\').sho" +
-"w();\r\n\r\n            if (totqty <= 0) {\r\n\r\n                $(\'.divqtyvisible\').hi" +
-"de();\r\n            } else {\r\n                $(\'.divqtyvisible\').show();\r\n      " +
-"      }\r\n            //$(\'#cardshow\').css(\'display\', \'block\');\r\n        }\r\n     " +
-"   else {\r\n            $(\'.divqtyvisible\').hide();\r\n            $(\'.divvisible\')" +
-".hide();\r\n            //$(\'#cardshow\').css(\'display\', \'none\');\r\n        }\r\n\r\n   " +
-" }\r\n\r\n    function calculateTickTotalOptional(vCount) {\r\n\r\n        var vVarValue" +
-" = $(\"#hdVarId\").val().split(\',\');\r\n        var vOrderTotal = parseFloat($(\"#hdO" +
-"rderTotal\").val());\r\n        var vPromoTotal = parseFloat($(\"#hdPromoCodetotal\")" +
-".val());\r\n        if (isNaN(vPromoTotal) == true) vPromoTotal = 0;\r\n        var " +
-"vPromoCalc = vPromoTotal;\r\n        var vSel = \'\';\r\n        if (isNaN(vOrderTotal" +
-") == true) vOrderTotal = 0;\r\n        var vVariChanges = 0;\r\n        for (i = 0; " +
-"i <= vVarValue.length; i++) {\r\n            if ($(\"#chk_\" + vVarValue[i]).is(\":ch" +
-"ecked\") == true) {\r\n                if (vSel == \'\')\r\n                    vSel = " +
-"vVarValue[i];\r\n                else\r\n                    vSel = vSel + \',\' + vVa" +
-"rValue[i];\r\n\r\n                vAmt = parseFloat($(\"#sp_\" + vVarValue[i]).text())" +
-";\r\n                if (isNaN(vAmt) == true) vAmt = 0;\r\n\r\n                vOrderT" +
-"otal = vOrderTotal + vAmt;\r\n                vPromoTotal = vPromoTotal + vAmt;\r\n " +
-"               vVariChanges = vVariChanges + vAmt;\r\n\r\n            }\r\n        }\r\n" +
-"        $(\"#hdVarChanges\").val(vVariChanges);\r\n\r\n        $(\"#hdVChg\").val(vSel);" +
-"\r\n\r\n        //for (i = 1; i <= vCount; i++) {\r\n        //    if ($(\"#chk_\" + i.t" +
-"oString()).is(\":checked\") == true) {\r\n        //        vAmt = parseFloat($(\"#sp" +
-"_\" + i.toString()).text());\r\n        //        if (isNaN(vAmt) == true) vAmt = 0" +
-"; vOrderTotal = vOrderTotal + vAmt;\r\n        //    }\r\n        //}\r\n\r\n        if " +
-"(vPromoCalc > 0) {\r\n            $(\"#spGrdTotal\").text(vPromoTotal.toFixed(2));\r\n" +
-"            $(\"#hdGrandTotal\").val(vPromoTotal.toFixed(2));\r\n        }\r\n        " +
-"else {\r\n            $(\"#spGrdTotal\").text(vOrderTotal.toFixed(2));\r\n            " +
-"$(\"#hdGrandTotal\").val(vOrderTotal.toFixed(2))\r\n        }\r\n\r\n        $(\"#spSubTo" +
-"tal\").text(vOrderTotal.toFixed(2));\r\n        var totqty = $(\'#hidQty\').val();\r\n " +
-"       if (vOrderTotal > 0) {\r\n            $(\'.divvisible\').show();\r\n           " +
-" if (totqty <= 0) {\r\n                $(\'.divqtyvisible\').hide();\r\n            } " +
-"else {\r\n                $(\'.divqtyvisible\').show();\r\n            }\r\n            " +
-"//$(\'#cardshow\').css(\'display\', \'block\');\r\n        }\r\n        else {\r\n          " +
-"  $(\'.divvisible\').hide();\r\n            $(\'.divqtyvisible\').hide();\r\n           " +
-" //$(\'#cardshow\').css(\'display\', \'none\');\r\n        }\r\n    }\r\n    function ajaxse" +
-"tup(strname, strFormTag) {\r\n        var msgnew = \"\";\r\n\r\n        var request = $." +
-"ajax({\r\n            url: \'");
+"tal\").val(vGrandAmt.toFixed(2));\r\n                            if (vTickets != \"A" +
+"\" && vLoopFlag == true) {\r\n                                $(\"#spValidation\").te" +
+"xt(\"Promo Code Not Applicable\");\r\n                                $(\"#spValidati" +
+"on\").removeClass(\"promoerrorgreen\");\r\n                                $(\"#spVali" +
+"dation\").addClass(\"promoerrorred\");\r\n                            }\r\n            " +
+"                else {\r\n                                $(\"#spValidation\").text(" +
+"\"Promo Code Applied\");\r\n                                $(\"#spValidation\").remov" +
+"eClass(\"promoerrorred\");\r\n                                $(\"#spValidation\").add" +
+"Class(\"promoerrorgreen\");\r\n                            }\r\n                      " +
+"  }\r\n                    }\r\n                }\r\n            });\r\n        }\r\n     " +
+"   else {\r\n\r\n            $(\"#spValidation\").text(\"Invalid Promo Code\");\r\n       " +
+"     $(\"#spValidation\").removeClass(\"promoerrorgreen\");\r\n            $(\"#spValid" +
+"ation\").addClass(\"promoerrorred\");\r\n\r\n            $(\"#spGrdTotal\").text($(\"#spSu" +
+"bTotal\").text());\r\n            $(\"#hdGrandTotal\").val($(\"#spSubTotal\").text());\r" +
+"\n\r\n            $(\"#hdPromoCodetotal\").val(\"0\");\r\n        }\r\n        //$(\"#imgPro" +
+"moLoader\").addClass(\"PromoLoaderHide\");\r\n        //$(\"#imgPromoLoader\").removeCl" +
+"ass(\"PromoLoaderShow\");\r\n\r\n    }\r\n\r\n    function calculateTickTotal(vAmount, vva" +
+"rId) {\r\n\r\n        $(\"#hdVChg\").val(vvarId);\r\n        debugger;\r\n        var vOrd" +
+"erTotal = parseFloat($(\"#hdOrderTotal\").val());\r\n        var vPromoTotal = parse" +
+"Float($(\"#hdPromoCodetotal\").val());\r\n\r\n        var vQty = parseInt($(\"#hidQty\")" +
+".val());\r\n        vAmt = parseFloat(vAmount);\r\n        if (isNaN(vAmt) == true) " +
+"vAmt = 0;\r\n        if (isNaN(vOrderTotal) == true) vOrderTotal = 0;\r\n        if " +
+"(isNaN(vPromoTotal) == true) vPromoTotal = 0;\r\n        vOrderTotal = parseFloat(" +
+"vOrderTotal + vAmt).toFixed(2);\r\n        var vGrdTotal = 0\r\n        if (vPromoTo" +
+"tal > 0) {\r\n            vGrdTotal = parseFloat(vPromoTotal + vAmt).toFixed(2);\r\n" +
+"        }\r\n        else {\r\n            vGrdTotal = parseFloat(vOrderTotal + vAmt" +
+").toFixed(2);\r\n        }\r\n\r\n        $(\"#spGrdTotal\").text(vGrdTotal);\r\n        $" +
+"(\"#hdGrandTotal\").val(vGrdTotal);\r\n\r\n        $(\"#spSubTotal\").text(vOrderTotal);" +
+"\r\n        $(\"#hdVarChanges\").val(vAmt);\r\n        var totqty = $(\'#hidQty\').val()" +
+";\r\n\r\n        if (vOrderTotal > 0) {\r\n            $(\'.divvisible\').show();\r\n\r\n   " +
+"         if (totqty <= 0) {\r\n\r\n                $(\'.divqtyvisible\').hide();\r\n    " +
+"        } else {\r\n                $(\'.divqtyvisible\').show();\r\n            }\r\n  " +
+"          //$(\'#cardshow\').css(\'display\', \'block\');\r\n        }\r\n        else {\r\n" +
+"            $(\'.divqtyvisible\').hide();\r\n            $(\'.divvisible\').hide();\r\n " +
+"           //$(\'#cardshow\').css(\'display\', \'none\');\r\n        }\r\n\r\n    }\r\n    fun" +
+"ction calculateTickTotalOptional(vCount) {\r\n\r\n        var vVarValue = $(\"#hdVarI" +
+"d\").val().split(\',\');\r\n        var vOrderTotal = parseFloat($(\"#hdOrderTotal\").v" +
+"al());\r\n        var vPromoTotal = parseFloat($(\"#hdPromoCodetotal\").val());\r\n   " +
+"     if (isNaN(vPromoTotal) == true) vPromoTotal = 0;\r\n        var vPromoCalc = " +
+"vPromoTotal;\r\n        var vSel = \'\';\r\n        if (isNaN(vOrderTotal) == true) vO" +
+"rderTotal = 0;\r\n        var vVariChanges = 0;\r\n        for (i = 0; i <= vVarValu" +
+"e.length; i++) {\r\n            if ($(\"#chk_\" + vVarValue[i]).is(\":checked\") == tr" +
+"ue) {\r\n                if (vSel == \'\')\r\n                    vSel = vVarValue[i];" +
+"\r\n                else\r\n                    vSel = vSel + \',\' + vVarValue[i];\r\n\r" +
+"\n                vAmt = parseFloat($(\"#sp_\" + vVarValue[i]).text());\r\n          " +
+"      if (isNaN(vAmt) == true) vAmt = 0;\r\n\r\n                vOrderTotal = vOrder" +
+"Total + vAmt;\r\n                vPromoTotal = vPromoTotal + vAmt;\r\n              " +
+"  vVariChanges = vVariChanges + vAmt;\r\n\r\n            }\r\n        }\r\n        $(\"#h" +
+"dVarChanges\").val(vVariChanges);\r\n\r\n        $(\"#hdVChg\").val(vSel);\r\n\r\n        /" +
+"/for (i = 1; i <= vCount; i++) {\r\n        //    if ($(\"#chk_\" + i.toString()).is" +
+"(\":checked\") == true) {\r\n        //        vAmt = parseFloat($(\"#sp_\" + i.toStri" +
+"ng()).text());\r\n        //        if (isNaN(vAmt) == true) vAmt = 0; vOrderTotal" +
+" = vOrderTotal + vAmt;\r\n        //    }\r\n        //}\r\n\r\n        if (vPromoCalc >" +
+" 0) {\r\n            $(\"#spGrdTotal\").text(vPromoTotal.toFixed(2));\r\n            $" +
+"(\"#hdGrandTotal\").val(vPromoTotal.toFixed(2));\r\n        }\r\n        else {\r\n     " +
+"       $(\"#spGrdTotal\").text(vOrderTotal.toFixed(2));\r\n            $(\"#hdGrandTo" +
+"tal\").val(vOrderTotal.toFixed(2))\r\n        }\r\n\r\n        $(\"#spSubTotal\").text(vO" +
+"rderTotal.toFixed(2));\r\n        var totqty = $(\'#hidQty\').val();\r\n        if (vO" +
+"rderTotal > 0) {\r\n            $(\'.divvisible\').show();\r\n            if (totqty <" +
+"= 0) {\r\n                $(\'.divqtyvisible\').hide();\r\n            } else {\r\n     " +
+"           $(\'.divqtyvisible\').show();\r\n            }\r\n            //$(\'#cardsho" +
+"w\').css(\'display\', \'block\');\r\n        }\r\n        else {\r\n            $(\'.divvisi" +
+"ble\').hide();\r\n            $(\'.divqtyvisible\').hide();\r\n            //$(\'#cardsh" +
+"ow\').css(\'display\', \'none\');\r\n        }\r\n    }\r\n\r\n\r\n\r\n    function ajaxsetup(str" +
+"name, strFormTag) {\r\n        var msgnew = \"\";\r\n\r\n        var request = $.ajax({\r" +
+"\n            url: \'");
 
             
-            #line 1913 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1906 "..\..\Views\TicketPayment\TicketPayment.cshtml"
              Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -2912,7 +2914,7 @@ WriteLiteral("\',\r\n            async: false,\r\n            data: { strFormNam
 "     $.ajax({\r\n                url: \'");
 
             
-            #line 2225 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 2218 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                  Write(Url.Action("returncardetail", "TicketPayment"));
 
             
@@ -2959,7 +2961,7 @@ WriteLiteral(@"',
             url: '");
 
             
-            #line 2263 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 2256 "..\..\Views\TicketPayment\TicketPayment.cshtml"
              Write(Url.Action("Nullsession", "TicketPayment"));
 
             
@@ -2970,7 +2972,7 @@ WriteLiteral("\',\r\n            type: \"Get\",\r\n            success: function
 "dow.location.href = \'");
 
             
-            #line 2270 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 2263 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                            Write(Url.Action("TicketPayment", "TicketPayment", new { }));
 
             
