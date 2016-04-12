@@ -826,6 +826,7 @@ span.evnt_toltip{
 #eventtopscoll.viewevent_container .xs-viewevent-inner{ margin-top: -24px !important;}
 .xs-viewevent-inner{margin-top: -10px;}
 .desc_pl_0{ padding-left:0px !important}
+.xs_create_code_mb10{ margin-bottom:10px;}
 }
 @media (width: 320px) {
 .ev_loc_icn{ left:-10px !important; }
@@ -875,6 +876,7 @@ span.evnt_toltip{
 #eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 154px !important;}
 }
 @media (min-width: 360px) and (max-width: 640px) {
+.xs_create_code_mb10{ margin-bottom:10px;}
 #mainhead{ padding-top:10px;}
 .headr_main { padding-top:10px;}
 
