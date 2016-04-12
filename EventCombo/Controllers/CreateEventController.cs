@@ -38,6 +38,70 @@ namespace EventCombo.Controllers
             return View();
         }
 
+        public string GetOrderText( long EventId)
+        {
+            string tickettype = "";
+            var ticketsfree = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 1 select r).Count();
+            var ticketsPaid = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 2 select r).Count();
+            var ticketsDonation = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 3 select r).Count();
+
+            var itemsremainingInCart = (from o in db.Ticket_Quantity_Detail where o.TQD_Event_Id == EventId select o.TQD_Remaining_Quantity).Sum();
+
+
+            if (ticketsfree > 0 && ticketsPaid > 0 && ticketsDonation > 0)
+            {
+                tickettype = "Order Now";
+
+            }
+            if (ticketsfree <= 0 && ticketsPaid > 0 && ticketsDonation <= 0)
+            {
+                tickettype = "Order Now";
+
+            }
+            if (ticketsfree <= 0 && ticketsPaid > 0 && ticketsDonation > 0)
+            {
+                tickettype = "Order Now";
+
+            }
+            if (ticketsfree > 0 && ticketsPaid > 0 && ticketsDonation <= 0)
+            {
+                tickettype = "Order Now";
+
+            }
+            if (ticketsfree <= 0 && ticketsPaid > 0 && ticketsDonation > 0)
+            {
+                tickettype = "Order Now";
+
+            }
+            if (ticketsfree > 0 && ticketsPaid <= 0 && ticketsDonation <= 0)
+            {
+                tickettype = "Register";
+
+            }
+            if (ticketsfree <= 0 && ticketsPaid <= 0 && ticketsDonation > 0)
+            {
+                tickettype = "Donate";
+
+            }
+            if (ticketsfree > 0 && ticketsPaid <= 0 && ticketsDonation > 0)
+            {
+                tickettype = "Register";
+
+            }
+            if (ticketsfree <= 0 && ticketsPaid <= 0 && ticketsDonation <= 0)
+            {
+                tickettype = "Get Tickets";
+
+            }
+            if (itemsremainingInCart == 0)
+            {
+                tickettype = "Sold Out";
+
+            }
+            return tickettype;
+        }
+
+
         public ActionResult CreateEvent()
         {
 

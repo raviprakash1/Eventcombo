@@ -1,8 +1,10 @@
-﻿
+﻿@using EventCombo.Controllers;
 @using PagedList.Mvc;
 @{
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
+
+
 <div class="col-sm-12">
     <h3 class="acnt_title inv_eml_title">Manage Email Invitations</h3>
 </div>
@@ -107,7 +109,7 @@
                                 @Html.DisplayFor(modelItem => item.SendOn)
                             </div>
                             <div class="crt_inv_mid_cell create_invite_action ">
-                                @Html.ActionLink("Edit", "CreateInvitations", "ManageEvent", new { lId = item.I_Id }, null)  <a href="#">Copy</a>  <a href="#">Delete</a>
+                                @Html.ActionLink("Edit", "CreateInvitations", "ManageEvent", new { lId = item.I_Id, lEvtId = item.EventID, strMode = "C" }, null)  <a href="#">Copy</a>  <a href="#">Delete</a>
                             </div>
                         }
 
@@ -177,7 +179,7 @@
                                 @Html.DisplayFor(modelItem => item.SendOn)
                             </div>
                             <div class="crt_inv_mid_cell create_invite_action ">
-                                @Html.ActionLink("Edit", "CreateInvitations", "ManageEvent", new { lId = item.I_Id }, null)  <a href="#">Copy</a>  <a href="#">Delete</a>
+                                @Html.ActionLink("Edit", "CreateInvitations", "ManageEvent", new { lId = item.I_Id, lEvtId = item.EventID, strMode = "C" }, null)  <a href="#">Copy</a>  <a href="#">Delete</a>
                             </div>
                         }
                     </div>

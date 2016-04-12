@@ -2221,7 +2221,11 @@ namespace EventCombo.Controllers
             int iElistCnt = 0;
             string strPassword = "";
             string strDateTime = "";
-            
+            string strviewEvent = "";
+            string strOrgnizerUrl = "";
+            Session["logo"] = "Invitation";
+            Session["Fromname"] = "Invitation";
+            string strOrderText = "Attend";
             using (EventComboEntities objEnt = new EventComboEntities())
             {
                 var vObj = (from EEI in objEnt.Event_Email_Invitation where EEI.I_Id == lId select EEI).FirstOrDefault();
@@ -2249,9 +2253,18 @@ namespace EventCombo.Controllers
                         {
                             strDateTime = Convert.ToDateTime(vDatetime.EventStartDate).ToString("ddd MMM dd, yyyy") + "," + vDatetime.EventStartTime.ToString();
                         }
-                        objEEI.EventDate = strDateTime;
-                        var vOrgnizer = (from Ord in objEnt.Event_Orgnizer_Detail join orm in objEnt.Organizer_Master on Ord.OrganizerMaster_Id equals orm.Orgnizer_Id where Ord.Orgnizer_Event_Id == lEvtId select orm.Orgnizer_Name).FirstOrDefault();
-                        objEEI.EventOrgnizer = (vOrgnizer != null ? vOrgnizer.ToString() : "");
+                        if (vEvent.TimeZone != null)
+                        {
+                            int iTimezone = Convert.ToInt32(vEvent.TimeZone);
+                            var vTimeZone = (from tmz in objEnt.TimeZoneDetails where tmz.TimeZone_Id == iTimezone select tmz.TimeZone_Name).FirstOrDefault();
+                            objEEI.EventDate = strDateTime + "(" + vTimeZone + ")";
+                         }
+                        else
+                        {
+                            objEEI.EventDate = strDateTime;
+                        }
+                        var vOrgnizer = (from Ord in objEnt.Event_Orgnizer_Detail join orm in objEnt.Organizer_Master on Ord.OrganizerMaster_Id equals orm.Orgnizer_Id where Ord.Orgnizer_Event_Id == lEvtId select orm).FirstOrDefault();
+                        objEEI.EventOrgnizer = (vOrgnizer != null ? vOrgnizer.Orgnizer_Name  : "");
                         var vAddress = (from eAdd in objEnt.Addresses where eAdd.EventId == lEvtId select eAdd).FirstOrDefault();
                         if (vAddress != null)
                         {
@@ -2263,6 +2276,14 @@ namespace EventCombo.Controllers
                             objEEI.EventLat = vAddress.Latitude;
                             objEEI.EventLong = vAddress.Longitude;
                         }
+
+                        CreateEventController objEv = new CreateEventController();
+                        strOrderText = objEv.GetOrderText(lEvtId);
+
+                        var url = Request.Url;
+                        var baseurl = url.GetLeftPart(UriPartial.Authority);
+                        strviewEvent = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(vEvent.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = lEvtId.ToString() });
+                        strOrgnizerUrl = baseurl + Url.Action("Index", "OrganizerInfo", new { id = vOrgnizer.Orgnizer_Id, eventid = lEvtId });
                     }
                     CreateEventController objCEv = new CreateEventController();
                     string strImageUrl = objCEv.GetImages(lEvtId).FirstOrDefault();
@@ -2275,9 +2296,16 @@ namespace EventCombo.Controllers
                         strImageUrl = "/Images/default_event_image.jpg";
 
                     objEEI.EventImg = strImageUrl;
+
+                  
+                    //@Url.Action("Index", "OrganizerInfo", new { id = Model.organizerid, eventid = Model.eventId })
+
                 }
             }
 
+            TempData["OrderText"] = strOrderText;
+            TempData["OrgnizerUrl"] = strOrgnizerUrl;
+            TempData["ViewEventUrl"] = strviewEvent;
             TempData["Lat"] = (objEEI.EventLat != null ? objEEI.EventLat.Trim() : "");
             TempData["Long"] = (objEEI.EventLong != null ? objEEI.EventLong.Trim() : ""); 
             TempData["lId"] = lId;
@@ -2383,6 +2411,23 @@ namespace EventCombo.Controllers
                         }
                         objEnt.SaveChanges();
                         lResult = objEInt.I_Id;
+                      
+                    }
+                    if (Model.I_Mode.Trim() == "N")
+                    {
+                        EmailContent objEC = new EmailContent();
+                        foreach (Event_Email_List objEv in Model.EmailList)
+                        {
+                            objEC = new EmailContent();
+                            objEC.To = objEv.L_EmailId;
+                            objEC.From = "shweta.sindhu@kiwitech.com";
+                            objEC.Body = Model.I_EmailContent;
+                            objEC.Subject = Model.I_SubjectLine;
+                            objEC.Cc = "";
+                            objEC.Bcc = "";
+                            objEC.Fromname = Model.I_SenderName;
+                            SendHtmlFormattedEmail(objEC);
+                        }
                     }
                 }
                 return lResult;
