@@ -1,0 +1,120 @@
+-----------Exception Details on  4/12/2016 11:09:03 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/12/2016 11:09:03 AM
+
+Error Line No : ine 159
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/editevent/modifyevent?Eventid=152
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/12/2016 11:17:13 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/12/2016 11:17:13 AM
+
+Error Line No : ine 159
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/editevent/modifyevent?Eventid=156
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/12/2016 11:45:26 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/12/2016 11:45:26 AM
+
+Error Line No : ine 159
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/editevent/modifyevent?Eventid=177
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/12/2016 11:47:52 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/12/2016 11:47:52 AM
+
+Error Line No : ine 159
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/editevent/modifyevent?Eventid=100
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/12/2016 11:49:22 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/12/2016 11:49:22 AM
+
+Error Line No : ine 159
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/editevent/modifyevent?Eventid=148
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

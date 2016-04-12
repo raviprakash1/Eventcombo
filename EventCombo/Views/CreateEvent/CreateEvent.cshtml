@@ -248,7 +248,7 @@
 
                 </div>
                 <div class="col-sm-9 col-xs-12 pt10 text-right no_pad">
-                    <button class="cbtSave btn ev_live_sub_btn mb5 cdisable"  type="submit" disabled="disabled">
+                    <button class="cbtSave btn ev_live_sub_btn mb5 cdisable"  type="button" disabled="disabled">
                         SAVE &#10;
                         <span> > </span>
                     </button>
@@ -1265,7 +1265,7 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-sm-12 text-right mb10 make_live_btn">
-                    <button type="submit" id="btSave" class="cbtSave btn ev_live_sub_btn mb5 cdisable"  disabled="disabled">
+                    <button type="button" id="btSave" class="cbtSave btn ev_live_sub_btn mb5 cdisable"  disabled="disabled">
                         SAVE
                         <span> > </span>
                     </button>
@@ -1471,7 +1471,7 @@
     @*<div id='map-canvas-event'></div>*@
 </div>
 
-    // ---------------------Event Creation Script -------------------
+    @*// ---------------------Event Creation Script -------------------*@
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     @*<script src="~/Content/gmap.js"></script>*@
@@ -2139,21 +2139,21 @@
                 save("Live");
             });
 
-            //$('.cbtSave').click(function () {
-            //    var msg = validatemain();
-            //    if (msg != "") {
-            //        $('#diverroacc').css('display', 'block');
-            //        $('#diverroacc').focus();
-            //        $('#erraccmsg').html(msg);
-            //        $('html,body').animate({ scrollTop: 0 });
-            //        return false;
+            $('.cbtSave').click(function () {
+                var msg = validatemain();
+                if (msg != "") {
+                    $('#diverroacc').css('display', 'block');
+                    $('#diverroacc').focus();
+                    $('#erraccmsg').html(msg);
+                    $('html,body').animate({ scrollTop: 0 });
+                    return false;
 
-            //    }
+                }
 
-            //    save("Save");
+                save("Save");
 
 
-            //});
+            });
 
             $("#btOKAccess").click(function () {
                 history.back();
@@ -5665,6 +5665,10 @@
             $("input[id^='id_saletimeend']").attr("disabled", false);
             $(".upload_help_icn").css('display', 'none');
             } else {
+                $("input[id^='id_salestart']").val("");;
+                $("input[id^='id_saletimestart']").val("");;
+                $("input[id^='id_saleend']").val("");;
+                $("input[id^='id_saletimeend']").val("");;
                 $("input[id^='id_salestart']").attr("disabled", true);
                 $("input[id^='id_saletimestart']").attr("disabled", true);
                 $("input[id^='id_saleend']").attr("disabled", true);
