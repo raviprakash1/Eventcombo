@@ -2229,7 +2229,12 @@ namespace EventCombo.Controllers
             using (EventComboEntities objEnt = new EventComboEntities())
             {
                 var vObj = (from EEI in objEnt.Event_Email_Invitation where EEI.I_Id == lId select EEI).FirstOrDefault();
-                if (vObj != null) objEEI = vObj;
+                if (vObj != null)
+                {
+                    objEEI = vObj;
+                    if (objEEI.I_ScheduleDate != null)
+                        objEEI.I_ScheduleDate = DateTime.SpecifyKind(Convert.ToDateTime(objEEI.I_ScheduleDate), DateTimeKind.Local);
+                }
                 iElistCnt = (objEEI.Event_Email_List != null ? objEEI.Event_Email_List.Count() : 0);
                // lEvtId = (objEEI.I_Event_Id != null ? Convert.ToInt64(objEEI.I_Event_Id):0);
                 
@@ -2369,7 +2374,12 @@ namespace EventCombo.Controllers
                         objEInt.I_SubjectLine = Model.I_SubjectLine;
                         objEInt.I_Event_Id = Model.I_Event_Id;
                         objEInt.I_EmailContent = Model.I_EmailContent;
-                        objEInt.I_ScheduleDate = Model.I_ScheduleDate;
+                        if (Model.I_ScheduleDate != null)
+                            objEInt.I_ScheduleDate = DateTime.SpecifyKind(Convert.ToDateTime(Model.I_ScheduleDate), DateTimeKind.Utc);
+                        else
+                            objEInt.I_ScheduleDate = Model.I_ScheduleDate;
+
+                        objEInt.I_EditableContent = Model.I_EditableContent;
                         objEInt.I_Mode  = Model.I_Mode;
                         objEInt.I_CreateDate = DateTime.Now;
                         if (Model.EmailList != null)
@@ -2394,7 +2404,11 @@ namespace EventCombo.Controllers
                         objEInt.I_SubjectLine = Model.I_SubjectLine;
                         objEInt.I_Event_Id = Model.I_Event_Id;
                         objEInt.I_EmailContent = Model.I_EmailContent;
-                        objEInt.I_ScheduleDate = Model.I_ScheduleDate;
+                        if (Model.I_ScheduleDate != null)
+                            objEInt.I_ScheduleDate = DateTime.SpecifyKind(Convert.ToDateTime(Model.I_ScheduleDate), DateTimeKind.Utc);
+                        else
+                            objEInt.I_ScheduleDate = Model.I_ScheduleDate;
+                        objEInt.I_EditableContent = Model.I_EditableContent;
                         objEInt.I_Mode = Model.I_Mode;
                         objEInt.I_ModifyDate = DateTime.Now;
                         objEnt.Event_Email_List.RemoveRange(objEnt.Event_Email_List.Where(x => x.L_I_Id == Model.I_Id));
@@ -2419,7 +2433,7 @@ namespace EventCombo.Controllers
                         foreach (Event_Email_List objEv in Model.EmailList)
                         {
                             objEC = new EmailContent();
-                            objEC.To = objEv.L_EmailId;
+                            objEC.To = objEv.L_EmailId.Trim();
                             objEC.From = "shweta.sindhu@kiwitech.com";
                             objEC.Body = Model.I_EmailContent;
                             objEC.Subject = Model.I_SubjectLine;

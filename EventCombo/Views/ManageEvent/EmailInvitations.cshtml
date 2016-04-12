@@ -11,8 +11,6 @@
 <div class="clearfix"></div>
 <div class="col-sm-10 mb10 col-xs-12" id="diverro1acc" style="display:none ">
     <div class="er_UI_main">
-
-
         <div class="er_sys_img"></div>
         <div class="er_suc" id="erraccsucc"></div>
         <button class="close" type="button" onclick="$('#diverro1acc').css('display', 'none');" id="btndiverro1acc" tabindex="-1">&#215;</button>
@@ -91,11 +89,11 @@
                             Action
                         </div>
                     </div>
-                    <div class="crt_inv_mid_row">
 
-                        @foreach (var item in (PagedList.IPagedList<EventCombo.ViewModels.EmailInvitation>)ViewBag.scheduled)
-                        {
 
+                    @foreach (var item in (PagedList.IPagedList<EventCombo.ViewModels.EmailInvitation>)ViewBag.scheduled)
+                    {
+                        <div class="crt_inv_mid_row">
                             <div class="crt_inv_mid_cell">
                                 @Html.DisplayFor(modelItem => item.Subject)
                             </div>
@@ -111,9 +109,10 @@
                             <div class="crt_inv_mid_cell create_invite_action ">
                                 @Html.ActionLink("Edit", "CreateInvitations", "ManageEvent", new { lId = item.I_Id, lEvtId = item.EventID, strMode = "C" }, null)  <a href="#">Copy</a>  <a href="#">Delete</a>
                             </div>
-                        }
+                        </div>
+                    }
 
-                    </div>
+
                     <div class="col-sm-12 col-xs-12 text-center mb10">
                         <nav class="home-pagination">
                             @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
@@ -163,26 +162,28 @@
                             Action
                         </div>
                     </div>
-                    <div class="crt_inv_mid_row">
+                    
                         @foreach (var item in (PagedList.IPagedList<EventCombo.ViewModels.EmailInvitation>)ViewBag.draft)
                         {
-                            <div class="crt_inv_mid_cell">
-                                @Html.DisplayFor(modelItem => item.Subject)
-                            </div>
-                            <div class="crt_inv_mid_cell ">
-                                @Html.DisplayFor(modelItem => item.NoOfRecipients)
-                            </div>
-                            <div class="crt_inv_mid_cell ">
-                                @Html.DisplayFor(modelItem => item.CreatedOn)
-                            </div>
-                            <div class="crt_inv_mid_cell ">
-                                @Html.DisplayFor(modelItem => item.SendOn)
-                            </div>
-                            <div class="crt_inv_mid_cell create_invite_action ">
-                                @Html.ActionLink("Edit", "CreateInvitations", "ManageEvent", new { lId = item.I_Id, lEvtId = item.EventID, strMode = "C" }, null)  <a href="#">Copy</a>  <a href="#">Delete</a>
+                            <div class="crt_inv_mid_row">
+                                <div class="crt_inv_mid_cell">
+                                    @Html.DisplayFor(modelItem => item.Subject)
+                                </div>
+                                <div class="crt_inv_mid_cell ">
+                                    @Html.DisplayFor(modelItem => item.NoOfRecipients)
+                                </div>
+                                <div class="crt_inv_mid_cell ">
+                                    @Html.DisplayFor(modelItem => item.CreatedOn)
+                                </div>
+                                <div class="crt_inv_mid_cell ">
+                                    @Html.DisplayFor(modelItem => item.SendOn)
+                                </div>
+                                <div class="crt_inv_mid_cell create_invite_action ">
+                                    @Html.ActionLink("Edit", "CreateInvitations", "ManageEvent", new { lId = item.I_Id, lEvtId = item.EventID, strMode = "C" }, null)  <a href="#">Copy</a>  <a href="#">Delete</a>
+                                </div>
                             </div>
                         }
-                    </div>
+                            
                     <div class="col-sm-12 col-xs-12 text-center mb10">
                         <nav class="home-pagination">
                             @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@

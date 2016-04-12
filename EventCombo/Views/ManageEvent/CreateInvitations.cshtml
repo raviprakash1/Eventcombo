@@ -153,7 +153,9 @@
                                 }
                             </div>
                             <div class="col-xs-12 no_pad mb10">
-                                <p class="inv_mail_date def_color">Get Directions</p>
+                                <p class="inv_mail_date def_color">
+                                    <a href="http://maps.google.com/maps?daddr=@TempData["Lat"],@TempData["Long"]&amp;ll=" style="color: #3cf; text-decoration: none;"> Get Directions </a>
+                                </p>
 
                             </div>
                             <div class="col-xs-12 no_pad mb10">
@@ -173,7 +175,10 @@
             <div class="clearfix"></div>
             <div class="col-sm-12 col-xs-12 mt20 text-center ">
                 <div class="col-sm-12 col-xs-12 invite_email_btn_bor ">
-                    <button class="btn def_btn acnt_btn invite_email_attend_btn " title="" type="button">Attend</button>
+                    <a href="@TempData["ViewEventUrl"]" style="text-decoration:none; background:#00adef; box-shadow:none; border:0px; border-radius:5px; padding:8px 15px; color:#fff; font-size:2em; " title="" type="button">
+                        @TempData["OrderText"]
+                    </a>
+                    @*<button class="btn def_btn acnt_btn invite_email_attend_btn " title="" type="button">Attend</button>*@
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -192,10 +197,10 @@
                 </p>
             </div>
             <div class="clearfix"></div>
-            @if (Model != null && !String.IsNullOrEmpty(Model.I_EmailContent))
+            @if (Model != null && !String.IsNullOrEmpty(Model.I_EditableContent))
             {
                 <div id="dvemailcontent" class="col-sm-12">
-                    @Model.I_EmailContent
+                    @Model.I_EditableContent
                 </div>
             }
             else
@@ -203,135 +208,6 @@
                 <div id="dvemailcontent" class="col-sm-12"></div>
             }
         </div>
-
-
-        <div id="dvUserMail" style="width:650px; font-family: arial; float: left; border: 1px solid #ccc; margin-bottom: 10px;">
-            <div style="width: 100px; float: left; margin-bottom: 20px; margin-top: 20px;" class="inv_mail_side_logo text-center"><img src= "~/images/logo_vertical.png"></div>
-            <div style="margin-top: 20px; width: 540px; float: left;" class="">
-                <h4 style="font-size:1.8em; margin-bottom:5px"> Hello [Attendee]!</h4>
-                <p style="color:#686868; font-size:16px; margin-bottom:0; margin-top:20px;"> Please join us for</p>
-                @if (Model.EventTitle != null)
-                {
-                    <h5 style="color: #3cf; font-size: 2em; font-weight: bold; margin-bottom: 0; margin-top: 0;text-transform: capitalize;">@Model.EventTitle</h5>
-                }
-                else
-                {
-                    <h5 style="color: #3cf; font-size: 2em; font-weight: bold; margin-bottom: 0; margin-top: 0;text-transform: capitalize;"> No Title </h5>
-                }
-                <div style="width: 100%; float:left; margin-top: 20px;">
-                    <div style="width: 100%; float:left;">
-                        <div style="width: 40%; float:left;">
-                            @if (Model.EventImg != null)
-                            {
-                                <img width="175" height="175" src="@Model.EventImg">
-                            }
-                            else
-                            {
-                                <img width="175" height="175" src="">
-                            }
-                        </div>
-                        <div style="width: 60%; float:left;">
-                            <div style="width: 100%; float:left; margin-bottom: 10px;">
-                                <p style="color: #676767; font-size: 18px; margin-bottom: 0; font-weight: bold; margin-top: 0;">Date:</p>
-                                @if (Model.EventDate != null)
-                                {
-                                    <p style="color: #676767; font-size: 18px; margin-bottom: 0; margin-top: 0;">@Model.EventDate</p>
-                                }
-                                else
-                                {
-                                    <p style="color: #676767; font-size: 18px; margin-bottom: 0; margin-top: 0;"></p>
-                                }
-                            </div>
-                            <div style="width: 100%; float:left; margin-bottom: 10px;">
-                                <p style="color: #676767; font-size: 18px; font-weight: bold; margin-bottom: 0; margin-top: 0;">Organizer:</p>
-                                <p style="color: #3cf; font-size: 18px; margin-bottom: 0; margin-top: 0;">
-                                    @if (Model.EventOrgnizer != null)
-                                    {
-                                        <a href="@TempData["OrgnizerUrl"].ToString()" style="color: #3cf; text-decoration: none;">@Model.EventOrgnizer</a>
-                                    }
-                                    else
-                                    {
-                                        <a href="#" style="color: #3cf; text-decoration: none;">Orgnizer</a>
-                                    }
-
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="width: 100%; float:left; margin-top: 10px;">
-                        <div style="width: 40%; height:175px;  float:left;" id="dvMapMail"></div>
-                        <div style="width: 60%; float:left;">
-                            <div style="width: 100%; float:left; margin-bottom: 10px;">
-                                @if (Model.EventAddress != null)
-                                {
-                                    <p style="color: #676767; font-size: 18px; margin-bottom: 0; margin-top: 0;">@Model.EventAddress </p>
-                                }
-                                else
-                                {
-                                    <p style="color: #676767; font-size: 18px; margin-bottom: 0; margin-top: 0;"></p>
-                                }
-                            </div>
-                            <div style="width: 100%; float:left; margin-bottom: 10px;">
-                                <p style="color: #3cf; font-size: 18px; font-weight: bold; margin-bottom: 0; margin-top: 0;"><a href="#" style="color: #3cf; text-decoration: none;"> Get Directions </a></p>
-
-                            </div>
-                            <div style="width: 100%; float:left; margin-bottom: 10px;">
-                                <p style="color: #676767; font-size: 18px; font-weight: bold; margin-bottom: 0; margin-top: 0;">Share:</p>
-                                <p>
-                                    @*<a href="#"><img src="~/images/fb.png" /></a>
-                                    <a href="#"><img src="~/images/tw.png" /></a>
-                                    <a href="#"><img src="~/images/linkid.png" /></a>
-                                    <a href="#"><img src="~/images/msg.png" /></a>*@
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div style="width: 96%; float:left; margin-top: 20px; text-align: center; margin-left: 2%;">
-                <div style="width: 100%; float:left; border-bottom: 1px solid #9e9e9e; border-top: 1px solid #9e9e9e; padding-bottom: 20px; padding-top: 20px; ">
-
-                    <a href="@TempData["ViewEventUrl"]" style="text-decoration:none; background:#00adef; box-shadow:none; border:0px; border-radius:5px; padding:8px 15px; color:#fff; font-size:2em; " title="" type="button">
-                        @TempData["OrderText"]
-                    </a>
-                </div>
-            </div>
-
-            <div style="width: 98%; float:left; margin-top: 10px; padding: 0 2%; margin-bottom: 10px;">
-                <p style="color: #686868; font-size: 20px; margin-top: 0px; margin-bottom: 0px;">About the event:</p>
-                @if (TempData["PPassword"].ToString() != string.Empty)
-                {
-                    <p style="color: #686868; font-size: 20px; margin-top: 5px; margin-bottom: 0px;"> Your event password : @TempData["PPassword"].ToString()</p>
-                }
-
-                <p style="font-size: 13px; color: #686868;">
-                    ( Event registration is by invitation only with the provided password. Register with your email address
-                    and the password above to attend this event. )
-                </p>
-                @if (Model != null && !String.IsNullOrEmpty(Model.I_EmailContent))
-                {
-                    <div id="dvemailcontentmail" style="color:#000;font-size:16px;">
-                        @Model.I_EmailContent
-                    </div>
-                }
-                else
-                {
-                    <div id="dvemailcontentmail" style="color:#000;font-size:16px;"></div>
-                }
-
-            </div>
-        </div>
-
-
-
-
-
-
-
-
-
 
         <div class="clearfix"></div>
         <div class="col-sm-6 col-xs-12 no_pad ">
@@ -491,9 +367,9 @@
             <input type="hidden" id="hdListId" value="@TempData["EmailListCount"]" />
             <input type="hidden" id="hdId" value="@Model.I_Id" />
             <input type="hidden" id="hdEventId" value="@TempData["Eventid"]" />
-            @if (Model != null && !String.IsNullOrEmpty(Model.I_EmailContent))
+            @if (Model != null && !String.IsNullOrEmpty(Model.I_EditableContent))
             {
-                <input type="hidden" id="hdEmailContent" value="@Model.I_EmailContent" />
+                <input type="hidden" id="hdEmailContent" value="@Model.I_EditableContent" />
             }
             else
             {
@@ -507,7 +383,128 @@
     <div class="col-sm-12 no_pad mt10 mb10">
 
     </div>
+    <div id="dvUserMail" style="width:650px; font-family: arial; float: left; border: 1px solid #ccc; margin-bottom: 10px;display:none">
+        <div style="width: 100px; float: left; margin-bottom: 20px; margin-top: 20px;" class="inv_mail_side_logo text-center"><img src="~/images/logo_vertical.png"></div>
+        <div style="margin-top: 20px; width: 540px; float: left" class="">
+            <h4 style="font-size:1.8em; margin-bottom:5px"> Hello Attendee</h4>
+            <p style="color:#686868; font-size:16px; margin-bottom:0; margin-top:20px;"> Please join us for</p>
+            @if (Model.EventTitle != null)
+            {
+                <h5 style="color: #3cf; font-size: 2em; font-weight: bold; margin-bottom: 0; margin-top: 0;text-transform: capitalize;">@Model.EventTitle</h5>
+            }
+            else
+            {
+                <h5 style="color: #3cf; font-size: 2em; font-weight: bold; margin-bottom: 0; margin-top: 0;text-transform: capitalize;"> No Title </h5>
+            }
+            <div style="width: 100%; float:left; margin-top: 20px;">
+                <div style="width: 100%; float:left;">
+                    <div style="width: 40%; float:left;">
+                        @if (Model.EventImg != null)
+                        {
+                            <img width="175" height="175" src="@Model.EventImg">
+                        }
+                        else
+                        {
+                            <img width="175" height="175" src="">
+                        }
+                    </div>
+                    <div style="width: 60%; float:left;">
+                        <div style="width: 100%; float:left; margin-bottom: 10px;">
+                            <p style="color: #676767; font-size: 18px; margin-bottom: 0; font-weight: bold; margin-top: 0;">Date:</p>
+                            @if (Model.EventDate != null)
+                            {
+                                <p style="color: #676767; font-size: 18px; margin-bottom: 0; margin-top: 0;">@Model.EventDate</p>
+                            }
+                            else
+                            {
+                                <p style="color: #676767; font-size: 18px; margin-bottom: 0; margin-top: 0;"></p>
+                            }
+                        </div>
+                        <div style="width: 100%; float:left; margin-bottom: 10px;">
+                            <p style="color: #676767; font-size: 18px; font-weight: bold; margin-bottom: 0; margin-top: 0;">Organizer:</p>
+                            <p style="color: #3cf; font-size: 18px; margin-bottom: 0; margin-top: 0;">
+                                @if (Model.EventOrgnizer != null)
+                                {
+                                    <a href="@TempData["OrgnizerUrl"].ToString()" style="color: #3cf; text-decoration: none;">@Model.EventOrgnizer</a>
+                                }
+                                else
+                                {
+                                    <a href="#" style="color: #3cf; text-decoration: none;">Orgnizer</a>
+                                }
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 100%; float:left; margin-top: 10px;">
+                    <div style="width: 40%; height:175px;  float:left;" id="dvMapMail"></div>
+                    <div style="width: 60%; float:left;">
+                        <div style="width: 100%; float:left; margin-bottom: 10px;">
+                            @if (Model.EventAddress != null)
+                            {
+                                <p style="color: #676767; font-size: 18px; margin-bottom: 0; margin-top: 0;">@Model.EventAddress </p>
+                            }
+                            else
+                            {
+                                <p style="color: #676767; font-size: 18px; margin-bottom: 0; margin-top: 0;"></p>
+                            }
+                        </div>
+                        <div style="width: 100%; float:left; margin-bottom: 10px;">
+                            <p style="color: #3cf; font-size: 18px; font-weight: bold; margin-bottom: 0; margin-top: 0;">
+                                <a href="http://maps.google.com/maps?daddr=@TempData["Lat"],@TempData["Long"]&amp;ll=" style="color: #3cf; text-decoration: none;"> Get Directions </a>
+                            </p>
+
+                        </div>
+                        <div style="width: 100%; float:left; margin-bottom: 10px;">
+                            <p style="color: #676767; font-size: 18px; font-weight: bold; margin-bottom: 0; margin-top: 0;">Share:</p>
+                            <p>
+                                @*<a href="#"><img src="~/images/fb.png" /></a>
+                                    <a href="#"><img src="~/images/tw.png" /></a>
+                                    <a href="#"><img src="~/images/linkid.png" /></a>
+                                    <a href="#"><img src="~/images/msg.png" /></a>*@
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="width: 96%; float:left; margin-top: 20px; text-align: center; margin-left: 2%;">
+            <div style="width: 100%; float:left; border-bottom: 1px solid #9e9e9e; border-top: 1px solid #9e9e9e; padding-bottom: 20px; padding-top: 20px; ">
+
+                <a href="@TempData["ViewEventUrl"]" style="text-decoration:none; background:#00adef; box-shadow:none; border:0px; border-radius:5px; padding:8px 15px; color:#fff; font-size:2em; " title="" type="button">
+                    @TempData["OrderText"]
+                </a>
+            </div>
+        </div>
+
+        <div style="width: 98%; float:left; margin-top: 10px; padding: 0 2%; margin-bottom: 10px;">
+            <p style="color: #686868; font-size: 20px; margin-top: 0px; margin-bottom: 0px;">About the event:</p>
+            @if (TempData["PPassword"].ToString() != string.Empty)
+            {
+                <p style="color: #686868; font-size: 20px; margin-top: 5px; margin-bottom: 0px;"> Your event password : @TempData["PPassword"].ToString()</p>
+            }
+
+            <p style="font-size: 13px; color: #686868;">
+                ( Event registration is by invitation only with the provided password. Register with your email address
+                and the password above to attend this event. )
+            </p>
+            @if (Model != null && !String.IsNullOrEmpty(Model.I_EditableContent))
+            {
+                <div id="dvemailcontentmail" style="color:#000;font-size:16px;">
+                    @Model.I_EditableContent
+                </div>
+            }
+            else
+            {
+                <div id="dvemailcontentmail" style="color:#000;font-size:16px;"></div>
+            }
+
+        </div>
+    </div>
 </div>
+
 
 <div class="modal fade" id="test_inv_email" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -550,6 +547,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+        //$("#dvUserMail").hide();
         var bIsPopup = displayPopup();
 
         $("#dtBox").DateTimePicker(
@@ -682,15 +680,17 @@
         var vEditorVal = $("#hdEmailContent").val().trim();
         if (vEditorVal != "") {
             $("#dvemailcontent").empty();
-            $("#dvemailcontent").append(vEditorVal)
+            $("#dvemailcontent").append(vEditorVal);
+            $("#dvemailcontentmail").empty();
+            $("#dvemailcontentmail").append(vEditorVal);
         }
 
         $("#btSaveEditor").click(function () {
             var vEditorValue = $("#dvEditor").code();
             $("#dvemailcontent").empty();
-            $("#dvemailcontent").append(vEditorValue)
+            $("#dvemailcontent").append(vEditorValue);
             $("#dvemailcontentmail").empty();
-            $("#dvemailcontentmail").append(vEditorValue)
+            $("#dvemailcontentmail").append(vEditorValue);
         });
 
         $("#btEditEditor").click(function () {
@@ -802,8 +802,9 @@
             'I_SubjectLine': $("#txtSubjectLine").val(),
             'I_EmailContent': $("#dvUserMail").html(),
             'I_ScheduleDate': $("#txtSchDate").val(),
-            'I_Mode': Mode
-
+            'I_EditableContent': $("#dvemailcontentmail").html(),
+            'I_Mode': Mode,
+            'EmailList': EmailList
         };
 
         $.ajax({

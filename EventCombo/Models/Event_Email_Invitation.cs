@@ -30,6 +30,8 @@ namespace EventCombo.Models
         public Nullable<System.DateTime> I_CreateDate { get; set; }
         public Nullable<System.DateTime> I_ModifyDate { get; set; }
         public string I_Mode { get; set; }
+        [AllowHtml]
+        public string I_EditableContent { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event_Email_List> Event_Email_List { get; set; }

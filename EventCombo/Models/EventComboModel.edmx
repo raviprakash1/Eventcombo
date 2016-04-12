@@ -214,6 +214,7 @@
           <Property Name="I_CreateDate" Type="datetime" />
           <Property Name="I_ModifyDate" Type="datetime" />
           <Property Name="I_Mode" Type="varchar" MaxLength="1" />
+          <Property Name="I_EditableContent" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Event_Email_List">
           <Key>
@@ -2347,6 +2348,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="I_ModifyDate" Type="DateTime" Precision="3" />
           <Property Name="I_Mode" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Event_Email_List" Relationship="EventComboModel.FK_Event_Email_List_Event_Email_Invitation" FromRole="Event_Email_Invitation" ToRole="Event_Email_List" />
+          <Property Name="I_EditableContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Event_Email_List">
           <Key>
@@ -3196,6 +3198,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySetMapping Name="Event_Email_Invitation">
             <EntityTypeMapping TypeName="EventComboModel.Event_Email_Invitation">
               <MappingFragment StoreEntitySet="Event_Email_Invitation">
+                <ScalarProperty Name="I_EditableContent" ColumnName="I_EditableContent" />
                 <ScalarProperty Name="I_Mode" ColumnName="I_Mode" />
                 <ScalarProperty Name="I_ModifyDate" ColumnName="I_ModifyDate" />
                 <ScalarProperty Name="I_CreateDate" ColumnName="I_CreateDate" />
