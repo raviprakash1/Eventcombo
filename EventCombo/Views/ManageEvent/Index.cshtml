@@ -1083,7 +1083,7 @@ else
 
                 $("#btDay").click(function () {
                     var EventId = $("#hdEventid").val();
-          
+
                     $.ajax({
                         url: '@Url.Action("GetEventHitsChart", "ManageEvent")',
                         data: { strDurataion: "Day", lEventId: EventId },
@@ -1338,7 +1338,7 @@ else
                         success: function (response) {
 
                             if (response == "Y") {
-                                window.location.href = '@Url.Action("Index", "ManageEvent", new { })' + '?Eventid=' + EventId + '&type=P';
+                                window.location.href = '@Url.Action("Index", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(@Model.Eventid), type = "P"})';
 
                             } else {
 
@@ -1375,7 +1375,7 @@ else
                         success: function (response) {
 
                             if (response == "Y") {
-                                window.location.href = '@Url.Action("Index", "ManageEvent", new { })' + '?Eventid=' + EventId + '&type=U';
+                                window.location.href = '@Url.Action("Index", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(@Model.Eventid), type = "U" })';
 
                             }
                             if (response == "T") {
