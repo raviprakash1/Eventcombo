@@ -1796,11 +1796,11 @@
                 } else {
 
                     $('#txtEndTime').val($('#' + e).val());
-                  
-                    
+
+
                 }
 
-               
+
 
             }
             if (e == "txtEndTime") {
@@ -1896,19 +1896,19 @@
                 });
             } else
             {
-               
+
             }
 
-        
+
             $('#tblOrgnizer tr').each(function () {
-              
+
                 if (Sno.trim() == $(this).find("td:first").html().trim()) {
-                   
+
                     $(this).remove();
-                    
+
                 }
             });
-           
+
             //$("#dllOrganizer")
             $("#ddlOrgnizers option").each(function (i) {
                 if (Sno == $(this).val()) {
@@ -1998,7 +1998,7 @@
         function AddOrgnizer() {
             $("#hidOrgnizer").val('');
             var Sno = $("#tblOrgnizer tr").length + 1;
-          
+
             var vOrgName = $("#txtOrgnizer").val();
             var vOrgDes = $("#edOrgDes").code();
             var vOrgFB = $("#txtOrgFBlink").val();
@@ -2023,7 +2023,7 @@
             strHTML = '<option value="' + Sno + '" id="' + Sno + '">' + vOrgName + '</option>';
 
             $("#ddlOrgnizers").append(strHTML);
-            
+
         }
 
         function UpdateOrgnizer() {
@@ -2085,7 +2085,7 @@
                     $(".pac-container").append("<div class='pac-item location-places-autocomplete-cant-find ' id='divCNF'><i class='ico-search'></i><b><span class='pac-item-query'><a id='aCantFind' data-target='#myModal' class='js-location-cant-find' onclick='CannotFindLocation();' href='javascript:void(0);'   style='cursor: pointer; cursor: hand; margin-left:7px; color:#3cf;' data-toggle='modal' draggable='false'>Can't find your location?</a></span></b></div>");
                     $(".pac-container").on("click", function (event) {
                         $(this).removeClass('map-drop-block');
-                        $("#divCNF").removeClass('map-drop-block'); 
+                        $("#divCNF").removeClass('map-drop-block');
                         $(this).hide();
                         $(".pac-container").slice(1).removeClass('map-drop-block');
                     });
@@ -2200,7 +2200,7 @@
                 }
             });
 
-          
+
 
 
 
@@ -2241,7 +2241,7 @@
             function save(type)
             {
 
-                
+
                 var status = "";
                 if (type == "Preview")
                 {
@@ -2336,11 +2336,11 @@
                         customerfee = $('#id_fee-' + i).val();
                         ecfee = $('#id_fee-' + i).val();
                         //if ($('#id_include_ticket_fees-' + i).val() == 0) {
-                          
+
 
                         //}
                         //if ($('#id_include_ticket_fees-' + i).val() == 1) {
-                          
+
 
                         //}
                         total = $('#id_total-' + i).val();
@@ -2522,10 +2522,10 @@
                 debugger;
 
                 var vDefaultOrg = $("#ddlOrgnizers").val();
-                
+
                 $("#tblOrgnizer tr").each(function () {
                     var Sno = $(this).find("td:first").html().trim();
-                  
+
                     // Multiple Address
                     if (Sno != '') {
                         Orgnizer.push({
@@ -2606,7 +2606,12 @@
                             $("#hdEventId").val(response);
                             if (type == "Save") {
                                 $('#dvdraft').css('display', 'block');
-                                window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+                                if ($("#chkGuestonly").is(":checked")) {
+                                    window.location.href = '@Url.Action("CreateInvitations", "ManageEvent", new {  })?lId=0&lEvtId=' + response + '&strMode="E"';
+                                } else {
+                                    window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+                                }
+
                             }
                             if(type=="Preview")
                             {
@@ -2626,7 +2631,12 @@
                             }
                             if(type=="Live")
                             {
-                                window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' + response + '';
+                                var eventid = response;
+                                if ($("#chkGuestonly").is(":checked")) {
+                                    window.location.href = '@Url.Action("CreateInvitations", "ManageEvent", new {  })?lId=0&lEvtId='+response+'&strMode="E"';
+                                } else {
+                                    window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' + response + '';
+                                }
                             }
                         }
                     });
@@ -2742,17 +2752,17 @@
                 $("#btndeleteorg").attr('disabled', false);
 
                 var msg = disablebutton();
-              
+
                 if (msg == " ") {
                     $(".cdisable").removeAttr("disabled");
                 }
                 $("#txtOrgnizer").removeClass("err-bor");
-              
+
 
             });
 
 
-         
+
 
             $('#txtEventUrl').bind('cut copy paste', function (event) {
                 event.preventDefault();
@@ -2778,7 +2788,7 @@
                                 $("#txtEventUrl").val('');
                                 $("#txtEventUrl").focus();
 
-                            
+
                         }else
                     {
                                 $('#diverroacc').css('display', 'none');
@@ -2802,7 +2812,7 @@
             $("#EventType").change(function () {
 
                 var msg = disablebutton();
-              
+
                 if (msg.trim()=='') {
                     $(".cdisable").removeAttr("disabled");
                 }
@@ -2835,9 +2845,9 @@
                 });
 
                 var msg = disablebutton();
-              
+
                 if (msg.trim() == '') {
-                   
+
                     $(".cdisable").removeAttr("disabled");
                 }
             });
@@ -2873,9 +2883,9 @@
             });
 
             $("#btEnterDates").click(function () {
-               
+
                 if ($("#hdSchType").val() == 'Multiple') {
-                   
+
                     $(".SchmultiDetail").show();
                     $(".SchDivtop").hide();
                     $(".Schmultisingle").show();
@@ -2888,10 +2898,10 @@
                 lastmodulecalled = "Startmodel";
             });
 
-         
 
 
-          
+
+
 
             if ($("#hidSchLastState").val() == "") {
                 $("#dlSchOption").val("Daily");
@@ -3169,11 +3179,11 @@
 
 
         });
-   
+
 
 
     //Ticket Section Starts
-   
+
         function CannotFindLocation() {
             $("#dvAddFooter").hide();
             $("#VenueName").val('');
@@ -3187,9 +3197,9 @@
             $(".pac-container").removeClass('map-drop-block');
             $(".js-location-cant-find").slice(1).remove();
         }
-        
+
         function changetext(e) {
-         
+
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
             var al = e.substr(0, e.indexOf('-'));
 
@@ -3203,7 +3213,7 @@
 
                     $('#id_auto_hide_until_Date-' + el).focus();
                     $('#id_auto_hide_until_Date-' + el).val("");
-                  
+
                 }
 
                 //} else {
@@ -3251,7 +3261,7 @@
                         }
                     }
 
-                   
+
                 }
 
             }
@@ -3263,7 +3273,7 @@
 
         }
 
-      
+
         function enablehideafteruntil(e)
         {
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
@@ -3328,7 +3338,7 @@
             }
 
         }
-     
+
 
         $(document).ready(function () {
             $("#txtOrgnizer").blur(function () {
@@ -3336,14 +3346,14 @@
                 var isValid = false;
                 var sno = $("#hidOrgnizer").val();
                 var name = $('#txtOrgnizer').val();
-                
-                var regex = /^[a-zA-Z ]*$/; 
+
+                var regex = /^[a-zA-Z ]*$/;
                 isValid = regex.test(name);
                 if (isValid) {
                     var orgid = 0;
 
                     orgid = $('#OrgId_' + sno).html();
-                 
+
                     if (typeof orgid === "undefined") {
                         orgid = 0;
                     }
@@ -3355,17 +3365,17 @@
                         success: function (data) {
 
                             if (data == "True") {
-                              
+
                                 $('#erraccmsg').html("Organizer name already exist!");
                                 $('#diverroacc').css('display', 'block');
                                 $('#txtOrgnizer').addClass('err-bor');
                                 $('#txtOrgnizer').val('');
                                 $('html,body').animate({ scrollTop: 0 });
-                              
+
                                 return false;
                             } else {
                                 $('#txtOrgnizer').removeClass('err-bor');
-                               
+
                             }
 
                         }
@@ -3428,7 +3438,7 @@
                 type: "Get",
                 success: function (data) {
                     var getHtml = data.split('¶');
-                  
+
                     $("#tblOrgnizer").append(getHtml[0]);
                     $("#ddlOrgnizers").append(getHtml[1]);
                     if( getHtml[1].trim()=="")
@@ -3526,12 +3536,12 @@
 
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
 
-          
+
             var minamt = parseInt($('#id_min_ticket-' + el).val());
             var maxamt = parseInt($('#id_max_ticket-' + el).val());
             if (isNaN(maxamt) && !isNaN(minamt))
             {
-                
+
                 $('#hdMaxerr').val('1');
                 $('#id_min_ticket-' + el).addClass('err-bor');
                 $('#id_max_ticket-' + el).addClass('err-bor');
@@ -3557,7 +3567,7 @@
                     $('#id_max_ticket-' + el).removeClass('err-bor');
                     $('#id_lblmax-' + el).css('display', 'none');
                 }
-          
+
         }
         function calculateSum() {
 
@@ -3848,12 +3858,12 @@
             data.removeAttr("style")
 
             data.find('*[id]').andSelf().each(function () {
-              
+
 
                 var id = $(this).attr('id');
-               
+
                 id1 = id.substr(0, id.indexOf('-'));
-               
+
                 var idn = id1 + "-" + divlength;
                 $(this).attr("id", idn);
                 $(this).val('');
@@ -3880,7 +3890,7 @@
             $(".paidticket-" + divlength).css('display', 'block');
             $("#id_ticket_type-" + divlength).attr("placeholder", "Early Bird, RSVP...");
             $("#id_ticket_type-" + divlength).attr("title", "Give your ticket a name, like General Admission, Early Bird, RSVP, etc.");
-          
+
             $("#id_Discount-" + divlength).prop("readonly", false);
             var randomValue = randomString(4);
             $("#id_ticket_id-" + divlength).val(randomValue);
@@ -3889,7 +3899,7 @@
             $("#id_Tickettype-" + divlength).val("Paid");
             $("#id_buyerprice-" + divlength).html('$0.00');
             $('#id_tooltip-' + divlength).html('Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;   $0.00 <br /> Buyer(s) Total $0.00');
-          
+
             $("#id_feemethod").val(0);
             $("#id_salestart-" + divlength).datepicker({
                 format: "mm/dd/yyyy",
@@ -3912,16 +3922,16 @@
                 $("#id_saleend-" + divlength).datepicker('hide');
             });
 
-        
+
 
             $("#id_saletimestart-" + divlength).timepicker();
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
             $("#id_saletimeend-" + divlength).timepicker();
-           
-      
+
+
             $("input[id^='id_cost']").mask('000,000.00', { reverse: true });
             $("input[id^='id_Discount']").mask('000,000.00', { reverse: true });
-         
+
 
             $("#clonediv-" + divlength).focus();
             var msg = disablebutton();
@@ -4006,16 +4016,16 @@
             });
 
 
-           
+
 
             $("#id_saletimestart-" + divlength).timepicker();
-           
+
             $("#id_saletimeend-" + divlength).timepicker();
-         
-          
+
+
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
             $("#clonediv-" + divlength).focus();
-          
+
             var msg = disablebutton();
             if (msg == "") {
 
@@ -4023,7 +4033,7 @@
 
             }
         });
-     
+
         $('.save_btnfree').click(function () {
 
             $(".ticket_panel").show();
@@ -4072,9 +4082,9 @@
             var randomValue = randomString(4);
             $("#id_ticket_id-" + divlength).val(randomValue);
             $("#id_order-" + divlength).val(divlength);
-          
+
             $("#id_Tickettype-" + divlength).val("Free");
-           
+
 
             $("#id_feemethod").val(0);
             $("#id_salestart-" + divlength).datepicker({
@@ -4098,14 +4108,14 @@
                 $("#id_saleend-" + divlength).datepicker('hide');
             });
 
-           
-           
+
+
 
             $("#id_saletimestart-" + divlength).timepicker();
 
             $("#id_saletimeend-" + divlength).timepicker();
-         
-          
+
+
             $("#clonediv-" + divlength).focus();
             var msg = disablebutton();
             if (msg == "") {
@@ -4376,7 +4386,7 @@
 
                     $('#id_saletimestart-' + el).focus();
                     $('#id_saletimestart-' + el).val("7:00pm");
-                
+
 
                 }
                 else
@@ -4386,7 +4396,7 @@
                     var enddate = convertTo24Hour($('#id_saletimeend-' + el).val());
 
                     var dateOne = new Date($('#id_saleend-' + el).val() + " " + enddate);
-                 
+
                     if (todayDate > dateOne) {
                         $('#id_saleend-' + el).val($("#id_salestart-" + el).val());
                         $('#id_saletimeend-' + el).val($("#id_saletimestart-" + el).val());
@@ -4409,8 +4419,8 @@
                             $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
                         }
                     }
-                   
-                   
+
+
 
                 }
             }
@@ -4418,32 +4428,32 @@
                 errorMsg = checkTime(e);
                 if (errorMsg != "") {
 
-                    
-                  
-                   
+
+
+
                     if ($("#hdSchType").val() == '') {
                         $('#id_saletimeend-' + el).val($('#id_saletimestart-' + el).val());
                     }
 
                     if ($("#hdSchType").val() == 'Single') {
-                      
+
                         $('#id_saletimeend-' + el).val($("#txtEndTime").val());
 
                     }
                     if ($("#hdSchType").val() == 'Multiple') {
-                       
+
                         $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
                     }
 
                 } else
                 {
-                   
+
                     var starttimetime1 = convertTo24Hour($("#id_saletimestart-" + el).val());
                     var todayDate = new Date($('#id_salestart-' + el).val() + " " + starttimetime1);
                     var enddate = convertTo24Hour($('#id_saletimeend-' + el).val());
-             
+
                     var dateOne = new Date($('#id_saleend-' + el).val() + " " + enddate);
-                 
+
                     if (todayDate > dateOne) {
                         $('#id_saleend-' + e).val($("#id_salestart-" + el).val());
                         $('#id_saletimeend-' + e).val($("#id_saletimestart-" + el).val());
@@ -4461,7 +4471,7 @@
                     //$('#id_auto_hide_after_Time-' + el).val("7:00pm");
 
                 } else {
-                
+
                     $('#id_hdautohideuntil-' + el).val($('#' + e).val());
                     //$('#id_hdautohideafter-' + el).val($('#' + e).val());
                     //$('#id_auto_hide_after_Time-' + el).val($('#' + e).val());
@@ -4474,14 +4484,14 @@
                 if (errorMsg != "") {
                     $("#id_auto_hide_after_Time-" + el).val("");
                     //$('#id_auto_hide_after_Time-' + el).val($('#id_auto_hide_until_time-' + el).val());
-                  
+
                     //$('#id_auto_hide_after_Time-' + el).focus();
 
                     $('#id_hdautohideafter-' + el).val("");
 
                 } else {
                     $('#id_hdautohideafter-' + el).val($('#' + e).val());
-                    
+
                 }
             }
 
@@ -4523,10 +4533,10 @@
                         $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
                     }
 
-                    
 
 
-              
+
+
 
 
                 }
@@ -4539,9 +4549,9 @@
                 if (todayDate > dateOne) {
                     $('#id_saleend-' + el).val(startdate);
                 }
-              
 
-               
+
+
             }
             if (al == "id_auto_hide_after_Date") {
                 var startdate = $('#id_auto_hide_until_Date-' + el).val();
@@ -4556,7 +4566,7 @@
 
                 }
 
-              
+
 
 
             }
@@ -4567,9 +4577,9 @@
         {
             var count=0;
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
-            
+
             var al = e.substr(0, e.indexOf('-'));
-            if($("#txtStartDate").val() != "" && $("#txtEndDate").val()!="") 
+            if($("#txtStartDate").val() != "" && $("#txtEndDate").val()!="")
             {
                 count=1;
             }
@@ -4586,13 +4596,13 @@
 
             if (count == 1)
             {
-              
-               
-               
+
+
+
             }else
             {
             }
-           
+
         }
         function allownumber(el, evt, id) {
 
@@ -4710,7 +4720,7 @@
                 $("#id_auto_hide_type_0-" + el).prop('checked', false);
                 $("#id_hideuntil-" + el).attr("checked", false);
                 $("#id_hideafter-" + el).attr("checked", false);
-             
+
                 $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
@@ -4729,7 +4739,7 @@
                 $("#id_auto_hide_after_Time-" + el).val('');
                 $("#id_hideuntil-" + el).attr("checked", false);
                 $("#id_hideafter-" + el).attr("checked", false);
-             
+
                 $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
@@ -4751,15 +4761,15 @@
             }
             return randomString;
         }
-  
+
 
     @*Image Section*@
- 
 
 
-  
+
+
         $(document).ready(function () {
-          
+
             function uuid() {
                 var chars = '0123456789abcdef'.split('');
 
@@ -4796,25 +4806,25 @@
             });
             $('#hdUniqueguid').val(uuid());
             //$('#input2').change(function () {
-                
-             
-              
-              
+
+
+
+
             //    if (this.files[0].size > 2097152) {
             //        $("#imageeror").val(1);
             //            alert("The file must be less than " + (2097152 / 1024 / 1024) + "MB");
-                      
+
             //            return false;
             //        }
-                
+
 
             //});
-           
+
         });
- 
+
 
     //DateTime
- 
+
         function ajaxsetup(strname, strFormTag) {
             var msgnew = "";
 
@@ -4834,7 +4844,7 @@
             return msgnew;
         }
         function disablebutton() {
-           
+
             var msg = "";
             var count = 0;
             var countqty = 0;
@@ -4845,14 +4855,14 @@
             var title = $('#txtEventTitle').val();
 
             if (title == "") {
-               
+
 
                 msg += ajaxsetup("CreateEvent", "CreateEventTitileUI") + "<br/>";
 
             }
 
             if ($('#ddlOrgnizers option').length <= 0) {
-              
+
                 msg += ajaxsetup("CreateEvent", "CreateEventOrganizerUI") + "<br/>";;
 
 
@@ -4860,11 +4870,11 @@
             var type = $("#EventType").val();
             var cat = $("#ddlEventCategory").val();
             if (type <= 0) {
-               
+
                 msg += ajaxsetup("CreateEvent", "CreateEventtypeUI") + "<br/>";;
             }
             if (cat <= 0) {
-              
+
                 msg += ajaxsetup("CreateEvent", "CreateEventCategoryUI") + "<br/>";;
             }
 
@@ -4889,27 +4899,27 @@
 
                     if (days == null) {
                         weekcnt++;
-                       
-                    } 
+
+                    }
                     if ($("#txtTimeStart").val() == "") {
                         weekcnt++;
-                       
+
                     }
                     if ($("#txtTimeEnd").val() == "") {
                         weekcnt++;
-                       
+
                     }
                     if ($("#txtTimeEnd").val() == "") {
                         weekcnt++;
-                      
+
                     }
                     if ($("#txtDateFrom").val() == "") {
                         weekcnt++;
-                      
+
                     }
                     if ($("#txtDateTo").val() == "") {
                         weekcnt++;
-                        
+
                     }
                 }
 
@@ -4917,22 +4927,22 @@
                     $("#txtDateFrom").length;
                     if ($("#txtDateFrom").val() == "") {
                         weekdaily++;
-                       
+
                     }
                     $("#txtDateTo").length;
                     if ($("#txtDateTo").val() == "") {
                         weekdaily++;
-                       
+
                     }
                     $("#txtTimeStart").length;
                     if ($("#txtTimeStart").val() == "") {
                         weekdaily++;
-                       
+
                     }
                     $("#txtTimeEnd").length;
                     if ($("#txtTimeEnd").val() == "") {
                         weekdaily++;
-                        
+
                     }
 
                 }
@@ -4941,23 +4951,23 @@
                     if (days == null) {
 
                         weekmnth++;
-                       
+
                     }
                     if ($("#txtDateFrom").val() == "") {
                         weekmnth++;
-                        
+
                     }
                     if ($("#txtDateFrom").val() == "") {
                         weekmnth++;
-                       
+
                     }
                     if ($("#txtTimeStart").val() == "") {
                         weekmnth++;
-                       
+
                     }
                     if ($("#txtDateTo").val() == "") {
                         weekmnth++;
-                       
+
                     }
 
                 }
@@ -4965,19 +4975,19 @@
 
                     if ($("#txtTimeStart").val() == "") {
                         custom++;
-                       
+
                     }
                     if ($("#txtTimeEnd").val() == "") {
                         custom++;
-                        
+
                     }
                     if ($("#txtDateFrom").val() == "") {
                         custom++;
-                       
+
                     }
                     if ($("#txtDateTo").val() == "") {
                         custom++;
-                        
+
                     }
 
                 }
@@ -4987,22 +4997,22 @@
                 var str = $("#txtStartDate").val();
                 if ($("#txtStartDate").val() == "") {
                     single++;
-                    
+
                 }
                 str = $("#txtStartTime").val();
                 if ($("#txtStartTime").val() == "") {
                     single++;
-                   
+
                 }
                 str = $("#txtEndDate").val();
                 if ($("#txtEndDate").val() == "") {
                     single++;
-                   
+
                 }
                 str = $("#txtEndTime").val();
                 if ($("#txtEndTime").val() == "") {
                     single++;
-                  
+
                 }
 
             }
@@ -5018,16 +5028,16 @@
 
             }
             if (weekmnth > 0) {
-               
+
                 msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
 
             }
             if (custom > 0) {
-               
+
                 msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
             }
             if (single > 0) {
-               
+
                 msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
             }
             return msg;
@@ -5053,7 +5063,7 @@
 
             if (title == "") {
                 $('#txtEventTitle').addClass('err-bor');
-                
+
                 msg += ajaxsetup("CreateEvent", "CreateEventTitileUI")+"<br/>";
 
             }
@@ -5124,7 +5134,7 @@
                         if (price > 999999.99) {
                             $('#id_cost-' + i).addClass('err-bor');
                             countprice++;
-                        } 
+                        }
                     }
 
                     if ($('#id_ticketshidden-' + i).is(":checked"))
@@ -5143,7 +5153,7 @@
                             }
 
                         }
-                       
+
                         if ($('#id_hideafter-' + i).is(":checked")) {
                             if ($('#id_auto_hide_after_Date-' + i).val() == "" || $("#id_auto_hide_after_Time-" + i).val() == "") {
                                 $('#id_auto_hide_after_Date-' + i).addClass('err-bor');
@@ -5194,7 +5204,7 @@
                             $('#id_Discount-' + i).addClass('err-bor');
                             countdiscount++;
                         }
-                       
+
 
                     }
                     if(isNaN(cost)&& !isNaN(discount))
@@ -5202,7 +5212,7 @@
                         $('#id_Discount-' + i).addClass('err-bor');
                         countdiscount++;
                     }
-                    
+
                 }
 
 
@@ -5234,7 +5244,7 @@
                 msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
 
             }
-          
+
             if ($('#id_variablecharge').is(":checked") == true) {
                 if ($('#id_vardesc').val() == "") {
                     $('#id_vardesc').addClass('err-bor');
@@ -5287,9 +5297,9 @@
 
                 }
             }
-           
 
-         
+
+
             if (count > 0)
             {
 
@@ -5581,7 +5591,7 @@
             $('input.number').keyup(function (event) {
 
                 // skip for arrow keys
-             
+
 
                 // format number
                 $(this).val(function (index, value) {
@@ -5601,13 +5611,13 @@
             //    $("input").removeClass('err-bor');
             //});
             $('#drag-drop').on('click', function (e) {
-           
+
                 $('#input2').unbind('click');
 
             });
         });
 
- 
+
 
         function AddDates() {
             var savedaddress = "";
@@ -5644,10 +5654,10 @@
                     savedaddress = vSelecttextDates;
                 }
                 $("#btEnterDates").text(vSelecttextDates);
-               
+
                 $("#hdSchType").val('Single');
             }
-           
+
             if (savedaddress != '')
             {
            $("input[id^='id_salestart']").attr("disabled", false);
@@ -5975,31 +5985,31 @@
         //});
         //$("#datemodel").on('click', function (e) {
         //    e.stopPropagation();
-           
+
         //});
         //$("#txtStartTime .ui-timepicker-input").change(function (e) {
         //    e.stopPropagation();
 
         //});
 
-       
+
 
         $(document).on('click', function (e) {
 
-         
+
 
             var $target = $(e.target);
 
             var id = $(e.target)[0].id;
             //alert($($(e.target)[0]).attr("class"));
-         
+
             var uiclasstimepicker = $($(e.target)[0]).attr("class");
-            var uiclassdatepicker=$($(e.target)[0]).parent().parents("div").attr("class") 
+            var uiclassdatepicker=$($(e.target)[0]).parent().parents("div").attr("class")
             var uidatepickerheader = $($(e.target)[0]).parent().parents("div").attr("class");
             if (typeof uiclasstimepicker === "undefined" && typeof uiclassdatepicker === "undefined" && typeof uidatepickerheader === "undefined")
             {
                 AddDates();
-              
+
                 $(".StartDatemodal").hide();
             } else {
                 if ((uiclasstimepicker != "ui-timepicker-selected") && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker-header") < 0) && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker") < 0)) {
@@ -6014,14 +6024,14 @@
 
                 }
             }
-           
+
            if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
                AddTimeZone();
                $(".TmezoneSet").hide();
            }
 
 
-              
+
 
         });
 
@@ -6054,12 +6064,12 @@
 
         }
 
-      
+
         $(document).prop('title', 'Eventcombo - Create a new event');
 
         $(".upload_help_icn_inner").css({ "display": "none" });
 
-     
+
         function showhover(e)
         {
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
@@ -6085,7 +6095,7 @@
             }
 
         }
-      
+
 
     </script>
 

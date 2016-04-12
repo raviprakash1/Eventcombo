@@ -1769,6 +1769,8 @@ namespace EventCombo.Controllers
                     var baseurl = url.GetLeftPart(UriPartial.Authority);
                     ps.url = baseurl + Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + Eventdetails.EventTitle.Trim() + "౼" + Eventid + "౼N";
                     ps.Guestlist = emailonpayment;
+                    ps.EventPrivacy = Eventdetails.EventPrivacy;
+                    ps.Shareonfb = Eventdetails.Private_ShareOnFB;
                     ps.Orderdetail = GetOrderDetailForConfirmation(strGUID);
                     ViewBag.Timecal = Dateofevent;
                     System.GC.Collect();
@@ -2413,7 +2415,7 @@ namespace EventCombo.Controllers
                                            {
                                                totalOrder = TPDgrp.Sum(s => s.TPD_Purchased_Qty)
                                            }
-                                           ).SingleOrDefault();
+                                           ).FirstOrDefault();
 
                         var PurchaseDetail = (from TPD in objEnt.Ticket_Purchased_Detail
                                               where TPD.TPD_GUID == strGuid
@@ -2425,10 +2427,10 @@ namespace EventCombo.Controllers
                         {
                             var vTId = (from TQD in objEnt.Ticket_Quantity_Detail
                                         where TQD.TQD_Id == TPD.TPD_TQD_Id
-                                        select TQD.TQD_Ticket_Id).SingleOrDefault();
+                                        select TQD.TQD_Ticket_Id).FirstOrDefault();
                             var vTType = (from Tkt in objEnt.Tickets
                                           where Tkt.T_Id == vTId
-                                          select Tkt.TicketTypeID).SingleOrDefault();
+                                          select Tkt.TicketTypeID).FirstOrDefault();
 
                             if (vTType == 2) iPaidCount = iPaidCount + TPD.TPD_Purchased_Qty;
                             if (vTType == 1) iFreeCount = iFreeCount + TPD.TPD_Purchased_Qty;
@@ -2443,7 +2445,7 @@ namespace EventCombo.Controllers
                         var OrderAmt = (from OD in objEnt.Order_Detail_T
                                         where OD.O_Order_Id == OrderNo
                                         select OD.O_TotalAmount
-                                        ).SingleOrDefault();
+                                        ).FirstOrDefault();
 
                         if (iPaidCount == 1)
                         {

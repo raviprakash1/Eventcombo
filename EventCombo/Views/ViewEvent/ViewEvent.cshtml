@@ -313,17 +313,21 @@
                 <div class="col-sm-6 col-xs-6 text-left no_pad">
                     <h2 class="fb_dis_head no_pad pt5 pr0">COMPLETE INFO </h2>
                 </div>
+                @if (Model.EventPrivacy == "Public" || (Model.Shareonfb == "Y" || Model.Shareonfb == "y"))
+                {
+                    <div class="col-sm-6 col-xs-6 text-right pl0 ev_social_share_btn">
+                        <a href="javascript:void(0)"><img src="/Images/mail.png"></a>
+                        <a href="javascript:void(0)" id="twittershare"><img src="/Images/twi.png"></a>
+                        <a href="javascript:void(0)" id="fbshare"><img src="/Images/fac.png"></a>
 
-                <div class="col-sm-6 col-xs-6 text-right pl0 ev_social_share_btn">
-                    <a href="javascript:void(0)"><img src="/Images/mail.png"></a>
-                    <a href="javascript:void(0)" id="twittershare"><img src="/Images/twi.png"></a>
-                    <a href="javascript:void(0)" id="fbshare"><img src="/Images/fac.png"></a>
+                        <a href="javascript:void(0)" id="linkshare"><img src="/Images/lin.png"></a>
+                    </div>
 
-                    <a href="javascript:void(0)" id="linkshare"><img src="/Images/lin.png"></a>
+                }
+              
+
+                    <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
                 </div>
-
-                <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
-            </div>
             <div class="evnt_details_body2">
                 <div class="col-sm-12 ev_white_bg pb10">
                     <div class="col-sm-8 view_sec_text mt10" id="eventdesc" >
@@ -658,7 +662,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade  modal-vcenter" id="viewticketpassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade  modal-vcenter" id="viewticketpassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -669,7 +673,7 @@
                         <div class="col-md-12 no_pad">
                             <div class="form-group mb5 ">
                                 <div class="col-sm-12 no_pad ev_ven_mod_lebel mb10">
-                                    <label class="alert-danger" id="lblwrongpwd" style="display:none;">Invalid Password</label>
+                                    <label class="alert-danger" id="lblwrongpwd" style="display:none;">You have entered incorrect password</label>
                                 </div>
                                 <div class="col-sm-12 no_pad ev_ven_mod_lebel mb10">
                                     Enter Password to View the Event
@@ -718,9 +722,9 @@
         //window.location.hash = "ticketinfo";
         //$('.divTable').click();
         //alert(Chal);
-       console.log($('.divtabledrop'));
-      //input.removeAttr("title");
-     });
+        console.log($('.divtabledrop'));
+        //input.removeAttr("title");
+    });
 
     @*window.fbAsyncInit = function () {
         FB.init({
@@ -797,30 +801,30 @@
 
     function InitializeMap() {
 
-         latlng = new google.maps.LatLng(-34.397, 150.644);
-         myOptions =
-        {
-            zoom: 12,
-            center: latlng,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            //disableDefaultUI: true
-        };
-         if (!map) {
-             map = new google.maps.Map(document.getElementById("googleMap"), myOptions);
-         }
-         else {
-             map.setOptions(mapOptions);
-         }
+        latlng = new google.maps.LatLng(-34.397, 150.644);
+        myOptions =
+       {
+           zoom: 12,
+           center: latlng,
+           mapTypeId: google.maps.MapTypeId.ROADMAP,
+           //disableDefaultUI: true
+       };
+        if (!map) {
+            map = new google.maps.Map(document.getElementById("googleMap"), myOptions);
+        }
+        else {
+            map.setOptions(mapOptions);
+        }
     }
     function FindLocaiton() {
         InitializeMap();
         geocoder = new google.maps.Geocoder();
-         lbltopaddress = document.getElementById("lbltopaddress");
-         address = lbltopaddress.innerHTML.trim();
+        lbltopaddress = document.getElementById("lbltopaddress");
+        address = lbltopaddress.innerHTML.trim();
         geocoder.geocode({ 'address': address }, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 map.setCenter(results[0].geometry.location);
-                 marker = new google.maps.Marker({
+                marker = new google.maps.Marker({
                     map: map,
                     position: results[0].geometry.location
                 });
@@ -834,14 +838,16 @@
         });
 
     }
-   // window.onload = InitializeMap;
+    // window.onload = InitializeMap;
     $(document).ready(function () {
-
+        //$('#viewticketpassword').modal({
+        //    //backdrop: 'static',
+        //    keyboard: false
+        //})
 
         $('#lblwrongpwd').css('display', 'none');
-        var eventype="@Model.EventPrivacy";
-        if (eventype !="")
-        {
+        var eventype = "@Model.PrivatePassword";
+        if (eventype != "") {
 
             $('#idpasswordtick').click();
 
@@ -866,7 +872,7 @@
                         $('#btnclosepwd').click();
                     } else {
                         $('#lblwrongpwd').css('display', 'block');
-                        $('#lblwrongpwd').html('Invalid Password');
+                        $('#lblwrongpwd').html('You have entered incorrect password');
                     }
                 }
             });
@@ -940,8 +946,7 @@
                 errormsg += erroremail;
 
             }
-            if (count > 0)
-            {
+            if (count > 0) {
                 errormsg = "Fill the missing details"
             }
             if (errormsg != "") {
@@ -1001,78 +1006,78 @@
 
 
 
-                function showevent(t) {
-                    var split = t.split('-');
-                    var str = '', format = '';
-                    var fullDate ="";
-                    var Datenew = new Date(split[1]);
+    function showevent(t) {
+        var split = t.split('-');
+        var str = '', format = '';
+        var fullDate = "";
+        var Datenew = new Date(split[1]);
 
-                    if (split[2] != null) {
+        if (split[2] != null) {
 
-                        //var time = document.getElementById('txttime').value;
-                        var where_is_p = split[2].indexOf('p');
-                        var where_is_a = split[2].indexOf('a');
-                        if (where_is_p > 0) {
-                            str = split[2].replace('pm', ' ');
-                            format = 'PM';
+            //var time = document.getElementById('txttime').value;
+            var where_is_p = split[2].indexOf('p');
+            var where_is_a = split[2].indexOf('a');
+            if (where_is_p > 0) {
+                str = split[2].replace('pm', ' ');
+                format = 'PM';
 
-                        }
-                        if (where_is_a > 0) {
+            }
+            if (where_is_a > 0) {
 
-                            str = split[2].replace('am', ' ');
-                            format = 'AM';
-                        }
-                        var hrs = Number(str.match(/^(\d+)/)[1]);
-                        var mnts = Number(str.match(/:(\d+)/)[1]);
+                str = split[2].replace('am', ' ');
+                format = 'AM';
+            }
+            var hrs = Number(str.match(/^(\d+)/)[1]);
+            var mnts = Number(str.match(/:(\d+)/)[1]);
 
-                        if (format == "PM" && hrs < 12) hrs = hrs + 12;
-                        if (format == "AM" && hrs == 12) hrs = hrs - 12;
-                        var hours = hrs.toString();
-                        var minutes = mnts.toString();
-                        if (hrs < 10) hours = "0" + hours;
-                        if (mnts < 10) minutes = "0" + minutes;
+            if (format == "PM" && hrs < 12) hrs = hrs + 12;
+            if (format == "AM" && hrs == 12) hrs = hrs - 12;
+            var hours = hrs.toString();
+            var minutes = mnts.toString();
+            if (hrs < 10) hours = "0" + hours;
+            if (mnts < 10) minutes = "0" + minutes;
 
-                        var fullDate = split[1] + " " + hours + ":" + minutes;
-                    }
-                    else{
+            var fullDate = split[1] + " " + hours + ":" + minutes;
+        }
+        else {
 
-                        fullDate= split[1] ;
-                    }
-                    var fullDateReal = new Date(fullDate);
-                    var year = fullDateReal.getUTCFullYear();
-                    var month = fullDateReal.getUTCMonth()
-                    $('#startdate').val(fullDateReal);
+            fullDate = split[1];
+        }
+        var fullDateReal = new Date(fullDate);
+        var year = fullDateReal.getUTCFullYear();
+        var month = fullDateReal.getUTCMonth()
+        $('#startdate').val(fullDateReal);
 
-                    var isodatestart = (fullDateReal.getUTCFullYear() + ""
-                              + pad(fullDateReal.getUTCMonth() + 1) + ""
-                              + pad(fullDateReal.getUTCDate()) + 'T'
-                              + pad(fullDateReal.getUTCHours()) + ""
-                              + pad(fullDateReal.getUTCMinutes()) + ""
-                              + pad(fullDateReal.getUTCSeconds()) + 'Z');
+        var isodatestart = (fullDateReal.getUTCFullYear() + ""
+                  + pad(fullDateReal.getUTCMonth() + 1) + ""
+                  + pad(fullDateReal.getUTCDate()) + 'T'
+                  + pad(fullDateReal.getUTCHours()) + ""
+                  + pad(fullDateReal.getUTCMinutes()) + ""
+                  + pad(fullDateReal.getUTCSeconds()) + 'Z');
 
-                    var isodateend = (fullDateReal.getUTCFullYear() + ""
-                                     + pad(fullDateReal.getUTCMonth() + 1) + ""
-                                     + pad(fullDateReal.getUTCDate()) + 'T'
-                                     + "00" + ""
-                                     + "00" + ""
-                                     + "00" + 'Z');
+        var isodateend = (fullDateReal.getUTCFullYear() + ""
+                         + pad(fullDateReal.getUTCMonth() + 1) + ""
+                         + pad(fullDateReal.getUTCDate()) + 'T'
+                         + "00" + ""
+                         + "00" + ""
+                         + "00" + 'Z');
 
 
 
-                    //console.log(where_is_p);
-                    //console.log(where_is_a);
-                    var title = $('#evtitle').html().trim();
-                    var location = $('#lbltopaddress').html().trim();
-                    var variable = fullDateReal;
-                    $("#ioutlook").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
-                    $("#icalender").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
-                    $("#yahoocal").attr("href", "http://calendar.yahoo.com/?v=60&view=d&type=20&title=" + title + "&st=" + isodatestart + "&desc=A%20traditional%20barbeque%20for%20our%20big%20day&in_loc=" + location + "")
+        //console.log(where_is_p);
+        //console.log(where_is_a);
+        var title = $('#evtitle').html().trim();
+        var location = $('#lbltopaddress').html().trim();
+        var variable = fullDateReal;
+        $("#ioutlook").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
+        $("#icalender").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
+        $("#yahoocal").attr("href", "http://calendar.yahoo.com/?v=60&view=d&type=20&title=" + title + "&st=" + isodatestart + "&desc=A%20traditional%20barbeque%20for%20our%20big%20day&in_loc=" + location + "")
 
-                    $("#googlecal").attr("href", "http://www.google.com/calendar/event?action=TEMPLATE&text=" + title + "&dates=" + isodatestart + "/" + isodatestart + "&location=" + location + "&sprop=website")
-                    var target = $(this).data("target");
-                    $(target).show();
-                }
-function pad(n) { return n < 10 ? '0' + n : n };
+        $("#googlecal").attr("href", "http://www.google.com/calendar/event?action=TEMPLATE&text=" + title + "&dates=" + isodatestart + "/" + isodatestart + "&location=" + location + "&sprop=website")
+        var target = $(this).data("target");
+        $(target).show();
+    }
+    function pad(n) { return n < 10 ? '0' + n : n };
 
 
     $(document).ready(function () {
@@ -1102,7 +1107,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
 
             if (clickvote == "Y") {
                 $("#btOk").click();
-                 msg = ajaxsetup("ViewEvent", "VoteOnce");
+                msg = ajaxsetup("ViewEvent", "VoteOnce");
                 $("#spanokid").html(msg);
                 //alert('You can only vote once.');
             } else {
@@ -1124,8 +1129,8 @@ function pad(n) { return n < 10 ? '0' + n : n };
                             $('#spanvotes').html(data);
 
                             $("#btOk").click();
-                             msg = ajaxsetup("ViewEvent", "ThanksForVote");
-                             $("#spanokid").html(msg);
+                            msg = ajaxsetup("ViewEvent", "ThanksForVote");
+                            $("#spanokid").html(msg);
                             //alert('Thank you for voting!');
                         }
                     },
