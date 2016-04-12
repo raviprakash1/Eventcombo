@@ -52,11 +52,11 @@
             <div class="form-group">
                 @if (Model != null && !String.IsNullOrEmpty(Model.I_SenderName))
                 {
-                    <input class="form-control invite_mail_inp_cont " id="txtSenderName" value="@Model.I_SenderName" type="text" placeholder="">
+                    <input class="form-control invite_mail_inp_cont " id="txtSenderName" maxlength="50" value="@Model.I_SenderName" type="text" placeholder="">
                 }
                 else
                 {
-                    <input class="form-control invite_mail_inp_cont " id="txtSenderName" type="text" placeholder="">
+                    <input class="form-control invite_mail_inp_cont " id="txtSenderName" maxlength="50" type="text" placeholder="">
                 }
                 <p class="bottom-label">Sender's Name</p>
             </div>
@@ -68,11 +68,11 @@
             <div class="form-group">
                 @if (Model != null && !String.IsNullOrEmpty(Model.I_SubjectLine))
                 {
-                    <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" type="text" value="@Model.I_SubjectLine" placeholder="">
+                    <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" maxlength="256" type="text" value="@Model.I_SubjectLine" placeholder="">
                 }
                 else
                 {
-                    <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" type="text" placeholder="">
+                    <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" maxlength="256" type="text" placeholder="">
                 }
                 <p class="bottom-label">Subject Line</p>
             </div>
