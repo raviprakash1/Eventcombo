@@ -2446,6 +2446,7 @@ namespace EventCombo.Controllers
                                         where OD.O_Order_Id == OrderNo
                                         select OD.O_TotalAmount
                                         ).FirstOrDefault();
+                        var Promocode = (from p in objEnt.Order_Detail_T join k in objEnt.Promo_Code on p.O_PromoCodeId equals k.PC_id where p.O_Order_Id== OrderNo select k.PC_Code).FirstOrDefault();
 
                         if (iPaidCount == 1)
                         {
@@ -2468,7 +2469,10 @@ namespace EventCombo.Controllers
                             OrderAmt = (OrderAmt != null ? OrderAmt : 0);
                             strResult = "Order " + OrderNo.ToString() + " , " + TicketCount.totalOrder.ToString() + " ticket for $" + OrderAmt.ToString();
                         }
-
+                        if(!string.IsNullOrWhiteSpace(Promocode))
+                        {
+                            strResult = strResult+"." + Environment.NewLine+ "You have applied " + Promocode + " as promo code for this transaction";
+                        }
 
                         //strResult = OrderNo + "~" + TicketCount.totalOrder + "~" + OrderAmt;
                     }
