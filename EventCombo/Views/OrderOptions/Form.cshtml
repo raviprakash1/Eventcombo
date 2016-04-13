@@ -90,7 +90,7 @@
                             <input id="QuestionId" name="QuestionId" type="hidden" value="@questions[j].OrderTemplateQuestionId" />
 
                             <div class="col-xs-2">
-                              <div class="dragIconItems"><img src="../../images//drag.png" /></div>
+                              <div class="dragIconItems"><a href="javascript:void(0)"><img src="../../images/drag.png" /></a></div>
                             </div>
 
                             <div class="col-xs-8">
@@ -121,7 +121,7 @@
                           <div id="userQuestion_@i" class="dragableDivContent" data-indexid="@i" data-questionid="@Model.UserQuestions[i].OrderTemplateQuestionId" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="handleDragEnter(event, this);" ondragover="handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
                             <div class="col-xs-2">
                               <div class="dragIconItems">
-                                <img src="../../images//drag.png" />
+                                <a href="javascript:void(0)"><img src="../../images/drag.png" /></a>
                               </div>
                             </div>
                             <div class="col-xs-6">
@@ -140,7 +140,7 @@
                         <div class="form-group" style="padding-bottom: 31px;">
                           <input type="text" class="form-control questionsTxtbox" id="questions" placeholder="Question" maxlength="255">
                           <div class="dropdown questionsDropDown">
-                            <button class="btn btn-default dropdown-toggle questionsBtn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" value="@ViewBag.ControlType[0].ControlTypeId">
+                            <button class="btn btn-default dropdown-toggle questionsBtn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" value="@ViewBag.ControlType[0].ControlTypeId" onkeydown="$('#questions').removeClass('validatorTxt');">
                               <span class="text">@ViewBag.ControlType[0].ControlTypeName</span>
                               <span class="caret"></span>
                             </button>
@@ -505,17 +505,20 @@
   function addQuestionToContainer() {
     var question = $('#questions').val();
     var dropDownTxt = $('#dropdownMenu1 .text').html();
-    var innerHtml = '<div id="userQuestion_' + curQIndex + '" class="dragableDivContent" data-indexid="' + curQIndex + '" data-questionid="0" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);"><div class="col-xs-2"><div class="dragIconItems"><img src="../../images//drag.png" /></div></div><div class="col-xs-6"><div id="questionText" class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this); setRequiredUncheck(this);">' + question + '</div></div><div class="col-xs-2"><div id="require" class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this); setFieldCheck(this);"></div></div><div class="col-xs-2"><a href="javascript:void(0)" class="removeIconAnchor" onclick="removeItemList(this)"><img src="../../images//cross.png" /></a></div></div>';
-    $("#questionContainerDiv").append(innerHtml);
-    $("#questionContainerDiv").show();
 
-    storedQuestions.push(GetEditedQuestion())
-    console.debug(storedQuestions);
+    question = question.trim();
+    if (question == '') {
+      $('#questions').addClass('validatorTxt');
+    }
+    else {
+      var innerHtml = '<div id="userQuestion_' + curQIndex + '" class="dragableDivContent" data-indexid="' + curQIndex + '" data-questionid="0" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);"><div class="col-xs-2"><div class="dragIconItems"><img src="../../images//drag.png" /></div></div><div class="col-xs-6"><div id="questionText" class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this); setRequiredUncheck(this);">' + question + '</div></div><div class="col-xs-2"><div id="require" class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this); setFieldCheck(this);"></div></div><div class="col-xs-2"><a href="javascript:void(0)" class="removeIconAnchor" onclick="removeItemList(this)"><img src="../../images//cross.png" /></a></div></div>';
+      $("#questionContainerDiv").append(innerHtml);
+      $("#questionContainerDiv").show();
 
-    $('#questions').val('');
-
-
-    curQIndex++;
+      storedQuestions.push(GetEditedQuestion())
+      $('#questions').val('');
+      curQIndex++;
+    }
   }
 
   function GetEditedQuestion()
