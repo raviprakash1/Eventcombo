@@ -202,7 +202,7 @@
                     <h4 class="msg promotional_pop" id="hId"></h4>
                 </div>
                 <div class="modal-footer msg-action-btn ok">
-                    <button type="submit" id="btnYes" class="btn btn-primary no" data-dismiss="modal">Yes</button>
+                    <button type="button" id="btnYes" class="btn btn-primary no" data-dismiss="modal">Yes</button>
                     <button type="button" class="btn btn-primary yes ok" id="btMesOk" data-dismiss="modal">OK</button>
                     <button type="button" id="btnNo" class="btn btn-primary no" data-dismiss="modal">No</button>
                 </div>
@@ -251,11 +251,11 @@
     function NextPage(vIndex) {
 
 
-        var vUrl = '@Url.Action("PromotionalCodes", "ManageEvent", new {  })?Eventlid=ValidationMessageController.GetParentEventId(@Model.Eventid)'+&strPageIndex=page';
-
+        var vUrl = '@Url.Action("PromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(@Model.Eventid), strPageIndex = "page" })';
+        vUrl = vUrl.replace("&amp;", "&");
         if (vIndex > 1)
             vUrl = vUrl.replace("page", vIndex);
-
+        alert(vUrl);
 
 
         window.location.href = vUrl;
