@@ -121,15 +121,16 @@
                         </div>
                     }
 
+                    
+                   
+                </div>
+                <div class="col-sm-12 col-xs-12 text-center mb10">
+                    <nav class="home-pagination">
+                        @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
 
-                    <div class="col-sm-12 col-xs-12 text-center mb10">
-                        <nav class="home-pagination">
-                            @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
-
-                            @Html.PagedListPager((PagedList.IPagedList<EventCombo.ViewModels.EmailInvitation>)ViewBag.scheduled, page => Url.Action("EmailInvitations", "ManageEvent",
-         new { eventId = ViewBag.EventId, sortOrder = ViewBag.CurrentSort, page, tab = ViewBag.tab }))
-                        </nav>
-                    </div>
+                        @Html.PagedListPager((PagedList.IPagedList<EventCombo.ViewModels.EmailInvitation>)ViewBag.scheduled, page => Url.Action("EmailInvitations", "ManageEvent",
+                                new { eventId = ViewBag.EventId, sortOrder = ViewBag.CurrentSort, page, tab = ViewBag.tab }))
+                    </nav>
                 </div>
             </div>
         </div>
@@ -193,14 +194,13 @@
                             </div>
                         }
                             
-                    <div class="col-sm-12 col-xs-12 text-center mb10">
-                        <nav class="home-pagination">
-                            @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
-
-                            @Html.PagedListPager((PagedList.IPagedList<EventCombo.ViewModels.EmailInvitation>)ViewBag.draft, page => Url.Action("EmailInvitations", "ManageEvent",
-                                             new { eventId = ViewBag.EventId, sortOrder = ViewBag.CurrentSort, page, tab = ViewBag.tab }))
-                        </nav>
-                    </div>
+                    
+                </div>
+                <div class="col-sm-12 col-xs-12 text-center mb10">
+                    <nav class="home-pagination">
+                        @Html.PagedListPager((PagedList.IPagedList<EventCombo.ViewModels.EmailInvitation>)ViewBag.draft, page => Url.Action("EmailInvitations", "ManageEvent",
+                                new { eventId = ViewBag.EventId, sortOrder = ViewBag.CurrentSort, page, tab = ViewBag.tab }))
+                    </nav>
                 </div>
             </div>
 
@@ -310,6 +310,9 @@
                 }
             });
         });
+
+
+        $('.home-pagination').find('.pagination').addClass('desc_pagination');
 
 
         $("#btCreateInv").click(function () {

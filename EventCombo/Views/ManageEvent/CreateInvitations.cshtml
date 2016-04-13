@@ -73,11 +73,11 @@
             <div class="form-group">
                 @if (Model != null && !String.IsNullOrEmpty(Model.I_SubjectLine))
                 {
-                    <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" maxlength="256" type="text" value="@Model.I_SubjectLine" placeholder="">
+                <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" maxlength="256" type="text" value="@Model.I_SubjectLine" placeholder="">
                 }
                 else
                 {
-                    <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" maxlength="256" type="text" placeholder="">
+                <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" maxlength="256" type="text" placeholder="">
                 }
                 <p class="bottom-label">Subject Line</p>
             </div>
@@ -227,7 +227,7 @@
                 <div class="col-sm-3 col-xs-12 no_pad  text-center">
                     <button class="btn def_btn acnt_btn send_test_btn" style="display:none" type="button" data-toggle="modal" id="btPopUp" data-target="#test_inv_email"></button>
                     <button class="btn def_btn acnt_btn send_test_btn" type="button" id="btTestEmail">Send Test</button>
-                   
+
                 </div>
                 <div class="invitation-loader" id="dvAjxLoader">
                     <img src="~/Images/ajax-loaderMini.gif" />
@@ -247,7 +247,7 @@
                         <button class="InvAddlist btn def_btn acnt_btn send_test_btn" type="submit">Add List + </button>
                     </div>
                     <div class="col-sm-6 col-xs-6 no_pad">
-                        <button class="btn def_btn acnt_btn send_test_btn" id="btDeleteEmail" type="button">Delete </button>
+                        <button class="btn def_btn acnt_btn send_test_btn" id="btDeleteEmail" style="display:none;" type="button">Delete </button>
                     </div>
 
                 </div>
@@ -264,16 +264,32 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 col-xs-12 no_pad mt10">
-                        <div class="col-sm-12 no_pad">
-                            <ul class="inv_mail_list_head">
-                                <li><input id="chkSelectAll" type="checkbox"></li>
-                                <li>
-                                    EmailId
-                                    <span class="crt_evnt_drop_up crt_invit_drop_down_a"> <a href="#"><i class="fa fa-angle-up"></i></a> </span>
-                                    <span class="crt_evnt_drop_down crt_invit_drop_down"> <a href="#"><i class="fa fa-angle-down"></i></a> </span>
-                                </li>
-                            </ul>
-                        </div>
+                        @if (Model.Event_Email_List != null && Model.Event_Email_List.Count>0)
+                        {
+                            <div id="dvEmaillistHeader" class="col-sm-12 no_pad">
+                                <ul class="inv_mail_list_head">
+                                    <li><input id="chkSelectAll" onclick="SelectAllList();" type="checkbox"></li>
+                                    <li>
+                                        EmailId
+                                        <span class="crt_evnt_drop_up crt_invit_drop_down_a"> <a href="#"><i class="fa fa-angle-up"></i></a> </span>
+                                        <span class="crt_evnt_drop_down crt_invit_drop_down"> <a href="#"><i class="fa fa-angle-down"></i></a> </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <div id="dvEmaillistHeader" class="col-sm-12 no_pad" style="display:none;" >
+                                <ul class="inv_mail_list_head">
+                                    <li><input id="chkSelectAll" onclick="SelectAllList();" type="checkbox"></li>
+                                    <li>
+                                        EmailId
+                                        <span class="crt_evnt_drop_up crt_invit_drop_down_a"> <a href="#"><i class="fa fa-angle-up"></i></a> </span>
+                                        <span class="crt_evnt_drop_down crt_invit_drop_down"> <a href="#"><i class="fa fa-angle-down"></i></a> </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
                         <div class="clearfix"></div>
                         <div class="col-sm-12 no_pad">
                             <div id="dvEmaillist" class="col-sm-12 no_pad inv_mail_scroll">
@@ -283,7 +299,7 @@
                                     {
                                         icnt = icnt + 1;
                                         <ul id="UL_@icnt" class="inv_mail_list">
-                                            <li><input id="chk_@icnt" type="checkbox"></li>
+                                            <li><input id="chk_@icnt" onclick="CheckDeleteOption();" type="checkbox"></li>
                                             <li>@eel.L_EmailId </li>
                                         </ul>
                                     }
@@ -367,7 +383,7 @@
             <div class="col-sm-4 col-xs-6 no_pad">
                 <button class="btn def_btn acnt_btn send_test_btn" id="btSaveDraft" onclick="SaveDetail('D');" type="button">Save Draft</button>
             </div>
-            <div id="dvAjxLoaderSave" style="display:none;" >
+            <div id="dvAjxLoaderSave" style="display:none;">
                 <img src="~/Images/ajaxloader1.gif" /> Please wait ...
             </div>
             <input type="hidden" id="hdListId" value="@TempData["EmailListCount"]" />
@@ -613,6 +629,12 @@
     $(document).ready(function () {
         $('#sidebar').load('@Url.Action("Sidenav", "ManageEvent", new { eventid= TempData["Eventid"] })');
 
+        $('#crt_promcode').click();
+        $('#dvcrtpromcode').addClass("active");
+        $('#dvcrtpromcode b').addClass('opened new-opend');
+
+
+
         $("#txtSenderName").on("input", function () {
             var regexp = /[^a-zA-Z]/g;
             if ($(this).val().match(regexp)) {
@@ -647,10 +669,9 @@
 
 
         $("#btTestEmail").click(function () {
-            
+
             var vTo = $("#txtTestEmail").val().trim();
             if (validateEmail(vTo) == true && vTo != "") {
-
                 var vFrom = "shweta.sindhu@kiwitech.com";
                 var vSubject = $("#txtSubjectLine").val();
                 var vBody = $("#dvUserMail").html();
@@ -683,7 +704,6 @@
                 ShowMessage('E', ajaxsetup('CreateInvitations', 'EmailValidationUI'));
             }
         });
-        //data: {To : vTo,from : vFrom,subject:vSubject,body:vBody,cc:vCc,bcc:vBcc,emailname:vEmailname},
 
         var vEditorVal = $("#hdEmailContent").val().trim();
         if (vEditorVal != "") {
@@ -716,6 +736,7 @@
         });
         $("#btDeleteEmail").click(function () {
             //$("#UlTest").remove();
+            var vFlag = false;
             var vIds = parseFloat($("#hdListId").val());
             if (isNaN(vIds) == true) vIds = 0;
 
@@ -727,28 +748,85 @@
                 }
             }
 
-        });
 
-        $("#chkSelectAll").click(function () {
 
-            var vIds = parseFloat($("#hdListId").val());
-            if (isNaN(vIds) == true) vIds = 0;
-            var vflag = false;
             if (vIds > 0) {
-                if ($("#chkSelectAll").is(":checked") == true) {
-                    vflag = true;
-                }
-                //alert(vflag);
                 for (i = 0; i <= vIds; i++) {
-                    //  alert(vIds);
-                    $("#chk_" + i).attr("checked", vflag);
+                    if ($("#chk_" + i).length > 0) {
+                        vFlag = true;
+                    }
                 }
             }
+            
+            if (vFlag == true)
+            {
+                $("#dvEmaillistHeader").show();
+            }
+            else
+            {
+                $("#dvEmaillistHeader").hide();
+            }
+            
+            $("#btDeleteEmail").hide();
 
         });
+
 
 
     });
+    function SelectAllList()
+    {
+        //debugger;
+        var vIds = parseFloat($("#hdListId").val());
+        if (isNaN(vIds) == true) vIds = 0;
+        var vflag = false;
+        if (vIds > 0) {
+            //alert($("#chkSelectAll").is(":checked"));
+            if ($("#chkSelectAll").is(":checked") == true) {
+                vflag = true;
+            }
+            for (i = 0; i <= vIds; i++) {
+                if (vflag == true)
+                    $("#chk_" + i).attr("checked", "checked");
+                else
+                {
+                    $("#chk_" + i).attr("checked", false);
+                }
+            }
+        }
+        CheckDeleteOption();
+
+    }
+
+    function CheckDeleteOption()
+    {
+        var vFlag = false;
+        var vIds = parseFloat($("#hdListId").val());
+        if (isNaN(vIds) == true) vIds = 0;
+        if (vIds > 0) {
+            for (i = 0; i <= vIds; i++) {
+                if ($("#chk_" + i).is(":checked") == true) {
+                    vFlag = true;
+                }
+            }
+        }
+
+        if (vFlag == false) {
+            $("#btDeleteEmail").hide();
+        }
+        else {
+            $("#btDeleteEmail").show();
+        }
+       
+        //if ($("#dvEmaillist").children.length>0)
+        //{
+        //    $("#dvEmaillistHeader").show();
+        //}
+        //else
+        //{
+        //    $("#dvEmaillistHeader").hide();
+        //}
+    }
     function ajaxsetup(strname, strFormTag) {
         var msgnew = "";
 
@@ -785,61 +863,92 @@
             $('#erraccmsg').html(Mess);
 
         }
-        
+
     }
-    function SaveDetail(Mode) {
-        var EmailList = [];
+
+    function validatemain() {
+        var msg = "";
+        var vval = $("#txtSenderName").val().trim();
+
+        if ($("#txtSenderName").val().trim() == "") {
+            //$('#txtEventTitle').addClass('err-bor');
+            msg += ajaxsetup("CreateInvitations", "SenderNameValidateUI") + "<br/>";
+        }
+
+        if ($("#txtSubjectLine").val().trim() == "") {
+            //$('#txtEventTitle').addClass('err-bor');
+            msg += ajaxsetup("CreateInvitations", "SubjectValidateUI") + "<br/>";
+        }
+
+        var vFlag = true;
         var vIds = parseFloat($("#hdListId").val());
         if (vIds > 0) {
             for (i = 0; i <= vIds; i++) {
                 vVal = $("#UL_" + i).text();
-                //  alert(vVal);
                 if (vVal.trim() != '') {
-                    EmailList.push({
-                        L_Id: "0",
-                        L_I_Id: $("#hdId").val(),
-                        L_EmailId: vVal
-                    });
+                    vFlag = false;
                 }
             }
         }
-        var model = {
-            'I_Id': $("#hdId").val(),
-            'I_Event_Id': $("#hdEventId").val(),
-            'I_SenderName': $("#txtSenderName").val(),
-            'I_SubjectLine': $("#txtSubjectLine").val(),
-            'I_EmailContent': $("#dvUserMail").html(),
-            'I_ScheduleDate': $("#txtSchDate").val(),
-            'I_EditableContent': $("#dvemailcontentmail").html(),
-            'I_Mode': Mode,
-            'EmailList': EmailList
-        };
+        if (vFlag == true) {
+            //$('#txtEventTitle').addClass('err-bor');
+            msg += ajaxsetup("CreateInvitations", "EmailValidationUI") + "<br/>";
+        }
+        return msg;
+    }
 
-        $.ajax({
-            url: '@Url.Action("SaveInvitation", "ManageEvent")',
-            data: { model: model },
-            beforeSend: function () { $('#dvAjxLoaderSave').show(); },
-            complete: function () { $('#dvAjxLoaderSave').hide(); },
-            type: "Post",
-            success: function (response) {
-                $("#hdId").val(response);
-
-
-                var vUrl = '@Url.Action("EmailInvitations", "ManageEvent", new { eventId = "eveid" })';
-                vUrl = vUrl.replace("eveid", $("#hdEventId").val());
-
-                window.location.href = vUrl;
+    function SaveDetail(Mode) {
+        var vMsg = validatemain()
+        if (vMsg == "") {
+            var EmailList = [];
+            var vIds = parseFloat($("#hdListId").val());
+            if (vIds > 0) {
+                for (i = 0; i <= vIds; i++) {
+                    vVal = $("#UL_" + i).text();
+                    //  alert(vVal);
+                    if (vVal.trim() != '') {
+                        EmailList.push({
+                            L_Id: "0",
+                            L_I_Id: $("#hdId").val(),
+                            L_EmailId: vVal
+                        });
+                    }
+                }
             }
-        });
+            var model = {
+                'I_Id': $("#hdId").val(),
+                'I_Event_Id': $("#hdEventId").val(),
+                'I_SenderName': $("#txtSenderName").val(),
+                'I_SubjectLine': $("#txtSubjectLine").val(),
+                'I_EmailContent': $("#dvUserMail").html(),
+                'I_ScheduleDate': $("#txtSchDate").val(),
+                'I_EditableContent': $("#dvemailcontentmail").html(),
+                'I_Mode': Mode,
+                'EmailList': EmailList
+            };
 
-        //'EmailList': EmailList,
-        //   'EventTitle': " ",
-        //   'EventDate': " ",
-        //   'EventOrgnizer': " ",
-        //   'EventAddress': " ",
-        //   'EventLat': " ",
-        //   'EventLong': " ",
-        //   'EventImg': " "
+            $.ajax({
+                url: '@Url.Action("SaveInvitation", "ManageEvent")',
+                data: { model: model },
+                beforeSend: function () { $('#dvAjxLoaderSave').show(); },
+                complete: function () { $('#dvAjxLoaderSave').hide(); },
+                type: "Post",
+                success: function (response) {
+                    $("#hdId").val(response);
+
+
+                    var vUrl = '@Url.Action("EmailInvitations", "ManageEvent", new { eventId = "eveid" })';
+                    vUrl = vUrl.replace("eveid", $("#hdEventId").val());
+
+                    window.location.href = vUrl;
+                }
+
+            });
+        }
+        else
+        {
+            ShowMessage('E', vMsg);
+        }
     }
 
     function AddEmail(vValue) {
@@ -853,7 +962,7 @@
                 if (isNaN(vId) == true) vId = 0;
                 vId = vId + 1;
                 $("#hdListId").val(vId);
-                var vHtml = '<ul id="UL_' + vId + '" class="inv_mail_list"><li><input id="chk_' + vId + '" type="checkbox"></li><li>' + vData + '</li></ul>';
+                var vHtml = '<ul id="UL_' + vId + '" class="inv_mail_list"><li><input id="chk_' + vId + '" onclick="CheckDeleteOption();" type="checkbox"></li><li>' + vData + '</li></ul>';
                 $("#dvEmaillist").append(vHtml);
             }
             else {
@@ -871,6 +980,7 @@
             ShowMessage('E', ajaxsetup('CreateInvitations', 'EmailValidationUI'));
         }
         else {
+            $("#dvEmaillistHeader").show();
             $("#txtAddEmail").val("");
             $("#txtAddEmail").focus();
             ShowMessage('N', "");
