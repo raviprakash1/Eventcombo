@@ -5,14 +5,14 @@
     <div id="accordion" class="panel-group">
 
         <div class="panel panel-default menu_list">
-            <a class="menu_title" href="#">
+            <a class="menu_title" href="@Url.Action("MyAccount", "Account") ">
                 <div class="panel-heading">
                     < My Account
                 </div>
             </a>
         </div>
         <div class="panel panel-default menu_list">
-            <a class="menu_title" href="#" title="@Model.Eventtitle">
+            <a class="menu_title" href="@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(Model.Eventtitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = Model.EventId.ToString() })" title="@Model.Eventtitle">
                 <div class="panel-heading activeyellow act_ellipses">
                     @Model.Eventtitle
                 </div>
@@ -33,7 +33,7 @@
             </a>
         </div>
         <div class="panel panel-default menu_list">
-            <a class="menu_title" href="#">
+            <a class="menu_title" href="@Url.Action("Index","ManageEvent",  new { Eventlid = ValidationMessageController.GetParentEventId(Model.EventId) , type = "N"})">
                 <div class="panel-heading">
                     Event Dashboard
                 </div>
