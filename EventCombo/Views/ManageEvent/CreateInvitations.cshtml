@@ -389,6 +389,9 @@
             <input type="hidden" id="hdListId" value="@TempData["EmailListCount"]" />
             <input type="hidden" id="hdId" value="@Model.I_Id" />
             <input type="hidden" id="hdEventId" value="@TempData["Eventid"]" />
+            <input type="hidden" id="hdEventIMode" value="@TempData["EventIMode"]" />
+            
+
             @if (Model != null && !String.IsNullOrEmpty(Model.I_EditableContent))
             {
                 <input type="hidden" id="hdEmailContent" value="@Model.I_EditableContent" />
@@ -757,7 +760,7 @@
                     }
                 }
             }
-            
+
             if (vFlag == true)
             {
                 $("#dvEmaillistHeader").show();
@@ -766,7 +769,7 @@
             {
                 $("#dvEmaillistHeader").hide();
             }
-            
+
             $("#btDeleteEmail").hide();
 
         });
@@ -817,7 +820,7 @@
         else {
             $("#btDeleteEmail").show();
         }
-       
+
         //if ($("#dvEmaillist").children.length>0)
         //{
         //    $("#dvEmaillistHeader").show();
@@ -935,11 +938,16 @@
                 type: "Post",
                 success: function (response) {
                     $("#hdId").val(response);
-
-
-                    var vUrl = '@Url.Action("EmailInvitations", "ManageEvent", new { eventId = "eveid" })';
+                    var vUrl = "";
+                    if ($("#hdEventIMode").val() == "E")
+                    {
+                        vUrl = '@Url.Action("EventConfirmation", "EventConfirmation",new { eventId = "eveid"});
+                    }
+                    else
+                    {
+                        vUrl = '@Url.Action("EmailInvitations", "ManageEvent", new { eventId = "eveid"})';
+                    }
                     vUrl = vUrl.replace("eveid", $("#hdEventId").val());
-
                     window.location.href = vUrl;
                 }
 

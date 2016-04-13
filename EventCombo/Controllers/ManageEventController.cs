@@ -2333,6 +2333,7 @@ namespace EventCombo.Controllers
             TempData["EmailListCount"] = iElistCnt;
             TempData["Eventid"] = lEvtId;
             TempData["PPassword"] = strPassword;
+            TempData["EventIMode"] = strMode;
             return View(objEEI);
         }
 
