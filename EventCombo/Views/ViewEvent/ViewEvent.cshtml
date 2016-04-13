@@ -854,28 +854,42 @@
         }
 
         $('#btnbackpwd').click(function () {
+            $.ajax({
+                url: '@Url.Action("Nullurlsession", "ViewEvent")',
+                type: "Post",
+                success: function (data) {
 
-            window.location.href = '@Url.Action("Index","Home")';
+                    window.location.href = '@Url.Action("Index","Home")';
+
+                }
+            });
+
 
         });
 
         $('#btnsubmitpwd').click(function () {
             var a = $('#txtpwdlive').val();
-            var id = $('#hdEventid').val();
-            $.ajax({
-                url: '@Url.Action("Checkpassword", "CreateEvent")',
-                data: { password: a, id: id },
-                type: "Post",
-                success: function (response) {
+            if (a != '') {
+                var id = $('#hdEventid').val();
+                $.ajax({
+                    url: '@Url.Action("Checkpassword", "CreateEvent")',
+                    data: { password: a, id: id },
+                    type: "Post",
+                    success: function (response) {
 
-                    if (response == "Y") {
-                        $('#btnclosepwd').click();
-                    } else {
-                        $('#lblwrongpwd').css('display', 'block');
-                        $('#lblwrongpwd').html('You have entered incorrect password');
+                        if (response == "Y") {
+                            $('#btnclosepwd').click();
+                        } else {
+                            $('#lblwrongpwd').css('display', 'block');
+                            $('#lblwrongpwd').html('You have entered incorrect password');
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                $('#lblwrongpwd').css('display', 'block');
+                $('#lblwrongpwd').html('You have entered incorrect password');
+                return false;
+            }
 
         });
 

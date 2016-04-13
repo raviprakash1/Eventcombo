@@ -784,7 +784,8 @@ namespace EventCombo.Controllers
                     else lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList();
                     if (strTextSearch.Trim() != string.Empty)
                     {
-                        lsDisEvt = lsDisEvt.Where(m => m.EventTitle.Contains(strTextSearch) || m.EventCat.Contains(strTextSearch) || m.EventDisplayAddress.Contains(strTextSearch)).ToList();
+                        lsDisEvt = lsDisEvt.Where(m => m.EventTitle.ToLower().Contains(strTextSearch.ToLower()) || m.EventCat.ToLower().Contains(strTextSearch.ToLower()) || m.EventDisplayAddress.ToLower().Contains(strTextSearch.ToLower())).ToList();
+                        //lsDisEvt = lsDisEvt.Where(m => m.EventTitle.Contains(strTextSearch) || m.EventCat.Contains(strTextSearch) || m.EventDisplayAddress.Contains(strTextSearch)).ToList();
                     }
                     try
                     {
@@ -1031,7 +1032,8 @@ namespace EventCombo.Controllers
 
                         lsDisEvt.Add(objDisEv);
                     }
-                    lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventFeature).OrderBy(m => m.FeatureDateTime) .ToList();
+                    //lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventFeature).OrderBy(m => m.FeatureDateTime) .ToList();
+                    lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventFeature).ToList();
                 }
                 return lsDisEvt;
             }
