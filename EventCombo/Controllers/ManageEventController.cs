@@ -2324,6 +2324,9 @@ namespace EventCombo.Controllers
                 }
             }
 
+            var vurl = Request.Url;
+            var vbaseurl = vurl.GetLeftPart(UriPartial.Authority);
+            TempData["baseurl"] = vbaseurl;
             TempData["OrderText"] = strOrderText;
             TempData["OrgnizerUrl"] = strOrgnizerUrl;
             TempData["ViewEventUrl"] = strviewEvent;
