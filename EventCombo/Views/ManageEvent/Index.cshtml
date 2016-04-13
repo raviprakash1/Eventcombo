@@ -9,136 +9,60 @@
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 
 @section sidenav{
- <div id="sidebar" class="nav nav-stacked">
-    <div id="accordion" class="panel-group">
+<div id="sidebar" class="nav nav-stacked">
 
-        <div class="panel panel-default menu_list">
-            <a class="menu_title" href="#">
-                <div class="panel-heading">
-                  < My Account
-                </div>
-            </a>
-        </div>
-        <div class="panel panel-default menu_list">
-            <a class="menu_title" href="#" title="@Model.Eventtitle">
-                <div class="panel-heading activeyellow act_ellipses">
-                   @Model.Eventtitle
-                </div>
-            </a>
-        </div>
-        <div class="panel panel-default menu_list">
-            <a class="menu_title" href="#">
-                <div class="panel-heading">
-                   Event Help
-                </div>
-            </a>
-        </div>
-        <div class="panel panel-default menu_list">
-            <a class="menu_title" href="#">
-                <div class="panel-heading">
-                    Event Bundles
-                </div>
-            </a>
-        </div>
-        <div class="panel panel-default menu_list">
-            <a class="menu_title" href="#">
-                <div class="panel-heading">
-                    Event Dashboard
-                </div>
-            </a>
-        </div>
-        <div class="panel panel-default menu_list">
-            <a class="menu_title" href="#">
-                <div class="panel-heading">
-                    Modify Order Options
-                </div>
-            </a>
-        </div>
-        <div class="panel panel-default menu_list">
-
-            <a id="mgnav" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                <div id="dvManage" class="panel-heading">
-                   Invite and Promote <b class="closed"></b>
-                </div>
-            </a>
-
-            <div id="collapse2" class="panel-collapse collapse">
-                <div class="panel-body no-padding">
-                    <p>@Html.ActionLink("Email Invitations", "EmailInvitations", "ManageEvent", new { eventId = Model.Eventid }, null)</p>
-                    @if (Model.DiscountCode > 0)
-                    {
-                        <p>@Html.ActionLink("Promotional Code", "PromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.Eventid) }, null)</p>
-                    }
-                    else
-                    {
-                    <p>@Html.ActionLink("Promotional Code", "CreatePromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.Eventid)  }, null)</p>
-                    }
-                    <p>Facebook Integration</p>
-                    <p>Website Integration</p>
-                    <p>Tracing Links</p>
-                    <p>Affialate Programs</p>
-                    <p>Social Stream</p>
-                 
-                   
-
-                 
-                </div>
-            </div>
-        </div>
-        
     </div>
-</div>
 }
 
 
 @using (Html.BeginForm())
 {
 
-  
-    <input type="hidden" value="@Model.Eventid" id="hdEventid" />
-    
-            <div class="col-sm-12 pt10 bggrey clearfix">
-                <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
-                    <div class="er_UI_main">
-                        <div class="er_UI_img"></div>
-                        <div class="er_suc" id="erraccmsg"></div>
-                        <button class="close" type="button" id="btndivaccsuc">&#215;</button>
 
-                    </div>
-                </div>
+    <input type="hidden" value="@Model.Eventid" id="hdEventid" />
+
+    <div class="col-sm-12 pt10 bggrey clearfix">
+        <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
+            <div class="er_UI_main">
+                <div class="er_UI_img"></div>
+                <div class="er_suc" id="erraccmsg"></div>
+                <button class="close" type="button" id="btndivaccsuc">&#215;</button>
 
             </div>
+        </div>
+
+    </div>
             <div class="col-sm-12 pt10 bggrey">
                 @if (@TempData["Success"] != null)
                 {
-                <div class="Moderor" id="divaccsuc" tabindex="-1">
-                    <div class="er_suc_main">
+                    <div class="Moderor" id="divaccsuc" tabindex="-1">
+                        <div class="er_suc_main">
 
-                        <div class="er_suc_img"></div>
-                        <div class="er_suc" id="succaccmsg">@TempData["Success"] </div>
-                        <button class="close" type="button" id="btndivaccsuce">&#215;</button>
+                            <div class="er_suc_img"></div>
+                            <div class="er_suc" id="succaccmsg">@TempData["Success"] </div>
+                            <button class="close" type="button" id="btndivaccsuce">&#215;</button>
 
+                        </div>
                     </div>
-                </div>
                 }
                 <div class="col-sm-6 col-xs-6 pt10 text-left no_pad">
                     <div class="col-sm-12 no_pad">
                         <p class="ev_mng_title">
                             @Model.Eventtitle
-@if (Model.Eventcancel != "Y")
-{
-                            if (Model.EventExpired == "N")
+                            @if (Model.Eventcancel != "Y")
                             {
-                                if (Model.Eventstatus == "Save")
+                                if (Model.EventExpired == "N")
                                 {
-                            <label class="btn ev_live_sub_btn yelw_live_btn ft24"> DRAFT </label>
-                                }
-                                else
-                                {
-                            <label class="btn ev_live_sub_btn grn_live_btn ft24"> LIVE </label>
+                                    if (Model.Eventstatus == "Save")
+                                    {
+                                        <label class="btn ev_live_sub_btn yelw_live_btn ft24"> DRAFT </label>
+                                    }
+                                    else
+                                    {
+                                        <label class="btn ev_live_sub_btn grn_live_btn ft24"> LIVE </label>
+                                    }
                                 }
                             }
-}
                         </p>
                         <p class="ev_mng_title_mini ">@Model.EventAddress </p>
                         <p class="ev_mng_title_mini">@Model.Eventdate </p>
@@ -148,27 +72,27 @@
                 <div class="col-sm-6 col-xs-6 pt10 text-right no_pad">
                     @if (Model.Eventcancel != "Y")
                     {
-                    if (Model.EventExpired == "N")
-                    {
-                        if (Model.Eventstatus == "Save")
+                        if (Model.EventExpired == "N")
                         {
-                    <button class="btn ev_live_sub_btn mb5 ft24" type="button" id="cbtnprivew">
-                        PREVIEW
-                    </button>
+                            if (Model.Eventstatus == "Save")
+                            {
+                                <button class="btn ev_live_sub_btn mb5 ft24" type="button" id="cbtnprivew">
+                                    PREVIEW
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn ev_live_sub_btn mb5 ft24" type="button" id="cbtview">
+                                    VIEW
+                                </button>
+                            }
                         }
                         else
                         {
-                    <button class="btn ev_live_sub_btn mb5 ft24" type="button" id="cbtview">
-                        VIEW
-                    </button>
+                            <button class="btn ev_live_sub_btn mb5 ft24" type="button" id="cbtnprivew">
+                                PREVIEW
+                            </button>
                         }
-                    }
-                    else
-                    {
-                    <button class="btn ev_live_sub_btn mb5 ft24" type="button" id="cbtnprivew">
-                        PREVIEW
-                    </button>
-                    }
                     }
                 </div>
                 <div class="clearfix"></div>
@@ -177,20 +101,20 @@
                 <div class="col-sm-12 no_pad pt10 pb10">
                     <div class="col-sm-4 no_pad ev-pilot-font1">Event Pilot</div>
                     <div class="col-sm-4 no_pad">
-@if (Model.Eventcancel != "Y")
-{
+                        @if (Model.Eventcancel != "Y")
+                        {
 
-                        if (Model.Eventprivacy == "Public")
-                        {
-                        <div class="col-sm-12 no_pad ev-pilot-font"><a class="aPubPrivate" href="#">Public </a></div>
-                        <div class="col-sm-12 no_pad ft15">Your event is listed and searchable. </div>
+                            if (Model.Eventprivacy == "Public")
+                            {
+                                <div class="col-sm-12 no_pad ev-pilot-font"><a class="aPubPrivate" href="#">Public </a></div>
+                                <div class="col-sm-12 no_pad ft15">Your event is listed and searchable. </div>
+                            }
+                            if (Model.Eventprivacy == "Private")
+                            {
+                                <div class="col-sm-12 no_pad ev-pilot-font"><a class="aPubPrivate" href="#">Private</a> </div>
+                                <div class="col-sm-12 no_pad ft15">Only people who receive your Eventcombo invitation will be able to register once your event is live.</div>
+                            }
                         }
-                        if (Model.Eventprivacy == "Private")
-                        {
-                        <div class="col-sm-12 no_pad ev-pilot-font"><a class="aPubPrivate" href="#">Private</a> </div>
-                        <div class="col-sm-12 no_pad ft15">Only people who receive your Eventcombo invitation will be able to register once your event is live.</div>
-                        }
-}
                     </div>
                     <div class="col-sm-4 no_pad text-right">
                         <!-- <button class="btn ev_live_sub_btn grey_btn cap_l">Find Attendees</button> -->
@@ -205,29 +129,29 @@
                         <div class="col-sm-9 col-xs-9">Page URL: <span style="cursor:pointer;" id="spEventUrl">@Model.url</span>@*<a href="@TempData["EventUrl"]" id="aEventUrl" > @TempData["EventUrl"]</a>*@</div>
                         <div class="col-sm-3 col-xs-12 text-right">
                             <span class="ev-mng-edit">
-                            @if (Model.Eventcancel != "Y")
-                            {
-                                <button type="button" class="btn ev_live_sub_btn mb5 ft24" id="btEditUrl" value="Edit">Edit</button>
-                            }
-                          </span>
-                         </div>
+                                @if (Model.Eventcancel != "Y")
+                                {
+                                    <button type="button" class="btn ev_live_sub_btn mb5 ft24" id="btEditUrl" value="Edit">Edit</button>
+                                }
+                            </span>
+                        </div>
 
-                       </div>
+                    </div>
 
                     <div class="col-sm-12 no_pad ev-mg-url" id="dvTexturl">
                         <div class="col-sm-8 col-xs-12">
                             <div class="col-sm-3 col-xs-3">Page URL:</div>
                             <div class="col-sm-6 col-xs-6 no_pad ">
                                 <input type="text" class="form-control" value="" id="txtEventURl" onkeypress="return IsAlphaNumeric(event);" />
-                             
+
                             </div>
                             <div class="col-sm-3 col-xs-6 no_pad">
-                               .eventcombo.com
+                                .eventcombo.com
                             </div>
-                            </div>
+                        </div>
                         <div class="col-sm-4 col-xs-12">
                             <button type="button" class="btn ev_live_sub_btn mb5 ft24" id="btSaveUrl" value="Edit">Save</button>
-                            <button type="button" id="btCancelUrl" class="btn ev_live_sub_btn mb5 ft24"  value="Edit">Cancel</button>
+                            <button type="button" id="btCancelUrl" class="btn ev_live_sub_btn mb5 ft24" value="Edit">Cancel</button>
                         </div>
                     </div>
 
@@ -237,85 +161,85 @@
 
                 <div class="col-sm-12 no_pad pt10 pb10">
                     <div class="col-sm-6 col-xs-12 no_pad">
-@if (Model.Eventcancel != "Y")
-{
-                        if (Model.EventExpired == "N")
+                        @if (Model.Eventcancel != "Y")
                         {
-                            if (Model.Eventstatus == "Save")
-                            {
-                        <div class="col-sm-2 col-xs-2 text-center no_pad"><img src="/Images/hjsdjd.png"></div>
-                        <div class="col-sm-10 col-xs-10 no_pad ev_congrt">
-
-                            <span> Unpublished </span> <br>Your event is in draft mode, please publish it to make it live.
-
-                        </div>
-                            }
-                            else
-                            {
-                        <div class="col-sm-2 col-xs-2 text-center no_pad"><img src="/Images/dgd.png"></div>
-                        <div class="col-sm-10 col-xs-10 no_pad ev_congrt">
-
-                            <span> In Progress </span> <br>Your event page is live and you are ready to sell tickets.
-
-                        </div>
-                            }
-                        }
-                        else
-                        {
-                        <div class="col-sm-2 col-xs-2 text-center no_pad"><img src="/Images/cong-mark.png"></div>
-                        <div class="col-sm-10 col-xs-10 no_pad ev_congrt">
-
-                            <span> Completed </span> <br>Congratulation on completeing your event.
-
-
-                        </div>
-    }
-}
-else
-{
-    <div class="col-sm-2 col-xs-2 text-center no_pad"><img src="/Images/qwe.png"></div>
-    <div class="col-sm-10 col-xs-10 no_pad ev_congrt">
-
-        <span> Canceled </span> <br>You have canceled your event.
-
-
-    </div>
-}
-                    </div>
-                    <div class="col-sm-6 col-xs-12 text-right no_pad">
-                        <ul class="col-sm-12 col-xs-12 no_pad mang-ev-nav">
-@if (Model.Eventcancel != "Y")
-{
                             if (Model.EventExpired == "N")
                             {
                                 if (Model.Eventstatus == "Save")
                                 {
-                            <li><a href="#" id="aPublish">Publish</a></li>
+                                    <div class="col-sm-2 col-xs-2 text-center no_pad"><img src="/Images/hjsdjd.png"></div>
+                                    <div class="col-sm-10 col-xs-10 no_pad ev_congrt">
+
+                                        <span> Unpublished </span> <br>Your event is in draft mode, please publish it to make it live.
+
+                                    </div>
                                 }
                                 else
                                 {
-                            <li><a href="#" id="aUnpublish" >Unpublish</a></li>
+                                    <div class="col-sm-2 col-xs-2 text-center no_pad"><img src="/Images/dgd.png"></div>
+                                    <div class="col-sm-10 col-xs-10 no_pad ev_congrt">
+
+                                        <span> In Progress </span> <br>Your event page is live and you are ready to sell tickets.
+
+                                    </div>
                                 }
                             }
-}
+                            else
+                            {
+                                <div class="col-sm-2 col-xs-2 text-center no_pad"><img src="/Images/cong-mark.png"></div>
+                                <div class="col-sm-10 col-xs-10 no_pad ev_congrt">
+
+                                    <span> Completed </span> <br>Congratulation on completeing your event.
+
+
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="col-sm-2 col-xs-2 text-center no_pad"><img src="/Images/qwe.png"></div>
+                            <div class="col-sm-10 col-xs-10 no_pad ev_congrt">
+
+                                <span> Canceled </span> <br>You have canceled your event.
+
+
+                            </div>
+                        }
+                    </div>
+                    <div class="col-sm-6 col-xs-12 text-right no_pad">
+                        <ul class="col-sm-12 col-xs-12 no_pad mang-ev-nav">
+                            @if (Model.Eventcancel != "Y")
+                            {
+                                if (Model.EventExpired == "N")
+                                {
+                                    if (Model.Eventstatus == "Save")
+                                    {
+                                        <li><a href="#" id="aPublish">Publish</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a href="#" id="aUnpublish">Unpublish</a></li>
+                                    }
+                                }
+                            }
                             @if (Model.EventExpired == "N")
                             {
                                 <li><a href="#" id="btCopyEvt">Copy</a></li>
                             }
-@if (Model.EventExpired == "N")
-{
-                           if (Model.Eventcancel != "Y")
+                            @if (Model.EventExpired == "N")
                             {
-                                <li><a href="#" id="aCancel" data-toggle="modal">Cancel</a></li>
+                                if (Model.Eventcancel != "Y")
+                                {
+                                    <li><a href="#" id="aCancel" data-toggle="modal">Cancel</a></li>
+                                }
                             }
-}
-@if (Model.Eventcancel != "Y")
-{
-                           if (Model.Eventtransaction == "N")
+                            @if (Model.Eventcancel != "Y")
                             {
-                                <li><a href="#" id="aDelete" >Delete</a></li>
+                                if (Model.Eventtransaction == "N")
+                                {
+                                    <li><a href="#" id="aDelete">Delete</a></li>
+                                }
                             }
-}
                             @if (Model.Eventcancel != "Y")
                             {
                                 if (Model.EventExpired == "N")
@@ -336,15 +260,15 @@ else
                             <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">@TempData["TicketSalePer"]% Ticket Sold </p>
                             <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">Sales Report</a></p>
                             <div class="col-sm-12 col-xs-12 no_pad">
-                               
-                                    <figure id="tickets_sold_graph">
-                                        <div class="tickets_sold_paid curved-left" style="width: @TempData["PaidTicket"]%;"></div>
-                                        <div class="tickets_sold_free" style="width: @TempData["FreeTicket"]%;"></div>
-                                        <div class="tickets_sold_qyant">@TempData["RemQty"] </div>
-                                       
-                                        @*<figcaption>@TempData["TicketSalePer"]%</figcaption>*@
-                                        <div class="tickets_total_tic">Total : @TempData["TotalQty"]</div>
-                                    </figure>
+
+                                <figure id="tickets_sold_graph">
+                                    <div class="tickets_sold_paid curved-left" style="width: @TempData["PaidTicket"]%;"></div>
+                                    <div class="tickets_sold_free" style="width: @TempData["FreeTicket"]%;"></div>
+                                    <div class="tickets_sold_qyant">@TempData["RemQty"] </div>
+
+                                    @*<figcaption>@TempData["TicketSalePer"]%</figcaption>*@
+                                    <div class="tickets_total_tic">Total : @TempData["TotalQty"]</div>
+                                </figure>
                                 <dl class="mng_dl" id="tickets_sold_legend">
                                     <dt class="tickets_sold_paid">
                                         Paid Tickets 1%
@@ -358,7 +282,7 @@ else
 
 
                             </div>
-                           
+
                             <div class="col-sm-12 col-xs-12 no_pad grp_white">
                                 <div class="col-sm-12 text-right">
                                     <input class="btn graph_day_mnth_btn" id="btDaySale" type="button" value="1 Day" />
@@ -366,25 +290,25 @@ else
                                     <input class="btn graph_day_mnth_btn" id="btMonthSale" type="button" value="1 Month" />
                                     <input class="btn graph_day_mnth_btn" id="btYearSale" type="button" value="1 Year" />
                                 </div>
-                                <canvas class="" id="cnSaleQty" ></canvas>
-                                
+                                <canvas class="" id="cnSaleQty"></canvas>
+
                                 @*<img src="/Images/gr1.png">*@
                             </div>
 
                             <div class="col-sm-12 col-xs-12 no_pad for_total mt10">
                                 <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">Event Page Hits(@Model.EventHits.ToString()) </p>
                                 <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">Promotional Tools</a></p>
-                                    <div class="col-sm-12 col-xs-12 no_pad grp_white">
-                                        <div class="col-sm-12 col-xs-12 no_pad text-right">
-                                            <input class="btn graph_day_mnth_btn" id="btDay" type="button" value="1 Day" />
-                                            <input class="btn graph_day_mnth_btn" id="btWeek" type="button" value="1 Week" />
-                                            <input class="btn graph_day_mnth_btn" id="btMonth" type="button" value="1 Month" />
-                                            <input class="btn graph_day_mnth_btn" id="btYear" type="button" value="1 Year" />
-                                        </div>
-                                        <canvas id="cnEventHit"></canvas>
-                                        @*<img src="/Images/gr1.png">*@
+                                <div class="col-sm-12 col-xs-12 no_pad grp_white">
+                                    <div class="col-sm-12 col-xs-12 no_pad text-right">
+                                        <input class="btn graph_day_mnth_btn" id="btDay" type="button" value="1 Day" />
+                                        <input class="btn graph_day_mnth_btn" id="btWeek" type="button" value="1 Week" />
+                                        <input class="btn graph_day_mnth_btn" id="btMonth" type="button" value="1 Month" />
+                                        <input class="btn graph_day_mnth_btn" id="btYear" type="button" value="1 Year" />
                                     </div>
-                             </div>
+                                    <canvas id="cnEventHit"></canvas>
+                                    @*<img src="/Images/gr1.png">*@
+                                </div>
+                            </div>
 
                         </div>
                         <div class="col-sm-6 col-xs-12 no_pad ft_black">
@@ -403,39 +327,39 @@ else
                                 <div class="col-sm-12 no_pad">
                                     <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">Payment status </p>
                                     <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail">
-                                        @Html.ActionLink("Payment Settings","PaymentInfo","PaymentInfo",new { EventId=Model.Eventid },null)
-                                     </p>
+                                        @Html.ActionLink("Payment Settings", "PaymentInfo", "PaymentInfo", new { EventId = Model.Eventid }, null)
+                                    </p>
                                 </div>
                                 <div class="col-sm-12 no_pad">
-                                  
-                                   @if (Model.EventExpired == "N")
-                                   {
-                                       if (Model.Eventstatus == "Save")
-                                       {
+
+                                    @if (Model.EventExpired == "N")
+                                    {
+                                        if (Model.Eventstatus == "Save")
+                                        {
+                                            <div class="col-sm-1 col-xs-2 text-center no_pad"><img src="/Images/cong-mark-mini.png"></div>
+                                            <div class="col-sm-11 col-xs-10 no_pad">
+                                                <p class="ft18 payout_desc">Please enter your payment details for the money to be transferred to your account when event goes live</p>
+                                            </div>
+                                        }
+                                        if (Model.Eventstatus == "Live")
+                                        {
+                                            <div class="col-sm-1 col-xs-2 text-center no_pad"><img src="/Images/cong-mark-mini.png"></div>
+                                            <div class="col-sm-11 col-xs-10 no_pad">
+                                                <p class="ft18 payout_desc">Please enter your payment details so we can send you your money.</p>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
                                         <div class="col-sm-1 col-xs-2 text-center no_pad"><img src="/Images/cong-mark-mini.png"></div>
                                         <div class="col-sm-11 col-xs-10 no_pad">
-                                            <p class="ft18 payout_desc">Please enter your payment details for the money to be transferred to your account when event goes live</p>
+                                            <p class="ft18 payout_desc">Payout was issued on <b>date of amount transfer</b> to your <b>Bank Name</b> account ending in <b>last 4 digit of account number</b></p>
                                         </div>
-                                       }
-                                       if (Model.Eventstatus == "Live")
-                                       {
-                                        <div class="col-sm-1 col-xs-2 text-center no_pad"><img src="/Images/cong-mark-mini.png"></div>
-                                      <div class="col-sm-11 col-xs-10 no_pad">
-                                        <p class="ft18 payout_desc">Please enter your payment details so we can send you your money.</p>
-                                    </div>
-                                       }
-                                   }
-                                   else
-                                    {
-                                    <div class="col-sm-1 col-xs-2 text-center no_pad"><img src="/Images/cong-mark-mini.png"></div>
-                                    <div class="col-sm-11 col-xs-10 no_pad">
-                                        <p class="ft18 payout_desc">Payout was issued on <b>date of amount transfer</b> to your <b>Bank Name</b> account ending in <b>last 4 digit of account number</b></p>
-                                    </div>
-                                   }
+                                    }
                                     <p class="ft15">You have <span class="ft_red">3 days 21 hours </span>to issue any requested refunds. Allow 2-3 business days for the payout to arrive.(Longer for public holidays)</p>
 
 
-                                 </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -450,43 +374,43 @@ else
                                 <div class="order_attendee_inner">
                                     @if (Model.Eventstatus == "Save")
                                     {
-                                    <label> You haven't made your event live. Publish it to make your event live</label>
+                                        <label> You haven't made your event live. Publish it to make your event live</label>
                                     }
                                     else
                                     {
                                         if (Model.Eventtransaction == "N")
                                         {
-                                    <label> You haven't sold any tickets yet. Check out our promotional tools and tips to get the ball rolling!</label>
+                                            <label> You haven't sold any tickets yet. Check out our promotional tools and tips to get the ball rolling!</label>
                                         }
                                         else
                                         {
-                                    <table class="table ft_black table-bordered mb0">
-                                        <thead>
-                                            <tr>
-                                                <th>#Order</th>
-                                                <th>Ticket Buyer</th>
-                                                <th>Quantity</th>
-                                                <th>Price</th>
-                                                <th>Date</th>
-                                                <th>Payment</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in (List<OrderAttendees>)Model.Order)
-                                                    {
+                                            <table class="table ft_black table-bordered mb0">
+                                                <thead>
                                                     <tr>
-                                                        <td class="ev_detail"><a href="#">@item.OrderId</a></td>
-                                                        <td>@item.Name</td>
-                                                        <td>@item.Qty</td>
-                                                        <td>$@item.Amount</td>
-                                                        <td>@item.Date</td>
-                                                        <td>Completed</td>
+                                                        <th>#Order</th>
+                                                        <th>Ticket Buyer</th>
+                                                        <th>Quantity</th>
+                                                        <th>Price</th>
+                                                        <th>Date</th>
+                                                        <th>Payment</th>
                                                     </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in (List<OrderAttendees>)Model.Order)
+                                                    {
+                                                        <tr>
+                                                            <td class="ev_detail"><a href="#">@item.OrderId</a></td>
+                                                            <td>@item.Name</td>
+                                                            <td>@item.Qty</td>
+                                                            <td>$@item.Amount</td>
+                                                            <td>@item.Date</td>
+                                                            <td>Completed</td>
+                                                        </tr>
                                                     }
-                                        </tbody>
-                                    </table>
-                                    <div class="clearfix"></div>
-                                    <div class="row ev_detail recent_view_ord"><a href="#">View All</a></div>
+                                                </tbody>
+                                            </table>
+                                            <div class="clearfix"></div>
+                                            <div class="row ev_detail recent_view_ord"><a href="#">View All</a></div>
                                         }
                                     }
                                 </div>
@@ -496,43 +420,43 @@ else
                                     <div class="table-responsive">
                                         @if (Model.Eventstatus == "Save")
                                         {
-                                        <label> You haven't made your event live. Publish it to make your event live</label>
+                                            <label> You haven't made your event live. Publish it to make your event live</label>
                                         }
                                         else
                                         {
                                             if (Model.Eventtransaction == "N")
                                             {
-                                        <label> You haven't sold any tickets yet. Check out our promotional tools and tips to get the ball rolling!</label>
+                                                <label> You haven't sold any tickets yet. Check out our promotional tools and tips to get the ball rolling!</label>
                                             }
                                             else
                                             {
-                                        <table class="table ft_black table-bordered mb0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Ticket Buyer</th>
-                                                    <th>Order #</th>
-                                                    <th>Quantity</th>
-                                                    <th>Price</th>
-                                                    <th>Date</th>
-                                                    <th>Payment</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in (List<OrderAttendees>)Model.Attendess)
-                                                        {
+                                                <table class="table ft_black table-bordered mb0">
+                                                    <thead>
                                                         <tr>
-                                                            <td>@item.Name</td>
-                                                            <td class="ev_detail"><a href="#">@item.OrderId</a></td>
-                                                            <td>@item.Qty</td>
-                                                            <td>$@item.Amount</td>
-                                                            <td>@item.Date</td>
-                                                            <td>Completed</td>
+                                                            <th>Ticket Buyer</th>
+                                                            <th>Order #</th>
+                                                            <th>Quantity</th>
+                                                            <th>Price</th>
+                                                            <th>Date</th>
+                                                            <th>Payment</th>
                                                         </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in (List<OrderAttendees>)Model.Attendess)
+                                                        {
+                                                            <tr>
+                                                                <td>@item.Name</td>
+                                                                <td class="ev_detail"><a href="#">@item.OrderId</a></td>
+                                                                <td>@item.Qty</td>
+                                                                <td>$@item.Amount</td>
+                                                                <td>@item.Date</td>
+                                                                <td>Completed</td>
+                                                            </tr>
                                                         }
-                                            </tbody>
-                                        </table>
-                                        <div class="clearfix"></div>
-                                        <div class="col-sm-12 ev_detail recent_view_ord"><a href="#">View All</a></div>
+                                                    </tbody>
+                                                </table>
+                                                <div class="clearfix"></div>
+                                                <div class="col-sm-12 ev_detail recent_view_ord"><a href="#">View All</a></div>
                                             }
                                         }
                                     </div>
@@ -549,16 +473,16 @@ else
                             <div id="dvAjxLoader">
                                 <img src="~/Images/ajaxloader1.gif" />
                             </div>
-                        
+
                         </div>
-                       
+
                         <div class="col-sm-12 no_pad ft18 mb10 clearfix">
                             <div class="col-sm-6 col-xs-6 text-left ev_detail"><button id="btViewMore" class="btn ev_live_sub_btn mb5 sal_viw_mor_btn" type="button">View More</button></div>
                             <div class="col-sm-6 col-xs-6 text-right ev_detail"><button id="btViewLess" class="btn ev_live_sub_btn mb5 sal_viw_mor_btn" type="button">View Less</button></div>
                             <input type="hidden" id="hidTblvalue" value="" />
                         </div>
                         <div class="col-sm-12 no_pad ft18 mb10 clearfix">
-                              * Service fees will be deducted from your payout and depend on your ticket fees settings.
+                            * Service fees will be deducted from your payout and depend on your ticket fees settings.
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -625,7 +549,7 @@ else
                     <div class="clearfix"></div>
                     <div class="col-sm-12 no_pad mb20 mt20">
                         <div class="col-sm-12 traf_promo_bg">Your Link</div>
-                        <div class="col-sm-12 link_share"> 
+                        <div class="col-sm-12 link_share">
                             @if (Model.Eventstatus == "Save")
                             {
                                 <p>Your Organizer URL <a href="#">http://eventcombo.com</a></p>
@@ -647,160 +571,162 @@ else
                 <input type="hidden" value="@TempData["EventHits"]" id="hidEventhit" />
                 <input type="hidden" value="@TempData["SaleQty"]" id="hidSaleQty" />
             </div>
-       
-    <div class="clearfix"></div>
 
-    <a href="#cnfrm" id="aclick" data-toggle="modal" style="display:none;"></a>
-        
-        <div class="modal fade" id="cnfrm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
-                <div class="modal-content">
-                    <!-- <div class="modal-header custom">
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div> -->
-                    <form id="contactForm" class="fullw1 add">
-                        <div class="modal-body text-center pv50 txt-msg">
-                            <h4  class="msg"><span id="hdmsg"></span></h4>
-                        </div>
-                        <div class="modal-footer msg-action-btn ok">
-                            <button type="button" class="btn btn-primary yes ok" id="btnyescancel" data-dismiss="modal">Yes</button>
-                            <button type="button" class="btn btn-primary yes ok" id="btnyes" data-dismiss="modal">Yes</button>
-                            <button type="button" class="btn btn-primary yes ok" id="btnyesdelete" data-dismiss="modal">Yes</button>
-                            <button type="button" class="btn btn-primary no" id="btnno" data-dismiss="modal">No</button>
+            <div class="clearfix"></div>
+
+            <a href="#cnfrm" id="aclick" data-toggle="modal" style="display:none;"></a>
+
+            <div class="modal fade" id="cnfrm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+                    <div class="modal-content">
+                        <!-- <div class="modal-header custom">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div> -->
+                        <form id="contactForm" class="fullw1 add">
+                            <div class="modal-body text-center pv50 txt-msg">
+                                <h4 class="msg"><span id="hdmsg"></span></h4>
+                            </div>
+                            <div class="modal-footer msg-action-btn ok">
+                                <button type="button" class="btn btn-primary yes ok" id="btnyescancel" data-dismiss="modal">Yes</button>
+                                <button type="button" class="btn btn-primary yes ok" id="btnyes" data-dismiss="modal">Yes</button>
+                                <button type="button" class="btn btn-primary yes ok" id="btnyesdelete" data-dismiss="modal">Yes</button>
+                                <button type="button" class="btn btn-primary no" id="btnno" data-dismiss="modal">No</button>
 
 
-                        </div>
-                    </form>
-                </div>
-            </div><!-- confirm-msg -->
-        </div>
-        <div class="modal fade" id="nopublish" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
-                <div class="modal-content">
-                    <!-- <div class="modal-header custom">
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div> -->
-                    <form id="contactForm" class="fullw1 add">
-                        <div class="modal-body text-center pv50 txt-msg">
-                            <h4 id="hdmsg1" class="msg">Can't Unpublish event as transaction had been done on this event</h4>
-                        </div>
-                        <div class="modal-footer msg-action-btn ok">
-                            <button type="button" class="btn btn-primary no" id="btnno" data-dismiss="modal">Ok</button>
-                        </div>
-                    </form>
-                </div>
-            </div><!-- confirm-msg -->
-        </div>
-        }
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- confirm-msg -->
+            </div>
+            <div class="modal fade" id="nopublish" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+                    <div class="modal-content">
+                        <!-- <div class="modal-header custom">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div> -->
+                        <form id="contactForm" class="fullw1 add">
+                            <div class="modal-body text-center pv50 txt-msg">
+                                <h4 id="hdmsg1" class="msg">Can't Unpublish event as transaction had been done on this event</h4>
+                            </div>
+                            <div class="modal-footer msg-action-btn ok">
+                                <button type="button" class="btn btn-primary no" id="btnno" data-dismiss="modal">Ok</button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- confirm-msg -->
+            </div>
+}
 
-        <script src="~/Scripts/Chart.js"></script>
+<script src="~/Scripts/Chart.js"></script>
 
-        <script>
-          $(function() {
-            $( document ).tooltip();
-          });
-        </script>
+<script>
 
-        <script type="text/javascript">
-            var specialKeys = new Array();
-            specialKeys.push(8); //Backspace
-            specialKeys.push(9); //Tab
-            specialKeys.push(46); //Delete
-            specialKeys.push(36); //Home
-            specialKeys.push(35); //End
-            specialKeys.push(37); //Left
-            specialKeys.push(39); //Right
-            function IsAlphaNumeric(e) {
-                var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
-                var ret = ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
+    $('#sidebar').load('@Url.Action("Sidenav", "ManageEvent", new { eventid=Model.Eventid })');
+    $(function () {
+        $(document).tooltip();
+    });
+</script>
 
-                return ret;
+<script type="text/javascript">
+    var specialKeys = new Array();
+    specialKeys.push(8); //Backspace
+    specialKeys.push(9); //Tab
+    specialKeys.push(46); //Delete
+    specialKeys.push(36); //Home
+    specialKeys.push(35); //End
+    specialKeys.push(37); //Left
+    specialKeys.push(39); //Right
+    function IsAlphaNumeric(e) {
+        var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
+        var ret = ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
+
+        return ret;
+    }
+
+    var EventId = $("#hdEventid").val();
+    function ajaxsetup(strname, strFormTag) {
+        var msgnew = "";
+
+        var request = $.ajax({
+            url: '@Url.Action("Index", "ValidationMessage")',
+            async: false,
+            data: { strFormName: strname, strFormTag: strFormTag },
+            type: 'Post'
+        });
+        request.done(function (msg) {
+            msgnew += msg;
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            msgnew += "Some Error occur!!";
+        });
+        return msgnew;
+    }
+    $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("GetAllTicketSale", "ManageEvent")',
+            beforeSend: function () { $('#dvAjxLoader').show(); },
+            complete: function () { $('#dvAjxLoader').hide(); },
+            data: { EventId: $("#hdEventid").val() },
+            type: "Post",
+            success: function (response) {
+                $("#dvTktSale").append(response);
+                var len = $("#tbSaleTicket tr").length;
+                $("#tbSaleTicket tr").slice(6, len).hide();
+                $("#hidTblvalue").val(6);
+            }
+        });
+
+        $("#spEventUrl").click(function () {
+            var vUrl = $("#spEventUrl").text();
+            window.open(vUrl, "_blank");
+        });
+
+        $("#btViewMore").click(function () {
+            debugger;
+            var startlen = $("#hidTblvalue").val();
+            var endlen = parseInt(startlen) + 5;
+            var tblen = $("#tbSaleTicket tr").length
+            $("#tbSaleTicket tr").slice(startlen, endlen).show();
+            if (endlen <= tblen) {
+                $("#hidTblvalue").val(endlen);
+            }
+            else {
+                $("#hidTblvalue").val(tblen)
             }
 
-            var EventId = $("#hdEventid").val();
-            function ajaxsetup(strname, strFormTag) {
-                var msgnew = "";
+        });
 
-                var request = $.ajax({
-                    url: '@Url.Action("Index", "ValidationMessage")',
-                    async: false,
-                    data: { strFormName: strname, strFormTag: strFormTag },
-                    type: 'Post'
-                });
-                request.done(function (msg) {
-                    msgnew += msg;
-                });
 
-                request.fail(function (jqXHR, textStatus) {
-                    msgnew += "Some Error occur!!";
-                });
-                return msgnew;
+        $("#btViewLess").click(function () {
+            debugger;
+            var Endlen = $("#hidTblvalue").val();
+            var startlen = Endlen - 5;
+            if (startlen > 5) {
+                $("#tbSaleTicket tr").slice(startlen, Endlen).hide();
+                $("#hidTblvalue").val(startlen);
             }
-            $(document).ready(function () {
-                 $.ajax({
-                        url: '@Url.Action("GetAllTicketSale", "ManageEvent")',
-                        beforeSend: function () { $('#dvAjxLoader').show(); },
-                        complete: function () { $('#dvAjxLoader').hide(); },
-                        data: { EventId: $("#hdEventid").val() },
-                        type: "Post",
-                        success: function (response) {
-                            $("#dvTktSale").append(response);
-                            var len = $("#tbSaleTicket tr").length;
-                            $("#tbSaleTicket tr").slice(6, len).hide();
-                            $("#hidTblvalue").val(6);
-                        }
-                    });
+            else {
+                $("#tbSaleTicket tr").slice(6, Endlen).hide();
+                $("#hidTblvalue").val(6);
+            }
 
-                $("#spEventUrl").click(function () {
-                    var vUrl = $("#spEventUrl").text();
-                    window.open(vUrl, "_blank");
-                });
+        });
 
-                $("#btViewMore").click(function () {
-                    debugger;
-                    var startlen = $("#hidTblvalue").val();
-                    var endlen = parseInt(startlen) + 5;
-                    var tblen = $("#tbSaleTicket tr").length
-                    $("#tbSaleTicket tr").slice(startlen, endlen).show();
-                    if (endlen <= tblen) {
-                        $("#hidTblvalue").val(endlen);
-                    }
-                    else {
-                        $("#hidTblvalue").val(tblen)
-                    }
+        $("#btCopyEvt").click(function () {
+            var vEventId = $("#hdEventid").val();
+            var vEventTitle = 'Copy of ' + '@Model.Eventtitle';
 
-                });
+            $.ajax({
+                url: '@Url.Action("SaveEvent", "ManageEvent")',
+                data: { Eventid: vEventId, strEventTitle: vEventTitle },
+                type: "Post",
+                success: function (response) {
+                    window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+                }
+            });
 
-
-                $("#btViewLess").click(function () {
-                    debugger;
-                    var Endlen = $("#hidTblvalue").val();
-                    var startlen = Endlen - 5;
-                    if (startlen > 5) {
-                        $("#tbSaleTicket tr").slice(startlen, Endlen).hide();
-                        $("#hidTblvalue").val(startlen);
-                    }
-                    else {
-                        $("#tbSaleTicket tr").slice(6, Endlen).hide();
-                        $("#hidTblvalue").val(6);
-                    }
-
-                });
-
-                $("#btCopyEvt").click(function () {
-                    var vEventId = $("#hdEventid").val();
-                    var vEventTitle = 'Copy of ' + '@Model.Eventtitle';
-
-                    $.ajax({
-                        url: '@Url.Action("SaveEvent", "ManageEvent")',
-                        data: { Eventid: vEventId, strEventTitle: vEventTitle },
-                        type: "Post",
-                        success: function (response) {
-                            window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
-                        }
-                    });
-
-                    @*$.ajax({
+            @*$.ajax({
                         url: '@Url.Action("SaveEvent", "ManageEvent")',
                         data: { Eventid: vEventId, strEventTitle: vEventTitle },
                         type: "Post",
@@ -808,121 +734,158 @@ else
                             window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
                         }
                     });*@
-                });
+        });
 
 
-                $("#dvTexturl").hide();
-                $("#dvLblurl").show();
-                $("#btEditUrl").click(function () {
-                    var text = $("#spEventUrl").html();
-                    if (text.indexOf("/") > 0)
-                    {
-                        var full=text.length;
-                       var start=text.lastIndexOf("/");
-                       text = text.substr(start+1, full - start);
+        $("#dvTexturl").hide();
+        $("#dvLblurl").show();
+        $("#btEditUrl").click(function () {
+            var text = $("#spEventUrl").html();
+            if (text.indexOf("/") > 0) {
+                var full = text.length;
+                var start = text.lastIndexOf("/");
+                text = text.substr(start + 1, full - start);
 
-                    }
-                    $("#txtEventURl").val(text);
-                    $("#dvTexturl").show();
-                    $("#dvLblurl").hide();
-                });
-                $("#btCancelUrl").click(function () {
-                    $("#dvTexturl").hide();
-                    $("#dvLblurl").show();
-                    $('#diverroacc').css('display', 'none');
-                });
-                $("#btSaveUrl").click(function () {
-                    var EventId = $("#hdEventid").val();
-                    var vEvUrl = $("#txtEventURl").val();
-                    if (vEvUrl == "")
-                    {
+            }
+            $("#txtEventURl").val(text);
+            $("#dvTexturl").show();
+            $("#dvLblurl").hide();
+        });
+        $("#btCancelUrl").click(function () {
+            $("#dvTexturl").hide();
+            $("#dvLblurl").show();
+            $('#diverroacc').css('display', 'none');
+        });
+        $("#btSaveUrl").click(function () {
+            var EventId = $("#hdEventid").val();
+            var vEvUrl = $("#txtEventURl").val();
+            if (vEvUrl == "") {
+                $('#diverroacc').css('display', 'block');
+                $('#diverroacc').focus();
+                var msg = ajaxsetup('ManageEvent', 'MEnterUrlUI');
+                $('#erraccmsg').html(msg);
+                return false;
+            } else {
+                $('#diverroacc').css('display', 'none');
+            }
+            var VPath = "";
+            var pathname = window.location.origin; // Returns path only
+            if (vEvUrl.indexOf("/") > 0) {
+                VPath = pathname + vEvUrl;
+            } else {
+                VPath = pathname + '/ev/' + vEvUrl;
+            }
+
+            $.ajax({
+                url: '@Url.Action("saveEventUrl", "ManageEvent")',
+                data: { strEventUrl: vEvUrl, lEventId: EventId },
+                type: "Post",
+                success: function (response) {
+                    if (response == "N") {
                         $('#diverroacc').css('display', 'block');
                         $('#diverroacc').focus();
-                        var msg = ajaxsetup('ManageEvent', 'MEnterUrlUI');
+                        var msg = ajaxsetup('CreateEvent', 'CreateEventurlexistUI');
                         $('#erraccmsg').html(msg);
-                        return false;
-                    } else
-                    {
-                        $('#diverroacc').css('display', 'none');
+                        $("#txtEventUrl").val('');
+                        $("#txtEventUrl").focus();
                     }
-                    var VPath = "";
-                    var pathname = window.location.origin; // Returns path only
-                    if (vEvUrl.indexOf("/") > 0) {
-                         VPath = pathname + vEvUrl;
-                    } else
-                    {
-                        VPath = pathname +'/ev/'+ vEvUrl;
+                    else {
+                        $("#spEventUrl").text(VPath);
+                        $("#dvTexturl").hide();
+                        $("#dvLblurl").show();
                     }
-
-                    $.ajax({
-                        url: '@Url.Action("saveEventUrl", "ManageEvent")',
-                        data: { strEventUrl: vEvUrl, lEventId: EventId },
-                        type: "Post",
-                        success: function (response) {
-                            if (response == "N") {
-                                $('#diverroacc').css('display', 'block');
-                                $('#diverroacc').focus();
-                                var msg = ajaxsetup('CreateEvent', 'CreateEventurlexistUI');
-                                $('#erraccmsg').html(msg);
-                                $("#txtEventUrl").val('');
-                                $("#txtEventUrl").focus();
-                            }
-                            else {
-                                $("#spEventUrl").text(VPath);
-                                $("#dvTexturl").hide();
-                                $("#dvLblurl").show();
-                            }
-                        }
-                    });
-                });
-
-
-
-                $('#txtEventURl').bind('cut copy paste', function (event) {
-                    event.preventDefault();
-                    return false;
-                });
-
-
-
-
-
-
-                if ($("#hidSaleQty").val() != "") {
-                    var vHitData = $("#hidSaleQty").val().split(",");
-                    var vLables = [];
-                    var vValues = [];
-                    for (i = 0; i < vHitData.length; i++) {
-                        vHit = vHitData[i].split("-");
-                        vLables.push(vHit[0]);
-                        vValues.push(vHit[1]);
-                    }
-                    var voption = {
-                        scaleShowGridLines: false
-                    };
-                    var data = {
-                        labels: vLables,
-                        datasets: [
-                            {
-                                label: "Ticket Sales",
-                                fillColor: "rgba(151,187,205,0.2)",
-                                strokeColor: "rgba(151,187,205,1)",
-                                pointColor: "rgba(151,187,205,1)",
-                                pointStrokeColor: "#fff",
-                                pointHighlightFill: "#fff",
-                                pointHighlightStroke: "rgba(151,187,205,1)",
-                                data: vValues
-                            }
-                        ]
-                    };
-                    Chart.defaults.global.responsive = true;
-                    Chart.defaults.global.showTooltips = false;
-                    var ctx = $("#cnSaleQty").get(0).getContext("2d");
-                    var myLineChart = new Chart(ctx).Line(data, voption);
-
                 }
-                if ($("#hidEventhit").val() != "") {
-                    var vHitData = $("#hidEventhit").val().split(",");
+            });
+        });
+
+
+
+        $('#txtEventURl').bind('cut copy paste', function (event) {
+            event.preventDefault();
+            return false;
+        });
+
+
+
+
+
+
+        if ($("#hidSaleQty").val() != "") {
+            var vHitData = $("#hidSaleQty").val().split(",");
+            var vLables = [];
+            var vValues = [];
+            for (i = 0; i < vHitData.length; i++) {
+                vHit = vHitData[i].split("-");
+                vLables.push(vHit[0]);
+                vValues.push(vHit[1]);
+            }
+            var voption = {
+                scaleShowGridLines: false
+            };
+            var data = {
+                labels: vLables,
+                datasets: [
+                    {
+                        label: "Ticket Sales",
+                        fillColor: "rgba(151,187,205,0.2)",
+                        strokeColor: "rgba(151,187,205,1)",
+                        pointColor: "rgba(151,187,205,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(151,187,205,1)",
+                        data: vValues
+                    }
+                ]
+            };
+            Chart.defaults.global.responsive = true;
+            Chart.defaults.global.showTooltips = false;
+            var ctx = $("#cnSaleQty").get(0).getContext("2d");
+            var myLineChart = new Chart(ctx).Line(data, voption);
+
+        }
+        if ($("#hidEventhit").val() != "") {
+            var vHitData = $("#hidEventhit").val().split(",");
+            var vLables = [];
+            var vValues = [];
+            for (i = 0; i < vHitData.length; i++) {
+                vHit = vHitData[i].split("-");
+                vLables.push(vHit[0]);
+                vValues.push(vHit[1]);
+            }
+            var voption = {
+                scaleShowGridLines: false
+            };
+            var data = {
+                labels: vLables,
+                datasets: [
+                    {
+                        label: "Event Hits",
+                        fillColor: "rgba(151,187,205,0.2)",
+                        strokeColor: "rgba(151,187,205,1)",
+                        pointColor: "rgba(151,187,205,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(151,187,205,1)",
+                        data: vValues
+                    }
+                ]
+            };
+            Chart.defaults.global.responsive = true;
+            Chart.defaults.global.showTooltips = false;
+            var ctx = $("#cnEventHit").get(0).getContext("2d");
+            var myLineChart = new Chart(ctx).Line(data, voption);
+        }
+
+
+
+        $("#btWeek").click(function () {
+            var EventId = $("#hdEventid").val();
+            $.ajax({
+                url: '@Url.Action("GetEventHitsChart", "ManageEvent")',
+                data: { strDurataion: "Week", lEventId: EventId },
+                type: "Post",
+                success: function (response) {
+                    var vHitData = response.split(",");
                     var vLables = [];
                     var vValues = [];
                     for (i = 0; i < vHitData.length; i++) {
@@ -953,541 +916,500 @@ else
                     var ctx = $("#cnEventHit").get(0).getContext("2d");
                     var myLineChart = new Chart(ctx).Line(data, voption);
                 }
+            });
+        });
 
 
 
-                $("#btWeek").click(function () {
-                    var EventId = $("#hdEventid").val();
-                    $.ajax({
-                        url: '@Url.Action("GetEventHitsChart", "ManageEvent")',
-                        data: { strDurataion: "Week", lEventId: EventId },
-                        type: "Post",
-                        success: function (response) {
-                        var vHitData = response.split(",");
-                        var vLables = [];
-                        var vValues = [];
-                        for (i = 0; i < vHitData.length; i++) {
-                            vHit = vHitData[i].split("-");
-                            vLables.push(vHit[0]);
-                            vValues.push(vHit[1]);
-                        }
-                        var voption = {
-                            scaleShowGridLines: false
-                        };
-                        var data = {
-                            labels: vLables,
-                            datasets: [
-                                {
-                                    label: "Event Hits",
-                                    fillColor: "rgba(151,187,205,0.2)",
-                                    strokeColor: "rgba(151,187,205,1)",
-                                    pointColor: "rgba(151,187,205,1)",
-                                    pointStrokeColor: "#fff",
-                                    pointHighlightFill: "#fff",
-                                    pointHighlightStroke: "rgba(151,187,205,1)",
-                                    data: vValues
-                                }
-                            ]
-                        };
-                        Chart.defaults.global.responsive = true;
-                        Chart.defaults.global.showTooltips = false;
-                        var ctx = $("#cnEventHit").get(0).getContext("2d");
-                        var myLineChart = new Chart(ctx).Line(data, voption);
-                        }
-                    });
-                });
-
-
-
-                $("#btMonth").click(function () {
-                    var EventId = $("#hdEventid").val();
-                    $.ajax({
-                        url: '@Url.Action("GetEventHitsChart", "ManageEvent")',
-                        data: { strDurataion: "Month", lEventId: EventId },
-                        type: "Post",
-                        success: function (response) {
-                            var vHitData = response.split(",");
-                            var vLables = [];
-                            var vValues = [];
-                            for (i = 0; i < vHitData.length; i++) {
-                                vHit = vHitData[i].split("-");
-                                vLables.push(vHit[0]);
-                                vValues.push(vHit[1]);
+        $("#btMonth").click(function () {
+            var EventId = $("#hdEventid").val();
+            $.ajax({
+                url: '@Url.Action("GetEventHitsChart", "ManageEvent")',
+                data: { strDurataion: "Month", lEventId: EventId },
+                type: "Post",
+                success: function (response) {
+                    var vHitData = response.split(",");
+                    var vLables = [];
+                    var vValues = [];
+                    for (i = 0; i < vHitData.length; i++) {
+                        vHit = vHitData[i].split("-");
+                        vLables.push(vHit[0]);
+                        vValues.push(vHit[1]);
+                    }
+                    var voption = {
+                        scaleShowGridLines: false
+                    };
+                    var data = {
+                        labels: vLables,
+                        datasets: [
+                            {
+                                label: "Event Hits",
+                                fillColor: "rgba(151,187,205,0.2)",
+                                strokeColor: "rgba(151,187,205,1)",
+                                pointColor: "rgba(151,187,205,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: vValues
                             }
-                            var voption = {
-                                scaleShowGridLines: false
-                            };
-                            var data = {
-                                labels: vLables,
-                                datasets: [
-                                    {
-                                        label: "Event Hits",
-                                        fillColor: "rgba(151,187,205,0.2)",
-                                        strokeColor: "rgba(151,187,205,1)",
-                                        pointColor: "rgba(151,187,205,1)",
-                                        pointStrokeColor: "#fff",
-                                        pointHighlightFill: "#fff",
-                                        pointHighlightStroke: "rgba(151,187,205,1)",
-                                        data: vValues
-                                    }
-                                ]
-                            };
-                            Chart.defaults.global.responsive = true;
-                            Chart.defaults.global.showTooltips = false;
-                            var ctx = $("#cnEventHit").get(0).getContext("2d");
-                            var myLineChart = new Chart(ctx).Line(data, voption);
-                        }
-                    });
-                });
+                        ]
+                    };
+                    Chart.defaults.global.responsive = true;
+                    Chart.defaults.global.showTooltips = false;
+                    var ctx = $("#cnEventHit").get(0).getContext("2d");
+                    var myLineChart = new Chart(ctx).Line(data, voption);
+                }
+            });
+        });
 
-                $("#btYear").click(function () {
-                    var EventId = $("#hdEventid").val();
-                    $.ajax({
-                        url: '@Url.Action("GetEventHitsChart", "ManageEvent")',
-                        data: { strDurataion: "Year", lEventId: EventId },
-                        type: "Post",
-                        success: function (response) {
-                            var vHitData = response.split(",");
-                            var vLables = [];
-                            var vValues = [];
-                            for (i = 0; i < vHitData.length; i++) {
-                                vHit = vHitData[i].split("-");
-                                vLables.push(vHit[0]);
-                                vValues.push(vHit[1]);
+        $("#btYear").click(function () {
+            var EventId = $("#hdEventid").val();
+            $.ajax({
+                url: '@Url.Action("GetEventHitsChart", "ManageEvent")',
+                data: { strDurataion: "Year", lEventId: EventId },
+                type: "Post",
+                success: function (response) {
+                    var vHitData = response.split(",");
+                    var vLables = [];
+                    var vValues = [];
+                    for (i = 0; i < vHitData.length; i++) {
+                        vHit = vHitData[i].split("-");
+                        vLables.push(vHit[0]);
+                        vValues.push(vHit[1]);
+                    }
+                    var voption = {
+                        scaleShowGridLines: false
+                    };
+                    var data = {
+                        labels: vLables,
+                        datasets: [
+                            {
+                                label: "Event Hits",
+                                fillColor: "rgba(151,187,205,0.2)",
+                                strokeColor: "rgba(151,187,205,1)",
+                                pointColor: "rgba(151,187,205,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: vValues
                             }
-                            var voption = {
-                                scaleShowGridLines: false
-                            };
-                            var data = {
-                                labels: vLables,
-                                datasets: [
-                                    {
-                                        label: "Event Hits",
-                                        fillColor: "rgba(151,187,205,0.2)",
-                                        strokeColor: "rgba(151,187,205,1)",
-                                        pointColor: "rgba(151,187,205,1)",
-                                        pointStrokeColor: "#fff",
-                                        pointHighlightFill: "#fff",
-                                        pointHighlightStroke: "rgba(151,187,205,1)",
-                                        data: vValues
-                                    }
-                                ]
-                            };
-                            Chart.defaults.global.responsive = true;
-                            Chart.defaults.global.showTooltips = false;
-                            var ctx = $("#cnEventHit").get(0).getContext("2d");
-                            var myLineChart = new Chart(ctx).Line(data, voption);
-                        }
-                    });
-                });
+                        ]
+                    };
+                    Chart.defaults.global.responsive = true;
+                    Chart.defaults.global.showTooltips = false;
+                    var ctx = $("#cnEventHit").get(0).getContext("2d");
+                    var myLineChart = new Chart(ctx).Line(data, voption);
+                }
+            });
+        });
 
-                $("#btDay").click(function () {
-                    var EventId = $("#hdEventid").val();
+        $("#btDay").click(function () {
+            var EventId = $("#hdEventid").val();
 
-                    $.ajax({
-                        url: '@Url.Action("GetEventHitsChart", "ManageEvent")',
-                        data: { strDurataion: "Day", lEventId: EventId },
-                        type: "Post",
-                        success: function (response) {
-                            var vHitData = response.split(",");
-                            var vLables = [];
-                            var vValues = [];
-                            for (i = 0; i < vHitData.length; i++) {
-                                vHit = vHitData[i].split("-");
-                                vLables.push(vHit[0]);
-                                vValues.push(vHit[1]);
+            $.ajax({
+                url: '@Url.Action("GetEventHitsChart", "ManageEvent")',
+                data: { strDurataion: "Day", lEventId: EventId },
+                type: "Post",
+                success: function (response) {
+                    var vHitData = response.split(",");
+                    var vLables = [];
+                    var vValues = [];
+                    for (i = 0; i < vHitData.length; i++) {
+                        vHit = vHitData[i].split("-");
+                        vLables.push(vHit[0]);
+                        vValues.push(vHit[1]);
+                    }
+                    var voption = {
+                        scaleShowGridLines: false
+                    };
+                    var data = {
+                        labels: vLables,
+                        datasets: [
+                            {
+                                label: "Event Hits",
+                                fillColor: "rgba(151,187,205,0.2)",
+                                strokeColor: "rgba(151,187,205,1)",
+                                pointColor: "rgba(151,187,205,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: vValues
                             }
-                            var voption = {
-                                scaleShowGridLines: false
-                            };
-                            var data = {
-                                labels: vLables,
-                                datasets: [
-                                    {
-                                        label: "Event Hits",
-                                        fillColor: "rgba(151,187,205,0.2)",
-                                        strokeColor: "rgba(151,187,205,1)",
-                                        pointColor: "rgba(151,187,205,1)",
-                                        pointStrokeColor: "#fff",
-                                        pointHighlightFill: "#fff",
-                                        pointHighlightStroke: "rgba(151,187,205,1)",
-                                        data: vValues
-                                    }
-                                ]
-                            };
-                            Chart.defaults.global.responsive = true;
-                            Chart.defaults.global.showTooltips = false;
-                            var ctx = $("#cnEventHit").get(0).getContext("2d");
-                            var myLineChart = new Chart(ctx).Line(data, voption);
-                        }
-                    });
-                });
+                        ]
+                    };
+                    Chart.defaults.global.responsive = true;
+                    Chart.defaults.global.showTooltips = false;
+                    var ctx = $("#cnEventHit").get(0).getContext("2d");
+                    var myLineChart = new Chart(ctx).Line(data, voption);
+                }
+            });
+        });
 
 
 
 
-                $("#btWeekSale").click(function () {
-                    var EventId = $("#hdEventid").val();
-                    $.ajax({
-                        url: '@Url.Action("GetEventSaleChart", "ManageEvent")',
-                        data: { strDurataion: "Week", lEventId: EventId },
-                        type: "Post",
-                        success: function (response) {
-                            var vHitData = response.split(",");
-                            var vLables = [];
-                            var vValues = [];
-                            for (i = 0; i < vHitData.length; i++) {
-                                vHit = vHitData[i].split("-");
-                                vLables.push(vHit[0]);
-                                vValues.push(vHit[1]);
+        $("#btWeekSale").click(function () {
+            var EventId = $("#hdEventid").val();
+            $.ajax({
+                url: '@Url.Action("GetEventSaleChart", "ManageEvent")',
+                data: { strDurataion: "Week", lEventId: EventId },
+                type: "Post",
+                success: function (response) {
+                    var vHitData = response.split(",");
+                    var vLables = [];
+                    var vValues = [];
+                    for (i = 0; i < vHitData.length; i++) {
+                        vHit = vHitData[i].split("-");
+                        vLables.push(vHit[0]);
+                        vValues.push(vHit[1]);
+                    }
+                    var voption = {
+                        scaleShowGridLines: false
+                    };
+                    var data = {
+                        labels: vLables,
+                        datasets: [
+                            {
+                                label: "Event Hits",
+                                fillColor: "rgba(151,187,205,0.2)",
+                                strokeColor: "rgba(151,187,205,1)",
+                                pointColor: "rgba(151,187,205,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: vValues
                             }
-                            var voption = {
-                                scaleShowGridLines: false
-                            };
-                            var data = {
-                                labels: vLables,
-                                datasets: [
-                                    {
-                                        label: "Event Hits",
-                                        fillColor: "rgba(151,187,205,0.2)",
-                                        strokeColor: "rgba(151,187,205,1)",
-                                        pointColor: "rgba(151,187,205,1)",
-                                        pointStrokeColor: "#fff",
-                                        pointHighlightFill: "#fff",
-                                        pointHighlightStroke: "rgba(151,187,205,1)",
-                                        data: vValues
-                                    }
-                                ]
-                            };
-                            Chart.defaults.global.responsive = true;
-                            Chart.defaults.global.showTooltips = false;
-                            var ctx = $("#cnSaleQty").get(0).getContext("2d");
-                            var myLineChart = new Chart(ctx).Line(data, voption);
-                        }
-                    });
-                });
+                        ]
+                    };
+                    Chart.defaults.global.responsive = true;
+                    Chart.defaults.global.showTooltips = false;
+                    var ctx = $("#cnSaleQty").get(0).getContext("2d");
+                    var myLineChart = new Chart(ctx).Line(data, voption);
+                }
+            });
+        });
 
 
 
-                $("#btMonthSale").click(function () {
-                    var EventId = $("#hdEventid").val();
-                    $.ajax({
-                        url: '@Url.Action("GetEventSaleChart", "ManageEvent")',
-                        data: { strDurataion: "Month", lEventId: EventId },
-                        type: "Post",
-                        success: function (response) {
-                            var vHitData = response.split(",");
-                            var vLables = [];
-                            var vValues = [];
-                            for (i = 0; i < vHitData.length; i++) {
-                                vHit = vHitData[i].split("-");
-                                vLables.push(vHit[0]);
-                                vValues.push(vHit[1]);
+        $("#btMonthSale").click(function () {
+            var EventId = $("#hdEventid").val();
+            $.ajax({
+                url: '@Url.Action("GetEventSaleChart", "ManageEvent")',
+                data: { strDurataion: "Month", lEventId: EventId },
+                type: "Post",
+                success: function (response) {
+                    var vHitData = response.split(",");
+                    var vLables = [];
+                    var vValues = [];
+                    for (i = 0; i < vHitData.length; i++) {
+                        vHit = vHitData[i].split("-");
+                        vLables.push(vHit[0]);
+                        vValues.push(vHit[1]);
+                    }
+                    var voption = {
+                        scaleShowGridLines: false
+                    };
+                    var data = {
+                        labels: vLables,
+                        datasets: [
+                            {
+                                label: "Event Hits",
+                                fillColor: "rgba(151,187,205,0.2)",
+                                strokeColor: "rgba(151,187,205,1)",
+                                pointColor: "rgba(151,187,205,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: vValues
                             }
-                            var voption = {
-                                scaleShowGridLines: false
-                            };
-                            var data = {
-                                labels: vLables,
-                                datasets: [
-                                    {
-                                        label: "Event Hits",
-                                        fillColor: "rgba(151,187,205,0.2)",
-                                        strokeColor: "rgba(151,187,205,1)",
-                                        pointColor: "rgba(151,187,205,1)",
-                                        pointStrokeColor: "#fff",
-                                        pointHighlightFill: "#fff",
-                                        pointHighlightStroke: "rgba(151,187,205,1)",
-                                        data: vValues
-                                    }
-                                ]
-                            };
-                            Chart.defaults.global.responsive = true;
-                            Chart.defaults.global.showTooltips = false;
-                            var ctx = $("#cnSaleQty").get(0).getContext("2d");
-                            var myLineChart = new Chart(ctx).Line(data, voption);
-                        }
-                    });
-                });
+                        ]
+                    };
+                    Chart.defaults.global.responsive = true;
+                    Chart.defaults.global.showTooltips = false;
+                    var ctx = $("#cnSaleQty").get(0).getContext("2d");
+                    var myLineChart = new Chart(ctx).Line(data, voption);
+                }
+            });
+        });
 
-                $("#btYearSale").click(function () {
-                    var EventId = $("#hdEventid").val();
-                    $.ajax({
-                        url: '@Url.Action("GetEventSaleChart", "ManageEvent")',
-                        data: { strDurataion: "Year", lEventId: EventId },
-                        type: "Post",
-                        success: function (response) {
-                            var vHitData = response.split(",");
-                            var vLables = [];
-                            var vValues = [];
-                            for (i = 0; i < vHitData.length; i++) {
-                                vHit = vHitData[i].split("-");
-                                vLables.push(vHit[0]);
-                                vValues.push(vHit[1]);
+        $("#btYearSale").click(function () {
+            var EventId = $("#hdEventid").val();
+            $.ajax({
+                url: '@Url.Action("GetEventSaleChart", "ManageEvent")',
+                data: { strDurataion: "Year", lEventId: EventId },
+                type: "Post",
+                success: function (response) {
+                    var vHitData = response.split(",");
+                    var vLables = [];
+                    var vValues = [];
+                    for (i = 0; i < vHitData.length; i++) {
+                        vHit = vHitData[i].split("-");
+                        vLables.push(vHit[0]);
+                        vValues.push(vHit[1]);
+                    }
+                    var voption = {
+                        scaleShowGridLines: false
+                    };
+                    var data = {
+                        labels: vLables,
+                        datasets: [
+                            {
+                                label: "Event Hits",
+                                fillColor: "rgba(151,187,205,0.2)",
+                                strokeColor: "rgba(151,187,205,1)",
+                                pointColor: "rgba(151,187,205,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: vValues
                             }
-                            var voption = {
-                                scaleShowGridLines: false
-                            };
-                            var data = {
-                                labels: vLables,
-                                datasets: [
-                                    {
-                                        label: "Event Hits",
-                                        fillColor: "rgba(151,187,205,0.2)",
-                                        strokeColor: "rgba(151,187,205,1)",
-                                        pointColor: "rgba(151,187,205,1)",
-                                        pointStrokeColor: "#fff",
-                                        pointHighlightFill: "#fff",
-                                        pointHighlightStroke: "rgba(151,187,205,1)",
-                                        data: vValues
-                                    }
-                                ]
-                            };
-                            Chart.defaults.global.responsive = true;
-                            Chart.defaults.global.showTooltips = false;
-                            var ctx = $("#cnSaleQty").get(0).getContext("2d");
-                            var myLineChart = new Chart(ctx).Line(data, voption);
-                        }
-                    });
-                });
+                        ]
+                    };
+                    Chart.defaults.global.responsive = true;
+                    Chart.defaults.global.showTooltips = false;
+                    var ctx = $("#cnSaleQty").get(0).getContext("2d");
+                    var myLineChart = new Chart(ctx).Line(data, voption);
+                }
+            });
+        });
 
-                $("#btDaySale").click(function () {
-                    var EventId = $("#hdEventid").val();
-                    debugger;
-                 //   alert(EventId);
-                    $.ajax({
-                        url: '@Url.Action("GetEventSaleChart", "ManageEvent")',
-                        data: { strDurataion: "Day", lEventId: EventId },
-                        type: "Post",
-                        success: function (response) {
-                            var vHitData = response.split(",");
-                            var vLables = [];
-                            var vValues = [];
-                            for (i = 0; i < vHitData.length; i++) {
-                                vHit = vHitData[i].split("-");
-                                vLables.push(vHit[0]);
-                                vValues.push(vHit[1]);
+        $("#btDaySale").click(function () {
+            var EventId = $("#hdEventid").val();
+            debugger;
+            //   alert(EventId);
+            $.ajax({
+                url: '@Url.Action("GetEventSaleChart", "ManageEvent")',
+                data: { strDurataion: "Day", lEventId: EventId },
+                type: "Post",
+                success: function (response) {
+                    var vHitData = response.split(",");
+                    var vLables = [];
+                    var vValues = [];
+                    for (i = 0; i < vHitData.length; i++) {
+                        vHit = vHitData[i].split("-");
+                        vLables.push(vHit[0]);
+                        vValues.push(vHit[1]);
+                    }
+                    var voption = {
+                        scaleShowGridLines: false
+                    };
+                    var data = {
+                        labels: vLables,
+                        datasets: [
+                            {
+                                label: "Event Hits",
+                                fillColor: "rgba(151,187,205,0.2)",
+                                strokeColor: "rgba(151,187,205,1)",
+                                pointColor: "rgba(151,187,205,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: vValues
                             }
-                            var voption = {
-                                scaleShowGridLines: false
-                            };
-                            var data = {
-                                labels: vLables,
-                                datasets: [
-                                    {
-                                        label: "Event Hits",
-                                        fillColor: "rgba(151,187,205,0.2)",
-                                        strokeColor: "rgba(151,187,205,1)",
-                                        pointColor: "rgba(151,187,205,1)",
-                                        pointStrokeColor: "#fff",
-                                        pointHighlightFill: "#fff",
-                                        pointHighlightStroke: "rgba(151,187,205,1)",
-                                        data: vValues
-                                    }
-                                ]
-                            };
-                            Chart.defaults.global.responsive = true;
-                            Chart.defaults.global.showTooltips = false;
-                            var ctx = $("#cnSaleQty").get(0).getContext("2d");
-                            var myLineChart = new Chart(ctx).Line(data, voption);
-                        }
-                    });
-                });
+                        ]
+                    };
+                    Chart.defaults.global.responsive = true;
+                    Chart.defaults.global.showTooltips = false;
+                    var ctx = $("#cnSaleQty").get(0).getContext("2d");
+                    var myLineChart = new Chart(ctx).Line(data, voption);
+                }
+            });
+        });
 
 
-                $("#btndivaccsuce").click(function () {
+        $("#btndivaccsuce").click(function () {
 
-                    $('#divaccsuc').css('display', 'none');
-                    $('#diverroacc').css('display', 'none');
-                });
-
-
-                $("#btndivaccsuc").click(function () {
-                    debugger;
-
-                    $('#divaccsuc').css('display', 'none');
-                    $('#diverroacc').css('display', 'none');
+            $('#divaccsuc').css('display', 'none');
+            $('#diverroacc').css('display', 'none');
+        });
 
 
-                });
-                $("#aDelete").click(function () {
-                    var msg = ajaxsetup('ManageEvent', 'MEDeleteEvent');
+        $("#btndivaccsuc").click(function () {
+            debugger;
 
-                    $("#hdmsg").html(msg);
-                    $("#btnyes").hide();
-                    $("#btnyesdelete").show();
-                    $("#btnyescancel").hide();
-                    $("#aclick").click();
-
-                });
-                $("#aUnpublish").click(function () {
-                    var msg = ajaxsetup('ManageEvent', 'MEunPublish');
-                    $("#hdmsg").html(msg);
-                    $("#btnyes").show();
-                    $("#btnyesdelete").hide();
-                    $("#btnyescancel").hide();
-                    $("#aclick").click();
-
-                });
-                $("#aPublish").click(function () {
-                    var EventId = $("#hdEventid").val();
-                    $.ajax({
-                        url: '@Url.Action("PublishUnpublishEvent", "ManageEvent")',
-                        data: { Tag: "P", id: EventId },
-                        type: "Post",
-                        success: function (response) {
-
-                            if (response == "Y") {
-                                window.location.href = '@Url.Action("Index", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(@Model.Eventid), type = "P"})';
-
-                            } else {
-
-                            }
-                        }
-                    });
-
-                });
-                $("#btnyesdelete").click(function () {
-                    var EventId = $("#hdEventid").val();
-                    $.ajax({
-                        url: '@Url.Action("DeleteEvent", "ManageEvent")',
-                        data: { eventid: EventId },
-                        type: "Post",
-                        success: function (response) {
-
-                            if (response == "Y") {
-                                window.location.href = '@Url.Action("EventList", "EventList")';
-
-                            }
-
-                        }
-                    });
-
-                });
+            $('#divaccsuc').css('display', 'none');
+            $('#diverroacc').css('display', 'none');
 
 
-                $("#btnyes").click(function () {
-                    var EventId = $("#hdEventid").val();
-                    $.ajax({
-                        url: '@Url.Action("PublishUnpublishEvent", "ManageEvent")',
-                        data: { Tag: "U", id: EventId },
-                        type: "Post",
-                        success: function (response) {
+        });
+        $("#aDelete").click(function () {
+            var msg = ajaxsetup('ManageEvent', 'MEDeleteEvent');
 
-                            if (response == "Y") {
-                                window.location.href = '@Url.Action("Index", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(@Model.Eventid), type = "U" })';
+            $("#hdmsg").html(msg);
+            $("#btnyes").hide();
+            $("#btnyesdelete").show();
+            $("#btnyescancel").hide();
+            $("#aclick").click();
 
-                            }
-                            if (response == "T") {
-                                $("#aTransaction").click();
-                            }
-                        }
-                    });
+        });
+        $("#aUnpublish").click(function () {
+            var msg = ajaxsetup('ManageEvent', 'MEunPublish');
+            $("#hdmsg").html(msg);
+            $("#btnyes").show();
+            $("#btnyesdelete").hide();
+            $("#btnyescancel").hide();
+            $("#aclick").click();
 
-                });
+        });
+        $("#aPublish").click(function () {
+            var EventId = $("#hdEventid").val();
+            $.ajax({
+                url: '@Url.Action("PublishUnpublishEvent", "ManageEvent")',
+                data: { Tag: "P", id: EventId },
+                type: "Post",
+                success: function (response) {
 
+                    if (response == "Y") {
+                        window.location.href = '@Url.Action("Index", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(@Model.Eventid), type = "P"})';
 
-                $("#btnyescancel").click(function () {
+                    } else {
 
-                    var EventId = $("#hdEventid").val();
-                    $.ajax({
-                        url: '@Url.Action("CancelEvent", "ManageEvent")',
-                        data: { eventid: EventId },
-                        type: "Post",
-                        success: function (response) {
-
-                          if (response == "Y") {
-                                window.location.href = '@Url.Action("EventList", "EventList")';
-
-                            }
-                        }
-                    });
-
-                });
-
-
-
-                $("#cbtnprivew").click(function () {
-
-                    var title = "@Html.Raw(Model.Eventtitle).ToString()";
-                    title = title.replace(" ", "-");
-                    var vUrl = title + "౼" + @Model.Eventid.ToString() + "౼Y";
-
-                    window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");
-
-
-
-                });
-
-                $("#cbtview").click(function () {
-
-
-                    window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.Eventtitle.Replace(" ","-") , strEventId = Model.Eventid.ToString()})';
-
-                });
-                $(".aPubPrivate").click(function () {
-                    var EventId = $("#hdEventid").val();
-                    $.ajax({
-                        url: '@Url.Action("SetScrollTemp", "ManageEvent")',
-                        type: "Post",
-                        success: function (response) {
-
-                            window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + EventId;
-
-                        }
-                    });
-
-                });
-
-                $("#aCancel").click(function () {
-                    var msg = ajaxsetup('ManageEvent', 'MECancel');
-                    $("#hdmsg").html(msg);
-                    $("#btnyes").hide();
-                    $("#btnyesdelete").hide();
-                    $("#btnyescancel").show();
-                    $("#aclick").click();
-
-                });
-
-
+                    }
+                }
             });
 
-               $('#fbshare').click(function () {
+        });
+        $("#btnyesdelete").click(function () {
+            var EventId = $("#hdEventid").val();
+            $.ajax({
+                url: '@Url.Action("DeleteEvent", "ManageEvent")',
+                data: { eventid: EventId },
+                type: "Post",
+                success: function (response) {
 
-            var url = '@Html.DisplayFor(m => m.url)';
+                    if (response == "Y") {
+                        window.location.href = '@Url.Action("EventList", "EventList")';
+
+                    }
+
+                }
+            });
+
+        });
 
 
+        $("#btnyes").click(function () {
+            var EventId = $("#hdEventid").val();
+            $.ajax({
+                url: '@Url.Action("PublishUnpublishEvent", "ManageEvent")',
+                data: { Tag: "U", id: EventId },
+                type: "Post",
+                success: function (response) {
+
+                    if (response == "Y") {
+                        window.location.href = '@Url.Action("Index", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(@Model.Eventid), type = "U" })';
+
+                    }
+                    if (response == "T") {
+                        $("#aTransaction").click();
+                    }
+                }
+            });
+
+        });
 
 
-           var title = '@Html.DisplayFor(m => m.Eventtitle)';
+        $("#btnyescancel").click(function () {
 
-         window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title.trim()) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-           return false;
+            var EventId = $("#hdEventid").val();
+            $.ajax({
+                url: '@Url.Action("CancelEvent", "ManageEvent")',
+                data: { eventid: EventId },
+                type: "Post",
+                success: function (response) {
 
+                    if (response == "Y") {
+                        window.location.href = '@Url.Action("EventList", "EventList")';
+
+                    }
+                }
+            });
 
         });
 
 
 
+        $("#cbtnprivew").click(function () {
 
-        $('#twittershare').click(function () {
+            var title = "@Html.Raw(Model.Eventtitle).ToString()";
+            title = title.replace(" ", "-");
+            var vUrl = title + "౼" + @Model.Eventid.ToString() + "౼Y";
 
-            var title = '@Html.DisplayFor(m => m.Eventtitle)';
+            window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");
 
-            var url = '@Html.DisplayFor(m => m.url)';
-            window.open('https://twitter.com/home?status=I am attending' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
+
 
         });
 
-        $('#linkshare').click(function () {
+        $("#cbtview").click(function () {
 
-            var title = '@Html.DisplayFor(m => m.Eventtitle)';
 
-            var url = '@Html.DisplayFor(m => m.url)';
-            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(url) + '&title=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
+            window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.Eventtitle.Replace(" ","-") , strEventId = Model.Eventid.ToString()})';
+
+        });
+        $(".aPubPrivate").click(function () {
+            var EventId = $("#hdEventid").val();
+            $.ajax({
+                url: '@Url.Action("SetScrollTemp", "ManageEvent")',
+                type: "Post",
+                success: function (response) {
+
+                    window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + EventId;
+
+                }
+            });
+
         });
 
-            $(document).prop('title', 'Manage @Model.Eventtitle | Eventcombo');
-        </script>
+        $("#aCancel").click(function () {
+            var msg = ajaxsetup('ManageEvent', 'MECancel');
+            $("#hdmsg").html(msg);
+            $("#btnyes").hide();
+            $("#btnyesdelete").hide();
+            $("#btnyescancel").show();
+            $("#aclick").click();
+
+        });
+
+
+    });
+
+    $('#fbshare').click(function () {
+
+        var url = '@Html.DisplayFor(m => m.url)';
+
+
+
+
+        var title = '@Html.DisplayFor(m => m.Eventtitle)';
+
+        window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title.trim()) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+        return false;
+
+
+    });
+
+
+
+
+    $('#twittershare').click(function () {
+
+        var title = '@Html.DisplayFor(m => m.Eventtitle)';
+
+        var url = '@Html.DisplayFor(m => m.url)';
+        window.open('https://twitter.com/home?status=I am attending' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+        return false;
+
+    });
+
+    $('#linkshare').click(function () {
+
+        var title = '@Html.DisplayFor(m => m.Eventtitle)';
+
+        var url = '@Html.DisplayFor(m => m.url)';
+        window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(url) + '&title=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+        return false;
+    });
+
+    $(document).prop('title', 'Manage @Model.Eventtitle | Eventcombo');
+</script>

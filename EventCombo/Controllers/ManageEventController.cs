@@ -2394,7 +2394,19 @@ namespace EventCombo.Controllers
             
         }
 
+        public PartialViewResult Sidenav(long eventid)
+        {
 
+            Sidenav ss = new ViewModels.Sidenav();
+            CreateEventController cms = new CreateEventController();
+            cms.ControllerContext = new ControllerContext(this.Request.RequestContext, cms);
+            var Eventdetails = cms.GetEventdetail(eventid);
+            var Discountcode = (from x in db.Promo_Code where x.PC_Eventid == eventid select x).Count();
+            ss.Eventtitle = Eventdetails.EventTitle;
+            ss.EventId = eventid;
+            ss.DiscountCode = Discountcode;
+            return PartialView("SideNavPartialView", ss);
+        }
 
     }
     #endregion
