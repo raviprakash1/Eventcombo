@@ -2651,7 +2651,7 @@
                             {
                                 var eventid = response;
                                 if ($("#chkGuestonly").is(":checked") && $("#rdPrivate").is(":checked")) {
-                                    window.location.href = '@Url.Action("CreateInvitations", "ManageEvent", new {  })?lId=0&lEvtId='+response+'&strMode="E"';
+                                    window.location.href = '@Url.Action("CreateInvitations", "ManageEvent", new {  })?lId=0&lEvtId='+response+'&strMode=E';
                                 } else {
                                     window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' + response + '';
                                 }

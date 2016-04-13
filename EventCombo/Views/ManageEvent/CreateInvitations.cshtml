@@ -939,9 +939,9 @@
                 success: function (response) {
                     $("#hdId").val(response);
                     var vUrl = "";
-                    if ($("#hdEventIMode").val() == "E")
+                    if ($("#hdEventIMode").val().trim() == "E")
                     {
-                        vUrl = '@Url.Action("EventConfirmation", "EventConfirmation",new { eventId = "eveid"});
+                        vUrl = '@Url.Action("EventConfirmation", "EventConfirmation",new { eventId = "eveid"})';
                     }
                     else
                     {
