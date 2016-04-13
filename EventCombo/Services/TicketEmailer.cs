@@ -18,7 +18,7 @@ namespace EventCombo.Services
                 DbRawSqlQuery<TicketEmailTemplate> template = null;
                 string query = "SELECT I_SenderName as SenderName, I_SubjectLine as Subject, I_EmailContent as EmailBody, I_ScheduleDate as ScheduledDate, " +
                                 "L_EmailId as EmailId FROM Event_Email_Invitation i inner join Event_Email_List l on i.I_Id = l.L_I_Id " +
-                                "where I_ScheduleDate between getutcdate() and DATEADD(MINUTE, 1, getutcdate()) and I_mode = 'S'";
+                                "where I_ScheduleDate between getutcdate() and DATEADD(MINUTE, 10, getutcdate()) and I_mode = 'S'";
 
                 template = db.Database.SqlQuery<TicketEmailTemplate>(query);
                 foreach (var item in template)
