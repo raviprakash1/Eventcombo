@@ -5,6 +5,12 @@
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
+@section sidenav{
+    <div id="sidebar" class="nav nav-stacked">
+
+    </div>
+}
+
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/DateTimePicker.css" rel="stylesheet" />
 <div class="pt10 bggrey clearfix">
@@ -605,6 +611,8 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script>
     $(document).ready(function () {
+        $('#sidebar').load('@Url.Action("Sidenav", "ManageEvent", new { eventid= TempData["Eventid"] })');
+
         $("#txtSenderName").on("input", function () {
             var regexp = /[^a-zA-Z]/g;
             if ($(this).val().match(regexp)) {

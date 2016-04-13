@@ -3,6 +3,14 @@
 @{
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
+@section sidenav{
+    <div id="sidebar" class="nav nav-stacked">
+
+    </div>
+}
+
+
+
 
 
 
@@ -278,6 +286,7 @@
     }
 
     $(document).ready(function () {
+        $('#sidebar').load('@Url.Action("Sidenav", "ManageEvent", new { eventid= ViewBag.EventId })');
         $("#btnYes").click(function () {
             $.ajax({
                 url: '@Url.Action("DeleteInvitation", "ManageEvent")',

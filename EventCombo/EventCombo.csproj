@@ -478,6 +478,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\Email.cs" />
     <Compile Include="ViewModels\EmailInvitation.cs" />
+    <Compile Include="ViewModels\Sidenav.cs" />
     <Compile Include="Views\Account\MyAccount.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1217,6 +1218,7 @@
     <Content Include="Views\Home\HomeEventList.cshtml" />
     <Content Include="Views\ManageEvent\EmailInvitations.cshtml" />
     <Content Include="Views\ManageEvent\CreateInvitations.cshtml" />
+    <Content Include="Views\ManageEvent\SidenavPartialView.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
