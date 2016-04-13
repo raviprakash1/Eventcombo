@@ -614,8 +614,24 @@ namespace EventCombo.Controllers
             return View();
         }
 
+        public string DeleteInvitation(long lId)
+        {
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    objEnt.Event_Email_List.RemoveRange(objEnt.Event_Email_List.Where(x => x.L_I_Id == lId));
+                    objEnt.Event_Email_Invitation.Remove(objEnt.Event_Email_Invitation.Where(x => x.I_Id == lId).FirstOrDefault());
+                    objEnt.SaveChanges();
+                    return "D";
 
-
+                }
+            }
+            catch (Exception ex)
+            {
+                return "E";
+            }
+        }
         public string GetAllTicketSale(long EventId)
         {
             StringBuilder strResult = new StringBuilder();
@@ -2223,7 +2239,7 @@ namespace EventCombo.Controllers
             string strDateTime = "";
             string strviewEvent = "";
             string strOrgnizerUrl = "";
-            Session["logo"] = "Invitation";
+            Session["logo"] = "events";
             Session["Fromname"] = "Invitation";
             string strOrderText = "Attend";
             using (EventComboEntities objEnt = new EventComboEntities())
@@ -2451,6 +2467,55 @@ namespace EventCombo.Controllers
                 return lResult;
             }
             
+        }
+
+        public string CopyInvitation(long l_Id)
+        {
+            try
+            {
+                string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                        Event_Email_Invitation objEInt = new Event_Email_Invitation();
+                        var Model = (from Int in objEnt.Event_Email_Invitation where Int.I_Id == l_Id select Int).FirstOrDefault();
+                    if (Model != null)
+                    {
+                        objEInt.I_SenderName = Model.I_SenderName;
+                        objEInt.I_SubjectLine = Model.I_SubjectLine;
+                        objEInt.I_Event_Id = Model.I_Event_Id;
+                        objEInt.I_EmailContent = Model.I_EmailContent;
+                        if (Model.I_ScheduleDate != null)
+                            objEInt.I_ScheduleDate = DateTime.SpecifyKind(Convert.ToDateTime(Model.I_ScheduleDate), DateTimeKind.Utc);
+                        else
+                            objEInt.I_ScheduleDate = Model.I_ScheduleDate;
+
+                        objEInt.I_EditableContent = Model.I_EditableContent;
+                        objEInt.I_Mode = Model.I_Mode;
+                        objEInt.I_CreateDate = DateTime.Now;
+                        if (Model.EmailList != null)
+                        {
+                            Event_Email_List objEList = new Event_Email_List();
+                            var vEmailList = (from Int in objEnt.Event_Email_List where Int.L_I_Id == l_Id select Int).ToList();
+                            foreach (Event_Email_List objEv in vEmailList)
+                            {
+                                objEList = new Event_Email_List();
+                                objEList.L_I_Id = objEInt.I_Id;
+                                objEList.L_EmailId = objEv.L_EmailId;
+                                objEnt.Event_Email_List.Add(objEList);
+                            }
+                        }
+                        objEnt.Event_Email_Invitation.Add(objEInt);
+                        objEnt.SaveChanges();
+                       return "Y";
+                    }
+                }
+                return "Y";
+            }
+            catch (Exception ex)
+            {
+                return "E";
+            }
+
         }
 
         public PartialViewResult Sidenav(long eventid)

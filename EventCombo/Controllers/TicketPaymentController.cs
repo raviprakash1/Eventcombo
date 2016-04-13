@@ -1546,8 +1546,11 @@ namespace EventCombo.Controllers
                     Session["TicketDatamodel"] = null;
                     string body = "";
                     string to = "", from = "", cc = "", bcc = "", subjectn = "";
-                   
 
+                    var currenturl = Url.Action("PaymentConfirmation", "TicketPayment");
+                    //Session["ReturnUrl"] = "TicketPayment~" + url;
+                    //var url = Url.RouteUrl("Payment");
+                    Session["ReturnUrl"] = "PaymentConfirmation~" + currenturl;
                     var Emailtemplate = hmc.getEmail("eticket");
                     List<paymentdate> Dateofevent = new List<paymentdate>();
                    
