@@ -217,22 +217,8 @@
 <script>
     $(document).ready(function () {
         $('#sidebar').load('@Url.Action("Sidenav", "ManageEvent", new { eventid=Model.Eventid })');
+       
         $('#crt_promcode').click();
-        $('#dvcrtpromcode').addClass("active");
-        $('#dvcrtpromcode b').addClass('opened new-opend');
-
-        $('#dvcrtpromcode').click(function (e) {
-
-            var $dvEle = $('#dvcrtpromcode b');
-            var vclassname = $dvEle.attr('class');
-            if ($dvEle.hasClass("new-opend")) {
-                $dvEle.removeClass('opened new-opend').addClass('closed');
-            }
-            else {
-                $dvEle.addClass('opened new-opend');
-            }
-        });
-
 
         var vPageIndex = $("#hdPageIndex").val();
         $("#aPageLink-" + vPageIndex).addClass("active");

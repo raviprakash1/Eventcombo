@@ -1883,18 +1883,21 @@ else
         var totqty = $('#hidQty').val();
         if (vOrderTotal > 0) {
             $('.divvisible').show();
-            if (totqty <= 0) {
-                $('.divqtyvisible').hide();
-            } else {
-                $('.divqtyvisible').show();
-            }
+           
             //$('#cardshow').css('display', 'block');
         }
         else {
             $('.divvisible').hide();
-            $('.divqtyvisible').hide();
+            //$('.divqtyvisible').hide();
             //$('#cardshow').css('display', 'none');
         }
+        //alert(totqty);
+        if (totqty <= 0) {
+            $('.divqtyvisible').hide();
+        } else {
+            $('.divqtyvisible').show();
+        }
+
     }
 
 
@@ -2251,16 +2254,22 @@ else
 
     }
     function NullSession(e) {
+       
         $("#hdIsPostBack").val("Y");
+
         $.ajax({
             url: '@Url.Action("Nullsession", "TicketPayment")',
-            type: "Get",
-            success: function (response) {
+            type: "Post",
+            success: function (data) {
+
+                window.location.href = '@Url.Action("TicketPayment", "TicketPayment")';
 
             }
         });
+       
         var eventid = $('#hdEventid').val();
-        window.location.href = '@Url.Action("TicketPayment", "TicketPayment", new { })' + '?Eventid=' + eventid;
+        //alert(eventid);
+      
 
     }
     function UpdateTicket() {

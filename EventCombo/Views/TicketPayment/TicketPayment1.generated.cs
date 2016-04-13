@@ -2744,17 +2744,17 @@ WriteLiteral("\',\r\n                                        data: { dAmt: vProM
 "       $(\"#spGrdTotal\").text(vOrderTotal.toFixed(2));\r\n            $(\"#hdGrandTo" +
 "tal\").val(vOrderTotal.toFixed(2))\r\n        }\r\n\r\n        $(\"#spSubTotal\").text(vO" +
 "rderTotal.toFixed(2));\r\n        var totqty = $(\'#hidQty\').val();\r\n        if (vO" +
-"rderTotal > 0) {\r\n            $(\'.divvisible\').show();\r\n            if (totqty <" +
-"= 0) {\r\n                $(\'.divqtyvisible\').hide();\r\n            } else {\r\n     " +
-"           $(\'.divqtyvisible\').show();\r\n            }\r\n            //$(\'#cardsho" +
-"w\').css(\'display\', \'block\');\r\n        }\r\n        else {\r\n            $(\'.divvisi" +
-"ble\').hide();\r\n            $(\'.divqtyvisible\').hide();\r\n            //$(\'#cardsh" +
-"ow\').css(\'display\', \'none\');\r\n        }\r\n    }\r\n\r\n\r\n\r\n    function ajaxsetup(str" +
-"name, strFormTag) {\r\n        var msgnew = \"\";\r\n\r\n        var request = $.ajax({\r" +
-"\n            url: \'");
+"rderTotal > 0) {\r\n            $(\'.divvisible\').show();\r\n           \r\n           " +
+" //$(\'#cardshow\').css(\'display\', \'block\');\r\n        }\r\n        else {\r\n         " +
+"   $(\'.divvisible\').hide();\r\n            //$(\'.divqtyvisible\').hide();\r\n        " +
+"    //$(\'#cardshow\').css(\'display\', \'none\');\r\n        }\r\n        //alert(totqty)" +
+";\r\n        if (totqty <= 0) {\r\n            $(\'.divqtyvisible\').hide();\r\n        " +
+"} else {\r\n            $(\'.divqtyvisible\').show();\r\n        }\r\n\r\n    }\r\n\r\n\r\n\r\n   " +
+" function ajaxsetup(strname, strFormTag) {\r\n        var msgnew = \"\";\r\n\r\n        " +
+"var request = $.ajax({\r\n            url: \'");
 
             
-            #line 1906 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1909 "..\..\Views\TicketPayment\TicketPayment.cshtml"
              Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -2914,7 +2914,7 @@ WriteLiteral("\',\r\n            async: false,\r\n            data: { strFormNam
 "     $.ajax({\r\n                url: \'");
 
             
-            #line 2218 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 2221 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                  Write(Url.Action("returncardetail", "TicketPayment"));
 
             
@@ -2956,29 +2956,37 @@ WriteLiteral(@"',
 
     }
     function NullSession(e) {
+       
         $(""#hdIsPostBack"").val(""Y"");
+
         $.ajax({
             url: '");
 
             
-            #line 2256 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 2261 "..\..\Views\TicketPayment\TicketPayment.cshtml"
              Write(Url.Action("Nullsession", "TicketPayment"));
 
             
             #line default
             #line hidden
-WriteLiteral("\',\r\n            type: \"Get\",\r\n            success: function (response) {\r\n\r\n     " +
-"       }\r\n        });\r\n        var eventid = $(\'#hdEventid\').val();\r\n        win" +
-"dow.location.href = \'");
+WriteLiteral("\',\r\n            type: \"Post\",\r\n            success: function (data) {\r\n\r\n        " +
+"        window.location.href = \'");
 
             
-            #line 2263 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                           Write(Url.Action("TicketPayment", "TicketPayment", new { }));
+            #line 2265 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+                                   Write(Url.Action("TicketPayment", "TicketPayment"));
 
             
             #line default
             #line hidden
-WriteLiteral(@"' + '?Eventid=' + eventid;
+WriteLiteral(@"';
+
+            }
+        });
+       
+        var eventid = $('#hdEventid').val();
+        //alert(eventid);
+      
 
     }
     function UpdateTicket() {
