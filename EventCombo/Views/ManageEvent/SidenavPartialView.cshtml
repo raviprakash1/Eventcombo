@@ -79,7 +79,28 @@
         </div>
 
     </div>
+<script>
+    $(document).ready(function () {
 
+     
+
+        $('#dvcrtpromcode').click(function (e) {
+
+            var $dvEle = $('#dvcrtpromcode b');
+            var vclassname = $dvEle.attr('class');
+            if ($dvEle.hasClass("new-opend")) {
+                $dvEle.removeClass('opened new-opend').addClass('closed');
+            }
+            else {
+                $dvEle.addClass('opened new-opend');
+            }
+        });
+
+
+    });
+
+
+</script>
 
 <script>
     //$('#crt_promcode').click();
