@@ -1539,6 +1539,8 @@ namespace EventCombo.Controllers
                 hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
                 AccountController ac = new AccountController();
                 ac.ControllerContext = new ControllerContext(this.Request.RequestContext, ac);
+                CreateEventController cs = new CreateEventController();
+                cs.ControllerContext = new ControllerContext(this.Request.RequestContext, cs);
                 string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
                 try {
                     Session["TicketDatamodel"] = null;
@@ -1751,7 +1753,7 @@ namespace EventCombo.Controllers
                     //Send mail
 
 
-                    CreateEventController cs = new CreateEventController();
+                  
                   
                     var Eventdetails = cs.GetEventdetail(Eventid);
                     ps.imgurl = (!string.IsNullOrEmpty(cs.GetImages(Eventid).FirstOrDefault()) ? cs.GetImages(Eventid).FirstOrDefault() : "/Images/default_event_image.jpg");
@@ -1773,8 +1775,8 @@ namespace EventCombo.Controllers
                     ps.Shareonfb = Eventdetails.Private_ShareOnFB;
                     ps.Orderdetail = GetOrderDetailForConfirmation(strGUID);
                     ViewBag.Timecal = Dateofevent;
-                    System.GC.Collect();
-                    System.GC.WaitForPendingFinalizers();
+                    //System.GC.Collect();
+                    //System.GC.WaitForPendingFinalizers();
 
 
                     //if (System.IO.File.Exists(ImageMapPath))
