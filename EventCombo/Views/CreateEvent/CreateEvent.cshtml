@@ -728,13 +728,13 @@
                                     </span>
                                 </div>*@
                             <div class="col-sm-12 no_pad">
-                                <div class="col-sm-8 no_pad col-xs-4">
+                                <div class="col-sm-8 no_pad col-xs-4 xs_crt_evnt_edit_org_btn">
                                     <select id="ddlOrgnizers" class="form-control evnt_inp_cont"></select>
                                 </div>
-                                <div class="col-sm-2 col-xs-4">
+                                <div class="col-sm-2 col-xs-4 xs_crt_evnt_edit_org_btn">
                                     <button type="button" onclick="editOrgnizer();" class="btn btn-primary ev_add_sub_btn org_dele_btn" id="btneditorg">Edit <i class="fa fa-pencil"></i></button>
                                 </div>
-                                <div class="col-sm-2 col-xs-4">
+                                <div class="col-sm-2 col-xs-4 xs_crt_evnt_edit_org_btn">
                                     <button type="button" id="btndeleteorg" class="btn btn-primary ev_add_sub_btn org_dele_btn">Delete <i class="fa fa-trash"></i></button>
                                 </div>
                                 <table style="display:none;" id="tblOrgnizer"></table>
@@ -773,13 +773,14 @@
 
                     <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
                 </div>
+                <div class="clearfix"></div>
                 <div class="evnt_details_body">
 
                     <div class="col-sm-12 no_pad text-left mt10 evnt_tct_btn ev_btn_type">
                         <label class="ev_add_tkt_tit col12">Add ticket type*</label>
-                        <button type="button" class="btn btn-primary save_btnfree save_btn">FREE <i class="fa fa-plus"></i> </button>
-                        <button type="button" class="btn btn-primary save_btnpaid save_btn">PAID <i class="fa fa-plus"></i></button>
-                        <button type="button" class="btn btn-primary save_btndonation save_btn xsmr0 ">DONATE <i class="fa fa-plus"></i> </button>
+                        <button type="button" class="btn btn-primary save_btnfree save_btn xs_tkt_typ_btn">FREE <i class="fa fa-plus"></i> </button>
+                        <button type="button" class="btn btn-primary save_btnpaid save_btn xs_tkt_typ_btn">PAID <i class="fa fa-plus"></i></button>
+                        <button type="button" class="btn btn-primary save_btndonation save_btn xsmr0 xs_tkt_typ_btn">DONATE <i class="fa fa-plus"></i> </button>
                     </div>
                     <div class="col-sm-12 no_pad">
                         <div class="modal-content ticket_panel mt10">
@@ -1100,6 +1101,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
                     <div class="col-sm-12 row mt10">
 
                         <div class="col-sm-12 no_pad">
@@ -1221,7 +1223,7 @@
                     <div class="evnt_tile_bg_l"></div>
                     <div class="col-sm-12 col-xs-12 text-left no_pad">
                         <h2 class="fb_dis_head pt5">
-                            EVENT SETTING <img class="help_icon_hov" src="~/Images/icon-question.gif" />
+                            EVENT SETTING <img class="help_icon_hov help_ml" src="~/Images/icon-question.gif" />
                         </h2>
                     </div>
                     <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
