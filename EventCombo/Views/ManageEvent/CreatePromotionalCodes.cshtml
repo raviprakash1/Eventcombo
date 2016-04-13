@@ -502,24 +502,7 @@ else
 </script>
 
             <script type="text/javascript">
-                $(document).ready(function () {
-                    $('#crt_promcode').click();
-                    $('#dvcrtpromcode').addClass("active");
-                    $('#dvcrtpromcode b').addClass('opened new-opend');
-
-                    $('#dvcrtpromcode').click(function (e) {
-
-                        var $dvEle = $('#dvcrtpromcode b');
-                        var vclassname = $dvEle.attr('class');
-                        if ($dvEle.hasClass("new-opend")) {
-                            $dvEle.removeClass('opened new-opend').addClass('closed');
-                        }
-                        else {
-                            $dvEle.addClass('opened new-opend');
-                        }
-                    });
-                });
-
+               
                 $(".upload_help_icn_inner").css("display", "none");
                 $('.help_icon_hov').hover(
                  function () {
@@ -927,14 +910,26 @@ else
                         }
                         
                     });
-
+                    $("#txt_Promocode").on("input", function () {
+                        
+                        var regexp = /[^a-zA-Z0-9@@_,-]/g;
+                        if ($(this).val().match(regexp)) {
+                            $(this).val($(this).val().replace(regexp, ''));
+                        }
+                    });
                     $('#txt_discountmnt').blur(function (e) {
                         debugger;
-                        var num = $(this).val();
+                        var num = parseFloat($(this).val());
                         if(num!='')
                         {
+
                             var n = parseFloat(num).toFixed(2);
                             $(this).val(n);
+                        }
+
+                        if(isNaN(num))
+                        {
+                            $(this).val('');
                         }
                     });
                     //    var txt = parseFloat($(this).val().replace(',', ''));

@@ -449,7 +449,10 @@ namespace EventCombo.Controllers
 
 
         }
-
+        public void Nullurlsession()
+        {
+            Session["ReturnUrl"] = null;
+        }
         //public ActionResult ViewEvent(string strEventDs, string strEventId)
         //{
         //    if ((Session["AppId"] != null))
