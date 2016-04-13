@@ -2084,6 +2084,7 @@ transform: rotate(45deg);
 .bld_remove{ font-weight:normal;}
 div.dis_file_upld{ background:#ccc !important;}
 
+
 .event_tip {
     display:block;
     position: absolute;
@@ -2119,3 +2120,5 @@ div.dis_file_upld{ background:#ccc !important;}
     left:-9px;
     top:45px;
 }
+
+.invitation-loader{ margin-top:7px;display:none }
