@@ -116,7 +116,7 @@
                                 @Html.DisplayFor(modelItem => item.SendOn)
                             </div>
                             <div class="crt_inv_mid_cell create_invite_action ">
-                                @Html.ActionLink("Edit", "CreateInvitations", "ManageEvent", new { lId = item.I_Id, lEvtId = item.EventID, strMode = "C" }, null)  <a href="#">Copy</a>  <a href="#confirm-delete-ok" data-toggle="modal" onclick="ConfirmDelete(@item.I_Id);">Delete</a>
+                                @Html.ActionLink("Edit", "CreateInvitations", "ManageEvent", new { lId = item.I_Id, lEvtId = item.EventID, strMode = "C" }, null)  <a href="javascript:void(0)">Copy</a>  <a href="#confirm-delete-ok" data-toggle="modal" onclick="ConfirmDelete(@item.I_Id);">Delete</a>
                             </div>
                         </div>
                     }
@@ -188,7 +188,7 @@
                                     @Html.DisplayFor(modelItem => item.SendOn)
                                 </div>
                                 <div class="crt_inv_mid_cell create_invite_action ">
-                                    @Html.ActionLink("Edit", "CreateInvitations", "ManageEvent", new { lId = item.I_Id, lEvtId = item.EventID, strMode = "C" }, null)  <a href="#">Copy</a>  <a href="#confirm-delete-ok" data-toggle="modal" onclick="ConfirmDelete(@item.I_Id);">Delete</a>
+                                    @Html.ActionLink("Edit", "CreateInvitations", "ManageEvent", new { lId = item.I_Id, lEvtId = item.EventID, strMode = "C" }, null)  <a href="javascript:void(0);">Copy</a>  <a href="#confirm-delete-ok" data-toggle="modal" onclick="ConfirmDelete(@item.I_Id);">Delete</a>
                                 </div>
                             </div>
                         }
@@ -284,7 +284,19 @@
         }
 
     }
+    function CopyInvitation(vId)
+    {
+        $.ajax({
+            url: '@Url.Action("CopyInvitation", "ManageEvent")',
+            data: { l_Id: vId},
+            datatype: "Text",
+            type: "Post",
+            success: function (response) {
+                window.location.href = '@Html.Raw(@Url.Action("EmailInvitations", "ManageEvent", new { eventId = ViewBag.EventId }))';
+            }
+        });
 
+    }
     $(document).ready(function () {
         $('#sidebar').load('@Url.Action("Sidenav", "ManageEvent", new { eventid= ViewBag.EventId })');
         $("#btnYes").click(function () {
