@@ -145,7 +145,9 @@
                         </div>
                     </div>
                     <div class="col-xs-12 no_pad mt10 mb10">
-                        <div class="col-sm-5 col-xs-12 no_pad crt_map" id="dvMap"></div>
+                        <div class="col-sm-5 col-xs-12 no_pad crt_map">
+                            <div id="dvMap" style="height:150px;"></div>
+                        </div>
                         <div class="col-sm-7 col-xs-12 no_pad">
                             <div class="col-xs-12 no_pad mb10">
                                 @*<p class="inv_mail_date">Club Illusions:</p>*@
@@ -459,7 +461,9 @@
                     </div>
                 </div>
                 <div style="width: 100%; float:left; margin-top: 10px;">
-                    <div style="width: 40%; height:175px;  float:left;" id="dvMapMail"></div>
+                    <div style="width:175px; float:left;" >
+                        <div id="dvMapMail" style="width:175px;height:175px;"></div>
+                    </div>
                     <div style="width: 60%; float:left;">
                         <div style="width: 100%; float:left; margin-bottom: 10px;">
                             @if (Model.EventAddress != null)
@@ -632,7 +636,7 @@
         $('#crt_promcode').click();
         $('#dvcrtpromcode').addClass("active");
         $('#dvcrtpromcode b').addClass('opened new-opend');
-
+        
 
 
         $("#txtSenderName").on("input", function () {
