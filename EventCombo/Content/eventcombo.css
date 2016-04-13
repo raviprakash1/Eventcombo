@@ -2083,4 +2083,42 @@ transform: rotate(45deg);
 .crt_inv_mid_cell{ width: 20%; height: 100%; font-size: 16px;  display: table-cell; padding: 8px 5px; vertical-align: top; color: #000;  border-bottom: 1px solid #ddd;  }
 .bld_remove{ font-weight:normal;}
 div.dis_file_upld{ background:#ccc !important;}
+
+
+.event_tip {
+    display:block;
+    position: absolute;
+    margin-left: 30px;
+    min-width: 80px; max-width: 250px; 
+    padding: 5px;  margin-left: 155px;
+    margin-top: -40px;
+    z-index: 99; font-size: 15px; text-align: left; min-height: 60px;
+    background: #fff; box-shadow: 0px 0px 5px #ccc;
+    color: #000;
+    -moz-border-radius: 5px; /* this works only in camino/firefox */
+    -webkit-border-radius: 5px; /* this is just for Safari */
+}
+.event_tip:before{
+    content:'';
+    width:0;
+    height:0;
+    position:absolute;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent; 
+    border-right:10px solid #ccc;
+    left:-10px;
+    top:45px;
+}
+.event_tip:after{
+    content:'';
+    width:0;
+    height:0;
+    position:absolute;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent; 
+    border-right:10px solid #fff;
+    left:-9px;
+    top:45px;
+}
+
 .invitation-loader{ margin-top:7px;display:none }
