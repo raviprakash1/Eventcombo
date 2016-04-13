@@ -614,8 +614,24 @@ namespace EventCombo.Controllers
             return View();
         }
 
+        public string DeleteInvitation(long lId)
+        {
+            try
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    objEnt.Event_Email_List.RemoveRange(objEnt.Event_Email_List.Where(x => x.L_I_Id == lId));
+                    objEnt.Event_Email_Invitation.Remove(objEnt.Event_Email_Invitation.Where(x => x.I_Id == lId).FirstOrDefault());
+                    objEnt.SaveChanges();
+                    return "D";
 
-
+                }
+            }
+            catch (Exception ex)
+            {
+                return "E";
+            }
+        }
         public string GetAllTicketSale(long EventId)
         {
             StringBuilder strResult = new StringBuilder();
