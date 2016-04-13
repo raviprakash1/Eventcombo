@@ -98,7 +98,7 @@
 
                 @if (Model.EventTitle != null)
                 {
-                    <h5 class="awsom_title">@Model.EventTitle</h5>
+                    <h5 class="awsom_title"><a href="@TempData["ViewEventUrl"]" target="_blank">@Model.EventTitle</a></h5>
                 }
                 else
                 {
@@ -412,7 +412,7 @@
             <p style="color:#686868; font-size:16px; margin-bottom:0; margin-top:20px;"> Please join us for</p>
             @if (Model.EventTitle != null)
             {
-                <h5 style="color: #3cf; font-size: 2em; font-weight: bold; margin-bottom: 0; margin-top: 0;text-transform: capitalize;">@Model.EventTitle</h5>
+                <h5 style="color: #3cf; font-size: 2em; font-weight: bold; margin-bottom: 0; margin-top: 0;text-transform: capitalize;"><a href="@TempData["ViewEventUrl"]" target="_blank">@Model.EventTitle</a></h5>
             }
             else
             {
