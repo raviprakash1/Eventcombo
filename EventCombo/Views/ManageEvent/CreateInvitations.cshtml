@@ -145,7 +145,7 @@
                         </div>
                     </div>
                     <div class="col-xs-12 no_pad mt10 mb10">
-                        <div class="col-sm-5 col-xs-12 no_pad" id="dvMap"></div>
+                        <div class="col-sm-5 col-xs-12 no_pad crt_map" id="dvMap"></div>
                         <div class="col-sm-7 col-xs-12 no_pad">
                             <div class="col-xs-12 no_pad mb10">
                                 @*<p class="inv_mail_date">Club Illusions:</p>*@
@@ -651,7 +651,7 @@
             center: myLatlng,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }
-        //var map = new google.maps.Map(document.getElementById("dvMap"), myOptions);
+        var map = new google.maps.Map(document.getElementById("dvMap"), myOptions);
 
         var maps = new google.maps.Map(document.getElementById("dvMapMail"), myOptions);
         $("#befendevnt").click(function () {
