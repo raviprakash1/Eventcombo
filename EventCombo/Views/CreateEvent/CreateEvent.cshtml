@@ -1221,10 +1221,13 @@
                     <div class="evnt_tile_bg_l"></div>
                     <div class="col-sm-12 col-xs-12 text-left no_pad">
                         <h2 class="fb_dis_head pt5">
-                            EVENT SETTING
+                            EVENT SETTING <img class="help_icon_hov" src="~/Images/icon-question.gif" />
                         </h2>
                     </div>
                     <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+                    <div class="event_tip">
+                        When the event is set to private, it will not be listed in our directory and you will have a private link through which to access the listing. you will also have an opportunity to send out email invites after you publish this event.
+                    </div>
                 </div>
                 <div class="evnt_details_body">
                     <div class="form-group">
@@ -5720,7 +5723,15 @@
             $(".help_icon_hov").mouseout(function (e) {
                 var $target = $(e.currentTarget);
                 $target.parent("div").find(".upload_help_icn_inner").css({ "display": "none" });
+                $(".event_tip").css({ "display": "none" });
             });
+
+            $(".event_tip").css({ "display": "none" });
+            $(".help_icon_hov").mouseover(function (e) {
+                var $target = $(e.currentTarget);
+                $(".event_tip").css({ "display": "block" });
+            });
+           
 
             $('.summernote').summernote({
                 height: 70,   //set editable area's height
