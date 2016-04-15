@@ -96,7 +96,7 @@ namespace EventCombo.Controllers
                     if (startdate != null)
                     {
                         DateTime sDate = new DateTime();
-                        sDate = DateTime.Parse(startdate.ToString());
+                        sDate = DateTime.Parse(startdate.ToString(), new CultureInfo("en-US", false));
                         startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
                         sDate_new = sDate.ToString("MMM dd,yyyy");
                     }
@@ -104,14 +104,14 @@ namespace EventCombo.Controllers
                     if (enddate != null)
                     {
                         DateTime eDate = new DateTime();
-                        eDate = DateTime.Parse(enddate.ToString());
+                        eDate = DateTime.Parse(enddate.ToString(), new CultureInfo("en-US", false));
                         endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
                         eDate_new = eDate.ToString("MMM dd,yyyy");
                     }
 
                     starttime = evschdetails.EventStartTime.ToString();
                     endtime = evschdetails.EventEndTime.ToString();
-                    ENDATE = DateTime.Parse(enddate + " " + endtime);
+                    ENDATE = DateTime.Parse(enddate + " " + endtime, new CultureInfo("en-US", false));
                 }
             }
             var timezone = "";
@@ -312,6 +312,9 @@ namespace EventCombo.Controllers
             TempData["ForSale"] = GetSaleAmount(Eventid, "FORSALE");
             TempData["NETSale"] = GetSaleAmount(Eventid, "NETSALE");
 
+            ViewBag.EventId = Eventid;
+            ViewBag.EventTitle = Mevent.Eventtitle;
+            ViewBag.DiscountCode = Mevent.DiscountCode;
             return View(Mevent);
         }
 
@@ -1497,6 +1500,10 @@ namespace EventCombo.Controllers
                 sc.searchquery = searchquery;
                 sc.discountcode = Discountcode;
                 TempData["PageIndex"] = (strPageIndex.ToLower() == "page" ? "1" : strPageIndex);
+
+                ViewBag.EventId = Eventid;
+                ViewBag.EventTitle = sc.Eventtitle;
+                ViewBag.DiscountCode = sc.discountcode;
                 return View(sc);
             }
             else
@@ -1651,6 +1658,9 @@ namespace EventCombo.Controllers
                     pm.Pc_Enddatetype = p.Pc_Enddatetype != null ? p.Pc_Enddatetype : "0";
                 }
 
+                ViewBag.EventId = Eventid;
+                ViewBag.EventTitle = pm.Eventitle;
+                ViewBag.DiscountCode = pm.discountcode;
                 return View(pm);
             }
             else

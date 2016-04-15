@@ -192,20 +192,20 @@ namespace EventCombo.Controllers
                 var evschdetails = (from ev in db.MultipleEvents where ev.EventID == EventId select ev).FirstOrDefault();
                 var startdate = (evschdetails.StartingFrom);
                 DateTime sDate = new DateTime();
-                sDate = DateTime.Parse(startdate);
+                sDate = DateTime.Parse(startdate, new CultureInfo("en-US", false));
                 startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
 
                 sDate_new = sDate.ToString("MMM dd, yyyy");
                 var enddate = evschdetails.StartingTo;
 
                 DateTime eDate = new DateTime();
-                eDate = DateTime.Parse(enddate);
+                eDate = DateTime.Parse(enddate, new CultureInfo("en-US", false));
                 endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
                 eDate_new = eDate.ToString("MMM dd, yyyy");
 
                 starttime = evschdetails.StartTime.ToUpper();
                 endtime = evschdetails.EndTime.ToUpper();
-                 ENDATE = DateTime.Parse(enddate + " "+evschdetails.EndTime);
+                ENDATE = DateTime.Parse(enddate + " " + evschdetails.EndTime, new CultureInfo("en-US", false));
 
 
 
@@ -221,7 +221,8 @@ namespace EventCombo.Controllers
                     if (startdate != null)
                     {
                         DateTime sDate = new DateTime();
-                        sDate = DateTime.Parse(startdate.ToString());
+                        sDate = DateTime.Parse(startdate.ToString(), new CultureInfo("en-US", false));
+
                         startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
                         sDate_new = sDate.ToString("MMM dd,yyyy");
                     }
@@ -229,14 +230,14 @@ namespace EventCombo.Controllers
                     if (enddate != null)
                     {
                         DateTime eDate = new DateTime();
-                        eDate = DateTime.Parse(enddate.ToString());
+                        eDate = DateTime.Parse(enddate.ToString(), new CultureInfo("en-US", false));
                         endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
                         eDate_new = eDate.ToString("MMM dd,yyyy");
                     }
 
                     starttime = evschdetails.EventStartTime.ToString();
                     endtime = evschdetails.EventEndTime.ToString();
-                     ENDATE = DateTime.Parse(enddate + " " + endtime);
+                    ENDATE = DateTime.Parse(enddate + " " + endtime, new CultureInfo("en-US", false));
                 }
 
 
@@ -269,7 +270,7 @@ namespace EventCombo.Controllers
            
             if (!string.IsNullOrEmpty(eDate_new))
             {
-                var enday = DateTime.Parse(eDate_new);
+              var enday = DateTime.Parse(eDate_new);
              
                 var now = DateTime.Now;
                 if (ENDATE < dateTime)

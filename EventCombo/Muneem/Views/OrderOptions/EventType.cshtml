@@ -1,0 +1,76 @@
+﻿@using EventCombo.Models
+@model EventCombo.Models.OrderTemplateViewModel
+@{
+  ViewBag.Title = "EventType";
+  Layout = "~/Views/Shared/_ManageEventLayout.cshtml";
+}
+
+<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.masked.js"></script>
+<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+<script src="~/Scripts/filer/jquery.filer.js"></script>
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/summernote.css" rel="stylesheet" />
+
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<link href="~/Content/MapPlaces.css" rel="stylesheet" />
+
+<link href='~/Content/OrderForm.css' rel='stylesheet' type='text/css'>
+<link href="~/Content/OrderFormDesign.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+  <div class="event_container">
+    <div class="event_top">
+      @if ((ViewBag.StateMessage != null) && (ViewBag.StateMessage != ""))
+      {
+      }
+      @Html.HiddenFor(m => m.OrderTemplateId)
+      @Html.HiddenFor(m => m.EventId)
+      @foreach (var et in ViewBag.OrderTemplateEventTypes)
+      {
+        bool inputchecked = et.OrderTemplateEventTypeId == Model.OrderTemplateEventTypeId;
+
+      }
+
+        <div class="insideContainer col-md-9 col-xs-12">
+            <div id="mainForm3" style="display:block;">
+                <div class="orderFormTxt"><h1>Event Type & Language</h1></div>
+                <div class="formText" style="font-weight:bold;">Event Type</div>
+
+                <div class="radio">
+                    <label><input type="radio" name="optradio" checked>Ticketed Event</label><span style="font-size: 12px;padding-left: 10px;color: #888;">(Examples: Buy Tickets, Ticket Information, Ticket Type)</span>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" name="optradio">Registration Event</label><span style="font-size: 12px;padding-left: 10px;color: #888;">(Examples: Register, Registration Information, Registration Type)</span>
+                </div>
+
+                <div class="formText">Event Page Language</div>
+
+                <div class="dropdown" style="margin-top:15px;">
+                    <button class="btn btn-default dropdown-toggle dropdownItemClass" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        English (US)
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">French</a></li>
+                        <li><a href="#">German</a></li>
+                    </ul>
+                </div>
+
+                <div id="eventTypeTxt" class="form-group" style="margin: 20px 0px; overflow:hidden;">
+                    <label for="Instruction">Please record data</label>
+                    <textarea class="form-control setHeight" id="waiverTxt" placeholder=""></textarea>
+                </div>
+
+                <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                    <div class="btn btn-primary btn-lg">Save</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+  </div>
+
+}
+

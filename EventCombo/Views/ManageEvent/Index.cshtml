@@ -9,10 +9,11 @@
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 
 @section sidenav{
-<div id="sidebar" class="nav nav-stacked">
+    <div id="sidebar" class="nav nav-stacked">
   
     </div>
-}
+    @Html.Partial("_ManageEventLeftMenu")
+ }
 
 
 @using (Html.BeginForm())
