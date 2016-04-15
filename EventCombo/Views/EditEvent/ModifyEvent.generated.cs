@@ -140,7 +140,7 @@ WriteLiteral(" class=\"event_container\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"event_inner_container event_top\"");
+WriteLiteral(" class=\"event_inner_container event_top createeventtop\"");
 
 WriteLiteral(" id=\"eventtopscoll\"");
 
@@ -216,7 +216,7 @@ WriteLiteral(" id=\"btndivaccsuc\"");
 WriteLiteral(">&#215;</button>\r\n\r\n                    </div>\r\n                </div>\r\n         " +
 "   </div>\r\n\r\n            <div");
 
-WriteLiteral(" class=\"col-sm-12 pt10 bggrey clearfix\"");
+WriteLiteral(" class=\"col-sm-12 bggrey clearfix\"");
 
 WriteLiteral(">\r\n                <div");
 
@@ -324,14 +324,14 @@ WriteLiteral(" class=\"form-control evnt_title_control evnt_placehold chkvalidat
 
 WriteLiteral(" placeholder=\"Click here to enter the name of the event*\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 3542), Tuple.Create("\"", 3567)
+WriteAttribute("value", Tuple.Create(" value=\"", 3552), Tuple.Create("\"", 3577)
             
             #line 76 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                                                                                                                       , Tuple.Create(Tuple.Create("", 3550), Tuple.Create<System.Object, System.Int32>(Model.EventTitle
+                                                                                                                       , Tuple.Create(Tuple.Create("", 3560), Tuple.Create<System.Object, System.Int32>(Model.EventTitle
             
             #line default
             #line hidden
-, 3550), false)
+, 3560), false)
 );
 
 WriteLiteral(" />\r\n                    </div>\r\n                    <div");
@@ -408,7 +408,7 @@ WriteLiteral(" class=\"form-group mb0 \"");
 
 WriteLiteral(">\r\n                            <div");
 
-WriteLiteral(" class=\"ev_date_icn\"");
+WriteLiteral(" class=\"ev_date_icn StartDate\"");
 
 WriteLiteral("></div>\r\n                            <label");
 
@@ -748,14 +748,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdPastLId\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 11354), Tuple.Create("\"", 11388)
+WriteAttribute("value", Tuple.Create(" value=\"", 11374), Tuple.Create("\"", 11408)
             
             #line 178 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-      , Tuple.Create(Tuple.Create("", 11362), Tuple.Create<System.Object, System.Int32>(Model.LastLocationAddress
+      , Tuple.Create(Tuple.Create("", 11382), Tuple.Create<System.Object, System.Int32>(Model.LastLocationAddress
             
             #line default
             #line hidden
-, 11362), false)
+, 11382), false)
 );
 
 WriteLiteral(" />\r\n                                            \r\n                              " +
@@ -1768,14 +1768,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hidSubCat\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 32488), Tuple.Create("\"", 32521)
+WriteAttribute("value", Tuple.Create(" value=\"", 32508), Tuple.Create("\"", 32541)
             
             #line 456 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 32496), Tuple.Create<System.Object, System.Int32>(Model.EventSubCategoryID
+, Tuple.Create(Tuple.Create("", 32516), Tuple.Create<System.Object, System.Int32>(Model.EventSubCategoryID
             
             #line default
             #line hidden
-, 32496), false)
+, 32516), false)
 );
 
 WriteLiteral(" />\r\n                                </div>\r\n                            </div>\r\n" +
@@ -1852,14 +1852,14 @@ WriteLiteral(" id=\"txtEventUrl\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 33982), Tuple.Create("\"", 34005)
+WriteAttribute("value", Tuple.Create(" value=\"", 34002), Tuple.Create("\"", 34025)
             
             #line 483 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                                 , Tuple.Create(Tuple.Create("", 33990), Tuple.Create<System.Object, System.Int32>(Model.EventUrl
+                                 , Tuple.Create(Tuple.Create("", 34010), Tuple.Create<System.Object, System.Int32>(Model.EventUrl
             
             #line default
             #line hidden
-, 33990), false)
+, 34010), false)
 );
 
 WriteLiteral(" placeholder=\"enter url name\"");
@@ -2150,7 +2150,7 @@ WriteLiteral(" class=\"col-sm-12 no_pad\"");
 
 WriteLiteral(">\r\n                                <div");
 
-WriteLiteral(" class=\"col-sm-8 no_pad col-xs-4\"");
+WriteLiteral(" class=\"col-sm-8 no_pad col-xs-4 xs_crt_evnt_edit_org_btn\"");
 
 WriteLiteral(">\r\n                                    <select");
 
@@ -2161,7 +2161,7 @@ WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 WriteLiteral("></select>\r\n                                </div>\r\n                             " +
 "   <div");
 
-WriteLiteral(" class=\"col-sm-2 col-xs-4\"");
+WriteLiteral(" class=\"col-sm-2 col-xs-4 xs_crt_evnt_edit_org_btn xs_crt_evnt_edit_org_btn\"");
 
 WriteLiteral(">\r\n                                    <button");
 
@@ -2180,7 +2180,7 @@ WriteLiteral(" class=\"fa fa-pencil\"");
 WriteLiteral("></i></button>\r\n                                </div>\r\n                         " +
 "       <div");
 
-WriteLiteral(" class=\"col-sm-2 col-xs-4\"");
+WriteLiteral(" class=\"col-sm-2 col-xs-4 xs_crt_evnt_edit_org_btn xs_crt_evnt_edit_org_btn\"");
 
 WriteLiteral(">\r\n                                    <button");
 
@@ -2279,7 +2279,7 @@ WriteLiteral(">Add ticket type*</label>\r\n                        <button");
 
 WriteLiteral(" type=\"button\"");
 
-WriteLiteral(" class=\"btn btn-primary save_btnfree save_btn\"");
+WriteLiteral(" class=\"btn btn-primary save_btnfree save_btn xs_tkt_typ_btn\"");
 
 WriteLiteral(">FREE <i");
 
@@ -2289,7 +2289,7 @@ WriteLiteral("></i> </button>\r\n                        <button");
 
 WriteLiteral(" type=\"button\"");
 
-WriteLiteral(" class=\"btn btn-primary save_btnpaid save_btn\"");
+WriteLiteral(" class=\"btn btn-primary save_btnpaid save_btn xs_tkt_typ_btn\"");
 
 WriteLiteral(">PAID <i");
 
@@ -2299,7 +2299,7 @@ WriteLiteral("></i></button>\r\n                        <button");
 
 WriteLiteral(" type=\"button\"");
 
-WriteLiteral(" class=\"btn btn-primary save_btndonation save_btn xsmr0\"");
+WriteLiteral(" class=\"btn btn-primary save_btndonation save_btn xsmr0 xs_tkt_typ_btn\"");
 
 WriteLiteral(">DONATE <i");
 
@@ -3029,9 +3029,9 @@ WriteLiteral(">\r\n                                                             
 
 WriteLiteral(" class=\"help_icon_hov\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 58870), Tuple.Create("\"", 58902)
-, Tuple.Create(Tuple.Create("", 58876), Tuple.Create<System.Object, System.Int32>(Href("~/Images/icon-question.gif")
-, 58876), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 59060), Tuple.Create("\"", 59092)
+, Tuple.Create(Tuple.Create("", 59066), Tuple.Create<System.Object, System.Int32>(Href("~/Images/icon-question.gif")
+, 59066), false)
 );
 
 WriteLiteral(" id=\"hovstart-n\"");
@@ -3118,9 +3118,9 @@ WriteLiteral(">\r\n                                                             
 
 WriteLiteral(" class=\"help_icon_hov\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 61461), Tuple.Create("\"", 61493)
-, Tuple.Create(Tuple.Create("", 61467), Tuple.Create<System.Object, System.Int32>(Href("~/Images/icon-question.gif")
-, 61467), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 61651), Tuple.Create("\"", 61683)
+, Tuple.Create(Tuple.Create("", 61657), Tuple.Create<System.Object, System.Int32>(Href("~/Images/icon-question.gif")
+, 61657), false)
 );
 
 WriteLiteral(" id=\"hovend-n\"");
@@ -3717,6 +3717,10 @@ WriteLiteral(">0</span></label>\r\n                                </div>\r\n   
 "      </div>\r\n                        </div>\r\n                    </div>\r\n      " +
 "              <div");
 
+WriteLiteral(" class=\"clearfix\"");
+
+WriteLiteral("></div>\r\n                    <div");
+
 WriteLiteral(" class=\"col-sm-12 row mt10\"");
 
 WriteLiteral(">\r\n\r\n                        <div");
@@ -3762,13 +3766,13 @@ WriteLiteral(" id=\"id_percentage\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 1020 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1021 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 
             
             #line default
             #line hidden
             
-            #line 1020 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1021 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                  if (Model.Ticket_DAdress == "Y" || Model.Ticket_DAdress == "y")
                                 {
 
@@ -3788,7 +3792,7 @@ WriteLiteral(" checked=\"checked\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1023 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1024 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 }
                                 else
                                 {
@@ -3807,7 +3811,7 @@ WriteLiteral(" id=\"id_ticketdeliveryaddr\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1027 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1028 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 }
 
             
@@ -3826,13 +3830,13 @@ WriteLiteral(" class=\"label-control ev_tickt_lebel pl0\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1033 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1034 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 
             
             #line default
             #line hidden
             
-            #line 1033 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1034 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                  if (Model.Ticket_showremain == "Y" || Model.Ticket_showremain == "y")
                                 {
 
@@ -3852,7 +3856,7 @@ WriteLiteral(" checked=\"checked\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1036 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1037 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 }
                                 else
                                 {
@@ -3871,7 +3875,7 @@ WriteLiteral(" id=\"id_showremaningticket\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1040 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1041 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
                                 }
 
@@ -3891,13 +3895,13 @@ WriteLiteral(" class=\"label-control ev_tickt_lebel pl0\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1047 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1048 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 
             
             #line default
             #line hidden
             
-            #line 1047 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1048 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                  if (Model.Ticket_showvariable == "Y" || Model.Ticket_showvariable == "y")
 {
 
@@ -3917,7 +3921,7 @@ WriteLiteral(" checked=\"checked\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1050 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1051 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 }
 else
 {
@@ -3936,7 +3940,7 @@ WriteLiteral(" id=\"id_variablecharge\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1054 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1055 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
 }
 
@@ -3975,14 +3979,14 @@ WriteLiteral(" placeholder=\"\"");
 
 WriteLiteral(" id=\"id_vardesc\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 80059), Tuple.Create("\"", 80093)
+WriteAttribute("value", Tuple.Create(" value=\"", 80299), Tuple.Create("\"", 80333)
             
-            #line 1067 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                                                                 , Tuple.Create(Tuple.Create("", 80067), Tuple.Create<System.Object, System.Int32>(Model.Ticket_variabledesc
+            #line 1068 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+                                                                 , Tuple.Create(Tuple.Create("", 80307), Tuple.Create<System.Object, System.Int32>(Model.Ticket_variabledesc
             
             #line default
             #line hidden
-, 80067), false)
+, 80307), false)
 );
 
 WriteLiteral(">\r\n                                    </div>\r\n                                </" +
@@ -4001,13 +4005,13 @@ WriteLiteral(" class=\"col-sm-10\"");
 WriteLiteral(">\r\n");
 
             
-            #line 1073 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1074 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                         
             
             #line default
             #line hidden
             
-            #line 1073 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1074 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                          if (Model.Ticket_variabletype == "R")
                                         {
 
@@ -4033,7 +4037,7 @@ WriteLiteral(" selected=\"selected\"");
 WriteLiteral(">Required </option>\r\n\r\n                                            </select>\r\n");
 
             
-            #line 1080 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1081 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                         }
                                         else if (Model.Ticket_variabletype == "O")
                                         {
@@ -4060,7 +4064,7 @@ WriteLiteral(" value=\"R\"");
 WriteLiteral(">Required </option>\r\n\r\n                                            </select>\r\n");
 
             
-            #line 1088 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1089 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                         }
                                         else
                                         {
@@ -4085,7 +4089,7 @@ WriteLiteral(" value=\"R\"");
 WriteLiteral(">Required </option>\r\n\r\n                                            </select>\r\n");
 
             
-            #line 1096 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1097 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
                                         }
 
@@ -4249,21 +4253,21 @@ WriteLiteral(" class=\"ev_fb_lable\"");
 
 WriteLiteral(">\r\n                                <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 84873), Tuple.Create("\"", 84894)
-, Tuple.Create(Tuple.Create("", 84879), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
-, 84879), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 85113), Tuple.Create("\"", 85134)
+, Tuple.Create(Tuple.Create("", 85119), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
+, 85119), false)
 );
 
 WriteLiteral("> ENABLE DISCUSSION\r\n");
 
             
-            #line 1145 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1146 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 
             
             #line default
             #line hidden
             
-            #line 1145 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1146 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                  if (Model.EnableFBDiscussion == "Y" || Model.EnableFBDiscussion == "y")
                                 {
 
@@ -4281,7 +4285,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 1148 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1149 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 }
                                 else
                                 {
@@ -4298,7 +4302,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 1152 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1153 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 }
 
             
@@ -4311,13 +4315,13 @@ WriteLiteral(" class=\"ev_fb_lable\"");
 WriteLiteral(">\r\n                                PUBLISH EVENT TO FACEBOOK\r\n");
 
             
-            #line 1159 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1160 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 
             
             #line default
             #line hidden
             
-            #line 1159 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1160 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                  if (Model.PublishOnFB == "Y"|| Model.PublishOnFB == "y")
                                 {
 
@@ -4335,7 +4339,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 1162 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1163 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 }
                                 else
                                 {
@@ -4352,7 +4356,7 @@ WriteLiteral(" type=\"checkbox\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 1166 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1167 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 }
 
             
@@ -4387,12 +4391,29 @@ WriteLiteral("  >\r\n                        <h2");
 
 WriteLiteral(" class=\"fb_dis_head pt5\"");
 
-WriteLiteral(">\r\n                            EVENT SETTING\r\n                        </h2>\r\n    " +
-"                </div>\r\n                    <div");
+WriteLiteral(">\r\n                            EVENT SETTING <img");
+
+WriteLiteral(" class=\"help_icon_hov help_ml\"");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 86867), Tuple.Create("\"", 86899)
+, Tuple.Create(Tuple.Create("", 86873), Tuple.Create<System.Object, System.Int32>(Href("~/Images/icon-question.gif")
+, 86873), false)
+);
+
+WriteLiteral(" />\r\n                        </h2>\r\n                    </div>\r\n                 " +
+"   <div");
 
 WriteLiteral(" class=\"evnt_tile_bg_r evnt_tile_bg_r_call\"");
 
-WriteLiteral("></div>\r\n                </div>\r\n                <div");
+WriteLiteral("></div>\r\n                    <div");
+
+WriteLiteral(" class=\"event_tip\"");
+
+WriteLiteral(@">
+                        When the event is set to private, it will not be listed in our directory and you will have a private link through which to access the listing. you will also have an opportunity to send out email invites after you publish this event.
+                    </div>
+                </div>
+                <div");
 
 WriteLiteral(" class=\"evnt_details_body\"");
 
@@ -4524,14 +4545,14 @@ WriteLiteral(" id=\"txtReqPassword\"");
 
 WriteLiteral(" readonly=\"readonly\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 90581), Tuple.Create("\"", 90612)
+WriteAttribute("value", Tuple.Create(" value=\"", 91223), Tuple.Create("\"", 91254)
             
-            #line 1252 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                 , Tuple.Create(Tuple.Create("", 90589), Tuple.Create<System.Object, System.Int32>(Model.Private_Password
+            #line 1256 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+                 , Tuple.Create(Tuple.Create("", 91231), Tuple.Create<System.Object, System.Int32>(Model.Private_Password
             
             #line default
             #line hidden
-, 90589), false)
+, 91231), false)
 );
 
 WriteLiteral(" class=\"form-control evnt_inp_cont mb10 wd500 chkvalidation\"");
@@ -4613,14 +4634,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hidAddressStatus\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 92357), Tuple.Create("\"", 92385)
+WriteAttribute("value", Tuple.Create(" value=\"", 92999), Tuple.Create("\"", 93027)
             
-            #line 1288 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 92365), Tuple.Create<System.Object, System.Int32>(Model.AddressStatus
+            #line 1292 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+, Tuple.Create(Tuple.Create("", 93007), Tuple.Create<System.Object, System.Int32>(Model.AddressStatus
             
             #line default
             #line hidden
-, 92365), false)
+, 93007), false)
 );
 
 WriteLiteral(" />\r\n                    <input");
@@ -4629,14 +4650,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdEventId\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 92446), Tuple.Create("\"", 92468)
+WriteAttribute("value", Tuple.Create(" value=\"", 93088), Tuple.Create("\"", 93110)
             
-            #line 1289 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 92454), Tuple.Create<System.Object, System.Int32>(Model.EventID
+            #line 1293 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+, Tuple.Create(Tuple.Create("", 93096), Tuple.Create<System.Object, System.Int32>(Model.EventID
             
             #line default
             #line hidden
-, 92454), false)
+, 93096), false)
 );
 
 WriteLiteral(" />\r\n                    <input");
@@ -4645,14 +4666,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdParentEventId\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 92535), Tuple.Create("\"", 92564)
+WriteAttribute("value", Tuple.Create(" value=\"", 93177), Tuple.Create("\"", 93206)
             
-            #line 1290 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 92543), Tuple.Create<System.Object, System.Int32>(Model.Parent_EventID
+            #line 1294 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+, Tuple.Create(Tuple.Create("", 93185), Tuple.Create<System.Object, System.Int32>(Model.Parent_EventID
             
             #line default
             #line hidden
-, 92543), false)
+, 93185), false)
 );
 
 WriteLiteral(" />\r\n\r\n                    <input");
@@ -4900,14 +4921,14 @@ WriteLiteral(" />\r\n                            </div>\r\n                     
 "</div>\r\n    </div>\r\n");
 
             
-            #line 1348 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1352 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 
     
             
             #line default
             #line hidden
             
-            #line 1349 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1353 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                                                  
 
 
@@ -4921,7 +4942,7 @@ WriteLiteral(" id=\"imagetostore\"");
 WriteLiteral(">\r\n\r\n\r\n\r\n    </div>\r\n");
 
             
-            #line 1356 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1360 "..\..\Views\EditEvent\ModifyEvent.cshtml"
 }
 
             
@@ -5093,6 +5114,8 @@ WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
 WriteLiteral(" placeholder=\"Zip Code\"");
 
+WriteLiteral(" maxlength=\"6\"");
+
 WriteLiteral(" />\r\n                            </div>\r\n                        </div>\r\n        " +
 "                <div");
 
@@ -5107,7 +5130,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 1404 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1408 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                        Write(Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control evnt_inp_cont" }));
 
             
@@ -5240,9 +5263,9 @@ WriteLiteral(" class=\"modal-body text-center pv50 txt-msg\"");
 
 WriteLiteral(">\r\n                    <h4><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 102636), Tuple.Create("\"", 102666)
-, Tuple.Create(Tuple.Create("", 102642), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 102642), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 103292), Tuple.Create("\"", 103322)
+, Tuple.Create(Tuple.Create("", 103298), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 103298), false)
 );
 
 WriteLiteral(" />Please wait ... </h4>\r\n                </div>\r\n                <div");
@@ -5361,7 +5384,7 @@ WriteLiteral(">\r\n\r\n\r\n\r\n        var map_canvas ;\r\n        var mapProp;\
 "       var vVal = \'");
 
             
-            #line 1673 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1677 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                    Write(TempData["IsNewEvent"].ToString());
 
             
@@ -5398,7 +5421,7 @@ WriteLiteral("\';\r\n            if (vVal == \"Y\")\r\n            {\r\n        
 "   });\r\n\r\n            var isadmin=\"");
 
             
-            #line 1716 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1720 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                     Write(Model.Isadmin);
 
             
@@ -5423,7 +5446,7 @@ WriteLiteral(@""";
             $.getJSON('");
 
             
-            #line 1732 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1736 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                   Write(Url.Action("GetEventChildData", "EditEvent"));
 
             
@@ -5541,7 +5564,7 @@ WriteLiteral("\',\r\n                { lEventId: lEventId},\r\n                f
 "             }\r\n            );\r\n\r\n\r\n            var privat=\"");
 
             
-            #line 1923 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1927 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                    Write(Model.EventPrivacy);
 
             
@@ -5550,7 +5573,7 @@ WriteLiteral("\',\r\n                { lEventId: lEventId},\r\n                f
 WriteLiteral("\";\r\n            var privatefb=\"");
 
             
-            #line 1924 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1928 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                       Write(Model.Private_ShareOnFB);
 
             
@@ -5559,7 +5582,7 @@ WriteLiteral("\";\r\n            var privatefb=\"");
 WriteLiteral("\"\r\n            var privateguest=\"");
 
             
-            #line 1925 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1929 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                          Write(Model.Private_GuestOnly);
 
             
@@ -5568,7 +5591,7 @@ WriteLiteral("\"\r\n            var privateguest=\"");
 WriteLiteral("\"\r\n            var privatepwd=\"");
 
             
-            #line 1926 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1930 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                        Write(Model.Private_Password);
 
             
@@ -5615,7 +5638,7 @@ WriteLiteral(@"""
             var temp=""");
 
             
-            #line 1964 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1968 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(TempData["Scroll"]);
 
             
@@ -5624,7 +5647,7 @@ WriteLiteral(@"""
 WriteLiteral("\"\r\n            if(temp!=\'\')\r\n            {\r\n                var scroll=\"");
 
             
-            #line 1967 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1971 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                        Write(TempData["Scroll"]);
 
             
@@ -5657,7 +5680,7 @@ WriteLiteral(@""";
                     url: '");
 
             
-            #line 1991 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 1995 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      Write(Url.Action("chkOrganizerName", "Account"));
 
             
@@ -5766,7 +5789,7 @@ WriteLiteral("\r\n    <script>\r\n\r\n        $(\".chkvalidation\").blur(functio
 "jax({\r\n                    url: \'");
 
             
-            #line 2293 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2297 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      Write(Url.Action("deleteOrg", "EditEvent"));
 
             
@@ -5777,7 +5800,7 @@ WriteLiteral("\',\r\n                    data: { id: id },\r\n                  
 "a.Message == \"O\") {\r\n                            window.location.href = \'");
 
             
-            #line 2300 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2304 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                Write(Url.Action("Index", "Home"));
 
             
@@ -5949,7 +5972,7 @@ WriteLiteral("\';\r\n\r\n                        }\r\n                    }\r\n\
 "val();\r\n\r\n                        var isadmin=\"");
 
             
-            #line 2651 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2655 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                 Write(Model.Isadmin);
 
             
@@ -6152,7 +6175,7 @@ WriteLiteral("\";\r\n                        if(isadmin==\"Y\")\r\n             
 "ntId\").val() != \'\') {\r\n\r\n                $.ajax({\r\n                    url: \'");
 
             
-            #line 2987 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2991 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      Write(Url.Action("Draftmodemodification", "EditEvent"));
 
             
@@ -6167,7 +6190,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 2993 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 2997 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                Write(Url.Action("Index", "Home"));
 
             
@@ -6196,7 +6219,7 @@ WriteLiteral(@"';
                                 var isadmin=""");
 
             
-            #line 3013 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3017 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                         Write(Model.Isadmin);
 
             
@@ -6207,7 +6230,7 @@ WriteLiteral("\";\r\n                                if(isadmin==\"Y\")\r\n     
 "                         window.location.href = \'");
 
             
-            #line 3017 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3021 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                        Write(Url.Action("ModifyEvent", "EditEvent", new { }));
 
             
@@ -6218,7 +6241,7 @@ WriteLiteral("\' + \'?Eventid=\' + response;\r\n\r\n                            
 " = \'");
 
             
-            #line 3021 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3025 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                        Write(Url.Action("ModifyEvent", "EditEvent", new { }));
 
             
@@ -6241,7 +6264,7 @@ WriteLiteral(@"' + '?Eventid=' + response;
                                 var vUrl = '");
 
             
-            #line 3035 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3039 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                        Write(Url.RouteUrl("ViewEvent",new { strEventDs= "ß", strEventId ="~" }));
 
             
@@ -6260,17 +6283,17 @@ WriteLiteral("\r\n                                if ($(\"#chkGuestonly\").is(\"
 ".href = \'");
 
             
-            #line 3046 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3050 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                        Write(Url.Action("CreateInvitations", "ManageEvent", new {  }));
 
             
             #line default
             #line hidden
-WriteLiteral("?lId=0&lEvtId=\'+response+\'&strMode=\"E\"\';\r\n                                } else " +
-"{\r\n                                    window.location.href = \'");
+WriteLiteral("?lId=0&lEvtId=\'+response+\'&strMode=E\';\r\n                                } else {\r" +
+"\n                                    window.location.href = \'");
 
             
-            #line 3048 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3052 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                        Write(Url.Action("EventConfirmation", "EventConfirmation",new { }));
 
             
@@ -6280,7 +6303,7 @@ WriteLiteral("?EventId=\' + response + \'\';\r\n                                
 "              // window.location.href = \'");
 
             
-            #line 3050 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3054 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                      Write(Url.Action("EventConfirmation", "EventConfirmation",new { }));
 
             
@@ -6344,7 +6367,7 @@ WriteLiteral("?EventId=\' +response;\r\n                            }\r\n       
 " url: \'");
 
             
-            #line 3145 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3149 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetSubCat", "EditEvent"));
 
             
@@ -6370,7 +6393,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 3162 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3166 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetOrgnizerDetail", "EditEvent"));
 
             
@@ -6527,7 +6550,7 @@ WriteLiteral("\',\r\n                data: { lEventId: $(\"#hdEventId\").val() }
 " != \'\') {\r\n                    $.ajax({\r\n                        url: \'");
 
             
-            #line 3463 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3467 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                          Write(Url.Action("CheckEventUrl", "ManageEvent"));
 
             
@@ -6563,7 +6586,7 @@ WriteLiteral("\',\r\n                        data: { strUserUrl: $(\"#txtEventUr
 "       $.ajax({\r\n                    url: \'");
 
             
-            #line 3510 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3514 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                      Write(Url.Action("GetSubCat", "CreateEvent"));
 
             
@@ -6655,7 +6678,7 @@ WriteLiteral("\',\r\n                    data: { lECatId: vCatId, lSubCat: \"0\"
 " $.ajax({\r\n                url: \'");
 
             
-            #line 3671 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 3675 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("GetPreviousAddressForEditing", "CreateEvent"));
 
             
@@ -6797,102 +6820,108 @@ WriteLiteral("\',\r\n                data: { \"lEid\": $(\"#hdEventId\").val() }
 "te\").val(\"\");\r\n                $(\"#Zip\").val(\"\");\r\n                $(\"#hidAddSno" +
 "\").val(\"\");\r\n                $(\"#CountryID\").val(\'1\');\r\n\r\n                \r\n    " +
 "        });\r\n\r\n\r\n\r\n\r\n            // ------Designer Code-----------\r\n\r\n\r\n\r\n\r\n\r\n\r\n" +
-"\r\n\r\n            $(\'.summernote\').summernote({\r\n                height: 70,   //s" +
-"et editable area\'s height\r\n                disableDragAndDrop: true\r\n           " +
-" });\r\n\r\n            $(\".ticket_panel\").hide();\r\n            $(\".save_btn\").click" +
-"(function () {\r\n                $(\".ticket_panel\").slideDown();\r\n\r\n            }" +
-");\r\n\r\n            $(\".ShowdateList\").hide();\r\n            $(\".DateList\").click(f" +
-"unction () {\r\n                $(\".ShowdateList\").toggle(500);\r\n            });\r\n" +
-"\r\n\r\n            $(\'#AddMore\').click(function () {\r\n                var data = $(" +
-"\'#CloneDiv\').clone();\r\n                data.attr(\'id\', \'\');\r\n                //d" +
-"ata.append(\'<span class=\"RemoveMoreHub\" style=\"width:80%;\"><a href=\"javascript:v" +
-"oid(0);\" style=\"float:right;color:#CE0009;font-size:13px;text-decoration:none;ma" +
-"rgin-right:5%;\" >- Remove</a></span>\');\r\n                $(\'#MasterDiv\').append(" +
-"data);\r\n            });\r\n\r\n            $(\".tab-content\").hide();\r\n            $(" +
-"\".evnt_set\").click(function () {\r\n\r\n                $(\".tab-content\").slideToggl" +
-"e(\"fast\");\r\n            });\r\n\r\n\r\n            // $(\'.date_picker\').datepicker({\r\n" +
-"            //     format: \"MM/DD/YYYY\",\r\n\r\n            // });\r\n\r\n            $(" +
-"\'.date_picker\').datepicker({\r\n                format: \"MM/DD/YYYY\",\r\n           " +
-"     minDate: \"0\"\r\n            })\r\n            .on(\'changeDate\', function (ev) {" +
-"\r\n                $(\'.date_picker\').datepicker(\'hide\');\r\n            });\r\n\r\n    " +
-"        $(function () {\r\n                $(\'.time_picker\').timepicker();\r\n      " +
-"      });\r\n\r\n            $(\".evnt_doll_amnt\").hide();\r\n            $(\".ev_tic_en" +
-"d\").click(function () {\r\n                $(\".evt_time\").css(\"display\", \"none\");\r" +
-"\n                $(\".evnt_doll_amnt\").css(\"display\", \"block\");\r\n            });\r" +
-"\n            $(\".ev_by_date\").click(function () {\r\n                $(\".evnt_doll" +
-"_amnt\").css(\"display\", \"none\");\r\n                $(\".evt_time\").css(\"display\", \"" +
-"block\");\r\n            });\r\n\r\n            $(\".CusdateCont\").hide();\r\n            " +
-"$(\".EvaddTkt\").click(function () {\r\n                $(\".CusdateCont\").css(\"displ" +
-"ay\", \"block\");\r\n            });\r\n\r\n            $(\".RemvTkt\").hide();\r\n          " +
-"  $(\".EvaddTkt\").click(function () {\r\n                $(\".RemvTkt\").css(\"display" +
-"\", \"block\");\r\n                $(\".EvaddTkt\").css(\"display\", \"none\");\r\n          " +
-"  });\r\n            $(\".RemvTkt\").click(function () {\r\n                $(\".EvaddT" +
-"kt\").css(\"display\", \"block\");\r\n                $(\".CusdateCont\").css(\"display\", " +
-"\"none\");\r\n                $(\".RemvTkt\").css(\"display\", \"none\");\r\n            });" +
-"\r\n\r\n            $(\".HideuntDiv\").hide();\r\n            $(\".CusdateTime\").click(fu" +
-"nction () {\r\n                $(\".HideuntDiv\").css(\"display\", \"block\");\r\n        " +
-"    });\r\n            $(\".TktnotSale\").click(function () {\r\n                $(\".H" +
-"ideuntDiv\").css(\"display\", \"none\");\r\n            });\r\n            // $(\'#multise" +
-"lect2\').multiselect({\r\n            // includeSelectAllOption: true\r\n            " +
-"// });\r\n            $(\'.checkboxName\').multiselect({\r\n                checkboxNa" +
-"me: \'multiselect[]\'\r\n            });\r\n\r\n            $(\".can_org_cont\").hide();\r\n" +
-"            $(\".EditOrg\").click(function () {\r\n                $(\".can_org_cont\"" +
-").css(\"display\", \"block\");\r\n                $(\".edit_org_cont\").css(\"display\", \"" +
-"none\");\r\n                $(\".Moderor\").css(\"display\", \"block\");\r\n\r\n            }" +
-");\r\n            $(\".AddOrg\").click(function () {\r\n                $(\".can_org_co" +
-"nt\").css(\"display\", \"block\");\r\n                $(\".edit_org_cont\").css(\"display\"" +
-", \"none\");\r\n                $(\".Moderor\").css(\"display\", \"none\");\r\n\r\n           " +
-" });\r\n            $(\".CanOrg\").click(function () {\r\n                $(\".edit_org" +
-"_cont\").css(\"display\", \"block\");\r\n                $(\".can_org_cont\").css(\"displa" +
-"y\", \"none\");\r\n\r\n            });\r\n\r\n\r\n            $(\".AddSocial\").css(\"display\", " +
-"\"none\");\r\n            $(\'#Incsocial\').change(function () {\r\n                if (" +
-"$(this).is(\":checked\")) {\r\n                    $(\'.AddSocial\').show();\r\n        " +
-"        } else {\r\n                    $(\'.AddSocial\').hide();\r\n                }" +
-"\r\n            });\r\n\r\n\r\n            $(\".Prvpage\").click(function () {\r\n          " +
-"      $(\".priv_cont\").css(\"display\", \"block\");\r\n            });\r\n            $(\"" +
-".Pubpage\").click(function () {\r\n                $(\".priv_cont\").css(\"display\", \"" +
-"none\");\r\n            });\r\n\r\n            $(\".online_main_cont\").hide();\r\n        " +
-"    $(\".OnlineEvent\").click(function () {\r\n                $(\".online_main_cont\"" +
-").css(\"display\", \"block\");\r\n                $(\".EnterAdd\").css(\"display\", \"none\"" +
-");\r\n            });\r\n\r\n            $(\".AddLocatondiv\").click(function () {\r\n    " +
-"            $(\".EnterAdd\").css(\"display\", \"block\");\r\n                $(\".online_" +
-"main_cont\").css(\"display\", \"none\");\r\n\r\n            });\r\n\r\n\r\n            $(\".Past" +
-"LocatMain\").hide();\r\n            $(\".UsePast\").click(function () {\r\n            " +
-"    $(\".PastLocatMain\").css(\"display\", \"block\");\r\n                $(\".EvntLocatT" +
-"itle\").css(\"display\", \"none\");\r\n                $(\".EnterAdd\").css(\"display\", \"n" +
-"one\");\r\n            });\r\n\r\n            $(\".RetunEvent\").click(function () {\r\n   " +
-"             $(\".EnterAdd\").css(\"display\", \"block\");\r\n                $(\".EvntLo" +
-"catTitle\").css(\"display\", \"block\");\r\n                $(\".PastLocatMain\").css(\"di" +
-"splay\", \"none\");\r\n\r\n            });\r\n\r\n            $(\".OrglistShow\").hide();\r\n  " +
-"          $(\".OrgIcn\").click(function () {\r\n\r\n                $(\".OrglistShow\")." +
-"slideToggle(\"fast\");\r\n            });\r\n\r\n            $(\".TmezoneSet\").hide();\r\n " +
-"           $(\".Timezone\").click(function () {\r\n                $(\".TmezoneSet\")." +
-"slideToggle(\"fast\");\r\n\r\n            });\r\n\r\n\r\n\r\n\r\n            $(\".PastLocat\").css" +
-"(\"display\", \"none\");\r\n            $(\'#UsepastLoc\').change(function () {\r\n       " +
-"         if ($(this).is(\":checked\")) {\r\n                    $(\'.PastLocat\').show" +
-"();\r\n                    $(\'.EntVenAdd\').hide();\r\n                } else {\r\n    " +
-"                $(\'.PastLocat\').hide();\r\n                    $(\'.EntVenAdd\').sho" +
-"w();\r\n                }\r\n            });\r\n\r\n            $(\".FindNewVen\").click(f" +
-"unction () {\r\n                $(\".EntVenAdd\").show();\r\n                $(\".PastL" +
-"ocat\").hide();\r\n\r\n            });\r\n\r\n            $(\".TicketFees\").css(\"display\"," +
-" \"none\");\r\n            $(\'#VarCharg\').change(function () {\r\n                if (" +
-"$(this).is(\":checked\")) {\r\n                    $(\'.TicketFees\').show();\r\n       " +
-"         } else {\r\n                    $(\'.TicketFees\').hide();\r\n               " +
-" }\r\n            });\r\n\r\n\r\n\r\n            $(\".SchmultiDetail\").hide();\r\n           " +
-" $(\".Schmultisingle\").hide();\r\n            $(\".SchmultiEvnt\").click(function () " +
-"{\r\n                $(\".SchmultiDetail\").slideToggle(\"slow\");\r\n                $(" +
-"\".SchDivtop\").hide();\r\n            });\r\n\r\n\r\n            $(\".SchmultiEvnt\").click" +
-"(function () {\r\n                $(\".SchDivtop\").hide();\r\n                $(\".Sch" +
-"multisingle\").show();\r\n            });\r\n\r\n\r\n            $(\".Schmultisingle\").cli" +
-"ck(function () {\r\n                $(\".SchDivtop\").show();\r\n                $(\".S" +
-"chmultiDetail\").hide();\r\n                $(\".Schmultisingle\").hide();\r\n         " +
-"   });\r\n\r\n\r\n\r\n\r\n            //$(\'body\').click(function () {\r\n            //    $" +
-"(\".StartDatemodal\").hide();\r\n            //});\r\n\r\n            //$(\'.StartDatemod" +
-"al,.StartDate\').click(function (event) {\r\n            //    event.stopPropagatio" +
-"n();\r\n            //});\r\n\r\n            //$(\'body\').click(function () {\r\n        " +
-"    //    $(\".TmezoneSet\").hide();\r\n            //});\r\n\r\n            //$(\'.Tmezo" +
-"neSet,.Timezone\').click(function (event) {\r\n            //    event.stopPropagat" +
-"ion();\r\n            //});\r\n\r\n\r\n\r\n        });\r\n    </script>\r\n\r\n\r\n    ");
+"            $(\".event_tip\").css({ \"display\": \"none\" });\r\n            $(\".help_ic" +
+"on_hov\").mouseover(function (e) {\r\n                var $target = $(e.currentTarg" +
+"et);\r\n                $(\".event_tip\").css({ \"display\": \"block\" });\r\n            " +
+"});\r\n\r\n            $(\".help_icon_hov\").mouseout(function (e) {\r\n                " +
+"var $target = $(e.currentTarget);\r\n               $(\".event_tip\").css({ \"display" +
+"\": \"none\" });\r\n            });\r\n\r\n            $(\'.summernote\').summernote({\r\n   " +
+"             height: 70,   //set editable area\'s height\r\n                disable" +
+"DragAndDrop: true\r\n            });\r\n\r\n            $(\".ticket_panel\").hide();\r\n  " +
+"          $(\".save_btn\").click(function () {\r\n                $(\".ticket_panel\")" +
+".slideDown();\r\n\r\n            });\r\n\r\n            $(\".ShowdateList\").hide();\r\n    " +
+"        $(\".DateList\").click(function () {\r\n                $(\".ShowdateList\").t" +
+"oggle(500);\r\n            });\r\n\r\n\r\n            $(\'#AddMore\').click(function () {\r" +
+"\n                var data = $(\'#CloneDiv\').clone();\r\n                data.attr(\'" +
+"id\', \'\');\r\n                //data.append(\'<span class=\"RemoveMoreHub\" style=\"wid" +
+"th:80%;\"><a href=\"javascript:void(0);\" style=\"float:right;color:#CE0009;font-siz" +
+"e:13px;text-decoration:none;margin-right:5%;\" >- Remove</a></span>\');\r\n         " +
+"       $(\'#MasterDiv\').append(data);\r\n            });\r\n\r\n            $(\".tab-con" +
+"tent\").hide();\r\n            $(\".evnt_set\").click(function () {\r\n\r\n              " +
+"  $(\".tab-content\").slideToggle(\"fast\");\r\n            });\r\n\r\n\r\n            // $(" +
+"\'.date_picker\').datepicker({\r\n            //     format: \"MM/DD/YYYY\",\r\n\r\n      " +
+"      // });\r\n\r\n            $(\'.date_picker\').datepicker({\r\n                form" +
+"at: \"MM/DD/YYYY\",\r\n                minDate: \"0\"\r\n            })\r\n            .on" +
+"(\'changeDate\', function (ev) {\r\n                $(\'.date_picker\').datepicker(\'hi" +
+"de\');\r\n            });\r\n\r\n            $(function () {\r\n                $(\'.time_" +
+"picker\').timepicker();\r\n            });\r\n\r\n            $(\".evnt_doll_amnt\").hide" +
+"();\r\n            $(\".ev_tic_end\").click(function () {\r\n                $(\".evt_t" +
+"ime\").css(\"display\", \"none\");\r\n                $(\".evnt_doll_amnt\").css(\"display" +
+"\", \"block\");\r\n            });\r\n            $(\".ev_by_date\").click(function () {\r" +
+"\n                $(\".evnt_doll_amnt\").css(\"display\", \"none\");\r\n                $" +
+"(\".evt_time\").css(\"display\", \"block\");\r\n            });\r\n\r\n            $(\".Cusda" +
+"teCont\").hide();\r\n            $(\".EvaddTkt\").click(function () {\r\n              " +
+"  $(\".CusdateCont\").css(\"display\", \"block\");\r\n            });\r\n\r\n            $(\"" +
+".RemvTkt\").hide();\r\n            $(\".EvaddTkt\").click(function () {\r\n            " +
+"    $(\".RemvTkt\").css(\"display\", \"block\");\r\n                $(\".EvaddTkt\").css(\"" +
+"display\", \"none\");\r\n            });\r\n            $(\".RemvTkt\").click(function ()" +
+" {\r\n                $(\".EvaddTkt\").css(\"display\", \"block\");\r\n                $(\"" +
+".CusdateCont\").css(\"display\", \"none\");\r\n                $(\".RemvTkt\").css(\"displ" +
+"ay\", \"none\");\r\n            });\r\n\r\n            $(\".HideuntDiv\").hide();\r\n        " +
+"    $(\".CusdateTime\").click(function () {\r\n                $(\".HideuntDiv\").css(" +
+"\"display\", \"block\");\r\n            });\r\n            $(\".TktnotSale\").click(functi" +
+"on () {\r\n                $(\".HideuntDiv\").css(\"display\", \"none\");\r\n            }" +
+");\r\n            // $(\'#multiselect2\').multiselect({\r\n            // includeSelec" +
+"tAllOption: true\r\n            // });\r\n            $(\'.checkboxName\').multiselect" +
+"({\r\n                checkboxName: \'multiselect[]\'\r\n            });\r\n\r\n          " +
+"  $(\".can_org_cont\").hide();\r\n            $(\".EditOrg\").click(function () {\r\n   " +
+"             $(\".can_org_cont\").css(\"display\", \"block\");\r\n                $(\".ed" +
+"it_org_cont\").css(\"display\", \"none\");\r\n                $(\".Moderor\").css(\"displa" +
+"y\", \"block\");\r\n\r\n            });\r\n            $(\".AddOrg\").click(function () {\r\n" +
+"                $(\".can_org_cont\").css(\"display\", \"block\");\r\n                $(\"" +
+".edit_org_cont\").css(\"display\", \"none\");\r\n                $(\".Moderor\").css(\"dis" +
+"play\", \"none\");\r\n\r\n            });\r\n            $(\".CanOrg\").click(function () {" +
+"\r\n                $(\".edit_org_cont\").css(\"display\", \"block\");\r\n                " +
+"$(\".can_org_cont\").css(\"display\", \"none\");\r\n\r\n            });\r\n\r\n\r\n            $" +
+"(\".AddSocial\").css(\"display\", \"none\");\r\n            $(\'#Incsocial\').change(funct" +
+"ion () {\r\n                if ($(this).is(\":checked\")) {\r\n                    $(\'" +
+".AddSocial\').show();\r\n                } else {\r\n                    $(\'.AddSocia" +
+"l\').hide();\r\n                }\r\n            });\r\n\r\n\r\n            $(\".Prvpage\").c" +
+"lick(function () {\r\n                $(\".priv_cont\").css(\"display\", \"block\");\r\n  " +
+"          });\r\n            $(\".Pubpage\").click(function () {\r\n                $(" +
+"\".priv_cont\").css(\"display\", \"none\");\r\n            });\r\n\r\n            $(\".online" +
+"_main_cont\").hide();\r\n            $(\".OnlineEvent\").click(function () {\r\n       " +
+"         $(\".online_main_cont\").css(\"display\", \"block\");\r\n                $(\".En" +
+"terAdd\").css(\"display\", \"none\");\r\n            });\r\n\r\n            $(\".AddLocatond" +
+"iv\").click(function () {\r\n                $(\".EnterAdd\").css(\"display\", \"block\")" +
+";\r\n                $(\".online_main_cont\").css(\"display\", \"none\");\r\n\r\n           " +
+" });\r\n\r\n\r\n            $(\".PastLocatMain\").hide();\r\n            $(\".UsePast\").cli" +
+"ck(function () {\r\n                $(\".PastLocatMain\").css(\"display\", \"block\");\r\n" +
+"                $(\".EvntLocatTitle\").css(\"display\", \"none\");\r\n                $(" +
+"\".EnterAdd\").css(\"display\", \"none\");\r\n            });\r\n\r\n            $(\".RetunEv" +
+"ent\").click(function () {\r\n                $(\".EnterAdd\").css(\"display\", \"block\"" +
+");\r\n                $(\".EvntLocatTitle\").css(\"display\", \"block\");\r\n             " +
+"   $(\".PastLocatMain\").css(\"display\", \"none\");\r\n\r\n            });\r\n\r\n           " +
+" $(\".OrglistShow\").hide();\r\n            $(\".OrgIcn\").click(function () {\r\n\r\n    " +
+"            $(\".OrglistShow\").slideToggle(\"fast\");\r\n            });\r\n\r\n         " +
+"   $(\".TmezoneSet\").hide();\r\n            $(\".Timezone\").click(function () {\r\n   " +
+"             $(\".TmezoneSet\").slideToggle(\"fast\");\r\n\r\n            });\r\n\r\n\r\n\r\n\r\n " +
+"           $(\".PastLocat\").css(\"display\", \"none\");\r\n            $(\'#UsepastLoc\')" +
+".change(function () {\r\n                if ($(this).is(\":checked\")) {\r\n          " +
+"          $(\'.PastLocat\').show();\r\n                    $(\'.EntVenAdd\').hide();\r\n" +
+"                } else {\r\n                    $(\'.PastLocat\').hide();\r\n         " +
+"           $(\'.EntVenAdd\').show();\r\n                }\r\n            });\r\n\r\n      " +
+"      $(\".FindNewVen\").click(function () {\r\n                $(\".EntVenAdd\").show" +
+"();\r\n                $(\".PastLocat\").hide();\r\n\r\n            });\r\n\r\n            $" +
+"(\".TicketFees\").css(\"display\", \"none\");\r\n            $(\'#VarCharg\').change(funct" +
+"ion () {\r\n                if ($(this).is(\":checked\")) {\r\n                    $(\'" +
+".TicketFees\').show();\r\n                } else {\r\n                    $(\'.TicketF" +
+"ees\').hide();\r\n                }\r\n            });\r\n\r\n\r\n\r\n            $(\".Schmult" +
+"iDetail\").hide();\r\n            $(\".Schmultisingle\").hide();\r\n            $(\".Sch" +
+"multiEvnt\").click(function () {\r\n                $(\".SchmultiDetail\").slideToggl" +
+"e(\"slow\");\r\n                $(\".SchDivtop\").hide();\r\n            });\r\n\r\n\r\n      " +
+"      $(\".SchmultiEvnt\").click(function () {\r\n                $(\".SchDivtop\").hi" +
+"de();\r\n                $(\".Schmultisingle\").show();\r\n            });\r\n\r\n\r\n      " +
+"      $(\".Schmultisingle\").click(function () {\r\n                $(\".SchDivtop\")." +
+"show();\r\n                $(\".SchmultiDetail\").hide();\r\n                $(\".Schmu" +
+"ltisingle\").hide();\r\n            });\r\n\r\n\r\n\r\n\r\n            //$(\'body\').click(func" +
+"tion () {\r\n            //    $(\".StartDatemodal\").hide();\r\n            //});\r\n\r\n" +
+"            //$(\'.StartDatemodal,.StartDate\').click(function (event) {\r\n        " +
+"    //    event.stopPropagation();\r\n            //});\r\n\r\n            //$(\'body\')" +
+".click(function () {\r\n            //    $(\".TmezoneSet\").hide();\r\n            //" +
+"});\r\n\r\n            //$(\'.TmezoneSet,.Timezone\').click(function (event) {\r\n      " +
+"      //    event.stopPropagation();\r\n            //});\r\n\r\n\r\n\r\n        });\r\n    " +
+"</script>\r\n\r\n\r\n    ");
 
 WriteLiteral("\r\n    <script>\r\n        function CannotFindLocation() {\r\n            $(\"#dvAddFoo" +
 "ter\").hide();\r\n            $(\"#VenueName\").val(\'\');\r\n            $(\"#Address1\")." +
@@ -6962,7 +6991,7 @@ WriteLiteral("\r\n    <script>\r\n        function CannotFindLocation() {\r\n   
 "               url: \'");
 
             
-            #line 4288 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 4301 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                  Write(Url.Action("returnfees", "Event"));
 
             
@@ -7147,7 +7176,7 @@ WriteLiteral("\',\r\n                success: function (data) {\r\n\r\n         
 "l();\r\n            var isadmin=\"");
 
             
-            #line 4637 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 4650 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                     Write(Model.Isadmin);
 
             
@@ -7203,7 +7232,7 @@ WriteLiteral("\";\r\n            var el = e.substr(e.indexOf(\'-\') + 1, e.lengt
 ",\',\'\')).toFixed(2));\r\n            var isadmin=\"");
 
             
-            #line 4720 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 4733 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                     Write(Model.Isadmin);
 
             
@@ -7451,7 +7480,7 @@ WriteLiteral("\";\r\n            if (price == 0) {\r\n\r\n                $(\'#i
 "\"");
 
             
-            #line 5297 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5310 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                     Write(Model.Isadmin);
 
             
@@ -7541,7 +7570,7 @@ WriteLiteral("\";\r\n\r\n            if(isadmin==\"Y\")\r\n            {\r\n\r\n
 "   var isadmin=\"");
 
             
-            #line 5431 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5444 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                     Write(Model.Isadmin);
 
             
@@ -7733,7 +7762,7 @@ WriteLiteral("\";\r\n\r\n            if(isadmin==\"Y\")\r\n            {\r\n\r\n
 "          {\r\n                    $.ajax({\r\n                        url: \'");
 
             
-            #line 5762 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5775 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                          Write(Url.Action("Checkticketstatus", "EditEvent"));
 
             
@@ -8006,27 +8035,27 @@ WriteLiteral("\',\r\n                        data: { ticketid: ticketId },\r\n  
 
 WriteLiteral("\r\n    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 293558), Tuple.Create("\"", 293597)
-, Tuple.Create(Tuple.Create("", 293565), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 293565), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 294642), Tuple.Create("\"", 294681)
+, Tuple.Create(Tuple.Create("", 294649), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 294649), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n\r\n    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 293631), Tuple.Create("\"", 293688)
-, Tuple.Create(Tuple.Create("", 293638), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 293638), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 294715), Tuple.Create("\"", 294772)
+, Tuple.Create(Tuple.Create("", 294722), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 294722), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 293722), Tuple.Create("\"", 293759)
-, Tuple.Create(Tuple.Create("", 293728), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 293728), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 294806), Tuple.Create("\"", 294843)
+, Tuple.Create(Tuple.Create("", 294812), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 294812), false)
 );
 
 WriteLiteral("></script>\r\n\r\n\r\n    <script");
@@ -8057,7 +8086,7 @@ WriteLiteral(">\r\n        $(document).ready(function () {\r\n\r\n            //
 "         var request = $.ajax({\r\n                url:\'");
 
             
-            #line 6365 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6378 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                 Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -8085,29 +8114,33 @@ WriteLiteral("\',\r\n                async: false,\r\n                data: { st
 "       msg += ajaxsetup(\"CreateEvent\", \"CreateEventtypeUI\") + \"<br/>\";;\r\n       " +
 "     }\r\n            if (cat <= 0) {\r\n                $(\'#ddlEventCategory\').addC" +
 "lass(\'err-bor\');\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEventCa" +
-"tegoryUI\") + \"<br/>\";;\r\n            }\r\n\r\n\r\n\r\n            var divlength = $(\"#Mas" +
-"terDiv> div\").size();\r\n            if (divlength <= 0) {\r\n                msg +=" +
-" \"Please Enter atleast one ticket\";\r\n\r\n            }\r\n            if (divlength " +
-"> 0) {\r\n\r\n                for (var i = 0; i < divlength; i++) {\r\n\r\n             " +
-"       var ticket_name = $(\'#id_ticket_type-\' + i).val();\r\n                    v" +
-"ar ticket_Qty = $(\'#id_quantity_total-\' + i).val();\r\n                    if (tic" +
-"ket_name == \"\") {\r\n                        $(\'#id_ticket_type-\' + i).addClass(\'e" +
-"rr-bor\');\r\n\r\n                        countdesc++;\r\n                    } else {\r" +
-"\n                        $(\'#id_ticket_type-\' + i).removeClass(\'err-bor\');\r\n\r\n  " +
-"                  }\r\n                    if (ticket_Qty == \"\") {\r\n\r\n            " +
-"            $(\'#id_quantity_total-\' + i).addClass(\'err-bor\');\r\n                 " +
-"       countqty++;\r\n                    } else {\r\n                        if (ti" +
-"cket_Qty <= 0) {\r\n                            $(\'#id_quantity_total-\' + i).addCl" +
-"ass(\'err-bor\');\r\n                            countqty++;\r\n\r\n                    " +
-"    } else {\r\n                            $(\'#id_quantity_total-\' + i).removeCla" +
-"ss(\'err-bor\');\r\n                        }\r\n                    }\r\n              " +
-"      debugger;\r\n                    var ticketId=parseInt($(\"#id_ticket_id-\"+i)" +
-".val());\r\n                    var deltedy=0;\r\n                    if(ticketId!=0" +
-")\r\n                    {\r\n                        $.ajax({\r\n                    " +
-"        url: \'");
+"tegoryUI\") + \"<br/>\";;\r\n            }\r\n\r\n\r\n            if ($(\"#tblAddress tr\").l" +
+"ength <= 1) {\r\n                if ($(\"#btOnlineEvent\").is(\":checked\") == false &" +
+"& $(\"#UsepastLoc\").is(\":checked\") == false) {\r\n                    if ($(\"#txtEv" +
+"entLocation\").val() == \"\") {\r\n                        msg += \"Inavlid Address\" +" +
+" \"<br/>\";;\r\n                    }\r\n                }\r\n            }\r\n           " +
+" var divlength = $(\"#MasterDiv> div\").size();\r\n            if (divlength <= 0) {" +
+"\r\n                msg += \"Please Enter atleast one ticket\";\r\n\r\n            }\r\n  " +
+"          if (divlength > 0) {\r\n\r\n                for (var i = 0; i < divlength;" +
+" i++) {\r\n\r\n                    var ticket_name = $(\'#id_ticket_type-\' + i).val()" +
+";\r\n                    var ticket_Qty = $(\'#id_quantity_total-\' + i).val();\r\n   " +
+"                 if (ticket_name == \"\") {\r\n                        $(\'#id_ticket" +
+"_type-\' + i).addClass(\'err-bor\');\r\n\r\n                        countdesc++;\r\n     " +
+"               } else {\r\n                        $(\'#id_ticket_type-\' + i).remov" +
+"eClass(\'err-bor\');\r\n\r\n                    }\r\n                    if (ticket_Qty " +
+"== \"\") {\r\n\r\n                        $(\'#id_quantity_total-\' + i).addClass(\'err-b" +
+"or\');\r\n                        countqty++;\r\n                    } else {\r\n      " +
+"                  if (ticket_Qty <= 0) {\r\n                            $(\'#id_qua" +
+"ntity_total-\' + i).addClass(\'err-bor\');\r\n                            countqty++;" +
+"\r\n\r\n                        } else {\r\n                            $(\'#id_quantit" +
+"y_total-\' + i).removeClass(\'err-bor\');\r\n                        }\r\n             " +
+"       }\r\n                    debugger;\r\n                    var ticketId=parseI" +
+"nt($(\"#id_ticket_id-\"+i).val());\r\n                    var deltedy=0;\r\n          " +
+"          if(ticketId!=0)\r\n                    {\r\n                        $.ajax" +
+"({\r\n                            url: \'");
 
             
-            #line 6460 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6479 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                              Write(Url.Action("Checkticketstatus", "EditEvent"));
 
             
@@ -8137,7 +8170,7 @@ WriteLiteral("\',\r\n                            data: { ticketid: ticketId },\r
 "      var isadmin=\"");
 
             
-            #line 6504 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6523 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                             Write(Model.Isadmin);
 
             
@@ -8420,7 +8453,7 @@ WriteLiteral("\";\r\n                   \r\n                    if(isadmin==\"Y\
 "image=\"\";\r\n        var j= ");
 
             
-            #line 7066 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 7085 "..\..\Views\EditEvent\ModifyEvent.cshtml"
           Write(Html.Raw(ViewData["Image"]));
 
             
@@ -8630,7 +8663,7 @@ WriteLiteral(";\r\n\r\n\r\n        $(\'#input2\').filer({\r\n            limit: 
 "ventCombo - Edit ");
 
             
-            #line 7447 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 7466 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                 Write(Model.EventTitle);
 
             

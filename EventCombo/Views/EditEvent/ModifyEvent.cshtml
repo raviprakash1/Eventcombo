@@ -1400,7 +1400,7 @@ else
                         </div>
                         <div class="col-sm-6 row pull-right">
                             <div class="form-group">
-                                <input id="Zip" class="form-control evnt_inp_cont" placeholder="Zip Code" />
+                                <input id="Zip" class="form-control evnt_inp_cont" placeholder="Zip Code" maxlength="6" />
                             </div>
                         </div>
                         <div class="clearfix"></div>
@@ -6431,7 +6431,13 @@ else
             }
 
 
-
+            if ($("#tblAddress tr").length <= 1) {
+                if ($("#btOnlineEvent").is(":checked") == false && $("#UsepastLoc").is(":checked") == false) {
+                    if ($("#txtEventLocation").val() == "") {
+                        msg += "Inavlid Address" + "<br/>";;
+                    }
+                }
+            }
             var divlength = $("#MasterDiv> div").size();
             if (divlength <= 0) {
                 msg += "Please Enter atleast one ticket";
