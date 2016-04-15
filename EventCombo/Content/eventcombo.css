@@ -922,6 +922,11 @@ span.evnt_toltip{
 .ev_date_icn{left:-10px !important;}
 .ev_loc_icn{ left:0px !important;}
 
+#mainhead .col-sm-1{top:18px !important; }
+#mainhead .Fix_Head{top: -6px !important;}
+#divmain .Fix_Head{ margin-top:-8px; }
+#divmain .social_icn{margin-top:-15px !important;}
+
 #navtop{margin-top:5px;}
 #midsection{margin-top:15px;}
 #navtop.affix-top {margin-top:0px; position:relative; }
@@ -938,7 +943,7 @@ span.evnt_toltip{
 .xsmr0{ margin-right:0px !important}
 
 #eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 154px !important;}
-
+.promo_code_btn{ margin-top:10px;}
 }
 
 
@@ -1009,8 +1014,12 @@ span.evnt_toltip{
 .xs375zip{ padding:0px; margin-bottom:10px; }
 
 .ev_date_icn{  margin-top: 0px !important; left: 0px !important; }
+.promo_code_btn{ margin-top:10px;}
 
-
+#mainhead .col-sm-1{top:18px !important; }
+#mainhead .Fix_Head{top: -6px !important;}
+#divmain .Fix_Head{ margin-top:-8px; }
+#divmain .social_icn{margin-top:-15px !important;}
 
 }
 
@@ -1075,7 +1084,7 @@ span.evnt_toltip{
 
 
 #scrollhome.con_scr0l_home{margin-top:214px !important;}
-#divsecmain .col-sm-1{ top:15px !important;  }
+/*#divsecmain .col-sm-1{ top:15px !important;  }*/
 /*#eventtopscoll .cbtMakeLive { right:65px; position:relative; }*/ 
 #mainhead{ height:140px;}
 .createeventtop.event_top{ margin-top:125px;}
@@ -1095,7 +1104,12 @@ span.evnt_toltip{
 .xsmr0{ margin-right:0px !important}
 .xspad0{ padding:0px;}
 .ev_date_icn{  margin-top: 0px !important; left: -10px !important; }
+.promo_code_btn{ margin-top:10px;}
 
+#mainhead .col-sm-1{top:18px !important; }
+#mainhead .Fix_Head{top: -6px !important;}
+#divmain .Fix_Head{ margin-top:-8px; }
+#divmain .social_icn{margin-top:-15px !important;}
 }
 @media (width: 736px) {
 .ev_loc_icn{ left:200px !important; }
