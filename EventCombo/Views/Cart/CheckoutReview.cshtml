@@ -13,3 +13,50 @@
 <a href="@Url.Action("DoCheckoutPayment","Cart",new {token=ViewData["token"],PayerID=ViewData["PayerID"] })">Confirm Payment</a>&nbsp;&nbsp;&nbsp;
 <a href="@Url.Action("Index","Home")">Cancel Payment</a>
 
+<div class="event_container " style="display:none;">
+    <div class="event_inner_container event_top">
+        <div class="event_detail_container">
+            <div class="col-sm-12"><h3 class="acnt_title"></h3></div>
+        </div>
+    </div>
+
+    <div class="event_detail_container">
+        <div class="evnt_tile_head">
+            <div class="evnt_tile_bg_l"></div>
+            <div class="col-sm-6 col-xs-6 text-left no_pad">
+                <h2 class="fb_dis_head pt5">Checkout Confirmation</h2>
+            </div>
+            <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+        </div>
+        <div class="evnt_details_body2">
+            <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
+
+                <div class="col-sm-12 no_pad chek_out_desc">
+                    <p>Amount : </p>
+
+                    <p class="text-center">Please confirm to continue  </p>
+
+
+                    <div class="clearfix"></div>
+
+                    <div class="col-sm-12 col-xs-12 no_pad text-center">
+                        <button class="btn ev_live_btn cap_l" type="button">
+                            Confirm
+                        </button>
+                        <button class="btn ev_live_btn cap_l" type="button">
+                            Cancel
+                        </button>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="col-sm-12 no_pad chek_out_desc">
+                    <p class="text-center"><img src="images/ajax-loader.gif"> </p>
+                    <p class="text-center">Your Payment is processing, Please wait </p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
