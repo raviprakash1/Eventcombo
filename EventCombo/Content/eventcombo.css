@@ -2124,7 +2124,7 @@ transform: rotate(45deg);
 /*.crt_inv_tablehead .crt_inv_tableCell{text-transform: uppercase; }*/
 
 .crt_inv_mid_row {width: 100%; height: 100%; display: table-row; background:#fff; }
-.crt_inv_mid_cell{ width: 20%; height: 100%; font-size: 16px;  display: table-cell; padding: 8px 5px; vertical-align: top; color: #000;  border-bottom: 1px solid #ddd;  }
+.crt_inv_mid_cell{ width: 20%; height: 100%; font-size: 16px; word-break:break-all;  display: table-cell; padding: 8px 5px; vertical-align: top; color: #000;  border-bottom: 1px solid #ddd;  }
 .bld_remove{ font-weight:normal;}
 div.dis_file_upld{ background:#ccc !important;}
 
@@ -2174,3 +2174,6 @@ div.dis_file_upld{ background:#ccc !important;}
 #forgotcheck{ margin-top:-10px; }
 #forgotcheck.forgot_top{ margin-top:120px;}
 .forg_acnt_title{ margin-top:0px;}
+.vw_tkt_modal{ background:#fff; }
+.vw_tkt_modal_body{ padding:15px 30px;}
+.no-shdw{ box-shadow:none !important;}
