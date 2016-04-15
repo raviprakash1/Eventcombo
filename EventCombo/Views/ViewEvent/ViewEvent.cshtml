@@ -662,43 +662,55 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade  modal-vcenter" id="viewticketpassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
+        <div class="modal fade  modal-vcenter vw_tkt_modal" id="viewticketpassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content no-shdw">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:none;" id="btnclosepwd"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title ev_modal_header_title" id="myModalLabel">View Event Password</h4>
                     </div>
-                    <div class="modal-body">
-                        <div class="col-md-12 no_pad">
-                            <div class="form-group mb5 ">
-                                <div class="col-sm-12 no_pad ev_ven_mod_lebel mb10">
-                                    <label class="alert-danger" id="lblwrongpwd" style="display:none;">You have entered incorrect password</label>
+                    <div class="modal-body vw_tkt_modal_body">
+                        <div class="event_detail_container">
+                            <div class="evnt_tile_head">
+                                <div class="evnt_tile_bg_l"></div>
+                                <div class="col-sm-12 col-xs-12 text-left no_pad">
+                                    <h2 class="fb_dis_head pt5">Enter Password to view your live event</h2>
                                 </div>
-                                <div class="col-sm-12 no_pad ev_ven_mod_lebel mb10">
-                                    Enter Password to View the Event
-                                </div>
+                                <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+                            </div>
+                            <div class="evnt_details_body2">
+                                <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
+                                    <div class="col-md-12 no_pad text-center">
+                                        <div class="form-group mb5 ">
+                                            <div class="col-sm-12 no_pad ev_ven_mod_lebel mb10">
+                                                <label class="alert-danger" id="lblwrongpwd" style="display:none;">You have entered incorrect password</label>
+                                            </div>
+                                            @*<div class="col-sm-12 no_pad ev_ven_mod_lebel mb10">
+                                                Enter Password to View the Event
+                                            </div>*@
 
-                                <div class="col-sm-12 no_pad">
-                                    <div class="form-group mb10">
-                                        <label class="col-md-4 control-label ev_tickt_lebel ">Password</label>
-                                        <div class="col-md-8">
-                                            <input class="form-control evnt_inp_cont" type="password" id="txtpwdlive">
+                                            <div class="col-sm-12 no_pad text-center">
+                                                <div class="form-group mb10">
+                                                    <label class="col-md-4 control-label ev_tickt_lebel text-right">Password</label>
+                                                    <div class="col-md-4">
+                                                        <input class="form-control evnt_inp_cont" type="password" id="txtpwdlive">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="col-sm-12 text-center mt20">
+                                            <button type="button" class="btn ev_live_btn ev_live_sub_btn mb10" id="btnbackpwd">
+                                                CANCEL
+                                            </button>
+                                            <button type="button" class="btn ev_live_btn ev_live_sub_btn mb10" id="btnsubmitpwd">
+                                                SUBMIT
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-                            <div class="clearfix"></div>
-                            <div class="col-sm-12 text-center mt20">
-                                <button type="button" class="btn ev_live_btn ev_live_sub_btn" id="btnbackpwd">
-                                    CANCEL
-                                </button>
-                                <button type="button" class="btn ev_live_btn ev_live_sub_btn" id="btnsubmitpwd">
-                                    SUBMIT
-                                </button>
-                            </div>
-
                         </div>
                         <div class="clearfix"></div>
                     </div>
