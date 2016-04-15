@@ -411,7 +411,7 @@
 
     </div>
     <div id="dvUserMail" style="width:650px; font-family: arial; float: left; border: 1px solid #ccc; margin-bottom: 10px;display:none">
-        <div style="width: 100px; float: left; margin-bottom: 20px; margin-top: 20px;" class="inv_mail_side_logo text-center"><img src="~/images/logo_vertical.png"></div>
+        <div style="width: 100px; float: left; margin-bottom: 20px; margin-top: 20px;" class="inv_mail_side_logo text-center"><img src='@TempData["baseurl"]/Images/logo_vertical.png' /></div>
         <div style="margin-top: 20px; width: 540px; float: left" class="">
             <h4 style="font-size:1.8em; margin-bottom:5px"> Hello Attendee</h4>
             <p style="color:#686868; font-size:16px; margin-bottom:0; margin-top:20px;"> Please join us for</p>
@@ -428,7 +428,7 @@
                     <div style="width: 40%; float:left;">
                         @if (Model.EventImg != null)
                         {
-                            <img width="175" height="175" src="@Model.EventImg">
+                            <img width="175" height="175" src="@TempData["baseurl"]/@Model.EventImg">
                         }
                         else
                         {
@@ -464,8 +464,11 @@
                     </div>
                 </div>
                 <div style="width: 100%; float:left; margin-top: 10px;">
-                    <div style="width:175px; float:left;" >
-                        <div id="dvMapMail" style="width:175px;height:175px;"></div>
+                    <div style="width:175px; float:left; margin-right: 35px;" >
+                        @*<div id="dvMapMailss" style="width:175px;height:175px;">*@
+                            <img style="width:175px;height:175px;" src='https://maps.googleapis.com/maps/api/staticmap?center=@TempData["Lat"],@TempData["Long"]&zoom=15&size=400x400&maptype=roadmap' />
+
+                        @*</div>*@
                     </div>
                     <div style="width: 60%; float:left;">
                         <div style="width: 100%; float:left; margin-bottom: 10px;">
@@ -487,10 +490,9 @@
                         <div style="width: 100%; float:left; margin-bottom: 10px;">
                             <p style="color: #676767; font-size: 18px; font-weight: bold; margin-bottom: 0; margin-top: 0;">Share:</p>
                             <p>
-                                @*<a href="#"><img src="~/images/fb.png" /></a>
-                                    <a href="#"><img src="~/images/tw.png" /></a>
-                                    <a href="#"><img src="~/images/linkid.png" /></a>
-                                    <a href="#"><img src="~/images/msg.png" /></a>*@
+                                <a href="#"><img src="~/images/fb.png" /></a>
+                                <a href="#"><img src="~/images/tw.png" /></a>
+                                <a href="#"><img src="~/images/linkid.png" /></a>
                             </p>
                         </div>
                     </div>
@@ -636,6 +638,13 @@
     $(document).ready(function () {
         $('#sidebar').load('@Url.Action("Sidenav", "ManageEvent", new { eventid= TempData["Eventid"] })');
 
+        $(document).ajaxStop(function () {
+            $(document).find("#crt_promcode").click();
+            $("#sidebar").find("#dvcrtpromcode").addClass("active");
+            $("#sidebar").find("#dvcrtpromcode b").addClass('opened new-opend');
+        });
+
+
         $('#crt_promcode').click();
         $('#dvcrtpromcode').addClass("active");
         $('#dvcrtpromcode b').addClass('opened new-opend');
@@ -660,7 +669,7 @@
         }
         var map = new google.maps.Map(document.getElementById("dvMap"), myOptions);
 
-        var maps = new google.maps.Map(document.getElementById("dvMapMail"), myOptions);
+       // var maps = new google.maps.Map(document.getElementById("dvMapMail"), myOptions);
         $("#befendevnt").click(function () {
             if ($("#befendevnt").is(":checked") == false) {
                 $("#txtSchDate").attr("disabled", true);
