@@ -259,7 +259,7 @@ else
 </div>
                             <div id="cardshow" style="display:none;">
                                 <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CREDIT CARD NUMBER" id="cardno" onkeyup="getcardvisa(this.id)">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CREDIT CARD NUMBER" id="cardno" onkeyup="getcardvisa(this.id)" oncopy="return false" oncut="return false" onpaste="return false">
                                 </div>
 
                                 <div class="col-sm-10 col-xs-12 mb10 no_pad card_list">
@@ -269,10 +269,10 @@ else
                                         <img src="~/Images/amr-exp.png" id="amr" style="display:none">*@
                                 </div>
                                 <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="EXPIRATION DATE" id="expirationdate">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="EXPIRATION DATE" id="expirationdate" oncopy="return false" oncut="return false" onpaste="return false">
                                 </div>
                                 <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CVV CODE" id="cvvcode" onkeydown="return checknumber(event);" maxlength="5">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CVV CODE" id="cvvcode" onkeydown="return checknumber(event);" maxlength="5" oncopy="return false" oncut="return false" onpaste="return false">
                                 </div>
                                 <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                     <input type="checkbox" id="chkcarddetails" /> <span class="ev_pay_span">Save billing and payment info for easy ordering </span>
@@ -303,7 +303,7 @@ else
 
                                 </div>
                                 <div class="col-sm-6 col-xs-12 no_pad">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength=5 id="billzip">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength=6 id="billzip">
                                 </div>
                                 
 
@@ -362,7 +362,7 @@ else
 
                                     </div>
                                     <div class="col-sm-6 col-xs-12 no_pad ">
-                                        <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength=5 id="shipzip">
+                                        <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength=6 id="shipzip">
                                     </div>
                                   
                               
@@ -517,9 +517,9 @@ else
                     <div class="modal-body text-center pv50 txt-msg">
                         <h4 class="msg"><img src="~/Images/ajaxloader1.gif" />Please wait, Preparing your order.</h4>
                     </div>
-                    @*<div class="modal-footer msg-action-btn ok">
-                            <button type="button" class="btn btn-primary yes ok" data-dismiss="modal">OK</button>
-                        </div>*@
+                 
+                            <button type="button" style="display:none;" id="btnclosemodal" class="btn btn-primary yes ok" data-dismiss="modal">OK</button>
+                    
                 </form>
             </div>
         </div><!-- confirm-msg -->
@@ -1055,6 +1055,12 @@ else
             var vPromoId = $("#hdPromoId").val();
             var vVarChanges = $("#hdVarChanges").val();
             var vVarId = $("#hdVChg").val();
+            var Eventid = $('#hdEventid').val();
+            var PaymentType = $("#selectcard").val();
+            if (PaymentType != "P")
+            {
+                PaymentType = "A";
+            }
             var model = {
 
                 'AccFname': $('#accfname').val(),
@@ -1103,10 +1109,9 @@ else
                 'strPaymentType': PaymentType
             }
 
-            var Eventid = $('#hdEventid').val();
-            var PaymentType = $("#selectcard").val();
+        
 
-            if (PaymentType == "P") {
+            @*if (PaymentType == "P") {
                 $.ajax({
                     url: '@Url.Action("SendPaypaldetail", "TicketPayment")',
                     data: { model: model },
@@ -1121,18 +1126,24 @@ else
                     }
                 });
             }
-            else {
+            else {*@
                 $.ajax({
                     url: '@Url.Action("SaveDetails", "TicketPayment")',
                     beforeSend: function () { $("#btOk").click(); },
                     data: { model: model, strOrderTotal: vOrderTotal, strGrandTotal: vGrandTotal, strPromId: vPromoId, strVarChanges: vVarChanges, strVarId: vVarId, strPaymentType: PaymentType },
                     type: "Post",
                     success: function (response) {
-                        var Eventid = $('#hdEventid').val();
-                        window.location.href = '@Url.Action("PaymentConfirmation", "TicketPayment")';
+                        if (response.Message == "S") {
+                            var Eventid = $('#hdEventid').val();
+                            window.location.href = '@Url.Action("PaymentConfirmation", "TicketPayment")';
+                        } else {
+                            $("#btnclosemodal").click();
+                          
+                            ShowMessage("E", response.Message);
+                        }
                     }
                 });
-            }
+            //}
         });
 
 
@@ -1659,7 +1670,8 @@ else
                         var vProType = vResult[1].toString();
                         var vProMoAmt = parseFloat(vResult[2].toString());
                         if (isNaN(vProMoAmt) == true) vProMoAmt = 0;
-                        if (vProMoAmt > 0) {
+                        debugger;
+                        if (vProMoAmt > 0 || vProType == "F") {
                             var vTicIds = $("#hidTicketIds").val().split(',');
                             var vVarChanges = parseFloat($("#hdVarChanges").val()); if (isNaN(vVarChanges) == true) vVarChanges = 0;
                             var vTotalAmt = 0;
@@ -1700,7 +1712,7 @@ else
                                     vPrice = (vPrice - vProMoAmt);
                                     $.ajax({
                                         url: '@Url.Action("LockPromoCode", "TicketPayment")',
-                                        data: { dAmt: vProMoAmt, lTQDId: vTQDId },
+                                        data: { dAmt:vProMoAmt,lTQDId:vTQDId,lEventId:vEventid,strCode:vProCode},
                                         type: "Post",
                                         success: function (response) {
                                         }

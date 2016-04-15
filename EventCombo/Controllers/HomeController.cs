@@ -334,7 +334,47 @@ namespace EventCombo.Controllers
 
 
         }
+        public string Discoversavefavourite(long Eventid, string strUrl)
+        {
+           
+            if (Session["AppId"] != null)
+            {
+                using (EventComboEntities objEnt = new EventComboEntities())
+                {
+                    long? lEventid = (Eventid != 0 ? Convert.ToInt64(Eventid) : 0);
+                    string strUserId = Session["AppId"].ToString();
+                    var vfav = (from ev in db.EventFavourites where ev.eventId == lEventid && ev.UserID == strUserId select ev.UserID).FirstOrDefault();
+                    if (vfav != null && vfav.Trim() != "")
+                    {
+                        var userid = Session["AppId"].ToString().Trim();
+                        objEnt.Database.ExecuteSqlCommand("Delete from EventFavourite where UserID='" + userid + "' AND eventId=" + Eventid + "");
+                        objEnt.SaveChanges();
+                        return "D";
+                    }
+                    else
+                    {
+                        EventFavourite ObjEC = new EventFavourite();
+                        ObjEC.eventId = lEventid;
+                        ObjEC.UserID = Session["AppId"].ToString();
+                        objEnt.EventFavourites.Add(ObjEC);
+                        objEnt.SaveChanges();
+                        return "I";
+                    }
+                }
 
+            }
+            else
+            {
+                //string url = strUrl;
+                var url = Request.Url;
+                var baseurl = url.GetLeftPart(UriPartial.Authority);
+                strUrl = strUrl.Replace(baseurl, "");
+
+                Session["ReturnUrl"] = Eventid.ToString() + "~" + strUrl;
+                return "Y";
+
+            }
+        }
 
         public ActionResult DiscoverEvents(string strEt, string strEc, string strPrice, string strPageIndex, string strLat, string strLong, string strSort, string strDateFilter,string strTextSearch)
         {
@@ -358,7 +398,30 @@ namespace EventCombo.Controllers
             }
             string strUrl = @Url.RouteUrl("EvType", new { strEt = strEt, strEc = strEc, strPrice = strPrice, strPageIndex = strPageIndex, strLat = strLat, strLong = strLong, strSort = strSort, strDateFilter = strDateFilter });
 
-            Session["ReturnUrl"] = "DiscoverEvent~" + strUrl;
+            try
+            {
+                if (Session["ReturnUrl"] != null)
+                {
+                    string[] str = Session["ReturnUrl"].ToString().Split('~');
+                    long lEventId = Convert.ToInt32(str[0].ToString());
+                    if (lEventId > 0)
+                    {
+                        Discoversavefavourite(lEventId,strUrl);
+                    }
+                }
+                else
+                {
+                    Session["ReturnUrl"] = "0~" + strUrl;
+                }
+            }
+            catch (Exception)
+            {
+                Session["ReturnUrl"] = "0~" + strUrl;
+                
+            }
+
+
+            
 
             if (strPageIndex == null) strPageIndex = "page";
             if (strDateFilter == null) strDateFilter = "none";
@@ -784,7 +847,7 @@ namespace EventCombo.Controllers
                     else lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList();
                     if (strTextSearch.Trim() != string.Empty)
                     {
-                        lsDisEvt = lsDisEvt.Where(m => m.EventTitle.ToLower().Contains(strTextSearch.ToLower()) || m.EventCat.ToLower().Contains(strTextSearch.ToLower()) || m.EventDisplayAddress.ToLower().Contains(strTextSearch.ToLower())).ToList();
+                        lsDisEvt = lsDisEvt.Where(m => m.EventTitle.ToLower().Contains(strTextSearch.ToLower()) || m.EventCat.ToLower().Contains(strTextSearch.ToLower()) || m.EventType.ToLower().Contains(strTextSearch.ToLower()) || m.EventDisplayAddress.ToLower().Contains(strTextSearch.ToLower())).ToList();
                         //lsDisEvt = lsDisEvt.Where(m => m.EventTitle.Contains(strTextSearch) || m.EventCat.Contains(strTextSearch) || m.EventDisplayAddress.Contains(strTextSearch)).ToList();
                     }
                     try
@@ -907,7 +970,29 @@ namespace EventCombo.Controllers
         public List<DiscoverEvent> GetHomePageEventListing(string strEventTypeId, string strEventCatId, string strPrice, string strLat, string strLong, string strSort, string strDateFilter, ref string strNearLat, ref string strNearLong)
         {
 
-            
+            //try
+            //{
+            //    string strUrl = Url.RouteUrl("EvType", new { strEt = strEt, strEc = strEc, strPrice = strPrice, strPageIndex = strPageIndex, strLat = strLat, strLong = strLong, strSort = strSort, strDateFilter = strDateFilter });
+            //    if (Session["ReturnUrl"] != null)
+            //    {
+            //        string[] str = Session["ReturnUrl"].ToString().Split('~');
+            //        long lEventId = Convert.ToInt32(str[0].ToString());
+            //        if (lEventId > 0)
+            //        {
+            //            Discoversavefavourite(lEventId, strUrl);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        Session["ReturnUrl"] = "0~" + strUrl;
+            //    }
+            //}
+            //catch (Exception)
+            //{
+            //    Session["ReturnUrl"] = "0~" + strUrl;
+
+            //}
+
 
             List<DiscoverEvent> lsDisEvt = new List<DiscoverEvent>();
             using (EventComboEntities db = new EventComboEntities())
@@ -1117,6 +1202,31 @@ namespace EventCombo.Controllers
                     Session["AppId"] = null;
                 }
             }
+
+            string strUrl = Url.RouteUrl("Default");
+
+            try
+            {
+                if (Session["ReturnUrl"] != null)
+                {
+                    string[] str = Session["ReturnUrl"].ToString().Split('~');
+                    long lEventId = Convert.ToInt32(str[0].ToString());
+                    if (lEventId > 0)
+                    {
+                        Discoversavefavourite(lEventId, strUrl);
+                    }
+                }
+                else
+                {
+                    Session["ReturnUrl"] = "0~" + strUrl;
+                }
+            }
+            catch (Exception)
+            {
+                Session["ReturnUrl"] = "0~" + strUrl;
+
+            }
+
 
 
             if (string.IsNullOrEmpty(lat))

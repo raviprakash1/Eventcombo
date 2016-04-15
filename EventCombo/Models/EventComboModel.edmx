@@ -104,10 +104,10 @@
           <Property Name="Zip" Type="varchar" MaxLength="256" />
           <Property Name="Country" Type="varchar" MaxLength="26" />
           <Property Name="PaymentType" Type="varchar" MaxLength="50" />
-          <Property Name="CardId" Type="varchar" MaxLength="50" />
-          <Property Name="card_type" Type="varchar" MaxLength="150" />
-          <Property Name="ExpirationDate" Type="varchar" MaxLength="50" />
-          <Property Name="Cvv" Type="varchar" MaxLength="50" />
+          <Property Name="CardId" Type="varchar" MaxLength="500" />
+          <Property Name="card_type" Type="varchar" MaxLength="500" />
+          <Property Name="ExpirationDate" Type="varchar" MaxLength="500" />
+          <Property Name="Cvv" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="CardDetails">
           <Key>
@@ -117,10 +117,10 @@
           <Property Name="UserId" Type="nchar" MaxLength="128" />
           <Property Name="OrderId" Type="varchar" MaxLength="1000" />
           <Property Name="Guid" Type="nchar" MaxLength="128" />
-          <Property Name="CardNumber" Type="varchar" MaxLength="50" />
-          <Property Name="ExpirationDate" Type="varchar" MaxLength="50" />
-          <Property Name="Cvv" Type="varchar" MaxLength="50" />
-          <Property Name="card_type" Type="varchar" MaxLength="150" />
+          <Property Name="CardNumber" Type="varchar" MaxLength="500" />
+          <Property Name="ExpirationDate" Type="varchar" MaxLength="500" />
+          <Property Name="Cvv" Type="varchar" MaxLength="500" />
+          <Property Name="card_type" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="ControlType">
           <Key>
@@ -394,6 +394,8 @@
           <Property Name="O_First_Name" Type="varchar" MaxLength="100" />
           <Property Name="O_Last_Name" Type="varchar" MaxLength="100" />
           <Property Name="O_Email" Type="varchar" MaxLength="100" />
+          <Property Name="O_Card_TransHash" Type="varchar" MaxLength="100" />
+          <Property Name="O_Card_TransId" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="OrderTemplate">
           <Key>
@@ -1455,10 +1457,10 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="Zip" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Country" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
           <Property Name="PaymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CardId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="card_type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="ExpirationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Cvv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CardId" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="card_type" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ExpirationDate" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Cvv" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CardDetail">
           <Key>
@@ -1468,10 +1470,10 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="CardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ExpirationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Cvv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="card_type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CardNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ExpirationDate" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Cvv" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="card_type" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -1703,6 +1705,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="O_First_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_Last_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_Card_TransHash" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_Card_TransId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Payment_Info">
           <Key>
@@ -1878,23 +1882,6 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
 
           <Property Name="TLD_PromoCodeAmount" Type="Decimal" Precision="18" Scale="2" />
 
-        </EntityType>
-        <EntityType Name="Ticket_Purchased_Detail">
-          <Key>
-            <PropertyRef Name="TPD_Id" />
-          </Key>
-          <Property Name="TPD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TPD_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="TPD_Order_Id" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="TPD_Purchased_Qty" Type="Int64" />
-          <Property Name="TPD_TQD_Id" Type="Int64" />
-          <Property Name="TPD_Event_Id" Type="Int64" />
-          <Property Name="TPD_Amount" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="TPD_Donate" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="TPD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="TPD_EC_Fee" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="TPD_PromoCodeID" Type="Int32" />
-          <Property Name="TPD_PromoCodeAmount" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Ticket_Quantity_Detail">
           <Key>
@@ -2162,7 +2149,6 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySet Name="Status" EntityType="Self.Status" />
           <EntitySet Name="Tickets" EntityType="Self.Ticket" />
           <EntitySet Name="Ticket_Locked_Detail" EntityType="Self.Ticket_Locked_Detail" />
-          <EntitySet Name="Ticket_Purchased_Detail" EntityType="Self.Ticket_Purchased_Detail" />
           <EntitySet Name="Ticket_Quantity_Detail" EntityType="Self.Ticket_Quantity_Detail" />
           <EntitySet Name="TicketBearers" EntityType="Self.TicketBearer" />
           <EntitySet Name="TicketDeliveryMethods" EntityType="Self.TicketDeliveryMethod" />
@@ -2370,6 +2356,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             <End Role="Ticket" EntitySet="Tickets" />
             <End Role="OrderTemplate" EntitySet="OrderTemplates" />
           </AssociationSet>
+          <EntitySet Name="Ticket_Purchased_Detail" EntityType="EventComboModel.Ticket_Purchased_Detail" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -2970,6 +2957,23 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Ticket_Purchased_Detail">
+          <Key>
+            <PropertyRef Name="TPD_Id" />
+          </Key>
+          <Property Name="TPD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TPD_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TPD_Order_Id" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="TPD_Purchased_Qty" Type="Int64" />
+          <Property Name="TPD_TQD_Id" Type="Int64" />
+          <Property Name="TPD_Event_Id" Type="Int64" />
+          <Property Name="TPD_Amount" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="TPD_Donate" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TPD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="TPD_EC_Fee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TPD_PromoCodeID" Type="Int32" />
+          <Property Name="TPD_PromoCodeAmount" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3304,6 +3308,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySetMapping Name="Order_Detail_T">
             <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
               <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="O_Card_TransId" ColumnName="O_Card_TransId" />
+                <ScalarProperty Name="O_Card_TransHash" ColumnName="O_Card_TransHash" />
                 <ScalarProperty Name="O_Email" ColumnName="O_Email" />
                 <ScalarProperty Name="O_Last_Name" ColumnName="O_Last_Name" />
                 <ScalarProperty Name="O_First_Name" ColumnName="O_First_Name" />
@@ -3496,24 +3502,6 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
                 <ScalarProperty Name="TLD_GUID" ColumnName="TLD_GUID" />
                 <ScalarProperty Name="TLD_Donate" ColumnName="TLD_Donate" />
                 <ScalarProperty Name="TicketAmount" ColumnName="TicketAmount" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Ticket_Purchased_Detail">
-            <EntityTypeMapping TypeName="EventComboModel.Ticket_Purchased_Detail">
-              <MappingFragment StoreEntitySet="Ticket_Purchased_Detail">
-                <ScalarProperty Name="TPD_PromoCodeAmount" ColumnName="TPD_PromoCodeAmount" />
-                <ScalarProperty Name="TPD_PromoCodeID" ColumnName="TPD_PromoCodeID" />
-                <ScalarProperty Name="TPD_Id" ColumnName="TPD_Id" />
-                <ScalarProperty Name="TPD_User_Id" ColumnName="TPD_User_Id" />
-                <ScalarProperty Name="TPD_Order_Id" ColumnName="TPD_Order_Id" />
-                <ScalarProperty Name="TPD_Purchased_Qty" ColumnName="TPD_Purchased_Qty" />
-                <ScalarProperty Name="TPD_TQD_Id" ColumnName="TPD_TQD_Id" />
-                <ScalarProperty Name="TPD_Event_Id" ColumnName="TPD_Event_Id" />
-                <ScalarProperty Name="TPD_Amount" ColumnName="TPD_Amount" />
-                <ScalarProperty Name="TPD_Donate" ColumnName="TPD_Donate" />
-                <ScalarProperty Name="TPD_GUID" ColumnName="TPD_GUID" />
-                <ScalarProperty Name="TPD_EC_Fee" ColumnName="TPD_EC_Fee" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3979,6 +3967,24 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
                 <ScalarProperty Name="L_EmailId" ColumnName="L_EmailId" />
                 <ScalarProperty Name="L_I_Id" ColumnName="L_I_Id" />
                 <ScalarProperty Name="L_Id" ColumnName="L_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket_Purchased_Detail">
+            <EntityTypeMapping TypeName="EventComboModel.Ticket_Purchased_Detail">
+              <MappingFragment StoreEntitySet="Ticket_Purchased_Detail">
+                <ScalarProperty Name="TPD_PromoCodeAmount" ColumnName="TPD_PromoCodeAmount" />
+                <ScalarProperty Name="TPD_PromoCodeID" ColumnName="TPD_PromoCodeID" />
+                <ScalarProperty Name="TPD_EC_Fee" ColumnName="TPD_EC_Fee" />
+                <ScalarProperty Name="TPD_GUID" ColumnName="TPD_GUID" />
+                <ScalarProperty Name="TPD_Donate" ColumnName="TPD_Donate" />
+                <ScalarProperty Name="TPD_Amount" ColumnName="TPD_Amount" />
+                <ScalarProperty Name="TPD_Event_Id" ColumnName="TPD_Event_Id" />
+                <ScalarProperty Name="TPD_TQD_Id" ColumnName="TPD_TQD_Id" />
+                <ScalarProperty Name="TPD_Purchased_Qty" ColumnName="TPD_Purchased_Qty" />
+                <ScalarProperty Name="TPD_Order_Id" ColumnName="TPD_Order_Id" />
+                <ScalarProperty Name="TPD_User_Id" ColumnName="TPD_User_Id" />
+                <ScalarProperty Name="TPD_Id" ColumnName="TPD_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

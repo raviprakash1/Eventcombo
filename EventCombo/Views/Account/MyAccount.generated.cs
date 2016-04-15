@@ -655,7 +655,7 @@ WriteLiteral("                            ");
 
             
             #line 201 "..\..\Views\Account\MyAccount.cshtml"
-                       Write(Html.TextBoxFor(m => m.Zip, new { @maxlength = 5, @class = "form-control" }));
+                       Write(Html.TextBoxFor(m => m.Zip, new { @maxlength = 6, @class = "form-control" }));
 
             
             #line default

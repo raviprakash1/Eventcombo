@@ -529,6 +529,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\Email.cs" />
     <Compile Include="ViewModels\EmailInvitation.cs" />
+    <Compile Include="Utils\EncryptDecrypt.cs" />
     <Compile Include="ViewModels\Sidenav.cs" />
     <Compile Include="Views\Account\MyAccount.generated.cs">
       <AutoGen>True</AutoGen>

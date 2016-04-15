@@ -182,8 +182,8 @@
         var clickid = clickfav;
         var vUrl = location.href;
         $.ajax({
-            url: '@Url.Action("Discoversavefavourite", "CreateEvent")',
-            data: { Eventid: eid, type: clickid, strUrl: vUrl },
+            url: '@Url.Action("Discoversavefavourite", "Home")',
+            data: { Eventid: eid,strUrl: vUrl },
             type: "Post",
             success: function (data) {
                 if (data == "Y") {
