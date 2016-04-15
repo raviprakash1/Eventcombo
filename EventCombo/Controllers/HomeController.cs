@@ -970,7 +970,29 @@ namespace EventCombo.Controllers
         public List<DiscoverEvent> GetHomePageEventListing(string strEventTypeId, string strEventCatId, string strPrice, string strLat, string strLong, string strSort, string strDateFilter, ref string strNearLat, ref string strNearLong)
         {
 
-            
+            //try
+            //{
+            //    string strUrl = Url.RouteUrl("EvType", new { strEt = strEt, strEc = strEc, strPrice = strPrice, strPageIndex = strPageIndex, strLat = strLat, strLong = strLong, strSort = strSort, strDateFilter = strDateFilter });
+            //    if (Session["ReturnUrl"] != null)
+            //    {
+            //        string[] str = Session["ReturnUrl"].ToString().Split('~');
+            //        long lEventId = Convert.ToInt32(str[0].ToString());
+            //        if (lEventId > 0)
+            //        {
+            //            Discoversavefavourite(lEventId, strUrl);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        Session["ReturnUrl"] = "0~" + strUrl;
+            //    }
+            //}
+            //catch (Exception)
+            //{
+            //    Session["ReturnUrl"] = "0~" + strUrl;
+
+            //}
+
 
             List<DiscoverEvent> lsDisEvt = new List<DiscoverEvent>();
             using (EventComboEntities db = new EventComboEntities())

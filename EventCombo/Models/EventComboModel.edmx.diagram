@@ -39,7 +39,6 @@
         <EntityTypeShape EntityType="EventComboModel.Status" Width="1.5" PointX="18.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Ticket" Width="1.5" PointX="3" PointY="23.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Ticket_Locked_Detail" Width="1.5" PointX="5.75" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Ticket_Purchased_Detail" Width="1.5" PointX="18.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Ticket_Quantity_Detail" Width="1.5" PointX="5.25" PointY="26" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.TicketBearer" Width="1.5" PointX="7.75" PointY="18.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.TicketDeliveryMethod" Width="1.5" PointX="15" PointY="0.875" IsExpanded="true" />
@@ -72,6 +71,7 @@
         <EntityTypeShape EntityType="EventComboModel.Event_Email_Invitation" Width="1.5" PointX="21.375" PointY="9.75" />
         <EntityTypeShape EntityType="EventComboModel.Event_Email_List" Width="1.5" PointX="21.375" PointY="13.75" />
         <AssociationConnector Association="EventComboModel.FK_Event_Email_List_Event_Email_Invitation" />
+        <EntityTypeShape EntityType="EventComboModel.Ticket_Purchased_Detail" Width="1.5" PointX="21.375" PointY="16.75" />
 
       </Diagram>
     </edmx:Diagrams>

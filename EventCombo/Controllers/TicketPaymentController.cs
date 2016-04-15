@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EventCombo.Models;
+using EventCombo.Utils;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -41,7 +42,7 @@ namespace EventCombo.Controllers
 
 
             }
-
+            EncryptDecrypt EDcode = new EncryptDecrypt();
             EventCreation cs = new EventCreation();
             MyAccount AccDetail = new MyAccount();
             //ValidationMessageController vmc = new ValidationMessageController();
@@ -171,7 +172,7 @@ namespace EventCombo.Controllers
                         foreach (var item in carddetails)
                         {
                             Cardview card1 = new Cardview();
-                            var Scardnumber = item.CardNumber.Trim();
+                            var Scardnumber = EDcode.DecryptText(item.CardNumber).Trim();
                             var Icardlength = Scardnumber.Length;
                             var WrVS = "";
                             int k = 1;
@@ -202,7 +203,8 @@ namespace EventCombo.Controllers
                             var touper = "";
                             if (!string.IsNullOrWhiteSpace(item.card_type))
                             {
-                                touper = char.ToUpper(item.card_type[0]) + item.card_type.Substring(1);
+                                string cardtype = EDcode.DecryptText(item.card_type).Trim();
+                                touper = char.ToUpper(cardtype[0]) + cardtype.Substring(1);
                             }
                             else
                             {
@@ -510,10 +512,10 @@ namespace EventCombo.Controllers
 
         public string returncardetail(string cardid)
         {
-
+            EncryptDecrypt Ecode = new EncryptDecrypt();
             var Carddetails = (from ev in db.CardDetails where ev.CardId.ToString() == cardid select ev).FirstOrDefault();
 
-            return Carddetails.CardNumber + "*" + Carddetails.ExpirationDate + "*" + Carddetails.Cvv;
+            return Ecode.DecryptText(Carddetails.CardNumber)+"*"+Ecode.DecryptText(Carddetails.ExpirationDate)+"*"+Ecode.DecryptText(Carddetails.Cvv);
 
         }
         public ApplicationSignInManager SignInManager
@@ -585,19 +587,37 @@ namespace EventCombo.Controllers
             return strResult;
         }
 
-        public async Task<string> SaveDetails(TicketPayment model, string strOrderTotal, string strGrandTotal, string strPromId, string strVarChanges, string strVarId, string strPaymentType, string strTranId = null, string strPayerId = null, string strTokenNo = null)
+        public async Task<JsonResult> SaveDetails(TicketPayment model, string strOrderTotal, string strGrandTotal, string strPromId, string strVarChanges, string strVarId, string strPaymentType, string strTranId = null, string strPayerId = null, string strTokenNo = null)
         {
             string ApiLoginID; string ApiTransactionKey; string strCardNo; string strExpDate; string strCvvCode; decimal dAmount;
             ApiLoginID = ""; ApiTransactionKey = ""; strCardNo = ""; strExpDate = ""; strCvvCode = ""; dAmount = 0;
 
             var usertype = 0;
             var useridnew = "";
+            string message = "";
 
-        
+            EncryptDecrypt EDcode = new EncryptDecrypt();
 
-            string Userid = "";
+
+            string Userid = "",transactionhash="",transactionid="";
             using (var transaction = db.Database.BeginTransaction())
             {
+                if (strPaymentType == "A")
+                {
+                    ApiLoginID = "354v9ZufxM6";
+                    ApiTransactionKey = "68Et2R3KcV62rJ27";
+                    strCardNo = model.cardno;
+                    strExpDate = model.expirydate;
+                    strCvvCode = model.cvv;
+                    dAmount = (strGrandTotal != "" ? Convert.ToDecimal(strGrandTotal) : 0);
+                   var cardtransaction=  PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
+                    message = cardtransaction.message;
+                    transactionhash = cardtransaction.Transactionhash;
+                    transactionid = cardtransaction.TransactionId;
+
+                }
+                if(strPaymentType == "P" || message=="O")
+                { 
                 var userdetail = UserManager.FindByEmail(model.AccEmail);
                 if (userdetail == null)
                 {
@@ -654,209 +674,212 @@ namespace EventCombo.Controllers
 
                 }
                 string guid = Session["TicketLockedId"].ToString();
-                using (EventComboEntities objEntity = new EventComboEntities())
-                {
-                    //Profile prof = objEntity.Profiles.First(i => i.UserID == Userid);
-                    //prof.FirstName = model.AccFname;
-                    //if (!string.IsNullOrEmpty(model.AccLname))
-                    //{
-                    //    prof.LastName = model.AccLname;
-                    //}
-
-
-
-
-                    List<Ticket_Locked_Detail_List> objLockedTic = new List<Ticket_Locked_Detail_List>();
-                    objLockedTic = GetLockTickets();
-                    Ticket_Purchased_Detail objTPD;
-                    long lPromoId = 0;
-                    foreach (Ticket_Locked_Detail_List TLD in objLockedTic)
+                    using (EventComboEntities objEntity = new EventComboEntities())
                     {
-                        lPromoId = (TLD.TLD_PromoCodeId != null ? Convert.ToInt32(TLD.TLD_PromoCodeId) : 0);
-                        break;
-                    }
+                        //Profile prof = objEntity.Profiles.First(i => i.UserID == Userid);
+                        //prof.FirstName = model.AccFname;
+                        //if (!string.IsNullOrEmpty(model.AccLname))
+                        //{
+                        //    prof.LastName = model.AccLname;
+                        //}
 
 
 
 
-                    Order_Detail_T objOdr = new Order_Detail_T();
-                    objOdr.O_Order_Id = "";
-                    objOdr.O_TotalAmount = CommanClasses.ConvertToNumeric(strGrandTotal); ;
-                    objOdr.O_User_Id = Userid;
-                    objOdr.O_OrderAmount = CommanClasses.ConvertToNumeric(strOrderTotal);
-                    objOdr.O_VariableId = strVarId;
-                    objOdr.O_VariableAmount = CommanClasses.ConvertToNumeric(strVarChanges);
-                    objOdr.O_PromoCodeId = lPromoId;
-                    objOdr.O_OrderDateTime = DateTime.Now;
-                    objOdr.O_PayPal_PayerId = strPayerId;
-                    objOdr.O_PayPal_TokenId = strTokenNo;
-                    objOdr.O_PayPal_TrancId = strTranId;
-                    objOdr.O_Email = model.AccEmail;
-                    objOdr.O_First_Name = model.AccFname;
-                    objOdr.O_Last_Name = model.AccLname;
-                    objEntity.Order_Detail_T.Add(objOdr);
-                    objEntity.SaveChanges();
-
-                    string strOrderNo = GetOrderNo();
-
-                    //List<Ticket_Locked_Detail> objLockedTic = new List<Ticket_Locked_Detail>();
-
-
-                    foreach (Ticket_Locked_Detail_List TLD in objLockedTic)
-                    {
-                        objTPD = new Ticket_Purchased_Detail();
-                        objTPD.TPD_Amount = TLD.TicketAmount;
-                        objTPD.TPD_Donate = TLD.TLD_Donate;
-                        objTPD.TPD_Event_Id = TLD.TLD_Event_Id;
-                        objTPD.TPD_Order_Id = strOrderNo;
-                        objTPD.TPD_Purchased_Qty = TLD.TLD_Locked_Qty;
-                        objTPD.TPD_TQD_Id = TLD.TLD_TQD_Id;
-                        objTPD.TPD_GUID = TLD.TLD_GUID;
-                        objTPD.TPD_User_Id = Userid;
-                        objTPD.TPD_EC_Fee = GetCurrentECFee(TLD.TLD_TQD_Id);
-                        objTPD.TPD_PromoCodeID = TLD.TLD_PromoCodeId;
-                        objTPD.TPD_PromoCodeAmount = TLD.TLD_PromoCodeAmount;
-                        objEntity.Ticket_Purchased_Detail.Add(objTPD);
-                    }
-
-
-                    if (model.Ticketname == "Paid")
-                    {
-
-                        if (model.Savecarddetail != "N")
+                        List<Ticket_Locked_Detail_List> objLockedTic = new List<Ticket_Locked_Detail_List>();
+                        objLockedTic = GetLockTickets();
+                        Ticket_Purchased_Detail objTPD;
+                        long lPromoId = 0;
+                        foreach (Ticket_Locked_Detail_List TLD in objLockedTic)
                         {
-                            var objcarddetail = (from objdetail in objEntity.CardDetails where objdetail.UserId == Userid && objdetail.CardNumber == model.cardno select objdetail).Any();
-                            if (!objcarddetail)
-                            {
-                                CardDetail card = new CardDetail();
-                                card.OrderId = strOrderNo;
-                                card.CardNumber = model.cardno;
-                                card.ExpirationDate = model.expirydate;
-                                card.Cvv = model.cvv;
-                                card.UserId = Userid;
-                                card.Guid = guid;
-                                card.card_type = model.card_type;
-                                objEntity.CardDetails.Add(card);
-                            }
-
-
-                        }
-
-                        if (strTranId == "" || strTranId == null)
-                        {
-                            BillingAddress badd = new BillingAddress();
-                            badd.Fname = model.billfname;
-                            badd.Lname = model.billLname;
-                            badd.Address1 = model.billaddress1;
-                            badd.Address2 = model.billaddress2;
-                            badd.City = model.billcity;
-                            badd.State = model.billstate;
-                            badd.Zip = model.billzip;
-                            badd.Country = model.billcountry;
-                            badd.Phone_Number = model.billingphno;
-                            badd.UserId = Userid;
-                            badd.Guid = guid;
-                            badd.OrderId = strOrderNo;
-                            badd.PaymentType = "C";
-                            badd.CardId = model.cardno;
-                            badd.card_type = model.card_type;
-                            badd.Cvv = model.cvv;
-                            badd.ExpirationDate = model.expirydate;
-                            objEntity.BillingAddresses.Add(badd);
-                        }
-                        if (model.Saveshipdetail != "N")
-                        {
-                            ShippingAddress shipadd = new ShippingAddress();
-
-                            shipadd.Fname = model.shipfname;
-                            shipadd.Lname = model.shipLname;
-                            shipadd.Address1 = model.shipaddress1;
-                            shipadd.Address2 = model.shipaddress2;
-                            shipadd.City = model.shipcity;
-                            shipadd.State = model.shipstate;
-                            shipadd.Zip = model.shipzip;
-                            shipadd.Country = model.shipcountry;
-                            shipadd.Phone_Number = model.shipphno;
-                            shipadd.UserId = Userid;
-                            shipadd.Guid = guid;
-                            shipadd.OrderId = strOrderNo;
-                            objEntity.ShippingAddresses.Add(shipadd);
-                        }
-                        if (model.sameshipbilldetail == "Y")
-                        {
-                            ShippingAddress shipadd = new ShippingAddress();
-                            shipadd.Fname = model.billfname;
-                            shipadd.Lname = model.billLname;
-                            shipadd.Address1 = model.billaddress1;
-                            shipadd.Address2 = model.billaddress2;
-                            shipadd.City = model.billcity;
-                            shipadd.State = model.billstate;
-                            shipadd.Zip = model.billzip;
-                            shipadd.Country = model.billcountry;
-                            shipadd.Phone_Number = model.billingphno;
-                            shipadd.UserId = Userid;
-                            shipadd.Guid = guid;
-                            shipadd.OrderId = strOrderNo;
-                            objEntity.ShippingAddresses.Add(shipadd);
-                        }
-                        if (model.NameList != null)
-                        {
-                            TicketBearer ObjAdd = new TicketBearer();
-                            foreach (TicketBearer objA in model.NameList)
-                            {
-
-                                ObjAdd = new TicketBearer();
-                                ObjAdd.UserId = Userid;
-                                ObjAdd.Guid = guid;
-                                ObjAdd.Email = objA.Email;
-                                ObjAdd.Name = objA.Name;
-                                ObjAdd.OrderId = strOrderNo;
-                                objEntity.TicketBearers.Add(ObjAdd);
-
-
-                            }
+                            lPromoId = (TLD.TLD_PromoCodeId != null ? Convert.ToInt32(TLD.TLD_PromoCodeId) : 0);
+                            break;
                         }
 
 
-                        // -------------------------------------------------- Payment Transfer Card detail -----------------------------------------
 
-                    }
-                    try
-                    {
+
+                        Order_Detail_T objOdr = new Order_Detail_T();
+                        objOdr.O_Order_Id = "";
+                        objOdr.O_TotalAmount = CommanClasses.ConvertToNumeric(strGrandTotal); ;
+                        objOdr.O_User_Id = Userid;
+                        objOdr.O_OrderAmount = CommanClasses.ConvertToNumeric(strOrderTotal);
+                        objOdr.O_VariableId = strVarId;
+                        objOdr.O_VariableAmount = CommanClasses.ConvertToNumeric(strVarChanges);
+                        objOdr.O_PromoCodeId = lPromoId;
+                        objOdr.O_OrderDateTime = DateTime.Now;
+                        objOdr.O_PayPal_PayerId = strPayerId;
+                        objOdr.O_PayPal_TokenId = strTokenNo;
+                        objOdr.O_PayPal_TrancId = strTranId;
+                        objOdr.O_Email = model.AccEmail;
+                        objOdr.O_First_Name = model.AccFname;
+                        objOdr.O_Last_Name = model.AccLname;
+                        objOdr.O_Card_TransHash = transactionhash;
+                        objOdr.O_Card_TransId = transactionid;
+                        objEntity.Order_Detail_T.Add(objOdr);
                         objEntity.SaveChanges();
+
+                        string strOrderNo = GetOrderNo();
+
+                        //List<Ticket_Locked_Detail> objLockedTic = new List<Ticket_Locked_Detail>();
+
+
+                        foreach (Ticket_Locked_Detail_List TLD in objLockedTic)
+                        {
+                            objTPD = new Ticket_Purchased_Detail();
+                            objTPD.TPD_Amount = TLD.TicketAmount;
+                            objTPD.TPD_Donate = TLD.TLD_Donate;
+                            objTPD.TPD_Event_Id = TLD.TLD_Event_Id;
+                            objTPD.TPD_Order_Id = strOrderNo;
+                            objTPD.TPD_Purchased_Qty = TLD.TLD_Locked_Qty;
+                            objTPD.TPD_TQD_Id = TLD.TLD_TQD_Id;
+                            objTPD.TPD_GUID = TLD.TLD_GUID;
+                            objTPD.TPD_User_Id = Userid;
+                            objTPD.TPD_EC_Fee = GetCurrentECFee(TLD.TLD_TQD_Id);
+                            objTPD.TPD_PromoCodeID = TLD.TLD_PromoCodeId;
+                            objTPD.TPD_PromoCodeAmount = TLD.TLD_PromoCodeAmount;
+                            objEntity.Ticket_Purchased_Detail.Add(objTPD);
+                        }
+
+
+                        if (model.Ticketname == "Paid")
+                        {
+                            if (model.strPaymentType != "P")
+                            {
+                                if (model.Savecarddetail != "N")
+                                {
+                                    var objcarddetail = (from objdetail in objEntity.CardDetails where objdetail.UserId == Userid && objdetail.CardNumber == model.cardno select objdetail).Any();
+                                    if (!objcarddetail)
+                                    {
+                                        CardDetail card = new CardDetail();
+                                        card.CardNumber = EDcode.EncryptText(model.cardno);
+                                        card.ExpirationDate = EDcode.EncryptText(model.expirydate);
+                                        card.Cvv = EDcode.EncryptText(model.cvv);
+                                        card.UserId = Userid;
+                                        card.Guid = guid;
+                                        card.card_type = EDcode.EncryptText(model.card_type);
+                                        objEntity.CardDetails.Add(card);
+                                    }
+
+
+                                }
+
+                                if (strTranId == "" || strTranId == null)
+                                {
+                                    BillingAddress badd = new BillingAddress();
+                                    badd.Fname = model.billfname;
+                                    badd.Lname = model.billLname;
+                                    badd.Address1 = model.billaddress1;
+                                    badd.Address2 = model.billaddress2;
+                                    badd.City = model.billcity;
+                                    badd.State = model.billstate;
+                                    badd.Zip = model.billzip;
+                                    badd.Country = model.billcountry;
+                                    badd.Phone_Number = model.billingphno;
+                                    badd.UserId = Userid;
+                                    badd.Guid = guid;
+                                    badd.OrderId = strOrderNo;
+                                    badd.PaymentType = "C";
+                                    badd.CardId = EDcode.EncryptText(model.cardno);
+                                    badd.card_type = EDcode.EncryptText(model.card_type);
+                                    badd.Cvv = EDcode.EncryptText(model.cvv);
+                                    badd.ExpirationDate = EDcode.EncryptText(model.expirydate);
+                                    objEntity.BillingAddresses.Add(badd);
+                                }
+                                if (model.Saveshipdetail != "N")
+                                {
+                                    ShippingAddress shipadd = new ShippingAddress();
+
+                                    shipadd.Fname = model.shipfname;
+                                    shipadd.Lname = model.shipLname;
+                                    shipadd.Address1 = model.shipaddress1;
+                                    shipadd.Address2 = model.shipaddress2;
+                                    shipadd.City = model.shipcity;
+                                    shipadd.State = model.shipstate;
+                                    shipadd.Zip = model.shipzip;
+                                    shipadd.Country = model.shipcountry;
+                                    shipadd.Phone_Number = model.shipphno;
+                                    shipadd.UserId = Userid;
+                                    shipadd.Guid = guid;
+                                    shipadd.OrderId = strOrderNo;
+                                    objEntity.ShippingAddresses.Add(shipadd);
+                                }
+                                if (model.sameshipbilldetail == "Y")
+                                {
+                                    ShippingAddress shipadd = new ShippingAddress();
+                                    shipadd.Fname = model.billfname;
+                                    shipadd.Lname = model.billLname;
+                                    shipadd.Address1 = model.billaddress1;
+                                    shipadd.Address2 = model.billaddress2;
+                                    shipadd.City = model.billcity;
+                                    shipadd.State = model.billstate;
+                                    shipadd.Zip = model.billzip;
+                                    shipadd.Country = model.billcountry;
+                                    shipadd.Phone_Number = model.billingphno;
+                                    shipadd.UserId = Userid;
+                                    shipadd.Guid = guid;
+                                    shipadd.OrderId = strOrderNo;
+                                    objEntity.ShippingAddresses.Add(shipadd);
+                                }
+                            }
+                            if (model.NameList != null)
+                            {
+                                TicketBearer ObjAdd = new TicketBearer();
+                                foreach (TicketBearer objA in model.NameList)
+                                {
+
+                                    ObjAdd = new TicketBearer();
+                                    ObjAdd.UserId = Userid;
+                                    ObjAdd.Guid = guid;
+                                    ObjAdd.Email = objA.Email;
+                                    ObjAdd.Name = objA.Name;
+                                    ObjAdd.OrderId = strOrderNo;
+                                    objEntity.TicketBearers.Add(ObjAdd);
+
+
+                                }
+                            }
+
+
+                            // -------------------------------------------------- Payment Transfer Card detail -----------------------------------------
+
+                        }
+                        try
+                        {
+                            objEntity.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+
+                            ExceptionLogging.SendErrorToText(ex);
+                        }
+
+                        //else if (strPaymentType == "P")
+                        //{
+                        //    RedirectToAction("Pay", "Cart");
+                        //}
+
+
+
+
+
+
+                        //Session["AppId"] = Userid;
+                        Session["TicketLockedId"] = guid;
+
+                         return Json(new { Message = "S",Order = strOrderNo }); ;
                     }
-                    catch (Exception ex)
+
+
+                }
+                else
+                {
+                    if(message=="E")
                     {
-                        transaction.Rollback();
-
-                        ExceptionLogging.SendErrorToText(ex);
+                        message = "Not able to proceed with payment contact administrator";
                     }
-                    if (strPaymentType == "A")
-                    {
-                        ApiLoginID = "354v9ZufxM6";
-                        ApiTransactionKey = "68Et2R3KcV62rJ27";
-                        strCardNo = model.cardno;
-                        strExpDate = model.expirydate;
-                        strCvvCode = model.cvv;
-                        dAmount = (strGrandTotal != "" ? Convert.ToDecimal(strGrandTotal) : 0);
-                        //  PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
-                    }
-                    //else if (strPaymentType == "P")
-                    //{
-                    //    RedirectToAction("Pay", "Cart");
-                    //}
-
-
-
-
-
-
-                    //Session["AppId"] = Userid;
-                    Session["TicketLockedId"] = guid;
-
-                    return strOrderNo;
-
-
+                    return Json(new { Message = message, Order = "" }); ;
                 }
             }
             
@@ -1554,11 +1577,11 @@ namespace EventCombo.Controllers
 
         #endregion
 
-        public async Task<string> SaveDetailsForPaypal(string strTranId, string strPayerId, string strTokenNo)
+        public async Task<JsonResult> SaveDetailsForPaypal(string strTranId, string strPayerId, string strTokenNo)
         {
             TicketPayment objTP = (Session["TicketDatamodel"] != null ? (TicketPayment)Session["TicketDatamodel"] : null);
 
-            string strResult = await SaveDetails(objTP, objTP.strOrderTotal, objTP.strGrandTotal, objTP.strPromId, objTP.strVarChanges, objTP.strVarId, objTP.strPaymentType, strTranId, strPayerId, strTokenNo);
+            JsonResult strResult = await SaveDetails(objTP, objTP.strOrderTotal, objTP.strGrandTotal, objTP.strPromId, objTP.strVarChanges, objTP.strVarId, objTP.strPaymentType, strTranId, strPayerId, strTokenNo);
             return strResult;
         }
 
@@ -1604,7 +1627,7 @@ namespace EventCombo.Controllers
 
 
                     var email = acountdedtails.Email;
-                    var username = acountdedtails.Firstname + " " + acountdedtails.Lastname;
+                    var username = (!String.IsNullOrEmpty(Orderdetail.O_First_Name)? Orderdetail.O_First_Name: acountdedtails.Firstname) + " " + (!String.IsNullOrEmpty(Orderdetail.O_First_Name)? Orderdetail.O_Last_Name:acountdedtails.Lastname);
 
                     string emailnames = "", emailonpayment = "";
                     string Organisername = "", Organiseremail = "";
@@ -1800,7 +1823,7 @@ namespace EventCombo.Controllers
 
                     ps.sendlatestdetails = acountdedtails.SendLatestdetails;
                     ps.Username = username;
-                    ps.Email = email;
+                    ps.Email = emailorder;
                     var url = Request.Url;
                     var baseurl = url.GetLeftPart(UriPartial.Authority);
                     ps.url = baseurl + Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + Eventdetails.EventTitle.Trim() + "౼" + Eventid + "౼N";
