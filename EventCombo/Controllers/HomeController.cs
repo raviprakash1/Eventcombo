@@ -1203,6 +1203,31 @@ namespace EventCombo.Controllers
                 }
             }
 
+            string strUrl = Url.RouteUrl("Default");
+
+            try
+            {
+                if (Session["ReturnUrl"] != null)
+                {
+                    string[] str = Session["ReturnUrl"].ToString().Split('~');
+                    long lEventId = Convert.ToInt32(str[0].ToString());
+                    if (lEventId > 0)
+                    {
+                        Discoversavefavourite(lEventId, strUrl);
+                    }
+                }
+                else
+                {
+                    Session["ReturnUrl"] = "0~" + strUrl;
+                }
+            }
+            catch (Exception)
+            {
+                Session["ReturnUrl"] = "0~" + strUrl;
+
+            }
+
+
 
             if (string.IsNullOrEmpty(lat))
             {
