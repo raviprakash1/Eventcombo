@@ -19,7 +19,7 @@ namespace EventCombo.Controllers
             {
                 TicketPaymentController objTc = new TicketPaymentController();
                 objTc.ControllerContext = new ControllerContext(this.Request.RequestContext, objTc);
-                string strResult = await objTc.SaveDetails(objTP, objTP.strOrderTotal, objTP.strGrandTotal, objTP.strPromId, objTP.strVarChanges, objTP.strVarId, objTP.strPaymentType);
+                JsonResult strResult = await objTc.SaveDetails(objTP, objTP.strOrderTotal, objTP.strGrandTotal, objTP.strPromId, objTP.strVarChanges, objTP.strVarId, objTP.strPaymentType);
             }
             return View();
         }
