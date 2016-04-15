@@ -246,6 +246,12 @@
 
 <script>
     $(document).ready(function () {
+
+        $(document).ajaxStop(function () {
+            $(document).find("#crt_promcode").click();
+            $("#sidebar").find("#dvcrtpromcode").addClass("active");
+            $("#sidebar").find("#dvcrtpromcode b").addClass('opened new-opend');
+        });
         $('#sidebar').load('@Url.Action("Sidenav", "ManageEvent", new { eventid=Model.Eventid })');
        
         $('#crt_promcode').click();

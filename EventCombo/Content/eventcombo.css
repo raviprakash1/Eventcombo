@@ -102,7 +102,7 @@ button:focus { outline: none;}
 .acnt_btn:hover{background-color: #00cafd; border:1px solid #00cafd;}
 .midd_container{ margin-bottom: 20px;}
 .forget_container{ background:#f0f0f0; padding:20px !important; }
-.forget_title{ display: block; background-color: #00cafd; margin-bottom: 0px;  padding:7px 10px; border:1px solid #aaaaaa; font-size: 1.3em; text-transform: uppercase; }
+.forget_title{ display: block; background-color: #00cafd; color:#fff; margin-bottom: 0px;  padding:7px 10px; font-size: 1.3em; text-transform: uppercase; }
 .forget_con_inner{ display: block; background-color: #fff; min-height: 150px;  padding:20px 10px;   font-size: 1em; text-transform: uppercase; }
 
 .event_list_main{ width: 100%; float: left; margin-bottom: 10px; }
@@ -729,6 +729,10 @@ span.evnt_toltip{
 
  #eventtopscoll.viewevent_container .xs-viewevent-inner{ margin-top: 22px !important;}
 .xs-viewevent-inner{margin-top: 3px;}
+
+ #forgotcheck.forgot_top{ margin-top:139px !important;}
+ #forgotcheck{ margin-top:-10px; }
+
 .nav_ipad_right{ left:160px !important;}
 }
 @media (width: 768px) {
@@ -755,6 +759,9 @@ span.evnt_toltip{
 
     #eventtopscoll.viewevent_container .xs-viewevent-inner{ margin-top: 22px !important;}
     .xs-viewevent-inner{margin-top: 3px;}
+
+    #forgotcheck.forgot_top{ margin-top:161px !important;}
+    #forgotcheck{ margin-top:-10px; }
 }
 
 
@@ -766,6 +773,10 @@ span.evnt_toltip{
    #mainhead{ height:150px;}
    .createeventtop.event_top{ margin-top:137px;}
    .createeventtop{margin-top:2px;}
+
+ #forgotcheck.forgot_top{ margin-top:161px !important;}
+ #forgotcheck{ margin-top:-10px; }
+
 }
 @media (max-width: 768px)  {
  
@@ -825,6 +836,10 @@ span.evnt_toltip{
 
 #eventtopscoll.viewevent_container .xs-viewevent-inner{ margin-top: -24px !important;}
 .xs-viewevent-inner{margin-top: -10px;}
+
+#forgotcheck{ margin-top:-10px; }
+#forgotcheck.forgot_top{ margin-top:207px !important;}
+
 .desc_pl_0{ padding-left:0px !important}
 .xs_create_code_mb10{ margin-bottom:10px;}
 .xs_crt_evnt_edit_org_btn{ width:100%; float:left; margin-top:10px; padding:0px; }
@@ -922,6 +937,11 @@ span.evnt_toltip{
 .ev_date_icn{left:-10px !important;}
 .ev_loc_icn{ left:0px !important;}
 
+#mainhead .col-sm-1{top:18px !important; }
+#mainhead .Fix_Head{top: -6px !important;}
+#divmain .Fix_Head{ margin-top:-8px; }
+#divmain .social_icn{margin-top:-15px !important;}
+
 #navtop{margin-top:5px;}
 #midsection{margin-top:15px;}
 #navtop.affix-top {margin-top:0px; position:relative; }
@@ -938,7 +958,10 @@ span.evnt_toltip{
 .xsmr0{ margin-right:0px !important}
 
 #eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 154px !important;}
+.promo_code_btn{ margin-top:10px;}
 
+#forgotcheck{ margin-top:-10px; }
+#forgotcheck.forgot_top{ margin-top:207px !important;}
 }
 
 
@@ -972,6 +995,10 @@ span.evnt_toltip{
 
 #eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 154px !important;}
 .xs-paymentconf-inner{ margin-top: -10px;}
+
+
+#forgotcheck.forgot_top{ margin-top:194px !important;}
+#forgotcheck{ margin-top:-9px; }
 }
 
 @media (min-width: 375px) and (max-width: 667px){
@@ -1009,8 +1036,12 @@ span.evnt_toltip{
 .xs375zip{ padding:0px; margin-bottom:10px; }
 
 .ev_date_icn{  margin-top: 0px !important; left: 0px !important; }
+.promo_code_btn{ margin-top:10px;}
 
-
+#mainhead .col-sm-1{top:18px !important; }
+#mainhead .Fix_Head{top: -6px !important;}
+#divmain .Fix_Head{ margin-top:-8px; }
+#divmain .social_icn{margin-top:-15px !important;}
 
 }
 
@@ -1075,7 +1106,7 @@ span.evnt_toltip{
 
 
 #scrollhome.con_scr0l_home{margin-top:214px !important;}
-#divsecmain .col-sm-1{ top:15px !important;  }
+/*#divsecmain .col-sm-1{ top:15px !important;  }*/
 /*#eventtopscoll .cbtMakeLive { right:65px; position:relative; }*/ 
 #mainhead{ height:140px;}
 .createeventtop.event_top{ margin-top:125px;}
@@ -1095,7 +1126,12 @@ span.evnt_toltip{
 .xsmr0{ margin-right:0px !important}
 .xspad0{ padding:0px;}
 .ev_date_icn{  margin-top: 0px !important; left: -10px !important; }
+.promo_code_btn{ margin-top:10px;}
 
+#mainhead .col-sm-1{top:18px !important; }
+#mainhead .Fix_Head{top: -6px !important;}
+#divmain .Fix_Head{ margin-top:-8px; }
+#divmain .social_icn{margin-top:-15px !important;}
 }
 @media (width: 736px) {
 .ev_loc_icn{ left:200px !important; }
@@ -1187,6 +1223,10 @@ span.evnt_toltip{
 
 #eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 153px !important;}
 .xs-paymentconf-inner{ margin-top:3px;}
+
+#forgotcheck.forgot_top{ margin-top:139px !important;}
+#forgotcheck{ margin-top:-10px; }
+
 }
 
 @media (min-width: 1280px) {
@@ -2130,3 +2170,7 @@ div.dis_file_upld{ background:#ccc !important;}
 .modal-backdrop.fade.in{ z-index:1111; }
  .ipad_min_height{ min-height:470px;}
  .crt_map{ margin-right: 8px; width: 175px;}
+
+#forgotcheck{ margin-top:-10px; }
+#forgotcheck.forgot_top{ margin-top:120px;}
+.forg_acnt_title{ margin-top:0px;}

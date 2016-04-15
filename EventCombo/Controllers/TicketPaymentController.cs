@@ -42,13 +42,13 @@ namespace EventCombo.Controllers
 
             }
 
-
-            ValidationMessageController vmc = new ValidationMessageController();
+            EventCreation cs = new EventCreation();
+            MyAccount AccDetail = new MyAccount();
+            //ValidationMessageController vmc = new ValidationMessageController();
             if ((Session["AppId"] != null))
             {
-                HomeController hmc = new HomeController();
-                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
-                string usernme = hmc.getusername();
+               
+                string usernme = AccDetail.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
                     return RedirectToAction("Index", "Home");
@@ -58,7 +58,7 @@ namespace EventCombo.Controllers
             if (Session["TicketLockedId"] != null)
             {
                 Event objMyEvent = new Event();
-                objMyEvent = vmc.GetSelectedEventDetail(Session["TicketLockedId"].ToString());
+                objMyEvent = cs.GetSelectedEventDetail(Session["TicketLockedId"].ToString());
                 if(objMyEvent==null)
                 {
                     return RedirectToAction("Index", "Home");
@@ -75,7 +75,7 @@ namespace EventCombo.Controllers
 
             }
 
-            Eventid = vmc.GetLatestEventId(Eventid);
+            Eventid = cs.GetLatestEventId(Eventid);
 
             TicketPayment tp = new TicketPayment();
             string defaultCountry = "";
@@ -86,8 +86,7 @@ namespace EventCombo.Controllers
             //var url = Url.RouteUrl("Payment");
             Session["ReturnUrl"] = "TicketPayment~" + url;
 
-            CreateEventController cs = new CreateEventController();
-            AccountController AccDetail = new AccountController();
+          
             var tt = cs.GetImages(Eventid).FirstOrDefault();
             if (!string.IsNullOrWhiteSpace(tt))
             {
@@ -565,8 +564,7 @@ namespace EventCombo.Controllers
             var usertype = 0;
             var useridnew = "";
 
-            HomeController hm = new HomeController();
-            hm.ControllerContext = new ControllerContext(this.Request.RequestContext, hm);
+        
 
             string Userid = "";
             using (var transaction = db.Database.BeginTransaction())
@@ -649,6 +647,9 @@ namespace EventCombo.Controllers
                         break;
                     }
 
+
+
+
                     Order_Detail_T objOdr = new Order_Detail_T();
                     objOdr.O_Order_Id = "";
                     objOdr.O_TotalAmount = CommanClasses.ConvertToNumeric(strGrandTotal); ;
@@ -666,6 +667,7 @@ namespace EventCombo.Controllers
                     objOdr.O_Last_Name = model.AccLname;
                     objEntity.Order_Detail_T.Add(objOdr);
                     objEntity.SaveChanges();
+
                     string strOrderNo = GetOrderNo();
 
                     //List<Ticket_Locked_Detail> objLockedTic = new List<Ticket_Locked_Detail>();
@@ -1441,7 +1443,8 @@ namespace EventCombo.Controllers
                 {
                     try {
                         long lMax = (from Ord in objECE.Order_Detail_T
-                                     select Ord.O_Id
+                                     where (Ord.O_Order_Id ?? string.Empty)!= string.Empty
+                                     select Ord.O_Id  
                                       ).Max();
 
                         strOrderNo = (from Ord in objECE.Order_Detail_T
@@ -1535,12 +1538,11 @@ namespace EventCombo.Controllers
             if (Session["TicketLockedId"] != null)
             {
                 PaymentConfirmation ps = new PaymentConfirmation();
-                HomeController hmc = new HomeController();
-                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
-                AccountController ac = new AccountController();
-                ac.ControllerContext = new ControllerContext(this.Request.RequestContext, ac);
-                CreateEventController cs = new CreateEventController();
-                cs.ControllerContext = new ControllerContext(this.Request.RequestContext, cs);
+              
+                MyAccount ac = new MyAccount();
+               
+                EventCreation cs = new EventCreation();
+              
                 string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
                 try {
                     Session["TicketDatamodel"] = null;
@@ -1551,7 +1553,7 @@ namespace EventCombo.Controllers
                     //Session["ReturnUrl"] = "TicketPayment~" + url;
                     //var url = Url.RouteUrl("Payment");
                     Session["ReturnUrl"] = "PaymentConfirmation~" + currenturl;
-                    var Emailtemplate = hmc.getEmail("eticket");
+                    var Emailtemplate = ac.getEmail("eticket");
                     List<paymentdate> Dateofevent = new List<paymentdate>();
                    
                     List<Email_Tag> EmailTag = new List<Email_Tag>();
@@ -1612,7 +1614,7 @@ namespace EventCombo.Controllers
                     var eventdetail = db.Events.FirstOrDefault(i => i.EventID == Eventid);
 
                     //Get Email tags
-                    EmailTag = hmc.getTag();
+                    EmailTag = ac.getTag();
                     //Get Email tags
                     foreach (var item in TicketPurchasedDetail)
                     {
@@ -1745,7 +1747,7 @@ namespace EventCombo.Controllers
 
                         // ImageMapPath = Server.MapPath("..") + "/Images/Imagemap_"+EvtOrDetail.TPD_Order_Id+ ".png";
                         //Mail 
-                        hmc.SendHtmlFormattedEmail(to, from, subjectn, body, cc, bcc, attachment, emailname, "", "", Emailbearer);
+                        ac.SendHtmlFormattedEmail(to, from, subjectn, body, cc, bcc, attachment, emailname, "", "", Emailbearer);
                         //Mail 
 
 

@@ -503,7 +503,16 @@ else
 </script>
 
             <script type="text/javascript">
-               
+                //$("#sidebar").find("#crt_promcode").click(function() {
+                //    alert('button clicked');
+                //});
+
+                $(document).ajaxStop(function() {
+                    $(document).find("#crt_promcode").click();
+                    $("#sidebar").find("#dvcrtpromcode").addClass("active");
+                    $("#sidebar").find("#dvcrtpromcode b").addClass('opened new-opend');
+                });
+              
                 $(".upload_help_icn_inner").css("display", "none");
                 $('.help_icon_hov').hover(
                  function () {
@@ -511,8 +520,8 @@ else
                  },
                  function () {
                      $(".upload_help_icn_inner").hide();
-                 }
-               );
+                 });
+               
 
                 function allownumber(el, evt, id) {
 
