@@ -696,8 +696,7 @@ else
 
             if (msg != "") {
                 ShowMessage('E', msg)
-                //$('#diverroacc').css('display', 'block');
-                //$('#erraccmsg').html(msg);
+               
                 return false;
             }
             else {
@@ -1503,38 +1502,7 @@ else
 
         var NameList = [];
 
-        //if ($("#confirmEmail").length > 0) {
-        //    $.ajax({
-        //        url: "/Home/IsValid",
-        //        async: true,
-        //        data: 'Email=' + Emaillogin,
-        //        dataType: "text",
-        //        success: function (data, textStatus, xhr) {
-        //            if (data != '') {
-        //                if (data == "NotFound") {
-        //                    flag = true;
-
-        //                    $('#hdemailexist').val(true);
-
-        //                } else if (data == "Found") {
-
-        //                    $('#Email').focus();
-        //                    $("#Email").addClass('err-bor');
-
-
-        //                    ShowMessage('E', ajaxsetup('TicketPayment', 'TPayValidateEmailSy'))
-
-        //                    $('#hdemailexist').val(false);
-
-        //                }
-        //            }
-        //        },
-        //        error: function (xhr, textStatus, errorThrown) {
-        //            alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
-        //        }
-        //    });
-        //}
-
+       
 
 
 
@@ -1556,11 +1524,11 @@ else
         });
         debugger;
 
-        if ($('#shippinginfo').is(":checked") == true) {
+        //if ($('#shippinginfo').is(":checked") == true) {
 
 
 
-        }
+        //}
         var totalorder = $('#hdOrderTotal').val();
         var type = '';
         if (totalorder > 0) {
@@ -1580,6 +1548,8 @@ else
         var vPromoId = $("#hdPromoId").val();
         var vVarChanges = $("#hdVarChanges").val();
         var vVarId = $("#hdVarId").val();
+        var Eventid = $('#hdEventid').val();
+        var PaymentType = $("#selectcard").val();
         debugger;
         var model = {
 
@@ -1588,38 +1558,38 @@ else
             'AccEmail': $('#Email').val(),
             'AccconfirmEmail': $('#confirmEmail').val(),
             'Accpassword': $('#password').val(),
-            'Accconfirmpassword': $('#confirmpassword').val(),
-            'Accountphnno': $('#accountphnno').val(),
-            'AccCity': $('#accCity').val(),
-            'AccState': $('#accState').val(),
-            'Acczip': $('#accZip').val(),
-            'Acccountry': $('#accCountry').val(),
-            'cardno': $('#cardno').val(),
-            'card_type': cardtype,
-            'expirydate': $('#expirationdate').val(),
-            'cvv': $('#cvvcode').val(),
-            'billfname': $('#billfname').val(),
-            'billLname': $('#billLname').val(),
-            'billingphno': $('#billingphno').val(),
-            'billaddress1': $('#billaddress1').val(),
-            'billaddress2': $('#billaddress2').val(),
-            'billcity': $('#billcity').val(),
-            'billzip': $('#billzip').val(),
-            'billstate': $('#billstate').val(),
-            'billcountry': $('#billcountry').val(),
-            'shipfname': $('#shipfname').val(),
-            'shipLname': $('#shipLname').val(),
-            'shipphno': $('#shippingphnno').val(),
-            'shipaddress1': $('#shipaddress1').val(),
-            'shipaddress2': $('#shipaddress2').val(),
-            'shipcity': $('#shipcity').val(),
-            'shipzip': $('#shipzip').val(),
-            'shipstate': $('#shipstate').val(),
-            'shipcountry': $('#shipcountry').val(),
+            'Accconfirmpassword': '',
+            'Accountphnno': '',
+            'AccCity': '',
+            'AccState': '',
+            'Acczip': '',
+            'Acccountry': '',
+            'cardno': '',
+            'card_type': '',
+            'expirydate': '',
+            'cvv': '',
+            'billfname': '',
+            'billLname': '',
+            'billingphno':'',
+            'billaddress1':'',
+            'billaddress2': '',
+            'billcity':'',
+            'billzip':'',
+            'billstate': '',
+            'billcountry': '',
+            'shipfname': '',
+            'shipLname': '',
+            'shipphno': '',
+            'shipaddress1':'',
+            'shipaddress2': '',
+            'shipcity': '',
+            'shipzip':'',
+            'shipstate': '',
+            'shipcountry': '',
             'NameList': NameList,
-            'Savecarddetail': ($("#chkcarddetails").is(":checked") == true ? "Y" : "N"),
-            'Saveshipdetail': ($("#shippinginfo").is(":checked") == true ? "Y" : "N"),
-            'sameshipbilldetail': ($("#sameshipping").is(":checked") == true ? "Y" : "N"),
+            'Savecarddetail': '',
+            'Saveshipdetail': '',
+            'sameshipbilldetail': '',
             'Ticketname': type,
             'strOrderTotal': vOrderTotal,
             'strGrandTotal': vGrandTotal,
@@ -1629,8 +1599,7 @@ else
             'strPaymentType': PaymentType
         }
 
-        var Eventid = $('#hdEventid').val();
-        var PaymentType = $("#selectcard").val();
+       
 
         $.ajax({
             url: '@Url.Action("SetSessionPaypaldetail", "Cart")',
@@ -2238,14 +2207,17 @@ else
     function getcardvisa(e) {
         if ($("#" + e).val() != '') {
             var result = $("#" + e).validateCreditCard();
-
-            if (result.card_type.name == 'visa' || result.card_type.name == 'mastercard' || result.card_type.name == 'discover' || result.card_type.name == 'amex') {
-                $('#imgcard').css('display', 'block');
-                $('#imgcard').attr('src', '/Images/' + result.card_type.name + '.png');
-
-            } else {
-
+            if (result.card_type == null) {
                 $('#imgcard').css('display', 'none');
+            } else {
+                if (result.card_type.name == 'visa' || result.card_type.name == 'mastercard' || result.card_type.name == 'discover' || result.card_type.name == 'amex') {
+                    $('#imgcard').css('display', 'block');
+                    $('#imgcard').attr('src', '/Images/' + result.card_type.name + '.png');
+
+                } else {
+
+                    $('#imgcard').css('display', 'none');
+                }
             }
         } else {
             $('#imgcard').css('display', 'none');
