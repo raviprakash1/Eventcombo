@@ -16,8 +16,7 @@ namespace EventCombo
             ConfigureAuth(app);
 
             TicketEmailer ticketEmailer = new TicketEmailer();
-            GlobalConfiguration.Configuration
-                .UseSqlServerStorage("MyConnection");
+            GlobalConfiguration.Configuration.UseSqlServerStorage("MyConnection");
 
             RecurringJob.AddOrUpdate(() => ticketEmailer.send(), Cron.Minutely);
 
