@@ -1659,7 +1659,8 @@ else
                         var vProType = vResult[1].toString();
                         var vProMoAmt = parseFloat(vResult[2].toString());
                         if (isNaN(vProMoAmt) == true) vProMoAmt = 0;
-                        if (vProMoAmt > 0) {
+                        debugger;
+                        if (vProMoAmt > 0 || vProType == "F") {
                             var vTicIds = $("#hidTicketIds").val().split(',');
                             var vVarChanges = parseFloat($("#hdVarChanges").val()); if (isNaN(vVarChanges) == true) vVarChanges = 0;
                             var vTotalAmt = 0;
@@ -1700,7 +1701,7 @@ else
                                     vPrice = (vPrice - vProMoAmt);
                                     $.ajax({
                                         url: '@Url.Action("LockPromoCode", "TicketPayment")',
-                                        data: { dAmt: vProMoAmt, lTQDId: vTQDId },
+                                        data: { dAmt:vProMoAmt,lTQDId:vTQDId,lEventId:vEventid,strCode:vProCode},
                                         type: "Post",
                                         success: function (response) {
                                         }

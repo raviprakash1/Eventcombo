@@ -1622,7 +1622,7 @@ namespace EventCombo.Controllers
                 var url = Request.Url;
                 var baseurl = url.GetLeftPart(UriPartial.Authority);
                 strUrl = strUrl.Replace(baseurl, "");
-                Session["ReturnUrl"] = "DiscoverEvent~" + strUrl;
+              //  Session["ReturnUrl"] = "DiscoverEvent~" + strUrl;
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
                     long? lEventid = (Eventid != "" ? Convert.ToInt64(Eventid) : 0);
@@ -1654,7 +1654,7 @@ namespace EventCombo.Controllers
                 var baseurl = url.GetLeftPart(UriPartial.Authority);
                 strUrl = strUrl.Replace(baseurl, "");
 
-                Session["ReturnUrl"] = "DiscoverEvent~" + strUrl;
+                Session["ReturnUrl"] = Eventid.ToString() + "~" + strUrl;
                 return "Y";
 
             }

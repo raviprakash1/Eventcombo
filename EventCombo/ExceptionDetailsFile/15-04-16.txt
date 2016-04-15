@@ -1,0 +1,24 @@
+-----------Exception Details on  4/15/2016 2:02:31 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/15/2016 2:02:31 PM
+
+Error Line No : ine 487
+
+Error Message: InvalidCastException
+
+Exception Type: System.InvalidCastException
+
+Error Location : Unable to cast object of type 'EventCombo.Models.Promo_Code' to type 'System.IConvertible'.
+
+ Error Page Url: http://localhost:10159/ticketpayment/lockpromocode
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

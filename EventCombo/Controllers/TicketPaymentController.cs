@@ -398,16 +398,16 @@ namespace EventCombo.Controllers
                             }
                             else
                             {
-                                strResult = strResult + "F~" + "0";
+                                strResult = strResult + "~F~" + "0";
                             }
 
-                            List<Ticket_Locked_Detail> objTLD = (from TLD in context.Ticket_Locked_Detail where TLD.TLD_GUID == strGUID select TLD).ToList();
-                            foreach (Ticket_Locked_Detail tl in objTLD)
-                            {
-                                tl.TLD_PromoCodeId = PromoCode.PC_id;
-                                context.SaveChanges();
+                            //List<Ticket_Locked_Detail> objTLD = (from TLD in context.Ticket_Locked_Detail where TLD.TLD_GUID == strGUID select TLD).ToList();
+                            //foreach (Ticket_Locked_Detail tl in objTLD)
+                            //{
+                            //    tl.TLD_PromoCodeId = PromoCode.PC_id;
+                            //    context.SaveChanges();
 
-                            }
+                            //}
 
                         }
                         //for (int i =0;i<strTAry.Length;i++)
@@ -452,16 +452,45 @@ namespace EventCombo.Controllers
             return strResult;
         }
 
-        public string LockPromoCode(decimal dAmt, long lTQDId)
+        public string LockPromoCode(decimal dAmt, long lTQDId,long lEventId, string strCode)
         {
             try
             {
                 string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
                 using (var context = new EventComboEntities())
                 {
-                    Ticket_Locked_Detail objTLD = (from TLD in context.Ticket_Locked_Detail where TLD.TLD_GUID == strGUID && TLD.TLD_TQD_Id == lTQDId select TLD).FirstOrDefault();
-                    objTLD.TLD_PromoCodeAmount = dAmt;
-                    context.SaveChanges();
+                    var vTicket = (from Tic in context.Tickets where Tic.E_Id == lEventId select Tic).ToList();
+                    bool bflag = false;
+                    bool bisPaid = false;
+                    foreach (Ticket objTic in vTicket)
+                    {
+                        if (objTic.TicketTypeID  == 2)
+                        {
+                            bisPaid = true;
+                            break;
+                        }
+                    }
+                    if (bisPaid == false)
+                    {
+                        var vPromoCode = (from pc in db.Promo_Code where pc.PC_Code == strCode && pc.PC_Eventid == lEventId select pc.PC_id).FirstOrDefault();
+                        Ticket_Locked_Detail objTLD = (from TLD in context.Ticket_Locked_Detail where TLD.TLD_GUID == strGUID && TLD.TLD_TQD_Id == lTQDId select TLD).FirstOrDefault();
+                        objTLD.TLD_PromoCodeId = vPromoCode;
+                        objTLD.TLD_PromoCodeAmount = dAmt;
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        Ticket_Locked_Detail objTLD = (from TLD in context.Ticket_Locked_Detail where TLD.TLD_GUID == strGUID && TLD.TLD_TQD_Id == lTQDId select TLD).FirstOrDefault();
+                        var vTicketId =  (from TQD in context.Ticket_Quantity_Detail where TQD.TQD_Id == lTQDId select TQD.TQD_Ticket_Id).FirstOrDefault();
+                        var vTicketType = (from Tic in context.Tickets where Tic.T_Id == vTicketId select Tic.TicketTypeID).FirstOrDefault();
+                        if (vTicketType == 2)
+                        {
+                            var vPromoCode = (from pc in db.Promo_Code where pc.PC_Code == strCode && pc.PC_Eventid == lEventId select pc.PC_id).FirstOrDefault();
+                            objTLD.TLD_PromoCodeId = vPromoCode;
+                            objTLD.TLD_PromoCodeAmount = dAmt;
+                            context.SaveChanges();
+                        }
+                    }
                 }
                 return "Y";
             }
