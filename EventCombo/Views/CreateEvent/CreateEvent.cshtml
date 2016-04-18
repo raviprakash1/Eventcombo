@@ -241,7 +241,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-12 bggrey clearfix" >
+            <div class="col-sm-12 bggrey clearfix xs-crt-evnt-pad-0" >
                 <div class="col-sm-3 col-xs-12 pt10 text-left no_pad" >
                     <label class="btn ev_live_sub_btn yelw_live_btn"  style="display:none;" id="dvdraft"> DRAFT </label>
 
@@ -267,7 +267,7 @@
                 </div>
             </div>
 
-            <div class="event-upload-container">
+            <div class="event-upload-container xs-upload-container">
                 <input type="file" name="image" id="input2" multiple data-jfiler-maxSize="2">
                 <div class="evnt_title_bg evnt_title_top">
                     <div class="form-group mb5">
@@ -581,27 +581,26 @@
                 </div>
                 <div class="evnt_details_body">
                     <div class="col-sm-12 mt20 no_pad">
-                        <div class="col-sm-4 pl0">
+                        <div class="col-sm-4 pl0 xs-evnt-type-pad-0">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label ev_tickt_lebel pl0">Type*</label>
-                                <div class="col-sm-9 dropheight">
+                                <div class="col-sm-9 xs-evnt-type-pad-0 dropheight">
                                     @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control selectpicker wd600 chkvalidation" })
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 pl0 xs768-pl0">
+                        <div class="col-sm-4 pl0 xs768-pl0 xs-evnt-type-pad-0">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label ev_tickt_lebel pl0">Category*</label>
-                                <div class="col-sm-9 dropheight">
+                                <div class="col-sm-9 xs-evnt-type-pad-0 dropheight">
                                     @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control selectpicker wd600 chkvalidation" })
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 pl0">
+                        <div class="col-sm-4 pl0 xs-evnt-type-pad-0">
                             <div class="form-group">
                                 <label class="col-sm-5 control-label ev_tickt_lebel no_pad">Sub Category</label>
-                                <div class="col-sm-7 dropheight">
-
+                                <div class="col-sm-7 xs-evnt-type-pad-0 dropheight">
                                     <select id="ddlEventSubCategory" class="form-control  wd600"></select>
                                 </div>
                             </div>
@@ -804,24 +803,24 @@
                                         </div>
                                         <div class="col-sm-3 no_pad">
                                             <div class="form-group">
-                                                <label class="col-sm-4 control-label ev_tickt_lebel">Ticket*</label>
-                                                <div class="col-sm-8">
+                                                <label class="col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Ticket*</label>
+                                                <div class="col-sm-8 xs-tkt-typ-pad-0">
                                                     <input type="text" class="form-control evnt_inp_cont chkvalidation" id="id_ticket_type-n" placeholder="Early Bird, RSVP..." maxlength="256" onblur="checkvalidatetkt(this.id)" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-2 no_pad">
                                             <div class="form-group">
-                                                <label class="col-sm-3 control-label ev_tickt_lebel">Qty*</label>
-                                                <div class="col-sm-9">
+                                                <label class="col-sm-3 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Qty*</label>
+                                                <div class="col-sm-9 xs-tkt-typ-pad-0">
                                                     <input type="text" class="form-control evnt_inp_cont txtsum numbers chkvalidation" id="id_quantity_total-n" maxlength="6" placeholder="" onblur="changeqty(this.id)" onkeypress="allownumber(this,event,this.id)" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-3 no_pad">
                                             <div class="form-group paidticket-n" id="id_paid-n">
-                                                <label class="col-sm-5 no_pad control-label ev_tickt_lebel">Price* $</label>
-                                                <div class="col-sm-7 ">
+                                                <label class="col-sm-5 no_pad control-label ev_tickt_lebel xs-tkt-typ-pad-0">Price* $</label>
+                                                <div class="col-sm-7 xs-tkt-typ-pad-0">
                                                     <input type="text" class="form-control evnt_inp_cont numbers" id="id_cost-n" onkeypress="validatenumdec(this, event, this.id)" onkeyup="changefee(this.id, event)" onblur="    tofixed(this.id)"   placeholder="0.00" maxlength="9" />
                                                 </div>
 
@@ -830,12 +829,12 @@
                                                 <label class="col-sm-4 no_pad control-label ev_tickt_lebel" id="id_paymenttype-n" />
 
                                             </div>
-                                            <div class="label-control lbl_bot_price paidticket-n" id="idlbuyertotal-n">
+                                            <div class="label-control lbl_bot_price paidticket-n " id="idlbuyertotal-n">
                                                 <span class="buyer_tot">Buyer(s) total: </span>
                                                 <span class="buyer_price" id="id_buyerprice-n">$0.00 </span>
                                                 <span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
 
-                                                <div class="tooltip" id="id_tooltip-n">Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $0.00 <br /> Buyer(s) Total &nbsp;&nbsp; &nbsp;  $0.00</div>
+                                                <div class="tooltip xs-buyer-total" id="id_tooltip-n">Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $0.00 <br /> Buyer(s) Total &nbsp;&nbsp; &nbsp;  $0.00</div>
                                                 <label class="pull-right" style="color:red;display:none;" id="id_lblprice-n">Please enter valid number</label>
                                             </div>
                                             @*<div class="label-control lbl_bot_price  paidticket-n" id="idlbuyertotal-n">
@@ -850,8 +849,8 @@
                                         </div>
                                         <div class="col-sm-3 no_pad xs768det-del">
                                             <div class="form-group paidticket-n" id="id_Disc-n">
-                                                <label class="col-sm-4 control-label ev_tickt_lebel">Disc.$</label>
-                                                <div class="col-sm-8">
+                                                <label class="col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Disc.$</label>
+                                                <div class="col-sm-8 xs-tkt-typ-pad-0">
                                                     <input type="text" class="form-control evnt_inp_cont numbers" placeholder="0" id="id_Discount-n" onkeypress="validatenumdec(this, event, this.id)"  onblur="    tofixed(this.id)" maxlength="9"/>
 
                                                 </div>
@@ -1211,7 +1210,7 @@
                     <div class="col-sm-12 col-xs-12 text-left no_pad">
                         <h2 class="fb_dis_head ">
                             <label class="ev_fb_lable"><img src="~/Images/fb.png"> ENABLE DISCUSSION <input id="chkAllowFBDis" type="checkbox" /></label>
-                            <label class="ev_fb_lable">PUBLISH EVENT TO FACEBOOK <input id="chkPublishEventOnFB" type="checkbox" /></label>
+                            <label class="ev_fb_lable xs-evnt-fb-mr-0">PUBLISH EVENT TO FACEBOOK <input id="chkPublishEventOnFB" type="checkbox" /></label>
                         </h2>
                     </div>
                     <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>

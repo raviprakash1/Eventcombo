@@ -2437,11 +2437,11 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                                            <label");
 
-WriteLiteral(" class=\"col-sm-3 control-label ev_tickt_lebel\"");
+WriteLiteral(" class=\"col-sm-3 control-label ev_tickt_lebel xs-tkt-typ-pad-0\"");
 
 WriteLiteral(">Ticket*</label>\r\n                                            <div");
 
-WriteLiteral(" class=\"col-sm-9\"");
+WriteLiteral(" class=\"col-sm-9 xs-tkt-typ-pad-0\"");
 
 WriteLiteral(">\r\n                                                <input");
 
@@ -2469,11 +2469,11 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                                            <label");
 
-WriteLiteral(" class=\"col-sm-3 control-label ev_tickt_lebel\"");
+WriteLiteral(" class=\"col-sm-3 control-label ev_tickt_lebel xs-tkt-typ-pad-0\"");
 
 WriteLiteral(">Qty*</label>\r\n                                            <div");
 
-WriteLiteral(" class=\"col-sm-9\"");
+WriteLiteral(" class=\"col-sm-9 xs-tkt-typ-pad-0\"");
 
 WriteLiteral(">\r\n                                                <input");
 
@@ -2505,11 +2505,11 @@ WriteLiteral(" id=\"id_paid-n\"");
 
 WriteLiteral(">\r\n                                            <label");
 
-WriteLiteral(" class=\"col-sm-5 no_pad control-label ev_tickt_lebel\"");
+WriteLiteral(" class=\"col-sm-5 no_pad control-label ev_tickt_lebel xs-tkt-typ-pad-0\"");
 
 WriteLiteral(">Price $*</label>\r\n                                            <div");
 
-WriteLiteral(" class=\"col-sm-7 \"");
+WriteLiteral(" class=\"col-sm-7 xs-tkt-typ-pad-0\"");
 
 WriteLiteral(">\r\n                                                <input");
 
@@ -2571,7 +2571,7 @@ WriteLiteral(" class=\"fa fa-info-circle\"");
 
 WriteLiteral("></i></span>\r\n\r\n                                            <div");
 
-WriteLiteral(" class=\"tooltip\"");
+WriteLiteral(" class=\"tooltip xs-buyer-total\"");
 
 WriteLiteral(" id=\"id_tooltip-n\"");
 
@@ -2603,11 +2603,11 @@ WriteLiteral(" id=\"id_Disc-n\"");
 
 WriteLiteral(">\r\n                                            <label");
 
-WriteLiteral(" class=\"col-sm-4 control-label ev_tickt_lebel\"");
+WriteLiteral(" class=\"col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0\"");
 
 WriteLiteral(">Disc.$</label>\r\n                                            <div");
 
-WriteLiteral(" class=\"col-sm-8\"");
+WriteLiteral(" class=\"col-sm-8 xs-tkt-typ-pad-0\"");
 
 WriteLiteral(">\r\n                                                <input");
 
