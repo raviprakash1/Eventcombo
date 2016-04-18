@@ -325,10 +325,10 @@ span.evnt_toltip{
 }
 .tooltip{ width: 200px; float: left; 
     background: #333; border-radius: 3px; color: #fff;  
-    left: 79px !important;
+    left: 10px !important;
     padding: 5px;
     position: absolute;
-    top: -42px !important;
+    top: -28px !important;
     display:none;
  }
 
@@ -845,6 +845,9 @@ span.evnt_toltip{
 .xs_crt_evnt_edit_org_btn{ width:100%; float:left; margin-top:10px; padding:0px; }
 .xs_crt_evnt_edit_org_btn button{ width:100%;  margin-bottom:5px; }
 .xs_tkt_typ_btn{ margin-bottom:5px;}
+.xs-evnt-type-pad-0{ padding:0px;}
+.xs-tkt-typ-pad-0{ padding:0px !important;}
+.xs-buyer-total{ top:15px !important;}
 }
 @media (width: 320px) {
 .ev_loc_icn{ left:-10px !important; }
@@ -866,6 +869,11 @@ span.evnt_toltip{
 #eventtopscoll.viewevent_container .xs-viewevent-inner{ margin-top: -20px !important;}
 #eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 152px !important;}
 .promo_code_btn{ margin-top:10px;}
+.xs-crt-evnt-pad-0{ padding:0px;}
+
+.xs-upload-container{ border:10px solid #f0f0f0;}
+.xs-upload-container-15{ border:15px solid #f0f0f0;}
+.xs-evnt-fb-mr-0{ margin-right:0px !important;}
 }
 @media (width: 480px){
 
@@ -931,6 +939,10 @@ span.evnt_toltip{
 .xs-100{width:100%; float:left;}
 .d_xs_pad_l0{ padding-left:0px;}
 .desc_pl_0{ padding-left:0px !important}
+
+.xs-evnt-type-pad-0{ padding:0px;}
+.xs-tkt-typ-pad-0{ padding:0px !important;}
+.xs-buyer-total{ top:15px !important;}
 }
 
 @media (width: 360px) {
