@@ -1558,9 +1558,10 @@ else
         var vGrandTotal = $("#hdGrandTotal").val();
         var vPromoId = $("#hdPromoId").val();
         var vVarChanges = $("#hdVarChanges").val();
-        var vVarId = $("#hdVarId").val();
+        var vVarId = $("#hdVChg").val();
         var Eventid = $('#hdEventid').val();
         var PaymentType = $("#selectcard").val();
+        
         debugger;
         var model = {
 
@@ -1673,6 +1674,7 @@ else
                         debugger;
                         if (vProMoAmt > 0 || vProType == "F") {
                             var vTicIds = $("#hidTicketIds").val().split(',');
+                            var vTictqdId = $("#hdIds").val().split(',');
                             var vVarChanges = parseFloat($("#hdVarChanges").val()); if (isNaN(vVarChanges) == true) vVarChanges = 0;
                             var vTotalAmt = 0;
                             var vGrandAmt = 0;
@@ -1694,11 +1696,11 @@ else
                                         }
                                     }
                                 }
-                                vPrice = parseFloat($("#spPrice_" + vTicIds[i]).text());
-                                vQty = parseFloat($("#spQty_" + vTicIds[i]).text());
-                                vFee = parseFloat($("#spFee_" + vTicIds[i]).text());
-                                vDonation = parseFloat($("#spDonation_" + vTicIds[i]).text());
-                                vTQDId = parseFloat($("#spTQDId_" + vTicIds[i]).text());
+                                vPrice = parseFloat($("#spPrice_" + vTictqdId[i]).text());
+                                vQty = parseFloat($("#spQty_" + vTictqdId[i]).text());
+                                vFee = parseFloat($("#spFee_" + vTictqdId[i]).text());
+                                vDonation = parseFloat($("#spDonation_" + vTictqdId[i]).text());
+                                vTQDId = parseFloat($("#spTQDId_" + vTictqdId[i]).text());
                                 if (isNaN(vPrice) == true) vPrice = 0;
                                 if (isNaN(vTQDId) == true) vTQDId = 0;
 
@@ -1770,8 +1772,8 @@ else
 
     function calculateTickTotal(vAmount, vvarId) {
 
+
         $("#hdVChg").val(vvarId);
-        debugger;
         var vOrderTotal = parseFloat($("#hdOrderTotal").val());
         var vPromoTotal = parseFloat($("#hdPromoCodetotal").val());
 
@@ -1812,7 +1814,6 @@ else
             $('.divvisible').hide();
             //$('#cardshow').css('display', 'none');
         }
-
     }
     function calculateTickTotalOptional(vCount) {
 
