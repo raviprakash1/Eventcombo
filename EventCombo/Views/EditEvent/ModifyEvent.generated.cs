@@ -4310,7 +4310,7 @@ WriteLiteral(" />\r\n");
             #line hidden
 WriteLiteral("\r\n\r\n                            </label>\r\n\r\n                            <label");
 
-WriteLiteral(" class=\"ev_fb_lable\"");
+WriteLiteral(" class=\"ev_fb_lable xs-evnt-fb-mr-0\"");
 
 WriteLiteral(">\r\n                                PUBLISH EVENT TO FACEBOOK\r\n");
 
