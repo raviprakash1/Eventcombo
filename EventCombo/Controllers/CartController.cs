@@ -81,6 +81,10 @@ namespace EventCombo.Controllers
                 }
                 else
                 {
+                    ViewData["token"] = "";
+                    ViewData["PayerID"] = "";
+                    ViewData["TRANSACTIONID"] = "";
+                    ViewData["Amount"] = "";
                     ViewData["ReturnMessage"] = retMsg;
                 }
             }catch(Exception ex)

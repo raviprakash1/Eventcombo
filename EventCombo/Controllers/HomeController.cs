@@ -783,9 +783,9 @@ namespace EventCombo.Controllers
                         objDisEv.PriceLable = GetPriceLabel(lEventId);
                         objDisEv.EventLike = GetDiscoverEventFavLikes(lEventId, strUserId);
                         var vAddress = objEv.Addresses.FirstOrDefault();
-                        objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble(strLat), Convert.ToDouble(strLong), Convert.ToDouble(vAddress.Latitude), Convert.ToDouble(vAddress.Longitude));
                         if (vAddress != null)
                         {
+                            objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble(strLat), Convert.ToDouble(strLong), Convert.ToDouble(vAddress.Latitude), Convert.ToDouble(vAddress.Longitude));
                             if (vAddress.ConsolidateAddress.Trim() != string.Empty)
                             {
                                 objDisEv.EventAddress = vAddress.ConsolidateAddress;
@@ -795,10 +795,15 @@ namespace EventCombo.Controllers
                                 objDisEv.EventAddress = vAddress.VenueName.Trim() + " " + vAddress.Address1.Trim() + " " + vAddress.Address2.Trim() + " " + vAddress.City.Trim() + " " + vAddress.Zip;
                             }
                             objDisEv.EventDisplayAddress = objDisEv.EventAddress;
+                            if (objDisEv.EventAddress.Length > 140)
+                            {
+                                objDisEv.EventAddress = objDisEv.EventAddress.Substring(0, 135) + "...";
+                            }
                         }
-                        if (objDisEv.EventAddress.Length > 140)
+                        else
                         {
-                            objDisEv.EventAddress = objDisEv.EventAddress.Substring(0, 135) + "...";
+                            objDisEv.EventDistance = double.MaxValue;
+                            objDisEv.EventAddress = "Online";
                         }
 
                         if (bflag == true)
@@ -847,7 +852,7 @@ namespace EventCombo.Controllers
                     else lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList();
                     if (strTextSearch.Trim() != string.Empty)
                     {
-                        lsDisEvt = lsDisEvt.Where(m => m.EventTitle.ToLower().Contains(strTextSearch.ToLower()) || m.EventCat.ToLower().Contains(strTextSearch.ToLower()) || m.EventType.ToLower().Contains(strTextSearch.ToLower()) || m.EventDisplayAddress.ToLower().Contains(strTextSearch.ToLower())).ToList();
+                        lsDisEvt = lsDisEvt.Where(m => m.EventTitle.ToLower().Contains(strTextSearch.ToLower()) || m.EventCat.ToLower().Contains(strTextSearch.ToLower()) || m.EventType.ToLower().Contains(strTextSearch.ToLower()) || (m.EventDisplayAddress != null ? m.EventDisplayAddress.ToLower().Contains(strTextSearch.ToLower()) : m.EventType.ToLower().Contains(strTextSearch.ToLower()))).ToList();
                         //lsDisEvt = lsDisEvt.Where(m => m.EventTitle.Contains(strTextSearch) || m.EventCat.Contains(strTextSearch) || m.EventDisplayAddress.Contains(strTextSearch)).ToList();
                     }
                     try
@@ -1007,7 +1012,7 @@ namespace EventCombo.Controllers
 
                 if (strEventIds.Trim() != "")
                 {
-                    sbQuery.Append("Select * from Event where EventStatus = 'Live' and isnull(Parent_EventID,0) = 0");
+                    sbQuery.Append("Select * from Event where EventStatus = 'Live' ");
                     sbQuery.Append(" and EventID in (" + strEventIds + ")");
 
                     var vEventList = db.Events.SqlQuery(sbQuery.ToString()).ToList();
@@ -1057,9 +1062,9 @@ namespace EventCombo.Controllers
                         objDisEv.EventFeature = (objEv.Feature != null ? Convert.ToInt16(objEv.Feature) : 10); // 10 - becz if feature is null then that event have to show at last according to feature sorting 
                         objDisEv.FeatureDateTime = (objEv.FeatureUpdateDate != null ? Convert.ToDateTime(objEv.FeatureUpdateDate) : DateTime.Now);
                         var vAddress = objEv.Addresses.FirstOrDefault();
-                        objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble(strLat), Convert.ToDouble(strLong), Convert.ToDouble(vAddress.Latitude), Convert.ToDouble(vAddress.Longitude));
                         if (vAddress != null)
                         {
+                            objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble(strLat), Convert.ToDouble(strLong), Convert.ToDouble(vAddress.Latitude), Convert.ToDouble(vAddress.Longitude));
                             if (vAddress.ConsolidateAddress.Trim() != string.Empty)
                             {
                                 objDisEv.EventAddress = vAddress.ConsolidateAddress;
@@ -1069,11 +1074,17 @@ namespace EventCombo.Controllers
                                 objDisEv.EventAddress = vAddress.VenueName.Trim() + " " + vAddress.Address1.Trim() + " " + vAddress.Address2.Trim() + " " + vAddress.City.Trim() + " " + vAddress.Zip;
                             }
                             objDisEv.EventDisplayAddress = objDisEv.EventAddress;
+                            if (objDisEv.EventAddress.Length > 140)
+                            {
+                                objDisEv.EventAddress = objDisEv.EventAddress.Substring(0, 135) + "...";
+                            }
                         }
-                        if (objDisEv.EventAddress.Length > 140)
+                        else
                         {
-                            objDisEv.EventAddress = objDisEv.EventAddress.Substring(0, 135) + "...";
+                            objDisEv.EventDistance = double.MaxValue;
+                            objDisEv.EventAddress = "Online";
                         }
+                        
 
                         if (bflag == true)
                         {
