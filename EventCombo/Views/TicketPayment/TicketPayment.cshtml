@@ -1619,7 +1619,6 @@ else
         $.ajax({
             url: '@Url.Action("SetSessionPaypaldetail", "Cart")',
             data: { model: model },
-            async: false,
             type: "Post",
             success: function (response) {
                 if (response == "Y") {
