@@ -2211,3 +2211,5 @@ div.dis_file_upld{ background:#ccc !important;}
 .vw_tkt_modal{ background:#fff; }
 .vw_tkt_modal_body{ padding:15px 30px;}
 .no-shdw{ box-shadow:none !important;}
+.form-control.promotional-readonly{ background:#fff;}
+.crt-code-no-listing{ font-size:18px; color:#000;}

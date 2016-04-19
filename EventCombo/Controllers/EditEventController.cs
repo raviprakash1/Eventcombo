@@ -206,7 +206,7 @@ namespace EventCombo.Controllers
                     Session["Fromname"] = "events";
                     var url = Url.Action("CreateEvent", "CreateEvent");
                     Session["ReturnUrl"] = "CreateEvent~" + url;
-
+                   
                     string defaultCountry = "";
                     string timezone = objCr.TimeZone != null ? objCr.TimeZone : "31";
                     using (EventComboEntities db = new EventComboEntities())

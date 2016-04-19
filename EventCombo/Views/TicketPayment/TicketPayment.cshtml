@@ -1812,6 +1812,14 @@ else
             $('.divvisible').hide();
             //$('#cardshow').css('display', 'none');
         }
+       var valselect= $("#selectcard").val()
+       if (valselect.trim() == "P") {
+          
+            $('#cardshow').css('display', 'none');
+            $('#divshippinginfo').css('display', 'none');
+            $('#dvBillingAddress').css('display', 'none');
+            
+        }
     }
     function calculateTickTotalOptional(vCount) {
 
@@ -1876,6 +1884,12 @@ else
             $('.divqtyvisible').hide();
         } else {
             $('.divqtyvisible').show();
+        }
+        if($("#selectcard").val()=="P")
+        {
+            $('#cardshow').css('display', 'none');
+            $('#divshippinginfo').css('display', 'none');
+            $('#dvBillingAddress').css('display', 'none');
         }
 
     }
