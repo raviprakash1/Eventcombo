@@ -280,7 +280,7 @@
                     </div>
                     <div class="col-sm-9 text-right no_pad">
                         <div class="form-group mb0 ">
-                            <div class="ev_date_icn StartDate"></div>
+                            <div class="ev_date_icn StartDate xs-date-icon-remv"></div>
                             <label id="btEnterDates" class="StartDate label-control evnt_title_date fs24">Click here to enter the start and end date*</label>
                             <div class="form-group mb5">
                                 <label class="Timezone label-control evnt_title_timezone mb0" id="lblTimeZone">Timezone & date setting</label>
@@ -329,7 +329,7 @@
                             <div class="col-sm-12 no_pad" id="dvAddress">
                                 <div class="form-group mb5">
                                     <div class="EntVenAdd col-sm-12 no_pad">
-                                        <div class="ev_loc_icn"></div>
+                                        <div class="ev_loc_icn xs-loc-icon-rem"></div>
                                         <div class="col-sm-10 no_pad mb5 pull-right">
                                             <input id="txtEventLocation" onkeypress="txtEventLocation_KeyPress(event);" class="form-control evnt_title_control evnt_title_location evnt_placehold" placeholder="Click here to enter venue address*" />
                                         </div>
@@ -714,7 +714,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 mt10 no_pad">
+                    <div class="clearfix"></div>
+                    <div class="col-sm-12 mt10 ">
                         <button type="button" id="btAddOrg" class="btn btn-primary btn-lg ev_add_sub_btn"> Add New Organizer </button>
                     </div>
                     <div class="col-sm-12 mt20 no_pad">
@@ -1130,14 +1131,14 @@
                         <div class="TicketFees col-sm-12 no_pad">
                             <div class="form-group">
                                 <div class="col-sm-5 no_pad">
-                                    <label class="col-sm-4 control-label ev_tickt_lebel">Description*</label>
-                                    <div class="col-sm-8">
+                                    <label class="col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Description*</label>
+                                    <div class="col-sm-8 xs-tkt-typ-pad-0">
                                         <input class="form-control evnt_inp_cont chkvalidation" type="text" placeholder="" id="id_vardesc" maxlength="256">
                                     </div>
                                 </div>
                                 <div class="col-sm-5 no_pad">
-                                    <label class="col-sm-2 control-label ev_tickt_lebel">Type</label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-2 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Type</label>
+                                    <div class="col-sm-10 xs-tkt-typ-pad-0">
                                         <select class="form-control ev_drop_label" id="variabletype">
                                             <option value="O">Optional</option>
                                             <option value="R">Required </option>
@@ -1145,7 +1146,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 no_pad">
+                                <div class="col-sm-2 no_pad xs-var-chrg-btn-mt10">
                                     <button class="btn btn-primary btn-lg  ev_add_sub_btn var_chg_btn" type="button">Add</button>
                                 </div>
                             </div>
@@ -1158,24 +1159,26 @@
                                 </div>
                                 <div class="col-sm-12 no_pad" id="id_clonevariable-n" style="display:none;">
                                     <div class="list-group-item ev_var_chrg_list">
-                                        <div class="form-group">
-                                            <div class="col-sm-7 col-xs-7">
+                                        <div class="col-sm-10 col-xs-10 no_pad">
+                                            <div class="col-sm-5 col-xs-6 no_pad">
                                                 <input class="form-control evnt_inp_cont" type="text" placeholder="Variable Charges Description n" id="id_varsubdesc-n" maxlength="256" onblur="checkvalidatetkt(this.id)">
                                             </div>
-                                            <div class="col-sm-4 col-xs-4">
-                                                <label class="col-sm-1 control-label ev_tickt_lebel">$</label>
-                                                <div class="col-sm-10 no_pad">
-                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="0.00" id="id_varsubprice-n" maxlength="9" onkeypress="validatenumdec(this, event, this.id);" onblur="    tofixed(this.id); checkvalidatetkt(this.id);" >
+                                            <div class="col-sm-7 col-xs-6 no_pad">
+                                                    <label class="col-sm-2 col-xs-3 control-label ev_tickt_lebel text-center xs-var-chg-lebel">$</label>
+                                                    <div class="col-sm-10 col-xs-9 no_pad xs-var-chg-div">
+                                                        <input class="form-control evnt_inp_cont" type="text" placeholder="0.00" id="id_varsubprice-n" maxlength="9" onkeypress="validatenumdec(this, event, this.id);" onblur="    tofixed(this.id); checkvalidatetkt(this.id);">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main">
-                                                <a class="btn" id="btn_vardelete-n"  href="#cnfrmdeletevariable-n" data-toggle="modal">
+                                        </div>
+                                        <div class="col-sm-2 col-xs-2 no_pad">
+                                            <div class="col-sm-12 col-xs-12 no_pad text-right var_chrg_edt_main">
+                                                <a class="btn" id="btn_vardelete-n" href="#cnfrmdeletevariable-n" data-toggle="modal">
                                                     <i class="fa fa-times"></i>
                                                 </a>
                                                 @*<button class="btn" type="button" id="btn_vardelete-n" onclick="deletevariable(this.id)"><i class="fa fa-times"></i></button>*@
                                             </div>
                                         </div>
-                                    </div>
+                                        </div>
                                     <div class="modal fade" id="cnfrmdeletevariable-n" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
                                             <div class="modal-content">
@@ -1342,14 +1345,14 @@
                                 <input id="State" class="form-control evnt_inp_cont" placeholder="State" />
                             </div>
                         </div>
-                        <div class="col-sm-6 row pull-right">
+                        <div class="col-sm-6 row pull-right xs-multi-add-ven">
                             <div class="form-group">
                                 <input id="Zip" class="form-control evnt_inp_cont" placeholder="Zip Code" maxlength="6" />
                             </div>
                         </div>
                         <div class="clearfix"></div>
-                        <div class="form-group mb5 ">
-                            @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control evnt_inp_cont" })
+                        <div class="form-group mb5 dropheight">
+                            @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control evnt_inp_cont selectpicker" })
                         </div>
 
                     </div>
@@ -1403,7 +1406,7 @@
                 </div>
                 </div>
                 <div class="modal-footer no_pad">
-                    <button type="button" id="btSaveAddress" data-dismiss="modal" aria-label="Close" class="btn btn-primary col-sm-12 ev_add_sub_btn ad_ven_mod_btn">SAVE</button>
+                    <button type="button" id="btSaveAddress" data-dismiss="modal" aria-label="Close" class="btn btn-primary col-sm-12 col-xs-12 ev_add_sub_btn ad_ven_mod_btn">SAVE</button>
                 </div>
 
             </div>
