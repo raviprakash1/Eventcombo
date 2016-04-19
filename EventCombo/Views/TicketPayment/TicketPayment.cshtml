@@ -586,7 +586,7 @@ else
                     $.ajax({
                         url: '@Html.Raw(Url.Action("PayPaltoken", "Cart"))',
                         type: "GET",
-                        async: false,
+                        async: true,
                         crossDomain: true,
                         //Load the minibrowser with the redirection url in the success handler
                         success: function (token) {
