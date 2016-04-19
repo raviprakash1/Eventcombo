@@ -452,7 +452,7 @@ else
                         </button>
                         <a class="td-btn" id="btOk" type="button" href="#dvProgress" data-toggle="modal" style="display:none">
                         </a>
-                        <input id="hdVChg" value="" type="hidden" />
+                        @*<input id="hdVChg" value="" type="hidden" />*@
                         @*@Ajax.ActionLink("Open popup", "Pay", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "PaypalCart", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" })<br />*@
                     </div>
                     <div id="dvAjxSave" style="display:none">
@@ -1619,7 +1619,8 @@ else
             type: "Post",
             success: function (response) {
                 if (response == "Y") {
-                    $("#btPaypalCheckout").click();
+                    $("#btPaypalCheckout").trigger('click');
+                    //$("#btPaypalCheckout").click();
                 }
             }
         });
