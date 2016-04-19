@@ -354,7 +354,7 @@ textarea {resize: none;}
 .ev_bre_cub > li + li::before{content: "> ";}
 
 .strat_timer_cont{ width: 100%; float: left; position: fixed; bottom: 0px; z-index:1; }
-.strt_tim_desc{ font-size: 1.2em;}
+.strt_tim_desc{ font-size: 1em; padding:0 5px; }
 .strt_tim_desc2{font-size: 1.5em;}
 .evnt_timer_margin{ margin-bottom: 90px;}
 .bg-green{background: #8fcf68; }

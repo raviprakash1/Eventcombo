@@ -95,7 +95,7 @@
             </div>
             <div class="evnt_details_body2">
                 <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
-                    <div id="dvTicketInfo" class="table-responsive">
+                    <div id="dvTicketInfo" class="table">
                         <div id="dvAjxLoader">
                             <img src="~/Images/ajaxloader1.gif" />
                         </div>
@@ -297,10 +297,8 @@ else
                                 <input class="form-control evnt_inp_cont" type="text" placeholder="PHONE NUMBER" id="billingphno">
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <div class="col-sm-6 col-xs-12 pl0 xs375zip dropheight">
+                                <div class="col-sm-6 col-xs-12 pl0 xs375zip dropheight xs-tkt-pay-pl-0 ipad-w-100">
                                     @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control selectpicker", @id = "billcountry" })
-
-
                                 </div>
                                 <div class="col-sm-6 col-xs-12 no_pad">
                                     <input class="form-control evnt_inp_cont" type="text" placeholder="Zip" maxlength=6 id="billzip">
@@ -310,7 +308,7 @@ else
 
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <div class="col-sm-6 col-xs-12 pl0 xs375zip">
+                                <div class="col-sm-6 col-xs-12 pl0 xs375zip xs-tkt-pay-pl-0 ipad-w-100">
                                     <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength=256 id="billcity">
                                 </div>
                                 <div class="col-sm-6 col-xs-12 no_pad ">
@@ -398,7 +396,7 @@ else
                                     PLEASE ENTER INTENDED TICKET RECEPIENTS (OPTIONAL)
                                 </label>
                                 <div class="clearfix"></div>
-                                <div class="col-sm-8 col-xs-8 no_pad">
+                                <div class="col-sm-8 col-xs-12 no_pad">
                                     <input class="form-control evnt_inp_cont" type="text" placeholder="NAME OF THE TICKET BEARER" id="nameofticket">
 
                                 </div>
@@ -407,7 +405,7 @@ else
                                 </label>*@
 
                                 <div class="col-sm-12 col-xs-12 no_pad mt10">
-                                    <div class="Notifybox col-sm-8 col-xs-8 no_pad mt10 mb10" id="divemail">
+                                    <div class="Notifybox col-sm-8 col-xs-12 no_pad mt10 mb10" id="divemail">
                                         <input class="form-control evnt_inp_cont" type="text" placeholder="EMAIL OF TICKET BEARER" id="emailbearer">
                                     </div>
                                     <div class="col-sm-12 col-xs-12 no_pad">
@@ -416,16 +414,16 @@ else
                                         </button>
                                     </div>
                                     <div class="col-sm-12 col-xs-12 no_pad mt10" id="blocklist" style="display:none;">
-                                        <div class="col-sm-8 col-xs-8 no_pad ">
+                                        <div class="col-sm-8 col-xs-12 no_pad ">
                                             <select class="form-control evnt_inp_cont " id="ddlListitem"></select>
                                         </div>
-                                        <div class="col-sm-2 col-xs-2">
-                                            <button class="btn ev_live_btn" type="button" id="editlist">
+                                        <div class="col-sm-2 col-xs-6 ipad-tkt-recpt-btn">
+                                            <button class="btn ev_live_btn xs-tkt-pay-btn" type="button" id="editlist">
                                                 Edit
                                             </button>
                                         </div>
-                                        <div class="col-sm-2 col-xs-2">
-                                            <button class="btn ev_live_btn" type="button" id="deletelist">
+                                        <div class="col-sm-2 col-xs-6 ipad-tkt-recpt-btn ipad-tkt-recpt-btn-mt10">
+                                            <button class="btn ev_live_btn xs-tkt-pay-btn" type="button" id="deletelist">
                                                 Delete
                                             </button>
                                         </div>
