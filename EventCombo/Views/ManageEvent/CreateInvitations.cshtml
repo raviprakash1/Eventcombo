@@ -167,13 +167,13 @@
 
                             </div>
                             <div class="col-xs-12 no_pad mb10">
-                                <p class="inv_mail_date ">Share:</p>
+                                @*<p class="inv_mail_date ">Share:</p>
                                 <p>
                                     <a href="#"><img src="~/images/fb.png" /></a>
                                     <a href="#"><img src="~/images/tw.png" /></a>
                                     <a href="#"><img src="~/images/linkid.png" /></a>
                                     <a href="#"><img src="~/images/msg.png" /></a>
-                                </p>
+                                </p>*@
                             </div>
                         </div>
                     </div>
@@ -347,7 +347,7 @@
                 </div>
                 <div class="col-sm-4 no_pad">
                     <div class="form-group">
-                        @if (Model != null && Model.I_ScheduleDate != null)
+                        @if (Model != null && Model.I_ScheduleDate != null && Model.I_Mode != "N")
                         {
                             <input type="text" class="form-control evnt_inp_cont" value="@Model.I_ScheduleDate" id="txtSchDate" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" />
                         }
