@@ -468,7 +468,7 @@ span.evnt_toltip{
 
 /************Create Ticket**********************/
 .ticket_panel{ box-shadow: none !important; border-radius: 3px !important; border: 0px;}
-.ticket_footer{ text-align: left !important;}
+.ticket_footer{ text-align: left !important; border: 0 none; padding-top: 0; }
 
 .evnt_setting{}
 .evnt_setting .evnt_setting_list a i{font-size: 1.3em !important; margin-left: 8%;}
@@ -762,6 +762,14 @@ span.evnt_toltip{
 
     #forgotcheck.forgot_top{ margin-top:161px !important;}
     #forgotcheck{ margin-top:-10px; }
+    .ipad-50{ width:45%; float:left; margin-bottom:10px;}
+    .ipad-50-ml10{ width:45%; float:left; margin-left:15px; margin-bottom:10px;}
+    .ipad-pad-5{ padding:0 5px;}
+    .ipad-width-58{ width:58px;}
+    .ipad-tkt-recpt-btn{padding: 0px; float: right; width: 80px;}
+    .ipad-tkt-recpt-btn{padding: 0px; float: right; width: 80px;}
+    .ipad-tkt-recpt-btn button{ width:100%;}
+    .ipad-tkt-recpt-btn-mt10{ margin-top:10px;}
 }
 
 
@@ -848,6 +856,7 @@ span.evnt_toltip{
 .xs-evnt-type-pad-0{ padding:0px;}
 .xs-tkt-typ-pad-0{ padding:0px !important;}
 .xs-buyer-total{ top:15px !important;}
+.xs-tkt-pay-pl-0{ padding-right:0px; margin-bottom:10px;}
 }
 @media (width: 320px) {
 .ev_loc_icn{ left:-10px !important; }
@@ -943,6 +952,7 @@ span.evnt_toltip{
 .xs-evnt-type-pad-0{ padding:0px;}
 .xs-tkt-typ-pad-0{ padding:0px !important;}
 .xs-buyer-total{ top:15px !important;}
+.xs-tkt-pay-pl-0{ padding-right:0px; margin-bottom:10px;}
 }
 
 @media (width: 360px) {
@@ -1017,6 +1027,11 @@ span.evnt_toltip{
 .xs-signup-height{ min-height:50px;}
 .xs-desk-show{ display: none; }
 .desc_pl_0{ padding-left:0px !important}
+
+.xs-evnt-type-pad-0{ padding:0px;}
+.xs-tkt-typ-pad-0{ padding:0px !important;}
+.xs-buyer-total{ top:15px !important;}
+.xs-tkt-pay-pl-0{ padding-right:0px; margin-bottom:10px;}
 }
 @media (width: 375px) {
 #scrollhome.con_scr0l_home{margin-top:215px !important;}
@@ -1104,6 +1119,11 @@ span.evnt_toltip{
 .xs-signup-height{ min-height:50px;}
 .xs-desk-show{ display: none; }
 .desc_pl_0{ padding-left:0px !important}
+
+.xs-evnt-type-pad-0{ padding:0px;}
+.xs-tkt-typ-pad-0{ padding:0px !important;}
+.xs-buyer-total{ top:15px !important;}
+.xs-tkt-pay-pl-0{ padding-right:0px; margin-bottom:10px;}
 }
 
 
@@ -1210,6 +1230,8 @@ span.evnt_toltip{
 #midsection.midd_cont {top: 135px !important;}
 .nav_ipad_left{ width:160px; position:absolute; z-index:9; }
 .nav_ipad_right{ left:125px;}
+.xs-tkt-pay-pl-0{ padding-right:0px; margin-bottom:10px;}
+.ipad-w-100{ width:45%; margin-right:10px;}
 }
 
 @media (min-width: 800px) and (max-width: 1280px) {
