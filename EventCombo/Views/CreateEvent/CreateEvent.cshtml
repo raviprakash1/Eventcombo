@@ -331,7 +331,7 @@
                                     <div class="EntVenAdd col-sm-12 no_pad">
                                         <div class="ev_loc_icn xs-loc-icon-rem"></div>
                                         <div class="col-sm-10 no_pad mb5 pull-right">
-                                            <input id="txtEventLocation" onkeypress="txtEventLocation_KeyPress(event);" class="form-control evnt_title_control evnt_title_location evnt_placehold" placeholder="Click here to enter venue address" />
+                                            <input id="txtEventLocation" onkeypress="txtEventLocation_KeyPress(event);" class="form-control evnt_title_control evnt_title_location evnt_placehold" placeholder="Click here to enter venue address*" />
                                         </div>
                                     </div>
                                     <div class="PastLocat col-sm-12 no_pad">
@@ -1264,7 +1264,7 @@
                                 <input type="checkbox" id="chkReqPassword">
                                 Require a password to view the event page
                             </label>
-                            <input type="password" id="txtReqPassword" readonly="readonly" value="" class="form-control evnt_inp_cont mb10 wd500 chkvalidation" placeholder="Enter Password" />
+                            <input type="password" id="txtReqPassword" readonly="readonly" value="" class="form-control evnt_inp_cont mb10 wd500 chkvalidation" placeholder="Enter Password" maxlength="15" />
                         </div>
                     </div>
 
@@ -5341,7 +5341,7 @@
 
             }
             if ($('#chkReqPassword').is(":checked") == true) {
-                if ($('#txtReqPassword').val() == "") {
+                if ($('#txtReqPassword').val().length<6) {
                     $('#txtReqPassword').addClass('err-bor');
                     msg += ajaxsetup("CreateEvent", "CreateEventPwdUI") + "<br/>";;
 
@@ -5650,7 +5650,7 @@
             $("#hidSchLastState").val($("#dlSchOption").val());
             if ($(".SchmultiDetail").css('display') == 'block') {
                 $("#hdSchType").val('Multiple');
-                vSelecttextDates = "Click here to enter the start and end date";
+                vSelecttextDates = "Click here to enter the start and end date*";
                 if ($("#txtDateFrom").val() != '' && $("#txtDateFrom").val() != null) {
                     if ($("#dlSchOption").val() == "Daily") {
                         vSelecttextDates = "Daily : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
@@ -5674,7 +5674,7 @@
                 $("#btEnterDates").text(vSelecttextDates);
             }
             else {
-                vSelecttextDates = "Click here to enter the start and end date";
+                vSelecttextDates = "Click here to enter the start and end date*";
                 if ($("#txtStartDate").val() != '' && $("#txtStartDate").val() != null) {
                     vSelecttextDates = $("#txtStartDate").val() + " " + $("#txtStartTime").val() + " To " + $("#txtEndDate").val() + " " + $("#txtEndTime").val()
                     savedaddress = vSelecttextDates;

@@ -683,7 +683,16 @@
                                     <div class="col-md-12 no_pad text-center">
                                         <div class="form-group mb5 ">
                                             <div class="col-sm-12 no_pad ev_ven_mod_lebel mb10">
-                                                <label class="alert-danger" id="lblwrongpwd" style="display:none;">You have entered incorrect password</label>
+
+                                                <div class="Moderor mb10" id="divpwderroacc" tabindex="-1">
+                                                    <div class="er_UI_main">
+                                                        <div class="er_warnui_img"></div>
+                                                        <div class="er_suc" id="erraccpwdmsg">You have entered incorrect password</div>
+                                                        <button class="close" aria-hidden="true" type="button" id="btnhidepwderror" onclick="$('#divpwderroacc').hide();">&#215;</button>
+
+                                                    </div>
+                                                </div>
+                                                @*<label class="alert-danger" id="lblwrongpwd" style="display:none;">You have entered incorrect password</label>*@
                                             </div>
                                             @*<div class="col-sm-12 no_pad ev_ven_mod_lebel mb10">
                                                 Enter Password to View the Event
@@ -857,7 +866,8 @@
         //    keyboard: false
         //})
 
-        $('#lblwrongpwd').css('display', 'none');
+        //$('#lblwrongpwd').css('display', 'none');
+        $('#divpwderroacc').hide();
         var eventype = "@Model.PrivatePassword";
         if (eventype != "") {
 
@@ -892,19 +902,25 @@
                         if (response == "Y") {
                             $('#btnclosepwd').click();
                         } else {
-                            $('#lblwrongpwd').css('display', 'block');
-                            $('#lblwrongpwd').html('You have entered incorrect password');
+                            $('#divpwderroacc').show();
+                            //$('#lblwrongpwd').css('display', 'block');
+                            $('#erraccpwdmsg').html(ajaxsetup('ViewEvent', 'VEPasswordIncorrect'));
                         }
                     }
                 });
             } else {
-                $('#lblwrongpwd').css('display', 'block');
-                $('#lblwrongpwd').html('You have entered incorrect password');
+                $('#divpwderroacc').show();
+                //$('#lblwrongpwd').css('display', 'block');
+                $('#erraccpwdmsg').html(ajaxsetup('ViewEvent', 'VEPasswordIncorrect'));
                 return false;
             }
 
         });
 
+        $('#txtpwdlive').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        
         $('ul.dropdown-menu.dropdown-map').on('click', function (event) {
             event.stopPropagation();
         });

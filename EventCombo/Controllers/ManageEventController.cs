@@ -1451,7 +1451,7 @@ namespace EventCombo.Controllers
                 sc.Eventtitle = Eventdetail.EventTitle;
                 if (!string.IsNullOrWhiteSpace(searchquery))
                 {
-                    ls = (from x in db.Promo_Code
+                    ls = (from x in db.Promo_Code 
                           orderby x.SavedDate descending
                           where x.PC_Eventid == Eventid && x.PC_Code.Contains(searchquery)
                           select new Promocode
@@ -1462,6 +1462,7 @@ namespace EventCombo.Controllers
                               End = (x.Pc_Enddatetype != null && x.Pc_Enddatetype == "1") ? x.PC_End + " before event" : x.PC_End,
                               Limit = x.PC_Uses != null ? x.PC_Uses.ToString() : "No Limit",
                               PCID = x.PC_id,
+                              Orderpromo=(from v in db.Order_Detail_T where v.O_PromoCodeId==x.PC_id select v).Count()
 
 
 
@@ -1480,13 +1481,15 @@ namespace EventCombo.Controllers
                               Start = (x.PC_Startdatetype != null && x.PC_Startdatetype == "1") ? x.PC_Start + " before event" : SqlFunctions.DateDiff("s", x.PC_Start, DateTime.Now) == 0 ? "Started" : x.PC_Start,
                               End = (x.Pc_Enddatetype != null && x.Pc_Enddatetype == "1") ? x.PC_End + " before event" : x.PC_End,
                               Limit = x.PC_Uses != null ? x.PC_Uses : "No Limit",
-                              PCID = x.PC_id
+                              PCID = x.PC_id,
+                              Orderpromo = (from v in db.Order_Detail_T where v.O_PromoCodeId == x.PC_id select v).Count()
 
 
                           }).ToList();
 
                 }
                 double dPageCount = ls.Count;
+                ViewData["countlist"] = ls.Count;
                 double dTotalPages = dPageCount / pageSize;
                 int lTotalPages = (ls.Count / pageSize);
                 if (dTotalPages.ToString().Contains(".") == true)
@@ -1561,12 +1564,12 @@ namespace EventCombo.Controllers
 
                     startdate = DateTime.UtcNow.ToString("MM-dd-yyyy hh:mm:ss tt");
 
-
+                    pm.orderrow = false;
                     pm.PC_Start = startdate;
                     pm.PC_End = startdatesave;
                     pm.startdatesave = end_date.ToString();
                     pm.PC_id = 0;
-                    pm.PC_URL = baseurl + urldb + "?discount=Example";
+                    pm.PC_URL = baseurl +"/"+ urldb + "?discount=Example";
                     pm.Pc_Enddatetype = "0";
                     pm.PC_Startdatetype = "0";
                     if (end_date < DateTime.Now)
@@ -1584,7 +1587,11 @@ namespace EventCombo.Controllers
                 }
                 else
                 {
+
+
+                    var Orderdetail = (from x in db.Order_Detail_T where x.O_PromoCodeId == Promocode select x).Any();
                     var p = (from x in db.Promo_Code where x.PC_id == Promocode select x).FirstOrDefault();
+                    pm.orderrow = Orderdetail;
                     pm.PC_Code = p.PC_Code;
                     pm.PC_id = p.PC_id;
                     pm.PC_Uses = p.PC_Uses;
@@ -1671,9 +1678,7 @@ namespace EventCombo.Controllers
                 {
 
                     if (Regex.IsMatch(model.PC_Code.ToString(), "^[a-zA-Z0-9@_,-]+$"))
-                    {
-                        var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() && v.PC_id != model.PC_id && v.PC_Eventid == model.PC_Eventid select v).Any();
-                        if (ifany)
+                    {   if (model.PC_Code.Length > 15)
                         {
                             if (!string.IsNullOrEmpty(model.PC_Code))
                             {
@@ -1690,59 +1695,79 @@ namespace EventCombo.Controllers
                         }
                         else
                         {
-                            Promo_Code org = (from x in db.Promo_Code where x.PC_id == model.PC_id select x).FirstOrDefault();
-                            org.PC_Eventid = model.PC_Eventid;
-                            org.PC_Type = model.PC_Type;
-                            org.PC_Code = model.PC_Code;
-                            if (model.Discount_Type == "A")
+
+                            var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() && v.PC_id != model.PC_id && v.PC_Eventid == model.PC_Eventid select v).Any();
+                            if (ifany)
                             {
-                                org.PC_Amount = model.PC_Amount;
-                                org.PC_Percentage = null;
+                                if (!string.IsNullOrEmpty(model.PC_Code))
+                                {
+                                    if (Invalidrepeatcode == "")
+                                    {
+                                        Invalidrepeatcode += model.PC_Code;
+                                    }
+                                    else
+                                    {
+                                        Invalidrepeatcode += "," + model.PC_Code;
+                                    }
+                                }
+
                             }
                             else
                             {
-                                org.PC_Percentage = model.PC_Amount;
-                                org.PC_Amount = null;
-                            }
+                                Promo_Code org = (from x in db.Promo_Code where x.PC_id == model.PC_id select x).FirstOrDefault();
+                                org.PC_Eventid = model.PC_Eventid;
+                                org.PC_Type = model.PC_Type;
+                                org.PC_Code = model.PC_Code;
+                                if (model.Discount_Type == "A")
+                                {
+                                    org.PC_Amount = model.PC_Amount;
+                                    org.PC_Percentage = null;
+                                }
+                                else
+                                {
+                                    org.PC_Percentage = model.PC_Amount;
+                                    org.PC_Amount = null;
+                                }
 
 
-                            org.PC_Uses = model.PC_Uses;
-                            org.PC_Startdatetype = model.PC_Startdatetype;
-                            if (model.PC_Startdatetype == "1")
-                            {
-                                org.PC_Start = model.startdays;
-                            }
-                            else
-                            {
-                                org.PC_Start = model.PC_Start;
-                            }
-                            org.Pc_Enddatetype = model.Pc_Enddatetype;
-                            if (model.Pc_Enddatetype == "1")
-                            {
-                                org.PC_End = model.enddays;
-                            }
-                            else
-                            {
-                                org.PC_End = model.PC_End;
-                            }
+                                org.PC_Uses = model.PC_Uses;
+                                org.PC_Startdatetype = model.PC_Startdatetype;
+                                if (model.PC_Startdatetype == "1")
+                                {
+                                    org.PC_Start = model.startdays;
+                                }
+                                else
+                                {
+                                    org.PC_Start = model.PC_Start;
+                                }
+                                org.Pc_Enddatetype = model.Pc_Enddatetype;
+                                if (model.Pc_Enddatetype == "1")
+                                {
+                                    org.PC_End = model.enddays;
+                                }
+                                else
+                                {
+                                    org.PC_End = model.PC_End;
+                                }
 
-                            org.PC_Apply = model.PC_Apply;
-                            org.PC_Eventid = model.PC_Eventid;
-                            org.SavedDate = DateTime.Now;
-
-
+                                org.PC_Apply = model.PC_Apply;
+                                org.PC_Eventid = model.PC_Eventid;
+                                org.SavedDate = DateTime.Now;
 
 
 
-                            try
-                            {
-                                int i = db.SaveChanges();
-                                msg = "S";
 
-                            }
-                            catch (Exception ex)
-                            {
-                                msg = "N";
+
+                                try
+                                {
+                                    int i = db.SaveChanges();
+                                    msg = "S";
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    msg = "N";
+                                }
                             }
                         }
                     }
@@ -1771,6 +1796,22 @@ namespace EventCombo.Controllers
                     {
                         if (Regex.IsMatch(model.PC_Code.ToString(), "^[a-zA-Z0-9@_,-]+$"))
                         {
+                            if (model.PC_Code.Length > 15)
+                            {
+                                if (!string.IsNullOrEmpty(model.PC_Code))
+                                {
+                                    if (Invalidrepeatcode == "")
+                                    {
+                                        Invalidrepeatcode += model.PC_Code;
+                                    }
+                                    else
+                                    {
+                                        Invalidrepeatcode += "," + model.PC_Code;
+                                    }
+                                }
+
+                            }
+                            else { 
                             var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() && v.PC_Eventid == model.PC_Eventid select v).Any();
                             if (ifany)
                             {
@@ -1840,6 +1881,7 @@ namespace EventCombo.Controllers
                                 }
                             }
                         }
+                        }
                         else
                         {
                             if (Invalidrepeatcode == "")
@@ -1873,17 +1915,147 @@ namespace EventCombo.Controllers
                                         {
                                             if (Regex.IsMatch(item.ToString(), "^[a-zA-Z0-9@_,-]+$"))
                                             {
-                                                var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == item.Trim().ToLower() && v.PC_Eventid == model.PC_Eventid select v).Any();
+                                                if (item.Length > 15)
+                                                {
+                                                    if (!string.IsNullOrEmpty(item))
+                                                    {
+                                                        if (Invalidrepeatcode == "")
+                                                        {
+                                                            Invalidrepeatcode += item;
+                                                        }
+                                                        else
+                                                        {
+                                                            Invalidrepeatcode += "," + item;
+                                                        }
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == item.Trim().ToLower() && v.PC_Eventid == model.PC_Eventid select v).Any();
+                                                    if (ifany)
+                                                    {
+                                                        Invalidrepeatcode += item.Trim();
+                                                    }
+                                                    else
+                                                    {
+                                                        Promo_Code org = new Promo_Code();
+                                                        org.PC_Eventid = model.PC_Eventid;
+                                                        org.PC_Type = model.PC_Type;
+                                                        org.PC_Code = item.Trim();
+                                                        if (model.Discount_Type == "A")
+                                                        {
+                                                            org.PC_Amount = model.PC_Amount;
+                                                        }
+                                                        else
+                                                        {
+                                                            org.PC_Percentage = model.PC_Amount;
+
+                                                        }
+
+
+                                                        org.PC_Uses = model.PC_Uses;
+                                                        org.PC_Startdatetype = model.PC_Startdatetype;
+                                                        if (model.PC_Startdatetype == "1")
+                                                        {
+                                                            org.PC_Start = model.startdays;
+                                                        }
+                                                        else
+                                                        {
+                                                            org.PC_Start = model.PC_Start;
+                                                        }
+                                                        org.Pc_Enddatetype = model.Pc_Enddatetype;
+                                                        if (model.Pc_Enddatetype == "1")
+                                                        {
+                                                            org.PC_End = model.enddays;
+                                                        }
+                                                        else
+                                                        {
+                                                            org.PC_End = model.PC_End;
+                                                        }
+                                                        org.PC_Apply = model.PC_Apply;
+                                                        org.PC_Eventid = model.PC_Eventid;
+                                                        org.SavedDate = DateTime.Now;
+
+
+
+
+                                                        db.Promo_Code.Add(org);
+                                                        try
+                                                        {
+                                                            int i = db.SaveChanges();
+                                                            msg = "S";
+
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+                                                            msg = "N";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (!string.IsNullOrEmpty(item))
+                                                {
+                                                    if (Invalidrepeatcode == "")
+                                                    {
+                                                        Invalidrepeatcode += item.Trim();
+                                                    }
+                                                    else
+                                                    {
+                                                        Invalidrepeatcode += "," + item.Trim();
+                                                    }
+                                                }
+
+                                                containsspecial++;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (Regex.IsMatch(line.ToString(), "^[a-zA-Z0-9@_,-]+$"))
+                                        {
+
+                                            if (line.Length > 15)
+                                            {
+                                                if (!string.IsNullOrEmpty(line))
+                                                {
+                                                    if (Invalidrepeatcode == "")
+                                                    {
+                                                        Invalidrepeatcode += line;
+                                                    }
+                                                    else
+                                                    {
+                                                        Invalidrepeatcode += "," + line;
+                                                    }
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == line.Trim().ToLower() && v.PC_Eventid == model.PC_Eventid select v).Any();
                                                 if (ifany)
                                                 {
-                                                    Invalidrepeatcode += item.Trim();
+                                                    if (!string.IsNullOrEmpty(line))
+                                                    {
+                                                        if (Invalidrepeatcode == "")
+                                                        {
+                                                            Invalidrepeatcode += line.Trim();
+                                                        }
+                                                        else
+                                                        {
+                                                            Invalidrepeatcode += "," + line.Trim();
+                                                        }
+                                                    }
+
                                                 }
                                                 else
                                                 {
                                                     Promo_Code org = new Promo_Code();
                                                     org.PC_Eventid = model.PC_Eventid;
                                                     org.PC_Type = model.PC_Type;
-                                                    org.PC_Code = item.Trim();
+                                                    org.PC_Code = line;
                                                     if (model.Discount_Type == "A")
                                                     {
                                                         org.PC_Amount = model.PC_Amount;
@@ -1916,9 +2088,9 @@ namespace EventCombo.Controllers
                                                     }
                                                     org.PC_Apply = model.PC_Apply;
                                                     org.PC_Eventid = model.PC_Eventid;
+
+
                                                     org.SavedDate = DateTime.Now;
-
-
 
 
                                                     db.Promo_Code.Add(org);
@@ -1932,99 +2104,6 @@ namespace EventCombo.Controllers
                                                     {
                                                         msg = "N";
                                                     }
-                                                }
-                                            }
-                                            else
-                                            {
-                                                if (!string.IsNullOrEmpty(item))
-                                                {
-                                                    if (Invalidrepeatcode == "")
-                                                    {
-                                                        Invalidrepeatcode += item.Trim();
-                                                    }
-                                                    else
-                                                    {
-                                                        Invalidrepeatcode += "," + item.Trim();
-                                                    }
-                                                }
-
-                                                containsspecial++;
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (Regex.IsMatch(line.ToString(), "^[a-zA-Z0-9@_,-]+$"))
-                                        {
-                                            var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == line.Trim().ToLower() && v.PC_Eventid == model.PC_Eventid select v).Any();
-                                            if (ifany)
-                                            {
-                                                if (!string.IsNullOrEmpty(line))
-                                                {
-                                                    if (Invalidrepeatcode == "")
-                                                    {
-                                                        Invalidrepeatcode += line.Trim();
-                                                    }
-                                                    else
-                                                    {
-                                                        Invalidrepeatcode += "," + line.Trim();
-                                                    }
-                                                }
-
-                                            }
-                                            else
-                                            {
-                                                Promo_Code org = new Promo_Code();
-                                                org.PC_Eventid = model.PC_Eventid;
-                                                org.PC_Type = model.PC_Type;
-                                                org.PC_Code = line;
-                                                if (model.Discount_Type == "A")
-                                                {
-                                                    org.PC_Amount = model.PC_Amount;
-                                                }
-                                                else
-                                                {
-                                                    org.PC_Percentage = model.PC_Amount;
-
-                                                }
-
-
-                                                org.PC_Uses = model.PC_Uses;
-                                                org.PC_Startdatetype = model.PC_Startdatetype;
-                                                if (model.PC_Startdatetype == "1")
-                                                {
-                                                    org.PC_Start = model.startdays;
-                                                }
-                                                else
-                                                {
-                                                    org.PC_Start = model.PC_Start;
-                                                }
-                                                org.Pc_Enddatetype = model.Pc_Enddatetype;
-                                                if (model.Pc_Enddatetype == "1")
-                                                {
-                                                    org.PC_End = model.enddays;
-                                                }
-                                                else
-                                                {
-                                                    org.PC_End = model.PC_End;
-                                                }
-                                                org.PC_Apply = model.PC_Apply;
-                                                org.PC_Eventid = model.PC_Eventid;
-
-
-                                                org.SavedDate = DateTime.Now;
-
-
-                                                db.Promo_Code.Add(org);
-                                                try
-                                                {
-                                                    int i = db.SaveChanges();
-                                                    msg = "S";
-
-                                                }
-                                                catch (Exception ex)
-                                                {
-                                                    msg = "N";
                                                 }
                                             }
                                         }

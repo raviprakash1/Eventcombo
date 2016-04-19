@@ -1,0 +1,24 @@
+-----------Exception Details on  4/19/2016 12:06:35 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/19/2016 12:06:35 PM
+
+Error Line No : ne 1629
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/ticketpayment/paymentconfirmation
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

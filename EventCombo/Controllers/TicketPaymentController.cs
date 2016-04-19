@@ -618,71 +618,71 @@ namespace EventCombo.Controllers
                 }
                 if(strPaymentType == "P" || message=="O")
                 { 
-                var userdetail = UserManager.FindByEmail(model.AccEmail);
-                if (userdetail == null)
-                {
-                    usertype = 1;
-                    string userid = await saveuser(model.AccEmail, model.Accpassword);
-                    useridnew = userid;
-                    if (!string.IsNullOrEmpty(userid))
-                    {
-                        using (EventComboEntities objEntity = new EventComboEntities())
-                        {
-
-                            Profile prof = new Profile();
-                            prof.FirstName = model.AccFname;
-                            prof.Email = model.AccEmail;
-                            prof.LastName = model.AccLname;
-                            prof.UserID = useridnew;
-                            prof.UserStatus = "y";
-                            objEntity.Profiles.Add(prof);
-                          
-                            await this.UserManager.AddToRoleAsync(useridnew, "Member");
-
-                            User_Permission_Detail permdetail = new User_Permission_Detail();
-                            for (int i = 1; i < 3; i++)
-                            {
-
-                                permdetail.UP_Permission_Id = i;
-                                permdetail.UP_User_Id = useridnew.ToString();
-                                objEntity.User_Permission_Detail.Add(permdetail);
-                                objEntity.SaveChanges();
-                            }
-                        }
-                        //Session["AppId"] = userid;
-                    }
-
-
-
-                }
-
+               
                 if (Session["AppId"] != null)
                 {
                     Userid = Session["AppId"].ToString();
                 }
                 else
                 {
-                    if (usertype == 0)
-                    {
+                        var userdetail = (from v in db.AspNetUsers where v.Email == model.AccEmail select v).FirstOrDefault();
+                        if (userdetail == null)
+                        {
+                            usertype = 1;
+                            string userid = await saveuser(model.AccEmail, model.Accpassword);
+                            Userid = userid;
+                            if (!string.IsNullOrEmpty(userid))
+                            {
+                                using (EventComboEntities objEntity = new EventComboEntities())
+                                {
 
-                        Userid = userdetail.Id;
-                    }
-                    else
-                    {
-                        Userid = useridnew;
-                    }
+                                    Profile prof = new Profile();
+                                    prof.FirstName = model.AccFname;
+                                    prof.Email = model.AccEmail;
+                                    prof.LastName = model.AccLname;
+                                    prof.UserID = Userid;
+                                    prof.UserStatus = "y";
+                                    objEntity.Profiles.Add(prof);
+
+                                    await this.UserManager.AddToRoleAsync(Userid, "Member");
+
+                                    User_Permission_Detail permdetail = new User_Permission_Detail();
+                                    for (int i = 1; i < 3; i++)
+                                    {
+
+                                        permdetail.UP_Permission_Id = i;
+                                        permdetail.UP_User_Id = Userid.ToString();
+                                        objEntity.User_Permission_Detail.Add(permdetail);
+                                        objEntity.SaveChanges();
+                                    }
+                                }
+                                //Session["AppId"] = userid;
+                            }
+
+
+
+                        }
+                        else
+                        {
+                            Userid = userdetail.Id;
+                        }
+
+                   
 
                 }
-                string guid = Session["TicketLockedId"].ToString();
+                    //if (usertype == 0)
+                    //{
+
+                    //    Userid = Userid;
+                    //}
+                    //else
+                    //{
+                    //    Userid = useridnew;
+                    //}
+                    string guid = Session["TicketLockedId"].ToString();
                     using (EventComboEntities objEntity = new EventComboEntities())
                     {
-                        //Profile prof = objEntity.Profiles.First(i => i.UserID == Userid);
-                        //prof.FirstName = model.AccFname;
-                        //if (!string.IsNullOrEmpty(model.AccLname))
-                        //{
-                        //    prof.LastName = model.AccLname;
-                        //}
-
+                       
 
 
 
@@ -1041,7 +1041,7 @@ namespace EventCombo.Controllers
                                              ).FirstOrDefault();
 
 
-
+                        var Ticketorderdetail = (from f in db.Order_Detail_T where f.O_Order_Id == item.T_Order_Id select f).FirstOrDefault();
                         var userdetail = (from prof in db.Profiles where prof.UserID == TPurchasedetail.TPD_User_Id select prof).FirstOrDefault();
                         var Edtails = (from p in db.Events
                                        join user in db.Profiles on p.UserID equals user.UserID
@@ -1057,6 +1057,7 @@ namespace EventCombo.Controllers
                                            Addresstatus = p.AddressStatus,
                                        }).ToList().Distinct().FirstOrDefault();
 
+                        var usernmae = !string.IsNullOrEmpty(Ticketorderdetail.O_First_Name + " " + Ticketorderdetail.O_Last_Name) ? Ticketorderdetail.O_First_Name + " " + Ticketorderdetail.O_Last_Name : Edtails.UserName;
                         var datetime = DateTime.Parse(TQtydetail.TQD_StartDate);
                         var day = datetime.DayOfWeek.ToString();
                         var Sdate = datetime.ToString("MMM dd, yyyy");
@@ -1133,14 +1134,18 @@ namespace EventCombo.Controllers
                                          eventid = g.Key.TPD_Event_Id
                                      }).ToList();
                         string orderdet = "", freetype = "", paidtype = "", donatertype = "";
-                        orderdet = " " + userdetail.FirstName + " has  ";
+                        orderdet = " " + Ticketorderdetail.O_First_Name != null ? Ticketorderdetail.O_First_Name : userdetail.FirstName + " has  ";
                         foreach (var i in query)
                         {
                             var promocode = (from v in db.Promo_Code where v.PC_Eventid == i.eventid && v.PC_id == i.Promocode select v.PC_Code).FirstOrDefault();
                             if (i.TicketType == 1)
                             {
-                                freetype = " " + i.Qty + " * " + i.Tname + " free type for $0.00 ";
-                                if (i.Promocodeamt != null && i.Promocode != null)
+                                if (!string.IsNullOrEmpty(freetype))
+                                {
+                                    freetype = freetype + " , ";
+                                }
+                                freetype = freetype + " " + i.Qty + " * " + i.Tname + " free type for $0.00 ";
+                                if (i.Promocode != null && i.Promocode != 0)
                                 {
 
                                     freetype = freetype + " after applying promotion code " + promocode + "  per ticket ";
@@ -1148,8 +1153,12 @@ namespace EventCombo.Controllers
                             }
                             if (i.TicketType == 2)
                             {
-                                paidtype = " " + i.Qty + " * " + i.Tname + " paid type for $ " + i.amount;
-                                if (i.Promocodeamt != null && i.Promocode != null)
+                                if (!string.IsNullOrEmpty(paidtype))
+                                {
+                                    paidtype = paidtype + " , ";
+                                }
+                                paidtype = paidtype + " " + i.Qty + " * " + i.Tname + " paid type for $ " + i.amount;
+                                if (i.Promocode != null && i.Promocode != 0)
                                 {
 
                                     paidtype = paidtype + " after applying promotion code " + promocode + "  per ticket ";
@@ -1158,8 +1167,12 @@ namespace EventCombo.Controllers
                             }
                             if (i.TicketType == 3)
                             {
-                                donatertype = "  Donated for " + i.Tname + " type for $ " + i.donate;
-                                if (i.Promocodeamt != null && i.Promocode != null)
+                                if (!string.IsNullOrEmpty(donatertype))
+                                {
+                                    donatertype = donatertype + " , ";
+                                }
+                                donatertype = donatertype + "  Donated for " + i.Tname + " type for $ " + i.donate;
+                                if (i.Promocode != null && i.Promocode != 0)
                                 {
 
                                     donatertype = donatertype + " after applying promotion code " + promocode + "  per ticket ";
@@ -1206,7 +1219,7 @@ namespace EventCombo.Controllers
                         htmlText = htmlText.Replace("¶¶EventStartDateID¶¶", Sdate);
                         htmlText = htmlText.Replace("¶¶EventVenueID¶¶", add);
                         htmlText = htmlText.Replace("¶¶EventOrderNO¶¶", item.T_Order_Id);
-                        htmlText = htmlText.Replace("¶¶UserFirstNameID¶¶", Edtails.UserName);
+                        htmlText = htmlText.Replace("¶¶UserFirstNameID¶¶", usernmae);
                         //htmlText = htmlText.Replace("¶¶UserLastNameID¶¶", userdetail.LastName);
                         htmlText = htmlText.Replace("¶¶TicketOrderDateId¶¶", System.DateTime.Now.ToLongDateString());
                         htmlText = htmlText.Replace("¶¶EventStartTimeID¶¶", time);
@@ -1283,7 +1296,7 @@ namespace EventCombo.Controllers
                                              ).FirstOrDefault();
 
 
-
+                        var Ticketorderdetail = (from f in db.Order_Detail_T where f.O_Order_Id == item.T_Order_Id select f).FirstOrDefault();
                         var userdetail = (from prof in db.Profiles where prof.UserID == TPurchasedetail.TPD_User_Id select prof).FirstOrDefault();
                         var Edtails = (from p in db.Events
                                        join user in db.Profiles on p.UserID equals user.UserID
@@ -1298,7 +1311,7 @@ namespace EventCombo.Controllers
                                            OrganiserEmail = orgprof.Email,
                                            Addresstatus = p.AddressStatus,
                                        }).ToList().Distinct().FirstOrDefault();
-
+                        var usernmae = !string.IsNullOrEmpty(Ticketorderdetail.O_First_Name + " " + Ticketorderdetail.O_Last_Name) ? Ticketorderdetail.O_First_Name + " " + Ticketorderdetail.O_Last_Name : Edtails.UserName;
                         var datetime = DateTime.Parse(TQtydetail.TQD_StartDate);
                         var day = datetime.DayOfWeek.ToString();
                         var Sdate = datetime.ToString("MMM dd, yyyy");
@@ -1375,14 +1388,18 @@ namespace EventCombo.Controllers
                                          eventid=g.Key.TPD_Event_Id
                                      }).ToList();
                         string orderdet = "", freetype = "", paidtype = "", donatertype = "";
-                        orderdet = " " + userdetail.FirstName + " has  ";
+                        orderdet = " " + Ticketorderdetail.O_First_Name!=null? Ticketorderdetail.O_First_Name:userdetail.FirstName + " has  ";
                         foreach (var i in query)
                         {
                             var promocode = (from v in db.Promo_Code where v.PC_Eventid == i.eventid && v.PC_id == i.Promocode select v.PC_Code).FirstOrDefault();
                             if (i.TicketType == 1)
                             {
-                                freetype = " " + i.Qty + " * " + i.Tname + " free type for $0.00 ";
-                                if(i.Promocodeamt!=null && i.Promocode!=null)
+                                if(!string.IsNullOrEmpty(freetype))
+                                {
+                                    freetype = freetype + " , ";
+                                }
+                                freetype = freetype + " " + i.Qty + " * " + i.Tname + " free type for $0.00 ";
+                                if(i.Promocode != null && i.Promocode!=0)
                                 {
 
                                     freetype = freetype + " after applying promotion code "+ promocode+"  per ticket ";
@@ -1390,8 +1407,12 @@ namespace EventCombo.Controllers
                             }
                             if (i.TicketType == 2)
                             {
-                                paidtype = " " + i.Qty + " * " + i.Tname + " paid type for $ " + i.amount;
-                                if (i.Promocodeamt != null && i.Promocode != null)
+                                if(!string.IsNullOrEmpty(paidtype))
+                                {
+                                    paidtype = paidtype + " , ";
+                                }
+                                paidtype = paidtype+ " " + i.Qty + " * " + i.Tname + " paid type for $ " + i.amount;
+                                if (i.Promocode != null && i.Promocode != 0)
                                 {
 
                                     paidtype = paidtype + " after applying promotion code " + promocode + "  per ticket ";
@@ -1400,8 +1421,12 @@ namespace EventCombo.Controllers
                             }
                             if (i.TicketType == 3)
                             {
-                                donatertype = "  Donated for " + i.Tname + " type for $ " + i.donate;
-                                if (i.Promocodeamt != null && i.Promocode != null)
+                                if (!string.IsNullOrEmpty(donatertype))
+                                {
+                                    donatertype = donatertype + " , ";
+                                }
+                                donatertype = donatertype+ "  Donated for " + i.Tname + " type for $ " + i.donate;
+                                if (i.Promocode != null && i.Promocode != 0)
                                 {
 
                                     donatertype = donatertype + " after applying promotion code " + promocode + "  per ticket ";
@@ -1962,7 +1987,7 @@ namespace EventCombo.Controllers
 
         private string ModifyEmailBody(string bodyn, string gUID, long Eventid, List<Email_Tag> Emailtag, string username)
         {
-
+            EncryptDecrypt Ecode = new EncryptDecrypt();
 
             var Edtails = (from p in db.Events
                            join user in db.Profiles on p.UserID equals user.UserID
@@ -2093,7 +2118,7 @@ namespace EventCombo.Controllers
                             strHTML.Append("</tr>");
                             foreach (var qty in itemtoadd)
                             {
-                                if (qty.Promocode != null && qty.Promocodeamt != null)
+                                if (qty.Promocode!=null && qty.Promocode != 0 )
                                 {
                                     strHTML.Append("<tr align='left' style='color:#696564;'> ");
                                     strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.username + "</td>");
@@ -2104,7 +2129,8 @@ namespace EventCombo.Controllers
                                     var promocode = (from v in db.Promo_Code where v.PC_Eventid == qty.eventid && v.PC_id == qty.Promocode select v.PC_Code).FirstOrDefault();
                                     strHTML.Append("<tr align='left'>");
                                     strHTML.Append("<td colspan='3' style='font-size:15px; padding:0px 5px 10px 5px;color: green; border-bottom:1px dashed #ccc;'>" + promocode + "</td>");
-                                    strHTML.Append("<td colspan='1' style='font-size:15px; color: green;padding:0px 5px 10px 5px; border-bottom:1px dashed #ccc;'>-" + qty.Promocodeamt + "</td>");
+                                    var promoprice = qty.Promocodeamt * qty.Quantity;
+                                    strHTML.Append("<td colspan='1' style='font-size:15px; color: green;padding:0px 5px 10px 5px; border-bottom:1px dashed #ccc;'>-" + promoprice + "</td>");
                                     strHTML.Append("</tr>");
                                 }
                                 else
@@ -2159,7 +2185,7 @@ namespace EventCombo.Controllers
 
                         foreach (var qty in itemtoadd)
                         {
-                            if (qty.Promocode != null && qty.Promocodeamt != null)
+                            if (qty.Promocode != null && qty.Promocode != 0)
                             {
                                 strHTML.Append("<tr align='left' style='color:#696564;'> ");
                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.username + "</td>");
@@ -2170,7 +2196,8 @@ namespace EventCombo.Controllers
                                 var promocode = (from v in db.Promo_Code where v.PC_Eventid == qty.eventid && v.PC_id == qty.Promocode select v.PC_Code).FirstOrDefault();
                                 strHTML.Append("<tr align='left'>");
                                 strHTML.Append("<td colspan='3' style='font-size:15px; padding:0px 5px 10px 5px;color: green; border-bottom:1px dashed #ccc;'>" + promocode + "</td>");
-                                strHTML.Append("<td colspan='1' style='font-size:15px; color: green;padding:0px 5px 10px 5px; border-bottom:1px dashed #ccc;'>-" + qty.Promocodeamt + "</td>");
+                                var promoprice = qty.Promocodeamt * qty.Quantity;
+                                strHTML.Append("<td colspan='1' style='font-size:15px; color: green;padding:0px 5px 10px 5px; border-bottom:1px dashed #ccc;'>-" + promoprice + "</td>");
                                 strHTML.Append("</tr>");
                             }
                             else
@@ -2229,7 +2256,7 @@ namespace EventCombo.Controllers
                     foreach (var qty in itemtoadd)
                     {
                        
-                        if (qty.Promocode != null && qty.Promocodeamt != null)
+                        if (qty.Promocode != null && qty.Promocode != 0)
                         {
                             strHTML.Append("<tr align='left' style='color:#696564;'> ");
                             strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.username + "</td>");
@@ -2240,7 +2267,8 @@ namespace EventCombo.Controllers
                             var promocode = (from v in db.Promo_Code where v.PC_Eventid == qty.eventid && v.PC_id == qty.Promocode select v.PC_Code).FirstOrDefault();
                             strHTML.Append("<tr align='left'>");
                             strHTML.Append("<td colspan='3' style='font-size:15px; padding:0px 5px 10px 5px;color: green; border-bottom:1px dashed #ccc;'>" + promocode + "</td>");
-                             strHTML.Append("<td colspan='1' style='font-size:15px; color: green;padding:0px 5px 10px 5px; border-bottom:1px dashed #ccc;'>-" + qty.Promocodeamt + "</td>");
+                            var promoprice = qty.Promocodeamt * qty.Quantity;
+                            strHTML.Append("<td colspan='1' style='font-size:15px; color: green;padding:0px 5px 10px 5px; border-bottom:1px dashed #ccc;'>-" + promoprice + "</td>");
                             strHTML.Append("</tr>");
                         }
                         else
@@ -2308,7 +2336,7 @@ namespace EventCombo.Controllers
 
             if (myBillingdeatils != null)
             {
-                var Scardnumber = myBillingdeatils.CardId.Trim();
+                var Scardnumber = Ecode.DecryptText(myBillingdeatils.CardId).Trim();
                 var Icardlength = Scardnumber.Length;
                 var WrVS = "";
                 int k = 1;
@@ -2337,9 +2365,11 @@ namespace EventCombo.Controllers
                 var finalstr = rvrs + result;
 
                 var touper = "";
+              
                 if (!string.IsNullOrWhiteSpace(myBillingdeatils.card_type))
                 {
-                    touper = char.ToUpper(myBillingdeatils.card_type[0]) + myBillingdeatils.card_type.Substring(1);
+                    var cardtype = Ecode.DecryptText(myBillingdeatils.card_type);
+                    touper = char.ToUpper(cardtype[0]) + cardtype.Substring(1);
                 }
                 else
                 {

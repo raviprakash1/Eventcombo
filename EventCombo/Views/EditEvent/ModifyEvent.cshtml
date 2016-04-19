@@ -168,7 +168,7 @@
                                     <div class="EntVenAdd col-sm-12 no_pad">
                                         <div class="ev_loc_icn"></div>
                                         <div class="col-sm-10 no_pad mb5 pull-right">
-                                            <input id="txtEventLocation" onkeypress="txtEventLocation_KeyPress(event);" class="form-control evnt_title_control evnt_title_location evnt_placehold" placeholder="Click here to enter venue address" />
+                                            <input id="txtEventLocation" onkeypress="txtEventLocation_KeyPress(event);" class="form-control evnt_title_control evnt_title_location evnt_placehold" placeholder="Click here to enter venue address*" />
                                         </div>
                                     </div>
                                     <div class="PastLocat col-sm-12 no_pad">
@@ -1256,7 +1256,7 @@ else
                                 @*}*@
                                 Require a password to view the event page
                             </label>
-                            <input type="password" id="txtReqPassword" readonly="readonly" value="@Model.Private_Password" class="form-control evnt_inp_cont mb10 wd500 chkvalidation" placeholder="Enter Password" />
+                            <input type="password" id="txtReqPassword" readonly="readonly" value="@Model.Private_Password" class="form-control evnt_inp_cont mb10 wd500 chkvalidation" placeholder="Enter Password" maxlength="15" />
 
                         </div>
                     </div>
@@ -3080,7 +3080,7 @@ else
             $("#hidSchLastState").val($("#dlSchOption").val());
             if ($(".SchmultiDetail").css('display') == 'block') {
                 $("#hdSchType").val('Multiple');
-                vSelecttextDates = "Click here to enter the start and end date";
+                vSelecttextDates = "Click here to enter the start and end date*";
                 if ($("#txtDateFrom").val() != '' && $("#txtDateFrom").val() != null) {
                     if ($("#dlSchOption").val() == "Daily") {
                         vSelecttextDates = "Daily : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
@@ -3106,7 +3106,7 @@ else
                 $("#btEnterDates").text(vSelecttextDates);
             }
             else {
-                vSelecttextDates = "Click here to enter the start and end date";
+                vSelecttextDates = "Click here to enter the start and end date*";
                 if ($("#txtStartDate").val() != '' && $("#txtStartDate").val() != null)
                 {
                     vSelecttextDates = $("#txtStartDate").val() + " " + $("#txtStartTime").val() + " To " + $("#txtEndDate").val() + " " + $("#txtEndTime").val()
@@ -5025,13 +5025,13 @@ else
 
 
             }
-            if ($('#hddiscount').val() == 1) {
-                count++;
+            //if ($('#hddiscount').val() == 1) {
+            //    count++;
 
-            }
-            if (parseInt($('#hdMaxerr').val()) == 1) {
-                count++;
-            }
+            //}
+            //if (parseInt($('#hdMaxerr').val()) == 1) {
+            //    count++;
+            //}
             if (countprice > 0) {
                 msg += ajaxsetup("CreateEvent", "PriceNotzeroUI") + "<br/>";
             }
@@ -5043,52 +5043,52 @@ else
 
             }
 
-            if ($('#id_variablecharge').is(":checked") == true) {
-                if ($('#id_vardesc').val() == "") {
+            //if ($('#id_variablecharge').is(":checked") == true) {
+            //    if ($('#id_vardesc').val() == "") {
 
-                    msg += ajaxsetup("CreateEvent", "CreateEventvariabledescUI") + "<br/>";;
-
-
-
-                } else {
-                    $('#id_vardesc').removeClass('err-bor');
-
-                }
-                var divvar = $("#id_Mainvariable>div").size();
-                if (divvar <= 0) {
-                    msg += "Please enter Variable valid charges by clicking on Add button" + "<br/>";;
-
-                }
-                if (divvar > 0) {
-
-                    for (var i = 0; i < divvar; i++) {
-                        var subdesc_name = $('#id_varsubdesc-' + i).val();
-                        var subprice_Qty = $('#id_varsubprice-' + i).val();
-
-                        if (subdesc_name == "") {
+            //        msg += ajaxsetup("CreateEvent", "CreateEventvariabledescUI") + "<br/>";;
 
 
 
-                            countvardesc++;
-                        }
-                        if (subprice_Qty == "") {
+            //    } else {
+            //        $('#id_vardesc').removeClass('err-bor');
+
+            //    }
+            //    var divvar = $("#id_Mainvariable>div").size();
+            //    if (divvar <= 0) {
+            //        msg += "Please enter Variable valid charges by clicking on Add button" + "<br/>";;
+
+            //    }
+            //    if (divvar > 0) {
+
+            //        for (var i = 0; i < divvar; i++) {
+            //            var subdesc_name = $('#id_varsubdesc-' + i).val();
+            //            var subprice_Qty = $('#id_varsubprice-' + i).val();
+
+            //            if (subdesc_name == "") {
 
 
-                            countvarqty++;
-                        } else {
-                            if (subprice_Qty <= 0) {
 
-                                countvarqty++;
-
-                            }
+            //                countvardesc++;
+            //            }
+            //            if (subprice_Qty == "") {
 
 
-                        }
+            //                countvarqty++;
+            //            } else {
+            //                if (subprice_Qty <= 0) {
 
-                    }
+            //                    countvarqty++;
 
-                }
-            }
+            //                }
+
+
+            //            }
+
+            //        }
+
+            //    }
+            //}
 
 
 
@@ -5096,21 +5096,21 @@ else
 
                 msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
             }
-            if (countvardesc > 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventSubDescUI") + "<br/>";
+            //if (countvardesc > 0) {
+            //    msg += ajaxsetup("CreateEvent", "CreateEventSubDescUI") + "<br/>";
 
-            }
-            if (countvarqty > 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventSubQtyUI") + "<br/>";
+            //}
+            //if (countvarqty > 0) {
+            //    msg += ajaxsetup("CreateEvent", "CreateEventSubQtyUI") + "<br/>";
 
-            }
-            if ($('#chkReqPassword').is(":checked") == true) {
-                if ($('#txtReqPassword').val() == "") {
+            //}
+            //if ($('#chkReqPassword').is(":checked") == true) {
+            //    if ($('#txtReqPassword').val().length<6) {
+            //        $('#txtReqPassword').addClass('err-bor');
+            //        msg += ajaxsetup("CreateEvent", "CreateEventPwdUI") + "<br/>";;
 
-                    msg += ajaxsetup("CreateEvent", "CreateEventPwdUI") + "<br/>";;
-
-                }
-            }
+            //    }
+            //}
             var weekcnt = 0;
             var weekdaily = 0;
             var weekmnth = 0;
@@ -6756,7 +6756,7 @@ else
 
             }
             if ($('#chkReqPassword').is(":checked") == true) {
-                if ($('#txtReqPassword').val() == "") {
+                if ($('#txtReqPassword').val().length<6) {
                     $('#txtReqPassword').addClass('err-bor');
                     msg += ajaxsetup("CreateEvent", "CreateEventPwdUI") + "<br/>";;
 

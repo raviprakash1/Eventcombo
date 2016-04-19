@@ -52,7 +52,14 @@
         <div class="col-sm-12 no_pad mt20">
                 <div class="col-sm-2 no_pad">
                     <div class="form-group">
-                        <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code" value="@Model.PC_Code" maxlength="20">
+                        @if (Model.orderrow)
+                        {
+                        <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code" value="@Model.PC_Code" maxlength="15" readonly="readonly">
+                        }
+                        else
+                        {
+                            <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code" value="@Model.PC_Code" maxlength="15">
+                        }
                     </div>
                 </div>
             @if (Model.Formtype == "S")
@@ -214,20 +221,20 @@ else
                         @if (Model.Formtype == "S")
                         {
                         <input type="text" class="form-control evnt_inp_cont" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start" value="@Model.PC_Start" />
-                        <input type="text" class="form-control evnt_inp_cont dayspickerclick" id="txtstartdatedays" name="startdays" value="@Model.startdays" style="display:none"  readonly="readonly" />
+                        <input type="text" class="form-control evnt_inp_cont dayspickerclick promotional-readonly" id="txtstartdatedays" name="startdays" value="@Model.startdays" style="display:none"  readonly="readonly" />
                         }
                         else
                         {
                             if (Model.PC_Startdatetype == "1")
                             {
                                 <input type="text" class="form-control evnt_inp_cont" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start" value="@Model.PC_Start" style="display:none"/>
-                                <input type="text" class="form-control evnt_inp_cont dayspickerclick" id="txtstartdatedays" name="startdays" value="@Model.startdays"  readonly="readonly"  />
+                                <input type="text" class="form-control evnt_inp_cont dayspickerclick promotional-readonly" id="txtstartdatedays" name="startdays" value="@Model.startdays"  readonly="readonly"  />
 
                             }
                             else
                             {
                                 <input type="text" class="form-control evnt_inp_cont" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start" value="@Model.PC_Start" />
-                                <input type="text" class="form-control evnt_inp_cont dayspickerclick" id="txtstartdatedays" name="startdays" value="@Model.startdays" style="display:none" readonly="readonly" />
+                                <input type="text" class="form-control evnt_inp_cont dayspickerclick promotional-readonly" id="txtstartdatedays" name="startdays" value="@Model.startdays" style="display:none" readonly="readonly" />
 
                             }
                         }
@@ -284,20 +291,20 @@ else
 @if (Model.Formtype == "S")
 {
                         <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" />
-                        <input type="text" class="form-control evnt_inp_cont dayspickerclick2" id="txtenddatedays" name="enddays" value="@Model.enddays" style="display:none" readonly="readonly"  />
+                        <input type="text" class="form-control evnt_inp_cont dayspickerclick2 promotional-readonly" id="txtenddatedays" name="enddays" value="@Model.enddays" style="display:none" readonly="readonly"  />
 }
 else
 {
     if (Model.Pc_Enddatetype == "1")
     {
         <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" style="display:none"/>
-        <input type="text" class="form-control evnt_inp_cont dayspickerclick2" id="txtenddatedays" name="enddays" value="@Model.enddays"  readonly="readonly"  />
+        <input type="text" class="form-control evnt_inp_cont dayspickerclick2" id="txtenddatedays promotional-readonly" name="enddays" value="@Model.enddays"  readonly="readonly"  />
 
     }
     else
     {
         <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" />
-        <input type="text" class="form-control evnt_inp_cont dayspickerclick2" id="txtenddatedays" name="enddays" value="@Model.enddays" style="display:none" readonly="readonly"   />
+        <input type="text" class="form-control evnt_inp_cont dayspickerclick2" id="txtenddatedays promotional-readonly" name="enddays" value="@Model.enddays" style="display:none" readonly="readonly"   />
 
     }
 }
@@ -507,9 +514,12 @@ else
                 //});
 
                 $(document).ajaxStop(function() {
-                    $(document).find("#crt_promcode").click();
-                    $("#sidebar").find("#dvcrtpromcode").addClass("active");
-                    $("#sidebar").find("#dvcrtpromcode b").addClass('opened new-opend');
+                    if( !$("#collapse2").hasClass("in"))
+                    {
+                        $(document).find("#crt_promcode").click();
+                        $("#sidebar").find("#dvcrtpromcode").addClass("active");
+                        $("#sidebar").find("#dvcrtpromcode b").addClass('opened new-opend');
+                    }
                 });
               
                 $(".upload_help_icn_inner").css("display", "none");
@@ -847,7 +857,7 @@ else
                         newFileUpload.attr("name", name);
 
                     });
-                    $('#txt_Promocode').blur(function (e) {
+                    $('#txt_Promocode').keyup(function (e) {
 
                         var value = $(this).val();
                         if(value!='')
