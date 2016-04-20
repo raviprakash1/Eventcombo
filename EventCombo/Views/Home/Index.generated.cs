@@ -154,7 +154,7 @@ WriteLiteral("> <img");
 
 WriteLiteral(" class=\"\"");
 
-WriteLiteral(" src=\"http://localhost:10159/Images/default_event_image.jpg\"");
+WriteLiteral(" src=\"../images/event1.jpg\"");
 
 WriteLiteral(" alt=\"\"");
 
@@ -317,17 +317,17 @@ WriteLiteral("></script>\r\n<script>\r\n    $(document).prop(\'title\', \'Find a
 "          if (sParameterName[0] === sParam) {\r\n                return sParameter" +
 "Name[1] === undefined ? true : sParameterName[1];\r\n            }\r\n        }\r\n   " +
 " };\r\n\r\n    $(document).ready(function () {\r\n        //url = url.replace(\"-parame" +
-"ter\", vEventId);\r\n\r\n\r\n        var pg = getUrlParameter(\'page\');\r\n        if (!pg" +
-") {\r\n            if (navigator.geolocation) {\r\n                navigator.geoloca" +
-"tion.getCurrentPosition(function (p) {\r\n                    var LatLng = new goo" +
-"gle.maps.LatLng(p.coords.latitude, p.coords.longitude);\r\n                    var" +
-" geocoder = new google.maps.Geocoder;\r\n                    var infowindow = new " +
-"google.maps.InfoWindow;\r\n\r\n                    var mapOptions = {\r\n             " +
-"           center: { lat: p.coords.latitude, lng: p.coords.longitude },\r\n       " +
-"                 zoom: 13,\r\n                        mapTypeId: google.maps.MapTy" +
-"peId.ROADMAP\r\n                    };\r\n                    var vLat = p.coords.la" +
-"titude;\r\n                    var vLong = p.coords.longitude;\r\n\r\n                " +
-"    var vUrl = \'");
+"ter\", vEventId);\r\n      \r\n\r\n        var pg = getUrlParameter(\'page\');\r\n        i" +
+"f (!pg) {\r\n            if (navigator.geolocation) {\r\n                navigator.g" +
+"eolocation.getCurrentPosition(function (p) {\r\n                    var LatLng = n" +
+"ew google.maps.LatLng(p.coords.latitude, p.coords.longitude);\r\n                 " +
+"   var geocoder = new google.maps.Geocoder;\r\n                    var infowindow " +
+"= new google.maps.InfoWindow;\r\n\r\n                    var mapOptions = {\r\n       " +
+"                 center: { lat: p.coords.latitude, lng: p.coords.longitude },\r\n " +
+"                       zoom: 13,\r\n                        mapTypeId: google.maps" +
+".MapTypeId.ROADMAP\r\n                    };\r\n                    var vLat = p.coo" +
+"rds.latitude;\r\n                    var vLong = p.coords.longitude;\r\n\r\n          " +
+"          var vUrl = \'");
 
             
             #line 151 "..\..\Views\Home\Index.cshtml"

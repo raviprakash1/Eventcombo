@@ -54,7 +54,7 @@
                     <div class="form-group">
                         @if (Model.orderrow)
                         {
-                        <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code" value="@Model.PC_Code" maxlength="15" readonly="readonly">
+                        <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code" value="@Model.PC_Code" maxlength="15" disabled>
                         }
                         else
                         {
@@ -298,13 +298,13 @@ else
     if (Model.Pc_Enddatetype == "1")
     {
         <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" style="display:none"/>
-        <input type="text" class="form-control evnt_inp_cont dayspickerclick2" id="txtenddatedays promotional-readonly" name="enddays" value="@Model.enddays"  readonly="readonly"  />
+        <input type="text" class="form-control evnt_inp_cont dayspickerclick2 promotional-readonly" id="txtenddatedays" name="enddays" value="@Model.enddays"  readonly="readonly"  />
 
     }
     else
     {
         <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" />
-        <input type="text" class="form-control evnt_inp_cont dayspickerclick2" id="txtenddatedays promotional-readonly" name="enddays" value="@Model.enddays" style="display:none" readonly="readonly"   />
+        <input type="text" class="form-control evnt_inp_cont dayspickerclick2 promotional-readonly" id="txtenddatedays" name="enddays" value="@Model.enddays" style="display:none" readonly="readonly"   />
 
     }
 }
@@ -564,15 +564,10 @@ else
                 $(document).ready(function () {
 
                     $('#befendevnt').change(function(){
-                    
+                        debugger;
                         if ($(this).is(":checked")==true)
                         {
                             $('#hd_enddatetype').val('1');
-                           
-                            //$('#txtenddatedays').val("0 Days 0 Hrs 0 Min");
-                            $('#txtenddatedays').css('display','block');
-                            $('#txtenddate').css('display','none');
-
                             var value=$('#txtenddate').val();
                             var startdatef=$('#idstartdate').val();
                             $.ajax({
@@ -580,12 +575,17 @@ else
                                 data: { date: value ,type:"d",starttype:startdatef,typeofs:'e'},
                                 type: "Post",
                                 success: function (data) {
-                                    
+                                    //$('#txtenddatedays').css('display','block');
                                     $('#txtenddatedays').val(data);
                                   
                                 }
                             });
-                        }else{
+                          
+                            $('#txtenddatedays').css('display','block');
+                            $('#txtenddate').css('display','none');
+                        }
+                        else
+                        {
 
                             var value=$('#txtenddatedays').val();
                             var startdatef=$('#idstartdate').val();
