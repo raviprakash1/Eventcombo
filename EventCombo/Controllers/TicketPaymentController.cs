@@ -1208,7 +1208,7 @@ namespace EventCombo.Controllers
                         {
                             orderdet = orderdet + donatertype;
                         }
-                        var totorder = (from o in db.Order_Detail_T where o.O_Order_Id == TPurchasedetail.TPD_Order_Id select o.O_OrderAmount).FirstOrDefault();
+                        var totorder = (from o in db.Order_Detail_T where o.O_Order_Id == TPurchasedetail.TPD_Order_Id select o.O_TotalAmount).FirstOrDefault();
 
                         orderdet = orderdet + " for a total of $ " + totorder;
                         //Order Details

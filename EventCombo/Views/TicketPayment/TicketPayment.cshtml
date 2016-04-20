@@ -450,7 +450,7 @@ else
                         </button>
                         <a class="td-btn" id="btOk" type="button" href="#dvProgress" data-toggle="modal" style="display:none">
                         </a>
-                        <input id="hdVChg" value="" type="hidden" />
+                        @*<input id="hdVChg" value="" type="hidden" />*@
                         @*@Ajax.ActionLink("Open popup", "Pay", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "PaypalCart", InsertionMode = InsertionMode.Replace, OnSuccess = "openPopup" })<br />*@
                     </div>
                     <div id="dvAjxSave" style="display:none">
@@ -575,6 +575,37 @@ else
 
 <script>
     $(document).ready(function () {
+        window.paypalCheckoutReady = function () {
+            paypal.checkout.setup("@PayPalSettings.MerchantAccountID", {
+                environment: '@PayPalSettings.Environment',
+                click: function (event) {
+                    event.preventDefault();
+                    paypal.checkout.initXO();
+                    $.support.cors = true;
+
+                    $.ajax({
+                        url: '@Html.Raw(Url.Action("PayPaltoken", "Cart"))',
+                        type: "GET",
+                        async: true,
+                        crossDomain: true,
+                        //Load the minibrowser with the redirection url in the success handler
+                        success: function (token) {
+                            var url = paypal.checkout.urlPrefix + token;
+                            //Loading Mini browser with redirect url, true for async AJAX calls
+                            paypal.checkout.startFlow(url);
+                        },
+                        error: function (responseData, textStatus, errorThrown) {
+                            alert("Something going wrong ");
+                            //Gracefully Close the minibrowser in case of AJAX errors
+                            paypal.checkout.closeFlow();
+                        }
+                    });
+                },
+                button: ['btPaypalCheckout']
+            });
+        }
+
+
         var Eventid = $('#hdEventid').val();
         $("#btPaypal").hide();
         $("#Email").on("blur", function ()
@@ -1471,39 +1502,13 @@ else
             });
         }
     });
+
     history.pushState(null, null, 'TicketPayment');
     window.addEventListener('popstate', function (event) {
         history.pushState(null, null, 'TicketPayment');
     });
-    window.paypalCheckoutReady = function () {
-        paypal.checkout.setup("@PayPalSettings.MerchantAccountID", {
-            environment: '@PayPalSettings.Environment',
-            click: function (event) {
-                event.preventDefault();
-                paypal.checkout.initXO();
-                $.support.cors = true;
 
-                $.ajax({
-                    url: '@Html.Raw(Url.Action("PayPaltoken", "Cart"))',
-                    type: "GET",
-                    async: true,
-                    crossDomain: true,
-                    //Load the minibrowser with the redirection url in the success handler
-                    success: function (token) {
-                        var url = paypal.checkout.urlPrefix + token;
-                        //Loading Mini browser with redirect url, true for async AJAX calls
-                        paypal.checkout.startFlow(url);
-                    },
-                    error: function (responseData, textStatus, errorThrown) {
-                        alert("Something going wrong ");
-                        //Gracefully Close the minibrowser in case of AJAX errors
-                        paypal.checkout.closeFlow();
-                    }
-                });
-            },
-            button: ['btPaypalCheckout']
-        });
-    }
+   
     function SavePaypaldetail() {
         var flag = true;
         var Emaillogin = $("#Email").val();
@@ -1617,7 +1622,8 @@ else
             type: "Post",
             success: function (response) {
                 if (response == "Y") {
-                    $("#btPaypalCheckout").click();
+                    $("#btPaypalCheckout").trigger('click');
+                    //$("#btPaypalCheckout").click();
                 }
             }
         });
