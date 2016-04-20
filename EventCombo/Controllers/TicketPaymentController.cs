@@ -1056,7 +1056,7 @@ namespace EventCombo.Controllers
                                            OrganiserEmail = orgprof.Email,
                                            Addresstatus = p.AddressStatus,
                                        }).ToList().Distinct().FirstOrDefault();
-
+                        var Organizerdetail = (from p in db.Event_Orgnizer_Detail join k in db.Organizer_Master on p.OrganizerMaster_Id equals k.Orgnizer_Id where p.Orgnizer_Event_Id == eventid && p.DefaultOrg == "Y" select k).FirstOrDefault();
                         var usernmae = !string.IsNullOrEmpty(Ticketorderdetail.O_First_Name + " " + Ticketorderdetail.O_Last_Name) ? Ticketorderdetail.O_First_Name + " " + Ticketorderdetail.O_Last_Name : Edtails.UserName;
                         var datetime = DateTime.Parse(TQtydetail.TQD_StartDate);
                         var day = datetime.DayOfWeek.ToString();
@@ -1232,8 +1232,9 @@ namespace EventCombo.Controllers
                         htmlText = htmlText.Replace("¶¶EventDescription¶¶", "");
                         htmlText = htmlText.Replace("¶¶Eventtypedetail¶¶", Etype);
                         htmlText = htmlText.Replace("¶¶OrderDetail¶¶", orderdet);
-                        htmlText = htmlText.Replace("¶¶EventOrganiserName¶¶", Edtails.Organizername);
-                        htmlText = htmlText.Replace("¶¶EventOrganiserEmail¶¶", Edtails.OrganiserEmail);
+                        htmlText = htmlText.Replace("¶¶EventOrganiserName¶¶", !string.IsNullOrEmpty(Organizerdetail.Orgnizer_Name) ? Organizerdetail.Orgnizer_Name : Edtails.Organizername);
+                        htmlText = htmlText.Replace("¶¶EventOrganiserEmail¶¶", !string.IsNullOrEmpty(Organizerdetail.Organizer_Email) ? Organizerdetail.Organizer_Email : Edtails.OrganiserEmail);
+
                     }
 
 
@@ -1311,6 +1312,8 @@ namespace EventCombo.Controllers
                                            OrganiserEmail = orgprof.Email,
                                            Addresstatus = p.AddressStatus,
                                        }).ToList().Distinct().FirstOrDefault();
+                        var Organizerdetail = (from p in db.Event_Orgnizer_Detail join k in db.Organizer_Master on p.OrganizerMaster_Id equals k.Orgnizer_Id where p.Orgnizer_Event_Id == eventid && p.DefaultOrg == "Y" select k).FirstOrDefault();
+
                         var usernmae = !string.IsNullOrEmpty(Ticketorderdetail.O_First_Name + " " + Ticketorderdetail.O_Last_Name) ? Ticketorderdetail.O_First_Name + " " + Ticketorderdetail.O_Last_Name : Edtails.UserName;
                         var datetime = DateTime.Parse(TQtydetail.TQD_StartDate);
                         var day = datetime.DayOfWeek.ToString();
@@ -1486,8 +1489,8 @@ namespace EventCombo.Controllers
                         htmlText = htmlText.Replace("¶¶EventDescription¶¶", "");
                         htmlText = htmlText.Replace("¶¶Eventtypedetail¶¶", Etype);
                         htmlText = htmlText.Replace("¶¶OrderDetail¶¶", orderdet);
-                        htmlText = htmlText.Replace("¶¶EventOrganiserName¶¶", Edtails.Organizername);
-                        htmlText = htmlText.Replace("¶¶EventOrganiserEmail¶¶", Edtails.OrganiserEmail);
+                        htmlText = htmlText.Replace("¶¶EventOrganiserName¶¶",!string.IsNullOrEmpty(Organizerdetail.Orgnizer_Name)? Organizerdetail.Orgnizer_Name: Edtails.Organizername);
+                        htmlText = htmlText.Replace("¶¶EventOrganiserEmail¶¶", !string.IsNullOrEmpty(Organizerdetail.Organizer_Email) ? Organizerdetail.Organizer_Email : Edtails.OrganiserEmail);
                         if (count == lastcount)
                         {
                             htmlText = htmlText.Replace("¶¶Linebreak¶¶", "");
@@ -2008,7 +2011,7 @@ namespace EventCombo.Controllers
                                OrganiserEmail = orgprof.Email,
                                Addresstatus = p.AddressStatus,
                            }).ToList().Distinct().FirstOrDefault();
-
+            var Organizerdetail = (from p in db.Event_Orgnizer_Detail join k in db.Organizer_Master on p.OrganizerMaster_Id equals k.Orgnizer_Id where p.Orgnizer_Event_Id == Eventid && p.DefaultOrg == "Y" select k).FirstOrDefault(); 
             var url = Request.Url;
             var baseurl = url.GetLeftPart(UriPartial.Authority);
             string createevent = baseurl + Url.Action("Index", "Home");
@@ -2136,7 +2139,7 @@ namespace EventCombo.Controllers
                                     strHTML.Append("<tr align='left'>");
                                     strHTML.Append("<td colspan='3' style='font-size:15px; padding:0px 5px 10px 5px;color: green; border-bottom:1px dashed #ccc;'>" + promocode + "</td>");
                                     var promoprice = qty.Promocodeamt * qty.Quantity;
-                                    strHTML.Append("<td colspan='1' style='font-size:15px; color: green;padding:0px 5px 10px 5px; border-bottom:1px dashed #ccc;'>-" + promoprice + "</td>");
+                                    strHTML.Append("<td colspan='1' style='font-size:15px; color: green;padding:0px 5px 10px 5px; border-bottom:1px dashed #ccc;'>-$" + promoprice + "</td>");
                                     strHTML.Append("</tr>");
                                 }
                                 else
@@ -2203,7 +2206,7 @@ namespace EventCombo.Controllers
                                 strHTML.Append("<tr align='left'>");
                                 strHTML.Append("<td colspan='3' style='font-size:15px; padding:0px 5px 10px 5px;color: green; border-bottom:1px dashed #ccc;'>" + promocode + "</td>");
                                 var promoprice = qty.Promocodeamt * qty.Quantity;
-                                strHTML.Append("<td colspan='1' style='font-size:15px; color: green;padding:0px 5px 10px 5px; border-bottom:1px dashed #ccc;'>-" + promoprice + "</td>");
+                                strHTML.Append("<td colspan='1' style='font-size:15px; color: green;padding:0px 5px 10px 5px; border-bottom:1px dashed #ccc;'>-$" + promoprice + "</td>");
                                 strHTML.Append("</tr>");
                             }
                             else
@@ -2274,7 +2277,7 @@ namespace EventCombo.Controllers
                             strHTML.Append("<tr align='left'>");
                             strHTML.Append("<td colspan='3' style='font-size:15px; padding:0px 5px 10px 5px;color: green; border-bottom:1px dashed #ccc;'>" + promocode + "</td>");
                             var promoprice = qty.Promocodeamt * qty.Quantity;
-                            strHTML.Append("<td colspan='1' style='font-size:15px; color: green;padding:0px 5px 10px 5px; border-bottom:1px dashed #ccc;'>-" + promoprice + "</td>");
+                            strHTML.Append("<td colspan='1' style='font-size:15px; color: green;padding:0px 5px 10px 5px; border-bottom:1px dashed #ccc;'>-$" + promoprice + "</td>");
                             strHTML.Append("</tr>");
                         }
                         else
@@ -2324,7 +2327,7 @@ namespace EventCombo.Controllers
                 }
             }
             strHTML.Append("<tr align='right'> ");
-            strHTML.Append("<td colspan='4' style='font-size:15px;font-weight:bold;padding:10px 5px;border-bottom:1px solid #ccc;'>Total :" + myOrderDetails.O_TotalAmount + " </td></tr>");
+            strHTML.Append("<td colspan='4' style='font-size:15px;font-weight:bold;padding:10px 5px;border-bottom:1px solid #ccc;'>Total :$" + myOrderDetails.O_TotalAmount + " </td></tr>");
             if (Edtails.Addresstatus == "Multiple")
             {
                 eventtype = "* This event has multiple venues ";
@@ -2433,12 +2436,12 @@ namespace EventCombo.Controllers
 
                         if (Emailtag[i].Tag_Name == "EventOrganiserName")
                         {
-                            bodyn = bodyn.Replace("¶¶EventOrganiserName¶¶", Edtails.Organizername);
+                            bodyn = bodyn.Replace("¶¶EventOrganiserName¶¶", !string.IsNullOrEmpty(Organizerdetail.Orgnizer_Name)?Organizerdetail.Orgnizer_Name:Edtails.Organizername);
 
                         }
                         if (Emailtag[i].Tag_Name == "EventOrganiserEmail")
                         {
-                            bodyn = bodyn.Replace("¶¶EventOrganiserEmail¶¶", Edtails.OrganiserEmail);
+                            bodyn = bodyn.Replace("¶¶EventOrganiserEmail¶¶", !string.IsNullOrEmpty(Organizerdetail.Organizer_Email)? Organizerdetail.Organizer_Email: Edtails.OrganiserEmail);
 
                         }
                         if (Emailtag[i].Tag_Name == "EventDynamicTable")

@@ -107,7 +107,25 @@
                 </div>
                 <div class="Fix_Head" title="Turn on to fix header">
                     <label class="switch">
-                        <input type="checkbox" class="switch-input" checked id="idchecked" onchange="changeheader(this.id);">
+                        @if (Session["Header"] == null)
+                        {
+                         <input type="checkbox" class="switch-input" checked id="idchecked" onchange="changeheader(this.id);">
+
+                        }
+                        else
+                        {
+                            if (Session["Header"].ToString() == " " || Session["Header"].ToString()=="on")
+                            {
+                                <input type="checkbox" class="switch-input" checked id="idchecked" onchange="changeheader(this.id);">
+
+                            }
+                            else
+                            {
+                                <input type="checkbox" class="switch-input" id="idchecked" onchange="changeheader(this.id);">
+                            }
+                        }
+                       
+
                         <span class="switch-label" data-on="On" data-off="Off"></span>
                         <span class="switch-handle"></span>
                     </label>
@@ -607,6 +625,7 @@
                     return false
                 }
             });
+          
             $('#divmain').addClass('home_fixed_header');
             $('#eventtopscoll').addClass('event_top');
             $('#scrollhome').addClass('con_scr0l_home');
@@ -809,7 +828,30 @@
 
         }
        
+        var sessionheader = "@Session["Header"]";
+        
+        if (sessionheader == "" || sessionheader=="on")
+        {
+            $('#divmain').addClass('home_fixed_header');
+            $('#eventtopscoll').addClass('event_top');
+            $('#scrollhome').addClass('con_scr0l_home');
+            $('#divcontmain').addClass('mt15');
+            $('#eventtopscoll').addClass('viewevent_container');
+            $('#forgotcheck').addClass('forgot_top');
+           
+          
+        }
+        if ( sessionheader == "off") {
+            $('#eventtopscoll').removeClass('event_top');
+            $('#scrollhome').removeClass('con_scr0l_home');
+            $('#divmain').removeClass('home_fixed_header');
 
+            $('#divcontmain').removeClass('mt15');
+
+            $('#eventtopscoll').removeClass('viewevent_container');
+            $('#forgotcheck').removeClass('forgot_top');
+            
+        }
 
     });
 
