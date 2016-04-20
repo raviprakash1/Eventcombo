@@ -318,30 +318,20 @@
                     if (response != "Y") {
                         alert("Access Denied !!!");
                         return false;
-                        //  $('#spanid').html("Record Updated.");
-                        // $('#divError').css('display', 'block');
-                        ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
                     }
                     else {
-                        //  alert(vPerm);
                         if (vPerm == "10")
                             window.location.href = '@Url.Action("Users", "Users")';
                         else if (vPerm == "6")
-
                             window.location.href = '@Url.Action("Index", "Email", new { templatetag = "email_welcome", templatename = "Welcome" })';
-
                         else if (vPerm == "7") {
-
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "MyAccount" })';
-
                         }
                         else if (vPerm == "7A") {
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "Login" })';
-
                         }
                         else if (vPerm == "7B") {
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "Signup" })';
-
                         }
                         else if (vPerm == "7C") {
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "ForgotPassword" })';
@@ -356,7 +346,6 @@
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "Messages" })';
                         else if (vPerm == "7H")
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "OrganizerMaster" })';
-
                         else if (vPerm == "4")
                             window.location.href = '@Url.Action("Index", "ManageEvent")';
                         else if (vPerm == "8")
