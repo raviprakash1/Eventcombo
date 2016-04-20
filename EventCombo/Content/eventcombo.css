@@ -770,6 +770,8 @@ span.evnt_toltip{
     .ipad-tkt-recpt-btn{padding: 0px; float: right; width: 80px;}
     .ipad-tkt-recpt-btn button{ width:100%;}
     .ipad-tkt-recpt-btn-mt10{ margin-top:10px;}
+    .ipad-pl0{ padding-left:0px !important;}
+   
 }
 
 

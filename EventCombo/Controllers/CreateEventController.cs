@@ -1886,8 +1886,9 @@ public string Checkpassword(string password ,long id)
         {
             EventComboEntities obje = new EventComboEntities();
             string strresult = "";
-            var checkpwd = (from obj in obje.Events where obj.EventID == id && obj.Private_Password.Trim() == password.Trim() select obj).Any();
-            if(checkpwd==true)
+            var pwd = (from obj in obje.Events where obj.EventID == id  select obj.Private_Password).FirstOrDefault();
+            var i = String.Compare(pwd, password);
+            if(i == 0)
             {
                 strresult = "Y";
             }
