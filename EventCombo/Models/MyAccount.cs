@@ -272,5 +272,7 @@ namespace EventCombo.Models
                 smtp.Send(mailMessage);
             }
         }
+
+      
     }
 }

@@ -1676,6 +1676,14 @@ else
 
     <script>
         $(document).ready(function () {
+            $("#txtReqPassword").on("keypress", function (e) {
+                
+                if (e.which == 32)
+                    return false;
+            });
+            $('#txtReqPassword').bind("cut copy paste", function (e) {
+                e.preventDefault();
+            });
             $("#btProgress").click();
             var vVal = '@TempData["IsNewEvent"].ToString()';
             if (vVal == "Y")

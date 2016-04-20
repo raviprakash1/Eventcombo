@@ -515,15 +515,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventConfirmation.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Event\EventCreation.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventCreation.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Home\DiscoverEvents.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DiscoverEvents.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Home\ForgetPassword.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ForgetPassword.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Home\Index.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Home\PasswordReset.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PasswordReset.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shared\_AccountLayout.generated.cs">
       <AutoGen>True</AutoGen>
@@ -1080,9 +1095,11 @@
     </Content>
     <Content Include="Views\Home\ForgetPassword.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ForgetPassword.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Home\PasswordReset.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>PasswordReset.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Account\PurchasedTicket.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1155,6 +1172,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Event\EventCreation.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EventCreation.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\CreateEvent\CreateEvent.cshtml">
       <LastGenOutput>CreateEvent1.generated.cs</LastGenOutput>

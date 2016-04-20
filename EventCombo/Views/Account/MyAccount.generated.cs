@@ -81,28 +81,31 @@ WriteAttribute("src", Tuple.Create(" src=\"", 319), Tuple.Create("\"", 356)
 WriteLiteral(@"></script>
 
 <style>
-    .jFiler-input-dragDrop{width:200px; height:auto; padding:0px; }
-    .jFiler-item-thumb-image{ }
-    .jFiler-item-thumb-image img{ width:100%; height:150px; }
+    .jFiler-input-dragDrop{width:200px; height:200px; padding:0px; }
+    .jFiler-item-thumb-image{height: 160px;line-height: 160px;overflow: hidden; width: 195px; }
+    .jFiler-item-thumb-image img{ width:auto; height:auto; }
     .jFiler-item-list{ margin:0px;}
-    .jFiler-input-dragDrop .jFiler-input-icon{ margin-top:0px; height: 150px;}
-    .jFiler-item .jFiler-item-container{ margin:0px; padding:0px; }
+    .jFiler-item{ display:inline-block; float:none; }
+    .jFiler-input-dragDrop .jFiler-input-icon{ margin-top:0px; height: 137px;}
+    .jFiler-item .jFiler-item-container{ margin:0px; padding:0px; box-shadow:none; border:0px; }
     .jFiler-item .jFiler-item-container .jFiler-item-assets{ margin-top:0px;}
+    .jFiler-item .jFiler-item-assets.jFiler-row{ display:none; } 
+
     .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:auto;  margin-left:0px; }
     .can_btn i{ font-size:25px;}
     .can_btn{ padding:0px;}
     .jFiler-input-text{ margin-bottom:5px;}
-    .jFiler-input-icon i{position: relative;
-        top: 35px;}
-    .coun_lef{ color:#000; margin-top:5px;}
+    .jFiler-input-icon i{position: relative;top: 35px;}
+    .jFiler-input-text h3{ word-break:normal !important; }
 
+    .coun_lef{ color:#000; margin-top:5px;}
 
 </style>
 
 ");
 
             
-            #line 32 "..\..\Views\Account\MyAccount.cshtml"
+            #line 35 "..\..\Views\Account\MyAccount.cshtml"
   Html.EnableClientValidation();
             
             #line default
@@ -110,7 +113,7 @@ WriteLiteral(@"></script>
 WriteLiteral("\r\n");
 
             
-            #line 33 "..\..\Views\Account\MyAccount.cshtml"
+            #line 36 "..\..\Views\Account\MyAccount.cshtml"
   Html.EnableUnobtrusiveJavaScript();
             
             #line default
@@ -134,7 +137,7 @@ WriteLiteral(" class=\"clearfix\"");
 WriteLiteral("></div>\r\n");
 
             
-            #line 40 "..\..\Views\Account\MyAccount.cshtml"
+            #line 43 "..\..\Views\Account\MyAccount.cshtml"
  using (Html.BeginForm("MyAccount", "Account", FormMethod.Post, new { role = "form", @class = "form-horizontal", autocomplete = "off" }))
 {
     
@@ -142,14 +145,14 @@ WriteLiteral("></div>\r\n");
             #line default
             #line hidden
             
-            #line 42 "..\..\Views\Account\MyAccount.cshtml"
+            #line 45 "..\..\Views\Account\MyAccount.cshtml"
 Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
-            #line 42 "..\..\Views\Account\MyAccount.cshtml"
+            #line 45 "..\..\Views\Account\MyAccount.cshtml"
                             
     if (ViewData["Message"] != null)
     {
@@ -178,7 +181,7 @@ WriteLiteral(" class=\"er_suc\"");
 WriteLiteral(">");
 
             
-            #line 49 "..\..\Views\Account\MyAccount.cshtml"
+            #line 52 "..\..\Views\Account\MyAccount.cshtml"
                                Write(ViewData["Message"]);
 
             
@@ -197,7 +200,7 @@ WriteLiteral(" tabindex=\"-1\"");
 WriteLiteral(">&#215;</button>\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 53 "..\..\Views\Account\MyAccount.cshtml"
+            #line 56 "..\..\Views\Account\MyAccount.cshtml"
     }
     if (!ViewData.ModelState.IsValid)
     {
@@ -229,7 +232,7 @@ WriteLiteral(" id=\"erraccsucc\"");
 WriteLiteral(">");
 
             
-            #line 62 "..\..\Views\Account\MyAccount.cshtml"
+            #line 65 "..\..\Views\Account\MyAccount.cshtml"
                                                Write(Html.ValidationMessage("Error"));
 
             
@@ -248,7 +251,7 @@ WriteLiteral(" tabindex=\"-1\"");
 WriteLiteral(">&#215;</button>\r\n            </div>\r\n\r\n        </div>\r\n");
 
             
-            #line 67 "..\..\Views\Account\MyAccount.cshtml"
+            #line 70 "..\..\Views\Account\MyAccount.cshtml"
     }
 
     
@@ -256,7 +259,7 @@ WriteLiteral(">&#215;</button>\r\n            </div>\r\n\r\n        </div>\r\n")
             #line default
             #line hidden
             
-            #line 75 "..\..\Views\Account\MyAccount.cshtml"
+            #line 78 "..\..\Views\Account\MyAccount.cshtml"
            
 
 
@@ -322,7 +325,7 @@ WriteLiteral(" id=\"input2\"");
 WriteLiteral(">\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 98 "..\..\Views\Account\MyAccount.cshtml"
+            #line 101 "..\..\Views\Account\MyAccount.cshtml"
 
 
 
@@ -358,7 +361,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 106 "..\..\Views\Account\MyAccount.cshtml"
+            #line 109 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.Firstname, new { @maxlength = 35, @class = "form-control" }));
 
             
@@ -378,7 +381,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 110 "..\..\Views\Account\MyAccount.cshtml"
+            #line 113 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.Lastname, new { @maxlength = 35, @class = "form-control" }));
 
             
@@ -418,7 +421,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 123 "..\..\Views\Account\MyAccount.cshtml"
+            #line 126 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.DropDownList("month", Enumerable.Range(1, 12).Select(i => new SelectListItem
                        {
                            Value = i.ToString(),
@@ -439,7 +442,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 133 "..\..\Views\Account\MyAccount.cshtml"
+            #line 136 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.DropDownList("day", Enumerable.Range(1, 31).Select(i => new SelectListItem
                        {
                            Value = i.ToString(),
@@ -460,8 +463,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 142 "..\..\Views\Account\MyAccount.cshtml"
-                       Write(Html.DropDownList("year", Enumerable.Range(1980, 36).Select(i => new SelectListItem
+            #line 145 "..\..\Views\Account\MyAccount.cshtml"
+                       Write(Html.DropDownList("year", Enumerable.Range(1901, (System.DateTime.Now.Year- 1901)+1).Select(i => new SelectListItem
                        {
                            Value = i.ToString(),
                            Text = i.ToString(),
@@ -502,7 +505,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 160 "..\..\Views\Account\MyAccount.cshtml"
+            #line 163 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.DropDownList("Gender", new List<SelectListItem>{
         new SelectListItem{ Text="Male", Value="Male"},
         new SelectListItem{ Text="Female", Value="Female"}
@@ -542,7 +545,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 175 "..\..\Views\Account\MyAccount.cshtml"
+            #line 178 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.StreetAddress1, new { @maxlength = 256, @class = "form-control" }));
 
             
@@ -568,7 +571,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 180 "..\..\Views\Account\MyAccount.cshtml"
+            #line 183 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.StreeAddress2, new { @maxlength = 256, @class = "form-control" }));
 
             
@@ -598,7 +601,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 187 "..\..\Views\Account\MyAccount.cshtml"
+            #line 190 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.City, new { @maxlength = 256, @class = "form-control" }));
 
             
@@ -624,7 +627,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 193 "..\..\Views\Account\MyAccount.cshtml"
+            #line 196 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.State, new { @maxlength = 256, @class = "form-control" }));
 
             
@@ -654,7 +657,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 201 "..\..\Views\Account\MyAccount.cshtml"
+            #line 204 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.Zip, new { @maxlength = 6, @class = "form-control" }));
 
             
@@ -673,7 +676,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 205 "..\..\Views\Account\MyAccount.cshtml"
+            #line 208 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.DropDownList("Country", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control selectpicker" }));
 
             
@@ -713,7 +716,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 218 "..\..\Views\Account\MyAccount.cshtml"
+            #line 221 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.MainPhone, new { @class = "form-control" }));
 
             
@@ -745,7 +748,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 228 "..\..\Views\Account\MyAccount.cshtml"
+            #line 231 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.SecondPhone, new { @class = "form-control" }));
 
             
@@ -777,7 +780,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 238 "..\..\Views\Account\MyAccount.cshtml"
+            #line 241 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.WorkPhone, new { @class = "form-control" }));
 
             
@@ -809,7 +812,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 248 "..\..\Views\Account\MyAccount.cshtml"
+            #line 251 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.HiddenFor(m => m.PreviousEmail, new { id = "hdEmail" }));
 
             
@@ -820,7 +823,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 249 "..\..\Views\Account\MyAccount.cshtml"
+            #line 252 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.Email, new { @class = "form-control", @maxlength = 256 }));
 
             
@@ -852,7 +855,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 259 "..\..\Views\Account\MyAccount.cshtml"
+            #line 262 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.ConfirmEmail, new { @class = "form-control", @maxlength = 256 }));
 
             
@@ -884,7 +887,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 269 "..\..\Views\Account\MyAccount.cshtml"
+            #line 272 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.TextBoxFor(m => m.WebsiteURL, new { @class = "form-control", @maxlength = 256 }));
 
             
@@ -916,7 +919,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 279 "..\..\Views\Account\MyAccount.cshtml"
+            #line 282 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.PasswordFor(m => m.Password, new { @class = "form-control", @maxlength = 15 }));
 
             
@@ -948,7 +951,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 289 "..\..\Views\Account\MyAccount.cshtml"
+            #line 292 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.PasswordFor(m => m.NewPassword, new { @class = "form-control", @maxlength = 15 }));
 
             
@@ -980,7 +983,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 299 "..\..\Views\Account\MyAccount.cshtml"
+            #line 302 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @maxlength = 15 }));
 
             
@@ -1002,7 +1005,7 @@ WriteLiteral(" />\r\n");
 WriteLiteral("            ");
 
             
-            #line 305 "..\..\Views\Account\MyAccount.cshtml"
+            #line 308 "..\..\Views\Account\MyAccount.cshtml"
        Write(Html.HiddenFor(m => m.ImagePresent));
 
             
@@ -1013,7 +1016,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 306 "..\..\Views\Account\MyAccount.cshtml"
+            #line 309 "..\..\Views\Account\MyAccount.cshtml"
        Write(Html.HiddenFor(m => m.userimage));
 
             
@@ -1028,7 +1031,7 @@ WriteLiteral(" type=\"hidden\"");
 WriteLiteral(" />\r\n\r\n        </div>\r\n");
 
             
-            #line 310 "..\..\Views\Account\MyAccount.cshtml"
+            #line 313 "..\..\Views\Account\MyAccount.cshtml"
 
 }
 
@@ -1095,7 +1098,7 @@ WriteLiteral(">\r\n\r\n    $(document).ready(function () {\r\n        $(\'#mgacn
 ");\r\n    var Model = \"");
 
             
-            #line 429 "..\..\Views\Account\MyAccount.cshtml"
+            #line 432 "..\..\Views\Account\MyAccount.cshtml"
             Write(Html.Raw(Model.editsave));
 
             
@@ -1104,7 +1107,7 @@ WriteLiteral(">\r\n\r\n    $(document).ready(function () {\r\n        $(\'#mgacn
 WriteLiteral("\";\r\n\r\n    var files1 = \'");
 
             
-            #line 431 "..\..\Views\Account\MyAccount.cshtml"
+            #line 434 "..\..\Views\Account\MyAccount.cshtml"
               Write(MvcHtmlString.Create(Json.Encode(ViewData["results"])));
 
             
@@ -1127,7 +1130,7 @@ WriteLiteral(@"';
         var userProfileImage = """);
 
             
-            #line 445 "..\..\Views\Account\MyAccount.cshtml"
+            #line 448 "..\..\Views\Account\MyAccount.cshtml"
                            Write(Html.Raw(Model.UserProfileImage));
 
             
@@ -1136,7 +1139,7 @@ WriteLiteral(@"';
 WriteLiteral("\";\r\n        var modelcontent = \"");
 
             
-            #line 446 "..\..\Views\Account\MyAccount.cshtml"
+            #line 449 "..\..\Views\Account\MyAccount.cshtml"
                        Write(Html.Raw(Model.contentype));
 
             
@@ -1334,7 +1337,7 @@ WriteLiteral("\r\n\r\n            $(\'#userimage\').val(imgdata);\r\n           
 ",\r\n                files: [{\r\n                    \"type\": \"");
 
             
-            #line 741 "..\..\Views\Account\MyAccount.cshtml"
+            #line 744 "..\..\Views\Account\MyAccount.cshtml"
                         Write(Model.contentype);
 
             
@@ -1343,7 +1346,7 @@ WriteLiteral("\r\n\r\n            $(\'#userimage\').val(imgdata);\r\n           
 WriteLiteral("\",\r\n                    \"name\": \"");
 
             
-            #line 742 "..\..\Views\Account\MyAccount.cshtml"
+            #line 745 "..\..\Views\Account\MyAccount.cshtml"
                         Write(Model.UserProfileImage);
 
             
@@ -1352,7 +1355,7 @@ WriteLiteral("\",\r\n                    \"name\": \"");
 WriteLiteral("\",\r\n                    \"file\": \"");
 
             
-            #line 743 "..\..\Views\Account\MyAccount.cshtml"
+            #line 746 "..\..\Views\Account\MyAccount.cshtml"
                         Write(Model.ImagePath);
 
             
@@ -1453,7 +1456,7 @@ WriteLiteral(">\r\n    function isleap(leapyear) {\r\n        var yr = leapyear;
 "           url: \'");
 
             
-            #line 1000 "..\..\Views\Account\MyAccount.cshtml"
+            #line 1003 "..\..\Views\Account\MyAccount.cshtml"
              Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -1477,9 +1480,9 @@ WriteLiteral(@"',
 </script>
 <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 41461), Tuple.Create("\"", 41502)
-, Tuple.Create(Tuple.Create("", 41467), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
-, 41467), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 41760), Tuple.Create("\"", 41801)
+, Tuple.Create(Tuple.Create("", 41766), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
+, 41766), false)
 );
 
 WriteLiteral("></script>\r\n\r\n");
