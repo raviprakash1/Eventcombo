@@ -928,7 +928,20 @@
         //window.addEventListener('popstate', function (event) {
         //    history.pushState(null, null, 'ViewEvent');
         //});
+        $('body').on('keyup keypress', function (e) {
 
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                if ($("#viewticketpassword").css('display') == 'block') {
+                    $("#btnsubmitpwd").click();
+                   
+                } else {
+                    $("#btPayment").click();
+                }
+
+              
+            }
+        });
         $(document).click(function () {
             $('#orgerror').css('display', 'none');
 

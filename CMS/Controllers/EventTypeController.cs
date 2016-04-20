@@ -11,6 +11,10 @@ namespace CMS.Controllers
         // GET: EventType
         public ActionResult EventType(string Type)// Calling when we first hit controller.
         {
+            if ((Session["UserID"] == null))
+            {
+                return RedirectToAction("Login", "Home");
+            }
             EventType objET = new Models.EventType();
             EmsEntities objEntity = new EmsEntities();
             

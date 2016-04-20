@@ -12,6 +12,10 @@ namespace CMS.Controllers
         // GET: EventCategory
         public ActionResult EventCategory(string msg)
         {
+            if ((Session["UserID"] == null))
+            {
+                return RedirectToAction("Login", "Home");
+            }
             EventCategory EC = new Models.EventCategory();
             EmsEntities objEntity = new EmsEntities();           
                 var modelPerm = (from EventCategory in objEntity.EventCategories 

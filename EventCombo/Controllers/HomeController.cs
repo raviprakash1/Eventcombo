@@ -1129,7 +1129,7 @@ namespace EventCombo.Controllers
                         lsDisEvt.Add(objDisEv);
                     }
                     //lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventFeature).OrderBy(m => m.FeatureDateTime) .ToList();
-                    lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventFeature).ToList();
+                    lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventDate).OrderBy(m => m.EventFeature).ToList();
                 }
                 return lsDisEvt;
             }

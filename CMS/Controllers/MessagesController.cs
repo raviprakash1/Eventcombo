@@ -11,6 +11,11 @@ namespace CMS.Controllers
         // GET: Messages
         public ActionResult Index(string Form)
         {
+            if ((Session["UserID"] == null))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
             List<MessageTemplate> lstmsg = new List<MessageTemplate>();
             TempData["FormName"] = Form;
             lstmsg = MessageData(Form);
@@ -19,6 +24,11 @@ namespace CMS.Controllers
         [HttpPost]
         public ActionResult Index(ICollection<MessageTemplate> MessageTemplates)
         {
+            if ((Session["UserID"] == null))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
             string form_name = "";
             EmsEntities objEntity = new EmsEntities();
             foreach (MessageTemplate item in MessageTemplates)
