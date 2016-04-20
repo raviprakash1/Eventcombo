@@ -1164,7 +1164,7 @@ namespace EventCombo.Controllers
                             strticketHtml.Append("<div class='form-group paidticket-" + j + "' id='id_Disc-" + j + "' style='display:none;'>");
 
                         }
-                        strticketHtml.Append("<label class='col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0 ipad-width-58'>Disc.$</label>");
+                        strticketHtml.Append("<label class='col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0 ipad-width-58 ipad-pl0'>Disc.$</label>");
                         strticketHtml.Append("<div class='col-sm-8 xs-tkt-typ-pad-0 ipad-pad-5'>");
                         strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' placeholder='0' id='id_Discount-" + j + "' onkeypress='changefeetype(this, event, this.id)'  onblur='tofixed(this.id)' maxlength='9' value='" + discount + "' />");
                         strticketHtml.Append("</div></div></div>");
