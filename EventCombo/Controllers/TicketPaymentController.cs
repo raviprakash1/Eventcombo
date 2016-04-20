@@ -1462,7 +1462,7 @@ namespace EventCombo.Controllers
                         {
                             orderdet = orderdet + donatertype;
                         }
-                        var totorder = (from o in db.Order_Detail_T where o.O_Order_Id == TPurchasedetail.TPD_Order_Id select o.O_OrderAmount).FirstOrDefault();
+                        var totorder = (from o in db.Order_Detail_T where o.O_Order_Id == TPurchasedetail.TPD_Order_Id select o.O_TotalAmount).FirstOrDefault();
 
                         orderdet = orderdet + " for a total of $ " + totorder;
                         //Order Details
@@ -1716,7 +1716,13 @@ namespace EventCombo.Controllers
                         pdate.id = timefinal;
                         pdate.Address = addresslist;
                         pdate.Datetime = day.ToString() + " " + Sdate.ToString() + " " + time;
-                        Dateofevent.Add(pdate);
+                        var matchingvalues = Dateofevent.Where(x => x.id.Contains(timefinal)).FirstOrDefault();
+                        if (matchingvalues == null)
+                        {
+                            Dateofevent.Add(pdate);
+                        }
+                    
+                       
                         //Detail to send on page
                     }
                     var emailname = "";
@@ -2121,7 +2127,7 @@ namespace EventCombo.Controllers
                                 if (qty.Promocode!=null && qty.Promocode != 0 )
                                 {
                                     strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                                    strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.username + "</td>");
+                                    strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + (!string.IsNullOrEmpty(username)? username:qty.username) + "</td>");
                                     strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
                                     strHTML.Append("<td style='width:10%font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
                                     strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Price + "</td>");
@@ -2136,7 +2142,7 @@ namespace EventCombo.Controllers
                                 else
                                 {
                                     strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                                    strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.username + "</td>");
+                                    strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + (!string.IsNullOrEmpty(username) ? username : qty.username) + "</td>");
                                     strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
                                     strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
                                     strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
@@ -2188,7 +2194,7 @@ namespace EventCombo.Controllers
                             if (qty.Promocode != null && qty.Promocode != 0)
                             {
                                 strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.username + "</td>");
+                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + (!string.IsNullOrEmpty(username) ? username : qty.username) + "</td>");
                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
                                 strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.Price + "</td>");
@@ -2203,7 +2209,7 @@ namespace EventCombo.Controllers
                             else
                             {
                                 strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.username + "</td>");
+                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + (!string.IsNullOrEmpty(username) ? username : qty.username) + "</td>");
                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
                                 strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
@@ -2259,7 +2265,7 @@ namespace EventCombo.Controllers
                         if (qty.Promocode != null && qty.Promocode != 0)
                         {
                             strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                            strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.username + "</td>");
+                            strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + (!string.IsNullOrEmpty(username) ? username : qty.username) + "</td>");
                             strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
                             strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
                             strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.Price + "</td>");
@@ -2274,7 +2280,7 @@ namespace EventCombo.Controllers
                         else
                         {
                             strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                            strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.username + "</td>");
+                            strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + (!string.IsNullOrEmpty(username) ? username : qty.username) + "</td>");
                             strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
                             strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
                             strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
@@ -2577,14 +2583,23 @@ namespace EventCombo.Controllers
 
         public void getlatestsetting(string get)
         {
-            string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
-            using (EventComboEntities db = new EventComboEntities())
-            {
-                Profile prof = db.Profiles.Where(x => x.UserID == strUsers).FirstOrDefault();
-                prof.SendCur_EventDetail = get;
-                db.SaveChanges();
+            try {
+                string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    Profile prof = db.Profiles.Where(x => x.UserID == strUsers).FirstOrDefault();
+                    if (prof != null)
+                    {
+                        prof.SendCur_EventDetail = get;
+                        db.SaveChanges();
+                    }
 
+                }
+            } catch (Exception ex)
+            {
+                ExceptionLogging.SendErrorToText(ex);
             }
+
 
         }
 

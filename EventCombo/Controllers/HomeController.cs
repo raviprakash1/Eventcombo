@@ -2296,6 +2296,11 @@ namespace EventCombo.Controllers
             }
         }
 
+        public void Setheader(string header)
+        {
+           Session["Header"] = header;
+        }
+
     }
 
 

@@ -594,13 +594,42 @@
 
     function changeheader(e) {
         if ($('#idchecked').is(":checked") == true) {
+            $.ajax({
+                url: '@Url.Action("Setheader", "Home")',
+                type: "Post",
+                data: { header: "on" },
+                success: function (data) {
+
+
+                },
+                error: function (data) {
+                    alert("Sorry there is some problem.");
+                    return false
+                }
+            });
             $('#divmain').addClass('home_fixed_header');
             $('#eventtopscoll').addClass('event_top');
             $('#scrollhome').addClass('con_scr0l_home');
             $('#divcontmain').addClass('mt15');
             $('#eventtopscoll').addClass('viewevent_container');
             $('#forgotcheck').addClass('forgot_top');
+
+          
+
         } else {
+            $.ajax({
+                url: '@Url.Action("Setheader", "Home")',
+                type: "Post",
+                data: { header: "off" },
+                success: function (data) {
+
+
+                },
+                error: function (data) {
+                    alert("Sorry there is some problem.");
+                    return false
+                }
+            });
             $('#eventtopscoll').removeClass('event_top');
             $('#scrollhome').removeClass('con_scr0l_home');
             $('#divmain').removeClass('home_fixed_header');
@@ -779,6 +808,7 @@
             $('#btnsave').removeAttr("disabled");
 
         }
+       
 
 
     });
@@ -1059,6 +1089,39 @@
         $("input").removeClass('err-bor');
     })
     $(document).ready(function () {
+
+        $("#SignupEmail").on("keypress", function (e) {
+
+            if (e.which == 32)
+                return false;
+        });
+        $('#SignupEmail').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        $("#SignupPassword").on("keypress", function (e) {
+
+            if (e.which == 32)
+                return false;
+        });
+        $('#SignupPassword').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        $("#loginemail").on("keypress", function (e) {
+
+            if (e.which == 32)
+                return false;
+        });
+        $('#loginemail').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        $("#loginpassword").on("keypress", function (e) {
+
+            if (e.which == 32)
+                return false;
+        });
+        $('#loginpassword').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
 
         $('#SignupEmail').removeClass('err-bor');
         $('#SignupPassword').removeClass('err-bor');
