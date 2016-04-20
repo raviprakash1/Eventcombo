@@ -143,7 +143,7 @@
                        }), new { @class = "form-control selectpicker" })
                         </div>
                         <div class="col-xs-4 add_form_bot mb0 dropheight">
-                            @Html.DropDownList("year", Enumerable.Range(1980, 36).Select(i => new SelectListItem
+                            @Html.DropDownList("year", Enumerable.Range(1901, (System.DateTime.Now.Year- 1901)+1).Select(i => new SelectListItem
                        {
                            Value = i.ToString(),
                            Text = i.ToString(),
