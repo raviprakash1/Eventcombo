@@ -14,14 +14,15 @@
 
 <style>
 .jFiler-input-dragDrop{width:200px; height:200px; padding:0px; }
-.jFiler-item-thumb-image{height: 160px;line-height: 160px;overflow: hidden; width: 195px; }
-.jFiler-item-thumb-image img{ width:auto; height:auto; }
+.jFiler-item-thumb-image{height: 142px; line-height:142px; overflow: hidden; width: 100%; }
+.jFiler-item-thumb-image img{height: auto; max-height:100%;width:100%; left: 50%; position: relative;
+    transform: translateX(-50%);-webkit-transform: translateX(-50%); max-width: none !important; }
 .jFiler-item-list{ margin:0px;}
 .jFiler-item{ display:inline-block; float:none; }
 .jFiler-input-dragDrop .jFiler-input-icon{ margin-top:0px; height: 137px;}
-.jFiler-item .jFiler-item-container{ margin:0px; padding:0px; box-shadow:none; border:0px; }
+.jFiler-item .jFiler-item-container{ margin:0px; padding:0px;  }
 .jFiler-item .jFiler-item-container .jFiler-item-assets{ margin-top:0px;}
-.jFiler-item .jFiler-item-assets.jFiler-row{ display:none; } 
+/*.jFiler-item .jFiler-item-assets.jFiler-row{ display:none; }*/ 
 
 .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:auto;  margin-left:0px; }
 .can_btn i{ font-size:25px;}
