@@ -334,7 +334,7 @@ namespace EventCombo.Controllers
 
 
         }
-        public string Discoversavefavourite(long Eventid, string strUrl)
+        public string Discoversavefavourite(long Eventid, string strUrl,string strType="")
         {
            
             if (Session["AppId"] != null)
@@ -346,10 +346,14 @@ namespace EventCombo.Controllers
                     var vfav = (from ev in db.EventFavourites where ev.eventId == lEventid && ev.UserID == strUserId select ev.UserID).FirstOrDefault();
                     if (vfav != null && vfav.Trim() != "")
                     {
-                        var userid = Session["AppId"].ToString().Trim();
-                        objEnt.Database.ExecuteSqlCommand("Delete from EventFavourite where UserID='" + userid + "' AND eventId=" + Eventid + "");
-                        objEnt.SaveChanges();
-                        return "D";
+                        if (strType == "")
+                        {
+                            var userid = Session["AppId"].ToString().Trim();
+                            objEnt.Database.ExecuteSqlCommand("Delete from EventFavourite where UserID='" + userid + "' AND eventId=" + Eventid + "");
+                            objEnt.SaveChanges();
+                        }
+                            return "D";
+                        
                     }
                     else
                     {
@@ -406,7 +410,7 @@ namespace EventCombo.Controllers
                     long lEventId = Convert.ToInt32(str[0].ToString());
                     if (lEventId > 0)
                     {
-                        Discoversavefavourite(lEventId,strUrl);
+                        Discoversavefavourite(lEventId,strUrl,"FromLogin");
                     }
                 }
                 else
@@ -776,8 +780,11 @@ namespace EventCombo.Controllers
                         {
                             objDisEv.EventType = objDisEv.EventType.Substring(0, 16) + "...";
                         }
-
-
+                        objDisEv.EventPrivacy = "N";
+                        if (objEv.EventPrivacy.Trim().ToLower() == "private" && objEv.Private_ShareOnFB.Trim() == "Y")
+                        {
+                            objDisEv.EventPrivacy = "Y";
+                        }
                         objDisEv.EventCatId = objEv.EventCategoryID;
                         objDisEv.EventTypeId = objEv.EventTypeID;
                         objDisEv.PriceLable = GetPriceLabel(lEventId);
@@ -1054,6 +1061,11 @@ namespace EventCombo.Controllers
                             objDisEv.EventType = objDisEv.EventType.Substring(0, 16) + "...";
                         }
 
+                        objDisEv.EventPrivacy = "N";
+                        if (objEv.EventPrivacy.Trim().ToLower() == "private" && objEv.Private_ShareOnFB.Trim() == "Y")
+                        {
+                            objDisEv.EventPrivacy = "Y";
+                        }
 
                         objDisEv.EventCatId = objEv.EventCategoryID;
                         objDisEv.EventTypeId = objEv.EventTypeID;
@@ -1224,7 +1236,7 @@ namespace EventCombo.Controllers
                     long lEventId = Convert.ToInt32(str[0].ToString());
                     if (lEventId > 0)
                     {
-                        Discoversavefavourite(lEventId, strUrl);
+                        Discoversavefavourite(lEventId, strUrl, "FromLogin");
                     }
                 }
                 else
@@ -1262,7 +1274,6 @@ namespace EventCombo.Controllers
             ViewBag.lng = lng;
 
             System.Diagnostics.Debug.Print("LAT" + lat + "LNG" + lng);
-
             return View(objDiscEvt.ToPagedList(pageNumber, pageSize));
 
         }
