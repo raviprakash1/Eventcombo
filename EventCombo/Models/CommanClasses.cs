@@ -106,6 +106,7 @@ namespace EventCombo.Models
 
         public DateTime FeatureDateTime { get; set; }
 
+        public string EventPrivacy { get; set; }
         //public DiscoverEvent[] DiscoverEventList { get; set; }
 
     }

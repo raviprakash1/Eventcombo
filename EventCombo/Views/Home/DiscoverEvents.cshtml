@@ -364,12 +364,12 @@
                                     </ul>
                                 </div>
                                 <div class="col-sm-3 col-xs-3 no_pad text-right ">
-                                    @*<button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" type="button">
-                                            <i class="fa fa-share-alt"></i>
-                                        </button>*@
-                                    <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" onclick="ShowUrl('@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString() })');" type="button" data-toggle="modal" data-target="#sharemodal">
-                                        @*<i class="fa fa-share-alt"></i>*@ <img src="~/Images/share_icon.png" alt="share event" >
-                                    </button>
+                                    @if (@item.EventPrivacy != "Y")
+                                    {
+                                        <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" onclick="ShowUrl('@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString() })');" type="button" data-toggle="modal" data-target="#sharemodal">
+                                            <img src="~/Images/share_icon.png" alt="share event">
+                                        </button>
+                                    }
                                     @if (@item.EventLike == "I")
                                     {
                                         <button class="desc_btn_bg_none desc_btn_bg_active share_like_btn show_like_btn" id="btnfavourite-@item.EventId" title="Your Favourite" onclick="SaveFav('Y','@item.EventId');" type="button">
@@ -390,7 +390,8 @@
 
                 }
 
-                if (iCnt == 0) {
+                if (iCnt == 0)
+                {
                     <div class="col-sm-12 no_pad text-center no_event_found_text">
                         <span id="spInfo">No Events Found</span>
                     </div>
@@ -404,7 +405,7 @@
                 <ul class="pagination desc_pagination">
                     <li id="lileft">
                         <a href="javascript:void(0)" onclick="PreviousArrowPage();">
-                            <span><i class="fa fa-angle-double-left" ></i> </span>
+                            <span><i class="fa fa-angle-double-left"></i> </span>
                         </a>
                     </li>
                     @for (int i = 1; i <= Convert.ToInt32(@TempData["TotalPages"]); i++)
@@ -419,7 +420,7 @@
                         <li><a href="javascript:void(0)" onclick="NextPage(5);">5</a></li>*@
                     <li id="liright">
                         <a href="javascript:void(0)" onclick="NextArrowPage();">
-                            <span><i class="fa fa-angle-double-right" ></i> </span>
+                            <span><i class="fa fa-angle-double-right"></i> </span>
                         </a>
                     </li>
                 </ul>
@@ -482,8 +483,7 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script>
-    function PreviousArrowPage()
-    {
+    function PreviousArrowPage() {
         var vPindex = parseFloat($("#hdPageIndex").val());
         if (isNaN(vPindex) == true) vPindex = 0;
 
@@ -495,7 +495,7 @@
         debugger;
         var vPindex = parseFloat($("#hdPageIndex").val());
         var vTotalPage = parseFloat(@TempData["TotalPages"]);
-        
+
         if (isNaN(vTotalPage) == true) vTotalPage = 0;
         if (isNaN(vPindex) == true) vPindex = 0;
 
@@ -791,17 +791,15 @@
         else {
             var vValues = $("#hdEventCat").val();
             vIds = vValues.split(',');
-            
-            var vflag =false;
-            for (i = 0; i < vIds.length; i++)
-            {
-                if (vIds[i] == vEvCatId)
-                {
+
+            var vflag = false;
+            for (i = 0; i < vIds.length; i++) {
+                if (vIds[i] == vEvCatId) {
                     vflag = true;
                     break;
                 }
             }
-            if (vflag == false ) {
+            if (vflag == false) {
                 vValues = vValues.concat(",", vEvCatId);
                 $("#hdEventCat").val(vValues);
             }
@@ -888,20 +886,18 @@
     $(document).ready(function () {
 
         var vPageIndex = $("#hdPageIndex").val();
-        
+
         $("#aPageLink-" + vPageIndex).addClass("active");
-        if ($("#spInfo").text().trim() == "No Events Found")
-        {
+        if ($("#spInfo").text().trim() == "No Events Found") {
             $("#lileft").hide();
             $("#liright").hide();
         }
-        else
-        {
+        else {
             $("#lileft").show();
             $("#liright").show();
         }
 
-        
+
 
 
         var vLat = '@TempData["NearLat"]';
@@ -924,11 +920,11 @@
         });
 
 
-        $('#fbshare').click(function () {
-            var vUrl = $("#txtEventUrl").val();
-            window.open('https://www.facebook.com/sharer.php?s=100&p[url]=' + encodeURIComponent(vUrl) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-        });
+        //$('#fbshare').click(function () {
+        //    var vUrl = $("#txtEventUrl").val();
+        //    window.open('https://www.facebook.com/sharer.php?s=100&p[url]=' + encodeURIComponent(vUrl) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+        //    return false;
+        //});
 
         $('#twittershare').click(function () {
             var vUrl = $("#txtEventUrl").val();
@@ -1138,7 +1134,7 @@
                 }
             });
         }
-        
+
         function geocodeLatLng(geocoder, map, infowindow) {
             var input = document.getElementById('txtAddress').value;
             var latlngStr = input.split(',', 2);
@@ -1265,8 +1261,51 @@
 
         var accordion = new Accordion($('#accordion'), false);
     });
-   
-  
+
+
 
 </script>
 
+<script type="text/javascript">
+
+    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
+    @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
+    var urlprefix = '@strpr'
+
+    window.fbAsyncInit = function () {
+        // init the FB JS SDK
+        FB.init({
+            appId: fbappid,                        // App ID from the app dashboard
+            status: true,                                 // Check Facebook Login status
+            xfbml: true                                  // Look for social plugins on the page
+        });
+
+    };
+
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    var globalFacebookShareObject = { name: 'share', link: '' };
+
+
+    $(document).ready(function () {
+        $('#fbshare').click(function (e) {
+            var vUrl = urlprefix + $("#txtEventUrl").val();
+            globalFacebookShareObject.link = vUrl;
+            FB.ui({
+                method: 'feed',
+                name: globalFacebookShareObject.name,
+                link: globalFacebookShareObject.link
+            }, function (response) {
+                if (response && response.post_id) { }
+                else { }
+            });
+        });
+    });
+</script>
