@@ -112,7 +112,8 @@ namespace EventCombo.Controllers
                                    }).FirstOrDefault();
             var displaystarttime = EventDetail.DisplayStartTime;
             var displayendtime = EventDetail.DisplayEndTime;
-            var EventDescription = EventDetail.EventDescription;
+            var htmldisplay = new HtmlString(Server.HtmlDecode(EventDetail.EventDescription));
+            var EventDescription = htmldisplay;
             var showtimezone = EventDetail.DisplayTimeZone;
             enablediscussion = EventDetail.EnableFBDiscussion;
             viewEvent.showTimezone = showtimezone;
@@ -298,7 +299,7 @@ namespace EventCombo.Controllers
             viewEvent.Title = EventDetail.EventTitle;
             viewEvent.eventId = EventDetail.EventID.ToString();
             viewEvent.TopVenue = Topvenue;
-            viewEvent.EventDescription = HttpUtility.UrlDecode(EventDescription, System.Text.Encoding.Default); 
+            viewEvent.EventDescription = EventDescription.ToString(); 
             viewEvent.organizername = organizername;
             viewEvent.organizerid = organizerid;
             viewEvent.fblink = fblink;

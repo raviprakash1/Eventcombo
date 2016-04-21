@@ -205,7 +205,7 @@
 
         </div>
     </div>
-
+    <a href="#confirm-delete-ok" data-toggle="modal" style="display:none" id="idshowmsg"></a>
         if (Convert.ToInt32(@TempData["TotalPages"]) > 1)
         {
         <div class="col-sm-12 col-xs-12 text-center">
@@ -236,7 +236,7 @@
         </div>
         }
    
-    <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
             <div class="modal-content">
 
@@ -273,6 +273,9 @@
 
         var vPageIndex = $("#hdPageIndex").val();
         $("#aPageLink-" + vPageIndex).addClass("active");
+        $("#btMesOk").click(function () {
+            location.reload();
+        });
         $("#btnYes").click(function () {
             $.ajax({
                 url: '@Url.Action("DeletePromocode","ManageEvent")',
@@ -280,7 +283,18 @@
                 datatype: "Text",
                 type: "Post",
                 success: function (response) {
-                    location.reload();
+                    if (response == "N")
+                    {
+                        $("#btnYes").hide();
+                        $("#btnNo").hide();
+                        $("#btMesOk").show();
+                        $("#hId").text("Cannot delete as it is in use!!");
+                        $("#idshowmsg").click();
+
+                    } else {
+                        location.reload();
+                    }
+                   
                 }
             });
         });

@@ -510,8 +510,8 @@ textarea {resize: none;}
 .ev_date_time_model{ top:80px;}
 .xs_mb10{ margin-bottom:10px;}
 .no_pad_res{ padding:0px;}
-#divsecmain .col-sm-1{ position:absolute; top:7px; right:-5px; }
-.Fix_Head{position:absolute; top:5px; right:5px;}
+/*#divsecmain .col-sm-1{ position:absolute; top:7px; right:-5px; }*/
+/*.Fix_Head{position:absolute; top:5px; right:5px;}*/
 
 .xs_pad_0{ padding: 0px;  }
 .xs-100-f-l{ float:left; width:100%;}

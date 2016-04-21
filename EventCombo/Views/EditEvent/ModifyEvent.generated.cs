@@ -2607,7 +2607,8 @@ WriteLiteral(" id=\"id_Disc-n\"");
 
 WriteLiteral(">\r\n                                            <label");
 
-WriteLiteral(" class=\"col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0 ipad-width-58\"");
+WriteLiteral(" class=\"col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0 ipad-width-58 ipad" +
+"-pl0\"");
 
 WriteLiteral(">Disc.$</label>\r\n                                            <div");
 
@@ -3033,9 +3034,9 @@ WriteLiteral(">\r\n                                                             
 
 WriteLiteral(" class=\"help_icon_hov\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 59487), Tuple.Create("\"", 59519)
-, Tuple.Create(Tuple.Create("", 59493), Tuple.Create<System.Object, System.Int32>(Href("~/Images/icon-question.gif")
-, 59493), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 59496), Tuple.Create("\"", 59528)
+, Tuple.Create(Tuple.Create("", 59502), Tuple.Create<System.Object, System.Int32>(Href("~/Images/icon-question.gif")
+, 59502), false)
 );
 
 WriteLiteral(" id=\"hovstart-n\"");
@@ -3122,9 +3123,9 @@ WriteLiteral(">\r\n                                                             
 
 WriteLiteral(" class=\"help_icon_hov\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 62078), Tuple.Create("\"", 62110)
-, Tuple.Create(Tuple.Create("", 62084), Tuple.Create<System.Object, System.Int32>(Href("~/Images/icon-question.gif")
-, 62084), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 62087), Tuple.Create("\"", 62119)
+, Tuple.Create(Tuple.Create("", 62093), Tuple.Create<System.Object, System.Int32>(Href("~/Images/icon-question.gif")
+, 62093), false)
 );
 
 WriteLiteral(" id=\"hovend-n\"");
@@ -3983,14 +3984,14 @@ WriteLiteral(" placeholder=\"\"");
 
 WriteLiteral(" id=\"id_vardesc\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 80760), Tuple.Create("\"", 80794)
+WriteAttribute("value", Tuple.Create(" value=\"", 80769), Tuple.Create("\"", 80803)
             
             #line 1069 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                                                                 , Tuple.Create(Tuple.Create("", 80768), Tuple.Create<System.Object, System.Int32>(Model.Ticket_variabledesc
+                                                                 , Tuple.Create(Tuple.Create("", 80777), Tuple.Create<System.Object, System.Int32>(Model.Ticket_variabledesc
             
             #line default
             #line hidden
-, 80768), false)
+, 80777), false)
 );
 
 WriteLiteral(">\r\n                                    </div>\r\n                                </" +
@@ -4263,9 +4264,9 @@ WriteLiteral(" class=\"ev_fb_lable\"");
 
 WriteLiteral(">\r\n                                <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 85850), Tuple.Create("\"", 85871)
-, Tuple.Create(Tuple.Create("", 85856), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
-, 85856), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 85859), Tuple.Create("\"", 85880)
+, Tuple.Create(Tuple.Create("", 85865), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
+, 85865), false)
 );
 
 WriteLiteral("> ENABLE DISCUSSION\r\n");
@@ -4405,9 +4406,9 @@ WriteLiteral(">\r\n                            EVENT SETTING <img");
 
 WriteLiteral(" class=\"help_icon_hov help_ml\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 87620), Tuple.Create("\"", 87652)
-, Tuple.Create(Tuple.Create("", 87626), Tuple.Create<System.Object, System.Int32>(Href("~/Images/icon-question.gif")
-, 87626), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 87629), Tuple.Create("\"", 87661)
+, Tuple.Create(Tuple.Create("", 87635), Tuple.Create<System.Object, System.Int32>(Href("~/Images/icon-question.gif")
+, 87635), false)
 );
 
 WriteLiteral(" />\r\n                        </h2>\r\n                    </div>\r\n                 " +
@@ -4555,14 +4556,14 @@ WriteLiteral(" id=\"txtReqPassword\"");
 
 WriteLiteral(" readonly=\"readonly\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 91976), Tuple.Create("\"", 92007)
+WriteAttribute("value", Tuple.Create(" value=\"", 91985), Tuple.Create("\"", 92016)
             
             #line 1259 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-                 , Tuple.Create(Tuple.Create("", 91984), Tuple.Create<System.Object, System.Int32>(Model.Private_Password
+                 , Tuple.Create(Tuple.Create("", 91993), Tuple.Create<System.Object, System.Int32>(Model.Private_Password
             
             #line default
             #line hidden
-, 91984), false)
+, 91993), false)
 );
 
 WriteLiteral(" class=\"form-control evnt_inp_cont mb10 wd500 chkvalidation\"");
@@ -4646,14 +4647,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hidAddressStatus\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 93767), Tuple.Create("\"", 93795)
+WriteAttribute("value", Tuple.Create(" value=\"", 93776), Tuple.Create("\"", 93804)
             
             #line 1295 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 93775), Tuple.Create<System.Object, System.Int32>(Model.AddressStatus
+, Tuple.Create(Tuple.Create("", 93784), Tuple.Create<System.Object, System.Int32>(Model.AddressStatus
             
             #line default
             #line hidden
-, 93775), false)
+, 93784), false)
 );
 
 WriteLiteral(" />\r\n                    <input");
@@ -4662,14 +4663,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdEventId\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 93856), Tuple.Create("\"", 93878)
+WriteAttribute("value", Tuple.Create(" value=\"", 93865), Tuple.Create("\"", 93887)
             
             #line 1296 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 93864), Tuple.Create<System.Object, System.Int32>(Model.EventID
+, Tuple.Create(Tuple.Create("", 93873), Tuple.Create<System.Object, System.Int32>(Model.EventID
             
             #line default
             #line hidden
-, 93864), false)
+, 93873), false)
 );
 
 WriteLiteral(" />\r\n                    <input");
@@ -4678,14 +4679,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdParentEventId\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 93945), Tuple.Create("\"", 93974)
+WriteAttribute("value", Tuple.Create(" value=\"", 93954), Tuple.Create("\"", 93983)
             
             #line 1297 "..\..\Views\EditEvent\ModifyEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 93953), Tuple.Create<System.Object, System.Int32>(Model.Parent_EventID
+, Tuple.Create(Tuple.Create("", 93962), Tuple.Create<System.Object, System.Int32>(Model.Parent_EventID
             
             #line default
             #line hidden
-, 93953), false)
+, 93962), false)
 );
 
 WriteLiteral(" />\r\n\r\n                    <input");
@@ -5275,9 +5276,9 @@ WriteLiteral(" class=\"modal-body text-center pv50 txt-msg\"");
 
 WriteLiteral(">\r\n                    <h4><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 104110), Tuple.Create("\"", 104140)
-, Tuple.Create(Tuple.Create("", 104116), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 104116), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 104119), Tuple.Create("\"", 104149)
+, Tuple.Create(Tuple.Create("", 104125), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 104125), false)
 );
 
 WriteLiteral(" />Please wait ... </h4>\r\n                </div>\r\n                <div");
@@ -6140,54 +6141,54 @@ WriteLiteral("\";\r\n                        if(isadmin==\"Y\")\r\n             
 "\r\n                // Multiple Address\r\n                debugger;\r\n              " +
 "  if (Sno != \'\') {\r\n                    Orgnizer.push({\r\n                       " +
 " Orgnizer_Id: $(\"#OrgId_\"+Sno).text(),\r\n                        Orgnizer_Name: $" +
-"(\"#OrgName_\"+Sno).html(),\r\n                        Organizer_Desc: escape($(\"#Or" +
-"gDes_\" + Sno).text()),\r\n                        Organizer_FBLink: $(\"#OrgFB_\" + " +
-"Sno).text(),\r\n                        Organizer_Twitter: $(\"#OrgTw_\" + Sno).text" +
-"(),\r\n                        Organizer_Linkedin: $(\"#OrgLn_\" + Sno).text(),\r\n   " +
-"                     DefaultOrg: (vDefaultOrg == Sno ? \'Y\' : \'N\'),\r\n            " +
-"            EditOrg: $(\"#OrgEdit_\" + Sno).text()\r\n                    });\r\n     " +
-"           }\r\n            });\r\n\r\n            console.log(Orgnizer);\r\n\r\n         " +
-"   // Basic Event Info\r\n            //alert($(\"#edSummer1\").code());\r\n          " +
-"  //debugger;\r\n            //$(\"#spEvDesc\").text();\r\n            var vEdesc = \'\'" +
-"; //$(\"#edEventDesc\").code();\r\n\r\n            var varDescritpion = \'\';\r\n         " +
-"   var optionalvariable = \'\';\r\n            if ($(\"#id_variablecharge\").is(\":chec" +
-"ked\")) {\r\n\r\n                varDescritpion = $(\'#id_vardesc\').val();\r\n          " +
-"      optionalvariable = $(\'#variabletype\').val();\r\n            }\r\n            v" +
-"ar evDec = escape($(\"#edEventDesc\").code());\r\n            var model = {\r\n       " +
-"         \'EventID\': $(\"#hdEventId\").val(),\r\n                \'EventTypeID\': $(\"#E" +
-"ventType\").val(),\r\n                \'EventCategoryID\': $(\"#ddlEventCategory\").val" +
-"(),\r\n                \'EventSubCategoryID\': $(\"#ddlEventSubCategory\").val(),\r\n   " +
-"             \'UserID\': \'\',\r\n                \'EventTitle\': $(\"#txtEventTitle\").va" +
-"l(),\r\n                \'EventDescription\': evDec,\r\n                \'EventPrivacy\'" +
-": ($(\"#rdPublic\").is(\":checked\") == true ? \'Public\' : \'Private\'),\r\n             " +
-"   \'Private_ShareOnFB\': ($(\"#chkShareOnFB\").is(\":checked\") == true ? \'Y\' : \'N\')," +
-"\r\n                \'Private_GuestOnly\': ($(\"#chkGuestonly\").is(\":checked\") == tru" +
-"e ? \'Y\' : \'N\'),\r\n                \'Private_Password\': $(\"#txtReqPassword\").val()," +
-"\r\n                \'EventUrl\': $(\"#txtEventUrl\").val().trim(),\r\n                \'" +
-"PublishOnFB\': ($(\"#chkPublishEventOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n " +
-"               \'EventStatus\': status,\r\n                \'AddressDetail\': SubmitAd" +
-"dress,\r\n                \'EventVenue\': SingleTiming,\r\n                \'TimeZone\':" +
-" $(\"#dllTimeZone\").val(),\r\n                \'DisplayStartTime\': ($(\"#chkDisplaySt" +
-"artTime\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n                \'DisplayEndTime\'" +
-": ($(\"#chkDisplayEndTime\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n               " +
-" \'DisplayTimeZone\': ($(\"#chkTimeZone\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n   " +
-"             \'FBUrl\': \'\',\r\n                \'TwitterUrl\': \'\',\r\n                \'M" +
-"ultipleEvents\': MultipleSchedule,\r\n                \'Orgnizer\': Orgnizer,\r\n      " +
-"          \'AddressStatus\':  $(\'#hidAddressStatus\').val(),\r\n                \'Last" +
-"LocationAddress\': ($(\"#hidAddressStatus\").val() == \"PastLocation\" ? $(\"#dllPastL" +
-"ocation\").val() : 0),\r\n                \'EnableFBDiscussion\': ($(\"#chkAllowFBDis\"" +
-").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                \'Ticket\': Ticket,\r\n     " +
-"           \'EventImage\': EventImage,\r\n                \'EventVariable\': EventVari" +
-"able,\r\n                \'Ticket_DAdress\': ($(\"#id_ticketdeliveryaddr\").is(\":check" +
-"ed\") == true ? \'Y\' : \'N\'),\r\n                \'Ticket_showremain\': ($(\"#id_showrem" +
-"aningticket\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                \'Ticket_show" +
-"variable\': ($(\"#id_variablecharge\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n      " +
-"          \'Ticket_variabledesc\': varDescritpion,\r\n                \'Ticket_variab" +
-"letype\': optionalvariable,\r\n                \'ShowMap\': ($(\"#chkShowMap\").is(\":ch" +
-"ecked\") == true ? \'Y\' : \'N\')\r\n\r\n            };\r\n\r\n            //var params = \'st" +
-"rEveDec :\' + $(\"#edEventDesc\").code();\r\n\r\n            var vDuplicate  = ($(\"#chk" +
-"DuplicateEvent\").is(\":checked\") == true ? \'Y\' : \'N\');\r\n            if ($(\"#hdEve" +
-"ntId\").val() != \'\') {\r\n\r\n                $.ajax({\r\n                    url: \'");
+"(\"#OrgName_\"+Sno).html(),\r\n                        Organizer_Desc: $(\"#OrgDes_\" " +
+"+ Sno).text(),\r\n                        Organizer_FBLink: $(\"#OrgFB_\" + Sno).tex" +
+"t(),\r\n                        Organizer_Twitter: $(\"#OrgTw_\" + Sno).text(),\r\n   " +
+"                     Organizer_Linkedin: $(\"#OrgLn_\" + Sno).text(),\r\n           " +
+"             DefaultOrg: (vDefaultOrg == Sno ? \'Y\' : \'N\'),\r\n                    " +
+"    EditOrg: $(\"#OrgEdit_\" + Sno).text()\r\n                    });\r\n             " +
+"   }\r\n            });\r\n\r\n            console.log(Orgnizer);\r\n\r\n            // Ba" +
+"sic Event Info\r\n            //alert($(\"#edSummer1\").code());\r\n            //debu" +
+"gger;\r\n            //$(\"#spEvDesc\").text();\r\n            var vEdesc = \'\'; //$(\"#" +
+"edEventDesc\").code();\r\n\r\n            var varDescritpion = \'\';\r\n            var o" +
+"ptionalvariable = \'\';\r\n            if ($(\"#id_variablecharge\").is(\":checked\")) {" +
+"\r\n\r\n                varDescritpion = $(\'#id_vardesc\').val();\r\n                op" +
+"tionalvariable = $(\'#variabletype\').val();\r\n            }\r\n            var evDec" +
+" = $(\"#edEventDesc\").code();\r\n            var model = {\r\n                \'EventI" +
+"D\': $(\"#hdEventId\").val(),\r\n                \'EventTypeID\': $(\"#EventType\").val()" +
+",\r\n                \'EventCategoryID\': $(\"#ddlEventCategory\").val(),\r\n           " +
+"     \'EventSubCategoryID\': $(\"#ddlEventSubCategory\").val(),\r\n                \'Us" +
+"erID\': \'\',\r\n                \'EventTitle\': $(\"#txtEventTitle\").val(),\r\n          " +
+"      \'EventDescription\': evDec,\r\n                \'EventPrivacy\': ($(\"#rdPublic\"" +
+").is(\":checked\") == true ? \'Public\' : \'Private\'),\r\n                \'Private_Shar" +
+"eOnFB\': ($(\"#chkShareOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n              " +
+"  \'Private_GuestOnly\': ($(\"#chkGuestonly\").is(\":checked\") == true ? \'Y\' : \'N\'),\r" +
+"\n                \'Private_Password\': $(\"#txtReqPassword\").val(),\r\n              " +
+"  \'EventUrl\': $(\"#txtEventUrl\").val().trim(),\r\n                \'PublishOnFB\': ($" +
+"(\"#chkPublishEventOnFB\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                \'" +
+"EventStatus\': status,\r\n                \'AddressDetail\': SubmitAddress,\r\n        " +
+"        \'EventVenue\': SingleTiming,\r\n                \'TimeZone\': $(\"#dllTimeZone" +
+"\").val(),\r\n                \'DisplayStartTime\': ($(\"#chkDisplayStartTime\").is(\":c" +
+"hecked\") == true ? \"Y\" : \"N\"),\r\n                \'DisplayEndTime\': ($(\"#chkDispla" +
+"yEndTime\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n                \'DisplayTimeZon" +
+"e\': ($(\"#chkTimeZone\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n                \'FB" +
+"Url\': \'\',\r\n                \'TwitterUrl\': \'\',\r\n                \'MultipleEvents\': " +
+"MultipleSchedule,\r\n                \'Orgnizer\': Orgnizer,\r\n                \'Addre" +
+"ssStatus\':  $(\'#hidAddressStatus\').val(),\r\n                \'LastLocationAddress\'" +
+": ($(\"#hidAddressStatus\").val() == \"PastLocation\" ? $(\"#dllPastLocation\").val() " +
+": 0),\r\n                \'EnableFBDiscussion\': ($(\"#chkAllowFBDis\").is(\":checked\")" +
+" == true ? \'Y\' : \'N\'),\r\n                \'Ticket\': Ticket,\r\n                \'Even" +
+"tImage\': EventImage,\r\n                \'EventVariable\': EventVariable,\r\n         " +
+"       \'Ticket_DAdress\': ($(\"#id_ticketdeliveryaddr\").is(\":checked\") == true ? \'" +
+"Y\' : \'N\'),\r\n                \'Ticket_showremain\': ($(\"#id_showremaningticket\").is" +
+"(\":checked\") == true ? \'Y\' : \'N\'),\r\n                \'Ticket_showvariable\': ($(\"#" +
+"id_variablecharge\").is(\":checked\") == true ? \'Y\' : \'N\'),\r\n                \'Ticke" +
+"t_variabledesc\': varDescritpion,\r\n                \'Ticket_variabletype\': optiona" +
+"lvariable,\r\n                \'ShowMap\': ($(\"#chkShowMap\").is(\":checked\") == true " +
+"? \'Y\' : \'N\')\r\n\r\n            };\r\n\r\n            //var params = \'strEveDec :\' + $(\"" +
+"#edEventDesc\").code();\r\n\r\n            var vDuplicate  = ($(\"#chkDuplicateEvent\")" +
+".is(\":checked\") == true ? \'Y\' : \'N\');\r\n            if ($(\"#hdEventId\").val() != " +
+"\'\') {\r\n\r\n                $.ajax({\r\n                    url: \'");
 
             
             #line 3002 "..\..\Views\EditEvent\ModifyEvent.cshtml"
@@ -8051,27 +8052,27 @@ WriteLiteral("\',\r\n                        data: { ticketid: ticketId },\r\n  
 
 WriteLiteral("\r\n    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 295912), Tuple.Create("\"", 295951)
-, Tuple.Create(Tuple.Create("", 295919), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 295919), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 295905), Tuple.Create("\"", 295944)
+, Tuple.Create(Tuple.Create("", 295912), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 295912), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n\r\n    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 295985), Tuple.Create("\"", 296042)
-, Tuple.Create(Tuple.Create("", 295992), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 295992), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 295978), Tuple.Create("\"", 296035)
+, Tuple.Create(Tuple.Create("", 295985), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 295985), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 296076), Tuple.Create("\"", 296113)
-, Tuple.Create(Tuple.Create("", 296082), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 296082), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 296069), Tuple.Create("\"", 296106)
+, Tuple.Create(Tuple.Create("", 296075), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 296075), false)
 );
 
 WriteLiteral("></script>\r\n\r\n\r\n    <script");

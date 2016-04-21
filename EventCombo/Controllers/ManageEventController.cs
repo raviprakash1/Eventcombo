@@ -2276,18 +2276,25 @@ namespace EventCombo.Controllers
         {
             try
             {
+                var countpru=(from x in db.Ticket_Purchased_Detail where x.TPD_PromoCodeID == promocode select x).Count();
+                var countlock = (from x in db.Ticket_Locked_Detail where x.TLD_PromoCodeId == promocode select x).Count();
+                if (countpru > 0 || countlock > 0)
+                {
+                    return "N";
+                }
+                else
+                {
+                    Promo_Code prof = db.Promo_Code.Where(i => i.PC_id == promocode).FirstOrDefault();
+                    db.Promo_Code.Remove(prof);
+                    db.SaveChanges();
+                    return "D";
+
+                }
 
 
 
 
-                Promo_Code prof = db.Promo_Code.Where(i => i.PC_id == promocode).FirstOrDefault();
-                db.Promo_Code.Remove(prof);
-                db.SaveChanges();
-
-
-
-
-                return "D";
+               
 
             }
             catch (Exception ex)

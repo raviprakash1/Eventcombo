@@ -8,8 +8,8 @@
 </script>
 
 <meta property="og:type" content="article" />
-<meta property="og:title" content='@Html.DisplayFor(m => m.Title)' />
-<meta property="og:description" content='@Html.Raw(Model.EventDescription)' />
+<meta property="og:title" content="@Html.Raw(Model.Title)" />
+<meta property="og:description" content="@Html.Raw(@Model.EventDescription)" />
 <style type="text/css">
     .ui-tooltip, .arrow:after {
         background: #fff;
