@@ -13,6 +13,7 @@ using PagedList;
 using EventCombo.ViewModels;
 using System.Net.Mail;
 using System.Configuration;
+using EventCombo.Utils;
 
 namespace EventCombo.Controllers
 {
@@ -2308,7 +2309,6 @@ namespace EventCombo.Controllers
         //}
 
         [Authorize]
-       
         public ActionResult CreateInvitations(long lId,long lEvtId,string strMode)
         {
             //strMode If comes from Event Live Then need to set as 'E' otherwise set as 'C'
@@ -2327,8 +2327,32 @@ namespace EventCombo.Controllers
                 if (vObj != null)
                 {
                     objEEI = vObj;
+
+
+                    //Kannan Start
+                    Event eventForTimeZone = objEnt.Events.First(i => i.EventID == objEEI.I_Event_Id);
+                    int timeZoneID = Int32.Parse(eventForTimeZone.TimeZone);
+                    TimeZoneDetail td = objEnt.TimeZoneDetails.First(i => i.TimeZone_Id == timeZoneID);
+                    DateTimeWithZone dtz;
+                    if (td != null)
+                    {
+                        TimeZoneInfo userTimeZone =
+                        TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                        dtz = new DateTimeWithZone(Convert.ToDateTime(objEEI.I_ScheduleDate), userTimeZone,true);
+
+                    }
+                    else
+                    {
+                        TimeZoneInfo userTimeZone =
+                        TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                        dtz = new DateTimeWithZone(Convert.ToDateTime(objEEI.I_ScheduleDate), userTimeZone,true);
+                    }
+                    //Kannan End
+
+
+
                     if (objEEI.I_ScheduleDate != null)
-                        objEEI.I_ScheduleDate = DateTime.SpecifyKind(Convert.ToDateTime(objEEI.I_ScheduleDate), DateTimeKind.Local);
+                        objEEI.I_ScheduleDate = dtz.LocalTime; // DateTime.SpecifyKind(Convert.ToDateTime(objEEI.I_ScheduleDate), DateTimeKind.Local);
                 }
                 iElistCnt = (objEEI.Event_Email_List != null ? objEEI.Event_Email_List.Count() : 0);
                // lEvtId = (objEEI.I_Event_Id != null ? Convert.ToInt64(objEEI.I_Event_Id):0);
@@ -2472,6 +2496,31 @@ namespace EventCombo.Controllers
                         objEInt.I_SenderName = Model.I_SenderName;
                         objEInt.I_SubjectLine = Model.I_SubjectLine;
                         objEInt.I_Event_Id = Model.I_Event_Id;
+
+                        
+                        //Kannan Start
+                        Event eventForTimeZone = objEnt.Events.First(i => i.EventID == Model.I_Event_Id);
+                        int timeZoneID = Int32.Parse(eventForTimeZone.TimeZone);
+
+                        TimeZoneDetail td = objEnt.TimeZoneDetails.First(i => i.TimeZone_Id == timeZoneID);
+                        DateTimeWithZone dtz;
+                        DateTimeWithZone dtzCreated;
+                        if (td!= null)
+                        {
+                            TimeZoneInfo userTimeZone =
+                            TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                            dtz = new DateTimeWithZone(Convert.ToDateTime(Model.I_ScheduleDate), userTimeZone);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone);
+
+                        } else
+                        {
+                            TimeZoneInfo userTimeZone =
+                            TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                            dtz = new DateTimeWithZone(Convert.ToDateTime(Model.I_ScheduleDate), userTimeZone);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone);
+                        }
+                        //Kannan End
+
                         objEInt.I_EmailContent = Model.I_EmailContent;
                         if (Model.I_Mode == "N")
                         {
@@ -2479,7 +2528,7 @@ namespace EventCombo.Controllers
                         }
                         else {
                             if (Model.I_ScheduleDate != null)
-                                objEInt.I_ScheduleDate = DateTime.SpecifyKind(Convert.ToDateTime(Model.I_ScheduleDate), DateTimeKind.Utc);
+                                objEInt.I_ScheduleDate = dtz.UniversalTime; // DateTime.SpecifyKind(Convert.ToDateTime(Model.I_ScheduleDate), DateTimeKind.Utc);
                             else
                                 objEInt.I_ScheduleDate = Model.I_ScheduleDate;
                         }
@@ -2487,7 +2536,7 @@ namespace EventCombo.Controllers
 
                         objEInt.I_EditableContent = Model.I_EditableContent;
                         objEInt.I_Mode  = Model.I_Mode;
-                        objEInt.I_CreateDate = DateTime.Now;
+                        objEInt.I_CreateDate = dtzCreated.UniversalTime; //DateTime.Now;
                         if (Model.EmailList != null)
                         {
                             Event_Email_List objEList = new Event_Email_List();
@@ -2510,13 +2559,36 @@ namespace EventCombo.Controllers
                         objEInt.I_SubjectLine = Model.I_SubjectLine;
                         objEInt.I_Event_Id = Model.I_Event_Id;
                         objEInt.I_EmailContent = Model.I_EmailContent;
+                        //Kannan Start
+                        Event eventForTimeZone = objEnt.Events.First(i => i.EventID == Model.I_Event_Id);
+                        int timeZoneID = Int32.Parse(eventForTimeZone.TimeZone);
+                        TimeZoneDetail td = objEnt.TimeZoneDetails.First(i => i.TimeZone_Id == timeZoneID);
+                        DateTimeWithZone dtz;
+                        DateTimeWithZone dtzCreated;
+                        if (td != null)
+                        {
+                            TimeZoneInfo userTimeZone =
+                            TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                            dtz = new DateTimeWithZone(Convert.ToDateTime(Model.I_ScheduleDate), userTimeZone);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone);
+                        }
+                        else
+                        {
+                            TimeZoneInfo userTimeZone =
+                            TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                            dtz = new DateTimeWithZone(Convert.ToDateTime(Model.I_ScheduleDate), userTimeZone);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone);
+                        }
+                        //Kannan End
+
+
                         if (Model.I_ScheduleDate != null)
-                            objEInt.I_ScheduleDate = DateTime.SpecifyKind(Convert.ToDateTime(Model.I_ScheduleDate), DateTimeKind.Utc);
+                            objEInt.I_ScheduleDate = dtz.UniversalTime; // DateTime.SpecifyKind(Convert.ToDateTime(Model.I_ScheduleDate), DateTimeKind.Utc);
                         else
                             objEInt.I_ScheduleDate = Model.I_ScheduleDate;
                         objEInt.I_EditableContent = Model.I_EditableContent;
                         objEInt.I_Mode = Model.I_Mode;
-                        objEInt.I_ModifyDate = DateTime.Now;
+                        objEInt.I_ModifyDate = dtzCreated.UniversalTime; //DateTime.Now;
                         objEnt.Event_Email_List.RemoveRange(objEnt.Event_Email_List.Where(x => x.L_I_Id == Model.I_Id));
                         if (Model.EmailList != null)
                         {

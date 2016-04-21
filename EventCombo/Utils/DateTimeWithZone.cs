@@ -9,7 +9,7 @@ namespace EventCombo.Utils
     {
         private readonly DateTime utcDateTime;
         private readonly TimeZoneInfo timeZone;
-
+        private readonly bool isUTC;
         public DateTimeWithZone(DateTime dateTime, TimeZoneInfo timeZone)
         {
             utcDateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(dateTime, DateTimeKind.Unspecified), timeZone);
@@ -18,6 +18,7 @@ namespace EventCombo.Utils
 
         public DateTimeWithZone(DateTime dateTime, TimeZoneInfo timeZone, bool isUTC)
         {
+            this.isUTC = isUTC;
             if (!isUTC)
             {
                 utcDateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(dateTime, DateTimeKind.Unspecified), timeZone);
@@ -37,7 +38,14 @@ namespace EventCombo.Utils
         {
             get
             {
-                return TimeZoneInfo.ConvertTime(utcDateTime, timeZone);
+                if (!this.isUTC)
+                {
+                    return TimeZoneInfo.ConvertTime(utcDateTime, timeZone);
+                }
+                else
+                {
+                    return TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, timeZone);
+                }
             }
         }
     }

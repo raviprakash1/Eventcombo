@@ -1,5 +1,6 @@
 ﻿using EventCombo.Services;
 using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.Owin;
 using Owin;
 using System;
@@ -16,9 +17,16 @@ namespace EventCombo
             ConfigureAuth(app);
 
             TicketEmailer ticketEmailer = new TicketEmailer();
-            GlobalConfiguration.Configuration.UseSqlServerStorage("MyConnection");
 
-            RecurringJob.AddOrUpdate(() => ticketEmailer.send(), Cron.Minutely);
+            var options = new SqlServerStorageOptions
+            {
+                QueuePollInterval = TimeSpan.FromSeconds(300) // Default value
+            };
+
+            GlobalConfiguration.Configuration
+                .UseSqlServerStorage("MyConnection");
+
+            RecurringJob.AddOrUpdate(() => ticketEmailer.send(), "*/5 * * * *");
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();
