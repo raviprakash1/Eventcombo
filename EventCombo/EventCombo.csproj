@@ -399,6 +399,7 @@
     <Compile Include="Models\Message.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Metadata.cs" />
     <Compile Include="Models\MultipleEvent.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>

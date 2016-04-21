@@ -497,21 +497,21 @@ WriteLiteral("\',\r\n                    data: { Name: name, id: orgid },\r\n   
 "removeClass(\"er_suc_img\");\r\n                $(\'#erraccmsg\').html(msg);\r\n        " +
 "        $(\'#diverroacc\').show();\r\n                $(\'html,body\').animate({ scrol" +
 "lTop: 0 });\r\n\r\n                return false;\r\n            }\r\n            \r\n     " +
-"       var code = escape($(\"#txt_desc\").code());\r\n            //var text = code." +
-"replace(/<p>/gi, \" \");\r\n            //var plainText = $(\"<div />\").html(text).te" +
-"xt();\r\n            var model = {\r\n                \'Orgnizer_Name\': $(\"#txt_name\"" +
-").val(),\r\n                \'Organizer_Desc\': code,\r\n                \'Organizer_FB" +
-"Link\': $(\"#txt_fburl\").val(),\r\n                \'Organizer_Twitter\': $(\"#txt_twit" +
-"terurl\").val(),\r\n                \'Organizer_Linkedin\': $(\"#txt_linkedinurl\").val" +
-"(),\r\n                \'UserId\': \'\',\r\n                \'Organizer_Image\': $(\"#useri" +
-"mage\").val(),\r\n                \'Organizer_Address1\': $(\"#txt_streetadd1\").val()," +
-"\r\n                \'Organizer_Address2\': $(\"#txt_streetaddr2\").val(),\r\n          " +
-"      \'Organizer_City\': $(\"#txt_city\").val(),\r\n                \'Organizer_State\'" +
-": $(\"#txt_state\").val(),\r\n                \'Organizer_CountryId\': $(\"#Country\").v" +
-"al(),\r\n                \'Organizer_Zipcode\': $(\"#txt_zip\").val(),\r\n              " +
-"  \'Organizer_Email\': $(\"#txt_email\").val(),\r\n                \'Organizer_Phoneno\'" +
-": $(\"#txt_phnno\").val(),\r\n                \'Organizer_Websiteurl\': $(\"#txt_websit" +
-"eurl\").val(),\r\n\r\n            };\r\n            $.ajax({\r\n                url: \'");
+"       var code = $(\"#txt_desc\").code();\r\n            //var text = code.replace(" +
+"/<p>/gi, \" \");\r\n            //var plainText = $(\"<div />\").html(text).text();\r\n " +
+"           var model = {\r\n                \'Orgnizer_Name\': $(\"#txt_name\").val()," +
+"\r\n                \'Organizer_Desc\': code,\r\n                \'Organizer_FBLink\': $" +
+"(\"#txt_fburl\").val(),\r\n                \'Organizer_Twitter\': $(\"#txt_twitterurl\")" +
+".val(),\r\n                \'Organizer_Linkedin\': $(\"#txt_linkedinurl\").val(),\r\n   " +
+"             \'UserId\': \'\',\r\n                \'Organizer_Image\': $(\"#userimage\").v" +
+"al(),\r\n                \'Organizer_Address1\': $(\"#txt_streetadd1\").val(),\r\n      " +
+"          \'Organizer_Address2\': $(\"#txt_streetaddr2\").val(),\r\n                \'O" +
+"rganizer_City\': $(\"#txt_city\").val(),\r\n                \'Organizer_State\': $(\"#tx" +
+"t_state\").val(),\r\n                \'Organizer_CountryId\': $(\"#Country\").val(),\r\n " +
+"               \'Organizer_Zipcode\': $(\"#txt_zip\").val(),\r\n                \'Organ" +
+"izer_Email\': $(\"#txt_email\").val(),\r\n                \'Organizer_Phoneno\': $(\"#tx" +
+"t_phnno\").val(),\r\n                \'Organizer_Websiteurl\': $(\"#txt_websiteurl\").v" +
+"al(),\r\n\r\n            };\r\n            $.ajax({\r\n                url: \'");
 
             
             #line 336 "..\..\Views\Account\OrganizerProfile.cshtml"
@@ -617,21 +617,21 @@ WriteLiteral("\';\r\n\r\n                            }\r\n\r\n\r\n              
 "er_suc_main\");\r\n                $(\"#dveruiimg\").removeClass(\"er_suc_img\");\r\n    " +
 "            $(\'#erraccmsg\').html(msg);\r\n                $(\'#diverroacc\').show();" +
 "\r\n                $(\'html,body\').animate({ scrollTop: 0 });\r\n\r\n                r" +
-"eturn false;\r\n            }\r\n            var code = escape($(\"#txt_desc\").code()" +
-");\r\n          \r\n            var model = {\r\n                \'Orgnizer_Id\': $(\'#hd" +
-"_ID\').val(),\r\n                \'Orgnizer_Name\': $(\"#txt_name\").val(),\r\n          " +
-"      \'Organizer_Desc\': code,\r\n                \'Organizer_FBLink\': $(\"#txt_fburl" +
-"\").val(),\r\n                \'Organizer_Twitter\': $(\"#txt_twitterurl\").val(),\r\n   " +
-"             \'Organizer_Linkedin\': $(\"#txt_linkedinurl\").val(),\r\n               " +
-" \'UserId\': \'\',\r\n                \'Organizer_Image\': $(\"#userimage\").val(),\r\n     " +
-"           \'Organizer_Address1\': $(\"#txt_streetadd1\").val(),\r\n                \'O" +
-"rganizer_Address2\': $(\"#txt_streetaddr2\").val(),\r\n                \'Organizer_Cit" +
-"y\': $(\"#txt_city\").val(),\r\n                \'Organizer_State\': $(\"#txt_state\").va" +
-"l(),\r\n                \'Organizer_CountryId\': $(\"#Country\").val(),\r\n             " +
-"   \'Organizer_Zipcode\': $(\"#txt_zip\").val(),\r\n                \'Organizer_Email\':" +
-" $(\"#txt_email\").val(),\r\n                \'Organizer_Phoneno\': $(\"#txt_phnno\").va" +
-"l(),\r\n                \'Organizer_Websiteurl\': $(\"#txt_websiteurl\").val(),\r\n\r\n   " +
-"         };\r\n            $.ajax({\r\n                url: \'");
+"eturn false;\r\n            }\r\n            var code = $(\"#txt_desc\").code();\r\n    " +
+"      \r\n            var model = {\r\n                \'Orgnizer_Id\': $(\'#hd_ID\').va" +
+"l(),\r\n                \'Orgnizer_Name\': $(\"#txt_name\").val(),\r\n                \'O" +
+"rganizer_Desc\': code,\r\n                \'Organizer_FBLink\': $(\"#txt_fburl\").val()" +
+",\r\n                \'Organizer_Twitter\': $(\"#txt_twitterurl\").val(),\r\n           " +
+"     \'Organizer_Linkedin\': $(\"#txt_linkedinurl\").val(),\r\n                \'UserId" +
+"\': \'\',\r\n                \'Organizer_Image\': $(\"#userimage\").val(),\r\n             " +
+"   \'Organizer_Address1\': $(\"#txt_streetadd1\").val(),\r\n                \'Organizer" +
+"_Address2\': $(\"#txt_streetaddr2\").val(),\r\n                \'Organizer_City\': $(\"#" +
+"txt_city\").val(),\r\n                \'Organizer_State\': $(\"#txt_state\").val(),\r\n  " +
+"              \'Organizer_CountryId\': $(\"#Country\").val(),\r\n                \'Orga" +
+"nizer_Zipcode\': $(\"#txt_zip\").val(),\r\n                \'Organizer_Email\': $(\"#txt" +
+"_email\").val(),\r\n                \'Organizer_Phoneno\': $(\"#txt_phnno\").val(),\r\n  " +
+"              \'Organizer_Websiteurl\': $(\"#txt_websiteurl\").val(),\r\n\r\n           " +
+" };\r\n            $.ajax({\r\n                url: \'");
 
             
             #line 487 "..\..\Views\Account\OrganizerProfile.cshtml"

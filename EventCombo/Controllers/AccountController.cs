@@ -130,6 +130,8 @@ namespace EventCombo.Controllers
                 var modelPerm = (from Org in db.Organizer_Master
                              where Org.Orgnizer_Id == id
                              select Org).FirstOrDefault();
+            var Orgdesc =new HtmlString( Server.HtmlDecode(modelPerm.Organizer_Desc));
+            modelPerm.Organizer_Desc = Orgdesc.ToString();
             if (string.IsNullOrEmpty(modelPerm.Organizer_Image))
             {
 
@@ -215,7 +217,7 @@ namespace EventCombo.Controllers
                 {
                     Organizer_Master org = (from o in db.Organizer_Master where o.Orgnizer_Id==model.Orgnizer_Id select o).FirstOrDefault();
                     org.Orgnizer_Name = model.Orgnizer_Name;
-                    org.Organizer_Desc = model.Organizer_Desc;
+                    org.Organizer_Desc =Server.HtmlEncode(model.Organizer_Desc);
                     org.Organizer_FBLink = model.Organizer_FBLink;
                     org.Organizer_Twitter = model.Organizer_Twitter;
                     org.Organizer_Linkedin = model.Organizer_Linkedin;
@@ -2447,7 +2449,7 @@ namespace EventCombo.Controllers
                 {
                     Organizer_Master org = new Organizer_Master();
                     org.Orgnizer_Name = model.Orgnizer_Name;
-                    org.Organizer_Desc = model.Organizer_Desc;
+                    org.Organizer_Desc =Server.HtmlEncode(model.Organizer_Desc);
                     org.Organizer_FBLink = model.Organizer_FBLink;
                     org.Organizer_Twitter = model.Organizer_Twitter;
                     org.Organizer_Linkedin = model.Organizer_Linkedin;

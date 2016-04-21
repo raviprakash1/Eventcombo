@@ -26,7 +26,7 @@ namespace EventCombo.Controllers
 
             mst.Imagepath = !string.IsNullOrEmpty(mst.Imagepath) ? mst.Imagepath : "Images/default_org_image.jpg";
             mst.Eventid = eventid;
-
+            mst.Organizer_Desc = Server.HtmlDecode(mst.Organizer_Desc);
             var OrganizerEvents =  db.GetOrganizerEventid(id).Select(x=>x.Orgnizer_Event_Id).ToList();
             mst.pastevent = new List<Organiserevent>();
             mst.presentevent = new List<Organiserevent>();

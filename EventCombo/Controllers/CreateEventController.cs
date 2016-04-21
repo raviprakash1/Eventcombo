@@ -378,7 +378,7 @@ namespace EventCombo.Controllers
                     ObjEC.DisplayStartTime = model.DisplayStartTime;
                     ObjEC.DisplayEndTime = model.DisplayEndTime;
                     ObjEC.DisplayTimeZone = model.DisplayTimeZone;
-                    ObjEC.EventDescription = HttpUtility.UrlDecode(model.EventDescription, System.Text.Encoding.Default);
+                    ObjEC.EventDescription =Server.HtmlEncode(model.EventDescription);
                     ObjEC.EventPrivacy = model.EventPrivacy;
                     ObjEC.Private_ShareOnFB = model.Private_ShareOnFB;
                     ObjEC.Private_GuestOnly = model.Private_GuestOnly;
@@ -517,7 +517,7 @@ namespace EventCombo.Controllers
                                         objEOrg = new Organizer_Master();
                                         // objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
                                         objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
-                                        objEOrg.Organizer_Desc = HttpUtility.UrlDecode(objOr.Organizer_Desc, System.Text.Encoding.Default);
+                                        objEOrg.Organizer_Desc = Server.HtmlEncode(objOr.Organizer_Desc);
                                         objEOrg.Organizer_FBLink = objOr.Organizer_FBLink;
                                         objEOrg.Organizer_Twitter = objOr.Organizer_Twitter;
                                         //objEOrg.DefaultOrg = objOr.DefaultOrg;
@@ -548,7 +548,7 @@ namespace EventCombo.Controllers
                                         objEOrg = new Organizer_Master();
                                         // objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
                                         objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
-                                        objEOrg.Organizer_Desc = HttpUtility.UrlDecode(objOr.Organizer_Desc, System.Text.Encoding.Default);
+                                        objEOrg.Organizer_Desc = Server.HtmlEncode(objOr.Organizer_Desc);
                                         objEOrg.Organizer_FBLink = objOr.Organizer_FBLink;
                                         objEOrg.Organizer_Twitter = objOr.Organizer_Twitter;
                                         objEOrg.Organizer_Linkedin = objOr.Organizer_Linkedin;
@@ -578,7 +578,7 @@ namespace EventCombo.Controllers
                                         string sql = @"update Organizer_Master set Orgnizer_Name={0},Organizer_Desc={1},Organizer_FBLink={2},Organizer_Twitter={3},Organizer_Linkedin={4} where Orgnizer_Id={5}";
                                         List<Object> sqlParamsList = new List<object>();
                                         sqlParamsList.Add(objOr.Orgnizer_Name);
-                                        sqlParamsList.Add(HttpUtility.UrlDecode(objOr.Organizer_Desc, System.Text.Encoding.Default));
+                                        sqlParamsList.Add(Server.HtmlEncode(objOr.Organizer_Desc));
                                         sqlParamsList.Add(objOr.Organizer_FBLink);
                                         sqlParamsList.Add(objOr.Organizer_Twitter);
                                         sqlParamsList.Add(objOr.Organizer_Linkedin);
@@ -616,7 +616,7 @@ namespace EventCombo.Controllers
                                     string sql = @"update Organizer_Master set Orgnizer_Name={0},Organizer_Desc={1},Organizer_FBLink={2},Organizer_Twitter={3},Organizer_Linkedin={4} where Orgnizer_Id={5}";
                                     List<Object> sqlParamsList = new List<object>();
                                     sqlParamsList.Add(objOr.Orgnizer_Name);
-                                    sqlParamsList.Add(HttpUtility.UrlDecode(objOr.Organizer_Desc, System.Text.Encoding.Default));
+                                    sqlParamsList.Add(Server.HtmlEncode(objOr.Organizer_Desc));
                                     sqlParamsList.Add(objOr.Organizer_FBLink);
                                     sqlParamsList.Add(objOr.Organizer_Twitter);
                                     sqlParamsList.Add(objOr.Organizer_Linkedin);
@@ -1140,7 +1140,7 @@ namespace EventCombo.Controllers
                             strHTML.Append("<label id=OrgDes_");
                             strHTML.Append(i);
                             strHTML.Append(">");
-                            strHTML.Append(EOD.Organizer_Desc);
+                            strHTML.Append(new HtmlString(EOD.Organizer_Desc));
                             strHTML.Append("</label></td>");
 
                             strHTML.Append("<td style='display: none'><label id=OrgFB_");

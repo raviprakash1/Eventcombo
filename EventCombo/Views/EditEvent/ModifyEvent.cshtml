@@ -2927,7 +2927,7 @@ else
                     Orgnizer.push({
                         Orgnizer_Id: $("#OrgId_"+Sno).text(),
                         Orgnizer_Name: $("#OrgName_"+Sno).html(),
-                        Organizer_Desc: escape($("#OrgDes_" + Sno).text()),
+                        Organizer_Desc: $("#OrgDes_" + Sno).text(),
                         Organizer_FBLink: $("#OrgFB_" + Sno).text(),
                         Organizer_Twitter: $("#OrgTw_" + Sno).text(),
                         Organizer_Linkedin: $("#OrgLn_" + Sno).text(),
@@ -2952,7 +2952,7 @@ else
                 varDescritpion = $('#id_vardesc').val();
                 optionalvariable = $('#variabletype').val();
             }
-            var evDec = escape($("#edEventDesc").code());
+            var evDec = $("#edEventDesc").code();
             var model = {
                 'EventID': $("#hdEventId").val(),
                 'EventTypeID': $("#EventType").val(),
