@@ -2517,14 +2517,14 @@ namespace EventCombo.Controllers
                             TimeZoneInfo userTimeZone =
                             TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
                             dtz = new DateTimeWithZone(Convert.ToDateTime(Model.I_ScheduleDate), userTimeZone);
-                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone,false);
 
                         } else
                         {
                             TimeZoneInfo userTimeZone =
                             TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
                             dtz = new DateTimeWithZone(Convert.ToDateTime(Model.I_ScheduleDate), userTimeZone);
-                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone,false);
                         }
                         //Kannan End
 
@@ -2577,14 +2577,14 @@ namespace EventCombo.Controllers
                             TimeZoneInfo userTimeZone =
                             TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
                             dtz = new DateTimeWithZone(Convert.ToDateTime(Model.I_ScheduleDate), userTimeZone);
-                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone,false);
                         }
                         else
                         {
                             TimeZoneInfo userTimeZone =
                             TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
                             dtz = new DateTimeWithZone(Convert.ToDateTime(Model.I_ScheduleDate), userTimeZone);
-                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone,false);
                         }
                         //Kannan End
 

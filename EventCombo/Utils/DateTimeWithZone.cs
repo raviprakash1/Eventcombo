@@ -25,7 +25,7 @@ namespace EventCombo.Utils
             }
             else
             {
-                utcDateTime = dateTime;
+                utcDateTime = dateTime; // TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(dateTime, DateTimeKind.Unspecified), TimeZoneInfo.Local);
             }
             this.timeZone = timeZone;
         }
