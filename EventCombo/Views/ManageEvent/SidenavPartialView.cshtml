@@ -56,7 +56,7 @@
 
             <div id="collapse2" class="panel-collapse collapse">
                 <div class="panel-body no-padding">
-                    <p>@Html.ActionLink("Email Invitations", "EmailInvitations", "ManageEvent", new { eventId = Model.EventId }, null)</p>
+                    <p class="invite_nav">@Html.ActionLink("Email Invitations", "EmailInvitations", "ManageEvent", new { eventId = Model.EventId }, null)</p>
                     @if (Model.DiscountCode > 0)
                     {
                         <p>@Html.ActionLink("Promotional Code", "PromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.EventId) }, null)</p>

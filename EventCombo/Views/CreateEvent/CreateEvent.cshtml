@@ -721,12 +721,7 @@
                     <div class="col-sm-12 mt20 no_pad">
                         <div class="form-group">
                             <label class="col-sm-12 control-label ev_tickt_lebel pl0">Choose Existing Organizer</label>
-                            @*<div class="col-sm-8 Orgz_dro_con">
-                                    Organizer(s) List
-                                    <span class="OrgIcn org_right pull-right">
-                                        <i class="fa fa-angle-down"></i>
-                                    </span>
-                                </div>*@
+                           
                             <div class="col-sm-12 no_pad">
                                 <div class="col-sm-8 no_pad col-xs-4 xs_crt_evnt_edit_org_btn">
                                     <select id="ddlOrgnizers" class="form-control evnt_inp_cont"></select>
@@ -739,20 +734,7 @@
                                 </div>
                                 <table style="display:none;" id="tblOrgnizer"></table>
                             </div>
-                            @*<div  class="OrglistShow col-sm-8 no_pad ">
-                                            <div id="dvOrganizer" class="list-group ev_orgz_group">
-                                                <div id="dvOrg_0" class="list-group-item ev_orgz_list">
-
-                                                    <div class="col-sm-8 no_pad">Organizer 1</div>
-                                <div class="col-sm-4 no_pad text-right ev_org_edt_main">
-                                    <a href="#"><i class="fa fa-pencil"></i> </a> |
-                                    <a href="#"><i class="fa fa-trash"></i> </a>
-                                </div>
-                                                </div>
-
-                                            </div>
-
-                                        </div>*@
+                          
                         </div>
                     </div>
 
@@ -1992,7 +1974,7 @@
             //alert(Sno);
             $("#hidOrgnizer").val(Sno);
             var vOrgName = $("#OrgName_" + Sno).text();
-            var vOrgDes = $("#OrgDes_" + Sno).text();
+            var vOrgDes =$("#OrgDes_" + Sno).text();
             var vOrgFB = $("#OrgFB_" + Sno).text();
             var vOrgTw = $("#OrgTw_" + Sno).text();
             var vOrgLn = $("#OrgLn_" + Sno).text();
@@ -2551,7 +2533,7 @@
                         Orgnizer.push({
                             Orgnizer_Id: $("#OrgId_"+Sno).text(),
                             Orgnizer_Name: $("#OrgName_"+Sno).html(),
-                            Organizer_Desc: escape($("#OrgDes_" + Sno).text()),
+                            Organizer_Desc: $("#OrgDes_" + Sno).text(),
                             Organizer_FBLink: $("#OrgFB_" + Sno).text(),
                             Organizer_Twitter: $("#OrgTw_" + Sno).text(),
                             Organizer_Linkedin: $("#OrgLn_" + Sno).text(),
@@ -2576,7 +2558,7 @@
 
                 }
                 //$("#edEventDesc").code().replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, "");
-                var evDec = escape($("#edEventDesc").code());
+                var evDec =$("#edEventDesc").code();
 
                 var model = {
                     'EventTypeID': $("#EventType").val(),

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -62,6 +63,9 @@ namespace EventCombo.Models
     {
         public Ticket_Locked_Detail[] TLD_List { get; set; }
     }
+
+   
+    
 
     public class Ticket_Locked_Detail_List
     {

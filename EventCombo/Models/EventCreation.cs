@@ -9,6 +9,7 @@ using System.Web.Mvc;
 namespace EventCombo.Models
 {
     [Table("Event")]
+    
     public class EventCreation
     {
         EventComboEntities db = new EventComboEntities();
@@ -21,7 +22,7 @@ namespace EventCombo.Models
         public string DisplayStartTime { get; set; }
         public string DisplayEndTime { get; set; }
         public string DisplayTimeZone { get; set; }
-        //[AllowHtml]
+        [AllowHtml]
         public string EventDescription { get; set; } 
         public string EventPrivacy { get; set; }
         public string Private_ShareOnFB { get; set; }
