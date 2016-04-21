@@ -21,7 +21,7 @@ namespace EventCombo.Utils
             this.isUTC = isUTC;
             if (!isUTC)
             {
-                utcDateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(dateTime, DateTimeKind.Unspecified), timeZone);
+                utcDateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(dateTime, DateTimeKind.Unspecified), TimeZoneInfo.Local);
             }
             else
             {
@@ -29,6 +29,8 @@ namespace EventCombo.Utils
             }
             this.timeZone = timeZone;
         }
+
+ 
 
         public DateTime UniversalTime { get { return utcDateTime; } }
 
