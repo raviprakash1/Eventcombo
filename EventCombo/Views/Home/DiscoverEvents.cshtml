@@ -364,7 +364,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-sm-3 col-xs-3 no_pad text-right ">
-                                    @if (@item.EventPrivacy != "Y")
+                                    @if (@item.EventPrivacy == "Y")
                                     {
                                         <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" onclick="ShowUrl('@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString() })');" type="button" data-toggle="modal" data-target="#sharemodal">
                                             <img src="~/Images/share_icon.png" alt="share event">

@@ -780,11 +780,12 @@ namespace EventCombo.Controllers
                         {
                             objDisEv.EventType = objDisEv.EventType.Substring(0, 16) + "...";
                         }
-                        objDisEv.EventPrivacy = "N";
-                        if (objEv.EventPrivacy.Trim().ToLower() == "private" && objEv.Private_ShareOnFB.Trim() == "Y")
+                        objDisEv.EventPrivacy = "Y";
+                        if (objEv.EventPrivacy.Trim().ToLower() == "private" && objEv.Private_ShareOnFB.Trim() == "N")
                         {
-                            objDisEv.EventPrivacy = "Y";
+                            objDisEv.EventPrivacy = "N";
                         }
+
                         objDisEv.EventCatId = objEv.EventCategoryID;
                         objDisEv.EventTypeId = objEv.EventTypeID;
                         objDisEv.PriceLable = GetPriceLabel(lEventId);
@@ -1061,17 +1062,16 @@ namespace EventCombo.Controllers
                             objDisEv.EventType = objDisEv.EventType.Substring(0, 16) + "...";
                         }
 
-                        objDisEv.EventPrivacy = "N";
-                        if (objEv.EventPrivacy.Trim().ToLower() == "private" && objEv.Private_ShareOnFB.Trim() == "Y")
+                        objDisEv.EventPrivacy = "Y";
+                        if (objEv.EventPrivacy.Trim().ToLower() == "private" && objEv.Private_ShareOnFB.Trim() == "N")
                         {
-                            objDisEv.EventPrivacy = "Y";
+                            objDisEv.EventPrivacy = "N";
                         }
-
                         objDisEv.EventCatId = objEv.EventCategoryID;
                         objDisEv.EventTypeId = objEv.EventTypeID;
                         objDisEv.PriceLable = GetPriceLabel(lEventId);
                         objDisEv.EventLike = GetDiscoverEventFavLikes(lEventId, strUserId);
-                        objDisEv.EventFeature = (objEv.Feature != null ? Convert.ToInt16(objEv.Feature) : 10); // 10 - becz if feature is null then that event have to show at last according to feature sorting 
+                        objDisEv.EventFeature = (objEv.Feature != null ? Convert.ToInt16(objEv.Feature) : int.MaxValue); // 10 - becz if feature is null then that event have to show at last according to feature sorting 
                         objDisEv.FeatureDateTime = (objEv.FeatureUpdateDate != null ? Convert.ToDateTime(objEv.FeatureUpdateDate) : DateTime.Now);
                         var vAddress = objEv.Addresses.FirstOrDefault();
                         if (vAddress != null)
@@ -1141,7 +1141,8 @@ namespace EventCombo.Controllers
                         lsDisEvt.Add(objDisEv);
                     }
                     //lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventFeature).OrderBy(m => m.FeatureDateTime) .ToList();
-                    lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventDate).OrderBy(m => m.EventFeature).ToList();
+                    //lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventFeature).ToList().OrderBy(m => m.EventDate).ToList();
+                    lsDisEvt = lsDisEvt.OrderBy(m => m.EventFeature).ToList().OrderBy(m => m.EventDate).ToList().OrderBy(m => m.FeatureDateTime).ToList().OrderBy(m => m.EventDistance).ToList();
                 }
                 return lsDisEvt;
             }
