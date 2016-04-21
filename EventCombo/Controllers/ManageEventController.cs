@@ -507,7 +507,7 @@ namespace EventCombo.Controllers
                                   group invite_list by invite_list.L_I_Id 
                                   into result1
                                   join invites in objEnt.Event_Email_Invitation on result1.FirstOrDefault().L_I_Id equals invites.I_Id
-                                  where invites.I_Event_Id == eventId && invites.I_Mode == "S" || invites.I_Mode == "N"
+                                  where invites.I_Event_Id == eventId && (invites.I_Mode == "S" || invites.I_Mode == "N")
                                   orderby invites.I_ModifyDate
                                   select new EmailInvitation
                                   {

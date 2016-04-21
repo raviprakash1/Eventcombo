@@ -17,6 +17,10 @@ namespace CMS.Controllers
         [HttpPost]
         public ActionResult Index(string SearchStringEventTitle, string EventType, string ddlEventCategory, string ddlEventSubCategory, string Features, string PageF, string Events, string Tickets)
         {
+            if ((Session["UserID"] == null))
+            {
+                return RedirectToAction("Login", "Home");
+            }
             List<EventCreation> objlst = GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features, Events, Tickets);
             if (objlst.Count == 0)
                 ViewData["SearchedUser"] = 0;
@@ -101,6 +105,11 @@ namespace CMS.Controllers
 
         public ActionResult Index()
         {
+            if ((Session["UserID"] == null))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
             List<EventCreation> objlst = GetAllEvents("", "", "", "", "", "", "");
             int iCount = 0;
             List<SelectListItem> PageFilter = new List<SelectListItem>();
@@ -275,7 +284,7 @@ namespace CMS.Controllers
                 GetEventListing_Result obj = new GetEventListing_Result();
                 List<EventCreation> objEv = new List<EventCreation>();
                 objEv = objEntity.GetEventListing(SearchStringEventTitle, iEventType, iEventCategory, iEventSubCategory, strFeature, Events, tickets).ToList();
-
+                //objEv = objEv.OrderBy(m => m.EventTiming);
 
 
 

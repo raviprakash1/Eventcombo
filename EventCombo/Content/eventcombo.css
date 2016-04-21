@@ -169,7 +169,7 @@ button:focus { outline: none;}
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;}
-.disc_title_head a{ color: #fff;}
+.disc_title_head a{ color: #fff; word-break:normal !important; }
 .disc_title_head a:hover{ text-decoration: none;}
 
 
@@ -662,19 +662,19 @@ span.evnt_toltip{
 
 
 .place_hold::-webkit-input-placeholder {
-   font-size: 1.4em; font-style: italic;
+   font-size: 1.4em; font-style: italic; line-height:18px;
 }
 
 .place_hold:-moz-placeholder { /* Firefox 18- */
-   font-size: 1.4em; font-style: italic;
+   font-size: 1.4em; font-style: italic; line-height:18px;
 }
 
 .place_hold::-moz-placeholder {  /* Firefox 19+ */
-   font-size: 1.4em; font-style: italic;  
+   font-size: 1.4em; font-style: italic; line-height:18px; 
 }
 
 .place_hold:-ms-input-placeholder {  
-   font-size: 1.4em; font-style: italic;
+   font-size: 1.4em; font-style: italic;line-height:18px;
 }
 
 .login_place::-webkit-input-placeholder{ 
@@ -744,7 +744,7 @@ span.evnt_toltip{
     .affix-top{top: 147px !important;max-width:130px; }
     #scrollhome.con_scr0l_home{margin-top:156px !important;}
     /*#eventtopscoll.event_top{ margin-top:132px !important; }*/ 
-    .cyan-line-new .stylish-input-group .form-control{ height:56px; line-height:56px; }
+    .cyan-line-new .stylish-input-group .form-control{ height:56px;  }
     .cyan-line-new .psst{ line-height:56px; }
 
     .xs768det-del {width: 150px;}
@@ -885,7 +885,7 @@ span.evnt_toltip{
 
 
 #eventtopscoll.view_evnt_top.viewevent_container{margin-top:163px !important;}
-#divmain .Fix_Head{ position:absolute; top:20px;}
+#divmain .Fix_Head{ position:absolute; top:5px;}
 /*#divmain .social_icn{ position:absolute; margin-top:0 !important; right:15px;}*/
 .cont_margin{ margin-top: 3px; margin-bottom: 0px;}
 
@@ -1090,6 +1090,9 @@ span.evnt_toltip{
 .ev_date_icn{  margin-top: 0px !important; left: 0px !important; }
 .promo_code_btn{ margin-top:10px;}
 
+#forgotcheck{ margin-top:-10px; }
+#forgotcheck.forgot_top{ margin-top:205px !important;}
+
 #mainhead .col-sm-1{top:18px !important; }
 #mainhead .Fix_Head{top: -6px !important;}
 #divmain .Fix_Head{ margin-top:-8px; }
@@ -1140,6 +1143,10 @@ span.evnt_toltip{
 .xspad0{ padding:0px;}
 .ev_date_icn{  margin-top: 5px !important; left: 0px !important; }
 .dis_evnt_img{height:auto !important; padding:0px!important;} 
+
+
+#forgotcheck{ margin-top:-10px; }
+#forgotcheck.forgot_top{ margin-top:204px !important;}
 }
 
 @media (min-width: 414px) and (max-width: 736px){
@@ -1181,6 +1188,9 @@ span.evnt_toltip{
 
 #eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 153px !important;}
 .xs-paymentconf-inner{ margin-top:-10px;}
+
+#forgotcheck{ margin-top:-10px; }
+#forgotcheck.forgot_top{ margin-top:205px !important;}
 
 /*.ev_btn_type .col12{ width:100%; float:left; }*/
 #divmain .social_icn{  margin-top:4px !important;}
@@ -1231,6 +1241,8 @@ span.evnt_toltip{
 #eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 174px !important;}
 .xs-paymentconf-inner{ margin-top:-10px;}
 
+#forgotcheck{ margin-top:-10px; }
+#forgotcheck.forgot_top{ margin-top:204px !important;}
 
 #mainhead{ height:140px;}
 .createeventtop.event_top{ margin-top:145px;}
@@ -2233,6 +2245,7 @@ div.dis_file_upld{ background:#ccc !important;}
 .help_icon_hov.help_ml{ margin-left:5px;}
 .modal-backdrop.fade.in{ z-index:1111; }
  .ipad_min_height{ min-height:470px;}
+ .forgot_height{ min-height:370px;}
  .crt_map{ margin-right: 8px; width: 175px;}
 
 #forgotcheck{ margin-top:-10px; }
@@ -2243,3 +2256,78 @@ div.dis_file_upld{ background:#ccc !important;}
 .no-shdw{ box-shadow:none !important;}
 .form-control.promotional-readonly{ background:#fff;}
 .crt-code-no-listing{ font-size:18px; color:#000;}
+
+
+table.crt_event_list_tabl { width: 100%; border-collapse: collapse; }             
+.crt_event_list_tabl tr:nth-of-type(odd) { 
+    background: #fff; 
+}
+.crt_event_list_tabl th { 
+    background: #fff; 
+    color: #000; 
+    font-weight: bold; font-size: 18px;
+}
+.crt_event_list_tabl td, .crt_event_list_tabl th { 
+    padding: 10px 6px; 
+    border-bottom: 1px solid #ccc; 
+    font-size: 16px;
+}
+.crt_event_list_tabl a{ margin-right: 5px; }
+.crt_event_list_tabl .word_brack{ word-break: break-all; max-width:150px;  }
+
+@media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+table.crt_event_list_tabl, .crt_event_list_tabl thead, .crt_event_list_tabl tbody, .crt_event_list_tabl th, .crt_event_list_tabl td, .crt_event_list_tabl tr { 
+   display: inline-block;
+   width: 100%;
+   text-align:left;
+}
+.crt_event_list_tabl th{ background-color: #333 ; }
+/* Hide table headers (but not display: none;, for accessibility) */
+.crt_event_list_tabl thead tr { 
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+.crt_event_list_tabl .word_brack{ word-break: break-all; max-width:100%;  }
+.crt_event_list_tabl tr:nth-of-type(even) {  background: #eee;}
+
+.crt_event_list_tabl tr { border: 1px solid #ccc; }
+            
+.crt_event_list_tabl td { 
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee; 
+    position: relative;
+    padding-left: 50%; 
+}
+            
+.crt_event_list_tabl td:before { 
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%; 
+    padding-right: 10px; 
+    white-space: nowrap;
+}
+            
+/*
+Label the data
+*/
+.crt_event_list_tabl td:nth-of-type(1):before { content: "Event Title"; }
+.crt_event_list_tabl td:nth-of-type(2):before { content: "Event Date /Time"; }
+.crt_event_list_tabl td:nth-of-type(3):before { content: "Sold / Total No."; }
+.crt_event_list_tabl td:nth-of-type(4):before { content: "Action"; }
+
+.crt_inv_tab td:nth-of-type(1):before { content: "Subject"; }
+.crt_inv_tab td:nth-of-type(2):before { content: "Recipients"; }
+.crt_inv_tab td:nth-of-type(3):before { content: "Created"; }
+.crt_inv_tab td:nth-of-type(4):before { content: "Send On"; }
+.crt_inv_tab td:nth-of-type(5):before { content: "Action"; }
+            
+}
+        
+       
+      
