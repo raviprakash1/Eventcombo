@@ -771,7 +771,11 @@ span.evnt_toltip{
     .ipad-tkt-recpt-btn button{ width:100%;}
     .ipad-tkt-recpt-btn-mt10{ margin-top:10px;}
     .ipad-pl0{ padding-left:0px !important;}
-   
+
+    
+    /*.jFiler-input-dragDrop{width:160px; height:160px; padding:0px; }
+    .jFiler-item-thumb-image{height: 142px; line-height:142px; overflow: hidden; width: 100%; }*/
+
 }
 
 
@@ -1229,8 +1233,9 @@ span.evnt_toltip{
 .frnt_cret_evnt{ display:inline;}
 #scrollhome.con_scr0l_home{margin-top:214px !important;}
 /*#eventtopscoll.event_top{ margin-top:159px !important; }*/
-.event-upload-container .jFiler-item-thumb-image{width: 90px;  height: 95px;}
+
 .event-upload-container .jFiler-item-thumb-image{width: 80px !important; height: 90px !important;}
+ .event-upload-container .jFiler-item-container{width: 80px; }
 
 #eventtopscoll.view_evnt_top.viewevent_container{margin-top:170px !important;}
 
@@ -2256,8 +2261,10 @@ div.dis_file_upld{ background:#ccc !important;}
 .no-shdw{ box-shadow:none !important;}
 .form-control.promotional-readonly{ background:#fff;}
 .crt-code-no-listing{ font-size:18px; color:#000;}
+.invite_nav a{ color:#333;}
+.invite_nav a:hover{ color:#337ab7;}
 
-
+/*Responsive table start*/
 table.crt_event_list_tabl { width: 100%; border-collapse: collapse; }             
 .crt_event_list_tabl tr:nth-of-type(odd) { 
     background: #fff; 
@@ -2328,6 +2335,6 @@ Label the data
 .crt_inv_tab td:nth-of-type(5):before { content: "Action"; }
             
 }
-        
+/*Responsive table End*/     
        
       
