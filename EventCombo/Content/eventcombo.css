@@ -885,7 +885,7 @@ span.evnt_toltip{
 
 
 #eventtopscoll.view_evnt_top.viewevent_container{margin-top:163px !important;}
-#divmain .Fix_Head{ position:absolute; top:20px;}
+#divmain .Fix_Head{ position:absolute; top:5px;}
 /*#divmain .social_icn{ position:absolute; margin-top:0 !important; right:15px;}*/
 .cont_margin{ margin-top: 3px; margin-bottom: 0px;}
 
@@ -2256,3 +2256,78 @@ div.dis_file_upld{ background:#ccc !important;}
 .no-shdw{ box-shadow:none !important;}
 .form-control.promotional-readonly{ background:#fff;}
 .crt-code-no-listing{ font-size:18px; color:#000;}
+
+
+table.crt_event_list_tabl { width: 100%; border-collapse: collapse; }             
+.crt_event_list_tabl tr:nth-of-type(odd) { 
+    background: #fff; 
+}
+.crt_event_list_tabl th { 
+    background: #fff; 
+    color: #000; 
+    font-weight: bold; font-size: 18px;
+}
+.crt_event_list_tabl td, .crt_event_list_tabl th { 
+    padding: 10px 6px; 
+    border-bottom: 1px solid #ccc; 
+    font-size: 16px;
+}
+.crt_event_list_tabl a{ margin-right: 5px; }
+.crt_event_list_tabl .word_brack{ word-break: break-all; max-width:150px;  }
+
+@media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+table.crt_event_list_tabl, .crt_event_list_tabl thead, .crt_event_list_tabl tbody, .crt_event_list_tabl th, .crt_event_list_tabl td, .crt_event_list_tabl tr { 
+   display: inline-block;
+   width: 100%;
+   text-align:left;
+}
+.crt_event_list_tabl th{ background-color: #333 ; }
+/* Hide table headers (but not display: none;, for accessibility) */
+.crt_event_list_tabl thead tr { 
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+.crt_event_list_tabl .word_brack{ word-break: break-all; max-width:100%;  }
+.crt_event_list_tabl tr:nth-of-type(even) {  background: #eee;}
+
+.crt_event_list_tabl tr { border: 1px solid #ccc; }
+            
+.crt_event_list_tabl td { 
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee; 
+    position: relative;
+    padding-left: 50%; 
+}
+            
+.crt_event_list_tabl td:before { 
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%; 
+    padding-right: 10px; 
+    white-space: nowrap;
+}
+            
+/*
+Label the data
+*/
+.crt_event_list_tabl td:nth-of-type(1):before { content: "Event Title"; }
+.crt_event_list_tabl td:nth-of-type(2):before { content: "Event Date /Time"; }
+.crt_event_list_tabl td:nth-of-type(3):before { content: "Sold / Total No."; }
+.crt_event_list_tabl td:nth-of-type(4):before { content: "Action"; }
+
+.crt_inv_tab td:nth-of-type(1):before { content: "Subject"; }
+.crt_inv_tab td:nth-of-type(2):before { content: "Recipients"; }
+.crt_inv_tab td:nth-of-type(3):before { content: "Created"; }
+.crt_inv_tab td:nth-of-type(4):before { content: "Send On"; }
+.crt_inv_tab td:nth-of-type(5):before { content: "Action"; }
+            
+}
+        
+       
+      

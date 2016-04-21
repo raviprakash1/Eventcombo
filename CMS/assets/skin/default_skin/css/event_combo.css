@@ -61,3 +61,9 @@ top: 40%; left: 30%; border:1px solid #e2e2e2; display: none; }
 .pay_dollar_btn:hover{ color: #666666; background:none; }
 .Payment-form-body{ background:#fff; }
 .admin-form.Payment-form-body .panel{ border:0px;}
+
+.editr_email .cke_2 { width:100% !important;}
+@media (min-width: 768px) and (max-width: 1024px) {
+    .fs26 {font-size: 1.2em !important;}
+    .panel100{ width:100%;}
+}
