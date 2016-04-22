@@ -739,10 +739,12 @@
 
         $("#btAddEmail").click(function () {
             var vValue = $("#txtAddEmail").val().trim();
-
             if (vValue != "") {
                 AddEmail(vValue);
-
+            }
+            else
+            {
+                ShowMessage('E', ajaxsetup('CreateInvitations', 'EmailValidationUI'));
             }
         });
         $("#btDeleteEmail").click(function () {

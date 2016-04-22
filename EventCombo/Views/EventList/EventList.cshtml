@@ -120,10 +120,8 @@
                                             <p class="btn-link manage">@Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(item.EventID), type = "N" }, null)</p>
                                             <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = ValidationMessageController.GetParentEventId(item.EventID) }, null)</p>
                                             <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(item.EventTitle.Replace(" ", "-"),"[^a-zA-Z0-9_-]+",""), strEventId = ValidationMessageController.GetParentEventId(item.EventID).ToString() }, null) </p>
-
-                                            <p class="btn-link manage"><a href="Javascript:void(0)" onclick="DuplicateEvent(@item.EventID, '@item.EventTitle');">Duplicate</a>  </p>
+                                            <p class="btn-link manage"><a href="Javascript:void(0)" onclick="DuplicateEvent(@item.EventID, '@item.EventTitle');">Duplicate</a></p>
                                             @*<p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>*@
-
                                         </div>
                                     </td>
                                 </tr>

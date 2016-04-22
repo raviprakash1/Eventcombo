@@ -1067,11 +1067,22 @@ namespace EventCombo.Controllers
                         {
                             objDisEv.EventPrivacy = "N";
                         }
+
+                        objDisEv.AddressStatus = 0;
+                        if (objEv.AddressStatus != null)
+                            objDisEv.AddressStatus = (objEv.AddressStatus.ToLower().Trim() == "online" ? 1 : 0);
+                        
+
                         objDisEv.EventCatId = objEv.EventCategoryID;
                         objDisEv.EventTypeId = objEv.EventTypeID;
                         objDisEv.PriceLable = GetPriceLabel(lEventId);
                         objDisEv.EventLike = GetDiscoverEventFavLikes(lEventId, strUserId);
-                        objDisEv.EventFeature = (objEv.Feature != null ? Convert.ToInt16(objEv.Feature) : int.MaxValue); // 10 - becz if feature is null then that event have to show at last according to feature sorting 
+                        objDisEv.EventFeature = int.MaxValue;
+                        if (objEv.Feature != null)
+                            objDisEv.EventFeature = (objEv.Feature == 0 ? int.MaxValue : Convert.ToInt16(objEv.Feature)); // 10 - becz if feature is null then that event have to show at last according to feature sorting 
+                        
+
+
                         objDisEv.FeatureDateTime = (objEv.FeatureUpdateDate != null ? Convert.ToDateTime(objEv.FeatureUpdateDate) : DateTime.Now);
                         var vAddress = objEv.Addresses.FirstOrDefault();
                         if (vAddress != null)
@@ -1143,6 +1154,11 @@ namespace EventCombo.Controllers
                     //lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventFeature).OrderBy(m => m.FeatureDateTime) .ToList();
                     //lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventFeature).ToList().OrderBy(m => m.EventDate).ToList();
                     lsDisEvt = lsDisEvt.OrderBy(m => m.EventFeature).ToList().OrderBy(m => m.EventDate).ToList().OrderBy(m => m.FeatureDateTime).ToList().OrderBy(m => m.EventDistance).ToList();
+                    //lsDisEvt = lsDisEvt.OrderBy(m => m.AddressStatus).ToList();
+                   // lsDisEvt = lsDisEvt.OrderBy(m => m.EventFeature).ThenBy(m => m.EventDate).ThenBy(m => m.FeatureDateTime).ThenBy(m => m.EventDistance).ToList();
+                    
+
+
                 }
                 return lsDisEvt;
             }
