@@ -1144,7 +1144,12 @@ span.evnt_toltip{
 .frnt_cret_evnt{ display:inline;}
 #scrollhome.con_scr0l_home{margin-top:214px !important;}
 /*#eventtopscoll.event_top{ margin-top:159px !important; }*/ 
+.event-upload-container .jFiler-input-dragDrop{ padding:15px; }
 .event-upload-container .jFiler-item-thumb-image{width: 80px !important; height: 90px !important;}
+.event-upload-container .jFiler-item-container{width: 80px; }
+.event-upload-container .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:68px; }
+.event-upload-container .jFiler-items ul li.jFiler-item:last-child{ margin-right:0px;}
+
 
 #eventtopscoll.view_evnt_top.viewevent_container{margin-top:170px !important;}
 
@@ -1250,6 +1255,7 @@ span.evnt_toltip{
 
 .event-upload-container .jFiler-item-thumb-image{width: 80px !important; height: 90px !important;}
  .event-upload-container .jFiler-item-container{width: 80px; }
+ .event-upload-container .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:68px; }
 
 #eventtopscoll.view_evnt_top.viewevent_container{margin-top:170px !important;}
 
@@ -2388,3 +2394,6 @@ Label the data
 /*Responsive table End*/     
        
       
+.event-upload-container input[type="file"]{ opacity:0 !important;}
+.myacnt_image_upload input[type="file"]{ opacity:0 !important;}
+.orgnz_image_upload input[type="file"]{ opacity:0 !important;}
