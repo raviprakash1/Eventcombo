@@ -63,7 +63,14 @@ top: 40%; left: 30%; border:1px solid #e2e2e2; display: none; }
 .admin-form.Payment-form-body .panel{ border:0px;}
 
 .editr_email .cke_2 { width:100% !important;}
+.shw_menu{ display:block !important;}
+
+.sidebar-menu > li > ul > li > a > span:nth-child(1){ margin-right:0px !important; }
+
 @media (min-width: 768px) and (max-width: 1024px) {
     .fs26 {font-size: 1.2em !important;}
     .panel100{ width:100%;}
 }
+
+body.sb-l-m .sidebar-header, body.sb-l-m #sidebar_left .sidebar-title, body.sb-l-m #sidebar_left .sidebar-label, body.sb-l-m #sidebar_left .sidebar-title-tray, body.sb-l-m #sidebar_left .caret, body.sb-l-m #sidebar_left .sidebar-proj, body.sb-l-m #sidebar_left .sidebar-stat
+{}

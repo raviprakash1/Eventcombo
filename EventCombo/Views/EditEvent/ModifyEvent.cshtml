@@ -77,14 +77,14 @@
                     </div>
                     <div class="col-sm-3 no_pad ev_loca_check_main">
                         <div class="form-group mb0">
-                            <label class="label-control evnt_title_date evnt_title_online fs24">
+                            <label class="label-control evnt_title_date evnt_title_online fs24 ipad_online_evnt">
                                 @if (Model.AddressStatus == "Online")
                                 {
-                                    <input id="btOnlineEvent" checked="checked" type="checkbox" />
+                                    <input id="btOnlineEvent" class="form-control online_check_box" checked="checked" type="checkbox" />
                                 }
                                 else
                                 {
-                                    <input id="btOnlineEvent" type="checkbox" />
+                                    <input id="btOnlineEvent" class="form-control online_check_box" type="checkbox" />
                                 }
                                 Online Event
                             </label>
@@ -93,7 +93,7 @@
                     </div>
                     <div class="col-sm-9 text-right no_pad">
                         <div class="form-group mb0 ">
-                            <div class="ev_date_icn StartDate"></div>
+                            <div class="ev_date_icn StartDate xs-date-icon-remv"></div>
                             <label id="btEnterDates" class="StartDate label-control evnt_title_date fs24">Click here to enter the start and end date*</label>
                             <div class="form-group mb5">
                                 <label class="Timezone label-control evnt_title_timezone mb0" id="lblTimeZone">Timezone & date setting</label>
@@ -166,7 +166,7 @@
                             <div class="col-sm-12 no_pad" id="dvAddress">
                                 <div class="form-group mb5">
                                     <div class="EntVenAdd col-sm-12 no_pad">
-                                        <div class="ev_loc_icn"></div>
+                                        <div class="ev_loc_icn xs-loc-icon-rem"></div>
                                         <div class="col-sm-10 no_pad mb5 pull-right">
                                             <input id="txtEventLocation" onkeypress="txtEventLocation_KeyPress(event);" class="form-control evnt_title_control evnt_title_location evnt_placehold" placeholder="Click here to enter venue address*" />
                                         </div>
@@ -568,7 +568,7 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 mt10 ">
-                        <button type="button" id="btAddOrg" class="btn btn-primary btn-lg ev_add_sub_btn"> Add New Organizer </button>
+                        <button type="button" id="btAddOrg" class="btn theme-btn btn-lg ev_add_sub_btn"> Add New Organizer </button>
                     </div>
                     <div class="col-sm-12 mt20 no_pad">
                         <div class="form-group">
@@ -584,10 +584,10 @@
                                     <select id="ddlOrgnizers" class="form-control evnt_inp_cont"></select>
                                 </div>
                                 <div class="col-sm-2 col-xs-4 xs_crt_evnt_edit_org_btn xs_crt_evnt_edit_org_btn">
-                                    <button type="button" onclick="editOrgnizer();" class="btn btn-primary ev_add_sub_btn org_dele_btn" id="btneditorg">Edit <i class="fa fa-pencil"></i></button>
+                                    <button type="button" onclick="editOrgnizer();" class="btn theme-btn ev_add_sub_btn org_dele_btn" id="btneditorg">Edit <i class="fa fa-pencil"></i></button>
                                 </div>
                                 <div class="col-sm-2 col-xs-4 xs_crt_evnt_edit_org_btn xs_crt_evnt_edit_org_btn">
-                                    <button type="button" id="btndeleteorg" class="btn btn-primary ev_add_sub_btn org_dele_btn">Delete <i class="fa fa-trash"></i></button>
+                                    <button type="button" id="btndeleteorg" class="btn theme-btn ev_add_sub_btn org_dele_btn">Delete <i class="fa fa-trash"></i></button>
                                 </div>
                                 <table style="display:none;" id="tblOrgnizer"></table>
                             </div>
@@ -790,7 +790,7 @@
                                         <div class="col-sm-12 no_pad ">
                                             <div class="modal-content evnt_set_panel">
                                                 <div class="modal-body pb0">
-                                                    <div class="col-sm-12">
+                                                    <div class="col-sm-12 no_pad">
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label ev_tickt_lebel pl0">Description</label>
                                                             <div class="col-sm-6 xs-tkt-typ-pad-0">
@@ -816,7 +816,7 @@
                                                         </div>
                                                         <div class="clearfix"></div>
                                                         <div class="form-group mt20">
-                                                            <div class="col-sm-6 ev_pad_l0">
+                                                            <div class="col-sm-6 ev_pad_l0 xs-tkt-typ-pad-0">
                                                                 <div class="col-sm-12 no_pad">
                                                                     <label class="label-control pl0 ev_tickt_lebel">Ticket Sales Start</label>
                                                                     <div class="upload_help_icn pull-right">
@@ -855,10 +855,10 @@
                                                                         </div>
                                                                    
                                                                 </div>
-                                                                <div class="col-sm-8 ev_pad_l0 mb5">
+                                                                <div class="col-sm-8 ev_pad_l0 mb5 xs-tkt-typ-pad-0">
                                                                     <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n"  disabled="disabled" />
                                                                 </div>
-                                                                <div class="col-sm-4 ev_pad_l0 mb5">
+                                                                <div class="col-sm-4 ev_pad_l0 mb5 xs-tkt-typ-pad-0">
                                                                     @*<input type="hidden" value="0" id="id_hdsaletimeend-n" />*@
                                                                     <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am"  disabled="disabled" />
                                                                 </div>
@@ -1100,7 +1100,7 @@ else
                                     </div>
                                 </div>
                                 <div class="col-sm-2 no_pad xs-var-chrg-btn-mt10">
-                                    <button class="btn btn-primary btn-lg  ev_add_sub_btn var_chg_btn" type="button">Add</button>
+                                    <button class="btn theme-btn btn-lg  ev_add_sub_btn var_chg_btn" type="button">Add</button>
                                 </div>
                             </div>
                             <div class="col-sm-12 mt20 no_pad">

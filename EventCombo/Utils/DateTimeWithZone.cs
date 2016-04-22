@@ -21,14 +21,16 @@ namespace EventCombo.Utils
             this.isUTC = isUTC;
             if (!isUTC)
             {
-                utcDateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(dateTime, DateTimeKind.Unspecified), timeZone);
+                utcDateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(dateTime, DateTimeKind.Unspecified), TimeZoneInfo.Local);
             }
             else
             {
-                utcDateTime = dateTime;
+                utcDateTime = dateTime; // TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(dateTime, DateTimeKind.Unspecified), TimeZoneInfo.Local);
             }
             this.timeZone = timeZone;
         }
+
+ 
 
         public DateTime UniversalTime { get { return utcDateTime; } }
 
