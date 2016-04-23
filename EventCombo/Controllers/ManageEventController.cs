@@ -523,7 +523,6 @@ namespace EventCombo.Controllers
                                       NoOfRecipients = result1.Count()
                                   };
                 ViewBag.scheduledCount = invitations.Count();
-
                 switch (sortOrder)
                 {
                     case "subject_desc":
@@ -548,7 +547,7 @@ namespace EventCombo.Controllers
                         invitations = invitations.OrderByDescending(s => s.NoOfRecipients);
                         break;
                     default:
-                        invitations = invitations.OrderBy(s => s.Subject);
+                        invitations = invitations.OrderBy(s => s.SendOn);
                         break;
                 }
 
@@ -578,7 +577,6 @@ namespace EventCombo.Controllers
                                   };
 
                 ViewBag.draftCount = invitations.Count();
-
                 switch (sortOrder)
                 {
                     case "subject_desc":
@@ -603,7 +601,7 @@ namespace EventCombo.Controllers
                         invitations = invitations.OrderByDescending(s => s.NoOfRecipients);
                         break;
                     default:
-                        invitations = invitations.OrderBy(s => s.Subject);
+                        invitations = invitations.OrderBy(s => s.SendOn);
                         break;
                 }
 
@@ -664,7 +662,7 @@ namespace EventCombo.Controllers
                                 where myRow.E_Id == EventId
                                 select myRow).ToList().OrderBy(y => y.T_name);
                 long dSoldQty = 0;
-                strResult.Append("<table id='tbSaleTicket' class='table ft_black table - bordered mb0'>");
+                strResult.Append("<table id='tbSaleTicket' class='crt_event_list_tabl sales_by_tkt_tab'>");
                 strResult.Append("<thead>");
                 strResult.Append("<tr>");
                 strResult.Append("<th>Ticket Type</th>");
