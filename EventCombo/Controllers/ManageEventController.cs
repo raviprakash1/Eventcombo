@@ -687,7 +687,14 @@ namespace EventCombo.Controllers
                     }
                     else
                     {
-                        strResult.Append("<td>"); strResult.Append(obj.Price); strResult.Append("</td>");
+                        if (obj.Price != null && obj.Price > 0)
+                        {
+                            strResult.Append("<td>"); strResult.Append(obj.Price); strResult.Append("</td>");
+                        }
+                        else
+                        {
+                            strResult.Append("<td>"); strResult.Append("-"); strResult.Append("</td>");
+                        }
                     }
 
                     var vRemQty = (from myRow in objEnt.Ticket_Quantity_Detail
@@ -736,8 +743,8 @@ namespace EventCombo.Controllers
                     {
                         strResult.Append("<td>"); strResult.Append("On Sale"); strResult.Append("</td>");
                     }
-                    strResult.Append("<td>"); strResult.Append((obj.Sale_End_Date != null ? obj.Sale_End_Date.ToString() : "")); strResult.Append("</td>");
-                    strResult.Append("<td>"); strResult.Append(""); strResult.Append("</td>");
+                    strResult.Append("<td>"); strResult.Append((obj.Sale_End_Date != null ? obj.Sale_End_Date.ToString() : "-")); strResult.Append("</td>");
+                    strResult.Append("<td>"); strResult.Append("-"); strResult.Append("</td>");
                     strResult.Append("</tr>");
                 }
                 strResult.Append("</tbody>");
