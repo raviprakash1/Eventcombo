@@ -502,7 +502,8 @@ namespace EventCombo.Controllers
                 return RedirectToAction("Index", "Home");
             }
             ViewBag.CurrentSort = (sortOrder ?? "subject");
-
+            ValidationMessageController vmc = new ValidationMessageController();
+            eventId = vmc.GetLatestEventId(eventId);
             ViewBag.tab = tab;
             ViewBag.EventId = eventId;
             using (EventComboEntities objEnt = new EventComboEntities())

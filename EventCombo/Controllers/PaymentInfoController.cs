@@ -15,6 +15,8 @@ namespace EventCombo.Controllers
             //long EventId = 1;
             if (Session["logo"] != null)
             {
+                ValidationMessageController vmc = new ValidationMessageController();
+                EventId = vmc.GetLatestEventId(EventId);
                 ViewBag.EventId = EventId;
                 Payment_Info objPI = new Payment_Info();
 
@@ -182,7 +184,7 @@ namespace EventCombo.Controllers
             }
             ViewBag.CountryID = countryList;
 
-            return RedirectToAction("Index", "ManageEvent", new { Eventid = Eventid, type="N" });
+            return RedirectToAction("Index", "ManageEvent", new { Eventlid = Eventid, type="N" });
         }
 
 

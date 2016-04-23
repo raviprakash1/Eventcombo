@@ -1,0 +1,24 @@
+-----------Exception Details on  4/23/2016 4:46:21 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/23/2016 4:46:21 PM
+
+Error Line No : ine 178
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/editevent/modifyevent?strEventDs=Navreet-Singh-Live-case-testing-modify&amp;strEventId=12
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
