@@ -551,7 +551,7 @@ namespace EventCombo.Controllers
                         break;
                 }
 
-                int pageSize = 9;
+                int pageSize = 10;
                 int pageNumber = (page ?? 1);
                 ViewBag.scheduled = invitations.ToPagedList(pageNumber, pageSize);
                 
@@ -605,7 +605,7 @@ namespace EventCombo.Controllers
                         break;
                 }
 
-                int pageSize = 9;
+                int pageSize = 10;
                 int pageNumber = (page ?? 1);
                 ViewBag.draft = invitations.ToPagedList(pageNumber, pageSize);
 
