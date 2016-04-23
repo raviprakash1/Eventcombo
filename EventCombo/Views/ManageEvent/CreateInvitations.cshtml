@@ -201,7 +201,7 @@
                     and the password above to attend this event. )
                 </p>
                 <p>
-                    <button class="btn def_btn acnt_btn edit_editor_btn" type="button" title="" data-toggle="modal" id="btEditEditor" data-target="#invite_email_desc">Edit</button>
+                    <button class="btn theme-btn def_btn acnt_btn edit_editor_btn" type="button" title="" data-toggle="modal" id="btEditEditor" data-target="#invite_email_desc">Edit</button>
                 </p>
             </div>
             <div class="clearfix"></div>
@@ -220,15 +220,15 @@
         <div class="clearfix"></div>
         <div class="col-sm-6 col-xs-12 no_pad ">
             <div class="col-sm-12 no_pad">
-                <div class="col-sm-6 col-xs-12 no_pad ">
+                <div class="col-sm-6 col-xs-12 no_pad inp100">
                     <div class="form-group">
                         <input class="form-control invite_mail_inp_cont " id="txtTestEmail" type="text" placeholder="">
                         <p class="bottom-label">Send test to email address</p>
                     </div>
                 </div>
-                <div class="col-sm-3 col-xs-12 no_pad  text-center">
+                <div class="col-sm-3 col-xs-12 no_pad  text-center ipad_send_test">
                     <button class="btn def_btn acnt_btn send_test_btn" style="display:none" type="button" data-toggle="modal" id="btPopUp" data-target="#test_inv_email"></button>
-                    <button class="btn def_btn acnt_btn send_test_btn" type="button" id="btTestEmail">Send Test</button>
+                    <button class="btn theme-btn def_btn acnt_btn send_test_btn" type="button" id="btTestEmail">Send Test</button>
 
                 </div>
                 <div class="invitation-loader" id="dvAjxLoader">
@@ -246,10 +246,10 @@
             <div class="col-sm-12 col-xs-12 no_pad">
                 <div class="col-sm-12 col-xs-12 no_pad">
                     <div class="col-sm-6 col-xs-6 no_pad">
-                        <button class="InvAddlist btn def_btn acnt_btn send_test_btn" type="submit">Add List + </button>
+                        <button class="InvAddlist btn theme-btn def_btn acnt_btn send_test_btn" type="submit">Add List + </button>
                     </div>
                     <div class="col-sm-6 col-xs-6 no_pad">
-                        <button class="btn def_btn acnt_btn send_test_btn" id="btDeleteEmail" style="display:none;" type="button">Delete </button>
+                        <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btDeleteEmail" style="display:none;" type="button">Delete </button>
                     </div>
 
                 </div>
@@ -261,7 +261,7 @@
                             </div>
                         </div>
                         <div class="col-sm-2 col-xs-12 no_pad  text-center">
-                            <button class="btn def_btn acnt_btn send_test_btn" id="btAddEmail" type="button">Add</button>
+                            <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btAddEmail" type="button">Add</button>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -367,23 +367,23 @@
                 {
                     if (Model.I_Mode.Trim() == "N" || Model.I_Mode.Trim() == "D")
                     {
-                        <button class="btn def_btn acnt_btn send_test_btn" id="btSendNow" onclick="SaveDetail('N');" type="button">Send Now</button>
-                        <button class="btn def_btn acnt_btn send_test_btn" id="btSchdule" style="display:none" onclick="SaveDetail('S');" type="button">Schedule</button>
+                        <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btSendNow" onclick="SaveDetail('N');" type="button">Send Now</button>
+                        <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btSchdule" style="display:none" onclick="SaveDetail('S');" type="button">Schedule</button>
                     }
                     else
                     {
-                        <button class="btn def_btn acnt_btn send_test_btn" id="btSchdule" onclick="SaveDetail('S');" type="button">Schedule</button>
-                        <button class="btn def_btn acnt_btn send_test_btn" id="btSendNow" style="display:none" onclick="SaveDetail('N');" type="button">Send Now</button>
+                        <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btSchdule" onclick="SaveDetail('S');" type="button">Schedule</button>
+                        <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btSendNow" style="display:none" onclick="SaveDetail('N');" type="button">Send Now</button>
                     }
                 }
                 else
                 {
-                    <button class="btn def_btn acnt_btn send_test_btn" id="btSendNow" onclick="SaveDetail('N');" type="button">Send Now</button>
-                    <button class="btn def_btn acnt_btn send_test_btn" id="btSchdule" style="display:none" onclick="SaveDetail('S');" type="button">Schedule</button>
+                    <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btSendNow" onclick="SaveDetail('N');" type="button">Send Now</button>
+                    <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btSchdule" style="display:none" onclick="SaveDetail('S');" type="button">Schedule</button>
                 }
             </div>
             <div class="col-sm-4 col-xs-6 no_pad">
-                <button class="btn def_btn acnt_btn send_test_btn" id="btSaveDraft" onclick="SaveDetail('D');" type="button">Save Draft</button>
+                <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btSaveDraft" onclick="SaveDetail('D');" type="button">Save Draft</button>
             </div>
             <div id="dvAjxLoaderSave" style="display:none;">
                 <img src="~/Images/ajaxloader1.gif" /> Please wait ...
@@ -539,7 +539,7 @@
                 <div class="col-sm-12 text-center">
                     <h3>Success! </h3>
                     <p class="email_send_desc">The Email has been send. </p>
-                    <button type="button" class="btn def_btn acnt_btn send_test_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Ok</span></button>
+                    <button type="button" class="btn theme-btn def_btn acnt_btn send_test_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Ok</span></button>
                 </div>
             </div>
 
@@ -559,7 +559,7 @@
                     <div class="summernote" id="dvEditor"></div>
 
                     <div class="col-sm-12 text-center">
-                        <button type="button" id="btSaveEditor" class="btn def_btn acnt_btn send_test_btn" data-dismiss="modal" aria-label="Close">
+                        <button type="button" id="btSaveEditor" class="btn theme-btn def_btn acnt_btn send_test_btn" data-dismiss="modal" aria-label="Close">
                             Save
                         </button>
                     </div>
@@ -739,10 +739,12 @@
 
         $("#btAddEmail").click(function () {
             var vValue = $("#txtAddEmail").val().trim();
-
             if (vValue != "") {
                 AddEmail(vValue);
-
+            }
+            else
+            {
+                ShowMessage('E', ajaxsetup('CreateInvitations', 'EmailValidationUI'));
             }
         });
         $("#btDeleteEmail").click(function () {

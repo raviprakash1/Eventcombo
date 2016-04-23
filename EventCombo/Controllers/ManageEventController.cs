@@ -497,7 +497,10 @@ namespace EventCombo.Controllers
         [Authorize]
         public ActionResult EmailInvitations(long eventId, string tab, string sortOrder, int? page)
         {
-            
+            if (Session["AppId"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.CurrentSort = (sortOrder ?? "subject");
 
             ViewBag.tab = tab;
@@ -2318,6 +2321,11 @@ namespace EventCombo.Controllers
         [Authorize]
         public ActionResult CreateInvitations(long lId,long lEvtId,string strMode)
         {
+            if (Session["AppId"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             //strMode If comes from Event Live Then need to set as 'E' otherwise set as 'C'
             Event_Email_Invitation objEEI = new Event_Email_Invitation();
             int iElistCnt = 0;

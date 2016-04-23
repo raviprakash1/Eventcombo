@@ -512,6 +512,8 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\DateTimeWithZone.cs" />
     <Compile Include="Utils\Email.cs" />
+    <Compile Include="Utils\Ip2Geo.cs" />
+    <Compile Include="Utils\ClientIPAddress.cs" />
     <Compile Include="ViewModels\EmailInvitation.cs" />
     <Compile Include="Utils\EncryptDecrypt.cs" />
     <Compile Include="ViewModels\Sidenav.cs" />

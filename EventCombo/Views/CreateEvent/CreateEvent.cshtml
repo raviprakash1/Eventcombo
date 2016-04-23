@@ -275,7 +275,7 @@
                     </div>
                     <div class="col-sm-3 no_pad ev_loca_check_main">
                         <div class="form-group mb0">
-                            <label class="label-control evnt_title_date evnt_title_online fs24"><input id="btOnlineEvent" type="checkbox"> Online Event</label>
+                            <label class="label-control evnt_title_date evnt_title_online fs24 ipad_online_evnt"><input id="btOnlineEvent" class="form-control online_check_box" type="checkbox"> Online Event</label>
                         </div>
                     </div>
                     <div class="col-sm-9 text-right no_pad">
@@ -716,7 +716,7 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 mt10 ">
-                        <button type="button" id="btAddOrg" class="btn btn-primary btn-lg ev_add_sub_btn"> Add New Organizer </button>
+                        <button type="button" id="btAddOrg" class="btn theme-btn btn-lg ev_add_sub_btn"> Add New Organizer </button>
                     </div>
                     <div class="col-sm-12 mt20 no_pad">
                         <div class="form-group">
@@ -727,10 +727,10 @@
                                     <select id="ddlOrgnizers" class="form-control selectpicker evnt_inp_cont"></select>
                                 </div>
                                 <div class="col-sm-2 col-xs-4 xs_crt_evnt_edit_org_btn">
-                                    <button type="button" onclick="editOrgnizer();" class="btn btn-primary ev_add_sub_btn org_dele_btn" id="btneditorg">Edit <i class="fa fa-pencil"></i></button>
+                                    <button type="button" onclick="editOrgnizer();" class="btn theme-btn ev_add_sub_btn org_dele_btn" id="btneditorg">Edit <i class="fa fa-pencil"></i></button>
                                 </div>
                                 <div class="col-sm-2 col-xs-4 xs_crt_evnt_edit_org_btn">
-                                    <button type="button" id="btndeleteorg" class="btn btn-primary ev_add_sub_btn org_dele_btn">Delete <i class="fa fa-trash"></i></button>
+                                    <button type="button" id="btndeleteorg" class="btn theme-btn ev_add_sub_btn org_dele_btn">Delete <i class="fa fa-trash"></i></button>
                                 </div>
                                 <table style="display:none;" id="tblOrgnizer"></table>
                             </div>
@@ -864,7 +864,7 @@
                                         <div class="col-sm-12 no_pad ">
                                             <div class="modal-content evnt_set_panel">
                                                 <div class="modal-body pb0">
-                                                    <div class="col-sm-12">
+                                                    <div class="col-sm-12 no_pad">
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label ev_tickt_lebel pl0">Description</label>
                                                             <div class="col-sm-6 xs-tkt-typ-pad-0">
@@ -890,7 +890,7 @@
                                                         </div>
                                                         <div class="clearfix"></div>
                                                         <div class="form-group mt20">
-                                                            <div class="col-sm-6 ev_pad_l0">
+                                                            <div class="col-sm-6 ev_pad_l0 xs-tkt-typ-pad-0">
                                                                 <div class="col-sm-12 no_pad">
                                                                     <label class="label-control pl0 ev_tickt_lebel" >Ticket Sales Start
                                                                         <div class="upload_help_icn pull-right">
@@ -904,7 +904,7 @@
                                                                         </div>
                                                                     </label>
                                                                 </div>
-                                                                <div class="col-sm-8 ev_pad_l0 mb5 xs_pad_0">
+                                                                <div class="col-sm-8 ev_pad_l0 mb5 xs_pad_0 inp100">
                                                                     <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_salestart-n" onchange="changetext(this.id);" disabled="disabled"     />
                                                                 </div>
                                                                 <div class="col-sm-4 no_pad mb5 xs_pad_0">
@@ -914,7 +914,7 @@
 
                                                             </div>
 
-                                                            <div class="col-sm-6 ev_pad_r0 xs_pad_0">
+                                                            <div class="col-sm-6 ev_pad_r0 xs_pad_0 xs-tkt-typ-pad-0">
                                                                 <div class="col-sm-12 no_pad">
                                                                     <label class="label-control pl0 ev_tickt_lebel">Ticket Sales End
                                                                         <div class="upload_help_icn pull-right">
@@ -928,10 +928,10 @@
                                                                         </div>
                                                                     </label>
                                                                 </div>
-                                                                <div class="col-sm-8 ev_pad_l0 mb5">
+                                                                <div class="col-sm-8 ev_pad_l0 mb5 xs-tkt-typ-pad-0">
                                                                     <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n" onchange="checkvalidDate(this.id)" disabled="disabled"  />
                                                                 </div>
-                                                                <div class="col-sm-4 ev_pad_l0 mb5">
+                                                                <div class="col-sm-4 ev_pad_l0 mb5 xs-tkt-typ-pad-0">
                                                                     @*<input type="hidden" value="7:00pm" id="id_hdsaletimeend-n" />*@
                                                                     <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id)" disabled="disabled"  />
                                                                 </div>
@@ -1129,7 +1129,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-2 no_pad xs-var-chrg-btn-mt10">
-                                    <button class="btn btn-primary btn-lg  ev_add_sub_btn var_chg_btn" type="button">Add</button>
+                                    <button class="btn theme-btn btn-lg  ev_add_sub_btn var_chg_btn" type="button">Add</button>
                                 </div>
                             </div>
                             <div class="col-sm-12 mt20 no_pad">
