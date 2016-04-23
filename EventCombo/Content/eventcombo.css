@@ -915,6 +915,7 @@ span.evnt_toltip{
 .xs-var-chg-div{float: left;width: 55px;}
 .xs-date-icon-remv{ display:none;}
 .xs-loc-icon-rem{ display:none}
+.pay100{ width:100%; margin-bottom:10px;}
 }
 @media (width: 480px){
 
@@ -2383,12 +2384,27 @@ Label the data
 .crt_inv_tab td:nth-of-type(4):before { content: "Send On"; }
 .crt_inv_tab td:nth-of-type(5):before { content: "Action"; }
 
-.promocode_list td:nth-of-type(1):before { content: "Promocode"; }
-.promocode_list td:nth-of-type(2):before { content: "Amount"; }
+.promocode_list td:nth-of-type(1):before { content: "Promo Code"; }
+.promocode_list td:nth-of-type(2):before { content: "Amounts"; }
 .promocode_list td:nth-of-type(3):before { content: "Starts"; }
-.promocode_list td:nth-of-type(4):before { content: "End"; }
+.promocode_list td:nth-of-type(4):before { content: "Ends"; }
 .promocode_list td:nth-of-type(5):before { content: "Available"; }
-.promocode_list td:nth-of-type(6):before { content: "Action"; }
+.promocode_list td:nth-of-type(6):before { content: "Actions"; }
+
+.recnt_ord_tab td:nth-of-type(1):before { content: "#Order"; }
+.recnt_ord_tab td:nth-of-type(2):before { content: "Ticket Buyer"; }
+.recnt_ord_tab td:nth-of-type(3):before { content: "Quantity"; }
+.recnt_ord_tab td:nth-of-type(4):before { content: "Price"; }
+.recnt_ord_tab td:nth-of-type(5):before { content: "Date"; }
+.recnt_ord_tab td:nth-of-type(6):before { content: "Payment"; }
+
+
+.sales_by_tkt_tab td:nth-of-type(1):before { content: "Ticket Type"; }
+.sales_by_tkt_tab td:nth-of-type(2):before { content: "Price"; }
+.sales_by_tkt_tab td:nth-of-type(3):before { content: "Sold"; }
+.sales_by_tkt_tab td:nth-of-type(4):before { content: "Status"; }
+.sales_by_tkt_tab td:nth-of-type(5):before { content: "End Sales"; }
+.sales_by_tkt_tab td:nth-of-type(6):before { content: "View Sale"; }
             
 }
 /*Responsive table End*/     

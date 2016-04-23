@@ -534,7 +534,8 @@ namespace EventCombo.Controllers
                 return RedirectToAction("Index", "Home");
             }
             ViewBag.CurrentSort = (sortOrder ?? "subject");
-
+            ValidationMessageController vmc = new ValidationMessageController();
+            eventId = vmc.GetLatestEventId(eventId);
             ViewBag.tab = tab;
             ViewBag.EventId = eventId;
             using (EventComboEntities objEnt = new EventComboEntities())
@@ -555,7 +556,6 @@ namespace EventCombo.Controllers
                                       NoOfRecipients = result1.Count()
                                   };
                 ViewBag.scheduledCount = invitations.Count();
-
                 switch (sortOrder)
                 {
                     case "subject_desc":
@@ -580,11 +580,11 @@ namespace EventCombo.Controllers
                         invitations = invitations.OrderByDescending(s => s.NoOfRecipients);
                         break;
                     default:
-                        invitations = invitations.OrderBy(s => s.Subject);
+                        invitations = invitations.OrderBy(s => s.SendOn);
                         break;
                 }
 
-                int pageSize = 9;
+                int pageSize = 10;
                 int pageNumber = (page ?? 1);
                 ViewBag.scheduled = invitations.ToPagedList(pageNumber, pageSize);
                 
@@ -610,7 +610,6 @@ namespace EventCombo.Controllers
                                   };
 
                 ViewBag.draftCount = invitations.Count();
-
                 switch (sortOrder)
                 {
                     case "subject_desc":
@@ -635,11 +634,11 @@ namespace EventCombo.Controllers
                         invitations = invitations.OrderByDescending(s => s.NoOfRecipients);
                         break;
                     default:
-                        invitations = invitations.OrderBy(s => s.Subject);
+                        invitations = invitations.OrderBy(s => s.SendOn);
                         break;
                 }
 
-                int pageSize = 9;
+                int pageSize = 10;
                 int pageNumber = (page ?? 1);
                 ViewBag.draft = invitations.ToPagedList(pageNumber, pageSize);
 
@@ -696,7 +695,7 @@ namespace EventCombo.Controllers
                                 where myRow.E_Id == EventId
                                 select myRow).ToList().OrderBy(y => y.T_name);
                 long dSoldQty = 0;
-                strResult.Append("<table id='tbSaleTicket' class='table ft_black table - bordered mb0'>");
+                strResult.Append("<table id='tbSaleTicket' class='crt_event_list_tabl sales_by_tkt_tab'>");
                 strResult.Append("<thead>");
                 strResult.Append("<tr>");
                 strResult.Append("<th>Ticket Type</th>");
@@ -721,7 +720,14 @@ namespace EventCombo.Controllers
                     }
                     else
                     {
-                        strResult.Append("<td>"); strResult.Append(obj.Price); strResult.Append("</td>");
+                        if (obj.Price != null && obj.Price > 0)
+                        {
+                            strResult.Append("<td>"); strResult.Append(obj.Price); strResult.Append("</td>");
+                        }
+                        else
+                        {
+                            strResult.Append("<td>"); strResult.Append("-"); strResult.Append("</td>");
+                        }
                     }
 
                     var vRemQty = (from myRow in objEnt.Ticket_Quantity_Detail
@@ -770,8 +776,8 @@ namespace EventCombo.Controllers
                     {
                         strResult.Append("<td>"); strResult.Append("On Sale"); strResult.Append("</td>");
                     }
-                    strResult.Append("<td>"); strResult.Append((obj.Sale_End_Date != null ? obj.Sale_End_Date.ToString() : "")); strResult.Append("</td>");
-                    strResult.Append("<td>"); strResult.Append(""); strResult.Append("</td>");
+                    strResult.Append("<td>"); strResult.Append((obj.Sale_End_Date != null ? obj.Sale_End_Date.ToString() : "-")); strResult.Append("</td>");
+                    strResult.Append("<td>"); strResult.Append("-"); strResult.Append("</td>");
                     strResult.Append("</tr>");
                 }
                 strResult.Append("</tbody>");

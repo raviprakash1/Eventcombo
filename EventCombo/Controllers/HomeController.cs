@@ -1140,9 +1140,9 @@ namespace EventCombo.Controllers
                     }
                     //lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventFeature).OrderBy(m => m.FeatureDateTime) .ToList();
                     //lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventFeature).ToList().OrderBy(m => m.EventDate).ToList();
-                    lsDisEvt = lsDisEvt.OrderBy(m => m.EventFeature).ToList().OrderBy(m => m.EventDate).ToList().OrderBy(m => m.FeatureDateTime).ToList().OrderBy(m => m.EventDistance).ToList();
+                    //lsDisEvt = lsDisEvt.OrderBy(m => m.EventFeature).ToList().OrderBy(m => m.EventDate).ToList().OrderBy(m => m.FeatureDateTime).ToList().OrderBy(m => m.EventDistance).ToList();
                     //lsDisEvt = lsDisEvt.OrderBy(m => m.AddressStatus).ToList();
-                   // lsDisEvt = lsDisEvt.OrderBy(m => m.EventFeature).ThenBy(m => m.EventDate).ThenBy(m => m.FeatureDateTime).ThenBy(m => m.EventDistance).ToList();
+                    lsDisEvt = lsDisEvt.OrderBy(m => m.EventFeature).ThenBy(m => m.EventDate).ThenBy(m => m.FeatureDateTime).ThenBy(m => m.EventDistance).ToList();
                     
 
 
