@@ -15,22 +15,18 @@
 
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 <div class="event_container">
-    <div class="event_inner_container ">
-        <div class="event_detail_container">
-            <div class="col-sm-12 col-xs-12">
-                <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
-                    <div class="er_UI_main">
-                        <div class="er_UI_img"></div>
-                        <div class="er_suc" id="erraccmsg"></div>
-                        <button class="close" type="button" id="btndivaccsuc">&#215;</button>
+    <div class="event_detail_container">
+        <div class="col-sm-12 col-xs-12">
+            <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
+                <div class="er_UI_main">
+                    <div class="er_UI_img"></div>
+                    <div class="er_suc" id="erraccmsg"></div>
+                    <button class="close" type="button" id="btndivaccsuc">&#215;</button>
 
-                    </div>
                 </div>
             </div>
-
         </div>
-    </div>
-    <div class="event_detail_container">
+        <div class="clearfix"></div>
         <div class="evnt_tile_head">
             <div class="evnt_tile_bg_l"></div>
             <div class="col-sm-12 col-xs-12 text-left no_pad">
@@ -259,7 +255,7 @@
                                     <div class="clearfix"></div>
                                     <div class="col-md-8 col-xs-12 no_pad mt10">
                                         <div class="row">
-                                            <div class="col-xs-6 dropheight">
+                                            <div class="col-xs-6 dropheight pay100">
                                                 @if (Model != null && !String.IsNullOrEmpty(Model.PI_City))
                                                 {
                                                     <input id="txtCity1" name="City1" class="form-control" placeholder="City"
@@ -271,7 +267,7 @@
                                                            maxlength="500" type="text" />
                                                 }
                                             </div>
-                                            <div class="col-xs-6 dropheight">
+                                            <div class="col-xs-6 dropheight pay100">
                                                 @if (Model != null && !String.IsNullOrEmpty(Model.PI_State))
                                                 {
                                                     <input id="txtState1" name="State1" class="form-control" placeholder="State"
@@ -289,7 +285,7 @@
                                 <div class="clearfix"></div>
                                 <div class="col-md-8 col-xs-12 no_pad mt10">
                                     <div class="row">
-                                        <div class="col-xs-6 dropheight">
+                                        <div class="col-xs-6 dropheigh pay100">
                                             @*<select id="ddlCountry1" name="Country1" class="form-control selectpicker">
                                         <option @(Model.PI_Country == 1 ? " selected=\"selected\" " : "") value="1">Country1</option>
                                         <option @(Model.PI_Country == 2 ? " selected=\"selected\" " : "") value="2">Country2</option>
@@ -305,16 +301,16 @@
                                                 </select>
                                             }
                                         </div>
-                                        <div class="col-xs-6 ">
+                                        <div class="col-xs-6 pay100">
 
                                             @if (Model != null && !String.IsNullOrEmpty(Model.PI_PostalCode))
                                             {
-                                                <input id="txtPostalCode1" name="PostalCode1" class="form-control" placeholder="Postal Code"
+                                                <input id="txtPostalCode1" name="PostalCode1" class="form-control" placeholder="Zip Code"
                                                        maxlength="5" type="text" value="@Model.PI_PostalCode">
                                             }
                                             else
                                             {
-                                                <input id="txtPostalCode1" name="PostalCode1" class="form-control" placeholder="Postal Code"
+                                                <input id="txtPostalCode1" name="PostalCode1" class="form-control" placeholder="Zip Code"
                                                        maxlength="5" type="text" />
                                             }
                                         </div>
@@ -494,7 +490,7 @@
                                 <div class="clearfix"></div>
                                 <div class="col-md-8 col-xs-12 no_pad mt10">
                                     <div class="row">
-                                        <div class="col-xs-6 dropheight">
+                                        <div class="col-xs-6 dropheight pay100">
                                             @if (Model != null && !String.IsNullOrEmpty(Model.PI_City))
                                             {
                                                 <input id="txtCity2" name="City2" class="form-control" placeholder="City"
@@ -506,7 +502,7 @@
                                                        maxlength="500" type="text" />
                                             }
                                         </div>
-                                        <div class="col-xs-6 dropheight">
+                                        <div class="col-xs-6 dropheight pay100">
                                             @if (Model != null && !String.IsNullOrEmpty(Model.PI_State))
                                             {
                                                 <input id="txtState2" name="State2" class="form-control" placeholder="State"
@@ -523,7 +519,7 @@
                                 <div class="clearfix"></div>
                                 <div class="col-md-8 col-xs-12 no_pad mt10">
                                     <div class="row">
-                                        <div class="col-xs-6 dropheight">
+                                        <div class="col-xs-6 dropheight pay100">
                                             @*<select id="ddlCountry2" name="Country2" class="form-control selectpicker">
                                         <option @(Model.PI_Country == 1 ? " selected=\"selected\" " : "") value="1">Country1</option>
                                         <option @(Model.PI_Country == 2 ? " selected=\"selected\" " : "") value="2">Country2</option>
@@ -539,15 +535,15 @@
                                                 </select>
                                             }
                                         </div>
-                                        <div class="col-xs-6 ">
+                                        <div class="col-xs-6 pay100">
                                             @if (Model != null && !String.IsNullOrEmpty(Model.PI_PostalCode))
                                             {
-                                                <input id="txtPostalCode2" name="PostalCode2" class="form-control" placeholder="Postal Code"
+                                                <input id="txtPostalCode2" name="PostalCode2" class="form-control" placeholder="Zip Code"
                                                        maxlength="5" type="text" value="@Model.PI_PostalCode">
                                             }
                                             else
                                             {
-                                                <input id="txtPostalCode2" name="PostalCode2" class="form-control" placeholder="Postal Code"
+                                                <input id="txtPostalCode2" name="PostalCode2" class="form-control" placeholder="Zip Code"
                                                        maxlength="5" type="text" />
                                             }
                                         </div>
@@ -587,9 +583,8 @@
                 </div>
                 </div>
                 
-
-            </div>
-        </div>
+    </div>
+</div>
 
 <div class="clearfix"></div>
 

@@ -47,8 +47,9 @@
                 }
                 <div class="col-sm-6 col-xs-6 pt10 text-left no_pad">
                     <div class="col-sm-12 no_pad">
+                      
                         <p class="ev_mng_title">
-                            @Model.Eventtitle
+                           
                             @if (Model.Eventcancel != "Y")
                             {
                                 if (Model.EventExpired == "N")
@@ -63,9 +64,9 @@
                                     }
                                 }
                             }
+                           
                         </p>
-                        <p class="ev_mng_title_mini ">@Model.EventAddress </p>
-                        <p class="ev_mng_title_mini">@Model.Eventdate </p>
+                       
                     </div>
 
                 </div>
@@ -96,6 +97,12 @@
                     }
                 </div>
                 <div class="clearfix"></div>
+                <div class="col-sm-12 no_pad">
+                    <p class="ev_mng_title">@Model.Eventtitle</p>
+                    <p class="ev_mng_title_mini ">@Model.EventAddress </p>
+                    <p class="ev_mng_title_mini">@Model.Eventdate </p>
+                </div>
+                <div class="clearfix"></div>
                 <div class="col-sm-12 no_pad bor_line"></div>
 
                 <div class="col-sm-12 no_pad pt10 pb10">
@@ -118,7 +125,7 @@
                     </div>
                     <div class="col-sm-4 no_pad text-right">
                         <!-- <button class="btn ev_live_sub_btn grey_btn cap_l">Find Attendees</button> -->
-                        <input type="text" class="ev_mng_searh grey_btn cap_l" placeholder="Find Attendees" />
+                        <input type="text" class="ev_mng_searh grey_btn cap_l xs-100" placeholder="Find Attendees" />
                     </div>
                 </div>
 
@@ -176,7 +183,7 @@
                                 }
                                 else
                                 {
-                                    <div class="col-sm-2 col-xs-2 text-center no_pad"><img src="/Images/dgd.png"></div>
+                                    <div class="col-sm-2 col-xs-2 text-center no_pad"><img class="img-responsive" src="/Images/dgd.png"></div>
                                     <div class="col-sm-10 col-xs-10 no_pad ev_congrt">
 
                                         <span> In Progress </span> <br>Your event page is live and you are ready to sell tickets.
@@ -257,8 +264,8 @@
                 <div class="col-sm-12 no_pad mt10">
                     <div class="col-sm-12 col-xs-12 no_pad">
                         <div class="col-sm-6 col-xs-12 no_pad for_total">
-                            <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">@TempData["TicketSalePer"]% Ticket Sold </p>
-                            <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">Sales Report</a></p>
+                            <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 evnt_mg_word_brack">@TempData["TicketSalePer"]% Ticket Sold </p>
+                            <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail "><a href="#">Sales Report</a></p>
                             <div class="col-sm-12 col-xs-12 no_pad">
 
                                 <figure id="tickets_sold_graph">
@@ -296,8 +303,8 @@
                             </div>
 
                             <div class="col-sm-12 col-xs-12 no_pad for_total mt10">
-                                <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">Event Page Hits(@Model.EventHits.ToString()) </p>
-                                <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">Promotional Tools</a></p>
+                                <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 evnt_mg_word_brack">Event Page Hits(@Model.EventHits.ToString()) </p>
+                                <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail evnt_mg_word_brack"><a href="#">Promotional Tools</a></p>
                                 <div class="col-sm-12 col-xs-12 no_pad grp_white">
                                     <div class="col-sm-12 col-xs-12 no_pad text-right">
                                         <input class="btn graph_day_mnth_btn" id="btDay" type="button" value="1 Day" />
@@ -321,15 +328,17 @@
                                     <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">Net Sales </p>
                                     <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail"><a href="#">See Details</a></p>
                                 </div>
+                                <div class="clearfix"></div>
                                 <p class="ft4em mb0 for_net_amont">$@TempData["NETSale"]</p>
                             </div>
                             <div class="col-sm-12 col-xs-12 ">
                                 <div class="col-sm-12 no_pad">
-                                    <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 ">Payment status </p>
-                                    <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail">
+                                    <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 evnt_mg_word_brack ">Payment status </p>
+                                    <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail evnt_mg_word_brack">
                                         @Html.ActionLink("Payment Settings", "PaymentInfo", "PaymentInfo", new { EventId = Model.Eventid }, null)
                                     </p>
                                 </div>
+                                <div class="clearfix"></div>
                                 <div class="col-sm-12 no_pad">
 
                                     @if (Model.EventExpired == "N")
@@ -356,6 +365,7 @@
                                             <p class="ft18 payout_desc">Payout was issued on <b>date of amount transfer</b> to your <b>Bank Name</b> account ending in <b>last 4 digit of account number</b></p>
                                         </div>
                                     }
+                                    <div class="clearfix"></div>
                                     <p class="ft15">You have <span class="ft_red">3 days 21 hours </span>to issue any requested refunds. Allow 2-3 business days for the payout to arrive.(Longer for public holidays)</p>
 
 
@@ -417,7 +427,7 @@
                             </div>
                             <div id="menu1" class="tab-pane fade">
                                 <div class="order_attendee_inner">
-                                    <div class="table-responsive">
+                                  
                                         @if (Model.Eventstatus == "Save")
                                         {
                                             <label> You haven't made your event live. Publish it to make your event live</label>
@@ -459,7 +469,7 @@
                                                 <div class="col-sm-12 ev_detail recent_view_ord"><a href="#">View All</a></div>
                                             }
                                         }
-                                    </div>
+                                   
                                 </div>
                                 @*<div class="col-sm-12 no_pad ft18">
                                         <div class="col-sm-12 col-xs-12 text-left ev_detail"><a href="#">View All</a></div>
@@ -481,7 +491,7 @@
                             <div class="col-sm-6 col-xs-6 text-right ev_detail"><button id="btViewLess" class="btn ev_live_sub_btn mb5 sal_viw_mor_btn" type="button">View Less</button></div>
                             <input type="hidden" id="hidTblvalue" value="" />
                         </div>
-                        <div class="col-sm-12 no_pad ft18 mb10 clearfix">
+                        <div class="col-sm-12 ft18 mb10 clearfix">
                             * Service fees will be deducted from your payout and depend on your ticket fees settings.
                         </div>
                     </div>
