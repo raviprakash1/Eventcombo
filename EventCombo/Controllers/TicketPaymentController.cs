@@ -18,6 +18,8 @@ using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
+using EventCombo.ViewModels;
+
 namespace EventCombo.Controllers
 {
 
@@ -34,6 +36,7 @@ namespace EventCombo.Controllers
         //[OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         //[Route("",Name ="Payment"),HttpGet]   
         public ActionResult TicketPayment()
+
         {
             if (Session["token"] != null && Session["PayerID"] != null)
             {
@@ -230,6 +233,7 @@ namespace EventCombo.Controllers
                 Detailscard.Add(card3);
                 ViewBag.Detailscard = Detailscard;
             }
+           tp.tickebox =  LoadTickets(Eventid.ToString());
 
             return View(tp);
         }
@@ -1412,7 +1416,7 @@ namespace EventCombo.Controllers
                         string barcode = "<img  src ='" + barImgPath + "' alt = 'BarCode' >";
                         string Imagelogo = Server.MapPath("..") + "/Images/logo_vertical.png";
                         string logoImage = "<img style='width:57px;height:375px' src ='" + Imagelogo + "' alt = 'Logo' >";
-                        CreateEventController ccEvent = new CreateEventController();
+                        EventCreation ccEvent = new EventCreation();
                         var Images = ccEvent.GetImages(eventid).FirstOrDefault();
                         string Imageevent = "";
                         if (string.IsNullOrEmpty(Images))
@@ -2735,7 +2739,12 @@ namespace EventCombo.Controllers
             return URL;
         }
 
-
+        public PartialViewResult LoadTicket(long id)
+        {
+            ticketbox t = new ticketbox();
+            t.ticketinfo = LoadTickets(id.ToString());
+            return PartialView("LoadTicketsView", t);
+        }
 
     }
 

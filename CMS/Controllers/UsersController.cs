@@ -45,7 +45,7 @@ namespace CMS.Controllers
 
         public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail,string PageF)
         {
-            EventListController objEl = new EventListController();
+          
             
             if ((Session["UserID"] != null))
             {

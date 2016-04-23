@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CMS.Models;
+
+
 namespace CMS.Controllers
 {
     public class MessagesController : Controller
@@ -49,7 +51,7 @@ namespace CMS.Controllers
             lstmsg = MessageData(form_name);
 
             ValidationMessageController vmc = new ValidationMessageController();
-            var successmsg = vmc.Index("Messages", "MessageSuccSY");
+             var successmsg = vmc.Index("Messages", "MessageSuccSY");
             ViewData["Saved"] = successmsg;
             TempData["FormName"] = form_name;
             return View(lstmsg);

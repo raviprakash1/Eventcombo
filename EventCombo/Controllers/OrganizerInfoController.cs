@@ -37,7 +37,7 @@ namespace EventCombo.Controllers
             foreach (var item in OrganizerEvents)
             {
                 Organiserevent orgev = new Organiserevent();
-                CreateEventController cms = new CreateEventController();
+                EventCreation cms = new EventCreation();
                 long ?Eventid = item;
                 var EventDetail = cms.GetEventdetail(Eventid??0);
                

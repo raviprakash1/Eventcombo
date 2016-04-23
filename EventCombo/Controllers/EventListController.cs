@@ -25,10 +25,10 @@ namespace EventCombo.Controllers
         {
             Session["logo"] = "events";
             Session["Fromname"] = "MyList";
+            MyAccount hmc = new MyAccount();
             if ((Session["AppId"] != null))
             {
-                HomeController hmc = new HomeController();
-                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+               
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -134,10 +134,10 @@ namespace EventCombo.Controllers
 
             Session["AppId"] = e;
             Session["Fromname"] = "MyList";
+            MyAccount hmc = new MyAccount();
             if ((Session["AppId"] != null))
             {
-                HomeController hmc = new HomeController();
-                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+               
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {

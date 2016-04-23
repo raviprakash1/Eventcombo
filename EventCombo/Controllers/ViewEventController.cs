@@ -33,10 +33,10 @@ namespace EventCombo.Controllers
 
         public ActionResult ViewEvent(string strEventDs, string strEventId)
         {
+            MyAccount hmc = new MyAccount();
             if ((Session["AppId"] != null))
             {
-                HomeController hmc = new HomeController();
-                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+               
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -52,7 +52,7 @@ namespace EventCombo.Controllers
             //    return RedirectToAction("Index", "Home");
 
             //}
-            ValidationMessageController vmc = new ValidationMessageController();
+            ValidationMessage vmc = new ValidationMessage();
 
             //string[] str = strUrlData.Split('౼');
             //string strForView = "";
@@ -80,7 +80,7 @@ namespace EventCombo.Controllers
             string startday = "", endday = "", starttime = "", endtime = "";
             Session["Fromname"] = "events";
             Session["logo"] = "events";
-            CreateEventController objCE = new CreateEventController();
+            EventCreation objCE = new EventCreation();
             var EventDetail = objCE.GetEventdetail(EventId);
             if (EventDetail == null) return null;
             var url = Url.RouteUrl("ViewEvent", new { strEventDs = Regex.Replace(EventDetail.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = EventDetail.EventID.ToString() });

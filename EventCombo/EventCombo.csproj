@@ -500,6 +500,7 @@
     <Compile Include="Models\User_Permission_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ValidationMessage.cs" />
     <Compile Include="Models\Venue.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -1267,6 +1268,7 @@
     <Content Include="Views\ManageEvent\EmailInvitations.cshtml" />
     <Content Include="Views\ManageEvent\CreateInvitations.cshtml" />
     <Content Include="Views\ManageEvent\SidenavPartialView.cshtml" />
+    <Content Include="Views\TicketPayment\LoadTicketsView.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

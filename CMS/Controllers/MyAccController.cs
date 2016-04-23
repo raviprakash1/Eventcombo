@@ -312,7 +312,7 @@ namespace CMS.Controllers
             string msg = "", errormessage = "", successmsg = "";
             //if (Session["AppId"] != null)
             //{
-            ValidationMessageController vmc = new ValidationMessageController();
+            EventCombo.Models.ValidationMessage vmc = new EventCombo.Models.ValidationMessage();
             var validationresult = "";
             string Userid = model.Id;
             var accountdetail = GetLoginDetails(Userid);
@@ -428,7 +428,7 @@ namespace CMS.Controllers
                     string to = "", from = "", cc = "", bcc = "", subjectn = "", emailname="";
                     var bodyn = "";
                     List<Email_Tag> EmailTag = new List<Email_Tag>();
-                    HomeController hmc = new HomeController();
+                    MyAccount hmc = new MyAccount();
                     EmailTag = getTag();
 
                     var Emailtemplate =getEmail("acc_pwd_set");

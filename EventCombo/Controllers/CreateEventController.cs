@@ -109,9 +109,8 @@ namespace EventCombo.Controllers
             if ((Session["AppId"] != null))
             {
                 try {
-               
-                HomeController hmc = new HomeController();
-                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+
+                    MyAccount hmc = new MyAccount();
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -355,6 +354,7 @@ namespace EventCombo.Controllers
             long lEventId = 0;
             string lat="", lon="";
             ViewEvent vc = new ViewEvent();
+            EventCreation obj = new EventCreation();
             try
             {
                 //PayPalRedirect redirect = PayPal.ExpressCheckout(new PayPalOrder { Amount = 50 });
@@ -749,7 +749,7 @@ namespace EventCombo.Controllers
 
                     objEnt.SaveChanges();
                     lEventId = ObjEC.EventID;
-                    PublishEvent(lEventId);
+                    obj.PublishEvent(lEventId);
 
 
 
@@ -1303,7 +1303,7 @@ namespace EventCombo.Controllers
         public ActionResult ViewCreateEvent(string strUrlData)
         {
             
-            ValidationMessageController vmc = new ValidationMessageController();
+            ValidationMessage vmc = new ValidationMessage();
             ViewEvent viewEvent = new ViewEvent();
             string[] str = strUrlData.Split('౼');
             string strForView = "";
@@ -1839,33 +1839,7 @@ namespace EventCombo.Controllers
 
         }
 
-        public string PublishEvent(long lEventId)
-        {
-            string strResult = "N";
-            try
-            {
-                string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
-                if (strUserId != "" && lEventId >0)
-                {
-                    using (EventComboEntities objEnt = new EventComboEntities())
-                    {
-                        try
-                        {
-                            objEnt.PublishEvent(lEventId, strUserId);
-                        }catch(Exception ex)
-                         {
-                            ExceptionLogging.SendErrorToText(ex);
-                        }
-                    }
-                    strResult = "Y";
-                }
-            }
-            catch (Exception)
-            {
-                strResult ="N";
-            }
-            return strResult;
-        }
+     
         public string UpdateEventStatus(string strEventId)
         {
             string strResult = "N";

@@ -32,7 +32,7 @@ namespace EventCombo.Controllers
 
                 try {
 
-                    HomeController hmc = new HomeController();
+                    MyAccount hmc = new MyAccount();
                     string usernme = hmc.getusername();
                     if (string.IsNullOrEmpty(usernme))
                     {
@@ -188,7 +188,7 @@ namespace EventCombo.Controllers
                         EventIid = long.Parse(Eventid);
                     }
 
-                    ValidationMessageController vmc = new ValidationMessageController();
+                    ValidationMessage vmc = new ValidationMessage();
                     EventIid = vmc.GetLatestEventId(EventIid);
                      objCr = GetEventDataEditing(EventIid);
                     if (objCr == null) return RedirectToAction("Index", "Home");
@@ -197,8 +197,8 @@ namespace EventCombo.Controllers
                     {
                         return RedirectToAction("Index", "Home");
                     }
-                    HomeController hmc = new HomeController();
-                    hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                    MyAccount hmc = new MyAccount();
+                  
                     string usernme = hmc.getusername();
                     if (string.IsNullOrEmpty(usernme))
                     {
@@ -2140,6 +2140,7 @@ namespace EventCombo.Controllers
         {
             string lat = "", lon = "";
             ViewEvent vc = new ViewEvent();
+            ValidationMessage vmc = new ValidationMessage();
             if (Session["AppId"] != null)
             {
                 long lEventId = model.EventID;
@@ -2164,14 +2165,14 @@ namespace EventCombo.Controllers
                         {
                             if (ObjEC.EventStatus == "Live")
                             {
-                                ValidationMessageController vmc = new ValidationMessageController();
+                               
                                 model.EventID = vmc.GetLatestEventId(lEventId);
                                 lEventId = EditEventInfo(model);
                                 //if (ObjEC.Parent_EventID == null || ObjEC.Parent_EventID == 0)
                                 //    Parent_EventID = lEventId;
                                 //else
                                 //    Parent_EventID = (long)ObjEC.Parent_EventID;
-                                Parent_EventID = ValidationMessageController.GetParentEventId(lEventId);
+                                Parent_EventID = vmc.GetParentEventId(lEventId);
                             }
                             else
                             {
@@ -2766,7 +2767,7 @@ namespace EventCombo.Controllers
                                 //    Parent_EventID = lEventId;
                                 //else
                                 //    Parent_EventID = (long)ObjEC.Parent_EventID;
-                                Parent_EventID = ValidationMessageController.GetParentEventId(lEventId);
+                                Parent_EventID = vmc.GetParentEventId(lEventId);
                                 //Parent_EventID = (ObjEC.Parent_EventID ==null? lEventId : (long)ObjEC.Parent_EventID);
 
                                 PublishEvent(lEventId);

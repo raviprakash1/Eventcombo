@@ -25,8 +25,7 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
-                HomeController hmc = new HomeController();
-                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+                MyAccount hmc = new MyAccount();
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
