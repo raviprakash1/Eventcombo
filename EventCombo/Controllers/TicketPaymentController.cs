@@ -432,6 +432,8 @@ namespace EventCombo.Controllers
                     objOdr.O_PayPal_TrancId = strTranId;
                     objEntity.Order_Detail_T.Add(objOdr);
                     objEntity.SaveChanges();
+                    objOdr.O_Order_Id = "T" + objOdr.O_Id.ToString().PadLeft(9, '0');
+                    objEntity.SaveChanges();
                     string strOrderNo = GetOrderNo();
 
                     //List<Ticket_Locked_Detail> objLockedTic = new List<Ticket_Locked_Detail>();
