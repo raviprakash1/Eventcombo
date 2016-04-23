@@ -137,6 +137,7 @@ namespace EventCombo.Models
 
     
     }
+   
     public class Coordinates
         {
             public Coordinates(double latitude, double longitude)

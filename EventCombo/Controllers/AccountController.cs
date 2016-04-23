@@ -22,6 +22,7 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Security.Cryptography;
 using System.Text;
+using EventCombo.Utils;
 
 namespace EventCombo.Controllers
 {
@@ -413,41 +414,27 @@ namespace EventCombo.Controllers
         public ActionResult MyAccount()
         {
             string defaultCountry = "";
-            HomeController hmc = new HomeController();
-            hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+            myAccount myacc = new myAccount();
+            MyAccount myac = new MyAccount();
+          
             Session["logo"] = "account";
             Session["Fromname"] = "account";
             string city = "", state = "", zipcode = "", country = "";
             if ((Session["AppId"] != null))
             {
-              string usernme=  hmc.getusername();
+              string usernme= myac.getusername();
                 if(string.IsNullOrEmpty(usernme))
                 {
                     return RedirectToAction("Index", "Home");
                 }
 
                 try {
-                    using (WebClient client = new WebClient())
-                    {
-                        string ip = GetLanIPAddress().Replace("::ffff:", "");
-                        var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
-                        dynamic stuff = JsonConvert.DeserializeObject(json);
-                        if (stuff != null)
-                        {
-                            city = stuff.city;
-                            state = stuff.region_name;
-                            zipcode = stuff.zip_code;
-                            country = stuff.country_name;
-                        }
-                        else
-                        {
-                            city = "";
-                            state = "";
-                            zipcode = "";
-                            country = "";
-
-                        }
-                    }
+                    Ip2Geo ip2Geo = new Ip2Geo();
+                    GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+                    city = geoAddress.cityName;
+                    country = geoAddress.countryName;
+                    zipcode = geoAddress.zipCode;
+                    state = geoAddress.regionName;
                 }
                 catch (Exception ex)
                 {
@@ -461,8 +448,7 @@ namespace EventCombo.Controllers
 
 
                 string userid = Session["AppId"].ToString();
-                myAccount myacc = new myAccount();
-                MyAccount myac = new MyAccount();
+               
                 var accountdetail = myac.GetLoginDetails(userid);
                 if (accountdetail != null)
                 {
@@ -635,7 +621,7 @@ namespace EventCombo.Controllers
                 string Userid = Session["AppId"].ToString();
                 string imagepresent = model.ImagePresent;
 
-                ValidationMessageController vmc = new ValidationMessageController();
+                ValidationMessage vmc = new ValidationMessage();
                 MyAccount mac = new MyAccount();
                 validationresult = vmc.Index("", "");
                 var accountdetail = mac.GetLoginDetails(Userid);
@@ -1536,29 +1522,36 @@ namespace EventCombo.Controllers
                     //{
                     try
                     {
-                        using (WebClient client = new WebClient())
-                        {
-                            string ip = GetLanIPAddress().Replace("::ffff:", "");
+
+                        Ip2Geo ip2Geo = new Ip2Geo();
+                        GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+                       city = geoAddress.cityName;
+                        country = geoAddress.countryName;
+                        zipcode = geoAddress.zipCode;
+                        state = geoAddress.regionName;
+                        //using (WebClient client = new WebClient())
+                        //{
+                        //    string ip = GetLanIPAddress().Replace("::ffff:", "");
 
 
-                            var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
-                            dynamic stuff = JsonConvert.DeserializeObject(json);
-                            if (stuff != null)
-                            {
-                                city = stuff.city;
-                                state = stuff.region_name;
-                                zipcode = stuff.zip_code;
-                                country = stuff.country_name;
-                            }
-                            else
-                            {
-                                city = "";
-                                state = "";
-                                zipcode = "";
-                                country = "";
+                        //    var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
+                        //    dynamic stuff = JsonConvert.DeserializeObject(json);
+                        //    if (stuff != null)
+                        //    {
+                        //        city = stuff.city;
+                        //        state = stuff.region_name;
+                        //        zipcode = stuff.zip_code;
+                        //        country = stuff.country_name;
+                        //    }
+                        //    else
+                        //    {
+                        //        city = "";
+                        //        state = "";
+                        //        zipcode = "";
+                        //        country = "";
 
-                            }
-                        }
+                        //    }
+                        //}
                     }
                     catch (Exception ex)
                     {
@@ -1923,31 +1916,16 @@ namespace EventCombo.Controllers
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             string city = "", state = "", zipcode = "", country = "";
+            MyAccount acc = new Models.MyAccount();
             try
             {
-                using (WebClient client = new WebClient())
-                {
-                    string ip = GetLanIPAddress().Replace("::ffff:", "");
 
-
-                    var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
-                    dynamic stuff = JsonConvert.DeserializeObject(json);
-                    if (stuff != null)
-                    {
-                        city = stuff.city;
-                        state = stuff.region_name;
-                        zipcode = stuff.zip_code;
-                        country = stuff.country_name;
-                    }
-                    else
-                    {
-                        city = "";
-                        state = "";
-                        zipcode = "";
-                        country = "";
-
-                    }
-                }
+                Ip2Geo ip2Geo = new Ip2Geo();
+                GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+                city = geoAddress.cityName;
+                country = geoAddress.countryName;
+                zipcode = geoAddress.zipCode;
+                state = geoAddress.regionName;
             }
             catch (Exception ex)
             {
@@ -2035,7 +2013,7 @@ namespace EventCombo.Controllers
                             Lastnmae = lastNameClaim.Value != null ? lastNameClaim.Value : "";
 
                         }
-                        bool getprofstatus = Getprofiledetails(user1.Id);
+                        bool getprofstatus = acc.Getprofiledetails(user1.Id);
                         if (getprofstatus == false)
                         {
                             using (EventComboEntities objEntity = new EventComboEntities())
@@ -2094,7 +2072,7 @@ namespace EventCombo.Controllers
             }
             else
             {
-                bool getstatus = GetExternalLogindetails(user.Id, loginInfo.Login.LoginProvider);
+                bool getstatus = acc.GetExternalLogindetails(user.Id, loginInfo.Login.LoginProvider);
                 if (getstatus)
                 {
 
@@ -2150,7 +2128,8 @@ namespace EventCombo.Controllers
                     //    //userPicture = result.picture;
                     //}
                 }
-                bool getprofstatus = Getprofiledetails(user.Id);
+               
+                bool getprofstatus = acc.Getprofiledetails(user.Id);
                 if (getprofstatus == false)
                 {
                     using (EventComboEntities objEntity = new EventComboEntities())
@@ -2208,69 +2187,9 @@ namespace EventCombo.Controllers
             }
         } 
 
-        public bool Getprofiledetails(string id)
-        {
-            using (EventComboEntities objEntity = new EventComboEntities())
-            {
+      
 
-                var modelmyaccount = (from cpd in objEntity.AspNetUsers
-                                      join pfd in objEntity.Profiles
-    on cpd.Id equals pfd.UserID
-                                      where cpd.Id == id
-                                      select new ExternalLogin
-                                      {
-                                          userid = cpd.Id,
-                                          email = cpd.Email
-
-                                      }).FirstOrDefault();
-
-
-                if (modelmyaccount == null)
-                {
-
-                    return false;
-                }
-                else
-                {
-                    return true;
-
-                }
-            }
-     }
-
-        public bool GetExternalLogindetails(string userid, string loginprovider)
-        {
-            using (EventComboEntities objEntity = new EventComboEntities())
-            {
-
-                var modelmyaccount = (from cpd in objEntity.AspNetUsers
-                                      join pfd in objEntity.AspNetUserLogins
-    on cpd.Id equals pfd.UserId
-                                      where cpd.Id == userid && pfd.LoginProvider == loginprovider
-                                      select new ExternalLogin
-                                      {
-                                          userid = cpd.Id,
-                                          email = cpd.Email
-
-                                      }).FirstOrDefault();
-
-
-                if (modelmyaccount == null)
-                {
-
-                    return false;
-                }
-                else
-                {
-                    return true;
-
-                }
-
-
-            }
-
-
-        }
+       
 
       
         [AllowAnonymous]

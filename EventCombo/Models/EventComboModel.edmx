@@ -104,10 +104,10 @@
           <Property Name="Zip" Type="varchar" MaxLength="256" />
           <Property Name="Country" Type="varchar" MaxLength="26" />
           <Property Name="PaymentType" Type="varchar" MaxLength="50" />
-          <Property Name="CardId" Type="varchar" MaxLength="500" />
-          <Property Name="card_type" Type="varchar" MaxLength="500" />
-          <Property Name="ExpirationDate" Type="varchar" MaxLength="500" />
-          <Property Name="Cvv" Type="varchar" MaxLength="500" />
+          <Property Name="CardId" Type="varchar" MaxLength="50" />
+          <Property Name="card_type" Type="varchar" MaxLength="150" />
+          <Property Name="ExpirationDate" Type="varchar" MaxLength="50" />
+          <Property Name="Cvv" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CardDetails">
           <Key>
@@ -117,10 +117,10 @@
           <Property Name="UserId" Type="nchar" MaxLength="128" />
           <Property Name="OrderId" Type="varchar" MaxLength="1000" />
           <Property Name="Guid" Type="nchar" MaxLength="128" />
-          <Property Name="CardNumber" Type="varchar" MaxLength="500" />
-          <Property Name="ExpirationDate" Type="varchar" MaxLength="500" />
-          <Property Name="Cvv" Type="varchar" MaxLength="500" />
-          <Property Name="card_type" Type="varchar" MaxLength="500" />
+          <Property Name="CardNumber" Type="varchar" MaxLength="50" />
+          <Property Name="ExpirationDate" Type="varchar" MaxLength="50" />
+          <Property Name="Cvv" Type="varchar" MaxLength="50" />
+          <Property Name="card_type" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -311,6 +311,8 @@
           <Property Name="EventVenueID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventID" Type="bigint" Nullable="false" />
           <Property Name="AddressId" Type="bigint" Nullable="false" />
+          <Property Name="E_Startdate" Type="datetime" />
+          <Property Name="E_Enddate" Type="datetime" />
           <Property Name="EventStartDate" Type="varchar" MaxLength="50" />
           <Property Name="EventEndDate" Type="varchar" MaxLength="50" />
           <Property Name="EventStartTime" Type="varchar" MaxLength="50" />
@@ -350,14 +352,16 @@
           <Property Name="MultipleEventID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventID" Type="bigint" Nullable="false" />
           <Property Name="Frequency" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="StartingFrom" Type="varchar" MaxLength="50" />
-          <Property Name="StartingTo" Type="varchar" MaxLength="50" />
           <Property Name="WeeklyDay" Type="varchar" MaxLength="100" />
           <Property Name="MonthlyDay" Type="int" />
-          <Property Name="StartTime" Type="varchar" MaxLength="50" />
-          <Property Name="EndTime" Type="varchar" MaxLength="50" />
           <Property Name="MonthlyWeek" Type="varchar" MaxLength="10" />
           <Property Name="MonthlyWeekDays" Type="varchar" MaxLength="100" />
+          <Property Name="M_Startfrom" Type="datetime" />
+          <Property Name="M_StartTo" Type="datetime" />
+          <Property Name="StartingFrom" Type="varchar" MaxLength="50" />
+          <Property Name="StartTime" Type="varchar" MaxLength="50" />
+          <Property Name="StartingTo" Type="varchar" MaxLength="50" />
+          <Property Name="EndTime" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Order_Detail_T">
           <Key>
@@ -378,8 +382,8 @@
           <Property Name="O_First_Name" Type="varchar" MaxLength="100" />
           <Property Name="O_Last_Name" Type="varchar" MaxLength="100" />
           <Property Name="O_Email" Type="varchar" MaxLength="100" />
-          <Property Name="O_Card_TransHash" Type="varchar" MaxLength="100" />
-          <Property Name="O_Card_TransId" Type="varchar" MaxLength="100" />
+          <Property Name="O_Card_TransHash" Type="varchar" MaxLength="700" />
+          <Property Name="O_Card_TransId" Type="varchar" MaxLength="700" />
         </EntityType>
         <EntityType Name="Organizer_Master">
           <Key>
@@ -388,9 +392,9 @@
           <Property Name="Orgnizer_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Orgnizer_Name" Type="varchar" MaxLength="300" />
           <Property Name="Organizer_Desc" Type="nvarchar(max)" />
-          <Property Name="Organizer_FBLink" Type="varchar" MaxLength="256" />
-          <Property Name="Organizer_Twitter" Type="varchar" MaxLength="256" />
-          <Property Name="Organizer_Linkedin" Type="varchar" MaxLength="256" />
+          <Property Name="Organizer_FBLink" Type="varchar" MaxLength="300" />
+          <Property Name="Organizer_Twitter" Type="varchar" MaxLength="300" />
+          <Property Name="Organizer_Linkedin" Type="varchar" MaxLength="300" />
           <Property Name="UserId" Type="varchar" MaxLength="256" />
           <Property Name="Organizer_Image" Type="varchar" MaxLength="300" />
           <Property Name="Organizer_Address1" Type="varchar" MaxLength="256" />
@@ -663,7 +667,7 @@
           </Key>
           <Property Name="TimeZone_Name" Type="varchar" MaxLength="500" />
           <Property Name="TimeZone" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="TimeZone_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TimeZone_Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Timezone_order" Type="int" />
         </EntityType>
         <EntityType Name="User_Permission_Detail">
@@ -683,8 +687,110 @@
           <Property Name="AddressID" Type="bigint" Nullable="false" />
           <Property Name="VenueName" Type="varchar" MaxLength="200" />
         </EntityType>
+        <EntityType Name="AggregatedCounter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Value" Type="bigint" Nullable="false" />
+          <Property Name="ExpireAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Counter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Value" Type="smallint" Nullable="false" />
+          <Property Name="ExpireAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Hash">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Field" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" />
+          <Property Name="ExpireAt" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="20" />
+          <Property Name="InvocationData" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Arguments" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="ExpireAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="JobParameter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="JobQueue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="Queue" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FetchedAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="List">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" />
+          <Property Name="ExpireAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Schema">
+          <Key>
+            <PropertyRef Name="Version" />
+          </Key>
+          <Property Name="Version" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Server">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Data" Type="nvarchar(max)" />
+          <Property Name="LastHeartbeat" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Set">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Score" Type="float" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="ExpireAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="Data" Type="nvarchar(max)" />
+        </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'Testing.dbo.v_RetrieveEventid' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="v_RetrieveEventid">
           <Key>
             <PropertyRef Name="EventID" />
@@ -730,7 +836,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="Parent_EventID" Type="bigint" />
           <Property Name="EventCancel" Type="varchar" MaxLength="2" />
         </EntityType>
-        <Association Name="FK__EventSubC__Event__019419E5">
+        <Association Name="FK__EventSubC__Event__3004F00B">
           <End Role="EventCategory" Type="Self.EventCategory" Multiplicity="1" />
           <End Role="EventSubCategory" Type="Self.EventSubCategory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -742,7 +848,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TicketDel__Deliv__08411774">
+        <Association Name="FK__TicketDel__Deliv__36B1ED9A">
           <End Role="DeliveryMethod" Type="Self.DeliveryMethod" Multiplicity="1" />
           <End Role="TicketDeliveryMethod" Type="Self.TicketDeliveryMethod" Multiplicity="*" />
           <ReferentialConstraint>
@@ -903,6 +1009,34 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             </Principal>
             <Dependent Role="EventVenue1">
               <PropertyRef Name="EventVenueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HangFire_JobParameter_Job">
+          <End Role="Job" Type="Self.Job" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="JobParameter" Type="Self.JobParameter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobParameter">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HangFire_State_Job">
+          <End Role="Job" Type="Self.Job" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="State" Type="Self.State" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="State">
+              <PropertyRef Name="JobId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1072,6 +1206,17 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySet Name="TimeZoneDetail" EntityType="Self.TimeZoneDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Permission_Detail" EntityType="Self.User_Permission_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Venue" EntityType="Self.Venue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AggregatedCounter" EntityType="Self.AggregatedCounter" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="Counter" EntityType="Self.Counter" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="Hash" EntityType="Self.Hash" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="Job" EntityType="Self.Job" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="JobParameter" EntityType="Self.JobParameter" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="JobQueue" EntityType="Self.JobQueue" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="List" EntityType="Self.List" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="Schema" EntityType="Self.Schema" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="Server" EntityType="Self.Server" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="Set" EntityType="Self.Set" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="State" EntityType="Self.State" Schema="HangFire" store:Type="Tables" />
           <EntitySet Name="v_RetrieveEventid" EntityType="Self.v_RetrieveEventid" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [v_RetrieveEventid].[EventID] AS [EventID], 
@@ -1113,11 +1258,11 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
     [v_RetrieveEventid].[EventCancel] AS [EventCancel]
     FROM [dbo].[v_RetrieveEventid] AS [v_RetrieveEventid]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__EventSubC__Event__019419E5" Association="Self.FK__EventSubC__Event__019419E5">
+          <AssociationSet Name="FK__EventSubC__Event__3004F00B" Association="Self.FK__EventSubC__Event__3004F00B">
             <End Role="EventCategory" EntitySet="EventCategory" />
             <End Role="EventSubCategory" EntitySet="EventSubCategory" />
           </AssociationSet>
-          <AssociationSet Name="FK__TicketDel__Deliv__08411774" Association="Self.FK__TicketDel__Deliv__08411774">
+          <AssociationSet Name="FK__TicketDel__Deliv__36B1ED9A" Association="Self.FK__TicketDel__Deliv__36B1ED9A">
             <End Role="DeliveryMethod" EntitySet="DeliveryMethod" />
             <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethod" />
           </AssociationSet>
@@ -1168,6 +1313,14 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <AssociationSet Name="FK_EventVenue_EventVenue" Association="Self.FK_EventVenue_EventVenue">
             <End Role="EventVenue" EntitySet="EventVenue" />
             <End Role="EventVenue1" EntitySet="EventVenue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HangFire_JobParameter_Job" Association="Self.FK_HangFire_JobParameter_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="JobParameter" EntitySet="JobParameter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HangFire_State_Job" Association="Self.FK_HangFire_State_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="State" EntitySet="State" />
           </AssociationSet>
           <AssociationSet Name="FK_MultipleEvent_Event" Association="Self.FK_MultipleEvent_Event">
             <End Role="Event" EntitySet="Event" />
@@ -1293,10 +1446,10 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="Zip" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Country" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
           <Property Name="PaymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CardId" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="card_type" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ExpirationDate" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Cvv" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CardId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="card_type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ExpirationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cvv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CardDetail">
           <Key>
@@ -1306,10 +1459,10 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="CardNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ExpirationDate" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Cvv" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="card_type" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExpirationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cvv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="card_type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -1392,11 +1545,11 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <NavigationProperty Name="Addresses" Relationship="Self.FK_Address_Event" FromRole="Event" ToRole="Address" />
           <NavigationProperty Name="Event_VariableDesc" Relationship="Self.FK_Event_VariableDesc_Event" FromRole="Event" ToRole="Event_VariableDesc" />
           <NavigationProperty Name="EventImages" Relationship="Self.FK_EventImage_Event" FromRole="Event" ToRole="EventImage" />
-          <NavigationProperty Name="EventVenues" Relationship="Self.FK_EventVenue_Event" FromRole="Event" ToRole="EventVenue" />
-          <NavigationProperty Name="MultipleEvents" Relationship="Self.FK_MultipleEvent_Event" FromRole="Event" ToRole="MultipleEvent" />
           <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
           <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="EventComboModel.FK_Event_Orgnizer_Detail_Event" FromRole="Event" ToRole="Event_Orgnizer_Detail" />
           <Property Name="FeatureUpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="EventVenues" Relationship="EventComboModel.FK_EventVenue_Event" FromRole="Event" ToRole="EventVenue" />
+          <NavigationProperty Name="MultipleEvents" Relationship="EventComboModel.FK_MultipleEvent_Event" FromRole="Event" ToRole="MultipleEvent" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -1472,21 +1625,6 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="EventType1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EventHide" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
-        <EntityType Name="EventVenue">
-          <Key>
-            <PropertyRef Name="EventVenueID" />
-          </Key>
-          <Property Name="EventVenueID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EventID" Type="Int64" Nullable="false" />
-          <Property Name="AddressId" Type="Int64" Nullable="false" />
-          <Property Name="EventStartDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EventEndDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EventStartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EventEndTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Event" Relationship="Self.FK_EventVenue_Event" FromRole="EventVenue" ToRole="Event" />
-          <NavigationProperty Name="EventVenue1" Relationship="Self.FK_EventVenue_EventVenue" FromRole="EventVenue" ToRole="EventVenue1" />
-          <NavigationProperty Name="EventVenue2" Relationship="Self.FK_EventVenue_EventVenue" FromRole="EventVenue1" ToRole="EventVenue" />
-        </EntityType>
         <EntityType Name="EventVote">
           <Key>
             <PropertyRef Name="VoteId" />
@@ -1503,23 +1641,6 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="Form_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Form_Tag" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Message1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="MultipleEvent">
-          <Key>
-            <PropertyRef Name="MultipleEventID" />
-          </Key>
-          <Property Name="MultipleEventID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EventID" Type="Int64" Nullable="false" />
-          <Property Name="Frequency" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="StartingFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="StartingTo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="WeeklyDay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="MonthlyDay" Type="Int32" />
-          <Property Name="StartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EndTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MonthlyWeek" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="MonthlyWeekDays" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Event" Relationship="Self.FK_MultipleEvent_Event" FromRole="MultipleEvent" ToRole="Event" />
         </EntityType>
         <EntityType Name="Order_Detail_T">
           <Key>
@@ -1540,8 +1661,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="O_First_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_Last_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="O_Card_TransHash" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="O_Card_TransId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_Card_TransHash" Type="String" MaxLength="700" FixedLength="false" Unicode="false" />
+          <Property Name="O_Card_TransId" Type="String" MaxLength="700" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Payment_Info">
           <Key>
@@ -1870,30 +1991,6 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EventVenue_Event">
-          <End Role="Event" Type="Self.Event" Multiplicity="1" />
-          <End Role="EventVenue" Type="Self.EventVenue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Event">
-              <PropertyRef Name="EventID" />
-            </Principal>
-            <Dependent Role="EventVenue">
-              <PropertyRef Name="EventID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MultipleEvent_Event">
-          <End Role="Event" Type="Self.Event" Multiplicity="1" />
-          <End Role="MultipleEvent" Type="Self.MultipleEvent" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Event">
-              <PropertyRef Name="EventID" />
-            </Principal>
-            <Dependent Role="MultipleEvent">
-              <PropertyRef Name="EventID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Ticket_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
           <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
@@ -1915,18 +2012,6 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             </Principal>
             <Dependent Role="EventSubCategory">
               <PropertyRef Name="EventCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EventVenue_EventVenue">
-          <End Role="EventVenue" Type="Self.EventVenue" Multiplicity="1" />
-          <End Role="EventVenue1" Type="Self.EventVenue" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="EventVenue">
-              <PropertyRef Name="EventVenueID" />
-            </Principal>
-            <Dependent Role="EventVenue1">
-              <PropertyRef Name="EventVenueID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1968,10 +2053,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySet Name="Events_Hit" EntityType="Self.Events_Hit" />
           <EntitySet Name="EventSubCategories" EntityType="Self.EventSubCategory" />
           <EntitySet Name="EventTypes" EntityType="Self.EventType" />
-          <EntitySet Name="EventVenues" EntityType="Self.EventVenue" />
           <EntitySet Name="EventVotes" EntityType="Self.EventVote" />
           <EntitySet Name="Messages" EntityType="Self.Message" />
-          <EntitySet Name="MultipleEvents" EntityType="Self.MultipleEvent" />
           <EntitySet Name="Order_Detail_T" EntityType="Self.Order_Detail_T" />
           <EntitySet Name="Payment_Info" EntityType="Self.Payment_Info" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" />
@@ -2016,14 +2099,6 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             <End Role="Event" EntitySet="Events" />
             <End Role="EventImage" EntitySet="EventImages" />
           </AssociationSet>
-          <AssociationSet Name="FK_EventVenue_Event" Association="Self.FK_EventVenue_Event">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="EventVenue" EntitySet="EventVenues" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MultipleEvent_Event" Association="Self.FK_MultipleEvent_Event">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="MultipleEvent" EntitySet="MultipleEvents" />
-          </AssociationSet>
           <AssociationSet Name="FK_Ticket_Event" Association="Self.FK_Ticket_Event">
             <End Role="Event" EntitySet="Events" />
             <End Role="Ticket" EntitySet="Tickets" />
@@ -2031,10 +2106,6 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <AssociationSet Name="FK__EventSubC__Event__019419E5" Association="Self.FK__EventSubC__Event__019419E5">
             <End Role="EventCategory" EntitySet="EventCategories" />
             <End Role="EventSubCategory" EntitySet="EventSubCategories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EventVenue_EventVenue" Association="Self.FK_EventVenue_EventVenue">
-            <End Role="EventVenue" EntitySet="EventVenues" />
-            <End Role="EventVenue1" EntitySet="EventVenues" />
           </AssociationSet>
           <AssociationSet Name="FK_Ticket_Quantity_Info_Ticket" Association="Self.FK_Ticket_Quantity_Info_Ticket">
             <End Role="Ticket" EntitySet="Tickets" />
@@ -2059,11 +2130,6 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             <Parameter Name="EventFeature" Mode="In" Type="String" />
             <Parameter Name="EventStartdate" Mode="In" Type="String" />
             <Parameter Name="EventTicket" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetEventsListByStatus1" ReturnType="Collection(EventComboModel.GetEventsListByStatus1_Result)">
-            <Parameter Name="EventTitle" Mode="In" Type="String" />
-            <Parameter Name="EventStatus" Mode="In" Type="String" />
-            <Parameter Name="UserID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetSelectedTicketListing" ReturnType="Collection(String)">
             <Parameter Name="GUID" Mode="In" Type="String" />
@@ -2115,12 +2181,49 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             <End Role="Event_Email_Invitation" EntitySet="Event_Email_Invitation" />
             <End Role="Event_Email_List" EntitySet="Event_Email_List" />
           </AssociationSet>
+          <EntitySet Name="AggregatedCounters" EntityType="EventComboModel.AggregatedCounter" />
+          <EntitySet Name="Counters" EntityType="EventComboModel.Counter" />
+          <EntitySet Name="Hashes" EntityType="EventComboModel.Hash" />
+          <EntitySet Name="Jobs" EntityType="EventComboModel.Job" />
+          <EntitySet Name="JobParameters" EntityType="EventComboModel.JobParameter" />
+          <EntitySet Name="JobQueues" EntityType="EventComboModel.JobQueue" />
+          <EntitySet Name="Lists" EntityType="EventComboModel.List" />
+          <EntitySet Name="Schemata" EntityType="EventComboModel.Schema" />
+          <EntitySet Name="Servers" EntityType="EventComboModel.Server" />
+          <EntitySet Name="Sets" EntityType="EventComboModel.Set" />
+          <EntitySet Name="States" EntityType="EventComboModel.State" />
+          <AssociationSet Name="FK_HangFire_JobParameter_Job" Association="EventComboModel.FK_HangFire_JobParameter_Job">
+            <End Role="Job" EntitySet="Jobs" />
+            <End Role="JobParameter" EntitySet="JobParameters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HangFire_State_Job" Association="EventComboModel.FK_HangFire_State_Job">
+            <End Role="Job" EntitySet="Jobs" />
+            <End Role="State" EntitySet="States" />
+          </AssociationSet>
           <EntitySet Name="Ticket_Purchased_Detail" EntityType="EventComboModel.Ticket_Purchased_Detail" />
+          <EntitySet Name="EventVenues" EntityType="EventComboModel.EventVenue" />
+          <EntitySet Name="MultipleEvents" EntityType="EventComboModel.MultipleEvent" />
+          <AssociationSet Name="FK_EventVenue_Event" Association="EventComboModel.FK_EventVenue_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="EventVenue" EntitySet="EventVenues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MultipleEvent_Event" Association="EventComboModel.FK_MultipleEvent_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="MultipleEvent" EntitySet="MultipleEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventVenue_EventVenue" Association="EventComboModel.FK_EventVenue_EventVenue">
+            <End Role="EventVenue" EntitySet="EventVenues" />
+            <End Role="EventVenue1" EntitySet="EventVenues" />
+          </AssociationSet>
+          <FunctionImport Name="GetEventsListByStatus1" ReturnType="Collection(EventComboModel.GetEventsListByStatus1_Result)">
+            <Parameter Name="EventTitle" Mode="In" Type="String" />
+            <Parameter Name="EventStatus" Mode="In" Type="String" />
+            <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Datefrom" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="Time" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="Datefrom" Nullable="true" Precision="23" />
           <Property Type="String" Name="type" Nullable="true" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="GetEventListing_Result">
@@ -2138,36 +2241,6 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Type="String" Name="Email" Nullable="true" MaxLength="256" />
           <Property Type="String" Name="TicketDetail" Nullable="true" MaxLength="30" />
           <Property Type="Int64" Name="Purchasedqty" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="GetEventsListByStatus_Result">
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="102" />
-          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Date_Time" Nullable="false" MaxLength="1" />
-          <Property Type="String" Name="TicketType" Nullable="false" MaxLength="1" />
-          <Property Type="Int64" Name="TicketPurchased" Nullable="true" />
-          <Property Type="String" Name="OrderId" Nullable="false" MaxLength="1" />
-          <Property Type="Int64" Name="EventID" Nullable="false" />
-          <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="EventDate" Nullable="false" MaxLength="50" />
-          <Property Type="Int64" Name="TotalTicket" Nullable="true" />
-          <Property Type="Int64" Name="TicketSold" Nullable="true" />
-          <Property Type="String" Name="EventTime" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="EventCancel" Nullable="true" MaxLength="2" />
-        </ComplexType>
-        <ComplexType Name="GetEventsListByStatus1_Result">
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="102" />
-          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Date_Time" Nullable="false" MaxLength="1" />
-          <Property Type="String" Name="TicketType" Nullable="false" MaxLength="1" />
-          <Property Type="Int64" Name="TicketPurchased" Nullable="true" />
-          <Property Type="String" Name="OrderId" Nullable="false" MaxLength="1" />
-          <Property Type="Int64" Name="EventID" Nullable="false" />
-          <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="EventDate" Nullable="false" MaxLength="50" />
-          <Property Type="Int64" Name="TotalTicket" Nullable="true" />
-          <Property Type="Int64" Name="TicketSold" Nullable="true" />
-          <Property Type="String" Name="EventTime" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="EventCancel" Nullable="true" MaxLength="2" />
         </ComplexType>
         <EntityType Name="TicketOrderDetail">
           <Key>
@@ -2195,9 +2268,9 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="Orgnizer_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Orgnizer_Name" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Organizer_Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Organizer_FBLink" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Organizer_Twitter" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Organizer_Linkedin" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Organizer_FBLink" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Organizer_Twitter" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Organizer_Linkedin" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Organizer_Image" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Organizer_Address1" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
@@ -2358,6 +2431,140 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AggregatedCounter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="Int64" Nullable="false" />
+          <Property Name="ExpireAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Counter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="Int16" Nullable="false" />
+          <Property Name="ExpireAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Hash">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Field" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ExpireAt" Type="DateTime" Precision="7" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="StateName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="InvocationData" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Arguments" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExpireAt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="JobParameters" Relationship="EventComboModel.FK_HangFire_JobParameter_Job" FromRole="Job" ToRole="JobParameter" />
+          <NavigationProperty Name="States" Relationship="EventComboModel.FK_HangFire_State_Job" FromRole="Job" ToRole="State" />
+        </EntityType>
+        <EntityType Name="JobParameter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Job" Relationship="EventComboModel.FK_HangFire_JobParameter_Job" FromRole="JobParameter" ToRole="Job" />
+        </EntityType>
+        <EntityType Name="JobQueue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="Queue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FetchedAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="List">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ExpireAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Schema">
+          <Key>
+            <PropertyRef Name="Version" />
+          </Key>
+          <Property Name="Version" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Server">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastHeartbeat" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Set">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Score" Type="Double" Nullable="false" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ExpireAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Reason" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Job" Relationship="EventComboModel.FK_HangFire_State_Job" FromRole="State" ToRole="Job" />
+        </EntityType>
+        <Association Name="FK_HangFire_JobParameter_Job">
+          <End Type="EventComboModel.Job" Role="Job" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EventComboModel.JobParameter" Role="JobParameter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobParameter">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HangFire_State_Job">
+          <End Type="EventComboModel.Job" Role="Job" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EventComboModel.State" Role="State" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="State">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="Ticket_Purchased_Detail">
           <Key>
             <PropertyRef Name="TPD_Id" />
@@ -2375,6 +2582,106 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="TPD_PromoCodeID" Type="Int32" />
           <Property Name="TPD_PromoCodeAmount" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
+        <EntityType Name="EventVenue">
+          <Key>
+            <PropertyRef Name="EventVenueID" />
+          </Key>
+          <Property Name="EventVenueID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventID" Type="Int64" Nullable="false" />
+          <Property Name="AddressId" Type="Int64" Nullable="false" />
+          <Property Name="E_Startdate" Type="DateTime" Precision="3" />
+          <Property Name="E_Enddate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Event" Relationship="EventComboModel.FK_EventVenue_Event" FromRole="EventVenue" ToRole="Event" />
+          <NavigationProperty Name="EventVenue1" Relationship="EventComboModel.FK_EventVenue_EventVenue" FromRole="EventVenue" ToRole="EventVenue1" />
+          <NavigationProperty Name="EventVenue2" Relationship="EventComboModel.FK_EventVenue_EventVenue" FromRole="EventVenue1" ToRole="EventVenue" />
+          <Property Name="EventStartDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventEndDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventStartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventEndTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MultipleEvent">
+          <Key>
+            <PropertyRef Name="MultipleEventID" />
+          </Key>
+          <Property Name="MultipleEventID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventID" Type="Int64" Nullable="false" />
+          <Property Name="Frequency" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="WeeklyDay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MonthlyDay" Type="Int32" />
+          <Property Name="MonthlyWeek" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MonthlyWeekDays" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="M_Startfrom" Type="DateTime" Precision="3" />
+          <Property Name="M_StartTo" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Event" Relationship="EventComboModel.FK_MultipleEvent_Event" FromRole="MultipleEvent" ToRole="Event" />
+          <Property Name="StartingFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StartingTo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EndTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_EventVenue_Event">
+          <End Type="EventComboModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="EventComboModel.EventVenue" Role="EventVenue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="EventVenue">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MultipleEvent_Event">
+          <End Type="EventComboModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="EventComboModel.MultipleEvent" Role="MultipleEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="MultipleEvent">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventVenue_EventVenue">
+          <End Type="EventComboModel.EventVenue" Role="EventVenue" Multiplicity="1" />
+          <End Type="EventComboModel.EventVenue" Role="EventVenue1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="EventVenue">
+              <PropertyRef Name="EventVenueID" />
+            </Principal>
+            <Dependent Role="EventVenue1">
+              <PropertyRef Name="EventVenueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetEventsListByStatus_Result">
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="102" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Date_Time" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="TicketType" Nullable="false" MaxLength="1" />
+          <Property Type="Int64" Name="TicketPurchased" Nullable="true" />
+          <Property Type="String" Name="OrderId" Nullable="false" MaxLength="1" />
+          <Property Type="Int64" Name="EventID" Nullable="false" />
+          <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="EventDate" Nullable="false" Precision="23" />
+          <Property Type="Int64" Name="TotalTicket" Nullable="true" />
+          <Property Type="Int64" Name="TicketSold" Nullable="true" />
+          <Property Type="String" Name="EventCancel" Nullable="true" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="GetEventsListByStatus1_Result">
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="102" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Date_Time" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="TicketType" Nullable="false" MaxLength="1" />
+          <Property Type="Int64" Name="TicketPurchased" Nullable="true" />
+          <Property Type="String" Name="OrderId" Nullable="false" MaxLength="1" />
+          <Property Type="Int64" Name="EventID" Nullable="false" />
+          <Property Type="String" Name="EventTitle" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="EventDate" Nullable="false" Precision="23" />
+          <Property Type="Int64" Name="TotalTicket" Nullable="true" />
+          <Property Type="Int64" Name="TicketSold" Nullable="true" />
+          <Property Type="String" Name="EventCancel" Nullable="true" MaxLength="2" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2657,19 +2964,6 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EventVenues">
-            <EntityTypeMapping TypeName="EventComboModel.EventVenue">
-              <MappingFragment StoreEntitySet="EventVenue">
-                <ScalarProperty Name="EventVenueID" ColumnName="EventVenueID" />
-                <ScalarProperty Name="EventID" ColumnName="EventID" />
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-                <ScalarProperty Name="EventStartDate" ColumnName="EventStartDate" />
-                <ScalarProperty Name="EventEndDate" ColumnName="EventEndDate" />
-                <ScalarProperty Name="EventStartTime" ColumnName="EventStartTime" />
-                <ScalarProperty Name="EventEndTime" ColumnName="EventEndTime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="EventVotes">
             <EntityTypeMapping TypeName="EventComboModel.EventVote">
               <MappingFragment StoreEntitySet="EventVote">
@@ -2686,23 +2980,6 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
                 <ScalarProperty Name="Form_Name" ColumnName="Form_Name" />
                 <ScalarProperty Name="Form_Tag" ColumnName="Form_Tag" />
                 <ScalarProperty Name="Message1" ColumnName="Message" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MultipleEvents">
-            <EntityTypeMapping TypeName="EventComboModel.MultipleEvent">
-              <MappingFragment StoreEntitySet="MultipleEvent">
-                <ScalarProperty Name="MultipleEventID" ColumnName="MultipleEventID" />
-                <ScalarProperty Name="EventID" ColumnName="EventID" />
-                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
-                <ScalarProperty Name="StartingFrom" ColumnName="StartingFrom" />
-                <ScalarProperty Name="StartingTo" ColumnName="StartingTo" />
-                <ScalarProperty Name="WeeklyDay" ColumnName="WeeklyDay" />
-                <ScalarProperty Name="MonthlyDay" ColumnName="MonthlyDay" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-                <ScalarProperty Name="MonthlyWeek" ColumnName="MonthlyWeek" />
-                <ScalarProperty Name="MonthlyWeekDays" ColumnName="MonthlyWeekDays" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2999,7 +3276,6 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
               <ComplexTypeMapping TypeName="EventComboModel.GetEventDateList_Result">
                 <ScalarProperty Name="Dayofweek" ColumnName="Dayofweek" />
                 <ScalarProperty Name="Datefrom" ColumnName="Datefrom" />
-                <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="type" ColumnName="type" />
               </ComplexTypeMapping>
             </ResultMapping>
@@ -3021,25 +3297,6 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="TicketDetail" ColumnName="TicketDetail" />
                 <ScalarProperty Name="Purchasedqty" ColumnName="Purchasedqty" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetEventsListByStatus1" FunctionName="EventComboModel.Store.GetEventsListByStatus">
-          <ResultMapping>
-              <ComplexTypeMapping TypeName="EventComboModel.GetEventsListByStatus1_Result">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Date_Time" ColumnName="Date_Time" />
-                <ScalarProperty Name="TicketType" ColumnName="TicketType" />
-                <ScalarProperty Name="TicketPurchased" ColumnName="TicketPurchased" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="EventID" ColumnName="EventID" />
-                <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
-                <ScalarProperty Name="EventDate" ColumnName="EventDate" />
-                <ScalarProperty Name="TotalTicket" ColumnName="TotalTicket" />
-                <ScalarProperty Name="TicketSold" ColumnName="TicketSold" />
-                <ScalarProperty Name="EventTime" ColumnName="EventTime" />
-                <ScalarProperty Name="EventCancel" ColumnName="EventCancel" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -3208,6 +3465,119 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AggregatedCounters">
+            <EntityTypeMapping TypeName="EventComboModel.AggregatedCounter">
+              <MappingFragment StoreEntitySet="AggregatedCounter">
+                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Counters">
+            <EntityTypeMapping TypeName="EventComboModel.Counter">
+              <MappingFragment StoreEntitySet="Counter">
+                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hashes">
+            <EntityTypeMapping TypeName="EventComboModel.Hash">
+              <MappingFragment StoreEntitySet="Hash">
+                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Field" ColumnName="Field" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jobs">
+            <EntityTypeMapping TypeName="EventComboModel.Job">
+              <MappingFragment StoreEntitySet="Job">
+                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Arguments" ColumnName="Arguments" />
+                <ScalarProperty Name="InvocationData" ColumnName="InvocationData" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobParameters">
+            <EntityTypeMapping TypeName="EventComboModel.JobParameter">
+              <MappingFragment StoreEntitySet="JobParameter">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobQueues">
+            <EntityTypeMapping TypeName="EventComboModel.JobQueue">
+              <MappingFragment StoreEntitySet="JobQueue">
+                <ScalarProperty Name="FetchedAt" ColumnName="FetchedAt" />
+                <ScalarProperty Name="Queue" ColumnName="Queue" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lists">
+            <EntityTypeMapping TypeName="EventComboModel.List">
+              <MappingFragment StoreEntitySet="List">
+                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schemata">
+            <EntityTypeMapping TypeName="EventComboModel.Schema">
+              <MappingFragment StoreEntitySet="Schema">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Servers">
+            <EntityTypeMapping TypeName="EventComboModel.Server">
+              <MappingFragment StoreEntitySet="Server">
+                <ScalarProperty Name="LastHeartbeat" ColumnName="LastHeartbeat" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sets">
+            <EntityTypeMapping TypeName="EventComboModel.Set">
+              <MappingFragment StoreEntitySet="Set">
+                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="EventComboModel.State">
+              <MappingFragment StoreEntitySet="State">
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Ticket_Purchased_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Ticket_Purchased_Detail">
               <MappingFragment StoreEntitySet="Ticket_Purchased_Detail">
@@ -3226,6 +3596,58 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="EventVenues">
+            <EntityTypeMapping TypeName="EventComboModel.EventVenue">
+              <MappingFragment StoreEntitySet="EventVenue">
+                <ScalarProperty Name="EventEndTime" ColumnName="EventEndTime" />
+                <ScalarProperty Name="EventStartTime" ColumnName="EventStartTime" />
+                <ScalarProperty Name="EventEndDate" ColumnName="EventEndDate" />
+                <ScalarProperty Name="EventStartDate" ColumnName="EventStartDate" />
+                <ScalarProperty Name="E_Enddate" ColumnName="E_Enddate" />
+                <ScalarProperty Name="E_Startdate" ColumnName="E_Startdate" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="EventVenueID" ColumnName="EventVenueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MultipleEvents">
+            <EntityTypeMapping TypeName="EventComboModel.MultipleEvent">
+              <MappingFragment StoreEntitySet="MultipleEvent">
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartingTo" ColumnName="StartingTo" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="StartingFrom" ColumnName="StartingFrom" />
+                <ScalarProperty Name="M_StartTo" ColumnName="M_StartTo" />
+                <ScalarProperty Name="M_Startfrom" ColumnName="M_Startfrom" />
+                <ScalarProperty Name="MonthlyWeekDays" ColumnName="MonthlyWeekDays" />
+                <ScalarProperty Name="MonthlyWeek" ColumnName="MonthlyWeek" />
+                <ScalarProperty Name="MonthlyDay" ColumnName="MonthlyDay" />
+                <ScalarProperty Name="WeeklyDay" ColumnName="WeeklyDay" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="MultipleEventID" ColumnName="MultipleEventID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetEventsListByStatus1" FunctionName="EventComboModel.Store.GetEventsListByStatus">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="EventComboModel.GetEventsListByStatus1_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Date_Time" ColumnName="Date_Time" />
+                <ScalarProperty Name="TicketType" ColumnName="TicketType" />
+                <ScalarProperty Name="TicketPurchased" ColumnName="TicketPurchased" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
+                <ScalarProperty Name="EventDate" ColumnName="EventDate" />
+                <ScalarProperty Name="TotalTicket" ColumnName="TotalTicket" />
+                <ScalarProperty Name="TicketSold" ColumnName="TicketSold" />
+                <ScalarProperty Name="EventCancel" ColumnName="EventCancel" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
 
         </EntityContainerMapping>
       </Mapping>

@@ -134,7 +134,7 @@
                                         <li class="dropdown-header drop_cus_header">Schedule Date List</li>
                                         <span class="cus-drop-list_high">
 
-                                            @foreach (var item in (List<GetEventDateList_Result>)ViewBag.DateList)
+                                            @foreach (var item in (List<listevent>)ViewBag.DateList)
                                             {
                                                 <li>
                                                     <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom-@item.Time" data-toggle="modal">@item.Dayofweek @item.Datefrom @item.Time.ToUpper()</a>

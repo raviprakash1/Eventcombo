@@ -25,6 +25,7 @@ using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using Microsoft.Owin.Security.OAuth;
 using PagedList;
+using EventCombo.Utils;
 
 namespace EventCombo.Controllers
 {
@@ -78,33 +79,17 @@ namespace EventCombo.Controllers
             var fbuserid = "";
 
 
-            AccountController acc = new AccountController();
+            MyAccount acc = new MyAccount();
             try
             {
-                using (WebClient wbclient = new WebClient())
-                {
-                    string ip = GetLanIPAddress().Replace("::ffff:", "");
-
-
-                    var json = wbclient.DownloadString("http://freegeoip.net/json/" + ip + "");
-                    dynamic stuff = JsonConvert.DeserializeObject(json);
-                    if (stuff != null)
-                    {
-                        city = stuff.city;
-                        state = stuff.region_name;
-                        zipcode = stuff.zip_code;
-                        country = stuff.country_name;
-                    }
-                    else
-                    {
-                        city = "";
-                        state = "";
-                        zipcode = "";
-                        country = "";
-
-                    }
-                }
-            }
+               
+                    Ip2Geo ip2Geo = new Ip2Geo();
+                    GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+                    city = geoAddress.cityName;
+                    country = geoAddress.countryName;
+                    zipcode = geoAddress.zipCode;
+                    state = geoAddress.regionName;
+             }
             catch (Exception ex)
             {
                 city = "";
@@ -388,12 +373,11 @@ namespace EventCombo.Controllers
                 strLat = "28.6139";
                 strLong = "77.2090";
             }
-
+            MyAccount hmc = new MyAccount();
 
             if ((Session["AppId"] != null))
             {
-                HomeController hmc = new HomeController();
-                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+               
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -665,6 +649,8 @@ namespace EventCombo.Controllers
         {
 
             List<DiscoverEvent> lsDisEvt = new List<DiscoverEvent>();
+            EventCreation cs = new EventCreation();
+            ValidationMessage vmc = new ValidationMessage();
             using (EventComboEntities db = new EventComboEntities())
             {
                 StringBuilder sbQuery = new StringBuilder();
@@ -727,10 +713,10 @@ namespace EventCombo.Controllers
                     }
 
                     var vEventList = db.Events.SqlQuery(sbQuery.ToString()).ToList();
-                    CreateEventController objCEv = new CreateEventController();
+                  
 
                     string strImageUrl = "";
-                    ValidationMessageController vmc = new ValidationMessageController();
+                  
                     string strUserId = "";
                     if (Session["AppId"] != null && Session["AppId"].ToString() != string.Empty) strUserId = Session["AppId"].ToString();
                     bool bflag = true;
@@ -752,7 +738,7 @@ namespace EventCombo.Controllers
 
 
 
-                        strImageUrl = objCEv.GetImages(lEventId).FirstOrDefault();
+                        strImageUrl = cs.GetImages(lEventId).FirstOrDefault();
 
                         if (strImageUrl != null && strImageUrl != "")
                         {
@@ -1005,7 +991,9 @@ namespace EventCombo.Controllers
             //    Session["ReturnUrl"] = "0~" + strUrl;
 
             //}
+            EventCreation objCEv = new EventCreation();
 
+            ValidationMessage vmc = new ValidationMessage();
 
             List<DiscoverEvent> lsDisEvt = new List<DiscoverEvent>();
             using (EventComboEntities db = new EventComboEntities())
@@ -1024,9 +1012,8 @@ namespace EventCombo.Controllers
                     sbQuery.Append(" and EventID in (" + strEventIds + ")");
 
                     var vEventList = db.Events.SqlQuery(sbQuery.ToString()).ToList();
-                    CreateEventController objCEv = new CreateEventController();
+                  
                     string strImageUrl = "";
-                    ValidationMessageController vmc = new ValidationMessageController();
                     string strUserId = "";
                     if (Session["AppId"] != null && Session["AppId"].ToString() != string.Empty) strUserId = Session["AppId"].ToString();
                     bool bflag = true;
@@ -1166,10 +1153,10 @@ namespace EventCombo.Controllers
 
         public ActionResult DiscoverEventsTiles()
         {
+            MyAccount hmc = new MyAccount();
             if ((Session["AppId"] != null))
             {
-                HomeController hmc = new HomeController();
-                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+               
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -1182,10 +1169,10 @@ namespace EventCombo.Controllers
         }
         public ActionResult GetBuzz()
         {
+            MyAccount hmc = new MyAccount();
             if ((Session["AppId"] != null))
             {
-                HomeController hmc = new HomeController();
-                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+               
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -1199,10 +1186,10 @@ namespace EventCombo.Controllers
         }
         public ActionResult EventOraganizer()
         {
+            MyAccount hmc = new MyAccount();
             if ((Session["AppId"] != null))
             {
-                HomeController hmc = new HomeController();
-                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+               
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -1348,7 +1335,7 @@ namespace EventCombo.Controllers
             var error = "";
             var success = "";
             Session["Fromname"] = "PasswordReset";
-            ValidationMessageController vmc = new ValidationMessageController();
+            ValidationMessage vmc = new ValidationMessage();
             if (model.Password != model.ConfirmPassword)
             {
                 error = vmc.Index("ResetPassword", "PwdResetPwdValidationSys");
@@ -1780,7 +1767,7 @@ namespace EventCombo.Controllers
                 }
                 ac.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, tag, emailname);
             }
-            ValidationMessageController vmc = new ValidationMessageController();
+            ValidationMessage vmc = new ValidationMessage();
             var msg = vmc.Index("ForgotPassword", "ForgotPwdSuccessInitSY");
             ViewData["Message"] = msg;
             return View();
@@ -1976,29 +1963,13 @@ namespace EventCombo.Controllers
 
                         try
                         {
-                            using (WebClient client = new WebClient())
-                            {
-                                string ip = GetLanIPAddress().Replace("::ffff:", "");
 
-
-                                var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
-                                dynamic stuff = JsonConvert.DeserializeObject(json);
-                                if (stuff != null)
-                                {
-                                    city = stuff.city;
-                                    state = stuff.region_name;
-                                    zipcode = stuff.zip_code;
-                                    country = stuff.country_name;
-                                }
-                                else
-                                {
-                                    city = "";
-                                    state = "";
-                                    zipcode = "";
-                                    country = "";
-
-                                }
-                            }
+                            Ip2Geo ip2Geo = new Ip2Geo();
+                            GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+                            city = geoAddress.cityName;
+                            country = geoAddress.countryName;
+                            zipcode = geoAddress.zipCode;
+                            state = geoAddress.regionName;
                         }
                         catch (Exception ex)
                         {

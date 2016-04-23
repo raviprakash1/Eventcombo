@@ -128,6 +128,35 @@ namespace EventCombo.Models
                 return MyEvent;
             }
         }
+
+        public string PublishEvent(long lEventId)
+        {
+            string strResult = "N";
+            try
+            {
+                string strUserId = (HttpContext.Current.Session["AppId"] != null ? HttpContext.Current.Session["AppId"].ToString() : "");
+                if (strUserId != "" && lEventId > 0)
+                {
+                    using (EventComboEntities objEnt = new EventComboEntities())
+                    {
+                        try
+                        {
+                            objEnt.PublishEvent(lEventId, strUserId);
+                        }
+                        catch (Exception ex)
+                        {
+                            ExceptionLogging.SendErrorToText(ex);
+                        }
+                    }
+                    strResult = "Y";
+                }
+            }
+            catch (Exception)
+            {
+                strResult = "N";
+            }
+            return strResult;
+        }
     }
 
     public partial class Organizer_Master
@@ -185,4 +214,13 @@ namespace EventCombo.Models
         public string Venue { get; set; }
         public string eventpath { get; set; }
     }
-}
+
+    public class listevent
+    {
+        public String Dayofweek { get; set; }
+        public String Datefrom { get; set; }
+        public String Time { get; set; }
+    }
+
+
+    }

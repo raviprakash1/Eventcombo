@@ -218,7 +218,7 @@ WriteLiteral(" id=\"eventtopscoll\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"col-sm-12 mt10 bggrey clearfix\"");
+WriteLiteral(" class=\"col-sm-12 bggrey clearfix\"");
 
 WriteLiteral(" id=\"buttonscroll\"");
 
@@ -322,7 +322,7 @@ WriteLiteral(" id=\"btndiverrsuc\"");
 
 WriteLiteral(">&#215;</button>\r\n\r\n                </div>\r\n            </div>\r\n            <div");
 
-WriteLiteral(" class=\"col-sm-3 col-xs-12 pt10 text-center no_pad\"");
+WriteLiteral(" class=\"col-sm-3 col-xs-12 text-center no_pad\"");
 
 WriteLiteral(">\r\n                ");
 
@@ -524,7 +524,7 @@ WriteLiteral(">\r\n\r\n");
             #line hidden
             
             #line 137 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-                                             foreach (var item in (List<GetEventDateList_Result>)ViewBag.DateList)
+                                             foreach (var item in (List<listevent>)ViewBag.DateList)
                                             {
 
             
@@ -539,30 +539,30 @@ WriteLiteral(" onclick=\"showevent(this.id)\"");
 
 WriteLiteral(" data-target=\"#schcalender\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 6641), Tuple.Create("\"", 6687)
+WriteAttribute("id", Tuple.Create(" id=\"", 6617), Tuple.Create("\"", 6663)
             
             #line 140 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-                                            , Tuple.Create(Tuple.Create("", 6646), Tuple.Create<System.Object, System.Int32>(item.Dayofweek
+                                            , Tuple.Create(Tuple.Create("", 6622), Tuple.Create<System.Object, System.Int32>(item.Dayofweek
             
             #line default
             #line hidden
-, 6646), false)
-, Tuple.Create(Tuple.Create("", 6661), Tuple.Create("-", 6661), true)
+, 6622), false)
+, Tuple.Create(Tuple.Create("", 6637), Tuple.Create("-", 6637), true)
             
             #line 140 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-                                                            , Tuple.Create(Tuple.Create("", 6662), Tuple.Create<System.Object, System.Int32>(item.Datefrom
+                                                            , Tuple.Create(Tuple.Create("", 6638), Tuple.Create<System.Object, System.Int32>(item.Datefrom
             
             #line default
             #line hidden
-, 6662), false)
-, Tuple.Create(Tuple.Create("", 6676), Tuple.Create("-", 6676), true)
+, 6638), false)
+, Tuple.Create(Tuple.Create("", 6652), Tuple.Create("-", 6652), true)
             
             #line 140 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-                                                                           , Tuple.Create(Tuple.Create("", 6677), Tuple.Create<System.Object, System.Int32>(item.Time
+                                                                           , Tuple.Create(Tuple.Create("", 6653), Tuple.Create<System.Object, System.Int32>(item.Time
             
             #line default
             #line hidden
-, 6677), false)
+, 6653), false)
 );
 
 WriteLiteral(" data-toggle=\"modal\"");
@@ -682,6 +682,8 @@ WriteLiteral(">");
 WriteLiteral("</a>\r\n                                <a");
 
 WriteLiteral(" href=\"#DealInfo\"");
+
+WriteLiteral(" class=\"xs-icondeal\"");
 
 WriteLiteral("><img");
 
@@ -810,14 +812,14 @@ WriteLiteral(">\r\n                                <img");
 
 WriteLiteral(" class=\"img-responsive\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 11451), Tuple.Create("\"", 11462)
+WriteAttribute("src", Tuple.Create(" src=\"", 11447), Tuple.Create("\"", 11458)
             
             #line 216 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 11457), Tuple.Create<System.Object, System.Int32>(item
+, Tuple.Create(Tuple.Create("", 11453), Tuple.Create<System.Object, System.Int32>(item
             
             #line default
             #line hidden
-, 11457), false)
+, 11453), false)
 );
 
 WriteLiteral(" alt=\"First slide\"");
@@ -842,9 +844,9 @@ WriteLiteral(">\r\n                            <img");
 
 WriteLiteral(" class=\"img-responsive\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 11727), Tuple.Create("\"", 11765)
-, Tuple.Create(Tuple.Create("", 11733), Tuple.Create<System.Object, System.Int32>(Href("~/Images/default_event_image.jpg")
-, 11733), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 11723), Tuple.Create("\"", 11761)
+, Tuple.Create(Tuple.Create("", 11729), Tuple.Create<System.Object, System.Int32>(Href("~/Images/default_event_image.jpg")
+, 11729), false)
 );
 
 WriteLiteral(" alt=\"First slide\"");
@@ -919,7 +921,7 @@ WriteLiteral(" class=\"col-sm-6 col-xs-6 text-left no_pad\"");
 
 WriteLiteral(">\r\n                <h2");
 
-WriteLiteral(" class=\"fb_dis_head no_pad pt5\"");
+WriteLiteral(" class=\"fb_dis_head no_pad pt5 pr0\"");
 
 WriteLiteral(">COMPLETE INFO</h2>\r\n            </div>\r\n");
 
@@ -939,7 +941,7 @@ WriteLiteral(">COMPLETE INFO</h2>\r\n            </div>\r\n");
             #line hidden
 WriteLiteral("                <div");
 
-WriteLiteral(" class=\"col-sm-6 col-xs-6 text-right ev_social_share_btn\"");
+WriteLiteral(" class=\"col-sm-6 col-xs-6 pl0 text-right ev_social_share_btn\"");
 
 WriteLiteral(">\r\n                    <a");
 
@@ -1002,11 +1004,13 @@ WriteLiteral(" class=\"col-sm-12 ev_white_bg pb10\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"col-sm-8\"");
+WriteLiteral(" class=\"col-sm-8 mt10\"");
 
 WriteLiteral(">\r\n                    <label");
 
 WriteLiteral(" id=\"eventdesc\"");
+
+WriteLiteral(" class=\"eventdescfont\"");
 
 WriteLiteral(">\r\n\r\n\r\n");
 
@@ -1077,14 +1081,14 @@ WriteLiteral(">View organizer profile </a></p>\r\n");
             #line hidden
 WriteLiteral("                            <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15221), Tuple.Create("\"", 15259)
+WriteAttribute("href", Tuple.Create(" href=\"", 15252), Tuple.Create("\"", 15290)
             
             #line 295 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 15228), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.fblink)
+, Tuple.Create(Tuple.Create("", 15259), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.fblink)
             
             #line default
             #line hidden
-, 15228), false)
+, 15259), false)
 );
 
 WriteLiteral("><img");
@@ -1124,14 +1128,14 @@ WriteLiteral("                        ");
             #line hidden
 WriteLiteral("                            <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15522), Tuple.Create("\"", 15565)
+WriteAttribute("href", Tuple.Create(" href=\"", 15553), Tuple.Create("\"", 15596)
             
             #line 302 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 15529), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.twitterlink)
+, Tuple.Create(Tuple.Create("", 15560), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.twitterlink)
             
             #line default
             #line hidden
-, 15529), false)
+, 15560), false)
 );
 
 WriteLiteral("><img");
@@ -1167,21 +1171,21 @@ WriteLiteral(" </a></p>\r\n");
             #line hidden
 WriteLiteral("                        <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15777), Tuple.Create("\"", 15820)
+WriteAttribute("href", Tuple.Create(" href=\"", 15808), Tuple.Create("\"", 15851)
             
             #line 307 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 15784), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.Linkedinlin)
+, Tuple.Create(Tuple.Create("", 15815), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.Linkedinlin)
             
             #line default
             #line hidden
-, 15784), false)
+, 15815), false)
 );
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 15826), Tuple.Create("\"", 15851)
-, Tuple.Create(Tuple.Create("", 15832), Tuple.Create<System.Object, System.Int32>(Href("~/Images/linkid.png")
-, 15832), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 15857), Tuple.Create("\"", 15882)
+, Tuple.Create(Tuple.Create("", 15863), Tuple.Create<System.Object, System.Int32>(Href("~/Images/linkid.png")
+, 15863), false)
 );
 
 WriteLiteral(" />&nbsp; ");
@@ -1464,9 +1468,9 @@ WriteLiteral(" id=\"dvAjxLoader\"");
 
 WriteLiteral(">\r\n                        <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 19555), Tuple.Create("\"", 19585)
-, Tuple.Create(Tuple.Create("", 19561), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 19561), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 19586), Tuple.Create("\"", 19616)
+, Tuple.Create(Tuple.Create("", 19592), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 19592), false)
 );
 
 WriteLiteral(" />\r\n                    </div>\r\n                </div>\r\n\r\n                <div");
@@ -1739,11 +1743,11 @@ WriteLiteral(" class=\"col-sm-6 no_pad dl_title\"");
 
 WriteLiteral(">Upscale French Dinner</div>\r\n                        <div");
 
-WriteLiteral(" class=\"col-sm-2 mb5\"");
+WriteLiteral(" class=\"col-sm-2 mb5 dropheight\"");
 
 WriteLiteral(">\r\n                            <select");
 
-WriteLiteral(" class=\"form-control\"");
+WriteLiteral(" class=\"form-control selectpicker\"");
 
 WriteLiteral(@">
                                 <option>1</option>

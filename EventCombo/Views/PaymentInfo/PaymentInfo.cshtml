@@ -305,6 +305,7 @@
 
                                             @if (Model != null && !String.IsNullOrEmpty(Model.PI_PostalCode))
                                             {
+<<<<<<< HEAD
                                                 <input id="txtPostalCode1" name="PostalCode1" class="form-control" placeholder="Zip Code"
                                                        maxlength="5" type="text" value="@Model.PI_PostalCode">
                                             }
@@ -312,6 +313,15 @@
                                             {
                                                 <input id="txtPostalCode1" name="PostalCode1" class="form-control" placeholder="Zip Code"
                                                        maxlength="5" type="text" />
+=======
+                                                <input id="txtPostalCode1" name="PostalCode1" class="form-control" placeholder="Postal Code"
+                                                       maxlength="6" type="text" value="@Model.PI_PostalCode">
+                                            }
+                                            else
+                                            {
+                                                <input id="txtPostalCode1" name="PostalCode1" class="form-control" placeholder="Postal Code"
+                                                       maxlength="6" type="text" />
+>>>>>>> 999094be890ac70ea16b7c399f457192320dc688
                                             }
                                         </div>
 

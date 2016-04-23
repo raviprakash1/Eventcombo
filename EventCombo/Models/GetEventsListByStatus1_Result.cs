@@ -21,10 +21,9 @@ namespace EventCombo.Models
         public string OrderId { get; set; }
         public long EventID { get; set; }
         public string EventTitle { get; set; }
-        public string EventDate { get; set; }
+        public System.DateTime EventDate { get; set; }
         public Nullable<long> TotalTicket { get; set; }
         public Nullable<long> TicketSold { get; set; }
-        public string EventTime { get; set; }
         public string EventCancel { get; set; }
     }
 }
