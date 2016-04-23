@@ -604,12 +604,12 @@ textarea {resize: none;}
 .ev_detail a{ color: #3cf;}
 
 .for_net_amont{ color: #000; font-weight: bold; }
-.sales_ticket_ype{ border: 1px solid #d4d4d4; background: #fff; }
+.sales_ticket_ype{ background: #fff; }
 .sal_tic_bg{ background: #f4f4f4; padding: 5px 10px; font-size: 20px; color: #000; border-bottom: 1px solid #d4d4d4; margin-bottom: 15px; }
 .sales_ticket_inner{ clear: both; display: block; background: #fff; margin: 10px 15px;  }
-.traf_promo_inner{clear: both; display: block; background: #fff; }
+.traf_promo_inner{clear: both; display: block; background: #fff;  }
 
-.traf_promo_bg{ padding: 5px 0px; font-size: 20px; color: #000; }
+.traf_promo_bg{ padding: 5px; font-size: 20px; color: #000; background: #f4f4f4; }
 
 .order_attendee_tab{background: #fff; border-bottom: 1px solid #d4d4d4; border-left: 1px solid #d4d4d4; border-right: 1px solid #d4d4d4; }
 .order_attendee_inner {

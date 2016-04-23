@@ -881,6 +881,7 @@ span.evnt_toltip{
 .xs-incld-link-social{ padding:0px;}
 .online_check_box{ height:auto !important;}
 .col_days_hrs_picker_main{ margin-top:-15px !important;}
+.ft4em{ font-size:2.5em !important;}
 }
 @media (width: 320px) {
 .ev_loc_icn{ left:-10px !important; }
@@ -916,6 +917,7 @@ span.evnt_toltip{
 .xs-date-icon-remv{ display:none;}
 .xs-loc-icon-rem{ display:none}
 .pay100{ width:100%; margin-bottom:10px;}
+
 }
 @media (width: 480px){
 
@@ -990,6 +992,7 @@ span.evnt_toltip{
 .xs-incld-link-social{ padding:0px;}
 .online_check_box{ height:auto !important;}
 .col_days_hrs_picker_main{ margin-top:-15px !important;}
+.ft4em{ font-size:2.5em !important;}
 }
 
 @media (width: 360px) {
@@ -1075,6 +1078,7 @@ span.evnt_toltip{
 .xs-incld-link-social{ padding:0px;}
 .online_check_box{ height:auto !important;}
 .col_days_hrs_picker_main{ margin-top:-15px !important;}
+.ft4em{ font-size:2.5em !important;}
 }
 @media (width: 375px) {
 #scrollhome.con_scr0l_home{margin-top:215px !important;}
@@ -1184,6 +1188,7 @@ span.evnt_toltip{
 .xs-var-chrg-btn-mt10{ margin-top:10px;}
 .xs-incld-link-social{ padding:0px;}
 .online_check_box{ height:auto !important;}
+.ft4em{ font-size:2.5em !important;}
 }
 
 
@@ -1303,6 +1308,7 @@ span.evnt_toltip{
 .online_check_box{ height:17px !important}
 .email_box_container{ width:550px;}
 .inp100{ width:100%;}
+.ft4em{ font-size:2.5em !important;}
 }
 
 @media (min-width: 800px) and (max-width: 1280px) {
@@ -2351,6 +2357,8 @@ table.crt_event_list_tabl, .crt_event_list_tabl thead, .crt_event_list_tabl tbod
 .crt_event_list_tabl tr:nth-of-type(even) {  background: #eee;}
 
 .crt_event_list_tabl tr { border: 1px solid #ccc; }
+.recnt_ord_tab tr{border:0px; }
+.sales_by_tkt_tab tr { border:0px; }
             
 .crt_event_list_tabl td { 
     /* Behave  like a "row" */
@@ -2414,3 +2422,6 @@ Label the data
 .event-upload-container input[type="file"]{ opacity:0 !important;}
 .myacnt_image_upload input[type="file"]{ opacity:0 !important;}
 .orgnz_image_upload input[type="file"]{ opacity:0 !important;}
+
+.evnt_mg_word_brack{ word-break:normal!important;}
+.carousel-control{ z-index:99;}
