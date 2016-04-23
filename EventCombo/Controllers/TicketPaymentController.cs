@@ -657,23 +657,30 @@ namespace EventCombo.Controllers
 
             EncryptDecrypt EDcode = new EncryptDecrypt();
 
-
+            var grandtotal =double.Parse(strGrandTotal);
             string Userid = "",transactionhash="",transactionid="";
             using (var transaction = db.Database.BeginTransaction())
             {
-                if (strPaymentType == "A")
+                if (grandtotal>0)
                 {
-                    ApiLoginID = "354v9ZufxM6";
-                    ApiTransactionKey = "68Et2R3KcV62rJ27";
-                    strCardNo = model.cardno;
-                    strExpDate = model.expirydate;
-                    strCvvCode = model.cvv;
-                    dAmount = (strGrandTotal != "" ? Convert.ToDecimal(strGrandTotal) : 0);
-                   var cardtransaction=  PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
-                    message = cardtransaction.message;
-                    transactionhash = cardtransaction.Transactionhash;
-                    transactionid = cardtransaction.TransactionId;
+                    if (strPaymentType == "A")
+                    {
+                        ApiLoginID = "354v9ZufxM6";
+                        ApiTransactionKey = "68Et2R3KcV62rJ27";
+                        strCardNo = model.cardno;
+                        strExpDate = model.expirydate;
+                        strCvvCode = model.cvv;
+                        dAmount = (strGrandTotal != "" ? Convert.ToDecimal(strGrandTotal) : 0);
+                        var cardtransaction = PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
+                        message = cardtransaction.message;
+                        transactionhash = cardtransaction.Transactionhash;
+                        transactionid = cardtransaction.TransactionId;
 
+                    }
+                }
+                else
+                {
+                    message = "O";
                 }
                 if(strPaymentType == "P" || message=="O")
                 { 
@@ -801,7 +808,7 @@ namespace EventCombo.Controllers
                         }
 
 
-                        if (model.Ticketname == "Paid")
+                        if (grandtotal>0)
                         {
                             if (model.strPaymentType != "P")
                             {
