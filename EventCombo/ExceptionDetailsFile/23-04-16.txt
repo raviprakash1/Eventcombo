@@ -66,3 +66,75 @@ User Host IP:
 
 
 
+-----------Exception Details on  4/23/2016 6:23:30 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/23/2016 6:23:30 PM
+
+Error Line No : line 58
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/ticketpayment/savedetails
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/23/2016 6:25:05 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/23/2016 6:25:05 PM
+
+Error Line No : line 58
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/ticketpayment/savedetails
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/23/2016 6:26:02 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/23/2016 6:26:02 PM
+
+Error Line No : line 58
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/ticketpayment/savedetails
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

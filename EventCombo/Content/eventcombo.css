@@ -2288,8 +2288,9 @@ div.dis_file_upld{ background:#ccc !important;}
 .no-shdw{ box-shadow:none !important;}
 .form-control.promotional-readonly{ background:#fff;}
 .crt-code-no-listing{ font-size:18px; color:#000;}
-.invite_nav a{ color:#333;}
-.invite_nav a:hover{ color:#337ab7;}
+.invite_nav{ color:#337ab7}
+.invite_nav a{ color:#337ab7;}
+.invite_nav a:hover{ color:#23527c;}
 .online_check_box{ 
     display: inline;
     height: 17px;

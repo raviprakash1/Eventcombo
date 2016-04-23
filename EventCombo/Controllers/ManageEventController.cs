@@ -533,6 +533,8 @@ namespace EventCombo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            if (CommanClasses.CompareCurrentUser(eventId, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
+
             ViewBag.CurrentSort = (sortOrder ?? "subject");
             ValidationMessageController vmc = new ValidationMessageController();
             eventId = vmc.GetLatestEventId(eventId);
@@ -2407,6 +2409,8 @@ namespace EventCombo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            if (CommanClasses.CompareCurrentUser(lEvtId,Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
+
 
             //strMode If comes from Event Live Then need to set as 'E' otherwise set as 'C'
             Event_Email_Invitation objEEI = new Event_Email_Invitation();

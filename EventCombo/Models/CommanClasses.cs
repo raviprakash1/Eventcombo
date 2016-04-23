@@ -56,10 +56,29 @@ namespace EventCombo.Models
             }
             return dResult;
         }
-    }
+
+        public static bool CompareCurrentUser(long lEvntId,string strCurrentUser)
+        {
+            using (EventComboEntities objEnt = new EventComboEntities())
+            {
+                ValidationMessage vmc = new ValidationMessage();
+                lEvntId = vmc.GetLatestEventId(lEvntId);
+                var vEventUserId = (from myEvt in objEnt.Events where myEvt.EventID == lEvntId select myEvt.UserID).FirstOrDefault();
+                if (vEventUserId == null) return false;
+                if (strCurrentUser != vEventUserId.Trim())
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
 
 
-    public partial class Ticket_Locked_Detail
+
+}
+
+
+public partial class Ticket_Locked_Detail
     {
         public Ticket_Locked_Detail[] TLD_List { get; set; }
     }
