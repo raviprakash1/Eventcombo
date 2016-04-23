@@ -451,8 +451,8 @@
                         <div class="col-sm-4 pl0 xs-evnt-type-pad-0">
                             <div class="form-group">
                                 <label class="col-sm-5 control-label ev_tickt_lebel no_pad">Sub Category</label>
-                                <div class="col-sm-7 xs-evnt-type-pad-0">
-                                    <select id="ddlEventSubCategory" class="form-control evnt_inp_cont wd600"></select>
+                                <div class="col-sm-7 xs-evnt-type-pad-0 dropheight">
+                                    <select id="ddlEventSubCategory" class="form-control selectpicker evnt_inp_cont wd600"></select>
                                     <input type="hidden" id="hidSubCat" value="@Model.EventSubCategoryID" />
                                 </div>
                             </div>
@@ -580,8 +580,8 @@
                                     </span>
                                 </div>*@
                             <div class="col-sm-12 no_pad">
-                                <div class="col-sm-8 no_pad col-xs-4 xs_crt_evnt_edit_org_btn">
-                                    <select id="ddlOrgnizers" class="form-control evnt_inp_cont"></select>
+                                <div class="col-sm-8 no_pad col-xs-4 xs_crt_evnt_edit_org_btn dropheight">
+                                    <select id="ddlOrgnizers" class="form-control selectpicker evnt_inp_cont"></select>
                                 </div>
                                 <div class="col-sm-2 col-xs-4 xs_crt_evnt_edit_org_btn xs_crt_evnt_edit_org_btn">
                                     <button type="button" onclick="editOrgnizer();" class="btn btn-primary ev_add_sub_btn org_dele_btn" id="btneditorg">Edit <i class="fa fa-pencil"></i></button>
@@ -3165,6 +3165,7 @@ else
                     // debugger;
                     //                   alert(data.length);
                     $("#ddlEventSubCategory").html(data);
+                    $('#ddlEventSubCategory').selectpicker('refresh');
                     // items.push("<option value=" + this.Value + ">" + this.Text + "</option>");
                     //});
                 },
@@ -3181,7 +3182,7 @@ else
                     var getHtml = data.split('¶');
                     $("#tblOrgnizer").append(getHtml[0]);
                     $("#ddlOrgnizers").append(getHtml[1]);
-
+                    $('#ddlOrgnizers').selectpicker('refresh');
                   var msg = disablebutton();
 
                     if(msg=="")

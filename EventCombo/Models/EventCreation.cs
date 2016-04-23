@@ -185,4 +185,13 @@ namespace EventCombo.Models
         public string Venue { get; set; }
         public string eventpath { get; set; }
     }
-}
+
+    public class listevent
+    {
+        public String Dayofweek { get; set; }
+        public String Datefrom { get; set; }
+        public String Time { get; set; }
+    }
+
+
+    }

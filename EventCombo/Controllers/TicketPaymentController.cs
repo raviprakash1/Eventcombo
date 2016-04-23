@@ -277,11 +277,62 @@ namespace EventCombo.Controllers
         public string CalculatePromoCode(string strTicketId, string strCode, long lEventId)
         {
             string strResult = "";
+            DateTimeWithZone dtzstart, dzend, dtzCreated,dzstartpromocode,dzendpromocode;
             string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
             string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
             try {
                 using (var context = new EventComboEntities())
                 {
+                    var Event = (from myEnt in db.Events where myEnt.EventID == lEventId select myEnt).FirstOrDefault();
+                    int timeZoneID = Int32.Parse(Event.TimeZone);
+                    TimeZoneDetail td = db.TimeZoneDetails.First(x => x.TimeZone_Id == timeZoneID);
+                    DateTime dtStartDate = new DateTime();
+                    DateTime dtEndDate = new DateTime();
+                    DateTime dtendpromocodedate = new DateTime();
+                    DateTime dtNow = DateTime.Now;
+                    var vEventVenue = (from Ev in db.EventVenues where Ev.EventID == lEventId select Ev).FirstOrDefault();
+                    if (vEventVenue == null)
+                    {
+
+                        var vMultiEv = (from Ev in db.MultipleEvents where Ev.EventID == lEventId select Ev).FirstOrDefault();
+
+                        if (td != null)
+                        {
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiEv.M_Startfrom), userTimeZone, true);
+                            dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiEv.M_StartTo), userTimeZone, true);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                        }
+                        else
+                        {
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiEv.M_Startfrom), userTimeZone, true);
+                            dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiEv.M_StartTo), userTimeZone, true);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                        }
+                        dtStartDate = dtzstart.LocalTime;
+                        dtEndDate = dzend.LocalTime;
+                    }
+                    else
+                    {
+                        if (td != null)
+                        {
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(vEventVenue.E_Startdate), userTimeZone, true);
+                            dzend = new DateTimeWithZone(Convert.ToDateTime(vEventVenue.E_Enddate), userTimeZone, true);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                        }
+                        else
+                        {
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(vEventVenue.E_Startdate), userTimeZone, true);
+                            dzend = new DateTimeWithZone(Convert.ToDateTime(vEventVenue.E_Enddate), userTimeZone, true);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                        }
+                        dtStartDate = dtzstart.LocalTime;
+                        dtEndDate = dzend.LocalTime;
+                    }
+                    dtNow = dtzCreated.LocalTime;
                     string[] strTAry = strTicketId.Split(',');
                     var PromoCode = (from pc in db.Promo_Code where pc.PC_Code == strCode && pc.PC_Eventid == lEventId select pc).FirstOrDefault();
                     if (PromoCode == null) { return "INV"; }
@@ -296,13 +347,26 @@ namespace EventCombo.Controllers
                             return "OL";
                         }
                     }
-                    DateTime dtNow = DateTime.Now;
+                 
                     if (PromoCode.PC_Startdatetype != null)
                     {
                         if (PromoCode.PC_Startdatetype.Trim() == "0")
                         {
 
-                            DateTime dtStartDate = Convert.ToDateTime(PromoCode.PC_Start);
+                          
+
+                            if (td != null)
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                                dzstartpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_Start), userTimeZone, true);
+                               
+                            }
+                            else
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                dzstartpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_Start), userTimeZone, true);
+                            }
+                            dtStartDate = dzstartpromocode.LocalTime;
                             if (dtNow < dtStartDate)
                             {
                                 return "FDI";
@@ -310,18 +374,7 @@ namespace EventCombo.Controllers
                         }
                         else if (PromoCode.PC_Startdatetype.Trim() == "1")
                         {
-                            DateTime dtStartDate = new DateTime();
-
-                            var vEventVenue = (from Ev in db.EventVenues where Ev.EventID == lEventId select Ev).FirstOrDefault();
-                            if (vEventVenue == null)
-                            {
-                                var vMultiEv = (from Ev in db.MultipleEvents where Ev.EventID == lEventId select Ev).FirstOrDefault();
-                                dtStartDate = Convert.ToDateTime(vMultiEv.StartingFrom);
-                            }
-                            else
-                            {
-                                dtStartDate = Convert.ToDateTime(vEventVenue.EventStartDate);
-                            }
+                           
                             string text = PromoCode.PC_Start;// "10 Days 24 Hrs 45 Min";
                             Regex pattern = new Regex(@"(?:(?<days>\d+) Days )?(?:(?<hrs>\d+) Hrs )?(?:(?<mins>\d+) Min)?");
                             Match match = pattern.Match(text);
@@ -345,7 +398,18 @@ namespace EventCombo.Controllers
 
                         if (PromoCode.Pc_Enddatetype.Trim() == "0")
                         {
-                            DateTime dtEndDate = Convert.ToDateTime(PromoCode.PC_End);
+                            if (td != null)
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                                dzendpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_Start), userTimeZone, true);
+
+                            }
+                            else
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                dzendpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_Start), userTimeZone, true);
+                            }
+                            dtEndDate = dzendpromocode.LocalTime;
                             if (dtNow > dtEndDate)
                             {
                                 return "EDI";
@@ -353,17 +417,8 @@ namespace EventCombo.Controllers
                         }
                         else if (PromoCode.Pc_Enddatetype.Trim() == "1")
                         {
-                            DateTime dtEndDate = new DateTime();
-                            var vEventVenue = (from Ev in db.EventVenues where Ev.EventID == lEventId select Ev).FirstOrDefault();
-                            if (vEventVenue == null)
-                            {
-                                var vMultiEv = (from Ev in db.MultipleEvents where Ev.EventID == lEventId select Ev).FirstOrDefault();
-                                dtEndDate = Convert.ToDateTime(vMultiEv.EndTime);
-                            }
-                            else
-                            {
-                                dtEndDate = Convert.ToDateTime(vEventVenue.EventEndDate);
-                            }
+                           
+                            
 
                             string text = PromoCode.PC_End;// "10 Days 24 Hrs 45 Min";
                             Regex pattern = new Regex(@"(?:(?<days>\d+) Days )?(?:(?<hrs>\d+) Hrs )?(?:(?<mins>\d+) Min)?");
@@ -2037,21 +2092,52 @@ namespace EventCombo.Controllers
             var eventname = "";
             var startdate = "";
             var enddate = "";
+            var Event = (from myEnt in db.Events where myEnt.EventID == Eventid select myEnt).FirstOrDefault();
+
+            int timeZoneID = Int32.Parse(Event.TimeZone);
+            TimeZoneDetail td = db.TimeZoneDetails.First(x => x.TimeZone_Id == timeZoneID);
+            DateTimeWithZone dtzstart, dzend;
+            DateTimeWithZone dtzcreated;
+           
 
             var singledate = (from date in db.EventVenues where date.EventID == Eventid select date).FirstOrDefault();
             if (singledate != null)
             {
-                startdate = DateTime.Parse(singledate.EventStartDate).ToLongDateString() + " " + singledate.EventStartTime;
-                enddate = DateTime.Parse(singledate.EventEndDate).ToLongDateString() + " " + singledate.EventEndTime;
+                if (td != null)
+                {
+                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(singledate.E_Startdate), userTimeZone, true);
+                    dzend = new DateTimeWithZone(Convert.ToDateTime(singledate.E_Enddate), userTimeZone, true);
+                }
+                else
+                {
+                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(singledate.E_Startdate), userTimeZone, true);
+                    dzend = new DateTimeWithZone(Convert.ToDateTime(singledate.E_Enddate), userTimeZone, true);
+                }
+               
+               
             }
             else
             {
                 var muldate = (from date in db.MultipleEvents where date.EventID == Eventid select date).FirstOrDefault();
-                startdate = DateTime.Parse(muldate.StartingFrom).ToLongDateString() + " " + muldate.StartTime;
-                enddate = DateTime.Parse(muldate.StartingTo).ToLongDateString() + " " + muldate.EndTime;
+                if (td != null)
+                {
+                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(muldate.M_Startfrom), userTimeZone, true);
+                    dzend = new DateTimeWithZone(Convert.ToDateTime(muldate.M_StartTo), userTimeZone, true);
+                }
+                else
+                {
+                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(muldate.M_Startfrom), userTimeZone, true);
+                    dzend = new DateTimeWithZone(Convert.ToDateTime(muldate.M_StartTo), userTimeZone, true);
+                }
+               
 
             }
-
+            startdate = dtzstart.LocalTime.ToLongDateString() + " " + dtzstart.LocalTime.ToLongTimeString();
+            enddate = dzend.LocalTime.ToLongDateString() + " " + dzend.LocalTime.ToLongTimeString();
 
             if (Edtails.Addresstatus == "Online")
             {

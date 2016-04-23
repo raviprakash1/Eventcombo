@@ -1,0 +1,50 @@
+-----------Exception Details on  4/23/2016 12:38:42 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/23/2016 12:38:42 PM
+
+Error Line No : ine 437
+
+Error Message: ArgumentOutOfRangeException
+
+Exception Type: System.ArgumentOutOfRangeException
+
+Error Location : The added or subtracted value results in an un-representable DateTime.
+Parameter name: value
+
+ Error Page Url: http://localhost:10159/ticketpayment/calculatepromocode
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/23/2016 12:38:44 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/23/2016 12:38:44 PM
+
+Error Line No : ine 437
+
+Error Message: ArgumentOutOfRangeException
+
+Exception Type: System.ArgumentOutOfRangeException
+
+Error Location : The added or subtracted value results in an un-representable DateTime.
+Parameter name: value
+
+ Error Page Url: http://localhost:10159/ticketpayment/calculatepromocode
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

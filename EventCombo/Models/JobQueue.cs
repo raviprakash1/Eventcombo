@@ -10,11 +10,13 @@
 namespace EventCombo.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class GetEventDateList_Result
+    public partial class JobQueue
     {
-        public string Dayofweek { get; set; }
-        public Nullable<System.DateTime> Datefrom { get; set; }
-        public string type { get; set; }
+        public int Id { get; set; }
+        public int JobId { get; set; }
+        public string Queue { get; set; }
+        public Nullable<System.DateTime> FetchedAt { get; set; }
     }
 }

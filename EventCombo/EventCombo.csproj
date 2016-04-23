@@ -274,6 +274,9 @@
     <Compile Include="Models\Address.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AggregatedCounter.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -294,6 +297,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CommanClasses.cs" />
+    <Compile Include="Models\Counter.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Country.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -393,8 +399,23 @@
     <Compile Include="Models\GetOrganizerEventid_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Hash.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Html2Pdf.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Job.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobParameter.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobQueue.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\List.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
@@ -430,7 +451,19 @@
     <Compile Include="Models\Publish_Event_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Schema.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Server.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Set.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ShippingAddress.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\State.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Status.cs">
@@ -496,11 +529,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ViewCreateEvent.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CreateEvent\ViewEvent.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ViewEvent.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditEvent\EditEvent.generated.cs">
       <AutoGen>True</AutoGen>
@@ -1186,10 +1214,6 @@
     <Content Include="Views\TicketPayment\TicketPayment.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>TicketPayment1.generated.cs</LastGenOutput>
-    </Content>
-    <Content Include="Views\CreateEvent\ViewEvent.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>ViewEvent.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\TicketPayment\PaymentConfirmation.cshtml">
       <Generator>RazorGenerator</Generator>

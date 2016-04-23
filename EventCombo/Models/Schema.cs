@@ -10,11 +10,10 @@
 namespace EventCombo.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class GetEventDateList_Result
+    public partial class Schema
     {
-        public string Dayofweek { get; set; }
-        public Nullable<System.DateTime> Datefrom { get; set; }
-        public string type { get; set; }
+        public int Version { get; set; }
     }
 }

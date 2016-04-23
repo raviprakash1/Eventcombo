@@ -14,6 +14,7 @@ using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Web.Script.Serialization;
 using System.Net;
+using EventCombo.Utils;
 
 namespace EventCombo.Controllers
 {
@@ -470,6 +471,8 @@ namespace EventCombo.Controllers
             long lEventId = 0;
             string lat = "", lon = "";
             ViewEvent vc = new ViewEvent();
+            DateTimeWithZone dtzstart, dtzend;
+            DateTimeWithZone dtzCreated;
             try
             {
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
@@ -509,7 +512,20 @@ namespace EventCombo.Controllers
                     ObjEC.Ticket_showvariable = model.Ticket_showvariable;
                     ObjEC.Ticket_variabledesc = model.Ticket_variabledesc;
                     ObjEC.Ticket_variabletype = model.Ticket_variabletype;
+                    var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == model.TimeZone select ev).FirstOrDefault();
+                    if (Timezonedetail != null)
+                    {
 
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                        
+                        dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                    }
+                    else
+                    {
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                        dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                    }
+                    ObjEC.CreateDate = dtzCreated.UniversalTime;
                     objEnt.Events.Add(ObjEC);
                     // Address info
                     if (model.AddressDetail != null)
@@ -559,6 +575,24 @@ namespace EventCombo.Controllers
                         {
                             objEVenue = new EventVenue();
                             objEVenue.EventID = ObjEC.EventID;
+                            if (Timezonedetail != null)
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objEv.EventStartDate + " " + objEv.EventStartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objEv.EventEndDate + " " + objEv.EventEndTime), userTimeZone);
+
+
+                            }
+                            else
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objEv.EventStartDate + " " + objEv.EventStartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objEv.EventEndDate + " " + objEv.EventEndTime), userTimeZone);
+
+                            }
+                            //
+                            objEVenue.E_Startdate = dtzstart.UniversalTime;
+                            objEVenue.E_Enddate = dtzend.UniversalTime;
                             objEVenue.EventStartDate = objEv.EventStartDate;
                             objEVenue.EventEndDate = objEv.EventEndDate;
                             objEVenue.EventStartTime = objEv.EventStartTime;
@@ -573,6 +607,23 @@ namespace EventCombo.Controllers
                         foreach (MultipleEvent objME in model.MultipleEvents)
                         {
                             objMEvents = new MultipleEvent();
+
+                            if (Timezonedetail != null)
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objME.StartingFrom + " " + objME.StartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objME.StartingTo + " " + objME.EndTime), userTimeZone);
+
+
+                            }
+                            else
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objME.StartingFrom + " " + objME.StartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objME.StartingTo + " " + objME.EndTime), userTimeZone);
+
+                            }
+
                             objMEvents.EventID = ObjEC.EventID;
                             objMEvents.Frequency = objME.Frequency;
                             objMEvents.WeeklyDay = objME.WeeklyDay;
@@ -583,6 +634,8 @@ namespace EventCombo.Controllers
                             objMEvents.StartingTo = objME.StartingTo;
                             objMEvents.StartTime = objME.StartTime;
                             objMEvents.EndTime = objME.EndTime;
+                            objMEvents.M_Startfrom = dtzstart.UniversalTime;
+                            objMEvents.M_StartTo = dtzend.UniversalTime;
                             objEnt.MultipleEvents.Add(objMEvents);
                         }
                     }
@@ -841,11 +894,30 @@ namespace EventCombo.Controllers
                                Ticket_showvariable = myEvent.Ticket_showvariable,
                                Ticket_variabledesc = myEvent.Ticket_variabledesc,
                                Ticket_variabletype = myEvent.Ticket_variabletype,
-                               ModifyDate =  "(Last Saved at " + (myEvent.ModifyDate.ToString().Trim() != "" ? myEvent.ModifyDate.ToString().Trim() : myEvent.CreateDate.ToString().Trim()) + ")" ,
-                               ShowMap=myEvent.ShowMap,
+                               ModifyDate = (myEvent.ModifyDate.ToString().Trim() != "" ? myEvent.ModifyDate.ToString().Trim() : myEvent.CreateDate.ToString().Trim()) ,
+                               ShowMap =myEvent.ShowMap,
                                Parent_EventID = myEvent.Parent_EventID
                            }
                         ).FirstOrDefault();
+             
+                var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == vEC.TimeZone select ev).FirstOrDefault();
+                DateTimeWithZone dtzCreated;
+                if (Timezonedetail != null)
+                {
+
+
+                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+
+                    dtzCreated = new DateTimeWithZone(Convert.ToDateTime(vEC.ModifyDate), userTimeZone);
+                    //Timezone value
+
+                }
+                else
+                {
+                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                    dtzCreated = new DateTimeWithZone(Convert.ToDateTime(vEC.ModifyDate), userTimeZone);
+                }
+                vEC.ModifyDate = "(Last Saved at " + dtzCreated.LocalTime + ")";
                 return vEC;
             }
         }
@@ -874,14 +946,39 @@ namespace EventCombo.Controllers
                     var ev = (from myEvent in objEnt.EventVenues
                               where myEvent.EventID == EventIid
                               select myEvent).FirstOrDefault();
+                    int timeZoneID = Int32.Parse(Event.TimeZone);
+                    TimeZoneDetail td = objEnt.TimeZoneDetails.First(x => x.TimeZone_Id == timeZoneID);
+                    DateTimeWithZone dtzstart, dzend;
+                    DateTimeWithZone dtzcreated;
                     if (ev != null)
                     {
-                        objJson.EventID = Event.EventID;
-                        objJson.EventStartDate = Convert.ToString(ev.EventStartDate);
-                        objJson.EventStartTime = ev.EventStartTime;
-                        objJson.EventEndDate = ev.EventEndDate;
-                        objJson.EventEndTime = ev.EventEndTime;
 
+                        if (td != null)
+                        {
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(ev.E_Startdate), userTimeZone, true);
+                            dzend = new DateTimeWithZone(Convert.ToDateTime(ev.E_Enddate), userTimeZone, true);
+                        }
+                        else
+                        {
+                            TimeZoneInfo userTimeZone =TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(ev.E_Startdate), userTimeZone, true);
+                            dzend = new DateTimeWithZone(Convert.ToDateTime(ev.E_Enddate), userTimeZone, true);
+                        }
+                        var start_date = dtzstart.LocalTime;
+                        DateTime startdateOnly = start_date.Date;
+                        var startdate = startdateOnly.ToString("MM/dd/yyyy");
+                        var starttime = start_date.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
+                        var end_date = dzend.LocalTime;
+                        DateTime enddateOnly = end_date.Date;
+                        var enddate = enddateOnly.ToString("MM/dd/yyyy");
+                        var endtime= end_date.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
+                        objJson.EventID = Event.EventID;
+                        objJson.EventStartDate = startdate;
+                        objJson.EventStartTime = starttime;
+                        objJson.EventEndDate = enddate;
+                        objJson.EventEndTime = endtime;
+                       
 
                         objJson.MultipleSchTime = "S";
                     }
@@ -895,15 +992,36 @@ namespace EventCombo.Controllers
 
                     if (Mv != null)
                     {
+
+                        if (td != null)
+                        {
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(Mv.M_Startfrom), userTimeZone, true);
+                            dzend = new DateTimeWithZone(Convert.ToDateTime(Mv.M_StartTo), userTimeZone, true);
+                        }
+                        else
+                        {
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(Mv.M_Startfrom), userTimeZone, true);
+                            dzend = new DateTimeWithZone(Convert.ToDateTime(Mv.M_StartTo), userTimeZone, true);
+                        }
+                        var start_date = dtzstart.LocalTime;
+                        DateTime startdateOnly = start_date.Date;
+                        var startdate = startdateOnly.ToString("MM/dd/yyyy");
+                        var starttime = start_date.ToString("h:mm tt").ToLower().Trim();
+                        var end_date = dzend.LocalTime;
+                        DateTime enddateOnly = end_date.Date;
+                        var enddate = enddateOnly.ToString("MM/dd/yyyy");
+                        var endtime = end_date.ToString("h:mm tt").ToLower().Trim();
                         objJson.Frequency = Mv.Frequency;
                         objJson.WeeklyDay = Mv.WeeklyDay;
                         objJson.MonthlyDay = Mv.MonthlyDay;
                         objJson.MonthlyWeek = Mv.MonthlyWeek;
                         objJson.MonthlyWeekDays = Mv.MonthlyWeekDays;
-                        objJson.StartingFrom = Mv.StartingFrom;
-                        objJson.StartingTo = Mv.StartingTo;
-                        objJson.StartTime = Mv.StartTime;
-                        objJson.EndTime = Mv.EndTime;
+                        objJson.StartingFrom = startdate;
+                        objJson.StartingTo = enddate;
+                        objJson.StartTime = starttime;
+                        objJson.EndTime = endtime;
                         objJson.MultipleSchTime = "M";
                     }
 
@@ -1564,20 +1682,22 @@ namespace EventCombo.Controllers
 
                     var timezone = "";
 
-                    DateTime dateTime = new DateTime();
+                    DateTimeWithZone dtzCreated;
+
                     var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == model.TimeZone select ev).FirstOrDefault();
                     if (Timezonedetail != null)
                     {
-                        timezone = Timezonedetail.TimeZone;
-                        TimeZoneInfo timeZoneInfo;
 
-
-                        timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timezone);
-                        dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, timeZoneInfo);
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
                         //Timezone value
-
+                        dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
                     }
-                   ObjEC.ModifyDate = dateTime;
+                    else
+                    {
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                        dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                    }
+                    ObjEC.ModifyDate = dtzCreated.UniversalTime;
                    objEnt.Events.Add(ObjEC);
                     // Address info
                     if (model.AddressDetail != null)
@@ -1619,19 +1739,41 @@ namespace EventCombo.Controllers
                             }
                         }
                     }
-                    
+                    DateTimeWithZone dtzstart, dtzend;
                     // Event on Single Timing 
                     if (model.EventVenue != null)
                     {
                         EventVenue objEVenue = new EventVenue();
                         foreach (EventVenue objEv in model.EventVenue)
                         {
+
+                            //save utc
+
+
+                            if (Timezonedetail != null)
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objEv.EventStartDate + " " + objEv.EventStartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objEv.EventEndDate + " " + objEv.EventEndTime), userTimeZone);
+
+
+                            }
+                            else
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objEv.EventStartDate + " " + objEv.EventStartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objEv.EventEndDate + " " + objEv.EventEndTime), userTimeZone);
+
+                            }
+                            //
                             objEVenue.EventID = ObjEC.EventID;
                             objEVenue.EventStartDate = objEv.EventStartDate;
                             objEVenue.EventEndDate = objEv.EventEndDate;
                             objEVenue.EventStartTime = objEv.EventStartTime;
                             objEVenue.EventEndTime = objEv.EventEndTime;
-                           objEnt.EventVenues.Add(objEVenue);
+                            objEVenue.E_Startdate = dtzstart.UniversalTime;
+                            objEVenue.E_Enddate = dtzend.UniversalTime;
+                            objEnt.EventVenues.Add(objEVenue);
                         }
                     }
                     // Event on Multiple timing 
@@ -1640,6 +1782,21 @@ namespace EventCombo.Controllers
                         MultipleEvent objMEvents = new MultipleEvent();
                         foreach (MultipleEvent objME in model.MultipleEvents)
                         {
+                            if (Timezonedetail != null)
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objME.StartingFrom + " " + objME.StartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objME.StartingTo + " " + objME.EndTime), userTimeZone);
+
+
+                            }
+                            else
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objME.StartingFrom + " " + objME.StartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objME.StartingTo + " " + objME.EndTime), userTimeZone);
+
+                            }
                             objMEvents.EventID = ObjEC.EventID;
                             objMEvents.Frequency = objME.Frequency;
                             objMEvents.WeeklyDay = objME.WeeklyDay;
@@ -1650,7 +1807,9 @@ namespace EventCombo.Controllers
                             objMEvents.StartingTo = objME.StartingTo;
                             objMEvents.StartTime = objME.StartTime;
                             objMEvents.EndTime = objME.EndTime;
-                           ObjEC.MultipleEvents.Add(objMEvents);
+                            objMEvents.M_Startfrom = dtzstart.UniversalTime;
+                            objMEvents.M_StartTo = dtzend.UniversalTime;
+                            ObjEC.MultipleEvents.Add(objMEvents);
                         }
                     }
                     // Orgnizer
@@ -2066,21 +2225,22 @@ namespace EventCombo.Controllers
 
                                 var timezone = "";
 
-                                DateTime dateTime = new DateTime();
+                                DateTimeWithZone dtzCreated;
                                 var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == model.TimeZone select ev).FirstOrDefault();
                                 if (Timezonedetail != null)
                                 {
-                                    timezone = Timezonedetail.TimeZone;
-                                    TimeZoneInfo timeZoneInfo;
-
-
-                                    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timezone);
-                                    dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, timeZoneInfo);
+                                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                    dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
                                     //Timezone value
 
                                 }
+                                else
+                                {
+                                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                    dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                                }
 
-                                ObjEC.ModifyDate = dateTime;
+                                ObjEC.ModifyDate = dtzCreated.UniversalTime;
                                 //objEnt.Events.Add(ObjEC);
                                 // Address info
 
@@ -2159,7 +2319,8 @@ namespace EventCombo.Controllers
                                     }
                                 }
 
-
+                                DateTimeWithZone dtzstart, dtzend;
+                                DateTimeWithZone dtzCreatedstart, dtzCreatedend;
 
                                 // Event on Single Timing 
                                 if (model.EventVenue != null)
@@ -2171,14 +2332,34 @@ namespace EventCombo.Controllers
 
                                     foreach (EventVenue objEv in model.EventVenue)
                                     {
+                                        //save utc
 
+
+                                        if (Timezonedetail != null)
+                                        {
+                                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(objEv.EventStartDate + " " + objEv.EventStartTime), userTimeZone);
+                                            dtzend = new DateTimeWithZone(Convert.ToDateTime(objEv.EventEndDate + " " + objEv.EventEndTime), userTimeZone);
+
+
+                                        }
+                                        else
+                                        {
+                                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(objEv.EventStartDate + " " + objEv.EventStartTime), userTimeZone);
+                                            dtzend = new DateTimeWithZone(Convert.ToDateTime(objEv.EventEndDate + " " + objEv.EventEndTime), userTimeZone);
+
+                                        }
+                                        //
 
                                         objEVenue.EventID = lEventId;
                                         objEVenue.EventStartDate = objEv.EventStartDate;
                                         objEVenue.EventEndDate = objEv.EventEndDate;
+
                                         objEVenue.EventStartTime = objEv.EventStartTime;
                                         objEVenue.EventEndTime = objEv.EventEndTime;
-
+                                        objEVenue.E_Startdate = dtzstart.UniversalTime;
+                                        objEVenue.E_Enddate= dtzend.UniversalTime;
                                         objEnt.EventVenues.Add(objEVenue);
 
 
@@ -2193,6 +2374,22 @@ namespace EventCombo.Controllers
                                     MultipleEvent objMEvents = new MultipleEvent();
                                     foreach (MultipleEvent objME in model.MultipleEvents)
                                     {
+
+                                        if (Timezonedetail != null)
+                                        {
+                                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(objME.StartingFrom + " " + objME.StartTime), userTimeZone);
+                                            dtzend = new DateTimeWithZone(Convert.ToDateTime(objME.StartingTo + " " + objME.EndTime), userTimeZone);
+
+
+                                        }
+                                        else
+                                        {
+                                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(objME.StartingFrom + " " + objME.StartTime), userTimeZone);
+                                            dtzend = new DateTimeWithZone(Convert.ToDateTime(objME.StartingTo + " " + objME.EndTime), userTimeZone);
+
+                                        }
                                         objMEvents.EventID = lEventId;
                                         objMEvents.Frequency = objME.Frequency;
                                         objMEvents.WeeklyDay = objME.WeeklyDay;
@@ -2203,6 +2400,8 @@ namespace EventCombo.Controllers
                                         objMEvents.StartingTo = objME.StartingTo;
                                         objMEvents.StartTime = objME.StartTime;
                                         objMEvents.EndTime = objME.EndTime;
+                                        objMEvents.M_Startfrom = dtzstart.UniversalTime;
+                                        objMEvents.M_StartTo = dtzend.UniversalTime;
 
                                         ObjEC.MultipleEvents.Add(objMEvents);
 

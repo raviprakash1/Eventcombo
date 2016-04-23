@@ -3,9 +3,14 @@
 @using PagedList.Mvc;
 @using EventCombo.Models;
 @using EventCombo.Controllers;
+@using EventCombo.Utils;
 @{
     ViewBag.Title = "EventList";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+@{
+    EventComboEntities objEnt = new EventComboEntities();
+  
 }
 <div class="col-sm-12">
     <h3 class="acnt_title">My Events</h3>
@@ -108,11 +113,31 @@
                         @{
                             foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)
                             {
+
+                                Event eventForTimeZone = objEnt.Events.First(i => i.EventID == item.EventID);
+                                int timeZoneID = Int32.Parse(eventForTimeZone.TimeZone);
+                                TimeZoneDetail td = objEnt.TimeZoneDetails.First(i => i.TimeZone_Id == timeZoneID);
+                                DateTimeWithZone dtz;
+                                DateTimeWithZone dtzcreated;
+                                if (td != null)
+                                {
+                                    TimeZoneInfo userTimeZone =
+                                    TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                                    dtz = new DateTimeWithZone(Convert.ToDateTime(item.EventDate), userTimeZone, true);
+                                    
+                                }
+                                else
+                                {
+                                    TimeZoneInfo userTimeZone =
+                                    TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                    dtz = new DateTimeWithZone(Convert.ToDateTime(item.EventDate), userTimeZone, true);
+                                   
+                                }
                                 <tr>
 
                                     <td class="word_brack">@item.EventTitle</td>
 
-                                    <td>@item.EventDate / @item.EventTime</td>
+                                    <td>@dtz.LocalTime.ToString("MMM dd, yyyy") /@dtz.LocalTime.ToString("h:mm tt")</td>
                                     <td>@item.TicketSold/@item.TotalTicket</td>
                                     <td class="text-center">
 
@@ -154,9 +179,29 @@
                             //foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.SavedEvent)
                             foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.SavedEvent)
                             {
+
+                                Event eventForTimeZone = objEnt.Events.First(i => i.EventID == item.EventID);
+                                int timeZoneID = Int32.Parse(eventForTimeZone.TimeZone);
+                                TimeZoneDetail td = objEnt.TimeZoneDetails.First(i => i.TimeZone_Id == timeZoneID);
+                                DateTimeWithZone dtz;
+                               
+                                if (td != null)
+                                {
+                                    TimeZoneInfo userTimeZone =
+                                    TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                                    dtz = new DateTimeWithZone(Convert.ToDateTime(item.EventDate), userTimeZone, true);
+
+                                }
+                                else
+                                {
+                                    TimeZoneInfo userTimeZone =
+                                    TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                    dtz = new DateTimeWithZone(Convert.ToDateTime(item.EventDate), userTimeZone, true);
+
+                                }
                                 <tr>
                                     <td class="word_brack">@item.EventTitle</td>
-                                    <td>@item.EventDate / @item.EventTime</td>
+                                    <td>@dtz.LocalTime.ToString("MMM dd, yyyy") /@dtz.LocalTime.ToString("h:mm tt")</td>
                                     <td>@item.TicketSold/@item.TotalTicket</td>
                                     <td class="text-center">
                                         <div class="event-btn-action">
@@ -198,9 +243,30 @@
                             //foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.PastEvent)
                             foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.PastEvent)
                             {
+
+                                Event eventForTimeZone = objEnt.Events.First(i => i.EventID == item.EventID);
+                                int timeZoneID = Int32.Parse(eventForTimeZone.TimeZone);
+                                TimeZoneDetail td = objEnt.TimeZoneDetails.First(i => i.TimeZone_Id == timeZoneID);
+                                DateTimeWithZone dtz;
+
+                                if (td != null)
+                                {
+                                    TimeZoneInfo userTimeZone =
+                                    TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                                    dtz = new DateTimeWithZone(Convert.ToDateTime(item.EventDate), userTimeZone, true);
+
+                                }
+                                else
+                                {
+                                    TimeZoneInfo userTimeZone =
+                                    TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                    dtz = new DateTimeWithZone(Convert.ToDateTime(item.EventDate), userTimeZone, true);
+
+                                }
+
                                 <tr>
                                     <td class="word_brack">@item.EventTitle</td>
-                                    <td>@item.EventDate/ @item.EventTime</td>
+                                    <td>@dtz.LocalTime.ToString("MMM dd, yyyy") /@dtz.LocalTime.ToString("h:mm tt")</td>
                                     <td>@item.TicketSold/@item.TotalTicket</td>
                                     <td class="text-center">
                                         <div class="event-btn-action">
