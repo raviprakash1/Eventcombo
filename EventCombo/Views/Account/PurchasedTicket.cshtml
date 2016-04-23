@@ -61,22 +61,6 @@
     OrderType: "@OrderTypes.Favorite"
   }];
 
-  $(document).ready(function () {
-    $('#mgacnt').click();
-    $('#dvacmang').addClass("active");
-    $('#dvacmang b').addClass('opened new-opend');
-    $('#dvacmang').click(function (e) {
-      var $dvEle = $('#dvacmang b');
-      var vclassname = $dvEle.attr('class');
-      if ($dvEle.hasClass("new-opend")) {
-        $dvEle.removeClass('opened new-opend').addClass('closed');
-      }
-      else {
-        $dvEle.addClass('opened new-opend');
-      }
-    });
-  });
-
   function expandEditMenu(obj, name, id) {
     var detail = $('#' + name + id);
     if ($(detail).data('popped') == '0') {
@@ -86,6 +70,7 @@
         data: { OrderId: id },
         datatype: 'html',
         success: function (data) {
+          console.debug(data);
           $(obj).parent().parent().css('background-color', '#f1f1f1');
           $(detail).html(data);
           $(detail).css('background-color', '#f1f1f1');
@@ -139,11 +124,6 @@
     return cur;
   }
 
-  function RefreshTab(obj) {
-    var cur = findState(obj);
-    getTicketList($(obj).closest('.tab-pane').attr('id'), cStates[cur]);
-  }
-
   function getTicketList(id, query) {
     $.ajax({
       type: "GET",
@@ -159,32 +139,30 @@
   function saveChangeFunc(id) {
     var query = {
       OrderId: id,
-      SendEmail: $('#sendConfirmationEmail').hasClass('basicInfoCheckBox'),
+      SendEmail: $('#sendConfirmationEmail' + id).hasClass('basicInfoCheckBox'),
       Attendees: []
     };
-    $('input[id^="UETableTDSUbDivName"]').each(function () {
+    $('input[id^="UETableTDSUbDivName' + id + '_"]').each(function () {
       query.Attendees.push({
         TicketbearerId: $(this).data('bearerid'),
         Name: $(this).val(),
-        Email: $('#UETableTDSUbDivEmail' + $(this).data('bearerid')).val()
+        Email: $('#UETableTDSUbDivEmail' + id + '_' + $(this).data('bearerid')).val()
       })
     });
-    console.debug(query);
     $.ajax({
       type: "POST",
       url: "@Url.Action("SavePurchasedTicketDetail", "Account")",
       data: query,
       datatype: "html",
       success: function (data) {
-        $('#ajaxanswer').html(data);
+        $('#ajaxanswer' + id).html(data);
       }
     });
   }
 
   function SendCancelOrder(obj, oId) {
-    console.debug(oId);
     if ($(obj).closest('table').parent().parent().data('orderstate') != 1) {
-      $('#ajaxanswer').html("Order already cancelled.");
+      $('#ajaxanswer' + oId).html("Order already cancelled.");
       return;
     }
     $.ajax({
@@ -196,10 +174,10 @@
         if (data > 0) {
           var caption = $(obj).closest('table').parent().parent().prev('tr').find('td').last();
           $(caption).html($(caption).html() + ' - Cancelled');
-          $('#ajaxanswer').html("Order cancelled.");
+          $('#ajaxanswer' + oId).html("Order cancelled.");
         }
         else
-          $('#ajaxanswer').html("Order wasn't cancelled.");
+          $('#ajaxanswer' + oId).html("Order wasn't cancelled.");
       }
     });
   }
@@ -207,9 +185,9 @@
   function SendOrganizerMessage(oId) {
     var query = {
       OrderId: oId,
-      Name: $('#nameContact').val(),
-      Email: $('#emailContact').val(),
-      Message: $('#messageContact').val()
+      Name: $('#nameContact' + oId).val(),
+      Email: $('#emailContact' + oId).val(),
+      Message: $('#messageContact' + oId).val()
     }
     console.debug(query);
     $.ajax({
@@ -219,10 +197,10 @@
       datatype: "html",
       success: function (data) {
         if (data > 0) {
-          $('#ajaxanswer').html("Message saved.");
+          $('#ajaxanswer' + oId).html("Message saved.");
         }
         else
-          $('#ajaxanswer').html("Message not saved.");
+          $('#ajaxanswer' + oId).html("Message not saved.");
       }
     });
   }

@@ -30,10 +30,10 @@
           @if (Model.Attendees.Count > 0)
           {
             <td class="subTableInnerTD">
-              <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Name" />
+              <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Name" />
             </td>
             <td class="subTableInnerTD">
-              <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Email" />
+              <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Email" />
             </td>
           }
           else
@@ -54,10 +54,10 @@
           @if (Model.Attendees.Count > 1)
           {
             <td class="subTableInnerTD">
-              <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Name" />
+              <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Name" />
             </td>
             <td class="subTableInnerTD">
-              <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Email" />
+              <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Email" />
             </td>
           }
           else
@@ -73,10 +73,10 @@
         <tr class="UETableTDSUbDivBackColor" style="height: 85px;">
           <td class="subTableInnerTD" colspan="2"></td>
           <td class="subTableInnerTD">
-            <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Name" />
+            <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Name" />
           </td>
           <td class="subTableInnerTD">
-            <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Email" />
+            <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Email" />
           </td>
           <td class="subTableInnerTD"></td>
         </tr>
@@ -87,22 +87,22 @@
       <tr class="UETableTDSUbDivBackColor" style="height: 85px;">
         <td class="subTableInnerTD" colspan="2"></td>
         <td class="subTableInnerTD" colspan="2">
-          <div class="basicInfoUnCheckBox" id="sendConfirmationEmail" onclick="setCheckBoxChecked(this);">Send confirmation email to new attendee</div>
+          <div class="basicInfoUnCheckBox" id="sendConfirmationEmail@(Model.OrderId)" onclick="setCheckBoxChecked(this);">Send confirmation email to new attendee</div>
         </td>
         <td class="subTableInnerTD"></td>
       </tr>
     }
     <tr class="UETableTDSUbDivBackColor" style="height: 85px;">
       <td class="subTableInnerTD" colspan="4">
-        <div id="ajaxanswer"></div>
+        <div id="ajaxanswer@(Model.OrderId)"></div>
       </td>
       <td class="subTableInnerTD"></td>
     </tr>
     <tr class="UETableTDSUbDivBackColorFooter">
-      <td class="UETableTDSUbDivFooterLinks" onclick="printTicketsFunc()">PRINT TICKETS</td>
+      <td class="UETableTDSUbDivFooterLinks" onclick="printTicketsFunc(@(Model.OrderId))">PRINT TICKETS</td>
       <td class="UETableTDSUbDivFooterLinks">
-        <a data-toggle="modal" data-target="#cancelModal1">CANCEL ORDER</a>
-        <div class="modal fade" id="cancelModal1" role="dialog">
+        <a data-toggle="modal" data-target="#cancelModal@(Model.OrderId)">CANCEL ORDER</a>
+        <div class="modal fade" id="cancelModal@(Model.OrderId)" role="dialog">
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header cancelOrderHeader">
@@ -119,8 +119,8 @@
         </div>
       </td>
       <td class="UETableTDSUbDivFooterLinks" colspan="2">
-        <a data-toggle="modal" data-target="#contactModal1">CONTACT ORGANIZER</a>
-        <div class="modal fade" id="contactModal1" role="dialog">
+        <a data-toggle="modal" data-target="#contactModal@(Model.OrderId)">CONTACT ORGANIZER</a>
+        <div class="modal fade" id="contactModal@(Model.OrderId)" role="dialog">
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
@@ -129,13 +129,13 @@
               </div>
               <div class="modal-body">
                 <label class="cancelOrderBodyTxt contactBodyTxt"><b>YOUR NAME</b></label>
-                <input type="text" id="nameContact" class="UETableTDSUbDiv1NameCls cancelOrderBodyTxt" />
+                <input type="text" id="nameContact@(Model.OrderId)" class="UETableTDSUbDiv1NameCls cancelOrderBodyTxt" />
 
                 <label class="cancelOrderBodyTxt contactBodyTxt"><b>EMAIL</b></label>
-                <input type="text" id="emailContact" class="UETableTDSUbDiv1NameCls cancelOrderBodyTxt" />
+                <input type="text" id="emailContact@(Model.OrderId)" class="UETableTDSUbDiv1NameCls cancelOrderBodyTxt" />
 
                 <label class="cancelOrderBodyTxt contactBodyTxt"><b>MESSAGE</b></label>
-                <textarea id="messageContact" class="messageContact1Cls cancelOrderBodyTxt"></textarea>
+                <textarea id="messageContact@(Model.OrderId)" class="messageContact1Cls cancelOrderBodyTxt"></textarea>
                 <label class="txtAreaModelLbl">Your message will only be seen by the event organizer.</label>
 
                 <button type="button" class="btn btn-primary cancelOrderBodyBtn" data-dismiss="modal" onclick="SendOrganizerMessage('@(Model.OrderId)')">SEND MESSAGE</button>
