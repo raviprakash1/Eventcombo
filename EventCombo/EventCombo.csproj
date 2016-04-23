@@ -405,6 +405,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MyAccount.cs" />
+    <Compile Include="Models\OrderState.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OrderTemplate.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -507,10 +510,20 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\DBAccessService.cs" />
+    <Compile Include="Service\IDBAccessService.cs" />
     <Compile Include="Service\IManageEventService.cs" />
+    <Compile Include="Service\Notification\INotification.cs" />
     <Compile Include="Service\IOrderOptionsService.cs" />
+    <Compile Include="Service\Notification\ISendMailService.cs" />
+    <Compile Include="Service\ITicketsService.cs" />
     <Compile Include="Service\ManageEventService.cs" />
+    <Compile Include="Service\Notification\OrderNotification.cs" />
+    <Compile Include="Service\Notification\OrderCancelNotification.cs" />
     <Compile Include="Service\OrderOptionsService.cs" />
+    <Compile Include="Service\Notification\SendMailService.cs" />
+    <Compile Include="Service\Notification\OrganizerMessageNotification.cs" />
+    <Compile Include="Service\TicketService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Views\Account\MyAccount.generated.cs">
       <AutoGen>True</AutoGen>
@@ -604,14 +617,20 @@
     <Content Include="Content\flipclock.css" />
     <Content Include="Content\jquery-te-1.4.0.css" />
     <Content Include="Content\jquery-te.png" />
+    <Content Include="Content\manageattendees.css" />
     <Content Include="Content\OrderForm.css" />
     <Content Include="Content\OrderFormDesign.css" />
+    <Content Include="Content\PurchasedTicket.css" />
     <Content Include="email-content-pdf%281%29.html" />
     <Content Include="Images\ajax-loader.gif" />
+    <Content Include="Images\align_center.gif" />
+    <Content Include="Images\align_left.gif" />
+    <Content Include="Images\align_right.gif" />
     <Content Include="Images\amr-exp.png" />
     <Content Include="Images\Bar_Image.Png" />
     <Content Include="Images\checked.png" />
     <Content Include="Images\cross.png" />
+    <Content Include="Images\dateicon.png" />
     <Content Include="Images\default_org_image.jpg" />
     <Content Include="Images\dgd.png" />
     <Content Include="Images\downarrow.png" />
@@ -631,6 +650,7 @@
     <Content Include="Images\login_img.png" />
     <Content Include="Images\paper_tic.png" />
     <Content Include="Images\qwe.png" />
+    <Content Include="Images\search.png" />
     <Content Include="Images\unchecked.png" />
     <Content Include="Models\EventComboModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1269,6 +1289,9 @@
     <Content Include="Views\OrderOptions\EventType.cshtml" />
     <Content Include="Views\OrderOptions\Waitlist.cshtml" />
     <Content Include="Views\Shared\_ManageEventLeftMenu.cshtml" />
+    <Content Include="Views\Account\_PurchasedTicketList.cshtml" />
+    <Content Include="Views\Account\_PurchasedTicketDetail.cshtml" />
+    <Content Include="Views\Account\_PurchasedTicketFavoriteList.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

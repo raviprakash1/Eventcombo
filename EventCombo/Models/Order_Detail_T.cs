@@ -26,5 +26,8 @@ namespace EventCombo.Models
         public string O_PayPal_TokenId { get; set; }
         public string O_PayPal_PayerId { get; set; }
         public string O_PayPal_TrancId { get; set; }
+        public Nullable<byte> OrderStateId { get; set; }
+    
+        public virtual OrderState OrderState { get; set; }
     }
 }

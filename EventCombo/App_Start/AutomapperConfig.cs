@@ -61,6 +61,10 @@ namespace EventCombo
         .ForMember(d => d.OrderTemplateGroupTicketId, m => m.MapFrom(s => s.OrderTemplateTicketId))
         .ForMember(d => d.GroupTicket, m => m.MapFrom(s => s.Ticket));
       CreateMap<OrderTemplateGroupType, OrderTemplateGroupTypeViewModel>();
+      CreateMap<TicketBearer, AttendeeViewModel>()
+        .ForMember(d => d.Name, m => m.MapFrom(s => s.Name.Trim()))
+        .ForMember(d => d.Email, m => m.MapFrom(s => s.Email.Trim()));
+      CreateMap<Event_OrganizerMessages, OrganizerMessageViewModel>();
 
       //backward maps
       CreateMap<OrderTemplateViewModel, OrderTemplate>();
@@ -79,6 +83,10 @@ namespace EventCombo
       CreateMap<OrderTemplateQuestionVariantViewModel, OrderTemplateQuestionVariant>();
       CreateMap<OrderTemplateGroupTicketViewModel, OrderTemplateTicket>();
       CreateMap<OrderTemplateGroupTypeViewModel, OrderTemplateGroupType>();
+      CreateMap<AttendeeViewModel, TicketBearer>()
+        .ForMember(d => d.TicketbearerId, m => m.Ignore());
+      CreateMap<OrganizerMessageViewModel, Event_OrganizerMessages>()
+        .ForMember(d => d.MessageId, m => m.Ignore());
     }
   }
 }

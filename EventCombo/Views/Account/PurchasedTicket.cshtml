@@ -1,33 +1,231 @@
-﻿
+﻿@using System.Collections.Generic;
+@using System.Linq;
+@using EventCombo.Models;
+@model OrderViewModel
 @{
-    ViewBag.Title = "PurchasedTicket";
-    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+  ViewBag.Title = "PurchasedTicket";
+  Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
-<h2>MY PURCHASED TICKET</h2>
+<link href="~/Content/PurchasedTicket.css" rel="stylesheet" />
 
-<div>
-    <div class="eventList titles"><span class="eventOrderNumber">Order Number <img src="~/Images/arrow-down.png" width="12" height="10"></span><span class="eventName">Name <img src="~/Images/arrow-down.png" width="12" height="10"></span><span class="eventDate">Date <img src="~/Images/arrow-down.png" width="12" height="10"></span><span class="eventQty">Qty. </span><span class="eventTotal">Total Paid</span><span class="eventLinks">Quick Links</span> </div>
-    <div class="eventList"><span class="eventOrderNumber">5648465</span><span class="eventName"><a href="#" target="_blank">My test event</a></span><span class="eventDate">November 16, 2013</span><span class="eventQty">5</span><span class="eventTotal">$50.00 </span><span class="eventLinks">View | Invite </span> </div>
-    <div class="eventList odd"><span class="eventOrderNumber">5648465</span><span class="eventName"><a href="#" target="_blank">My test event</a></span><span class="eventDate">November 1, 2013</span><span class="eventQty">1</span><span class="eventTotal">$23.54</span><span class="eventLinks">View | Invite </span> </div>
-    <div class="clearboth" style="margin:10px;"></div>
+
+
+<div id="purchasedTicketContainer">
+  <h2 class="purchasedTitleHead">PURCHASED TICKETS</h2>
+
+  @{
+    long upcomingCount = Model.OrderTypeInfo.Where(m => m.OrderType == OrderTypes.Upcoming).First().TotalCount;
+    long pastCount = Model.OrderTypeInfo.Where(m => m.OrderType == OrderTypes.Past).First().TotalCount;
+    long favoriteCount = Model.OrderTypeInfo.Where(m => m.OrderType == OrderTypes.Favorite).First().TotalCount;
+  }
+  <ul class="nav nav-tabs purchaseTicketHeaderTabs">
+    <li class="active"><a data-toggle="tab" href="#UpcomingEvents">Upcoming Events (@upcomingCount)</a></li>
+    <li><a data-toggle="tab" href="#PastEvents">Past Events (@pastCount)</a></li>
+    <li><a data-toggle="tab" href="#FavoriteEvents">Favorite Events (@favoriteCount)</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="UpcomingEvents" data-ttype="@OrderTypes.Upcoming" class="tab-pane fade in active">
+      @{ Html.RenderAction("PurchasedTicketList", new { OrderType = OrderTypes.Upcoming, SortBy = Model.State.SortBy, Page = Model.State.Page, PerPage = Model.State.PerPage }); }
+    </div>
+    <div id="PastEvents" data-ttype="@OrderTypes.Past" class="tab-pane fade">
+      @{ Html.RenderAction("PurchasedTicketList", new { OrderType = OrderTypes.Past, SortBy = Model.State.SortBy, Page = Model.State.Page, PerPage = Model.State.PerPage }); }
+    </div>
+    <div id="FavoriteEvents" data-ttype="@OrderTypes.Favorite" class="tab-pane fade">
+      @{ Html.RenderAction("PurchasedTicketList", new { OrderType = OrderTypes.Favorite, SortBy = Model.State.SortBy, Page = Model.State.Page, PerPage = Model.State.PerPage }); }
+    </div>
+  </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $('#mgacnt').click();
-        $('#dvacmang').addClass("active");
-        $('#dvacmang b').addClass('opened new-opend');
-        $('#dvacmang').click(function (e) {
-            var $dvEle = $('#dvacmang b');
-            var vclassname = $dvEle.attr('class');
-            if ($dvEle.hasClass("new-opend")) {
-                $dvEle.removeClass('opened new-opend').addClass('closed');
-            }
-            else {
-                $dvEle.addClass('opened new-opend');
-            }
-        });
+
+
+<script type="text/javascript">
+
+  var cStates = [{
+    Page: "@(Model.State.Page)",
+    PerPage: "@(Model.State.PerPage)",
+    SortBy: "@(Model.State.SortBy)",
+    SortDesc: "@(Model.State.SortDesc)",
+    OrderType: "@OrderTypes.Upcoming"
+  }, {
+    Page: "@(Model.State.Page)",
+    PerPage: "@(Model.State.PerPage)",
+    SortBy: "@(Model.State.SortBy)",
+    SortDesc: "@(Model.State.SortDesc)",
+    OrderType: "@OrderTypes.Past"
+  }, {
+    Page: "@(Model.State.Page)",
+    PerPage: "@(Model.State.PerPage)",
+    SortBy: "@(Model.State.SortBy)",
+    SortDesc: "@(Model.State.SortDesc)",
+    OrderType: "@OrderTypes.Favorite"
+  }];
+
+  $(document).ready(function () {
+    $('#mgacnt').click();
+    $('#dvacmang').addClass("active");
+    $('#dvacmang b').addClass('opened new-opend');
+    $('#dvacmang').click(function (e) {
+      var $dvEle = $('#dvacmang b');
+      var vclassname = $dvEle.attr('class');
+      if ($dvEle.hasClass("new-opend")) {
+        $dvEle.removeClass('opened new-opend').addClass('closed');
+      }
+      else {
+        $dvEle.addClass('opened new-opend');
+      }
     });
+  });
+
+  function expandEditMenu(obj, name, id) {
+    var detail = $('#' + name + id);
+    if ($(detail).data('popped') == '0') {
+      $.ajax({
+        type: 'GET',
+        url: '@Url.Action("PurchasedTicketDetail", "Account")',
+        data: { OrderId: id },
+        datatype: 'html',
+        success: function (data) {
+          $(obj).parent().parent().css('background-color', '#f1f1f1');
+          $(detail).html(data);
+          $(detail).css('background-color', '#f1f1f1');
+          $(detail).css('border-top', 'none');
+          $(detail).data('popped', '1');
+          $(detail).slideDown();
+        }
+      });
+    }
+    else {
+      $(detail).html('');
+      $(obj).parent().parent().css('background-color', '#ffffff');
+      $(detail).data('popped', '0');
+      $(detail).slideUp();
+    }
+
+  }
+
+  function setCheckBoxChecked(obj) {
+    if ($(obj).hasClass('basicInfoUnCheckBox')) {
+      $(obj).addClass('basicInfoCheckBox');
+      $(obj).removeClass('basicInfoUnCheckBox');
+    }
+    else {
+      $(obj).removeClass('basicInfoCheckBox');
+      $(obj).addClass('basicInfoUnCheckBox');
+    }
+  }
+
+
+  function sortBy(obj, sort) {
+    var cur = findState(obj);
+    if ((cStates[cur].SortDesc == 'False') && (cStates[cur].SortBy == sort))
+      cStates[cur].SortDesc = 'True';
+    else
+      cStates[cur].SortDesc = 'False';
+    cStates[cur].SortBy = sort;
+    getTicketList($(obj).closest('.tab-pane').attr('id'), cStates[cur]);
+  }
+
+  function findState(obj) {
+    var tabpane = $(obj).closest('.tab-pane');
+    var tType = $(tabpane).data('ttype');
+
+    var cur = 0;
+    for (var i = 0; i < cStates.length; i++)
+      if (cStates[i].OrderType == tType) {
+        cur = i;
+        break;
+      }
+    return cur;
+  }
+
+  function RefreshTab(obj) {
+    var cur = findState(obj);
+    getTicketList($(obj).closest('.tab-pane').attr('id'), cStates[cur]);
+  }
+
+  function getTicketList(id, query) {
+    $.ajax({
+      type: "GET",
+      url: "@Url.Action("PurchasedTicketList", "Account")",
+      data: query,
+      datatype: "html",
+      success: function (data) {
+        $('#' + id).html(data);
+      }
+    });
+  }
+
+  function saveChangeFunc(id) {
+    var query = {
+      OrderId: id,
+      SendEmail: $('#sendConfirmationEmail').hasClass('basicInfoCheckBox'),
+      Attendees: []
+    };
+    $('input[id^="UETableTDSUbDivName"]').each(function () {
+      query.Attendees.push({
+        TicketbearerId: $(this).data('bearerid'),
+        Name: $(this).val(),
+        Email: $('#UETableTDSUbDivEmail' + $(this).data('bearerid')).val()
+      })
+    });
+    console.debug(query);
+    $.ajax({
+      type: "POST",
+      url: "@Url.Action("SavePurchasedTicketDetail", "Account")",
+      data: query,
+      datatype: "html",
+      success: function (data) {
+        $('#ajaxanswer').html(data);
+      }
+    });
+  }
+
+  function SendCancelOrder(obj, oId) {
+    console.debug(oId);
+    if ($(obj).closest('table').parent().parent().data('orderstate') != 1) {
+      $('#ajaxanswer').html("Order already cancelled.");
+      return;
+    }
+    $.ajax({
+      type: "POST",
+      url: "@Url.Action("CancelOrder", "Account")",
+      data: { OrderId: oId },
+      datatype: "html",
+      success: function (data) {
+        if (data > 0) {
+          var caption = $(obj).closest('table').parent().parent().prev('tr').find('td').last();
+          $(caption).html($(caption).html() + ' - Cancelled');
+          $('#ajaxanswer').html("Order cancelled.");
+        }
+        else
+          $('#ajaxanswer').html("Order wasn't cancelled.");
+      }
+    });
+  }
+
+  function SendOrganizerMessage(oId) {
+    var query = {
+      OrderId: oId,
+      Name: $('#nameContact').val(),
+      Email: $('#emailContact').val(),
+      Message: $('#messageContact').val()
+    }
+    console.debug(query);
+    $.ajax({
+      type: "POST",
+      url: "@Url.Action("SaveMessage", "Account")",
+      data: query,
+      datatype: "html",
+      success: function (data) {
+        if (data > 0) {
+          $('#ajaxanswer').html("Message saved.");
+        }
+        else
+          $('#ajaxanswer').html("Message not saved.");
+      }
+    });
+  }
 
 
 </script>

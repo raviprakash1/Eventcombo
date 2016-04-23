@@ -1,0 +1,31 @@
+﻿@using System.Collections.Generic;
+@using System.Linq;
+@using EventCombo.Models;
+@model OrderListMainViewModel
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="UETableHead" width="15%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Name')">Event</a></th>
+        <th class="UETableHead" width="15%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Date')">Date</a></th>
+        <th class="UETableHead">Favorite</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var order in Model.Orders)
+      {
+        <tr>
+          <td class="UETableTD">@order.Name</td>
+          <td class="UETableTD">@order.EventStartDate</td>
+          <td class="UETableTD">
+            <button class="desc_btn_bg_none desc_btn_bg_active share_like_btn" id="btnfavourite@(order.OrderId)" title="Your Favourite" onclick="SaveFav();" type="button">
+              <i class="fa fa-heart"></i>
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+

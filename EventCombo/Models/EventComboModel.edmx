@@ -367,6 +367,14 @@
           <Property Name="O_PayPal_TokenId" Type="varchar" MaxLength="100" />
           <Property Name="O_PayPal_PayerId" Type="varchar" MaxLength="100" />
           <Property Name="O_PayPal_TrancId" Type="varchar" MaxLength="100" />
+          <Property Name="OrderStateId" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="OrderState">
+          <Key>
+            <PropertyRef Name="OrderStateId" />
+          </Key>
+          <Property Name="OrderStateId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderStateName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="OrderTemplate">
           <Key>
@@ -489,9 +497,9 @@
           <Property Name="Orgnizer_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Orgnizer_Name" Type="varchar" MaxLength="300" />
           <Property Name="Organizer_Desc" Type="nvarchar(max)" />
-          <Property Name="Organizer_FBLink" Type="varchar" MaxLength="256" />
-          <Property Name="Organizer_Twitter" Type="varchar" MaxLength="256" />
-          <Property Name="Organizer_Linkedin" Type="varchar" MaxLength="256" />
+          <Property Name="Organizer_FBLink" Type="varchar" MaxLength="300" />
+          <Property Name="Organizer_Twitter" Type="varchar" MaxLength="300" />
+          <Property Name="Organizer_Linkedin" Type="varchar" MaxLength="300" />
           <Property Name="UserId" Type="varchar" MaxLength="256" />
           <Property Name="Organizer_Image" Type="varchar" MaxLength="300" />
           <Property Name="Organizer_Address1" Type="varchar" MaxLength="256" />
@@ -848,7 +856,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="Parent_EventID" Type="bigint" />
           <Property Name="EventCancel" Type="varchar" MaxLength="2" />
         </EntityType>
-        <Association Name="FK__EventSubC__Event__019419E5">
+        <Association Name="FK__EventSubC__Event__1DF12CC8">
           <End Role="EventCategory" Type="Self.EventCategory" Multiplicity="1" />
           <End Role="EventSubCategory" Type="Self.EventSubCategory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -860,7 +868,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TicketDel__Deliv__08411774">
+        <Association Name="FK__TicketDel__Deliv__249E2A57">
           <End Role="DeliveryMethod" Type="Self.DeliveryMethod" Multiplicity="1" />
           <End Role="TicketDeliveryMethod" Type="Self.TicketDeliveryMethod" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1159,6 +1167,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MultipleEvent" EntityType="Self.MultipleEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Detail_T" EntityType="Self.Order_Detail_T" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderState" EntityType="Self.OrderState" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderTemplate" EntityType="Self.OrderTemplate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderTemplateEventType" EntityType="Self.OrderTemplateEventType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderTemplateGroupType" EntityType="Self.OrderTemplateGroupType" Schema="dbo" store:Type="Tables" />
@@ -1229,11 +1238,11 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
     [v_RetrieveEventid].[EventCancel] AS [EventCancel]
     FROM [dbo].[v_RetrieveEventid] AS [v_RetrieveEventid]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__EventSubC__Event__019419E5" Association="Self.FK__EventSubC__Event__019419E5">
+          <AssociationSet Name="FK__EventSubC__Event__1DF12CC8" Association="Self.FK__EventSubC__Event__1DF12CC8">
             <End Role="EventCategory" EntitySet="EventCategory" />
             <End Role="EventSubCategory" EntitySet="EventSubCategory" />
           </AssociationSet>
-          <AssociationSet Name="FK__TicketDel__Deliv__08411774" Association="Self.FK__TicketDel__Deliv__08411774">
+          <AssociationSet Name="FK__TicketDel__Deliv__249E2A57" Association="Self.FK__TicketDel__Deliv__249E2A57">
             <End Role="DeliveryMethod" EntitySet="DeliveryMethod" />
             <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethod" />
           </AssociationSet>
@@ -1335,6 +1344,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <NavigationProperty Name="Event" Relationship="Self.FK_Address_Event" FromRole="Address" ToRole="Event" />
           <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Ticket_Quantity_Details" Relationship="EventComboModel.AddressTicket_Quantity_Detail" FromRole="Address" ToRole="Ticket_Quantity_Detail" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -1386,6 +1396,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_Profile" FromRole="AspNetUsers" ToRole="Profile" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="Ticket_Purchased_Details" Relationship="EventComboModel.AspNetUserTicket_Purchased_Detail" FromRole="AspNetUser" ToRole="Ticket_Purchased_Detail" />
+          <NavigationProperty Name="Organizer_Masters" Relationship="EventComboModel.AspNetUserOrganizer_Master" FromRole="AspNetUser" ToRole="Organizer_Master" />
         </EntityType>
         <EntityType Name="BillingAddress">
           <Key>
@@ -1509,6 +1521,9 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Event" FromRole="Event" ToRole="Ticket" />
           <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="EventComboModel.FK_Event_Orgnizer_Detail_Event" FromRole="Event" ToRole="Event_Orgnizer_Detail" />
           <NavigationProperty Name="OrderTemplates" Relationship="EventComboModel.EventOrderTemplate" FromRole="Event" ToRole="OrderTemplate" />
+          <NavigationProperty Name="Ticket_Purchased_Detail" Relationship="EventComboModel.EventTicket_Purchased_Detail" FromRole="Event" ToRole="Ticket_Purchased_Detail" />
+          <NavigationProperty Name="EventFavourites" Relationship="EventComboModel.EventEventFavourite" FromRole="Event" ToRole="EventFavourite" />
+          <NavigationProperty Name="Event_OrganizerMessages" Relationship="EventComboModel.EventEvent_OrganizerMessages" FromRole="Event" ToRole="Event_OrganizerMessages" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -1521,6 +1536,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MessageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Event" Relationship="EventComboModel.EventEvent_OrganizerMessages" FromRole="Event_OrganizerMessages" ToRole="Event" />
+          <NavigationProperty Name="Organizer_Master" Relationship="EventComboModel.Organizer_MasterEvent_OrganizerMessages" FromRole="Event_OrganizerMessages" ToRole="Organizer_Master" />
         </EntityType>
         <EntityType Name="Event_VariableDesc">
           <Key>
@@ -1547,6 +1564,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="eventId" Type="Int64" />
           <Property Name="FavId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Event" Relationship="EventComboModel.EventEventFavourite" FromRole="EventFavourite" ToRole="Event" />
         </EntityType>
         <EntityType Name="EventImage">
           <Key>
@@ -1598,6 +1616,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <NavigationProperty Name="Event" Relationship="Self.FK_EventVenue_Event" FromRole="EventVenue" ToRole="Event" />
           <NavigationProperty Name="EventVenue1" Relationship="Self.FK_EventVenue_EventVenue" FromRole="EventVenue" ToRole="EventVenue1" />
           <NavigationProperty Name="EventVenue2" Relationship="Self.FK_EventVenue_EventVenue" FromRole="EventVenue1" ToRole="EventVenue" />
+          <NavigationProperty Name="Publish_Event_Details" Relationship="EventComboModel.EventVenuePublish_Event_Detail" FromRole="EventVenue" ToRole="Publish_Event_Detail" />
         </EntityType>
         <EntityType Name="EventVote">
           <Key>
@@ -1632,6 +1651,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="MonthlyWeek" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="MonthlyWeekDays" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Event" Relationship="Self.FK_MultipleEvent_Event" FromRole="MultipleEvent" ToRole="Event" />
+          <NavigationProperty Name="Publish_Event_Details" Relationship="EventComboModel.MultipleEventPublish_Event_Detail" FromRole="MultipleEvent" ToRole="Publish_Event_Detail" />
         </EntityType>
         <EntityType Name="Order_Detail_T">
           <Key>
@@ -1649,6 +1669,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="O_PayPal_TokenId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_PayPal_PayerId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_PayPal_TrancId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OrderStateId" Type="Byte" />
+          <NavigationProperty Name="OrderState" Relationship="EventComboModel.OrderStateOrder_Detail_T" FromRole="Order_Detail_T" ToRole="OrderState" />
         </EntityType>
         <EntityType Name="Payment_Info">
           <Key>
@@ -1734,6 +1756,9 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="PE_Scheduled_Date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PE_Start_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PE_End_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Ticket_Quantity_Details" Relationship="EventComboModel.Publish_Event_DetailTicket_Quantity_Detail" FromRole="Publish_Event_Detail" ToRole="Ticket_Quantity_Detail" />
+          <NavigationProperty Name="EventVenue" Relationship="EventComboModel.EventVenuePublish_Event_Detail" FromRole="Publish_Event_Detail" ToRole="EventVenue" />
+          <NavigationProperty Name="MultipleEvent" Relationship="EventComboModel.MultipleEventPublish_Event_Detail" FromRole="Publish_Event_Detail" ToRole="MultipleEvent" />
         </EntityType>
         <EntityType Name="ShippingAddress">
           <Key>
@@ -1835,6 +1860,9 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="TPD_Donate" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TPD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="TPD_EC_Fee" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Event" Relationship="EventComboModel.EventTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="Event" />
+          <NavigationProperty Name="Ticket_Quantity_Detail" Relationship="EventComboModel.Ticket_Quantity_DetailTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="Ticket_Quantity_Detail" />
+          <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.AspNetUserTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="Ticket_Quantity_Detail">
           <Key>
@@ -1850,6 +1878,9 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="TQD_StartDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TQD_StartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_Quantity_Info_Ticket" FromRole="Ticket_Quantity_Detail" ToRole="Ticket" />
+          <NavigationProperty Name="Ticket_Purchased_Details" Relationship="EventComboModel.Ticket_Quantity_DetailTicket_Purchased_Detail" FromRole="Ticket_Quantity_Detail" ToRole="Ticket_Purchased_Detail" />
+          <NavigationProperty Name="Publish_Event_Detail" Relationship="EventComboModel.Publish_Event_DetailTicket_Quantity_Detail" FromRole="Ticket_Quantity_Detail" ToRole="Publish_Event_Detail" />
+          <NavigationProperty Name="Address" Relationship="EventComboModel.AddressTicket_Quantity_Detail" FromRole="Ticket_Quantity_Detail" ToRole="Address" />
         </EntityType>
         <EntityType Name="TicketBearer">
           <Key>
@@ -2220,8 +2251,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             <Parameter Name="Long" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetOrganizerEventid" ReturnType="Collection(EventComboModel.GetOrganizerEventid_Result)">
-            <Parameter Name="Masterid" Mode="In" Type="Int64" />
 
+          <Parameter Name="Masterid" Mode="In" Type="Int64" />
           </FunctionImport>
           <EntitySet Name="v_RetrieveEventid" EntityType="EventComboModel.v_RetrieveEventid" />
           <FunctionImport Name="GetLantLongDistance" ReturnType="Collection(Double)">
@@ -2303,6 +2334,55 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             <End Role="Ticket" EntitySet="Tickets" />
             <End Role="OrderTemplate" EntitySet="OrderTemplates" />
           </AssociationSet>
+          <AssociationSet Name="EventTicket_Purchased_Detail" Association="EventComboModel.EventTicket_Purchased_Detail">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Ticket_Purchased_Detail" EntitySet="Ticket_Purchased_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="EventEventFavourite" Association="EventComboModel.EventEventFavourite">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="EventFavourite" EntitySet="EventFavourites" />
+          </AssociationSet>
+          <AssociationSet Name="Ticket_Quantity_DetailTicket_Purchased_Detail" Association="EventComboModel.Ticket_Quantity_DetailTicket_Purchased_Detail">
+            <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
+            <End Role="Ticket_Purchased_Detail" EntitySet="Ticket_Purchased_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="Publish_Event_DetailTicket_Quantity_Detail" Association="EventComboModel.Publish_Event_DetailTicket_Quantity_Detail">
+            <End Role="Publish_Event_Detail" EntitySet="Publish_Event_Detail" />
+            <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="EventVenuePublish_Event_Detail" Association="EventComboModel.EventVenuePublish_Event_Detail">
+            <End Role="EventVenue" EntitySet="EventVenues" />
+            <End Role="Publish_Event_Detail" EntitySet="Publish_Event_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="MultipleEventPublish_Event_Detail" Association="EventComboModel.MultipleEventPublish_Event_Detail">
+            <End Role="MultipleEvent" EntitySet="MultipleEvents" />
+            <End Role="Publish_Event_Detail" EntitySet="Publish_Event_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="AddressTicket_Quantity_Detail" Association="EventComboModel.AddressTicket_Quantity_Detail">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserTicket_Purchased_Detail" Association="EventComboModel.AspNetUserTicket_Purchased_Detail">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Ticket_Purchased_Detail" EntitySet="Ticket_Purchased_Detail" />
+          </AssociationSet>
+          <EntitySet Name="OrderStates" EntityType="EventComboModel.OrderState" />
+          <AssociationSet Name="OrderStateOrder_Detail_T" Association="EventComboModel.OrderStateOrder_Detail_T">
+            <End Role="OrderState" EntitySet="OrderStates" />
+            <End Role="Order_Detail_T" EntitySet="Order_Detail_T" />
+          </AssociationSet>
+          <AssociationSet Name="EventEvent_OrganizerMessages" Association="EventComboModel.EventEvent_OrganizerMessages">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Event_OrganizerMessages" EntitySet="Event_OrganizerMessages" />
+          </AssociationSet>
+          <AssociationSet Name="Organizer_MasterEvent_OrganizerMessages" Association="EventComboModel.Organizer_MasterEvent_OrganizerMessages">
+            <End Role="Organizer_Master" EntitySet="Organizer_Master" />
+            <End Role="Event_OrganizerMessages" EntitySet="Event_OrganizerMessages" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserOrganizer_Master" Association="EventComboModel.AspNetUserOrganizer_Master">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Organizer_Master" EntitySet="Organizer_Master" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -2382,9 +2462,9 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="Orgnizer_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Orgnizer_Name" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Organizer_Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Organizer_FBLink" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Organizer_Twitter" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="Organizer_Linkedin" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Organizer_FBLink" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Organizer_Twitter" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Organizer_Linkedin" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Organizer_Image" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Organizer_Address1" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
@@ -2400,6 +2480,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="contenttype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Imagepath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="EventComboModel.FK_Event_Orgnizer_Detail_Organizer_Master" FromRole="Organizer_Master" ToRole="Event_Orgnizer_Detail" />
+          <NavigationProperty Name="Event_OrganizerMessages" Relationship="EventComboModel.Organizer_MasterEvent_OrganizerMessages" FromRole="Organizer_Master" ToRole="Event_OrganizerMessages" />
+          <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.AspNetUserOrganizer_Master" FromRole="Organizer_Master" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="Event_Orgnizer_Detail">
           <Key>
@@ -2866,6 +2948,158 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="Parent_EventID" Type="Int64" />
           <Property Name="EventCancel" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
+        <Association Name="EventTicket_Purchased_Detail">
+          <End Type="EventComboModel.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="EventComboModel.Ticket_Purchased_Detail" Role="Ticket_Purchased_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Ticket_Purchased_Detail">
+              <PropertyRef Name="TPD_Event_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventEventFavourite">
+          <End Type="EventComboModel.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="EventComboModel.EventFavourite" Role="EventFavourite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="EventFavourite">
+              <PropertyRef Name="eventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Ticket_Quantity_DetailTicket_Purchased_Detail">
+          <End Type="EventComboModel.Ticket_Quantity_Detail" Role="Ticket_Quantity_Detail" Multiplicity="0..1" />
+          <End Type="EventComboModel.Ticket_Purchased_Detail" Role="Ticket_Purchased_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket_Quantity_Detail">
+              <PropertyRef Name="TQD_Id" />
+            </Principal>
+            <Dependent Role="Ticket_Purchased_Detail">
+              <PropertyRef Name="TPD_TQD_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Publish_Event_DetailTicket_Quantity_Detail">
+          <End Type="EventComboModel.Publish_Event_Detail" Role="Publish_Event_Detail" Multiplicity="0..1" />
+          <End Type="EventComboModel.Ticket_Quantity_Detail" Role="Ticket_Quantity_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publish_Event_Detail">
+              <PropertyRef Name="PE_Id" />
+            </Principal>
+            <Dependent Role="Ticket_Quantity_Detail">
+              <PropertyRef Name="TQD_PE_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventVenuePublish_Event_Detail">
+          <End Type="EventComboModel.EventVenue" Role="EventVenue" Multiplicity="0..1" />
+          <End Type="EventComboModel.Publish_Event_Detail" Role="Publish_Event_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventVenue">
+              <PropertyRef Name="EventVenueID" />
+            </Principal>
+            <Dependent Role="Publish_Event_Detail">
+              <PropertyRef Name="PE_SingleVenue_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MultipleEventPublish_Event_Detail">
+          <End Type="EventComboModel.MultipleEvent" Role="MultipleEvent" Multiplicity="0..1" />
+          <End Type="EventComboModel.Publish_Event_Detail" Role="Publish_Event_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MultipleEvent">
+              <PropertyRef Name="MultipleEventID" />
+            </Principal>
+            <Dependent Role="Publish_Event_Detail">
+              <PropertyRef Name="PE_MultipleVenue_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AddressTicket_Quantity_Detail">
+          <End Type="EventComboModel.Address" Role="Address" Multiplicity="0..1" />
+          <End Type="EventComboModel.Ticket_Quantity_Detail" Role="Ticket_Quantity_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="Ticket_Quantity_Detail">
+              <PropertyRef Name="TQD_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserTicket_Purchased_Detail">
+          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="EventComboModel.Ticket_Purchased_Detail" Role="Ticket_Purchased_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket_Purchased_Detail">
+              <PropertyRef Name="TPD_User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrderState">
+          <Key>
+            <PropertyRef Name="OrderStateId" />
+          </Key>
+          <Property Name="OrderStateId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderStateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Order_Details" Relationship="EventComboModel.OrderStateOrder_Detail_T" FromRole="OrderState" ToRole="Order_Detail_T" />
+        </EntityType>
+        <Association Name="OrderStateOrder_Detail_T">
+          <End Type="EventComboModel.OrderState" Role="OrderState" Multiplicity="0..1" />
+          <End Type="EventComboModel.Order_Detail_T" Role="Order_Detail_T" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderState">
+              <PropertyRef Name="OrderStateId" />
+            </Principal>
+            <Dependent Role="Order_Detail_T">
+              <PropertyRef Name="OrderStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventEvent_OrganizerMessages">
+          <End Type="EventComboModel.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="EventComboModel.Event_OrganizerMessages" Role="Event_OrganizerMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Event_OrganizerMessages">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Organizer_MasterEvent_OrganizerMessages">
+          <End Type="EventComboModel.Organizer_Master" Role="Organizer_Master" Multiplicity="0..1" />
+          <End Type="EventComboModel.Event_OrganizerMessages" Role="Event_OrganizerMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizer_Master">
+              <PropertyRef Name="Orgnizer_Id" />
+            </Principal>
+            <Dependent Role="Event_OrganizerMessages">
+              <PropertyRef Name="OrganizerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserOrganizer_Master">
+          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="EventComboModel.Organizer_Master" Role="Organizer_Master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organizer_Master">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3199,6 +3433,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySetMapping Name="Order_Detail_T">
             <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
               <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="OrderStateId" ColumnName="OrderStateId" />
                 <ScalarProperty Name="O_PayPal_TrancId" ColumnName="O_PayPal_TrancId" />
                 <ScalarProperty Name="O_PayPal_PayerId" ColumnName="O_PayPal_PayerId" />
                 <ScalarProperty Name="O_PayPal_TokenId" ColumnName="O_PayPal_TokenId" />
@@ -3838,6 +4073,14 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
                 <ScalarProperty Name="EventCategoryID" ColumnName="EventCategoryID" />
                 <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderStates">
+            <EntityTypeMapping TypeName="EventComboModel.OrderState">
+              <MappingFragment StoreEntitySet="OrderState">
+                <ScalarProperty Name="OrderStateName" ColumnName="OrderStateName" />
+                <ScalarProperty Name="OrderStateId" ColumnName="OrderStateId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
