@@ -2215,15 +2215,16 @@ namespace EventCombo.Controllers
 
                                              }).ToList();
 
-                            strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'><span style='float:right;'>" + vdate + " </span></p ></tr > ");
-                            strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                            strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
-                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Type </th>");
-                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Quantity </th>");
-                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </th>");
-                            strHTML.Append("</tr>");
+                          
                             foreach (var qty in itemtoadd)
                             {
+                                strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'><span style='float:right;'>" + vdate + " </span></p ></tr > ");
+                                strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                                strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
+                                strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Type </th>");
+                                strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Quantity </th>");
+                                strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </th>");
+                                strHTML.Append("</tr>");
                                 if (qty.Promocode!=null && qty.Promocode != 0 )
                                 {
                                     strHTML.Append("<tr align='left' style='color:#696564;'> ");
@@ -2281,16 +2282,17 @@ namespace EventCombo.Controllers
                                              where p.TQD_AddressId == item && TP.TPD_GUID == gUID && TP.TPD_Event_Id == Eventid
                                              select p.TQD_StartDate).ToList().Distinct().FirstOrDefault();
                         var addressdetail = (from p in db.Addresses where p.AddressID == item select p.ConsolidateAddress).FirstOrDefault();
-                        strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'>" + addressdetail + "<span style='float:right;'>" + dateofaddress.ToString() + " </span></p ></tr > ");
-                        strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                        strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
-                        strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;' > Type </th >");
-                        strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Quantity </th>");
-                        strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </ th >");
-                        strHTML.Append("</tr>");
+                      
 
                         foreach (var qty in itemtoadd)
                         {
+                            strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'>" + addressdetail + "<span style='float:right;'>" + dateofaddress.ToString() + " </span></p ></tr > ");
+                            strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                            strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
+                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;' > Type </th >");
+                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Quantity </th>");
+                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </ th >");
+                            strHTML.Append("</tr>");
                             if (qty.Promocode != null && qty.Promocode != 0)
                             {
                                 strHTML.Append("<tr align='left' style='color:#696564;'> ");
@@ -2351,17 +2353,17 @@ namespace EventCombo.Controllers
                                          where p.TQD_AddressId == item && TP.TPD_GUID == gUID && TP.TPD_Event_Id == Eventid
                                          select p.TQD_StartDate).ToList().Distinct().FirstOrDefault();
                     var addressdetail = (from p in db.Addresses where p.AddressID == item select p.ConsolidateAddress).FirstOrDefault();
-                    strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'>" + addressdetail + "<span style='float:right;'>" + dateofaddress.ToString() + " </span></p ></tr > ");
-                    strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                    strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
-                    strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;' > Type </th >");
-                    strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Quantity </th>");
-                    strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </ th >");
-                    strHTML.Append("</tr>");
+                  
 
                     foreach (var qty in itemtoadd)
                     {
-                       
+                        strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'>" + addressdetail + "<span style='float:right;'>" + dateofaddress.ToString() + " </span></p ></tr > ");
+                        strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                        strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
+                        strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;' > Type </th >");
+                        strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Quantity </th>");
+                        strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </ th >");
+                        strHTML.Append("</tr>");
                         if (qty.Promocode != null && qty.Promocode != 0)
                         {
                             strHTML.Append("<tr align='left' style='color:#696564;'> ");
