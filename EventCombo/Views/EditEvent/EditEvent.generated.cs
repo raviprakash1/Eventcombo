@@ -4424,8 +4424,8 @@ WriteLiteral("></script>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("    <script>\r\n        $(document).ready(function () {\r\n            alert(\"Chal py" +
-"a\");\r\n            $.getJSON(\'");
+WriteLiteral("    <script>\r\n        $(document).ready(function () {\r\n            //alert(\"Chal " +
+"pya\");\r\n            $.getJSON(\'");
 
             
             #line 1298 "..\..\Views\EditEvent\EditEvent.cshtml"
@@ -4943,89 +4943,89 @@ WriteLiteral("\',\r\n                        data: { model },\r\n               
 "c\').css(\'display\', \'block\');\r\n                            $(\'#diverroacc\').css(\'" +
 "display\', \'none\');\r\n                            $(\'#succaccmsg\').html(\'Congratul" +
 "ations, your event is on Eventcombo!\');\r\n                            $(\"#hdEvent" +
-"Id\").val(response);\r\n                            alert(response);\r\n             " +
-"           }\r\n                    });\r\n                }\r\n                else {" +
-"\r\n                    $(\'#divaccsuc\').css(\'display\', \'none\');\r\n                 " +
-"   $(\'#diverroacc\').css(\'display\', \'block\');\r\n                    $(\'#erraccmsg\'" +
-").html(\'There some problem occurs, Please check after some time.\');\r\n           " +
-"     }\r\n            });\r\n\r\n\r\n            $(\"#btMultiVenue\").click(function () {\r" +
-"\n                $(\"#txtEventLocation\").val(\'\');\r\n            });\r\n\r\n           " +
-" $(\"#btOnlineEvent\").click(function () {\r\n                if ($(\"#btOnlineEvent\"" +
-").is(\":checked\") == true) {\r\n                    $(\"#dvAddress\").hide();\r\n      " +
-"              //$(\"#txtEventLocation\").prop(\'disabled\', true);\r\n                " +
-"    //$(\"#dllPastLocation\").prop(\'disabled\', true);\r\n                    //$(\"#F" +
-"indNewVen\").prop(\'disabled\', true);\r\n                    //$(\"#btMultiVenue\").pr" +
-"op(\'disabled\', true);\r\n                    //$(\"#UsepastLoc\").prop(\'disabled\', t" +
-"rue);\r\n                    $(\"#hidAddressStatus\").val(\'Online\');\r\n              " +
-"  }\r\n                else {\r\n                    $(\"#dvAddress\").show();\r\n      " +
-"              //$(\"#txtEventLocation\").prop(\'disabled\', false);\r\n               " +
-"     //$(\"#dllPastLocation\").prop(\'disabled\', false);\r\n                    //$(\"" +
-"#FindNewVen\").prop(\'disabled\', false);\r\n                    //$(\"#btMultiVenue\")" +
-".prop(\'disabled\', false);\r\n                    //$(\"#UsepastLoc\").prop(\'disabled" +
-"\', false);\r\n                    $(\"#hidAddressStatus\").val(\'\');\r\n               " +
-" }\r\n\r\n                //$(\"#dvAddress\").children().attr(\"disabled\", \"disabled\");" +
-"\r\n                //$(\"#dvAddress\").prop(\'disabled\', true);\r\n            });\r\n\r\n" +
-"\r\n\r\n\r\n            $(\"#btAddOrg\").click(function () {\r\n                //  alert(" +
-"\"Test\");\r\n                //  alert($(\'#dllOrganizer option\').length);\r\n        " +
-"        //    if (parseInt($(\'#dllOrganizer option\').length) < 25) {\r\n          " +
-"      //if ($(\"#hidOrgnizer\").val() == \"\") {\r\n                //var vval = $(\"#e" +
-"dSummer2\").code();\r\n                //var vLenght = $(\"#dvOrganizer\").length;\r\n\r" +
-"\n                //var divlength = $(\"#dvOrg_0> div\").size();\r\n\r\n               " +
-" //var data = $(\"#dvOrg_0\").clone();\r\n                //$(\"#dvOrganizer\").append" +
-"(data);\r\n                //alert(parseInt($(\"#ddlOrgnizers option\").length));\r\n\r" +
-"\n\r\n                if ($(\"#txtOrgnizer\").val().trim() == \'\') {\r\n                " +
-"    alert(\"Please enter valid organizer.\");\r\n                    $(\"#txtOrgnizer" +
-"\").focus();\r\n                    return false;\r\n                }\r\n\r\n\r\n\r\n       " +
-"         if ($(\"#hidOrgnizer\").val() == \'\') {\r\n                    if (parseInt(" +
-"$(\"#ddlOrgnizers option\").length) > 24) {\r\n                        alert(\"Limit " +
-"Exceeded, System Allow Only 25 Orgnizer.\");\r\n                        return fals" +
-"e;\r\n                    }\r\n                    AddOrgnizer();\r\n                }" +
-"\r\n                else\r\n                    UpdateOrgnizer($(\"#hidOrgnizer\").val" +
-"());\r\n\r\n\r\n                $(\"#hidOrgnizer\").val(\'\');\r\n                $(\"#txtOrg" +
-"nizer\").val(\'\');\r\n                $(\"#edOrgDes\").code(\'\');\r\n                $(\"#" +
-"txtOrgFBlink\").val(\'\');\r\n                $(\"#txtOrgTWlink\").val(\'\');\r\n          " +
-"      $(\"#Incsocial\").prop(\"checked\", false);\r\n                $(\"#dvOrgnizerFBT" +
-"w\").hide();\r\n                //alert(divlength);\r\n                //var addOptio" +
-"n = \'<div class=\"list-group-item ev_orgz_list\"></div> <div id = dvOrg_\' + vLengh" +
-"t.toString() + \'  class=\"col-sm-8 no_pad\">\' + $(\"#txtOrgnizer\").val() + \'</div><" +
-"div class=\"col-sm-4 no_pad text-right ev_org_edt_main\"><a href=\"#\"><i class=\"fa " +
-"fa-pencil\"></i> </a> | <a href=\"#\"><i class=\"fa fa-trash\"></i></a></div>\';\r\n    " +
-"            //$(\"#dvOrganizer\").append(addOption)\r\n\r\n                //\'<option " +
-"value=\"\' + vval + \'\" id=\"\' + $(\"#txtOrgnizer\").val() + \'\">\' + $(\"#txtOrgnizer\")." +
-"val() + \'</option>\';\r\n                //$(\"#dllOrganizer\").append(addOption);\r\n\r" +
-"\n                //}\r\n                //else {\r\n                //    //$(\'#dllO" +
-"rganizer option:selected\').removeAttr(\'selected\');\r\n                //    var vv" +
-"al = $(\"#edSummer2\").code();\r\n                //    $(\"#dllOrganizer option\").ea" +
-"ch(function (i) {\r\n                //        //alert($(this).text());\r\n         " +
-"       //        //alert($(\"#hidOrgnizer\").val());\r\n                //        if" +
-" ($(\"#hidOrgnizer\").val() == $(this).text()) {\r\n\r\n                //            " +
-"$(this).remove();\r\n                //            //alert($(\"#hidOrgnizer\").val()" +
-");\r\n                //            //$(this).text($(\"#txtOrgnizer\").val());\r\n    " +
-"            //            //$(this).val(vval);\r\n                //        }\r\n   " +
-"             //        //alert($(this).text() + \" : \" + $(this).val());\r\n       " +
-"         //    });\r\n                //    var vval = $(\"#edSummer2\").code();\r\n  " +
-"              //    var addOption = \'<option value=\"\' + vval + \'\" id=\"\' + vval +" +
-" \'\" >\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n                //    $(\"#dllOr" +
-"ganizer\").append(addOption);\r\n\r\n\r\n\r\n                //    //var addOption = \'<op" +
-"tion value=\"\' + vval + \'\" id=\"\' + vval + \'\" >\' + $(\"#txtOrgnizer\").val() + \'</op" +
-"tion>\';\r\n                //    //$(\"#dllOrganizer\").append(addOption);\r\n        " +
-"        //}\r\n                //}\r\n                //else {\r\n                //  " +
-"  alert(\"Limit Exceeded, System Alow Only 25 Orgnizer.\");\r\n\r\n                //}" +
-"\r\n\r\n                //$(\"#hidOrgnizer\").val(\'\');\r\n                //$(\"#txtOrgni" +
-"zer\").val(\'\');\r\n                //$(\"#edSummer2\").code(\'\');\r\n\r\n                /" +
-"/ $(\"#txtOrgnizer\").focus();\r\n                //$(\"#dllOrganizer option\").each(f" +
-"unction (i) {\r\n                //    alert($(this).text() + \" : \" + $(this).val(" +
-"));\r\n                //});\r\n\r\n                //alert(vval);\r\n\r\n            });\r" +
-"\n\r\n\r\n            $(\'#txtEventUrl\').bind(\'keypress\', function (event) {\r\n        " +
-"        var regex = new RegExp(\"^[a-zA-Z0-9]+$\");\r\n                var key = Str" +
-"ing.fromCharCode(!event.charCode ? event.which : event.charCode);\r\n             " +
-"   if (!regex.test(key)) {\r\n                    event.preventDefault();\r\n       " +
-"             return false;\r\n                }\r\n            });\r\n\r\n\r\n            " +
-"$(\'#txtEventUrl\').bind(\'cut copy paste\', function (event) {\r\n                eve" +
-"nt.preventDefault();\r\n                return false;\r\n            });\r\n\r\n        " +
-"    $(\"#txtEventUrl\").focusout(function () {\r\n                var vval = $(\"#txt" +
-"EventUrl\").val().trim();\r\n                if (vval != \'\') {\r\n                   " +
-" $.ajax({\r\n                        url: \'");
+"Id\").val(response);\r\n                            //alert(response);\r\n           " +
+"             }\r\n                    });\r\n                }\r\n                else" +
+" {\r\n                    $(\'#divaccsuc\').css(\'display\', \'none\');\r\n               " +
+"     $(\'#diverroacc\').css(\'display\', \'block\');\r\n                    $(\'#erraccms" +
+"g\').html(\'There some problem occurs, Please check after some time.\');\r\n         " +
+"       }\r\n            });\r\n\r\n\r\n            $(\"#btMultiVenue\").click(function () " +
+"{\r\n                $(\"#txtEventLocation\").val(\'\');\r\n            });\r\n\r\n         " +
+"   $(\"#btOnlineEvent\").click(function () {\r\n                if ($(\"#btOnlineEven" +
+"t\").is(\":checked\") == true) {\r\n                    $(\"#dvAddress\").hide();\r\n    " +
+"                //$(\"#txtEventLocation\").prop(\'disabled\', true);\r\n              " +
+"      //$(\"#dllPastLocation\").prop(\'disabled\', true);\r\n                    //$(\"" +
+"#FindNewVen\").prop(\'disabled\', true);\r\n                    //$(\"#btMultiVenue\")." +
+"prop(\'disabled\', true);\r\n                    //$(\"#UsepastLoc\").prop(\'disabled\'," +
+" true);\r\n                    $(\"#hidAddressStatus\").val(\'Online\');\r\n            " +
+"    }\r\n                else {\r\n                    $(\"#dvAddress\").show();\r\n    " +
+"                //$(\"#txtEventLocation\").prop(\'disabled\', false);\r\n             " +
+"       //$(\"#dllPastLocation\").prop(\'disabled\', false);\r\n                    //$" +
+"(\"#FindNewVen\").prop(\'disabled\', false);\r\n                    //$(\"#btMultiVenue" +
+"\").prop(\'disabled\', false);\r\n                    //$(\"#UsepastLoc\").prop(\'disabl" +
+"ed\', false);\r\n                    $(\"#hidAddressStatus\").val(\'\');\r\n             " +
+"   }\r\n\r\n                //$(\"#dvAddress\").children().attr(\"disabled\", \"disabled\"" +
+");\r\n                //$(\"#dvAddress\").prop(\'disabled\', true);\r\n            });\r\n" +
+"\r\n\r\n\r\n\r\n            $(\"#btAddOrg\").click(function () {\r\n                //  aler" +
+"t(\"Test\");\r\n                //  alert($(\'#dllOrganizer option\').length);\r\n      " +
+"          //    if (parseInt($(\'#dllOrganizer option\').length) < 25) {\r\n        " +
+"        //if ($(\"#hidOrgnizer\").val() == \"\") {\r\n                //var vval = $(\"" +
+"#edSummer2\").code();\r\n                //var vLenght = $(\"#dvOrganizer\").length;\r" +
+"\n\r\n                //var divlength = $(\"#dvOrg_0> div\").size();\r\n\r\n             " +
+"   //var data = $(\"#dvOrg_0\").clone();\r\n                //$(\"#dvOrganizer\").appe" +
+"nd(data);\r\n                //alert(parseInt($(\"#ddlOrgnizers option\").length));\r" +
+"\n\r\n\r\n                if ($(\"#txtOrgnizer\").val().trim() == \'\') {\r\n              " +
+"      //alert(\"Please enter valid organizer.\");\r\n                    $(\"#txtOrgn" +
+"izer\").focus();\r\n                    return false;\r\n                }\r\n\r\n\r\n\r\n   " +
+"             if ($(\"#hidOrgnizer\").val() == \'\') {\r\n                    if (parse" +
+"Int($(\"#ddlOrgnizers option\").length) > 24) {\r\n                        //alert(\"" +
+"Limit Exceeded, System Allow Only 25 Orgnizer.\");\r\n                        retur" +
+"n false;\r\n                    }\r\n                    AddOrgnizer();\r\n           " +
+"     }\r\n                else\r\n                    UpdateOrgnizer($(\"#hidOrgnizer" +
+"\").val());\r\n\r\n\r\n                $(\"#hidOrgnizer\").val(\'\');\r\n                $(\"#" +
+"txtOrgnizer\").val(\'\');\r\n                $(\"#edOrgDes\").code(\'\');\r\n              " +
+"  $(\"#txtOrgFBlink\").val(\'\');\r\n                $(\"#txtOrgTWlink\").val(\'\');\r\n    " +
+"            $(\"#Incsocial\").prop(\"checked\", false);\r\n                $(\"#dvOrgni" +
+"zerFBTw\").hide();\r\n                //alert(divlength);\r\n                //var ad" +
+"dOption = \'<div class=\"list-group-item ev_orgz_list\"></div> <div id = dvOrg_\' + " +
+"vLenght.toString() + \'  class=\"col-sm-8 no_pad\">\' + $(\"#txtOrgnizer\").val() + \'<" +
+"/div><div class=\"col-sm-4 no_pad text-right ev_org_edt_main\"><a href=\"#\"><i clas" +
+"s=\"fa fa-pencil\"></i> </a> | <a href=\"#\"><i class=\"fa fa-trash\"></i></a></div>\';" +
+"\r\n                //$(\"#dvOrganizer\").append(addOption)\r\n\r\n                //\'<o" +
+"ption value=\"\' + vval + \'\" id=\"\' + $(\"#txtOrgnizer\").val() + \'\">\' + $(\"#txtOrgni" +
+"zer\").val() + \'</option>\';\r\n                //$(\"#dllOrganizer\").append(addOptio" +
+"n);\r\n\r\n                //}\r\n                //else {\r\n                //    //$(" +
+"\'#dllOrganizer option:selected\').removeAttr(\'selected\');\r\n                //    " +
+"var vval = $(\"#edSummer2\").code();\r\n                //    $(\"#dllOrganizer optio" +
+"n\").each(function (i) {\r\n                //        //alert($(this).text());\r\n   " +
+"             //        //alert($(\"#hidOrgnizer\").val());\r\n                //    " +
+"    if ($(\"#hidOrgnizer\").val() == $(this).text()) {\r\n\r\n                //      " +
+"      $(this).remove();\r\n                //            //alert($(\"#hidOrgnizer\")" +
+".val());\r\n                //            //$(this).text($(\"#txtOrgnizer\").val());" +
+"\r\n                //            //$(this).val(vval);\r\n                //        " +
+"}\r\n                //        //alert($(this).text() + \" : \" + $(this).val());\r\n " +
+"               //    });\r\n                //    var vval = $(\"#edSummer2\").code(" +
+");\r\n                //    var addOption = \'<option value=\"\' + vval + \'\" id=\"\' + " +
+"vval + \'\" >\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n                //    $(\"" +
+"#dllOrganizer\").append(addOption);\r\n\r\n\r\n\r\n                //    //var addOption " +
+"= \'<option value=\"\' + vval + \'\" id=\"\' + vval + \'\" >\' + $(\"#txtOrgnizer\").val() +" +
+" \'</option>\';\r\n                //    //$(\"#dllOrganizer\").append(addOption);\r\n  " +
+"              //}\r\n                //}\r\n                //else {\r\n              " +
+"  //    alert(\"Limit Exceeded, System Alow Only 25 Orgnizer.\");\r\n\r\n             " +
+"   //}\r\n\r\n                //$(\"#hidOrgnizer\").val(\'\');\r\n                //$(\"#tx" +
+"tOrgnizer\").val(\'\');\r\n                //$(\"#edSummer2\").code(\'\');\r\n\r\n           " +
+"     // $(\"#txtOrgnizer\").focus();\r\n                //$(\"#dllOrganizer option\")." +
+"each(function (i) {\r\n                //    alert($(this).text() + \" : \" + $(this" +
+").val());\r\n                //});\r\n\r\n                //alert(vval);\r\n\r\n          " +
+"  });\r\n\r\n\r\n            $(\'#txtEventUrl\').bind(\'keypress\', function (event) {\r\n  " +
+"              var regex = new RegExp(\"^[a-zA-Z0-9]+$\");\r\n                var key" +
+" = String.fromCharCode(!event.charCode ? event.which : event.charCode);\r\n       " +
+"         if (!regex.test(key)) {\r\n                    event.preventDefault();\r\n " +
+"                   return false;\r\n                }\r\n            });\r\n\r\n\r\n      " +
+"      $(\'#txtEventUrl\').bind(\'cut copy paste\', function (event) {\r\n             " +
+"   event.preventDefault();\r\n                return false;\r\n            });\r\n\r\n  " +
+"          $(\"#txtEventUrl\").focusout(function () {\r\n                var vval = $" +
+"(\"#txtEventUrl\").val().trim();\r\n                if (vval != \'\') {\r\n             " +
+"       $.ajax({\r\n                        url: \'");
 
             
             #line 2326 "..\..\Views\EditEvent\EditEvent.cshtml"
@@ -5049,7 +5049,7 @@ WriteLiteral(@"',
                             }
                         },
                         error: function (data) {
-                            alert(""Sorry there is some problem."");
+                            //alert(""Sorry there is some problem."");
                         }
                     });
                 }
@@ -5076,72 +5076,72 @@ WriteLiteral("\',\r\n                    data: { lECatId: vCatId, lSubCat: \"0\"
 "          $(\"#ddlEventSubCategory\").html(data);\r\n                        // item" +
 "s.push(\"<option value=\" + this.Value + \">\" + this.Text + \"</option>\");\r\n        " +
 "                //});\r\n                    },\r\n                    error: functi" +
-"on (data) {\r\n                        alert(\"Sorry there is some problem.\");\r\n   " +
-"                 }\r\n                });\r\n            });\r\n\r\n\r\n            $(\".cl" +
-"osemodal\").click(function () {\r\n                $(\".StartDatemodal\").hide();\r\n\r\n" +
-"            });\r\n\r\n            $(\".closetimemodal\").click(function () {\r\n       " +
-"         $(\".TmezoneSet\").hide();\r\n\r\n            });\r\n            // -----------" +
-"-------------------------Multiple schedule-----------------------------------\r\n " +
-"           $(\"#txtStartTime\").val(\"7:00pm\");\r\n            $(\"#txtEndTime\").val(\"" +
-"7:00pm\");\r\n            $(\"#txtTimeStart\").val(\"7:00pm\");\r\n            $(\"#txtTim" +
-"eEnd\").val(\"7:00pm\");\r\n\r\n            $(\"#dlSchOption\").change(function () {\r\n   " +
-"             if ($(\"#dlSchOption\").val() == \"Daily\") {\r\n                    $(\"#" +
-"dvWeeklyDayChk\").hide();\r\n                    $(\"#dvMonthly\").hide();\r\n\r\n       " +
-"         }\r\n                else if ($(\"#dlSchOption\").val() == \"Weekly\") {\r\n   " +
-"                 $(\"#dvWeeklyDayChk\").show();\r\n                    $(\"#dvMonthly" +
-"\").hide();\r\n                }\r\n                else if ($(\"#dlSchOption\").val() " +
-"== \"Monthly\") {\r\n                    $(\"#dvWeeklyDayChk\").hide();\r\n             " +
-"       $(\"#dvMonthly\").show();\r\n                }\r\n                else if ($(\"#" +
-"dlSchOption\").val() == \"Custom\") {\r\n                    $(\"#dvWeeklyDayChk\").hid" +
-"e();\r\n                    $(\"#dvMonthly\").hide();\r\n                }\r\n\r\n\r\n      " +
-"      });\r\n\r\n            $(\"#btEnterDates\").click(function () {\r\n               " +
-" //alert($(\"#hdSchType\").val());\r\n                if ($(\"#hdSchType\").val() == \'" +
-"Multiple\') {\r\n                    //$(\".SchmultiDetail\").slideToggle(\"slow\");\r\n " +
-"                   $(\".SchmultiDetail\").show();\r\n                    $(\".SchDivt" +
-"op\").hide();\r\n                    $(\".Schmultisingle\").show();\r\n                " +
-"}\r\n                else {\r\n                    $(\".SchDivtop\").show();\r\n        " +
-"            $(\".SchmultiDetail\").hide();\r\n                    $(\".Schmultisingle" +
-"\").hide();\r\n                }\r\n            });\r\n\r\n            $(\"#btSaveTimeZone" +
-"\").click(function () {\r\n                var vval = $(\"#dllTimeZone\").val();\r\n   " +
-"             if (vval == null || vval == \'\')\r\n                    vval = \"Timezo" +
-"ne & date setting\";\r\n\r\n                $(\"#lblTimeZone\").text(vval);\r\n\r\n        " +
-"    });\r\n\r\n            $(\"#btnAddSch\").click(function () {\r\n                $(\"#" +
-"hidSchLastState\").val($(\"#dlSchOption\").val());\r\n                if ($(\".Schmult" +
-"iDetail\").css(\'display\') == \'block\') {\r\n                    $(\"#hdSchType\").val(" +
-"\'Multiple\');\r\n                    vSelecttextDates = \"Click here to enter the st" +
-"art and end date\";\r\n                    if ($(\"#txtDateFrom\").val() != \'\' && $(\"" +
-"#txtDateFrom\").val() != null) {\r\n                        if ($(\"#dlSchOption\").v" +
-"al() == \"Daily\") {\r\n                            vSelecttextDates = \"Daily : \" + " +
-"$(\"#txtDateFrom\").val() + \" \" + $(\"#txtTimeStart\").val() + \" To \" + $(\"#txtDateT" +
-"o\").val() + \" \" + $(\"#txtTimeEnd\").val();\r\n                        }\r\n          " +
-"              else if ($(\"#dlSchOption\").val() == \"Weekly\") {\r\n                 " +
-"           vSelecttextDates = \"Weekly : \" + $(\"#txtDateFrom\").val() + \" \" + $(\"#" +
-"txtTimeStart\").val() + \" To \" + $(\"#txtDateTo\").val() + \" \" + $(\"#txtTimeEnd\").v" +
-"al();\r\n\r\n                        }\r\n                        else if ($(\"#dlSchOp" +
-"tion\").val() == \"Monthly\") {\r\n                            vSelecttextDates = \"Mo" +
-"nthly : \" + $(\"#txtDateFrom\").val() + \" \" + $(\"#txtTimeStart\").val() + \" To \" + " +
-"$(\"#txtDateTo\").val() + \" \" + $(\"#txtTimeEnd\").val();\r\n\r\n                       " +
-" }\r\n                        else if ($(\"#dlSchOption\").val() == \"Custom\") {\r\n   " +
-"                         vSelecttextDates = \"Custom : \" + $(\"#txtDateFrom\").val(" +
-") + \" \" + $(\"#txtTimeStart\").val() + \" To \" + $(\"#txtDateTo\").val() + \" \" + $(\"#" +
-"txtTimeEnd\").val();\r\n\r\n                        }\r\n                    }\r\n       " +
-"             $(\"#btEnterDates\").text(vSelecttextDates);\r\n                }\r\n    " +
-"            else {\r\n                    vSelecttextDates = \"Click here to enter " +
-"the start and end date\";\r\n                    if ($(\"#txtStartDate\").val() != \'\'" +
-" && $(\"#txtStartDate\").val() != null)\r\n                        vSelecttextDates " +
-"= $(\"#txtStartDate\").val() + \" \" + $(\"#txtStartTime\").val() + \" To \" + $(\"#txtEn" +
-"dDate\").val() + \" \" + $(\"#txtEndTime\").val()\r\n                    $(\"#btEnterDat" +
-"es\").text(vSelecttextDates);\r\n                    $(\"#hdSchType\").val(\'Single\');" +
-"\r\n                }\r\n            });\r\n\r\n            if ($(\"#hidSchLastState\").va" +
-"l() == \"\") {\r\n                $(\"#dlSchOption\").val(\"Daily\");\r\n                $" +
-"(\"#hidSchLastState\").val(\"Daily\");\r\n                $(\"#dvWeeklyDayChk\").hide();" +
-"\r\n                $(\"#dvMonthly\").hide();\r\n            }\r\n\r\n\r\n\r\n            // -" +
-"-----------------------------------End Multiple schedule------------------------" +
-"-----------\r\n\r\n            $(\"#UsepastLoc\").click(function () {\r\n               " +
-" if ($(\"#UsepastLoc\").is(\":checked\") == true)\r\n                    $(\"#hidAddres" +
-"sStatus\").val(\'PastLocation\');\r\n                else\r\n                    $(\"#hi" +
-"dAddressStatus\").val(\'\');\r\n\r\n\r\n                $.ajax({\r\n                    url" +
-": \'");
+"on (data) {\r\n                        //alert(\"Sorry there is some problem.\");\r\n " +
+"                   }\r\n                });\r\n            });\r\n\r\n\r\n            $(\"." +
+"closemodal\").click(function () {\r\n                $(\".StartDatemodal\").hide();\r\n" +
+"\r\n            });\r\n\r\n            $(\".closetimemodal\").click(function () {\r\n     " +
+"           $(\".TmezoneSet\").hide();\r\n\r\n            });\r\n            // ---------" +
+"---------------------------Multiple schedule-----------------------------------\r" +
+"\n            $(\"#txtStartTime\").val(\"7:00pm\");\r\n            $(\"#txtEndTime\").val" +
+"(\"7:00pm\");\r\n            $(\"#txtTimeStart\").val(\"7:00pm\");\r\n            $(\"#txtT" +
+"imeEnd\").val(\"7:00pm\");\r\n\r\n            $(\"#dlSchOption\").change(function () {\r\n " +
+"               if ($(\"#dlSchOption\").val() == \"Daily\") {\r\n                    $(" +
+"\"#dvWeeklyDayChk\").hide();\r\n                    $(\"#dvMonthly\").hide();\r\n\r\n     " +
+"           }\r\n                else if ($(\"#dlSchOption\").val() == \"Weekly\") {\r\n " +
+"                   $(\"#dvWeeklyDayChk\").show();\r\n                    $(\"#dvMonth" +
+"ly\").hide();\r\n                }\r\n                else if ($(\"#dlSchOption\").val(" +
+") == \"Monthly\") {\r\n                    $(\"#dvWeeklyDayChk\").hide();\r\n           " +
+"         $(\"#dvMonthly\").show();\r\n                }\r\n                else if ($(" +
+"\"#dlSchOption\").val() == \"Custom\") {\r\n                    $(\"#dvWeeklyDayChk\").h" +
+"ide();\r\n                    $(\"#dvMonthly\").hide();\r\n                }\r\n\r\n\r\n    " +
+"        });\r\n\r\n            $(\"#btEnterDates\").click(function () {\r\n             " +
+"   //alert($(\"#hdSchType\").val());\r\n                if ($(\"#hdSchType\").val() ==" +
+" \'Multiple\') {\r\n                    //$(\".SchmultiDetail\").slideToggle(\"slow\");\r" +
+"\n                    $(\".SchmultiDetail\").show();\r\n                    $(\".SchDi" +
+"vtop\").hide();\r\n                    $(\".Schmultisingle\").show();\r\n              " +
+"  }\r\n                else {\r\n                    $(\".SchDivtop\").show();\r\n      " +
+"              $(\".SchmultiDetail\").hide();\r\n                    $(\".Schmultising" +
+"le\").hide();\r\n                }\r\n            });\r\n\r\n            $(\"#btSaveTimeZo" +
+"ne\").click(function () {\r\n                var vval = $(\"#dllTimeZone\").val();\r\n " +
+"               if (vval == null || vval == \'\')\r\n                    vval = \"Time" +
+"zone & date setting\";\r\n\r\n                $(\"#lblTimeZone\").text(vval);\r\n\r\n      " +
+"      });\r\n\r\n            $(\"#btnAddSch\").click(function () {\r\n                $(" +
+"\"#hidSchLastState\").val($(\"#dlSchOption\").val());\r\n                if ($(\".Schmu" +
+"ltiDetail\").css(\'display\') == \'block\') {\r\n                    $(\"#hdSchType\").va" +
+"l(\'Multiple\');\r\n                    vSelecttextDates = \"Click here to enter the " +
+"start and end date\";\r\n                    if ($(\"#txtDateFrom\").val() != \'\' && $" +
+"(\"#txtDateFrom\").val() != null) {\r\n                        if ($(\"#dlSchOption\")" +
+".val() == \"Daily\") {\r\n                            vSelecttextDates = \"Daily : \" " +
+"+ $(\"#txtDateFrom\").val() + \" \" + $(\"#txtTimeStart\").val() + \" To \" + $(\"#txtDat" +
+"eTo\").val() + \" \" + $(\"#txtTimeEnd\").val();\r\n                        }\r\n        " +
+"                else if ($(\"#dlSchOption\").val() == \"Weekly\") {\r\n               " +
+"             vSelecttextDates = \"Weekly : \" + $(\"#txtDateFrom\").val() + \" \" + $(" +
+"\"#txtTimeStart\").val() + \" To \" + $(\"#txtDateTo\").val() + \" \" + $(\"#txtTimeEnd\")" +
+".val();\r\n\r\n                        }\r\n                        else if ($(\"#dlSch" +
+"Option\").val() == \"Monthly\") {\r\n                            vSelecttextDates = \"" +
+"Monthly : \" + $(\"#txtDateFrom\").val() + \" \" + $(\"#txtTimeStart\").val() + \" To \" " +
+"+ $(\"#txtDateTo\").val() + \" \" + $(\"#txtTimeEnd\").val();\r\n\r\n                     " +
+"   }\r\n                        else if ($(\"#dlSchOption\").val() == \"Custom\") {\r\n " +
+"                           vSelecttextDates = \"Custom : \" + $(\"#txtDateFrom\").va" +
+"l() + \" \" + $(\"#txtTimeStart\").val() + \" To \" + $(\"#txtDateTo\").val() + \" \" + $(" +
+"\"#txtTimeEnd\").val();\r\n\r\n                        }\r\n                    }\r\n     " +
+"               $(\"#btEnterDates\").text(vSelecttextDates);\r\n                }\r\n  " +
+"              else {\r\n                    vSelecttextDates = \"Click here to ente" +
+"r the start and end date\";\r\n                    if ($(\"#txtStartDate\").val() != " +
+"\'\' && $(\"#txtStartDate\").val() != null)\r\n                        vSelecttextDate" +
+"s = $(\"#txtStartDate\").val() + \" \" + $(\"#txtStartTime\").val() + \" To \" + $(\"#txt" +
+"EndDate\").val() + \" \" + $(\"#txtEndTime\").val()\r\n                    $(\"#btEnterD" +
+"ates\").text(vSelecttextDates);\r\n                    $(\"#hdSchType\").val(\'Single\'" +
+");\r\n                }\r\n            });\r\n\r\n            if ($(\"#hidSchLastState\")." +
+"val() == \"\") {\r\n                $(\"#dlSchOption\").val(\"Daily\");\r\n               " +
+" $(\"#hidSchLastState\").val(\"Daily\");\r\n                $(\"#dvWeeklyDayChk\").hide(" +
+");\r\n                $(\"#dvMonthly\").hide();\r\n            }\r\n\r\n\r\n\r\n            //" +
+" ------------------------------------End Multiple schedule----------------------" +
+"-------------\r\n\r\n            $(\"#UsepastLoc\").click(function () {\r\n             " +
+"   if ($(\"#UsepastLoc\").is(\":checked\") == true)\r\n                    $(\"#hidAddr" +
+"essStatus\").val(\'PastLocation\');\r\n                else\r\n                    $(\"#" +
+"hidAddressStatus\").val(\'\');\r\n\r\n\r\n                $.ajax({\r\n                    u" +
+"rl: \'");
 
             
             #line 2483 "..\..\Views\EditEvent\EditEvent.cshtml"
@@ -5153,217 +5153,217 @@ WriteLiteral("\',\r\n                    data: { lECatId: vCatId, lSubCat: \"0\"
 WriteLiteral("\',\r\n                    data: { \"lPreAddId\": $(\"#hdPastLId\").val() },\r\n          " +
 "          type: \"Post\",\r\n                    success: function (data) {\r\n       " +
 "                 $(\"#dllPastLocation\").html(data);\r\n                    },\r\n    " +
-"                error: function (data) {\r\n                        alert(\"Sorry t" +
-"here is some problem.\");\r\n                    }\r\n                });\r\n\r\n        " +
-"        //$(\"#dllPastLocation\")\r\n            });\r\n\r\n\r\n\r\n            // ---------" +
-"------------------------Map Implemetation---------------------------------------" +
-"-----\r\n            var input = document.getElementById(\'txtEventLocation\');\r\n\r\n " +
-"           var autocomplete = new google.maps.places.Autocomplete(input);\r\n     " +
-"       //autocomplete.bindTo(\'Hello\');\r\n\r\n            google.maps.event.addListe" +
-"ner(autocomplete, \'place_changed\', function () {\r\n                var mapOptions" +
-" = {\r\n                    center: new google.maps.LatLng(6.9167, 79.8473),\r\n    " +
-"                zoom: 10,\r\n                    mapTypeId: google.maps.MapTypeId." +
-"ROADMAP\r\n                };\r\n                //var map = new google.maps.Map(doc" +
-"ument.getElementById(\"map_canvas\"),\r\n                //  mapOptions);\r\n         " +
-"       var map = new google.maps.Map(document.getElementById(\"map\"),\r\n          " +
-"        mapOptions);\r\n                // create a marker\r\n                var la" +
-"tlng = new google.maps.LatLng(6.9167, 79.8473);\r\n                var marker = ne" +
-"w google.maps.Marker({\r\n                    position: latlng,\r\n                 " +
-"   map: map,\r\n                    title: \'My Place\'\r\n\r\n                });\r\n    " +
-"            var place = autocomplete.getPlace();\r\n                if (place.geom" +
-"etry.viewport) {\r\n                    map.fitBounds(place.geometry.viewport);\r\n " +
-"               }\r\n                else {\r\n                    map.setCenter(plac" +
-"e.geometry.location);\r\n                    map.setZoom(17);\r\n\r\n                }" +
-"\r\n                marker.setIcon(({\r\n                    url: place.icon,\r\n     " +
-"               size: new google.maps.Size(71, 71),\r\n                    origin: " +
-"new google.maps.Point(0, 0),\r\n                    anchor: new google.maps.Point(" +
-"17, 34),\r\n                    scaledSize: new google.maps.Size(35, 35)\r\n        " +
-"        }));\r\n                marker.setPosition(place.geometry.location);\r\n    " +
-"            marker.setVisible(true);\r\n\r\n                var address = \'\';\r\n     " +
-"           if (place.address_components) {\r\n                    address = [\r\n   " +
-"                   (place.address_components[0] && place.address_components[0].s" +
-"hort_name || \'\'),\r\n                      (place.address_components[1] && place.a" +
-"ddress_components[1].short_name || \'\'),\r\n                      (place.address_co" +
-"mponents[2] && place.address_components[2].short_name || \'\')\r\n                  " +
-"  ].join(\' \');\r\n                }\r\n\r\n                //$(\"#VenueName\").val(place" +
-".address_components[0].long_name);\r\n\r\n                //$(\"#City\").val(place.add" +
-"ress_components[1].long_name);\r\n                //$(\"#State\").val(place.address_" +
-"components[3].long_name);\r\n                //$(\"#Zip\").val(place.address_compone" +
-"nts[5].long_name);\r\n                //$(\"#CountryID\").val(place.address_componen" +
-"ts[4].long_name);\r\n\r\n                //$(\"#VenueName\").val(address.toString());\r" +
-"\n                //$(\"#Address1\").val(address[1].toString());\r\n                /" +
-"/$(\"#Address2\").val(address[2].toString());\r\n            });\r\n            // ---" +
-"-----------------Multiple Venue---------------------------\r\n\r\n            functi" +
-"on AddRow(TableId, ColumnValue, ColumnName, IncludeSNo) {\r\n                var C" +
-"olAry = ColumnValue.split(\'¶\');\r\n                var ColName = ColumnName.split(" +
-"\'¶\');\r\n                var Sno = $(\"#\" + TableId + \" tr\").length;\r\n             " +
-"   var cval = ColumnValue;\r\n                var strHTML = \'<tr>\';\r\n             " +
-"   strHTML = strHTML + \'<td style=\"display:none\">\' + Sno + \'</td>\';\r\n\r\n         " +
-"       var ConsolidateValue = \'\';\r\n                for (i = 0; i <= ColAry.lengt" +
-"h - 1; i++) {\r\n                    CellId = ColName[i] + Sno.toString();\r\n      " +
-"              strHTML = strHTML + \'<td style=\"display:none\"> <input type=\"text\" " +
-"name=\" \" id=\"\' + CellId + \'\" style=\"width:100px;\" value=\"\' + ColAry[i] + \'\" /></" +
-"td>\';\r\n                    if (ColAry[i] != \'\') {\r\n                        if (i" +
-" != ColAry.length - 1) {\r\n                            if (ConsolidateValue == \'\'" +
-")\r\n                                ConsolidateValue = ColAry[i];\r\n              " +
-"              else\r\n                                ConsolidateValue = Consolida" +
-"teValue + \',\' + ColAry[i];\r\n                        }\r\n                    }\r\n  " +
-"                  //if (ColName[i].toString() == \"CID\" || ColName[i].toString() " +
-"== \"CountryID\")\r\n                    //    strHTML = strHTML + \'<td style=\"displ" +
-"ay:none\"> <input type=\"text\" name=\" \" id=\"\' + CellId + \'\" style=\"width:100px;\" v" +
-"alue=\"\' + ColAry[i] + \'\" /></td>\';\r\n                    //else\r\n                " +
-"    //    strHTML = strHTML + \'<td> <input type=\"text\" name=\" \" id=\"\' + CellId +" +
-" \'\" style=\"width:100px;\" value=\"\' + ColAry[i] + \'\" /></td>\';\r\n                }\r" +
-"\n\r\n                strHTML = strHTML + \'<td align=\"left\"><label id=consolidate\' " +
-"+ Sno + \'>\' + ConsolidateValue + \' </label>\';\r\n\r\n                strHTML = strHT" +
-"ML + \'<td><div class=\"trigger mt5 ent_add\"><a href=\"#\" onclick=\"editRow(\' + Sno " +
-"+ \');\"><i class=\"fa fa-map-marker\"></i> Edit</a>  <a href=\"#\" id=\"btAddDelete\" o" +
-"nclick=\"DeleteTableRow(\' + Sno + \')\">Delete</a> </div> </td>\';\r\n                " +
-"//strHTML = strHTML + \'<td><div class=\"trigger mt5 ent_add\"><a href=\"#\" onclick=" +
-"\"editRow(\' + Sno + \');\" data-toggle=\"modal\" data-target=\"#myModal\"><i class=\"fa " +
-"fa-map-marker\"></i> Edit</a>  <input type=\"button\" name=\"Delete\" id=\"btAddDelete" +
-"\" onclick=\"DeleteTableRow(\' + Sno + \')\" value=\"Delete\" /> </div> </td>\';\r\n      " +
-"          //strHTML = strHTML + \'<td><input type=\"button\" onclick=\"editRow();\" i" +
-"d=\"btnEdit\" value=\"Edit\" /></td>\';\r\n                strHTML = strHTML + \'</tr>\';" +
-"\r\n                $(\"#\" + TableId).append(strHTML);\r\n            }\r\n\r\n          " +
-"  function EditRow(TableId, ColumnValue, ColumnName, Sno) {\r\n                var" +
+"                error: function (data) {\r\n                        //alert(\"Sorry" +
+" there is some problem.\");\r\n                    }\r\n                });\r\n\r\n      " +
+"          //$(\"#dllPastLocation\")\r\n            });\r\n\r\n\r\n\r\n            // -------" +
+"--------------------------Map Implemetation-------------------------------------" +
+"-------\r\n            var input = document.getElementById(\'txtEventLocation\');\r\n\r" +
+"\n            var autocomplete = new google.maps.places.Autocomplete(input);\r\n   " +
+"         //autocomplete.bindTo(\'Hello\');\r\n\r\n            google.maps.event.addLis" +
+"tener(autocomplete, \'place_changed\', function () {\r\n                var mapOptio" +
+"ns = {\r\n                    center: new google.maps.LatLng(6.9167, 79.8473),\r\n  " +
+"                  zoom: 10,\r\n                    mapTypeId: google.maps.MapTypeI" +
+"d.ROADMAP\r\n                };\r\n                //var map = new google.maps.Map(d" +
+"ocument.getElementById(\"map_canvas\"),\r\n                //  mapOptions);\r\n       " +
+"         var map = new google.maps.Map(document.getElementById(\"map\"),\r\n        " +
+"          mapOptions);\r\n                // create a marker\r\n                var " +
+"latlng = new google.maps.LatLng(6.9167, 79.8473);\r\n                var marker = " +
+"new google.maps.Marker({\r\n                    position: latlng,\r\n               " +
+"     map: map,\r\n                    title: \'My Place\'\r\n\r\n                });\r\n  " +
+"              var place = autocomplete.getPlace();\r\n                if (place.ge" +
+"ometry.viewport) {\r\n                    map.fitBounds(place.geometry.viewport);\r" +
+"\n                }\r\n                else {\r\n                    map.setCenter(pl" +
+"ace.geometry.location);\r\n                    map.setZoom(17);\r\n\r\n               " +
+" }\r\n                marker.setIcon(({\r\n                    url: place.icon,\r\n   " +
+"                 size: new google.maps.Size(71, 71),\r\n                    origin" +
+": new google.maps.Point(0, 0),\r\n                    anchor: new google.maps.Poin" +
+"t(17, 34),\r\n                    scaledSize: new google.maps.Size(35, 35)\r\n      " +
+"          }));\r\n                marker.setPosition(place.geometry.location);\r\n  " +
+"              marker.setVisible(true);\r\n\r\n                var address = \'\';\r\n   " +
+"             if (place.address_components) {\r\n                    address = [\r\n " +
+"                     (place.address_components[0] && place.address_components[0]" +
+".short_name || \'\'),\r\n                      (place.address_components[1] && place" +
+".address_components[1].short_name || \'\'),\r\n                      (place.address_" +
+"components[2] && place.address_components[2].short_name || \'\')\r\n                " +
+"    ].join(\' \');\r\n                }\r\n\r\n                //$(\"#VenueName\").val(pla" +
+"ce.address_components[0].long_name);\r\n\r\n                //$(\"#City\").val(place.a" +
+"ddress_components[1].long_name);\r\n                //$(\"#State\").val(place.addres" +
+"s_components[3].long_name);\r\n                //$(\"#Zip\").val(place.address_compo" +
+"nents[5].long_name);\r\n                //$(\"#CountryID\").val(place.address_compon" +
+"ents[4].long_name);\r\n\r\n                //$(\"#VenueName\").val(address.toString())" +
+";\r\n                //$(\"#Address1\").val(address[1].toString());\r\n               " +
+" //$(\"#Address2\").val(address[2].toString());\r\n            });\r\n            // -" +
+"-------------------Multiple Venue---------------------------\r\n\r\n            func" +
+"tion AddRow(TableId, ColumnValue, ColumnName, IncludeSNo) {\r\n                var" +
 " ColAry = ColumnValue.split(\'¶\');\r\n                var ColName = ColumnName.spli" +
-"t(\'¶\');\r\n                var ConsolidateValue = \'\';\r\n                for (i = 0;" +
-" i <= ColName.length - 1; i++) {\r\n\r\n                    CtrlId = ColName[i] + Sn" +
-"o.toString();\r\n                    if (ColAry[i] != \'\') {\r\n                     " +
-"   if (i != ColAry.length - 1) {\r\n                            if (ConsolidateVal" +
-"ue == \'\')\r\n                                ConsolidateValue = ColAry[i];\r\n      " +
-"                      else\r\n                                ConsolidateValue = C" +
-"onsolidateValue + \',\' + ColAry[i];\r\n                        }\r\n                 " +
-"   }\r\n\r\n                    //alert(CtrlId);\r\n                    //if (ColName[" +
-"i] == \"CID\")\r\n                    //{\r\n                    //    CtrlId = \"Count" +
-"ryID\" + Sno.toString();\r\n                    //    alert(\"In country\");\r\n       " +
-"             //}\r\n                    //else\r\n                    //    CtrlId =" +
-" ColName[i] + Sno.toString();\r\n\r\n\r\n                    $(\"#\" + CtrlId).val(ColAr" +
-"y[i]);\r\n                }\r\n                //   alert(ConsolidateValue);\r\n      " +
-"          $(\"#consolidate\" + Sno).text(ConsolidateValue);\r\n\r\n            }\r\n    " +
-"        function validateAddress() {\r\n                if ($(\"#VenueName\").val()." +
-"trim() == \'\') {\r\n                    alert(\"Please enter valid venue name\");\r\n  " +
-"                  $(\"#VenueName\").focus();\r\n                    return false;\r\n " +
-"               }\r\n                //if ($(\"#Address1\").val().trim() == \'\') {\r\n  " +
-"              //    alert(\"Please enter valid address\");\r\n                //    " +
-"$(\"#Address1\").focus();\r\n                //    return false;\r\n                //" +
-"}\r\n            }\r\n\r\n            $(\"#btReset\").click(function () {\r\n             " +
-"   $(\"#VenueName\").val(\"\");\r\n                $(\"#Address1\").val(\"\");\r\n          " +
-"      $(\"#Address2\").val(\"\");\r\n                $(\"#City\").val(\"\");\r\n            " +
-"    $(\"#State\").val(\"\");\r\n                $(\"#Zip\").val(\"\");\r\n                $(" +
-"\"#hidAddSno\").val(\"\");\r\n                $(\"#CountryID\").val(\'1\');\r\n             " +
-"   $(\"#VenueName\").focus();\r\n\r\n            });\r\n\r\n            $(\"#btAddMore\").cl" +
-"ick(function () {\r\n\r\n                if (validateAddress() == false) return fals" +
-"e;\r\n\r\n                var vCols = $(\"#VenueName\").val() + \"¶\" + $(\"#Address1\").v" +
-"al() + \"¶\" + $(\"#Address2\").val() + \"¶\" + $(\"#City\").val() + \"¶\" + $(\"#State\").v" +
-"al() + \"¶\" + $(\"#Zip\").val() + \"¶\" + $(\"#CountryID option:selected\").text() + \"¶" +
-"\" + $(\"#CountryID\").val();\r\n                var vColName = \"VenueName¶Address1¶A" +
-"ddress2¶City¶State¶Zip¶CountryID¶CID\";\r\n                if ($(\"#hidAddSno\").val(" +
-").trim() != \"\")\r\n                    EditRow(\"tblAddress\", vCols, vColName, $(\"#" +
-"hidAddSno\").val().trim());\r\n                else\r\n                    AddRow(\"tb" +
-"lAddress\", vCols, vColName, \"Y\");\r\n\r\n\r\n                $(\"#VenueName\").val(\"\");\r" +
-"\n                $(\"#Address1\").val(\"\");\r\n                $(\"#Address2\").val(\"\")" +
-";\r\n                $(\"#City\").val(\"\");\r\n                $(\"#State\").val(\"\");\r\n  " +
-"              $(\"#Zip\").val(\"\");\r\n                $(\"#hidAddSno\").val(\"\");\r\n    " +
-"            $(\"#CountryID\").val(\'1\');\r\n            });\r\n\r\n\r\n\r\n\r\n            // -" +
-"-----Designer Code-----------\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n            $(\'.summernote\').summ" +
-"ernote({\r\n                height: 70,   //set editable area\'s height\r\n          " +
-"  });\r\n\r\n            $(\".ticket_panel\").hide();\r\n            $(\".save_btn\").clic" +
-"k(function () {\r\n                $(\".ticket_panel\").slideDown();\r\n\r\n            " +
-"});\r\n\r\n            $(\".ShowdateList\").hide();\r\n            $(\".DateList\").click(" +
-"function () {\r\n                $(\".ShowdateList\").toggle(500);\r\n            });\r" +
-"\n\r\n\r\n            $(\'#AddMore\').click(function () {\r\n                var data = $" +
-"(\'#CloneDiv\').clone();\r\n                data.attr(\'id\', \'\');\r\n                //" +
-"data.append(\'<span class=\"RemoveMoreHub\" style=\"width:80%;\"><a href=\"javascript:" +
-"void(0);\" style=\"float:right;color:#CE0009;font-size:13px;text-decoration:none;m" +
-"argin-right:5%;\" >- Remove</a></span>\');\r\n                $(\'#MasterDiv\').append" +
-"(data);\r\n            });\r\n\r\n            $(\".tab-content\").hide();\r\n            $" +
-"(\".evnt_set\").click(function () {\r\n\r\n                $(\".tab-content\").slideTogg" +
-"le(\"fast\");\r\n            });\r\n\r\n\r\n            // $(\'.date_picker\').datepicker({\r" +
-"\n            //     format: \"MM/DD/YYYY\",\r\n\r\n            // });\r\n\r\n            $" +
-"(\'.date_picker\').datepicker({\r\n                format: \"MM/DD/YYYY\",\r\n          " +
-"      minDate: \"0\"\r\n            })\r\n            .on(\'changeDate\', function (ev) " +
-"{\r\n                $(\'.date_picker\').datepicker(\'hide\');\r\n            });\r\n\r\n   " +
-"         $(function () {\r\n                $(\'.time_picker\').timepicker();\r\n     " +
-"       });\r\n\r\n            $(\".evnt_doll_amnt\").hide();\r\n            $(\".ev_tic_e" +
-"nd\").click(function () {\r\n                $(\".evt_time\").css(\"display\", \"none\");" +
-"\r\n                $(\".evnt_doll_amnt\").css(\"display\", \"block\");\r\n            });" +
-"\r\n            $(\".ev_by_date\").click(function () {\r\n                $(\".evnt_dol" +
-"l_amnt\").css(\"display\", \"none\");\r\n                $(\".evt_time\").css(\"display\", " +
-"\"block\");\r\n            });\r\n\r\n            $(\".CusdateCont\").hide();\r\n           " +
-" $(\".EvaddTkt\").click(function () {\r\n                $(\".CusdateCont\").css(\"disp" +
-"lay\", \"block\");\r\n            });\r\n\r\n            $(\".RemvTkt\").hide();\r\n         " +
-"   $(\".EvaddTkt\").click(function () {\r\n                $(\".RemvTkt\").css(\"displa" +
-"y\", \"block\");\r\n                $(\".EvaddTkt\").css(\"display\", \"none\");\r\n         " +
-"   });\r\n            $(\".RemvTkt\").click(function () {\r\n                $(\".Evadd" +
-"Tkt\").css(\"display\", \"block\");\r\n                $(\".CusdateCont\").css(\"display\"," +
-" \"none\");\r\n                $(\".RemvTkt\").css(\"display\", \"none\");\r\n            })" +
-";\r\n\r\n            $(\".HideuntDiv\").hide();\r\n            $(\".CusdateTime\").click(f" +
-"unction () {\r\n                $(\".HideuntDiv\").css(\"display\", \"block\");\r\n       " +
-"     });\r\n            $(\".TktnotSale\").click(function () {\r\n                $(\"." +
-"HideuntDiv\").css(\"display\", \"none\");\r\n            });\r\n            // $(\'#multis" +
-"elect2\').multiselect({\r\n            // includeSelectAllOption: true\r\n           " +
-" // });\r\n            $(\'.checkboxName\').multiselect({\r\n                checkboxN" +
-"ame: \'multiselect[]\'\r\n            });\r\n\r\n            $(\".can_org_cont\").hide();\r" +
-"\n            $(\".EditOrg\").click(function () {\r\n                $(\".can_org_cont" +
-"\").css(\"display\", \"block\");\r\n                $(\".edit_org_cont\").css(\"display\", " +
-"\"none\");\r\n                $(\".Moderor\").css(\"display\", \"block\");\r\n\r\n            " +
-"});\r\n            $(\".AddOrg\").click(function () {\r\n                $(\".can_org_c" +
-"ont\").css(\"display\", \"block\");\r\n                $(\".edit_org_cont\").css(\"display" +
-"\", \"none\");\r\n                $(\".Moderor\").css(\"display\", \"none\");\r\n\r\n          " +
-"  });\r\n            $(\".CanOrg\").click(function () {\r\n                $(\".edit_or" +
-"g_cont\").css(\"display\", \"block\");\r\n                $(\".can_org_cont\").css(\"displ" +
-"ay\", \"none\");\r\n\r\n            });\r\n\r\n\r\n            $(\".AddSocial\").css(\"display\"," +
-" \"none\");\r\n            $(\'#Incsocial\').change(function () {\r\n                if " +
-"($(this).is(\":checked\")) {\r\n                    $(\'.AddSocial\').show();\r\n       " +
-"         } else {\r\n                    $(\'.AddSocial\').hide();\r\n                " +
-"}\r\n            });\r\n\r\n            $(\".priv_cont\").hide();\r\n            $(\".Prvpa" +
-"ge\").click(function () {\r\n                $(\".priv_cont\").css(\"display\", \"block\"" +
-");\r\n            });\r\n            $(\".Pubpage\").click(function () {\r\n            " +
-"    $(\".priv_cont\").css(\"display\", \"none\");\r\n            });\r\n\r\n            $(\"." +
-"online_main_cont\").hide();\r\n            $(\".OnlineEvent\").click(function () {\r\n " +
-"               $(\".online_main_cont\").css(\"display\", \"block\");\r\n                " +
-"$(\".EnterAdd\").css(\"display\", \"none\");\r\n            });\r\n\r\n            $(\".AddLo" +
-"catondiv\").click(function () {\r\n                $(\".EnterAdd\").css(\"display\", \"b" +
-"lock\");\r\n                $(\".online_main_cont\").css(\"display\", \"none\");\r\n\r\n     " +
-"       });\r\n\r\n\r\n            $(\".PastLocatMain\").hide();\r\n            $(\".UsePast" +
-"\").click(function () {\r\n                $(\".PastLocatMain\").css(\"display\", \"bloc" +
-"k\");\r\n                $(\".EvntLocatTitle\").css(\"display\", \"none\");\r\n            " +
-"    $(\".EnterAdd\").css(\"display\", \"none\");\r\n            });\r\n\r\n            $(\".R" +
-"etunEvent\").click(function () {\r\n                $(\".EnterAdd\").css(\"display\", \"" +
-"block\");\r\n                $(\".EvntLocatTitle\").css(\"display\", \"block\");\r\n       " +
-"         $(\".PastLocatMain\").css(\"display\", \"none\");\r\n\r\n            });\r\n\r\n     " +
-"       $(\".OrglistShow\").hide();\r\n            $(\".OrgIcn\").click(function () {\r\n" +
-"\r\n                $(\".OrglistShow\").slideToggle(\"fast\");\r\n            });\r\n\r\n   " +
-"         $(\".TmezoneSet\").hide();\r\n            $(\".Timezone\").click(function () " +
-"{\r\n                $(\".TmezoneSet\").slideToggle(\"fast\");\r\n\r\n            });\r\n\r\n\r" +
-"\n\r\n\r\n            $(\".PastLocat\").css(\"display\", \"none\");\r\n            $(\'#Usepas" +
-"tLoc\').change(function () {\r\n                if ($(this).is(\":checked\")) {\r\n    " +
-"                $(\'.PastLocat\').show();\r\n                    $(\'.EntVenAdd\').hid" +
-"e();\r\n                } else {\r\n                    $(\'.PastLocat\').hide();\r\n   " +
-"                 $(\'.EntVenAdd\').show();\r\n                }\r\n            });\r\n\r\n" +
-"            $(\".FindNewVen\").click(function () {\r\n                $(\".EntVenAdd\"" +
-").show();\r\n                $(\".PastLocat\").hide();\r\n\r\n            });\r\n\r\n       " +
-"     $(\".TicketFees\").css(\"display\", \"none\");\r\n            $(\'#VarCharg\').change" +
-"(function () {\r\n                if ($(this).is(\":checked\")) {\r\n                 " +
-"   $(\'.TicketFees\').show();\r\n                } else {\r\n                    $(\'.T" +
-"icketFees\').hide();\r\n                }\r\n            });\r\n\r\n\r\n\r\n            $(\".S" +
-"chmultiDetail\").hide();\r\n            $(\".Schmultisingle\").hide();\r\n            $" +
-"(\".SchmultiEvnt\").click(function () {\r\n                $(\".SchmultiDetail\").slid" +
-"eToggle(\"slow\");\r\n                $(\".SchDivtop\").hide();\r\n            });\r\n\r\n\r\n" +
-"            $(\".SchmultiEvnt\").click(function () {\r\n                $(\".SchDivto" +
-"p\").hide();\r\n                $(\".Schmultisingle\").show();\r\n            });\r\n\r\n\r\n" +
-"            $(\".Schmultisingle\").click(function () {\r\n                $(\".SchDiv" +
-"top\").show();\r\n                $(\".SchmultiDetail\").hide();\r\n                $(\"" +
-".Schmultisingle\").hide();\r\n            });\r\n\r\n\r\n\r\n\r\n            //$(\'body\').clic" +
-"k(function () {\r\n            //    $(\".StartDatemodal\").hide();\r\n            //}" +
-");\r\n\r\n            //$(\'.StartDatemodal,.StartDate\').click(function (event) {\r\n  " +
-"          //    event.stopPropagation();\r\n            //});\r\n\r\n            //$(\'" +
-"body\').click(function () {\r\n            //    $(\".TmezoneSet\").hide();\r\n        " +
-"    //});\r\n\r\n            //$(\'.TmezoneSet,.Timezone\').click(function (event) {\r\n" +
-"            //    event.stopPropagation();\r\n            //});\r\n\r\n\r\n\r\n        });" +
-"\r\n    </script>\r\n");
+"t(\'¶\');\r\n                var Sno = $(\"#\" + TableId + \" tr\").length;\r\n           " +
+"     var cval = ColumnValue;\r\n                var strHTML = \'<tr>\';\r\n           " +
+"     strHTML = strHTML + \'<td style=\"display:none\">\' + Sno + \'</td>\';\r\n\r\n       " +
+"         var ConsolidateValue = \'\';\r\n                for (i = 0; i <= ColAry.len" +
+"gth - 1; i++) {\r\n                    CellId = ColName[i] + Sno.toString();\r\n    " +
+"                strHTML = strHTML + \'<td style=\"display:none\"> <input type=\"text" +
+"\" name=\" \" id=\"\' + CellId + \'\" style=\"width:100px;\" value=\"\' + ColAry[i] + \'\" />" +
+"</td>\';\r\n                    if (ColAry[i] != \'\') {\r\n                        if " +
+"(i != ColAry.length - 1) {\r\n                            if (ConsolidateValue == " +
+"\'\')\r\n                                ConsolidateValue = ColAry[i];\r\n            " +
+"                else\r\n                                ConsolidateValue = Consoli" +
+"dateValue + \',\' + ColAry[i];\r\n                        }\r\n                    }\r\n" +
+"                    //if (ColName[i].toString() == \"CID\" || ColName[i].toString(" +
+") == \"CountryID\")\r\n                    //    strHTML = strHTML + \'<td style=\"dis" +
+"play:none\"> <input type=\"text\" name=\" \" id=\"\' + CellId + \'\" style=\"width:100px;\"" +
+" value=\"\' + ColAry[i] + \'\" /></td>\';\r\n                    //else\r\n              " +
+"      //    strHTML = strHTML + \'<td> <input type=\"text\" name=\" \" id=\"\' + CellId" +
+" + \'\" style=\"width:100px;\" value=\"\' + ColAry[i] + \'\" /></td>\';\r\n                " +
+"}\r\n\r\n                strHTML = strHTML + \'<td align=\"left\"><label id=consolidate" +
+"\' + Sno + \'>\' + ConsolidateValue + \' </label>\';\r\n\r\n                strHTML = str" +
+"HTML + \'<td><div class=\"trigger mt5 ent_add\"><a href=\"#\" onclick=\"editRow(\' + Sn" +
+"o + \');\"><i class=\"fa fa-map-marker\"></i> Edit</a>  <a href=\"#\" id=\"btAddDelete\"" +
+" onclick=\"DeleteTableRow(\' + Sno + \')\">Delete</a> </div> </td>\';\r\n              " +
+"  //strHTML = strHTML + \'<td><div class=\"trigger mt5 ent_add\"><a href=\"#\" onclic" +
+"k=\"editRow(\' + Sno + \');\" data-toggle=\"modal\" data-target=\"#myModal\"><i class=\"f" +
+"a fa-map-marker\"></i> Edit</a>  <input type=\"button\" name=\"Delete\" id=\"btAddDele" +
+"te\" onclick=\"DeleteTableRow(\' + Sno + \')\" value=\"Delete\" /> </div> </td>\';\r\n    " +
+"            //strHTML = strHTML + \'<td><input type=\"button\" onclick=\"editRow();\"" +
+" id=\"btnEdit\" value=\"Edit\" /></td>\';\r\n                strHTML = strHTML + \'</tr>" +
+"\';\r\n                $(\"#\" + TableId).append(strHTML);\r\n            }\r\n\r\n        " +
+"    function EditRow(TableId, ColumnValue, ColumnName, Sno) {\r\n                v" +
+"ar ColAry = ColumnValue.split(\'¶\');\r\n                var ColName = ColumnName.sp" +
+"lit(\'¶\');\r\n                var ConsolidateValue = \'\';\r\n                for (i = " +
+"0; i <= ColName.length - 1; i++) {\r\n\r\n                    CtrlId = ColName[i] + " +
+"Sno.toString();\r\n                    if (ColAry[i] != \'\') {\r\n                   " +
+"     if (i != ColAry.length - 1) {\r\n                            if (ConsolidateV" +
+"alue == \'\')\r\n                                ConsolidateValue = ColAry[i];\r\n    " +
+"                        else\r\n                                ConsolidateValue =" +
+" ConsolidateValue + \',\' + ColAry[i];\r\n                        }\r\n               " +
+"     }\r\n\r\n                    //alert(CtrlId);\r\n                    //if (ColNam" +
+"e[i] == \"CID\")\r\n                    //{\r\n                    //    CtrlId = \"Cou" +
+"ntryID\" + Sno.toString();\r\n                    //    alert(\"In country\");\r\n     " +
+"               //}\r\n                    //else\r\n                    //    CtrlId" +
+" = ColName[i] + Sno.toString();\r\n\r\n\r\n                    $(\"#\" + CtrlId).val(Col" +
+"Ary[i]);\r\n                }\r\n                //   alert(ConsolidateValue);\r\n    " +
+"            $(\"#consolidate\" + Sno).text(ConsolidateValue);\r\n\r\n            }\r\n  " +
+"          function validateAddress() {\r\n                if ($(\"#VenueName\").val(" +
+").trim() == \'\') {\r\n                    //alert(\"Please enter valid venue name\");" +
+"\r\n                    $(\"#VenueName\").focus();\r\n                    return false" +
+";\r\n                }\r\n                //if ($(\"#Address1\").val().trim() == \'\') {" +
+"\r\n                //    alert(\"Please enter valid address\");\r\n                //" +
+"    $(\"#Address1\").focus();\r\n                //    return false;\r\n              " +
+"  //}\r\n            }\r\n\r\n            $(\"#btReset\").click(function () {\r\n         " +
+"       $(\"#VenueName\").val(\"\");\r\n                $(\"#Address1\").val(\"\");\r\n      " +
+"          $(\"#Address2\").val(\"\");\r\n                $(\"#City\").val(\"\");\r\n        " +
+"        $(\"#State\").val(\"\");\r\n                $(\"#Zip\").val(\"\");\r\n              " +
+"  $(\"#hidAddSno\").val(\"\");\r\n                $(\"#CountryID\").val(\'1\');\r\n         " +
+"       $(\"#VenueName\").focus();\r\n\r\n            });\r\n\r\n            $(\"#btAddMore\"" +
+").click(function () {\r\n\r\n                if (validateAddress() == false) return " +
+"false;\r\n\r\n                var vCols = $(\"#VenueName\").val() + \"¶\" + $(\"#Address1" +
+"\").val() + \"¶\" + $(\"#Address2\").val() + \"¶\" + $(\"#City\").val() + \"¶\" + $(\"#State" +
+"\").val() + \"¶\" + $(\"#Zip\").val() + \"¶\" + $(\"#CountryID option:selected\").text() " +
+"+ \"¶\" + $(\"#CountryID\").val();\r\n                var vColName = \"VenueName¶Addres" +
+"s1¶Address2¶City¶State¶Zip¶CountryID¶CID\";\r\n                if ($(\"#hidAddSno\")." +
+"val().trim() != \"\")\r\n                    EditRow(\"tblAddress\", vCols, vColName, " +
+"$(\"#hidAddSno\").val().trim());\r\n                else\r\n                    AddRow" +
+"(\"tblAddress\", vCols, vColName, \"Y\");\r\n\r\n\r\n                $(\"#VenueName\").val(\"" +
+"\");\r\n                $(\"#Address1\").val(\"\");\r\n                $(\"#Address2\").val" +
+"(\"\");\r\n                $(\"#City\").val(\"\");\r\n                $(\"#State\").val(\"\");" +
+"\r\n                $(\"#Zip\").val(\"\");\r\n                $(\"#hidAddSno\").val(\"\");\r\n" +
+"                $(\"#CountryID\").val(\'1\');\r\n            });\r\n\r\n\r\n\r\n\r\n            " +
+"// ------Designer Code-----------\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n            $(\'.summernote\')." +
+"summernote({\r\n                height: 70,   //set editable area\'s height\r\n      " +
+"      });\r\n\r\n            $(\".ticket_panel\").hide();\r\n            $(\".save_btn\")." +
+"click(function () {\r\n                $(\".ticket_panel\").slideDown();\r\n\r\n        " +
+"    });\r\n\r\n            $(\".ShowdateList\").hide();\r\n            $(\".DateList\").cl" +
+"ick(function () {\r\n                $(\".ShowdateList\").toggle(500);\r\n            " +
+"});\r\n\r\n\r\n            $(\'#AddMore\').click(function () {\r\n                var data" +
+" = $(\'#CloneDiv\').clone();\r\n                data.attr(\'id\', \'\');\r\n              " +
+"  //data.append(\'<span class=\"RemoveMoreHub\" style=\"width:80%;\"><a href=\"javascr" +
+"ipt:void(0);\" style=\"float:right;color:#CE0009;font-size:13px;text-decoration:no" +
+"ne;margin-right:5%;\" >- Remove</a></span>\');\r\n                $(\'#MasterDiv\').ap" +
+"pend(data);\r\n            });\r\n\r\n            $(\".tab-content\").hide();\r\n         " +
+"   $(\".evnt_set\").click(function () {\r\n\r\n                $(\".tab-content\").slide" +
+"Toggle(\"fast\");\r\n            });\r\n\r\n\r\n            // $(\'.date_picker\').datepicke" +
+"r({\r\n            //     format: \"MM/DD/YYYY\",\r\n\r\n            // });\r\n\r\n         " +
+"   $(\'.date_picker\').datepicker({\r\n                format: \"MM/DD/YYYY\",\r\n      " +
+"          minDate: \"0\"\r\n            })\r\n            .on(\'changeDate\', function (" +
+"ev) {\r\n                $(\'.date_picker\').datepicker(\'hide\');\r\n            });\r\n\r" +
+"\n            $(function () {\r\n                $(\'.time_picker\').timepicker();\r\n " +
+"           });\r\n\r\n            $(\".evnt_doll_amnt\").hide();\r\n            $(\".ev_t" +
+"ic_end\").click(function () {\r\n                $(\".evt_time\").css(\"display\", \"non" +
+"e\");\r\n                $(\".evnt_doll_amnt\").css(\"display\", \"block\");\r\n           " +
+" });\r\n            $(\".ev_by_date\").click(function () {\r\n                $(\".evnt" +
+"_doll_amnt\").css(\"display\", \"none\");\r\n                $(\".evt_time\").css(\"displa" +
+"y\", \"block\");\r\n            });\r\n\r\n            $(\".CusdateCont\").hide();\r\n       " +
+"     $(\".EvaddTkt\").click(function () {\r\n                $(\".CusdateCont\").css(\"" +
+"display\", \"block\");\r\n            });\r\n\r\n            $(\".RemvTkt\").hide();\r\n     " +
+"       $(\".EvaddTkt\").click(function () {\r\n                $(\".RemvTkt\").css(\"di" +
+"splay\", \"block\");\r\n                $(\".EvaddTkt\").css(\"display\", \"none\");\r\n     " +
+"       });\r\n            $(\".RemvTkt\").click(function () {\r\n                $(\".E" +
+"vaddTkt\").css(\"display\", \"block\");\r\n                $(\".CusdateCont\").css(\"displ" +
+"ay\", \"none\");\r\n                $(\".RemvTkt\").css(\"display\", \"none\");\r\n          " +
+"  });\r\n\r\n            $(\".HideuntDiv\").hide();\r\n            $(\".CusdateTime\").cli" +
+"ck(function () {\r\n                $(\".HideuntDiv\").css(\"display\", \"block\");\r\n   " +
+"         });\r\n            $(\".TktnotSale\").click(function () {\r\n                " +
+"$(\".HideuntDiv\").css(\"display\", \"none\");\r\n            });\r\n            // $(\'#mu" +
+"ltiselect2\').multiselect({\r\n            // includeSelectAllOption: true\r\n       " +
+"     // });\r\n            $(\'.checkboxName\').multiselect({\r\n                check" +
+"boxName: \'multiselect[]\'\r\n            });\r\n\r\n            $(\".can_org_cont\").hide" +
+"();\r\n            $(\".EditOrg\").click(function () {\r\n                $(\".can_org_" +
+"cont\").css(\"display\", \"block\");\r\n                $(\".edit_org_cont\").css(\"displa" +
+"y\", \"none\");\r\n                $(\".Moderor\").css(\"display\", \"block\");\r\n\r\n        " +
+"    });\r\n            $(\".AddOrg\").click(function () {\r\n                $(\".can_o" +
+"rg_cont\").css(\"display\", \"block\");\r\n                $(\".edit_org_cont\").css(\"dis" +
+"play\", \"none\");\r\n                $(\".Moderor\").css(\"display\", \"none\");\r\n\r\n      " +
+"      });\r\n            $(\".CanOrg\").click(function () {\r\n                $(\".edi" +
+"t_org_cont\").css(\"display\", \"block\");\r\n                $(\".can_org_cont\").css(\"d" +
+"isplay\", \"none\");\r\n\r\n            });\r\n\r\n\r\n            $(\".AddSocial\").css(\"displ" +
+"ay\", \"none\");\r\n            $(\'#Incsocial\').change(function () {\r\n               " +
+" if ($(this).is(\":checked\")) {\r\n                    $(\'.AddSocial\').show();\r\n   " +
+"             } else {\r\n                    $(\'.AddSocial\').hide();\r\n            " +
+"    }\r\n            });\r\n\r\n            $(\".priv_cont\").hide();\r\n            $(\".P" +
+"rvpage\").click(function () {\r\n                $(\".priv_cont\").css(\"display\", \"bl" +
+"ock\");\r\n            });\r\n            $(\".Pubpage\").click(function () {\r\n        " +
+"        $(\".priv_cont\").css(\"display\", \"none\");\r\n            });\r\n\r\n            " +
+"$(\".online_main_cont\").hide();\r\n            $(\".OnlineEvent\").click(function () " +
+"{\r\n                $(\".online_main_cont\").css(\"display\", \"block\");\r\n            " +
+"    $(\".EnterAdd\").css(\"display\", \"none\");\r\n            });\r\n\r\n            $(\".A" +
+"ddLocatondiv\").click(function () {\r\n                $(\".EnterAdd\").css(\"display\"" +
+", \"block\");\r\n                $(\".online_main_cont\").css(\"display\", \"none\");\r\n\r\n " +
+"           });\r\n\r\n\r\n            $(\".PastLocatMain\").hide();\r\n            $(\".Use" +
+"Past\").click(function () {\r\n                $(\".PastLocatMain\").css(\"display\", \"" +
+"block\");\r\n                $(\".EvntLocatTitle\").css(\"display\", \"none\");\r\n        " +
+"        $(\".EnterAdd\").css(\"display\", \"none\");\r\n            });\r\n\r\n            $" +
+"(\".RetunEvent\").click(function () {\r\n                $(\".EnterAdd\").css(\"display" +
+"\", \"block\");\r\n                $(\".EvntLocatTitle\").css(\"display\", \"block\");\r\n   " +
+"             $(\".PastLocatMain\").css(\"display\", \"none\");\r\n\r\n            });\r\n\r\n " +
+"           $(\".OrglistShow\").hide();\r\n            $(\".OrgIcn\").click(function ()" +
+" {\r\n\r\n                $(\".OrglistShow\").slideToggle(\"fast\");\r\n            });\r\n\r" +
+"\n            $(\".TmezoneSet\").hide();\r\n            $(\".Timezone\").click(function" +
+" () {\r\n                $(\".TmezoneSet\").slideToggle(\"fast\");\r\n\r\n            });\r" +
+"\n\r\n\r\n\r\n\r\n            $(\".PastLocat\").css(\"display\", \"none\");\r\n            $(\'#Us" +
+"epastLoc\').change(function () {\r\n                if ($(this).is(\":checked\")) {\r\n" +
+"                    $(\'.PastLocat\').show();\r\n                    $(\'.EntVenAdd\')" +
+".hide();\r\n                } else {\r\n                    $(\'.PastLocat\').hide();\r" +
+"\n                    $(\'.EntVenAdd\').show();\r\n                }\r\n            });" +
+"\r\n\r\n            $(\".FindNewVen\").click(function () {\r\n                $(\".EntVen" +
+"Add\").show();\r\n                $(\".PastLocat\").hide();\r\n\r\n            });\r\n\r\n   " +
+"         $(\".TicketFees\").css(\"display\", \"none\");\r\n            $(\'#VarCharg\').ch" +
+"ange(function () {\r\n                if ($(this).is(\":checked\")) {\r\n             " +
+"       $(\'.TicketFees\').show();\r\n                } else {\r\n                    $" +
+"(\'.TicketFees\').hide();\r\n                }\r\n            });\r\n\r\n\r\n\r\n            $" +
+"(\".SchmultiDetail\").hide();\r\n            $(\".Schmultisingle\").hide();\r\n         " +
+"   $(\".SchmultiEvnt\").click(function () {\r\n                $(\".SchmultiDetail\")." +
+"slideToggle(\"slow\");\r\n                $(\".SchDivtop\").hide();\r\n            });\r\n" +
+"\r\n\r\n            $(\".SchmultiEvnt\").click(function () {\r\n                $(\".SchD" +
+"ivtop\").hide();\r\n                $(\".Schmultisingle\").show();\r\n            });\r\n" +
+"\r\n\r\n            $(\".Schmultisingle\").click(function () {\r\n                $(\".Sc" +
+"hDivtop\").show();\r\n                $(\".SchmultiDetail\").hide();\r\n               " +
+" $(\".Schmultisingle\").hide();\r\n            });\r\n\r\n\r\n\r\n\r\n            //$(\'body\')." +
+"click(function () {\r\n            //    $(\".StartDatemodal\").hide();\r\n           " +
+" //});\r\n\r\n            //$(\'.StartDatemodal,.StartDate\').click(function (event) {" +
+"\r\n            //    event.stopPropagation();\r\n            //});\r\n\r\n            /" +
+"/$(\'body\').click(function () {\r\n            //    $(\".TmezoneSet\").hide();\r\n    " +
+"        //});\r\n\r\n            //$(\'.TmezoneSet,.Timezone\').click(function (event)" +
+" {\r\n            //    event.stopPropagation();\r\n            //});\r\n\r\n\r\n\r\n       " +
+" });\r\n    </script>\r\n");
 
             
             #line 2928 "..\..\Views\EditEvent\EditEvent.cshtml"
@@ -5917,9 +5917,9 @@ WriteLiteral("\',\r\n            success: function (data) {\r\n\r\n             
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 196437), Tuple.Create("\"", 196476)
-, Tuple.Create(Tuple.Create("", 196444), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 196444), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 196453), Tuple.Create("\"", 196492)
+, Tuple.Create(Tuple.Create("", 196460), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 196460), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -5935,9 +5935,9 @@ WriteLiteral(" />\r\n");
             #line hidden
 WriteLiteral("    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 196510), Tuple.Create("\"", 196567)
-, Tuple.Create(Tuple.Create("", 196517), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 196517), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 196526), Tuple.Create("\"", 196583)
+, Tuple.Create(Tuple.Create("", 196533), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 196533), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -5946,9 +5946,9 @@ WriteLiteral(" />\r\n");
 
 WriteLiteral("    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 196601), Tuple.Create("\"", 196638)
-, Tuple.Create(Tuple.Create("", 196607), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 196607), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 196617), Tuple.Create("\"", 196654)
+, Tuple.Create(Tuple.Create("", 196623), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 196623), false)
 );
 
 WriteLiteral("></script>\r\n");

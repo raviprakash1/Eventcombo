@@ -2215,16 +2215,16 @@ namespace EventCombo.Controllers
 
                                              }).ToList();
 
-                          
+                            strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'><span style='float:right;'>" + vdate + " </span></p ></tr > ");
+                            strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                            strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
+                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Type </th>");
+                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Quantity </th>");
+                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </th>");
+                            strHTML.Append("</tr>");
                             foreach (var qty in itemtoadd)
                             {
-                                strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'><span style='float:right;'>" + vdate + " </span></p ></tr > ");
-                                strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                                strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
-                                strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Type </th>");
-                                strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Quantity </th>");
-                                strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </th>");
-                                strHTML.Append("</tr>");
+                                
                                 if (qty.Promocode!=null && qty.Promocode != 0 )
                                 {
                                     strHTML.Append("<tr align='left' style='color:#696564;'> ");
@@ -2260,64 +2260,73 @@ namespace EventCombo.Controllers
                     }
                     else
                     {
-                        var itemtoadd = (from p in db.Ticket_Quantity_Detail
-                                         join TP in db.Ticket_Purchased_Detail on p.TQD_Id equals TP.TPD_TQD_Id
-                                         join l in db.Profiles on TP.TPD_User_Id equals l.UserID
-                                         join t in db.Tickets on p.TQD_Ticket_Id equals t.T_Id
-                                         where p.TQD_AddressId == item && TP.TPD_GUID == gUID && TP.TPD_Event_Id == Eventid
-                                         select new
-                                         {
-                                             eventid = TP.TPD_Event_Id,
-                                             Promocode = TP.TPD_PromoCodeID,
-                                             Promocodeamt = TP.TPD_PromoCodeAmount,
-                                             username = l.FirstName,
-                                             Ticketname = t.T_name,
-                                             Quantity = TP.TPD_Purchased_Qty,
-                                             Price = TP.TPD_Amount > 0 ? "$ " + TP.TPD_Amount.ToString() : TP.TPD_Donate > 0 ? "$ " + TP.TPD_Donate.ToString() : "Free"
 
-                                         }).ToList();
-
-                        var dateofaddress = (from p in db.Ticket_Quantity_Detail
-                                             join TP in db.Ticket_Purchased_Detail on p.TQD_Id equals TP.TPD_TQD_Id
-                                             where p.TQD_AddressId == item && TP.TPD_GUID == gUID && TP.TPD_Event_Id == Eventid
-                                             select p.TQD_StartDate).ToList().Distinct().FirstOrDefault();
-                        var addressdetail = (from p in db.Addresses where p.AddressID == item select p.ConsolidateAddress).FirstOrDefault();
-                      
-
-                        foreach (var qty in itemtoadd)
+                        var myDatescnt = (from p in db.Ticket_Quantity_Detail where itemQuery.Contains(p.TQD_Id) select p.TQD_StartDate).ToList().Distinct();
+                        foreach (var vdate in myDatescnt)
                         {
-                            strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'>" + addressdetail + "<span style='float:right;'>" + dateofaddress.ToString() + " </span></p ></tr > ");
+                            var itemtoadd = (from p in db.Ticket_Quantity_Detail
+                                             join TP in db.Ticket_Purchased_Detail on p.TQD_Id equals TP.TPD_TQD_Id
+                                             join l in db.Profiles on TP.TPD_User_Id equals l.UserID
+                                             join t in db.Tickets on p.TQD_Ticket_Id equals t.T_Id
+                                             where p.TQD_StartDate == vdate && TP.TPD_GUID == gUID && TP.TPD_Event_Id == Eventid
+                                             select new
+                                             {
+                                                 eventid=TP.TPD_Event_Id,
+                                                 Promocode=TP.TPD_PromoCodeID,
+                                                 Promocodeamt=TP.TPD_PromoCodeAmount,
+                                                 username = l.FirstName,
+                                                 Ticketname = t.T_name,
+                                                 Quantity = TP.TPD_Purchased_Qty,
+                                                 Price = TP.TPD_Amount > 0 ? "$ " + TP.TPD_Amount.ToString() : TP.TPD_Donate > 0 ? "$ " + TP.TPD_Donate.ToString() : "Free"
+
+                                             }).ToList();
+
+                            strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'><span style='float:right;'>" + vdate + " </span></p ></tr > ");
                             strHTML.Append("<tr align='left' style='color:#696564;'> ");
                             strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
-                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;' > Type </th >");
+                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Type </th>");
                             strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Quantity </th>");
-                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </ th >");
+                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </th>");
                             strHTML.Append("</tr>");
-                            if (qty.Promocode != null && qty.Promocode != 0)
+                            foreach (var qty in itemtoadd)
                             {
-                                strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + (!string.IsNullOrEmpty(username) ? username : qty.username) + "</td>");
-                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
-                                strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
-                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.Price + "</td>");
-                                strHTML.Append("</tr>");
-                                var promocode = (from v in db.Promo_Code where v.PC_Eventid == qty.eventid && v.PC_id == qty.Promocode select v.PC_Code).FirstOrDefault();
-                                strHTML.Append("<tr align='left'>");
-                                strHTML.Append("<td colspan='3' style='font-size:15px; padding:0px 5px 10px 5px;color: green; border-bottom:1px dashed #ccc;'>" + promocode + "</td>");
-                                var promoprice = qty.Promocodeamt * qty.Quantity;
-                                strHTML.Append("<td colspan='1' style='font-size:15px; color: green;padding:0px 5px 10px 5px; border-bottom:1px dashed #ccc;'>-$" + promoprice + "</td>");
-                                strHTML.Append("</tr>");
+                                
+                                if (qty.Promocode!=null && qty.Promocode != 0 )
+                                {
+                                    strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                                    strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + (!string.IsNullOrEmpty(username)? username:qty.username) + "</td>");
+                                    strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
+                                    strHTML.Append("<td style='width:10%font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
+                                    strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Price + "</td>");
+                                    strHTML.Append("</tr>");
+                                    var promocode = (from v in db.Promo_Code where v.PC_Eventid == qty.eventid && v.PC_id == qty.Promocode select v.PC_Code).FirstOrDefault();
+                                    strHTML.Append("<tr align='left'>");
+                                    strHTML.Append("<td colspan='3' style='font-size:15px; padding:0px 5px 10px 5px;color: green; border-bottom:1px dashed #ccc;'>" + promocode + "</td>");
+                                    var promoprice = qty.Promocodeamt * qty.Quantity;
+                                    strHTML.Append("<td colspan='1' style='font-size:15px; color: green;padding:0px 5px 10px 5px; border-bottom:1px dashed #ccc;'>-$" + promoprice + "</td>");
+                                    strHTML.Append("</tr>");
+                                }
+                                else
+                                {
+                                    strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                                    strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + (!string.IsNullOrEmpty(username) ? username : qty.username) + "</td>");
+                                    strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
+                                    strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
+                                    strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
+                                    strHTML.Append("</tr>");
+                                }
+
+
+
                             }
-                            else
-                            {
-                                strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + (!string.IsNullOrEmpty(username) ? username : qty.username) + "</td>");
-                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
-                                strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
-                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
-                                strHTML.Append("</tr>");
-                            }
+
+
+
                         }
+                            
+
+                       
+                       
                     }
 
                 }
@@ -2353,17 +2362,17 @@ namespace EventCombo.Controllers
                                          where p.TQD_AddressId == item && TP.TPD_GUID == gUID && TP.TPD_Event_Id == Eventid
                                          select p.TQD_StartDate).ToList().Distinct().FirstOrDefault();
                     var addressdetail = (from p in db.Addresses where p.AddressID == item select p.ConsolidateAddress).FirstOrDefault();
-                  
 
+                    strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'>" + addressdetail + "<span style='float:right;'>" + dateofaddress.ToString() + " </span></p ></tr > ");
+                    strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                    strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
+                    strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;' > Type </th >");
+                    strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Quantity </th>");
+                    strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </ th >");
+                    strHTML.Append("</tr>");
                     foreach (var qty in itemtoadd)
                     {
-                        strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'>" + addressdetail + "<span style='float:right;'>" + dateofaddress.ToString() + " </span></p ></tr > ");
-                        strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                        strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
-                        strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;' > Type </th >");
-                        strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Quantity </th>");
-                        strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </ th >");
-                        strHTML.Append("</tr>");
+                        
                         if (qty.Promocode != null && qty.Promocode != 0)
                         {
                             strHTML.Append("<tr align='left' style='color:#696564;'> ");

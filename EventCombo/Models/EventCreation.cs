@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -158,12 +159,12 @@ namespace EventCombo.Models
             return strResult;
         }
     }
-
+    [MetadataType(typeof(OrganiserMetadata))]
     public partial class Organizer_Master
     {
         public string DefaultOrg { get; set; }
         public string EditOrg { get; set; }
-
+     
         public long Eventid { get; set; }
 
         public List<Organiserevent> presentevent { get; set; }
@@ -172,6 +173,11 @@ namespace EventCombo.Models
         public int presentevtcount { get; set; }
      
         public int maxsetcount { get; set; }
+    }
+    [MetadataType(typeof(EventMetadata))]
+    public partial class Event
+    {
+        
     }
     public class ManageEvent
     {

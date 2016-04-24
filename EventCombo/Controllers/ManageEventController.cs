@@ -794,21 +794,30 @@ namespace EventCombo.Controllers
             CultureInfo us = new CultureInfo("en-US");
             using (EventComboEntities objEnt = new EventComboEntities())
             {
-                var vTotalAmt = (from myRow in objEnt.Ticket_Purchased_Detail
-                                 where myRow.TPD_Event_Id == lEventId
-                                 select myRow.TPD_Amount).Sum();
+                var ticketid = (from v in db.Tickets where v.E_Id == lEventId select v.T_Id).ToList();
+                string joined = string.Join(",", ticketid.ToArray());
+                string strQuery = "SELECT isnull(sum(TPD_Amount),0) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
+                var vTotalAmt = objEnt.Database.SqlQuery<decimal>(strQuery).FirstOrDefault();
+             
+                //var vTotalAmt = (from myRow in objEnt.Ticket_Purchased_Detail
+                //                 where myRow.TPD_Event_Id == lEventId
+                //                 select myRow.TPD_Amount).Sum();
 
                 if (strAmtType == "FORSALE")
                 {
-                    strResult = Math.Round((vTotalAmt == null ? 0 : Convert.ToDouble(vTotalAmt)), 2).ToString("N", us);
+                    strResult = Math.Round(vTotalAmt, 2).ToString("N", us);
                 }
                 else if (strAmtType == "NETSALE")
                 {
-                    var vEcFee = (from myRow in objEnt.Ticket_Purchased_Detail
-                                  where myRow.TPD_Event_Id == lEventId
-                                  select myRow.TPD_EC_Fee).Sum();
 
-                    double dResult = Math.Round((vTotalAmt == null ? 0 : Convert.ToDouble(vTotalAmt)) - (vEcFee == null ? 0 : Convert.ToDouble(vEcFee)), 2);
+                     string strQueryec = "SELECT isnull(sum(TPD_EC_Fee),0) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
+                    var vEcFee = objEnt.Database.SqlQuery<decimal>(strQueryec).FirstOrDefault();
+
+                    //var vEcFee = (from myRow in objEnt.Ticket_Purchased_Detail
+                    //              where myRow.TPD_Event_Id == lEventId
+                    //              select myRow.TPD_EC_Fee).Sum();
+
+                    double dResult = Math.Round( Convert.ToDouble(vTotalAmt) - Convert.ToDouble(vEcFee), 2);
                     strResult = dResult.ToString("N", us);
                 }
             }
@@ -1241,6 +1250,8 @@ namespace EventCombo.Controllers
                     //objEnt.Events.Add(vEvent);
                     if (strEventTitle.Trim().Equals("")) strEventTitle = vEvent.EventTitle;
                     Event ObjEC = new Event();
+                    var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == vEvent.TimeZone select ev).FirstOrDefault();
+
                     ObjEC.EventTypeID = vEvent.EventTypeID;
                     ObjEC.EventCategoryID = vEvent.EventCategoryID;
                     ObjEC.EventSubCategoryID = vEvent.EventSubCategoryID;
@@ -1277,7 +1288,20 @@ namespace EventCombo.Controllers
                     ObjEC.Ticket_variabletype = vEvent.Ticket_variabletype;
                     ObjEC.ShowMap = vEvent.ShowMap;
                     ObjEC.Parent_EventID = 0;
-                    ObjEC.CreateDate = DateTime.Now;
+                    DateTimeWithZone dtzstart, dtzend, dtzCreated;
+                    if (Timezonedetail != null)
+                    {
+
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                        //Timezone value
+                        dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                    }
+                    else
+                    {
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                        dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                    }
+                    ObjEC.CreateDate = dtzCreated.UniversalTime;
                     ObjEC.EventStatus = "Save";
                     objEnt.Events.Add(ObjEC);
 
@@ -1307,29 +1331,66 @@ namespace EventCombo.Controllers
                         //    objEnt.Addresses.Add(objAdd);
                         //}
                     }
-                    var vEventVenue = (from myEnt in objEnt.EventVenues where myEnt.EventID == Eventid select myEnt).ToList();
+                    DateTimeWithZone dtzstart, dtzend;
+                                       var vEventVenue = (from myEnt in objEnt.EventVenues where myEnt.EventID == Eventid select myEnt).ToList();
                     if (vEventVenue != null)
                     {
                         EventVenue objEVenue = new EventVenue();
                         foreach (EventVenue objEv in vEventVenue)
                         {
                             objEVenue = new EventVenue();
+                            if (Timezonedetail != null)
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objEv.EventStartDate + " " + objEv.EventStartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objEv.EventEndDate + " " + objEv.EventEndTime), userTimeZone);
+
+
+                            }
+                            else
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objEv.EventStartDate + " " + objEv.EventStartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objEv.EventEndDate + " " + objEv.EventEndTime), userTimeZone);
+
+                            }
+
                             objEVenue.EventID = ObjEC.EventID;
                             objEVenue.EventStartDate = objEv.EventStartDate;
                             objEVenue.EventEndDate = objEv.EventEndDate;
                             objEVenue.EventStartTime = objEv.EventStartTime;
                             objEVenue.EventEndTime = objEv.EventEndTime;
+                            objEVenue.E_Startdate = dtzstart.UniversalTime;
+                            objEVenue.E_Enddate = dtzend.UniversalTime;
                             objEnt.EventVenues.Add(objEVenue);
                         }
                     }
-
+                   
                     var vEventAddress = (from myEnt in objEnt.MultipleEvents where myEnt.EventID == Eventid select myEnt).ToList();
                     if (vEventAddress != null)
                     {
                         MultipleEvent objMEvents = new MultipleEvent();
                         foreach (MultipleEvent objME in vEventAddress)
                         {
+
+                            
                             objMEvents = new MultipleEvent();
+
+                            if (Timezonedetail != null)
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objME.StartingFrom + " " + objME.StartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objME.StartingTo + " " + objME.EndTime), userTimeZone);
+
+
+                            }
+                            else
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objME.StartingFrom + " " + objME.StartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objME.StartingTo + " " + objME.EndTime), userTimeZone);
+
+                            }
                             objMEvents.EventID = ObjEC.EventID;
                             objMEvents.Frequency = objME.Frequency;
                             objMEvents.WeeklyDay = objME.WeeklyDay;
@@ -1340,6 +1401,8 @@ namespace EventCombo.Controllers
                             objMEvents.StartingTo = objME.StartingTo;
                             objMEvents.StartTime = objME.StartTime;
                             objMEvents.EndTime = objME.EndTime;
+                            objMEvents.M_Startfrom = dtzstart.UniversalTime;
+                            objMEvents.M_StartTo = dtzend.UniversalTime;
                             objEnt.MultipleEvents.Add(objMEvents);
                         }
                     }

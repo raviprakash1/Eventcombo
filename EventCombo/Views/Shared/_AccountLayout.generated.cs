@@ -1096,7 +1096,7 @@ WriteLiteral(@"',
 
                 },
                 error: function (data) {
-                    alert(""Sorry there is some problem."");
+                    //alert(""Sorry there is some problem."");
                     return false
                 }
             });
@@ -1130,7 +1130,7 @@ WriteLiteral(@"',
 
                 },
                 error: function (data) {
-                    alert(""Sorry there is some problem."");
+                    //alert(""Sorry there is some problem."");
                     return false
                 }
             });

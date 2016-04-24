@@ -2336,14 +2336,16 @@ WriteLiteral("\' + \'?beginDate=\' + isodatestart + \'&endDate=\' + isodateend +
 "v_act\");\r\n\r\n        } else {\r\n            $(\"#btnfavourite\").removeClass(\"btn_fa" +
 "v_act\");\r\n\r\n        }\r\n        if (clickvote == \"Y\") {\r\n            $(\"#btnvote\"" +
 ").addClass(\"btn_fav_act\");\r\n\r\n        } else {\r\n            $(\"#btnvote\").remove" +
-"Class(\"btn_fav_act\");\r\n\r\n        }\r\n        $(\"#btnvote\").click(function () {\r\n " +
-"           var clickvote = $(\'#hdEventvote\').val();\r\n\r\n            if (clickvote" +
-" == \"Y\") {\r\n\r\n                alert(\'You can only vote once.\');\r\n            } e" +
-"lse {\r\n                var eid = $(\'#hdEventid\').val();\r\n                $.ajax(" +
-"{\r\n                    url: \'");
+"Class(\"btn_fav_act\");\r\n\r\n        }\r\n       $(\"#btnvote\").click(function () {\r\n  " +
+"          debugger;\r\n            var msg = \"\";\r\n            var clickvote = $(\'#" +
+"hdEventvote\').val();\r\n\r\n            if (clickvote == \"Y\") {\r\n                $(\"" +
+"#btOk\").click();\r\n                msg = ajaxsetup(\"ViewEvent\", \"VoteOnce\");\r\n   " +
+"             $(\"#spanokid\").html(msg);\r\n                //alert(\'You can only vo" +
+"te once.\');\r\n            } else {\r\n                var eid = $(\'#hdEventid\').val" +
+"();\r\n                $.ajax({\r\n                    url: \'");
 
             
-            #line 864 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 868 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                      Write(Url.Action("savevote", "CreateEvent"));
 
             
@@ -2365,19 +2367,25 @@ WriteLiteral(@"
 
                             $('#hdEventvote').val(""Y"");
                             $('#spanvotes').html(data);
-                            alert('Thank you for voting!');
+
+                            $(""#btOk"").click();
+                            msg = ajaxsetup(""ViewEvent"", ""ThanksForVote"");
+                            $(""#spanokid"").html(msg);
+                            //alert('Thank you for voting!');
                         }
                     },
                     error: function (data) {
-                        alert(""Sorry there is some problem."");
+                        $(""#btOk"").click();
+                        $(""#spanokid"").html(""Sorry their is problem contact Administrator!!"");
                         return false
                     }
                 });
             }
         });
 
-        $(""#btnfavourite"").click(function () {
-
+          $(""#btnfavourite"").click(function () {
+            debugger;
+            var msg = """";
             var clickfav = $('#hdEventFav').val();
             if (clickfav == ""Y"") {
                 $('#hdEventFav').val(""N"");
@@ -2391,7 +2399,7 @@ WriteLiteral(@"
                 url: '");
 
             
-            #line 901 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 911 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                  Write(Url.Action("savefavourite", "CreateEvent"));
 
             
@@ -2405,35 +2413,40 @@ WriteLiteral("\',\r\n                data: { Eventid: eid, type: clickid },\r\n 
 WriteLiteral("\r\n                        return false;\r\n                    } else {\r\n          " +
 "              var clickfav = $(\'#hdEventFav\').val();\r\n                        if" +
 " (clickfav == \"Y\") {\r\n                            $(\"#btnfavourite\").addClass(\"b" +
-"tn_fav_act\");\r\n                            alert(\'Your Event have been saved!\');" +
-"\r\n                        }\r\n                        if (clickfav == \"N\") {\r\n   " +
-"                         alert(\'Your Event have not been saved!\');\r\n            " +
-"                $(\"#btnfavourite\").removeClass(\"btn_fav_act\");\r\n                " +
-"        }\r\n\r\n                        $(\'#spanfav\').html(data);\r\n\r\n              " +
-"      }\r\n                },\r\n                error: function (data) {\r\n         " +
-"           alert(\"Sorry there is some problem.\");\r\n                    return fa" +
-"lse\r\n                }\r\n            });\r\n\r\n        });\r\n\r\n        $(\"#lstcarouse" +
-"l div:first\").addClass(\"active\");\r\n\r\n\r\n        $(\".EveActRib\").css(\"display\", \"n" +
-"one\");\r\n        $(\".FacdisComm\").click(function () {\r\n            $(\".EveActRib\"" +
-").show();\r\n            $(\".EveDisRib\").hide();\r\n        });\r\n\r\n        $(\".Facda" +
-"ctComm\").click(function () {\r\n            $(\".EveActRib\").hide();\r\n            $" +
-"(\".EveDisRib\").show();\r\n        });\r\n\r\n\r\n        $(\".TmezoneSet\").hide();\r\n     " +
-"   $(\".Timezone\").click(function () {\r\n            var eventtype = $(\"#hdEventty" +
-"pe\").val();\r\n            if (eventtype == \"Multiple\") {\r\n                $(\".Tme" +
-"zoneSet\").slideToggle(\"fast\");\r\n            } else {\r\n                $(\".Tmezon" +
-"eSet\").slideToggle(\"fast\");\r\n            }\r\n            //\r\n\r\n        });\r\n\r\n   " +
-"     $(\".closetimemodal\").click(function () {\r\n            $(\".TmezoneSet\").hide" +
-"();\r\n\r\n        });\r\n    });\r\n</script>\r\n\r\n\r\n\r\n<script>\r\n    $(function () {\r\n   " +
-"     var address = $(\'#lbltopaddress\').html();\r\n        $(document).tooltip({\r\n " +
-"           items: \"[data-geo], [title]\",\r\n            content: function () {\r\n  " +
-"              var element = $(this);\r\n                if (element.is(\"[data-geo]" +
-"\")) {\r\n\r\n                    var text = address;\r\n                    return \"<i" +
-"mg class=\'map\'  alt=\'\" + text +\r\n                      \"\' src=\'http://maps.googl" +
-"e.com/maps/api/staticmap?\" +\r\n                      \"zoom=15&size=250x250&maptyp" +
-"e=roadmap&sensor=false&center=\" +\r\n                      text + \"&markers=size:m" +
-"id%7Ccolor:0xff0000%7Clabel:%7C\" + text + \"\'>\";\r\n                }\r\n            " +
-"    if (element.is(\"[title]\")) {\r\n                    return element.attr(\"title" +
-"\");\r\n                }\r\n\r\n            }\r\n        });\r\n    });\r\n</script>\r\n\r\n\r\n");
+"tn_fav_act\");\r\n                            $(\"#btOk\").click();\r\n                " +
+"            msg = ajaxsetup(\"ViewEvent\", \"eventSaved\");\r\n                       " +
+"     $(\"#spanokid\").html(msg);\r\n                            //alert(\'Your Event " +
+"have been saved!\');\r\n                        }\r\n                        if (clic" +
+"kfav == \"N\") {\r\n                            $(\"#btOk\").click();\r\n               " +
+"             msg = ajaxsetup(\"ViewEvent\", \"eventnotsaved\");\r\n\r\n                 " +
+"           $(\"#spanokid\").html(msg);\r\n                            //alert(\'Your " +
+"Event have not been saved!\');\r\n                            $(\"#btnfavourite\").re" +
+"moveClass(\"btn_fav_act\");\r\n                        }\r\n\r\n                        " +
+"$(\'#spanfav\').html(data);\r\n\r\n                    }\r\n                },\r\n        " +
+"        error: function (data) {\r\n                   \r\n                    retur" +
+"n false\r\n                }\r\n            });\r\n\r\n        });\r\n\r\n        $(\"#lstcar" +
+"ousel div:first\").addClass(\"active\");\r\n\r\n\r\n        $(\".EveActRib\").css(\"display\"" +
+", \"none\");\r\n        $(\".FacdisComm\").click(function () {\r\n            $(\".EveAct" +
+"Rib\").show();\r\n            $(\".EveDisRib\").hide();\r\n        });\r\n\r\n        $(\".F" +
+"acdactComm\").click(function () {\r\n            $(\".EveActRib\").hide();\r\n         " +
+"   $(\".EveDisRib\").show();\r\n        });\r\n\r\n\r\n        $(\".TmezoneSet\").hide();\r\n " +
+"       $(\".Timezone\").click(function () {\r\n            var eventtype = $(\"#hdEve" +
+"nttype\").val();\r\n            if (eventtype == \"Multiple\") {\r\n                $(\"" +
+".TmezoneSet\").slideToggle(\"fast\");\r\n            } else {\r\n                $(\".Tm" +
+"ezoneSet\").slideToggle(\"fast\");\r\n            }\r\n            //\r\n\r\n        });\r\n\r" +
+"\n        $(\".closetimemodal\").click(function () {\r\n            $(\".TmezoneSet\")." +
+"hide();\r\n\r\n        });\r\n    });\r\n</script>\r\n\r\n\r\n\r\n<script>\r\n    $(function () {\r" +
+"\n        var address = $(\'#lbltopaddress\').html();\r\n        $(document).tooltip(" +
+"{\r\n            items: \"[data-geo], [title]\",\r\n            content: function () {" +
+"\r\n                var element = $(this);\r\n                if (element.is(\"[data-" +
+"geo]\")) {\r\n\r\n                    var text = address;\r\n                    return" +
+" \"<img class=\'map\'  alt=\'\" + text +\r\n                      \"\' src=\'http://maps.g" +
+"oogle.com/maps/api/staticmap?\" +\r\n                      \"zoom=15&size=250x250&ma" +
+"ptype=roadmap&sensor=false&center=\" +\r\n                      text + \"&markers=si" +
+"ze:mid%7Ccolor:0xff0000%7Clabel:%7C\" + text + \"\'>\";\r\n                }\r\n        " +
+"        if (element.is(\"[title]\")) {\r\n                    return element.attr(\"t" +
+"itle\");\r\n                }\r\n\r\n            }\r\n        });\r\n    });\r\n</script>\r\n\r\n" +
+"\r\n");
 
 WriteLiteral("\r\n<script>\r\n    //function validate(e) {\r\n    //    if (isNaN(this.value + \"\" + S" +
 "tring.fromCharCode(e.charCode))) return false;\r\n    //}\r\n    //$(\'.number-only\')" +
@@ -2525,7 +2538,7 @@ WriteLiteral("\r\n<script>\r\n    //function validate(e) {\r\n    //    if (isNa
 "         url: \'");
 
             
-            #line 1175 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 1192 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                      Write(Url.Action("GetTicketDetail", "CreateEvent"));
 
             
@@ -2541,7 +2554,7 @@ WriteLiteral(@"',
                         $.removeCookie(""Selection"");
                     },
                     error: function (data) {
-                        alert(""Sorry there is some problem."");
+                        //alert(""Sorry there is some problem."");
                     }
                 });
             }
@@ -2552,7 +2565,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 1193 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 1210 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                  Write(Url.Action("GetTicketDetail", "CreateEvent"));
 
             
@@ -2572,33 +2585,33 @@ WriteLiteral("\',\r\n                beforeSend: function () { $(\'#dvAjxLoader\
 "oString()).val(vColm[2].toString());\r\n                        }\r\n               " +
 "         $.removeCookie(\"Selection\");\r\n                        calculateTickTota" +
 "l();\r\n                    }\r\n                },\r\n                error: function" +
-" (data) {\r\n                    alert(\"Sorry there is some problem.\");\r\n         " +
-"       }\r\n            });\r\n        }\r\n        var Eventid = $(\'#hdEventid\').val(" +
-");\r\n        $(\"#btPayment\").click(function () {\r\n            var vEntid = $(\'#hd" +
-"Eventid\').val();\r\n            var IdAry = $(\"#hdIds\").val().split(\',\');\r\n       " +
-"     var TList = [];\r\n            var vId = 0;\r\n            var vLockQty = 0;\r\n " +
-"           var vDonate = 0;\r\n            var vflag = 0;\r\n            var vSelect" +
-"ion = \"\";\r\n            for (i = 0; i < IdAry.length; i++) {\r\n                deb" +
-"ugger;\r\n                vId = parseInt(IdAry[i].toString());\r\n                vL" +
-"ockQty = parseInt($(\"#d_\" + IdAry[i].toString()).val());\r\n                vDonat" +
-"e = parseFloat($(\"#txtd_\" + IdAry[i].toString()).val());\r\n                vTAmt " +
-"= parseFloat($(\"#hid_\" + IdAry[i].toString()).val());\r\n                if (isNaN" +
-"(vDonate) == true) vDonate = 0;\r\n                if (isNaN(vTAmt) == true) vTAmt" +
-" = 0;\r\n\r\n                if (vLockQty > 0 || vDonate >0) {\r\n                    " +
-"vflag = 1;\r\n                    TList.push({\r\n                        \'TLD_TQD_I" +
-"d\': vId,\r\n                        \'TLD_Locked_Qty\': vLockQty,\r\n                 " +
-"       \'TLD_Event_Id\': vEntid,\r\n                        \'TLD_Donate\': vDonate,\r\n" +
-"                        \'TicketAmount\': vTAmt\r\n                    });\r\n        " +
-"            if (vSelection == \"\")\r\n                        vSelection = vId + \"~" +
-"\" + vLockQty + \"~\" + vDonate;\r\n                    else\r\n                       " +
-" vSelection = vSelection + \"¶\" + (vId + \"~\" + vLockQty + \"~\" + vDonate);\r\n      " +
-"          }\r\n\r\n            }\r\n\r\n            var model = {\r\n                \'TLD_" +
-"TQD_Id\': \'0\',\r\n                \'TLD_Locked_Qty\': \'0\',\r\n                \'TLD_List" +
-"\': TList\r\n            }\r\n            if (vflag > 0) {\r\n\r\n\r\n\r\n\r\n                $" +
-".ajax({\r\n                    url: \'");
+" (data) {\r\n                    //alert(\"Sorry there is some problem.\");\r\n       " +
+"         }\r\n            });\r\n        }\r\n        var Eventid = $(\'#hdEventid\').va" +
+"l();\r\n        $(\"#btPayment\").click(function () {\r\n            var vEntid = $(\'#" +
+"hdEventid\').val();\r\n            var IdAry = $(\"#hdIds\").val().split(\',\');\r\n     " +
+"       var TList = [];\r\n            var vId = 0;\r\n            var vLockQty = 0;\r" +
+"\n            var vDonate = 0;\r\n            var vflag = 0;\r\n            var vSele" +
+"ction = \"\";\r\n            for (i = 0; i < IdAry.length; i++) {\r\n                d" +
+"ebugger;\r\n                vId = parseInt(IdAry[i].toString());\r\n                " +
+"vLockQty = parseInt($(\"#d_\" + IdAry[i].toString()).val());\r\n                vDon" +
+"ate = parseFloat($(\"#txtd_\" + IdAry[i].toString()).val());\r\n                vTAm" +
+"t = parseFloat($(\"#hid_\" + IdAry[i].toString()).val());\r\n                if (isN" +
+"aN(vDonate) == true) vDonate = 0;\r\n                if (isNaN(vTAmt) == true) vTA" +
+"mt = 0;\r\n\r\n                if (vLockQty > 0 || vDonate >0) {\r\n                  " +
+"  vflag = 1;\r\n                    TList.push({\r\n                        \'TLD_TQD" +
+"_Id\': vId,\r\n                        \'TLD_Locked_Qty\': vLockQty,\r\n               " +
+"         \'TLD_Event_Id\': vEntid,\r\n                        \'TLD_Donate\': vDonate," +
+"\r\n                        \'TicketAmount\': vTAmt\r\n                    });\r\n      " +
+"              if (vSelection == \"\")\r\n                        vSelection = vId + " +
+"\"~\" + vLockQty + \"~\" + vDonate;\r\n                    else\r\n                     " +
+"   vSelection = vSelection + \"¶\" + (vId + \"~\" + vLockQty + \"~\" + vDonate);\r\n    " +
+"            }\r\n\r\n            }\r\n\r\n            var model = {\r\n                \'TL" +
+"D_TQD_Id\': \'0\',\r\n                \'TLD_Locked_Qty\': \'0\',\r\n                \'TLD_Li" +
+"st\': TList\r\n            }\r\n            if (vflag > 0) {\r\n\r\n\r\n\r\n\r\n               " +
+" $.ajax({\r\n                    url: \'");
 
             
-            #line 1265 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 1282 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                      Write(Url.Action("LockTickets", "CreateEvent"));
 
             
@@ -2617,7 +2630,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 1275 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 1292 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                                Write(Url.Action("TicketPayment", "TicketPayment", new { }));
 
             
@@ -2652,7 +2665,7 @@ WriteLiteral(@"' + '?Eventid=' + Eventid;
             url: '");
 
             
-            #line 1301 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 1318 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
              Write(Url.Action("Index", "ValidationMessage"));
 
             

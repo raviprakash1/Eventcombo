@@ -11,7 +11,7 @@ namespace EventCombo.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Organizer_Master
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

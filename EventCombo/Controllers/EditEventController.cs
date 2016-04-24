@@ -908,14 +908,14 @@ namespace EventCombo.Controllers
 
                     TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
 
-                    dtzCreated = new DateTimeWithZone(Convert.ToDateTime(vEC.ModifyDate), userTimeZone);
+                    dtzCreated = new DateTimeWithZone(Convert.ToDateTime(vEC.ModifyDate), userTimeZone,true);
                     //Timezone value
 
                 }
                 else
                 {
                     TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                    dtzCreated = new DateTimeWithZone(Convert.ToDateTime(vEC.ModifyDate), userTimeZone);
+                    dtzCreated = new DateTimeWithZone(Convert.ToDateTime(vEC.ModifyDate), userTimeZone,true);
                 }
                 vEC.ModifyDate = "(Last Saved at " + dtzCreated.LocalTime + ")";
                 return vEC;

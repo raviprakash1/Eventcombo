@@ -482,7 +482,7 @@
                             alert("There is some Problem, not able to update.");
                     },
                     error: function (data) {
-                        alert("Sorry there is some problem.");
+                        //alert("Sorry there is some problem.");
                     }
                 });
 
@@ -525,7 +525,7 @@
                             //});
                         },
                         error: function (data) {
-                            alert("Sorry there is some problem.");
+                            //alert("Sorry there is some problem.");
                         }
                     });
                 });
@@ -533,11 +533,11 @@
 
 
                 $("#dlFeature").change(function () {
-                    alert("chal pya");
+                    //alert("chal pya");
                     var vValue = 0;
                     var EventId = $(this).val();
                     var Feature = $("#dlFeature option:selected").text();
-                    alert(Feature);
+                    //alert(Feature);
                     if (Feature == "Platinum")
                         vValue = 1;
                     else if (Feature == "Gold")

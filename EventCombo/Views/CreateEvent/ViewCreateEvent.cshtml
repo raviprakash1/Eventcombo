@@ -852,12 +852,16 @@ function pad(n) { return n < 10 ? '0' + n : n };
             $("#btnvote").removeClass("btn_fav_act");
 
         }
-        $("#btnvote").click(function () {
+       $("#btnvote").click(function () {
+            debugger;
+            var msg = "";
             var clickvote = $('#hdEventvote').val();
 
             if (clickvote == "Y") {
-
-                alert('You can only vote once.');
+                $("#btOk").click();
+                msg = ajaxsetup("ViewEvent", "VoteOnce");
+                $("#spanokid").html(msg);
+                //alert('You can only vote once.');
             } else {
                 var eid = $('#hdEventid').val();
                 $.ajax({
@@ -875,19 +879,25 @@ function pad(n) { return n < 10 ? '0' + n : n };
 
                             $('#hdEventvote').val("Y");
                             $('#spanvotes').html(data);
-                            alert('Thank you for voting!');
+
+                            $("#btOk").click();
+                            msg = ajaxsetup("ViewEvent", "ThanksForVote");
+                            $("#spanokid").html(msg);
+                            //alert('Thank you for voting!');
                         }
                     },
                     error: function (data) {
-                        alert("Sorry there is some problem.");
+                        $("#btOk").click();
+                        $("#spanokid").html("Sorry their is problem contact Administrator!!");
                         return false
                     }
                 });
             }
         });
 
-        $("#btnfavourite").click(function () {
-
+          $("#btnfavourite").click(function () {
+            debugger;
+            var msg = "";
             var clickfav = $('#hdEventFav').val();
             if (clickfav == "Y") {
                 $('#hdEventFav').val("N");
@@ -910,10 +920,17 @@ function pad(n) { return n < 10 ? '0' + n : n };
                         var clickfav = $('#hdEventFav').val();
                         if (clickfav == "Y") {
                             $("#btnfavourite").addClass("btn_fav_act");
-                            alert('Your Event have been saved!');
+                            $("#btOk").click();
+                            msg = ajaxsetup("ViewEvent", "eventSaved");
+                            $("#spanokid").html(msg);
+                            //alert('Your Event have been saved!');
                         }
                         if (clickfav == "N") {
-                            alert('Your Event have not been saved!');
+                            $("#btOk").click();
+                            msg = ajaxsetup("ViewEvent", "eventnotsaved");
+
+                            $("#spanokid").html(msg);
+                            //alert('Your Event have not been saved!');
                             $("#btnfavourite").removeClass("btn_fav_act");
                         }
 
@@ -922,7 +939,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
                     }
                 },
                 error: function (data) {
-                    alert("Sorry there is some problem.");
+                   
                     return false
                 }
             });
@@ -1182,7 +1199,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
                         $.removeCookie("Selection");
                     },
                     error: function (data) {
-                        alert("Sorry there is some problem.");
+                        //alert("Sorry there is some problem.");
                     }
                 });
             }
@@ -1211,7 +1228,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
                     }
                 },
                 error: function (data) {
-                    alert("Sorry there is some problem.");
+                    //alert("Sorry there is some problem.");
                 }
             });
         }

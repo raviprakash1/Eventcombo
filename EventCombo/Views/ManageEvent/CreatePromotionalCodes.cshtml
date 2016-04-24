@@ -119,7 +119,7 @@ else
 {
 if (Model.Formtype == "S")
 {
-                <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Value" id="txt_discountmnt" name="PC_Amount" value="@Model.PC_Amount"  maxlength="7">
+                <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Value" id="txt_discountmnt" name="PC_Amount" value="@Model.PC_Amount"  maxlength="7" >
 }
 else
 {
@@ -512,7 +512,9 @@ else
                 //$("#sidebar").find("#crt_promcode").click(function() {
                 //    alert('button clicked');
                 //});
-
+                $('#txt_discountmnt').bind("cut copy paste", function (e) {
+                    e.preventDefault();
+                });
                 $(document).ajaxStop(function() {
                     if( !$("#collapse2").hasClass("in"))
                     {

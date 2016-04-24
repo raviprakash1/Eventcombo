@@ -2008,21 +2008,21 @@ WriteLiteral("\',\r\n                    type: \"GET\",\r\n                    a
 "\r\n                        //Loading Mini browser with redirect url, true for asy" +
 "nc AJAX calls\r\n                        paypal.checkout.startFlow(url);\r\n        " +
 "            },\r\n                    error: function (responseData, textStatus, e" +
-"rrorThrown) {\r\n                        alert(\"Something going wrong \");\r\n       " +
-"                 //Gracefully Close the minibrowser in case of AJAX errors\r\n    " +
-"                    paypal.checkout.closeFlow();\r\n                    }\r\n       " +
-"         });\r\n            },\r\n            button: [\'btPaypalCheckout\']\r\n        " +
-"});\r\n    }\r\n\r\n    $(document).ready(function () {\r\n\r\n        var vGrdTotal = par" +
-"seFloat($(\"#spGrdTotal\").text());\r\n       \r\n        \r\n        if (isNaN(vGrdTota" +
-"l) == true) vGrdTotal = 0;\r\n        var totqty = $(\'#hidQty\').val();\r\n\r\n        " +
-"if (totqty <= 0) {\r\n            $(\'.divqtyvisible\').hide();\r\n        } else {\r\n " +
-"           $(\'.divqtyvisible\').show();\r\n        }\r\n        if (vGrdTotal > 0) {\r" +
-"\n            $(\'.divvisible\').show();\r\n        }\r\n        else {\r\n            $(" +
-"\'.divvisible\').hide();\r\n\r\n        }\r\n\r\n        if ($(\"#hdVarId\").val() != \"\") {\r" +
-"\n            window.location.hash = \"dvVarHash\";\r\n        }\r\n        else {\r\n   " +
-"         window.location.hash = \"dvHash\";\r\n        }\r\n\r\n        //--------------" +
-"----------------------------------LoadSelectedTickets---------------------------" +
-"-----------------------\r\n\r\n        ");
+"rrorThrown) {\r\n                        //alert(\"Something going wrong \");\r\n     " +
+"                   //Gracefully Close the minibrowser in case of AJAX errors\r\n  " +
+"                      paypal.checkout.closeFlow();\r\n                    }\r\n     " +
+"           });\r\n            },\r\n            button: [\'btPaypalCheckout\']\r\n      " +
+"  });\r\n    }\r\n\r\n    $(document).ready(function () {\r\n\r\n        var vGrdTotal = p" +
+"arseFloat($(\"#spGrdTotal\").text());\r\n       \r\n        \r\n        if (isNaN(vGrdTo" +
+"tal) == true) vGrdTotal = 0;\r\n        var totqty = $(\'#hidQty\').val();\r\n\r\n      " +
+"  if (totqty <= 0) {\r\n            $(\'.divqtyvisible\').hide();\r\n        } else {\r" +
+"\n            $(\'.divqtyvisible\').show();\r\n        }\r\n        if (vGrdTotal > 0) " +
+"{\r\n            $(\'.divvisible\').show();\r\n        }\r\n        else {\r\n            " +
+"$(\'.divvisible\').hide();\r\n\r\n        }\r\n\r\n        if ($(\"#hdVarId\").val() != \"\") " +
+"{\r\n            window.location.hash = \"dvVarHash\";\r\n        }\r\n        else {\r\n " +
+"           window.location.hash = \"dvHash\";\r\n        }\r\n\r\n        //------------" +
+"------------------------------------LoadSelectedTickets-------------------------" +
+"-------------------------\r\n\r\n        ");
 
 WriteLiteral("\r\n\r\n        //-------------------------------------------------------------------" +
 "---------------------------------//\r\n        ");

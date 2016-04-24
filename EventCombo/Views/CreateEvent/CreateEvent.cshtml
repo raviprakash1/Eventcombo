@@ -2243,7 +2243,7 @@
             function save(type)
             {
 
-                debugger;
+
                 var status = "";
                 if (type == "Preview")
                 {
@@ -2598,6 +2598,8 @@
                     'ShowMap': ($("#chkShowMap").is(":checked") == true ? 'Y' : 'N'),
                     'DuplicateEvent': ($("#chkDuplicateEvent").is(":checked") == true ? 'Y' : 'N')
                 };
+
+                console.log(model);
                     $.ajax({
                         url: '@Url.Action("SaveEvent", "CreateEvent")',
                         data: { model: model},
