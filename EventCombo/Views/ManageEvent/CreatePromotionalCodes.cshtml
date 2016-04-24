@@ -119,7 +119,7 @@ else
 {
 if (Model.Formtype == "S")
 {
-                <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Value" id="txt_discountmnt" name="PC_Amount" value="@Model.PC_Amount"  maxlength="7">
+                <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Value" id="txt_discountmnt" name="PC_Amount" value="@Model.PC_Amount"  maxlength="7" >
 }
 else
 {
@@ -512,7 +512,9 @@ else
                 //$("#sidebar").find("#crt_promcode").click(function() {
                 //    alert('button clicked');
                 //});
-
+                $('#txt_discountmnt').bind("cut copy paste", function (e) {
+                    e.preventDefault();
+                });
                 $(document).ajaxStop(function() {
                     if( !$("#collapse2").hasClass("in"))
                     {
@@ -1143,27 +1145,59 @@ else
                 function compare(chkstart, chkend) {
                     debugger;
                     var errorMsg = "";
-                    var arr1= chkstart.split(" ");
-                    var dates1=arr1[0].split("-");
-                    var time=arr1[1].split(":");
+                    var dates1="";
+                    var time="";
+                    var AMPM="";
+                    var arr1= chkstart.trim().split(" ");
+                    var alength=arr1.length;
+                    for(var i=0;i<alength;i++)
+                    {
+                        if(arr1[i].indexOf("-")>0)
+                        {
+                            dates1=arr1[i].split("-");
+                        }
+                        if(arr1[i].indexOf(":")>0)
+                        {
+                            time=arr1[i].split(":");
+                        }
+                       
+                    }
+
+                    AMPM=arr1[alength-1];
+                 
                     var hours=parseInt(time[0]);
                     var minutes=parseInt(time[1]);
-                    var AMPM=arr1[2].toLowerCase();
+                    
                     if(AMPM == "pm" && hours<12) hours = hours+12;
                     if(AMPM == "am" && hours==12) hours = hours-12;
                     var sHours1 = hours.toString();
                     var sMinutes1 = minutes.toString();
                     if(hours<10) sHours1 = "0" + sHours1;
                     if(minutes<10) sMinutes1 = "0" + sMinutes1;
-                           
+                    //sseconds= parseInt(time[2])   ;
                             
                             
-                    var arr2= chkend.split(" ");
-                    var dates2=arr2[0].split("-");
-                    var time2=arr2[1].split(":");
+                    var arr2= chkend.trim().split(" ");
+                    var dates2="";
+                    var time2="";
+                    var alength2=arr2.length;
+                    for(var i=0;i<alength2;i++)
+                    {
+                        if(arr2[i].indexOf("-")>0)
+                        {
+                            dates2=arr2[i].split("-");
+                        }
+                        if(arr2[i].indexOf(":")>0)
+                        {
+                            time2=arr2[i].split(":");
+                        }
+                       
+                    }
+                    AMPM2=arr2[alength2-1].toLowerCase();
+                   
                     var hours2=parseInt(time2[0]);
                     var minutes2=parseInt(time2[1]);
-                    var AMPM2=arr2[2].toLowerCase();
+                 
                   
                     if(AMPM2 == "pm" && hours2<12) hours2 = hours2+12;
                     if(AMPM2 == "am" && hours2==12) hours2 = hours2-12;
@@ -1171,13 +1205,13 @@ else
                     var sMinutes2= minutes2.toString();
                     if(hours2<10) sHours2 = "0" + sHours2;
                     if(minutes2<10) sMinutes2 = "0" + sMinutes2;
-                        
+                    //sseconds2=parseInt(time2[2]);
                            
 
-                    var a = new Date(dates1[2], dates1[0], dates1[1], sHours1, sMinutes1);
+                    var a = new Date(dates1[2], dates1[0], dates1[1], sHours1, sMinutes1,sseconds);
                          
-                    var b = new Date(dates2[2], dates2[0], dates2[1], sHours2, sMinutes2);
-
+                    var b = new Date(dates2[2], dates2[0], dates2[1], sHours2, sMinutes2,sseconds2);
+                   
                     //var msDateA = Date.UTC(a.getFullYear(), a.getMonth() + 1, a.getDate());
                     //var msDateB = Date.UTC(b.getFullYear(), b.getMonth() + 1, b.getDate());
 

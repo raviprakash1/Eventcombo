@@ -585,7 +585,7 @@
                         paypal.checkout.startFlow(url);
                     },
                     error: function (responseData, textStatus, errorThrown) {
-                        alert("Something going wrong ");
+                        //alert("Something going wrong ");
                         //Gracefully Close the minibrowser in case of AJAX errors
                         paypal.checkout.closeFlow();
                     }

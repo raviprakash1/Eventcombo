@@ -583,10 +583,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_Layout.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\_Login1Partial.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_Login1Partial.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shared\_Logout.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>_Logout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_signuppartial.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_signuppartial.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\TicketPayment\PaymentConfirmation.generated.cs">
       <AutoGen>True</AutoGen>
@@ -1104,6 +1114,7 @@
     </Content>
     <Content Include="Views\Shared\_Login1Partial.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_Login1Partial.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Shared\_AuthenticateLayout.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1125,6 +1136,7 @@
     </Content>
     <Content Include="Views\Shared\_signuppartial.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_signuppartial.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Home\ForgetPassword.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1207,9 +1219,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>EventCreation.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\CreateEvent\CreateEvent.cshtml">
-      <LastGenOutput>CreateEvent1.generated.cs</LastGenOutput>
-    </Content>
     <Content Include="Views\EventConfirmation\EventConfirmation.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>EventConfirmation.generated.cs</LastGenOutput>
@@ -1269,6 +1278,7 @@
     <Content Include="Views\ManageEvent\CreateInvitations.cshtml" />
     <Content Include="Views\ManageEvent\SidenavPartialView.cshtml" />
     <Content Include="Views\TicketPayment\LoadTicketsView.cshtml" />
+    <Content Include="Views\CreateEvent\CreateEvent.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

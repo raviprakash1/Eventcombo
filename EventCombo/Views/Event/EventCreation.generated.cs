@@ -3764,52 +3764,52 @@ WriteLiteral(">\r\n\r\n\r\n\r\n\r\n\r\n    function DeleteTableRow(Sno) {\r\n\r\
 "  if (parseInt(Sno) == )\r\n        //        {\r\n        //            myTr.push($" +
 "(this).text());\r\n        //        }\r\n        //    });\r\n        //    alert(myT" +
 "r);\r\n        //});\r\n\r\n    }\r\n\r\n    function compare(fromdate, todate) {\r\n       " +
-" if (Date.parse(fromDate) > Date.parse(toDate)) {\r\n            alert(\"Invalid Da" +
-"te Range!\\nStart Date cannot be after End Date!\")\r\n            return false;\r\n  " +
-"      }\r\n\r\n    }\r\n    function checkValidDate(datevalue)\r\n    {\r\n        var dat" +
-"e = Date.parse(datevalue);\r\n        if (isNaN(date))\r\n            return \'N\';\r\n " +
-"       else\r\n            return \'Y\';\r\n\r\n    }\r\n    //function GetSchDateDiff() {" +
-"\r\n    //    alert(\"IN fun\");\r\n    //    var dateFrom = date.parse($(\"#txtDateFro" +
-"m\").val());\r\n    //    var dateTo = date.parse($(\"#txtDateTo\").val());\r\n    //  " +
-"  dateDiff = new Date(dateTo - dateFrom);\r\n    //    alert(dateDiff);\r\n\r\n    //}" +
-"\r\n\r\n    $(document).ready(function () {\r\n        //alert(\"Reload\");\r\n        $(\"" +
-"#txtStartTime\").val(\"7:00pm\");\r\n        $(\"#txtEndTime\").val(\"7:00pm\");\r\n       " +
-" $(\"#txtTimeStart\").val(\"7:00pm\");\r\n        $(\"#txtTimeEnd\").val(\"7:00pm\");\r\n\r\n " +
-"       $(\"#txtDateTo\").focusout(function () {\r\n\r\n            $(\"#txtDateTo\").val" +
-"($(\"#txtDateFrom\").val());\r\n\r\n\r\n\r\n        });\r\n\r\n\r\n        $(\"#txtStartDate\").fo" +
-"cusout(function () {\r\n          \r\n            $(\"#txtEndDate\").val($(\"#txtStartD" +
-"ate\").val());\r\n\r\n\r\n\r\n        });\r\n\r\n        $(\".PastLocatMain\").hide();\r\n       " +
-" $(\".UsePast\").click(function () {\r\n            $(\".PastLocatMain\").css(\"display" +
-"\", \"block\");\r\n            $(\".EvntLocatTitle\").css(\"display\", \"none\");\r\n        " +
-"    $(\".EnterAdd\").css(\"display\", \"none\");\r\n        });\r\n\r\n        $(\".RetunEven" +
-"t\").click(function () {\r\n            $(\".EnterAdd\").css(\"display\", \"block\");\r\n  " +
-"          $(\".EvntLocatTitle\").css(\"display\", \"block\");\r\n            $(\".PastLoc" +
-"atMain\").css(\"display\", \"none\");\r\n\r\n        });\r\n\r\n        // Event Orgnization\r" +
-"\n\r\n\r\n\r\n\r\n        $(\".can_org_cont\").hide();\r\n        $(\".EditOrg\").click(functio" +
-"n () {\r\n            $(\".can_org_cont\").css(\"display\", \"block\");\r\n            $(\"" +
-".edit_org_cont\").css(\"display\", \"none\");\r\n            $(\".Moderor\").css(\"display" +
-"\", \"block\");\r\n\r\n        });\r\n        $(\".AddOrg\").click(function () {\r\n         " +
-"   $(\".can_org_cont\").css(\"display\", \"block\");\r\n            $(\".edit_org_cont\")." +
-"css(\"display\", \"none\");\r\n            $(\".Moderor\").css(\"display\", \"none\");\r\n\r\n  " +
-"      });\r\n        $(\".CanOrg\").click(function () {\r\n            $(\".edit_org_co" +
-"nt\").css(\"display\", \"block\");\r\n            $(\".can_org_cont\").css(\"display\", \"no" +
-"ne\");\r\n\r\n        });\r\n\r\n\r\n        $(\".AddSocial\").css(\"display\", \"none\");\r\n     " +
-"   $(\'#chkLinkonFBTwit\').change(function () {\r\n            if ($(this).is(\":chec" +
-"ked\")) {\r\n                $(\'.AddSocial\').show();\r\n            } else {\r\n       " +
-"         $(\'.AddSocial\').hide();\r\n            }\r\n        });\r\n\r\n        $(\".priv" +
-"_cont\").hide();\r\n        $(\".Prvpage\").click(function () {\r\n            $(\".priv" +
-"_cont\").css(\"display\", \"block\");\r\n        });\r\n        $(\".Pubpage\").click(funct" +
-"ion () {\r\n            $(\".priv_cont\").css(\"display\", \"none\");\r\n        });\r\n\r\n\r\n" +
-"\r\n        $(\".online_main_cont\").hide();\r\n        $(\".OnlineEvent\").click(functi" +
-"on () {\r\n            $(\".online_main_cont\").css(\"display\", \"block\");\r\n          " +
-"  $(\".EnterAdd\").css(\"display\", \"none\");\r\n        });\r\n\r\n        $(\".AddLocatond" +
-"iv\").click(function () {\r\n            $(\".EnterAdd\").css(\"display\", \"block\");\r\n " +
-"           $(\".online_main_cont\").css(\"display\", \"none\");\r\n            $(\"#hidAd" +
-"dressStatus\").val(\'Normal\');\r\n        });\r\n\r\n        //hidAddressStatus\r\n       " +
-" $(\"#btOnlineEvent\").click(function () {\r\n            $(\"#hidAddressStatus\").val" +
-"(\'Online\');\r\n        });\r\n\r\n        $(\"#btPastLocation\").click(function () {\r\n  " +
-"          $(\"#hidAddressStatus\").val(\'PastLocation\');\r\n            $.ajax({\r\n   " +
-"             url: \'");
+" if (Date.parse(fromDate) > Date.parse(toDate)) {\r\n            //alert(\"Invalid " +
+"Date Range!\\nStart Date cannot be after End Date!\")\r\n            return false;\r\n" +
+"        }\r\n\r\n    }\r\n    function checkValidDate(datevalue)\r\n    {\r\n        var d" +
+"ate = Date.parse(datevalue);\r\n        if (isNaN(date))\r\n            return \'N\';\r" +
+"\n        else\r\n            return \'Y\';\r\n\r\n    }\r\n    //function GetSchDateDiff()" +
+" {\r\n    //    alert(\"IN fun\");\r\n    //    var dateFrom = date.parse($(\"#txtDateF" +
+"rom\").val());\r\n    //    var dateTo = date.parse($(\"#txtDateTo\").val());\r\n    //" +
+"    dateDiff = new Date(dateTo - dateFrom);\r\n    //    alert(dateDiff);\r\n\r\n    /" +
+"/}\r\n\r\n    $(document).ready(function () {\r\n        //alert(\"Reload\");\r\n        $" +
+"(\"#txtStartTime\").val(\"7:00pm\");\r\n        $(\"#txtEndTime\").val(\"7:00pm\");\r\n     " +
+"   $(\"#txtTimeStart\").val(\"7:00pm\");\r\n        $(\"#txtTimeEnd\").val(\"7:00pm\");\r\n\r" +
+"\n        $(\"#txtDateTo\").focusout(function () {\r\n\r\n            $(\"#txtDateTo\").v" +
+"al($(\"#txtDateFrom\").val());\r\n\r\n\r\n\r\n        });\r\n\r\n\r\n        $(\"#txtStartDate\")." +
+"focusout(function () {\r\n          \r\n            $(\"#txtEndDate\").val($(\"#txtStar" +
+"tDate\").val());\r\n\r\n\r\n\r\n        });\r\n\r\n        $(\".PastLocatMain\").hide();\r\n     " +
+"   $(\".UsePast\").click(function () {\r\n            $(\".PastLocatMain\").css(\"displ" +
+"ay\", \"block\");\r\n            $(\".EvntLocatTitle\").css(\"display\", \"none\");\r\n      " +
+"      $(\".EnterAdd\").css(\"display\", \"none\");\r\n        });\r\n\r\n        $(\".RetunEv" +
+"ent\").click(function () {\r\n            $(\".EnterAdd\").css(\"display\", \"block\");\r\n" +
+"            $(\".EvntLocatTitle\").css(\"display\", \"block\");\r\n            $(\".PastL" +
+"ocatMain\").css(\"display\", \"none\");\r\n\r\n        });\r\n\r\n        // Event Orgnizatio" +
+"n\r\n\r\n\r\n\r\n\r\n        $(\".can_org_cont\").hide();\r\n        $(\".EditOrg\").click(funct" +
+"ion () {\r\n            $(\".can_org_cont\").css(\"display\", \"block\");\r\n            $" +
+"(\".edit_org_cont\").css(\"display\", \"none\");\r\n            $(\".Moderor\").css(\"displ" +
+"ay\", \"block\");\r\n\r\n        });\r\n        $(\".AddOrg\").click(function () {\r\n       " +
+"     $(\".can_org_cont\").css(\"display\", \"block\");\r\n            $(\".edit_org_cont\"" +
+").css(\"display\", \"none\");\r\n            $(\".Moderor\").css(\"display\", \"none\");\r\n\r\n" +
+"        });\r\n        $(\".CanOrg\").click(function () {\r\n            $(\".edit_org_" +
+"cont\").css(\"display\", \"block\");\r\n            $(\".can_org_cont\").css(\"display\", \"" +
+"none\");\r\n\r\n        });\r\n\r\n\r\n        $(\".AddSocial\").css(\"display\", \"none\");\r\n   " +
+"     $(\'#chkLinkonFBTwit\').change(function () {\r\n            if ($(this).is(\":ch" +
+"ecked\")) {\r\n                $(\'.AddSocial\').show();\r\n            } else {\r\n     " +
+"           $(\'.AddSocial\').hide();\r\n            }\r\n        });\r\n\r\n        $(\".pr" +
+"iv_cont\").hide();\r\n        $(\".Prvpage\").click(function () {\r\n            $(\".pr" +
+"iv_cont\").css(\"display\", \"block\");\r\n        });\r\n        $(\".Pubpage\").click(fun" +
+"ction () {\r\n            $(\".priv_cont\").css(\"display\", \"none\");\r\n        });\r\n\r\n" +
+"\r\n\r\n        $(\".online_main_cont\").hide();\r\n        $(\".OnlineEvent\").click(func" +
+"tion () {\r\n            $(\".online_main_cont\").css(\"display\", \"block\");\r\n        " +
+"    $(\".EnterAdd\").css(\"display\", \"none\");\r\n        });\r\n\r\n        $(\".AddLocato" +
+"ndiv\").click(function () {\r\n            $(\".EnterAdd\").css(\"display\", \"block\");\r" +
+"\n            $(\".online_main_cont\").css(\"display\", \"none\");\r\n            $(\"#hid" +
+"AddressStatus\").val(\'Normal\');\r\n        });\r\n\r\n        //hidAddressStatus\r\n     " +
+"   $(\"#btOnlineEvent\").click(function () {\r\n            $(\"#hidAddressStatus\").v" +
+"al(\'Online\');\r\n        });\r\n\r\n        $(\"#btPastLocation\").click(function () {\r\n" +
+"            $(\"#hidAddressStatus\").val(\'PastLocation\');\r\n            $.ajax({\r\n " +
+"               url: \'");
 
             
             #line 1374 "..\..\Views\Event\EventCreation.cshtml"
@@ -3824,7 +3824,7 @@ WriteLiteral(@"',
                     $(""#dllPastLocation"").html(data);
                 },
                 error: function (data) {
-                    alert(""Sorry there is some problem."");
+                    //alert(""Sorry there is some problem."");
                 }
             });
 
@@ -3850,14 +3850,14 @@ WriteLiteral(@"',
                     type: ""Post"",
                     success: function (data) {
                         if (data == ""Y"") {
-                            alert(""Event Url already exists."");
+                            //alert(""Event Url already exists."");
                             $(""#txtEventUrl"").val('');
                             $(""#txtEventUrl"").focus();
 
                         }
                     },
                     error: function (data) {
-                        alert(""Sorry there is some problem."");
+                        //alert(""Sorry there is some problem."");
                     }
                 });
             }
@@ -3882,43 +3882,43 @@ WriteLiteral("\',\r\n                data: { lECatId: vCatId },\r\n             
 "      alert(data.length);\r\n                    $(\"#ddlEventSubCategory\").html(da" +
 "ta);\r\n                    // items.push(\"<option value=\" + this.Value + \">\" + th" +
 "is.Text + \"</option>\");\r\n                    //});\r\n                },\r\n        " +
-"        error: function (data) {\r\n                    alert(\"Sorry there is some" +
-" problem.\");\r\n                }\r\n            });\r\n        });\r\n\r\n\r\n        $(\"#b" +
-"tEditOrg\").click(function () {\r\n            $(\"#txtOrgnizer\").val(\'\');\r\n        " +
-"    $(\"#hidOrgnizer\").val(\'\');\r\n            $(\"#edSummer2\").code(\'\');\r\n\r\n       " +
-"     var OrgVal = $(\'#dllOrganizer option:selected\').text();\r\n            //aler" +
-"t(OrgVal);\r\n            //alert(OrgVal);\r\n            var OrgEditor = $(\"#dllOrg" +
-"anizer\").val();\r\n            //alert(OrgEditor);\r\n            $(\"#txtOrgnizer\")." +
-"val(OrgVal);\r\n            $(\"#hidOrgnizer\").val(OrgVal);\r\n            $(\"#edSumm" +
-"er2\").code(OrgEditor);\r\n\r\n        });\r\n\r\n        $(\"#btAddOrg\").click(function (" +
-") {\r\n            //  alert($(\'#dllOrganizer option\').length);\r\n            if (p" +
-"arseInt($(\'#dllOrganizer option\').length) < 25) {\r\n                if ($(\"#hidOr" +
-"gnizer\").val() == \"\") {\r\n                    var vval = $(\"#edSummer2\").code();\r" +
-"\n                    var addOption = \'<option value=\"\' + vval + \'\" id=\"\' + $(\"#t" +
-"xtOrgnizer\").val() + \'\">\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n            " +
-"        $(\"#dllOrganizer\").append(addOption);\r\n                }\r\n              " +
-"  else {\r\n                    //$(\'#dllOrganizer option:selected\').removeAttr(\'s" +
-"elected\');\r\n                    var vval = $(\"#edSummer2\").code();\r\n            " +
-"        $(\"#dllOrganizer option\").each(function (i) {\r\n                        /" +
-"/alert($(this).text());\r\n                        //alert($(\"#hidOrgnizer\").val()" +
-");\r\n                        if ($(\"#hidOrgnizer\").val() == $(this).text()) {\r\n\r\n" +
-"                            $(this).remove();\r\n                            //ale" +
-"rt($(\"#hidOrgnizer\").val());\r\n                            //$(this).text($(\"#txt" +
-"Orgnizer\").val());\r\n                            //$(this).val(vval);\r\n          " +
-"              }\r\n                        //alert($(this).text() + \" : \" + $(this" +
-").val());\r\n                    });\r\n                    var vval = $(\"#edSummer2" +
-"\").code();\r\n                    var addOption = \'<option value=\"\' + vval + \'\" id" +
-"=\"\' + vval + \'\" >\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n                   " +
-" $(\"#dllOrganizer\").append(addOption);\r\n\r\n\r\n\r\n                    //var addOptio" +
-"n = \'<option value=\"\' + vval + \'\" id=\"\' + vval + \'\" >\' + $(\"#txtOrgnizer\").val()" +
-" + \'</option>\';\r\n                    //$(\"#dllOrganizer\").append(addOption);\r\n  " +
-"              }\r\n            }\r\n            else {\r\n                alert(\"Limit" +
-" Exceeded, System Allow Only 25 Orgnizer.\");\r\n\r\n            }\r\n            $(\"#h" +
-"idOrgnizer\").val(\'\');\r\n            $(\"#txtOrgnizer\").val(\'\');\r\n            $(\"#e" +
-"dSummer2\").code(\'\');\r\n            // $(\"#txtOrgnizer\").focus();\r\n            //$" +
-"(\"#dllOrganizer option\").each(function (i) {\r\n            //    alert($(this).te" +
-"xt() + \" : \" + $(this).val());\r\n            //});\r\n\r\n            //alert(vval);\r" +
-"\n\r\n        });\r\n\r\n        // Drop Down Binding\r\n        ");
+"        error: function (data) {\r\n                    //alert(\"Sorry there is so" +
+"me problem.\");\r\n                }\r\n            });\r\n        });\r\n\r\n\r\n        $(\"" +
+"#btEditOrg\").click(function () {\r\n            $(\"#txtOrgnizer\").val(\'\');\r\n      " +
+"      $(\"#hidOrgnizer\").val(\'\');\r\n            $(\"#edSummer2\").code(\'\');\r\n\r\n     " +
+"       var OrgVal = $(\'#dllOrganizer option:selected\').text();\r\n            //al" +
+"ert(OrgVal);\r\n            //alert(OrgVal);\r\n            var OrgEditor = $(\"#dllO" +
+"rganizer\").val();\r\n            //alert(OrgEditor);\r\n            $(\"#txtOrgnizer\"" +
+").val(OrgVal);\r\n            $(\"#hidOrgnizer\").val(OrgVal);\r\n            $(\"#edSu" +
+"mmer2\").code(OrgEditor);\r\n\r\n        });\r\n\r\n        $(\"#btAddOrg\").click(function" +
+" () {\r\n            //  alert($(\'#dllOrganizer option\').length);\r\n            if " +
+"(parseInt($(\'#dllOrganizer option\').length) < 25) {\r\n                if ($(\"#hid" +
+"Orgnizer\").val() == \"\") {\r\n                    var vval = $(\"#edSummer2\").code()" +
+";\r\n                    var addOption = \'<option value=\"\' + vval + \'\" id=\"\' + $(\"" +
+"#txtOrgnizer\").val() + \'\">\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n          " +
+"          $(\"#dllOrganizer\").append(addOption);\r\n                }\r\n            " +
+"    else {\r\n                    //$(\'#dllOrganizer option:selected\').removeAttr(" +
+"\'selected\');\r\n                    var vval = $(\"#edSummer2\").code();\r\n          " +
+"          $(\"#dllOrganizer option\").each(function (i) {\r\n                       " +
+" //alert($(this).text());\r\n                        //alert($(\"#hidOrgnizer\").val" +
+"());\r\n                        if ($(\"#hidOrgnizer\").val() == $(this).text()) {\r\n" +
+"\r\n                            $(this).remove();\r\n                            //a" +
+"lert($(\"#hidOrgnizer\").val());\r\n                            //$(this).text($(\"#t" +
+"xtOrgnizer\").val());\r\n                            //$(this).val(vval);\r\n        " +
+"                }\r\n                        //alert($(this).text() + \" : \" + $(th" +
+"is).val());\r\n                    });\r\n                    var vval = $(\"#edSumme" +
+"r2\").code();\r\n                    var addOption = \'<option value=\"\' + vval + \'\" " +
+"id=\"\' + vval + \'\" >\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n                 " +
+"   $(\"#dllOrganizer\").append(addOption);\r\n\r\n\r\n\r\n                    //var addOpt" +
+"ion = \'<option value=\"\' + vval + \'\" id=\"\' + vval + \'\" >\' + $(\"#txtOrgnizer\").val" +
+"() + \'</option>\';\r\n                    //$(\"#dllOrganizer\").append(addOption);\r\n" +
+"                }\r\n            }\r\n            else {\r\n                //alert(\"L" +
+"imit Exceeded, System Allow Only 25 Orgnizer.\");\r\n\r\n            }\r\n            $" +
+"(\"#hidOrgnizer\").val(\'\');\r\n            $(\"#txtOrgnizer\").val(\'\');\r\n            $" +
+"(\"#edSummer2\").code(\'\');\r\n            // $(\"#txtOrgnizer\").focus();\r\n           " +
+" //$(\"#dllOrganizer option\").each(function (i) {\r\n            //    alert($(this" +
+").text() + \" : \" + $(this).val());\r\n            //});\r\n\r\n            //alert(vva" +
+"l);\r\n\r\n        });\r\n\r\n        // Drop Down Binding\r\n        ");
 
 WriteLiteral("\r\n\r\n\r\n\r\n\r\n        // Map Implemetation\r\n        var input = document.getElementBy" +
 "Id(\'txtEventLocation\');\r\n        debugger;\r\n        var autocomplete = new googl" +
@@ -4483,28 +4483,28 @@ WriteLiteral("\',\r\n            success: function (data) {\r\n\r\n             
 "    errorMsg = \"Invalid value for minutes: \" + regs[2];\r\n                    }\r\n" +
 "                } else {\r\n                    errorMsg = \"Invalid time format: \"" +
 " + field.value;\r\n                }\r\n            }\r\n\r\n            if (errorMsg !=" +
-" \"\") {\r\n                alert(errorMsg);\r\n                field.focus();\r\n      " +
-"          field.value = \"\";\r\n                return false;\r\n            }\r\n\r\n   " +
-"         return true;\r\n        }\r\n        function checkDate(field) {\r\n         " +
-"   var allowBlank = true;\r\n            var minYear = 1902;\r\n            var maxY" +
-"ear = (new Date()).getFullYear();\r\n\r\n            var errorMsg = \"\";\r\n\r\n         " +
-"   // regular expression to match required date format\r\n            re = /^(\\d{1" +
-",2})\\/(\\d{1,2})\\/(\\d{4})$/;\r\n\r\n            if (field.value != \'\') {\r\n           " +
-"     if (regs = field.value.match(re))\r\n                {\r\n                    i" +
-"f (regs[2] != \'\' && regs[2] != \'\' && regs[3] != \'\')\r\n                    {\r\n    " +
-"                    if (regs[2] < 1 || regs[2] > 31) {\r\n                        " +
-"    errorMsg = \"Invalid value for day: \" + regs[2];\r\n                        } e" +
-"lse if (regs[1] < 1 || regs[1] > 12) {\r\n                            errorMsg = \"" +
-"Invalid value for month: \" + regs[1];\r\n                        } else if (regs[3" +
-"] < minYear || regs[3] > maxYear) {\r\n                            errorMsg = \"Inv" +
-"alid value for year: \" + regs[3] + \" - must be between \" + minYear + \" and \" + m" +
-"axYear;\r\n                        }\r\n                    }\r\n                } els" +
-"e {\r\n                    errorMsg = \"Invalid date format: \" + field.value;\r\n    " +
-"            }\r\n            } else if (!allowBlank) {\r\n                errorMsg =" +
-" \"Empty date not allowed!\";\r\n            }\r\n\r\n            if (errorMsg != \"\") {\r" +
-"\n                alert(errorMsg);\r\n\r\n\r\n                field.focus();\r\n         " +
-"       field.value = \"\";\r\nreturn false;\r\n            }\r\n\r\n            return tru" +
-"e;\r\n        }\r\n\r\n\r\n\r\n\r\n\r\n    });\r\n\r\n\r\n\r\n</script>\r\n\r\n<script");
+" \"\") {\r\n                //alert(errorMsg);\r\n                field.focus();\r\n    " +
+"            field.value = \"\";\r\n                return false;\r\n            }\r\n\r\n " +
+"           return true;\r\n        }\r\n        function checkDate(field) {\r\n       " +
+"     var allowBlank = true;\r\n            var minYear = 1902;\r\n            var ma" +
+"xYear = (new Date()).getFullYear();\r\n\r\n            var errorMsg = \"\";\r\n\r\n       " +
+"     // regular expression to match required date format\r\n            re = /^(\\d" +
+"{1,2})\\/(\\d{1,2})\\/(\\d{4})$/;\r\n\r\n            if (field.value != \'\') {\r\n         " +
+"       if (regs = field.value.match(re))\r\n                {\r\n                   " +
+" if (regs[2] != \'\' && regs[2] != \'\' && regs[3] != \'\')\r\n                    {\r\n  " +
+"                      if (regs[2] < 1 || regs[2] > 31) {\r\n                      " +
+"      errorMsg = \"Invalid value for day: \" + regs[2];\r\n                        }" +
+" else if (regs[1] < 1 || regs[1] > 12) {\r\n                            errorMsg =" +
+" \"Invalid value for month: \" + regs[1];\r\n                        } else if (regs" +
+"[3] < minYear || regs[3] > maxYear) {\r\n                            errorMsg = \"I" +
+"nvalid value for year: \" + regs[3] + \" - must be between \" + minYear + \" and \" +" +
+" maxYear;\r\n                        }\r\n                    }\r\n                } e" +
+"lse {\r\n                    errorMsg = \"Invalid date format: \" + field.value;\r\n  " +
+"              }\r\n            } else if (!allowBlank) {\r\n                errorMsg" +
+" = \"Empty date not allowed!\";\r\n            }\r\n\r\n            if (errorMsg != \"\") " +
+"{\r\n               // alert(errorMsg);\r\n\r\n\r\n                field.focus();\r\n     " +
+"           field.value = \"\";\r\nreturn false;\r\n            }\r\n\r\n            return" +
+" true;\r\n        }\r\n\r\n\r\n\r\n\r\n\r\n    });\r\n\r\n\r\n\r\n</script>\r\n\r\n<script");
 
 WriteLiteral(" type=\"text/javascript\"");
 
@@ -4551,27 +4551,27 @@ WriteLiteral(">\r\n    function AssignNumeric() {\r\n        $(\'.Price\').each(
 
 WriteLiteral("\r\n<link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 149096), Tuple.Create("\"", 149135)
-, Tuple.Create(Tuple.Create("", 149103), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 149103), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 149112), Tuple.Create("\"", 149151)
+, Tuple.Create(Tuple.Create("", 149119), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 149119), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n\r\n<link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 149165), Tuple.Create("\"", 149222)
-, Tuple.Create(Tuple.Create("", 149172), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 149172), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 149181), Tuple.Create("\"", 149238)
+, Tuple.Create(Tuple.Create("", 149188), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 149188), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 149252), Tuple.Create("\"", 149289)
-, Tuple.Create(Tuple.Create("", 149258), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 149258), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 149268), Tuple.Create("\"", 149305)
+, Tuple.Create(Tuple.Create("", 149274), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 149274), false)
 );
 
 WriteLiteral("></script>\r\n\r\n\r\n<script");
@@ -4665,44 +4665,44 @@ WriteLiteral(">\r\n    $(document).ready(function () {\r\n        function uuid(
 "\n                    }\r\n                    //if ($(\"#Celebrity_image_count\").va" +
 "l()==\'5\') {\r\n                    //    $(\"#Celebrity_image_count_em_\").hide();\r\n" +
 "                    //}\r\n\r\n\r\n                },\r\n                error: function" +
-" (el) {\r\n                    alert(\"Error\" + el);\r\n                    //var par" +
-"ent = el.find(\".jFiler-jProgressBar\").parent();\r\n                    //el.find(\"" +
-".jFiler-jProgressBar\").fadeOut(\"slow\", function(){\r\n                    //    $(" +
-"\"<div class=\\\"jFiler-item-others text-error\\\"><i class=\\\"icon-jfi-minus-circle\\\"" +
-"></i> Error</div>\").hide().appendTo(parent).fadeIn(\"slow\");\r\n                   " +
-" //});\r\n                },\r\n                statusCode: {},\r\n                onP" +
-"rogress: function () { },\r\n            },\r\n            dragDrop: {\r\n            " +
-"    dragEnter: function () { },\r\n                dragLeave: function () { },\r\n  " +
-"              drop: function () { },\r\n            },\r\n            addMore: false" +
-",\r\n            clipBoardPaste: true,\r\n            excludeName: null,\r\n          " +
-"  beforeShow: function () { $(\".jFiler-input-inner\").hide(); return true },\r\n   " +
-"         onSelect: function () { $(\".jFiler-input-inner\").hide(); },\r\n          " +
-"  afterShow: function () { $(\".jFiler-input-inner\").hide(); $(\".fi-progressBar\")" +
-".hide(); },\r\n            onRemove: function (el) {\r\n                var image_co" +
-"unt = $(\"#image_count\").val();\r\n                image_count = parseInt(image_cou" +
-"nt) - 1;\r\n                var id_div = el[0].jfiler_id;\r\n                var hid" +
-"den_image_element = \'image_hidden_\' + id_div;\r\n                if (image_count =" +
-"= 0) {\r\n                    $(\"#image_count\").val(\'\');\r\n                } else {" +
-"\r\n                    $(\"#image_count\").val(image_count);\r\n                }\r\n  " +
-"              $(\"#\" + hidden_image_element).remove();\r\n                $(\'#input" +
-"2\').click(function (e) {\r\n                    e.preventDefault();\r\n\r\n           " +
-"     })\r\n                $(\'#ImagePresent\').val(\"NO\");\r\n\r\n\r\n                //$." +
-"post(\"/Event/RemoveFile\", function (data) {\r\n                //    alert(\"gsdger" +
-"tet\");\r\n                //});\r\n\r\n\r\n            },\r\n            onEmpty: function" +
-" (el) {\r\n\r\n                if ($(\"#imageeror\").val() == 0) {\r\n                  " +
-"  if ($(\".jFiler-items\").length == 1) { setTimeout(function () { $(\".jFiler-inpu" +
-"t-inner\").css(\'display\', \'block\'); $(\'#input2\').unbind(\'click\'); }, 200); };\r\n  " +
-"              }\r\n            },\r\n            captions: {\r\n                button" +
-": \"Choose Files\",\r\n                feedback: \"Choose files To Upload\",\r\n        " +
-"        feedback2: \"files were chosen\",\r\n                drop: \"Drop file here t" +
-"o Upload\",\r\n                removeConfirmation: \"Are you sure you want to remove" +
-" this file?\",\r\n                errors: {\r\n                    filesLimit: \"Only " +
-"{{fi-limit}} photos are allowed to be uploaded.\",\r\n                    filesType" +
-": \"Only files with extension .jpg,.png,.jpeg are allowed to be uploaded.\",\r\n    " +
-"                filesSize: \"Image is too large! Please upload file up to {{fi-ma" +
-"xSize}} MB.\",\r\n                    filesSizeAll: \"Files you\'ve choosed are too l" +
-"arge! Please upload files up to {{fi-maxSize}} MB.\"\r\n                }\r\n        " +
-"    }\r\n\r\n        });\r\n    });\r\n</script>");
+" (el) {\r\n                    //alert(\"Error\" + el);\r\n                    //var p" +
+"arent = el.find(\".jFiler-jProgressBar\").parent();\r\n                    //el.find" +
+"(\".jFiler-jProgressBar\").fadeOut(\"slow\", function(){\r\n                    //    " +
+"$(\"<div class=\\\"jFiler-item-others text-error\\\"><i class=\\\"icon-jfi-minus-circle" +
+"\\\"></i> Error</div>\").hide().appendTo(parent).fadeIn(\"slow\");\r\n                 " +
+"   //});\r\n                },\r\n                statusCode: {},\r\n                o" +
+"nProgress: function () { },\r\n            },\r\n            dragDrop: {\r\n          " +
+"      dragEnter: function () { },\r\n                dragLeave: function () { },\r\n" +
+"                drop: function () { },\r\n            },\r\n            addMore: fal" +
+"se,\r\n            clipBoardPaste: true,\r\n            excludeName: null,\r\n        " +
+"    beforeShow: function () { $(\".jFiler-input-inner\").hide(); return true },\r\n " +
+"           onSelect: function () { $(\".jFiler-input-inner\").hide(); },\r\n        " +
+"    afterShow: function () { $(\".jFiler-input-inner\").hide(); $(\".fi-progressBar" +
+"\").hide(); },\r\n            onRemove: function (el) {\r\n                var image_" +
+"count = $(\"#image_count\").val();\r\n                image_count = parseInt(image_c" +
+"ount) - 1;\r\n                var id_div = el[0].jfiler_id;\r\n                var h" +
+"idden_image_element = \'image_hidden_\' + id_div;\r\n                if (image_count" +
+" == 0) {\r\n                    $(\"#image_count\").val(\'\');\r\n                } else" +
+" {\r\n                    $(\"#image_count\").val(image_count);\r\n                }\r\n" +
+"                $(\"#\" + hidden_image_element).remove();\r\n                $(\'#inp" +
+"ut2\').click(function (e) {\r\n                    e.preventDefault();\r\n\r\n         " +
+"       })\r\n                $(\'#ImagePresent\').val(\"NO\");\r\n\r\n\r\n                //" +
+"$.post(\"/Event/RemoveFile\", function (data) {\r\n                //    alert(\"gsdg" +
+"ertet\");\r\n                //});\r\n\r\n\r\n            },\r\n            onEmpty: functi" +
+"on (el) {\r\n\r\n                if ($(\"#imageeror\").val() == 0) {\r\n                " +
+"    if ($(\".jFiler-items\").length == 1) { setTimeout(function () { $(\".jFiler-in" +
+"put-inner\").css(\'display\', \'block\'); $(\'#input2\').unbind(\'click\'); }, 200); };\r\n" +
+"                }\r\n            },\r\n            captions: {\r\n                butt" +
+"on: \"Choose Files\",\r\n                feedback: \"Choose files To Upload\",\r\n      " +
+"          feedback2: \"files were chosen\",\r\n                drop: \"Drop file here" +
+" to Upload\",\r\n                removeConfirmation: \"Are you sure you want to remo" +
+"ve this file?\",\r\n                errors: {\r\n                    filesLimit: \"Onl" +
+"y {{fi-limit}} photos are allowed to be uploaded.\",\r\n                    filesTy" +
+"pe: \"Only files with extension .jpg,.png,.jpeg are allowed to be uploaded.\",\r\n  " +
+"                  filesSize: \"Image is too large! Please upload file up to {{fi-" +
+"maxSize}} MB.\",\r\n                    filesSizeAll: \"Files you\'ve choosed are too" +
+" large! Please upload files up to {{fi-maxSize}} MB.\"\r\n                }\r\n      " +
+"      }\r\n\r\n        });\r\n    });\r\n</script>");
 
         }
     }
