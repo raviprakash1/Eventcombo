@@ -640,9 +640,9 @@
         });
 
 
-        $('#crt_promcode').click();
-        $('#dvcrtpromcode').addClass("active");
-        $('#dvcrtpromcode b').addClass('opened new-opend');
+        //$('#crt_promcode').click();
+        //$('#dvcrtpromcode').addClass("active");
+        //$('#dvcrtpromcode b').addClass('opened new-opend');
         
 
 
@@ -680,39 +680,46 @@
 
 
         $("#btTestEmail").click(function () {
-
             var vTo = $("#txtTestEmail").val().trim();
-            if (validateEmail(vTo) == true && vTo != "") {
-                var vFrom = "shweta.sindhu@kiwitech.com";
-                var vSubject = $("#txtSubjectLine").val();
-                var vBody = $("#dvUserMail").html();
-                var vCc = "";
-                var vBcc = "";
-                var vFromname = $("#txtSenderName").val();
-                var model = {
-                    'To': vTo,
-                    'From': vFrom,
-                    'Body': vBody,
-                    'Subject': vSubject,
-                    'Cc': vCc,
-                    'Bcc': vBcc,
-                    'Fromname': vFromname
-                };
-                //var params = 'To=' + vTo, from: vFrom, body: vBody 'tree_contents=' + treeInnerHTML;
-                $.ajax({
-                    url: '@Url.Action("SendHtmlFormattedEmail", "ManageEvent")',
-                    data: { model: model },
-                    beforeSend: function () { $('#dvAjxLoader').show(); },
-                    complete: function () { $('#dvAjxLoader').hide(); },
-                    type: "Post",
-                    success: function (response) {
-                        $("#btPopUp").click();
-                    }
-                });
+            var vMsg  = validateTest()
+            if (vMsg == "") {
+                if (validateEmail(vTo) == true && vTo != "") {
+                    $("#txtTestEmail").removeClass('err-bor');
+                    var vFrom = "shweta.sindhu@kiwitech.com";
+                    var vSubject = $("#txtSubjectLine").val();
+                    var vBody = $("#dvUserMail").html();
+                    var vCc = "";
+                    var vBcc = "";
+                    var vFromname = $("#txtSenderName").val();
+                    var model = {
+                        'To': vTo,
+                        'From': vFrom,
+                        'Body': vBody,
+                        'Subject': vSubject,
+                        'Cc': vCc,
+                        'Bcc': vBcc,
+                        'Fromname': vFromname
+                    };
+                    //var params = 'To=' + vTo, from: vFrom, body: vBody 'tree_contents=' + treeInnerHTML;
+                    $.ajax({
+                        url: '@Url.Action("SendHtmlFormattedEmail", "ManageEvent")',
+                        data: { model: model },
+                        beforeSend: function () { $('#dvAjxLoader').show(); },
+                        complete: function () { $('#dvAjxLoader').hide(); },
+                        type: "Post",
+                        success: function (response) {
+                            $("#btPopUp").click();
+                        }
+                    });
+                }
+                else {
+                    ShowMessage('E', ajaxsetup('CreateInvitations', 'EmailValidationUI'));
+                    $("#txtTestEmail").addClass('err-bor');
+                }
             }
             else
             {
-                ShowMessage('E', ajaxsetup('CreateInvitations', 'EmailValidationUI'));
+                ShowMessage('E', vMsg);
             }
         });
 
@@ -741,10 +748,12 @@
             var vValue = $("#txtAddEmail").val().trim();
             if (vValue != "") {
                 AddEmail(vValue);
+                $("#txtAddEmail").removeClass('err-bor');
             }
             else
             {
                 ShowMessage('E', ajaxsetup('CreateInvitations', 'EmailValidationUI'));
+                $("#txtAddEmail").addClass('err-bor');
             }
         });
         $("#btDeleteEmail").click(function () {
@@ -800,10 +809,10 @@
             }
             for (i = 0; i <= vIds; i++) {
                 if (vflag == true)
-                    $("#chk_" + i).attr("checked", "checked");
+                    $("#chk_" + i).prop("checked", true);
                 else
                 {
-                    $("#chk_" + i).attr("checked", false);
+                    $("#chk_" + i).prop("checked", false);
                 }
             }
         }
@@ -878,7 +887,29 @@
         }
 
     }
+    function validateTest() {
+        var msg = "";
+        var vval = $("#txtSenderName").val().trim();
 
+        if ($("#txtSenderName").val().trim() == "") {
+            //$('#txtEventTitle').addClass('err-bor');
+            msg += ajaxsetup("CreateInvitations", "SenderNameValidateUI") + "<br/>";
+            $("#txtSenderName").addClass('err-bor');
+        }
+        else {
+            $("#txtSenderName").removeClass('err-bor');
+        }
+
+        if ($("#txtSubjectLine").val().trim() == "") {
+            //$('#txtEventTitle').addClass('err-bor');
+            msg += ajaxsetup("CreateInvitations", "SubjectValidateUI") + "<br/>";
+            $("#txtSubjectLine").addClass('err-bor');
+        }
+        else {
+            $("#txtSubjectLine").removeClass('err-bor');
+        }
+        return msg;
+    }
     function validatemain() {
         var msg = "";
         var vval = $("#txtSenderName").val().trim();
@@ -886,11 +917,21 @@
         if ($("#txtSenderName").val().trim() == "") {
             //$('#txtEventTitle').addClass('err-bor');
             msg += ajaxsetup("CreateInvitations", "SenderNameValidateUI") + "<br/>";
+            $("#txtSenderName").addClass('err-bor');
+        }
+        else
+        {
+            $("#txtSenderName").removeClass('err-bor');
         }
 
         if ($("#txtSubjectLine").val().trim() == "") {
             //$('#txtEventTitle').addClass('err-bor');
             msg += ajaxsetup("CreateInvitations", "SubjectValidateUI") + "<br/>";
+            $("#txtSubjectLine").addClass('err-bor');
+        }
+        else
+        {
+            $("#txtSubjectLine").removeClass('err-bor');
         }
 
         var vFlag = true;
@@ -904,8 +945,12 @@
             }
         }
         if (vFlag == true) {
-            //$('#txtEventTitle').addClass('err-bor');
             msg += ajaxsetup("CreateInvitations", "EmailValidationUI") + "<br/>";
+            $("#txtAddEmail").addClass('err-bor');
+        }
+        else
+        {
+            $("#txtAddEmail").removeClass('err-bor');
         }
         return msg;
     }
@@ -975,13 +1020,15 @@
         var vInvalidData = '';
         for (i = 0; i < vAry.length; i++) {
             var vData = vAry[i];
-            if (validateEmail(vData) == true) {
-                var vId = parseFloat($("#hdListId").val());
-                if (isNaN(vId) == true) vId = 0;
-                vId = vId + 1;
-                $("#hdListId").val(vId);
-                var vHtml = '<ul id="UL_' + vId + '" class="inv_mail_list"><li><input id="chk_' + vId + '" onclick="CheckDeleteOption();" type="checkbox"></li><li>' + vData + '</li></ul>';
-                $("#dvEmaillist").append(vHtml);
+            if (validateEmail(vData) == true && vData != vValue) {
+                
+                    var vId = parseFloat($("#hdListId").val());
+                    if (isNaN(vId) == true) vId = 0;
+                    vId = vId + 1;
+                    $("#hdListId").val(vId);
+                    var vHtml = '<ul id="UL_' + vId + '" class="inv_mail_list"><li><input id="chk_' + vId + '" onclick="CheckDeleteOption();" type="checkbox"></li><li>' + vData + '</li></ul>';
+                    $("#dvEmaillist").append(vHtml);
+           
             }
             else {
                 if (vInvalidData == '') {
