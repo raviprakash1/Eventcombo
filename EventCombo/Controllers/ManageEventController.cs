@@ -2507,14 +2507,19 @@ namespace EventCombo.Controllers
 
                         var url = Request.Url;
                         var baseurl = url.GetLeftPart(UriPartial.Authority);
-                        strviewEvent = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(vEvent.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = lEvtId.ToString() });
+
+                         
+                        strviewEvent = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(vEvent.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(lEvtId).ToString() });
                         strOrgnizerUrl = baseurl + Url.Action("Index", "OrganizerInfo", new { id = vOrgnizer.Orgnizer_Id, eventid = lEvtId });
                     }
+
+              
+
                     EventCreation objCEv = new EventCreation();
                     string strImageUrl = objCEv.GetImages(lEvtId).FirstOrDefault();
                     if (strImageUrl != null && strImageUrl != "")
                     {
-                        if (!System.IO.File.Exists(strImageUrl)) // Need to check on server
+                        if (!System.IO.File.Exists(Server.MapPath(strImageUrl))) // Need to check on server
                             strImageUrl = "/Images/default_event_image.jpg";
                     }
                     else

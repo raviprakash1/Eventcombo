@@ -439,6 +439,8 @@
     <input type="hidden" id="hdSort" value="@TempData["tSort"]" />
     <input type="hidden" id="hdDateFilter" value="@TempData["tDateFilter"]" />
     <input type="hidden" id="hdPageIndex" value="@TempData["PageIndex"]" />
+    <input type="hidden" id="hdSearchText" value="@TempData["SearchText"]" />
+    
 
 </div>
 
@@ -610,7 +612,7 @@
     }
 
     function NextPage(vIndex) {
-        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex="Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex="Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none", strTextSearch= "search" })';
 
         var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "evc");
         var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "evt");
@@ -620,6 +622,8 @@
         var vSort = ($("#hdSort").val() != '' ? $("#hdSort").val() : "rel");
         var vDateFilter = ($("#hdDateFilter").val() != '' ? $("#hdDateFilter").val() : "none");
 
+        var vSearchText = ($("#hdSearchText").val() != '' ? $("#hdSearchText").val() : "");
+        
 
         vUrl = vUrl.replace("all", vPrice);
         vUrl = vUrl.replace("evc", vECat);
@@ -628,6 +632,7 @@
         vUrl = vUrl.replace("long", vlng);
         vUrl = vUrl.replace("rel", vSort);
         vUrl = vUrl.replace("none", vDateFilter);
+        vUrl = vUrl.replace("search", vSearchText);
         if (vIndex > 1)
             vUrl = vUrl.replace("page", vIndex);
 

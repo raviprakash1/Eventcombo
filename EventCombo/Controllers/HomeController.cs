@@ -446,6 +446,7 @@ namespace EventCombo.Controllers
             else
                 ViewBag.ECatSelected = null;
 
+            TempData["SearchText"] = strTextSearch;
             TempData["ETypeSelected"] = strEt;
             TempData["ECatSelected"] = strEc;
             TempData["TotalPages"] = lTotalPages;
@@ -457,6 +458,7 @@ namespace EventCombo.Controllers
             TempData["NearLong"] = strNearLong;
             TempData["PageIndex"] = (strPageIndex.ToLower() == "page" ? "1" : strPageIndex);
             ViewData["tempPrice"] = (strPrice != null ? strPrice.ToUpper() : "ALL");
+
             return View();
         }
 
