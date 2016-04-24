@@ -683,6 +683,7 @@
 
             var vTo = $("#txtTestEmail").val().trim();
             if (validateEmail(vTo) == true && vTo != "") {
+                $("#txtTestEmail").removeClass('err-bor');
                 var vFrom = "shweta.sindhu@kiwitech.com";
                 var vSubject = $("#txtSubjectLine").val();
                 var vBody = $("#dvUserMail").html();
@@ -713,6 +714,7 @@
             else
             {
                 ShowMessage('E', ajaxsetup('CreateInvitations', 'EmailValidationUI'));
+                $("#txtTestEmail").addClass('err-bor');
             }
         });
 
@@ -741,10 +743,12 @@
             var vValue = $("#txtAddEmail").val().trim();
             if (vValue != "") {
                 AddEmail(vValue);
+                $("#txtAddEmail").removeClass('err-bor');
             }
             else
             {
                 ShowMessage('E', ajaxsetup('CreateInvitations', 'EmailValidationUI'));
+                $("#txtAddEmail").addClass('err-bor');
             }
         });
         $("#btDeleteEmail").click(function () {
@@ -886,11 +890,21 @@
         if ($("#txtSenderName").val().trim() == "") {
             //$('#txtEventTitle').addClass('err-bor');
             msg += ajaxsetup("CreateInvitations", "SenderNameValidateUI") + "<br/>";
+            $("#txtSenderName").addClass('err-bor');
+        }
+        else
+        {
+            $("#txtSenderName").removeClass('err-bor');
         }
 
         if ($("#txtSubjectLine").val().trim() == "") {
             //$('#txtEventTitle').addClass('err-bor');
             msg += ajaxsetup("CreateInvitations", "SubjectValidateUI") + "<br/>";
+            $("#txtSubjectLine").addClass('err-bor');
+        }
+        else
+        {
+            $("#txtSubjectLine").removeClass('err-bor');
         }
 
         var vFlag = true;
@@ -904,8 +918,12 @@
             }
         }
         if (vFlag == true) {
-            //$('#txtEventTitle').addClass('err-bor');
             msg += ajaxsetup("CreateInvitations", "EmailValidationUI") + "<br/>";
+            $("#txtAddEmail").addClass('err-bor');
+        }
+        else
+        {
+            $("#txtAddEmail").removeClass('err-bor');
         }
         return msg;
     }
