@@ -13,12 +13,21 @@ namespace EventCombo.Controllers
         public ActionResult PaymentInfo(long EventId)
         {
             //long EventId = 1;
+
+            if (Session["AppId"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (Session["logo"] != null)
             {
                 ValidationMessageController vmc = new ValidationMessageController();
                 EventId = vmc.GetLatestEventId(EventId);
                 ViewBag.EventId = EventId;
                 Payment_Info objPI = new Payment_Info();
+
+                if (CommanClasses.CompareCurrentUser(EventId, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
+
 
                 EventComboEntities db = new EventComboEntities();
                 objPI = db.Payment_Info.Where(x => x.PI_EventId == EventId).SingleOrDefault();

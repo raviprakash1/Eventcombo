@@ -18,7 +18,7 @@
         <div class="er_UI_main">
             <div class="er_UI_img"></div>
             <div class="er_suc" id="erraccmsg"></div>
-            <button class="close" type="button" id="btndiverrsuc" onclick="$('#diverroacc').hide();" >&#215;</button>
+            <button class="close" type="button" id="btndiverrsuc" onclick="$('#diverroacc').hide();">&#215;</button>
 
         </div>
     </div>
@@ -73,11 +73,11 @@
             <div class="form-group">
                 @if (Model != null && !String.IsNullOrEmpty(Model.I_SubjectLine))
                 {
-                <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" maxlength="256" type="text" value="@Model.I_SubjectLine" placeholder="">
+                    <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" maxlength="256" type="text" value="@Model.I_SubjectLine" placeholder="">
                 }
                 else
                 {
-                <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" maxlength="256" type="text" placeholder="">
+                    <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" maxlength="256" type="text" placeholder="">
                 }
                 <p class="bottom-label">Subject Line</p>
             </div>
@@ -168,12 +168,12 @@
                             </div>
                             <div class="col-xs-12 no_pad mb10">
                                 @*<p class="inv_mail_date ">Share:</p>
-                                <p>
-                                    <a href="#"><img src="~/images/fb.png" /></a>
-                                    <a href="#"><img src="~/images/tw.png" /></a>
-                                    <a href="#"><img src="~/images/linkid.png" /></a>
-                                    <a href="#"><img src="~/images/msg.png" /></a>
-                                </p>*@
+                                    <p>
+                                        <a href="#"><img src="~/images/fb.png" /></a>
+                                        <a href="#"><img src="~/images/tw.png" /></a>
+                                        <a href="#"><img src="~/images/linkid.png" /></a>
+                                        <a href="#"><img src="~/images/msg.png" /></a>
+                                    </p>*@
                             </div>
                         </div>
                     </div>
@@ -266,7 +266,7 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 col-xs-12 no_pad mt10">
-                        @if (Model.Event_Email_List != null && Model.Event_Email_List.Count>0)
+                        @if (Model.Event_Email_List != null && Model.Event_Email_List.Count > 0)
                         {
                             <div id="dvEmaillistHeader" class="col-sm-12 no_pad">
                                 <ul class="inv_mail_list_head">
@@ -281,7 +281,7 @@
                         }
                         else
                         {
-                            <div id="dvEmaillistHeader" class="col-sm-12 no_pad" style="display:none;" >
+                            <div id="dvEmaillistHeader" class="col-sm-12 no_pad" style="display:none;">
                                 <ul class="inv_mail_list_head">
                                     <li><input id="chkSelectAll" onclick="SelectAllList();" type="checkbox"></li>
                                     <li>
@@ -392,7 +392,7 @@
             <input type="hidden" id="hdId" value="@Model.I_Id" />
             <input type="hidden" id="hdEventId" value="@TempData["Eventid"]" />
             <input type="hidden" id="hdEventIMode" value="@TempData["EventIMode"]" />
-            
+
 
             @if (Model != null && !String.IsNullOrEmpty(Model.I_EditableContent))
             {
@@ -464,9 +464,9 @@
                     </div>
                 </div>
                 <div style="width: 100%; float:left; margin-top: 10px;">
-                    <div style="width:175px; float:left; margin-right: 35px;" >
+                    <div style="width:175px; float:left; margin-right: 35px;">
                         @*<div id="dvMapMailss" style="width:175px;height:175px;">*@
-                            <img style="width:175px;height:175px;" src='https://maps.googleapis.com/maps/api/staticmap?center=@TempData["Lat"],@TempData["Long"]&zoom=15&size=400x400&maptype=roadmap' />
+                        <img style="width:175px;height:175px;" src='https://maps.googleapis.com/maps/api/staticmap?center=@TempData["Lat"],@TempData["Long"]&zoom=15&size=400x400&maptype=roadmap' />
 
                         @*</div>*@
                     </div>
@@ -488,7 +488,7 @@
 
                         </div>
                         <div style="width: 100%; float:left; margin-bottom: 10px;">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -643,7 +643,7 @@
         //$('#crt_promcode').click();
         //$('#dvcrtpromcode').addClass("active");
         //$('#dvcrtpromcode b').addClass('opened new-opend');
-        
+
 
 
         $("#txtSenderName").on("input", function () {
@@ -664,7 +664,7 @@
         }
         var map = new google.maps.Map(document.getElementById("dvMap"), myOptions);
 
-       // var maps = new google.maps.Map(document.getElementById("dvMapMail"), myOptions);
+        // var maps = new google.maps.Map(document.getElementById("dvMapMail"), myOptions);
         $("#befendevnt").click(function () {
             if ($("#befendevnt").is(":checked") == false) {
                 $("#txtSchDate").attr("disabled", true);
@@ -681,7 +681,7 @@
 
         $("#btTestEmail").click(function () {
             var vTo = $("#txtTestEmail").val().trim();
-            var vMsg  = validateTest()
+            var vMsg = validateTest()
             if (vMsg == "") {
                 if (validateEmail(vTo) == true && vTo != "") {
                     $("#txtTestEmail").removeClass('err-bor');
@@ -717,8 +717,7 @@
                     $("#txtTestEmail").addClass('err-bor');
                 }
             }
-            else
-            {
+            else {
                 ShowMessage('E', vMsg);
             }
         });
@@ -750,8 +749,7 @@
                 AddEmail(vValue);
                 $("#txtAddEmail").removeClass('err-bor');
             }
-            else
-            {
+            else {
                 ShowMessage('E', ajaxsetup('CreateInvitations', 'EmailValidationUI'));
                 $("#txtAddEmail").addClass('err-bor');
             }
@@ -780,12 +778,10 @@
                 }
             }
 
-            if (vFlag == true)
-            {
+            if (vFlag == true) {
                 $("#dvEmaillistHeader").show();
             }
-            else
-            {
+            else {
                 $("#dvEmaillistHeader").hide();
             }
 
@@ -796,8 +792,7 @@
 
 
     });
-    function SelectAllList()
-    {
+    function SelectAllList() {
         //debugger;
         var vIds = parseFloat($("#hdListId").val());
         if (isNaN(vIds) == true) vIds = 0;
@@ -810,8 +805,7 @@
             for (i = 0; i <= vIds; i++) {
                 if (vflag == true)
                     $("#chk_" + i).prop("checked", true);
-                else
-                {
+                else {
                     $("#chk_" + i).prop("checked", false);
                 }
             }
@@ -820,8 +814,7 @@
 
     }
 
-    function CheckDeleteOption()
-    {
+    function CheckDeleteOption() {
         var vFlag = false;
         var vIds = parseFloat($("#hdListId").val());
         if (isNaN(vIds) == true) vIds = 0;
@@ -919,8 +912,7 @@
             msg += ajaxsetup("CreateInvitations", "SenderNameValidateUI") + "<br/>";
             $("#txtSenderName").addClass('err-bor');
         }
-        else
-        {
+        else {
             $("#txtSenderName").removeClass('err-bor');
         }
 
@@ -929,8 +921,7 @@
             msg += ajaxsetup("CreateInvitations", "SubjectValidateUI") + "<br/>";
             $("#txtSubjectLine").addClass('err-bor');
         }
-        else
-        {
+        else {
             $("#txtSubjectLine").removeClass('err-bor');
         }
 
@@ -948,8 +939,7 @@
             msg += ajaxsetup("CreateInvitations", "EmailValidationUI") + "<br/>";
             $("#txtAddEmail").addClass('err-bor');
         }
-        else
-        {
+        else {
             $("#txtAddEmail").removeClass('err-bor');
         }
         return msg;
@@ -994,22 +984,25 @@
                 success: function (response) {
                     $("#hdId").val(response);
                     var vUrl = "";
-                    if ($("#hdEventIMode").val().trim() == "E")
-                    {
+                    if ($("#hdEventIMode").val().trim() == "E") {
                         vUrl = '@Url.Action("EventConfirmation", "EventConfirmation",new { eventId = "eveid"})';
                     }
-                    else
-                    {
-                        vUrl = '@Url.Action("EmailInvitations", "ManageEvent", new { eventId = "eveid"})';
+                    else {
+                        if (Mode == 'D') {
+                            tab = 'drt';
+                        } else {
+                            tab = 'sch';
+                        }
+                        vUrl = '@Html.Raw(@Url.Action("EmailInvitations", "ManageEvent", new { eventId = "eveid", tab = "tabValue" }))';
                     }
                     vUrl = vUrl.replace("eveid", $("#hdEventId").val());
+                    vUrl = vUrl.replace("tabValue", tab);
                     window.location.href = vUrl;
                 }
 
             });
         }
-        else
-        {
+        else {
             ShowMessage('E', vMsg);
         }
     }
@@ -1018,17 +1011,17 @@
         debugger;
         var vAry = vValue.split(',');
         var vInvalidData = '';
+        var vIds = parseFloat($("#hdListId").val());
+        var vFlag = true;
         for (i = 0; i < vAry.length; i++) {
             var vData = vAry[i];
-            if (validateEmail(vData) == true && vData != vValue) {
-                
-                    var vId = parseFloat($("#hdListId").val());
-                    if (isNaN(vId) == true) vId = 0;
-                    vId = vId + 1;
-                    $("#hdListId").val(vId);
-                    var vHtml = '<ul id="UL_' + vId + '" class="inv_mail_list"><li><input id="chk_' + vId + '" onclick="CheckDeleteOption();" type="checkbox"></li><li>' + vData + '</li></ul>';
-                    $("#dvEmaillist").append(vHtml);
-           
+            if (validateEmail(vData) == true) {
+                var vId = parseFloat($("#hdListId").val());
+                if (isNaN(vId) == true) vId = 0;
+                vId = vId + 1;
+                $("#hdListId").val(vId);
+                var vHtml = '<ul id="UL_' + vId + '" class="inv_mail_list"><li><input id="chk_' + vId + '" onclick="CheckDeleteOption();" type="checkbox"></li><li>' + vData + '</li></ul>';
+                $("#dvEmaillist").append(vHtml);
             }
             else {
                 if (vInvalidData == '') {

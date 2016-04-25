@@ -916,7 +916,6 @@
                 if (results[1]) {
                     vAry = results[1].formatted_address.split(',');
                     var vResult = vAry[vAry.length - 2] + " - " + vAry[vAry.length - 1];
-                    //alert(vResult);
                     $("#hdcity").val(vResult);
                     $("#spEventAddress").text("Events " + vResult);
                     $(document).prop('title', vResult + ' Events | Eventcombo');

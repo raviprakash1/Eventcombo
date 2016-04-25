@@ -27,9 +27,16 @@ namespace EventCombo.Controllers
         [Authorize]
         public ActionResult Index(long Eventlid, string type)
         {
-            ValidationMessage vmc = new ValidationMessage();
+            if (Session["AppId"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
            
+
+            ValidationMessage vmc = new ValidationMessage();
             var Eventid = vmc.GetLatestEventId(Eventlid);
+            if (CommanClasses.CompareCurrentUser(Eventid, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
+
             var TopAddress = ""; var Topvenue = "";
             string sDate_new = "", eDate_new = "";
             string startday = "", endday = "", starttime = "", endtime = "";
@@ -538,6 +545,7 @@ namespace EventCombo.Controllers
             ViewBag.CurrentSort = (sortOrder ?? "subject");
             ValidationMessageController vmc = new ValidationMessageController();
             eventId = vmc.GetLatestEventId(eventId);
+            long levtId = ValidationMessageController.GetParentEventId(eventId);
             ViewBag.tab = tab;
             ViewBag.EventId = eventId;
             using (EventComboEntities objEnt = new EventComboEntities())
@@ -546,7 +554,7 @@ namespace EventCombo.Controllers
                                   group invite_list by invite_list.L_I_Id 
                                   into result1
                                   join invites in objEnt.Event_Email_Invitation on result1.FirstOrDefault().L_I_Id equals invites.I_Id
-                                  where invites.I_Event_Id == eventId && (invites.I_Mode == "S" || invites.I_Mode == "N")
+                                  where invites.I_Event_Id == levtId && (invites.I_Mode == "S" || invites.I_Mode == "N")
                                   orderby invites.I_ModifyDate
                                   select new EmailInvitation
                                   {
@@ -599,7 +607,7 @@ namespace EventCombo.Controllers
                                   group invite_list by invite_list.L_I_Id
                                   into result1
                                   join invites in objEnt.Event_Email_Invitation on result1.FirstOrDefault().L_I_Id equals invites.I_Id
-                                  where invites.I_Event_Id == eventId && invites.I_Mode=="D"
+                                  where invites.I_Event_Id == levtId && invites.I_Mode=="D"
                                   orderby invites.I_ModifyDate
                                   select new EmailInvitation
                                   {
@@ -1331,10 +1339,8 @@ namespace EventCombo.Controllers
                         //    objEnt.Addresses.Add(objAdd);
                         //}
                     }
-
-                    //DateTimeWithZone dtzstart, dtzend;
-                                       var vEventVenue = (from myEnt in objEnt.EventVenues where myEnt.EventID == Eventid select myEnt).ToList();
-
+                  
+               var vEventVenue = (from myEnt in objEnt.EventVenues where myEnt.EventID == Eventid select myEnt).ToList();
                     if (vEventVenue != null)
                     {
                         EventVenue objEVenue = new EventVenue();
@@ -1543,10 +1549,10 @@ namespace EventCombo.Controllers
         {
             if (Session["AppId"] != null)
             {
-
                 ValidationMessage vmc = new ValidationMessage();
-              
                 var Eventid = vmc.GetLatestEventId(Eventlid);
+                if (CommanClasses.CompareCurrentUser(Eventid, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
+
                 showPromocode sc = new showPromocode();
                 sc.Eventid = Eventid;
                 int pageSize = 20;
@@ -1626,6 +1632,7 @@ namespace EventCombo.Controllers
                 ValidationMessage vmc = new ValidationMessage();
               
                 var Eventid = vmc.GetLatestEventId(Eventlid);
+                if (CommanClasses.CompareCurrentUser(Eventid, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
 
                 Promo_Code pm = new Promo_Code();
                 var ttype = 0;
@@ -2536,7 +2543,8 @@ namespace EventCombo.Controllers
                             var vMultiDateTime = (from myDt in objEnt.MultipleEvents where myDt.EventID == lEvtId select myDt).FirstOrDefault();
                             if (vMultiDateTime != null)
                             {
-                                strDateTime = Convert.ToDateTime(vMultiDateTime.StartingFrom).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.StartTime.ToString() + "(" + vMultiDateTime.Frequency + ")";
+                                //strDateTime = Convert.ToDateTime(vMultiDateTime.StartingFrom).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.StartTime.ToString() + "(" + vMultiDateTime.Frequency + ")";
+                                strDateTime = Convert.ToDateTime(vMultiDateTime.StartingFrom).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.StartTime.ToString()  + " - " + Convert.ToDateTime(vMultiDateTime.StartingTo).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.EndTime.ToString();
                             }
                         }
                         else
@@ -2666,7 +2674,7 @@ namespace EventCombo.Controllers
                         Event_Email_Invitation objEInt = new Event_Email_Invitation();
                         objEInt.I_SenderName = Model.I_SenderName;
                         objEInt.I_SubjectLine = Model.I_SubjectLine;
-                        objEInt.I_Event_Id = Model.I_Event_Id;
+                        objEInt.I_Event_Id = ValidationMessageController.GetParentEventId((Model.I_Event_Id != null ? Convert.ToInt64(Model.I_Event_Id): 0));
 
                         
                         //Kannan Start
@@ -2726,7 +2734,7 @@ namespace EventCombo.Controllers
                         Event_Email_Invitation objEInt = objEnt.Event_Email_Invitation.First(i => i.I_Id  == Model.I_Id);
                         objEInt.I_SenderName = Model.I_SenderName;
                         objEInt.I_SubjectLine = Model.I_SubjectLine;
-                        objEInt.I_Event_Id = Model.I_Event_Id;
+                        objEInt.I_Event_Id = ValidationMessageController.GetParentEventId((Model.I_Event_Id != null ? Convert.ToInt64(Model.I_Event_Id) : 0));
                         objEInt.I_EmailContent = Model.I_EmailContent;
                         //Kannan Start
                         Event eventForTimeZone = objEnt.Events.First(i => i.EventID == Model.I_Event_Id);

@@ -367,17 +367,28 @@ namespace EventCombo.Controllers
 
         public ActionResult DiscoverEvents(string strEt, string strEc, string strPrice, string strPageIndex, string strLat, string strLong, string strSort, string strDateFilter,string strTextSearch)
         {
-
-            if (string.IsNullOrEmpty(strLat))
+            if (strLat == "lat")
             {
-                Ip2Geo ip2Geo = new Ip2Geo();
-                GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
-
-                strLat = geoAddress.latitude; // "28.6139";
-                strLong = geoAddress.longitude; // "77.2090";
+                try
+                {
+                    Ip2Geo ip2Geo = new Ip2Geo();
+                    GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+                    strLat = geoAddress.latitude;
+                    strLong = geoAddress.longitude;
+                    if (string.IsNullOrEmpty(strLat) || strLat == "0")
+                    {
+                        strLat = "28.6139";
+                        strLong = "77.2090";
+                    }
+                }
+                catch (Exception)
+                {
+                    strLat = "28.6139";
+                    strLong = "77.2090";
+                }
             }
-            MyAccount hmc = new MyAccount();
 
+            MyAccount hmc = new MyAccount();
             if ((Session["AppId"] != null))
             {
                
@@ -448,6 +459,9 @@ namespace EventCombo.Controllers
                 ViewBag.ECatSelected = GetEventCategorySelected(strEc);
             else
                 ViewBag.ECatSelected = null;
+
+           
+
 
             TempData["SearchText"] = strTextSearch;
             TempData["ETypeSelected"] = strEt;
@@ -1263,12 +1277,28 @@ namespace EventCombo.Controllers
 
             if (string.IsNullOrEmpty(lat))
             {
-                Ip2Geo ip2Geo = new Ip2Geo();
-                GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+                try
+                {
+                    Ip2Geo ip2Geo = new Ip2Geo();
+                    GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+                    lat = geoAddress.latitude;
+                    lng = geoAddress.longitude;
+                    if (string.IsNullOrEmpty(lat) || lat == "0")
+                    {
+                        lat = "28.6139";
+                        lng = "77.2090";
+                    }
+                }
+                catch (Exception)
+                {
+                    lat = "28.6139";
+                    lng = "77.2090";
+                }
 
-                lat = geoAddress.latitude; // "28.6139";
-                lng = geoAddress.longitude; // "77.2090";
             }
+
+         
+
 
             int pageSize = 15;
             int pageNumber = (page ?? 1);
@@ -1284,6 +1314,12 @@ namespace EventCombo.Controllers
             ViewBag.DisEvnt = objDiscEvt.ToPagedList(pageNumber, pageSize);
             ViewBag.lat = lat;
             ViewBag.lng = lng;
+
+        
+
+
+
+
 
             System.Diagnostics.Debug.Print("LAT" + lat + "LNG" + lng);
             return View(objDiscEvt.ToPagedList(pageNumber, pageSize));
@@ -1971,7 +2007,6 @@ namespace EventCombo.Controllers
 
                         try
                         {
-
                             Ip2Geo ip2Geo = new Ip2Geo();
                             GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
                             city = geoAddress.cityName;
