@@ -30,8 +30,8 @@ namespace EventCombo
             RecurringJob.AddOrUpdate(() => ticketEmailer.send(), "*/5 * * * *");
 
 
-            EventStatus eventStatus = new EventStatus();
-            RecurringJob.AddOrUpdate(() => eventStatus.Update(), "*/15 * * * *");
+            //EventStatus eventStatus = new EventStatus();
+            //RecurringJob.AddOrUpdate(() => eventStatus.Update(), "*/15 * * * *");
 
 
             app.UseHangfireDashboard();

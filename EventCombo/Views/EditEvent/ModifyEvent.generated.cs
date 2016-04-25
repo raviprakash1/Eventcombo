@@ -8658,39 +8658,40 @@ WriteLiteral(";\r\n\r\n\r\n        $(\'#input2\').filer({\r\n            limit: 
 "\').on(\'click\', function(e){\r\n        //    e.stopPropagation();\r\n        //});\r\n" +
 "\r\n\r\n        //$(document).on(\'click\', function(){\r\n        //    $(\'.TmezoneSet\'" +
 ").hide();\r\n        //});\r\n        //$(\'.TmezoneSet, .Timezone\').on(\'click\', func" +
-"tion(e){\r\n        //    e.stopPropagation();\r\n        //});\r\n\r\n        $(documen" +
-"t).on(\'click\', function (e) {\r\n\r\n            debugger;\r\n\r\n            var $targe" +
-"t = $(e.target);\r\n\r\n            var id = $(e.target)[0].id;\r\n\r\n\r\n            var" +
-" uiclasstimepicker = $($(e.target)[0]).attr(\"class\");\r\n            var uiclassda" +
-"tepicker = $($(e.target)[0]).parent().parents(\"div\").attr(\"class\")\r\n            " +
-"var uidatepickerheader = $($(e.target)[0]).parent().parents(\"div\").attr(\"class\")" +
-";\r\n            if (typeof uiclasstimepicker === \"undefined\" && typeof uiclassdat" +
-"epicker === \"undefined\" && typeof uidatepickerheader === \"undefined\") {\r\n       " +
-"         AddDates();\r\n\r\n                $(\".StartDatemodal\").hide();\r\n          " +
-"  } else\r\n            {\r\n                if (typeof uiclasstimepicker === \"undef" +
-"ined\" && (typeof uiclassdatepicker != \"undefined\" || typeof uidatepickerheader !" +
-"= \"undefined\"))\r\n                {\r\n                    AddDates();\r\n\r\n         " +
-"           $(\".StartDatemodal\").hide();\r\n                }\r\n                if(t" +
-"ypeof uiclasstimepicker!=\"undefined\"&& (typeof uiclassdatepicker != \"undefined\" " +
-"|| typeof uidatepickerheader != \"undefined\"))\r\n                {\r\n              " +
-"      if ((uiclasstimepicker != \"ui-timepicker-selected\") && ($($(e.target)[0])." +
-"parent().parents(\"div\").attr(\"class\").indexOf(\"ui-datepicker-header\") < 0) && ($" +
-"($(e.target)[0]).parent().parents(\"div\").attr(\"class\").indexOf(\"ui-datepicker\") " +
-"< 0))\r\n                    {\r\n\r\n                        if ($target.closest(\".St" +
-"artDate\").get(0) == null && $target.closest(\".StartDatemodal\").get(0) == null)\r\n" +
-"                        {\r\n                            AddDates();\r\n\r\n          " +
-"                  $(\".StartDatemodal\").hide();\r\n\r\n                        }\r\n   " +
-"                 }\r\n                }\r\n             \r\n\r\n\r\n                //}\r\n " +
-"           }\r\n\r\n            if ($target.closest(\".Timezone\").get(0) == null && $" +
-"target.closest(\".TmezoneSet\").get(0) == null) {\r\n                AddTimeZone();\r" +
-"\n                $(\".TmezoneSet\").hide();\r\n            }\r\n\r\n\r\n\r\n\r\n        });\r\n\r" +
-"\n        function onlyAlphabets(e, t) {\r\n\r\n\r\n\r\n            if (window.event) {\r\n" +
-"\r\n                var charCode = window.event.keyCode;\r\n\r\n            }\r\n\r\n     " +
-"       else if (e) {\r\n\r\n                var charCode = e.which;\r\n\r\n            }" +
-"\r\n\r\n            else { return true; }\r\n\r\n            if ((charCode > 64 && charC" +
-"ode < 91) || (charCode > 96 && charCode < 123) || charCode == 32)\r\n\r\n           " +
-"     return true;\r\n\r\n            else\r\n\r\n                return false;\r\n\r\n      " +
-"  }\r\n        $(document).prop(\'title\', \'EventCombo - Edit ");
+"tion(e){\r\n        //    e.stopPropagation();\r\n        //});\r\n\r\n        //$(docum" +
+"ent).on(\'click\', function (e) {\r\n\r\n        //    debugger;\r\n\r\n        //    var " +
+"$target = $(e.target);\r\n\r\n        //    var id = $(e.target)[0].id;\r\n\r\n\r\n       " +
+" //    var uiclasstimepicker = $($(e.target)[0]).attr(\"class\");\r\n        //    v" +
+"ar uiclassdatepicker = $($(e.target)[0]).parent().parents(\"div\").attr(\"class\")\r\n" +
+"        //    var uidatepickerheader = $($(e.target)[0]).parent().parents(\"div\")" +
+".attr(\"class\");\r\n        //    if (typeof uiclasstimepicker === \"undefined\" && t" +
+"ypeof uiclassdatepicker === \"undefined\" && typeof uidatepickerheader === \"undefi" +
+"ned\") {\r\n        //        AddDates();\r\n\r\n        //        $(\".StartDatemodal\")" +
+".hide();\r\n        //    } else\r\n        //    {\r\n        //        if (typeof ui" +
+"classtimepicker === \"undefined\" && (typeof uiclassdatepicker != \"undefined\" || t" +
+"ypeof uidatepickerheader != \"undefined\"))\r\n        //        {\r\n        //      " +
+"      AddDates();\r\n\r\n        //            $(\".StartDatemodal\").hide();\r\n       " +
+" //        }\r\n        //        if(typeof uiclasstimepicker!=\"undefined\"&& (type" +
+"of uiclassdatepicker != \"undefined\" || typeof uidatepickerheader != \"undefined\")" +
+")\r\n        //        {\r\n        //            if ((uiclasstimepicker != \"ui-time" +
+"picker-selected\") && ($($(e.target)[0]).parent().parents(\"div\").attr(\"class\").in" +
+"dexOf(\"ui-datepicker-header\") < 0) && ($($(e.target)[0]).parent().parents(\"div\")" +
+".attr(\"class\").indexOf(\"ui-datepicker\") < 0))\r\n        //            {\r\n\r\n      " +
+"  //                if ($target.closest(\".StartDate\").get(0) == null && $target." +
+"closest(\".StartDatemodal\").get(0) == null)\r\n        //                {\r\n       " +
+" //                    AddDates();\r\n\r\n        //                    $(\".StartDat" +
+"emodal\").hide();\r\n\r\n        //                }\r\n        //            }\r\n      " +
+"  //        }\r\n             \r\n\r\n\r\n        //        //}\r\n        //    }\r\n\r\n    " +
+"    //    if ($target.closest(\".Timezone\").get(0) == null && $target.closest(\".T" +
+"mezoneSet\").get(0) == null) {\r\n        //        AddTimeZone();\r\n        //     " +
+"   $(\".TmezoneSet\").hide();\r\n        //    }\r\n\r\n\r\n\r\n\r\n        //});\r\n\r\n        f" +
+"unction onlyAlphabets(e, t) {\r\n\r\n\r\n\r\n            if (window.event) {\r\n\r\n        " +
+"        var charCode = window.event.keyCode;\r\n\r\n            }\r\n\r\n            els" +
+"e if (e) {\r\n\r\n                var charCode = e.which;\r\n\r\n            }\r\n\r\n      " +
+"      else { return true; }\r\n\r\n            if ((charCode > 64 && charCode < 91) " +
+"|| (charCode > 96 && charCode < 123) || charCode == 32)\r\n\r\n                retur" +
+"n true;\r\n\r\n            else\r\n\r\n                return false;\r\n\r\n        }\r\n     " +
+"   $(document).prop(\'title\', \'EventCombo - Edit ");
 
             
             #line 7492 "..\..\Views\EditEvent\ModifyEvent.cshtml"

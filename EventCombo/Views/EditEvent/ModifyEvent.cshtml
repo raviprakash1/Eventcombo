@@ -7408,59 +7408,59 @@ else
         //    e.stopPropagation();
         //});
 
-        $(document).on('click', function (e) {
+        //$(document).on('click', function (e) {
 
-            debugger;
+        //    debugger;
 
-            var $target = $(e.target);
+        //    var $target = $(e.target);
 
-            var id = $(e.target)[0].id;
+        //    var id = $(e.target)[0].id;
 
 
-            var uiclasstimepicker = $($(e.target)[0]).attr("class");
-            var uiclassdatepicker = $($(e.target)[0]).parent().parents("div").attr("class")
-            var uidatepickerheader = $($(e.target)[0]).parent().parents("div").attr("class");
-            if (typeof uiclasstimepicker === "undefined" && typeof uiclassdatepicker === "undefined" && typeof uidatepickerheader === "undefined") {
-                AddDates();
+        //    var uiclasstimepicker = $($(e.target)[0]).attr("class");
+        //    var uiclassdatepicker = $($(e.target)[0]).parent().parents("div").attr("class")
+        //    var uidatepickerheader = $($(e.target)[0]).parent().parents("div").attr("class");
+        //    if (typeof uiclasstimepicker === "undefined" && typeof uiclassdatepicker === "undefined" && typeof uidatepickerheader === "undefined") {
+        //        AddDates();
 
-                $(".StartDatemodal").hide();
-            } else
-            {
-                if (typeof uiclasstimepicker === "undefined" && (typeof uiclassdatepicker != "undefined" || typeof uidatepickerheader != "undefined"))
-                {
-                    AddDates();
+        //        $(".StartDatemodal").hide();
+        //    } else
+        //    {
+        //        if (typeof uiclasstimepicker === "undefined" && (typeof uiclassdatepicker != "undefined" || typeof uidatepickerheader != "undefined"))
+        //        {
+        //            AddDates();
 
-                    $(".StartDatemodal").hide();
-                }
-                if(typeof uiclasstimepicker!="undefined"&& (typeof uiclassdatepicker != "undefined" || typeof uidatepickerheader != "undefined"))
-                {
-                    if ((uiclasstimepicker != "ui-timepicker-selected") && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker-header") < 0) && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker") < 0))
-                    {
+        //            $(".StartDatemodal").hide();
+        //        }
+        //        if(typeof uiclasstimepicker!="undefined"&& (typeof uiclassdatepicker != "undefined" || typeof uidatepickerheader != "undefined"))
+        //        {
+        //            if ((uiclasstimepicker != "ui-timepicker-selected") && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker-header") < 0) && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker") < 0))
+        //            {
 
-                        if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null)
-                        {
-                            AddDates();
+        //                if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null)
+        //                {
+        //                    AddDates();
 
-                            $(".StartDatemodal").hide();
+        //                    $(".StartDatemodal").hide();
 
-                        }
-                    }
-                }
+        //                }
+        //            }
+        //        }
              
 
 
-                //}
-            }
+        //        //}
+        //    }
 
-            if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
-                AddTimeZone();
-                $(".TmezoneSet").hide();
-            }
-
-
+        //    if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
+        //        AddTimeZone();
+        //        $(".TmezoneSet").hide();
+        //    }
 
 
-        });
+
+
+        //});
 
         function onlyAlphabets(e, t) {
 
