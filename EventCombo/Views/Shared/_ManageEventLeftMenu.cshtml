@@ -39,11 +39,12 @@
     </div>
     <div class="panel panel-default menu_list">
       <a id="orderoptions" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapseOrderOption">
-        <div class="panel-heading">
+        <div class="panel-heading @(Model == "orderoptions" ? "active" : "")">
           Modify Order Options <b class="closed"></b>
         </div>
+
       </a>
-      <div id="collapseOrderOption" class="panel-collapse collapse">
+      <div id="collapseOrderOption" class="panel-collapse collapse @(Model == "orderoptions" ? "in" : "" )">
         <div class="panel-body no-padding">
           <p>@Html.ActionLink("Order Form", "Form", "OrderOptions", new { eventId = @ViewBag.EventId }, null) </p>
           <p>@Html.ActionLink("Order Confirmation", "Confirmation", "OrderOptions", new { eventId = @ViewBag.EventId }, null)</p>
@@ -54,11 +55,11 @@
     </div>
     <div class="panel panel-default menu_list">
       <a id="manageattendees" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapseManageAttendees">
-        <div class="panel-heading">
+        <div class="panel-heading @(Model == "manageattendees" ? "active" : "")">
           Manage Attendees <b class="closed"></b>
         </div>
       </a>
-      <div id="collapseManageAttendees" class="panel-collapse collapse">
+      <div id="collapseManageAttendees" class="panel-collapse collapse @(Model == "manageattendees" ? "in" : "")">
         <div class="panel-body no-padding">
           <p>@Html.ActionLink("Orders", "Orders", "ManageAttendees")</p>
           <p>@Html.ActionLink("Add Attendees", "Add", "ManageAttendees")</p>
@@ -72,12 +73,12 @@
     <div class="panel panel-default menu_list">
 
       <a id="inviteandpromote" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-        <div class="panel-heading">
+        <div class="panel-heading @(Model == "inviteandpromote" ? "active" : "")">
           Invite and Promote <b class="closed"></b>
         </div>
       </a>
 
-      <div id="collapse2" class="panel-collapse collapse">
+      <div id="collapse2" class="panel-collapse collapse @(Model == "inviteandpromote" ? "in" : "")">
         <div class="panel-body no-padding">
           <p>Email Invitations</p>
           @if (ViewBag.DiscountCode > 0)
@@ -104,23 +105,5 @@
   </div>
 </div>
 
-<script type="text/javascript">
 
-  $(document).ready(function () {
-    $('#@(Model)').click();
-    $('#@(Model) div').addClass("active");
-    $('#@(Model) div b').addClass('opened new-opend');
-    $('#@(Model) div').click(function (e) {
-      var $dvEle = $('#@(Model) div b');
-      var vclassname = $dvEle.attr('class');
-      if ($dvEle.hasClass("new-opend")) {
-        $dvEle.removeClass('opened new-opend').addClass('closed');
-      }
-      else {
-        $dvEle.addClass('opened new-opend');
-      }
-    });
-  });
-
-</script>
 
