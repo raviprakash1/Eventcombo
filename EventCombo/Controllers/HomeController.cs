@@ -370,8 +370,11 @@ namespace EventCombo.Controllers
 
             if (string.IsNullOrEmpty(strLat))
             {
-                strLat = "28.6139";
-                strLong = "77.2090";
+                Ip2Geo ip2Geo = new Ip2Geo();
+                GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+
+                strLat = geoAddress.latitude; // "28.6139";
+                strLong = geoAddress.longitude; // "77.2090";
             }
             MyAccount hmc = new MyAccount();
 
@@ -1260,8 +1263,11 @@ namespace EventCombo.Controllers
 
             if (string.IsNullOrEmpty(lat))
             {
-                lat = "28.6139";
-                lng = "77.2090";
+                Ip2Geo ip2Geo = new Ip2Geo();
+                GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+
+                lat = geoAddress.latitude; // "28.6139";
+                lng = geoAddress.longitude; // "77.2090";
             }
 
             int pageSize = 15;
