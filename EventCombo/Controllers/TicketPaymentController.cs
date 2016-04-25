@@ -370,8 +370,10 @@ namespace EventCombo.Controllers
                                 TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
                                 dzstartpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_Start), userTimeZone, true);
                             }
+                            DateTime dtstartpromo = new DateTime();
+                            dtstartpromo = Convert.ToDateTime(PromoCode.PC_Start);
                             dtStartDate = dzstartpromocode.LocalTime;
-                            if (dtNow < dtStartDate)
+                            if (dtNow < dtstartpromo)
                             {
                                 return "FDI";
                             }
@@ -405,16 +407,18 @@ namespace EventCombo.Controllers
                             if (td != null)
                             {
                                 TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
-                                dzendpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_Start), userTimeZone, true);
+                                dzendpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_End), userTimeZone, true);
 
                             }
                             else
                             {
                                 TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                                dzendpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_Start), userTimeZone, true);
+                                dzendpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_End), userTimeZone, true);
                             }
                             dtEndDate = dzendpromocode.LocalTime;
-                            if (dtNow > dtEndDate)
+                            DateTime dtendpromo = new DateTime();
+                            dtendpromo = Convert.ToDateTime(PromoCode.PC_End);
+                            if (dtNow > dtendpromo)
                             {
                                 return "EDI";
                             }
