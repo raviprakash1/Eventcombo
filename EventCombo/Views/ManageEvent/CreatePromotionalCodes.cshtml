@@ -515,6 +515,10 @@ else
                 $('#txt_discountmnt').bind("cut copy paste", function (e) {
                     e.preventDefault();
                 });
+                $('#txt_use').bind("cut copy paste", function (e) {
+                    e.preventDefault();
+                });
+                
                 $(document).ajaxStop(function() {
                     if( !$("#collapse2").hasClass("in"))
                     {
@@ -1162,9 +1166,9 @@ else
                         }
                        
                     }
-
+                   
                     AMPM=arr1[alength-1];
-                 
+                  
                     var hours=parseInt(time[0]);
                     var minutes=parseInt(time[1]);
                     
@@ -1208,13 +1212,13 @@ else
                     //sseconds2=parseInt(time2[2]);
                            
 
-                    var a = new Date(dates1[2], dates1[0], dates1[1], sHours1, sMinutes1,sseconds);
+                    var a = new Date(dates1[2], dates1[0], dates1[1], sHours1, sMinutes1);
                          
-                    var b = new Date(dates2[2], dates2[0], dates2[1], sHours2, sMinutes2,sseconds2);
+                    var b = new Date(dates2[2], dates2[0], dates2[1], sHours2, sMinutes2);
                    
                     //var msDateA = Date.UTC(a.getFullYear(), a.getMonth() + 1, a.getDate());
                     //var msDateB = Date.UTC(b.getFullYear(), b.getMonth() + 1, b.getDate());
-
+                  
                     if (a < b)
                         return errorMsg = "";  // less than
                     else if (a == b)

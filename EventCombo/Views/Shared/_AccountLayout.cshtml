@@ -132,10 +132,12 @@
         </div>
 
     </div>
+
    <div class="container-fluid cont_margin" id="bodysec">
         @if (HttpContext.Current.Session["Fromname"].ToString() == "events" || HttpContext.Current.Session["Fromname"].ToString() == "deals")
         {
             @RenderBody()
+         
 
         }
         else
