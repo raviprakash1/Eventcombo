@@ -724,7 +724,7 @@
                            
                             <div class="col-sm-12 no_pad">
                                 <div class="col-sm-8 no_pad col-xs-4 xs_crt_evnt_edit_org_btn dropheight">
-                                    <select id="ddlOrgnizers" class="form-control selectpicker evnt_inp_cont"></select>
+                                    <select id="ddlOrgnizers" class="form-control selectpicker evnt_inp_cont orgz-selectpick"></select>
                                 </div>
                                 <div class="col-sm-2 col-xs-4 xs_crt_evnt_edit_org_btn">
                                     <button type="button" onclick="editOrgnizer();" class="btn theme-btn ev_add_sub_btn org_dele_btn" id="btneditorg">Edit <i class="fa fa-pencil"></i></button>
@@ -904,7 +904,7 @@
                                                                         </div>
                                                                     </label>
                                                                 </div>
-                                                                <div class="col-sm-8 ev_pad_l0 mb5 xs_pad_0 inp100">
+                                                                <div class="col-sm-8 ev_pad_l0 mb5 xs_pad_0">
                                                                     <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_salestart-n" onchange="changetext(this.id);" disabled="disabled"     />
                                                                 </div>
                                                                 <div class="col-sm-4 no_pad mb5 xs_pad_0">
@@ -2761,7 +2761,7 @@
                     $(".cdisable").removeAttr("disabled");
                 }
                 $("#txtOrgnizer").removeClass("err-bor");
-
+                $('#ddlOrgnizers').selectpicker('refresh');
 
             });
 
@@ -3105,13 +3105,7 @@
                 $("#consolidate" + Sno).text(ConsolidateValue);
 
             }
-            $(document).click(function () {
-                $('#diverrorvenue').css('display', 'none');
-                if ($('#diverrorvenue').css('display') == 'block') {
-                    $("input").removeClass('err-bor');
-                }
-
-            });
+         
             function validateAddress() {
                 if ($("#VenueName").val().trim() == '') {
                     $('#diverrorvenue').css('display', 'block');
@@ -6028,39 +6022,52 @@
 
         $(document).on('click', function (e) {
 
-
+            debugger;
 
             var $target = $(e.target);
 
             var id = $(e.target)[0].id;
-            //alert($($(e.target)[0]).attr("class"));
+
 
             var uiclasstimepicker = $($(e.target)[0]).attr("class");
-            var uiclassdatepicker=$($(e.target)[0]).parent().parents("div").attr("class")
+            var uiclassdatepicker = $($(e.target)[0]).parent().parents("div").attr("class")
             var uidatepickerheader = $($(e.target)[0]).parent().parents("div").attr("class");
-            if (typeof uiclasstimepicker === "undefined" && typeof uiclassdatepicker === "undefined" && typeof uidatepickerheader === "undefined")
-            {
+            if (typeof uiclasstimepicker === "undefined" && typeof uiclassdatepicker === "undefined" && typeof uidatepickerheader === "undefined") {
                 AddDates();
 
                 $(".StartDatemodal").hide();
-            } else {
-                if ((uiclasstimepicker != "ui-timepicker-selected") && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker-header") < 0) && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker") < 0)) {
+            } else
+            {
+                if (typeof uiclasstimepicker === "undefined" && (typeof uiclassdatepicker != "undefined" || typeof uidatepickerheader != "undefined"))
+                {
+                    AddDates();
 
-                    if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null) {
-                        AddDates();
-
-                        $(".StartDatemodal").hide();
-
-                    }
-
-
+                    $(".StartDatemodal").hide();
                 }
+                if(typeof uiclasstimepicker!="undefined"&& (typeof uiclassdatepicker != "undefined" || typeof uidatepickerheader != "undefined"))
+                {
+                    if ((uiclasstimepicker != "ui-timepicker-selected") && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker-header") < 0) && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker") < 0))
+                    {
+
+                        if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null)
+                        {
+                            AddDates();
+
+                            $(".StartDatemodal").hide();
+
+                        }
+                     }
+                }
+             
+
+
+                //}
             }
 
-           if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
-               AddTimeZone();
-               $(".TmezoneSet").hide();
-           }
+            if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
+                AddTimeZone();
+                $(".TmezoneSet").hide();
+            }
 
 
 
@@ -6070,7 +6077,7 @@
 
         function onlyAlphabets(e, t) {
 
-
+            debugger;
 
             if (window.event) {
 
@@ -6086,7 +6093,7 @@
 
             else { return true; }
 
-            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 32)
+            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 32 || charCode == 8 || charCode == 0)
 
                 return true;
 

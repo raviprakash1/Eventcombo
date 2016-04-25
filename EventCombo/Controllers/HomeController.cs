@@ -369,6 +369,7 @@ namespace EventCombo.Controllers
         {
             if (strLat == "lat")
             {
+<<<<<<< HEAD
                 try
                 {
                     Ip2Geo ip2Geo = new Ip2Geo();
@@ -386,6 +387,13 @@ namespace EventCombo.Controllers
                     strLat = "28.6139";
                     strLong = "77.2090";
                 }
+=======
+                Ip2Geo ip2Geo = new Ip2Geo();
+                GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+
+                strLat = geoAddress.latitude; // "28.6139";
+                strLong = geoAddress.longitude; // "77.2090";
+>>>>>>> 1dd137cabacc990a5c49238fa107dd64d2a37cb0
             }
 
             MyAccount hmc = new MyAccount();
@@ -1294,6 +1302,7 @@ namespace EventCombo.Controllers
                     lat = "28.6139";
                     lng = "77.2090";
                 }
+
             }
 
          
