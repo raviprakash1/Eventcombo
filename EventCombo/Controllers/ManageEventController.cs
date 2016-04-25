@@ -548,6 +548,8 @@ namespace EventCombo.Controllers
             long levtId = ValidationMessageController.GetParentEventId(eventId);
             ViewBag.tab = tab;
             ViewBag.EventId = eventId;
+            Session["Fromname"] = "emailinvitation";
+            Session["logo"] = "events";
             using (EventComboEntities objEnt = new EventComboEntities())
             {
                 var invitations = from invite_list in objEnt.Event_Email_List
@@ -1552,7 +1554,8 @@ namespace EventCombo.Controllers
                 ValidationMessage vmc = new ValidationMessage();
                 var Eventid = vmc.GetLatestEventId(Eventlid);
                 if (CommanClasses.CompareCurrentUser(Eventid, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
-
+                Session["Fromname"] = "promotional";
+                Session["logo"] = "events";
                 showPromocode sc = new showPromocode();
                 sc.Eventid = Eventid;
                 int pageSize = 20;
@@ -1639,6 +1642,9 @@ namespace EventCombo.Controllers
                 DateTime end_date = new DateTime();
                 EventCreation cms = new EventCreation();
                 DateTime now = new DateTime();
+                Session["Fromname"] = "promotional";
+                Session["logo"] = "events";
+              
                 string startdate = "", enddate = "";
                 DateTimeWithZone dtzstart, dzend, dtznewstart, dtzCreated;
                 var Eventdetail = cms.GetEventdetail(Eventid);

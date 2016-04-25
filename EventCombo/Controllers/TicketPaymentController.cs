@@ -370,8 +370,10 @@ namespace EventCombo.Controllers
                                 TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
                                 dzstartpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_Start), userTimeZone, true);
                             }
+                            DateTime dtstartpromo = new DateTime();
+                            dtstartpromo = Convert.ToDateTime(PromoCode.PC_Start);
                             dtStartDate = dzstartpromocode.LocalTime;
-                            if (dtNow < dtStartDate)
+                            if (dtNow < dtstartpromo)
                             {
                                 return "FDI";
                             }
@@ -405,16 +407,18 @@ namespace EventCombo.Controllers
                             if (td != null)
                             {
                                 TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
-                                dzendpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_Start), userTimeZone, true);
+                                dzendpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_End), userTimeZone, true);
 
                             }
                             else
                             {
                                 TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                                dzendpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_Start), userTimeZone, true);
+                                dzendpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_End), userTimeZone, true);
                             }
                             dtEndDate = dzendpromocode.LocalTime;
-                            if (dtNow > dtEndDate)
+                            DateTime dtendpromo = new DateTime();
+                            dtendpromo = Convert.ToDateTime(PromoCode.PC_End);
+                            if (dtNow > dtendpromo)
                             {
                                 return "EDI";
                             }
@@ -2195,9 +2199,19 @@ namespace EventCombo.Controllers
                 {
                     if (item == 0)
                     {
+                       
+                      
                         var myDatescnt = (from p in db.Ticket_Quantity_Detail where itemQuery.Contains(p.TQD_Id) select p.TQD_StartDate).ToList().Distinct();
+
                         foreach (var vdate in myDatescnt)
                         {
+                            strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'><span style='float:right;'>" + Convert.ToDateTime(vdate).ToString("MMM dd, yyyy") + " </span></p ></tr > ");
+                            strHTML.Append("<tr align='left' style='color:#696564;'> ");
+                            strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
+                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Type </th>");
+                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Quantity </th>");
+                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </th>");
+                            strHTML.Append("</tr>");
                             var itemtoadd = (from p in db.Ticket_Quantity_Detail
                                              join TP in db.Ticket_Purchased_Detail on p.TQD_Id equals TP.TPD_TQD_Id
                                              join l in db.Profiles on TP.TPD_User_Id equals l.UserID
@@ -2215,13 +2229,7 @@ namespace EventCombo.Controllers
 
                                              }).ToList();
 
-                            strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'><span style='float:right;'>" + vdate + " </span></p ></tr > ");
-                            strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                            strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
-                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Type </th>");
-                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Quantity </th>");
-                            strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Price </th>");
-                            strHTML.Append("</tr>");
+                          
                             foreach (var qty in itemtoadd)
                             {
                                 
@@ -2260,7 +2268,8 @@ namespace EventCombo.Controllers
                     }
                     else
                     {
-
+                        var addressdetail = (from p in db.Addresses where p.AddressID == item select p.ConsolidateAddress).FirstOrDefault();
+                        strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'>" + addressdetail + "</p ></tr > ");
                         var myDatescnt = (from p in db.Ticket_Quantity_Detail where itemQuery.Contains(p.TQD_Id) select p.TQD_StartDate).ToList().Distinct();
                         foreach (var vdate in myDatescnt)
                         {
@@ -2281,7 +2290,7 @@ namespace EventCombo.Controllers
 
                                              }).ToList();
 
-                            strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'><span style='float:right;'>" + vdate + " </span></p ></tr > ");
+                            strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'><span style='float:right;'>" + Convert.ToDateTime(vdate).ToString("MMM dd, yyyy") + " </span></p ></tr > ");
                             strHTML.Append("<tr align='left' style='color:#696564;'> ");
                             strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
                             strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;'> Type </th>");
@@ -2363,7 +2372,7 @@ namespace EventCombo.Controllers
                                          select p.TQD_StartDate).ToList().Distinct().FirstOrDefault();
                     var addressdetail = (from p in db.Addresses where p.AddressID == item select p.ConsolidateAddress).FirstOrDefault();
 
-                    strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'>" + addressdetail + "<span style='float:right;'>" + dateofaddress.ToString() + " </span></p ></tr > ");
+                    strHTML.Append("<tr> <p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'>" + addressdetail + "<span style='float:right;'>" + Convert.ToDateTime(dateofaddress).ToString("MMM dd, yyyy") + " </span></p ></tr > ");
                     strHTML.Append("<tr align='left' style='color:#696564;'> ");
                     strHTML.Append("<th style='font-weight:normal;padding:10px5px;border-bottom:1px dashed #ccc;'>Name</th>");
                     strHTML.Append("<th style='font-weight:normal; padding:10px 5px; border-bottom:1px dashed #ccc;' > Type </th >");
