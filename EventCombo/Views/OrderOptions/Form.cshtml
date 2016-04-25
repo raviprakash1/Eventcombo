@@ -85,19 +85,21 @@
                         @{ var questions = Model.Questions.FindAll(q => q.Question.QuestionTypeGroupId == ViewBag.QuestionGroups[i].QuestionTypeGroupId); }
                         @for (int j = 0; j < questions.Count; j++)
                         {
-                          <div id="mainQuestion_@questions[j].OrderTemplateQuestionId" class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                          <div id="mainQuestion_@questions[j].OrderTemplateQuestionId" class="dragableDivContent" ondragstart="handleDragStart(event, this, @i);" ondragenter="handleDragEnter(event, this);" ondragover="handleDragOver(event, this, @i);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this, @i);" ondragend="handleDragEnd(event, this);">
 
                             <input id="QuestionId" name="QuestionId" type="hidden" value="@questions[j].OrderTemplateQuestionId" />
 
                             <div class="col-xs-2">
-                              <div class="dragIconItems"><a href="javascript:void(0)"><img src="../../images/drag.png" /></a></div>
+                              <div class="dragIconItems">
+                                <a href="javascript:void(0)" style="cursor:move;" draggable="true"><img src="../../images/drag.png" /></a>
+                              </div>
                             </div>
 
-                            <div class="col-xs-8">
+                            <div class="col-xs-8" style="cursor:pointer;">
                               <div id="Include" class="@(questions[j].Include ? "basicInfoCheckBox" : "basicInfoUnCheckBox")" onclick="setCheckBoxChecked(this); setRequiredUncheck(this);">@questions[j].Question.Title</div>
                             </div>
 
-                            <div class="col-xs-2">
+                            <div class="col-xs-2" style="cursor:pointer;">
                               <div id="Require" class="@(questions[j].Require ? "basicInfoCheckBox" : "basicInfoUnCheckBox") onlyCheckBoxItem" onclick="setCheckBoxChecked(this); setFieldCheck(this);"></div>
                             </div>
 
@@ -118,21 +120,23 @@
                       <div id="questionContainerDiv" style="display:@(Model.UserQuestions.Count > 0 ? "block" : "none")">
                         @for (var i = 0; i < Model.UserQuestions.Count; i++)
                         {
-                          <div id="userQuestion_@i" class="dragableDivContent" data-indexid="@i" data-questionid="@Model.UserQuestions[i].OrderTemplateQuestionId" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="handleDragEnter(event, this);" ondragover="handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                          <div id="userQuestion_@i" class="dragableDivContent dragableDivContentQuestion" data-indexid="@i" data-questionid="@Model.UserQuestions[i].OrderTemplateQuestionId" ondragstart="handleDragStart(event, this, -1);" ondragenter="handleDragEnter(event, this);" ondragover="handleDragOver(event, this, -1);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this, -1);" ondragend="handleDragEnd(event, this);">
                             <div class="col-xs-2">
                               <div class="dragIconItems">
-                                <a href="javascript:void(0)"><img src="../../images/drag.png" /></a>
+                                <a href="javascript:void(0)" style="cursor:move;" draggable="true"><img src="../../images/drag.png" /></a>
                               </div>
                             </div>
-                            <div class="col-xs-6">
-                              <div id="questionText" class="@(Model.UserQuestions[i].Include ? "basicInfoCheckBox" : "basicInfoUnCheckBox")" onclick="setCheckBoxChecked(this); setRequiredUncheck(this);">
+                            <div class="col-xs-6" style="cursor:pointer;">
+                              <div id="questionText" class="@(Model.UserQuestions[i].Include ? "basicInfoCheckBox " : "basicInfoUnCheckBox") basicInfoUnCheckBoxQuestion" onclick="setCheckBoxChecked(this); setRequiredUncheck(this);">
                                 @Model.UserQuestions[i].QuestionText
                               </div>
                             </div>
-                            <div class="col-xs-2">
+                            <div class="col-xs-2" style="cursor:pointer;">
                               <div id="require" class="@(Model.UserQuestions[i].Require ? "basicInfoCheckBox" : "basicInfoUnCheckBox") onlyCheckBoxItem" onclick="setCheckBoxChecked(this); setFieldCheck(this);"></div>
                             </div>
-                            <div class="col-xs-2"><a href="javascript:void(0)" class="removeIconAnchor" onclick="removeItemList(this)"><img src="../../images//cross.png" /></a></div>
+                            <div class="col-xs-2" style="cursor:pointer;">
+                              <a href="javascript:void(0)" class="removeIconAnchor" onclick="removeItemList(this)"><img src="../../images//cross.png" /></a>
+                            </div>
                           </div>
                         }
                       </div>
@@ -351,6 +355,7 @@
   var qvariants = [];
   var subquestions = [];
   var subvariants = [];
+  var handleDragGroup = -2;
 
   @for (var i = 0; i < Model.UserQuestions.Count; i++)
   {
@@ -420,21 +425,23 @@
 
   console.debug(storedQuestions);
 
-  function handleDragStart(e, obj) {
-    //$(obj).css("opacity", "0.4");  // this / e.target is the source node.
+  function handleDragStart(e, obj, i) {
     dragSrcEl = obj;
+    handleDragGroup = i;
 
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/html', obj.innerHTML);
   }
 
-  function handleDragOver(e) {
-    if (e.preventDefault) {
-      e.preventDefault(); // Necessary. Allows us to drop.
+  function handleDragOver(e, obj, i) {
+    console.debug("Stored = " + handleDragGroup + ", Current = " + i);
+    if (handleDragGroup == i)
+    {
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
     }
-
-    e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
-
+    else
+      e.dataTransfer.dropEffect = 'none';  // See the section on the DataTransfer object.
     return false;
   }
 
@@ -447,14 +454,14 @@
     //$(obj).removeClass('over');  // this / e.target is previous target element.
   }
 
-  function handleDrop(e, obj) {
+  function handleDrop(e, obj, i) {
     // this / e.target is current target element.
 
     if (e.stopPropagation) {
       e.stopPropagation(); // stops the browser from redirecting.
     }
     // Don't do anything if dropping the same column we're dragging.
-    if (dragSrcEl != obj) {
+    if ((dragSrcEl != obj) && (handleDragGroup == i)) {
       // Set the source column's HTML to the HTML of the column we dropped on.
       dragSrcEl.innerHTML = obj.innerHTML;
       obj.innerHTML = e.dataTransfer.getData('text/html');
@@ -511,7 +518,7 @@
       $('#questions').addClass('validatorTxt');
     }
     else {
-      var innerHtml = '<div id="userQuestion_' + curQIndex + '" class="dragableDivContent" data-indexid="' + curQIndex + '" data-questionid="0" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);"><div class="col-xs-2"><div class="dragIconItems"><img src="../../images//drag.png" /></div></div><div class="col-xs-6"><div id="questionText" class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this); setRequiredUncheck(this);">' + question + '</div></div><div class="col-xs-2"><div id="require" class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this); setFieldCheck(this);"></div></div><div class="col-xs-2"><a href="javascript:void(0)" class="removeIconAnchor" onclick="removeItemList(this)"><img src="../../images//cross.png" /></a></div></div>';
+      var innerHtml = '<div id="userQuestion_' + curQIndex + '" class="dragableDivContent dragableDivContentQuestion" data-indexid="' + curQIndex + '" data-questionid="0" ondragstart="handleDragStart(event, this, -1);" ondragenter="handleDragEnter(event, this);" ondragover="handleDragOver(event, this, -1);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this, -1);" ondragend="handleDragEnd(event, this);"><div class="col-xs-2"><div class="dragIconItems"><a href="javascript:void(0)" style="cursor:move;" draggable="true"><img src="../../images/drag.png" /></a></div></div><div class="col-xs-6" style="cursor:pointer;"><div id="questionText" class="basicInfoUnCheckBox basicInfoUnCheckBoxQuestion" onclick="setCheckBoxChecked(this); setRequiredUncheck(this);">' + question + '</div></div><div class="col-xs-2" style="cursor:pointer;"><div id="require" class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this); setFieldCheck(this);"></div></div><div class="col-xs-2"><a href="javascript:void(0)" class="removeIconAnchor" onclick="removeItemList(this)"><img src="../../images//cross.png" /></a></div></div>';
       $("#questionContainerDiv").append(innerHtml);
       $("#questionContainerDiv").show();
 
