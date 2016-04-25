@@ -1339,8 +1339,8 @@ namespace EventCombo.Controllers
                         //    objEnt.Addresses.Add(objAdd);
                         //}
                     }
-                    DateTimeWithZone dtzstart, dtzend;
-                                       var vEventVenue = (from myEnt in objEnt.EventVenues where myEnt.EventID == Eventid select myEnt).ToList();
+                  
+               var vEventVenue = (from myEnt in objEnt.EventVenues where myEnt.EventID == Eventid select myEnt).ToList();
                     if (vEventVenue != null)
                     {
                         EventVenue objEVenue = new EventVenue();
@@ -2543,7 +2543,8 @@ namespace EventCombo.Controllers
                             var vMultiDateTime = (from myDt in objEnt.MultipleEvents where myDt.EventID == lEvtId select myDt).FirstOrDefault();
                             if (vMultiDateTime != null)
                             {
-                                strDateTime = Convert.ToDateTime(vMultiDateTime.StartingFrom).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.StartTime.ToString() + "(" + vMultiDateTime.Frequency + ")";
+                                //strDateTime = Convert.ToDateTime(vMultiDateTime.StartingFrom).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.StartTime.ToString() + "(" + vMultiDateTime.Frequency + ")";
+                                strDateTime = Convert.ToDateTime(vMultiDateTime.StartingFrom).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.StartTime.ToString()  + " - " + Convert.ToDateTime(vMultiDateTime.StartingTo).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.EndTime.ToString();
                             }
                         }
                         else
