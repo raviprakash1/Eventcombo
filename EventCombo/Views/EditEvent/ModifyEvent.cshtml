@@ -3412,6 +3412,7 @@ else
                     $(".cdisable").removeAttr("disabled");
                 }
                 $("#txtOrgnizer").removeClass("err-bor");
+                $('#ddlOrgnizers').selectpicker('refresh');
                 //alert(divlength);
                 //var addOption = '<div class="list-group-item ev_orgz_list"></div> <div id = dvOrg_' + vLenght.toString() + '  class="col-sm-8 no_pad">' + $("#txtOrgnizer").val() + '</div><div class="col-sm-4 no_pad text-right ev_org_edt_main"><a href="#"><i class="fa fa-pencil"></i> </a> | <a href="#"><i class="fa fa-trash"></i></a></div>';
                 //$("#dvOrganizer").append(addOption)
@@ -7409,42 +7410,55 @@ else
 
         $(document).on('click', function (e) {
 
-         
+            debugger;
 
             var $target = $(e.target);
 
             var id = $(e.target)[0].id;
-          
-         
+
+
             var uiclasstimepicker = $($(e.target)[0]).attr("class");
-            var uiclassdatepicker=$($(e.target)[0]).parent().parents("div").attr("class") 
+            var uiclassdatepicker = $($(e.target)[0]).parent().parents("div").attr("class")
             var uidatepickerheader = $($(e.target)[0]).parent().parents("div").attr("class");
-            if (typeof uiclasstimepicker === "undefined" && typeof uiclassdatepicker === "undefined" && typeof uidatepickerheader === "undefined")
-            {
+            if (typeof uiclasstimepicker === "undefined" && typeof uiclassdatepicker === "undefined" && typeof uidatepickerheader === "undefined") {
                 AddDates();
-              
+
                 $(".StartDatemodal").hide();
-            } else {
-                if ((uiclasstimepicker != "ui-timepicker-selected") && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker-header") < 0) && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker") < 0)) {
+            } else
+            {
+                if (typeof uiclasstimepicker === "undefined" && (typeof uiclassdatepicker != "undefined" || typeof uidatepickerheader != "undefined"))
+                {
+                    AddDates();
 
-                    if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null) {
-                        AddDates();
-
-                        $(".StartDatemodal").hide();
-
-                    }
-
-
+                    $(".StartDatemodal").hide();
                 }
+                if(typeof uiclasstimepicker!="undefined"&& (typeof uiclassdatepicker != "undefined" || typeof uidatepickerheader != "undefined"))
+                {
+                    if ((uiclasstimepicker != "ui-timepicker-selected") && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker-header") < 0) && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker") < 0))
+                    {
+
+                        if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null)
+                        {
+                            AddDates();
+
+                            $(".StartDatemodal").hide();
+
+                        }
+                    }
+                }
+             
+
+
+                //}
             }
-           
+
             if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
                 AddTimeZone();
                 $(".TmezoneSet").hide();
             }
 
 
-              
+
 
         });
 

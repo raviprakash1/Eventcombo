@@ -1331,8 +1331,8 @@ namespace EventCombo.Controllers
                         //    objEnt.Addresses.Add(objAdd);
                         //}
                     }
-                    DateTimeWithZone dtzstart, dtzend;
-                                       var vEventVenue = (from myEnt in objEnt.EventVenues where myEnt.EventID == Eventid select myEnt).ToList();
+                   
+                var vEventVenue = (from myEnt in objEnt.EventVenues where myEnt.EventID == Eventid select myEnt).ToList();
                     if (vEventVenue != null)
                     {
                         EventVenue objEVenue = new EventVenue();
