@@ -878,20 +878,22 @@ namespace EventCombo.Controllers
                             //objDisEv.EventTimings = strTiming;
 
                             var vMultiple = objEv.MultipleEvents.FirstOrDefault();
-
-                            if (Timezonedetail != null)
+                            if (vMultiple != null)
                             {
-                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
-                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_Startfrom), userTimeZone, true);
-                                dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_StartTo), userTimeZone, true);
+                                if (Timezonedetail != null)
+                                {
+                                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_Startfrom), userTimeZone, true);
+                                    dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_StartTo), userTimeZone, true);
+                                }
+                                else
+                                {
+                                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_Startfrom), userTimeZone, true);
+                                    dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_StartTo), userTimeZone, true);
+                                }
+                                objDisEv.EventTimings = dtzstart.LocalTime.ToString("ddd MMM dd, yyyy") + " " + dtzstart.LocalTime.ToString("h:mm tt").ToLower().Trim().Replace(" ", "") + " - " + dzend.LocalTime.ToString("ddd MMM dd, yyyy") + " " + dzend.LocalTime.ToString("h:mm tt").ToLower().Trim().Replace(" ", "");
                             }
-                            else
-                            {
-                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_Startfrom), userTimeZone, true);
-                                dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_StartTo), userTimeZone, true);
-                            }
-                            objDisEv.EventTimings = dtzstart.LocalTime.ToString("ddd MMM dd, yyyy") + " " + dtzstart.LocalTime.ToString("h:mm tt").ToLower().Trim().Replace(" ", "") + " - " + dzend.LocalTime.ToString("ddd MMM dd, yyyy") + " " + dzend.LocalTime.ToString("h:mm tt").ToLower().Trim().Replace(" ", "");
                         }
 
                         lsDisEvt.Add(objDisEv);
@@ -1204,21 +1206,23 @@ namespace EventCombo.Controllers
                                 strTiming = strTiming + " - " + vMax.PE_Scheduled_Date + " " + vMax.PE_End_Time;
                             }
                             var vMultiple = objEv.MultipleEvents.FirstOrDefault();
-
-                            if (Timezonedetail != null)
+                            if (vMultiple != null)
                             {
-                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
-                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_Startfrom), userTimeZone, true);
-                                dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_StartTo), userTimeZone, true);
+                                if (Timezonedetail != null)
+                                {
+                                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_Startfrom), userTimeZone, true);
+                                    dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_StartTo), userTimeZone, true);
+                                }
+                                else
+                                {
+                                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_Startfrom), userTimeZone, true);
+                                    dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_StartTo), userTimeZone, true);
+                                }
+                                //objDisEv.EventTimings = strTiming;
+                                objDisEv.EventTimings = dtzstart.LocalTime.ToString("ddd MMM dd, yyyy") + " " + dtzstart.LocalTime.ToString("h:mm tt").ToLower().Trim().Replace(" ", "") + " - " + dzend.LocalTime.ToString("ddd MMM dd, yyyy") + " " + dzend.LocalTime.ToString("h:mm tt").ToLower().Trim().Replace(" ", "");
                             }
-                            else
-                            {
-                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_Startfrom), userTimeZone, true);
-                                dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_StartTo), userTimeZone, true);
-                            }
-                            //objDisEv.EventTimings = strTiming;
-                            objDisEv.EventTimings = dtzstart.LocalTime.ToString("ddd MMM dd, yyyy") + " " + dtzstart.LocalTime.ToString("h:mm tt").ToLower().Trim().Replace(" ", "") + " - " + dzend.LocalTime.ToString("ddd MMM dd, yyyy") + " " + dzend.LocalTime.ToString("h:mm tt").ToLower().Trim().Replace(" ", "");
                         }
 
                         lsDisEvt.Add(objDisEv);

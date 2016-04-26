@@ -16,7 +16,7 @@
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 <link href="~/Content/MapPlaces.css" rel="stylesheet" />
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { autocomplete = "off"}))
 {
     <input type="hidden" id="hdimage" />
     <div class="event_container">
@@ -1256,7 +1256,8 @@ else
                                 @*}*@
                                 Require a password to view the event page
                             </label>
-                            <input type="password" id="txtReqPassword" readonly="readonly" value="@Model.Private_Password" class="form-control evnt_inp_cont mb10 wd500 chkvalidation" placeholder="Enter Password" maxlength="15" />
+                            <input type="password" id="txtReqPasswordTemp" name="somePass" style="display:none;"  value=""  placeholder="Enter Password"  maxlength="15" />
+                            <input type="password" id="txtReqPassword" name="somePass" readonly="readonly" value="@Model.Private_Password" class="form-control evnt_inp_cont mb10 wd500 chkvalidation" placeholder="Enter Password" autocomplete="off" maxlength="15" />
 
                         </div>
                     </div>
@@ -1492,7 +1493,11 @@ else
     @*// ---------------------Event Creation Script -------------------*@
 
     <script type="text/javascript">
-
+        $(document).on('keypress keydown keyup', function (e) {
+            if (e.keyCode == 27) {
+                $('.date_picker').blur();
+            }
+        });
 
 
         var map_canvas ;
@@ -1972,7 +1977,7 @@ else
             {
                 $('#chkReqPassword').prop("checked","true");
                 $('#txtReqPassword').attr('readonly', false);
-
+       
 
             }
             $(".cdisable").removeAttr("disabled");
