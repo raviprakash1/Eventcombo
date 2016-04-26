@@ -1,0 +1,1007 @@
+﻿@using EventCombo.Controllers
+@model EventCombo.Models.Event_Email_Invitation
+@using EventCombo.Models
+@{
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+@section sidenav{
+    <div id="sidebar" class="nav nav-stacked">
+
+    </div>
+}
+
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/DateTimePicker.css" rel="stylesheet" />
+<div class="pt10 bggrey clearfix">
+    <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
+        <div class="er_UI_main">
+            <div class="er_UI_img"></div>
+            <div class="er_suc" id="erraccmsg"></div>
+            <button class="close" type="button" id="btndiverrsuc">&#215;</button>
+
+        </div>
+    </div>
+    <div class="Moderor" id="divaccsuc" style="display: none;" tabindex="-1">
+        <div class="er_suc_main">
+
+            <div class="er_suc_img"></div>
+            <div class="er_suc" id="succaccmsg"> </div>
+            <button class="close" type="button" id="btndivaccsuc">&#215;</button>
+
+        </div>
+    </div>
+</div>
+<div class="col-sm-12 ">
+    <h3 class="acnt_title inv_eml_title">Great! your private event is now live.</h3>
+    <p class="inv_em_url">The URL for the event is <a href="@TempData["ViewEventUrl"]" target="_blank">@TempData["ViewEventUrl"]</a></p>
+    <p class="inv_em_url">Don't forget to send out email invitations to your guests, below. </p>
+</div>
+<div class="clearfix"></div>
+<div class="col-sm-10 mb10 col-xs-12" id="diverro1acc" style="display:none ">
+    <div class="er_UI_main">
+        <div class="er_sys_img"></div>
+        <div class="er_suc" id="erraccsucc"></div>
+        <button class="close" type="button" onclick="$('#diverro1acc').css('display', 'none');" id="btndiverro1acc" tabindex="-1">&#215;</button>
+    </div>
+
+</div>
+<div class="clearfix"></div>
+<div class="col-sm-12 col-xs-12 mt20">
+    <div class="col-sm-12 no_pad">
+        <h3 class="acnt_title inv_eml_title_crt">Create an email invite</h3>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-sm-12 no_pad mt10">
+        <div class="col-sm-2 col-xs-12 no_pad">
+            <div class="form-group">
+                @if (Model != null && !String.IsNullOrEmpty(Model.I_SenderName))
+                {
+                    <input class="form-control invite_mail_inp_cont " id="txtSenderName" maxlength="50" value="@Model.I_SenderName" type="text" placeholder="">
+                }
+                else
+                {
+                    <input class="form-control invite_mail_inp_cont " id="txtSenderName" maxlength="50" type="text" placeholder="">
+                }
+                <p class="bottom-label">Sender's Name</p>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-sm-12 no_pad mt10">
+        <div class="col-sm-3 col-xs-12 no_pad">
+            <div class="form-group">
+                @if (Model != null && !String.IsNullOrEmpty(Model.I_SubjectLine))
+                {
+                <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" maxlength="256" type="text" value="@Model.I_SubjectLine" placeholder="">
+                }
+                else
+                {
+                <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" maxlength="256" type="text" placeholder="">
+                }
+                <p class="bottom-label">Subject Line</p>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-sm-12 no_pad mt10">
+
+        <div id="dvMailBody" class="col-sm-6 col-xs-12 no_pad email_box_container">
+            <div class="col-sm-2 col-xs-3 no_pad inv_mail_side_logo text-center">
+                <img src="~/Images/logo_vertical.png" />
+
+
+            </div>
+            <div class="col-sm-10 col-xs-9 no_pad email_box_container_right">
+                <h4> Hello [Attendee]!</h4>
+                <p class="inv_mail_joinus"> Please join us for</p>
+
+                @if (Model.EventTitle != null)
+                {
+                    <h5 class="awsom_title"><a href="@TempData["ViewEventUrl"]" target="_blank">@Model.EventTitle</a></h5>
+                }
+                else
+                {
+                    <h5 class="awsom_title">No Title</h5>
+                }
+                <div class="clearfix"></div>
+                <div class="col-sm-12 col-xs-12 no_pad mt20">
+                    <div class="col-xs-12 no_pad">
+                        <div class="col-sm-5 col-xs-12 no_pad">
+                            @if (Model.EventImg != null)
+                            {
+                                <img class="invite_mail_img" src="@Model.EventImg">
+                            }
+                            else
+                            {
+                                <img class="invite_mail_img" src="">
+                            }
+                        </div>
+                        <div class="col-sm-7 col-xs-12 no_pad">
+                            <div class="col-xs-12 no_pad mb10">
+                                <p class="inv_mail_date">Date:</p>
+                                @if (Model.EventDate != null)
+                                {
+                                    <p class="inv_mail_date_add">@Model.EventDate</p>
+                                }
+                                else
+                                {
+                                    <p class="inv_mail_date_add"></p>
+                                }
+                            </div>
+                            <div class="col-xs-12 no_pad mb10">
+                                <p class="inv_mail_date">Organizer:</p>
+                                @if (Model.EventOrgnizer != null)
+                                {
+                                    <a href="@TempData["OrgnizerUrl"].ToString()" style="color: #3cf; text-decoration: none;">@Model.EventOrgnizer</a>
+                                    @*<p class="inv_mail_date_add def_color">@Model.EventOrgnizer</p>*@
+                                }
+                                else
+                                {
+                                    <p class="inv_mail_date_add def_color"></p>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 no_pad mt10 mb10">
+                        <div class="col-sm-5 col-xs-12 no_pad crt_map">
+                            <div id="dvMap" style="height:150px;"></div>
+                        </div>
+                        <div class="col-sm-7 col-xs-12 no_pad">
+                            <div class="col-xs-12 no_pad mb10">
+                                @*<p class="inv_mail_date">Club Illusions:</p>*@
+                                @if (Model.EventAddress != null)
+                                {
+                                    <p class="inv_mail_date_add">@Model.EventAddress </p>
+                                }
+                                else
+                                {
+                                    <p class="inv_mail_date_add"></p>
+                                }
+                            </div>
+                            <div class="col-xs-12 no_pad mb10">
+                                <p class="inv_mail_date def_color">
+                                    <a href="http://maps.google.com/maps?daddr=@TempData["Lat"],@TempData["Long"]&amp;ll=" style="color: #3cf; text-decoration: none;"> Get Directions </a>
+                                </p>
+
+                            </div>
+                            <div class="col-xs-12 no_pad mb10">
+                                <p class="inv_mail_date ">Share:</p>
+                                <p>
+                                    <a href="#"><img src="~/images/fb.png" /></a>
+                                    <a href="#"><img src="~/images/tw.png" /></a>
+                                    <a href="#"><img src="~/images/linkid.png" /></a>
+                                    <a href="#"><img src="~/images/msg.png" /></a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-sm-12 col-xs-12 mt20 text-center ">
+                <div class="col-sm-12 col-xs-12 invite_email_btn_bor ">
+                    <a href="@TempData["ViewEventUrl"]" style="text-decoration:none; background:#00adef; box-shadow:none; border:0px; border-radius:5px; padding:8px 15px; color:#fff; font-size:2em; " title="" type="button">
+                        @TempData["OrderText"]
+                    </a>
+                    @*<button class="btn def_btn acnt_btn invite_email_attend_btn " title="" type="button">Attend</button>*@
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-sm-12 col-xs-12 mt10 ">
+                <p class="inv_mail_abt mb0">About the event:</p>
+                @if (TempData["PPassword"].ToString() != string.Empty)
+                {
+                    <p class="inv_mail_abt mb0"> Your event password : @TempData["PPassword"].ToString()</p>
+                }
+                <p>
+                    ( Event registration is by invitation only with the provided password. Register with your email address
+                    and the password above to attend this event. )
+                </p>
+                <p>
+                    <button class="btn def_btn acnt_btn edit_editor_btn" type="button" title="" data-toggle="modal" id="btEditEditor" data-target="#invite_email_desc">Edit</button>
+                </p>
+            </div>
+            <div class="clearfix"></div>
+            @if (Model != null && !String.IsNullOrEmpty(Model.I_EditableContent))
+            {
+                <div id="dvemailcontent" class="col-sm-12">
+                    @Model.I_EditableContent
+                </div>
+            }
+            else
+            {
+                <div id="dvemailcontent" class="col-sm-12"></div>
+            }
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="col-sm-6 col-xs-12 no_pad ">
+            <div class="col-sm-12 no_pad">
+                <div class="col-sm-6 col-xs-12 no_pad ">
+                    <div class="form-group">
+                        <input class="form-control invite_mail_inp_cont " id="txtTestEmail" type="text" placeholder="">
+                        <p class="bottom-label">Send test to email address</p>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-12 no_pad  text-center">
+                    <button class="btn def_btn acnt_btn send_test_btn" style="display:none" type="button" data-toggle="modal" id="btPopUp" data-target="#test_inv_email"></button>
+                    <button class="btn def_btn acnt_btn send_test_btn" type="button" id="btTestEmail">Send Test</button>
+
+                </div>
+                <div class="invitation-loader" id="dvAjxLoader">
+                    <img src="~/Images/ajax-loaderMini.gif" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-sm-12 no_pad mt10 mb20">
+        <div class="col-md-6 col-sm-12 no_pad mb20">
+            <div class="col-sm-12 apply_code_head">
+                Invite Guest
+            </div>
+            <div class="col-sm-12 col-xs-12 no_pad">
+                <div class="col-sm-12 col-xs-12 no_pad">
+                    <div class="col-sm-6 col-xs-6 no_pad">
+                        <button class="InvAddlist btn def_btn acnt_btn send_test_btn" type="submit">Add List + </button>
+                    </div>
+                    <div class="col-sm-6 col-xs-6 no_pad">
+                        <button class="btn def_btn acnt_btn send_test_btn" id="btDeleteEmail" style="display:none;" type="button">Delete </button>
+                    </div>
+
+                </div>
+                <div class="col-sm-12 col-xs-12 no_pad mt20">
+                    <div class="InvAddlistbox col-sm-12 no_pad">
+                        <div class="col-sm-6 col-xs-12 no_pad ">
+                            <div class="form-group">
+                                <input class="form-control invite_mail_inp_cont " id="txtAddEmail" type="text" placeholder="Add List ">
+                            </div>
+                        </div>
+                        <div class="col-sm-2 col-xs-12 no_pad  text-center">
+                            <button class="btn def_btn acnt_btn send_test_btn" id="btAddEmail" type="button">Add</button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-sm-12 col-xs-12 no_pad mt10">
+                        @if (Model.Event_Email_List != null && Model.Event_Email_List.Count>0)
+                        {
+                            <div id="dvEmaillistHeader" class="col-sm-12 no_pad">
+                                <ul class="inv_mail_list_head">
+                                    <li><input id="chkSelectAll" onclick="SelectAllList();" type="checkbox"></li>
+                                    <li>
+                                        EmailId
+                                        <span class="crt_evnt_drop_up crt_invit_drop_down_a"> <a href="#"><i class="fa fa-angle-up"></i></a> </span>
+                                        <span class="crt_evnt_drop_down crt_invit_drop_down"> <a href="#"><i class="fa fa-angle-down"></i></a> </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <div id="dvEmaillistHeader" class="col-sm-12 no_pad" style="display:none;" >
+                                <ul class="inv_mail_list_head">
+                                    <li><input id="chkSelectAll" onclick="SelectAllList();" type="checkbox"></li>
+                                    <li>
+                                        EmailId
+                                        <span class="crt_evnt_drop_up crt_invit_drop_down_a"> <a href="#"><i class="fa fa-angle-up"></i></a> </span>
+                                        <span class="crt_evnt_drop_down crt_invit_drop_down"> <a href="#"><i class="fa fa-angle-down"></i></a> </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        <div class="clearfix"></div>
+                        <div class="col-sm-12 no_pad">
+                            <div id="dvEmaillist" class="col-sm-12 no_pad inv_mail_scroll">
+                                @{ int icnt = 0;
+
+                                    foreach (Event_Email_List eel in Model.Event_Email_List)
+                                    {
+                                        icnt = icnt + 1;
+                                        <ul id="UL_@icnt" class="inv_mail_list">
+                                            <li><input id="chk_@icnt" onclick="CheckDeleteOption();" type="checkbox"></li>
+                                            <li>@eel.L_EmailId </li>
+                                        </ul>
+                                    }
+                                }
+                                @*<ul class="inv_mail_list">
+                                        <li><input type="checkbox"></li>
+                                        <li>  abc@gmail.com </li>
+                                    </ul>
+                                    <ul class="inv_mail_list">
+                                        <li><input type="checkbox"></li>
+                                        <li>  abc@gmail.com </li>
+                                    </ul>*@
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+
+
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-6 col-sm-12 no_pad">
+            <div class="col-sm-12 apply_code_head">
+                Schedule email
+            </div>
+            <div class="col-sm-12 no_pad promo_checkbox">
+                <div class="col-sm-12 no_pad">
+                    <div class="squaredOne">
+                        @if (Model != null && Model.I_Mode != null && Model.I_Mode == "S")
+                        {
+                            <input type="checkbox" value="None" checked="checked" id="befendevnt" name="check" />
+                        }
+                        else
+                        {
+                            <input type="checkbox" value="None" id="befendevnt" name="check" />
+                        }
+                        <label for="befendevnt"></label>
+                    </div>
+                    <div class="prm_cd_level"> before event</div>
+                </div>
+                <div class="col-sm-4 no_pad">
+                    <div class="form-group">
+                        @if (Model != null && Model.I_ScheduleDate != null)
+                        {
+                            <input type="text" class="form-control evnt_inp_cont" value="@Model.I_ScheduleDate" id="txtSchDate" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" />
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control evnt_inp_cont fillDateTime" disabled="disabled" data-format="MM-dd-yyyy HH:mm AA" id="txtSchDate" data-field="datetime" />
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-6 col-sm-12 no_pad mt20 inv_send_btn_bottom">
+            <div class="col-sm-4 col-xs-6 no_pad ">
+                @if (Model != null && Model.I_Mode != null)
+                {
+                    if (Model.I_Mode.Trim() == "N" || Model.I_Mode.Trim() == "D")
+                    {
+                        <button class="btn def_btn acnt_btn send_test_btn" id="btSendNow" onclick="SaveDetail('N');" type="button">Send Now</button>
+                        <button class="btn def_btn acnt_btn send_test_btn" id="btSchdule" style="display:none" onclick="SaveDetail('S');" type="button">Schedule</button>
+                    }
+                    else
+                    {
+                        <button class="btn def_btn acnt_btn send_test_btn" id="btSchdule" onclick="SaveDetail('S');" type="button">Schedule</button>
+                        <button class="btn def_btn acnt_btn send_test_btn" id="btSendNow" style="display:none" onclick="SaveDetail('N');" type="button">Send Now</button>
+                    }
+                }
+                else
+                {
+                    <button class="btn def_btn acnt_btn send_test_btn" id="btSendNow" onclick="SaveDetail('N');" type="button">Send Now</button>
+                    <button class="btn def_btn acnt_btn send_test_btn" id="btSchdule" style="display:none" onclick="SaveDetail('S');" type="button">Schedule</button>
+                }
+            </div>
+            <div class="col-sm-4 col-xs-6 no_pad">
+                <button class="btn def_btn acnt_btn send_test_btn" id="btSaveDraft" onclick="SaveDetail('D');" type="button">Save Draft</button>
+            </div>
+            <div id="dvAjxLoaderSave" style="display:none;">
+                <img src="~/Images/ajaxloader1.gif" /> Please wait ...
+            </div>
+            <input type="hidden" id="hdListId" value="@TempData["EmailListCount"]" />
+            <input type="hidden" id="hdId" value="@Model.I_Id" />
+            <input type="hidden" id="hdEventId" value="@TempData["Eventid"]" />
+            <input type="hidden" id="hdEventIMode" value="@TempData["EventIMode"]" />
+            
+
+            @if (Model != null && !String.IsNullOrEmpty(Model.I_EditableContent))
+            {
+                <input type="hidden" id="hdEmailContent" value="@Model.I_EditableContent" />
+            }
+            else
+            {
+                <input type="hidden" id="hdEmailContent" value="" />
+            }
+        </div>
+    </div>
+
+
+    <div class="clearfix"></div>
+    <div class="col-sm-12 no_pad mt10 mb10">
+
+    </div>
+    <div id="dvUserMail" style="width:650px; font-family: arial; float: left; border: 1px solid #ccc; margin-bottom: 10px;display:none">
+        <div style="width: 100px; float: left; margin-bottom: 20px; margin-top: 20px;" class="inv_mail_side_logo text-center"><img src='@TempData["baseurl"]/Images/logo_vertical.png' /></div>
+        <div style="margin-top: 20px; width: 540px; float: left" class="">
+            <h4 style="font-size:1.8em; margin-bottom:5px"> Hello Attendee</h4>
+            <p style="color:#686868; font-size:16px; margin-bottom:0; margin-top:20px;"> Please join us for</p>
+            @if (Model.EventTitle != null)
+            {
+                <h5 style="color: #3cf; font-size: 2em; font-weight: bold; margin-bottom: 0; margin-top: 0;text-transform: capitalize;"><a href="@TempData["ViewEventUrl"]" target="_blank">@Model.EventTitle</a></h5>
+            }
+            else
+            {
+                <h5 style="color: #3cf; font-size: 2em; font-weight: bold; margin-bottom: 0; margin-top: 0;text-transform: capitalize;"> No Title </h5>
+            }
+            <div style="width: 100%; float:left; margin-top: 20px;">
+                <div style="width: 100%; float:left;">
+                    <div style="width: 40%; float:left;">
+                        @if (Model.EventImg != null)
+                        {
+                            <img width="175" height="175" src="@TempData["baseurl"]/@Model.EventImg">
+                        }
+                        else
+                        {
+                            <img width="175" height="175" src="">
+                        }
+                    </div>
+                    <div style="width: 60%; float:left;">
+                        <div style="width: 100%; float:left; margin-bottom: 10px;">
+                            <p style="color: #676767; font-size: 18px; margin-bottom: 0; font-weight: bold; margin-top: 0;">Date:</p>
+                            @if (Model.EventDate != null)
+                            {
+                                <p style="color: #676767; font-size: 18px; margin-bottom: 0; margin-top: 0;">@Model.EventDate</p>
+                            }
+                            else
+                            {
+                                <p style="color: #676767; font-size: 18px; margin-bottom: 0; margin-top: 0;"></p>
+                            }
+                        </div>
+                        <div style="width: 100%; float:left; margin-bottom: 10px;">
+                            <p style="color: #676767; font-size: 18px; font-weight: bold; margin-bottom: 0; margin-top: 0;">Organizer:</p>
+                            <p style="color: #3cf; font-size: 18px; margin-bottom: 0; margin-top: 0;">
+                                @if (Model.EventOrgnizer != null)
+                                {
+                                    <a href="@TempData["OrgnizerUrl"].ToString()" style="color: #3cf; text-decoration: none;">@Model.EventOrgnizer</a>
+                                }
+                                else
+                                {
+                                    <a href="#" style="color: #3cf; text-decoration: none;">Orgnizer</a>
+                                }
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 100%; float:left; margin-top: 10px;">
+                    <div style="width:175px; float:left; margin-right: 35px;" >
+                        @*<div id="dvMapMailss" style="width:175px;height:175px;">*@
+                            <img style="width:175px;height:175px;" src='https://maps.googleapis.com/maps/api/staticmap?center=@TempData["Lat"],@TempData["Long"]&zoom=15&size=400x400&maptype=roadmap' />
+
+                        @*</div>*@
+                    </div>
+                    <div style="width: 60%; float:left;">
+                        <div style="width: 100%; float:left; margin-bottom: 10px;">
+                            @if (Model.EventAddress != null)
+                            {
+                                <p style="color: #676767; font-size: 18px; margin-bottom: 0; margin-top: 0;">@Model.EventAddress </p>
+                            }
+                            else
+                            {
+                                <p style="color: #676767; font-size: 18px; margin-bottom: 0; margin-top: 0;"></p>
+                            }
+                        </div>
+                        <div style="width: 100%; float:left; margin-bottom: 10px;">
+                            <p style="color: #3cf; font-size: 18px; font-weight: bold; margin-bottom: 0; margin-top: 0;">
+                                <a href="http://maps.google.com/maps?daddr=@TempData["Lat"],@TempData["Long"]&amp;ll=" style="color: #3cf; text-decoration: none;"> Get Directions </a>
+                            </p>
+
+                        </div>
+                        <div style="width: 100%; float:left; margin-bottom: 10px;">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="width: 96%; float:left; margin-top: 20px; text-align: center; margin-left: 2%;">
+            <div style="width: 100%; float:left; border-bottom: 1px solid #9e9e9e; border-top: 1px solid #9e9e9e; padding-bottom: 20px; padding-top: 20px; ">
+
+                <a href="@TempData["ViewEventUrl"]" style="text-decoration:none; background:#00adef; box-shadow:none; border:0px; border-radius:5px; padding:8px 15px; color:#fff; font-size:2em; " title="" type="button">
+                    @TempData["OrderText"]
+                </a>
+            </div>
+        </div>
+
+        <div style="width: 98%; float:left; margin-top: 10px; padding: 0 2%; margin-bottom: 10px;">
+            <p style="color: #686868; font-size: 20px; margin-top: 0px; margin-bottom: 0px;">About the event:</p>
+            @if (TempData["PPassword"].ToString() != string.Empty)
+            {
+                <p style="color: #686868; font-size: 20px; margin-top: 5px; margin-bottom: 0px;"> Your event password : @TempData["PPassword"].ToString()</p>
+            }
+
+            <p style="font-size: 13px; color: #686868;">
+                ( Event registration is by invitation only with the provided password. Register with your email address
+                and the password above to attend this event. )
+            </p>
+            @if (Model != null && !String.IsNullOrEmpty(Model.I_EditableContent))
+            {
+                <div id="dvemailcontentmail" style="color:#000;font-size:16px;">
+                    @Model.I_EditableContent
+                </div>
+            }
+            else
+            {
+                <div id="dvemailcontentmail" style="color:#000;font-size:16px;"></div>
+            }
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="test_inv_email" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body clearfix">
+                <div class="col-sm-12 text-center">
+                    <h3>Success! </h3>
+                    <p class="email_send_desc">The Email has been send. </p>
+                    <button type="button" class="btn def_btn acnt_btn send_test_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Ok</span></button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="invite_email_desc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title text-center"> About the events </h3>
+            </div>
+            <div class="modal-body clearfix">
+                <div class="col-sm-12">
+                    <div class="summernote" id="dvEditor"></div>
+
+                    <div class="col-sm-12 text-center">
+                        <button type="button" id="btSaveEditor" class="btn def_btn acnt_btn send_test_btn" data-dismiss="modal" aria-label="Close">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //$("#dvUserMail").hide();
+        var bIsPopup = displayPopup();
+
+        $("#dtBox").DateTimePicker(
+
+        {
+            isPopup: bIsPopup,
+
+            addEventHandlers: function () {
+                var dtPickerObj = this;
+
+                $(window).resize(function () {
+                    bIsPopup = displayPopup();
+                    dtPickerObj.setIsPopup(bIsPopup);
+                });
+
+                dtPickerObj.setDateTimeStringInInputField($(".fillDateTime"));
+            }
+        });
+
+
+    });
+
+
+
+    function displayPopup() {
+        if ($(document).width() >= 768)
+            return false;
+        else
+            return true;
+    }
+
+
+
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(".InvAddlistbox").css("display", "none");
+        $(".InvAddlist").click(function () {
+            $('.InvAddlistbox').slideToggle("slow");
+        });
+
+        $('.summernote').summernote({
+            height: 70,   //set editable area's height
+        });
+
+
+
+
+
+
+
+    });
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+<script>
+    $(document).ready(function () {
+        $('#sidebar').load('@Url.Action("Sidenav", "ManageEvent", new { eventid= TempData["Eventid"] })');
+
+        $(document).ajaxStop(function () {
+            $(document).find("#crt_promcode").click();
+            $("#sidebar").find("#dvcrtpromcode").addClass("active");
+            $("#sidebar").find("#dvcrtpromcode b").addClass('opened new-opend');
+        });
+
+
+        $('#crt_promcode').click();
+        $('#dvcrtpromcode').addClass("active");
+        $('#dvcrtpromcode b').addClass('opened new-opend');
+        
+
+
+        $("#txtSenderName").on("input", function () {
+            var regexp = /[^a-zA-Z]/g;
+            if ($(this).val().match(regexp)) {
+                $(this).val($(this).val().replace(regexp, ''));
+            }
+        });
+        var vLat = '@TempData["Lat"]';
+        var vLong = '@TempData["Long"]';
+        if (vLat == '') vLat = '6.9167';
+        if (vLong == '') vLong = '79.8473'
+        var myLatlng = new google.maps.LatLng(vLat, vLong);
+        var myOptions = {
+            zoom: 8,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var map = new google.maps.Map(document.getElementById("dvMap"), myOptions);
+
+       // var maps = new google.maps.Map(document.getElementById("dvMapMail"), myOptions);
+        $("#befendevnt").click(function () {
+            if ($("#befendevnt").is(":checked") == false) {
+                $("#txtSchDate").attr("disabled", true);
+                $("#btSendNow").show();
+                $("#btSchdule").hide();
+            }
+            else {
+                $("#txtSchDate").attr("disabled", false);
+                $("#btSendNow").hide();
+                $("#btSchdule").show();
+            }
+        });
+
+
+        $("#btTestEmail").click(function () {
+
+            var vTo = $("#txtTestEmail").val().trim();
+            if (validateEmail(vTo) == true && vTo != "") {
+                var vFrom = "shweta.sindhu@kiwitech.com";
+                var vSubject = $("#txtSubjectLine").val();
+                var vBody = $("#dvUserMail").html();
+                var vCc = "";
+                var vBcc = "";
+                var vFromname = $("#txtSenderName").val();
+                var model = {
+                    'To': vTo,
+                    'From': vFrom,
+                    'Body': vBody,
+                    'Subject': vSubject,
+                    'Cc': vCc,
+                    'Bcc': vBcc,
+                    'Fromname': vFromname
+                };
+                //var params = 'To=' + vTo, from: vFrom, body: vBody 'tree_contents=' + treeInnerHTML;
+                $.ajax({
+                    url: '@Url.Action("SendHtmlFormattedEmail", "ManageEvent")',
+                    data: { model: model },
+                    beforeSend: function () { $('#dvAjxLoader').show(); },
+                    complete: function () { $('#dvAjxLoader').hide(); },
+                    type: "Post",
+                    success: function (response) {
+                        $("#btPopUp").click();
+                    }
+                });
+            }
+            else
+            {
+                ShowMessage('E', ajaxsetup('CreateInvitations', 'EmailValidationUI'));
+            }
+        });
+
+        var vEditorVal = $("#hdEmailContent").val().trim();
+        if (vEditorVal != "") {
+            $("#dvemailcontent").empty();
+            $("#dvemailcontent").append(vEditorVal);
+            $("#dvemailcontentmail").empty();
+            $("#dvemailcontentmail").append(vEditorVal);
+        }
+
+        $("#btSaveEditor").click(function () {
+            var vEditorValue = $("#dvEditor").code();
+            $("#dvemailcontent").empty();
+            $("#dvemailcontent").append(vEditorValue);
+            $("#dvemailcontentmail").empty();
+            $("#dvemailcontentmail").append(vEditorValue);
+        });
+
+        $("#btEditEditor").click(function () {
+            var vEditorHtml = $("#dvemailcontent").html();
+            $("#dvEditor").code(vEditorHtml);
+        });
+
+        $("#btAddEmail").click(function () {
+            var vValue = $("#txtAddEmail").val().trim();
+
+            if (vValue != "") {
+                AddEmail(vValue);
+
+            }
+        });
+        $("#btDeleteEmail").click(function () {
+            //$("#UlTest").remove();
+            var vFlag = false;
+            var vIds = parseFloat($("#hdListId").val());
+            if (isNaN(vIds) == true) vIds = 0;
+
+            if (vIds > 0) {
+                for (i = 0; i <= vIds; i++) {
+                    if ($("#chk_" + i).is(":checked") == true) {
+                        $("#UL_" + i).remove();
+                    }
+                }
+            }
+
+
+
+            if (vIds > 0) {
+                for (i = 0; i <= vIds; i++) {
+                    if ($("#chk_" + i).length > 0) {
+                        vFlag = true;
+                    }
+                }
+            }
+
+            if (vFlag == true)
+            {
+                $("#dvEmaillistHeader").show();
+            }
+            else
+            {
+                $("#dvEmaillistHeader").hide();
+            }
+
+            $("#btDeleteEmail").hide();
+
+        });
+
+
+
+    });
+    function SelectAllList()
+    {
+        //debugger;
+        var vIds = parseFloat($("#hdListId").val());
+        if (isNaN(vIds) == true) vIds = 0;
+        var vflag = false;
+        if (vIds > 0) {
+            //alert($("#chkSelectAll").is(":checked"));
+            if ($("#chkSelectAll").is(":checked") == true) {
+                vflag = true;
+            }
+            for (i = 0; i <= vIds; i++) {
+                if (vflag == true)
+                    $("#chk_" + i).attr("checked", "checked");
+                else
+                {
+                    $("#chk_" + i).attr("checked", false);
+                }
+            }
+        }
+        CheckDeleteOption();
+
+    }
+
+    function CheckDeleteOption()
+    {
+        var vFlag = false;
+        var vIds = parseFloat($("#hdListId").val());
+        if (isNaN(vIds) == true) vIds = 0;
+        if (vIds > 0) {
+            for (i = 0; i <= vIds; i++) {
+                if ($("#chk_" + i).is(":checked") == true) {
+                    vFlag = true;
+                }
+            }
+        }
+
+        if (vFlag == false) {
+            $("#btDeleteEmail").hide();
+        }
+        else {
+            $("#btDeleteEmail").show();
+        }
+
+        //if ($("#dvEmaillist").children.length>0)
+        //{
+        //    $("#dvEmaillistHeader").show();
+        //}
+        //else
+        //{
+        //    $("#dvEmaillistHeader").hide();
+        //}
+    }
+    function ajaxsetup(strname, strFormTag) {
+        var msgnew = "";
+
+        var request = $.ajax({
+            url: '@Url.Action("Index", "ValidationMessage")',
+            async: false,
+            data: { strFormName: strname, strFormTag: strFormTag },
+            type: 'Post'
+        });
+        request.done(function (msg) {
+            msgnew += msg;
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            msgnew += "Some Error occur!!";
+        });
+        return msgnew;
+    }
+    function ShowMessage(Type, Mess) {
+        if (Type == 'S') {
+            $('#divaccsuc').css('display', 'block');
+            $('#divaccsuc').focus();
+            $('#diverroacc').css('display', 'none');
+            $('#succaccmsg').html(Mess);
+        }
+        else if (Type == 'N') {
+            $('#divaccsuc').css('display', 'none');
+            $('#diverroacc').css('display', 'none');
+        }
+        else {
+            $('#divaccsuc').css('display', 'none');
+            $('#diverroacc').css('display', 'block');
+            $('#diverroacc').focus();
+            $('#erraccmsg').html(Mess);
+
+        }
+
+    }
+
+    function validatemain() {
+        var msg = "";
+        var vval = $("#txtSenderName").val().trim();
+
+        if ($("#txtSenderName").val().trim() == "") {
+            //$('#txtEventTitle').addClass('err-bor');
+            msg += ajaxsetup("CreateInvitations", "SenderNameValidateUI") + "<br/>";
+        }
+
+        if ($("#txtSubjectLine").val().trim() == "") {
+            //$('#txtEventTitle').addClass('err-bor');
+            msg += ajaxsetup("CreateInvitations", "SubjectValidateUI") + "<br/>";
+        }
+
+        var vFlag = true;
+        var vIds = parseFloat($("#hdListId").val());
+        if (vIds > 0) {
+            for (i = 0; i <= vIds; i++) {
+                vVal = $("#UL_" + i).text();
+                if (vVal.trim() != '') {
+                    vFlag = false;
+                }
+            }
+        }
+        if (vFlag == true) {
+            //$('#txtEventTitle').addClass('err-bor');
+            msg += ajaxsetup("CreateInvitations", "EmailValidationUI") + "<br/>";
+        }
+        return msg;
+    }
+
+    function SaveDetail(Mode) {
+        var vMsg = validatemain()
+        if (vMsg == "") {
+            var EmailList = [];
+            var vIds = parseFloat($("#hdListId").val());
+            if (vIds > 0) {
+                for (i = 0; i <= vIds; i++) {
+                    vVal = $("#UL_" + i).text();
+                    //  alert(vVal);
+                    if (vVal.trim() != '') {
+                        EmailList.push({
+                            L_Id: "0",
+                            L_I_Id: $("#hdId").val(),
+                            L_EmailId: vVal
+                        });
+                    }
+                }
+            }
+            var model = {
+                'I_Id': $("#hdId").val(),
+                'I_Event_Id': $("#hdEventId").val(),
+                'I_SenderName': $("#txtSenderName").val(),
+                'I_SubjectLine': $("#txtSubjectLine").val(),
+                'I_EmailContent': $("#dvUserMail").html(),
+                'I_ScheduleDate': $("#txtSchDate").val(),
+                'I_EditableContent': $("#dvemailcontentmail").html(),
+                'I_Mode': Mode,
+                'EmailList': EmailList
+            };
+
+            $.ajax({
+                url: '@Url.Action("SaveInvitation", "ManageEvent")',
+                data: { model: model },
+                beforeSend: function () { $('#dvAjxLoaderSave').show(); },
+                complete: function () { $('#dvAjxLoaderSave').hide(); },
+                type: "Post",
+                success: function (response) {
+                    $("#hdId").val(response);
+                    var vUrl = "";
+                    if ($("#hdEventIMode").val().trim() == "E")
+                    {
+                        vUrl = '@Url.Action("EventConfirmation", "EventConfirmation",new { eventId = "eveid"})';
+                    }
+                    else
+                    {
+                        vUrl = '@Url.Action("EmailInvitations", "ManageEvent", new { eventId = "eveid"})';
+                    }
+                    vUrl = vUrl.replace("eveid", $("#hdEventId").val());
+                    window.location.href = vUrl;
+                }
+
+            });
+        }
+        else
+        {
+            ShowMessage('E', vMsg);
+        }
+    }
+
+    function AddEmail(vValue) {
+        debugger;
+        var vAry = vValue.split(',');
+        var vInvalidData = '';
+        for (i = 0; i < vAry.length; i++) {
+            var vData = vAry[i];
+            if (validateEmail(vData) == true) {
+                var vId = parseFloat($("#hdListId").val());
+                if (isNaN(vId) == true) vId = 0;
+                vId = vId + 1;
+                $("#hdListId").val(vId);
+                var vHtml = '<ul id="UL_' + vId + '" class="inv_mail_list"><li><input id="chk_' + vId + '" onclick="CheckDeleteOption();" type="checkbox"></li><li>' + vData + '</li></ul>';
+                $("#dvEmaillist").append(vHtml);
+            }
+            else {
+                if (vInvalidData == '') {
+                    vInvalidData = vData;
+                }
+                else {
+                    vInvalidData = vInvalidData + "," + vData;
+                }
+            }
+        }
+        if (vInvalidData != '') {
+            $("#txtAddEmail").val(vInvalidData);
+            $("#txtAddEmail").focus();
+            ShowMessage('E', ajaxsetup('CreateInvitations', 'EmailValidationUI'));
+        }
+        else {
+            $("#dvEmaillistHeader").show();
+            $("#txtAddEmail").val("");
+            $("#txtAddEmail").focus();
+            ShowMessage('N', "");
+        }
+    }
+
+
+</script>

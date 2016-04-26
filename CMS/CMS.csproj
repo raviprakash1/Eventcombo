@@ -325,6 +325,9 @@
     <Compile Include="Models\GetEventsListByStatus_Result.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetOrganizerEventid_Result.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageEvent.cs" />
     <Compile Include="Models\EmailTemplate.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -339,6 +342,9 @@
     <Compile Include="Models\Order_Detail_T.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Organizer_Master.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Payment_Info.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
@@ -348,6 +354,9 @@
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Profile.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Promo_Code.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Publish_Event_Detail.cs">
@@ -361,6 +370,9 @@
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Ticket.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TicketBack2015.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TicketBearer.cs">
@@ -387,12 +399,18 @@
     <Compile Include="Models\TimeZoneDetail.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TimeZoneDetail1.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UsersContext.cs" />
     <Compile Include="Models\UsersTemplate.cs" />
     <Compile Include="Models\User_Permission_Detail.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Venue.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\v_RetrieveEventid.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

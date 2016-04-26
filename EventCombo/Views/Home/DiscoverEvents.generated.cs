@@ -66,6 +66,15 @@ WriteAttribute("href", Tuple.Create(" href=\"", 117), Tuple.Create("\"", 147)
 
 WriteLiteral(" rel=\"stylesheet\"");
 
+WriteLiteral(" />\r\n<link");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 175), Tuple.Create("\"", 209)
+, Tuple.Create(Tuple.Create("", 182), Tuple.Create<System.Object, System.Int32>(Href("~/Content/custom-scroll.css")
+, 182), false)
+);
+
+WriteLiteral(" rel=\"stylesheet\"");
+
 WriteLiteral(" />\r\n<div");
 
 WriteLiteral(" id=\"dvProgress\"");
@@ -74,9 +83,9 @@ WriteLiteral(" class=\"loding_bg\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 213), Tuple.Create("\"", 243)
-, Tuple.Create(Tuple.Create("", 219), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajax-loader.gif")
-, 219), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 275), Tuple.Create("\"", 305)
+, Tuple.Create(Tuple.Create("", 281), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajax-loader.gif")
+, 281), false)
 );
 
 WriteLiteral(" /></div>\r\n<div");
@@ -85,7 +94,7 @@ WriteLiteral(" class=\"container-fluid cont_margin no-padding con_scr0l_home\"")
 
 WriteLiteral(" id=\"scrollhome\"");
 
-WriteLiteral(">\r\n    \r\n    <div");
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"col-sm-12 col-xs-12 ot_main_pad mb10\"");
 
@@ -97,7 +106,11 @@ WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"dis_event_ser_title \"");
 
-WriteLiteral("><h2>Events </h2></div>\r\n        </div>\r\n        <div");
+WriteLiteral("><h2");
+
+WriteLiteral(" id=\"spEventAddress\"");
+
+WriteLiteral("></h2></div>\r\n        </div>\r\n        <div");
 
 WriteLiteral(" class=\"col-sm-3 text-right no_pad\"");
 
@@ -206,130 +219,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 37 "..\..\Views\Home\DiscoverEvents.cshtml"
-                     if (@TempData["tDateFilter"].ToString() != null && @TempData["tDateFilter"].ToString() != "none")
-                    {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                    <li");
-
-WriteLiteral(" class=\"open\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"link\"");
-
-WriteLiteral(">All Dates<i");
-
-WriteLiteral(" class=\"glyphicon  glyphicon-triangle-bottom\"");
-
-WriteLiteral("></i></div>\r\n                        <ul");
-
-WriteLiteral(" class=\"submenu submenu_side\"");
-
-WriteLiteral(" style=\"display:block;\"");
-
-WriteLiteral(">\r\n                            <li><a");
-
-WriteLiteral(" href=\"javascript:void(0);\"");
-
-WriteLiteral(" onclick=\"DateFilters(\'today\');\"");
-
-WriteLiteral(">Today</a></li>\r\n                            <li><a");
-
-WriteLiteral(" href=\"javascript:void(0);\"");
-
-WriteLiteral(" onclick=\"DateFilters(\'tommarow\');\"");
-
-WriteLiteral(">Tomorrow</a></li>\r\n                            <li><a");
-
-WriteLiteral(" href=\"javascript:void(0);\"");
-
-WriteLiteral(" onclick=\"DateFilters(\'thisweek\');\"");
-
-WriteLiteral(">This Week</a></li>\r\n                            <li><a");
-
-WriteLiteral(" href=\"javascript:void(0);\"");
-
-WriteLiteral(" onclick=\"DateFilters(\'thisweekend\');\"");
-
-WriteLiteral(">This Weekend</a></li>\r\n                            <li><a");
-
-WriteLiteral(" href=\"javascript:void(0);\"");
-
-WriteLiteral(" onclick=\"DateFilters(\'nextweek\');\"");
-
-WriteLiteral(">Next Week</a></li>\r\n                            <li><a");
-
-WriteLiteral(" href=\"javascript:void(0);\"");
-
-WriteLiteral(" onclick=\"DateFilters(\'thismonth\');\"");
-
-WriteLiteral(">This Month</a></li>\r\n                            <li>\r\n                         " +
-"       <a");
-
-WriteLiteral(" href=\"#\"");
-
-WriteLiteral(" class=\"CustDateMain\"");
-
-WriteLiteral(">Custom Date</a>\r\n                                <div");
-
-WriteLiteral(" class=\"clearfix\"");
-
-WriteLiteral("></div>\r\n                                <div");
-
-WriteLiteral(" class=\"CustDate col-sm-12 ot_main_pad mb10\"");
-
-WriteLiteral(">\r\n                                    <div");
-
-WriteLiteral(" class=\" col-sm-10 no_pad mb10\"");
-
-WriteLiteral(">\r\n                                        <label");
-
-WriteLiteral(" class=\"label-control desc_date_lebel\"");
-
-WriteLiteral(">Start Date</label>\r\n                                        <input");
-
-WriteLiteral(" class=\"date_picker form-control\"");
-
-WriteLiteral(" id=\"txtstartDate\"");
-
-WriteLiteral(" placeholder=\"mm/dd/yyyy\"");
-
-WriteLiteral(" />\r\n                                    </div>\r\n                                " +
-"    <div");
-
-WriteLiteral(" class=\"col-sm-10 no_pad mb10\"");
-
-WriteLiteral(">\r\n                                        <label");
-
-WriteLiteral(" class=\"label-control desc_date_lebel\"");
-
-WriteLiteral(">End Date</label>\r\n                                        <input");
-
-WriteLiteral(" class=\"date_picker form-control\"");
-
-WriteLiteral(" id=\"txtEndDate\"");
-
-WriteLiteral(" placeholder=\"mm/dd/yyyy\"");
-
-WriteLiteral(" />\r\n                                    </div>\r\n\r\n                              " +
-"      <button");
-
-WriteLiteral(" class=\"btn btn-lg fiter_btn_pop_sub \"");
-
-WriteLiteral(" onclick=\"DateFiltersCustom();\"");
-
-WriteLiteral(" type=\"submit\"");
-
-WriteLiteral(">Search</button>\r\n                                </div>\r\n                       " +
-"     </li>\r\n                        </ul>\r\n                    </li>\r\n");
-
-            
-            #line 66 "..\..\Views\Home\DiscoverEvents.cshtml"
-                    }
-                    else
+                     if (@TempData["tDateFilter"] != null && @TempData["tDateFilter"].ToString().ToLower() != "none")
                     {
 
             
@@ -339,56 +229,310 @@ WriteLiteral("                        <li>\r\n                            <div")
 
 WriteLiteral(" class=\"link\"");
 
-WriteLiteral(">All Dates<i");
+WriteLiteral(">\r\n");
+
+            
+            #line 41 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 41 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                 if (@TempData["tDateFilter"].ToString().ToLower() == "none")
+                                {
+            
+            #line default
+            #line hidden
+WriteLiteral("<span");
+
+WriteLiteral(" id=\"spDate\"");
+
+WriteLiteral(">All Dates</span>");
+
+            
+            #line 42 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                   }
+                                else if (@TempData["tDateFilter"].ToString().ToLower() == "today")
+                                {
+            
+            #line default
+            #line hidden
+WriteLiteral("<span");
+
+WriteLiteral(" id=\"spDate\"");
+
+WriteLiteral(">Today</span>");
+
+            
+            #line 44 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                               }
+                                else if (@TempData["tDateFilter"].ToString().ToLower() == "tomorrow")
+                                {
+            
+            #line default
+            #line hidden
+WriteLiteral("<span");
+
+WriteLiteral(" id=\"spDate\"");
+
+WriteLiteral(">Tomorrow</span>");
+
+            
+            #line 46 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                  }
+                                else if (@TempData["tDateFilter"].ToString().ToLower() == "thisweek")
+                                {
+            
+            #line default
+            #line hidden
+WriteLiteral("<span");
+
+WriteLiteral(" id=\"spDate\"");
+
+WriteLiteral(">This Week</span>");
+
+            
+            #line 48 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                   }
+                                else if (@TempData["tDateFilter"].ToString().ToLower() == "thisweekend")
+                                {
+            
+            #line default
+            #line hidden
+WriteLiteral("<span");
+
+WriteLiteral(" id=\"spDate\"");
+
+WriteLiteral(">This Weekend</span>");
+
+            
+            #line 50 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                      }
+                                else if (@TempData["tDateFilter"].ToString().ToLower() == "nextweek")
+                                {
+            
+            #line default
+            #line hidden
+WriteLiteral("<span");
+
+WriteLiteral(" id=\"spDate\"");
+
+WriteLiteral(">Next Week</span>");
+
+            
+            #line 52 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                   }
+                                else if (@TempData["tDateFilter"].ToString().ToLower() == "thismonth")
+                                {
+            
+            #line default
+            #line hidden
+WriteLiteral("<span");
+
+WriteLiteral(" id=\"spDate\"");
+
+WriteLiteral(">This Month</span>");
+
+            
+            #line 54 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                    }
+                                else
+                                {
+            
+            #line default
+            #line hidden
+WriteLiteral("<span");
+
+WriteLiteral(" id=\"spDate\"");
+
+WriteLiteral(">");
+
+            
+            #line 56 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                              Write(TempData["tDateFilter"].ToString());
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</span>");
+
+            
+            #line 56 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                             }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                <i");
 
 WriteLiteral(" class=\"glyphicon  glyphicon-triangle-bottom\"");
 
-WriteLiteral("></i></div>\r\n                            <ul");
+WriteLiteral("></i>\r\n                            </div>\r\n                            <ul");
 
 WriteLiteral(" class=\"submenu submenu_side\"");
 
 WriteLiteral(" style=\"display:none;\"");
 
-WriteLiteral(">\r\n                                <li><a");
+WriteLiteral(">\r\n");
+
+            
+            #line 61 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 61 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                 if (@TempData["tDateFilter"].ToString().ToLower() != "today")
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <li><a");
 
 WriteLiteral(" href=\"javascript:void(0);\"");
 
 WriteLiteral(" onclick=\"DateFilters(\'today\');\"");
 
-WriteLiteral(">Today</a></li>\r\n                                <li><a");
+WriteLiteral(">Today</a></li>");
+
+            
+            #line 63 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                ");
+
+            
+            #line 64 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                 if (@TempData["tDateFilter"].ToString().ToLower() != "tomorrow")
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <li><a");
 
 WriteLiteral(" href=\"javascript:void(0);\"");
 
-WriteLiteral(" onclick=\"DateFilters(\'tommarow\');\"");
+WriteLiteral(" onclick=\"DateFilters(\'tomorrow\');\"");
 
-WriteLiteral(">Tomorrow</a></li>\r\n                                <li><a");
+WriteLiteral(">Tomorrow</a></li>");
+
+            
+            #line 66 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                          }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                ");
+
+            
+            #line 67 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                 if (@TempData["tDateFilter"].ToString().ToLower() != "thisweek")
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <li><a");
 
 WriteLiteral(" href=\"javascript:void(0);\"");
 
 WriteLiteral(" onclick=\"DateFilters(\'thisweek\');\"");
 
-WriteLiteral(">This Week</a></li>\r\n                                <li><a");
+WriteLiteral(">This Week</a></li>");
+
+            
+            #line 69 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                           }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                ");
+
+            
+            #line 70 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                 if (@TempData["tDateFilter"].ToString().ToLower() != "thisweekend")
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <li><a");
 
 WriteLiteral(" href=\"javascript:void(0);\"");
 
 WriteLiteral(" onclick=\"DateFilters(\'thisweekend\');\"");
 
-WriteLiteral(">This Weekend</a></li>\r\n                                <li><a");
+WriteLiteral(">This Weekend</a></li>");
+
+            
+            #line 72 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                                 }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                ");
+
+            
+            #line 73 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                 if (@TempData["tDateFilter"].ToString().ToLower() != "nextweek")
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <li><a");
 
 WriteLiteral(" href=\"javascript:void(0);\"");
 
 WriteLiteral(" onclick=\"DateFilters(\'nextweek\');\"");
 
-WriteLiteral(">Next Week</a></li>\r\n                                <li><a");
+WriteLiteral(">Next Week</a></li>");
+
+            
+            #line 75 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                           }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                ");
+
+            
+            #line 76 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                 if (@TempData["tDateFilter"].ToString().ToLower() != "thismonth")
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <li><a");
 
 WriteLiteral(" href=\"javascript:void(0);\"");
 
 WriteLiteral(" onclick=\"DateFilters(\'thismonth\');\"");
 
-WriteLiteral(">This Month</a></li>\r\n                                <li>\r\n                     " +
-"               <a");
+WriteLiteral(">This Month</a></li>");
 
-WriteLiteral(" href=\"javascript:void(0);\"");
+            
+            #line 78 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                             }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                <li>\r\n                                    <a");
+
+WriteLiteral(" href=\"#\"");
 
 WriteLiteral(" class=\"CustDateMain\"");
 
@@ -443,18 +587,143 @@ WriteLiteral(" onclick=\"DateFiltersCustom();\"");
 WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(">Search</button>\r\n                                    </div>\r\n                   " +
-"             </li>\r\n                            </ul>\r\n                        <" +
+"             </li>\r\n                                <li><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteLiteral(" onclick=\"DateFilters(\'none\');\"");
+
+WriteLiteral(">All Dates</a></li>\r\n                            </ul>\r\n                        <" +
 "/li>\r\n");
 
             
-            #line 96 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 98 "..\..\Views\Home\DiscoverEvents.cshtml"
+                    }
+                    else
+                    {
 
+            
+            #line default
+            #line hidden
+WriteLiteral("                        <li>\r\n                            <div");
+
+WriteLiteral(" class=\"link\"");
+
+WriteLiteral(">All Dates  <i");
+
+WriteLiteral(" class=\"glyphicon  glyphicon-triangle-bottom\"");
+
+WriteLiteral("></i></div>\r\n                            <ul");
+
+WriteLiteral(" class=\"submenu submenu_side\"");
+
+WriteLiteral(" style=\"display:none;\"");
+
+WriteLiteral(">\r\n                                <li><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteLiteral(" onclick=\"DateFilters(\'today\');\"");
+
+WriteLiteral(">Today</a></li>\r\n                                <li><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteLiteral(" onclick=\"DateFilters(\'tomorrow\');\"");
+
+WriteLiteral(">Tomorrow</a></li>\r\n                                <li><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteLiteral(" onclick=\"DateFilters(\'thisweek\');\"");
+
+WriteLiteral(">This Week</a></li>\r\n                                <li><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteLiteral(" onclick=\"DateFilters(\'thisweekend\');\"");
+
+WriteLiteral(">This Weekend</a></li>\r\n                                <li><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteLiteral(" onclick=\"DateFilters(\'nextweek\');\"");
+
+WriteLiteral(">Next Week</a></li>\r\n                                <li><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteLiteral(" onclick=\"DateFilters(\'thismonth\');\"");
+
+WriteLiteral(">This Month</a></li>\r\n                                <li>\r\n                     " +
+"               <a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteLiteral(" class=\"CustDateMain\"");
+
+WriteLiteral(">Custom Date</a>\r\n                                    <div");
+
+WriteLiteral(" class=\"clearfix\"");
+
+WriteLiteral("></div>\r\n                                    <div");
+
+WriteLiteral(" class=\"CustDate col-sm-12 ot_main_pad mb10\"");
+
+WriteLiteral(">\r\n                                        <div");
+
+WriteLiteral(" class=\"col-sm-10 no_pad mb10\"");
+
+WriteLiteral(">\r\n                                            <label");
+
+WriteLiteral(" class=\"label-control desc_date_lebel\"");
+
+WriteLiteral(">Start Date</label>\r\n                                            <input");
+
+WriteLiteral(" class=\"date_picker form-control\"");
+
+WriteLiteral(" id=\"txtstartDate\"");
+
+WriteLiteral(" placeholder=\"mm/dd/yyyy\"");
+
+WriteLiteral(" />\r\n                                        </div>\r\n                            " +
+"            <div");
+
+WriteLiteral(" class=\"col-sm-10 no_pad mb10\"");
+
+WriteLiteral(">\r\n                                            <label");
+
+WriteLiteral(" class=\"label-control desc_date_lebel\"");
+
+WriteLiteral(">End Date</label>\r\n                                            <input");
+
+WriteLiteral(" class=\"date_picker form-control\"");
+
+WriteLiteral(" id=\"txtEndDate\"");
+
+WriteLiteral(" placeholder=\"mm/dd/yyyy\"");
+
+WriteLiteral(" />\r\n                                        </div>\r\n\r\n                          " +
+"              <button");
+
+WriteLiteral(" class=\"btn btn-lg fiter_btn_pop_sub \"");
+
+WriteLiteral(" onclick=\"DateFiltersCustom();\"");
+
+WriteLiteral(" type=\"submit\"");
+
+WriteLiteral(">Search</button>\r\n                                    </div>\r\n                   " +
+"             </li>\r\n\r\n                            </ul>\r\n                       " +
+" </li>\r\n");
+
+            
+            #line 129 "..\..\Views\Home\DiscoverEvents.cshtml"
                     }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </ul>\r\n            </div>\r\n            <div");
+WriteLiteral("                </ul>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
@@ -509,14 +778,14 @@ WriteLiteral(" class=\"side_fliter_by_type\"");
 WriteLiteral(">\r\n");
 
             
-            #line 119 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 150 "..\..\Views\Home\DiscoverEvents.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 119 "..\..\Views\Home\DiscoverEvents.cshtml"
-                         if (@ViewData["tempPrice"].ToString() == "FREE")
+            #line 150 "..\..\Views\Home\DiscoverEvents.cshtml"
+                         if (@ViewData["tempPrice"] != null && @ViewData["tempPrice"].ToString() == "FREE")
                         {
 
             
@@ -549,9 +818,9 @@ WriteLiteral(" onclick=\"GetPriceFilter(\'PAID\');\"");
 WriteLiteral(">Paid</a></li>\r\n");
 
             
-            #line 124 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 155 "..\..\Views\Home\DiscoverEvents.cshtml"
                         }
-                        else if (@ViewData["tempPrice"].ToString() == "PAID")
+                        else if (@ViewData["tempPrice"] != null && @ViewData["tempPrice"].ToString() == "PAID")
                         {
 
             
@@ -584,7 +853,7 @@ WriteLiteral(" onclick=\"GetPriceFilter(\'PAID\');\"");
 WriteLiteral(">Paid</a></li>\r\n");
 
             
-            #line 130 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 161 "..\..\Views\Home\DiscoverEvents.cshtml"
                         }
                         else
                         {
@@ -619,7 +888,7 @@ WriteLiteral(" onclick=\"GetPriceFilter(\'PAID\');\"");
 WriteLiteral(">Paid</a></li>\r\n");
 
             
-            #line 136 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 167 "..\..\Views\Home\DiscoverEvents.cshtml"
                         }
 
             
@@ -627,35 +896,39 @@ WriteLiteral(">Paid</a></li>\r\n");
             #line hidden
 WriteLiteral("                    </ul>\r\n                </div>\r\n                <div");
 
+WriteLiteral(" class=\"col-sm-12 no_pad xs-desk-show\"");
+
+WriteLiteral(">\r\n                    <div");
+
 WriteLiteral(" class=\"col-sm-12 no_pad\"");
 
-WriteLiteral(">\r\n                    <p");
+WriteLiteral(">\r\n                        <p");
 
 WriteLiteral(" class=\"side_desc_fil_head\"");
 
-WriteLiteral(">Event Type</p>\r\n                    <ul");
+WriteLiteral(">Event Type</p>\r\n                        <ul");
 
-WriteLiteral(" class=\"nav nav-pills dis_side_fliter_tag dis_side_fliter_scrol\"");
+WriteLiteral(" class=\"nav nav-pills dis_side_fliter_tag \"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 142 "..\..\Views\Home\DiscoverEvents.cshtml"
-                    
+            #line 174 "..\..\Views\Home\DiscoverEvents.cshtml"
+                            
             
             #line default
             #line hidden
             
-            #line 142 "..\..\Views\Home\DiscoverEvents.cshtml"
-                     if (ViewBag.ETSelected != null)
-                    {
-                        foreach (var item in (List<EventCombo.Models.EventType>)ViewBag.ETSelected)
-                        {
+            #line 174 "..\..\Views\Home\DiscoverEvents.cshtml"
+                             if (ViewBag.ETSelected != null)
+                            {
+                                foreach (var item in (List<EventCombo.Models.EventType>)ViewBag.ETSelected)
+                                {
 
             
             #line default
             #line hidden
-WriteLiteral("                            <li");
+WriteLiteral("                                    <li");
 
 WriteLiteral(" class=\"active\"");
 
@@ -663,23 +936,23 @@ WriteLiteral("><a");
 
 WriteLiteral(" href=\"javascript:void(0);\"");
 
-WriteAttribute("onclick", Tuple.Create("  onclick=\"", 9166), Tuple.Create("\"", 9213)
-, Tuple.Create(Tuple.Create("", 9177), Tuple.Create("FilterEventType(\'", 9177), true)
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 11829), Tuple.Create("\"", 11875)
+, Tuple.Create(Tuple.Create("", 11839), Tuple.Create("FilterEventType(\'", 11839), true)
             
-            #line 146 "..\..\Views\Home\DiscoverEvents.cshtml"
-                        , Tuple.Create(Tuple.Create("", 9194), Tuple.Create<System.Object, System.Int32>(item.EventTypeID
+            #line 178 "..\..\Views\Home\DiscoverEvents.cshtml"
+                              , Tuple.Create(Tuple.Create("", 11856), Tuple.Create<System.Object, System.Int32>(item.EventTypeID
             
             #line default
             #line hidden
-, 9194), false)
-, Tuple.Create(Tuple.Create("", 9211), Tuple.Create("\')", 9211), true)
+, 11856), false)
+, Tuple.Create(Tuple.Create("", 11873), Tuple.Create("\')", 11873), true)
 );
 
 WriteLiteral(">");
 
             
-            #line 146 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                                                                                        Write(item.EventType1);
+            #line 178 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                               Write(item.EventType1);
 
             
             #line default
@@ -688,140 +961,34 @@ WriteLiteral(" </a> <a");
 
 WriteLiteral(" href=\"javascript:void(0);\"");
 
-WriteLiteral(" class=\"can_badg \"");
+WriteLiteral(" class=\"can_badg cat_remov\"");
 
-WriteAttribute("onclick", Tuple.Create(" onclick=\"", 9284), Tuple.Create("\"", 9337)
-, Tuple.Create(Tuple.Create("", 9294), Tuple.Create("DeleteFilterEventType(\'", 9294), true)
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 11955), Tuple.Create("\"", 12008)
+, Tuple.Create(Tuple.Create("", 11965), Tuple.Create("DeleteFilterEventType(\'", 11965), true)
             
-            #line 146 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                                                                                                                   , Tuple.Create(Tuple.Create("", 9317), Tuple.Create<System.Object, System.Int32>(item.EventTypeID
+            #line 178 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                                                                  , Tuple.Create(Tuple.Create("", 11988), Tuple.Create<System.Object, System.Int32>(item.EventTypeID
             
             #line default
             #line hidden
-, 9317), false)
-, Tuple.Create(Tuple.Create("", 9334), Tuple.Create("\');", 9334), true)
+, 11988), false)
+, Tuple.Create(Tuple.Create("", 12005), Tuple.Create("\');", 12005), true)
 );
 
-WriteLiteral(">X</a></li>\r\n");
+WriteLiteral("> + </a></li>\r\n");
 
             
-            #line 147 "..\..\Views\Home\DiscoverEvents.cshtml"
-                        }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                        <li><a");
-
-WriteLiteral(" href=\"javascript:void(0);\"");
-
-WriteLiteral(" onclick=\"GetAllEventType();\"");
-
-WriteLiteral(">ALL</a></li>\r\n");
-
-            
-            #line 149 "..\..\Views\Home\DiscoverEvents.cshtml"
-                    }
-                    else
-                    {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                        <li");
-
-WriteLiteral(" class=\"active\"");
-
-WriteLiteral("><a");
-
-WriteLiteral(" href=\"javascript:void(0);\"");
-
-WriteLiteral(" onclick=\"GetAllEventType();\"");
-
-WriteLiteral(">ALL</a></li>\r\n");
-
-            
-            #line 153 "..\..\Views\Home\DiscoverEvents.cshtml"
-                    }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                    \r\n");
-
-            
-            #line 155 "..\..\Views\Home\DiscoverEvents.cshtml"
-                    
+            #line 179 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                }
+                                
             
             #line default
             #line hidden
             
-            #line 155 "..\..\Views\Home\DiscoverEvents.cshtml"
-                     foreach (var item in (List<EventCombo.Models.EventType>)ViewBag.Eventtype)
-                    {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                        <li><a");
-
-WriteLiteral(" href=\"javascript:void(0);\"");
-
-WriteAttribute("onclick", Tuple.Create(" onclick=\"", 9889), Tuple.Create("\"", 9935)
-, Tuple.Create(Tuple.Create("", 9899), Tuple.Create("FilterEventType(\'", 9899), true)
-            
-            #line 157 "..\..\Views\Home\DiscoverEvents.cshtml"
-    , Tuple.Create(Tuple.Create("", 9916), Tuple.Create<System.Object, System.Int32>(item.EventTypeID
-            
-            #line default
-            #line hidden
-, 9916), false)
-, Tuple.Create(Tuple.Create("", 9933), Tuple.Create("\')", 9933), true)
-);
-
-WriteLiteral(">");
-
-            
-            #line 157 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                                                                    Write(item.EventType1);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" </a></li>\r\n");
-
-            
-            #line 158 "..\..\Views\Home\DiscoverEvents.cshtml"
-                    }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                    </ul>\r\n\r\n                </div>\r\n                <div");
-
-WriteLiteral(" class=\"col-sm-12 no_pad mt10\"");
-
-WriteLiteral(">\r\n                    <p");
-
-WriteLiteral(" class=\"side_desc_fil_head\"");
-
-WriteLiteral(">Category</p>\r\n                    <ul");
-
-WriteLiteral(" class=\"nav nav-pills dis_side_fliter_tag dis_side_fliter_scrol\"");
-
-WriteLiteral(">\r\n");
-
-            
-            #line 165 "..\..\Views\Home\DiscoverEvents.cshtml"
-                        
-            
-            #line default
-            #line hidden
-            
-            #line 165 "..\..\Views\Home\DiscoverEvents.cshtml"
-                         if(ViewBag.ECatSelected != null)
-                        {
-                            foreach (var item in (List<EventCombo.Models.EventCategory>)ViewBag.ECatSelected)
+            #line 180 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                               
+                            }
+                            else
                             {
 
             
@@ -835,23 +1002,156 @@ WriteLiteral("><a");
 
 WriteLiteral(" href=\"javascript:void(0);\"");
 
-WriteAttribute("onclick", Tuple.Create("  onclick=\"", 10556), Tuple.Create("\"", 10611)
-, Tuple.Create(Tuple.Create("", 10567), Tuple.Create("FilterEventCategory(\'", 10567), true)
+WriteLiteral(" onclick=\"GetAllEventType();\"");
+
+WriteLiteral(">ALL</a></li>\r\n");
+
             
-            #line 169 "..\..\Views\Home\DiscoverEvents.cshtml"
-                               , Tuple.Create(Tuple.Create("", 10588), Tuple.Create<System.Object, System.Int32>(item.EventCategoryID
+            #line 185 "..\..\Views\Home\DiscoverEvents.cshtml"
+                            }
+
             
             #line default
             #line hidden
-, 10588), false)
-, Tuple.Create(Tuple.Create("", 10609), Tuple.Create("\')", 10609), true)
+WriteLiteral("                        </ul>\r\n                        <div");
+
+WriteLiteral(" class=\"scrollbox\"");
+
+WriteLiteral(">\r\n                            <ul");
+
+WriteLiteral(" class=\"nav nav-pills dis_side_fliter_tag\"");
+
+WriteLiteral(">\r\n");
+
+            
+            #line 189 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 189 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                 if (ViewBag.ETSelected != null)
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <li><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteLiteral(" onclick=\"GetAllEventType();\"");
+
+WriteLiteral(">ALL</a></li>\r\n");
+
+            
+            #line 192 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                ");
+
+            
+            #line 193 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                 foreach (var item in (List<EventCombo.Models.EventType>)ViewBag.Eventtype)
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <li><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 13041), Tuple.Create("\"", 13087)
+, Tuple.Create(Tuple.Create("", 13051), Tuple.Create("FilterEventType(\'", 13051), true)
+            
+            #line 195 "..\..\Views\Home\DiscoverEvents.cshtml"
+               , Tuple.Create(Tuple.Create("", 13068), Tuple.Create<System.Object, System.Int32>(item.EventTypeID
+            
+            #line default
+            #line hidden
+, 13068), false)
+, Tuple.Create(Tuple.Create("", 13085), Tuple.Create("\')", 13085), true)
 );
 
 WriteLiteral(">");
 
             
-            #line 169 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                                                                                                    Write(item.EventCategory1);
+            #line 195 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                Write(item.EventType1);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" </a></li>\r\n");
+
+            
+            #line 196 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                            </ul>\r\n                        </div>\r\n              " +
+"      </div>\r\n\r\n                    <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad mt10 mb10\"");
+
+WriteLiteral(">\r\n                        <p");
+
+WriteLiteral(" class=\"side_desc_fil_head\"");
+
+WriteLiteral(">Category</p>\r\n                        <ul");
+
+WriteLiteral(" class=\"nav nav-pills dis_side_fliter_tag \"");
+
+WriteLiteral(">\r\n");
+
+            
+            #line 204 "..\..\Views\Home\DiscoverEvents.cshtml"
+                            
+            
+            #line default
+            #line hidden
+            
+            #line 204 "..\..\Views\Home\DiscoverEvents.cshtml"
+                             if (ViewBag.ECatSelected != null)
+                            {
+                                foreach (var item in (List<EventCombo.Models.EventCategory>)ViewBag.ECatSelected)
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <li");
+
+WriteLiteral(" class=\"active\"");
+
+WriteLiteral("><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 13781), Tuple.Create("\"", 13835)
+, Tuple.Create(Tuple.Create("", 13791), Tuple.Create("FilterEventCategory(\'", 13791), true)
+            
+            #line 208 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                  , Tuple.Create(Tuple.Create("", 13812), Tuple.Create<System.Object, System.Int32>(item.EventCategoryID
+            
+            #line default
+            #line hidden
+, 13812), false)
+, Tuple.Create(Tuple.Create("", 13833), Tuple.Create("\')", 13833), true)
+);
+
+WriteLiteral(">");
+
+            
+            #line 208 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                                       Write(item.EventCategory1);
 
             
             #line default
@@ -860,47 +1160,40 @@ WriteLiteral("</a> <a");
 
 WriteLiteral(" href=\"javascript:void(0);\"");
 
-WriteLiteral(" class=\"can_badg \"");
+WriteLiteral(" class=\"can_badg cat_remov\"");
 
-WriteAttribute("onclick", Tuple.Create(" onclick=\"", 10685), Tuple.Create("\"", 10746)
-, Tuple.Create(Tuple.Create("", 10695), Tuple.Create("DeleteFilterEventCategory(\'", 10695), true)
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 13918), Tuple.Create("\"", 13979)
+, Tuple.Create(Tuple.Create("", 13928), Tuple.Create("DeleteFilterEventCategory(\'", 13928), true)
             
-            #line 169 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                                                                                                                                     , Tuple.Create(Tuple.Create("", 10722), Tuple.Create<System.Object, System.Int32>(item.EventCategoryID
+            #line 208 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                                                                                 , Tuple.Create(Tuple.Create("", 13955), Tuple.Create<System.Object, System.Int32>(item.EventCategoryID
             
             #line default
             #line hidden
-, 10722), false)
-, Tuple.Create(Tuple.Create("", 10743), Tuple.Create("\');", 10743), true)
+, 13955), false)
+, Tuple.Create(Tuple.Create("", 13976), Tuple.Create("\');", 13976), true)
 );
 
-WriteLiteral(">X</a></li>\r\n");
+WriteLiteral("> + </a></li>\r\n");
 
             
-            #line 170 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 209 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                }
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 210 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                     
                             }
+                            else
+                            {
 
             
             #line default
             #line hidden
-WriteLiteral("                            <li><a");
-
-WriteLiteral(" href=\"javascript:void(0);\"");
-
-WriteLiteral(" onclick=\"GetAllEventCategories();\"");
-
-WriteLiteral(">ALL</a></li>\r\n");
-
-            
-            #line 172 "..\..\Views\Home\DiscoverEvents.cshtml"
-                        }
-                        else
-                        {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                            <li");
+WriteLiteral("                                <li");
 
 WriteLiteral(" class=\"active\"");
 
@@ -913,49 +1206,88 @@ WriteLiteral(" onclick=\"GetAllEventCategories();\"");
 WriteLiteral(">ALL</a></li>\r\n");
 
             
-            #line 176 "..\..\Views\Home\DiscoverEvents.cshtml"
-                        }
+            #line 215 "..\..\Views\Home\DiscoverEvents.cshtml"
+                            }
 
             
             #line default
             #line hidden
-WriteLiteral("                        \r\n");
+WriteLiteral("                        </ul>\r\n                        <div");
+
+WriteLiteral(" class=\"scrollbox2\"");
+
+WriteLiteral(">\r\n                            <ul");
+
+WriteLiteral(" class=\"nav nav-pills dis_side_fliter_tag\"");
+
+WriteLiteral(">\r\n");
 
             
-            #line 178 "..\..\Views\Home\DiscoverEvents.cshtml"
-                        
+            #line 219 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                
             
             #line default
             #line hidden
             
-            #line 178 "..\..\Views\Home\DiscoverEvents.cshtml"
-                         foreach (var item in (List<EventCombo.Models.EventCategory>)ViewBag.EventCat)
-                        {
+            #line 219 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                 if (ViewBag.ECatSelected != null)
+                                {
 
             
             #line default
             #line hidden
-WriteLiteral("                            <li><a");
+WriteLiteral("                                    <li><a");
 
 WriteLiteral(" href=\"javascript:void(0);\"");
 
-WriteAttribute("onclick", Tuple.Create(" onclick=\"", 11357), Tuple.Create("\"", 11411)
-, Tuple.Create(Tuple.Create("", 11367), Tuple.Create("FilterEventCategory(\'", 11367), true)
+WriteLiteral(" onclick=\"GetAllEventCategories();\"");
+
+WriteLiteral(">ALL</a></li>\r\n");
+
             
-            #line 180 "..\..\Views\Home\DiscoverEvents.cshtml"
-           , Tuple.Create(Tuple.Create("", 11388), Tuple.Create<System.Object, System.Int32>(item.EventCategoryID
+            #line 222 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                }
+
             
             #line default
             #line hidden
-, 11388), false)
-, Tuple.Create(Tuple.Create("", 11409), Tuple.Create("\')", 11409), true)
+WriteLiteral("\r\n");
+
+            
+            #line 224 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 224 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                 foreach (var item in (List<EventCombo.Models.EventCategory>)ViewBag.EventCat)
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <li><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 15038), Tuple.Create("\"", 15092)
+, Tuple.Create(Tuple.Create("", 15048), Tuple.Create("FilterEventCategory(\'", 15048), true)
+            
+            #line 226 "..\..\Views\Home\DiscoverEvents.cshtml"
+                   , Tuple.Create(Tuple.Create("", 15069), Tuple.Create<System.Object, System.Int32>(item.EventCategoryID
+            
+            #line default
+            #line hidden
+, 15069), false)
+, Tuple.Create(Tuple.Create("", 15090), Tuple.Create("\')", 15090), true)
 );
 
 WriteLiteral(">");
 
             
-            #line 180 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                                                                                Write(item.EventCategory1);
+            #line 226 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                        Write(item.EventCategory1);
 
             
             #line default
@@ -963,263 +1295,883 @@ WriteLiteral(">");
 WriteLiteral("</a></li>\r\n");
 
             
-            #line 181 "..\..\Views\Home\DiscoverEvents.cshtml"
-                        }
+            #line 227 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                }
 
             
             #line default
             #line hidden
-WriteLiteral("                    </ul>\r\n                </div>\r\n            </div>\r\n\r\n        " +
-"</div>\r\n    </div>\r\n    <div");
+WriteLiteral("                            </ul>\r\n                        </div>\r\n              " +
+"      </div>\r\n                </div>\r\n                <div");
+
+WriteLiteral(" class=\"clearfix\"");
+
+WriteLiteral("></div>\r\n                <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad xs-mobile-show\"");
+
+WriteLiteral(">\r\n                    <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad mb10 mt10\"");
+
+WriteLiteral(">\r\n                        <p");
+
+WriteLiteral(" class=\"side_desc_fil_head\"");
+
+WriteLiteral(">Event Type</p>\r\n\r\n                        <ul");
+
+WriteLiteral(" class=\"nav nav-pills dis_side_fliter_tag \"");
+
+WriteLiteral(">\r\n");
+
+            
+            #line 238 "..\..\Views\Home\DiscoverEvents.cshtml"
+                            
+            
+            #line default
+            #line hidden
+            
+            #line 238 "..\..\Views\Home\DiscoverEvents.cshtml"
+                             if (ViewBag.ETSelected != null)
+                            {
+                                foreach (var item in (List<EventCombo.Models.EventType>)ViewBag.ETSelected)
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <li");
+
+WriteLiteral(" class=\"active\"");
+
+WriteLiteral("><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 15916), Tuple.Create("\"", 15962)
+, Tuple.Create(Tuple.Create("", 15926), Tuple.Create("FilterEventType(\'", 15926), true)
+            
+            #line 242 "..\..\Views\Home\DiscoverEvents.cshtml"
+                              , Tuple.Create(Tuple.Create("", 15943), Tuple.Create<System.Object, System.Int32>(item.EventTypeID
+            
+            #line default
+            #line hidden
+, 15943), false)
+, Tuple.Create(Tuple.Create("", 15960), Tuple.Create("\')", 15960), true)
+);
+
+WriteLiteral(">");
+
+            
+            #line 242 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                               Write(item.EventType1);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" </a> <a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteLiteral(" class=\"can_badg cat_remov\"");
+
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 16042), Tuple.Create("\"", 16095)
+, Tuple.Create(Tuple.Create("", 16052), Tuple.Create("DeleteFilterEventType(\'", 16052), true)
+            
+            #line 242 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                                                                  , Tuple.Create(Tuple.Create("", 16075), Tuple.Create<System.Object, System.Int32>(item.EventTypeID
+            
+            #line default
+            #line hidden
+, 16075), false)
+, Tuple.Create(Tuple.Create("", 16092), Tuple.Create("\');", 16092), true)
+);
+
+WriteLiteral("> + </a></li>\r\n");
+
+            
+            #line 243 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                }
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 244 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                               
+                            }
+                            else
+                            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                <li");
+
+WriteLiteral(" class=\"active\"");
+
+WriteLiteral("><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteLiteral(" onclick=\"GetAllEventType();\"");
+
+WriteLiteral(">ALL</a></li>\r\n");
+
+            
+            #line 249 "..\..\Views\Home\DiscoverEvents.cshtml"
+                            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        </ul>\r\n                        <div");
+
+WriteLiteral(" class=\"col-sm-12 DesccatClick mobile_side_desc_fil_head\"");
+
+WriteLiteral(">\r\n                            Select\r\n                            <span");
+
+WriteLiteral(" class=\"float-right\"");
+
+WriteLiteral("> <i");
+
+WriteLiteral(" class=\"glyphicon  glyphicon-triangle-bottom\"");
+
+WriteLiteral("></i> </span>\r\n                        </div>\r\n\r\n                        <div");
+
+WriteLiteral(" class=\"Desccatshow categ_type_accord\"");
+
+WriteLiteral(">\r\n                            <div");
+
+WriteLiteral(" class=\"mobilescrollbox\"");
+
+WriteLiteral(">\r\n                                <ul");
+
+WriteLiteral(" class=\"nav nav-pills dis_side_fliter_tag \"");
+
+WriteLiteral(">\r\n");
+
+            
+            #line 259 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                    
+            
+            #line default
+            #line hidden
+            
+            #line 259 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                     if (ViewBag.ETSelected != null)
+                                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                        <li><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteLiteral(" onclick=\"GetAllEventType();\"");
+
+WriteLiteral(">ALL</a></li>\r\n");
+
+            
+            #line 262 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    ");
+
+            
+            #line 263 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                     foreach (var item in (List<EventCombo.Models.EventType>)ViewBag.Eventtype)
+                                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                        <li><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 17515), Tuple.Create("\"", 17561)
+, Tuple.Create(Tuple.Create("", 17525), Tuple.Create("FilterEventType(\'", 17525), true)
+            
+            #line 265 "..\..\Views\Home\DiscoverEvents.cshtml"
+                   , Tuple.Create(Tuple.Create("", 17542), Tuple.Create<System.Object, System.Int32>(item.EventTypeID
+            
+            #line default
+            #line hidden
+, 17542), false)
+, Tuple.Create(Tuple.Create("", 17559), Tuple.Create("\')", 17559), true)
+);
+
+WriteLiteral(">");
+
+            
+            #line 265 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                    Write(item.EventType1);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" </a></li>\r\n");
+
+            
+            #line 266 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                </ul>\r\n                            </div>\r\n      " +
+"                  </div>\r\n                    </div>\r\n\r\n\r\n                    <d" +
+"iv");
+
+WriteLiteral(" class=\"col-sm-12 no_pad mb10\"");
+
+WriteLiteral(">\r\n                        <p");
+
+WriteLiteral(" class=\"side_desc_fil_head\"");
+
+WriteLiteral(">Category</p>\r\n                        <ul");
+
+WriteLiteral(" class=\"nav nav-pills dis_side_fliter_tag \"");
+
+WriteLiteral(">\r\n");
+
+            
+            #line 276 "..\..\Views\Home\DiscoverEvents.cshtml"
+                            
+            
+            #line default
+            #line hidden
+            
+            #line 276 "..\..\Views\Home\DiscoverEvents.cshtml"
+                             if (ViewBag.ECatSelected != null)
+                            {
+                                foreach (var item in (List<EventCombo.Models.EventCategory>)ViewBag.ECatSelected)
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <li");
+
+WriteLiteral(" class=\"active\"");
+
+WriteLiteral("><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 18296), Tuple.Create("\"", 18350)
+, Tuple.Create(Tuple.Create("", 18306), Tuple.Create("FilterEventCategory(\'", 18306), true)
+            
+            #line 280 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                  , Tuple.Create(Tuple.Create("", 18327), Tuple.Create<System.Object, System.Int32>(item.EventCategoryID
+            
+            #line default
+            #line hidden
+, 18327), false)
+, Tuple.Create(Tuple.Create("", 18348), Tuple.Create("\')", 18348), true)
+);
+
+WriteLiteral(">");
+
+            
+            #line 280 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                                       Write(item.EventCategory1);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</a> <a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteLiteral(" class=\"can_badg cat_remov\"");
+
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 18433), Tuple.Create("\"", 18494)
+, Tuple.Create(Tuple.Create("", 18443), Tuple.Create("DeleteFilterEventCategory(\'", 18443), true)
+            
+            #line 280 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                                                                                 , Tuple.Create(Tuple.Create("", 18470), Tuple.Create<System.Object, System.Int32>(item.EventCategoryID
+            
+            #line default
+            #line hidden
+, 18470), false)
+, Tuple.Create(Tuple.Create("", 18491), Tuple.Create("\');", 18491), true)
+);
+
+WriteLiteral("> + </a></li>\r\n");
+
+            
+            #line 281 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                }
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 282 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                     
+                            }
+                            else
+                            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                <li");
+
+WriteLiteral(" class=\"active\"");
+
+WriteLiteral("><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteLiteral(" onclick=\"GetAllEventCategories();\"");
+
+WriteLiteral(">ALL</a></li>\r\n");
+
+            
+            #line 287 "..\..\Views\Home\DiscoverEvents.cshtml"
+                            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        </ul>\r\n\r\n                        <div");
+
+WriteLiteral(" class=\"col-sm-12 DesccatClick2 mobile_side_desc_fil_head\"");
+
+WriteLiteral(">\r\n                            Select\r\n                            <span");
+
+WriteLiteral(" class=\"float-right\"");
+
+WriteLiteral("> <i");
+
+WriteLiteral(" class=\"glyphicon  glyphicon-triangle-bottom\"");
+
+WriteLiteral("></i> </span>\r\n                        </div>\r\n\r\n                        <div");
+
+WriteLiteral(" class=\"Desccatshow2 categ_type_accord\"");
+
+WriteLiteral(">\r\n                            <div");
+
+WriteLiteral(" class=\"mobilescrollbox\"");
+
+WriteLiteral(">\r\n                                <ul");
+
+WriteLiteral(" class=\"nav nav-pills dis_side_fliter_tag\"");
+
+WriteLiteral(">\r\n");
+
+            
+            #line 298 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                    
+            
+            #line default
+            #line hidden
+            
+            #line 298 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                     if (ViewBag.ECatSelected != null)
+                                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                        <li><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteLiteral(" onclick=\"GetAllEventCategories();\"");
+
+WriteLiteral(">ALL</a></li>\r\n");
+
+            
+            #line 301 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    ");
+
+            
+            #line 302 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                     foreach (var item in (List<EventCombo.Models.EventCategory>)ViewBag.EventCat)
+                                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                        <li><a");
+
+WriteLiteral(" href=\"javascript:void(0);\"");
+
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 19940), Tuple.Create("\"", 19994)
+, Tuple.Create(Tuple.Create("", 19950), Tuple.Create("FilterEventCategory(\'", 19950), true)
+            
+            #line 304 "..\..\Views\Home\DiscoverEvents.cshtml"
+                       , Tuple.Create(Tuple.Create("", 19971), Tuple.Create<System.Object, System.Int32>(item.EventCategoryID
+            
+            #line default
+            #line hidden
+, 19971), false)
+, Tuple.Create(Tuple.Create("", 19992), Tuple.Create("\')", 19992), true)
+);
+
+WriteLiteral(">");
+
+            
+            #line 304 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                            Write(item.EventCategory1);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</a></li>\r\n");
+
+            
+            #line 305 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                </ul>\r\n                            </div>\r\n      " +
+"                  </div>\r\n                    </div>\r\n                </div>\r\n\r\n" +
+"            </div>\r\n\r\n        </div>\r\n    </div>\r\n    <div");
 
 WriteLiteral(" class=\"col-sm-9 col-xs-12 ot_main_pad\"");
 
-WriteLiteral(">\r\n        <div");
+WriteLiteral(">\r\n\r\n        <div");
 
 WriteLiteral(" class=\"col-sm-12 no_pad\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 190 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 319 "..\..\Views\Home\DiscoverEvents.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 190 "..\..\Views\Home\DiscoverEvents.cshtml"
-             foreach (var item in (PagedList.IPagedList<EventCombo.Models.DiscoverEvent>)ViewBag.DisEvnt)
-            {
+            #line 319 "..\..\Views\Home\DiscoverEvents.cshtml"
+                int iCnt = 0;
+                foreach (var item in (PagedList.IPagedList<EventCombo.Models.DiscoverEvent>)ViewBag.DisEvnt)
+                {
+                    iCnt = 1;
 
             
             #line default
             #line hidden
-WriteLiteral("                <div");
+WriteLiteral("                    <div");
 
-WriteLiteral(" class=\"col-md-4 col-xs-12 col-sm-6 ot_pad\"");
-
-WriteLiteral(">\r\n                    <div");
-
-WriteLiteral(" class=\"col-sm-12 col-xs-12 in_shadw no_pad\"");
+WriteLiteral(" class=\"col-md-4 col-xs-12 col-sm-6 ot_pad \"");
 
 WriteLiteral(">\r\n                        <div");
 
-WriteLiteral(" class=\"col-sm-12 col-xs-12 in_pad\"");
+WriteLiteral(" class=\"col-sm-12 col-xs-12 in_shadw no_pad\"");
 
 WriteLiteral(">\r\n                            <div");
 
-WriteLiteral(" class=\"col-sm-4 no_pad\"");
+WriteLiteral(" class=\"col-sm-12 col-xs-12 in_pad\"");
 
 WriteLiteral(">\r\n                                <div");
+
+WriteLiteral(" class=\"col-sm-4 no_pad\"");
+
+WriteLiteral(">\r\n                                    <div");
 
 WriteLiteral(" class=\"dis_evnt_img\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create("  src=\"", 12108), Tuple.Create("\"", 12131)
+WriteAttribute("src", Tuple.Create(" src=\"", 20905), Tuple.Create("\"", 20927)
             
-            #line 196 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 12115), Tuple.Create<System.Object, System.Int32>(item.EventImage
+            #line 327 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 20911), Tuple.Create<System.Object, System.Int32>(item.EventImage
             
             #line default
             #line hidden
-, 12115), false)
+, 20911), false)
 );
 
 WriteLiteral(" alt=\"\"");
 
-WriteLiteral("></div>\r\n                                <div");
+WriteLiteral("></div>\r\n                                    ");
 
-WriteLiteral(" class=\"col-sm-12 no_pad text-center desc_list_event_type\"");
-
-WriteLiteral(">");
-
-            
-            #line 197 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                                                          Write(item.PriceLable);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n                            </div>\r\n                            <div");
+WriteLiteral("\r\n\r\n                                </div>\r\n                                <div");
 
 WriteLiteral(" class=\"col-sm-8 no_pad\"");
 
-WriteLiteral(">\r\n                                <h1");
+WriteLiteral(">\r\n                                    <h1");
 
-WriteLiteral(" class=\"list_event_desc_title\"");
+WriteLiteral(" class=\"list_event_desc_title xs-title-height d_xs_pad_l0\"");
 
 WriteLiteral("><a");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 12430), Tuple.Create("\'", 12638)
+WriteAttribute("href", Tuple.Create(" href=\'", 21304), Tuple.Create("\'", 21513)
             
-            #line 200 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 12437), Tuple.Create<System.Object, System.Int32>(Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString()})
+            #line 332 "..\..\Views\Home\DiscoverEvents.cshtml"
+                          , Tuple.Create(Tuple.Create("", 21311), Tuple.Create<System.Object, System.Int32>(Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString() })
             
             #line default
             #line hidden
-, 12437), false)
+, 21311), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 200 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                                                                                                                                                                                                                                                 Write(item.EventTitle);
+            #line 332 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                                                                                                                                                                                                                  Write(item.EventTitle);
 
             
             #line default
             #line hidden
-WriteLiteral("</a></h1>\r\n                                <p");
+WriteLiteral("</a></h1>\r\n                                    <p");
 
-WriteLiteral(" class=\"list_event_desc\"");
+WriteLiteral(" class=\"list_event_desc xs-address-height d_xs_pad_l0\"");
 
-WriteLiteral(">\r\n                                    <span");
+WriteLiteral(">\r\n");
 
-WriteLiteral(" class=\"des_hover\"");
-
-WriteLiteral(">");
+WriteLiteral("                                        ");
 
             
-            #line 202 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                       Write(item.EventAddress);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" </span>\r\n                                    ");
-
-WriteLiteral("\r\n                                </p>\r\n                                <p");
-
-WriteLiteral(" class=\"list_event_date_time\"");
-
-WriteLiteral(">");
-
-            
-            #line 207 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                           Write(item.EventTimings);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" </p>\r\n                                   <div");
-
-WriteLiteral(" class=\"desc_hide\"");
-
-WriteLiteral(">\r\n                                    <p> ");
-
-            
-            #line 209 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 334 "..\..\Views\Home\DiscoverEvents.cshtml"
                                    Write(item.EventAddress);
 
             
             #line default
             #line hidden
-WriteLiteral(" </p>\r\n                                </div>\r\n                            </div>" +
-"\r\n                        </div>\r\n                        <div");
+WriteLiteral("\r\n\r\n                                    </p>\r\n                                   " +
+" ");
+
+WriteLiteral("\r\n\r\n                                </div>\r\n                                <div");
+
+WriteLiteral(" class=\"col-sm-12 col-xs-12 no_pad\"");
+
+WriteLiteral(">\r\n");
+
+            
+            #line 341 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                    
+            
+            #line default
+            #line hidden
+            
+            #line 341 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                     if (@item.PriceLable.ToLower().Trim() == "free")
+                                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                        <div");
+
+WriteLiteral(" class=\"col-sm-5 no_pad col-xs-12 text-left desc_list_event_type\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                            ");
+
+            
+            #line 344 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                       Write(item.PriceLable);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                        </div>\r\n");
+
+            
+            #line 346 "..\..\Views\Home\DiscoverEvents.cshtml"
+
+                                    }
+                                    else
+                                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                        <div");
+
+WriteLiteral(" class=\"col-sm-5 no_pad col-xs-12 text-left desc_list_event_type_disable\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                            ");
+
+            
+            #line 351 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                       Write(item.PriceLable);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                        </div>\r\n");
+
+            
+            #line 353 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <div");
+
+WriteLiteral(" class=\"col-sm-7 no_pad col-xs-12 list_event_date_time xs-dat-time-height\"");
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                                        ");
+
+            
+            #line 355 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                   Write(item.EventTimings);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                    </div>\r\n                                </d" +
+"iv>\r\n                            </div>\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-12 col-xs-12 no_pad de_ev_li_border\"");
 
-WriteLiteral(">\r\n                            <div");
+WriteLiteral(">\r\n                                <div");
 
-WriteLiteral(" class=\"col-sm-10 no_pad\"");
+WriteLiteral(" class=\"col-sm-9 col-xs-9 no_pad  xs-event-type-height\"");
 
-WriteLiteral(">\r\n                                <ul");
+WriteLiteral(">\r\n                                    <ul");
 
-WriteLiteral(" class=\"nav nav-pills list_inner_cat_tag\"");
+WriteLiteral(" class=\"nav nav-pills list_inner_cat_tag \"");
 
-WriteLiteral(">\r\n                                    <li><a");
+WriteLiteral(">\r\n                                        <li><a");
 
 WriteLiteral(" href=\"javascript:void(0);\"");
 
-WriteAttribute("onclick", Tuple.Create(" onclick=\"", 13637), Tuple.Create("\"", 13682)
-, Tuple.Create(Tuple.Create("", 13647), Tuple.Create("FilterEventType(", 13647), true)
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 23327), Tuple.Create("\"", 23372)
+, Tuple.Create(Tuple.Create("", 23337), Tuple.Create("FilterEventType(", 23337), true)
             
-            #line 216 "..\..\Views\Home\DiscoverEvents.cshtml"
-              , Tuple.Create(Tuple.Create("", 13663), Tuple.Create<System.Object, System.Int32>(item.EventTypeId
+            #line 362 "..\..\Views\Home\DiscoverEvents.cshtml"
+                  , Tuple.Create(Tuple.Create("", 23353), Tuple.Create<System.Object, System.Int32>(item.EventTypeId
             
             #line default
             #line hidden
-, 13663), false)
-, Tuple.Create(Tuple.Create("", 13680), Tuple.Create(");", 13680), true)
+, 23353), false)
+, Tuple.Create(Tuple.Create("", 23370), Tuple.Create(");", 23370), true)
 );
 
 WriteLiteral(">#");
 
             
-            #line 216 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                                                                                Write(item.EventType);
+            #line 362 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                    Write(item.EventType);
 
             
             #line default
             #line hidden
-WriteLiteral(" </a></li>\r\n                                    <li><a");
+WriteLiteral(" </a></li>\r\n                                        <li><a");
 
 WriteLiteral(" href=\"javascript:void(0);\"");
 
-WriteAttribute("onclick", Tuple.Create(" onclick=\"", 13781), Tuple.Create("\"", 13829)
-, Tuple.Create(Tuple.Create("", 13791), Tuple.Create("FilterEventCategory(", 13791), true)
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 23475), Tuple.Create("\"", 23523)
+, Tuple.Create(Tuple.Create("", 23485), Tuple.Create("FilterEventCategory(", 23485), true)
             
-            #line 217 "..\..\Views\Home\DiscoverEvents.cshtml"
-                  , Tuple.Create(Tuple.Create("", 13811), Tuple.Create<System.Object, System.Int32>(item.EventCatId
+            #line 363 "..\..\Views\Home\DiscoverEvents.cshtml"
+                      , Tuple.Create(Tuple.Create("", 23505), Tuple.Create<System.Object, System.Int32>(item.EventCatId
             
             #line default
             #line hidden
-, 13811), false)
-, Tuple.Create(Tuple.Create("", 13827), Tuple.Create(");", 13827), true)
+, 23505), false)
+, Tuple.Create(Tuple.Create("", 23521), Tuple.Create(");", 23521), true)
 );
 
 WriteLiteral(">#");
 
             
-            #line 217 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                                                                                   Write(item.EventCat);
+            #line 363 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                       Write(item.EventCat);
 
             
             #line default
             #line hidden
-WriteLiteral(" </a></li>\r\n                                </ul>\r\n                            </" +
-"div>\r\n                            <div");
+WriteLiteral(" </a></li>\r\n                                    </ul>\r\n                          " +
+"      </div>\r\n                                <div");
 
-WriteLiteral(" class=\"col-sm-2 no_pad text-right\"");
+WriteLiteral(" class=\"col-sm-3 col-xs-3 no_pad text-right \"");
 
-WriteLiteral(">\r\n                                <button");
+WriteLiteral(">\r\n                                    ");
 
-WriteLiteral(" class=\"desc_btn_bg_none \"");
+WriteLiteral("\r\n                                    <button");
+
+WriteLiteral(" class=\"desc_btn_bg_none desc_share_btn share_like_btn\"");
 
 WriteLiteral(" title=\"Your Favourite\"");
 
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 24110), Tuple.Create("\"", 24334)
+, Tuple.Create(Tuple.Create("", 24120), Tuple.Create("ShowUrl(\'", 24120), true)
+            
+            #line 370 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                           , Tuple.Create(Tuple.Create("", 24129), Tuple.Create<System.Object, System.Int32>(Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString() })
+            
+            #line default
+            #line hidden
+, 24129), false)
+, Tuple.Create(Tuple.Create("", 24331), Tuple.Create("\');", 24331), true)
+);
+
 WriteLiteral(" type=\"button\"");
 
-WriteLiteral(">\r\n                                    <i");
+WriteLiteral(" data-toggle=\"modal\"");
+
+WriteLiteral(" data-target=\"#sharemodal\"");
+
+WriteLiteral(">\r\n                                        <i");
 
 WriteLiteral(" class=\"fa fa-share-alt\"");
 
-WriteLiteral("></i>\r\n                                </button>\r\n                               " +
-" <button");
-
-WriteLiteral(" class=\"desc_btn_bg_none desc_btn_bg_active\"");
-
-WriteLiteral(" title=\"Your Favourite\"");
-
-WriteLiteral(" type=\"button\"");
-
-WriteLiteral(">\r\n                                    <i");
-
-WriteLiteral(" class=\"fa fa-heart\"");
-
-WriteLiteral("></i>\r\n                                </button>\r\n                            </d" +
-"iv>\r\n                        </div>\r\n                    </div>\r\n               " +
-" </div>\r\n");
+WriteLiteral("></i>\r\n                                    </button>\r\n");
 
             
-            #line 231 "..\..\Views\Home\DiscoverEvents.cshtml"
-            }
+            #line 373 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                    
+            
+            #line default
+            #line hidden
+            
+            #line 373 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                     if (@item.EventLike == "I")
+                                    {
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n</div>\r\n        <div");
+WriteLiteral("                                        <button");
+
+WriteLiteral(" class=\"desc_btn_bg_none desc_btn_bg_active share_like_btn show_like_btn\"");
+
+WriteAttribute("id", Tuple.Create(" id=\"", 24743), Tuple.Create("\"", 24774)
+, Tuple.Create(Tuple.Create("", 24748), Tuple.Create("btnfavourite-", 24748), true)
+            
+            #line 375 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                         , Tuple.Create(Tuple.Create("", 24761), Tuple.Create<System.Object, System.Int32>(item.EventId
+            
+            #line default
+            #line hidden
+, 24761), false)
+);
+
+WriteLiteral(" title=\"Your Favourite\"");
+
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 24798), Tuple.Create("\"", 24837)
+, Tuple.Create(Tuple.Create("", 24808), Tuple.Create("SaveFav(\'Y\',\'", 24808), true)
+            
+            #line 375 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                     , Tuple.Create(Tuple.Create("", 24821), Tuple.Create<System.Object, System.Int32>(item.EventId
+            
+            #line default
+            #line hidden
+, 24821), false)
+, Tuple.Create(Tuple.Create("", 24834), Tuple.Create("\');", 24834), true)
+);
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(">\r\n                                            <i");
+
+WriteLiteral(" class=\"fa fa-heart\"");
+
+WriteLiteral("></i>\r\n                                        </button>\r\n");
+
+            
+            #line 378 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                    }
+                                    else
+                                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                        <button");
+
+WriteLiteral(" class=\"desc_btn_bg_none desc_btn_bg_active share_like_btn\"");
+
+WriteAttribute("id", Tuple.Create(" id=\"", 25205), Tuple.Create("\"", 25236)
+, Tuple.Create(Tuple.Create("", 25210), Tuple.Create("btnfavourite-", 25210), true)
+            
+            #line 381 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                           , Tuple.Create(Tuple.Create("", 25223), Tuple.Create<System.Object, System.Int32>(item.EventId
+            
+            #line default
+            #line hidden
+, 25223), false)
+);
+
+WriteLiteral(" title=\"Your Favourite\"");
+
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 25260), Tuple.Create("\"", 25299)
+, Tuple.Create(Tuple.Create("", 25270), Tuple.Create("SaveFav(\'Y\',\'", 25270), true)
+            
+            #line 381 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                       , Tuple.Create(Tuple.Create("", 25283), Tuple.Create<System.Object, System.Int32>(item.EventId
+            
+            #line default
+            #line hidden
+, 25283), false)
+, Tuple.Create(Tuple.Create("", 25296), Tuple.Create("\');", 25296), true)
+);
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(">\r\n                                            <i");
+
+WriteLiteral(" class=\"fa fa-heart\"");
+
+WriteLiteral("></i>\r\n                                        </button>\r\n");
+
+            
+            #line 384 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                </div>\r\n                            </div>\r\n     " +
+"                   </div>\r\n\r\n                    </div>\r\n");
+
+            
+            #line 390 "..\..\Views\Home\DiscoverEvents.cshtml"
+
+                }
+
+                if (iCnt == 0) {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                    <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad text-center no_event_found_text\"");
+
+WriteLiteral(">\r\n                        <span");
+
+WriteLiteral(" id=\"spInfo\"");
+
+WriteLiteral(">No Events Found</span>\r\n                    </div>\r\n");
+
+            
+            #line 397 "..\..\Views\Home\DiscoverEvents.cshtml"
+                }
+            
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n        </div>\r\n\r\n        <div");
 
 WriteLiteral(" class=\"col-sm-12 col-xs-12 text-center\"");
 
@@ -1227,25 +2179,31 @@ WriteLiteral(">\r\n            <nav>\r\n                <ul");
 
 WriteLiteral(" class=\"pagination desc_pagination\"");
 
-WriteLiteral(">\r\n                    <li>\r\n                        <a");
+WriteLiteral(">\r\n                    <li");
+
+WriteLiteral(" id=\"lileft\"");
+
+WriteLiteral(">\r\n                        <a");
 
 WriteLiteral(" href=\"javascript:void(0)\"");
+
+WriteLiteral(" onclick=\"PreviousArrowPage();\"");
 
 WriteLiteral(">\r\n                            <span><i");
 
 WriteLiteral(" class=\"fa fa-angle-left\"");
 
-WriteLiteral("></i> </span>\r\n                        </a>\r\n                    </li>\r\n");
+WriteLiteral(" ></i> </span>\r\n                        </a>\r\n                    </li>\r\n");
 
             
-            #line 242 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 410 "..\..\Views\Home\DiscoverEvents.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 242 "..\..\Views\Home\DiscoverEvents.cshtml"
-                     for(int i=1;i<= Convert.ToInt32(@TempData["TotalPages"]);i++)
+            #line 410 "..\..\Views\Home\DiscoverEvents.cshtml"
+                     for (int i = 1; i <= Convert.ToInt32(@TempData["TotalPages"]); i++)
                     {
 
             
@@ -1255,23 +2213,34 @@ WriteLiteral("                        <li><a");
 
 WriteLiteral(" href=\"javascript:void(0)\"");
 
-WriteAttribute("onclick", Tuple.Create(" onclick=\"", 15104), Tuple.Create("\"", 15127)
-, Tuple.Create(Tuple.Create("", 15114), Tuple.Create("NextPage(", 15114), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 26465), Tuple.Create("\"", 26482)
+, Tuple.Create(Tuple.Create("", 26470), Tuple.Create("aPageLink-", 26470), true)
             
-            #line 244 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 15123), Tuple.Create<System.Object, System.Int32>(i
+            #line 412 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 26480), Tuple.Create<System.Object, System.Int32>(i
             
             #line default
             #line hidden
-, 15123), false)
-, Tuple.Create(Tuple.Create("", 15125), Tuple.Create(");", 15125), true)
+, 26480), false)
+);
+
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 26483), Tuple.Create("\"", 26506)
+, Tuple.Create(Tuple.Create("", 26493), Tuple.Create("NextPage(", 26493), true)
+            
+            #line 412 "..\..\Views\Home\DiscoverEvents.cshtml"
+            , Tuple.Create(Tuple.Create("", 26502), Tuple.Create<System.Object, System.Int32>(i
+            
+            #line default
+            #line hidden
+, 26502), false)
+, Tuple.Create(Tuple.Create("", 26504), Tuple.Create(");", 26504), true)
 );
 
 WriteLiteral(">");
 
             
-            #line 244 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                                            Write(i);
+            #line 412 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                              Write(i);
 
             
             #line default
@@ -1279,7 +2248,7 @@ WriteLiteral(">");
 WriteLiteral("</a></li>\r\n");
 
             
-            #line 245 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 413 "..\..\Views\Home\DiscoverEvents.cshtml"
                     }
 
             
@@ -1287,16 +2256,22 @@ WriteLiteral("</a></li>\r\n");
             #line hidden
 WriteLiteral("\r\n                    ");
 
-WriteLiteral("\r\n                    <li>\r\n                        <a");
+WriteLiteral("\r\n                    <li");
+
+WriteLiteral(" id=\"liright\"");
+
+WriteLiteral(">\r\n                        <a");
 
 WriteLiteral(" href=\"javascript:void(0)\"");
+
+WriteLiteral(" onclick=\"NextArrowPage();\"");
 
 WriteLiteral(">\r\n                            <span><i");
 
 WriteLiteral(" class=\"fa fa-angle-right\"");
 
-WriteLiteral("></i> </span>\r\n                        </a>\r\n                    </li>\r\n         " +
-"       </ul>\r\n            </nav>\r\n            <div");
+WriteLiteral(" ></i> </span>\r\n                        </a>\r\n                    </li>\r\n        " +
+"        </ul>\r\n            </nav>\r\n            <div");
 
 WriteLiteral(" class=\"col-sm-12 pagination_desc\"");
 
@@ -1308,14 +2283,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdEventType\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 16061), Tuple.Create("\"", 16095)
+WriteAttribute("value", Tuple.Create(" value=\"", 27497), Tuple.Create("\"", 27531)
             
-            #line 265 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 16069), Tuple.Create<System.Object, System.Int32>(TempData["ETypeSelected"]
+            #line 433 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 27505), Tuple.Create<System.Object, System.Int32>(TempData["ETypeSelected"]
             
             #line default
             #line hidden
-, 16069), false)
+, 27505), false)
 );
 
 WriteLiteral(" />\r\n    <input");
@@ -1324,14 +2299,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdEventCat\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 16141), Tuple.Create("\"", 16174)
+WriteAttribute("value", Tuple.Create(" value=\"", 27577), Tuple.Create("\"", 27610)
             
-            #line 266 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 16149), Tuple.Create<System.Object, System.Int32>(TempData["ECatSelected"]
+            #line 434 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 27585), Tuple.Create<System.Object, System.Int32>(TempData["ECatSelected"]
             
             #line default
             #line hidden
-, 16149), false)
+, 27585), false)
 );
 
 WriteLiteral(" />\r\n    <input");
@@ -1340,14 +2315,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdPrice\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 16217), Tuple.Create("\"", 16247)
+WriteAttribute("value", Tuple.Create(" value=\"", 27653), Tuple.Create("\"", 27683)
             
-            #line 267 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 16225), Tuple.Create<System.Object, System.Int32>(ViewData["tempPrice"]
+            #line 435 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 27661), Tuple.Create<System.Object, System.Int32>(ViewData["tempPrice"]
             
             #line default
             #line hidden
-, 16225), false)
+, 27661), false)
 );
 
 WriteLiteral(" />\r\n    <input");
@@ -1356,14 +2331,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdlat\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 16288), Tuple.Create("\"", 16313)
+WriteAttribute("value", Tuple.Create(" value=\"", 27724), Tuple.Create("\"", 27749)
             
-            #line 268 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 16296), Tuple.Create<System.Object, System.Int32>(TempData["tLat"]
+            #line 436 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 27732), Tuple.Create<System.Object, System.Int32>(TempData["tLat"]
             
             #line default
             #line hidden
-, 16296), false)
+, 27732), false)
 );
 
 WriteLiteral(" />\r\n    <input");
@@ -1372,14 +2347,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdlng\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 16354), Tuple.Create("\"", 16379)
+WriteAttribute("value", Tuple.Create(" value=\"", 27790), Tuple.Create("\"", 27815)
             
-            #line 269 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 16362), Tuple.Create<System.Object, System.Int32>(TempData["tLng"]
+            #line 437 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 27798), Tuple.Create<System.Object, System.Int32>(TempData["tLng"]
             
             #line default
             #line hidden
-, 16362), false)
+, 27798), false)
 );
 
 WriteLiteral(" />\r\n    <input");
@@ -1388,14 +2363,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdSort\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 16421), Tuple.Create("\"", 16447)
+WriteAttribute("value", Tuple.Create(" value=\"", 27857), Tuple.Create("\"", 27883)
             
-            #line 270 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 16429), Tuple.Create<System.Object, System.Int32>(TempData["tSort"]
+            #line 438 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 27865), Tuple.Create<System.Object, System.Int32>(TempData["tSort"]
             
             #line default
             #line hidden
-, 16429), false)
+, 27865), false)
 );
 
 WriteLiteral(" />\r\n    <input");
@@ -1404,28 +2379,182 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdDateFilter\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 16495), Tuple.Create("\"", 16527)
+WriteAttribute("value", Tuple.Create(" value=\"", 27931), Tuple.Create("\"", 27963)
             
-            #line 271 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 16503), Tuple.Create<System.Object, System.Int32>(TempData["tDateFilter"]
+            #line 439 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 27939), Tuple.Create<System.Object, System.Int32>(TempData["tDateFilter"]
             
             #line default
             #line hidden
-, 16503), false)
+, 27939), false)
 );
 
-WriteLiteral(" />\r\n\r\n</div>\r\n\r\n\r\n\r\n<script");
+WriteLiteral(" />\r\n    <input");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 16556), Tuple.Create("\"", 16595)
-, Tuple.Create(Tuple.Create("", 16562), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/bootstrap-datepicker.js")
-, 16562), false)
+WriteLiteral(" type=\"hidden\"");
+
+WriteLiteral(" id=\"hdPageIndex\"");
+
+WriteAttribute("value", Tuple.Create(" value=\"", 28010), Tuple.Create("\"", 28040)
+            
+            #line 440 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 28018), Tuple.Create<System.Object, System.Int32>(TempData["PageIndex"]
+            
+            #line default
+            #line hidden
+, 28018), false)
+);
+
+WriteLiteral(" />\r\n\r\n</div>\r\n\r\n<div");
+
+WriteLiteral(" class=\"modal fade\"");
+
+WriteLiteral(" id=\"sharemodal\"");
+
+WriteLiteral(" tabindex=\"-1\"");
+
+WriteLiteral(" role=\"dialog\"");
+
+WriteLiteral(" aria-labelledby=\"myModalLabel\"");
+
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"modal-dialog\"");
+
+WriteLiteral(" role=\"document\"");
+
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" class=\"modal-content sharmodal_pop\"");
+
+WriteLiteral(">\r\n            <div");
+
+WriteLiteral(" class=\"modal-header\"");
+
+WriteLiteral(">\r\n                <button");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" class=\"close\"");
+
+WriteLiteral(" data-dismiss=\"modal\"");
+
+WriteLiteral(" aria-label=\"Close\"");
+
+WriteLiteral("><span");
+
+WriteLiteral(" aria-hidden=\"true\"");
+
+WriteLiteral(">&times;</span></button>\r\n                <h3");
+
+WriteLiteral(" class=\"modal-title text-center\"");
+
+WriteLiteral("> Share with friends </h3>\r\n            </div>\r\n            <div");
+
+WriteLiteral(" class=\"modal-body\"");
+
+WriteLiteral(">\r\n\r\n\r\n                <div");
+
+WriteLiteral(" class=\"col-md-12 social-buttons text-center mt20\"");
+
+WriteLiteral(">\r\n                    <div");
+
+WriteLiteral(" class=\"col-sm-12  text-center\"");
+
+WriteLiteral(">\r\n                        <button");
+
+WriteLiteral(" class=\"btn soc_btn_fb fb_color\"");
+
+WriteLiteral(" id=\"fbshare\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"fa fa-facebook\"");
+
+WriteLiteral("></i></button>\r\n                        <button");
+
+WriteLiteral(" class=\"btn soc_btn_fb \"");
+
+WriteLiteral(" id=\"twittershare\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"fa fa-twitter\"");
+
+WriteLiteral("></i></button>\r\n                        <button");
+
+WriteLiteral(" class=\"btn soc_btn_fb linkd_color\"");
+
+WriteLiteral(" id=\"linkshare\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"fa fa-linkedin\"");
+
+WriteLiteral("></i></button>\r\n                        <button");
+
+WriteLiteral(" class=\"btn soc_btn_fb msg_color\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"fa fa-envelope\"");
+
+WriteLiteral("></i></button>\r\n                    </div>\r\n                </div>\r\n             " +
+"   <div");
+
+WriteLiteral(" class=\"col-md-12 mt10\"");
+
+WriteLiteral(">\r\n                    <form");
+
+WriteLiteral(" class=\"form-horizontal\"");
+
+WriteLiteral(">\r\n                        <div");
+
+WriteLiteral(" class=\"col-sm-12 \"");
+
+WriteLiteral(">\r\n                            <div");
+
+WriteLiteral(" class=\"form-group\"");
+
+WriteLiteral(">\r\n                                <input");
+
+WriteLiteral(" class=\"form-control sharesocilform\"");
+
+WriteLiteral(" id=\"txtEventUrl\"");
+
+WriteLiteral(" readonly=\"readonly\"");
+
+WriteLiteral(" placeholder=\"\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(">\r\n                            </div>\r\n                        </div>\r\n\r\n        " +
+"            </form>\r\n                </div>\r\n            </div>\r\n        </div>\r" +
+"\n\r\n    </div>\r\n    <input");
+
+WriteLiteral(" type=\"hidden\"");
+
+WriteLiteral(" id=\"hdcity\"");
+
+WriteLiteral(" />\r\n</div>\r\n\r\n<script");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 29799), Tuple.Create("\"", 29838)
+, Tuple.Create(Tuple.Create("", 29805), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/bootstrap-datepicker.js")
+, 29805), false)
 );
 
 WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 16615), Tuple.Create("\"", 16643)
-, Tuple.Create(Tuple.Create("", 16621), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui.js")
-, 16621), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 29858), Tuple.Create("\"", 29886)
+, Tuple.Create(Tuple.Create("", 29864), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui.js")
+, 29864), false)
+);
+
+WriteLiteral("></script>\r\n<script");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 29906), Tuple.Create("\"", 29938)
+, Tuple.Create(Tuple.Create("", 29912), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/custom-scroll.js")
+, 29912), false)
 );
 
 WriteLiteral("></script>\r\n\r\n<script");
@@ -1435,31 +2564,109 @@ WriteLiteral(" src=\"https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=fals
 
 WriteLiteral(@"></script>
 <script>
-
-    function DateFilters(vvalue) {
-        $(""#hdDateFilter"").val(vvalue);
-        NextPage(1);
-    }
-
-    function DateFiltersCustom() {
-        //vvalue = ""custom-"" + $(""#txtstartDate"").val() + ""-"" + $(""#txtEndDate"").val();
-        vvalue = """";
-        $(""#hdDateFilter"").val(vvalue);
-        NextPage(1);
-    }
-
-    function DateRelevenceFilter(vvalue)
+    function PreviousArrowPage()
     {
+        var vPindex = parseFloat($(""#hdPageIndex"").val());
+        if (isNaN(vPindex) == true) vPindex = 0;
+
+        if (vPindex > 1) { NextPage(vPindex - 1) };
+
+    }
+
+    function NextArrowPage() {
+        debugger;
+        var vPindex = parseFloat($(""#hdPageIndex"").val());
+        var vTotalPage = parseFloat(");
+
+            
+            #line 497 "..\..\Views\Home\DiscoverEvents.cshtml"
+                               Write(TempData["TotalPages"]);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@");
+        
+        if (isNaN(vTotalPage) == true) vTotalPage = 0;
+        if (isNaN(vPindex) == true) vPindex = 0;
+
+        if (vPindex < vTotalPage) { NextPage(vPindex + 1) };
+
+    }
+
+
+
+    function SaveFav(clickfav, eid) {
+        var id = ""btnfavourite-"" + eid;
+        var msg = """";
+        var clickid = clickfav;
+        var vUrl = location.href;
+        $.ajax({
+            url: '");
+
+            
+            #line 514 "..\..\Views\Home\DiscoverEvents.cshtml"
+             Write(Url.Action("Discoversavefavourite", "CreateEvent"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\',\r\n            data: { Eventid: eid, type: clickid, strUrl: vUrl },\r\n           " +
+" type: \"Post\",\r\n            success: function (data) {\r\n                if (data" +
+" == \"Y\") {\r\n                    $(\"#loginPopup\").click();\r\n                    r" +
+"eturn false;\r\n                } else {\r\n                    if (data == \"I\") {\r\n" +
+"                        $(\"#\" + id).addClass(\"show_like_btn\");\r\n\r\n              " +
+"      }\r\n                    if (data == \"D\") {\r\n                        $(\"#\" +" +
+" id).removeClass(\"show_like_btn\");\r\n                    }\r\n                }\r\n  " +
+"          },\r\n            error: function (data) {\r\n                alert(\"Sorry" +
+" there is some problem.\");\r\n                return false\r\n            }\r\n       " +
+" });\r\n    }\r\n\r\n    function ShowUrl(vurl) {\r\n        $(\"#txtEventUrl\").val(vurl)" +
+";\r\n    }\r\n    function checkDate(field) {\r\n        var allowBlank = true;\r\n     " +
+"   var minYear = (new Date()).getFullYear();\r\n        var maxYear = (new Date())" +
+".getFullYear() + 10;\r\n        var d = new Date();\r\n\r\n        var errorMsg = \"\";\r" +
+"\n        var value = $(\"#\" + field).val();\r\n        var datelast = new Date(valu" +
+"e);\r\n\r\n        var msDateA = Date.UTC(d.getFullYear(), d.getMonth() + 1, d.getDa" +
+"te());\r\n        var msDateB = Date.UTC(datelast.getFullYear(), datelast.getMonth" +
+"() + 1, datelast.getDate());\r\n\r\n\r\n\r\n        // regular expression to match requi" +
+"red date format\r\n        re = /^(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})$/;\r\n\r\n        if (" +
+"value != \'\') {\r\n            if (regs = value.match(re)) {\r\n                if (r" +
+"egs[2] != \'\' && regs[2] != \'\' && regs[3] != \'\') {\r\n                    if (regs[" +
+"2] < 1 || regs[2] > 31) {\r\n                        errorMsg = \"<br/>Invalid Date" +
+"\";\r\n                    } else if (regs[1] < 1 || regs[1] > 12) {\r\n             " +
+"           errorMsg = \"<br/>Invalid Date\";\r\n                    } else if (regs[" +
+"3] < minYear || regs[3] > maxYear) {\r\n                        errorMsg = \"<br/>I" +
+"nvalid Date\";\r\n                    }\r\n                }\r\n            } else {\r\n " +
+"               errorMsg = \"Invalid Date<br/>\";\r\n            }\r\n        } else if" +
+" (!allowBlank) {\r\n            errorMsg = \"Invalid Date<br/>\";\r\n        }\r\n\r\n    " +
+"    if (parseFloat(msDateB) < parseFloat(msDateA)) {\r\n\r\n            errorMsg = \"" +
+"Invalid Date<br/>\";\r\n        }\r\n        return errorMsg;\r\n    }\r\n\r\n\r\n\r\n    funct" +
+"ion DateFilters(vvalue) {\r\n        $(\"#hdDateFilter\").val(vvalue);\r\n        Next" +
+"Page(1);\r\n    }\r\n\r\n    function DateFiltersCustom() {\r\n        debugger;\r\n      " +
+"  if ($(\"#txtstartDate\").val() != \"\" && $(\"#txtEndDate\").val() != \"\") {\r\n       " +
+"     var vResult = compare($(\"#txtstartDate\").val(), $(\"#txtEndDate\").val());\r\n " +
+"           if (vResult != \"\") {\r\n                var dt = new Date();\r\n         " +
+"       var vCurrentdate = (dt.getMonth() + 1) + \"/\" + dt.getDate() + \"/\" + dt.ge" +
+"tFullYear();\r\n                $(\"#txtstartDate\").val(vCurrentdate);\r\n           " +
+"     $(\"#txtEndDate\").val(vCurrentdate)\r\n            }\r\n        }\r\n        vvalu" +
+"e = \"custom");
+
+WriteLiteral("@\" + $(\"#txtstartDate\").val().split(\"/\").join(\".\") + \"");
+
+WriteLiteral(@"@"" + $(""#txtEndDate"").val().split(""/"").join(""."");
+        $(""#hdDateFilter"").val(vvalue);
+        NextPage(1);
+    }
+
+    function DateRelevenceFilter(vvalue) {
         $(""#hdSort"").val(vvalue);
         NextPage(1);
     }
 
-    function NextPage(vIndex)
-    {
+    function NextPage(vIndex) {
         var vUrl = '");
 
             
-            #line 303 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 613 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex="Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -1475,7 +2682,7 @@ WriteLiteral(@"';
         var vSort = ($(""#hdSort"").val() != '' ? $(""#hdSort"").val() : ""rel"");
         var vDateFilter = ($(""#hdDateFilter"").val() != '' ? $(""#hdDateFilter"").val() : ""none"");
 
-        
+
         vUrl = vUrl.replace(""all"", vPrice);
         vUrl = vUrl.replace(""evc"", vECat);
         vUrl = vUrl.replace(""evt"", vEtype);
@@ -1483,6 +2690,9 @@ WriteLiteral(@"';
         vUrl = vUrl.replace(""long"", vlng);
         vUrl = vUrl.replace(""rel"", vSort);
         vUrl = vUrl.replace(""none"", vDateFilter);
+        if (vIndex > 1)
+            vUrl = vUrl.replace(""page"", vIndex);
+
 
         window.location.href = vUrl;
     }
@@ -1490,7 +2700,7 @@ WriteLiteral(@"';
         var vUrl = '");
 
             
-            #line 325 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 638 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -1519,7 +2729,7 @@ WriteLiteral(@"';
         var vUrl = '");
 
             
-            #line 345 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 658 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -1542,11 +2752,11 @@ WriteLiteral(@"';
         window.location.href = vUrl;
     }
     function GetAllEventCategories() {
-         var vUrl = '");
+        var vUrl = '");
 
             
-            #line 362 "..\..\Views\Home\DiscoverEvents.cshtml"
-                Write(Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
+            #line 675 "..\..\Views\Home\DiscoverEvents.cshtml"
+               Write(Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
             #line default
@@ -1567,14 +2777,11 @@ WriteLiteral(@"';
         vUrl = vUrl.replace(""none"", vDateFilter);
         window.location.href = vUrl;
     }
-    function DeleteFilterEventType(vEvTypeId)
-    {
-        var vValue="""";
+    function DeleteFilterEventType(vEvTypeId) {
+        var vValue = """";
         var vAry = $(""#hdEventType"").val().split(',');
-        for (i = 0; i < vAry.length; i++)
-        {
-            if (vAry[i] != vEvTypeId)
-            {
+        for (i = 0; i < vAry.length; i++) {
+            if (vAry[i] != vEvTypeId) {
                 if (vValue == """")
                     vValue = vAry[i];
                 else
@@ -1584,7 +2791,7 @@ WriteLiteral(@"';
         var vUrl = '");
 
             
-            #line 392 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 702 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -1622,86 +2829,66 @@ WriteLiteral(@"';
         var vUrl = '");
 
             
-            #line 421 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 731 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
             #line default
             #line hidden
-WriteLiteral(@"';
-        var vEtype = ($(""#hdEventType"").val() != '' ? $(""#hdEventType"").val() : ""evt"");
-        vUrl = vUrl.replace(""evc"", (vValue == """" ? ""evc"" : vValue));
-        vUrl = vUrl.replace(""evt"", vEtype);
-        var Price = ($(""#hdPrice"").val() != '' ? $(""#hdPrice"").val() : ""ALL"");
-        var vLat = ($(""#hdlat"").val() != '' ? $(""#hdlat"").val() : ""lat"");
-        var vlng = ($(""#hdlng"").val() != '' ? $(""#hdlng"").val() : ""long"");
-        var vSort = ($(""#hdSort"").val() != '' ? $(""#hdSort"").val() : ""rel"");
-        var vDateFilter = ($(""#hdDateFilter"").val() != '' ? $(""#hdDateFilter"").val() : ""none"");
-
-        vUrl = vUrl.replace(""all"", Price);
-        vUrl = vUrl.replace(""lat"", vLat);
-        vUrl = vUrl.replace(""long"", vlng);
-        vUrl = vUrl.replace(""rel"", vSort);
-        vUrl = vUrl.replace(""none"", vDateFilter);
-        window.location.href = vUrl;
-
-    }
-    function FilterEventType(vEvTypeId) {
-        if ($(""#hdEventType"").val() == """" || $(""#hdEventType"").val() == ""~"" || $(""#hdEventType"").val() == ""evt"") {
-            $(""#hdEventType"").val(vEvTypeId);
-        }
-        else {
-            vIds = $(""#hdEventType"").val();
-            // alert(vIds.indexOf(vEvTypeId));
-            if (vIds.indexOf(vEvTypeId) < 0) {
-                vIds = vIds.concat("","", vEvTypeId);
-                $(""#hdEventType"").val(vIds);
-            }
-        }
-        var vUrl = '");
+WriteLiteral("\';\r\n        var vEtype = ($(\"#hdEventType\").val() != \'\' ? $(\"#hdEventType\").val()" +
+" : \"evt\");\r\n        vUrl = vUrl.replace(\"evc\", (vValue == \"\" ? \"evc\" : vValue));" +
+"\r\n        vUrl = vUrl.replace(\"evt\", vEtype);\r\n        var Price = ($(\"#hdPrice\"" +
+").val() != \'\' ? $(\"#hdPrice\").val() : \"ALL\");\r\n        var vLat = ($(\"#hdlat\").v" +
+"al() != \'\' ? $(\"#hdlat\").val() : \"lat\");\r\n        var vlng = ($(\"#hdlng\").val() " +
+"!= \'\' ? $(\"#hdlng\").val() : \"long\");\r\n        var vSort = ($(\"#hdSort\").val() !=" +
+" \'\' ? $(\"#hdSort\").val() : \"rel\");\r\n        var vDateFilter = ($(\"#hdDateFilter\"" +
+").val() != \'\' ? $(\"#hdDateFilter\").val() : \"none\");\r\n\r\n        vUrl = vUrl.repla" +
+"ce(\"all\", Price);\r\n        vUrl = vUrl.replace(\"lat\", vLat);\r\n        vUrl = vUr" +
+"l.replace(\"long\", vlng);\r\n        vUrl = vUrl.replace(\"rel\", vSort);\r\n        vU" +
+"rl = vUrl.replace(\"none\", vDateFilter);\r\n        window.location.href = vUrl;\r\n\r" +
+"\n    }\r\n    function FilterEventType(vEvTypeId) {\r\n        if ($(\"#hdEventType\")" +
+".val() == \"\" || $(\"#hdEventType\").val() == \"~\" || $(\"#hdEventType\").val() == \"ev" +
+"t\") {\r\n            $(\"#hdEventType\").val(vEvTypeId);\r\n        }\r\n        else {\r" +
+"\n            var vValues = $(\"#hdEventType\").val();\r\n            vIds = vValues." +
+"split(\',\');\r\n            var vflag = false;\r\n            for (i = 0; i < vIds.le" +
+"ngth; i++) {\r\n                if (vIds[i] == vEvTypeId) {\r\n                    v" +
+"flag = true;\r\n                    break;\r\n                }\r\n            }\r\n    " +
+"        if (vflag == false) {\r\n                vValues = vValues.concat(\",\", vEv" +
+"TypeId);\r\n                $(\"#hdEventType\").val(vValues);\r\n            }\r\n      " +
+"  }\r\n        var vUrl = \'");
 
             
-            #line 451 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 768 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
             #line default
             #line hidden
-WriteLiteral(@"';
-        var vECat = ($(""#hdEventCat"").val() != '' ? $(""#hdEventCat"").val() : ""evc"");
-        vUrl = vUrl.replace(""evt"", $(""#hdEventType"").val());
-        vUrl = vUrl.replace(""evc"", vECat);
-        var Price = ($(""#hdPrice"").val() != '' ? $(""#hdPrice"").val() : ""all"");
-        var vLat = ($(""#hdlat"").val() != '' ? $(""#hdlat"").val() : ""lat"");
-        var vlng = ($(""#hdlng"").val() != '' ? $(""#hdlng"").val() : ""long"");
-        var vSort = ($(""#hdSort"").val() != '' ? $(""#hdSort"").val() : ""rel"");
-        var vDateFilter = ($(""#hdDateFilter"").val() != '' ? $(""#hdDateFilter"").val() : ""none"");
-
-        vUrl = vUrl.replace(""lat"", vLat);
-        vUrl = vUrl.replace(""long"", vlng);
-        vUrl = vUrl.replace(""all"", Price);
-        vUrl = vUrl.replace(""rel"", vSort);
-        vUrl = vUrl.replace(""none"", vDateFilter);
-        window.location.href = vUrl;
-        // alert($(""#hdEventType"").val());
-
-    }
-    function FilterEventCategory(vEvCatId) {
-        if ($(""#hdEventCat"").val() == """" || $(""#hdEventCat"").val() == ""~"" || $(""#hdEventCat"").val() == ""evc"") {
-            $(""#hdEventCat"").val(vEvCatId);
-        }
-        else {
-            vIds = $(""#hdEventCat"").val();
-            if (vIds.indexOf(vEvCatId) < 0) {
-                vIds = vIds.concat("","", vEvCatId);
-                $(""#hdEventCat"").val(vIds);
-            }
-        }
-
-        var vUrl = '");
+WriteLiteral("\';\r\n        var vECat = ($(\"#hdEventCat\").val() != \'\' ? $(\"#hdEventCat\").val() : " +
+"\"evc\");\r\n        vUrl = vUrl.replace(\"evt\", $(\"#hdEventType\").val());\r\n        v" +
+"Url = vUrl.replace(\"evc\", vECat);\r\n        var Price = ($(\"#hdPrice\").val() != \'" +
+"\' ? $(\"#hdPrice\").val() : \"all\");\r\n        var vLat = ($(\"#hdlat\").val() != \'\' ?" +
+" $(\"#hdlat\").val() : \"lat\");\r\n        var vlng = ($(\"#hdlng\").val() != \'\' ? $(\"#" +
+"hdlng\").val() : \"long\");\r\n        var vSort = ($(\"#hdSort\").val() != \'\' ? $(\"#hd" +
+"Sort\").val() : \"rel\");\r\n        var vDateFilter = ($(\"#hdDateFilter\").val() != \'" +
+"\' ? $(\"#hdDateFilter\").val() : \"none\");\r\n\r\n        vUrl = vUrl.replace(\"lat\", vL" +
+"at);\r\n        vUrl = vUrl.replace(\"long\", vlng);\r\n        vUrl = vUrl.replace(\"a" +
+"ll\", Price);\r\n        vUrl = vUrl.replace(\"rel\", vSort);\r\n        vUrl = vUrl.re" +
+"place(\"none\", vDateFilter);\r\n        window.location.href = vUrl;\r\n        // al" +
+"ert($(\"#hdEventType\").val());\r\n\r\n    }\r\n    function FilterEventCategory(vEvCatI" +
+"d) {\r\n        if ($(\"#hdEventCat\").val() == \"\" || $(\"#hdEventCat\").val() == \"~\" " +
+"|| $(\"#hdEventCat\").val() == \"evc\") {\r\n            $(\"#hdEventCat\").val(vEvCatId" +
+");\r\n        }\r\n        else {\r\n            var vValues = $(\"#hdEventCat\").val();" +
+"\r\n            vIds = vValues.split(\',\');\r\n            \r\n            var vflag =f" +
+"alse;\r\n            for (i = 0; i < vIds.length; i++)\r\n            {\r\n           " +
+"     if (vIds[i] == vEvCatId)\r\n                {\r\n                    vflag = tr" +
+"ue;\r\n                    break;\r\n                }\r\n            }\r\n            i" +
+"f (vflag == false ) {\r\n                vValues = vValues.concat(\",\", vEvCatId);\r" +
+"\n                $(\"#hdEventCat\").val(vValues);\r\n            }\r\n        }\r\n\r\n   " +
+"     var vUrl = \'");
 
             
-            #line 482 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 810 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -1732,7 +2919,7 @@ WriteLiteral(@"';
         var vUrl = '");
 
             
-            #line 504 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 832 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -1760,7 +2947,7 @@ WriteLiteral(@"';
         var vUrl = '");
 
             
-            #line 523 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 851 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType",new { strEt = "evt", strEc = "", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -1775,22 +2962,119 @@ WriteLiteral("\';\r\n        vUrl = vUrl.replace(\"evt\", vEvTypeId);\r\n       
 "eplace(\"all\", Price);\r\n        vUrl = vUrl.replace(\"lat\", vLat);\r\n        vUrl =" +
 " vUrl.replace(\"long\", vlng);\r\n        vUrl = vUrl.replace(\"rel\", vSort);\r\n      " +
 "  vUrl = vUrl.replace(\"none\", vDateFilter);\r\n        //vUrl = vUrl.replace(\"evc\"" +
-", \"\");\r\n        window.location.href = vUrl;\r\n    }\r\n\r\n\r\n\r\n    $(document).ready" +
-"(function () {\r\n        var input = document.getElementById(\'txtAddress\');\r\n    " +
-"    var autocomplete = new google.maps.places.Autocomplete(input);\r\n\r\n        go" +
-"ogle.maps.event.addListener(autocomplete, \'place_changed\', function () {\r\n      " +
-"      var mapOptions = {\r\n                center: new google.maps.LatLng(6.9167," +
-" 79.8473),\r\n                zoom: 10,\r\n                mapTypeId: google.maps.Ma" +
-"pTypeId.ROADMAP\r\n            };\r\n            var map = new google.maps.Map(docum" +
-"ent.getElementById(\"dvMap\"),\r\n              mapOptions);\r\n            // create " +
-"a marker\r\n            var latlng = new google.maps.LatLng(6.9167, 79.8473);\r\n\r\n " +
-"           var marker = new google.maps.Marker({\r\n                position: latl" +
-"ng,\r\n                map: map,\r\n                title: \'My Place\'\r\n\r\n           " +
-" });\r\n\r\n            var place = autocomplete.getPlace();\r\n            var vUrl =" +
-" \'");
+", \"\");\r\n        window.location.href = vUrl;\r\n    }\r\n\r\n    function compare(Date" +
+"A, DateB) {\r\n        var errorMsg = \"\";\r\n        var a = new Date(DateA);\r\n     " +
+"   var b = new Date(DateB);\r\n\r\n        var msDateA = Date.UTC(a.getFullYear(), a" +
+".getMonth() + 1, a.getDate());\r\n        var msDateB = Date.UTC(b.getFullYear(), " +
+"b.getMonth() + 1, b.getDate());\r\n\r\n        if (parseFloat(msDateA) < parseFloat(" +
+"msDateB))\r\n            return errorMsg = \"\";  // less than\r\n        else if (par" +
+"seFloat(msDateA) == parseFloat(msDateB))\r\n            return errorMsg = \"\";  // " +
+"equal\r\n        else if (parseFloat(msDateA) > parseFloat(msDateB))\r\n            " +
+"return errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventCompareDateUI\") + \"<br/>\"" +
+"; // greater than\r\n        else\r\n            return null;  // error\r\n\r\n\r\n    }\r\n" +
+"\r\n    $(document).ready(function () {\r\n\r\n        var vPageIndex = $(\"#hdPageInde" +
+"x\").val();\r\n        \r\n        $(\"#aPageLink-\" + vPageIndex).addClass(\"active\");\r" +
+"\n        if ($(\"#spInfo\").text().trim() == \"No Events Found\")\r\n        {\r\n      " +
+"      $(\"#lileft\").hide();\r\n            $(\"#liright\").hide();\r\n        }\r\n      " +
+"  else\r\n        {\r\n            $(\"#lileft\").show();\r\n            $(\"#liright\").s" +
+"how();\r\n        }\r\n\r\n        \r\n\r\n\r\n        var vLat = \'");
 
             
-            #line 565 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 907 "..\..\Views\Home\DiscoverEvents.cshtml"
+               Write(TempData["NearLat"]);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n        var vLong = \'");
+
+            
+            #line 908 "..\..\Views\Home\DiscoverEvents.cshtml"
+                Write(TempData["NearLong"]);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n        if (vLat != null && vLat != \'\') var lat = vLat;\r\n        if (vLong !=" +
+" null && vLong != \'\') var lng = vLong;\r\n        var latlng = new google.maps.Lat" +
+"Lng(lat, lng);\r\n        var geocoder = geocoder = new google.maps.Geocoder();\r\n " +
+"       geocoder.geocode({ \'latLng\': latlng }, function (results, status) {\r\n    " +
+"        if (status == google.maps.GeocoderStatus.OK) {\r\n                if (resu" +
+"lts[1]) {\r\n                    vAry = results[1].formatted_address.split(\',\');\r\n" +
+"                    var vResult = vAry[vAry.length - 2] + \" - \" + vAry[vAry.leng" +
+"th - 1];\r\n                    //alert(vResult);\r\n                    $(\"#hdcity\"" +
+").val(vResult);\r\n                    $(\"#spEventAddress\").text(\"Events \" + vResu" +
+"lt);\r\n                    $(document).prop(\'title\', vResult + \' Events | Eventco" +
+"mbo\');\r\n                }\r\n            }\r\n        });\r\n\r\n\r\n        $(\'#fbshare\')" +
+".click(function () {\r\n            var vUrl = $(\"#txtEventUrl\").val();\r\n         " +
+"   window.open(\'https://www.facebook.com/sharer.php?s=100&p[url]=\' + encodeURICo" +
+"mponent(vUrl) + \'\', \'targetWindow\', \'toolbar=no,location=no,status=no,menubar=no" +
+",scrollbars=yes,resizable=yes,width=626,height=436\');\r\n            return false;" +
+"\r\n        });\r\n\r\n        $(\'#twittershare\').click(function () {\r\n            var" +
+" vUrl = $(\"#txtEventUrl\").val();\r\n            window.open(\'https://twitter.com/s" +
+"hare?url=\' + encodeURIComponent(vUrl) + \'&via=twitterdev&related=twitterapi%2Ctw" +
+"itter&text=\', \'targetWindow\', \'toolbar=no,location=no,status=no,menubar=no,scrol" +
+"lbars=yes,resizable=yes,width=626,height=436\');\r\n            return false;\r\n    " +
+"    });\r\n\r\n        $(\'#linkshare\').click(function () {\r\n            var vUrl = $" +
+"(\"#txtEventUrl\").val();\r\n            window.open(\'https://www.linkedin.com/share" +
+"Article?mini=true&url=\' + encodeURIComponent(vUrl) + \'&title=\', \'targetWindow\', " +
+"\'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=" +
+"626,height=436\');\r\n            return false;\r\n        });\r\n\r\n\r\n        if ($(\"#h" +
+"dDateFilter\").val() != null && $(\"#hdDateFilter\").val() != \"\") {\r\n            va" +
+"r vAry = $(\"#hdDateFilter\").val().split(\'");
+
+WriteLiteral("@\');\r\n            if (vAry.length > 1) {\r\n                var vlbl = \"\";\r\n       " +
+"         var vStart = \"\";\r\n                var vEnd = \"\";\r\n                if (v" +
+"Ary[1] != null && vAry[1].toString() != \"\") {\r\n                    $(\"#txtstartD" +
+"ate\").val(vAry[1].split(\'.\').join(\'/\'));\r\n                    vStart = vAry[1].s" +
+"plit(\'.\').join(\'/\');\r\n                }\r\n                if (vAry[2] != null && " +
+"vAry[2].toString() != \"\") {\r\n                    $(\"#txtEndDate\").val(vAry[2].sp" +
+"lit(\'.\').join(\'/\'));\r\n                    vEnd = vAry[2].split(\'.\').join(\'/\');\r\n" +
+"                }\r\n                if (vStart != \"\" && vEnd != \"\")\r\n            " +
+"        vlbl = vStart + \" - \" + vEnd\r\n                else if (vStart != \"\" && v" +
+"End == \"\")\r\n                    vlbl = \"Start \" + vStart;\r\n                else " +
+"if (vStart == \"\" && vEnd != \"\")\r\n                    vlbl = \"End \" + vEnd;\r\n\r\n  " +
+"              //var vLbl = vAry.join(\' - \').split(\'.\').join(\'/\');\r\n             " +
+"   $(\"#spDate\").text(vlbl);\r\n            }\r\n        }\r\n\r\n        $(\"#txtstartDat" +
+"e\").focusout(function () {\r\n            if (checkDate(\"txtstartDate\") != \"\") {\r\n" +
+"                var dt = new Date();\r\n                var vCurrentdate = (dt.get" +
+"Month() + 1) + \"/\" + dt.getDate() + \"/\" + dt.getFullYear();\r\n                $(\"" +
+"#txtstartDate\").val(vCurrentdate);\r\n            }\r\n            else {\r\n         " +
+"       if ($(\"#txtstartDate\").val() != \"\" && $(\"#txtEndDate\").val() != \"\") {\r\n  " +
+"                  var vResult = compare($(\"#txtstartDate\").val(), $(\"#txtEndDate" +
+"\").val());\r\n                    if (vResult != \"\") {\r\n                        va" +
+"r dt = new Date();\r\n                        var vCurrentdate = (dt.getMonth() + " +
+"1) + \"/\" + dt.getDate() + \"/\" + dt.getFullYear();\r\n                        $(\"#t" +
+"xtstartDate\").val(vCurrentdate);\r\n                        $(\"#txtEndDate\").val(v" +
+"Currentdate)\r\n                    }\r\n                }\r\n\r\n            }\r\n       " +
+" });\r\n\r\n        $(\"#txtEndDate\").focusout(function () {\r\n            if (checkDa" +
+"te(\"txtEndDate\") != \"\") {\r\n                var dt = new Date();\r\n               " +
+" var vCurrentdate = (dt.getMonth() + 1) + \"/\" + dt.getDate() + \"/\" + dt.getFullY" +
+"ear();\r\n                $(\"#txtEndDate\").val(vCurrentdate);\r\n            }\r\n    " +
+"        else {\r\n                if ($(\"#txtstartDate\").val() != \"\" && $(\"#txtEnd" +
+"Date\").val() != \"\") {\r\n                    var vResult = compare($(\"#txtstartDat" +
+"e\").val(), $(\"#txtEndDate\").val());\r\n                    if (vResult != \"\") {\r\n " +
+"                       var dt = new Date();\r\n                        var vCurren" +
+"tdate = (dt.getMonth() + 1) + \"/\" + dt.getDate() + \"/\" + dt.getFullYear();\r\n    " +
+"                    $(\"#txtstartDate\").val(vCurrentdate);\r\n                     " +
+"   $(\"#txtEndDate\").val(vCurrentdate)\r\n                    }\r\n                }\r" +
+"\n            }\r\n        });\r\n\r\n\r\n\r\n        $(\'.scrollbox\').enscroll();\r\n        " +
+"$(\'.scrollbox2\').enscroll();\r\n\r\n        $(\'.mobilescrollbox\').enscroll();\r\n     " +
+"   $(\'.mobilescrollbox2\').enscroll();\r\n\r\n\r\n        var input = document.getEleme" +
+"ntById(\'txtAddress\');\r\n        var autocomplete = new google.maps.places.Autocom" +
+"plete(input);\r\n\r\n        google.maps.event.addListener(autocomplete, \'place_chan" +
+"ged\', function () {\r\n            var mapOptions = {\r\n                center: new" +
+" google.maps.LatLng(6.9167, 79.8473),\r\n                zoom: 10,\r\n              " +
+"  mapTypeId: google.maps.MapTypeId.ROADMAP\r\n            };\r\n            var map " +
+"= new google.maps.Map(document.getElementById(\"dvMap\"),\r\n              mapOption" +
+"s);\r\n            // create a marker\r\n            var latlng = new google.maps.La" +
+"tLng(6.9167, 79.8473);\r\n\r\n            var marker = new google.maps.Marker({\r\n   " +
+"             position: latlng,\r\n                map: map,\r\n                title" +
+": \'My Place\'\r\n\r\n            });\r\n\r\n            var place = autocomplete.getPlace" +
+"();\r\n            var vUrl = \'");
+
+            
+            #line 1042 "..\..\Views\Home\DiscoverEvents.cshtml"
                    Write(Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex="Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -1798,114 +3082,117 @@ WriteLiteral("\';\r\n        vUrl = vUrl.replace(\"evt\", vEvTypeId);\r\n       
             #line hidden
 WriteLiteral("\';\r\n            var vLat = place.geometry.location.lat();\r\n            var vLong " +
 "= place.geometry.location.lng();\r\n            vUrl = vUrl.replace(\"lat\", vLat);\r" +
-"\n            vUrl = vUrl.replace(\"long\", vLong);\r\n     \r\n            window.loca" +
-"tion.href = vUrl;\r\n\r\n            if (place.geometry.viewport) {\r\n               " +
-" map.fitBounds(place.geometry.viewport);\r\n            }\r\n            else {\r\n   " +
-"             map.setCenter(place.geometry.location);\r\n                map.setZoo" +
-"m(17);\r\n\r\n            }\r\n            marker.setIcon(({\r\n                url: pla" +
-"ce.icon,\r\n                size: new google.maps.Size(71, 71),\r\n                o" +
-"rigin: new google.maps.Point(0, 0),\r\n                anchor: new google.maps.Poi" +
-"nt(17, 34),\r\n                scaledSize: new google.maps.Size(35, 35)\r\n         " +
-"   }));\r\n            marker.setPosition(place.geometry.location);\r\n            m" +
-"arker.setVisible(true);\r\n\r\n\r\n\r\n            var address = \'\';\r\n            if (pl" +
-"ace.address_components) {\r\n                address = [\r\n                  (place" +
-".address_components[0] && place.address_components[0].short_name || \'\'),\r\n      " +
-"            (place.address_components[1] && place.address_components[1].short_na" +
-"me || \'\'),\r\n                  (place.address_components[2] && place.address_comp" +
-"onents[2].short_name || \'\')\r\n                ].join(\' \');\r\n            }\r\n\r\n    " +
-"    });\r\n\r\n        if ($(\"#hdlat\").val() == \"\" && $(\"#hdlng\").val() == \"\") {\r\n  " +
-"          if (navigator.geolocation) {\r\n                navigator.geolocation.ge" +
-"tCurrentPosition(function (p) {\r\n                    var LatLng = new google.map" +
-"s.LatLng(p.coords.latitude, p.coords.longitude);\r\n                    var geocod" +
-"er = new google.maps.Geocoder;\r\n                    var infowindow = new google." +
-"maps.InfoWindow;\r\n                    var mapOptions = {\r\n                      " +
-"  center: { lat: p.coords.latitude, lng: p.coords.longitude },\r\n                " +
-"        zoom: 13,\r\n                        mapTypeId: google.maps.MapTypeId.ROAD" +
-"MAP\r\n                    };\r\n                    var map = new google.maps.Map(d" +
-"ocument.getElementById(\"dvMap\"), mapOptions);\r\n                    var marker = " +
-"new google.maps.Marker({\r\n                        position: LatLng,\r\n           " +
-"             map: map\r\n                    });\r\n                    google.maps." +
-"event.addListener(marker, \"click\", function (e) {\r\n                        geoco" +
-"deLatLng(geocoder, map, infowindow);\r\n                        var infoWindow = n" +
-"ew google.maps.InfoWindow();\r\n                        infoWindow.setContent(mark" +
-"er.title);\r\n                        infoWindow.open(map, marker);\r\n             " +
-"       });\r\n\r\n                });\r\n\r\n            } else {\r\n                alert" +
-"(\'Geo Location feature is not supported in this browser.\');\r\n            }\r\n    " +
-"    }\r\n        else\r\n        {\r\n            var LatLng = new google.maps.LatLng(" +
-"$(\"#hdlat\").val(), $(\"#hdlng\").val());\r\n            var geocoder = new google.ma" +
-"ps.Geocoder;\r\n            var infowindow = new google.maps.InfoWindow;\r\n        " +
-"    var mapOptions = {\r\n                center: LatLng,\r\n                zoom: 1" +
-"3,\r\n                mapTypeId: google.maps.MapTypeId.ROADMAP\r\n            };\r\n  " +
-"          var map = new google.maps.Map(document.getElementById(\"dvMap\"), mapOpt" +
-"ions);\r\n            var marker = new google.maps.Marker({\r\n                posit" +
-"ion: LatLng,\r\n                map: map\r\n            });\r\n            google.maps" +
-".event.addListener(marker, \"click\", function (e) {\r\n                geocodeLatLn" +
-"g(geocoder, map, infowindow);\r\n                var infoWindow = new google.maps." +
-"InfoWindow();\r\n                infoWindow.setContent(marker.title);\r\n           " +
-"     infoWindow.open(map, marker);\r\n            });\r\n\r\n            var locationu" +
-"rl = \'http://maps.googleapis.com/maps/api/geocode/json?latlng=\' + $(\"#hdlat\").va" +
-"l() + \',\' + $(\"#hdlng\").val() + \'&sensor=true\';\r\n            $.ajax({\r\n         " +
-"       url: locationurl,\r\n                type: \"Post\",\r\n                success" +
-": function (response) {\r\n                    debugger;\r\n                    docu" +
-"ment.getElementById(\'txtAddress\').value = response.results[0].formatted_address;" +
-"\r\n                }\r\n            });\r\n        }\r\n        //title: \"<div style = " +
-"\'height:60px;width:200px\'><b>Your location:</b><br />Latitude: \" + p.coords.lati" +
-"tude + \"<br />Longitude: \" + p.coords.longitude\r\n\r\n\r\n        //function initMap(" +
-") {\r\n        //    var map = new google.maps.Map(document.getElementById(\'dvMap\'" +
-"), {\r\n        //        zoom: 8,\r\n        //        center: { lat: 40.731, lng: " +
-"-73.997 }\r\n        //    });\r\n        //    var geocoder = new google.maps.Geoco" +
-"der;\r\n        //    var infowindow = new google.maps.InfoWindow;\r\n\r\n        //  " +
-"  document.getElementById(\'submit\').addEventListener(\'click\', function () {\r\n   " +
-"     //        geocodeLatLng(geocoder, map, infowindow);\r\n        //    });\r\n   " +
-"     //}\r\n\r\n        function geocodeLatLng(geocoder, map, infowindow) {\r\n       " +
-"     var input = document.getElementById(\'txtAddress\').value;\r\n            var l" +
-"atlngStr = input.split(\',\', 2);\r\n            var latlng = { lat: parseFloat(latl" +
-"ngStr[0]), lng: parseFloat(latlngStr[1]) };\r\n            geocoder.geocode({ \'loc" +
-"ation\': latlng }, function (results, status) {\r\n                if (status === g" +
-"oogle.maps.GeocoderStatus.OK) {\r\n                    if (results[1]) {\r\n        " +
-"                map.setZoom(11);\r\n                        var marker = new googl" +
-"e.maps.Marker({\r\n                            position: latlng,\r\n                " +
-"            map: map\r\n                        });\r\n                        infow" +
-"indow.setContent(results[1].formatted_address);\r\n                        infowin" +
-"dow.open(map, marker);\r\n                    } else {\r\n                        wi" +
-"ndow.alert(\'No results found\');\r\n                    }\r\n                } else {" +
-"\r\n                    window.alert(\'Geocoder failed due to: \' + status);\r\n      " +
-"          }\r\n            });\r\n        }\r\n\r\n\r\n\r\n\r\n\r\n        //var geocoder = new " +
-"google.maps.Geocoder();\r\n        //geocoder.geocode({\r\n        //    \"address\": " +
-"firstResult\r\n        //}, function (results, status) {\r\n        //    if (status" +
-" == google.maps.GeocoderStatus.OK) {\r\n        //        var lat = results[0].geo" +
-"metry.location.lat(),\r\n        //            lng = results[0].geometry.location." +
-"lng(),\r\n        //            placeName = results[0].address_components[0].long_" +
-"name,\r\n        //            latlng = new google.maps.LatLng(lat, lng);\r\n\r\n     " +
-"   //        moveMarker(placeName, latlng);\r\n        //        $(\"txtAddress\").v" +
-"al(firstResult);\r\n        //        alert(firstResult)\r\n        //    }\r\n       " +
-" //});\r\n\r\n\r\n\r\n\r\n\r\n\r\n        $(\"#dvProgress\").hide();\r\n\r\n\r\n\r\n\r\n\r\n\r\n        $(\'.da" +
-"te_picker\').datepicker({\r\n            format: \"mm/dd/yyyy\",\r\n        })\r\n       " +
-"   .on(\'changeDate\', function (ev) {\r\n              $(\'.date_picker\').datepicker" +
-"(\'hide\');\r\n          });\r\n\r\n        $(\".desc_hide\").css({ \"display\": \"none\" });\r" +
-"\n        $(\".des_hover\").mouseover(function (e) {\r\n            var $target = $(e" +
-".currentTarget);\r\n            $target.css({ \"display\": \"none\" });\r\n            $" +
-"target.closest(\"div\").find(\".desc_hide\").css({ \"display\": \"block\" });\r\n        }" +
-");\r\n        $(\".desc_hide\").mouseout(function (e) {\r\n            var $target = $" +
-"(e.currentTarget);\r\n            $target.css({ \"display\": \"none\" });\r\n           " +
-" $target.parent(\"div\").find(\".des_hover\").css({ \"display\": \"block\" });\r\n        " +
-"});\r\n\r\n        $(\".CustDate\").css({ \"display\": \"none\" });\r\n        $(\".CustDateM" +
-"ain\").click(function () {\r\n            $(\'.CustDate\').slideToggle(function () {\r" +
-"\n                $(\'.CustDateMain\').toggleClass(\'active\');\r\n            });\r\n\r\n " +
-"       });\r\n\r\n    });\r\n\r\n\r\n    $(function () {\r\n\r\n        var Accordion = functi" +
-"on (el, multiple) {\r\n            this.el = el || {};\r\n            this.multiple " +
-"= multiple || false;\r\n\r\n            // Variables privadas\r\n            var links" +
-" = this.el.find(\'.link\');\r\n            // Evento\r\n            links.on(\'click\', " +
-"{ el: this.el, multiple: this.multiple }, this.dropdown)\r\n        }\r\n\r\n        A" +
-"ccordion.prototype.dropdown = function (e) {\r\n            var $el = e.data.el;\r\n" +
-"            $this = $(this),\r\n            $next = $this.next();\r\n\r\n            $" +
-"next.slideToggle();\r\n            $this.parent().toggleClass(\'open\');\r\n\r\n        " +
-"    if (!e.data.multiple) {\r\n                $el.find(\'.submenu\').not($next).sli" +
-"deUp().parent().removeClass(\'open\');\r\n            };\r\n        }\r\n\r\n        var a" +
-"ccordion = new Accordion($(\'#accordion\'), false);\r\n    });\r\n</script>\r\n\r\n\r\n\r\n\r\n\r" +
-"\n");
-
-WriteLiteral("\r\n");
+"\n            vUrl = vUrl.replace(\"long\", vLong);\r\n\r\n            window.location." +
+"href = vUrl;\r\n\r\n            if (place.geometry.viewport) {\r\n                map." +
+"fitBounds(place.geometry.viewport);\r\n            }\r\n            else {\r\n        " +
+"        map.setCenter(place.geometry.location);\r\n                map.setZoom(17)" +
+";\r\n\r\n            }\r\n            marker.setIcon(({\r\n                url: place.ic" +
+"on,\r\n                size: new google.maps.Size(71, 71),\r\n                origin" +
+": new google.maps.Point(0, 0),\r\n                anchor: new google.maps.Point(17" +
+", 34),\r\n                scaledSize: new google.maps.Size(35, 35)\r\n            })" +
+");\r\n            marker.setPosition(place.geometry.location);\r\n            marker" +
+".setVisible(true);\r\n\r\n\r\n\r\n            var address = \'\';\r\n            if (place.a" +
+"ddress_components) {\r\n                address = [\r\n                  (place.addr" +
+"ess_components[0] && place.address_components[0].short_name || \'\'),\r\n           " +
+"       (place.address_components[1] && place.address_components[1].short_name ||" +
+" \'\'),\r\n                  (place.address_components[2] && place.address_component" +
+"s[2].short_name || \'\')\r\n                ].join(\' \');\r\n            }\r\n\r\n        }" +
+");\r\n\r\n        if ($(\"#hdlat\").val() == \"\" && $(\"#hdlng\").val() == \"\") {\r\n       " +
+"     if (navigator.geolocation) {\r\n                navigator.geolocation.getCurr" +
+"entPosition(function (p) {\r\n                    var LatLng = new google.maps.Lat" +
+"Lng(p.coords.latitude, p.coords.longitude);\r\n                    var geocoder = " +
+"new google.maps.Geocoder;\r\n                    var infowindow = new google.maps." +
+"InfoWindow;\r\n                    var mapOptions = {\r\n                        cen" +
+"ter: { lat: p.coords.latitude, lng: p.coords.longitude },\r\n                     " +
+"   zoom: 13,\r\n                        mapTypeId: google.maps.MapTypeId.ROADMAP\r\n" +
+"                    };\r\n                    var map = new google.maps.Map(docume" +
+"nt.getElementById(\"dvMap\"), mapOptions);\r\n                    var marker = new g" +
+"oogle.maps.Marker({\r\n                        position: LatLng,\r\n                " +
+"        map: map\r\n                    });\r\n                    google.maps.event" +
+".addListener(marker, \"click\", function (e) {\r\n                        geocodeLat" +
+"Lng(geocoder, map, infowindow);\r\n                        var infoWindow = new go" +
+"ogle.maps.InfoWindow();\r\n                        infoWindow.setContent(marker.ti" +
+"tle);\r\n                        infoWindow.open(map, marker);\r\n                  " +
+"  });\r\n\r\n                });\r\n\r\n            } else {\r\n                alert(\'Geo" +
+" Location feature is not supported in this browser.\');\r\n            }\r\n        }" +
+"\r\n        else {\r\n            var LatLng = new google.maps.LatLng($(\"#hdlat\").va" +
+"l(), $(\"#hdlng\").val());\r\n            var geocoder = new google.maps.Geocoder;\r\n" +
+"            var infowindow = new google.maps.InfoWindow;\r\n            var mapOpt" +
+"ions = {\r\n                center: LatLng,\r\n                zoom: 13,\r\n          " +
+"      mapTypeId: google.maps.MapTypeId.ROADMAP\r\n            };\r\n            var " +
+"map = new google.maps.Map(document.getElementById(\"dvMap\"), mapOptions);\r\n      " +
+"      var marker = new google.maps.Marker({\r\n                position: LatLng,\r\n" +
+"                map: map\r\n            });\r\n            google.maps.event.addList" +
+"ener(marker, \"click\", function (e) {\r\n                geocodeLatLng(geocoder, ma" +
+"p, infowindow);\r\n                var infoWindow = new google.maps.InfoWindow();\r" +
+"\n                infoWindow.setContent(marker.title);\r\n                infoWindo" +
+"w.open(map, marker);\r\n            });\r\n\r\n            var locationurl = \'http://m" +
+"aps.googleapis.com/maps/api/geocode/json?latlng=\' + $(\"#hdlat\").val() + \',\' + $(" +
+"\"#hdlng\").val() + \'&sensor=true\';\r\n            $.ajax({\r\n                url: lo" +
+"cationurl,\r\n                type: \"Post\",\r\n                success: function (re" +
+"sponse) {\r\n                    debugger;\r\n                    document.getElemen" +
+"tById(\'txtAddress\').value = response.results[0].formatted_address;\r\n            " +
+"    }\r\n            });\r\n        }\r\n        //title: \"<div style = \'height:60px;w" +
+"idth:200px\'><b>Your location:</b><br />Latitude: \" + p.coords.latitude + \"<br />" +
+"Longitude: \" + p.coords.longitude\r\n\r\n\r\n        //function initMap() {\r\n        /" +
+"/    var map = new google.maps.Map(document.getElementById(\'dvMap\'), {\r\n        " +
+"//        zoom: 8,\r\n        //        center: { lat: 40.731, lng: -73.997 }\r\n   " +
+"     //    });\r\n        //    var geocoder = new google.maps.Geocoder;\r\n        " +
+"//    var infowindow = new google.maps.InfoWindow;\r\n\r\n        //    document.get" +
+"ElementById(\'submit\').addEventListener(\'click\', function () {\r\n        //       " +
+" geocodeLatLng(geocoder, map, infowindow);\r\n        //    });\r\n        //}\r\n\r\n  " +
+"      function geocodeLatLng(geocoder, map, infowindow) {\r\n            var input" +
+" = document.getElementById(\'txtAddress\').value;\r\n            var latlngStr = inp" +
+"ut.split(\',\', 2);\r\n            var latlng = { lat: parseFloat(latlngStr[0]), lng" +
+": parseFloat(latlngStr[1]) };\r\n            geocoder.geocode({ \'location\': latlng" +
+" }, function (results, status) {\r\n                if (status === google.maps.Geo" +
+"coderStatus.OK) {\r\n                    if (results[1]) {\r\n                      " +
+"  map.setZoom(11);\r\n                        var marker = new google.maps.Marker(" +
+"{\r\n                            position: latlng,\r\n                            ma" +
+"p: map\r\n                        });\r\n                        infowindow.setConte" +
+"nt(results[1].formatted_address);\r\n                        infowindow.open(map, " +
+"marker);\r\n                    } else {\r\n                        window.alert(\'No" +
+" results found\');\r\n                    }\r\n                } else {\r\n            " +
+"        window.alert(\'Geocoder failed due to: \' + status);\r\n                }\r\n " +
+"           });\r\n        }\r\n\r\n\r\n\r\n\r\n\r\n        //var geocoder = new google.maps.Ge" +
+"ocoder();\r\n        //geocoder.geocode({\r\n        //    \"address\": firstResult\r\n " +
+"       //}, function (results, status) {\r\n        //    if (status == google.map" +
+"s.GeocoderStatus.OK) {\r\n        //        var lat = results[0].geometry.location" +
+".lat(),\r\n        //            lng = results[0].geometry.location.lng(),\r\n      " +
+"  //            placeName = results[0].address_components[0].long_name,\r\n       " +
+" //            latlng = new google.maps.LatLng(lat, lng);\r\n\r\n        //        m" +
+"oveMarker(placeName, latlng);\r\n        //        $(\"txtAddress\").val(firstResult" +
+");\r\n        //        alert(firstResult)\r\n        //    }\r\n        //});\r\n\r\n\r\n\r\n" +
+"\r\n\r\n\r\n        $(\"#dvProgress\").hide();\r\n\r\n\r\n\r\n\r\n\r\n\r\n        $(\'.date_picker\').da" +
+"tepicker({\r\n            format: \"mm/dd/yyyy\",\r\n        })\r\n          .on(\'change" +
+"Date\', function (ev) {\r\n              $(\'.date_picker\').datepicker(\'hide\');\r\n   " +
+"       });\r\n\r\n        $(\".CustDate\").css({ \"display\": \"none\" });\r\n        $(\".Cu" +
+"stDateMain\").click(function () {\r\n            $(\'.CustDate\').slideToggle(functio" +
+"n () {\r\n                $(\'.CustDateMain\').toggleClass(\'active\');\r\n            }" +
+");\r\n\r\n        });\r\n\r\n        $(\".Desccatshow\").css({ \"display\": \"none\" });\r\n    " +
+"    $(\".DesccatClick\").click(function () {\r\n            $(\'.Desccatshow\').slideT" +
+"oggle(function () {\r\n                // $(\'.def_color\').toggleClass(\'active\');\r\n" +
+"            });\r\n\r\n        });\r\n\r\n        $(\".Desccatshow2\").css({ \"display\": \"n" +
+"one\" });\r\n        $(\".DesccatClick2\").click(function () {\r\n            $(\'.Descc" +
+"atshow2\').slideToggle(function () {\r\n                // $(\'.def_color\').toggleCl" +
+"ass(\'active\');\r\n            });\r\n\r\n        });\r\n\r\n        $(document).on(\'click\'" +
+", function (e) {\r\n            var $target = $(e.target);\r\n            if ($targe" +
+"t.closest(\".DesccatClick\").get(0) == null && $target.closest(\".Desccatshow\").get" +
+"(0) == null) {\r\n                $(\".Desccatshow\").hide();\r\n            };\r\n     " +
+"       if ($target.closest(\".DesccatClick2\").get(0) == null && $target.closest(\"" +
+".Desccatshow2\").get(0) == null) {\r\n                $(\".Desccatshow2\").hide();\r\n " +
+"           }\r\n        });\r\n\r\n    });\r\n\r\n\r\n    $(function () {\r\n\r\n        var Acc" +
+"ordion = function (el, multiple) {\r\n            this.el = el || {};\r\n           " +
+" this.multiple = multiple || false;\r\n\r\n            // Variables privadas\r\n      " +
+"      var links = this.el.find(\'.link\');\r\n            // Evento\r\n            lin" +
+"ks.on(\'click\', { el: this.el, multiple: this.multiple }, this.dropdown)\r\n       " +
+" }\r\n\r\n        Accordion.prototype.dropdown = function (e) {\r\n            var $el" +
+" = e.data.el;\r\n            $this = $(this),\r\n            $next = $this.next();\r\n" +
+"\r\n            $next.slideToggle();\r\n            $this.parent().toggleClass(\'open" +
+"\');\r\n\r\n            if (!e.data.multiple) {\r\n                $el.find(\'.submenu\')" +
+".not($next).slideUp().parent().removeClass(\'open\');\r\n            };\r\n        }\r\n" +
+"\r\n        var accordion = new Accordion($(\'#accordion\'), false);\r\n    });\r\n   \r\n" +
+"  \r\n\r\n</script>\r\n\r\n");
 
         }
     }

@@ -329,8 +329,8 @@
 
                                 </div>
                                 <div class="col-sm-8 no_pad">
-                                    <h1 class="list_event_desc_title xs-title-height"><a href='@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString() })'>@item.EventTitle</a></h1>
-                                    <p class="list_event_desc xs-address-height">
+                                    <h1 class="list_event_desc_title xs-title-height d_xs_pad_l0 desc_pl_0"><a href='@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString() })'>@item.EventTitle</a></h1>
+                                    <p class="list_event_desc xs-address-height d_xs_pad_l0 desc_pl_0">
                                         @item.EventAddress
 
                                     </p>
@@ -367,8 +367,8 @@
                                     @*<button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" type="button">
                                             <i class="fa fa-share-alt"></i>
                                         </button>*@
-                                    <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" onclick="ShowUrl('@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString() })');" type="button" data-toggle="modal" data-target="#sharemodal">
-                                        <i class="fa fa-share-alt"></i>
+                                    <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" onclick="ShowUrl('@item.EventTitle', '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString() })');" type="button" data-toggle="modal" data-target="#sharemodal">
+                                        @*<i class="fa fa-share-alt"></i>*@ <img src="~/Images/share_icon.png" alt="share event" >
                                     </button>
                                     @if (@item.EventLike == "I")
                                     {
@@ -404,7 +404,7 @@
                 <ul class="pagination desc_pagination">
                     <li id="lileft">
                         <a href="javascript:void(0)" onclick="PreviousArrowPage();">
-                            <span><i class="fa fa-angle-left" ></i> </span>
+                            <span><i class="fa fa-angle-double-left" ></i> </span>
                         </a>
                     </li>
                     @for (int i = 1; i <= Convert.ToInt32(@TempData["TotalPages"]); i++)
@@ -419,7 +419,7 @@
                         <li><a href="javascript:void(0)" onclick="NextPage(5);">5</a></li>*@
                     <li id="liright">
                         <a href="javascript:void(0)" onclick="NextArrowPage();">
-                            <span><i class="fa fa-angle-right" ></i> </span>
+                            <span><i class="fa fa-angle-double-right" ></i> </span>
                         </a>
                     </li>
                 </ul>
@@ -464,6 +464,7 @@
                         <div class="col-sm-12 ">
                             <div class="form-group">
                                 <input class="form-control sharesocilform" id="txtEventUrl" readonly="readonly" placeholder="" type="text">
+                                <input class="form-control sharesocilform" id="txtEventTitle" readonly="readonly" placeholder="" type="hidden">
                             </div>
                         </div>
 
@@ -473,6 +474,7 @@
         </div>
 
     </div>
+    <input type="hidden" id="hdcity" />
 </div>
 
 <script src="~/Scripts/bootstrap-datepicker.js"></script>
@@ -534,7 +536,8 @@
         });
     }
 
-    function ShowUrl(vurl) {
+    function ShowUrl(vtitle, vurl) {
+        $("#txtEventTitle").val(vtitle);
         $("#txtEventUrl").val(vurl);
     }
     function checkDate(field) {
@@ -915,13 +918,15 @@
                     vAry = results[1].formatted_address.split(',');
                     var vResult = vAry[vAry.length - 2] + " - " + vAry[vAry.length - 1];
                     //alert(vResult);
+                    $("#hdcity").val(vResult);
                     $("#spEventAddress").text("Events " + vResult);
+                    $(document).prop('title', vResult + ' Events | Eventcombo');
                 }
             }
         });
 
 
-        $('#fbshare').click(function () {
+        $('#fbsharessss').click(function () {
             var vUrl = $("#txtEventUrl").val();
             window.open('https://www.facebook.com/sharer.php?s=100&p[url]=' + encodeURIComponent(vUrl) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
@@ -1101,7 +1106,7 @@
                 });
 
             } else {
-                alert('Geo Location feature is not supported in this browser.');
+                //alert('Geo Location feature is not supported in this browser.');
             }
         }
         else {
@@ -1135,22 +1140,7 @@
                 }
             });
         }
-        //title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
-
-
-        //function initMap() {
-        //    var map = new google.maps.Map(document.getElementById('dvMap'), {
-        //        zoom: 8,
-        //        center: { lat: 40.731, lng: -73.997 }
-        //    });
-        //    var geocoder = new google.maps.Geocoder;
-        //    var infowindow = new google.maps.InfoWindow;
-
-        //    document.getElementById('submit').addEventListener('click', function () {
-        //        geocodeLatLng(geocoder, map, infowindow);
-        //    });
-        //}
-
+        
         function geocodeLatLng(geocoder, map, infowindow) {
             var input = document.getElementById('txtAddress').value;
             var latlngStr = input.split(',', 2);
@@ -1277,5 +1267,54 @@
 
         var accordion = new Accordion($('#accordion'), false);
     });
+   
+  
+
 </script>
 
+
+<script type="text/javascript">
+
+    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
+    @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
+    var urlprefix = '@strpr'
+
+    window.fbAsyncInit = function () {
+        // init the FB JS SDK
+        FB.init({
+            appId: fbappid,                        // App ID from the app dashboard
+            status: true,                                 // Check Facebook Login status
+            xfbml: true                                  // Look for social plugins on the page
+        });
+
+    };
+
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    var globalFacebookShareObject = { name: 'EventCombo', link: '' };
+
+
+    $(document).ready(function () {
+        $('#fbshare').click(function (e) {
+            globalFacebookShareObject.link = urlprefix + $("#txtEventUrl").val();
+            globalFacebookShareObject.name = $("#txtEventTitle").val();
+            console.log(globalFacebookShareObject.link);
+            console.log(globalFacebookShareObject.name);
+            FB.ui({
+                method: 'feed',
+                name: globalFacebookShareObject.name,
+                link: globalFacebookShareObject.link
+            }, function (response) {
+                if (response && response.post_id) { }
+                else { }
+            });
+        });
+    });
+</script>

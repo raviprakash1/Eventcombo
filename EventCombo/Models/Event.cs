@@ -64,6 +64,7 @@ namespace EventCombo.Models
         public string ShowMap { get; set; }
         public Nullable<long> Parent_EventID { get; set; }
         public string EventCancel { get; set; }
+        public Nullable<System.DateTime> FeatureUpdateDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Addresses { get; set; }

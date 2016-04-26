@@ -156,12 +156,19 @@ namespace EventCombo.Controllers
             {
                 try {
                     var vRefferer = ControllerContext.HttpContext.Request.UrlReferrer;
-                    if (vRefferer.ToString().ToLower().Contains("createevent") == true)
-                        TempData["IsNewEvent"] = "Y";
-                    else if (vRefferer.ToString().ToLower().Contains("modifyevent") == true)
-                        TempData["IsNewEvent"] = "M";
-                    else
+                    if (vRefferer == null)
+                    {
                         TempData["IsNewEvent"] = "N";
+                    }
+                    else
+                    {
+                        if (vRefferer.ToString().ToLower().Contains("createevent") == true)
+                            TempData["IsNewEvent"] = "Y";
+                        else if (vRefferer.ToString().ToLower().Contains("modifyevent") == true)
+                            TempData["IsNewEvent"] = "M";
+                        else
+                            TempData["IsNewEvent"] = "N";
+                    }
 
 
 
@@ -201,11 +208,12 @@ namespace EventCombo.Controllers
                     Session["ReturnUrl"] = "CreateEvent~" + url;
 
                     string defaultCountry = "";
-                    string timezone = objCr.TimeZone != null ? objCr.TimeZone : "";
+                    string timezone = objCr.TimeZone != null ? objCr.TimeZone : "31";
                     using (EventComboEntities db = new EventComboEntities())
                     {
-                        var Timezone = (from c in db.TimeZoneDetails orderby c.TimeZone_Id ascending select c).Distinct();
+                        var Timezone = (from c in db.TimeZoneDetails  select c).OrderBy(x => x.Timezone_order);
                         List<SelectListItem> Timezonelist = new List<SelectListItem>();
+                       
                         foreach (var item in Timezone)
                         {
                             Timezonelist.Add(new SelectListItem()
@@ -1264,12 +1272,17 @@ namespace EventCombo.Controllers
                         }
                         strticketHtml.Append("</div></div>");
                         strticketHtml.Append("<div class='clearfix'></div><div class='form-group mt20'> <div class='col-sm-6 ev_pad_l0'><div class='col-sm-12 no_pad'>");
-                        strticketHtml.Append("<label class='label-control pl0 ev_tickt_lebel'>Ticket Sales Start</label></div><div class='col-sm-8 ev_pad_l0 mb5 xs_pad_0'>");
+                        strticketHtml.Append("<label class='label-control pl0 ev_tickt_lebel'>Ticket Sales Start</label>");
+                        strticketHtml.Append("<div class='upload_help_icn pull-right' style='display:none;'><div class='tip'><img class='help_icon_hov' src='/Images/icon-question.gif' id='hovstart-" + j + "' onmouseover='showhover(this.id);' onmouseout='showhoverout(this.id)' />");
+                        strticketHtml.Append(" <span class='upload_help_icn_inner' style='display:none;' id='help_start_inner-" + j + "''> Your Event's date and time need to be  selected in order to update sales start date  </span>  </div>  </div>");
+                        strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0 mb5 xs_pad_0'>");
                         strticketHtml.Append("<input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_salestart-" + j + "' onchange='changetext(this.id);' value='" + startdate + "' />");
                         strticketHtml.Append("</div><div class='col-sm-4 no_pad mb5 xs_pad_0'><input type='hidden' value='0' id='id_hdsaletimestart-" + j + "' value='" + ObjTick.Sale_Start_Time + "' />");
                         strticketHtml.Append("<input id='id_saletimestart-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id)' value='" + ObjTick.Sale_Start_Time + "' />");
                         strticketHtml.Append("</div></div>");
                         strticketHtml.Append("<div class='col-sm-6 ev_pad_r0 xs_pad_0'><div class='col-sm-12 no_pad'><label class='label-control pl0 ev_tickt_lebel'>Ticket Sales End</label>");
+                        strticketHtml.Append("<div class='upload_help_icn pull-right' style='display:none;'><div class='tip'><img class='help_icon_hov' src='/Images/icon-question.gif' id='hovend-" + j + "' onmouseover='showhover(this.id);' onmouseout='showhoverout(this.id)' />");
+                        strticketHtml.Append(" <span class='upload_help_icn_inner' style='display:none;' id='help_end_inner-" + j + "''> Your Event's date and time need to be  selected in order to update sales end date  </span>  </div>  </div>");
                         strticketHtml.Append("</div><div class='col-sm-8 ev_pad_l0 mb5'><input class='form-control event_time_str ev_tickt_input' placeholder='MM/DD/YYYY' id='id_saleend-" + j + "' onchange='checkvalidDate(this.id)' value='" + enddate + "' />");
                         strticketHtml.Append("</div><div class='col-sm-4 ev_pad_l0 mb5'> <input type='hidden' value='0' id='id_hdsaletimeend-" + j + "' value='" + ObjTick.Sale_End_Time + "' />");
                         strticketHtml.Append("<input id='id_saletimeend-" + j + "' type='text' class='time_picker form-control ev_tickt_input mr0' placeholder='07:00pm' onchange='checkvalidtime(this.id) ' value='" + ObjTick.Sale_End_Time + "' />");
@@ -1765,15 +1778,49 @@ namespace EventCombo.Controllers
                     }
                     // Tickets
 
+                    string customize = "0";
+                    var customizefee = false;
+                    var customizeamt = false;
                     if (model.Ticket != null)
                     {
                         Ticket ticket = new Ticket();
-                       // objEnt.Ticket_Quantity_Detail.RemoveRange(objEnt.Ticket_Quantity_Detail.Where(x => x.TQD_Event_Id == lEventId));
-                      //  objEnt.Tickets.RemoveRange(objEnt.Tickets.Where(x => x.E_Id == lEventId));
+                        // objEnt.Ticket_Quantity_Detail.RemoveRange(objEnt.Ticket_Quantity_Detail.Where(x => x.TQD_Event_Id == lEventId));
+                        //  objEnt.Tickets.RemoveRange(objEnt.Tickets.Where(x => x.E_Id == lEventId));
+                       var  ids = new List<long>();
                         foreach (Ticket tick in model.Ticket)
                         {
-                            ticket = new Ticket();
 
+                            if (tick.T_Id == 0)
+                            {
+                                ticket = new Ticket();
+
+                                ticket.T_Customize = "0";
+                                var mainfee = (from db in objEnt.Fee_Structure select db).FirstOrDefault();
+                                ticket.EC_Fee = tick.Customer_Fee;
+                                ticket.T_Ecpercent = mainfee.FS_Percentage;
+                                ticket.T_EcAmount = mainfee.FS_Amount;
+                                if (tick.TicketTypeID == 2)
+                                {
+                                    ticket.Customer_Fee = tick.Customer_Fee;
+                                }
+                                else
+                                {
+                                    ticket.Customer_Fee = 0;
+                                }
+
+                            }
+                            else
+                            {
+                                ticket = (from obj in objEnt.Tickets where obj.T_Id == tick.T_Id && obj.E_Id == lEventId select obj).FirstOrDefault();
+                                customize = ticket.T_Customize;
+                                if (tick.TicketTypeID == 2)
+                                {
+                                    ticket.Customer_Fee = tick.Customer_Fee;
+                                }
+
+                            }
+
+                            //ids = new List<long>();
                             if (tick.Isadmin == "Y")
                             {
                                 if (tick.TicketTypeID != 1)
@@ -1792,8 +1839,8 @@ namespace EventCombo.Controllers
                                     }
                                     var oldamount = Decimal.Round(oldamnt, 2);
 
-                                    var customizefee = false;
-                                    var customizeamt = false;
+                                    //var customizefee = false;
+                                    //var customizeamt = false;
 
                                     if (mainfee.FS_Percentage == tick.T_Ecpercent && mainfee.FS_Amount == tick.T_EcAmount)
                                     {
@@ -1866,18 +1913,28 @@ namespace EventCombo.Controllers
                             ticket.Max_T_Qty = tick.Max_T_Qty;
                             ticket.T_Disable = tick.T_Disable;
                             ticket.T_Mark_SoldOut = tick.T_Mark_SoldOut;
-                            ticket.EC_Fee = tick.EC_Fee;
-                            ticket.Customer_Fee = tick.Customer_Fee;
+                            ticket.T_Displayremaining = tick.T_Displayremaining;
+                            if (tick.Isadmin == "Y")
+                            {
+                                ticket.EC_Fee = tick.EC_Fee;
+                                ticket.Customer_Fee = tick.Customer_Fee;
+                            }
+                            //ticket.EC_Fee = tick.EC_Fee;
+                            //ticket.Customer_Fee = tick.Customer_Fee;
                             ticket.TotalPrice = tick.TotalPrice;
                             ticket.T_Discount = tick.T_Discount;
-                            ticket.T_Displayremaining = tick.T_Displayremaining;
-                            ticket.T_EcAmount=tick.T_EcAmount;
-                            ticket.T_Ecpercent = tick.T_Ecpercent;
-                            ticket.T_Customize = tick.T_Customize;
-                            objEnt.Tickets.Add(ticket);
+                            if (tick.T_Id == 0)
+                            {
+                                objEnt.Tickets.Add(ticket);
+                            }
+                            ids.Add(ticket.T_Id);
+                            //ticket.T_EcAmount=tick.T_EcAmount;
+                            //ticket.T_Ecpercent = tick.T_Ecpercent;
+                            //ticket.T_Customize = tick.T_Customize;
+                            //objEnt.Tickets.Add(ticket);
                         }
                     }
-
+                  
                     if (model.EventImage != null)
                     {
                         EventImage Image = new EventImage();
@@ -1932,6 +1989,8 @@ namespace EventCombo.Controllers
                     {
                         CreateEventController objCE = new CreateEventController();
                         objCE.ControllerContext = new ControllerContext(this.Request.RequestContext, objCE);
+                        model.EventTitle = "Copy of " + model.EventTitle;
+                        model.EventUrl = "Copy of " + model.EventUrl;
                         lEventId = objCE.SaveEvent(model);
                         return lEventId;
                     }
@@ -1946,11 +2005,11 @@ namespace EventCombo.Controllers
                                 ValidationMessageController vmc = new ValidationMessageController();
                                 model.EventID = vmc.GetLatestEventId(lEventId);
                                 lEventId = EditEventInfo(model);
-                                if (ObjEC.Parent_EventID == null || ObjEC.Parent_EventID == 0)
-                                    Parent_EventID = lEventId;
-                                else
-                                    Parent_EventID = (long)ObjEC.Parent_EventID;
-
+                                //if (ObjEC.Parent_EventID == null || ObjEC.Parent_EventID == 0)
+                                //    Parent_EventID = lEventId;
+                                //else
+                                //    Parent_EventID = (long)ObjEC.Parent_EventID;
+                                Parent_EventID = ValidationMessageController.GetParentEventId(lEventId);
                             }
                             else
                             {
@@ -2501,10 +2560,11 @@ namespace EventCombo.Controllers
                                 objEnt.SaveChanges();
                                 lEventId = ObjEC.EventID;
 
-                                if (ObjEC.Parent_EventID == null || ObjEC.Parent_EventID == 0)
-                                    Parent_EventID = lEventId;
-                                else
-                                    Parent_EventID = (long)ObjEC.Parent_EventID;
+                                //if (ObjEC.Parent_EventID == null || ObjEC.Parent_EventID == 0)
+                                //    Parent_EventID = lEventId;
+                                //else
+                                //    Parent_EventID = (long)ObjEC.Parent_EventID;
+                                Parent_EventID = ValidationMessageController.GetParentEventId(lEventId);
                                 //Parent_EventID = (ObjEC.Parent_EventID ==null? lEventId : (long)ObjEC.Parent_EventID);
 
                                 PublishEvent(lEventId);
@@ -3054,6 +3114,24 @@ namespace EventCombo.Controllers
             }
 
 
+
+
+        }
+        public JsonResult Checkticketstatus( string ticketid)
+        {
+            long str = 0;
+            string strQuery = "SELECT isnull(sum(TPD_Purchased_Qty),0) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id    where isnull(TPD_Order_Id,'') !=''  AND b.TQD_Ticket_Id = " + ticketid + "  ";
+            var vEvent = db.Database.SqlQuery<long>(strQuery).FirstOrDefault();
+            if(vEvent==0)
+            {
+                str = 0;
+            }
+            else
+            {
+                str = vEvent;
+            }
+            return Json(new { Ticketsale = str });
+           
 
 
         }

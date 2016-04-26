@@ -41,6 +41,7 @@
         <EntityTypeShape EntityType="EventComboModel.Ticket_Locked_Detail" Width="1.5" PointX="5.75" PointY="18.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Ticket_Purchased_Detail" Width="1.5" PointX="18.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Ticket_Quantity_Detail" Width="1.5" PointX="0.875" PointY="28.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Ticket_Quantity_Detail" Width="1.5" PointX="5.25" PointY="26" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.TicketBearer" Width="1.5" PointX="7.75" PointY="18.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.TicketDeliveryMethod" Width="1.5" PointX="15" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.TicketType" Width="1.5" PointX="18.75" PointY="11.75" IsExpanded="true" />
@@ -68,8 +69,11 @@
         <AssociationConnector Association="EventComboModel.FK_Event_Orgnizer_Detail_Event" />
         <AssociationConnector Association="EventComboModel.FK_Event_Orgnizer_Detail_Organizer_Master" />
         <EntityTypeShape EntityType="EventComboModel.Promo_Code" Width="1.5" PointX="11.98486792109202" PointY="28.749151675379441" />
+        <EntityTypeShape EntityType="EventComboModel.v_RetrieveEventid" Width="1.5" PointX="8.375" PointY="21.75" />
+        <EntityTypeShape EntityType="EventComboModel.Event_Email_Invitation" Width="1.5" PointX="21.375" PointY="9.75" />
+        <EntityTypeShape EntityType="EventComboModel.Event_Email_List" Width="1.5" PointX="21.375" PointY="13.75" />
+        <AssociationConnector Association="EventComboModel.FK_Event_Email_List_Event_Email_Invitation" />
         <EntityTypeShape EntityType="EventComboModel.v_RetrieveEventid" Width="1.5" PointX="20.625" PointY="22.625" />
-
         <EntityTypeShape EntityType="EventComboModel.OrderTemplate" Width="2.125" PointX="10.5" PointY="22.875" />
         <EntityTypeShape EntityType="EventComboModel.OrderTemplateQuestion" Width="2" PointX="12.875" PointY="21.5" />
         <EntityTypeShape EntityType="EventComboModel.OrderTemplateType" Width="2.125" PointX="16.125" PointY="28.75" />
@@ -100,6 +104,7 @@
         <EntityTypeShape EntityType="EventComboModel.OrderTemplateGroupType" Width="2.25" PointX="14.125" PointY="31" />
         <AssociationConnector Association="EventComboModel.OrderTemplateGroupTypeOrderTemplate" />
         <AssociationConnector Association="EventComboModel.TicketOrderTemplate" />
+        <EntityTypeShape EntityType="EventComboModel.Ticket_Purchased_Detail" Width="1.5" PointX="21.375" PointY="16.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

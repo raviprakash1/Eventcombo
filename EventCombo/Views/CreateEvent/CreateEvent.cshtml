@@ -15,6 +15,9 @@
 
 <script>
     $(document).ready(function () {
+       
+       
+
         $('#input2').filer({
             limit: 5,
             extensions: ['jpg', 'jpeg', 'png'],
@@ -214,10 +217,10 @@
     });
 </script>
 @*<script src="~/Scripts/jquery.numberformatter-1.2.4.jsmin.js"></script>*@
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "CreateEvent" }))
 {
     <div class="event_container">
-        <div class="event_inner_container event_top" id="eventtopscoll">
+        <div class="event_inner_container event_top createeventtop" id="eventtopscoll">
             <div class="col-sm-12 pt10 bggrey clearfix"  >
                 <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
                     <div class="er_UI_main" >
@@ -238,7 +241,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-12 pt10 bggrey clearfix" >
+            <div class="col-sm-12 bggrey clearfix xs-crt-evnt-pad-0" >
                 <div class="col-sm-3 col-xs-12 pt10 text-left no_pad" >
                     <label class="btn ev_live_sub_btn yelw_live_btn"  style="display:none;" id="dvdraft"> DRAFT </label>
 
@@ -264,7 +267,7 @@
                 </div>
             </div>
 
-            <div class="event-upload-container">
+            <div class="event-upload-container xs-upload-container">
                 <input type="file" name="image" id="input2" multiple data-jfiler-maxSize="2">
                 <div class="evnt_title_bg evnt_title_top">
                     <div class="form-group mb5">
@@ -302,13 +305,13 @@
                                                     </div>
                                                     <div class="form-group mb5 ">
                                                         <label class="col-sm-12 no_pad label-control ev_timezone_lebel">
-                                                            <input id="chkDisplayStartTime" type="checkbox" /> Display start time on event page
+                                                            <input id="chkDisplayStartTime" type="checkbox" checked="checked" /> Display start time on event page
                                                         </label>
                                                         <label class="col-sm-12 no_pad label-control ev_timezone_lebel">
-                                                            <input id="chkDisplayEndTime" type="checkbox" /> Display end time on event page
+                                                            <input id="chkDisplayEndTime" type="checkbox" checked="checked" /> Display end time on event page
                                                         </label>
                                                         <label class="col-sm-12 no_pad label-control ev_timezone_lebel">
-                                                            <input id="chkTimeZone" type="checkbox" />  Display time zone on event page
+                                                            <input id="chkTimeZone" type="checkbox" checked="checked" />  Display time zone on event page
                                                         </label>
                                                     </div>
                                                 </div>
@@ -316,7 +319,7 @@
                                             </div>
                                             <div class="clearfix"></div>
                                             <div class="modal-footer">
-                                                <button type="button" id="btSaveTimeZone" class="closetimemodal btn btn-primary  ev_add_sub_btn">Save</button>
+                                                @*<button type="button" id="btSaveTimeZone" class="closetimemodal btn btn-primary  ev_add_sub_btn">Save</button>*@
                                             </div>
                                         </div>
                                     </div>
@@ -364,11 +367,11 @@
 
 
                     </div>
-                    <div class="StartDatemodal col-sm-12 ev_time_zone_model_main ev_date_time_model">
+                    <div class="StartDatemodal col-sm-12 ev_time_zone_model_main ev_date_time_model" id="datemodel">
                         <div class="ev_time_zone_model">
                             <div class="modal-content ev_tm_zon_cont">
                                 <div class="modal-header">
-                                    <button class="close closemodal" type="button">
+                                    <button class="close closemodal" type="button" id="btnAddSch">
                                         <span>&#215;</span>
                                     </button><h4 class="modal-title ev_modal_header_title" id="myModalLabel">Schedule dates</h4>
                                 </div>
@@ -386,7 +389,7 @@
                                                     <input id="txtStartDate" class="datecheck date_picker form-control" placeholder="MM/DD/YYYY" onchange="ValEventdate(this.id)" />
                                                 </div>
                                                 <div class="col-sm-6 no_pad_res">
-                                                    <input id="txtStartTime" type="text" class="timecheck time_picker form-control" placeholder="00:00 AM" onchange="ValEventTime(this.id)" />
+                                                    <input id="txtStartTime" type="text" class="timecheck time_picker form-control" placeholder="00:00 AM" onchange="ValEventTime(this.id,event)" />
                                                 </div>
 
                                             </div>
@@ -396,7 +399,7 @@
                                                     <input id="txtEndDate" class="datecheck date_picker form-control" placeholder="MM/DD/YYYY" onchange="ValEventdate(this.id)" />
                                                 </div>
                                                 <div class="col-sm-6 no_pad_res">
-                                                    <input id="txtEndTime" type="text" class="timecheck time_picker form-control" placeholder="00:00 AM" onchange="ValEventTime(this.id)" />
+                                                    <input id="txtEndTime" type="text" class="timecheck time_picker form-control" placeholder="00:00 AM" onchange="ValEventTime(this.id,event)" />
                                                 </div>
 
                                             </div>
@@ -526,13 +529,13 @@
                                             <div class="col-sm-6 no_pad">
                                                 <div class="col-sm-12 no_pad"><label class="label-control ev_ven_mod_lebel">From</label></div>
                                                 <div class="col-sm-6 pl0">
-                                                    <input id="txtTimeStart" class="timecheck time_picker form-control" placeholder="00:00 AM" onchange="ValEventTime(this.id)" />
+                                                    <input id="txtTimeStart" class="timecheck time_picker form-control" placeholder="00:00 AM" onchange="ValEventTime(this.id,event)" />
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 no_pad">
                                                 <div class="col-sm-12 no_pad"><label class="label-control ev_ven_mod_lebel">To</label></div>
                                                 <div class="col-sm-6 pl0">
-                                                    <input id="txtTimeEnd" class="timecheck time_picker form-control" placeholder="00:00 AM" onchange="ValEventTime(this.id)" />
+                                                    <input id="txtTimeEnd" class="timecheck time_picker form-control" placeholder="00:00 AM" onchange="ValEventTime(this.id,event)" />
                                                 </div>
 
                                             </div>
@@ -560,7 +563,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="modal-footer mt10">
-                                    <button type="button" id="btnAddSch" class="closemodal btn btn-primary btn-lg ev_add_sub_btn">Save</button>
+                                    @*<button type="button" id="btnAddSch" class="closemodal btn btn-primary btn-lg ev_add_sub_btn">Save</button>*@
                                 </div>
                             </div>
                         </div>
@@ -578,27 +581,26 @@
                 </div>
                 <div class="evnt_details_body">
                     <div class="col-sm-12 mt20 no_pad">
-                        <div class="col-sm-4 pl0">
+                        <div class="col-sm-4 pl0 xs-evnt-type-pad-0">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label ev_tickt_lebel pl0">Type*</label>
-                                <div class="col-sm-9 dropheight">
+                                <div class="col-sm-9 xs-evnt-type-pad-0 dropheight">
                                     @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control selectpicker wd600 chkvalidation" })
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 pl0 xs768-pl0">
+                        <div class="col-sm-4 pl0 xs768-pl0 xs-evnt-type-pad-0">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label ev_tickt_lebel pl0">Category*</label>
-                                <div class="col-sm-9 dropheight">
+                                <div class="col-sm-9 xs-evnt-type-pad-0 dropheight">
                                     @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control selectpicker wd600 chkvalidation" })
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 pl0">
+                        <div class="col-sm-4 pl0 xs-evnt-type-pad-0">
                             <div class="form-group">
                                 <label class="col-sm-5 control-label ev_tickt_lebel no_pad">Sub Category</label>
-                                <div class="col-sm-7 dropheight">
-
+                                <div class="col-sm-7 xs-evnt-type-pad-0 dropheight">
                                     <select id="ddlEventSubCategory" class="form-control  wd600"></select>
                                 </div>
                             </div>
@@ -713,11 +715,11 @@
                         </div>
                     </div>
                     <div class="col-sm-12 mt10 no_pad">
-                        <button type="button" id="btAddOrg" class="btn btn-primary btn-lg ev_add_sub_btn">Add</button>
+                        <button type="button" id="btAddOrg" class="btn btn-primary btn-lg ev_add_sub_btn"> Add New Organizer </button>
                     </div>
                     <div class="col-sm-12 mt20 no_pad">
                         <div class="form-group">
-                            <label class="col-sm-12 control-label ev_tickt_lebel pl0">Added Organizer</label>
+                            <label class="col-sm-12 control-label ev_tickt_lebel pl0">Choose Existing Organizer</label>
                             @*<div class="col-sm-8 Orgz_dro_con">
                                     Organizer(s) List
                                     <span class="OrgIcn org_right pull-right">
@@ -725,13 +727,13 @@
                                     </span>
                                 </div>*@
                             <div class="col-sm-12 no_pad">
-                                <div class="col-sm-8 no_pad col-xs-4">
+                                <div class="col-sm-8 no_pad col-xs-4 xs_crt_evnt_edit_org_btn">
                                     <select id="ddlOrgnizers" class="form-control evnt_inp_cont"></select>
                                 </div>
-                                <div class="col-sm-2 col-xs-4">
+                                <div class="col-sm-2 col-xs-4 xs_crt_evnt_edit_org_btn">
                                     <button type="button" onclick="editOrgnizer();" class="btn btn-primary ev_add_sub_btn org_dele_btn" id="btneditorg">Edit <i class="fa fa-pencil"></i></button>
                                 </div>
-                                <div class="col-sm-2 col-xs-4">
+                                <div class="col-sm-2 col-xs-4 xs_crt_evnt_edit_org_btn">
                                     <button type="button" id="btndeleteorg" class="btn btn-primary ev_add_sub_btn org_dele_btn">Delete <i class="fa fa-trash"></i></button>
                                 </div>
                                 <table style="display:none;" id="tblOrgnizer"></table>
@@ -770,13 +772,14 @@
 
                     <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
                 </div>
+                <div class="clearfix"></div>
                 <div class="evnt_details_body">
 
                     <div class="col-sm-12 no_pad text-left mt10 evnt_tct_btn ev_btn_type">
                         <label class="ev_add_tkt_tit col12">Add ticket type*</label>
-                        <button type="button" class="btn btn-primary save_btnfree save_btn">FREE <i class="fa fa-plus"></i> </button>
-                        <button type="button" class="btn btn-primary save_btnpaid save_btn">PAID <i class="fa fa-plus"></i></button>
-                        <button type="button" class="btn btn-primary save_btndonation save_btn xsmr0 ">DONATE <i class="fa fa-plus"></i> </button>
+                        <button type="button" class="btn btn-primary save_btnfree save_btn xs_tkt_typ_btn">FREE <i class="fa fa-plus"></i> </button>
+                        <button type="button" class="btn btn-primary save_btnpaid save_btn xs_tkt_typ_btn">PAID <i class="fa fa-plus"></i></button>
+                        <button type="button" class="btn btn-primary save_btndonation save_btn xsmr0 xs_tkt_typ_btn">DONATE <i class="fa fa-plus"></i> </button>
                     </div>
                     <div class="col-sm-12 no_pad">
                         <div class="modal-content ticket_panel mt10">
@@ -800,24 +803,24 @@
                                         </div>
                                         <div class="col-sm-3 no_pad">
                                             <div class="form-group">
-                                                <label class="col-sm-4 control-label ev_tickt_lebel">Ticket*</label>
-                                                <div class="col-sm-8">
+                                                <label class="col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Ticket*</label>
+                                                <div class="col-sm-8 xs-tkt-typ-pad-0">
                                                     <input type="text" class="form-control evnt_inp_cont chkvalidation" id="id_ticket_type-n" placeholder="Early Bird, RSVP..." maxlength="256" onblur="checkvalidatetkt(this.id)" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-2 no_pad">
                                             <div class="form-group">
-                                                <label class="col-sm-3 control-label ev_tickt_lebel">Qty*</label>
-                                                <div class="col-sm-9">
+                                                <label class="col-sm-3 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Qty*</label>
+                                                <div class="col-sm-9 xs-tkt-typ-pad-0">
                                                     <input type="text" class="form-control evnt_inp_cont txtsum numbers chkvalidation" id="id_quantity_total-n" maxlength="6" placeholder="" onblur="changeqty(this.id)" onkeypress="allownumber(this,event,this.id)" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-3 no_pad">
                                             <div class="form-group paidticket-n" id="id_paid-n">
-                                                <label class="col-sm-5 no_pad control-label ev_tickt_lebel">Price* $</label>
-                                                <div class="col-sm-7 ">
+                                                <label class="col-sm-5 no_pad control-label ev_tickt_lebel xs-tkt-typ-pad-0">Price* $</label>
+                                                <div class="col-sm-7 xs-tkt-typ-pad-0">
                                                     <input type="text" class="form-control evnt_inp_cont numbers" id="id_cost-n" onkeypress="validatenumdec(this, event, this.id)" onkeyup="changefee(this.id, event)" onblur="    tofixed(this.id)"   placeholder="0.00" maxlength="9" />
                                                 </div>
 
@@ -826,12 +829,12 @@
                                                 <label class="col-sm-4 no_pad control-label ev_tickt_lebel" id="id_paymenttype-n" />
 
                                             </div>
-                                            <div class="label-control lbl_bot_price paidticket-n" id="idlbuyertotal-n">
+                                            <div class="label-control lbl_bot_price paidticket-n " id="idlbuyertotal-n">
                                                 <span class="buyer_tot">Buyer(s) total: </span>
                                                 <span class="buyer_price" id="id_buyerprice-n">$0.00 </span>
                                                 <span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
 
-                                                <div class="tooltip" id="id_tooltip-n">Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $0.00 <br /> Buyer(s) Total &nbsp;&nbsp; &nbsp;  $0.00</div>
+                                                <div class="tooltip xs-buyer-total" id="id_tooltip-n">Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $0.00 <br /> Buyer(s) Total &nbsp;&nbsp; &nbsp;  $0.00</div>
                                                 <label class="pull-right" style="color:red;display:none;" id="id_lblprice-n">Please enter valid number</label>
                                             </div>
                                             @*<div class="label-control lbl_bot_price  paidticket-n" id="idlbuyertotal-n">
@@ -846,8 +849,8 @@
                                         </div>
                                         <div class="col-sm-3 no_pad xs768det-del">
                                             <div class="form-group paidticket-n" id="id_Disc-n">
-                                                <label class="col-sm-4 control-label ev_tickt_lebel">Disc.$</label>
-                                                <div class="col-sm-8">
+                                                <label class="col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Disc.$</label>
+                                                <div class="col-sm-8 xs-tkt-typ-pad-0">
                                                     <input type="text" class="form-control evnt_inp_cont numbers" placeholder="0" id="id_Discount-n" onkeypress="validatenumdec(this, event, this.id)"  onblur="    tofixed(this.id)" maxlength="9"/>
 
                                                 </div>
@@ -906,28 +909,48 @@
                                                         <div class="form-group mt20">
                                                             <div class="col-sm-6 ev_pad_l0">
                                                                 <div class="col-sm-12 no_pad">
-                                                                    <label class="label-control pl0 ev_tickt_lebel">Ticket Sales Start</label>
+                                                                    <label class="label-control pl0 ev_tickt_lebel" >Ticket Sales Start
+                                                                        <div class="upload_help_icn pull-right">
+                                                                            <div class="tip">
+                                                                                <img class="help_icon_hov" src="~/Images/icon-question.gif" id="hovstart-n" onmouseover="showhover(this.id);" onmouseout="showhoverout(this.id)" />
+                                                                                <span class="upload_help_icn_inner" id="help_start_inner-n">
+                                                                                    Your Event's date and time need to be
+                                                                                    selected in order to update sales start date
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </label>
                                                                 </div>
                                                                 <div class="col-sm-8 ev_pad_l0 mb5 xs_pad_0">
-                                                                    <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_salestart-n" onchange="changetext(this.id);" />
+                                                                    <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_salestart-n" onchange="changetext(this.id);" disabled="disabled"     />
                                                                 </div>
                                                                 <div class="col-sm-4 no_pad mb5 xs_pad_0">
-                                                                    <input type="hidden" value="7:00pm" id="id_hdsaletimestart-n" />
-                                                                    <input id="id_saletimestart-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id)" />
+                                                                    @*<input type="hidden" value="7:00pm" id="id_hdsaletimestart-n" />*@
+                                                                    <input id="id_saletimestart-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id)" disabled="disabled"  />
                                                                 </div>
 
                                                             </div>
 
                                                             <div class="col-sm-6 ev_pad_r0 xs_pad_0">
                                                                 <div class="col-sm-12 no_pad">
-                                                                    <label class="label-control pl0 ev_tickt_lebel">Ticket Sales End</label>
+                                                                    <label class="label-control pl0 ev_tickt_lebel">Ticket Sales End
+                                                                        <div class="upload_help_icn pull-right">
+                                                                            <div class="tip">
+                                                                                <img class="help_icon_hov" src="~/Images/icon-question.gif" id="hovend-n" onmouseover="showhover(this.id);" onmouseout="showhoverout(this.id)" />
+                                                                                <span class="upload_help_icn_inner" id="help_end_inner-n">
+                                                                                    Your Event's date and time need to be selected in order to update sales
+                                                                                    end date
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </label>
                                                                 </div>
                                                                 <div class="col-sm-8 ev_pad_l0 mb5">
-                                                                    <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n" onchange="checkvalidDate(this.id)" />
+                                                                    <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n" onchange="checkvalidDate(this.id)" disabled="disabled"  />
                                                                 </div>
                                                                 <div class="col-sm-4 ev_pad_l0 mb5">
-                                                                    <input type="hidden" value="7:00pm" id="id_hdsaletimeend-n" />
-                                                                    <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id) " />
+                                                                    @*<input type="hidden" value="7:00pm" id="id_hdsaletimeend-n" />*@
+                                                                    <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id)" disabled="disabled"  />
                                                                 </div>
 
                                                             </div>
@@ -1077,6 +1100,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
                     <div class="col-sm-12 row mt10">
 
                         <div class="col-sm-12 no_pad">
@@ -1186,7 +1210,7 @@
                     <div class="col-sm-12 col-xs-12 text-left no_pad">
                         <h2 class="fb_dis_head ">
                             <label class="ev_fb_lable"><img src="~/Images/fb.png"> ENABLE DISCUSSION <input id="chkAllowFBDis" type="checkbox" /></label>
-                            <label class="ev_fb_lable">PUBLISH EVENT TO FACEBOOK <input id="chkPublishEventOnFB" type="checkbox" /></label>
+                            <label class="ev_fb_lable xs-evnt-fb-mr-0">PUBLISH EVENT TO FACEBOOK <input id="chkPublishEventOnFB" type="checkbox" /></label>
                         </h2>
                     </div>
                     <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
@@ -1198,10 +1222,13 @@
                     <div class="evnt_tile_bg_l"></div>
                     <div class="col-sm-12 col-xs-12 text-left no_pad">
                         <h2 class="fb_dis_head pt5">
-                            EVENT SETTING
+                            EVENT SETTING <img class="help_icon_hov help_ml" src="~/Images/icon-question.gif" />
                         </h2>
                     </div>
                     <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+                    <div class="event_tip">
+                        When the event is set to private, it will not be listed in our directory and you will have a private link through which to access the listing. you will also have an opportunity to send out email invites after you publish this event.
+                    </div>
                 </div>
                 <div class="evnt_details_body">
                     <div class="form-group">
@@ -1277,7 +1304,7 @@
         </div>
     </div>
     //----------Model Starts Here------------------
-
+}
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -1317,7 +1344,7 @@
                         </div>
                         <div class="col-sm-6 row pull-right">
                             <div class="form-group">
-                                <input id="Zip" class="form-control evnt_inp_cont" placeholder="Zip Code" />
+                                <input id="Zip" class="form-control evnt_inp_cont" placeholder="Zip Code" maxlength="6" />
                             </div>
                         </div>
                         <div class="clearfix"></div>
@@ -1448,7 +1475,9 @@
     @*<div id='map-canvas-event'></div>*@
 </div>
 
-    // ---------------------Event Creation Script -------------------
+
+    @*---------------------Event Creation Script -------------------*@
+
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     @*<script src="~/Content/gmap.js"></script>*@
@@ -1456,9 +1485,14 @@
 
 
     <script type="text/javascript">
+
+
+
+
+        var lastmodulecalled = "";
         var map_canvas ;
         var mapProp;
-    google.maps.event.addDomListener(window, 'load', initialize);
+        google.maps.event.addDomListener(window, 'load', initialize);
         function initialize() {
             var autocomplete = new google.maps.places.Autocomplete(document.getElementById('VenueName'));
             mapProp = {
@@ -1562,12 +1596,21 @@
         return false;
     }
 
-    </script>
 
 
-    <script>
+    $("#rdPublic").click(function () {
+       
+        //$("#rdPrivate").prop("checked","false");
+
+        $("#chkShareOnFB").prop("checked", false);
+        $("#chkGuestonly").prop("checked", false);
+        $("#chkReqPassword").prop("checked", false);
+        $("#txtReqPassword").val('');
+        $('#txtReqPassword').attr('readonly', true);
+        $(".priv_cont").hide();
 
 
+    });
 
 
         $(".chkvalidation").blur(function () {
@@ -1584,6 +1627,8 @@
             $(this).removeClass("err-bor");
 
         });
+
+
 
         var specialKeys = new Array();
         specialKeys.push(8); //Backspace
@@ -1637,7 +1682,7 @@
                 var startdate = $('#txtDateFrom').val();
 
                 var errorMsg = checkDate(e);
-                ValEventTime(e);
+                ValEventTime(e,event);
                 if (errorMsg != "") {
 
 
@@ -1689,7 +1734,7 @@
                 var enddate = $('#txtEndDate').val();
                 var startdate = $('#txtStartDate').val();
                 var errorMsg = checkDate(e);
-                ValEventTime(e); // checking if endDate !> startDate
+                ValEventTime(e, event); // checking if endDate !> startDate
                 if (errorMsg != "") {
 
 
@@ -1736,7 +1781,8 @@
             return d;
         }
 
-        function ValEventTime(e) {
+        function ValEventTime(e, event) {
+            debugger;
             if ($("#txtStartDate").val() == $("#txtEndDate").val() && (e == "txtEndTime" || e == "txtEndDate")) {
                 var formattedEndTime = parseTime($("#txtEndTime").val());
                 var formattedStartTime = parseTime($("#txtStartTime").val());
@@ -1766,7 +1812,11 @@
                 } else {
 
                     $('#txtEndTime').val($('#' + e).val());
+
+
                 }
+
+
 
             }
             if (e == "txtEndTime") {
@@ -1796,6 +1846,8 @@
 
                     $('#txtTimeEnd').val($('#' + e).val());
                 }
+
+                $(".StartDatemodal").show();
             }
             if (e == "txtTimeEnd") {
                 errorMsg = checkTime(e);
@@ -1809,6 +1861,10 @@
                 }
 
             }
+
+            //$(document).unbind("click");
+            //setTimeout(function () { $(document).unbind("click") }, 0000);
+            //$(".StartDatemodal").css("display", "block");
 
         }
         function DeleteTableRow(Sno) {
@@ -1856,19 +1912,20 @@
                 });
             } else
             {
-               
+
             }
 
-        
+            
+
             $('#tblOrgnizer tr').each(function () {
-              
+
                 if (Sno.trim() == $(this).find("td:first").html().trim()) {
-                   
+
                     $(this).remove();
-                    
+
                 }
             });
-           
+
             //$("#dllOrganizer")
             $("#ddlOrgnizers option").each(function (i) {
                 if (Sno == $(this).val()) {
@@ -1958,7 +2015,7 @@
         function AddOrgnizer() {
             $("#hidOrgnizer").val('');
             var Sno = $("#tblOrgnizer tr").length + 1;
-          
+
             var vOrgName = $("#txtOrgnizer").val();
             var vOrgDes = $("#edOrgDes").code();
             var vOrgFB = $("#txtOrgFBlink").val();
@@ -1983,7 +2040,7 @@
             strHTML = '<option value="' + Sno + '" id="' + Sno + '">' + vOrgName + '</option>';
 
             $("#ddlOrgnizers").append(strHTML);
-            
+
         }
 
         function UpdateOrgnizer() {
@@ -2019,6 +2076,9 @@
         }
 
         $(document).ready(function () {
+
+
+            var lastmodulecalled = "";
             $("#btndeleteorg").click(function () {
                 $("#hId").html(ajaxsetup('OrganizerMaster', 'OrgDeleteMessage'));
                 $("#btdeOrg").click();
@@ -2042,7 +2102,7 @@
                     $(".pac-container").append("<div class='pac-item location-places-autocomplete-cant-find ' id='divCNF'><i class='ico-search'></i><b><span class='pac-item-query'><a id='aCantFind' data-target='#myModal' class='js-location-cant-find' onclick='CannotFindLocation();' href='javascript:void(0);'   style='cursor: pointer; cursor: hand; margin-left:7px; color:#3cf;' data-toggle='modal' draggable='false'>Can't find your location?</a></span></b></div>");
                     $(".pac-container").on("click", function (event) {
                         $(this).removeClass('map-drop-block');
-                        $("#divCNF").removeClass('map-drop-block'); 
+                        $("#divCNF").removeClass('map-drop-block');
                         $(this).hide();
                         $(".pac-container").slice(1).removeClass('map-drop-block');
                     });
@@ -2084,6 +2144,7 @@
 
                 save("Live");
             });
+
             $('.cbtSave').click(function () {
                 var msg = validatemain();
                 if (msg != "") {
@@ -2156,19 +2217,7 @@
                 }
             });
 
-            $("#btSaveTimeZone").click(function () {
 
-
-                var vval = $("#dllTimeZone option:selected").text();
-
-
-                //var vval = $("#dllTimeZone").text();
-                if (vval == null || vval == '')
-                    vval = "Timezone & date setting";
-
-                $("#lblTimeZone").text(vval);
-
-            });
 
 
 
@@ -2208,6 +2257,8 @@
 
             function save(type)
             {
+
+
                 var status = "";
                 if (type == "Preview")
                 {
@@ -2302,11 +2353,11 @@
                         customerfee = $('#id_fee-' + i).val();
                         ecfee = $('#id_fee-' + i).val();
                         //if ($('#id_include_ticket_fees-' + i).val() == 0) {
-                          
+
 
                         //}
                         //if ($('#id_include_ticket_fees-' + i).val() == 1) {
-                          
+
 
                         //}
                         total = $('#id_total-' + i).val();
@@ -2332,9 +2383,9 @@
                             'T_Desc': $('#id_descriptionclass-' + i).val(),
                             'Show_T_Desc': parseInt(showdesc),
                             Sale_Start_Date: $('#id_salestart-' + i).val(),
-                            Sale_Start_Time: $('#id_hdsaletimestart-' + i).val(),
+                            Sale_Start_Time: $('#id_saletimestart-' + i).val(),
                             Sale_End_Date: $('#id_saleend-' + i).val(),
-                            Sale_End_Time: $('#id_hdsaletimeend-' + i).val(),
+                            Sale_End_Time: $('#id_saletimeend-' + i).val(),
                             'Hide_Ticket': parseInt(($("#id_ticketshidden-" + i).is(":checked") == true ? '1' : '0')),
                             Auto_Hide_Sche: parseInt(Auto_Schedule),
                             Hide_Untill_Date: $('#id_auto_hide_until_Date-' + i).val(),
@@ -2488,10 +2539,10 @@
                 debugger;
 
                 var vDefaultOrg = $("#ddlOrgnizers").val();
-                
+
                 $("#tblOrgnizer tr").each(function () {
                     var Sno = $(this).find("td:first").html().trim();
-                  
+
                     // Multiple Address
                     if (Sno != '') {
                         Orgnizer.push({
@@ -2572,7 +2623,12 @@
                             $("#hdEventId").val(response);
                             if (type == "Save") {
                                 $('#dvdraft').css('display', 'block');
-                                window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+                                @*if ($("#chkGuestonly").is(":checked") && $("#rdPrivate").is(":checked")) {
+                                    window.location.href = '@Url.Action("CreateInvitations", "ManageEvent", new {  })?lId=0&lEvtId=' + response + '&strMode="E"';
+                                } else {*@
+                                    window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+                                //}
+
                             }
                             if(type=="Preview")
                             {
@@ -2592,7 +2648,12 @@
                             }
                             if(type=="Live")
                             {
-                                window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' + response + '';
+                                var eventid = response;
+                                if ($("#chkGuestonly").is(":checked") && $("#rdPrivate").is(":checked")) {
+                                    window.location.href = '@Url.Action("CreateInvitations", "ManageEvent", new {  })?lId=0&lEvtId='+response+'&strMode=E';
+                                } else {
+                                    window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' + response + '';
+                                }
                             }
                         }
                     });
@@ -2708,17 +2769,17 @@
                 $("#btndeleteorg").attr('disabled', false);
 
                 var msg = disablebutton();
-              
+
                 if (msg == " ") {
                     $(".cdisable").removeAttr("disabled");
                 }
                 $("#txtOrgnizer").removeClass("err-bor");
-              
+
 
             });
 
 
-         
+
 
             $('#txtEventUrl').bind('cut copy paste', function (event) {
                 event.preventDefault();
@@ -2744,7 +2805,7 @@
                                 $("#txtEventUrl").val('');
                                 $("#txtEventUrl").focus();
 
-                            
+
                         }else
                     {
                                 $('#diverroacc').css('display', 'none');
@@ -2768,7 +2829,7 @@
             $("#EventType").change(function () {
 
                 var msg = disablebutton();
-              
+
                 if (msg.trim()=='') {
                     $(".cdisable").removeAttr("disabled");
                 }
@@ -2801,9 +2862,9 @@
                 });
 
                 var msg = disablebutton();
-              
+
                 if (msg.trim() == '') {
-                   
+
                     $(".cdisable").removeAttr("disabled");
                 }
             });
@@ -2839,9 +2900,9 @@
             });
 
             $("#btEnterDates").click(function () {
-                //alert($("#hdSchType").val());
+
                 if ($("#hdSchType").val() == 'Multiple') {
-                    //$(".SchmultiDetail").slideToggle("slow");
+
                     $(".SchmultiDetail").show();
                     $(".SchDivtop").hide();
                     $(".Schmultisingle").show();
@@ -2851,50 +2912,13 @@
                     $(".SchmultiDetail").hide();
                     $(".Schmultisingle").hide();
                 }
+                lastmodulecalled = "Startmodel";
             });
 
-            $("#btnAddSch").click(function () {
-                debugger;
-                $("#hidSchLastState").val($("#dlSchOption").val());
-                if ($(".SchmultiDetail").css('display') == 'block') {
-                    $("#hdSchType").val('Multiple');
-                    vSelecttextDates = "Click here to enter the start and end date";
-                    if ($("#txtDateFrom").val() != '' && $("#txtDateFrom").val() != null) {
-                        if ($("#dlSchOption").val() == "Daily") {
-                            vSelecttextDates = "Daily : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-                        }
-                        else if ($("#dlSchOption").val() == "Weekly") {
-                            vSelecttextDates = "Weekly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
 
-                        }
-                        else if ($("#dlSchOption").val() == "Monthly") {
-                            vSelecttextDates = "Monthly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
 
-                        }
-                        else if ($("#dlSchOption").val() == "Custom") {
-                            vSelecttextDates = "Custom : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
 
-                        }
 
-                    }
-
-                    $("#btEnterDates").text(vSelecttextDates);
-                }
-                else {
-                    vSelecttextDates = "Click here to enter the start and end date";
-                    if ($("#txtStartDate").val() != '' && $("#txtStartDate").val() != null)
-                        vSelecttextDates = $("#txtStartDate").val() + " " + $("#txtStartTime").val() + " To " + $("#txtEndDate").val() + " " + $("#txtEndTime").val()
-                    $("#btEnterDates").text(vSelecttextDates);
-
-                    $("#hdSchType").val('Single');
-                }
-
-                var msg = disablebutton();
-                //alert(msg);
-                if (msg == "") {
-                    $(".cdisable").removeAttr("disabled");
-                }
-            });
 
             if ($("#hidSchLastState").val() == "") {
                 $("#dlSchOption").val("Daily");
@@ -3169,30 +3193,14 @@
 
 
 
-            //$('body').click(function () {
-            //    $(".StartDatemodal").hide();
-            //});
-
-            //$('.StartDatemodal,.StartDate').click(function (event) {
-            //    event.stopPropagation();
-            //});
-
-            //$('body').click(function () {
-            //    $(".TmezoneSet").hide();
-            //});
-
-            //$('.TmezoneSet,.Timezone').click(function (event) {
-            //    event.stopPropagation();
-            //});
-
 
 
         });
-    </script>
+
 
 
     //Ticket Section Starts
-    <script>
+
         function CannotFindLocation() {
             $("#dvAddFooter").hide();
             $("#VenueName").val('');
@@ -3206,8 +3214,9 @@
             $(".pac-container").removeClass('map-drop-block');
             $(".js-location-cant-find").slice(1).remove();
         }
-        
+
         function changetext(e) {
+
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
             var al = e.substr(0, e.indexOf('-'));
 
@@ -3221,7 +3230,7 @@
 
                     $('#id_auto_hide_until_Date-' + el).focus();
                     $('#id_auto_hide_until_Date-' + el).val("");
-                  
+
                 }
 
                 //} else {
@@ -3238,8 +3247,38 @@
                     $('#id_salestart-' + el).val("");
                     $('#id_saleend-' + el).val("");
 
-                } else {
-                    $('#id_saleend-' + el).val($('#' + e).val());
+                }
+                else
+                {
+                    var starttimetime1 = convertTo24Hour($("#id_saletimestart-" + el).val());
+                    var todayDate = new Date($('#id_salestart-' + el).val() + " " + starttimetime1);
+                    var enddate = convertTo24Hour($('#id_saletimeend-' + el).val());
+
+                    var dateOne = new Date($('#id_saleend-' + el).val() + " " + enddate);
+
+                    if (todayDate > dateOne)
+                    {
+                        $('#id_saleend-' + el).val($("#id_salestart-" + el).val());
+                        $('#id_saletimeend-' + el).val($("#id_saletimestart-" + el).val());
+                    } else
+                    {
+
+                        if ($("#hdSchType").val() == '') {
+                            $('#id_saleend-' + el).val($('#' + e).val());
+                        }
+
+                        if ($("#hdSchType").val() == 'Single') {
+                            $('#id_saleend-' + el).val($("#txtEndDate").val());
+                            $('#id_saletimeend-' + el).val($("#txtEndTime").val());
+
+                        }
+                        if ($("#hdSchType").val() == 'Multiple') {
+                            $('#id_saleend-' + el).val($("#txtDateTo").val());
+                            $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
+                        }
+                    }
+
+
                 }
 
             }
@@ -3250,6 +3289,8 @@
 
 
         }
+
+
         function enablehideafteruntil(e)
         {
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
@@ -3314,7 +3355,7 @@
             }
 
         }
-     
+
 
         $(document).ready(function () {
             $("#txtOrgnizer").blur(function () {
@@ -3322,14 +3363,14 @@
                 var isValid = false;
                 var sno = $("#hidOrgnizer").val();
                 var name = $('#txtOrgnizer').val();
-                
-                var regex = /^[a-zA-Z ]*$/; 
+
+                var regex = /^[a-zA-Z ]*$/;
                 isValid = regex.test(name);
                 if (isValid) {
                     var orgid = 0;
 
                     orgid = $('#OrgId_' + sno).html();
-                 
+
                     if (typeof orgid === "undefined") {
                         orgid = 0;
                     }
@@ -3341,17 +3382,17 @@
                         success: function (data) {
 
                             if (data == "True") {
-                              
+
                                 $('#erraccmsg').html("Organizer name already exist!");
                                 $('#diverroacc').css('display', 'block');
                                 $('#txtOrgnizer').addClass('err-bor');
                                 $('#txtOrgnizer').val('');
                                 $('html,body').animate({ scrollTop: 0 });
-                              
+
                                 return false;
                             } else {
                                 $('#txtOrgnizer').removeClass('err-bor');
-                               
+
                             }
 
                         }
@@ -3414,7 +3455,7 @@
                 type: "Get",
                 success: function (data) {
                     var getHtml = data.split('¶');
-                  
+
                     $("#tblOrgnizer").append(getHtml[0]);
                     $("#ddlOrgnizers").append(getHtml[1]);
                     if( getHtml[1].trim()=="")
@@ -3512,12 +3553,12 @@
 
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
 
-          
+
             var minamt = parseInt($('#id_min_ticket-' + el).val());
             var maxamt = parseInt($('#id_max_ticket-' + el).val());
             if (isNaN(maxamt) && !isNaN(minamt))
             {
-                
+
                 $('#hdMaxerr').val('1');
                 $('#id_min_ticket-' + el).addClass('err-bor');
                 $('#id_max_ticket-' + el).addClass('err-bor');
@@ -3543,7 +3584,7 @@
                     $('#id_max_ticket-' + el).removeClass('err-bor');
                     $('#id_lblmax-' + el).css('display', 'none');
                 }
-          
+
         }
         function calculateSum() {
 
@@ -3834,12 +3875,12 @@
             data.removeAttr("style")
 
             data.find('*[id]').andSelf().each(function () {
-                //console.log($(this));
+
 
                 var id = $(this).attr('id');
-                //console.log(id);
+
                 id1 = id.substr(0, id.indexOf('-'));
-                ////console.log(id);
+
                 var idn = id1 + "-" + divlength;
                 $(this).attr("id", idn);
                 $(this).val('');
@@ -3866,8 +3907,7 @@
             $(".paidticket-" + divlength).css('display', 'block');
             $("#id_ticket_type-" + divlength).attr("placeholder", "Early Bird, RSVP...");
             $("#id_ticket_type-" + divlength).attr("title", "Give your ticket a name, like General Admission, Early Bird, RSVP, etc.");
-            //$("#id_paymenttype-" + divlength).attr("title", "Give your ticket a name, like General Admission, Early Bird, RSVP, etc.");
-            //$("#id_paymenttype-" + divlength).attr("placeholder", "Early Bird, RSVP...");
+
             $("#id_Discount-" + divlength).prop("readonly", false);
             var randomValue = randomString(4);
             $("#id_ticket_id-" + divlength).val(randomValue);
@@ -3876,7 +3916,7 @@
             $("#id_Tickettype-" + divlength).val("Paid");
             $("#id_buyerprice-" + divlength).html('$0.00');
             $('#id_tooltip-' + divlength).html('Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;   $0.00 <br /> Buyer(s) Total $0.00');
-            //$("#id_tooltip-" + divlength).html('Ticket Price  $0.00 <br /> Fee $0.00 <br /> Buyers Total $0.00');
+
             $("#id_feemethod").val(0);
             $("#id_salestart-" + divlength).datepicker({
                 format: "mm/dd/yyyy",
@@ -3899,38 +3939,17 @@
                 $("#id_saleend-" + divlength).datepicker('hide');
             });
 
-            //$("#id_auto_hide_until_Date-" + divlength).datepicker({
-            //    format: "mm/dd/yyyy",
-            //    minDate: "0",
-            //    onSelect: function () {
 
-            //        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-            //    }
-            //}).on('changeDate', function (ev) {
-            //    $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
-            //});
-            //$("#id_auto_hide_after_Date-" + divlength).datepicker({
-            //    format: "mm/dd/yyyy",
-            //    minDate: "0",
-            //    onSelect: function () {
-
-            //        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-            //    }
-            //}).on('changeDate', function (ev) {
-            //    $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
-            //});
 
             $("#id_saletimestart-" + divlength).timepicker();
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
             $("#id_saletimeend-" + divlength).timepicker();
-            //$("#id_auto_hide_until_time-" + divlength).timepicker();
-            //$("#id_auto_hide_after_Time-" + divlength).timepicker();
-            //$("#id_auto_hide_until_time-" + divlength).val("7:00pm");
-            //$("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
-            $("#id_saletimestart-" + divlength).val("7:00pm");
-            $("#id_saletimeend-" + divlength).val("7:00pm");
+
+
             $("input[id^='id_cost']").mask('000,000.00', { reverse: true });
             $("input[id^='id_Discount']").mask('000,000.00', { reverse: true });
+
+
             $("#clonediv-" + divlength).focus();
             var msg = disablebutton();
             if (msg == "") {
@@ -3940,6 +3959,7 @@
             }
 
         });
+
         $('.save_btndonation').click(function () {
             $(".ticket_panel").show();
             $("#id_ticket_footer").css('display', 'block');
@@ -4012,38 +4032,17 @@
                 $("#id_saleend-" + divlength).datepicker('hide');
             });
 
-            //$("#id_auto_hide_until_Date-" + divlength).datepicker({
-            //    format: "mm/dd/yyyy",
-            //    minDate: "0",
-            //    onSelect: function () {
 
-            //        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-            //    }
-            //}).on('changeDate', function (ev) {
-            //    $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
-            //});
-            //$("#id_auto_hide_after_Date-" + divlength).datepicker({
-            //    format: "mm/dd/yyyy",
-            //    minDate: "0",
-            //    onSelect: function () {
 
-            //        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-            //    }
-            //}).on('changeDate', function (ev) {
-            //    $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
-            //});
 
             $("#id_saletimestart-" + divlength).timepicker();
-           
+
             $("#id_saletimeend-" + divlength).timepicker();
-           // $("#id_auto_hide_until_time-" + divlength).timepicker();
-           //$("#id_auto_hide_after_Time-" + divlength).timepicker();
-           // $("#id_auto_hide_until_time-" + divlength).val("7:00pm");
-           // $("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
-            $("#id_saletimestart-" + divlength).val("7:00pm");
-            $("#id_saletimeend-" + divlength).val("7:00pm");
+
+
             $("#btndelete-" + divlength).attr('href', '#cnfrmdelete-' + divlength);
             $("#clonediv-" + divlength).focus();
+
             var msg = disablebutton();
             if (msg == "") {
 
@@ -4051,7 +4050,7 @@
 
             }
         });
-     
+
         $('.save_btnfree').click(function () {
 
             $(".ticket_panel").show();
@@ -4100,9 +4099,9 @@
             var randomValue = randomString(4);
             $("#id_ticket_id-" + divlength).val(randomValue);
             $("#id_order-" + divlength).val(divlength);
-            //$("#id_feetype-" + divlength).css('display', 'none');
+
             $("#id_Tickettype-" + divlength).val("Free");
-            //$("clonediv-" + divlength).css('display', 'block');
+
 
             $("#id_feemethod").val(0);
             $("#id_salestart-" + divlength).datepicker({
@@ -4126,37 +4125,13 @@
                 $("#id_saleend-" + divlength).datepicker('hide');
             });
 
-            //$("#id_auto_hide_until_Date-" + divlength).datepicker({
-            //    format: "mm/dd/yyyy",
-            //    minDate: "0",
-            //    onSelect: function () {
 
-            //        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-            //    }
-            //}).on('changeDate', function (ev) {
-            //    $("#id_auto_hide_until_Date-" + divlength).datepicker('hide');
-            //});
-            //$("#id_auto_hide_after_Date-" + divlength).datepicker({
-            //    format: "mm/dd/yyyy",
-            //    minDate: "0",
-            //    onSelect: function () {
 
-            //        this.fireEvent && this.fireEvent('onchange') || $(this).change();
-            //    }
-            //}).on('changeDate', function (ev) {
-            //    $("#id_auto_hide_after_Date-" + divlength).datepicker('hide');
-            //});
 
             $("#id_saletimestart-" + divlength).timepicker();
 
             $("#id_saletimeend-" + divlength).timepicker();
-         
-            //$("#id_auto_hide_until_time-" + divlength).timepicker();
-            //$("#id_auto_hide_after_Time-" + divlength).timepicker();
-            //$("#id_auto_hide_until_time-" + divlength).val("7:00pm");
-            //$("#id_auto_hide_after_Time-" + divlength).val("7:00pm");
-            $("#id_saletimestart-" + divlength).val("7:00pm");
-            $("#id_saletimeend-" + divlength).val("7:00pm");
+
 
             $("#clonediv-" + divlength).focus();
             var msg = disablebutton();
@@ -4233,6 +4208,35 @@
 
 
 
+        }
+        function formatdate()
+        {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+
+            today = mm + '/' + dd + '/' + yyyy;
+            return today;
+        }
+        function formatAMPM() {
+            var date = new Date();
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var ampm = hours >= 12 ? 'pm' : 'am';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            var strTime = hours + ':' + minutes +ampm;
+            return strTime;
         }
         function deletediv(e) {
 
@@ -4399,13 +4403,41 @@
 
                     $('#id_saletimestart-' + el).focus();
                     $('#id_saletimestart-' + el).val("7:00pm");
-                    $('#id_saletimeend-' + el).val("7:00pm");
 
-                } else {
-                    var txt=$('#' + e).val();
-                    $('#id_hdsaletimestart-' + el).val(txt);
-                    $('#id_hdsaletimeend-' + el).val(txt);
-                    $('#id_saletimeend-' + el).val($('#' + e).val());
+
+                }
+                else
+                {
+                    var starttimetime1 = convertTo24Hour($("#id_saletimestart-" + el).val());
+                    var todayDate = new Date($('#id_salestart-' + el).val() + " " + starttimetime1);
+                    var enddate = convertTo24Hour($('#id_saletimeend-' + el).val());
+
+                    var dateOne = new Date($('#id_saleend-' + el).val() + " " + enddate);
+
+                    if (todayDate > dateOne) {
+                        $('#id_saleend-' + el).val($("#id_salestart-" + el).val());
+                        $('#id_saletimeend-' + el).val($("#id_saletimestart-" + el).val());
+                    } else
+                    {
+
+                        var txt = $('#' + e).val();
+
+                        if ($("#hdSchType").val() == '') {
+                            $('#id_saletimeend-' + el).val($('#' + e).val());
+                        }
+
+                        if ($("#hdSchType").val() == 'Single') {
+
+                            $('#id_saletimeend-' + el).val($("#txtEndTime").val());
+
+                        }
+                        if ($("#hdSchType").val() == 'Multiple') {
+
+                            $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
+                        }
+                    }
+
+
 
                 }
             }
@@ -4413,13 +4445,36 @@
                 errorMsg = checkTime(e);
                 if (errorMsg != "") {
 
-                 
-                    $('#id_saletimeend-' + el).val($('#id_saletimestart-' + el).val());
-                    $('#id_saletimeend-' + el).focus();
-                    $('#id_hdsaletimeend-' + el).val($('#id_saletimestart-' + el).val());
 
-                } else {
-                    $('#id_hdsaletimeend-' + el).val($('#' + e).val());
+
+
+                    if ($("#hdSchType").val() == '') {
+                        $('#id_saletimeend-' + el).val($('#id_saletimestart-' + el).val());
+                    }
+
+                    if ($("#hdSchType").val() == 'Single') {
+
+                        $('#id_saletimeend-' + el).val($("#txtEndTime").val());
+
+                    }
+                    if ($("#hdSchType").val() == 'Multiple') {
+
+                        $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
+                    }
+
+                } else
+                {
+
+                    var starttimetime1 = convertTo24Hour($("#id_saletimestart-" + el).val());
+                    var todayDate = new Date($('#id_salestart-' + el).val() + " " + starttimetime1);
+                    var enddate = convertTo24Hour($('#id_saletimeend-' + el).val());
+
+                    var dateOne = new Date($('#id_saleend-' + el).val() + " " + enddate);
+
+                    if (todayDate > dateOne) {
+                        $('#id_saleend-' + e).val($("#id_salestart-" + el).val());
+                        $('#id_saletimeend-' + e).val($("#id_saletimestart-" + el).val());
+                    }
                 }
             }
             if (al == "id_auto_hide_until_time") {
@@ -4433,7 +4488,7 @@
                     //$('#id_auto_hide_after_Time-' + el).val("7:00pm");
 
                 } else {
-                
+
                     $('#id_hdautohideuntil-' + el).val($('#' + e).val());
                     //$('#id_hdautohideafter-' + el).val($('#' + e).val());
                     //$('#id_auto_hide_after_Time-' + el).val($('#' + e).val());
@@ -4446,18 +4501,29 @@
                 if (errorMsg != "") {
                     $("#id_auto_hide_after_Time-" + el).val("");
                     //$('#id_auto_hide_after_Time-' + el).val($('#id_auto_hide_until_time-' + el).val());
-                  
+
                     //$('#id_auto_hide_after_Time-' + el).focus();
 
                     $('#id_hdautohideafter-' + el).val("");
 
                 } else {
                     $('#id_hdautohideafter-' + el).val($('#' + e).val());
-                    
+
                 }
             }
 
 
+        }
+
+        function convertTo24Hour(time) {
+            var hours = parseInt(time.substr(0, 2));
+            if (time.indexOf('am') != -1 && hours == 12) {
+                time = time.replace('12', '0');
+            }
+            if (time.indexOf('pm') != -1 && hours < 12) {
+                time = time.replace(hours, (hours + 12));
+            }
+            return time.replace(/(am|pm)/, '');
         }
         function checkvalidDate(e) {
 
@@ -4470,26 +4536,39 @@
                 var startdate = $('#id_salestart-' + el).val();
                 if (errorMsg != "") {
 
+                    if ($("#hdSchType").val() == '') {
+                        $('#id_saleend-' + el).val(startdate);
+                    }
+
+                    if ($("#hdSchType").val() == 'Single') {
+                        $('#id_saleend-' + el).val($("#txtEndDate").val());
+                        $('#id_saletimeend-' + el).val($("#txtEndTime").val());
+
+                    }
+                    if ($("#hdSchType").val() == 'Multiple') {
+                        $('#id_saleend-' + el).val($("#txtDateTo").val());
+                        $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
+                    }
 
 
-                    $('#id_saleend-' + el).focus();
-                    $('#id_saleend-' + el).val(startdate);
+
+
+
 
 
                 }
+                var starttimetime1 = convertTo24Hour($("#id_saletimestart-" + el).val());
+                var todayDate = new Date(startdate + " " + starttimetime1);
+                var enddatetime = convertTo24Hour($('#id_saletimeend-' + el).val());
 
-                errorMsg = compare(startdate, enddate);
+                var dateOne = new Date(enddate + " " + enddatetime);
 
-                if (errorMsg != "") {
-
-
-
-                    $('#id_saleend-' + el).focus();
+                if (todayDate > dateOne) {
                     $('#id_saleend-' + el).val(startdate);
-                    // field.value = "";
-
-
                 }
+
+
+
             }
             if (al == "id_auto_hide_after_Date") {
                 var startdate = $('#id_auto_hide_until_Date-' + el).val();
@@ -4504,22 +4583,42 @@
 
                 }
 
-                //errorMsg = compare(startdate, enddate);
 
-                //if (errorMsg != "") {
-
-
-
-                //    $('#id_auto_hide_after_Date-' + el).focus();
-                //    $('#id_auto_hide_after_Date-' + el).val(startdate);
-                //    // field.value = "";
-
-
-                //}
 
 
             }
             return true;
+
+        }
+        function checkstartdate(e)
+        {
+            var count=0;
+            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+
+            var al = e.substr(0, e.indexOf('-'));
+            if($("#txtStartDate").val() != "" && $("#txtEndDate").val()!="")
+            {
+                count=1;
+            }
+            if (count == 1)
+            {
+
+            } else
+            {
+                if ( $("#txtDateFrom").val() != "" && $("#txtDateTo").val()!="")
+                {
+                    count = 1;
+                }
+            }
+
+            if (count == 1)
+            {
+
+
+
+            }else
+            {
+            }
 
         }
         function allownumber(el, evt, id) {
@@ -4638,7 +4737,7 @@
                 $("#id_auto_hide_type_0-" + el).prop('checked', false);
                 $("#id_hideuntil-" + el).attr("checked", false);
                 $("#id_hideafter-" + el).attr("checked", false);
-             
+
                 $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
@@ -4657,7 +4756,7 @@
                 $("#id_auto_hide_after_Time-" + el).val('');
                 $("#id_hideuntil-" + el).attr("checked", false);
                 $("#id_hideafter-" + el).attr("checked", false);
-             
+
                 $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
@@ -4679,15 +4778,15 @@
             }
             return randomString;
         }
-    </script>
+
 
     @*Image Section*@
- 
 
 
-    <script type="text/javascript">
+
+
         $(document).ready(function () {
-          
+
             function uuid() {
                 var chars = '0123456789abcdef'.split('');
 
@@ -4724,25 +4823,25 @@
             });
             $('#hdUniqueguid').val(uuid());
             //$('#input2').change(function () {
-                
-             
-              
-              
+
+
+
+
             //    if (this.files[0].size > 2097152) {
             //        $("#imageeror").val(1);
             //            alert("The file must be less than " + (2097152 / 1024 / 1024) + "MB");
-                      
+
             //            return false;
             //        }
-                
+
 
             //});
-           
+
         });
-    </script>
+
 
     //DateTime
-    <script>
+
         function ajaxsetup(strname, strFormTag) {
             var msgnew = "";
 
@@ -4762,7 +4861,7 @@
             return msgnew;
         }
         function disablebutton() {
-           
+
             var msg = "";
             var count = 0;
             var countqty = 0;
@@ -4773,14 +4872,14 @@
             var title = $('#txtEventTitle').val();
 
             if (title == "") {
-               
+
 
                 msg += ajaxsetup("CreateEvent", "CreateEventTitileUI") + "<br/>";
 
             }
 
             if ($('#ddlOrgnizers option').length <= 0) {
-              
+
                 msg += ajaxsetup("CreateEvent", "CreateEventOrganizerUI") + "<br/>";;
 
 
@@ -4788,11 +4887,11 @@
             var type = $("#EventType").val();
             var cat = $("#ddlEventCategory").val();
             if (type <= 0) {
-               
+
                 msg += ajaxsetup("CreateEvent", "CreateEventtypeUI") + "<br/>";;
             }
             if (cat <= 0) {
-              
+
                 msg += ajaxsetup("CreateEvent", "CreateEventCategoryUI") + "<br/>";;
             }
 
@@ -4817,27 +4916,27 @@
 
                     if (days == null) {
                         weekcnt++;
-                       
-                    } 
+
+                    }
                     if ($("#txtTimeStart").val() == "") {
                         weekcnt++;
-                       
+
                     }
                     if ($("#txtTimeEnd").val() == "") {
                         weekcnt++;
-                       
+
                     }
                     if ($("#txtTimeEnd").val() == "") {
                         weekcnt++;
-                      
+
                     }
                     if ($("#txtDateFrom").val() == "") {
                         weekcnt++;
-                      
+
                     }
                     if ($("#txtDateTo").val() == "") {
                         weekcnt++;
-                        
+
                     }
                 }
 
@@ -4845,22 +4944,22 @@
                     $("#txtDateFrom").length;
                     if ($("#txtDateFrom").val() == "") {
                         weekdaily++;
-                       
+
                     }
                     $("#txtDateTo").length;
                     if ($("#txtDateTo").val() == "") {
                         weekdaily++;
-                       
+
                     }
                     $("#txtTimeStart").length;
                     if ($("#txtTimeStart").val() == "") {
                         weekdaily++;
-                       
+
                     }
                     $("#txtTimeEnd").length;
                     if ($("#txtTimeEnd").val() == "") {
                         weekdaily++;
-                        
+
                     }
 
                 }
@@ -4869,23 +4968,23 @@
                     if (days == null) {
 
                         weekmnth++;
-                       
+
                     }
                     if ($("#txtDateFrom").val() == "") {
                         weekmnth++;
-                        
+
                     }
                     if ($("#txtDateFrom").val() == "") {
                         weekmnth++;
-                       
+
                     }
                     if ($("#txtTimeStart").val() == "") {
                         weekmnth++;
-                       
+
                     }
                     if ($("#txtDateTo").val() == "") {
                         weekmnth++;
-                       
+
                     }
 
                 }
@@ -4893,19 +4992,19 @@
 
                     if ($("#txtTimeStart").val() == "") {
                         custom++;
-                       
+
                     }
                     if ($("#txtTimeEnd").val() == "") {
                         custom++;
-                        
+
                     }
                     if ($("#txtDateFrom").val() == "") {
                         custom++;
-                       
+
                     }
                     if ($("#txtDateTo").val() == "") {
                         custom++;
-                        
+
                     }
 
                 }
@@ -4915,22 +5014,22 @@
                 var str = $("#txtStartDate").val();
                 if ($("#txtStartDate").val() == "") {
                     single++;
-                    
+
                 }
                 str = $("#txtStartTime").val();
                 if ($("#txtStartTime").val() == "") {
                     single++;
-                   
+
                 }
                 str = $("#txtEndDate").val();
                 if ($("#txtEndDate").val() == "") {
                     single++;
-                   
+
                 }
                 str = $("#txtEndTime").val();
                 if ($("#txtEndTime").val() == "") {
                     single++;
-                  
+
                 }
 
             }
@@ -4946,16 +5045,16 @@
 
             }
             if (weekmnth > 0) {
-               
+
                 msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
 
             }
             if (custom > 0) {
-               
+
                 msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
             }
             if (single > 0) {
-               
+
                 msg += ajaxsetup("CreateEvent", "Validdate") + "<br/>";
             }
             return msg;
@@ -4981,7 +5080,7 @@
 
             if (title == "") {
                 $('#txtEventTitle').addClass('err-bor');
-                
+
                 msg += ajaxsetup("CreateEvent", "CreateEventTitileUI")+"<br/>";
 
             }
@@ -5002,7 +5101,13 @@
                 $('#ddlEventCategory').addClass('err-bor');
                 msg += ajaxsetup("CreateEvent", "CreateEventCategoryUI") + "<br/>";;
             }
-
+            if ($("#tblAddress tr").length <= 1) {
+                if ($("#btOnlineEvent").is(":checked") == false && $("#UsepastLoc").is(":checked") == false) {
+                    if ($("#txtEventLocation").val() == "") {
+                        msg += "Inavlid Address" + "<br/>";;
+                    }
+                }
+            }
 
 
             var divlength = $("#MasterDiv> div").size();
@@ -5052,7 +5157,7 @@
                         if (price > 999999.99) {
                             $('#id_cost-' + i).addClass('err-bor');
                             countprice++;
-                        } 
+                        }
                     }
 
                     if ($('#id_ticketshidden-' + i).is(":checked"))
@@ -5071,7 +5176,7 @@
                             }
 
                         }
-                       
+
                         if ($('#id_hideafter-' + i).is(":checked")) {
                             if ($('#id_auto_hide_after_Date-' + i).val() == "" || $("#id_auto_hide_after_Time-" + i).val() == "") {
                                 $('#id_auto_hide_after_Date-' + i).addClass('err-bor');
@@ -5122,7 +5227,7 @@
                             $('#id_Discount-' + i).addClass('err-bor');
                             countdiscount++;
                         }
-                       
+
 
                     }
                     if(isNaN(cost)&& !isNaN(discount))
@@ -5130,7 +5235,7 @@
                         $('#id_Discount-' + i).addClass('err-bor');
                         countdiscount++;
                     }
-                    
+
                 }
 
 
@@ -5162,7 +5267,7 @@
                 msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
 
             }
-          
+
             if ($('#id_variablecharge').is(":checked") == true) {
                 if ($('#id_vardesc').val() == "") {
                     $('#id_vardesc').addClass('err-bor');
@@ -5215,9 +5320,9 @@
 
                 }
             }
-           
 
-         
+
+
             if (count > 0)
             {
 
@@ -5509,7 +5614,7 @@
             $('input.number').keyup(function (event) {
 
                 // skip for arrow keys
-             
+
 
                 // format number
                 $(this).val(function (index, value) {
@@ -5529,16 +5634,112 @@
             //    $("input").removeClass('err-bor');
             //});
             $('#drag-drop').on('click', function (e) {
-           
+
                 $('#input2').unbind('click');
 
             });
         });
 
-    </script>
 
-    <script type="text/javascript">
+
+        function AddDates() {
+            var savedaddress = "";
+            $("#hidSchLastState").val($("#dlSchOption").val());
+            if ($(".SchmultiDetail").css('display') == 'block') {
+                $("#hdSchType").val('Multiple');
+                vSelecttextDates = "Click here to enter the start and end date";
+                if ($("#txtDateFrom").val() != '' && $("#txtDateFrom").val() != null) {
+                    if ($("#dlSchOption").val() == "Daily") {
+                        vSelecttextDates = "Daily : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                        savedaddress = vSelecttextDates;
+                    }
+                    else if ($("#dlSchOption").val() == "Weekly") {
+                        vSelecttextDates = "Weekly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                        savedaddress = vSelecttextDates;
+                    }
+                    else if ($("#dlSchOption").val() == "Monthly") {
+                        vSelecttextDates = "Monthly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                        savedaddress = vSelecttextDates;
+                    }
+                    else if ($("#dlSchOption").val() == "Custom") {
+                        vSelecttextDates = "Custom : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                        savedaddress = vSelecttextDates;
+                    }
+
+                }
+
+                $("#btEnterDates").text(vSelecttextDates);
+            }
+            else {
+                vSelecttextDates = "Click here to enter the start and end date";
+                if ($("#txtStartDate").val() != '' && $("#txtStartDate").val() != null) {
+                    vSelecttextDates = $("#txtStartDate").val() + " " + $("#txtStartTime").val() + " To " + $("#txtEndDate").val() + " " + $("#txtEndTime").val()
+                    savedaddress = vSelecttextDates;
+                }
+                $("#btEnterDates").text(vSelecttextDates);
+
+                $("#hdSchType").val('Single');
+            }
+
+            if (savedaddress != '')
+            {
+           $("input[id^='id_salestart']").attr("disabled", false);
+            $("input[id^='id_saletimestart']").attr("disabled", false);
+            $("input[id^='id_saleend']").attr("disabled", false);
+            $("input[id^='id_saletimeend']").attr("disabled", false);
+            $(".upload_help_icn").css('display', 'none');
+            } else {
+                $("input[id^='id_salestart']").val("");;
+                $("input[id^='id_saletimestart']").val("");;
+                $("input[id^='id_saleend']").val("");;
+                $("input[id^='id_saletimeend']").val("");;
+                $("input[id^='id_salestart']").attr("disabled", true);
+                $("input[id^='id_saletimestart']").attr("disabled", true);
+                $("input[id^='id_saleend']").attr("disabled", true);
+                $("input[id^='id_saletimeend']").attr("disabled", true);
+                $(".upload_help_icn").css('display', 'block');
+            }
+
+            var msg = disablebutton();
+            //alert(msg);
+            if (msg == "") {
+                $(".cdisable").removeAttr("disabled");
+            }
+
+        };
+        function AddTimeZone()
+        {
+
+            var vval = $("#dllTimeZone option:selected").text();
+
+
+
+            if (vval == null || vval == '')
+                vval = "Timezone & date setting";
+
+            $("#lblTimeZone").text(vval);
+
+        }
         $(document).ready(function () {
+
+           $(".upload_help_icn_inner").css({ "display": "none" });
+            $(".help_icon_hov").mouseover(function (e) {
+                var $target = $(e.currentTarget);
+                $target.closest("div").find(".upload_help_icn_inner").css({ "display": "block" });
+            });
+            $(".help_icon_hov").mouseout(function (e) {
+                var $target = $(e.currentTarget);
+                $target.parent("div").find(".upload_help_icn_inner").css({ "display": "none" });
+                $(".event_tip").css({ "display": "none" });
+            });
+
+            $(".event_tip").css({ "display": "none" });
+            $(".help_icon_hov").mouseover(function (e) {
+                var $target = $(e.currentTarget);
+                $(".event_tip").css({ "display": "block" });
+            });
+           
+
             $('.summernote').summernote({
                 height: 70,   //set editable area's height
                 disableDragAndDrop: true
@@ -5775,16 +5976,23 @@
 
             $(".TmezoneSet").hide();
             $(".Timezone").click(function () {
+                $("#lastmodelcalled").val("TmezoneSet");
                 $(".TmezoneSet").slideToggle("fast");
 
             });
 
             $(".closemodal").click(function () {
+                AddDates();
                 $(".StartDatemodal").hide();
+                $("input[id^='id_salestart']").attr("disabled", false);
+                $("input[id^='id_saletimestart']").attr("disabled", false);
+                $("input[id^='id_saleend']").attr("disabled", false);
+                $("input[id^='id_saletimeend']").attr("disabled", false);
 
             });
 
             $(".closetimemodal").click(function () {
+                AddTimeZone();
                 $(".TmezoneSet").hide();
 
             });
@@ -5806,17 +6014,59 @@
         //$('.TmezoneSet, .Timezone').on('click', function (e) {
         //    e.stopPropagation();
         //});
+        //$("#datemodel").on('click', function (e) {
+        //    e.stopPropagation();
+
+        //});
+        //$("#txtStartTime .ui-timepicker-input").change(function (e) {
+        //    e.stopPropagation();
+
+        //});
+
+
 
         $(document).on('click', function (e) {
+
+
+
             var $target = $(e.target);
-            if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null) {
+
+            var id = $(e.target)[0].id;
+            //alert($($(e.target)[0]).attr("class"));
+
+            var uiclasstimepicker = $($(e.target)[0]).attr("class");
+            var uiclassdatepicker=$($(e.target)[0]).parent().parents("div").attr("class")
+            var uidatepickerheader = $($(e.target)[0]).parent().parents("div").attr("class");
+            if (typeof uiclasstimepicker === "undefined" && typeof uiclassdatepicker === "undefined" && typeof uidatepickerheader === "undefined")
+            {
+                AddDates();
+
                 $(".StartDatemodal").hide();
-            };
-            if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
-                $(".TmezoneSet").hide();
+            } else {
+                if ((uiclasstimepicker != "ui-timepicker-selected") && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker-header") < 0) && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker") < 0)) {
+
+                    if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null) {
+                        AddDates();
+
+                        $(".StartDatemodal").hide();
+
+                    }
+
+
+                }
             }
+
+           if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
+               AddTimeZone();
+               $(".TmezoneSet").hide();
+           }
+
+
+
+
         });
-        
+
+
         function onlyAlphabets(e, t) {
 
 
@@ -5844,6 +6094,40 @@
                 return false;
 
         }
+
+
+        $(document).prop('title', 'Eventcombo - Create a new event');
+
+        $(".upload_help_icn_inner").css({ "display": "none" });
+
+
+        function showhover(e)
+        {
+            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+            var al = e.substr(0, e.indexOf('-'));
+            if (al == "hovstart") {
+                $("#help_start_inner-" + el).css({ "display": "block" });
+            }
+            if(al=="hovend")
+            {
+                $("#help_end_inner-" + el).css({ "display": "block" });
+            }
+        }
+
+        function showhoverout(e)
+        {
+            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+            var al = e.substr(0, e.indexOf('-'));
+            if (al == "hovstart") {
+                $("#help_start_inner-" + el).css({ "display": "none" });
+            }
+            if (al == "hovend") {
+                $("#help_end_inner-" + el).css({ "display": "none" });
+            }
+
+        }
+
+
     </script>
 
-}
+
