@@ -1,0 +1,24 @@
+-----------Exception Details on  4/27/2016 4:27:48 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/27/2016 4:27:48 PM
+
+Error Line No : ine 179
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/editevent/modifyevent?strEventDs=createpromo&amp;strEventId=266
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

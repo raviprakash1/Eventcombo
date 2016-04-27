@@ -2307,6 +2307,7 @@ input[type="file"]:focus, input[type="radio"]:focus, input[type="checkbox"]:focu
 .theme-btn{ color:#fff; background:#3cf; border-radius:3px; }
 .theme-btn:hover, .theme-btn.active, .theme-btn:focus{ color: #fff; background:#3cf;border-radius:3px; }
 .orgz-selectpick button{ height:38px; }
+.brnone{ border:0px !important;}
 
 
 

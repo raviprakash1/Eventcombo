@@ -388,8 +388,8 @@ namespace EventCombo.Controllers
 
                            
                             dtEndDate = dzendpromocode.LocalTime;
-                          
-                            if (dtNow > dtEndDate)
+
+                         if (dtNow > dtEndDate)
                             {
                                 return "EDI";
                             }
@@ -536,7 +536,26 @@ namespace EventCombo.Controllers
                 return "N";
             }
         }
-
+        public string UnLockPromoCode()
+        {
+            try
+            {
+                string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
+                using (var context = new EventComboEntities())
+                {
+                        Ticket_Locked_Detail objTLD = (from TLD in context.Ticket_Locked_Detail where TLD.TLD_GUID == strGUID select TLD).FirstOrDefault();
+                        objTLD.TLD_PromoCodeId = 0;
+                        objTLD.TLD_PromoCodeAmount = 0;
+                        context.SaveChanges();
+                }
+                return "Y";
+            }
+            catch (Exception ex)
+            {
+                ExceptionLogging.SendErrorToText(ex);
+                return "N";
+            }
+        }
         public void setsession(string id, long Eventid)
         {
 

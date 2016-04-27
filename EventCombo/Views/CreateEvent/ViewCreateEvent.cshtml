@@ -263,8 +263,8 @@
             <div class="col-sm-6 col-xs-6 text-left no_pad">
                 <h2 class="fb_dis_head no_pad pt5 pr0">COMPLETE INFO</h2>
             </div>
-            @if (Html.DisplayFor(m => m.Shareonfb).ToString() == "y" || Html.DisplayFor(m => m.Shareonfb).ToString() == "Y")
-            {
+          @if (Model.EventPrivacy == "Public" || (Model.Shareonfb == "Y" || Model.Shareonfb == "y"))
+          {
                 <div class="col-sm-6 col-xs-6 pl0 text-right ev_social_share_btn">
                     <a href=""><img src="/Images/mail.png"></a>
                     <a href="#" id="twittershare"><img src="/Images/twi.png"></a>
@@ -281,7 +281,7 @@
                     <label id="eventdesc" class="eventdescfont">
 
 
-                        @Html.DisplayFor(m => m.EventDescription)
+                        @Html.Raw(Model.EventDescription)
                     </label>
                 </div>
                 <div class="col-sm-4 mt20">
@@ -289,25 +289,24 @@
                         @Html.HiddenFor(m => m.organizerid, new { id = "hdorganiserid" })
                         <h4>@Html.DisplayFor(m => m.organizername)</h4>
                         <p> <a data-target="#contorganizer" data-toggle="modal" href="#">Contact the Organizer </a></p>
-                        <p><a href="#">View organizer profile </a></p>
+                        <p><a href="@Url.Action("Index","OrganizerInfo", new {id=Model.organizerid,eventid=Model.eventId })">View organizer profile </a></p>
                         @if (Html.DisplayFor(m => m.fblink).ToString() != "")
                         {
-                            <p><a href="@Html.DisplayFor(m => m.fblink)"><img src="/Images/facebook-icon.png">&nbsp;@Html.DisplayFor(m => m.fblink)</a></p>
+                            <p><a href="@Html.DisplayFor(m => m.fblink)" target="_blank"><img src="/Images/facebook-icon.png">&nbsp;@Html.DisplayFor(m => m.fblink)</a></p>
 
                         }
                         @if (Html.DisplayFor(m => m.twitterlink).ToString() != "")
                         {
 
 
-                            <p><a href="@Html.DisplayFor(m => m.twitterlink)"><img src="/Images/twitter-icon.png">&nbsp;@Html.DisplayFor(m => m.twitterlink) </a></p>
+                            <p><a href="@Html.DisplayFor(m => m.twitterlink)" target="_blank"><img src="/Images/twitter-icon.png">&nbsp;@Html.DisplayFor(m => m.twitterlink) </a></p>
 
                         }
-@if (Html.DisplayFor(m => m.Linkedinlin).ToString() != "")
-{
-                        <p><a href="@Html.DisplayFor(m => m.Linkedinlin)"><img src="~/Images/linkid.png" />&nbsp; @Html.DisplayFor(m => m.Linkedinlin)</a></p>
-}
-
-                        <p><span class="badge">5</span> <a href="#">&nbsp;Upcoming Event(s)</a> </p>
+                        @if (Html.DisplayFor(m => m.Linkedinlin).ToString() != "")
+                        {
+                            <p><a href="@Html.DisplayFor(m => m.Linkedinlin)" target="_blank"><img src="~/Images/linkid.png" />&nbsp; @Html.DisplayFor(m => m.Linkedinlin)</a></p>
+                        }
+                        <p><span class="badge">@Model.Orgevents</span> <a href="@Url.Action("Index","OrganizerInfo", new {id=Model.organizerid,eventid=Model.eventId })">&nbsp;Upcoming Event(s)</a> </p>
 
                     </div>
                 </div>
@@ -338,40 +337,38 @@
             <div class="EveDisRib evnt_tile_head evnt_cursor bg-grey">
                 <div class="evnt_tile_dis_bg_l"></div>
                 <div class="FacdisComm col-sm-12 col-xs-12 text-left no_pad ">
-                    <h2 class="fb_dis_head pt5"><img src="/Images/fb-dis.png" class="img_top"> <span class="fb-comments-count" data-href="https://www.facebook.com/Eventcombo"></span>&nbsp; Comment(s)</h2>
+                    <h2 class="fb_dis_head pt5"><img src="/Images/fb-dis.png" class="img_top"> @*<span class="comment-count"></span>*@ <span class="fb-comments-count" data-href="https://www.facebook.com/Eventcombo"></span> &nbsp; Comment(s)</h2>
                 </div>
                 <div class="evnt_tile_dis_bg_r evnt_tile_bg_r_call"></div>
             </div>
-            <div class="EveActRib evnt_tile_head evnt_cursor">
-                <div class="evnt_tile_bg_l"></div>
-                <div class="FacdactComm col-sm-12 col-xs-12 text-left no_pad">
-                    <h2 class="fb_dis_head pt5"><img src="/Images/fb.png" class="img_top"> <span class="fb-comments-count" data-href="https://www.facebook.com/Eventcombo"></span>&nbsp; Comment(s)</h2>
-                </div>
-                <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
-            </div>
+                    <div class="EveActRib evnt_tile_head evnt_cursor">
+                        <div class="evnt_tile_bg_l"></div>
+                        <div class="FacdactComm col-sm-12 col-xs-12 text-left no_pad">
+                            <h2 class="fb_dis_head pt5">
+                                <img src="/Images/fb.png" class="img_top">
+                                <fb:comments-count class="" href="https://www.facebook.com/Eventcombo" fb-xfbml-state="rendered">
 
-            <div class="evnt_details_body2">
-                <div class="Evenfaccomment col-sm-12 ev_white_bg pb10 mt20 pt10" id="comments">
-                    <div class="fb-comments" data-href="https://www.facebook.com/Eventcombo" data-numposts="5"></div>
+                                </fb:comments-count>
 
-                </div>
-            </div>
+                                @*<span class="fb-comments-count" data-href=""></span>*@&nbsp; Comment(s)
+                            </h2>
+                        </div>
+                        <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+                    </div>
+
+                    <div class="evnt_details_body2">
+                        <div class="Evenfaccomment col-sm-12 ev_white_bg pb10 mt20 pt10" id="comments">
+                            <div class="fb-comments" data-href="https://www.facebook.com/Eventcombo" data-numposts="15" fb-xfbml-state="rendered"></div>
+
+                        </div>
+                    </div>
         }
-        else
-        {
-            <div class="evnt_tile_head evnt_cursor bg-grey">
-                <div class="evnt_tile_dis_bg_l"></div>
-                <div class="col-sm-12 col-xs-12 text-left no_pad ">
-                    <h2 class="fb_dis_head pt5"><img src="/Images/fb-dis.png" class="img_top"> <span class="fb-comments-count" data-href="https://www.facebook.com/Eventcombo"></span>&nbsp; Comment(s)</h2>
-                </div>
-                <div class="evnt_tile_dis_bg_r evnt_tile_bg_r_call"></div>
-            </div>
 
-        }
 
 
 
     </div>
+
     <div class="event_detail_container">
         <div class="evnt_tile_head" id="Ticketinfo">
             <div class="evnt_tile_bg_l"></div>
@@ -604,13 +601,77 @@
         </div>
     </div>
 </div>
+<div class="modal fade  modal-vcenter vw_tkt_modal" id="viewticketpassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content no-shdw">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:none;" id="btnclosepwd"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title ev_modal_header_title" id="myModalLabel">View Event Password</h4>
+            </div>
+            <div class="modal-body vw_tkt_modal_body">
+                <div class="event_detail_container">
+                    <div class="evnt_tile_head">
+                        <div class="evnt_tile_bg_l"></div>
+                        <div class="col-sm-12 col-xs-12 text-left no_pad">
+                            <h2 class="fb_dis_head pt5">Enter Password to view your live event</h2>
+                        </div>
+                        <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+                    </div>
+                    <div class="evnt_details_body2">
+                        <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
+                            <div class="col-md-12 no_pad text-center">
+                                <div class="form-group mb5 ">
+                                    <div class="col-sm-12 no_pad ev_ven_mod_lebel mb10">
 
+                                        <div class="Moderor mb10" id="divpwderroacc" tabindex="-1">
+                                            <div class="er_UI_main">
+                                                <div class="er_warnui_img"></div>
+                                                <div class="er_suc" id="erraccpwdmsg">You have entered incorrect password</div>
+                                                <button class="close" aria-hidden="true" type="button" id="btnhidepwderror" onclick="$('#divpwderroacc').hide();">&#215;</button>
+
+                                            </div>
+                                        </div>
+                                        @*<label class="alert-danger" id="lblwrongpwd" style="display:none;">You have entered incorrect password</label>*@
+                                    </div>
+                                    @*<div class="col-sm-12 no_pad ev_ven_mod_lebel mb10">
+                                            Enter Password to View the Event
+                                        </div>*@
+
+                                    <div class="col-sm-12 no_pad text-center">
+                                        <div class="form-group mb10">
+                                            <label class="col-md-4 control-label ev_tickt_lebel text-right">Password</label>
+                                            <div class="col-md-4">
+                                                <input class="form-control evnt_inp_cont" type="password" id="txtpwdlive">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-sm-12 text-center mt20">
+                                    <button type="button" class="btn ev_live_btn ev_live_sub_btn mb10" id="btnbackpwd">
+                                        CANCEL
+                                    </button>
+                                    <button type="button" class="btn ev_live_btn ev_live_sub_btn mb10" id="btnsubmitpwd">
+                                        SUBMIT
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
 <div>
     <a class="td-btn" id="btOk" type="button" href="#Overselling" data-toggle="modal" style="display:none">
 
     </a>
 </div>
-
+<button type="button" data-target="#viewticketpassword" data-toggle="modal" style="display:none;" id="idpasswordtick"></button>
 
 @*<script src="~/Scripts/jquery.icalendar.pack.js"></script>*@
 @*<script src="~/Scripts/jquery.cookie.js"></script>*@
@@ -620,6 +681,55 @@
 
 
     $(document).ready(function () {
+        $('#divpwderroacc').hide();
+        var eventype = "@Model.PrivatePassword";
+
+        if (eventype != "") {
+
+            $('#idpasswordtick').click();
+
+        }
+        $('#btnbackpwd').click(function () {
+            $.ajax({
+                url: '@Url.Action("Nullurlsession", "ViewEvent")',
+                type: "Post",
+                success: function (data) {
+
+                     window.close();
+
+                }
+            });
+
+
+        });
+
+        $('#btnsubmitpwd').click(function () {
+            var a = $('#txtpwdlive').val();
+            if (a != '') {
+                var id = $('#hdEventid').val();
+                $.ajax({
+                    url: '@Url.Action("Checkpassword", "CreateEvent")',
+                    data: { password: a, id: id },
+                    type: "Post",
+                    success: function (response) {
+
+                        if (response == "Y") {
+                            $('#btnclosepwd').click();
+                        } else {
+                            $('#divpwderroacc').show();
+                            //$('#lblwrongpwd').css('display', 'block');
+                            $('#erraccpwdmsg').html(ajaxsetup('ViewEvent', 'VEPasswordIncorrect'));
+                        }
+                    }
+                });
+            } else {
+                $('#divpwderroacc').show();
+                //$('#lblwrongpwd').css('display', 'block');
+                $('#erraccpwdmsg').html(ajaxsetup('ViewEvent', 'VEPasswordIncorrect'));
+                return false;
+            }
+
+        });
         $("#btEdit").click(function () {
             window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + $('#hdEventid').val();
         });
@@ -939,7 +1049,7 @@ function pad(n) { return n < 10 ? '0' + n : n };
                     }
                 },
                 error: function (data) {
-                   
+
                     return false
                 }
             });

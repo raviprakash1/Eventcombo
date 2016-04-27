@@ -927,14 +927,14 @@ WriteLiteral(">COMPLETE INFO</h2>\r\n            </div>\r\n");
 
             
             #line 266 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-            
+          
             
             #line default
             #line hidden
             
             #line 266 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-             if (Html.DisplayFor(m => m.Shareonfb).ToString() == "y" || Html.DisplayFor(m => m.Shareonfb).ToString() == "Y")
-            {
+           if (Model.EventPrivacy == "Public" || (Model.Shareonfb == "Y" || Model.Shareonfb == "y"))
+          {
 
             
             #line default
@@ -1018,7 +1018,7 @@ WriteLiteral("                        ");
 
             
             #line 284 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-                   Write(Html.DisplayFor(m => m.EventDescription));
+                   Write(Html.Raw(Model.EventDescription));
 
             
             #line default
@@ -1061,7 +1061,15 @@ WriteLiteral(" href=\"#\"");
 
 WriteLiteral(">Contact the Organizer </a></p>\r\n                        <p><a");
 
-WriteLiteral(" href=\"#\"");
+WriteAttribute("href", Tuple.Create(" href=\"", 15036), Tuple.Create("\"", 15130)
+            
+            #line 292 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+, Tuple.Create(Tuple.Create("", 15043), Tuple.Create<System.Object, System.Int32>(Url.Action("Index","OrganizerInfo", new {id=Model.organizerid,eventid=Model.eventId })
+            
+            #line default
+            #line hidden
+, 15043), false)
+);
 
 WriteLiteral(">View organizer profile </a></p>\r\n");
 
@@ -1081,15 +1089,17 @@ WriteLiteral(">View organizer profile </a></p>\r\n");
             #line hidden
 WriteLiteral("                            <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15252), Tuple.Create("\"", 15290)
+WriteAttribute("href", Tuple.Create(" href=\"", 15304), Tuple.Create("\"", 15342)
             
             #line 295 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 15259), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.fblink)
+, Tuple.Create(Tuple.Create("", 15311), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.fblink)
             
             #line default
             #line hidden
-, 15259), false)
+, 15311), false)
 );
+
+WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral("><img");
 
@@ -1099,7 +1109,7 @@ WriteLiteral(">&nbsp;");
 
             
             #line 295 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-                                                                                                               Write(Html.DisplayFor(m => m.fblink));
+                                                                                                                               Write(Html.DisplayFor(m => m.fblink));
 
             
             #line default
@@ -1128,15 +1138,17 @@ WriteLiteral("                        ");
             #line hidden
 WriteLiteral("                            <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15553), Tuple.Create("\"", 15596)
+WriteAttribute("href", Tuple.Create(" href=\"", 15621), Tuple.Create("\"", 15664)
             
             #line 302 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 15560), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.twitterlink)
+, Tuple.Create(Tuple.Create("", 15628), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.twitterlink)
             
             #line default
             #line hidden
-, 15560), false)
+, 15628), false)
 );
+
+WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral("><img");
 
@@ -1146,7 +1158,7 @@ WriteLiteral(">&nbsp;");
 
             
             #line 302 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-                                                                                                                   Write(Html.DisplayFor(m => m.twitterlink));
+                                                                                                                                   Write(Html.DisplayFor(m => m.twitterlink));
 
             
             #line default
@@ -1161,38 +1173,42 @@ WriteLiteral(" </a></p>\r\n");
             
             #line default
             #line hidden
+WriteLiteral("                        ");
+
             
             #line 305 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
- if (Html.DisplayFor(m => m.Linkedinlin).ToString() != "")
-{
+                         if (Html.DisplayFor(m => m.Linkedinlin).ToString() != "")
+                        {
 
             
             #line default
             #line hidden
-WriteLiteral("                        <p><a");
+WriteLiteral("                            <p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15808), Tuple.Create("\"", 15851)
+WriteAttribute("href", Tuple.Create(" href=\"", 15944), Tuple.Create("\"", 15987)
             
             #line 307 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-, Tuple.Create(Tuple.Create("", 15815), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.Linkedinlin)
+, Tuple.Create(Tuple.Create("", 15951), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.Linkedinlin)
             
             #line default
             #line hidden
-, 15815), false)
+, 15951), false)
 );
+
+WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 15857), Tuple.Create("\"", 15882)
-, Tuple.Create(Tuple.Create("", 15863), Tuple.Create<System.Object, System.Int32>(Href("~/Images/linkid.png")
-, 15863), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 16009), Tuple.Create("\"", 16034)
+, Tuple.Create(Tuple.Create("", 16015), Tuple.Create<System.Object, System.Int32>(Href("~/Images/linkid.png")
+, 16015), false)
 );
 
 WriteLiteral(" />&nbsp; ");
 
             
             #line 307 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-                                                                                                             Write(Html.DisplayFor(m => m.Linkedinlin));
+                                                                                                                                 Write(Html.DisplayFor(m => m.Linkedinlin));
 
             
             #line default
@@ -1201,18 +1217,35 @@ WriteLiteral("</a></p>\r\n");
 
             
             #line 308 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-}
+                        }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        <p><span");
+WriteLiteral("                        <p><span");
 
 WriteLiteral(" class=\"badge\"");
 
-WriteLiteral(">5</span> <a");
+WriteLiteral(">");
 
-WriteLiteral(" href=\"#\"");
+            
+            #line 309 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+                                          Write(Model.Orgevents);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</span> <a");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 16191), Tuple.Create("\"", 16285)
+            
+            #line 309 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+, Tuple.Create(Tuple.Create("", 16198), Tuple.Create<System.Object, System.Int32>(Url.Action("Index","OrganizerInfo", new {id=Model.organizerid,eventid=Model.eventId })
+            
+            #line default
+            #line hidden
+, 16198), false)
+);
 
 WriteLiteral(">&nbsp;Upcoming Event(s)</a> </p>\r\n\r\n                    </div>\r\n                " +
 "</div>\r\n            </div>\r\n        </div>\r\n\r\n    </div>\r\n\r\n    <div");
@@ -1263,13 +1296,13 @@ WriteLiteral(" class=\"event_detail_container\"");
 WriteLiteral(">\r\n");
 
             
-            #line 336 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 335 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 336 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 335 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
          if (@Html.DisplayFor(m => m.enablediscussion).ToString() == "y" || @Html.DisplayFor(m => m.enablediscussion).ToString() == "Y")
         {
 
@@ -1298,131 +1331,97 @@ WriteLiteral(" src=\"/Images/fb-dis.png\"");
 
 WriteLiteral(" class=\"img_top\"");
 
-WriteLiteral("> <span");
+WriteLiteral("> ");
+
+WriteLiteral(" <span");
 
 WriteLiteral(" class=\"fb-comments-count\"");
 
 WriteLiteral(" data-href=\"https://www.facebook.com/Eventcombo\"");
 
-WriteLiteral("></span>&nbsp; Comment(s)</h2>\r\n                </div>\r\n                <div");
+WriteLiteral("></span> &nbsp; Comment(s)</h2>\r\n                </div>\r\n                <div");
 
 WriteLiteral(" class=\"evnt_tile_dis_bg_r evnt_tile_bg_r_call\"");
 
 WriteLiteral("></div>\r\n            </div>\r\n");
 
-WriteLiteral("            <div");
+WriteLiteral("                    <div");
 
 WriteLiteral(" class=\"EveActRib evnt_tile_head evnt_cursor\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"evnt_tile_bg_l\"");
 
-WriteLiteral("></div>\r\n                <div");
+WriteLiteral("></div>\r\n                        <div");
 
 WriteLiteral(" class=\"FacdactComm col-sm-12 col-xs-12 text-left no_pad\"");
 
-WriteLiteral(">\r\n                    <h2");
+WriteLiteral(">\r\n                            <h2");
 
 WriteLiteral(" class=\"fb_dis_head pt5\"");
 
-WriteLiteral("><img");
+WriteLiteral(">\r\n                                <img");
 
 WriteLiteral(" src=\"/Images/fb.png\"");
 
 WriteLiteral(" class=\"img_top\"");
 
-WriteLiteral("> <span");
+WriteLiteral(">\r\n                                <fb:comments-count");
 
-WriteLiteral(" class=\"fb-comments-count\"");
+WriteLiteral(" class=\"\"");
 
-WriteLiteral(" data-href=\"https://www.facebook.com/Eventcombo\"");
+WriteLiteral(" href=\"https://www.facebook.com/Eventcombo\"");
 
-WriteLiteral("></span>&nbsp; Comment(s)</h2>\r\n                </div>\r\n                <div");
+WriteLiteral(" fb-xfbml-state=\"rendered\"");
+
+WriteLiteral(">\r\n\r\n                                </fb:comments-count>\r\n\r\n                    " +
+"            ");
+
+WriteLiteral("&nbsp; Comment(s)\r\n                            </h2>\r\n                        </d" +
+"iv>\r\n                        <div");
 
 WriteLiteral(" class=\"evnt_tile_bg_r evnt_tile_bg_r_call\"");
 
-WriteLiteral("></div>\r\n            </div>\r\n");
+WriteLiteral("></div>\r\n                    </div>\r\n");
 
             
-            #line 352 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 358 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
 
 
             
             #line default
             #line hidden
-WriteLiteral("            <div");
+WriteLiteral("                    <div");
 
 WriteLiteral(" class=\"evnt_details_body2\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"Evenfaccomment col-sm-12 ev_white_bg pb10 mt20 pt10\"");
 
 WriteLiteral(" id=\"comments\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"fb-comments\"");
 
 WriteLiteral(" data-href=\"https://www.facebook.com/Eventcombo\"");
 
-WriteLiteral(" data-numposts=\"5\"");
+WriteLiteral(" data-numposts=\"15\"");
 
-WriteLiteral("></div>\r\n\r\n                </div>\r\n            </div>\r\n");
+WriteLiteral(" fb-xfbml-state=\"rendered\"");
 
-            
-            #line 359 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-        }
-        else
-        {
+WriteLiteral("></div>\r\n\r\n                        </div>\r\n                    </div>\r\n");
 
             
-            #line default
-            #line hidden
-WriteLiteral("            <div");
-
-WriteLiteral(" class=\"evnt_tile_head evnt_cursor bg-grey\"");
-
-WriteLiteral(">\r\n                <div");
-
-WriteLiteral(" class=\"evnt_tile_dis_bg_l\"");
-
-WriteLiteral("></div>\r\n                <div");
-
-WriteLiteral(" class=\"col-sm-12 col-xs-12 text-left no_pad \"");
-
-WriteLiteral(">\r\n                    <h2");
-
-WriteLiteral(" class=\"fb_dis_head pt5\"");
-
-WriteLiteral("><img");
-
-WriteLiteral(" src=\"/Images/fb-dis.png\"");
-
-WriteLiteral(" class=\"img_top\"");
-
-WriteLiteral("> <span");
-
-WriteLiteral(" class=\"fb-comments-count\"");
-
-WriteLiteral(" data-href=\"https://www.facebook.com/Eventcombo\"");
-
-WriteLiteral("></span>&nbsp; Comment(s)</h2>\r\n                </div>\r\n                <div");
-
-WriteLiteral(" class=\"evnt_tile_dis_bg_r evnt_tile_bg_r_call\"");
-
-WriteLiteral("></div>\r\n            </div>\r\n");
-
-            
-            #line 369 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
-
+            #line 365 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
         }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n\r\n    </div>\r\n    <div");
+WriteLiteral("\r\n\r\n\r\n\r\n    </div>\r\n\r\n    <div");
 
 WriteLiteral(" class=\"event_detail_container\"");
 
@@ -1468,9 +1467,9 @@ WriteLiteral(" id=\"dvAjxLoader\"");
 
 WriteLiteral(">\r\n                        <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 19586), Tuple.Create("\"", 19616)
-, Tuple.Create(Tuple.Create("", 19592), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 19592), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 19733), Tuple.Create("\"", 19763)
+, Tuple.Create(Tuple.Create("", 19739), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 19739), false)
 );
 
 WriteLiteral(" />\r\n                    </div>\r\n                </div>\r\n\r\n                <div");
@@ -1575,7 +1574,7 @@ WriteLiteral(" href=\"#\"");
 WriteLiteral(">");
 
             
-            #line 435 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 432 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                                            Write(TempData["EventType"]);
 
             
@@ -1592,7 +1591,7 @@ WriteLiteral(" href=\"#\"");
 WriteLiteral(">");
 
             
-            #line 436 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 433 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                                            Write(TempData["EventCategory"]);
 
             
@@ -1609,7 +1608,7 @@ WriteLiteral(" href=\"#\"");
 WriteLiteral(">");
 
             
-            #line 437 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 434 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                                            Write(TempData["EventSubCategory"]);
 
             
@@ -1796,13 +1795,13 @@ WriteLiteral(" class=\"col-sm-12 text-right no_pad\"");
 WriteLiteral(">\r\n");
 
             
-            #line 507 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 504 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 507 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 504 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                      if (TempData["ForViewOnly"].ToString() == "Y")
                     {
 
@@ -1822,7 +1821,7 @@ WriteLiteral(" class=\"btn btn-lg ev_live_btn ev_live_sub_btn\"");
 WriteLiteral(">PROCEED TO PAYMENT  > </button>\r\n");
 
             
-            #line 510 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 507 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                     }
                     else
                     {
@@ -1841,7 +1840,7 @@ WriteLiteral(" class=\"btn btn-lg ev_live_btn ev_live_sub_btn\"");
 WriteLiteral(">PROCEED TO PAYMENT  > </button>\r\n");
 
             
-            #line 514 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 511 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
 
                     }
 
@@ -2161,8 +2160,214 @@ WriteLiteral(" id=\"btMesOk\"");
 
 WriteLiteral(" data-dismiss=\"modal\"");
 
-WriteLiteral(">OK</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<div>\r\n  " +
-"  <a");
+WriteLiteral(">OK</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div");
+
+WriteLiteral(" class=\"modal fade  modal-vcenter vw_tkt_modal\"");
+
+WriteLiteral(" id=\"viewticketpassword\"");
+
+WriteLiteral(" tabindex=\"-1\"");
+
+WriteLiteral(" role=\"dialog\"");
+
+WriteLiteral(" aria-labelledby=\"myModalLabel\"");
+
+WriteLiteral(" data-backdrop=\"static\"");
+
+WriteLiteral(" data-keyboard=\"false\"");
+
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"modal-dialog modal-lg\"");
+
+WriteLiteral(" role=\"document\"");
+
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" class=\"modal-content no-shdw\"");
+
+WriteLiteral(">\r\n            <div");
+
+WriteLiteral(" class=\"modal-header\"");
+
+WriteLiteral(">\r\n                <button");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" class=\"close\"");
+
+WriteLiteral(" data-dismiss=\"modal\"");
+
+WriteLiteral(" aria-label=\"Close\"");
+
+WriteLiteral(" style=\"display:none;\"");
+
+WriteLiteral(" id=\"btnclosepwd\"");
+
+WriteLiteral("><span");
+
+WriteLiteral(" aria-hidden=\"true\"");
+
+WriteLiteral(">&times;</span></button>\r\n                <h4");
+
+WriteLiteral(" class=\"modal-title ev_modal_header_title\"");
+
+WriteLiteral(" id=\"myModalLabel\"");
+
+WriteLiteral(">View Event Password</h4>\r\n            </div>\r\n            <div");
+
+WriteLiteral(" class=\"modal-body vw_tkt_modal_body\"");
+
+WriteLiteral(">\r\n                <div");
+
+WriteLiteral(" class=\"event_detail_container\"");
+
+WriteLiteral(">\r\n                    <div");
+
+WriteLiteral(" class=\"evnt_tile_head\"");
+
+WriteLiteral(">\r\n                        <div");
+
+WriteLiteral(" class=\"evnt_tile_bg_l\"");
+
+WriteLiteral("></div>\r\n                        <div");
+
+WriteLiteral(" class=\"col-sm-12 col-xs-12 text-left no_pad\"");
+
+WriteLiteral(">\r\n                            <h2");
+
+WriteLiteral(" class=\"fb_dis_head pt5\"");
+
+WriteLiteral(">Enter Password to view your live event</h2>\r\n                        </div>\r\n   " +
+"                     <div");
+
+WriteLiteral(" class=\"evnt_tile_bg_r evnt_tile_bg_r_call\"");
+
+WriteLiteral("></div>\r\n                    </div>\r\n                    <div");
+
+WriteLiteral(" class=\"evnt_details_body2\"");
+
+WriteLiteral(">\r\n                        <div");
+
+WriteLiteral(" class=\"col-sm-12 ev_white_bg pb10 pt10 mt20\"");
+
+WriteLiteral(">\r\n                            <div");
+
+WriteLiteral(" class=\"col-md-12 no_pad text-center\"");
+
+WriteLiteral(">\r\n                                <div");
+
+WriteLiteral(" class=\"form-group mb5 \"");
+
+WriteLiteral(">\r\n                                    <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad ev_ven_mod_lebel mb10\"");
+
+WriteLiteral(">\r\n\r\n                                        <div");
+
+WriteLiteral(" class=\"Moderor mb10\"");
+
+WriteLiteral(" id=\"divpwderroacc\"");
+
+WriteLiteral(" tabindex=\"-1\"");
+
+WriteLiteral(">\r\n                                            <div");
+
+WriteLiteral(" class=\"er_UI_main\"");
+
+WriteLiteral(">\r\n                                                <div");
+
+WriteLiteral(" class=\"er_warnui_img\"");
+
+WriteLiteral("></div>\r\n                                                <div");
+
+WriteLiteral(" class=\"er_suc\"");
+
+WriteLiteral(" id=\"erraccpwdmsg\"");
+
+WriteLiteral(">You have entered incorrect password</div>\r\n                                     " +
+"           <button");
+
+WriteLiteral(" class=\"close\"");
+
+WriteLiteral(" aria-hidden=\"true\"");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" id=\"btnhidepwderror\"");
+
+WriteLiteral(" onclick=\"$(\'#divpwderroacc\').hide();\"");
+
+WriteLiteral(">&#215;</button>\r\n\r\n                                            </div>\r\n         " +
+"                               </div>\r\n                                        ");
+
+WriteLiteral("\r\n                                    </div>\r\n                                   " +
+" ");
+
+WriteLiteral("\r\n\r\n                                    <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad text-center\"");
+
+WriteLiteral(">\r\n                                        <div");
+
+WriteLiteral(" class=\"form-group mb10\"");
+
+WriteLiteral(">\r\n                                            <label");
+
+WriteLiteral(" class=\"col-md-4 control-label ev_tickt_lebel text-right\"");
+
+WriteLiteral(">Password</label>\r\n                                            <div");
+
+WriteLiteral(" class=\"col-md-4\"");
+
+WriteLiteral(">\r\n                                                <input");
+
+WriteLiteral(" class=\"form-control evnt_inp_cont\"");
+
+WriteLiteral(" type=\"password\"");
+
+WriteLiteral(" id=\"txtpwdlive\"");
+
+WriteLiteral(">\r\n                                            </div>\r\n                          " +
+"              </div>\r\n                                    </div>\r\n\r\n            " +
+"                    </div>\r\n                                <div");
+
+WriteLiteral(" class=\"clearfix\"");
+
+WriteLiteral("></div>\r\n                                <div");
+
+WriteLiteral(" class=\"col-sm-12 text-center mt20\"");
+
+WriteLiteral(">\r\n                                    <button");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" class=\"btn ev_live_btn ev_live_sub_btn mb10\"");
+
+WriteLiteral(" id=\"btnbackpwd\"");
+
+WriteLiteral(">\r\n                                        CANCEL\r\n                              " +
+"      </button>\r\n                                    <button");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" class=\"btn ev_live_btn ev_live_sub_btn mb10\"");
+
+WriteLiteral(" id=\"btnsubmitpwd\"");
+
+WriteLiteral(@">
+                                        SUBMIT
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div");
+
+WriteLiteral(" class=\"clearfix\"");
+
+WriteLiteral("></div>\r\n            </div>\r\n\r\n        </div>\r\n    </div>\r\n</div>\r\n<div>\r\n    <a");
 
 WriteLiteral(" class=\"td-btn\"");
 
@@ -2176,15 +2381,96 @@ WriteLiteral(" data-toggle=\"modal\"");
 
 WriteLiteral(" style=\"display:none\"");
 
-WriteLiteral(">\r\n\r\n    </a>\r\n</div>\r\n\r\n\r\n");
+WriteLiteral(">\r\n\r\n    </a>\r\n</div>\r\n<button");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" data-target=\"#viewticketpassword\"");
+
+WriteLiteral(" data-toggle=\"modal\"");
+
+WriteLiteral(" style=\"display:none;\"");
+
+WriteLiteral(" id=\"idpasswordtick\"");
+
+WriteLiteral("></button>\r\n\r\n");
 
 WriteLiteral("\r\n");
 
-WriteLiteral("\r\n<script>\r\n\r\n\r\n\r\n\r\n    $(document).ready(function () {\r\n        $(\"#btEdit\").cli" +
-"ck(function () {\r\n            window.location.href = \'");
+WriteLiteral("\r\n<script>\r\n\r\n\r\n\r\n\r\n    $(document).ready(function () {\r\n        $(\'#divpwderroac" +
+"c\').hide();\r\n        var eventype = \"");
 
             
-            #line 624 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 685 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+                   Write(Model.PrivatePassword);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\";\r\n\r\n        if (eventype != \"\") {\r\n\r\n            $(\'#idpasswordtick\').click();\r" +
+"\n\r\n        }\r\n        $(\'#btnbackpwd\').click(function () {\r\n            $.ajax({" +
+"\r\n                url: \'");
+
+            
+            #line 694 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+                 Write(Url.Action("Nullurlsession", "ViewEvent"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@"',
+                type: ""Post"",
+                success: function (data) {
+
+                     window.close();
+
+                }
+            });
+
+
+        });
+
+        $('#btnsubmitpwd').click(function () {
+            var a = $('#txtpwdlive').val();
+            if (a != '') {
+                var id = $('#hdEventid').val();
+                $.ajax({
+                    url: '");
+
+            
+            #line 711 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+                     Write(Url.Action("Checkpassword", "CreateEvent"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@"',
+                    data: { password: a, id: id },
+                    type: ""Post"",
+                    success: function (response) {
+
+                        if (response == ""Y"") {
+                            $('#btnclosepwd').click();
+                        } else {
+                            $('#divpwderroacc').show();
+                            //$('#lblwrongpwd').css('display', 'block');
+                            $('#erraccpwdmsg').html(ajaxsetup('ViewEvent', 'VEPasswordIncorrect'));
+                        }
+                    }
+                });
+            } else {
+                $('#divpwderroacc').show();
+                //$('#lblwrongpwd').css('display', 'block');
+                $('#erraccpwdmsg').html(ajaxsetup('ViewEvent', 'VEPasswordIncorrect'));
+                return false;
+            }
+
+        });
+        $(""#btEdit"").click(function () {
+            window.location.href = '");
+
+            
+            #line 734 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                Write(Url.Action("ModifyEvent", "EditEvent", new { }));
 
             
@@ -2194,7 +2480,7 @@ WriteLiteral("\' + \'?Eventid=\' + $(\'#hdEventid\').val();\r\n        });\r\n\r
 ".click(function () {\r\n           window.location.href = \'");
 
             
-            #line 628 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 738 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                               Write(Url.Action("EventConfirmation", "EventConfirmation",new { }));
 
             
@@ -2237,7 +2523,7 @@ WriteLiteral("?EventId=\' + $(\"#hdEventId\").val() + \'\';\r\n        });\r\n\r
 "                 url: \'");
 
             
-            #line 722 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 832 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                      Write(Url.Action("saveorganizermsg", "CreateEvent"));
 
             
@@ -2304,7 +2590,7 @@ WriteLiteral("\r\n\r\n\r\n\r\n\r\n\r\n                function showevent(t) {\r\
 "(\"#ioutlook\").attr(\"href\", \'");
 
             
-            #line 824 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 934 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                             Write(Url.Action("Calendar", "CreateEvent",new {}));
 
             
@@ -2315,7 +2601,7 @@ WriteLiteral("\' + \'?beginDate=\' + isodatestart + \'&endDate=\' + isodateend +
 "ender\").attr(\"href\", \'");
 
             
-            #line 825 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 935 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                              Write(Url.Action("Calendar", "CreateEvent",new {}));
 
             
@@ -2345,7 +2631,7 @@ WriteLiteral("\' + \'?beginDate=\' + isodatestart + \'&endDate=\' + isodateend +
 "();\r\n                $.ajax({\r\n                    url: \'");
 
             
-            #line 868 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 978 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                      Write(Url.Action("savevote", "CreateEvent"));
 
             
@@ -2399,7 +2685,7 @@ WriteLiteral(@"
                 url: '");
 
             
-            #line 911 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 1021 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                  Write(Url.Action("savefavourite", "CreateEvent"));
 
             
@@ -2423,30 +2709,29 @@ WriteLiteral("\r\n                        return false;\r\n                    }
 "Event have not been saved!\');\r\n                            $(\"#btnfavourite\").re" +
 "moveClass(\"btn_fav_act\");\r\n                        }\r\n\r\n                        " +
 "$(\'#spanfav\').html(data);\r\n\r\n                    }\r\n                },\r\n        " +
-"        error: function (data) {\r\n                   \r\n                    retur" +
-"n false\r\n                }\r\n            });\r\n\r\n        });\r\n\r\n        $(\"#lstcar" +
-"ousel div:first\").addClass(\"active\");\r\n\r\n\r\n        $(\".EveActRib\").css(\"display\"" +
-", \"none\");\r\n        $(\".FacdisComm\").click(function () {\r\n            $(\".EveAct" +
-"Rib\").show();\r\n            $(\".EveDisRib\").hide();\r\n        });\r\n\r\n        $(\".F" +
-"acdactComm\").click(function () {\r\n            $(\".EveActRib\").hide();\r\n         " +
-"   $(\".EveDisRib\").show();\r\n        });\r\n\r\n\r\n        $(\".TmezoneSet\").hide();\r\n " +
-"       $(\".Timezone\").click(function () {\r\n            var eventtype = $(\"#hdEve" +
-"nttype\").val();\r\n            if (eventtype == \"Multiple\") {\r\n                $(\"" +
-".TmezoneSet\").slideToggle(\"fast\");\r\n            } else {\r\n                $(\".Tm" +
-"ezoneSet\").slideToggle(\"fast\");\r\n            }\r\n            //\r\n\r\n        });\r\n\r" +
-"\n        $(\".closetimemodal\").click(function () {\r\n            $(\".TmezoneSet\")." +
-"hide();\r\n\r\n        });\r\n    });\r\n</script>\r\n\r\n\r\n\r\n<script>\r\n    $(function () {\r" +
-"\n        var address = $(\'#lbltopaddress\').html();\r\n        $(document).tooltip(" +
-"{\r\n            items: \"[data-geo], [title]\",\r\n            content: function () {" +
-"\r\n                var element = $(this);\r\n                if (element.is(\"[data-" +
-"geo]\")) {\r\n\r\n                    var text = address;\r\n                    return" +
-" \"<img class=\'map\'  alt=\'\" + text +\r\n                      \"\' src=\'http://maps.g" +
-"oogle.com/maps/api/staticmap?\" +\r\n                      \"zoom=15&size=250x250&ma" +
-"ptype=roadmap&sensor=false&center=\" +\r\n                      text + \"&markers=si" +
-"ze:mid%7Ccolor:0xff0000%7Clabel:%7C\" + text + \"\'>\";\r\n                }\r\n        " +
-"        if (element.is(\"[title]\")) {\r\n                    return element.attr(\"t" +
-"itle\");\r\n                }\r\n\r\n            }\r\n        });\r\n    });\r\n</script>\r\n\r\n" +
-"\r\n");
+"        error: function (data) {\r\n\r\n                    return false\r\n          " +
+"      }\r\n            });\r\n\r\n        });\r\n\r\n        $(\"#lstcarousel div:first\").a" +
+"ddClass(\"active\");\r\n\r\n\r\n        $(\".EveActRib\").css(\"display\", \"none\");\r\n       " +
+" $(\".FacdisComm\").click(function () {\r\n            $(\".EveActRib\").show();\r\n    " +
+"        $(\".EveDisRib\").hide();\r\n        });\r\n\r\n        $(\".FacdactComm\").click(" +
+"function () {\r\n            $(\".EveActRib\").hide();\r\n            $(\".EveDisRib\")." +
+"show();\r\n        });\r\n\r\n\r\n        $(\".TmezoneSet\").hide();\r\n        $(\".Timezone" +
+"\").click(function () {\r\n            var eventtype = $(\"#hdEventtype\").val();\r\n  " +
+"          if (eventtype == \"Multiple\") {\r\n                $(\".TmezoneSet\").slide" +
+"Toggle(\"fast\");\r\n            } else {\r\n                $(\".TmezoneSet\").slideTog" +
+"gle(\"fast\");\r\n            }\r\n            //\r\n\r\n        });\r\n\r\n        $(\".closet" +
+"imemodal\").click(function () {\r\n            $(\".TmezoneSet\").hide();\r\n\r\n        " +
+"});\r\n    });\r\n</script>\r\n\r\n\r\n\r\n<script>\r\n    $(function () {\r\n        var addres" +
+"s = $(\'#lbltopaddress\').html();\r\n        $(document).tooltip({\r\n            item" +
+"s: \"[data-geo], [title]\",\r\n            content: function () {\r\n                v" +
+"ar element = $(this);\r\n                if (element.is(\"[data-geo]\")) {\r\n\r\n      " +
+"              var text = address;\r\n                    return \"<img class=\'map\' " +
+" alt=\'\" + text +\r\n                      \"\' src=\'http://maps.google.com/maps/api/" +
+"staticmap?\" +\r\n                      \"zoom=15&size=250x250&maptype=roadmap&senso" +
+"r=false&center=\" +\r\n                      text + \"&markers=size:mid%7Ccolor:0xff" +
+"0000%7Clabel:%7C\" + text + \"\'>\";\r\n                }\r\n                if (element" +
+".is(\"[title]\")) {\r\n                    return element.attr(\"title\");\r\n          " +
+"      }\r\n\r\n            }\r\n        });\r\n    });\r\n</script>\r\n\r\n\r\n");
 
 WriteLiteral("\r\n<script>\r\n    //function validate(e) {\r\n    //    if (isNaN(this.value + \"\" + S" +
 "tring.fromCharCode(e.charCode))) return false;\r\n    //}\r\n    //$(\'.number-only\')" +
@@ -2538,7 +2823,7 @@ WriteLiteral("\r\n<script>\r\n    //function validate(e) {\r\n    //    if (isNa
 "         url: \'");
 
             
-            #line 1192 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 1302 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                      Write(Url.Action("GetTicketDetail", "CreateEvent"));
 
             
@@ -2565,7 +2850,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 1210 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 1320 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                  Write(Url.Action("GetTicketDetail", "CreateEvent"));
 
             
@@ -2611,7 +2896,7 @@ WriteLiteral("\',\r\n                beforeSend: function () { $(\'#dvAjxLoader\
 " $.ajax({\r\n                    url: \'");
 
             
-            #line 1282 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 1392 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                      Write(Url.Action("LockTickets", "CreateEvent"));
 
             
@@ -2630,7 +2915,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 1292 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 1402 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
                                                Write(Url.Action("TicketPayment", "TicketPayment", new { }));
 
             
@@ -2665,7 +2950,7 @@ WriteLiteral(@"' + '?Eventid=' + Eventid;
             url: '");
 
             
-            #line 1318 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
+            #line 1428 "..\..\Views\CreateEvent\ViewCreateEvent.cshtml"
              Write(Url.Action("Index", "ValidationMessage"));
 
             

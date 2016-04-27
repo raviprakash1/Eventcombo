@@ -978,7 +978,7 @@ namespace EventCombo.Controllers
                         objJson.EventStartTime = starttime;
                         objJson.EventEndDate = enddate;
                         objJson.EventEndTime = endtime;
-                       
+                        objJson.EventVenueID = ev.EventVenueID;
 
                         objJson.MultipleSchTime = "S";
                     }
@@ -2165,14 +2165,25 @@ namespace EventCombo.Controllers
                         {
                             if (ObjEC.EventStatus == "Live")
                             {
-                               
+                                var eventid = model.EventID;
                                 model.EventID = vmc.GetLatestEventId(lEventId);
-                                lEventId = EditEventInfo(model);
-                                //if (ObjEC.Parent_EventID == null || ObjEC.Parent_EventID == 0)
-                                //    Parent_EventID = lEventId;
-                                //else
-                                //    Parent_EventID = (long)ObjEC.Parent_EventID;
+                                lEventId = EditsingleLiveInfo(model);
+                                //lEventId = EditEventInfo(model);
+
                                 Parent_EventID = vmc.GetParentEventId(lEventId);
+
+
+                                var promocode = (from p in db.Promo_Code where p.PC_Eventid == eventid select p).Any();
+                                if(promocode)
+                                {
+                                    string sql = @"update Promo_Code set PC_Eventid={0} where PC_Eventid={1}";
+                                    List<Object> sqlParamsList = new List<object>();
+                                    sqlParamsList.Add(lEventId);
+                                    sqlParamsList.Add(eventid);
+                                    objEnt.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+
+                                }
+
                             }
                             else
                             {
@@ -2787,8 +2798,560 @@ namespace EventCombo.Controllers
                 return -1;
             }
         }
-     
-     
+
+        private long EditsingleLiveInfo(EventCreation model)
+        {
+            string lat = "", lon = "";
+            List<long> ids = new List<long>();
+            ViewEvent vc = new ViewEvent();
+            var lEventId = model.EventID;
+            using (EventComboEntities objEnt = new EventComboEntities())
+            {
+               
+                Event ObjEC = objEnt.Events.FirstOrDefault(i => i.EventID == lEventId);
+                if (ObjEC != null)
+                {
+                    string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+                    var addressstatus = model.AddressStatus;
+                    if (model.AddressDetail == null)
+                    {
+                        objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
+                        if (addressstatus != "PastLocation" && addressstatus != "Online")
+                        {
+                            model.AddressStatus = "";
+                        }
+                    }
+                    // Event ObjEC = new Event();
+                    ObjEC.Parent_EventID = 0;
+                    ObjEC.EventTypeID = model.EventTypeID;
+                    ObjEC.EventCategoryID = model.EventCategoryID;
+                    ObjEC.EventSubCategoryID = model.EventSubCategoryID;
+                    ObjEC.UserID = strUserId;
+                    ObjEC.EventTitle = model.EventTitle;
+                    ObjEC.DisplayStartTime = model.DisplayStartTime;
+                    ObjEC.DisplayEndTime = model.DisplayEndTime;
+                    ObjEC.DisplayTimeZone = model.DisplayTimeZone;
+                    ObjEC.EventDescription = Server.HtmlEncode(model.EventDescription);
+                    ObjEC.EventPrivacy = model.EventPrivacy;
+                    ObjEC.Private_ShareOnFB = model.Private_ShareOnFB;
+                    ObjEC.Private_GuestOnly = model.Private_GuestOnly;
+                    ObjEC.Private_Password = model.Private_Password;
+                    ObjEC.EventUrl = model.EventUrl;
+                    ObjEC.PublishOnFB = model.PublishOnFB;
+                    ObjEC.EventStatus = model.EventStatus;
+                    ObjEC.IsMultipleEvent = model.IsMultipleEvent;
+                    ObjEC.TimeZone = model.TimeZone;
+                    ObjEC.DisplayStartTime = model.DisplayStartTime;
+                    ObjEC.DisplayEndTime = model.DisplayEndTime;
+                    ObjEC.DisplayTimeZone = model.DisplayTimeZone;
+                    ObjEC.FBUrl = model.FBUrl;
+                    ObjEC.TwitterUrl = model.TwitterUrl;
+                    ObjEC.LastLocationAddress = model.LastLocationAddress;
+                    ObjEC.AddressStatus = model.AddressStatus;
+                    ObjEC.EnableFBDiscussion = model.EnableFBDiscussion;
+                    ObjEC.Ticket_DAdress = model.Ticket_DAdress;
+                    ObjEC.Ticket_showremain = model.Ticket_showremain;
+                    ObjEC.Ticket_showvariable = model.Ticket_showvariable;
+                    ObjEC.Ticket_variabledesc = model.Ticket_variabledesc;
+                    ObjEC.Ticket_variabletype = model.Ticket_variabletype;
+                    ObjEC.ShowMap = model.ShowMap;
+
+                    var timezone = "";
+
+                    DateTimeWithZone dtzCreated;
+                    var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == model.TimeZone select ev).FirstOrDefault();
+                    if (Timezonedetail != null)
+                    {
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                        dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                        //Timezone value
+
+                    }
+                    else
+                    {
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                        dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                    }
+
+                    ObjEC.ModifyDate = dtzCreated.UniversalTime;
+                    //objEnt.Events.Add(ObjEC);
+                    // Address info
+
+                    Address ObjAdd = new Models.Address();
+                    // 
+                   
+
+                    if (model.AddressStatus == "Online")
+                    {
+                        objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
+                    }
+                    else if (model.AddressStatus == "PastLocation")
+                    {
+                        objEnt.Addresses.RemoveRange(objEnt.Addresses.Where(x => x.EventId == lEventId));
+                    }
+                    else
+                    {
+                      
+                        if (model.AddressDetail != null)
+                        {
+                            foreach (Address objA in model.AddressDetail)
+                            {
+
+
+                                if ((objA.VenueName != null && objA.VenueName.Trim() != "") || (objA.ConsolidateAddress != "" && objA.ConsolidateAddress != null))
+                                {
+                                    try
+                                    {
+                                        var geocode = vc.Geocode(objA.ConsolidateAddress);
+                                        lat = geocode.Latitude.ToString();
+                                        lon = geocode.Longitude.ToString();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        lat = "";
+                                        lon = "";
+
+                                    }
+                                    ObjAdd= (from obj in objEnt.Addresses where  obj.EventId == lEventId select obj).FirstOrDefault();
+                                    if (ObjAdd == null)
+                                    {
+                                        ObjAdd = new Address();
+                                    }
+                                    else
+                                    { objA.AddressID = ObjAdd.AddressID; }
+                                        
+                                      
+                                        ObjAdd.EventId = lEventId;
+                                        ObjAdd.Address1 = objA.Address1 == null ? "" : objA.Address1;
+                                        ObjAdd.Address2 = objA.Address2 == null ? "" : objA.Address2;
+                                        ObjAdd.City = objA.City == null ? "" : objA.City;
+                                        ObjAdd.CountryID = objA.CountryID;
+                                        ObjAdd.State = objA.State == null ? "" : objA.State;
+                                        ObjAdd.UserId = strUserId;
+                                        ObjAdd.VenueName = objA.VenueName;
+                                        ObjAdd.Zip = objA.Zip == null ? "" : objA.Zip;
+                                        ObjAdd.ConsolidateAddress = objA.ConsolidateAddress;
+                                        ObjAdd.Name = "";
+                                        ObjAdd.Latitude = lat;
+                                        ObjAdd.Longitude = lon;
+
+                                    if (objA.AddressID == 0)
+                                    {
+                                        objEnt.Addresses.Add(ObjAdd);
+                                    }
+                                }
+
+                            }
+                          }
+                    }
+
+
+                    DateTimeWithZone dtzstart, dtzend;
+                    DateTimeWithZone dtzCreatedstart, dtzCreatedend;
+
+                    // Event on Single Timing 
+                    if (model.EventVenue != null)
+                    {
+                        //To be discuss  
+                          EventVenue objEVenue = new EventVenue();
+
+                        foreach (EventVenue objEv in model.EventVenue)
+                        {
+                            //save utc
+
+
+                            if (Timezonedetail != null)
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objEv.EventStartDate + " " + objEv.EventStartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objEv.EventEndDate + " " + objEv.EventEndTime), userTimeZone);
+
+
+                            }
+                            else
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objEv.EventStartDate + " " + objEv.EventStartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objEv.EventEndDate + " " + objEv.EventEndTime), userTimeZone);
+
+                            }
+                            //
+
+                            objEVenue = (from obj in objEnt.EventVenues where  obj.EventID == lEventId select obj).FirstOrDefault();
+                            
+                            //objEVenue.EventID = lEventId;
+                            objEVenue.EventStartDate = objEv.EventStartDate;
+                            objEVenue.EventEndDate = objEv.EventEndDate;
+
+                            objEVenue.EventStartTime = objEv.EventStartTime;
+                            objEVenue.EventEndTime = objEv.EventEndTime;
+                            objEVenue.E_Startdate = dtzstart.UniversalTime;
+                            objEVenue.E_Enddate = dtzend.UniversalTime;
+                           // objEnt.EventVenues.Add(objEVenue);
+
+
+                        }
+                    }
+
+                    if (model.Orgnizer != null)
+                    {
+                        Organizer_Master objEOrg = new Organizer_Master();
+                        Event_Orgnizer_Detail evntorg = new Event_Orgnizer_Detail();
+                        var results = objEnt.Event_Orgnizer_Detail.Where(x => x.Orgnizer_Event_Id == lEventId).ToList();
+                        if (results != null)
+                        {
+                            objEnt.Event_Orgnizer_Detail.RemoveRange(results);
+                        }
+                        var neworg = model.Orgnizer.Where(x => x.Orgnizer_Id == 0).Any();
+                        if (neworg)
+                        {
+                            var defaultorg = model.Orgnizer.Where(x => x.Orgnizer_Id == 0 && x.DefaultOrg == "Y").Any();
+                            if (defaultorg)
+                            {
+                                var orgnew = model.Orgnizer.Where(x => x.Orgnizer_Id == 0).ToList();
+                                foreach (Organizer_Master objOr in orgnew)
+                                {
+
+                                    objEOrg = new Organizer_Master();
+                                    // objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
+                                    objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
+                                    objEOrg.Organizer_Desc = Server.HtmlEncode(objOr.Organizer_Desc);
+                                    objEOrg.Organizer_FBLink = objOr.Organizer_FBLink;
+                                    objEOrg.Organizer_Twitter = objOr.Organizer_Twitter;
+                                    //objEOrg.DefaultOrg = objOr.DefaultOrg;
+                                    objEOrg.Organizer_Linkedin = objOr.Organizer_Linkedin;
+                                    objEOrg.UserId = strUserId;
+                                    objEOrg.Organizer_Status = "A";
+                                    objEnt.Organizer_Master.Add(objEOrg);
+                                    if (objOr.DefaultOrg == "Y")
+                                    {
+                                        evntorg = new Event_Orgnizer_Detail();
+                                        evntorg.DefaultOrg = objOr.DefaultOrg;
+                                        evntorg.OrganizerMaster_Id = objEOrg.Orgnizer_Id;
+
+                                        evntorg.Orgnizer_Event_Id = ObjEC.EventID;
+                                        evntorg.UserId = strUserId;
+                                        objEnt.Event_Orgnizer_Detail.Add(evntorg);
+                                    }
+
+
+
+                                }
+                            }
+                            else
+                            {
+                                var orgnew = model.Orgnizer.Where(x => x.Orgnizer_Id == 0).ToList();
+                                foreach (Organizer_Master objOr in orgnew)
+                                {
+
+                                    objEOrg = new Organizer_Master();
+                                    // objEOrg.Orgnizer_Event_Id = ObjEC.EventID;
+                                    objEOrg.Orgnizer_Name = objOr.Orgnizer_Name;
+                                    objEOrg.Organizer_Desc = Server.HtmlEncode(objOr.Organizer_Desc);
+                                    objEOrg.Organizer_FBLink = objOr.Organizer_FBLink;
+                                    objEOrg.Organizer_Twitter = objOr.Organizer_Twitter;
+                                    //objEOrg.DefaultOrg = objOr.DefaultOrg;
+                                    objEOrg.Organizer_Linkedin = objOr.Organizer_Linkedin;
+                                    objEOrg.UserId = strUserId;
+                                    objEOrg.Organizer_Status = "A";
+                                    objEnt.Organizer_Master.Add(objEOrg);
+
+
+
+
+                                }
+                                var defaultorgold = model.Orgnizer.Where(x => x.DefaultOrg == "Y").ToList();
+                                foreach (Organizer_Master objOr in defaultorgold)
+                                {
+                                    evntorg = new Event_Orgnizer_Detail();
+                                    evntorg.DefaultOrg = objOr.DefaultOrg;
+                                    evntorg.OrganizerMaster_Id = objOr.Orgnizer_Id;
+                                    evntorg.Orgnizer_Event_Id = ObjEC.EventID;
+                                    evntorg.UserId = strUserId;
+                                    objEnt.Event_Orgnizer_Detail.Add(evntorg);
+                                }
+                                var editoldorg = model.Orgnizer.Where(x => x.EditOrg == "1").ToList();
+                                if (editoldorg != null)
+                                {
+                                    foreach (Organizer_Master objOr in editoldorg)
+                                    {
+                                        string sql = @"update Organizer_Master set Orgnizer_Name={0},Organizer_Desc={1},Organizer_FBLink={2},Organizer_Twitter={3},Organizer_Linkedin={4} where Orgnizer_Id={5}";
+                                        List<Object> sqlParamsList = new List<object>();
+                                        sqlParamsList.Add(objOr.Orgnizer_Name);
+                                        sqlParamsList.Add(Server.HtmlEncode(objOr.Organizer_Desc));
+                                        sqlParamsList.Add(objOr.Organizer_FBLink);
+                                        sqlParamsList.Add(objOr.Organizer_Twitter);
+                                        sqlParamsList.Add(objOr.Organizer_Linkedin);
+                                        sqlParamsList.Add(objOr.Orgnizer_Id);
+
+                                        objEnt.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+                                    }
+                                }
+
+
+
+                            }
+
+                        }
+                        else
+                        {
+                            var defaultorg = model.Orgnizer.Where(x => x.DefaultOrg == "Y").ToList();
+                            foreach (Organizer_Master objOr in defaultorg)
+                            {
+                                evntorg = new Event_Orgnizer_Detail();
+                                evntorg.DefaultOrg = objOr.DefaultOrg;
+                                evntorg.OrganizerMaster_Id = objOr.Orgnizer_Id;
+                                evntorg.Orgnizer_Event_Id = ObjEC.EventID;
+                                evntorg.UserId = strUserId;
+                                objEnt.Event_Orgnizer_Detail.Add(evntorg);
+                            }
+                            var editoldorg = model.Orgnizer.Where(x => x.EditOrg == "1").ToList();
+                            if (editoldorg != null)
+                            {
+                                foreach (Organizer_Master objOr in editoldorg)
+                                {
+                                    string sql = @"update Organizer_Master set Orgnizer_Name={0},Organizer_Desc={1},Organizer_FBLink={2},Organizer_Twitter={3},Organizer_Linkedin={4} where Orgnizer_Id={5}";
+                                    List<Object> sqlParamsList = new List<object>();
+                                    sqlParamsList.Add(objOr.Orgnizer_Name);
+                                    sqlParamsList.Add(Server.HtmlEncode(objOr.Organizer_Desc));
+                                    sqlParamsList.Add(objOr.Organizer_FBLink);
+                                    sqlParamsList.Add(objOr.Organizer_Twitter);
+                                    sqlParamsList.Add(objOr.Organizer_Linkedin);
+                                    sqlParamsList.Add(objOr.Orgnizer_Id);
+
+                                    objEnt.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+                                }
+                            }
+                        }
+                    }
+                    // Tickets
+
+                    string customize = "0";
+                    var customizefee = false;
+                    var customizeamt = false;
+
+                    if (model.Ticket != null)
+                    {
+                        Ticket ticket = new Ticket();
+                        ids = new List<long>();
+                        // objEnt.Ticket_Quantity_Detail.RemoveRange(objEnt.Ticket_Quantity_Detail.Where(x => x.TQD_Event_Id == lEventId));
+                        //  objEnt.Tickets.RemoveRange(objEnt.Tickets.Where(x => x.E_Id == lEventId));
+                        foreach (Ticket tick in model.Ticket)
+                        {
+                            if (tick.T_Id == 0)
+                            {
+                                ticket = new Ticket();
+
+                                ticket.T_Customize = "0";
+                                var mainfee = (from db in objEnt.Fee_Structure select db).FirstOrDefault();
+                                ticket.EC_Fee = tick.Customer_Fee;
+                                ticket.T_Ecpercent = mainfee.FS_Percentage;
+                                ticket.T_EcAmount = mainfee.FS_Amount;
+                                if (tick.TicketTypeID == 2)
+                                {
+                                    ticket.Customer_Fee = tick.Customer_Fee;
+                                }
+                                else
+                                {
+                                    ticket.Customer_Fee = 0;
+                                }
+
+                            }
+                            else
+                            {
+                                ticket = (from obj in objEnt.Tickets where obj.T_Id == tick.T_Id && obj.E_Id == lEventId select obj).FirstOrDefault();
+                                customize = ticket.T_Customize;
+                                if (tick.TicketTypeID == 2)
+                                {
+                                    ticket.Customer_Fee = tick.Customer_Fee;
+                                }
+
+                            }
+                            if (tick.Isadmin == "Y")
+                            {
+                                if (tick.TicketTypeID != 1)
+                                {
+                                    var mainfee = (from db in objEnt.Fee_Structure select db).FirstOrDefault();
+                                    var oldamnt = 0m;
+
+                                    if (tick.Fees_Type == "0")
+                                    {
+                                        oldamnt = ((((tick.Price * mainfee.FS_Percentage) / 100) + mainfee.FS_Amount) + tick.Price) ?? 0;
+                                    }
+                                    else
+                                    {
+                                        oldamnt = tick.Price ?? 0;
+
+                                    }
+                                    var oldamount = Decimal.Round(oldamnt, 2);
+
+
+
+                                    if (mainfee.FS_Percentage == tick.T_Ecpercent && mainfee.FS_Amount == tick.T_EcAmount)
+                                    {
+                                        customizefee = false;
+
+                                    }
+                                    else
+                                    {
+                                        customizefee = true;
+
+                                    }
+                                    if (oldamount == tick.TotalPrice)
+                                    {
+                                        customizeamt = false;
+                                    }
+                                    else
+                                    {
+                                        customizeamt = true;
+                                    }
+
+                                    if (customizefee == true || customizeamt == true)
+                                    {
+                                        tick.T_Customize = "1";
+                                    }
+                                    else
+                                    {
+                                        tick.T_Customize = "0";
+                                    }
+                                    if (tick.TicketTypeID == 3)
+                                    {
+                                        if (tick.Customer_Fee > 0)
+                                        {
+                                            tick.T_Customize = "1";
+
+                                        }
+                                    }
+
+
+                                    ticket.T_Customize = tick.T_Customize;
+
+                                    ticket.T_EcAmount = tick.T_EcAmount;
+                                    ticket.T_Ecpercent = tick.T_Ecpercent;
+                                }
+
+                            }
+                            else
+                            {
+
+                            }
+
+                            ticket.E_Id = lEventId;
+                            ticket.TicketTypeID = tick.TicketTypeID;
+                            ticket.T_name = tick.T_name;
+                            ticket.Qty_Available = tick.Qty_Available;
+                            ticket.Price = tick.Price;
+                            ticket.T_Desc = tick.T_Desc;
+                            ticket.TicketTypeID = tick.TicketTypeID;
+                            ticket.T_order = tick.T_order;
+                            ticket.Show_T_Desc = tick.Show_T_Desc;
+                            ticket.Fees_Type = tick.Fees_Type;
+                            ticket.Sale_Start_Date = tick.Sale_Start_Date;
+                            ticket.Sale_Start_Time = tick.Sale_Start_Time;
+                            ticket.Sale_End_Date = tick.Sale_End_Date;
+                            ticket.Sale_End_Time = tick.Sale_End_Time;
+                            ticket.Hide_Ticket = tick.Hide_Ticket;
+                            ticket.Auto_Hide_Sche = tick.Auto_Hide_Sche;
+                            ticket.T_AutoSechduleType = tick.T_AutoSechduleType;
+                            ticket.Hide_Untill_Date = tick.Hide_Untill_Date;
+                            ticket.Hide_Untill_Time = tick.Hide_Untill_Time;
+                            ticket.Hide_After_Date = tick.Hide_After_Date;
+                            ticket.Hide_After_Time = tick.Hide_After_Time;
+                            ticket.Min_T_Qty = tick.Min_T_Qty;
+                            ticket.Max_T_Qty = tick.Max_T_Qty;
+                            ticket.T_Disable = tick.T_Disable;
+                            ticket.T_Mark_SoldOut = tick.T_Mark_SoldOut;
+                            ticket.T_Displayremaining = tick.T_Displayremaining;
+                            if (tick.Isadmin == "Y")
+                            {
+                                ticket.EC_Fee = tick.EC_Fee;
+                                ticket.Customer_Fee = tick.Customer_Fee;
+                            }
+
+                            ticket.TotalPrice = tick.TotalPrice;
+                            ticket.T_Discount = tick.T_Discount;
+                            if (tick.T_Id == 0)
+                            {
+                                objEnt.Tickets.Add(ticket);
+                            }
+                            ids.Add(ticket.T_Id);
+                        }
+
+
+                        //var ids = new HashSet<long>(objEnt.Tickets.Where(x => x.E_Id== lEventId).Select(x=>x.T_Id));
+
+                        var resultticks = objEnt.Tickets.Where(x => !ids.Contains(x.T_Id) && x.E_Id == lEventId).ToList();
+                        if (resultticks != null)
+                        {
+                            objEnt.Tickets.RemoveRange(resultticks);
+                        }
+
+
+                    }
+
+                    if (model.EventImage != null)
+                    {
+                        EventImage Image = new EventImage();
+                        objEnt.EventImages.RemoveRange(objEnt.EventImages.Where(x => x.EventID == lEventId));
+                        foreach (EventImage img in model.EventImage)
+                        {
+                            Image = new EventImage();
+                            Image.EventID = lEventId;
+                            Image.EventImageUrl = img.EventImageUrl;
+                            Image.ImageType = img.ImageType;
+                            objEnt.EventImages.Add(Image);
+                        }
+                    }
+                    else
+                    {
+                        objEnt.EventImages.RemoveRange(objEnt.EventImages.Where(x => x.EventID == lEventId));
+                    }
+
+                    if (model.EventVariable != null)
+                    {
+                        Event_VariableDesc var = new Event_VariableDesc();
+                        ids = new List<long>();
+                        foreach (Event_VariableDesc variable in model.EventVariable)
+                        {
+                            if (variable.Variable_Id == 0)
+                            {
+                                var = new Event_VariableDesc();
+                            }
+                            else
+                            {
+                                var = (from obj in objEnt.Event_VariableDesc where obj.Variable_Id == variable.Variable_Id && obj.Event_Id == lEventId select obj).FirstOrDefault();
+
+                            }
+                            var.Event_Id = lEventId;
+                            var.VariableDesc = variable.VariableDesc;
+                            var.Price = variable.Price;
+                            if (variable.Variable_Id == 0)
+                            {
+                                objEnt.Event_VariableDesc.Add(var);
+
+                            }
+                            ids.Add(variable.Variable_Id);
+                        }
+                        var resultdesc = objEnt.Event_VariableDesc.Where(x => !ids.Contains(x.Variable_Id) && x.Event_Id == lEventId).ToList();
+                        if (resultdesc != null)
+                        {
+                            objEnt.Event_VariableDesc.RemoveRange(resultdesc);
+                        }
+
+                    }
+                    else
+                    {
+                        objEnt.Event_VariableDesc.RemoveRange(objEnt.Event_VariableDesc.Where(x => x.Event_Id == lEventId));
+                    }
+                    objEnt.SaveChanges();
+                    lEventId = ObjEC.EventID;
+                    PublishSingleEvent(lEventId);
+                }
+            }
+
+            return lEventId;
+        }
+
         public string PublishEvent(long lEventId)
         {
             string strResult = "N";
@@ -2812,6 +3375,29 @@ namespace EventCombo.Controllers
             return strResult;
         }
 
+
+        public string PublishSingleEvent(long lEventId)
+        {
+            string strResult = "N";
+            try
+            {
+                string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
+                if (strUserId != "" && lEventId > 0)
+                {
+                    using (EventComboEntities objEnt = new EventComboEntities())
+                    {
+                        objEnt.PublishSingleEvent(lEventId);
+                    }
+                    strResult = "Y";
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLogging.SendErrorToText(ex);
+                strResult = "N";
+            }
+            return strResult;
+        }
         public string GetOrgnizerDetail(long lEventId)
         {
             StringBuilder strHTML = new StringBuilder();

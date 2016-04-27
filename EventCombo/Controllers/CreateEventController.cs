@@ -19,6 +19,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using EventCombo.Utils;
+using System.Data.Entity.SqlServer;
 
 namespace EventCombo.Controllers
 {
@@ -1305,10 +1306,16 @@ namespace EventCombo.Controllers
             
             ValidationMessage vmc = new ValidationMessage();
             ViewEvent viewEvent = new ViewEvent();
+            DateTimeWithZone dtzstart, dzend, dtznewstart;
+            DateTimeWithZone dtz;
+            DateTimeWithZone dtzCreated;
             string[] str = strUrlData.Split('౼');
             string strForView = "";
             string eventTitle = str[0].ToString();
-            long EventId = Convert.ToInt64(str[1]);
+            
+            long EventId = (str[1] != "" ? Convert.ToInt64(Convert.ToInt64(str[1])) : 0);
+            EventId = vmc.GetLatestEventId(EventId);
+          
             try
             {
                 strForView = str[2].ToString();
@@ -1330,7 +1337,7 @@ namespace EventCombo.Controllers
                 // var url = Url.Action("ViewEvent", "CreateEvent")+ "?EventId="+ EventId+ "&eventTitle="+ eventTitle.Trim();
                 Session["ReturnUrl"] = "ViewEvent~" + url;
                 var TopAddress = ""; var Topvenue = "";
-                string organizername = "", fblink = "", twitterlink = "", organizerid = "", tickettype = "", enablediscussion = "", Linkedin = "";
+                string organizername = "", fblink = "", twitterlink = "", organizerid = "", tickettype = "", enablediscussion = "",  linkedin = "", orgevents=""; 
                
                 //EventDetails
                 var EventDetail = GetEventdetail(EventId);
@@ -1345,7 +1352,8 @@ namespace EventCombo.Controllers
 
                 var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail
                                        join pfd in db.Organizer_Master on ev.OrganizerMaster_Id equals pfd.Orgnizer_Id
-                                       where ev.Orgnizer_Event_Id == EventId && ev.DefaultOrg == "Y" select new
+                                       where ev.Orgnizer_Event_Id == EventId && ev.DefaultOrg == "Y"
+                                       select new
                                        {
                                            Orgnizer_Name = pfd.Orgnizer_Name,
                                            FBLink = pfd.Organizer_FBLink,
@@ -1356,18 +1364,15 @@ namespace EventCombo.Controllers
                                        }).FirstOrDefault();
                 var displaystarttime = EventDetail.DisplayStartTime;
                 var displayendtime = EventDetail.DisplayEndTime;
-                var EventDescription = EventDetail.EventDescription;
+                var htmldisplay = new HtmlString(Server.HtmlDecode(EventDetail.EventDescription));
+                var EventDescription = htmldisplay;
+               // var EventDescription = EventDetail.EventDescription;
                 var showtimezone = EventDetail.DisplayTimeZone;
                 enablediscussion = EventDetail.EnableFBDiscussion;
                 viewEvent.showTimezone = showtimezone;
                 var timezone = "";
-                var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == EventDetail.TimeZone select ev).FirstOrDefault();
-                if (Timezonedetail != null)
-                {
-                    timezone = Timezonedetail.TimeZone_Name;
-
-                }
-                viewEvent.Timezone = timezone;
+                var timezonedet=DateTimeWithZone.Timezonedetail(EventId);
+                viewEvent.Timezone = timezonedet;
                 viewEvent.enablediscussion = enablediscussion;
                 viewEvent.showmaponevent = EventDetail.ShowMap;
                 viewEvent.eventId = EventId.ToString();
@@ -1397,34 +1402,62 @@ namespace EventCombo.Controllers
                 //Organiser
                 if (OrganiserDetail != null)
                 {
-                    //organizername = OrganiserDetail.Orgnizer_Name;
-                    //fblink = OrganiserDetail.FBLink;
-                    //twitterlink = OrganiserDetail.Twitter;
+                    organizername = OrganiserDetail.Orgnizer_Name;
+                    fblink = OrganiserDetail.FBLink;
+                    twitterlink = OrganiserDetail.Twitter;
                     organizerid = OrganiserDetail.Orgnizer_Id.ToString();
-                    //Linkedin = OrganiserDetail.Linkedin;
+                    linkedin = OrganiserDetail.Linkedin;
+                    var exceptionList = db.EventVenues.Where(x => SqlFunctions.DateDiff("s", x.E_Startdate, DateTime.UtcNow) > 0).Select(e => e.EventID).ToList();
+                    var exceptionList1 = db.MultipleEvents.Where(x => SqlFunctions.DateDiff("s", x.M_StartTo, DateTime.UtcNow) > 0).Select(e => e.EventID);
+                    var Organizerevents = db.GetOrganizerEventid(OrganiserDetail.Orgnizer_Id).ToList();
+
+
+                    orgevents = (from x in Organizerevents where x.OrganizerMaster_Id == OrganiserDetail.Orgnizer_Id && !exceptionList.Contains(x.Orgnizer_Event_Id ?? 0) && !exceptionList1.Contains(x.Orgnizer_Event_Id ?? 0) select x).Count().ToString();
+
 
                 }
                 var favCount = (from ev in db.EventFavourites where ev.eventId == EventId select ev).Count();
                 var votecount = (from ev in db.EventVotes where ev.eventId == EventId select ev).Count();
                 var eventype = (from ev in db.MultipleEvents where ev.EventID == EventId select ev).Count();
                 //GetDateList
+                List<listevent> lstevent = new List<listevent>();
                 var GetEventDate = db.GetEventDateList(EventId).ToList();
-                ViewBag.DateList = GetEventDate;
+                foreach (var item in GetEventDate)
+                {
+                    listevent lst = new listevent();
+                  
+                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(timezonedet);
+                    dtznewstart = new DateTimeWithZone(Convert.ToDateTime(item.Datefrom), userTimeZone, true);
+                    var datenew = dtznewstart.LocalTime;
+                    var endnewday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(datenew).ToString();
+                    var eDatnew = datenew.ToString("MMM dd, yyyy");
+                    var startnewtime = datenew.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
+                    lst.Dayofweek = endnewday;
+                    lst.Datefrom = eDatnew;
+                    lst.Time = startnewtime;
+                    lstevent.Add(lst);
+                }
+                ViewBag.DateList = lstevent;
 
                 if (eventype > 0)
                 {
                     viewEvent.eventType = "Multiple";
                     var evschdetails = (from ev in db.MultipleEvents where ev.EventID == EventId select ev).FirstOrDefault();
-                    var startdate = (evschdetails.StartingFrom);
+
+                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(timezonedet);
+                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(evschdetails.M_Startfrom), userTimeZone, true);
+                    dzend = new DateTimeWithZone(Convert.ToDateTime(evschdetails.M_StartTo), userTimeZone, true);
+
+                   
                     DateTime sDate = new DateTime();
-                    sDate = DateTime.Parse(startdate);
+                    sDate = dtzstart.LocalTime;
                     startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
 
                     sDate_new = sDate.ToString("MMM dd, yyyy");
-                    var enddate = evschdetails.StartingTo;
+                   
 
                     DateTime eDate = new DateTime();
-                    eDate = DateTime.Parse(enddate);
+                    eDate = dzend.LocalTime;
                     endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
                     eDate_new = eDate.ToString("MMM dd, yyyy");
 
@@ -1442,22 +1475,23 @@ namespace EventCombo.Controllers
                     var evschdetails = (from ev in db.EventVenues where ev.EventID == EventId select ev).FirstOrDefault();
                     if (evschdetails != null)
                     {
-                        var startdate = (evschdetails.EventStartDate);
-                        if (startdate != null)
-                        {
+
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(timezonedet);
+                        dtzstart = new DateTimeWithZone(Convert.ToDateTime(evschdetails.E_Startdate), userTimeZone, true);
+                        dzend = new DateTimeWithZone(Convert.ToDateTime(evschdetails.E_Enddate), userTimeZone, true);
+                      
+                       
                             DateTime sDate = new DateTime();
-                            sDate = DateTime.Parse(startdate.ToString());
+                            sDate = dtzstart.LocalTime;
                             startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
                             sDate_new = sDate.ToString("MMM dd,yyyy");
-                        }
-                        var enddate = evschdetails.EventEndDate;
-                        if (enddate != null)
-                        {
+                       
+                      
                             DateTime eDate = new DateTime();
-                            eDate = DateTime.Parse(enddate.ToString());
+                            eDate = dzend.LocalTime;
                             endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
                             eDate_new = eDate.ToString("MMM dd,yyyy");
-                        }
+                     
 
                         starttime = evschdetails.EventStartTime.ToString();
                         endtime = evschdetails.EventEndTime.ToString();
@@ -1516,12 +1550,15 @@ namespace EventCombo.Controllers
                 viewEvent.Title = EventDetail.EventTitle;
                 viewEvent.eventId = EventDetail.EventID.ToString();
                 viewEvent.TopVenue = Topvenue;
-                viewEvent.EventDescription = EventDescription;
+                viewEvent.EventDescription = EventDescription.ToString();
                 viewEvent.organizername = organizername;
                 viewEvent.organizerid = organizerid;
                 viewEvent.fblink = fblink;
                 viewEvent.twitterlink = twitterlink;
-                viewEvent.Linkedinlin = Linkedin;
+                viewEvent.Linkedinlin = linkedin;
+                viewEvent.Orgevents = orgevents;
+                viewEvent.EventPrivacy = EventDetail.EventPrivacy;
+                viewEvent.PrivatePassword = EventDetail.Private_Password;
                 if (Session["AppId"] != null)
                 {
                     var userid = Session["AppId"].ToString();

@@ -26,12 +26,14 @@ namespace EventCombo
             GlobalConfiguration.Configuration
                 .UseSqlServerStorage("MyConnection");
 
+            EventStatusUpdate eventStatus = new EventStatusUpdate();
+            RecurringJob.AddOrUpdate(() => eventStatus.Update(), "*/4 * * * *");
+
             TicketEmailer ticketEmailer = new TicketEmailer();
             RecurringJob.AddOrUpdate(() => ticketEmailer.send(), "*/5 * * * *");
 
 
-            //EventStatus eventStatus = new EventStatus();
-            //RecurringJob.AddOrUpdate(() => eventStatus.Update(), "*/15 * * * *");
+            
 
 
             app.UseHangfireDashboard();

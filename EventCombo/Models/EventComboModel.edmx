@@ -1154,6 +1154,9 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Parameter Name="EventId" Type="bigint" Mode="In" />
           <Parameter Name="UserId" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="PublishSingleEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EventId" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="ReturnDayOfWeek" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
           <Parameter Name="dtDate" Type="datetime" Mode="In" />
         </Function>
@@ -2221,6 +2224,9 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             <Parameter Name="EventTitle" Mode="In" Type="String" />
             <Parameter Name="EventStatus" Mode="In" Type="String" />
             <Parameter Name="UserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PublishSingleEvent">
+          <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
@@ -3654,6 +3660,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PublishSingleEvent" FunctionName="EventComboModel.Store.PublishSingleEvent" />
 
         </EntityContainerMapping>
       </Mapping>

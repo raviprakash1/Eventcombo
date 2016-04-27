@@ -1346,11 +1346,11 @@
             title = title.replace(" ", "-");
             var vUrl = title + "౼" + @Model.Eventid.ToString() + "౼Y";
 
-            window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new { })?strUrlData=' + vUrl, "_blank");
+            window.open('@Url.Action("ViewCreateEvent", "CreateEvent",new {strUrlData = Model.Eventtitle.Replace(" ", "-") + "౼" + ValidationMessageController.GetParentEventId(Model.Eventid).ToString() + "౼Y"})', "_blank");
 
 
 
-        });
+                    });
 
         $("#cbtview").click(function () {
 
@@ -1366,7 +1366,7 @@
                 success: function (response) {
 
                     @*window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + EventId;*@
-                    window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { strEventDs = Model.Eventtitle.Replace(" ", "-"), strEventId = ValidationMessageController.GetParentEventId(Model.Eventid).ToString() })';
+                    window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { Eventid = ValidationMessageController.GetParentEventId(Model.Eventid).ToString() })';
 
                 }
             });

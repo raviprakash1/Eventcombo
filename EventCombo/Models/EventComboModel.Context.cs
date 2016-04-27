@@ -256,5 +256,14 @@ namespace EventCombo.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEventsListByStatus1_Result>("GetEventsListByStatus1", eventTitleParameter, eventStatusParameter, userIDParameter);
         }
+    
+        public virtual int PublishSingleEvent(Nullable<long> eventId)
+        {
+            var eventIdParameter = eventId.HasValue ?
+                new ObjectParameter("EventId", eventId) :
+                new ObjectParameter("EventId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PublishSingleEvent", eventIdParameter);
+        }
     }
 }
