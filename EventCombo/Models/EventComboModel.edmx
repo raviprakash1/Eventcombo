@@ -498,6 +498,8 @@
           <Property Name="SavedDate" Type="datetime" />
           <Property Name="PC_Startdatetype" Type="nchar" MaxLength="1" />
           <Property Name="Pc_Enddatetype" Type="nchar" MaxLength="1" />
+          <Property Name="P_Startdate" Type="datetime" />
+          <Property Name="P_Enddate" Type="datetime" />
         </EntityType>
         <EntityType Name="Publish_Event_Detail">
           <Key>
@@ -2341,6 +2343,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="SavedDate" Type="DateTime" Precision="3" />
           <Property Name="PC_Startdatetype" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
           <Property Name="Pc_Enddatetype" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="P_Startdate" Type="DateTime" Precision="3" />
+          <Property Name="P_Enddate" Type="DateTime" Precision="3" />
         </EntityType>
         <ComplexType Name="GetOrganizerEventid_Result">
           <Property Type="Int64" Name="Orgnizer_Id" Nullable="false" />
@@ -3368,6 +3372,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySetMapping Name="Promo_Code">
             <EntityTypeMapping TypeName="EventComboModel.Promo_Code">
               <MappingFragment StoreEntitySet="Promo_Code">
+                <ScalarProperty Name="P_Enddate" ColumnName="P_Enddate" />
+                <ScalarProperty Name="P_Startdate" ColumnName="P_Startdate" />
                 <ScalarProperty Name="Pc_Enddatetype" ColumnName="Pc_Enddatetype" />
                 <ScalarProperty Name="PC_Startdatetype" ColumnName="PC_Startdatetype" />
                 <ScalarProperty Name="SavedDate" ColumnName="SavedDate" />

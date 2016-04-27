@@ -289,7 +289,7 @@ namespace EventCombo.Controllers
                 {
                     var Event = (from myEnt in db.Events where myEnt.EventID == lEventId select myEnt).FirstOrDefault();
                     int timeZoneID = Int32.Parse(Event.TimeZone);
-                    TimeZoneDetail td = db.TimeZoneDetails.First(x => x.TimeZone_Id == timeZoneID);
+                    var td = DateTimeWithZone.Timezonedetail(lEventId);
                     DateTime dtStartDate = new DateTime();
                     DateTime dtEndDate = new DateTime();
                     DateTime dtendpromocodedate = new DateTime();
@@ -300,41 +300,25 @@ namespace EventCombo.Controllers
 
                         var vMultiEv = (from Ev in db.MultipleEvents where Ev.EventID == lEventId select Ev).FirstOrDefault();
 
-                        if (td != null)
-                        {
-                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                       
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
                             dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiEv.M_Startfrom), userTimeZone, true);
                             dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiEv.M_StartTo), userTimeZone, true);
                             dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
-                        }
-                        else
-                        {
-                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiEv.M_Startfrom), userTimeZone, true);
-                            dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiEv.M_StartTo), userTimeZone, true);
-                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
-                        }
+                      
                         dtStartDate = dtzstart.LocalTime;
                         dtEndDate = dzend.LocalTime;
                     }
                     else
                     {
-                        if (td != null)
-                        {
-                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                        
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
                             dtzstart = new DateTimeWithZone(Convert.ToDateTime(vEventVenue.E_Startdate), userTimeZone, true);
                             dzend = new DateTimeWithZone(Convert.ToDateTime(vEventVenue.E_Enddate), userTimeZone, true);
                             dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
-                        }
-                        else
-                        {
-                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(vEventVenue.E_Startdate), userTimeZone, true);
-                            dzend = new DateTimeWithZone(Convert.ToDateTime(vEventVenue.E_Enddate), userTimeZone, true);
-                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
-                        }
-                        dtStartDate = dtzstart.LocalTime;
-                        dtEndDate = dzend.LocalTime;
+                     
+                         dtStartDate = dtzstart.LocalTime;
+                         dtEndDate = dzend.LocalTime;
                     }
                     dtNow = dtzCreated.LocalTime;
                     string[] strTAry = strTicketId.Split(',');
@@ -359,21 +343,15 @@ namespace EventCombo.Controllers
 
                           
 
-                            if (td != null)
-                            {
-                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
-                                dzstartpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_Start), userTimeZone, true);
+                           
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
+                                dzstartpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.P_Startdate), userTimeZone, true);
                                
-                            }
-                            else
-                            {
-                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                                dzstartpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_Start), userTimeZone, true);
-                            }
-                            DateTime dtstartpromo = new DateTime();
-                            dtstartpromo = Convert.ToDateTime(PromoCode.PC_Start);
+                          
+                       
+                          
                             dtStartDate = dzstartpromocode.LocalTime;
-                            if (dtNow < dtstartpromo)
+                            if (dtNow < dtStartDate)
                             {
                                 return "FDI";
                             }
@@ -404,21 +382,14 @@ namespace EventCombo.Controllers
 
                         if (PromoCode.Pc_Enddatetype.Trim() == "0")
                         {
-                            if (td != null)
-                            {
-                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
-                                dzendpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_End), userTimeZone, true);
+                           
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
+                                dzendpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.P_Enddate), userTimeZone, true);
 
-                            }
-                            else
-                            {
-                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                                dzendpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.PC_End), userTimeZone, true);
-                            }
+                           
                             dtEndDate = dzendpromocode.LocalTime;
-                            DateTime dtendpromo = new DateTime();
-                            dtendpromo = Convert.ToDateTime(PromoCode.PC_End);
-                            if (dtNow > dtendpromo)
+                          
+                            if (dtNow > dtEndDate)
                             {
                                 return "EDI";
                             }

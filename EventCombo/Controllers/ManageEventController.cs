@@ -1552,6 +1552,7 @@ namespace EventCombo.Controllers
             if (Session["AppId"] != null)
             {
                 ValidationMessage vmc = new ValidationMessage();
+                DateTimeWithZone dtzCreated;
                 var Eventid = vmc.GetLatestEventId(Eventlid);
                 if (CommanClasses.CompareCurrentUser(Eventid, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
                 Session["Fromname"] = "promotional";
@@ -1564,47 +1565,74 @@ namespace EventCombo.Controllers
                     pageIndex = Convert.ToInt32(strPageIndex);
                 List<Promocode> ls = new List<Promocode>();
                 EventCreation cms = new EventCreation();
+                  var Timezonedetail = DateTimeWithZone.Timezonedetail(Eventlid);
+               
+                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail);
+                dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
                 var Eventdetail = cms.GetEventdetail(Eventid);
                 var Discountcode = (from x in db.Promo_Code where x.PC_Eventid == Eventid select x).Count();
                 sc.Eventtitle = Eventdetail.EventTitle;
+                var lstpromo = new List<Promo_Code>();
                 if (!string.IsNullOrWhiteSpace(searchquery))
                 {
-                    ls = (from x in db.Promo_Code 
+                     lstpromo = (from x in db.Promo_Code 
                           orderby x.SavedDate descending
                           where x.PC_Eventid == Eventid && x.PC_Code.Contains(searchquery)
-                          select new Promocode
-                          {
-                              code = x.PC_Code,
-                              Amount = (x.PC_Amount != null || x.PC_Percentage != null) ? (x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%") : "-",
-                              Start = (x.PC_Startdatetype != null && x.PC_Startdatetype == "1") ? x.PC_Start + " before event" : SqlFunctions.DateDiff("s", x.PC_Start, DateTime.Now) == 0 ? "Started" : x.PC_Start,
-                              End = (x.Pc_Enddatetype != null && x.Pc_Enddatetype == "1") ? x.PC_End + " before event" : x.PC_End,
-                              Limit = x.PC_Uses != null ? x.PC_Uses.ToString() : "No Limit",
-                              PCID = x.PC_id,
-                              Orderpromo=(from v in db.Order_Detail_T where v.O_PromoCodeId==x.PC_id select v).Count()
-
-
-
-                          }).ToList();
+                            select x).ToList();
 
                 }
                 else
                 {
-                    ls = (from x in db.Promo_Code
+                    lstpromo = (from x in db.Promo_Code
                           orderby x.SavedDate descending
                           where x.PC_Eventid == Eventid
-                          select new Promocode
-                          {
-                              code = x.PC_Code,
-                              Amount = (x.PC_Amount != null || x.PC_Percentage != null) ? (x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%") : "-",
-                              Start = (x.PC_Startdatetype != null && x.PC_Startdatetype == "1") ? x.PC_Start + " before event" : SqlFunctions.DateDiff("s", x.PC_Start, DateTime.Now) == 0 ? "Started" : x.PC_Start,
-                              End = (x.Pc_Enddatetype != null && x.Pc_Enddatetype == "1") ? x.PC_End + " before event" : x.PC_End,
-                              Limit = x.PC_Uses != null ? x.PC_Uses : "No Limit",
-                              PCID = x.PC_id,
-                              Orderpromo = (from v in db.Order_Detail_T where v.O_PromoCodeId == x.PC_id select v).Count()
+                          select x).ToList();
 
-
-                          }).ToList();
-
+                }
+                //select new Promocode
+                //{
+                //    code = x.PC_Code,
+                //    Amount = (x.PC_Amount != null || x.PC_Percentage != null) ? (x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%") : "-",
+                //    Start = (x.PC_Startdatetype != null && x.PC_Startdatetype == "1") ? x.PC_Start + " before event" : SqlFunctions.DateDiff("s", new DateTimeWithZone(Convert.ToDateTime(x.P_Startdate), userTimeZone, true).LocalTime, dtzCreated.LocalTime) == 0 ? "Started" : new DateTimeWithZone(Convert.ToDateTime(x.P_Startdate), userTimeZone, true).LocalTime.ToString("MM-dd-yyyy hh:mm tt"),
+                //    End = (x.Pc_Enddatetype != null && x.Pc_Enddatetype == "1") ? x.PC_End + " before event" : new DateTimeWithZone(Convert.ToDateTime(x.P_Enddate), userTimeZone, true).LocalTime.ToString("MM-dd-yyyy hh:mm tt"),
+                //    Limit = x.PC_Uses != null ? x.PC_Uses.ToString() : "No Limit",
+                //    PCID = x.PC_id,
+                //    Orderpromo = (from v in db.Order_Detail_T where v.O_PromoCodeId == x.PC_id select v).Count()
+                foreach (var item in lstpromo)
+                {
+                    Promocode pr = new Promocode();
+                    pr.Amount = (item.PC_Amount != null || item.PC_Percentage != null) ? (item.PC_Amount != null ? "$" + item.PC_Amount.ToString() : item.PC_Percentage + "%") : "-";
+                    pr.code = item.PC_Code;
+                    var starttype = "";
+                    DateTimeWithZone dtzstart, dtzend;
+                    DateTime dtstart = new DateTime();
+                    DateTime dtnow = new DateTime();
+                    if (item.PC_Startdatetype=="0")
+                    {
+                        dtzstart=new DateTimeWithZone(Convert.ToDateTime(item.P_Startdate), userTimeZone, true);
+                       
+                        dtstart = dtzstart.LocalTime;
+                        dtnow = dtzCreated.LocalTime;
+                        int result = DateTime.Compare(dtstart, dtnow);
+                        if (result==0)
+                        {
+                            starttype = "Started";
+                        }
+                        else
+                        {
+                            starttype = dtstart.ToString("MM-dd-yyyy hh:mm tt");
+                        }
+                    }
+                    else
+                    {
+                        starttype = item.PC_Start + " before event";
+                    }
+                    pr.Start = starttype;
+                    pr.End = (item.Pc_Enddatetype != null && item.Pc_Enddatetype == "1") ? item.PC_End + " before event" : new DateTimeWithZone(Convert.ToDateTime(item.P_Enddate), userTimeZone, true).LocalTime.ToString("MM-dd-yyyy hh:mm tt");
+                    pr.Limit = item.PC_Uses != null ? item.PC_Uses.ToString() : "No Limit";
+                    pr.PCID = item.PC_id;
+                    pr.Orderpromo = (from v in db.Order_Detail_T where v.O_PromoCodeId == item.PC_id select v).Count();
+                    ls.Add(pr);
                 }
                 double dPageCount = ls.Count;
                 ViewData["countlist"] = ls.Count;
@@ -1633,7 +1661,8 @@ namespace EventCombo.Controllers
             {
 
                 ValidationMessage vmc = new ValidationMessage();
-              
+                DateTimeWithZone dtzstart, dzend, dtzpcstart, dtzCreated, dtzpcend;
+                //DateTimeWithZone tz = new DateTimeWithZone();
                 var Eventid = vmc.GetLatestEventId(Eventlid);
                 if (CommanClasses.CompareCurrentUser(Eventid, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
 
@@ -1646,7 +1675,7 @@ namespace EventCombo.Controllers
                 Session["logo"] = "events";
               
                 string startdate = "", enddate = "";
-                DateTimeWithZone dtzstart, dzend, dtznewstart, dtzCreated;
+           
                 var Eventdetail = cms.GetEventdetail(Eventid);
                 pm.Eventitle = Eventdetail.EventTitle;
                 pm.Eventitle = Eventdetail.EventTitle;
@@ -1659,60 +1688,29 @@ namespace EventCombo.Controllers
                 pm.PC_Eventid = Eventid;
                 var startdatesave = "";
                 var singleevnt = (from x in db.EventVenues where x.EventID == Eventid select x).Any();
-                var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == Eventdetail.TimeZone select ev).FirstOrDefault();
-                if (Timezonedetail != null)
-                {
-
-
-                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
-
-                    dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
-                    //Timezone value
-
-                }
-                else
-                {
-                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                    dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
-                }
+                var Timezonedetail = DateTimeWithZone.Timezonedetail(Eventlid);
+               
+                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail);
+                dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
                 now = dtzCreated.LocalTime;
                 if (singleevnt)
                 {
                     var y = (from x in db.EventVenues where x.EventID == Eventid select x).FirstOrDefault();
-                    if (Timezonedetail != null)
-                    {
-                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
-                        dtzstart = new DateTimeWithZone(Convert.ToDateTime(y.E_Startdate), userTimeZone, true);
-                        dzend = new DateTimeWithZone(Convert.ToDateTime(y.E_Enddate), userTimeZone, true);
-                    }
-                    else
-                    {
-                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                        dtzstart = new DateTimeWithZone(Convert.ToDateTime(y.E_Startdate), userTimeZone, true);
-                        dzend = new DateTimeWithZone(Convert.ToDateTime(y.E_Enddate), userTimeZone, true);
-                    }
-
+                
+                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(y.E_Startdate), userTimeZone, true);
+                    dzend = new DateTimeWithZone(Convert.ToDateTime(y.E_Enddate), userTimeZone, true);
                     end_date = dtzstart.LocalTime;
-                    startdatesave = dtzstart.LocalTime.ToString("MM-dd-yyyy hh:mm:ss tt");
+                    startdatesave = dtzstart.LocalTime.ToString("MM-dd-yyyy hh:mm tt");
 
                 }
                 else
                 {
                     var y = (from x in db.MultipleEvents where x.EventID == Eventid select x).FirstOrDefault();
-                    if (Timezonedetail != null)
-                    {
-                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
-                        dtzstart = new DateTimeWithZone(Convert.ToDateTime(y.M_Startfrom), userTimeZone, true);
-                        dzend = new DateTimeWithZone(Convert.ToDateTime(y.M_StartTo), userTimeZone, true);
-                    }
-                    else
-                    {
-                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                        dtzstart = new DateTimeWithZone(Convert.ToDateTime(y.M_Startfrom), userTimeZone, true);
-                        dzend = new DateTimeWithZone(Convert.ToDateTime(y.M_StartTo), userTimeZone, true);
-                    }
+                   
+                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(y.M_Startfrom), userTimeZone, true);
+                    dzend = new DateTimeWithZone(Convert.ToDateTime(y.M_StartTo), userTimeZone, true);
                     end_date = dtzstart.LocalTime;
-                    startdatesave = dtzstart.LocalTime.ToString("MM-dd-yyyy hh:mm:ss tt");
+                    startdatesave = dtzstart.LocalTime.ToString("MM-dd-yyyy hh:mm tt");
 
                 }
                 if (Promocode == 0)
@@ -1728,7 +1726,7 @@ namespace EventCombo.Controllers
                     pm.ticketype = ttype;
                     pm.Formtype = "S";
 
-                    startdate = DateTime.UtcNow.ToString("MM-dd-yyyy hh:mm:ss tt");
+                    startdate = now.ToString("MM-dd-yyyy hh:mm tt");
 
                     pm.orderrow = false;
                     pm.PC_Start = startdate;
@@ -1777,7 +1775,7 @@ namespace EventCombo.Controllers
                         string[] words = p.PC_Start.Split(' ');
                         if (end_date < now)
                         {
-                            pm.PC_Start = now.ToString("MM-dd-yyyy hh:mm:ss tt");
+                            pm.PC_Start = now.ToString("MM-dd-yyyy hh:mm tt");
                         }
                         else
                         {
@@ -1785,14 +1783,15 @@ namespace EventCombo.Controllers
                             datenew = datenew.AddHours(-double.Parse(words[2]));
 
                             datenew = datenew.AddMinutes(-double.Parse(words[4]));
-                            pm.PC_Start = datenew.ToString("MM-dd-yyyy hh:mm:ss tt");
+                            pm.PC_Start = datenew.ToString("MM-dd-yyyy hh:mm tt");
                         }
 
 
                     }
                     else
                     {
-                        pm.PC_Start = p.PC_Start;
+                        dtzpcstart = new DateTimeWithZone(Convert.ToDateTime(p.P_Startdate), userTimeZone, true);
+                        pm.PC_Start = dtzpcstart.LocalTime.ToString("MM-dd-yyyy hh:mm tt"); ;
 
                         pm.startdays = "0 Days 0 Hrs 0 Min";
                     }
@@ -1805,12 +1804,12 @@ namespace EventCombo.Controllers
                         datenew = datenew.AddHours(-double.Parse(words[2]));
 
                         datenew = datenew.AddMinutes(-double.Parse(words[4]));
-                        pm.PC_End = datenew.ToString("MM-dd-yyyy hh:mm:ss tt"); ;
+                        pm.PC_End = datenew.ToString("MM-dd-yyyy hh:mm tt"); ;
                     }
                     else
                     {
-
-                        pm.PC_End = p.PC_End;
+                        dtzpcend = new DateTimeWithZone(Convert.ToDateTime(p.P_Enddate), userTimeZone, true);
+                        pm.PC_End = dtzpcend.LocalTime.ToString("MM-dd-yyyy hh:mm tt"); ;
                         pm.enddays = "0 Days 0 Hrs 0 Min";
                     }
                     pm.PC_Amount = p.PC_Amount != null ? p.PC_Amount : p.PC_Percentage;
@@ -1838,10 +1837,15 @@ namespace EventCombo.Controllers
             var msg = "";
             var containsspecial = 0;
             var Invalidrepeatcode = "";
+            DateTimeWithZone dtz, dtzCreated;
+            var timezoneid = DateTimeWithZone.Timezonedetail(model.PC_Eventid);
+            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(timezoneid);
+            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
             using (EventComboEntities db = new EventComboEntities())
             {
                 if (model.Formtype == "E")
                 {
+                  
 
                     if (Regex.IsMatch(model.PC_Code.ToString(), "^[a-zA-Z0-9@_,-]+$"))
                     {   if (model.PC_Code.Length > 15)
@@ -1884,6 +1888,7 @@ namespace EventCombo.Controllers
                                 org.PC_Eventid = model.PC_Eventid;
                                 org.PC_Type = model.PC_Type;
                                 org.PC_Code = model.PC_Code;
+                             
                                 if (model.Discount_Type == "A")
                                 {
                                     org.PC_Amount = model.PC_Amount;
@@ -1904,7 +1909,10 @@ namespace EventCombo.Controllers
                                 }
                                 else
                                 {
-                                    org.PC_Start = model.PC_Start;
+
+                                    dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_Start), userTimeZone);
+
+                                    org.P_Startdate = dtz.UniversalTime;
                                 }
                                 org.Pc_Enddatetype = model.Pc_Enddatetype;
                                 if (model.Pc_Enddatetype == "1")
@@ -1913,12 +1921,15 @@ namespace EventCombo.Controllers
                                 }
                                 else
                                 {
-                                    org.PC_End = model.PC_End;
+                                    dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_End), userTimeZone);
+
+                                  
+                                    org.P_Enddate = dtz.UniversalTime;
                                 }
 
                                 org.PC_Apply = model.PC_Apply;
                                 org.PC_Eventid = model.PC_Eventid;
-                                org.SavedDate = DateTime.Now;
+                                org.SavedDate = dtzCreated.UniversalTime;
 
 
 
@@ -2015,7 +2026,8 @@ namespace EventCombo.Controllers
                                 }
                                 else
                                 {
-                                    org.PC_Start = model.PC_Start;
+                                        dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_Start), userTimeZone);
+                                        org.P_Startdate = dtz.UniversalTime;
                                 }
 
                                 org.Pc_Enddatetype = model.Pc_Enddatetype;
@@ -2025,12 +2037,13 @@ namespace EventCombo.Controllers
                                 }
                                 else
                                 {
-                                    org.PC_End = model.PC_End;
+                                        dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_End), userTimeZone);
+                                        org.P_Enddate = dtz.UniversalTime;
                                 }
                                 org.PC_Apply = model.PC_Apply;
                                 org.PC_Eventid = model.PC_Eventid;
 
-                                org.SavedDate = DateTime.Now;
+                                org.SavedDate = dtzCreated.UniversalTime;
 
 
 
@@ -2128,7 +2141,8 @@ namespace EventCombo.Controllers
                                                         }
                                                         else
                                                         {
-                                                            org.PC_Start = model.PC_Start;
+                                                            dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_Start), userTimeZone);
+                                                            org.P_Startdate = dtz.UniversalTime;
                                                         }
                                                         org.Pc_Enddatetype = model.Pc_Enddatetype;
                                                         if (model.Pc_Enddatetype == "1")
@@ -2137,11 +2151,12 @@ namespace EventCombo.Controllers
                                                         }
                                                         else
                                                         {
-                                                            org.PC_End = model.PC_End;
+                                                            dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_End), userTimeZone);
+                                                            org.P_Enddate = dtz.UniversalTime;
                                                         }
                                                         org.PC_Apply = model.PC_Apply;
                                                         org.PC_Eventid = model.PC_Eventid;
-                                                        org.SavedDate = DateTime.Now;
+                                                        org.SavedDate = dtzCreated.UniversalTime;
 
 
 
@@ -2241,7 +2256,8 @@ namespace EventCombo.Controllers
                                                     }
                                                     else
                                                     {
-                                                        org.PC_Start = model.PC_Start;
+                                                        dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_Start), userTimeZone);
+                                                        org.P_Startdate = dtz.UniversalTime;
                                                     }
                                                     org.Pc_Enddatetype = model.Pc_Enddatetype;
                                                     if (model.Pc_Enddatetype == "1")
@@ -2250,13 +2266,15 @@ namespace EventCombo.Controllers
                                                     }
                                                     else
                                                     {
-                                                        org.PC_End = model.PC_End;
+                                                        dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_End), userTimeZone);
+                                                       
+                                                        org.P_Enddate = dtz.UniversalTime;
                                                     }
                                                     org.PC_Apply = model.PC_Apply;
                                                     org.PC_Eventid = model.PC_Eventid;
 
 
-                                                    org.SavedDate = DateTime.Now;
+                                                    org.SavedDate = dtzCreated.UniversalTime;
 
 
                                                     db.Promo_Code.Add(org);
