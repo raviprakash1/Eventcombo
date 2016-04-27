@@ -27,14 +27,79 @@
 
   <div class="tab-content">
     <div id="UpcomingEvents" data-ttype="@OrderTypes.Upcoming" class="tab-pane fade in active">
-      @{ Html.RenderAction("PurchasedTicketList", new { OrderType = OrderTypes.Upcoming, SortBy = Model.State.SortBy, Page = Model.State.Page, PerPage = Model.State.PerPage }); }
+      <div id="tableplace@(OrderTypes.Upcoming.ToString())">
+        @{ Html.RenderAction("PurchasedTicketList", new { OrderType = OrderTypes.Upcoming, SortBy = Model.State.SortBy, Page = Model.State.Page, PerPage = Model.State.PerPage }); }
+      </div>
+      <div id="orderPaginationMainContainer@(OrderTypes.Upcoming.ToString())" class="orderListPagination">
+        <div class="col-sm-8 col-xs-12 orderPagination">
+          <ul id="paginationRecordUL@(OrderTypes.Upcoming.ToString())" class="pagination"></ul>
+        </div>
+        <script type="text/javascript">
+          $(function () {
+            setPagination("@(OrderTypes.Upcoming.ToString())", "@upcomingCount", 0);
+          });
+        </script>
+        <div class="col-sm-4 col-xs-12 orderViewCount">
+          <ul class="pagination">
+            <li id="recordShow20" onclick="SetPerPage(this, '@(OrderTypes.Upcoming.ToString())', 20)" class="active recordLiItem"><a href="javascript:void(0)">20</a></li>
+            <li id="recordShow50" onclick="SetPerPage(this, '@(OrderTypes.Upcoming.ToString())', 50)" class="recordLiItem"><a href="javascript:void(0)">50</a></li>
+            <li id="recordShow100" onclick="SetPerPage(this, '@(OrderTypes.Upcoming.ToString())', 100)" class="recordLiItem"><a href="javascript:void(0)">100</a></li>
+            <li id="recordShow0" onclick="SetPerPage(this, '@(OrderTypes.Upcoming.ToString())', 0)" class="recordLiItem"><a href="javascript:void(0)">ALL</a></li>
+          </ul>
+        </div>
+      </div>
+
     </div>
     <div id="PastEvents" data-ttype="@OrderTypes.Past" class="tab-pane fade">
-      @{ Html.RenderAction("PurchasedTicketList", new { OrderType = OrderTypes.Past, SortBy = Model.State.SortBy, Page = Model.State.Page, PerPage = Model.State.PerPage }); }
+      <div id="tableplace@(OrderTypes.Past.ToString())">
+        @{ Html.RenderAction("PurchasedTicketList", new { OrderType = OrderTypes.Past, SortBy = Model.State.SortBy, Page = Model.State.Page, PerPage = Model.State.PerPage }); }
+      </div>
+      <div id="orderPaginationMainContainer@(OrderTypes.Past.ToString())" class="orderListPagination">
+        <div class="col-sm-8 col-xs-12 orderPagination">
+          <ul id="paginationRecordUL@(OrderTypes.Past.ToString())" class="pagination"></ul>
+        </div>
+        <script type="text/javascript">
+          $(function () {
+            setPagination("@(OrderTypes.Past.ToString())", "@pastCount", 0);
+          });
+        </script>
+        <div class="col-sm-4 col-xs-12 orderViewCount">
+          <ul class="pagination">
+            <li id="recordShow20" onclick="SetPerPage(this, '@(OrderTypes.Past.ToString())', 20)" class="active recordLiItem"><a href="javascript:void(0)">20</a></li>
+            <li id="recordShow50" onclick="SetPerPage(this, '@(OrderTypes.Past.ToString())', 50)" class="recordLiItem"><a href="javascript:void(0)">50</a></li>
+            <li id="recordShow100" onclick="SetPerPage(this, '@(OrderTypes.Past.ToString())', 100)" class="recordLiItem"><a href="javascript:void(0)">100</a></li>
+            <li id="recordShow0" onclick="SetPerPage(this, '@(OrderTypes.Past.ToString())', 0)" class="recordLiItem"><a href="javascript:void(0)">ALL</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
+
     <div id="FavoriteEvents" data-ttype="@OrderTypes.Favorite" class="tab-pane fade">
-      @{ Html.RenderAction("PurchasedTicketList", new { OrderType = OrderTypes.Favorite, SortBy = Model.State.SortBy, Page = Model.State.Page, PerPage = Model.State.PerPage }); }
+      <div id="tableplace@(OrderTypes.Favorite.ToString())">
+        @{ Html.RenderAction("PurchasedTicketList", new { OrderType = OrderTypes.Favorite, SortBy = Model.State.SortBy, Page = Model.State.Page, PerPage = Model.State.PerPage }); }
+      </div>
+      <div id="orderPaginationMainContainer@(OrderTypes.Favorite.ToString())" class="orderListPagination">
+        <div class="col-sm-8 col-xs-12 orderPagination">
+          <ul id="paginationRecordUL@(OrderTypes.Favorite.ToString())" class="pagination"></ul>
+        </div>
+        <script type="text/javascript">
+          $(function () {
+            setPagination("@(OrderTypes.Favorite.ToString())", "@favoriteCount", 0);
+          });
+        </script>
+        <div class="col-sm-4 col-xs-12 orderViewCount">
+          <ul class="pagination">
+            <li id="recordShow20" onclick="SetPerPage(this, '@(OrderTypes.Favorite.ToString())', 20)" class="active recordLiItem"><a href="javascript:void(0)">20</a></li>
+            <li id="recordShow50" onclick="SetPerPage(this, '@(OrderTypes.Favorite.ToString())', 50)" class="recordLiItem"><a href="javascript:void(0)">50</a></li>
+            <li id="recordShow100" onclick="SetPerPage(this, '@(OrderTypes.Favorite.ToString())', 100)" class="recordLiItem"><a href="javascript:void(0)">100</a></li>
+            <li id="recordShow0" onclick="SetPerPage(this, '@(OrderTypes.Favorite.ToString())', 0)" class="recordLiItem"><a href="javascript:void(0)">ALL</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
+  </div>
+  <div id="spinner" class="spinner" style="display:none;">
+    <img id="img-spinner" src="~/Images/ajaxloader1.gif" alt="Loading" />
   </div>
 </div>
 
@@ -46,20 +111,30 @@
     PerPage: "@(Model.State.PerPage)",
     SortBy: "@(Model.State.SortBy)",
     SortDesc: "@(Model.State.SortDesc)",
+    Total: "@upcomingCount",
     OrderType: "@OrderTypes.Upcoming"
   }, {
     Page: "@(Model.State.Page)",
     PerPage: "@(Model.State.PerPage)",
     SortBy: "@(Model.State.SortBy)",
     SortDesc: "@(Model.State.SortDesc)",
+    Total: "@pastCount",
     OrderType: "@OrderTypes.Past"
   }, {
     Page: "@(Model.State.Page)",
     PerPage: "@(Model.State.PerPage)",
     SortBy: "@(Model.State.SortBy)",
     SortDesc: "@(Model.State.SortDesc)",
+    Total: "@favoriteCount",
     OrderType: "@OrderTypes.Favorite"
   }];
+
+  $(function () {
+    $(document).on({
+      ajaxStart: function () { $("#spinner").show(); },
+      ajaxStop: function () { $("#spinner").hide(); }
+    });
+  });
 
   function expandEditMenu(obj, name, id) {
     var detail = $('#' + name + id);
@@ -70,7 +145,6 @@
         data: { OrderId: id },
         datatype: 'html',
         success: function (data) {
-          console.debug(data);
           $(obj).parent().parent().css('background-color', '#f1f1f1');
           $(detail).html(data);
           $(detail).css('background-color', '#f1f1f1');
@@ -108,7 +182,7 @@
     else
       cStates[cur].SortDesc = 'False';
     cStates[cur].SortBy = sort;
-    getTicketList($(obj).closest('.tab-pane').attr('id'), cStates[cur]);
+    getTicketList($(obj).closest('div[id^="tableplace"').attr('id'), cStates[cur]);
   }
 
   function findState(obj) {
@@ -122,6 +196,15 @@
         break;
       }
     return cur;
+  }
+
+  function getCurrentState(state) {
+    var cState = null;
+    cStates.forEach(function (x) {
+      if (x.OrderType == state)
+        cState = x;
+    });
+    return cState;
   }
 
   function getTicketList(id, query) {
@@ -189,7 +272,6 @@
       Email: $('#emailContact' + oId).val(),
       Message: $('#messageContact' + oId).val()
     }
-    console.debug(query);
     $.ajax({
       type: "POST",
       url: "@Url.Action("SaveMessage", "Account")",
@@ -203,6 +285,47 @@
           $('#ajaxanswer' + oId).html("Message not saved.");
       }
     });
+  }
+
+  function setPagination(page, total, cur) {
+    $('#paginationRecordUL' + page).empty();
+    var cState = getCurrentState(page);
+    if (cState != null) {
+      cState.Total = total;
+      if ((parseInt(total, 10) > parseInt(cState.PerPage, 10)) && (parseInt(cState.PerPage, 10) > 0)) {
+        var totalPages = Math.ceil(total / cState.PerPage);
+        cur = cur >= totalPages ? totalPages - 1 : cur;
+        var startVal = ((cur + 2) >= totalPages) ? (totalPages - 5) : (cur - 2);
+        startVal = (startVal >= 0) ? startVal : 0;
+        var endVal = ((startVal + 4) >= totalPages) ? totalPages - 1 : (startVal + 4);
+        $("#paginationRecordUL" + page).append('<li id="paginationFirst" onclick="setPagination(\'' + page + '\', ' + total + ', 0)" class="paginationLiItem" ><a href="javascript:void(0)">First</a></li>' +
+          '<li id="paginationPrevious" onclick="setPagination(\'' + page + '\', ' + total + ', ' + (cur > 0 ? cur - 1 : cur) + ')" class="paginationLiItem"><a href="javascript:void(0)">Previous</a></li>');
+        if (startVal > 0)
+          $("#paginationRecordUL" + page).append('<li id="paginationPrevSome" onclick="setPagination(\'' + page + '\', ' + total + ', ' + (startVal - 1) + ')" class="paginationLiItem" ><a href="javascript:void(0)">...</a></li>');
+        for (i = startVal; i <= endVal; i++) {
+          $("#paginationRecordUL" + page).append('<li id="pagination"' + i + ' onclick="setPagination(\'' + page + '\', ' + total + ', ' + i + ')" class="paginationLiItem' + (i == cur ? ' active' : '') + '" ><a href="javascript:void(0)">' + (i + 1) + '</a></li>');
+        }
+        if (endVal < totalPages - 1)
+          $("#paginationRecordUL" + page).append('<li id="paginationNextSome" onclick="setPagination(\'' + page + '\', ' + total + ', ' + (endVal + 1) + ')" class="paginationLiItem" ><a href="javascript:void(0)">...</a></li>');
+        $("#paginationRecordUL" + page).append('<li id="paginationNext" onclick="setPagination(\'' + page + '\', ' + total + ', ' + (cur < (totalPages - 1) ? cur + 1 : cur) + ')" class="paginationLiItem" ><a href="javascript:void(0)">Next</a></li>' +
+          '<li id="paginationLast" onclick="setPagination(\'' + page + '\', ' + total + ', ' + (totalPages - 1) + ')" class="paginationLiItem"><a href="javascript:void(0)">Last</a></li>');
+        cState.Page = cur;
+      }
+      else
+        cState.Page = 0;
+      getTicketList("tableplace" + page, cState);
+    }
+  }
+
+  function SetPerPage(obj, page, num) {
+    $(obj).siblings('li').removeClass('active');
+    $(obj).addClass('active');
+    var cState = getCurrentState(page);
+    if (cState != null) {
+      var curRec = cState.Page * cState.PerPage;
+      cState.PerPage = num;
+      setPagination(page, cState.Total, Math.floor(curRec / num));
+    }
   }
 
 
