@@ -2426,3 +2426,5 @@ Label the data
 
 .evnt_mg_word_brack{ word-break:normal!important;}
 .carousel-control{ z-index:99;}
+.hidediv{ display:none;}
+.novisiblediv{ visibility:hidden;}

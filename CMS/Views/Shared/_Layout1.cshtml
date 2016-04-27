@@ -315,7 +315,12 @@
                 datatype: "Text",
                 type: "Post",
                 success: function (response) {
-                    if (response != "Y") {
+                    //alert(response);
+                    if (response == "SE") {
+                        window.location.href = '@Url.Action("Login", "Home")';
+                        return false;
+                    }
+                    else if (response != "Y") {
                         alert("Access Denied !!!");
                         return false;
                     }

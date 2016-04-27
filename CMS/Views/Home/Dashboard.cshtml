@@ -151,16 +151,22 @@
             datatype: "Text",
             type: "Post",
             success: function (response) {
-                if (response != "Y") {
+                //alert(response);
+                if (response == "SE")
+                {
+                    window.location.href = '@Url.Action("Login", "Home")';
+                    return false;
+                }
+                else if (response != "Y") {
                     alert("Access Denied !!!");
                     return false;
                 }
+
                 else {
                     //  alert(vPerm);
                     if (vPerm == "10")
                         window.location.href = '@Url.Action("Users", "Users")';
                     else if (vPerm == "6")
-
                         window.location.href = '@Url.Action("Index", "Email", new { templatetag = "email_welcome", templatename = "Welcome" })';
 
                     else if (vPerm == "7") {
@@ -193,7 +199,7 @@
                         window.location.href = '@Url.Action("EventType", "EventType", new {Type="N"})';
                     else if (vPerm == "9")
                         window.location.href = '@Url.Action("EventCategory", "EventCategory", new { msg = "N"})';
-                    
+
                 }
             }
         });
