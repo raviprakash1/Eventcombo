@@ -2838,7 +2838,7 @@ namespace EventCombo.Controllers
                     ObjEC.Private_Password = model.Private_Password;
                     ObjEC.EventUrl = model.EventUrl;
                     ObjEC.PublishOnFB = model.PublishOnFB;
-                    ObjEC.EventStatus = model.EventStatus;
+                    ObjEC.EventStatus = "Live";
                     ObjEC.IsMultipleEvent = model.IsMultipleEvent;
                     ObjEC.TimeZone = model.TimeZone;
                     ObjEC.DisplayStartTime = model.DisplayStartTime;

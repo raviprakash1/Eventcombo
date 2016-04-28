@@ -19,6 +19,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
 using EventCombo.ViewModels;
+using System.Globalization;
 
 namespace EventCombo.Controllers
 {
@@ -1674,6 +1675,7 @@ namespace EventCombo.Controllers
         }
 
         public ActionResult PaymentConfirmation()
+
         {
             if (Session["TicketLockedId"] != null)
             {
@@ -1752,9 +1754,12 @@ namespace EventCombo.Controllers
                     var bodyn = "";
                     var ticketP = "";
                     var eventdetail = db.Events.FirstOrDefault(i => i.EventID == Eventid);
-
+                    DateTimeWithZone dtzstart;
                     //Get Email tags
                     EmailTag = ac.getTag();
+                    DateTime datetime = new DateTime();
+                    DayOfWeek day = new DayOfWeek();
+                    string Sdate = "", time = "";
                     //Get Email tags
                     foreach (var item in TicketPurchasedDetail)
                     {
@@ -1762,11 +1767,35 @@ namespace EventCombo.Controllers
                         paymentdate pdate = new paymentdate();
                         var tQntydetail = db.Ticket_Quantity_Detail.FirstOrDefault(i => i.TQD_Id == item.TPD_TQD_Id);
                         var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
-                        var datetime = DateTime.Parse(tQntydetail.TQD_StartDate);
-                        var day = datetime.DayOfWeek;
-                        var Sdate = datetime.ToString("MMM dd, yyyy");
+                       
+                        
+                        if (tQntydetail.TQD_StartDate != null)
+                        {
+                             datetime = DateTime.Parse(tQntydetail.TQD_StartDate);
+                             day = datetime.DayOfWeek;
+                             Sdate = datetime.ToString("MMM dd, yyyy");
+                          
+                             time = tQntydetail.TQD_StartTime;
+                        }
+                        else
+                        {
+                            var td = DateTimeWithZone.Timezonedetail(eventdetail.EventID);
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
+                            if(etype=="Single")
+                            {
+                               var ev= db.EventVenues.FirstOrDefault(i => i.EventID == Eventid);
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(ev.E_Startdate), userTimeZone, true);
+                                datetime = dtzstart.LocalTime;
+                                day= CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(datetime);
+                                Sdate = datetime.ToString("MMM dd, yyyy");
+                                time= datetime.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
+
+                            }
+
+                         
+                        }
                         var addresslist = "";
-                        var time = tQntydetail.TQD_StartTime;
+
                         if (address != null)
                         {
                             addresslist = (!string.IsNullOrEmpty(address.ConsolidateAddress)) ? address.ConsolidateAddress : "";
