@@ -40,82 +40,64 @@
             </a>
         </div>
         <div class="panel panel-default menu_list">
-            <a class="menu_title" href="#">
-                <div class="panel-heading">
-                    Modify Order Options
-                </div>
-            </a>
+          <a id="orderoptions" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapseOrderOption">
+            <div class="panel-heading @(Model.CurrentItem == "orderoptions" ? "active" : "")">
+              Modify Order Options <b class="closed"></b>
+            </div>
+
+          </a>
+          <div id="collapseOrderOption" class="panel-collapse collapse @(Model.CurrentItem == "orderoptions" ? "in" : "" )">
+            <div class="panel-body no-padding">
+              <p>@Html.ActionLink("Order Form", "Form", "OrderOptions", new { eventId = Model.EventId }, null) </p>
+              <p>@Html.ActionLink("Order Confirmation", "Confirmation", "OrderOptions", new { eventId = Model.EventId }, null)</p>
+              <p>@Html.ActionLink("Event Type & Language", "EventType", "OrderOptions", new { eventId = Model.EventId }, null)</p>
+              <p>@Html.ActionLink("Waitlist", "Waitlist", "OrderOptions", new { eventId = Model.EventId }, null)</p>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default menu_list">
+          <a id="manageattendees" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapseManageAttendees">
+            <div class="panel-heading @(Model.CurrentItem == "manageattendees" ? "active" : "")">
+              Manage Attendees <b class="closed"></b>
+            </div>
+          </a>
+          <div id="collapseManageAttendees" class="panel-collapse collapse @(Model.CurrentItem == "manageattendees" ? "in" : "")">
+            <div class="panel-body no-padding">
+              <p>@Html.ActionLink("Orders", "Orders", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
+              <p>@Html.ActionLink("Add Attendees", "Add", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
+              <p>@Html.ActionLink("Emails to Attendees", "Email", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
+              <p>@Html.ActionLink("Guest List", "Guests", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
+              <p>@Html.ActionLink("Name Badges", "Badges", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
+              <p>@Html.ActionLink("Check-in", "Checkin", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
+            </div>
+          </div>
         </div>
         <div class="panel panel-default menu_list">
 
             <a id="crt_promcode" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                <div id="dvcrtpromcode" class="panel-heading">
-                    Invite and Promote <b class="closed"></b>
-                </div>
+              <div id="dvcrtpromcode" class="panel-heading @(Model.CurrentItem == "inviteandpromote" ? "active" : "")">
+                Invite and Promote <b class="closed"></b>
+              </div>
             </a>
 
-            <div id="collapse2" class="panel-collapse collapse">
-                <div class="panel-body no-padding">
-                    <p>@Html.ActionLink("Email Invitations", "EmailInvitations", "ManageEvent", new { eventId = Model.EventId }, null)</p>
-                    @if (Model.DiscountCode > 0)
-                    {
-                        <p>@Html.ActionLink("Promotional Code", "PromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.EventId) }, null)</p>
-                    }
-                    else
-                    {
-                        <p>@Html.ActionLink("Promotional Code", "CreatePromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.EventId) }, null)</p>
-                    }
-                    <p>Facebook Integration</p>
-                    <p>Website Integration</p>
-                    <p>Tracing Links</p>
-                    <p>Affialate Programs</p>
-                    <p>Social Stream</p>
-
-
-
-
-                </div>
+          <div id="collapse2" class="panel-collapse collapse @(Model.CurrentItem == "inviteandpromote" ? "in" : "")">
+            <div class="panel-body no-padding">
+              <p>@Html.ActionLink("Email Invitations", "EmailInvitations", "ManageEvent", new { eventId = Model.EventId }, null)</p>
+              @if (Model.DiscountCode > 0)
+              {
+                <p>@Html.ActionLink("Promotional Code", "PromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.EventId) }, null)</p>
+              }
+              else
+              {
+                <p>@Html.ActionLink("Promotional Code", "CreatePromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.EventId) }, null)</p>
+              }
+              <p>Facebook Integration</p>
+              <p>Website Integration</p>
+              <p>Tracing Links</p>
+              <p>Affialate Programs</p>
+              <p>Social Stream</p>
             </div>
+          </div>
+
         </div>
-
     </div>
-<script>
-    $(document).ready(function () {
-
-     
-
-        $('#dvcrtpromcode').click(function (e) {
-
-            var $dvEle = $('#dvcrtpromcode b');
-            var vclassname = $dvEle.attr('class');
-            if ($dvEle.hasClass("new-opend")) {
-                $dvEle.removeClass('opened new-opend').addClass('closed');
-            }
-            else {
-                $dvEle.addClass('opened new-opend');
-            }
-        });
-
-
-    });
-
-
-</script>
-
-<script>
-    //$('#crt_promcode').click();
-    //$('#dvcrtpromcode').addClass("active");
-    //$('#dvcrtpromcode b').addClass('opened new-opend');
-
-    $('#dvcrtpromcode').on("click", function (e) {
-        
-        var $dvEle = $('#dvcrtpromcode b');
-        var vclassname = $dvEle.attr('class');
-        if ($dvEle.hasClass("new-opend")) {
-            $dvEle.removeClass('opened new-opend').addClass('closed');
-        }
-        else {
-            $dvEle.addClass('opened new-opend');
-        }
-    });
-</script>

@@ -71,5 +71,16 @@ namespace EventCombo.Service
       return se;
     }
 
+    public AccessLevel GetOrderAccess(string orderId, string userId)
+    {
+      IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+      var ticket = tpdRepo.Get(filter: (t => ((t.TPD_User_Id == userId) && (t.TPD_Order_Id == orderId)))).FirstOrDefault();
+      if (ticket != null)
+        return AccessLevel.OrderOwner;
+      if (ticket.Event.UserID == userId)
+        return AccessLevel.EventOwner;
+      return AccessLevel.Public;
+    }
+
   }
 }

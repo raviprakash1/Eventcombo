@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EventCombo.Models;
+using System.IO;
 
 namespace EventCombo.Service
 {
@@ -20,5 +21,7 @@ namespace EventCombo.Service
     bool CancelOrder(string orderId, string userId);
 
     bool SaveMessage(OrganizerMessageViewModel model);
+
+    MemoryStream GetDownloadableTicket(string orderId, string format, string baseUrl);
   }
 }

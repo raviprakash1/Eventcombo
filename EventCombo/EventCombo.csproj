@@ -57,6 +57,10 @@
       <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DevTrends.MvcDonutCaching, Version=1.3.0.0, Culture=neutral, PublicKeyToken=73c58d802958a09f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcDonutCaching.1.3.0\lib\net40\DevTrends.MvcDonutCaching.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
       <Private>True</Private>
@@ -253,6 +257,7 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CMSController.cs" />
     <Compile Include="Controllers\CreateEventController.cs" />
+    <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\EditEventController.cs" />
     <Compile Include="Controllers\EventConfirmationController.cs" />
     <Compile Include="Controllers\EventController.cs" />
@@ -635,6 +640,7 @@
     <Content Include="Content\OrderForm.css" />
     <Content Include="Content\OrderFormDesign.css" />
     <Content Include="Content\PurchasedTicket.css" />
+    <Content Include="DevTrends.MvcDonutCaching.README.txt" />
     <Content Include="email-content-pdf%281%29.html" />
     <Content Include="Images\ajax-loader.gif" />
     <Content Include="Images\ajax-loaderMini.gif" />

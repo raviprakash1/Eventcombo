@@ -13,10 +13,11 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Web.Script.Serialization;
+using DevTrends.MvcDonutCaching;
 
 namespace EventCombo.Controllers
 {
-    [OutputCacheAttribute(VaryByParam = "None", Duration = 0, NoStore = true)]
+    [DonutOutputCache(VaryByParam = "None", Duration = 0, NoStore = true)]
     public class EditEventController : Controller
     {
         // GET: EditEvent

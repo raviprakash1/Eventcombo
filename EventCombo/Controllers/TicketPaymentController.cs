@@ -1244,12 +1244,11 @@ namespace EventCombo.Controllers
                 ExceptionLogging.SendErrorToText(ex);
             }
         }
-        public MemoryStream generateTicketPDF(string guid, long eventid, List<Email_Tag> emailtag, string fname)
+        public MemoryStream generateTicketPDF(string guid, long eventid, List<Email_Tag> emailtag, string fname, string htmlPath)
         {
             WebClient wc = new WebClient();
             MemoryStream mms = new MemoryStream();
             string htmlText = "";
-            string htmlPath = Server.MapPath("..");
             try {
                 var TicketDetail = (from Ord in db.TicketOrderDetails
                                     where Ord.T_Guid == guid
@@ -1262,9 +1261,9 @@ namespace EventCombo.Controllers
                     {
                         count = count + 1;
 
-                        string barImgPath = Server.MapPath("..") + "/Images/br_" + item.T_Id + ".Png";
+                        string barImgPath = htmlPath + "/Images/br_" + item.T_Id + ".Png";
 
-                        string qrImgPath = Server.MapPath("..") + "/Images/QR_" + item.T_Id + ".Png";
+                        string qrImgPath = htmlPath + "/Images/QR_" + item.T_Id + ".Png";
 
                         // Ticket and event details
                         var TQtydetail = (from tQty in db.Ticket_Quantity_Detail
@@ -1339,18 +1338,18 @@ namespace EventCombo.Controllers
 
                         string Qrcode = "<img style = 'width:150px;height:150px' src ='" + qrImgPath + "' alt = 'QRCode' />";
                         string barcode = "<img  src ='" + barImgPath + "' alt = 'BarCode' >";
-                        string Imagelogo = Server.MapPath("..") + "/Images/logo_vertical.png";
+                        string Imagelogo = htmlPath + "/Images/logo_vertical.png";
                         string logoImage = "<img style='width:57px;height:375px' src ='" + Imagelogo + "' alt = 'Logo' >";
                         CreateEventController ccEvent = new CreateEventController();
                         var Images = ccEvent.GetImages(eventid).FirstOrDefault();
                         string Imageevent = "";
                         if (string.IsNullOrEmpty(Images))
                         {
-                            Imageevent = Server.MapPath("..") + "/Images/default_event_image.jpg";
+                          Imageevent = htmlPath + "/Images/default_event_image.jpg";
                         }
                         else
                         {
-                            Imageevent = Server.MapPath("..") + Images;
+                          Imageevent = htmlPath + Images;
                         }
                         string Imagevent = "<img style='width:200px;height:200px;' src ='" + Imageevent + "' alt = 'Image' >";
 
@@ -1724,7 +1723,7 @@ namespace EventCombo.Controllers
                     }
 
                     //email bearer
-                    MemoryStream attachment = generateTicketPDF(strGUID, Eventid, EmailTag, username);
+                    MemoryStream attachment = generateTicketPDF(strGUID, Eventid, EmailTag, username, Server.MapPath(".."));
 
                     var emailorder = Orderdetail.O_Email != null ? Orderdetail.O_Email : email;
                     if (Emailtemplate != null)
