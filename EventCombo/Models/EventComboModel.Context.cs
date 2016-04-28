@@ -61,7 +61,6 @@ namespace EventCombo.Models
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<Ticket_Locked_Detail> Ticket_Locked_Detail { get; set; }
-        public virtual DbSet<Ticket_Purchased_Detail> Ticket_Purchased_Detail { get; set; }
         public virtual DbSet<Ticket_Quantity_Detail> Ticket_Quantity_Detail { get; set; }
         public virtual DbSet<TicketBearer> TicketBearers { get; set; }
         public virtual DbSet<TicketDeliveryMethod> TicketDeliveryMethods { get; set; }
@@ -74,6 +73,8 @@ namespace EventCombo.Models
         public virtual DbSet<Organizer_Master> Organizer_Master { get; set; }
         public virtual DbSet<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
         public virtual DbSet<v_RetrieveEventid> v_RetrieveEventid { get; set; }
+        public virtual DbSet<Event_Email_Invitation> Event_Email_Invitation { get; set; }
+        public virtual DbSet<Event_Email_List> Event_Email_List { get; set; }
         public virtual DbSet<OrderTemplate> OrderTemplates { get; set; }
         public virtual DbSet<OrderTemplateQuestion> OrderTemplateQuestions { get; set; }
         public virtual DbSet<OrderTemplateType> OrderTemplateTypes { get; set; }

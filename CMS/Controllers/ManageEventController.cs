@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 using CMS.Models;
 using System.Text;
+using System.Data.SqlClient;
 
 namespace CMS.Controllers
 {
@@ -14,9 +15,9 @@ namespace CMS.Controllers
         EmsEntities db = new EmsEntities();
         // GET: ManageEvent
         [HttpPost]
-        public ActionResult Index(string SearchStringEventTitle, string EventType, string ddlEventCategory, string ddlEventSubCategory,string Features, string PageF,string Events, string Tickets)
+        public ActionResult Index(string SearchStringEventTitle, string EventType, string ddlEventCategory, string ddlEventSubCategory, string Features, string PageF, string Events, string Tickets)
         {
-            List<EventCreation> objlst = GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features, Events,Tickets);
+            List<EventCreation> objlst = GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features, Events, Tickets);
             if (objlst.Count == 0)
                 ViewData["SearchedUser"] = 0;
             int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
@@ -24,19 +25,13 @@ namespace CMS.Controllers
             List<SelectListItem> PageFilter = new List<SelectListItem>();
             int i = 0; int z = 0; int iUcount = objlst.Count; int iGapValue = 25;
             string strText = "";
-            //PageFilter.Add(new SelectListItem()
-            //{
-            //    Text = "Select",
-            //    Value = "0",
-            //    Selected = (iCount == 0 ? true : false)
-            //});
             if (iUcount > iGapValue)
             {
                 for (i = 0; i < iUcount; i++)
                 {
-                    if (strText != (z+1).ToString() + " - " + (z + iGapValue).ToString())
+                    if (strText != (z + 1).ToString() + " - " + (z + iGapValue).ToString())
                     {
-                        strText = (z+1).ToString() + " - " + (z + iGapValue).ToString();
+                        strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
                         PageFilter.Add(new SelectListItem()
                         {
                             Text = strText,
@@ -46,27 +41,20 @@ namespace CMS.Controllers
                     }
                     z = z + iGapValue;
                     iUcount = iUcount - iGapValue;
-                    if (iUcount < iGapValue && iUcount>0)
+                    if (iUcount < iGapValue && iUcount > 0)
                     {
-                        strText = (z+1).ToString() + " - " + (z + iGapValue).ToString();
+                        strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
                         PageFilter.Add(new SelectListItem()
                         {
                             Text = strText,
-                            Value = (i+1).ToString(),
+                            Value = (i + 1).ToString(),
                             Selected = (iCount == z ? true : false)
                         });
                     }
                 }
                 if (iCount > 0)
                 {
-                    //if (iCount < objlst.Count)
-                    //    objlst = objlst.GetRange(iCount - iGapValue, iGapValue);
-                    //else
-                    //{
-                    //    int iGap = (iCount - iGapValue);
-                    //    if(iGap< objlst.Count)
-                    //        objlst = objlst.GetRange(iGap, (objlst.Count -iGap) );
-                    //}
+
                 }
             }
             else
@@ -96,8 +84,9 @@ namespace CMS.Controllers
         {
             using (EmsEntities objEntity = new EmsEntities())
             {
-                var vPInfo = (from myRow in objEntity.Payment_Info where myRow.PI_EventId == lEventId  
-                                   select myRow).FirstOrDefault();
+                var vPInfo = (from myRow in objEntity.Payment_Info
+                              where myRow.PI_EventId == lEventId
+                              select myRow).FirstOrDefault();
                 Payment_Info objPI = new Payment_Info();
                 if (vPInfo != null)
                 {
@@ -107,28 +96,22 @@ namespace CMS.Controllers
                 }
                 return View(objPI);
             }
-            
+
         }
 
         public ActionResult Index()
         {
-            List<EventCreation> objlst = GetAllEvents("", "", "", "", "","","");
-            int iCount = 0;            
+            List<EventCreation> objlst = GetAllEvents("", "", "", "", "", "", "");
+            int iCount = 0;
             List<SelectListItem> PageFilter = new List<SelectListItem>();
             ViewData["Eventscount"] = objlst.Count;
             int i = 0; int z = 0; int iUcount = objlst.Count; int iGapValue = 25;
             string strText = "";
-            //PageFilter.Add(new SelectListItem()
-            //{
-            //    Text = "Select",
-            //    Value = "0",
-            //    Selected = (iCount == 0 ? true : false)
-            //});
             if (iUcount > iGapValue)
             {
                 for (i = 0; i < iUcount; i++)
                 {
-                    strText = (z+1).ToString() + " - " + (z + iGapValue).ToString();
+                    strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
                     PageFilter.Add(new SelectListItem()
                     {
                         Text = strText,
@@ -167,17 +150,14 @@ namespace CMS.Controllers
             ViewBag.PageF = PageFilter;
             return View(objlst);
         }
-        public List<EventCreation> GetAllEvents(string SearchStringEventTitle, string iEventType, string iEventCategory, string iEventSubCategory,string strFeature,string Events,string tickets)
+        public List<EventCreation> GetAllEvents(string SearchStringEventTitle, string iEventType, string iEventCategory, string iEventSubCategory, string strFeature, string Events, string tickets)
         {
             string user = (Session["UserID"] != null ? Session["UserID"].ToString() : string.Empty);
 
-            //if (SearchStringEventTitle == null) SearchStringEventTitle = "";
-            //if (SearchStringEventType == null) SearchStringEventType = "";
-            //if (SearchStringEventCategory == null) SearchStringEventCategory = "";
 
             using (EmsEntities objEntity = new EmsEntities())
             {
-                 var rows = (from myRow in objEntity.EventTypes
+                var rows = (from myRow in objEntity.EventTypes
                             select myRow).ToList();
                 List<SelectListItem> EventType = new List<SelectListItem>();
                 EventType.Add(new SelectListItem()
@@ -252,7 +232,7 @@ namespace CMS.Controllers
                     Value = "2",
                     Selected = true
                 });
-                List <SelectListItem> Features = new List<SelectListItem>();
+                List<SelectListItem> Features = new List<SelectListItem>();
                 Features.Add(new SelectListItem()
                 {
                     Text = "Select",
@@ -294,38 +274,27 @@ namespace CMS.Controllers
 
                 GetEventListing_Result obj = new GetEventListing_Result();
                 List<EventCreation> objEv = new List<EventCreation>();
-                objEv = objEntity.GetEventListing(SearchStringEventTitle, iEventType, iEventCategory, iEventSubCategory,strFeature, Events,tickets).ToList();
+                objEv = objEntity.GetEventListing(SearchStringEventTitle, iEventType, iEventCategory, iEventSubCategory, strFeature, Events, tickets).ToList();
 
-                
+
 
 
                 return objEv;
             }
-            //if (!SearchStringFirstName.Equals(string.Empty))
-            //    return modelUserTemp.Where(us => us.FirstName.ToLower().Contains(SearchStringFirstName.ToLower()) || us.LastName.ToLower().Contains(SearchStringLastName.ToLower())
-            //    || us.EMail.ToLower().Contains(SearchStringEmail.ToLower())).ToList();
-            //else
-
-
-
-
 
         }
         public ActionResult Deleteevent(string Eventid)
         {
             try
             {
-
-                db.Database.ExecuteSqlCommand("Delete from Event_Orgnizer_Detail where Orgnizer_Event_Id='" + Eventid + "'");
-                db.Database.ExecuteSqlCommand("Delete from Event_VariableDesc where Event_Id='" + Eventid + "'");
-                db.Database.ExecuteSqlCommand("Delete from Ticket where E_Id='" + Eventid + "'");
-                db.Database.ExecuteSqlCommand("Delete from Address where EventId='" + Eventid + "'");
-                db.Database.ExecuteSqlCommand("Delete from MultipleEvent where EventID='" + Eventid + "'");
-                db.Database.ExecuteSqlCommand("Delete from EventVenue where EventID='" + Eventid + "'");
-                db.Database.ExecuteSqlCommand("Delete from Event where EventID='" + Eventid + "'");
-
-
-
+                var eventID = new SqlParameter("@EventID", Eventid);
+                db.Database.ExecuteSqlCommand("Delete from Event_Orgnizer_Detail where Orgnizer_Event_Id=@EventID", eventID);
+                db.Database.ExecuteSqlCommand("Delete from Event_VariableDesc where Event_Id=@EventID", eventID);
+                db.Database.ExecuteSqlCommand("Delete from Ticket where E_Id=@EventID", eventID);
+                db.Database.ExecuteSqlCommand("Delete from Address where EventId=@EventID", eventID);
+                db.Database.ExecuteSqlCommand("Delete from MultipleEvent where EventID=@EventID", eventID);
+                db.Database.ExecuteSqlCommand("Delete from EventVenue where EventID=@EventID", eventID);
+                db.Database.ExecuteSqlCommand("Delete from Event where EventID=@EventID", eventID);
 
                 return Content("Deleted");
 
@@ -343,8 +312,10 @@ namespace CMS.Controllers
             try
             {
                 EmsEntities db = new EmsEntities();
-                db.Database.ExecuteSqlCommand("UPDATE Event SET Feature = "  + iFid.ToString() + "  WHERE EventID = " + lEventId.ToString());
-                strResult ="Y";
+                var eventID = new SqlParameter("@EventID", lEventId);
+                var featureID = new SqlParameter("@FeatureID", iFid);
+                db.Database.ExecuteSqlCommand("UPDATE Event SET FeatureUpdateDate=getdate(), Feature = @FeatureID  WHERE EventID = @EventID", featureID, eventID);
+                strResult = "Y";
             }
             catch (Exception ex)
             {

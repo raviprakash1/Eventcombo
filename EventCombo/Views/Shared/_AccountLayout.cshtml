@@ -49,10 +49,48 @@
             <div class="col-sm-6">
                 <a class="logo" href="/Home/Index"><img src="~/Images/logo.png" /></a>
             </div>
+@if (HttpContext.Current.Session["AppId"] != null)
+{
             <div class="col-sm-5 head_left_nav">
-                @Html.Partial("_Logout")
+                <ul class="navbar-right frnt-top-header  xs-signup-height">
+
+
+
+
+                    <li class="msg_icn"><span>12</span> </li>
+
+                    <li><a href="#">Welcome @{Html.RenderAction("UserName", "Home");}!</a> </li>
+                    <li>
+                        @Html.ActionLink("My Account", "MyAccount", "Account", routeValues: null, htmlAttributes: new { title = "Account" })
+                    </li>
+                    <li>
+                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                        {
+                            <a href="javascript:document.getElementById('logoutForm').submit()">Log Out </a>
+                        }
+                    </li>
+
+
+
+
+
+
+                </ul>
             </div>
-         
+                        }
+                        else
+                        {
+
+                            <div class="col-sm-5 head_left_nav clearfix">
+                                <ul class="navbar-right frnt-top-header xs-signup-height">
+
+                                    <li><a href="javascript:void(0)" data-toggle="modal" data-target="#myModal" id="loginPopup">LogIn | SignUp </a>  </li>
+
+                                </ul>
+
+                            </div>
+                        }
+
             <div class="col-sm-1 text-right">
                 <div class="social_icn">
                     <a href="http://www.facebook.com/Eventcombo" target="_blank"><img src="~/Images/fb.png" /></a>
@@ -77,7 +115,7 @@
         </div>
 
     </div>
-    <div class="container-fluid cont_margin xspad0" id="bodysec">
+   <div class="container-fluid cont_margin" id="bodysec">
         @if (HttpContext.Current.Session["Fromname"].ToString() == "events" || HttpContext.Current.Session["Fromname"].ToString() == "deals")
         {
             @RenderBody()
@@ -88,7 +126,7 @@
 
 
         <div class="row xs-ip6">
-            <div class="col-sm-2">
+            <div class="col-sm-2 nav_ipad_left">
                 <div class="affix-top" id="navtop">
                     <nav class="navbar navbar-default nav_cus_main ">
                         <div class="navbar-header">
@@ -183,7 +221,7 @@
             </nav>
                 </div>
             </div>
-            <div class="col-sm-10 ">
+            <div class="col-sm-10 nav_ipad_right">
                 <div class="midd_cont" id="midsection">
                     
                     @RenderBody()

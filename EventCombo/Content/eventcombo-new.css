@@ -257,11 +257,10 @@ textarea {resize: none;}
 /*Start event display page*/
 
 .event-slide-container{
-    width: 100%; float: left; border:20px solid #f0f0f0; background: #c1c1c1; height: 600px;}
+    width: 100%; float: left; border:20px solid #f0f0f0; background: #c1c1c1; height: auto;}
 
 .carousel {
   min-height: 560px;
-  margin-bottom: 60px;
 }
 .carousel .item {
   height: 560px;
@@ -354,7 +353,7 @@ textarea {resize: none;}
 .ev_bre_cub li a{ color: #3cf;}
 .ev_bre_cub > li + li::before{content: "> ";}
 
-.strat_timer_cont{ width: 100%; float: left; position: fixed; bottom: 0px; }
+.strat_timer_cont{ width: 100%; float: left; position: fixed; bottom: 0px; z-index:1; }
 .strt_tim_desc{ font-size: 1.2em;}
 .strt_tim_desc2{font-size: 1.5em;}
 .evnt_timer_margin{ margin-bottom: 90px;}
@@ -511,10 +510,11 @@ textarea {resize: none;}
 .ev_date_time_model{ top:80px;}
 .xs_mb10{ margin-bottom:10px;}
 .no_pad_res{ padding:0px;}
-#divsecmain .col-sm-1{ position:absolute; top:5px; right:-5px; }
+#divsecmain .col-sm-1{ position:absolute; top:7px; right:-5px; }
 .Fix_Head{position:absolute; top:5px; right:5px;}
 
 .xs_pad_0{ padding: 0px;  }
+.xs-100-f-l{ float:left; width:100%;}
 }
 
 @media (min-width: 360px) and (max-width: 640px) {
@@ -524,7 +524,7 @@ textarea {resize: none;}
 .logo img{ width: 260px;}
 .ev_loca_check_main{ margin-top:0px;}
 .ev_loca_check_main{ margin-top:0px;}
-.headr_main{ padding-top:0px;}
+/*.headr_main{ padding-top:0px;}*/
 .event-upload-container .jFiler-item-thumb-image{width: 50px;  height: 55px;}
 .jFiler-input-dragDrop{ padding:5px !important;}
 .Fix_Head{ display:block;}
@@ -535,14 +535,15 @@ textarea {resize: none;}
 #mainhead .col-sm-1{ position:absolute; top:25px; right:0px; }
 #mainhead .Fix_Head {position:absolute; top:12px; right:10px;}
 .Fix_Head{position:absolute; top:40px; right:10px;}
-.filter_sep{ margin-top:15px !important; }
-.event-slide-container{ margin-top:95px;}
+/*.filter_sep{ margin-top:15px !important; }*/
+/*.event-slide-container{ margin-top:95px;}*/
 
 .xs_pad_0{ padding: 0px;  }
+.xs-100-f-l{ float:left; width:100%;}
 }
 
 @media (width: 640px) {
-   .event-slide-container{ margin-top:40px;}
+   /*.event-slide-container{ margin-top:40px;}*/
    .event-upload-container .jFiler-item-thumb-image{width: 90px;  height: 95px;}
 }
 
@@ -715,3 +716,16 @@ textarea {resize: none;}
     }
 
 .eventdescfont{ font-weight:normal; font-size:1.2em; color:#000; }
+
+
+
+.ticketsubtotalerror{ padding:0px; margin-right:10px;}
+.promoerror{ font-family:Arial; font-size:12px;}
+.promoerrorred{ color:red;}
+.promoerrorgreen{ color:green}
+.PromoLoaderHide { display:none
+}
+.PromoLoaderShow {
+    display: block;
+}
+.promo_code_btn{ height:37px; color:#fff; text-transform:uppercase; vertical-align:top; }

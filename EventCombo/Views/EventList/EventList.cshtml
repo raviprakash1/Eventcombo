@@ -35,7 +35,7 @@
 
     <!-- Search box close -- -->
     <!-- -- 3 tabs open -->
-    <div class="col-sm-12 row">
+    <div class="col-sm-12 row ipad_min_height">
 
 @if ((Convert.ToInt32(TempData["LiveEventscnt"]) > 0 && TempData["LiveEventscnt"] != null) || (Convert.ToInt32(TempData["SavedEventscnt"]) > 0 && TempData["SavedEventscnt"] != null) || (Convert.ToInt32(TempData["PastEventscnt"]) > 0 && TempData["PastEventscnt"] != null))
 {
@@ -117,10 +117,10 @@
                                     <td class="text-center">
 
                                         <div class="event-btn-action">
-                                            <p class="btn-link manage">@Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventid =  item.EventID, type = "N" }, null)</p>
+                                            <p class="btn-link manage">@Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(item.EventID) , type = "N" }, null)</p>
                                             <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = ValidationMessageController.GetParentEventId(item.EventID) }, null)</p>
                                             <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(item.EventTitle.Replace(" ", "-"),"[^a-zA-Z0-9_-]+",""), strEventId = item.EventID.ToString() }, null) </p>
-                                            <p class="btn-link manage"><a href="Javscript:void(0)" onclick="DuplicateEvent(@item.EventID, '@item.EventTitle');">Duplicate</a>  </p>
+                                            <p class="btn-link manage"><a href="Javascript:void(0)" onclick="DuplicateEvent(@item.EventID, '@item.EventTitle');">Duplicate</a>  </p>
                                             @*<p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>*@
                                      
                                            </div>
@@ -159,7 +159,7 @@
                                     <td>@item.TicketSold/@item.TotalTicket</td>
                                     <td class="text-center">
                                         <div class="event-btn-action">
-                                            <p class="btn-link manage">@Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventid = item.EventID, type = "N" }, null)</p>
+                                            <p class="btn-link manage">@Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventlid = item.EventID, type = "N" }, null)</p>
 
                                             <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>
                                             <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = item.EventID.ToString() }, null) </p>
@@ -202,7 +202,7 @@
                                     <td>@item.TicketSold/@item.TotalTicket</td>
                                     <td class="text-center">
                                         <div class="event-btn-action">
-                                            <p class="btn-link manage">@Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventid = item.EventID, type="N" }, null)</p>
+                                            <p class="btn-link manage">@Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventlid = item.EventID, type="N" }, null)</p>
                                           @if (item.EventCancel != null)
                                           {
                                              if (item.EventCancel.ToString() == "Y")
@@ -382,5 +382,5 @@
             $("#DivPastPager").hide();
         }
     });
-
+    $(document).prop('title', 'Manage Events and Ticketing on Eventcombo');
 </script>

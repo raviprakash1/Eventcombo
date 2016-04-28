@@ -588,7 +588,8 @@ namespace EventCombo.Controllers
 
         string userid = Session["AppId"].ToString();
         myAccount myacc = new myAccount();
-        var accountdetail = GetLoginDetails(userid);
+        MyAccount myac = new MyAccount();
+        var accountdetail = myac.GetLoginDetails(userid);
         if (accountdetail != null)
         {
 
@@ -742,33 +743,34 @@ namespace EventCombo.Controllers
         return RedirectToAction("Index", "Home");
       }
 
-    }
-    [HttpPost]
-    [Authorize]
-    [ValidateAntiForgeryToken]
-    public async Task<ActionResult> MyAccount(myAccount model, HttpPostedFileBase file)
-    {
-      string msg = "", errormessage = "", successmsg = "";
-      int emailchange = 0, Pwdchange = 0, mainchange = 1;
-      string to = "", from = "", cc = "", bcc = "", subjectn = "", emailname = "";
-      var bodyn = "";
-      var Emailtemplate = new Email_Template();
-      List<Email_Tag> EmailTag = new List<Email_Tag>();
-      HomeController hmc = new HomeController();
-      var validationresult = "";
-      if (Session["AppId"] != null)
-      {
-        string Userid = Session["AppId"].ToString();
-        string imagepresent = model.ImagePresent;
-
-        ValidationMessageController vmc = new ValidationMessageController();
-        validationresult = vmc.Index("", "");
-        var accountdetail = GetLoginDetails(Userid);
-        //check validation
-        if (string.IsNullOrEmpty(model.Firstname))
+        }
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> MyAccount(myAccount model, HttpPostedFileBase file)
         {
-          validationresult = vmc.Index("MyAccount", "MyAccountFnameRequiredUI");
-          ModelState.AddModelError("Error", validationresult);
+            string msg = "", errormessage = "", successmsg = "";
+            int emailchange = 0,Pwdchange=0,mainchange=1;
+            string to = "", from = "", cc = "", bcc = "", subjectn = "", emailname="";
+            var bodyn = "";
+            var Emailtemplate =new Email_Template();
+            List<Email_Tag> EmailTag = new List<Email_Tag>();
+            MyAccount hmc = new MyAccount();
+            var validationresult = "";
+            if (Session["AppId"] != null)
+            {
+                string Userid = Session["AppId"].ToString();
+                string imagepresent = model.ImagePresent;
+
+                ValidationMessageController vmc = new ValidationMessageController();
+                MyAccount mac = new MyAccount();
+                validationresult = vmc.Index("", "");
+                var accountdetail = mac.GetLoginDetails(Userid);
+                //check validation
+                if (string.IsNullOrEmpty(model.Firstname))
+                {
+                    validationresult = vmc.Index("MyAccount", "MyAccountFnameRequiredUI");
+                    ModelState.AddModelError("Error", validationresult);
 
         }
         if (!string.IsNullOrEmpty(model.ConfirmEmail))
@@ -1560,43 +1562,7 @@ namespace EventCombo.Controllers
     }
 
 
-    public myAccount GetLoginDetails(string userid)
-    {
-
-      using (EventComboEntities objEntity = new EventComboEntities())
-      {
-        var modelmyaccount = (from cpd in objEntity.AspNetUsers
-                              join pfd in objEntity.Profiles
-                              on cpd.Id equals pfd.UserID
-                              where cpd.Id == userid
-                              select new myAccount
-                              {
-                                Id = cpd.Id,
-                                Firstname = pfd.FirstName,
-                                Lastname = pfd.LastName,
-                                StreetAddress1 = pfd.StreetAddressLine1,
-                                StreeAddress2 = pfd.StreetAddressLine2,
-                                City = pfd.City,
-                                State = pfd.State,
-                                Zip = pfd.Zip,
-                                Country = pfd.CountryID.ToString(),
-                                MainPhone = pfd.MainPhone,
-                                SecondPhone = pfd.SecondPhone,
-                                WebsiteURL = pfd.WebsiteURL,
-                                UserProfileImage = pfd.UserProfileImage,
-                                Email = cpd.Email,
-                                Password = cpd.PasswordHash,
-                                contentype = pfd.ContentType,
-                                Dateofbirth = pfd.DateofBirth,
-                                Gender = pfd.Gender,
-                                PreviousEmail = cpd.Email,
-                                SendLatestdetails = pfd.SendCur_EventDetail
-
-                              });
-        return modelmyaccount.FirstOrDefault();
-
-      }
-    }
+      
 
     public bool checkexternallogin(string userid)
     {

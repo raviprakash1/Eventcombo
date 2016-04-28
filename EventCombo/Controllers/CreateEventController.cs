@@ -38,6 +38,70 @@ namespace EventCombo.Controllers
             return View();
         }
 
+        public string GetOrderText( long EventId)
+        {
+            string tickettype = "";
+            var ticketsfree = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 1 select r).Count();
+            var ticketsPaid = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 2 select r).Count();
+            var ticketsDonation = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 3 select r).Count();
+
+            var itemsremainingInCart = (from o in db.Ticket_Quantity_Detail where o.TQD_Event_Id == EventId select o.TQD_Remaining_Quantity).Sum();
+
+
+            if (ticketsfree > 0 && ticketsPaid > 0 && ticketsDonation > 0)
+            {
+                tickettype = "Order Now";
+
+            }
+            if (ticketsfree <= 0 && ticketsPaid > 0 && ticketsDonation <= 0)
+            {
+                tickettype = "Order Now";
+
+            }
+            if (ticketsfree <= 0 && ticketsPaid > 0 && ticketsDonation > 0)
+            {
+                tickettype = "Order Now";
+
+            }
+            if (ticketsfree > 0 && ticketsPaid > 0 && ticketsDonation <= 0)
+            {
+                tickettype = "Order Now";
+
+            }
+            if (ticketsfree <= 0 && ticketsPaid > 0 && ticketsDonation > 0)
+            {
+                tickettype = "Order Now";
+
+            }
+            if (ticketsfree > 0 && ticketsPaid <= 0 && ticketsDonation <= 0)
+            {
+                tickettype = "Register";
+
+            }
+            if (ticketsfree <= 0 && ticketsPaid <= 0 && ticketsDonation > 0)
+            {
+                tickettype = "Donate";
+
+            }
+            if (ticketsfree > 0 && ticketsPaid <= 0 && ticketsDonation > 0)
+            {
+                tickettype = "Register";
+
+            }
+            if (ticketsfree <= 0 && ticketsPaid <= 0 && ticketsDonation <= 0)
+            {
+                tickettype = "Get Tickets";
+
+            }
+            if (itemsremainingInCart == 0)
+            {
+                tickettype = "Sold Out";
+
+            }
+            return tickettype;
+        }
+
+
         public ActionResult CreateEvent()
         {
 
@@ -113,7 +177,7 @@ namespace EventCombo.Controllers
                             Value = item.EventCategoryID.ToString(),
                         });
                     }
-                    var Timezone = (from c in db.TimeZoneDetails orderby c.TimeZone_Id ascending select c).Distinct();
+                    var Timezone = (from c in db.TimeZoneDetails  select c).OrderBy(x=>x.Timezone_order);
                     List<SelectListItem> Timezonelist = new List<SelectListItem>();
                     foreach (var item in Timezone)
                     {
@@ -121,7 +185,7 @@ namespace EventCombo.Controllers
                         {
                             Text = item.TimeZone_Name.ToString(),
                             Value = item.TimeZone_Id.ToString(),
-                            Selected = (item.TimeZone_Id.ToString().Trim() == "26" ? true : false)
+                            Selected = (item.TimeZone_Id.ToString().Trim() == "31" ? true : false)
 
                         });
 
@@ -1558,7 +1622,7 @@ namespace EventCombo.Controllers
                 var url = Request.Url;
                 var baseurl = url.GetLeftPart(UriPartial.Authority);
                 strUrl = strUrl.Replace(baseurl, "");
-                Session["ReturnUrl"] = "DiscoverEvent~" + strUrl;
+              //  Session["ReturnUrl"] = "DiscoverEvent~" + strUrl;
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
                     long? lEventid = (Eventid != "" ? Convert.ToInt64(Eventid) : 0);
@@ -1590,7 +1654,7 @@ namespace EventCombo.Controllers
                 var baseurl = url.GetLeftPart(UriPartial.Authority);
                 strUrl = strUrl.Replace(baseurl, "");
 
-                Session["ReturnUrl"] = "DiscoverEvent~" + strUrl;
+                Session["ReturnUrl"] = Eventid.ToString() + "~" + strUrl;
                 return "Y";
 
             }

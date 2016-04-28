@@ -48,6 +48,10 @@ namespace EventCombo.Controllers
                 var lParentID = (from myEvt in db.Events
                                  where myEvt.EventID == lEvntId
                                  select myEvt.Parent_EventID).FirstOrDefault();
+                if(lParentID==0)
+                {
+                    lParentID = lEvntId;
+                }
                 return (long)lParentID;
             }
         }

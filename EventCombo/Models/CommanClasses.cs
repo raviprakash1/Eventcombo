@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace EventCombo.Models
 {
@@ -73,6 +74,8 @@ namespace EventCombo.Models
         public string TLD_GUID { get; set; }
         public Nullable<decimal> TLD_Donate { get; set; }
         public Nullable<decimal> TicketAmount { get; set; }
+        public Nullable<int> TLD_PromoCodeId { get; set; }
+        public Nullable<decimal> TLD_PromoCodeAmount { get; set; }
     }
 
 
@@ -99,7 +102,9 @@ namespace EventCombo.Models
         public string EventDisplayAddress { get; set; }
         public double EventDistance { get; set; }
 
-        
+        public int EventFeature { get; set; }
+
+        public DateTime FeatureDateTime { get; set; }
 
         //public DiscoverEvent[] DiscoverEventList { get; set; }
 
@@ -107,5 +112,38 @@ namespace EventCombo.Models
     public partial class Address
     {
         public string discoverdistance { get; set; }
+
+
+    }
+
+    public class EmailContent
+    {
+        public string To { get; set; }
+        public string From { get; set; }
+        [AllowHtml]
+        public string Body { get; set; }
+
+        public string Subject { get; set; }
+
+        public string Cc { get; set; }
+        public string Bcc { get; set; }
+        public string Fromname { get; set; }
+        
+
+    }
+
+    public partial class Event_Email_Invitation
+    {
+        public Event_Email_List[] EmailList { get; set; }
+        public string EventTitle  {get;set;}
+
+        public string EventDate { get; set; }
+        public string EventOrgnizer { get; set; }
+        public string EventAddress { get; set; }
+        public string EventLat { get; set; }
+        public string EventLong { get; set; }
+        public string EventImg { get; set; }
+        
+
     }
 }

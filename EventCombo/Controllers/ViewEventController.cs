@@ -138,8 +138,8 @@ namespace EventCombo.Controllers
             viewEvent.Timezone = timezone;
             viewEvent.enablediscussion = enablediscussion;
             viewEvent.showmaponevent = EventDetail.ShowMap;
-
-            viewEvent.EventPrivacy = EventDetail.Private_Password;
+            viewEvent.EventPrivacy = EventDetail.EventPrivacy;
+            viewEvent.PrivatePassword = EventDetail.Private_Password;
             //Address
             var Addresstype = EventDetail.AddressStatus;
             if (Addresstype == "PastLocation")
@@ -450,7 +450,10 @@ namespace EventCombo.Controllers
 
 
         }
-
+        public void Nullurlsession()
+        {
+            Session["ReturnUrl"] = null;
+        }
         //public ActionResult ViewEvent(string strEventDs, string strEventId)
         //{
         //    if ((Session["AppId"] != null))

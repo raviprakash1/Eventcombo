@@ -11,6 +11,7 @@ namespace EventCombo.Models
     [Table("Event")]
     public class EventCreation
     {
+        EventComboEntities db = new EventComboEntities();
         public long EventID { get; set; }
         public long EventTypeID { get; set; }
         public long EventCategoryID { get; set; }
@@ -59,6 +60,73 @@ namespace EventCombo.Models
 
         public long? Parent_EventID { get; set; }
 
+
+
+        public Event GetEventdetail(long eventid)
+        {
+            return ((from ev in db.Events where ev.EventID == eventid select ev).FirstOrDefault());
+        }
+        public List<string> GetImages(long EventId)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+
+                return (from myRow in db.EventImages
+
+                        where myRow.EventID == EventId
+                        orderby myRow.EventImageID
+                        select "/Images/events/event_flyers/imagepath/" + myRow.EventImageUrl).ToList();
+
+
+
+            }
+
+
+        }
+
+        public long GetLatestEventId(long lEvntId)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var lParentID = (from myEvt in db.Events
+                                 where myEvt.EventID == lEvntId
+                                 select myEvt.Parent_EventID).FirstOrDefault();
+                if (lParentID > 0)
+                {
+                    lParentID = (from myEvt in db.Events
+                                 where myEvt.Parent_EventID == lParentID
+                                 select myEvt.EventID).Max();
+                }
+                else
+                {
+                    int lCnt = (from myEvt in db.Events
+                                where myEvt.Parent_EventID == lEvntId
+                                select myEvt.EventID).Count();
+
+                    if (lCnt > 0)
+                    {
+                        lParentID = (from myEvt in db.Events
+                                     where myEvt.Parent_EventID == lEvntId
+                                     select myEvt.EventID).Max();
+                    }
+                }
+                if (lParentID == null || lParentID <= 0) lParentID = lEvntId;
+
+                return (long)lParentID;
+            }
+        }
+
+        public Event GetSelectedEventDetail(string strGuid)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var EventId = (from MyE in db.Ticket_Locked_Detail where MyE.TLD_GUID == strGuid select MyE.TLD_Event_Id).FirstOrDefault();
+                var MyEvent = (from MyEv in db.Events
+                               where MyEv.EventID == EventId
+                               select MyEv).FirstOrDefault();
+                return MyEvent;
+            }
+        }
     }
 
     public partial class Organizer_Master

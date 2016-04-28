@@ -19,9 +19,6 @@ namespace CMS.Controllers
         {
             try
             {
-                
-                
-
                 db.Database.ExecuteSqlCommand("Delete from User_Permission_Detail where UP_User_Id='" + userid + "'");
                 Profile prof = db.Profiles.Where(i => i.UserID == userid).FirstOrDefault();
                 db.Profiles.Remove(prof);

@@ -17,6 +17,9 @@ namespace EventCombo.Models
         public string Eventid { get; set; }
         public string Organiserid { get; set; }
         public string Guestlist { get; internal set; }
+        public string Orderdetail { get; set; }
+        public string EventPrivacy { get; internal set; }
+        public string Shareonfb { get; internal set; }
     }
 
     public class paymentdate
