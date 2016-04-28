@@ -94,6 +94,7 @@ namespace EventCombo.Controllers
         ordersInfo.OrderTypeInfo.Add(new OrderCommonInfoViewModel() { OrderType = ttype, TotalCount = _tservice.GetOrdersCount(ttype, userId) });
       }
 
+      ViewBag.CurrentItem = "account";
       return View(ordersInfo);
     }
 
@@ -126,8 +127,15 @@ namespace EventCombo.Controllers
           orders = model.SortDesc ? orders.OrderByDescending(t => t.TotalPaid) : orders.OrderBy(t => t.TotalPaid);
           break;
       }
-      model.Page = (model.PerPage * model.Page) > orders.Count() ? orders.Count() / model.PerPage : model.Page;
-      olist.Orders.AddRange(orders.Skip(model.PerPage * model.Page).Take(model.PerPage));
+
+      if (model.PerPage > 0)
+      {
+        model.Page = (model.PerPage * model.Page) > orders.Count() ? orders.Count() / model.PerPage : model.Page;
+        olist.Orders.AddRange(orders.Skip(model.PerPage * model.Page).Take(model.PerPage));
+      }
+      else
+        olist.Orders.AddRange(orders);
+
       if (model.OrderType == OrderTypes.Favorite)
         return PartialView("_PurchasedTicketFavoriteList", olist);
       else

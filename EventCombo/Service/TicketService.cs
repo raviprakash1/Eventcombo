@@ -61,7 +61,8 @@ namespace EventCombo.Service
             OrderId = order.O_Order_Id,
             EventCancelled = (firstticket.Event.EventCancel == "Y"),
             Favorite = firstticket.Event.EventFavourites.Where(ef => ef.UserID == userId).Any(),
-            OrderStateId = order.OrderStateId
+            OrderStateId = order.OrderStateId,
+            EventId = firstticket.TPD_Event_Id
           };
         };
         ordersVM.Add(oVM);

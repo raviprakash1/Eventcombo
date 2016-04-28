@@ -256,6 +256,7 @@ namespace EventCombo.Models
     public bool EventCancelled { get; set; }
     public bool Favorite { get; set; }
     public byte? OrderStateId { get; set; }
+    public long? EventId { get; set; }
   }
 
   public class OrderListMainViewModel

@@ -640,17 +640,20 @@
     <Content Include="Images\email_tw.png" />
     <Content Include="Images\em_ven_time.png" />
     <Content Include="Images\evnt_lik_1.png" />
+    <Content Include="Images\facebook.png" />
     <Content Include="Images\free-pinstripe.png" />
     <Content Include="Images\hjsdjd.png" />
     <Content Include="Images\Imagemap.png" />
     <Content Include="Images\Imagemap_T000000199.png" />
     <Content Include="Images\info.png" />
     <Content Include="Images\leftarrow.png" />
+    <Content Include="Images\linkedIn.png" />
     <Content Include="Images\loading.gif" />
     <Content Include="Images\login_img.png" />
     <Content Include="Images\paper_tic.png" />
     <Content Include="Images\qwe.png" />
     <Content Include="Images\search.png" />
+    <Content Include="Images\twitter.png" />
     <Content Include="Images\unchecked.png" />
     <Content Include="Models\EventComboModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
