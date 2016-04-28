@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using System.IO;
 using System.Net.Mime;
 using EventCombo.Controllers;
+using EventCombo.Utils;
 
 namespace EventCombo.Service
 {
@@ -135,7 +136,10 @@ namespace EventCombo.Service
       {
         IRepository<BillingAddress> billRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
         var billing = billRepo.Get(filter: (b => b.OrderId == orderId)).FirstOrDefault();
-        details.Payment = (billing == null) ? "No information" : billing.card_type + " XXXX-XXXX-XXXX-" + billing.CardId.Substring(billing.CardId.Length - 4);
+        EncryptDecrypt encryptor = new EncryptDecrypt();
+        string cardtype = encryptor.DecryptText(billing.card_type);
+        string cardnumber = encryptor.DecryptText(billing.CardId);
+        details.Payment = (billing == null) ? "No information" : cardtype + " XXXX-XXXX-XXXX-" + cardnumber.Substring(cardnumber.Length - 4);
       }
       else
         details.Payment = "PayPal ID: XXXXXXXXXXXX" + order.O_PayPal_TrancId.Substring(order.O_PayPal_TrancId.Length - 4);
@@ -159,7 +163,7 @@ namespace EventCombo.Service
     }
 
 
-    public bool SaveOrderDetails(OrderDetailsViewModel model, string userId, string baseUrl)
+    public bool SaveOrderDetails(OrderDetailsViewModel model, string userId, string baseUrl, string filePath)
     {
       bool res = true;
       using (var uow = _factory.GetUnitOfWork())
@@ -190,7 +194,8 @@ namespace EventCombo.Service
           uow.Context.SaveChanges();
           if (selected.Count > 0)
           {
-            Attachment attach = new Attachment(GetDownloadableTicket(model.OrderId, "pdf", baseUrl), new ContentType(MediaTypeNames.Application.Pdf));
+            var mem = GetDownloadableTicket(model.OrderId, "pdf", filePath);
+            Attachment attach = new Attachment(mem, new ContentType(MediaTypeNames.Application.Pdf));
             attach.ContentDisposition.FileName = "Ticket_EventCombo.pdf";
             OrderNotification notification = new OrderNotification(_factory, _dbservice, model.OrderId, baseUrl, attach);
             ISendMailService sendService = CreateSendMailService();
@@ -309,7 +314,7 @@ namespace EventCombo.Service
     }
 
 
-    public MemoryStream GetDownloadableTicket(string orderId, string format, string baseUrl)
+    public MemoryStream GetDownloadableTicket(string orderId, string format, string filePath)
     {
       TicketPaymentController tpc = new TicketPaymentController();
 
@@ -323,9 +328,9 @@ namespace EventCombo.Service
         return null;
 
       var user = ticket.AspNetUser.Profiles.FirstOrDefault();
-      string name = !String.IsNullOrWhiteSpace(order.O_First_Name) ? order.O_First_Name : (user == null ? "" : user.FirstName); 
+      string name = !String.IsNullOrWhiteSpace(order.O_First_Name) ? order.O_First_Name : (user == null ? "" : user.FirstName);
 
-      return tpc.generateTicketPDF(ticket.TPD_GUID, ticket.TPD_Event_Id ?? 0, null, name, baseUrl);
+      return tpc.generateTicketPDF(ticket.TPD_GUID, ticket.TPD_Event_Id ?? 0, null, name, filePath);
     }
   }
 }

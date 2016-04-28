@@ -177,7 +177,7 @@ namespace EventCombo.Service
         tagList.Add(new KeyValuePair<string, string>("EventOrganiserName", cEvent.Event_Orgnizer_Detail.FirstOrDefault().Organizer_Master.Orgnizer_Name));
         tagList.Add(new KeyValuePair<string, string>("EventOrganiserEmail", cEvent.Event_Orgnizer_Detail.FirstOrDefault().Organizer_Master.Organizer_Email));
         tagList.Add(new KeyValuePair<string, string>("EventDynamicTable", strHTML.ToString()));
-        tagList.Add(new KeyValuePair<string, string>("CreateEventurl", _baseUrl + "createevent/createevent"));
+        tagList.Add(new KeyValuePair<string, string>("CreateEventurl", _baseUrl + "/createevent/createevent"));
         tagList.Add(new KeyValuePair<string, string>("DiscoverEventurl", _baseUrl));
         tagList.Add(new KeyValuePair<string, string>("EventLogin", _baseUrl));
         tagList.Add(new KeyValuePair<string, string>("Eventtype", cEvent.AddressStatus == "Multiple" ? "* This event has multiple venues " : ""));
@@ -185,7 +185,7 @@ namespace EventCombo.Service
         tagList.Add(new KeyValuePair<string, string>("EventEndDateID", startend.End.ToString()));
         tagList.Add(new KeyValuePair<string, string>("EventVenueID", eventname));
         tagList.Add(new KeyValuePair<string, string>("EventMapImage", Imagecode));
-        tagList.Add(new KeyValuePair<string, string>("Downloadurl", _baseUrl + "download/ticket?OrderId=" + _orderId + "&format=pdf"));
+        tagList.Add(new KeyValuePair<string, string>("Downloadurl", _baseUrl + "/download/ticket?OrderId=" + _orderId + "&format=pdf"));
 
         foreach (var tag in tagList)
           sbBody.Replace("¶¶" + tag.Key + "¶¶", tag.Value);

@@ -157,10 +157,10 @@ namespace EventCombo.Controllers
     public string SavePurchasedTicketDetail(OrderDetailsViewModel model)
     {
       if (Session["AppId"] == null)
-        return "You cann't save changes.";
+        return "You can not save changes.";
 
       string userId = Session["AppId"].ToString();
-      if (_tservice.SaveOrderDetails(model, userId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/")))
+      if (_tservice.SaveOrderDetails(model, userId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath("..")))
         return "Changes saved.";
       else
         return "Changes not saved.";

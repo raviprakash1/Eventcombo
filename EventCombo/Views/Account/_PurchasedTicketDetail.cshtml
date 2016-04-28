@@ -99,7 +99,7 @@
       <td class="subTableInnerTD"></td>
     </tr>
     <tr class="UETableTDSUbDivBackColorFooter">
-      <td class="UETableTDSUbDivFooterLinks" onclick="printTicketsFunc(@(Model.OrderId))">PRINT TICKETS</td>
+      <td class="UETableTDSUbDivFooterLinks">@(Html.ActionLink("PRINT TICKETS", "Ticket", "Download", new { OrderId = Model.OrderId, format = "pdf" }, new { target = "_blank" }))</td>
       <td class="UETableTDSUbDivFooterLinks">
         <a data-toggle="modal" data-target="#cancelModal@(Model.OrderId)">CANCEL ORDER</a>
         <div class="modal fade" id="cancelModal@(Model.OrderId)" role="dialog">

@@ -16,12 +16,12 @@ namespace EventCombo.Service
 
     OrderDetailsViewModel GetOrderDetails(string orderId, string userId);
 
-    bool SaveOrderDetails(OrderDetailsViewModel model, string userId, string baseUrl);
+    bool SaveOrderDetails(OrderDetailsViewModel model, string userId, string baseUrl, string filePath);
 
     bool CancelOrder(string orderId, string userId);
 
     bool SaveMessage(OrganizerMessageViewModel model);
 
-    MemoryStream GetDownloadableTicket(string orderId, string format, string baseUrl);
+    MemoryStream GetDownloadableTicket(string orderId, string format, string filePath);
   }
 }
