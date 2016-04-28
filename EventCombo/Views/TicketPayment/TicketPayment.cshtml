@@ -515,7 +515,7 @@
     </div>
 
 
-    <div class="modal fade" id="SessionExp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="SessionExp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
             <div class="modal-content">
                 <form id="contactForm" class="fullw1 add">
@@ -882,11 +882,12 @@
         });
 
         $('#btBack').click(function () {
-            //alert(url);
+          
             $.ajax({
                 url: '@Url.Action("ReleaseTickets", "CreateEvent")',
                 type: "Post",
                 success: function (response) {
+                  
                     window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.URLTitle.Replace(" ","-") , strEventId = Model.EventId.ToString()})';
                 }
             });

@@ -207,12 +207,12 @@
                                 <div class="col-sm-4 col-xs-6 pb10">
                                     @if (Html.DisplayFor(m => m.Orderdetail).ToString() == "Sold Out")
                                     {
-                                        <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn">@Html.DisplayFor(m => m.Orderdetail)</a>
+                                        <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" id="btnorder">@Html.DisplayFor(m => m.Orderdetail)</a>
 
                                     }
                                     else
                                     {
-                                        <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" href="#Ticketinfo">@Html.DisplayFor(m => m.Orderdetail)</a>
+                                        <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" id="btnorder" href="#Ticketinfo">@Html.DisplayFor(m => m.Orderdetail)</a>
 
                                     }
                                     <a href="#DealInfo" class="xs-icondeal"><img src="/Images/icondeal.png" /></a>
@@ -733,6 +733,7 @@
 
             </a>
         </div>
+        @*<input type="hidden" id="hdremaningqty" value="0" />*@
 }
 
 @*<script src="~/Scripts/jquery.icalendar.pack.js"></script>*@
@@ -1492,6 +1493,12 @@
                     type: "Post",
                     success: function (data) {
                         $("#dvTicketInfo").append(data);
+                        var remainingqty = parseInt($("#hdremaningqty").val());
+                        if (remainingqty <= 0)
+                        {
+                            $("#btnorder").html("Sold Out");
+                            $("#btPayment").hide();
+                        }
                         $.removeCookie("Selection");
                     },
                     error: function (data) {

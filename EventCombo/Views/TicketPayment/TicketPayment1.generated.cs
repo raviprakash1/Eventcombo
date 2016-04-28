@@ -137,7 +137,7 @@ WriteLiteral(" class=\"event_inner_container event_top view_evnt_top viewevent_c
 
 WriteLiteral(" id=\"eventtopscoll\"");
 
-WriteLiteral(">\r\n            \r\n            <div");
+WriteLiteral(">\r\n\r\n            <div");
 
 WriteLiteral(" class=\"event_detail_container xs-paymentconf-inner\"");
 
@@ -231,14 +231,14 @@ WriteLiteral(">\r\n                            <img");
 
 WriteLiteral(" class=\"img-responsive\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 2073), Tuple.Create("\"", 2112)
+WriteAttribute("src", Tuple.Create(" src=\"", 2061), Tuple.Create("\"", 2100)
             
             #line 45 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-, Tuple.Create(Tuple.Create("", 2079), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.Imageurl)
+, Tuple.Create(Tuple.Create("", 2067), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m => m.Imageurl)
             
             #line default
             #line hidden
-, 2079), false)
+, 2067), false)
 );
 
 WriteLiteral(">\r\n                        </div>\r\n                        <div");
@@ -267,7 +267,7 @@ WriteLiteral("\r\n                            ");
 WriteLiteral("\r\n                            ");
 
 WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n                </d" +
-"iv>\r\n\r\n            </div>\r\n        </div>\r\n        \r\n        <div");
+"iv>\r\n\r\n            </div>\r\n        </div>\r\n\r\n        <div");
 
 WriteLiteral(" id=\"dvVarHash\"");
 
@@ -319,7 +319,7 @@ WriteLiteral("\r\n\r\n");
             #line hidden
             
             #line 103 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                           
+                          
                             
             
             #line default
@@ -338,86 +338,85 @@ WriteLiteral("\r\n\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        </div>\r\n                        \r\n                \r\n   " +
-"              \r\n                </div>\r\n            </div>\r\n        </div>\r\n    " +
-"   \r\n        \r\n        <div");
+WriteLiteral("\r\n                    </div>\r\n\r\n\r\n\r\n                </div>\r\n            </div>\r\n " +
+"       </div>\r\n\r\n\r\n        <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
-WriteLiteral("></div>\r\n   </div>\r\n");
+WriteLiteral("></div>\r\n    </div>\r\n");
 
-WriteLiteral("   <div");
+WriteLiteral("    <div");
 
 WriteLiteral(" class=\"event_container\"");
 
-WriteLiteral(">\r\n       <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" id=\"dvOrderInfo\"");
 
 WriteLiteral(" class=\"event_detail_container\"");
 
-WriteLiteral(">\r\n           <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"evnt_tile_head\"");
 
-WriteLiteral(">\r\n               <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"evnt_tile_bg_l\"");
 
-WriteLiteral("></div>\r\n               <div");
+WriteLiteral("></div>\r\n                <div");
 
 WriteLiteral(" class=\"col-sm-12 col-xs-12 text-left no_pad\"");
 
-WriteLiteral(">\r\n                   <h2");
+WriteLiteral(">\r\n                    <h2");
 
 WriteLiteral(" class=\"fb_dis_head pt5\"");
 
-WriteLiteral(">PAYMENT INFORMATION</h2>\r\n               </div>\r\n\r\n               <div");
+WriteLiteral(">PAYMENT INFORMATION</h2>\r\n                </div>\r\n\r\n                <div");
 
 WriteLiteral(" class=\"evnt_tile_bg_r evnt_tile_bg_r_call\"");
 
-WriteLiteral("></div>\r\n           </div>\r\n\r\n\r\n\r\n           <div");
+WriteLiteral("></div>\r\n            </div>\r\n\r\n\r\n\r\n            <div");
 
 WriteLiteral(" class=\"evnt_details_body2 evnt_timer_margin\"");
 
-WriteLiteral(">\r\n               <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"col-sm-12 ev_white_bg pb10 pt10 mt20\"");
 
-WriteLiteral(">\r\n                   <div");
+WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"col-sm-6\"");
 
-WriteLiteral(">\r\n                       <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"form-group \"");
 
-WriteLiteral(">\r\n                           <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-12 col-xs-12 no_pad\"");
 
-WriteLiteral(">\r\n                               <label");
+WriteLiteral(">\r\n                                <label");
 
 WriteLiteral(" class=\"control-label ev_payment_lebel pl0\"");
 
-WriteLiteral(">\r\n                                   PLEASE ENTER YOUR ACCOUNT INFORMATION<br>\r\n" +
-"");
+WriteLiteral(">\r\n                                    PLEASE ENTER YOUR ACCOUNT INFORMATION<br>\r" +
+"\n");
 
             
             #line 137 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                   
+                                    
             
             #line default
             #line hidden
             
             #line 137 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                    if (HttpContext.Current.Session["AppId"] != null)
-                                   {
+                                     if (HttpContext.Current.Session["AppId"] != null)
+                                    {
 
             
             #line default
             #line hidden
-WriteLiteral("                                       <span");
+WriteLiteral("                                        <span");
 
 WriteLiteral(" class=\"ev_pay_span\"");
 
@@ -425,7 +424,7 @@ WriteLiteral(">Hi, ");
 
             
             #line 139 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                                                Write(Html.DisplayFor(m => m.Email));
+                                                                 Write(Html.DisplayFor(m => m.Email));
 
             
             #line default
@@ -442,14 +441,14 @@ WriteLiteral(">Sign Out</a></span>\r\n");
 
             
             #line 140 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                   }
-                                   else
-                                   {
+                                    }
+                                    else
+                                    {
 
             
             #line default
             #line hidden
-WriteLiteral("                                       <span");
+WriteLiteral("                                        <span");
 
 WriteLiteral(" class=\"ev_pay_span\"");
 
@@ -464,17 +463,17 @@ WriteLiteral(">Sign In To Your Account    </a></span>\r\n");
             
             #line 144 "..\..\Views\TicketPayment\TicketPayment.cshtml"
 
-                                   }
+                                    }
 
             
             #line default
             #line hidden
-WriteLiteral("                               </label>\r\n                           </div>\r\n     " +
-"                      <div");
+WriteLiteral("                                </label>\r\n                            </div>\r\n   " +
+"                         <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                               <input");
+WriteLiteral(">\r\n                                <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -482,25 +481,25 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" placeholder=\"FIRST NAME\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 7577), Tuple.Create("\"", 7613)
+WriteAttribute("value", Tuple.Create(" value=\"", 7549), Tuple.Create("\"", 7585)
             
             #line 149 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                     , Tuple.Create(Tuple.Create("", 7585), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.FName)
+                                      , Tuple.Create(Tuple.Create("", 7557), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.FName)
             
             #line default
             #line hidden
-, 7585), false)
+, 7557), false)
 );
 
 WriteLiteral(" maxlength=50");
 
 WriteLiteral(" id=\"accfname\"");
 
-WriteLiteral(" />\r\n                           </div>\r\n                           <div");
+WriteLiteral(" />\r\n                            </div>\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                               <input");
+WriteLiteral(">\r\n                                <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -508,25 +507,25 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" placeholder=\"LAST NAME\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 7863), Tuple.Create("\"", 7899)
+WriteAttribute("value", Tuple.Create(" value=\"", 7838), Tuple.Create("\"", 7874)
             
             #line 152 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                    , Tuple.Create(Tuple.Create("", 7871), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.LName)
+                                     , Tuple.Create(Tuple.Create("", 7846), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.LName)
             
             #line default
             #line hidden
-, 7871), false)
+, 7846), false)
 );
 
 WriteLiteral(" id=\"accLname\"");
 
 WriteLiteral(" maxlength=50");
 
-WriteLiteral(" />\r\n                           </div>\r\n                           <div");
+WriteLiteral(" />\r\n                            </div>\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                               <input");
+WriteLiteral(">\r\n                                <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -534,14 +533,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" placeholder=\"EMAIL\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 8145), Tuple.Create("\"", 8181)
+WriteAttribute("value", Tuple.Create(" value=\"", 8123), Tuple.Create("\"", 8159)
             
             #line 155 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                , Tuple.Create(Tuple.Create("", 8153), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.Email)
+                                 , Tuple.Create(Tuple.Create("", 8131), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.Email)
             
             #line default
             #line hidden
-, 8153), false)
+, 8131), false)
 );
 
 WriteLiteral(" id=\"Email\"");
@@ -550,27 +549,27 @@ WriteLiteral(" maxlength=256");
 
 WriteLiteral(" autocomplete=\"off\"");
 
-WriteLiteral(" />\r\n                           </div>\r\n");
+WriteLiteral(" />\r\n                            </div>\r\n");
 
             
             #line 157 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                           
+                            
             
             #line default
             #line hidden
             
             #line 157 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                            if (HttpContext.Current.Session["AppId"] == null)
-                           {
+                             if (HttpContext.Current.Session["AppId"] == null)
+                            {
 
             
             #line default
             #line hidden
-WriteLiteral("                               <div");
+WriteLiteral("                                <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                                   <input");
+WriteLiteral(">\r\n                                    <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -584,16 +583,16 @@ WriteLiteral(" maxlength=256");
 
 WriteLiteral(" autocomplete=\"off\"");
 
-WriteLiteral(">\r\n                               </div>\r\n");
+WriteLiteral(">\r\n                                </div>\r\n");
 
             
             #line 162 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                           }
+                            }
 
             
             #line default
             #line hidden
-WriteLiteral("                       </div>\r\n                       <div");
+WriteLiteral("                        </div>\r\n                        <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
@@ -601,29 +600,29 @@ WriteLiteral("></div>\r\n");
 
             
             #line 165 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                       
+                        
             
             #line default
             #line hidden
             
             #line 165 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                        if (HttpContext.Current.Session["AppId"] == null)
-                       {
+                         if (HttpContext.Current.Session["AppId"] == null)
+                        {
 
             
             #line default
             #line hidden
-WriteLiteral("                           <div");
+WriteLiteral("                            <div");
 
 WriteLiteral(" class=\"form-group \"");
 
-WriteLiteral(">\r\n                               ");
+WriteLiteral(">\r\n                                ");
 
-WriteLiteral("\r\n                               <div");
+WriteLiteral("\r\n                                <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                                   <input");
+WriteLiteral(">\r\n                                    <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -637,22 +636,22 @@ WriteLiteral(" maxlength=15");
 
 WriteLiteral(" style=\"display:none;\"");
 
-WriteLiteral(">\r\n                               </div>\r\n                           </div>\r\n");
+WriteLiteral(">\r\n                                </div>\r\n                            </div>\r\n");
 
             
             #line 177 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                           
+                            
             
             #line default
             #line hidden
             
             #line 187 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                    
+                                        
 
             
             #line default
             #line hidden
-WriteLiteral("                           <div");
+WriteLiteral("                            <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
@@ -660,33 +659,33 @@ WriteLiteral("></div>\r\n");
 
             
             #line 189 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                       }
-                       
+                        }
+                        
             
             #line default
             #line hidden
             
             #line 216 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                
+                                    
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n                       <div");
+WriteLiteral("\r\n\r\n                        <div");
 
 WriteLiteral(" class=\"form-group mt10 divvisible\"");
 
-WriteLiteral(">\r\n                           <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-12 col-xs-12 no_pad\"");
 
-WriteLiteral(">\r\n                               <label");
+WriteLiteral(">\r\n                                <label");
 
 WriteLiteral(" class=\"control-label ev_payment_lebel pl0\"");
 
-WriteLiteral(">\r\n                                   PLEASE ENTER YOUR CREDIT CARD INFORMATION\r\n" +
-"                               </label>\r\n                           </div>\r\n    " +
-"                       <div");
+WriteLiteral(">\r\n                                    PLEASE ENTER YOUR CREDIT CARD INFORMATION\r" +
+"\n                                </label>\r\n                            </div>\r\n " +
+"                           <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad dropheight\"");
 
@@ -694,20 +693,20 @@ WriteLiteral(">\r\n");
 
             
             #line 226 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                               
+                                
             
             #line default
             #line hidden
             
             #line 226 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                if (HttpContext.Current.Session["AppId"] != null)
-                               {
+                                 if (HttpContext.Current.Session["AppId"] != null)
+                                {
 
 
             
             #line default
             #line hidden
-WriteLiteral("                                   <select");
+WriteLiteral("                                    <select");
 
 WriteLiteral(" class=\"form-control selectpicker\"");
 
@@ -719,35 +718,35 @@ WriteLiteral(">\r\n");
 
             
             #line 230 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                       
+                                        
             
             #line default
             #line hidden
             
             #line 230 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                        foreach (var item in (List<Cardview>)ViewBag.Detailscard)
-                                       {
+                                         foreach (var item in (List<Cardview>)ViewBag.Detailscard)
+                                        {
 
             
             #line default
             #line hidden
-WriteLiteral("                                           <option");
+WriteLiteral("                                            <option");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 13146), Tuple.Create("\"", 13165)
+WriteAttribute("value", Tuple.Create(" value=\"", 13294), Tuple.Create("\"", 13313)
             
             #line 232 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-, Tuple.Create(Tuple.Create("", 13154), Tuple.Create<System.Object, System.Int32>(item.value
+, Tuple.Create(Tuple.Create("", 13302), Tuple.Create<System.Object, System.Int32>(item.value
             
             #line default
             #line hidden
-, 13154), false)
+, 13302), false)
 );
 
 WriteLiteral(">");
 
             
             #line 232 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                                                  Write(item.text);
+                                                                   Write(item.text);
 
             
             #line default
@@ -757,23 +756,23 @@ WriteLiteral("</option>\r\n");
             
             #line 233 "..\..\Views\TicketPayment\TicketPayment.cshtml"
 
-                                       }
+                                        }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                                   </select>\r\n");
+WriteLiteral("\r\n                                    </select>\r\n");
 
             
             #line 237 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                               }
-                               else
-                               {
+                                }
+                                else
+                                {
 
             
             #line default
             #line hidden
-WriteLiteral("                                   <select");
+WriteLiteral("                                    <select");
 
 WriteLiteral(" class=\"form-control selectpicker\"");
 
@@ -781,39 +780,39 @@ WriteLiteral(" id=\"selectcard\"");
 
 WriteLiteral(" onchange=\"showcardetails(this.id)\"");
 
-WriteLiteral(">\r\n                                       <option");
+WriteLiteral(">\r\n                                        <option");
 
 WriteLiteral(" value=\"-1\"");
 
-WriteLiteral(">Select</option>\r\n                                       <option");
+WriteLiteral(">Select</option>\r\n                                        <option");
 
 WriteLiteral(" value=\"A\"");
 
-WriteLiteral(">Enter new card</option>\r\n                                       <option");
+WriteLiteral(">Enter new card</option>\r\n                                        <option");
 
 WriteLiteral(" value=\"P\"");
 
-WriteLiteral(">Use Paypal</option>\r\n\r\n\r\n                                   </select>\r\n");
+WriteLiteral(">Use Paypal</option>\r\n\r\n\r\n                                    </select>\r\n");
 
             
             #line 247 "..\..\Views\TicketPayment\TicketPayment.cshtml"
 
-                               }
+                                }
 
             
             #line default
             #line hidden
-WriteLiteral("                           </div>\r\n                           <div");
+WriteLiteral("                            </div>\r\n                            <div");
 
 WriteLiteral(" id=\"cardshow\"");
 
 WriteLiteral(" style=\"display:none;\"");
 
-WriteLiteral(">\r\n                               <div");
+WriteLiteral(">\r\n                                <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                                   <input");
+WriteLiteral(">\r\n                                    <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -831,11 +830,12 @@ WriteLiteral(" oncut=\"return false\"");
 
 WriteLiteral(" onpaste=\"return false\"");
 
-WriteLiteral(">\r\n                               </div>\r\n\r\n                               <div");
+WriteLiteral(">\r\n                                </div>\r\n\r\n                                <div" +
+"");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad card_list\"");
 
-WriteLiteral(">\r\n                                   <img");
+WriteLiteral(">\r\n                                    <img");
 
 WriteLiteral(" src=\"/Images/visa.png\"");
 
@@ -843,13 +843,13 @@ WriteLiteral(" id=\"imgcard\"");
 
 WriteLiteral(" style=\"display:none\"");
 
-WriteLiteral(">\r\n                                   ");
+WriteLiteral(">\r\n                                    ");
 
-WriteLiteral("\r\n                               </div>\r\n                               <div");
+WriteLiteral("\r\n                                </div>\r\n                                <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                                   <input");
+WriteLiteral(">\r\n                                    <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -865,11 +865,11 @@ WriteLiteral(" oncut=\"return false\"");
 
 WriteLiteral(" onpaste=\"return false\"");
 
-WriteLiteral(">\r\n                               </div>\r\n                               <div");
+WriteLiteral(">\r\n                                </div>\r\n                                <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                                   <input");
+WriteLiteral(">\r\n                                    <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -889,11 +889,11 @@ WriteLiteral(" oncut=\"return false\"");
 
 WriteLiteral(" onpaste=\"return false\"");
 
-WriteLiteral(">\r\n                               </div>\r\n                               <div");
+WriteLiteral(">\r\n                                </div>\r\n                                <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                                   <input");
+WriteLiteral(">\r\n                                    <input");
 
 WriteLiteral(" type=\"checkbox\"");
 
@@ -904,32 +904,32 @@ WriteLiteral(" /> <span");
 WriteLiteral(" class=\"ev_pay_span\"");
 
 WriteLiteral(">Save billing and payment info for easy ordering </span>\r\n\r\n                     " +
-"          </div>\r\n                           </div>\r\n                       </di" +
-"v>\r\n                       <div");
+"           </div>\r\n                            </div>\r\n                        <" +
+"/div>\r\n                        <div");
 
 WriteLiteral(" class=\"clearfix divvisible\"");
 
-WriteLiteral("></div>\r\n                       <div");
+WriteLiteral("></div>\r\n                        <div");
 
 WriteLiteral(" class=\"form-group mt10 divvisible\"");
 
 WriteLiteral(" id=\"dvBillingAddress\"");
 
-WriteLiteral(">\r\n                           <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-12 col-xs-12 no_pad\"");
 
-WriteLiteral(">\r\n                               <label");
+WriteLiteral(">\r\n                                <label");
 
 WriteLiteral(" class=\"control-label ev_payment_lebel pl0\"");
 
-WriteLiteral(">\r\n                                   PLEASE ENTER YOUR BILLING ADDRESS<br>\r\n    " +
-"                           </label>\r\n                           </div>\r\n        " +
-"                   <div");
+WriteLiteral(">\r\n                                    PLEASE ENTER YOUR BILLING ADDRESS<br>\r\n   " +
+"                             </label>\r\n                            </div>\r\n     " +
+"                       <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                               <input");
+WriteLiteral(">\r\n                                <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -941,11 +941,11 @@ WriteLiteral(" maxlength=50");
 
 WriteLiteral(" id=\"billfname\"");
 
-WriteLiteral(">\r\n                           </div>\r\n                           <div");
+WriteLiteral(">\r\n                            </div>\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                               <input");
+WriteLiteral(">\r\n                                <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -957,11 +957,11 @@ WriteLiteral(" maxlength=50");
 
 WriteLiteral(" id=\"billLname\"");
 
-WriteLiteral(">\r\n                           </div>\r\n                           <div");
+WriteLiteral(">\r\n                            </div>\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                               <input");
+WriteLiteral(">\r\n                                <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -971,30 +971,30 @@ WriteLiteral(" placeholder=\"PHONE NUMBER\"");
 
 WriteLiteral(" id=\"billingphno\"");
 
-WriteLiteral(">\r\n                           </div>\r\n                           <div");
+WriteLiteral(">\r\n                            </div>\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                               <div");
+WriteLiteral(">\r\n                                <div");
 
 WriteLiteral(" class=\"col-sm-6 col-xs-12 pl0 xs375zip dropheight xs-tkt-pay-pl-0 ipad-w-100\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                                   ");
+WriteLiteral("                                    ");
 
             
             #line 291 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                              Write(Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control selectpicker", @id = "billcountry" }));
+                               Write(Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control selectpicker", @id = "billcountry" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                               </div>\r\n                               <div");
+WriteLiteral("\r\n                                </div>\r\n                                <div");
 
 WriteLiteral(" class=\"col-sm-6 col-xs-12 no_pad\"");
 
-WriteLiteral(">\r\n                                   <input");
+WriteLiteral(">\r\n                                    <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -1006,16 +1006,16 @@ WriteLiteral(" maxlength=6");
 
 WriteLiteral(" id=\"billzip\"");
 
-WriteLiteral(">\r\n                               </div>\r\n\r\n\r\n\r\n                           </div>" +
-"\r\n                           <div");
+WriteLiteral(">\r\n                                </div>\r\n\r\n\r\n\r\n                            </di" +
+"v>\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                               <div");
+WriteLiteral(">\r\n                                <div");
 
 WriteLiteral(" class=\"col-sm-6 col-xs-12 pl0 xs375zip xs-tkt-pay-pl-0 ipad-w-100\"");
 
-WriteLiteral(">\r\n                                   <input");
+WriteLiteral(">\r\n                                    <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -1027,11 +1027,11 @@ WriteLiteral(" maxlength=256");
 
 WriteLiteral(" id=\"billcity\"");
 
-WriteLiteral(">\r\n                               </div>\r\n                               <div");
+WriteLiteral(">\r\n                                </div>\r\n                                <div");
 
 WriteLiteral(" class=\"col-sm-6 col-xs-12 no_pad \"");
 
-WriteLiteral(">\r\n                                   <input");
+WriteLiteral(">\r\n                                    <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -1043,12 +1043,12 @@ WriteLiteral(" maxlength=256");
 
 WriteLiteral(" id=\"billstate\"");
 
-WriteLiteral(">\r\n                               </div>\r\n\r\n\r\n                           </div>\r\n" +
-"\r\n                           <div");
+WriteLiteral(">\r\n                                </div>\r\n\r\n\r\n                            </div>" +
+"\r\n\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                               <input");
+WriteLiteral(">\r\n                                <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -1060,11 +1060,11 @@ WriteLiteral(" maxlength=256");
 
 WriteLiteral(" id=\"billaddress1\"");
 
-WriteLiteral(">\r\n                           </div>\r\n                           <div");
+WriteLiteral(">\r\n                            </div>\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                               <input");
+WriteLiteral(">\r\n                                <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -1076,8 +1076,8 @@ WriteLiteral(" maxlength=256");
 
 WriteLiteral(" id=\"billaddress2\"");
 
-WriteLiteral(">\r\n                           </div>\r\n                       </div>\r\n            " +
-"           <div");
+WriteLiteral(">\r\n                            </div>\r\n                        </div>\r\n          " +
+"              <div");
 
 WriteLiteral(" class=\"clearfix divvisible\"");
 
@@ -1085,25 +1085,25 @@ WriteLiteral("></div>\r\n");
 
             
             #line 319 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                       
+                        
             
             #line default
             #line hidden
             
             #line 319 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                        if (Html.DisplayFor(x => x.Ticketdeliveraddress).ToString() == "Y")
-                       {
+                         if (Html.DisplayFor(x => x.Ticketdeliveraddress).ToString() == "Y")
+                        {
 
             
             #line default
             #line hidden
-WriteLiteral("                           <div");
+WriteLiteral("                            <div");
 
 WriteLiteral(" class=\"form-group mt10 divvisible\"");
 
 WriteLiteral(" id=\"divshippinginfo\"");
 
-WriteLiteral(">\r\n                               <input");
+WriteLiteral(">\r\n                                <input");
 
 WriteLiteral(" type=\"checkbox\"");
 
@@ -1116,42 +1116,42 @@ WriteLiteral(" /> <span");
 WriteLiteral(" class=\"ev_pay_span\"");
 
 WriteLiteral(">Delivery address different from Billing Address</span>\r\n                        " +
-"       ");
+"        ");
 
-WriteLiteral("\r\n\r\n                           </div>\r\n");
+WriteLiteral("\r\n\r\n                            </div>\r\n");
 
             
             #line 327 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                       }
+                        }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                       <div");
+WriteLiteral("\r\n                        <div");
 
 WriteLiteral(" class=\"form-group mt10 shippingaddress\"");
 
 WriteLiteral(" style=\"display:none;\"");
 
-WriteLiteral(">\r\n                           <div");
+WriteLiteral(">\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-12 col-xs-12 no_pad\"");
 
-WriteLiteral(">\r\n                               <label");
+WriteLiteral(">\r\n                                <label");
 
 WriteLiteral(" class=\"control-label ev_payment_lebel pl0\"");
 
-WriteLiteral(">\r\n                                   PLEASE ENTER DELIVERY ADDRESS<br>\r\n        " +
-"                           <div");
+WriteLiteral(">\r\n                                    PLEASE ENTER DELIVERY ADDRESS<br>\r\n       " +
+"                             <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
-WriteLiteral("></div>\r\n                               </label>\r\n                           </di" +
-"v>\r\n                           <div");
+WriteLiteral("></div>\r\n                                </label>\r\n                            </" +
+"div>\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                               <input");
+WriteLiteral(">\r\n                                <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -1163,11 +1163,11 @@ WriteLiteral(" maxlength=50");
 
 WriteLiteral(" id=\"shipfname\"");
 
-WriteLiteral(">\r\n                           </div>\r\n                           <div");
+WriteLiteral(">\r\n                            </div>\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                               <input");
+WriteLiteral(">\r\n                                <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -1179,11 +1179,11 @@ WriteLiteral(" maxlength=50");
 
 WriteLiteral(" id=\"shipLname\"");
 
-WriteLiteral(">\r\n                           </div>\r\n                           <div");
+WriteLiteral(">\r\n                            </div>\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                               <input");
+WriteLiteral(">\r\n                                <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -1193,30 +1193,31 @@ WriteLiteral(" placeholder=\"PHONE NUMBER\"");
 
 WriteLiteral(" id=\"shippingphnno\"");
 
-WriteLiteral(">\r\n                           </div>\r\n                           <div");
+WriteLiteral(">\r\n                            </div>\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n\r\n                               <div");
+WriteLiteral(">\r\n\r\n                                <div");
 
 WriteLiteral(" class=\"col-sm-6 col-xs-12 pl0 dropheight\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                                   ");
+WriteLiteral("                                    ");
 
             
             #line 348 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                              Write(Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control  selectpicker", @id = "shipcountry" }));
+                               Write(Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control  selectpicker", @id = "shipcountry" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n\r\n                               </div>\r\n                               <div");
+WriteLiteral("\r\n\r\n\r\n                                </div>\r\n                                <di" +
+"v");
 
 WriteLiteral(" class=\"col-sm-6 col-xs-12 no_pad \"");
 
-WriteLiteral(">\r\n                                   <input");
+WriteLiteral(">\r\n                                    <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -1228,16 +1229,16 @@ WriteLiteral(" maxlength=6");
 
 WriteLiteral(" id=\"shipzip\"");
 
-WriteLiteral(">\r\n                               </div>\r\n\r\n\r\n\r\n                           </div>" +
-"\r\n                           <div");
+WriteLiteral(">\r\n                                </div>\r\n\r\n\r\n\r\n                            </di" +
+"v>\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                               <div");
+WriteLiteral(">\r\n                                <div");
 
 WriteLiteral(" class=\"col-sm-6 col-xs-12 pl0\"");
 
-WriteLiteral(">\r\n                                   <input");
+WriteLiteral(">\r\n                                    <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -1249,11 +1250,11 @@ WriteLiteral(" maxlength=256");
 
 WriteLiteral(" id=\"shipcity\"");
 
-WriteLiteral(">\r\n                               </div>\r\n                               <div");
+WriteLiteral(">\r\n                                </div>\r\n                                <div");
 
 WriteLiteral(" class=\"col-sm-6 col-xs-12 no_pad \"");
 
-WriteLiteral(">\r\n                                   <input");
+WriteLiteral(">\r\n                                    <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -1265,12 +1266,12 @@ WriteLiteral(" maxlength=256");
 
 WriteLiteral(" id=\"shipstate\"");
 
-WriteLiteral(">\r\n                               </div>\r\n\r\n\r\n                           </div>\r\n" +
-"\r\n                           <div");
+WriteLiteral(">\r\n                                </div>\r\n\r\n\r\n                            </div>" +
+"\r\n\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                               <input");
+WriteLiteral(">\r\n                                <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -1282,11 +1283,11 @@ WriteLiteral(" maxlength=256");
 
 WriteLiteral(" id=\"shipaddress1\"");
 
-WriteLiteral(">\r\n                           </div>\r\n                           <div");
+WriteLiteral(">\r\n                            </div>\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-10 col-xs-12 mb10 no_pad\"");
 
-WriteLiteral(">\r\n                               <input");
+WriteLiteral(">\r\n                                <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -1298,36 +1299,36 @@ WriteLiteral(" maxlength=256");
 
 WriteLiteral(" id=\"shipaddress2\"");
 
-WriteLiteral(">\r\n                           </div>\r\n                       </div>\r\n\r\n\r\n        " +
-"           </div>\r\n\r\n                   <div");
+WriteLiteral(">\r\n                            </div>\r\n                        </div>\r\n\r\n\r\n      " +
+"              </div>\r\n\r\n                    <div");
 
 WriteLiteral(" class=\"col-sm-6 divqtyvisible\"");
 
 WriteLiteral(" style=\"display:none;\"");
 
-WriteLiteral(">\r\n                       <div");
+WriteLiteral(">\r\n                        <div");
 
 WriteLiteral(" class=\"form-group \"");
 
-WriteLiteral(">\r\n\r\n                           <div");
+WriteLiteral(">\r\n\r\n                            <div");
 
 WriteLiteral(" class=\"col-sm-12 col-xs-12 no_pad mt20\"");
 
-WriteLiteral(">\r\n                               <label");
+WriteLiteral(">\r\n                                <label");
 
 WriteLiteral(" class=\"control-label ev_payment_lebel pl0\"");
 
-WriteLiteral(">\r\n                                   PLEASE ENTER INTENDED TICKET RECEPIENTS (OP" +
-"TIONAL)\r\n                               </label>\r\n                              " +
-" <div");
+WriteLiteral(">\r\n                                    PLEASE ENTER INTENDED TICKET RECEPIENTS (O" +
+"PTIONAL)\r\n                                </label>\r\n                            " +
+"    <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
-WriteLiteral("></div>\r\n                               <div");
+WriteLiteral("></div>\r\n                                <div");
 
 WriteLiteral(" class=\"col-sm-8 col-xs-12 no_pad\"");
 
-WriteLiteral(">\r\n                                   <input");
+WriteLiteral(">\r\n                                    <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -1337,19 +1338,19 @@ WriteLiteral(" placeholder=\"NAME OF THE TICKET BEARER\"");
 
 WriteLiteral(" id=\"nameofticket\"");
 
-WriteLiteral(">\r\n\r\n                               </div>\r\n                               ");
+WriteLiteral(">\r\n\r\n                                </div>\r\n                                ");
 
-WriteLiteral("\r\n\r\n                               <div");
+WriteLiteral("\r\n\r\n                                <div");
 
 WriteLiteral(" class=\"col-sm-12 col-xs-12 no_pad mt10\"");
 
-WriteLiteral(">\r\n                                   <div");
+WriteLiteral(">\r\n                                    <div");
 
 WriteLiteral(" class=\"Notifybox col-sm-8 col-xs-12 no_pad mt10 mb10\"");
 
 WriteLiteral(" id=\"divemail\"");
 
-WriteLiteral(">\r\n                                       <input");
+WriteLiteral(">\r\n                                        <input");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont\"");
 
@@ -1359,12 +1360,12 @@ WriteLiteral(" placeholder=\"EMAIL OF TICKET BEARER\"");
 
 WriteLiteral(" id=\"emailbearer\"");
 
-WriteLiteral(">\r\n                                   </div>\r\n                                   " +
-"<div");
+WriteLiteral(">\r\n                                    </div>\r\n                                  " +
+"  <div");
 
 WriteLiteral(" class=\"col-sm-12 col-xs-12 no_pad\"");
 
-WriteLiteral(">\r\n                                       <button");
+WriteLiteral(">\r\n                                        <button");
 
 WriteLiteral(" class=\"btn ev_live_btn\"");
 
@@ -1372,9 +1373,9 @@ WriteLiteral(" type=\"button\"");
 
 WriteLiteral(" id=\"btAddList\"");
 
-WriteLiteral(">\r\n                                           ADD TO LIST\r\n                      " +
-"                 </button>\r\n                                   </div>\r\n         " +
-"                          <div");
+WriteLiteral(">\r\n                                            ADD TO LIST\r\n                     " +
+"                   </button>\r\n                                    </div>\r\n      " +
+"                              <div");
 
 WriteLiteral(" class=\"col-sm-12 col-xs-12 no_pad mt10\"");
 
@@ -1382,22 +1383,22 @@ WriteLiteral(" id=\"blocklist\"");
 
 WriteLiteral(" style=\"display:none;\"");
 
-WriteLiteral(">\r\n                                       <div");
+WriteLiteral(">\r\n                                        <div");
 
 WriteLiteral(" class=\"col-sm-8 col-xs-12 no_pad \"");
 
-WriteLiteral(">\r\n                                           <select");
+WriteLiteral(">\r\n                                            <select");
 
 WriteLiteral(" class=\"form-control evnt_inp_cont \"");
 
 WriteLiteral(" id=\"ddlListitem\"");
 
-WriteLiteral("></select>\r\n                                       </div>\r\n                      " +
-"                 <div");
+WriteLiteral("></select>\r\n                                        </div>\r\n                     " +
+"                   <div");
 
 WriteLiteral(" class=\"col-sm-2 col-xs-6 ipad-tkt-recpt-btn\"");
 
-WriteLiteral(">\r\n                                           <button");
+WriteLiteral(">\r\n                                            <button");
 
 WriteLiteral(" class=\"btn ev_live_btn xs-tkt-pay-btn\"");
 
@@ -1405,13 +1406,13 @@ WriteLiteral(" type=\"button\"");
 
 WriteLiteral(" id=\"editlist\"");
 
-WriteLiteral(">\r\n                                               Edit\r\n                         " +
-"                  </button>\r\n                                       </div>\r\n    " +
-"                                   <div");
+WriteLiteral(">\r\n                                                Edit\r\n                        " +
+"                    </button>\r\n                                        </div>\r\n " +
+"                                       <div");
 
 WriteLiteral(" class=\"col-sm-2 col-xs-6 ipad-tkt-recpt-btn ipad-tkt-recpt-btn-mt10\"");
 
-WriteLiteral(">\r\n                                           <button");
+WriteLiteral(">\r\n                                            <button");
 
 WriteLiteral(" class=\"btn ev_live_btn xs-tkt-pay-btn\"");
 
@@ -1420,27 +1421,27 @@ WriteLiteral(" type=\"button\"");
 WriteLiteral(" id=\"deletelist\"");
 
 WriteLiteral(@">
-                                               Delete
-                                           </button>
-                                       </div>
-                                   </div>
-                               </div>
-                               <table");
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table");
 
 WriteLiteral(" style=\"display:none;\"");
 
 WriteLiteral(" id=\"tblListitem\"");
 
-WriteLiteral("></table>\r\n                           </div>\r\n\r\n                       </div>\r\n  " +
-"                     <div");
+WriteLiteral("></table>\r\n                            </div>\r\n\r\n                        </div>\r\n" +
+"                        <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
-WriteLiteral("></div>\r\n                   </div>\r\n                   <div");
+WriteLiteral("></div>\r\n                    </div>\r\n                    <div");
 
 WriteLiteral(" class=\"col-sm-12 text-right mb10 mt10\"");
 
-WriteLiteral(">\r\n                       <button");
+WriteLiteral(">\r\n                        <button");
 
 WriteLiteral(" type=\"button\"");
 
@@ -1448,8 +1449,8 @@ WriteLiteral(" class=\"btn btn-lg ev_live_btn ev_live_sub_btn mb10\"");
 
 WriteLiteral(" id=\"btBack\"");
 
-WriteLiteral(">\r\n                           < Back\r\n                       </button>\r\n         " +
-"              <button");
+WriteLiteral(">\r\n                            < Back\r\n                        </button>\r\n       " +
+"                 <button");
 
 WriteLiteral(" type=\"button\"");
 
@@ -1457,8 +1458,8 @@ WriteLiteral(" class=\"btn btn-lg ev_live_btn ev_live_sub_btn mb10\"");
 
 WriteLiteral(" id=\"completeorder\"");
 
-WriteLiteral(">\r\n                           COMPLTE ORDER >\r\n                       </button>\r\n" +
-"                       <button");
+WriteLiteral(">\r\n                            COMPLTE ORDER >\r\n                        </button>" +
+"\r\n                        <button");
 
 WriteLiteral(" type=\"button\"");
 
@@ -1466,8 +1467,8 @@ WriteLiteral(" class=\"btn btn-lg ev_live_btn ev_live_sub_btn mb10\"");
 
 WriteLiteral(" id=\"btPaypal\"");
 
-WriteLiteral(">\r\n                           Paypal >\r\n                       </button>\r\n       " +
-"                <button");
+WriteLiteral(">\r\n                            Paypal >\r\n                        </button>\r\n     " +
+"                   <button");
 
 WriteLiteral(" type=\"button\"");
 
@@ -1475,12 +1476,16 @@ WriteLiteral(" style=\"display:none;\"");
 
 WriteLiteral(" id=\"btPaypalCheckout\"");
 
-WriteLiteral(">\r\n                           Checkout\r\n                       </button>\r\n       " +
-"                <a");
+WriteLiteral(">\r\n                            Checkout\r\n                        </button>\r\n     " +
+"                   <a");
 
 WriteLiteral(" class=\"td-btn\"");
 
 WriteLiteral(" id=\"btOk\"");
+
+WriteLiteral(" data-backdrop=\"static\"");
+
+WriteLiteral(" data-keyboard=\"false\"");
 
 WriteLiteral(" type=\"button\"");
 
@@ -1490,25 +1495,25 @@ WriteLiteral(" data-toggle=\"modal\"");
 
 WriteLiteral(" style=\"display:none\"");
 
-WriteLiteral(">\r\n                       </a>\r\n                       ");
+WriteLiteral(">\r\n                        </a>\r\n                        ");
 
-WriteLiteral("\r\n                       ");
+WriteLiteral("\r\n                        ");
 
-WriteLiteral("\r\n                   </div>\r\n                   <div");
+WriteLiteral("\r\n                    </div>\r\n                    <div");
 
 WriteLiteral(" id=\"dvAjxSave\"");
 
 WriteLiteral(" style=\"display:none\"");
 
-WriteLiteral(">\r\n                       <img");
+WriteLiteral(">\r\n                        <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 27158), Tuple.Create("\"", 27188)
-, Tuple.Create(Tuple.Create("", 27164), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 27164), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 27550), Tuple.Create("\"", 27580)
+, Tuple.Create(Tuple.Create("", 27556), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 27556), false)
 );
 
-WriteLiteral(" />\r\n                   </div>\r\n               </div>\r\n\r\n           </div>\r\n     " +
-"  </div>\r\n\r\n   </div>\r\n");
+WriteLiteral(" />\r\n                    </div>\r\n                </div>\r\n\r\n            </div>\r\n  " +
+"      </div>\r\n\r\n    </div>\r\n");
 
 WriteLiteral("    <div");
 
@@ -1720,13 +1725,13 @@ WriteLiteral(" class=\"msg\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 29842), Tuple.Create("\"", 29872)
-, Tuple.Create(Tuple.Create("", 29848), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
-, 29848), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 30239), Tuple.Create("\"", 30269)
+, Tuple.Create(Tuple.Create("", 30245), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajaxloader1.gif")
+, 30245), false)
 );
 
-WriteLiteral(" />Please wait, Preparing your order.</h4>\r\n                    </div>\r\n         " +
-"        \r\n                            <button");
+WriteLiteral(" />Please wait, Preparing your order.</h4>\r\n                    </div>\r\n\r\n       " +
+"             <button");
 
 WriteLiteral(" type=\"button\"");
 
@@ -1738,8 +1743,8 @@ WriteLiteral(" class=\"btn btn-primary yes ok\"");
 
 WriteLiteral(" data-dismiss=\"modal\"");
 
-WriteLiteral(">OK</button>\r\n                    \r\n                </form>\r\n            </div>\r\n" +
-"        </div><!-- confirm-msg -->\r\n    </div>\r\n");
+WriteLiteral(">OK</button>\r\n\r\n                </form>\r\n            </div>\r\n        </div><!-- c" +
+"onfirm-msg -->\r\n    </div>\r\n");
 
             
             #line 516 "..\..\Views\TicketPayment\TicketPayment.cshtml"
@@ -1762,6 +1767,10 @@ WriteLiteral(" role=\"dialog\"");
 WriteLiteral(" aria-labelledby=\"myModalLabel\"");
 
 WriteLiteral(" aria-hidden=\"true\"");
+
+WriteLiteral(" data-backdrop=\"static\"");
+
+WriteLiteral(" data-keyboard=\"false\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -1828,6 +1837,10 @@ WriteLiteral(" class=\"td-btn\"");
 WriteLiteral(" id=\"btOkMes\"");
 
 WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" data-backdrop=\"static\"");
+
+WriteLiteral(" data-keyboard=\"false\"");
 
 WriteLiteral(" href=\"#SessionExp\"");
 
@@ -1925,37 +1938,37 @@ WriteLiteral(" />\r\n");
             #line hidden
 WriteLiteral("<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 32055), Tuple.Create("\"", 32088)
-, Tuple.Create(Tuple.Create("", 32061), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/Commonfunction.js")
-, 32061), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 32497), Tuple.Create("\"", 32530)
+, Tuple.Create(Tuple.Create("", 32503), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/Commonfunction.js")
+, 32503), false)
 );
 
 WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 32108), Tuple.Create("\"", 32136)
-, Tuple.Create(Tuple.Create("", 32114), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/flipclock.js")
-, 32114), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 32550), Tuple.Create("\"", 32578)
+, Tuple.Create(Tuple.Create("", 32556), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/flipclock.js")
+, 32556), false)
 );
 
 WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 32156), Tuple.Create("\"", 32188)
-, Tuple.Create(Tuple.Create("", 32162), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.cookie.js")
-, 32162), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 32598), Tuple.Create("\"", 32630)
+, Tuple.Create(Tuple.Create("", 32604), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.cookie.js")
+, 32604), false)
 );
 
 WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 32208), Tuple.Create("\"", 32236)
-, Tuple.Create(Tuple.Create("", 32214), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui.js")
-, 32214), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 32650), Tuple.Create("\"", 32678)
+, Tuple.Create(Tuple.Create("", 32656), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui.js")
+, 32656), false)
 );
 
 WriteLiteral("></script>\r\n<link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 32254), Tuple.Create("\"", 32312)
-, Tuple.Create(Tuple.Create("", 32261), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.min.css")
-, 32261), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 32696), Tuple.Create("\"", 32754)
+, Tuple.Create(Tuple.Create("", 32703), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.min.css")
+, 32703), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
@@ -1966,9 +1979,9 @@ WriteLiteral(" src=\"//www.paypalobjects.com/api/checkout.js\"");
 
 WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 32413), Tuple.Create("\"", 32454)
-, Tuple.Create(Tuple.Create("", 32419), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
-, 32419), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 32855), Tuple.Create("\"", 32896)
+, Tuple.Create(Tuple.Create("", 32861), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
+, 32861), false)
 );
 
 WriteLiteral("></script>\r\n\r\n<script>\r\n    window.paypalCheckoutReady = function () {\r\n        p" +
@@ -2012,30 +2025,29 @@ WriteLiteral("\',\r\n                    type: \"GET\",\r\n                    a
 "                   //Gracefully Close the minibrowser in case of AJAX errors\r\n  " +
 "                      paypal.checkout.closeFlow();\r\n                    }\r\n     " +
 "           });\r\n            },\r\n            button: [\'btPaypalCheckout\']\r\n      " +
-"  });\r\n    }\r\n\r\n    $(document).ready(function () {\r\n\r\n        var vGrdTotal = p" +
-"arseFloat($(\"#spGrdTotal\").text());\r\n       \r\n        \r\n        if (isNaN(vGrdTo" +
-"tal) == true) vGrdTotal = 0;\r\n        var totqty = $(\'#hidQty\').val();\r\n\r\n      " +
-"  if (totqty <= 0) {\r\n            $(\'.divqtyvisible\').hide();\r\n        } else {\r" +
-"\n            $(\'.divqtyvisible\').show();\r\n        }\r\n        if (vGrdTotal > 0) " +
-"{\r\n            $(\'.divvisible\').show();\r\n        }\r\n        else {\r\n            " +
-"$(\'.divvisible\').hide();\r\n\r\n        }\r\n\r\n        if ($(\"#hdVarId\").val() != \"\") " +
-"{\r\n            window.location.hash = \"dvVarHash\";\r\n        }\r\n        else {\r\n " +
-"           window.location.hash = \"dvHash\";\r\n        }\r\n\r\n        //------------" +
-"------------------------------------LoadSelectedTickets-------------------------" +
-"-------------------------\r\n\r\n        ");
+"  });\r\n    }\r\n\r\n    $(document).ready(function () {\r\n        var vGrdTotal = par" +
+"seFloat($(\"#spGrdTotal\").text());\r\n        if (isNaN(vGrdTotal) == true) vGrdTot" +
+"al = 0;\r\n        var totqty = $(\'#hidQty\').val();\r\n        if (totqty <= 0) {\r\n " +
+"           $(\'.divqtyvisible\').hide();\r\n        } else {\r\n            $(\'.divqty" +
+"visible\').show();\r\n        }\r\n        if (vGrdTotal > 0) {\r\n            $(\'.divv" +
+"isible\').show();\r\n        }\r\n        else {\r\n            $(\'.divvisible\').hide()" +
+";\r\n        }\r\n        if ($(\"#hdVarId\").val() != \"\") {\r\n            window.locat" +
+"ion.hash = \"dvVarHash\";\r\n        }\r\n        else {\r\n            window.location." +
+"hash = \"dvHash\";\r\n        }\r\n        //-----------------------------------------" +
+"-------LoadSelectedTickets--------------------------------------------------\r\n\r\n" +
+"        ");
 
 WriteLiteral("\r\n\r\n        //-------------------------------------------------------------------" +
 "---------------------------------//\r\n        ");
 
 WriteLiteral(@"
         //$(""#dvTicketInfo"").();
-     
+
 
 
         var Eventid = $('#hdEventid').val();
         $(""#btPaypal"").hide();
-        $(""#Email"").on(""blur"", function ()
-        {
+        $(""#Email"").on(""blur"", function () {
             var email = $(""#Email"").val();
             if (email != '') {
                 if (!validateEmail(email)) {
@@ -2049,13 +2061,13 @@ WriteLiteral(@"
                     $(""#Email"").removeClass('err-bor');
                     $('#divaccsuc').hide();
                     $('#diverroacc').hide();
-                 
+
 
                     $.ajax({
                         url: '");
 
             
-            #line 671 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 663 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                          Write(Url.Action("Getuserdetails", "Home"));
 
             
@@ -2064,98 +2076,144 @@ WriteLiteral(@"
 WriteLiteral("\',\r\n                        data: { \'Email\': email },\r\n                        ty" +
 "pe: \"Post\",\r\n                        success: function (response) {\r\n           " +
 "                 console.log(response);\r\n                            if (respons" +
-"e.Message == \"F\") {\r\n                              \r\n                           " +
-"     $(\"#accfname\").val(response.Fname);\r\n                                $(\"#ac" +
-"cLname\").val(response.Lname);\r\n                                $(\"#password\").hi" +
-"de();\r\n                                $(\"#password\").val(\'\');\r\n                " +
-"                $(\"#hdemailexist\").val(0);\r\n                            } else {" +
-"\r\n                                if (response.Message == \"N\") {\r\n              " +
-"                        $(\"#password\").show();\r\n                                " +
-"      $(\"#hdemailexist\").val(1);\r\n\r\n                                }\r\n         " +
-"                   }\r\n\r\n                         \r\n                        }\r\n  " +
-"                  });\r\n\r\n\r\n\r\n                }\r\n            }\r\n            else\r" +
-"\n            {\r\n                $(\"#Email\").removeClass(\'err-bor\');\r\n           " +
-"     $(\'#divaccsuc\').hide();\r\n                $(\'#diverroacc\').hide();\r\n        " +
-"        $(\"#password\").hide();\r\n                $(\"#hdemailexist\").val(0);\r\n    " +
-"        }\r\n\r\n\r\n        });\r\n        $(\"#confirmEmail\").on(\"blur\", function ()\r\n " +
-"       {\r\n            var email = $(\"#Email\").val();\r\n            var confirmema" +
-"il = $(this).val();\r\n            if (confirmemail != \'\' && email != \'\') {\r\n\r\n\r\n " +
-"               if (!validateEmail(confirmemail)) {\r\n                    $(\"#conf" +
-"irmEmail\").addClass(\'err-bor\');\r\n                    ShowMessage(\'E\', ajaxsetup(" +
-"\'TicketPayment\', \'TPayValidatebeareremailUI\'));\r\n                    return fals" +
-"e;\r\n                } else {\r\n                    $(\"#confirmEmail\").removeClass" +
-"(\'err-bor\');\r\n                    $(\'#divaccsuc\').hide();\r\n                    $" +
-"(\'#diverroacc\').hide();\r\n                }\r\n\r\n                if (confirmemail !" +
-"= email) {\r\n                    $(\"#confirmEmail\").addClass(\'err-bor\');\r\n       " +
-"             $(\"#Email\").addClass(\'err-bor\');\r\n                    ShowMessage(\'" +
-"E\', ajaxsetup(\'TicketPayment\', \'TPayValidateConfirmMatchEmailUI\'));\r\n\r\n\r\n       " +
-"         } else\r\n                {\r\n                    $(\"#Email\").removeClass(" +
-"\'err-bor\');\r\n                    $(\"#confirmEmail\").removeClass(\'err-bor\');\r\n   " +
-"                 $(\'#divaccsuc\').hide();\r\n                    $(\'#diverroacc\').h" +
-"ide();\r\n                }\r\n            } else {\r\n                if (confirmemai" +
-"l != \'\' && email == \'\') {\r\n                    $(\"#Email\").addClass(\'err-bor\');\r" +
-"\n                    ShowMessage(\'E\', ajaxsetup(\'TicketPayment\', \'TPayValidatebe" +
-"areremailUI\'));\r\n                    $(\"#password\").hide();\r\n                   " +
-" $(\"#hdemailexist\").val(0);\r\n                    return false;\r\n                " +
-"}\r\n            }\r\n\r\n\r\n        });\r\n        if ($(\'#ddlListitem option\').length <" +
-"= 0) {\r\n            $(\'#blocklist\').css(\'display\', \'none\');\r\n\r\n        } else {\r" +
-"\n            $(\'#blocklist\').css(\'display\', \'block\');\r\n        }\r\n\r\n        $(\"#" +
-"expirationdate\").mask(\"99/99\");\r\n        $(\"#shippingphnno\").mask(\"999-999-9999\"" +
-");\r\n        $(\"#billingphno\").mask(\"999-999-9999\");\r\n        $(\"#accountphnno\")." +
-"mask(\"999-999-9999\");\r\n        $(\'#btPaypal\').click(function () {\r\n\r\n           " +
-" $(\"#hdIsPostBack\").val(\"Y\");\r\n            var msg = validationpage();\r\n\r\n      " +
-"      if (msg != \"\") {\r\n                ShowMessage(\'E\', msg)\r\n               \r\n" +
-"                return false;\r\n            }\r\n            else {\r\n              " +
-"  SavePaypaldetail();\r\n            }\r\n        });\r\n\r\n        $(\"#btAddList\").cli" +
-"ck(function () {\r\n\r\n            if ($(\"#nameofticket\").val().trim() == \'\') {\r\n  " +
-"              ShowMessage(\'E\', ajaxsetup(\'TicketPayment\', \'TPayValidatebearernam" +
-"eUI\'));\r\n                $(\"#nameofticket\").addClass(\'err-bor\');\r\n\r\n            " +
-"    return false;\r\n            }\r\n            var email = $(\'#emailbearer\').val(" +
-");\r\n                if (!validateEmail(email)) {\r\n                    $(\'#emailb" +
-"earer\').addClass(\'err-bor\');\r\n                    ShowMessage(\'E\', ajaxsetup(\'Ti" +
-"cketPayment\', \'TPayValidatebeareremailUI\'));\r\n                    //alert(\"Pleas" +
-"e enter valid Email.\");\r\n                    if ($(\'#ddlListitem option\').length" +
-" < 0) {\r\n                        $(\'#blocklist\').css(\'display\', \'none\');\r\n      " +
-"              }\r\n                    return false;\r\n\r\n\r\n                } else {" +
-"\r\n\r\n                    $(\'#blocklist\').css(\'display\', \'block\');\r\n              " +
-"  }\r\n            //if ($(\'.Notifybox\').css(\'display\') == \'block\') {\r\n           " +
-" //   \r\n         \r\n\r\n            //}\r\n            //else {\r\n\r\n            //    " +
-"$(\'#blocklist\').css(\'display\', \'block\');\r\n            //}\r\n\r\n\r\n\r\n\r\n\r\n           " +
-" var qty = $(\'#hidQty\').val();\r\n\r\n\r\n\r\n\r\n            if ($(\"#hidTicketbearer\").va" +
-"l() == \'\') {\r\n                var qty = parseInt($(\'#hidQty\').val());\r\n         " +
-"       var ddlength = parseInt($(\"#ddlListitem option\").length);\r\n              " +
-"  if (ddlength > (qty - 1)) {\r\n                    var msg = ajaxsetup(\'TicketPa" +
-"yment\', \'TpayMaxTicketReciepts\') + qty;\r\n                    $(\'#divaccsuc\').css" +
-"(\'display\', \'none\');\r\n                    $(\'#diverroacc\').css(\'display\', \'block" +
-"\');\r\n\r\n                    $(\'#diverroacc\').focus();\r\n                    $(\'#er" +
-"raccmsg\').html(msg);\r\n                    $(\'html,body\').animate({ scrollTop: 0 " +
-"});\r\n                    return false;\r\n                }\r\n                AddTi" +
-"cket();\r\n            }\r\n            else\r\n                UpdateTicket($(\"#hidTi" +
-"cketbearer\").val());\r\n\r\n\r\n            $(\"#hidTicketbearer\").val(\'\');\r\n          " +
-"  $(\"#nameofticket\").val(\'\');\r\n            $(\"#emailbearer\").val(\'\');\r\n         " +
-"   //if ($(\'.Notifybox\').css(\'display\') == \'block\') {\r\n            //    $(\'.Not" +
-"ifybox\').css(\'display\', \'none\');\r\n            //}\r\n\r\n        });\r\n\r\n        $(\"#" +
-"selectcard\").change(function () {\r\n            if ($(\"#selectcard\").val() == \"P\"" +
-") {\r\n                $(\"#dvBillingAddress\").hide();\r\n                $(\"#complet" +
-"eorder\").hide();\r\n                $(\"#btPaypal\").show();\r\n            }\r\n       " +
-"     else {\r\n                $(\"#dvBillingAddress\").show();\r\n                $(\"" +
-"#completeorder\").show();\r\n                $(\"#btPaypal\").hide();\r\n\r\n            " +
-"}\r\n        });\r\n        $(\"#login\").click(function () {\r\n            $(\"#hdIsPos" +
-"tBack\").val(\"Y\");\r\n        });\r\n\r\n        $(\'#btBack\').click(function () {\r\n    " +
-"        //alert(url);\r\n            $.ajax({\r\n                url: \'");
+"e.Message == \"F\") {\r\n\r\n                                $(\"#accfname\").val(respon" +
+"se.Fname);\r\n                                $(\"#accLname\").val(response.Lname);\r" +
+"\n                                $(\"#password\").hide();\r\n                       " +
+"         $(\"#password\").val(\'\');\r\n                                $(\"#hdemailexi" +
+"st\").val(0);\r\n                            } else {\r\n                            " +
+"    if (response.Message == \"N\") {\r\n                                    $(\"#pass" +
+"word\").show();\r\n                                    $(\"#hdemailexist\").val(1);\r\n" +
+"\r\n                                }\r\n                            }\r\n\r\n\r\n        " +
+"                }\r\n                    });\r\n\r\n\r\n\r\n                }\r\n           " +
+" }\r\n            else {\r\n                $(\"#Email\").removeClass(\'err-bor\');\r\n   " +
+"             $(\'#divaccsuc\').hide();\r\n                $(\'#diverroacc\').hide();\r\n" +
+"                $(\"#password\").hide();\r\n                $(\"#hdemailexist\").val(0" +
+");\r\n            }\r\n\r\n\r\n        });\r\n        $(\"#confirmEmail\").on(\"blur\", functi" +
+"on () {\r\n            var email = $(\"#Email\").val();\r\n            var confirmemai" +
+"l = $(this).val();\r\n            if (confirmemail != \'\' && email != \'\') {\r\n\r\n\r\n  " +
+"              if (!validateEmail(confirmemail)) {\r\n                    $(\"#confi" +
+"rmEmail\").addClass(\'err-bor\');\r\n                    ShowMessage(\'E\', ajaxsetup(\'" +
+"TicketPayment\', \'TPayValidatebeareremailUI\'));\r\n                    return false" +
+";\r\n                } else {\r\n                    $(\"#confirmEmail\").removeClass(" +
+"\'err-bor\');\r\n                    $(\'#divaccsuc\').hide();\r\n                    $(" +
+"\'#diverroacc\').hide();\r\n                }\r\n\r\n                if (confirmemail !=" +
+" email) {\r\n                    $(\"#confirmEmail\").addClass(\'err-bor\');\r\n        " +
+"            $(\"#Email\").addClass(\'err-bor\');\r\n                    ShowMessage(\'E" +
+"\', ajaxsetup(\'TicketPayment\', \'TPayValidateConfirmMatchEmailUI\'));\r\n\r\n\r\n        " +
+"        } else {\r\n                    $(\"#Email\").removeClass(\'err-bor\');\r\n     " +
+"               $(\"#confirmEmail\").removeClass(\'err-bor\');\r\n                    $" +
+"(\'#divaccsuc\').hide();\r\n                    $(\'#diverroacc\').hide();\r\n          " +
+"      }\r\n            } else {\r\n                if (confirmemail != \'\' && email =" +
+"= \'\') {\r\n                    $(\"#Email\").addClass(\'err-bor\');\r\n                 " +
+"   ShowMessage(\'E\', ajaxsetup(\'TicketPayment\', \'TPayValidatebeareremailUI\'));\r\n " +
+"                   $(\"#password\").hide();\r\n                    $(\"#hdemailexist\"" +
+").val(0);\r\n                    return false;\r\n                }\r\n            }\r\n" +
+"\r\n\r\n        });\r\n        if ($(\'#ddlListitem option\').length <= 0) {\r\n          " +
+"  $(\'#blocklist\').css(\'display\', \'none\');\r\n\r\n        } else {\r\n            $(\'#b" +
+"locklist\').css(\'display\', \'block\');\r\n        }\r\n\r\n        $(\"#expirationdate\").m" +
+"ask(\"99/99\");\r\n        $(\"#shippingphnno\").mask(\"999-999-9999\");\r\n        $(\"#bi" +
+"llingphno\").mask(\"999-999-9999\");\r\n        $(\"#accountphnno\").mask(\"999-999-9999" +
+"\");\r\n        $(\'#btPaypal\').click(function () {\r\n\r\n            $(\"#hdIsPostBack\"" +
+").val(\"Y\");\r\n            var msg = validationpage();\r\n\r\n            if (msg != \"" +
+"\") {\r\n                ShowMessage(\'E\', msg)\r\n\r\n                return false;\r\n  " +
+"          }\r\n            else {\r\n                SavePaypaldetail();\r\n          " +
+"  }\r\n        });\r\n\r\n        $(\"#btAddList\").click(function () {\r\n\r\n            i" +
+"f ($(\"#nameofticket\").val().trim() == \'\') {\r\n                ShowMessage(\'E\', aj" +
+"axsetup(\'TicketPayment\', \'TPayValidatebearernameUI\'));\r\n                $(\"#name" +
+"ofticket\").addClass(\'err-bor\');\r\n\r\n                return false;\r\n            }\r" +
+"\n            var email = $(\'#emailbearer\').val();\r\n            if (!validateEmai" +
+"l(email)) {\r\n                $(\'#emailbearer\').addClass(\'err-bor\');\r\n           " +
+"     ShowMessage(\'E\', ajaxsetup(\'TicketPayment\', \'TPayValidatebeareremailUI\'));\r" +
+"\n                //alert(\"Please enter valid Email.\");\r\n                if ($(\'#" +
+"ddlListitem option\').length < 0) {\r\n                    $(\'#blocklist\').css(\'dis" +
+"play\', \'none\');\r\n                }\r\n                return false;\r\n\r\n\r\n         " +
+"   } else {\r\n\r\n                $(\'#blocklist\').css(\'display\', \'block\');\r\n       " +
+"     }\r\n            //if ($(\'.Notifybox\').css(\'display\') == \'block\') {\r\n        " +
+"    //\r\n\r\n\r\n            //}\r\n            //else {\r\n\r\n            //    $(\'#block" +
+"list\').css(\'display\', \'block\');\r\n            //}\r\n\r\n\r\n\r\n\r\n\r\n            var qty " +
+"= $(\'#hidQty\').val();\r\n\r\n\r\n\r\n\r\n            if ($(\"#hidTicketbearer\").val() == \'\'" +
+") {\r\n                var qty = parseInt($(\'#hidQty\').val());\r\n                va" +
+"r ddlength = parseInt($(\"#ddlListitem option\").length);\r\n                if (ddl" +
+"ength > (qty - 1)) {\r\n                    var msg = ajaxsetup(\'TicketPayment\', \'" +
+"TpayMaxTicketReciepts\') + qty;\r\n                    $(\'#divaccsuc\').css(\'display" +
+"\', \'none\');\r\n                    $(\'#diverroacc\').css(\'display\', \'block\');\r\n\r\n  " +
+"                  $(\'#diverroacc\').focus();\r\n                    $(\'#erraccmsg\')" +
+".html(msg);\r\n                    $(\'html,body\').animate({ scrollTop: 0 });\r\n    " +
+"                return false;\r\n                }\r\n                AddTicket();\r\n" +
+"            }\r\n            else\r\n                UpdateTicket($(\"#hidTicketbeare" +
+"r\").val());\r\n\r\n\r\n            $(\"#hidTicketbearer\").val(\'\');\r\n            $(\"#nam" +
+"eofticket\").val(\'\');\r\n            $(\"#emailbearer\").val(\'\');\r\n            //if (" +
+"$(\'.Notifybox\').css(\'display\') == \'block\') {\r\n            //    $(\'.Notifybox\')." +
+"css(\'display\', \'none\');\r\n            //}\r\n\r\n        });\r\n\r\n        $(\"#selectcar" +
+"d\").change(function () {\r\n            if ($(\"#selectcard\").val() == \"P\") {\r\n    " +
+"            $(\"#dvBillingAddress\").hide();\r\n                $(\"#completeorder\")." +
+"hide();\r\n                $(\"#btPaypal\").show();\r\n                window.paypalCh" +
+"eckoutReady = function () {\r\n                    paypal.checkout.setup(\"");
 
             
-            #line 868 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 843 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+                                      Write(PayPalSettings.MerchantAccountID);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\", {\r\n                        environment: \'");
+
+            
+            #line 844 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+                                 Write(PayPalSettings.Environment);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@"',
+                        click: function (event) {
+                            event.preventDefault();
+                            paypal.checkout.initXO();
+                            $.support.cors = true;
+
+                            $.ajax({
+                                url: '");
+
+            
+            #line 851 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+                                 Write(Html.Raw(Url.Action("PayPaltoken", "Cart")));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\',\r\n                                type: \"GET\",\r\n                               " +
+" async: true,\r\n                                crossDomain: true,\r\n             " +
+"                   //Load the minibrowser with the redirection url in the succes" +
+"s handler\r\n                                success: function (token) {\r\n        " +
+"                            var url = paypal.checkout.urlPrefix + token;\r\n      " +
+"                              //Loading Mini browser with redirect url, true for" +
+" async AJAX calls\r\n                                    paypal.checkout.startFlow" +
+"(url);\r\n                                },\r\n                                erro" +
+"r: function (responseData, textStatus, errorThrown) {\r\n                         " +
+"           //alert(\"Something going wrong \");\r\n                                 " +
+"   //Gracefully Close the minibrowser in case of AJAX errors\r\n                  " +
+"                  paypal.checkout.closeFlow();\r\n                                " +
+"}\r\n                            });\r\n                        },\r\n                " +
+"        button: [\'btPaypalCheckout\']\r\n                    });\r\n                }" +
+"\r\n\r\n            }\r\n            else {\r\n                $(\"#dvBillingAddress\").sh" +
+"ow();\r\n                $(\"#completeorder\").show();\r\n                $(\"#btPaypal" +
+"\").hide();\r\n\r\n            }\r\n        });\r\n        $(\"#login\").click(function () " +
+"{\r\n            $(\"#hdIsPostBack\").val(\"Y\");\r\n        });\r\n\r\n        $(\'#btBack\')" +
+".click(function () {\r\n          \r\n            $.ajax({\r\n                url: \'");
+
+            
+            #line 887 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                  Write(Url.Action("ReleaseTickets", "CreateEvent"));
 
             
             #line default
             #line hidden
 WriteLiteral("\',\r\n                type: \"Post\",\r\n                success: function (response) {" +
-"\r\n                    window.location.href = \'");
+"\r\n                  \r\n                    window.location.href = \'");
 
             
-            #line 871 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 891 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                                        Write(Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.URLTitle.Replace(" ","-") , strEventId = Model.EventId.ToString()}));
 
             
@@ -2212,195 +2270,193 @@ WriteLiteral("\';\r\n                }\r\n            });\r\n        });\r\n    
 "Message(\'E\', msg)\r\n\r\n                        return false;\r\n                    " +
 "}\r\n                },\r\n                error: function (data) { alert(data) }\r\n " +
 "           });\r\n\r\n\r\n        });\r\n\r\n\r\n\r\n        $(\'#completeorder\').click(functio" +
-"n () {\r\n            \r\n\r\n           \r\n            var flag = true;\r\n            v" +
-"ar Emaillogin = $(\"#Email\").val();\r\n            var msg = validationpage();\r\n\r\n " +
-"           var NameList = [];\r\n            if (msg != \"\") {\r\n                Sho" +
-"wMessage(\'E\', msg)\r\n                //$(\'#diverroacc\').css(\'display\', \'block\');\r" +
-"\n                //$(\'#erraccmsg\').html(msg);\r\n                return false;\r\n  " +
-"          }\r\n            //else {\r\n            //    if ($(\"#confirmEmail\").leng" +
-"th > 0) {\r\n            //        $.ajax({\r\n            //            url: \"/Home" +
-"/IsValid\",\r\n            //            async: true,\r\n            //            da" +
-"ta: \'Email=\' + Emaillogin,\r\n            //            dataType: \"text\",\r\n       " +
-"     //            success: function (data, textStatus, xhr) {\r\n            //  " +
-"              if (data != \'\') {\r\n            //                    if (data == \"" +
-"NotFound\") {\r\n            //                        flag = true;\r\n\r\n            " +
-"//                        $(\'#hdemailexist\').val(true);\r\n\r\n            //       " +
-"             } else if (data == \"Found\") {\r\n\r\n            //                    " +
-"    $(\'#Email\').focus();\r\n            //                        $(\"#Email\").addC" +
-"lass(\'err-bor\');\r\n\r\n\r\n            //                        ShowMessage(\'E\', aja" +
-"xsetup(\'TicketPayment\', \'TPayValidateEmailSy\'))\r\n\r\n            //               " +
-"         $(\'#hdemailexist\').val(false);\r\n\r\n            //                    }\r\n" +
-"            //                }\r\n            //            },\r\n            //   " +
-"         error: function (xhr, textStatus, errorThrown) {\r\n            //       " +
-"         alert(\"Req \" + xhr + \" status \" + textStatus + \"  Error \" + errorThrown" +
-");\r\n            //            }\r\n            //        });\r\n            //    }\r" +
-"\n\r\n\r\n            //}\r\n\r\n\r\n            var confirmemail = \"\", cardno = \"\", expiry" +
-"date = \"\", cvv = \"\", cardtype = \"\";\r\n            var type = \'\';\r\n\r\n\r\n           " +
-" $(\"#tblListitem tr\").each(function () {\r\n                var Sno = $(this).find" +
-"(\"td:first\").html();\r\n\r\n                // Multiple Address\r\n                if " +
-"(Sno != \'\') {\r\n                    NameList.push({\r\n                        Name" +
-": $(\"#TicketName_\" + Sno).text(),\r\n                        Email: $(\"#TicketEmai" +
-"l_\" + Sno).text(),\r\n\r\n\r\n                    });\r\n                }\r\n            " +
-"});\r\n\r\n\r\n\r\n            if ($(\'#shippinginfo\').is(\":checked\") == true) {\r\n\r\n\r\n\r\n " +
-"           }\r\n            var totalorder = $(\'#hdOrderTotal\').val();\r\n          " +
-"  var type = \'\';\r\n            if (totalorder > 0) {\r\n\r\n                type = \'P" +
-"aid\';\r\n\r\n                var result = $(\"#cardno\").validateCreditCard({ accept: " +
-"[\'visa\', \'mastercard\', \'discover\', \'amex\'] });\r\n                cardtype = resul" +
-"t.card_type.name;\r\n                if ($(\'#chkcarddetails\').is(\":checked\") == tr" +
-"ue) {\r\n                    cardno = $(\'#cardno\').val();\r\n\r\n                    e" +
-"xpirydate = $(\'#expirationdate\').val();\r\n                    cvv = $(\'#cvvcode\')" +
-".val();\r\n\r\n                }\r\n            } else {\r\n\r\n                type = \'Fr" +
-"ee\';\r\n\r\n\r\n\r\n            }\r\n\r\n            //-------------------------------------" +
-"Saving Payment Detail---------------------------------------\r\n\r\n            //va" +
-"r TPurchaseList = [];\r\n            //var IdAry = $(\"#hdIds\").val().split(\',\');\r\n" +
-"            //var vId = 0;\r\n            //var vLockQty = 0;\r\n            //var v" +
-"Donate = 0;\r\n            //for (i = 0; i < IdAry.length; i++) {\r\n            // " +
-"   vId = parseInt(IdAry[i].toString());\r\n            //    vLockQty = parseInt($" +
-"(\"#d_\" + IdAry[i].toString()).val());\r\n            //    vDonate = parseFloat($(" +
-"\"#txtd_\" + IdAry[i].toString()).val());\r\n            //    if (isNaN(vDonate) ==" +
-" true) vDonate = 0;\r\n            //    if (vLockQty > 0) {\r\n            //      " +
-"  TPurchaseList.push({\r\n            //            \'TPD_TQD_Id\': vId,\r\n          " +
-"  //            \'TPD_Purchased_Qty\': vLockQty,\r\n            //            \'TPD_E" +
-"vent_Id\': vEntid,\r\n            //            \'TPD_Donate\': vDonate\r\n            " +
-"//        });\r\n            //    }\r\n            //}\r\n            var vOrderTotal" +
-" = $(\"#hdOrderTotal\").val();\r\n            var vGrandTotal = $(\"#hdGrandTotal\").v" +
-"al();\r\n            var vPromoId = $(\"#hdPromoId\").val();\r\n            var vVarCh" +
-"anges = $(\"#hdVarChanges\").val();\r\n            var vVarId = $(\"#hdVChg\").val();\r" +
-"\n            var Eventid = $(\'#hdEventid\').val();\r\n            var PaymentType =" +
-" $(\"#selectcard\").val();\r\n            if (PaymentType != \"P\")\r\n            {\r\n  " +
-"              PaymentType = \"A\";\r\n            }\r\n            var model = {\r\n\r\n  " +
-"              \'AccFname\': $(\'#accfname\').val(),\r\n                \'AccLname\': $(\'" +
-"#accLname\').val(),\r\n                \'AccEmail\': $(\'#Email\').val(),\r\n            " +
-"    \'AccconfirmEmail\': $(\'#confirmEmail\').val(),\r\n                \'Accpassword\':" +
-" $(\'#password\').val(),\r\n                \'Accconfirmpassword\': $(\'#confirmpasswor" +
-"d\').val(),\r\n                \'Accountphnno\': $(\'#accountphnno\').val(),\r\n         " +
-"       \'AccCity\': $(\'#accCity\').val(),\r\n                \'AccState\': $(\'#accState" +
-"\').val(),\r\n                \'Acczip\': $(\'#accZip\').val(),\r\n                \'Accco" +
-"untry\': $(\'#accCountry\').val(),\r\n                \'cardno\': $(\'#cardno\').val(),\r\n" +
-"                \'card_type\': cardtype,\r\n                \'expirydate\': $(\'#expira" +
-"tiondate\').val(),\r\n                \'cvv\': $(\'#cvvcode\').val(),\r\n                " +
-"\'billfname\': $(\'#billfname\').val(),\r\n                \'billLname\': $(\'#billLname\'" +
-").val(),\r\n                \'billingphno\': $(\'#billingphno\').val(),\r\n             " +
-"   \'billaddress1\': $(\'#billaddress1\').val(),\r\n                \'billaddress2\': $(" +
-"\'#billaddress2\').val(),\r\n                \'billcity\': $(\'#billcity\').val(),\r\n    " +
-"            \'billzip\': $(\'#billzip\').val(),\r\n                \'billstate\': $(\'#bi" +
-"llstate\').val(),\r\n                \'billcountry\': $(\'#billcountry\').val(),\r\n     " +
-"           \'shipfname\': $(\'#shipfname\').val(),\r\n                \'shipLname\': $(\'" +
-"#shipLname\').val(),\r\n                \'shipphno\': $(\'#shippingphnno\').val(),\r\n   " +
-"             \'shipaddress1\': $(\'#shipaddress1\').val(),\r\n                \'shipadd" +
-"ress2\': $(\'#shipaddress2\').val(),\r\n                \'shipcity\': $(\'#shipcity\').va" +
-"l(),\r\n                \'shipzip\': $(\'#shipzip\').val(),\r\n                \'shipstat" +
-"e\': $(\'#shipstate\').val(),\r\n                \'shipcountry\': $(\'#shipcountry\').val" +
-"(),\r\n                \'NameList\': NameList,\r\n                \'Savecarddetail\': ($" +
-"(\"#chkcarddetails\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n                \'Saves" +
-"hipdetail\': ($(\"#shippinginfo\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n          " +
-"      \'sameshipbilldetail\': ($(\"#sameshipping\").is(\":checked\") == true ? \"Y\" : \"" +
-"N\"),\r\n                \'Ticketname\': type,\r\n                \'strOrderTotal\': vOrd" +
-"erTotal,\r\n                \'strGrandTotal\': vGrandTotal,\r\n                \'strPro" +
-"mId\': vPromoId,\r\n                \'strVarChanges\': vVarChanges,\r\n                " +
-"\'strVarId\': vVarId,\r\n                \'strPaymentType\': PaymentType\r\n            " +
-"}\r\n\r\n        \r\n\r\n            ");
+"n () {\r\n            var flag = true;\r\n            var Emaillogin = $(\"#Email\").v" +
+"al();\r\n            var msg = validationpage();\r\n\r\n            var NameList = [];" +
+"\r\n            if (msg != \"\") {\r\n                ShowMessage(\'E\', msg)\r\n         " +
+"       //$(\'#diverroacc\').css(\'display\', \'block\');\r\n                //$(\'#erracc" +
+"msg\').html(msg);\r\n                return false;\r\n            }\r\n            //el" +
+"se {\r\n            //    if ($(\"#confirmEmail\").length > 0) {\r\n            //    " +
+"    $.ajax({\r\n            //            url: \"/Home/IsValid\",\r\n            //   " +
+"         async: true,\r\n            //            data: \'Email=\' + Emaillogin,\r\n " +
+"           //            dataType: \"text\",\r\n            //            success: f" +
+"unction (data, textStatus, xhr) {\r\n            //                if (data != \'\')" +
+" {\r\n            //                    if (data == \"NotFound\") {\r\n            // " +
+"                       flag = true;\r\n\r\n            //                        $(\'" +
+"#hdemailexist\').val(true);\r\n\r\n            //                    } else if (data " +
+"== \"Found\") {\r\n\r\n            //                        $(\'#Email\').focus();\r\n   " +
+"         //                        $(\"#Email\").addClass(\'err-bor\');\r\n\r\n\r\n       " +
+"     //                        ShowMessage(\'E\', ajaxsetup(\'TicketPayment\', \'TPay" +
+"ValidateEmailSy\'))\r\n\r\n            //                        $(\'#hdemailexist\').v" +
+"al(false);\r\n\r\n            //                    }\r\n            //               " +
+" }\r\n            //            },\r\n            //            error: function (xhr" +
+", textStatus, errorThrown) {\r\n            //                alert(\"Req \" + xhr +" +
+" \" status \" + textStatus + \"  Error \" + errorThrown);\r\n            //           " +
+" }\r\n            //        });\r\n            //    }\r\n\r\n\r\n            //}\r\n\r\n\r\n   " +
+"         var confirmemail = \"\", cardno = \"\", expirydate = \"\", cvv = \"\", cardtype" +
+" = \"\";\r\n            var type = \'\';\r\n\r\n\r\n            $(\"#tblListitem tr\").each(fu" +
+"nction () {\r\n                var Sno = $(this).find(\"td:first\").html();\r\n\r\n     " +
+"           // Multiple Address\r\n                if (Sno != \'\') {\r\n              " +
+"      NameList.push({\r\n                        Name: $(\"#TicketName_\" + Sno).tex" +
+"t(),\r\n                        Email: $(\"#TicketEmail_\" + Sno).text(),\r\n\r\n\r\n     " +
+"               });\r\n                }\r\n            });\r\n\r\n\r\n\r\n            if ($(" +
+"\'#shippinginfo\').is(\":checked\") == true) {\r\n\r\n\r\n\r\n            }\r\n            var" +
+" totalorder = $(\'#hdOrderTotal\').val();\r\n            var type = \'\';\r\n           " +
+" if (totalorder > 0) {\r\n\r\n                type = \'Paid\';\r\n\r\n                var " +
+"result = $(\"#cardno\").validateCreditCard({ accept: [\'visa\', \'mastercard\', \'disco" +
+"ver\', \'amex\'] });\r\n                cardtype = result.card_type.name;\r\n          " +
+"      if ($(\'#chkcarddetails\').is(\":checked\") == true) {\r\n                    ca" +
+"rdno = $(\'#cardno\').val();\r\n\r\n                    expirydate = $(\'#expirationdat" +
+"e\').val();\r\n                    cvv = $(\'#cvvcode\').val();\r\n\r\n                }\r" +
+"\n            } else {\r\n\r\n                type = \'Free\';\r\n\r\n\r\n\r\n            }\r\n\r\n" +
+"            //-------------------------------------Saving Payment Detail--------" +
+"-------------------------------\r\n\r\n            //var TPurchaseList = [];\r\n      " +
+"      //var IdAry = $(\"#hdIds\").val().split(\',\');\r\n            //var vId = 0;\r\n " +
+"           //var vLockQty = 0;\r\n            //var vDonate = 0;\r\n            //fo" +
+"r (i = 0; i < IdAry.length; i++) {\r\n            //    vId = parseInt(IdAry[i].to" +
+"String());\r\n            //    vLockQty = parseInt($(\"#d_\" + IdAry[i].toString())" +
+".val());\r\n            //    vDonate = parseFloat($(\"#txtd_\" + IdAry[i].toString(" +
+")).val());\r\n            //    if (isNaN(vDonate) == true) vDonate = 0;\r\n        " +
+"    //    if (vLockQty > 0) {\r\n            //        TPurchaseList.push({\r\n     " +
+"       //            \'TPD_TQD_Id\': vId,\r\n            //            \'TPD_Purchase" +
+"d_Qty\': vLockQty,\r\n            //            \'TPD_Event_Id\': vEntid,\r\n          " +
+"  //            \'TPD_Donate\': vDonate\r\n            //        });\r\n            //" +
+"    }\r\n            //}\r\n            var vOrderTotal = $(\"#hdOrderTotal\").val();\r" +
+"\n            var vGrandTotal = $(\"#hdGrandTotal\").val();\r\n            var vPromo" +
+"Id = $(\"#hdPromoId\").val();\r\n            var vVarChanges = $(\"#hdVarChanges\").va" +
+"l();\r\n            var vVarId = $(\"#hdVChg\").val();\r\n            var Eventid = $(" +
+"\'#hdEventid\').val();\r\n            var PaymentType = $(\"#selectcard\").val();\r\n   " +
+"         if (PaymentType != \"P\") {\r\n                PaymentType = \"A\";\r\n        " +
+"    }\r\n            var model = {\r\n\r\n                \'AccFname\': $(\'#accfname\').v" +
+"al(),\r\n                \'AccLname\': $(\'#accLname\').val(),\r\n                \'AccEm" +
+"ail\': $(\'#Email\').val(),\r\n                \'AccconfirmEmail\': $(\'#confirmEmail\')." +
+"val(),\r\n                \'Accpassword\': $(\'#password\').val(),\r\n                \'A" +
+"ccconfirmpassword\': $(\'#confirmpassword\').val(),\r\n                \'Accountphnno\'" +
+": $(\'#accountphnno\').val(),\r\n                \'AccCity\': $(\'#accCity\').val(),\r\n  " +
+"              \'AccState\': $(\'#accState\').val(),\r\n                \'Acczip\': $(\'#a" +
+"ccZip\').val(),\r\n                \'Acccountry\': $(\'#accCountry\').val(),\r\n         " +
+"       \'cardno\': $(\'#cardno\').val(),\r\n                \'card_type\': cardtype,\r\n  " +
+"              \'expirydate\': $(\'#expirationdate\').val(),\r\n                \'cvv\': " +
+"$(\'#cvvcode\').val(),\r\n                \'billfname\': $(\'#billfname\').val(),\r\n     " +
+"           \'billLname\': $(\'#billLname\').val(),\r\n                \'billingphno\': $" +
+"(\'#billingphno\').val(),\r\n                \'billaddress1\': $(\'#billaddress1\').val(" +
+"),\r\n                \'billaddress2\': $(\'#billaddress2\').val(),\r\n                \'" +
+"billcity\': $(\'#billcity\').val(),\r\n                \'billzip\': $(\'#billzip\').val()" +
+",\r\n                \'billstate\': $(\'#billstate\').val(),\r\n                \'billcou" +
+"ntry\': $(\'#billcountry\').val(),\r\n                \'shipfname\': $(\'#shipfname\').va" +
+"l(),\r\n                \'shipLname\': $(\'#shipLname\').val(),\r\n                \'ship" +
+"phno\': $(\'#shippingphnno\').val(),\r\n                \'shipaddress1\': $(\'#shipaddre" +
+"ss1\').val(),\r\n                \'shipaddress2\': $(\'#shipaddress2\').val(),\r\n       " +
+"         \'shipcity\': $(\'#shipcity\').val(),\r\n                \'shipzip\': $(\'#shipz" +
+"ip\').val(),\r\n                \'shipstate\': $(\'#shipstate\').val(),\r\n              " +
+"  \'shipcountry\': $(\'#shipcountry\').val(),\r\n                \'NameList\': NameList," +
+"\r\n                \'Savecarddetail\': ($(\"#chkcarddetails\").is(\":checked\") == true" +
+" ? \"Y\" : \"N\"),\r\n                \'Saveshipdetail\': ($(\"#shippinginfo\").is(\":check" +
+"ed\") == true ? \"Y\" : \"N\"),\r\n                \'sameshipbilldetail\': ($(\"#sameshipp" +
+"ing\").is(\":checked\") == true ? \"Y\" : \"N\"),\r\n                \'Ticketname\': type,\r" +
+"\n                \'strOrderTotal\': vOrderTotal,\r\n                \'strGrandTotal\':" +
+" vGrandTotal,\r\n                \'strPromId\': vPromoId,\r\n                \'strVarCh" +
+"anges\': vVarChanges,\r\n                \'strVarId\': vVarId,\r\n                \'strP" +
+"aymentType\': PaymentType\r\n            }\r\n\r\n\r\n\r\n            ");
 
-WriteLiteral("\r\n                $.ajax({\r\n                    url: \'");
+WriteLiteral("\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 1202 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                     Write(Url.Action("SaveDetails", "TicketPayment"));
+            #line 1218 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+                 Write(Url.Action("SaveDetails", "TicketPayment"));
 
             
             #line default
             #line hidden
 WriteLiteral(@"',
-                    beforeSend: function () { $(""#btOk"").click(); },
-                    data: { model: model, strOrderTotal: vOrderTotal, strGrandTotal: vGrandTotal, strPromId: vPromoId, strVarChanges: vVarChanges, strVarId: vVarId, strPaymentType: PaymentType },
-                    type: ""Post"",
-                    success: function (response) {
-                        if (response.Message == ""S"") {
-                            var Eventid = $('#hdEventid').val();
-                            window.location.href = '");
+                beforeSend: function () { $(""#btOk"").click(); },
+                data: { model: model, strOrderTotal: vOrderTotal, strGrandTotal: vGrandTotal, strPromId: vPromoId, strVarChanges: vVarChanges, strVarId: vVarId, strPaymentType: PaymentType },
+                type: ""Post"",
+                success: function (response) {
+                    if (response.Message == ""S"") {
+                        var Eventid = $('#hdEventid').val();
+                        window.location.href = '");
 
             
-            #line 1209 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                               Write(Url.Action("PaymentConfirmation", "TicketPayment"));
+            #line 1225 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+                                           Write(Url.Action("PaymentConfirmation", "TicketPayment"));
 
             
             #line default
             #line hidden
-WriteLiteral("\';\r\n                        } else {\r\n                            $(\"#btnclosemod" +
-"al\").click();\r\n                          \r\n                            ShowMessa" +
-"ge(\"E\", response.Message);\r\n                        }\r\n                    }\r\n  " +
-"              });\r\n            //}\r\n        });\r\n\r\n\r\n\r\n\r\n        $(\'#billzip\').c" +
-"hange(function () {\r\n            debugger;\r\n            var country = $(\"#billco" +
-"untry option:selected\").text().trim();\r\n\r\n            var city = \"\";\r\n          " +
-"  var state = \"\";\r\n\r\n            var pincode = $(this).val();\r\n\r\n\r\n            $" +
-".ajax({\r\n                url: \'http://maps.googleapis.com/maps/api/geocode/json?" +
-"address=\' + pincode + \'\',\r\n                dataType: \'json\',\r\n                ca" +
-"che: false,\r\n                success: function (data) {\r\n\r\n\r\n                   " +
-" if (data.status == \'OK\') {\r\n\r\n                        for (var i = 0; i < data." +
-"results[0].address_components.length; i++) {\r\n                            var ob" +
-"j = data.results[0].address_components[i];\r\n\r\n                            var ob" +
-"j2 = obj[\'types\'];\r\n\r\n                            for (var j = 0; j < obj2.lengt" +
-"h; j++) {\r\n                                if (obj2[j] == \'locality\') {\r\n       " +
-"                             city = obj[\'long_name\'];\r\n\r\n\r\n                     " +
-"           }\r\n\r\n                                if (obj2[j] == \'sublocality_leve" +
-"l_1\') {\r\n                                    city = obj[\'long_name\'];\r\n\r\n\r\n     " +
-"                           }\r\n                                if (obj2[j] == \'su" +
-"blocality_level_2\') {\r\n                                    city = obj[\'long_name" +
-"\'];\r\n\r\n\r\n                                }\r\n                                if (" +
-"obj2[j] == \'sublocality_level_3\') {\r\n                                    city = " +
-"obj[\'long_name\'];\r\n\r\n\r\n                                }\r\n                      " +
-"          if (obj2[j] == \'sublocality_level_4\') {\r\n                             " +
-"       city = obj[\'long_name\'];\r\n\r\n\r\n                                }\r\n        " +
-"                        if (obj2[j] == \'sublocality_level_5\') {\r\n               " +
-"                     city = obj[\'long_name\'];\r\n\r\n\r\n                             " +
-"   }\r\n                                if (obj2[j] == \'ward\') {\r\n                " +
-"                    city = obj[\'long_name\'];\r\n\r\n\r\n                              " +
-"  }\r\n                                if (obj2[j] == \'sublocality_level_5\') {\r\n  " +
-"                                  city = obj[\'long_name\'];\r\n\r\n\r\n                " +
-"                }\r\n                                if (obj2[j] == \'postal_town\')" +
-" {\r\n                                    city = obj[\'long_name\'];\r\n\r\n\r\n          " +
-"                      }\r\n                                if (obj2[j] == \'adminis" +
-"trative_area_level_1\') {\r\n                                    state = obj[\'long_" +
-"name\'];\r\n\r\n                                }\r\n\r\n\r\n                              " +
-"  if (obj2[j] == \'country\') {\r\n                                    if (obj[\'long" +
-"_name\'] == country) {\r\n\r\n\r\n                                        $(\'#billcity\'" +
-").val(city);\r\n                                        $(\'#billstate\').val(state)" +
-";\r\n                                    } else {\r\n                               " +
-"         $(\'#billcity\').val(\'\');\r\n                                        $(\'#bi" +
-"llstate\').val(\'\');\r\n                                    }\r\n\r\n                   " +
-"             }\r\n\r\n                            }\r\n\r\n\r\n\r\n                        }" +
-"\r\n\r\n                    }\r\n\r\n\r\n\r\n                    else {\r\n                   " +
-"     var msg = ajaxsetup(\'MyAccount\', \'MyAccountZipValidationUI\');\r\n            " +
-"            $(\"#billstate\").val(\"\");\r\n                        $(\"#billcity\").val" +
-"(\"\");\r\n                        $(\'#billzip\').val(\"\");\r\n                        $" +
-"(\'#billzip\').addClass(\'err-bor\');\r\n                        ShowMessage(\'E\', msg)" +
-"\r\n\r\n                        return false;\r\n                    }\r\n              " +
-"  },\r\n                error: function (data) { alert(data) }\r\n            });\r\n\r" +
-"\n\r\n        });\r\n        $(\"#billcountry\").change(function () {\r\n            $(\"#" +
-"billzip\").val(\"\");\r\n            $(\"#billstate\").val(\"\");\r\n            $(\"#billci" +
-"ty\").val(\"\");\r\n\r\n\r\n        });\r\n\r\n        $(\"#shipcountry\").change(function () {" +
-"\r\n            $(\"#shipzip\").val(\"\");\r\n            $(\"#shipstate\").val(\"\");\r\n    " +
-"        $(\"#shipcity\").val(\"\");\r\n\r\n\r\n        });\r\n\r\n        $(\"#editlist\").click" +
-"(function () {\r\n            var Sno = $(\"#ddlListitem\").val();\r\n\r\n            $(" +
-"\"#hidTicketbearer\").val(Sno);\r\n            var vOrgName = $(\"#TicketName_\" + Sno" +
-").text();\r\n            var vOrgDes = $(\"#TicketEmail_\" + Sno).text();\r\n         " +
-"   //if (vOrgDes != \"\") {\r\n            //    if ($(\'.Notifybox\').css(\'display\') " +
-"== \'none\') {\r\n            //        $(\'.Notifybox\').css(\'display\', \'block\');\r\n  " +
-"          //    }\r\n            //}\r\n\r\n            $(\"#nameofticket\").val(vOrgNam" +
-"e);\r\n            $(\"#emailbearer\").val(vOrgDes);\r\n        });\r\n        var cardl" +
-"ength = $(\"#cardno\").val();\r\n        if (cardlength == \"\") {\r\n            $(\'#im" +
-"gcard\').css(\'display\', \'none\');\r\n\r\n        }\r\n        $(\".billingaddress\").chang" +
-"e(function () {\r\n            $(\"#sameshipping\").attr(\'checked\', false);\r\n       " +
-"     if ($(this).is(\":checked\") == true) {\r\n\r\n                $(\".shippingaddres" +
-"s\").css(\'display\', \'block\');\r\n            } else {\r\n\r\n                $(\".shippi" +
-"ngaddress\").css(\'display\', \'none\');\r\n\r\n            }\r\n\r\n        });\r\n\r\n\r\n       " +
-" $(\".Timezone\").click(function () {\r\n\r\n            $(\".TmezoneSet\").slideToggle(" +
-"\"fast\");\r\n\r\n            //\r\n\r\n        });\r\n        $(\'#login\').click(function ()" +
-" {\r\n            $(\"#hdIsPostBack\").val(\"Y\");\r\n            $.ajax({\r\n            " +
-"    url: \'");
+WriteLiteral("\';\r\n                    } else {\r\n                        $(\"#btnclosemodal\").cli" +
+"ck();\r\n\r\n                        ShowMessage(\"E\", response.Message);\r\n          " +
+"          }\r\n                }\r\n            });\r\n            //}\r\n        });\r\n\r" +
+"\n\r\n\r\n\r\n        $(\'#billzip\').change(function () {\r\n            debugger;\r\n      " +
+"      var country = $(\"#billcountry option:selected\").text().trim();\r\n\r\n        " +
+"    var city = \"\";\r\n            var state = \"\";\r\n\r\n            var pincode = $(t" +
+"his).val();\r\n\r\n\r\n            $.ajax({\r\n                url: \'http://maps.googlea" +
+"pis.com/maps/api/geocode/json?address=\' + pincode + \'\',\r\n                dataTyp" +
+"e: \'json\',\r\n                cache: false,\r\n                success: function (da" +
+"ta) {\r\n\r\n\r\n                    if (data.status == \'OK\') {\r\n\r\n                   " +
+"     for (var i = 0; i < data.results[0].address_components.length; i++) {\r\n    " +
+"                        var obj = data.results[0].address_components[i];\r\n\r\n    " +
+"                        var obj2 = obj[\'types\'];\r\n\r\n                            " +
+"for (var j = 0; j < obj2.length; j++) {\r\n                                if (obj" +
+"2[j] == \'locality\') {\r\n                                    city = obj[\'long_name" +
+"\'];\r\n\r\n\r\n                                }\r\n\r\n                                if" +
+" (obj2[j] == \'sublocality_level_1\') {\r\n                                    city " +
+"= obj[\'long_name\'];\r\n\r\n\r\n                                }\r\n                    " +
+"            if (obj2[j] == \'sublocality_level_2\') {\r\n                           " +
+"         city = obj[\'long_name\'];\r\n\r\n\r\n                                }\r\n      " +
+"                          if (obj2[j] == \'sublocality_level_3\') {\r\n             " +
+"                       city = obj[\'long_name\'];\r\n\r\n\r\n                           " +
+"     }\r\n                                if (obj2[j] == \'sublocality_level_4\') {\r" +
+"\n                                    city = obj[\'long_name\'];\r\n\r\n\r\n             " +
+"                   }\r\n                                if (obj2[j] == \'sublocalit" +
+"y_level_5\') {\r\n                                    city = obj[\'long_name\'];\r\n\r\n\r" +
+"\n                                }\r\n                                if (obj2[j] " +
+"== \'ward\') {\r\n                                    city = obj[\'long_name\'];\r\n\r\n\r\n" +
+"                                }\r\n                                if (obj2[j] =" +
+"= \'sublocality_level_5\') {\r\n                                    city = obj[\'long" +
+"_name\'];\r\n\r\n\r\n                                }\r\n                               " +
+" if (obj2[j] == \'postal_town\') {\r\n                                    city = obj" +
+"[\'long_name\'];\r\n\r\n\r\n                                }\r\n                         " +
+"       if (obj2[j] == \'administrative_area_level_1\') {\r\n                        " +
+"            state = obj[\'long_name\'];\r\n\r\n                                }\r\n\r\n\r\n" +
+"                                if (obj2[j] == \'country\') {\r\n                   " +
+"                 if (obj[\'long_name\'] == country) {\r\n\r\n\r\n                       " +
+"                 $(\'#billcity\').val(city);\r\n                                    " +
+"    $(\'#billstate\').val(state);\r\n                                    } else {\r\n " +
+"                                       $(\'#billcity\').val(\'\');\r\n                " +
+"                        $(\'#billstate\').val(\'\');\r\n                              " +
+"      }\r\n\r\n                                }\r\n\r\n                            }\r\n\r" +
+"\n\r\n\r\n                        }\r\n\r\n                    }\r\n\r\n\r\n\r\n                 " +
+"   else {\r\n                        var msg = ajaxsetup(\'MyAccount\', \'MyAccountZi" +
+"pValidationUI\');\r\n                        $(\"#billstate\").val(\"\");\r\n            " +
+"            $(\"#billcity\").val(\"\");\r\n                        $(\'#billzip\').val(\"" +
+"\");\r\n                        $(\'#billzip\').addClass(\'err-bor\');\r\n               " +
+"         ShowMessage(\'E\', msg)\r\n\r\n                        return false;\r\n       " +
+"             }\r\n                },\r\n                error: function (data) { ale" +
+"rt(data) }\r\n            });\r\n\r\n\r\n        });\r\n        $(\"#billcountry\").change(f" +
+"unction () {\r\n            $(\"#billzip\").val(\"\");\r\n            $(\"#billstate\").va" +
+"l(\"\");\r\n            $(\"#billcity\").val(\"\");\r\n\r\n\r\n        });\r\n\r\n        $(\"#ship" +
+"country\").change(function () {\r\n            $(\"#shipzip\").val(\"\");\r\n            " +
+"$(\"#shipstate\").val(\"\");\r\n            $(\"#shipcity\").val(\"\");\r\n\r\n\r\n        });\r\n" +
+"\r\n        $(\"#editlist\").click(function () {\r\n            var Sno = $(\"#ddlListi" +
+"tem\").val();\r\n\r\n            $(\"#hidTicketbearer\").val(Sno);\r\n            var vOr" +
+"gName = $(\"#TicketName_\" + Sno).text();\r\n            var vOrgDes = $(\"#TicketEma" +
+"il_\" + Sno).text();\r\n            //if (vOrgDes != \"\") {\r\n            //    if ($" +
+"(\'.Notifybox\').css(\'display\') == \'none\') {\r\n            //        $(\'.Notifybox\'" +
+").css(\'display\', \'block\');\r\n            //    }\r\n            //}\r\n\r\n            " +
+"$(\"#nameofticket\").val(vOrgName);\r\n            $(\"#emailbearer\").val(vOrgDes);\r\n" +
+"        });\r\n        var cardlength = $(\"#cardno\").val();\r\n        if (cardlengt" +
+"h == \"\") {\r\n            $(\'#imgcard\').css(\'display\', \'none\');\r\n\r\n        }\r\n    " +
+"    $(\".billingaddress\").change(function () {\r\n            $(\"#sameshipping\").at" +
+"tr(\'checked\', false);\r\n            if ($(this).is(\":checked\") == true) {\r\n\r\n    " +
+"            $(\".shippingaddress\").css(\'display\', \'block\');\r\n            } else {" +
+"\r\n\r\n                $(\".shippingaddress\").css(\'display\', \'none\');\r\n\r\n           " +
+" }\r\n\r\n        });\r\n\r\n\r\n        $(\".Timezone\").click(function () {\r\n\r\n           " +
+" $(\".TmezoneSet\").slideToggle(\"fast\");\r\n\r\n            //\r\n\r\n        });\r\n       " +
+" $(\'#login\').click(function () {\r\n            $(\"#hdIsPostBack\").val(\"Y\");\r\n    " +
+"        $.ajax({\r\n                url: \'");
 
             
-            #line 1399 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1415 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                  Write(Url.Action("setsession", "TicketPayment"));
 
             
@@ -2432,7 +2488,7 @@ WriteLiteral(@"',
             window.location.href = '");
 
             
-            #line 1422 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1438 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                                Write(Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.URLTitle.Replace(" ","-") , strEventId = Model.EventId.ToString()}));
 
             
@@ -2461,7 +2517,7 @@ WriteLiteral("\';\r\n        });\r\n\r\n        //\r\n        $(\".closetimemoda
 "                 url: \'");
 
             
-            #line 1478 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1494 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                          Write(Url.Action("ReleaseTickets", "TicketPayment"));
 
             
@@ -2476,7 +2532,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 1484 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1500 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                                                Write(Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.Title.Replace(" ","") , strEventId = Model.EventId.ToString()}));
 
             
@@ -2500,7 +2556,7 @@ WriteLiteral(@"';
                 url: '");
 
             
-            #line 1499 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1515 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                  Write(Url.Action("ReleaseTickets", "TicketPayment"));
 
             
@@ -2510,47 +2566,48 @@ WriteLiteral("\',\r\n                type: \"Post\",\r\n                success:
 "\r\n                }\r\n            });\r\n        }\r\n    });\r\n\r\n    history.pushStat" +
 "e(null, null, \'TicketPayment\');\r\n    window.addEventListener(\'popstate\', functio" +
 "n (event) {\r\n        history.pushState(null, null, \'TicketPayment\');\r\n    });\r\n\r" +
-"\n   \r\n    function SavePaypaldetail() {\r\n        var flag = true;\r\n        var E" +
-"maillogin = $(\"#Email\").val();\r\n\r\n\r\n        var NameList = [];\r\n\r\n       \r\n\r\n\r\n\r" +
-"\n\r\n        var confirmemail = \"\", cardno = \"\", expirydate = \"\", cvv = \"\", cardty" +
-"pe = \"\";\r\n        var type = \'\';\r\n\r\n\r\n        $(\"#tblListitem tr\").each(function" +
-" () {\r\n            var Sno = $(this).find(\"td:first\").html();\r\n\r\n            // " +
-"Multiple Address\r\n            if (Sno != \'\') {\r\n                NameList.push({\r" +
-"\n                    Name: $(\"#TicketName_\" + Sno).text(),\r\n                    " +
-"Email: $(\"#TicketEmail_\" + Sno).text(),\r\n                });\r\n            }\r\n   " +
-"     });\r\n        debugger;\r\n\r\n        //if ($(\'#shippinginfo\').is(\":checked\") =" +
-"= true) {\r\n\r\n\r\n\r\n        //}\r\n        var totalorder = $(\'#hdOrderTotal\').val();" +
-"\r\n        var type = \'\';\r\n        if (totalorder > 0) {\r\n\r\n            type = \'P" +
-"aid\';\r\n        } else {\r\n\r\n            type = \'Free\';\r\n\r\n        }\r\n\r\n        //" +
-"-------------------------------------Saving Payment Detail----------------------" +
-"-----------------\r\n\r\n\r\n        var vOrderTotal = $(\"#hdOrderTotal\").val();\r\n    " +
-"    var vGrandTotal = $(\"#hdGrandTotal\").val();\r\n        var vPromoId = $(\"#hdPr" +
-"omoId\").val();\r\n        var vVarChanges = $(\"#hdVarChanges\").val();\r\n        var" +
-" vVarId = $(\"#hdVChg\").val();\r\n        var Eventid = $(\'#hdEventid\').val();\r\n   " +
-"     var PaymentType = $(\"#selectcard\").val();\r\n        \r\n        debugger;\r\n   " +
-"     var model = {\r\n\r\n            \'AccFname\': $(\'#accfname\').val(),\r\n           " +
-" \'AccLname\': $(\'#accLname\').val(),\r\n            \'AccEmail\': $(\'#Email\').val(),\r\n" +
-"            \'AccconfirmEmail\': $(\'#confirmEmail\').val(),\r\n            \'Accpasswo" +
-"rd\': $(\'#password\').val(),\r\n            \'Accconfirmpassword\': \'\',\r\n            \'" +
-"Accountphnno\': \'\',\r\n            \'AccCity\': \'\',\r\n            \'AccState\': \'\',\r\n   " +
-"         \'Acczip\': \'\',\r\n            \'Acccountry\': \'\',\r\n            \'cardno\': \'\'," +
-"\r\n            \'card_type\': \'\',\r\n            \'expirydate\': \'\',\r\n            \'cvv\'" +
-": \'\',\r\n            \'billfname\': \'\',\r\n            \'billLname\': \'\',\r\n            \'" +
-"billingphno\':\'\',\r\n            \'billaddress1\':\'\',\r\n            \'billaddress2\': \'\'" +
-",\r\n            \'billcity\':\'\',\r\n            \'billzip\':\'\',\r\n            \'billstate" +
-"\': \'\',\r\n            \'billcountry\': \'\',\r\n            \'shipfname\': \'\',\r\n          " +
-"  \'shipLname\': \'\',\r\n            \'shipphno\': \'\',\r\n            \'shipaddress1\':\'\',\r" +
-"\n            \'shipaddress2\': \'\',\r\n            \'shipcity\': \'\',\r\n            \'ship" +
-"zip\':\'\',\r\n            \'shipstate\': \'\',\r\n            \'shipcountry\': \'\',\r\n        " +
-"    \'NameList\': NameList,\r\n            \'Savecarddetail\': \'\',\r\n            \'Saves" +
-"hipdetail\': \'\',\r\n            \'sameshipbilldetail\': \'\',\r\n            \'Ticketname\'" +
-": type,\r\n            \'strOrderTotal\': vOrderTotal,\r\n            \'strGrandTotal\':" +
-" vGrandTotal,\r\n            \'strPromId\': vPromoId,\r\n            \'strVarChanges\': " +
-"vVarChanges,\r\n            \'strVarId\': vVarId,\r\n            \'strPaymentType\': Pay" +
-"mentType\r\n        }\r\n\r\n       \r\n\r\n        $.ajax({\r\n            url: \'");
+"\n\r\n    function SavePaypaldetail() {\r\n        var flag = true;\r\n        var Emai" +
+"llogin = $(\"#Email\").val();\r\n\r\n\r\n        var NameList = [];\r\n\r\n\r\n\r\n\r\n\r\n\r\n       " +
+" var confirmemail = \"\", cardno = \"\", expirydate = \"\", cvv = \"\", cardtype = \"\";\r\n" +
+"        var type = \'\';\r\n\r\n\r\n        $(\"#tblListitem tr\").each(function () {\r\n   " +
+"         var Sno = $(this).find(\"td:first\").html();\r\n\r\n            // Multiple A" +
+"ddress\r\n            if (Sno != \'\') {\r\n                NameList.push({\r\n         " +
+"           Name: $(\"#TicketName_\" + Sno).text(),\r\n                    Email: $(\"" +
+"#TicketEmail_\" + Sno).text(),\r\n                });\r\n            }\r\n        });\r\n" +
+"        debugger;\r\n\r\n        //if ($(\'#shippinginfo\').is(\":checked\") == true) {\r" +
+"\n\r\n\r\n\r\n        //}\r\n        var totalorder = $(\'#hdOrderTotal\').val();\r\n        " +
+"var type = \'\';\r\n        if (totalorder > 0) {\r\n\r\n            type = \'Paid\';\r\n   " +
+"     } else {\r\n\r\n            type = \'Free\';\r\n\r\n        }\r\n\r\n        //----------" +
+"---------------------------Saving Payment Detail--------------------------------" +
+"-------\r\n\r\n\r\n        var vOrderTotal = $(\"#hdOrderTotal\").val();\r\n        var vG" +
+"randTotal = $(\"#hdGrandTotal\").val();\r\n        var vPromoId = $(\"#hdPromoId\").va" +
+"l();\r\n        var vVarChanges = $(\"#hdVarChanges\").val();\r\n        var vVarId = " +
+"$(\"#hdVChg\").val();\r\n        var Eventid = $(\'#hdEventid\').val();\r\n        var P" +
+"aymentType = $(\"#selectcard\").val();\r\n\r\n        debugger;\r\n        var model = {" +
+"\r\n\r\n            \'AccFname\': $(\'#accfname\').val(),\r\n            \'AccLname\': $(\'#a" +
+"ccLname\').val(),\r\n            \'AccEmail\': $(\'#Email\').val(),\r\n            \'Accco" +
+"nfirmEmail\': $(\'#confirmEmail\').val(),\r\n            \'Accpassword\': $(\'#password\'" +
+").val(),\r\n            \'Accconfirmpassword\': \'\',\r\n            \'Accountphnno\': \'\'," +
+"\r\n            \'AccCity\': \'\',\r\n            \'AccState\': \'\',\r\n            \'Acczip\':" +
+" \'\',\r\n            \'Acccountry\': \'\',\r\n            \'cardno\': \'\',\r\n            \'car" +
+"d_type\': \'\',\r\n            \'expirydate\': \'\',\r\n            \'cvv\': \'\',\r\n           " +
+" \'billfname\': \'\',\r\n            \'billLname\': \'\',\r\n            \'billingphno\': \'\',\r" +
+"\n            \'billaddress1\': \'\',\r\n            \'billaddress2\': \'\',\r\n            \'" +
+"billcity\': \'\',\r\n            \'billzip\': \'\',\r\n            \'billstate\': \'\',\r\n      " +
+"      \'billcountry\': \'\',\r\n            \'shipfname\': \'\',\r\n            \'shipLname\':" +
+" \'\',\r\n            \'shipphno\': \'\',\r\n            \'shipaddress1\': \'\',\r\n            " +
+"\'shipaddress2\': \'\',\r\n            \'shipcity\': \'\',\r\n            \'shipzip\': \'\',\r\n  " +
+"          \'shipstate\': \'\',\r\n            \'shipcountry\': \'\',\r\n            \'NameLis" +
+"t\': NameList,\r\n            \'Savecarddetail\': \'\',\r\n            \'Saveshipdetail\': " +
+"\'\',\r\n            \'sameshipbilldetail\': \'\',\r\n            \'Ticketname\': type,\r\n   " +
+"         \'strOrderTotal\': vOrderTotal,\r\n            \'strGrandTotal\': vGrandTotal" +
+",\r\n            \'strPromId\': vPromoId,\r\n            \'strVarChanges\': vVarChanges," +
+"\r\n            \'strVarId\': vVarId,\r\n            \'strPaymentType\': PaymentType\r\n  " +
+"      }\r\n\r\n\r\n        var sessionResponse = \'\';\r\n        $.ajax({\r\n            ur" +
+"l: \'");
 
             
-            #line 1621 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1637 "..\..\Views\TicketPayment\TicketPayment.cshtml"
              Write(Url.Action("SetSessionPaypaldetail", "Cart"));
 
             
@@ -2558,14 +2615,20 @@ WriteLiteral("\',\r\n                type: \"Post\",\r\n                success:
             #line hidden
 WriteLiteral(@"',
             data: { model: model },
+            async: false,
             type: ""Post"",
             success: function (response) {
-                if (response == ""Y"") {
-                    $(""#btPaypalCheckout"").trigger('click');
-                    //$(""#btPaypalCheckout"").click();
-                }
+                sessionResponse = response;
+
+                
             }
         });
+        
+        if (sessionResponse == ""Y"") {
+            $(""#btPaypalCheckout"").trigger('click');
+            console.log(""Called"");
+        }
+
     }
 
 
@@ -2580,7 +2643,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 1642 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1664 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                  Write(Url.Action("CalculatePromoCode", "TicketPayment"));
 
             
@@ -2650,106 +2713,129 @@ WriteLiteral("\',\r\n                data: { strTicketId: \'\', strCode: vProCod
 "                     url: \'");
 
             
-            #line 1721 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1743 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                                          Write(Url.Action("LockPromoCode", "TicketPayment"));
 
             
             #line default
             #line hidden
-WriteLiteral("\',\r\n                                        data: { dAmt:vProMoAmt,lTQDId:vTQDId," +
-"lEventId:vEventid,strCode:vProCode},\r\n                                        ty" +
-"pe: \"Post\",\r\n                                        success: function (response" +
-") {\r\n                                        }\r\n                                " +
-"    });\r\n                                }\r\n                                if (" +
-"vPrice > 0) {\r\n                                    vTotalAmt = ((vQty * (vPrice " +
-"+ vFee)) + vDonation).toFixed(2);\r\n                                    if (isNaN" +
-"(vTotalAmt) == true) vTotalAmt = 0;\r\n                                    vGrandA" +
-"mt = Number(vGrandAmt) + Number(vTotalAmt);\r\n                                }\r\n" +
-"                                else if (vDonation > 0) {\r\n                     " +
-"               vPrice = 0;\r\n                                    vTotalAmt = ((vQ" +
-"ty * (vPrice + vFee)) + vDonation).toFixed(2);\r\n                                " +
-"    if (isNaN(vTotalAmt) == true) vTotalAmt = 0;\r\n                              " +
-"      vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);\r\n\r\n                    " +
-"            }\r\n                            }\r\n                            $(\"#hd" +
-"PromoCodetotal\").val(vGrandAmt);\r\n                            if (vVarChanges > " +
-"0)\r\n                                vGrandAmt = vGrandAmt + vVarChanges;\r\n\r\n    " +
-"                        $(\"#spGrdTotal\").text(vGrandAmt.toFixed(2));\r\n          " +
-"                  $(\"#hdGrandTotal\").val(vGrandAmt.toFixed(2));\r\n               " +
-"             if (vTickets != \"A\" && vLoopFlag == true) {\r\n                      " +
-"          $(\"#spValidation\").text(\"Promo Code Not Applicable\");\r\n               " +
-"                 $(\"#spValidation\").removeClass(\"promoerrorgreen\");\r\n           " +
-"                     $(\"#spValidation\").addClass(\"promoerrorred\");\r\n            " +
-"                }\r\n                            else {\r\n                         " +
-"       $(\"#spValidation\").text(\"Promo Code Applied\");\r\n                         " +
-"       $(\"#spValidation\").removeClass(\"promoerrorred\");\r\n                       " +
-"         $(\"#spValidation\").addClass(\"promoerrorgreen\");\r\n                      " +
-"      }\r\n                        }\r\n                    }\r\n                }\r\n  " +
-"          });\r\n        }\r\n        else {\r\n\r\n            $(\"#spValidation\").text(" +
-"\"Invalid Promo Code\");\r\n            $(\"#spValidation\").removeClass(\"promoerrorgr" +
-"een\");\r\n            $(\"#spValidation\").addClass(\"promoerrorred\");\r\n\r\n           " +
-" $(\"#spGrdTotal\").text($(\"#spSubTotal\").text());\r\n            $(\"#hdGrandTotal\")" +
-".val($(\"#spSubTotal\").text());\r\n\r\n            $(\"#hdPromoCodetotal\").val(\"0\");\r\n" +
+WriteLiteral("\',\r\n                                        data: { dAmt: vProMoAmt, lTQDId: vTQD" +
+"Id, lEventId: vEventid, strCode: vProCode },\r\n                                  " +
+"      type: \"Post\",\r\n                                        success: function (" +
+"response) {\r\n                                        }\r\n                        " +
+"            });\r\n                                }\r\n                            " +
+"    if (vPrice > 0) {\r\n                                    vTotalAmt = ((vQty * " +
+"(vPrice + vFee)) + vDonation).toFixed(2);\r\n                                    i" +
+"f (isNaN(vTotalAmt) == true) vTotalAmt = 0;\r\n                                   " +
+" vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);\r\n                           " +
+"     }\r\n                                else if (vDonation > 0) {\r\n             " +
+"                       vPrice = 0;\r\n                                    vTotalAm" +
+"t = ((vQty * (vPrice + vFee)) + vDonation).toFixed(2);\r\n                        " +
+"            if (isNaN(vTotalAmt) == true) vTotalAmt = 0;\r\n                      " +
+"              vGrandAmt = Number(vGrandAmt) + Number(vTotalAmt);\r\n\r\n            " +
+"                    }\r\n                            }\r\n                          " +
+"  $(\"#hdPromoCodetotal\").val(vGrandAmt);\r\n                            if (vVarCh" +
+"anges > 0)\r\n                                vGrandAmt = vGrandAmt + vVarChanges;" +
+"\r\n\r\n                            $(\"#spGrdTotal\").text(vGrandAmt.toFixed(2));\r\n  " +
+"                          $(\"#hdGrandTotal\").val(vGrandAmt.toFixed(2));\r\n       " +
+"                     if (vTickets != \"A\" && vLoopFlag == true) {\r\n              " +
+"                  $(\"#spValidation\").text(\"Promo Code Not Applicable\");\r\n       " +
+"                         $(\"#spValidation\").removeClass(\"promoerrorgreen\");\r\n   " +
+"                             $(\"#spValidation\").addClass(\"promoerrorred\");\r\n    " +
+"                        }\r\n                            else {\r\n                 " +
+"               $(\"#spValidation\").text(\"Promo Code Applied\");\r\n                 " +
+"               $(\"#spValidation\").removeClass(\"promoerrorred\");\r\n               " +
+"                 $(\"#spValidation\").addClass(\"promoerrorgreen\");\r\n              " +
+"                  $(\"#btApply\").hide();\r\n                                $(\"#btC" +
+"ancel\").show();\r\n                                $(\"#txtPromoCode\").prop(\"disabl" +
+"ed\", true);\r\n                            }\r\n                        }\r\n         " +
+"           }\r\n                }\r\n            });\r\n        }\r\n        else {\r\n\r\n " +
+"           $(\"#spValidation\").text(\"Invalid Promo Code\");\r\n            $(\"#spVal" +
+"idation\").removeClass(\"promoerrorgreen\");\r\n            $(\"#spValidation\").addCla" +
+"ss(\"promoerrorred\");\r\n\r\n            $(\"#spGrdTotal\").text($(\"#spSubTotal\").text(" +
+"));\r\n            $(\"#hdGrandTotal\").val($(\"#spSubTotal\").text());\r\n           \r\n" +
 "        }\r\n        //$(\"#imgPromoLoader\").addClass(\"PromoLoaderHide\");\r\n        " +
 "//$(\"#imgPromoLoader\").removeClass(\"PromoLoaderShow\");\r\n\r\n    }\r\n\r\n    function " +
-"calculateTickTotal(vAmount, vvarId) {\r\n\r\n\r\n        $(\"#hdVChg\").val(vvarId);\r\n  " +
-"      var vOrderTotal = parseFloat($(\"#hdOrderTotal\").val());\r\n        var vProm" +
-"oTotal = parseFloat($(\"#hdPromoCodetotal\").val());\r\n\r\n        var vQty = parseIn" +
-"t($(\"#hidQty\").val());\r\n        vAmt = parseFloat(vAmount);\r\n        if (isNaN(v" +
-"Amt) == true) vAmt = 0;\r\n        if (isNaN(vOrderTotal) == true) vOrderTotal = 0" +
-";\r\n        if (isNaN(vPromoTotal) == true) vPromoTotal = 0;\r\n        vOrderTotal" +
-" = parseFloat(vOrderTotal + vAmt).toFixed(2);\r\n        var vGrdTotal = 0\r\n      " +
-"  if (vPromoTotal > 0) {\r\n            vGrdTotal = parseFloat(vPromoTotal + vAmt)" +
-".toFixed(2);\r\n        }\r\n        else {\r\n            vGrdTotal = parseFloat(vOrd" +
-"erTotal + vAmt).toFixed(2);\r\n        }\r\n\r\n        $(\"#spGrdTotal\").text(vGrdTota" +
-"l);\r\n        $(\"#hdGrandTotal\").val(vGrdTotal);\r\n\r\n        $(\"#spSubTotal\").text" +
-"(vOrderTotal);\r\n        $(\"#hdVarChanges\").val(vAmt);\r\n        var totqty = $(\'#" +
-"hidQty\').val();\r\n\r\n        if (vOrderTotal > 0) {\r\n            $(\'.divvisible\')." +
-"show();\r\n\r\n            if (totqty <= 0) {\r\n\r\n                $(\'.divqtyvisible\')" +
-".hide();\r\n            } else {\r\n                $(\'.divqtyvisible\').show();\r\n   " +
-"         }\r\n            //$(\'#cardshow\').css(\'display\', \'block\');\r\n        }\r\n  " +
-"      else {\r\n            $(\'.divqtyvisible\').hide();\r\n            $(\'.divvisibl" +
-"e\').hide();\r\n            //$(\'#cardshow\').css(\'display\', \'none\');\r\n        }\r\n  " +
-"     var valselect= $(\"#selectcard\").val()\r\n       if (valselect.trim() == \"P\") " +
-"{\r\n          \r\n            $(\'#cardshow\').css(\'display\', \'none\');\r\n            $" +
-"(\'#divshippinginfo\').css(\'display\', \'none\');\r\n            $(\'#dvBillingAddress\')" +
-".css(\'display\', \'none\');\r\n            \r\n        }\r\n    }\r\n    function calculate" +
-"TickTotalOptional(vCount) {\r\n\r\n        var vVarValue = $(\"#hdVarId\").val().split" +
-"(\',\');\r\n        var vOrderTotal = parseFloat($(\"#hdOrderTotal\").val());\r\n       " +
-" var vPromoTotal = parseFloat($(\"#hdPromoCodetotal\").val());\r\n        if (isNaN(" +
-"vPromoTotal) == true) vPromoTotal = 0;\r\n        var vPromoCalc = vPromoTotal;\r\n " +
-"       var vSel = \'\';\r\n        if (isNaN(vOrderTotal) == true) vOrderTotal = 0;\r" +
-"\n        var vVariChanges = 0;\r\n        for (i = 0; i <= vVarValue.length; i++) " +
-"{\r\n            if ($(\"#chk_\" + vVarValue[i]).is(\":checked\") == true) {\r\n        " +
-"        if (vSel == \'\')\r\n                    vSel = vVarValue[i];\r\n             " +
-"   else\r\n                    vSel = vSel + \',\' + vVarValue[i];\r\n\r\n              " +
-"  vAmt = parseFloat($(\"#sp_\" + vVarValue[i]).text());\r\n                if (isNaN" +
-"(vAmt) == true) vAmt = 0;\r\n\r\n                vOrderTotal = vOrderTotal + vAmt;\r\n" +
-"                vPromoTotal = vPromoTotal + vAmt;\r\n                vVariChanges " +
-"= vVariChanges + vAmt;\r\n\r\n            }\r\n        }\r\n        $(\"#hdVarChanges\").v" +
-"al(vVariChanges);\r\n\r\n        $(\"#hdVChg\").val(vSel);\r\n\r\n        //for (i = 1; i " +
-"<= vCount; i++) {\r\n        //    if ($(\"#chk_\" + i.toString()).is(\":checked\") ==" +
-" true) {\r\n        //        vAmt = parseFloat($(\"#sp_\" + i.toString()).text());\r" +
-"\n        //        if (isNaN(vAmt) == true) vAmt = 0; vOrderTotal = vOrderTotal " +
-"+ vAmt;\r\n        //    }\r\n        //}\r\n\r\n        if (vPromoCalc > 0) {\r\n        " +
-"    $(\"#spGrdTotal\").text(vPromoTotal.toFixed(2));\r\n            $(\"#hdGrandTotal" +
-"\").val(vPromoTotal.toFixed(2));\r\n        }\r\n        else {\r\n            $(\"#spGr" +
-"dTotal\").text(vOrderTotal.toFixed(2));\r\n            $(\"#hdGrandTotal\").val(vOrde" +
-"rTotal.toFixed(2))\r\n        }\r\n\r\n        $(\"#spSubTotal\").text(vOrderTotal.toFix" +
-"ed(2));\r\n        var totqty = $(\'#hidQty\').val();\r\n        if (vOrderTotal > 0) " +
-"{\r\n            $(\'.divvisible\').show();\r\n           \r\n            //$(\'#cardshow" +
-"\').css(\'display\', \'block\');\r\n        }\r\n        else {\r\n            $(\'.divvisib" +
-"le\').hide();\r\n            //$(\'.divqtyvisible\').hide();\r\n            //$(\'#cards" +
-"how\').css(\'display\', \'none\');\r\n        }\r\n        //alert(totqty);\r\n        if (" +
-"totqty <= 0) {\r\n            $(\'.divqtyvisible\').hide();\r\n        } else {\r\n     " +
-"       $(\'.divqtyvisible\').show();\r\n        }\r\n        if($(\"#selectcard\").val()" +
-"==\"P\")\r\n        {\r\n            $(\'#cardshow\').css(\'display\', \'none\');\r\n         " +
-"   $(\'#divshippinginfo\').css(\'display\', \'none\');\r\n            $(\'#dvBillingAddre" +
-"ss\').css(\'display\', \'none\');\r\n        }\r\n\r\n    }\r\n\r\n\r\n\r\n    function ajaxsetup(s" +
-"trname, strFormTag) {\r\n        var msgnew = \"\";\r\n\r\n        var request = $.ajax(" +
-"{\r\n            url: \'");
+"CancelPromoCode() {\r\n        $.ajax({\r\n            url: \'");
 
             
-            #line 1910 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 1804 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+             Write(Url.Action("UnLockPromoCode", "TicketPayment"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\',\r\n            type: \"Post\",\r\n            success: function (response) {\r\n      " +
+"          var vGTotal = parseFloat($(\"#hdGrandTotalWithoutPromo\").val());\r\n     " +
+"           var vVarChanges = parseFloat($(\"#hdVarChanges\").val()); if (isNaN(vVa" +
+"rChanges) == true) vVarChanges = 0;\r\n              //  alert(vVarChanges);\r\n    " +
+"            if (isNaN(vGTotal) == true) vGTotal = 0;\r\n                var vval =" +
+" (vGTotal + vVarChanges).toFixed(2);\r\n                $(\"#spGrdTotal\").text(vval" +
+");\r\n                $(\"#hdGrandTotal\").val(vval);\r\n                $(\"#hdPromoCo" +
+"detotal\").val(\"0\");\r\n\r\n                $(\"#btApply\").show();\r\n                $(" +
+"\"#btCancel\").hide();\r\n                $(\"#txtPromoCode\").prop(\"disabled\", false)" +
+";\r\n                $(\"#txtPromoCode\").val(\"\");\r\n\r\n                $(\"#spValidati" +
+"on\").text(\"\");\r\n                $(\"#spValidation\").removeClass(\"promoerrorred\");" +
+"\r\n                $(\"#spValidation\").addClass(\"promoerrorgreen\");\r\n            }" +
+"\r\n        });\r\n\r\n    }\r\n\r\n\r\n    function calculateTickTotal(vAmount, vvarId) {\r\n" +
+"\r\n\r\n        $(\"#hdVChg\").val(vvarId);\r\n        var vOrderTotal = parseFloat($(\"#" +
+"hdOrderTotal\").val());\r\n        var vPromoTotal = parseFloat($(\"#hdPromoCodetota" +
+"l\").val());\r\n\r\n        var vQty = parseInt($(\"#hidQty\").val());\r\n        vAmt = " +
+"parseFloat(vAmount);\r\n        if (isNaN(vAmt) == true) vAmt = 0;\r\n        if (is" +
+"NaN(vOrderTotal) == true) vOrderTotal = 0;\r\n        if (isNaN(vPromoTotal) == tr" +
+"ue) vPromoTotal = 0;\r\n        vOrderTotal = parseFloat(vOrderTotal + vAmt).toFix" +
+"ed(2);\r\n        var vGrdTotal = 0\r\n        if (vPromoTotal > 0) {\r\n            v" +
+"GrdTotal = parseFloat(vPromoTotal + vAmt).toFixed(2);\r\n        }\r\n        else {" +
+"\r\n            vGrdTotal = parseFloat(vOrderTotal + vAmt).toFixed(2);\r\n        }\r" +
+"\n\r\n        $(\"#spGrdTotal\").text(vGrdTotal);\r\n        $(\"#hdGrandTotal\").val(vGr" +
+"dTotal);\r\n\r\n        $(\"#spSubTotal\").text(vOrderTotal);\r\n        $(\"#hdVarChange" +
+"s\").val(vAmt);\r\n        var totqty = $(\'#hidQty\').val();\r\n\r\n        if (vOrderTo" +
+"tal > 0) {\r\n            $(\'.divvisible\').show();\r\n\r\n            if (totqty <= 0)" +
+" {\r\n\r\n                $(\'.divqtyvisible\').hide();\r\n            } else {\r\n       " +
+"         $(\'.divqtyvisible\').show();\r\n            }\r\n            //$(\'#cardshow\'" +
+").css(\'display\', \'block\');\r\n        }\r\n        else {\r\n            $(\'.divqtyvis" +
+"ible\').hide();\r\n            $(\'.divvisible\').hide();\r\n            //$(\'#cardshow" +
+"\').css(\'display\', \'none\');\r\n        }\r\n        var valselect = $(\"#selectcard\")." +
+"val()\r\n        if (valselect.trim() == \"P\") {\r\n\r\n            $(\'#cardshow\').css(" +
+"\'display\', \'none\');\r\n            $(\'#divshippinginfo\').css(\'display\', \'none\');\r\n" +
+"            $(\'#dvBillingAddress\').css(\'display\', \'none\');\r\n\r\n        }\r\n    }\r\n" +
+"    function calculateTickTotalOptional(vCount) {\r\n\r\n        var vVarValue = $(\"" +
+"#hdVarId\").val().split(\',\');\r\n        var vOrderTotal = parseFloat($(\"#hdOrderTo" +
+"tal\").val());\r\n        var vPromoTotal = parseFloat($(\"#hdPromoCodetotal\").val()" +
+");\r\n        if (isNaN(vPromoTotal) == true) vPromoTotal = 0;\r\n        var vPromo" +
+"Calc = vPromoTotal;\r\n        var vSel = \'\';\r\n        if (isNaN(vOrderTotal) == t" +
+"rue) vOrderTotal = 0;\r\n        var vVariChanges = 0;\r\n        for (i = 0; i <= v" +
+"VarValue.length; i++) {\r\n            if ($(\"#chk_\" + vVarValue[i]).is(\":checked\"" +
+") == true) {\r\n                if (vSel == \'\')\r\n                    vSel = vVarVa" +
+"lue[i];\r\n                else\r\n                    vSel = vSel + \',\' + vVarValue" +
+"[i];\r\n\r\n                vAmt = parseFloat($(\"#sp_\" + vVarValue[i]).text());\r\n   " +
+"             if (isNaN(vAmt) == true) vAmt = 0;\r\n\r\n                vOrderTotal =" +
+" vOrderTotal + vAmt;\r\n                vPromoTotal = vPromoTotal + vAmt;\r\n       " +
+"         vVariChanges = vVariChanges + vAmt;\r\n\r\n            }\r\n        }\r\n      " +
+"  $(\"#hdVarChanges\").val(vVariChanges);\r\n\r\n        $(\"#hdVChg\").val(vSel);\r\n\r\n  " +
+"      //for (i = 1; i <= vCount; i++) {\r\n        //    if ($(\"#chk_\" + i.toStrin" +
+"g()).is(\":checked\") == true) {\r\n        //        vAmt = parseFloat($(\"#sp_\" + i" +
+".toString()).text());\r\n        //        if (isNaN(vAmt) == true) vAmt = 0; vOrd" +
+"erTotal = vOrderTotal + vAmt;\r\n        //    }\r\n        //}\r\n\r\n        if (vProm" +
+"oCalc > 0) {\r\n            $(\"#spGrdTotal\").text(vPromoTotal.toFixed(2));\r\n      " +
+"      $(\"#hdGrandTotal\").val(vPromoTotal.toFixed(2));\r\n        }\r\n        else {" +
+"\r\n            $(\"#spGrdTotal\").text(vOrderTotal.toFixed(2));\r\n            $(\"#hd" +
+"GrandTotal\").val(vOrderTotal.toFixed(2))\r\n        }\r\n\r\n        $(\"#spSubTotal\")." +
+"text(vOrderTotal.toFixed(2));\r\n        var totqty = $(\'#hidQty\').val();\r\n       " +
+" if (vOrderTotal > 0) {\r\n            $(\'.divvisible\').show();\r\n\r\n            //$" +
+"(\'#cardshow\').css(\'display\', \'block\');\r\n        }\r\n        else {\r\n            $" +
+"(\'.divvisible\').hide();\r\n            //$(\'.divqtyvisible\').hide();\r\n            " +
+"//$(\'#cardshow\').css(\'display\', \'none\');\r\n        }\r\n        //alert(totqty);\r\n " +
+"       if (totqty <= 0) {\r\n            $(\'.divqtyvisible\').hide();\r\n        } el" +
+"se {\r\n            $(\'.divqtyvisible\').show();\r\n        }\r\n        if ($(\"#select" +
+"card\").val() == \"P\") {\r\n            $(\'#cardshow\').css(\'display\', \'none\');\r\n    " +
+"        $(\'#divshippinginfo\').css(\'display\', \'none\');\r\n            $(\'#dvBilling" +
+"Address\').css(\'display\', \'none\');\r\n        }\r\n\r\n    }\r\n\r\n\r\n\r\n    function ajaxse" +
+"tup(strname, strFormTag) {\r\n        var msgnew = \"\";\r\n\r\n        var request = $." +
+"ajax({\r\n            url: \'");
+
+            
+            #line 1961 "..\..\Views\TicketPayment\TicketPayment.cshtml"
              Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -2762,154 +2848,153 @@ WriteLiteral("\',\r\n            async: false,\r\n            data: { strFormNam
 "      });\r\n        return msgnew;\r\n    }\r\n    function validationpage() {\r\n     " +
 "   var msglogin = \"\", emailerr = \"\", pasword = \"\";\r\n        var accfname = $(\"#a" +
 "ccfname\").val();\r\n        var Emaillogin = $(\"#Email\").val();\r\n        var confi" +
-"rmlogin = $(\"#confirmEmail\").val();\r\n       \r\n        //var confirmpassword = $(" +
-"\"#confirmpassword\").val();\r\n\r\n        var total = $(\'#hdOrderTotal\').val();\r\n\r\n\r" +
-"\n        if (accfname == \'\') {\r\n            $(\"#accfname\").addClass(\'err-bor\');\r" +
-"\n            msglogin += ajaxsetup(\'TicketPayment\', \'TPayFnameValidateUI\') + \"</" +
-"br>\";\r\n        }\r\n\r\n        if (!validateEmail(Emaillogin)) {\r\n            $(\'#E" +
-"mail\').focus();\r\n            $(\'#Email\').addClass(\'err-bor\');\r\n            email" +
-"err += \"Invalid Email\" + \"\\n\";\r\n        }\r\n        if ($(\'#confirmEmail\').css(\'d" +
-"isplay\') == \'block\') {\r\n            if (!validateEmail(confirmlogin)) {\r\n       " +
-"         $(\'#confirmEmail\').focus();\r\n                $(\'#confirmEmail\').addClas" +
-"s(\'err-bor\');\r\n                emailerr += \"Invalid Confirm Email\" + \"\\n\";\r\n    " +
-"        }\r\n\r\n            if (confirmlogin != Emaillogin) {\r\n                $(\'#" +
-"confirmEmail\').focus();\r\n                $(\'#confirmEmail\').addClass(\'err-bor\');" +
-"\r\n                msglogin += ajaxsetup(\'TicketPayment\', \'TPayValidateConfirmMat" +
-"chEmailUI\') + \"</br>\";\r\n\r\n            }\r\n        }\r\n\r\n\r\n        \r\n        if (em" +
-"ailerr != \"\") {\r\n            msglogin += ajaxsetup(\'TicketPayment\', \'TPayValidat" +
-"eEmailUI\') + \"</br>\";\r\n\r\n        }\r\n        if ($(\'#password\').css(\'display\') ==" +
-" \'block\' ) {\r\n            var Passowrdlogin = $(\"#password\").val();\r\n           " +
-" if (Passowrdlogin.length < 4) {\r\n                $(\"#password\").focus();\r\n     " +
-"           $(\'#password\').addClass(\'err-bor\');\r\n                pasword += \"Inva" +
-"lid Password\" + \"\\n\";\r\n            }\r\n\r\n        }\r\n       \r\n           \r\n       " +
-"     //if (confirmpassword.length < 4) {\r\n            //    $(\"#confirmpassword\"" +
-").focus();\r\n            //    $(\'#confirmpassword\').addClass(\'err-bor\');\r\n      " +
-"      //    pasword += \"Invalid Confirm Password\" + \"\\n\";\r\n            //}\r\n    " +
-"        //if (Passowrdlogin != confirmpassword) {\r\n            //    $(\"#confirm" +
-"password\").focus();\r\n            //    $(\'#confirmpassword\').addClass(\'err-bor\')" +
-";\r\n            //    msglogin += ajaxsetup(\'TicketPayment\', \'TPayValidatePwdUI\')" +
-" + \"</br>\";\r\n\r\n            //}\r\n        \r\n\r\n        if (pasword != \"\") {\r\n      " +
-"      msglogin += ajaxsetup(\'TicketPayment\', \'TPayValidatePwdUI\') + \"</br>\";\r\n\r\n" +
-"        }\r\n        var resultvar = \"\";\r\n        if (total > 0) {\r\n            va" +
-"r shippingerr = \"\";\r\n            if ($(\"#selectcard\").val() != \"P\") {\r\n         " +
-"       var result = $(\"#cardno\").validateCreditCard({ accept: [\'visa\', \'masterca" +
-"rd\', \'discover\', \'amex\'] });\r\n                if (result.card_type == null || re" +
-"sult.length_valid == false || result.luhn_valid == false) {\r\n                   " +
-" resultvar += \"Invalid Card Number\" + \"\\n\";\r\n                    $(\"#cardno\").fo" +
-"cus();\r\n                    $(\"#cardno\").addClass(\'err-bor\');\r\n\r\n               " +
-" }\r\n              \r\n                if (resultvar != \"\") {\r\n                    " +
-"msglogin += ajaxsetup(\'TicketPayment\', \'TPayCardValidationUI\') + \"</br>\";\r\n     " +
-"           }\r\n\r\n                var billerr = \"\";\r\n                var billfname" +
-" = $(\'#billfname\').val();\r\n                var billLname = $(\'#billLname\').val()" +
-";\r\n                var billingphno = $(\'#billingphno\').val();\r\n                v" +
-"ar billaddress1 = $(\'#billaddress1\').val();\r\n\r\n                var billcity = $(" +
-"\'#billcity\').val();\r\n                var billzip = $(\'#billzip\').val();\r\n       " +
-"         var billstate = $(\'#billstate\').val();\r\n                var billcountry" +
-" = $(\'#billcountry\').val();\r\n\r\n                if (billfname == \"\") {\r\n         " +
-"           billerr += \"Please Enter Billing First name\" + \"\\n\";\r\n               " +
-"     $(\"#billfname\").focus();\r\n                    $(\"#billfname\").addClass(\'err" +
-"-bor\');\r\n\r\n                }\r\n                if (billingphno == \"\") {\r\n        " +
-"            billerr += \"Please Enter Billing Phone number\" + \"\\n\";\r\n            " +
-"        $(\"#billingphno\").focus();\r\n                    $(\"#billingphno\").addCla" +
-"ss(\'err-bor\');\r\n\r\n                }\r\n                if (billaddress1 == \"\") {\r\n" +
-"                    billerr += \"Please Enter Billing Address\" + \"\\n\";\r\n         " +
-"           $(\"#billaddress1\").focus();\r\n                    $(\"#billaddress1\").a" +
-"ddClass(\'err-bor\');\r\n\r\n                }\r\n\r\n                if (billcity == \"\") " +
-"{\r\n                    billerr += \"Please Enter Billing City\" + \"\\n\";\r\n         " +
-"           $(\"#billcity\").focus();\r\n                    $(\"#billcity\").addClass(" +
-"\'err-bor\');\r\n\r\n                }\r\n                if (billzip == \"\") {\r\n        " +
-"            billerr += \"Please Enter Billing Zip\" + \"\\n\";\r\n                    $" +
-"(\"#billzip\").focus();\r\n                    $(\"#billzip\").addClass(\'err-bor\');\r\n\r" +
-"\n                }\r\n                if (billstate == \"\") {\r\n                    " +
-"billerr += \"Please Enter Billing State\" + \"\\n\";\r\n                    $(\"#billsta" +
-"te\").focus();\r\n                    $(\"#billstate\").addClass(\'err-bor\');\r\n\r\n     " +
-"           }\r\n                if (billcountry == \"\") {\r\n                    bill" +
-"err += \"Please Enter Billing Country\" + \"\\n\";\r\n                    $(\"#billcount" +
-"ry\").focus();\r\n                    $(\"#billcountry\").addClass(\'err-bor\');\r\n\r\n   " +
-"             }\r\n                if (billerr != \"\") {\r\n                    msglog" +
-"in += ajaxsetup(\'TicketPayment\', \'TPayValidateBillingAddressUI\') + \"</br>\";\r\n   " +
-"             }\r\n\r\n                if ($(\"#shippinginfo\").is(\":checked\")) {\r\n    " +
-"                if ($(\'#shipfname\').val() == \"\") {\r\n                        ship" +
-"pingerr += \"Please Enter Shipping First name\" + \"\\n\";\r\n                        $" +
-"(\"#shipfname\").focus();\r\n                        $(\"#shipfname\").addClass(\'err-b" +
-"or\');\r\n\r\n                    }\r\n                    if ($(\'#shippingphnno\').val(" +
-") == \"\") {\r\n                        shippingerr += \"Please Enter Shipping Phone " +
-"number\" + \"\\n\";\r\n                        $(\"#shippingphnno\").focus();\r\n         " +
-"               $(\"#shippingphnno\").addClass(\'err-bor\');\r\n                    }\r\n" +
-"                    if ($(\'#shipaddress1\').val() == \"\") {\r\n                     " +
-"   shippingerr += \"Please Enter Shipping Address\" + \"\\n\";\r\n                     " +
-"   $(\"#shipaddress1\").focus();\r\n                        $(\"#shipaddress1\").addCl" +
-"ass(\'err-bor\');\r\n\r\n                    }\r\n                    if ($(\'#shipcity\')" +
-".val() == \"\") {\r\n                        shippingerr += \"Please Enter Shipping C" +
-"ity\" + \"\\n\";\r\n                        $(\"#shipcity\").focus();\r\n                 " +
-"       $(\"#shipcity\").addClass(\'err-bor\');\r\n\r\n                    }\r\n           " +
-"         if ($(\'#shipzip\').val() == \"\") {\r\n                        shippingerr +" +
-"= \"Please Enter Shipping Zip\" + \"\\n\";\r\n                        $(\"#shipzip\").foc" +
-"us();\r\n                        $(\"#shipzip\").addClass(\'err-bor\');\r\n\r\n           " +
-"         }\r\n                    if ($(\'#shipstate\').val() == \"\") {\r\n            " +
-"            shippingerr += \"Please Enter Shipping state\" + \"\\n\";\r\n              " +
-"          $(\"#shipstate\").focus();\r\n                        $(\"#shipstate\").addC" +
-"lass(\'err-bor\');\r\n\r\n                    }\r\n                    if ($(\'#shipcount" +
-"ry\').val() == \"\") {\r\n                        shippingerr += \"Please Enter Shippi" +
-"ng country\" + \"\\n\";\r\n                        $(\"#shipcountry\").focus();\r\n       " +
-"                 $(\"#shipcountry\").addClass(\'err-bor\');\r\n\r\n                    }" +
-"\r\n                }\r\n            }\r\n            //alert(shippingerr);\r\n         " +
-"   if (shippingerr != \"\") {\r\n                msglogin += ajaxsetup(\'TicketPaymen" +
-"t\', \'TPayValidateShippingAddressUI\') + \"</br>\";\r\n            }\r\n\r\n        }\r\n   " +
-"     return msglogin;\r\n    }\r\n\r\n\r\n    function ShowMessage(Type, Mess) {\r\n      " +
-"  if (Type == \'S\') {\r\n            $(\'#divaccsuc\').css(\'display\', \'block\');\r\n    " +
-"        $(\'#divaccsuc\').focus();\r\n            $(\'#diverroacc\').css(\'display\', \'n" +
-"one\');\r\n            $(\'html,body\').animate({ scrollTop: 0 });\r\n            $(\'#s" +
-"uccaccmsg\').html(Mess);\r\n        }\r\n        else {\r\n            $(\'#divaccsuc\')." +
-"css(\'display\', \'none\');\r\n            $(\'#diverroacc\').css(\'display\', \'block\');\r\n" +
-"            $(\'#diverroacc\').focus();\r\n            $(\'html,body\').animate({ scro" +
-"llTop: 0 });\r\n            $(\'#erraccmsg\').html(Mess);\r\n\r\n        }\r\n    }\r\n\r\n\r\n\r" +
-"\n    function checkMore(QtyId) {\r\n        $(\"#Sp_\" + QtyId.toString()).slideTogg" +
-"le(\"fast\");\r\n        //$(\".TktdescDetl\").slideToggle(\"fast\");\r\n    }\r\n    functi" +
-"on checknumber(event) {\r\n\r\n        var code = event.charCode ? event.charCode : " +
-"event.keyCode;\r\n\r\n        if ((!event.shiftKey && !event.ctrlKey && !event.altKe" +
-"y) && ((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or num" +
-"pad 0-9, disallow shift, ctrl, and alt\r\n        {\r\n            return true;\r\n   " +
-"     }\r\n        else if (code != 8 && code != 46 && code != 37 && code != 39 && " +
-"code != 9 && code != 190) // not esc, del, left or right\r\n        {\r\n\r\n         " +
-"   event.preventDefault();\r\n            return false;\r\n        }\r\n\r\n    }\r\n    f" +
-"unction AddTicket() {\r\n\r\n\r\n        $(\"#hidTicketbearer\").val(\'\');\r\n        var q" +
-"ty = parseInt($(\'#hidQty\').val());\r\n        var ddlength = parseInt($(\"#ddlListi" +
-"tem option\").length);\r\n        if (ddlength < qty) {\r\n            var Sno = $(\"#" +
-"tblListitem tr\").length;\r\n            var vTicketName = $(\"#nameofticket\").val()" +
-";\r\n            var vTicketEmailDes = $(\"#emailbearer\").val();\r\n            if ($" +
-"(\'.Notifybox\').css(\'display\') == \'block\') {\r\n                vTicketEmailDes = $" +
-"(\"#emailbearer\").val();\r\n            } else {\r\n\r\n                vTicketEmailDes" +
-" = \"\";\r\n            }\r\n            //strHTML = strHTML + \'<td align=\"right\"><i o" +
-"nclick=\"editOrgnizer(\' + Sno + \')\"; class=\"fa fa-pencil\"></i> | <i onclick=\"Dele" +
-"teOrgnizer(\' + Sno + \');\" class=\"fa fa-trash\"></i></td>\';\r\n\r\n            var str" +
-"HTML = \'<tr>\';\r\n            strHTML = strHTML + \'<td style=\"display:none\" width=" +
-"\"92%\">\' + Sno + \'</td>\';\r\n            strHTML = strHTML + \'<td width=\"92%\"><labe" +
-"l id=TicketName_\' + Sno + \'>\' + vTicketName + \'</label></td>\';\r\n            strH" +
-"TML = strHTML + \'<td style=\"display:none\"><label id=TicketEmail_\' + Sno + \'>\' + " +
-"vTicketEmailDes + \'</label></td>\';\r\n            strHTML = strHTML + \'</tr>\';\r\n  " +
-"          //                strHTML = strHTML + \'<td><div class=\"trigger mt5 ent" +
-"_add\"><a href=\"#\" onclick=\"editRow(\' + Sno + \');\"><i class=\"fa fa-map-marker\"></" +
-"i> Edit</a>  <a href=\"#\" id=\"btAddDelete\" onclick=\"DeleteTableRow(\' + Sno + \')\">" +
-"Delete</a> </div> </td>\';\r\n\r\n\r\n            $(\"#tblListitem\").append(strHTML);\r\n " +
-"           strHTML = \'<option value=\"\' + Sno + \'\" id=\"\' + Sno + \'\">\' + vTicketNa" +
-"me + \'</option>\';\r\n\r\n            $(\"#ddlListitem\").append(strHTML);\r\n        }\r\n" +
-"\r\n    }\r\n    function showcardetails(e) {\r\n        debugger;\r\n        var select" +
-"value = $(\'#\' + e).val();\r\n\r\n        if (selectvalue == \"A\") {\r\n            $(\'#" +
-"cardshow\').css(\'display\', \'block\');\r\n            $(\'#cardno\').val(\"\");\r\n        " +
-"    $(\'#expirationdate\').val(\"\");\r\n            $(\'#cvvcode\').val(\"\");\r\n         " +
-"   $(\'#divshippinginfo\').css(\'display\', \'block\');\r\n        }\r\n        else if (s" +
-"electvalue == \"-1\") {\r\n            $(\'#cardshow\').css(\'display\', \'none\');\r\n     " +
-"       $(\'#divshippinginfo\').css(\'display\', \'block\');\r\n        }\r\n        else i" +
-"f (selectvalue == \"P\") {\r\n            $(\'#cardshow\').css(\'display\', \'none\');\r\n  " +
-"          $(\'#divshippinginfo\').css(\'display\', \'none\');\r\n            //$(\".divvi" +
-"sible\").css(\'display\', \'none\');\r\n\r\n        }\r\n        else {\r\n\r\n            $(\'#" +
-"cardshow\').css(\'display\', \'block\');\r\n            $(\'#divshippinginfo\').css(\'disp" +
-"lay\', \'block\');\r\n            //$(\".divvisible\").css(\'display\', \'none\');\r\n       " +
-"     $.ajax({\r\n                url: \'");
+"rmlogin = $(\"#confirmEmail\").val();\r\n\r\n        //var confirmpassword = $(\"#confi" +
+"rmpassword\").val();\r\n\r\n        var total = $(\'#hdOrderTotal\').val();\r\n\r\n\r\n      " +
+"  if (accfname == \'\') {\r\n            $(\"#accfname\").addClass(\'err-bor\');\r\n      " +
+"      msglogin += ajaxsetup(\'TicketPayment\', \'TPayFnameValidateUI\') + \"</br>\";\r\n" +
+"        }\r\n\r\n        if (!validateEmail(Emaillogin)) {\r\n            $(\'#Email\')." +
+"focus();\r\n            $(\'#Email\').addClass(\'err-bor\');\r\n            emailerr += " +
+"\"Invalid Email\" + \"\\n\";\r\n        }\r\n        if ($(\'#confirmEmail\').css(\'display\'" +
+") == \'block\') {\r\n            if (!validateEmail(confirmlogin)) {\r\n              " +
+"  $(\'#confirmEmail\').focus();\r\n                $(\'#confirmEmail\').addClass(\'err-" +
+"bor\');\r\n                emailerr += \"Invalid Confirm Email\" + \"\\n\";\r\n           " +
+" }\r\n\r\n            if (confirmlogin != Emaillogin) {\r\n                $(\'#confirm" +
+"Email\').focus();\r\n                $(\'#confirmEmail\').addClass(\'err-bor\');\r\n     " +
+"           msglogin += ajaxsetup(\'TicketPayment\', \'TPayValidateConfirmMatchEmail" +
+"UI\') + \"</br>\";\r\n\r\n            }\r\n        }\r\n\r\n\r\n\r\n        if (emailerr != \"\") {" +
+"\r\n            msglogin += ajaxsetup(\'TicketPayment\', \'TPayValidateEmailUI\') + \"<" +
+"/br>\";\r\n\r\n        }\r\n        if ($(\'#password\').css(\'display\') == \'block\') {\r\n  " +
+"          var Passowrdlogin = $(\"#password\").val();\r\n            if (Passowrdlog" +
+"in.length < 4) {\r\n                $(\"#password\").focus();\r\n                $(\'#p" +
+"assword\').addClass(\'err-bor\');\r\n                pasword += \"Invalid Password\" + " +
+"\"\\n\";\r\n            }\r\n\r\n        }\r\n\r\n\r\n        //if (confirmpassword.length < 4)" +
+" {\r\n        //    $(\"#confirmpassword\").focus();\r\n        //    $(\'#confirmpassw" +
+"ord\').addClass(\'err-bor\');\r\n        //    pasword += \"Invalid Confirm Password\" " +
+"+ \"\\n\";\r\n        //}\r\n        //if (Passowrdlogin != confirmpassword) {\r\n       " +
+" //    $(\"#confirmpassword\").focus();\r\n        //    $(\'#confirmpassword\').addCl" +
+"ass(\'err-bor\');\r\n        //    msglogin += ajaxsetup(\'TicketPayment\', \'TPayValid" +
+"atePwdUI\') + \"</br>\";\r\n\r\n        //}\r\n\r\n\r\n        if (pasword != \"\") {\r\n        " +
+"    msglogin += ajaxsetup(\'TicketPayment\', \'TPayValidatePwdUI\') + \"</br>\";\r\n\r\n  " +
+"      }\r\n        var resultvar = \"\";\r\n        if (total > 0) {\r\n            var " +
+"shippingerr = \"\";\r\n            if ($(\"#selectcard\").val() != \"P\") {\r\n           " +
+"     var result = $(\"#cardno\").validateCreditCard({ accept: [\'visa\', \'mastercard" +
+"\', \'discover\', \'amex\'] });\r\n                if (result.card_type == null || resu" +
+"lt.length_valid == false || result.luhn_valid == false) {\r\n                    r" +
+"esultvar += \"Invalid Card Number\" + \"\\n\";\r\n                    $(\"#cardno\").focu" +
+"s();\r\n                    $(\"#cardno\").addClass(\'err-bor\');\r\n\r\n                }" +
+"\r\n\r\n                if (resultvar != \"\") {\r\n                    msglogin += ajax" +
+"setup(\'TicketPayment\', \'TPayCardValidationUI\') + \"</br>\";\r\n                }\r\n\r\n" +
+"                var billerr = \"\";\r\n                var billfname = $(\'#billfname" +
+"\').val();\r\n                var billLname = $(\'#billLname\').val();\r\n             " +
+"   var billingphno = $(\'#billingphno\').val();\r\n                var billaddress1 " +
+"= $(\'#billaddress1\').val();\r\n\r\n                var billcity = $(\'#billcity\').val" +
+"();\r\n                var billzip = $(\'#billzip\').val();\r\n                var bil" +
+"lstate = $(\'#billstate\').val();\r\n                var billcountry = $(\'#billcount" +
+"ry\').val();\r\n\r\n                if (billfname == \"\") {\r\n                    bille" +
+"rr += \"Please Enter Billing First name\" + \"\\n\";\r\n                    $(\"#billfna" +
+"me\").focus();\r\n                    $(\"#billfname\").addClass(\'err-bor\');\r\n\r\n     " +
+"           }\r\n                if (billingphno == \"\") {\r\n                    bill" +
+"err += \"Please Enter Billing Phone number\" + \"\\n\";\r\n                    $(\"#bill" +
+"ingphno\").focus();\r\n                    $(\"#billingphno\").addClass(\'err-bor\');\r\n" +
+"\r\n                }\r\n                if (billaddress1 == \"\") {\r\n                " +
+"    billerr += \"Please Enter Billing Address\" + \"\\n\";\r\n                    $(\"#b" +
+"illaddress1\").focus();\r\n                    $(\"#billaddress1\").addClass(\'err-bor" +
+"\');\r\n\r\n                }\r\n\r\n                if (billcity == \"\") {\r\n             " +
+"       billerr += \"Please Enter Billing City\" + \"\\n\";\r\n                    $(\"#b" +
+"illcity\").focus();\r\n                    $(\"#billcity\").addClass(\'err-bor\');\r\n\r\n " +
+"               }\r\n                if (billzip == \"\") {\r\n                    bill" +
+"err += \"Please Enter Billing Zip\" + \"\\n\";\r\n                    $(\"#billzip\").foc" +
+"us();\r\n                    $(\"#billzip\").addClass(\'err-bor\');\r\n\r\n               " +
+" }\r\n                if (billstate == \"\") {\r\n                    billerr += \"Plea" +
+"se Enter Billing State\" + \"\\n\";\r\n                    $(\"#billstate\").focus();\r\n " +
+"                   $(\"#billstate\").addClass(\'err-bor\');\r\n\r\n                }\r\n  " +
+"              if (billcountry == \"\") {\r\n                    billerr += \"Please E" +
+"nter Billing Country\" + \"\\n\";\r\n                    $(\"#billcountry\").focus();\r\n " +
+"                   $(\"#billcountry\").addClass(\'err-bor\');\r\n\r\n                }\r\n" +
+"                if (billerr != \"\") {\r\n                    msglogin += ajaxsetup(" +
+"\'TicketPayment\', \'TPayValidateBillingAddressUI\') + \"</br>\";\r\n                }\r\n" +
+"\r\n                if ($(\"#shippinginfo\").is(\":checked\")) {\r\n                    " +
+"if ($(\'#shipfname\').val() == \"\") {\r\n                        shippingerr += \"Plea" +
+"se Enter Shipping First name\" + \"\\n\";\r\n                        $(\"#shipfname\").f" +
+"ocus();\r\n                        $(\"#shipfname\").addClass(\'err-bor\');\r\n\r\n       " +
+"             }\r\n                    if ($(\'#shippingphnno\').val() == \"\") {\r\n    " +
+"                    shippingerr += \"Please Enter Shipping Phone number\" + \"\\n\";\r" +
+"\n                        $(\"#shippingphnno\").focus();\r\n                        $" +
+"(\"#shippingphnno\").addClass(\'err-bor\');\r\n                    }\r\n                " +
+"    if ($(\'#shipaddress1\').val() == \"\") {\r\n                        shippingerr +" +
+"= \"Please Enter Shipping Address\" + \"\\n\";\r\n                        $(\"#shipaddre" +
+"ss1\").focus();\r\n                        $(\"#shipaddress1\").addClass(\'err-bor\');\r" +
+"\n\r\n                    }\r\n                    if ($(\'#shipcity\').val() == \"\") {\r" +
+"\n                        shippingerr += \"Please Enter Shipping City\" + \"\\n\";\r\n  " +
+"                      $(\"#shipcity\").focus();\r\n                        $(\"#shipc" +
+"ity\").addClass(\'err-bor\');\r\n\r\n                    }\r\n                    if ($(\'" +
+"#shipzip\').val() == \"\") {\r\n                        shippingerr += \"Please Enter " +
+"Shipping Zip\" + \"\\n\";\r\n                        $(\"#shipzip\").focus();\r\n         " +
+"               $(\"#shipzip\").addClass(\'err-bor\');\r\n\r\n                    }\r\n    " +
+"                if ($(\'#shipstate\').val() == \"\") {\r\n                        ship" +
+"pingerr += \"Please Enter Shipping state\" + \"\\n\";\r\n                        $(\"#sh" +
+"ipstate\").focus();\r\n                        $(\"#shipstate\").addClass(\'err-bor\');" +
+"\r\n\r\n                    }\r\n                    if ($(\'#shipcountry\').val() == \"\"" +
+") {\r\n                        shippingerr += \"Please Enter Shipping country\" + \"\\" +
+"n\";\r\n                        $(\"#shipcountry\").focus();\r\n                       " +
+" $(\"#shipcountry\").addClass(\'err-bor\');\r\n\r\n                    }\r\n              " +
+"  }\r\n            }\r\n            //alert(shippingerr);\r\n            if (shippinge" +
+"rr != \"\") {\r\n                msglogin += ajaxsetup(\'TicketPayment\', \'TPayValidat" +
+"eShippingAddressUI\') + \"</br>\";\r\n            }\r\n\r\n        }\r\n        return msgl" +
+"ogin;\r\n    }\r\n\r\n\r\n    function ShowMessage(Type, Mess) {\r\n        if (Type == \'S" +
+"\') {\r\n            $(\'#divaccsuc\').css(\'display\', \'block\');\r\n            $(\'#diva" +
+"ccsuc\').focus();\r\n            $(\'#diverroacc\').css(\'display\', \'none\');\r\n        " +
+"    $(\'html,body\').animate({ scrollTop: 0 });\r\n            $(\'#succaccmsg\').html" +
+"(Mess);\r\n        }\r\n        else {\r\n            $(\'#divaccsuc\').css(\'display\', \'" +
+"none\');\r\n            $(\'#diverroacc\').css(\'display\', \'block\');\r\n            $(\'#" +
+"diverroacc\').focus();\r\n            $(\'html,body\').animate({ scrollTop: 0 });\r\n  " +
+"          $(\'#erraccmsg\').html(Mess);\r\n\r\n        }\r\n    }\r\n\r\n\r\n\r\n    function ch" +
+"eckMore(QtyId) {\r\n        $(\"#Sp_\" + QtyId.toString()).slideToggle(\"fast\");\r\n   " +
+"     //$(\".TktdescDetl\").slideToggle(\"fast\");\r\n    }\r\n    function checknumber(e" +
+"vent) {\r\n\r\n        var code = event.charCode ? event.charCode : event.keyCode;\r\n" +
+"\r\n        if ((!event.shiftKey && !event.ctrlKey && !event.altKey) && ((code >= " +
+"48 && code <= 57) || (code >= 96 && code <= 105))) // 0-9 or numpad 0-9, disallo" +
+"w shift, ctrl, and alt\r\n        {\r\n            return true;\r\n        }\r\n        " +
+"else if (code != 8 && code != 46 && code != 37 && code != 39 && code != 9 && cod" +
+"e != 190) // not esc, del, left or right\r\n        {\r\n\r\n            event.prevent" +
+"Default();\r\n            return false;\r\n        }\r\n\r\n    }\r\n    function AddTicke" +
+"t() {\r\n\r\n\r\n        $(\"#hidTicketbearer\").val(\'\');\r\n        var qty = parseInt($(" +
+"\'#hidQty\').val());\r\n        var ddlength = parseInt($(\"#ddlListitem option\").len" +
+"gth);\r\n        if (ddlength < qty) {\r\n            var Sno = $(\"#tblListitem tr\")" +
+".length;\r\n            var vTicketName = $(\"#nameofticket\").val();\r\n            v" +
+"ar vTicketEmailDes = $(\"#emailbearer\").val();\r\n            if ($(\'.Notifybox\').c" +
+"ss(\'display\') == \'block\') {\r\n                vTicketEmailDes = $(\"#emailbearer\")" +
+".val();\r\n            } else {\r\n\r\n                vTicketEmailDes = \"\";\r\n        " +
+"    }\r\n            //strHTML = strHTML + \'<td align=\"right\"><i onclick=\"editOrgn" +
+"izer(\' + Sno + \')\"; class=\"fa fa-pencil\"></i> | <i onclick=\"DeleteOrgnizer(\' + S" +
+"no + \');\" class=\"fa fa-trash\"></i></td>\';\r\n\r\n            var strHTML = \'<tr>\';\r\n" +
+"            strHTML = strHTML + \'<td style=\"display:none\" width=\"92%\">\' + Sno + " +
+"\'</td>\';\r\n            strHTML = strHTML + \'<td width=\"92%\"><label id=TicketName_" +
+"\' + Sno + \'>\' + vTicketName + \'</label></td>\';\r\n            strHTML = strHTML + " +
+"\'<td style=\"display:none\"><label id=TicketEmail_\' + Sno + \'>\' + vTicketEmailDes " +
+"+ \'</label></td>\';\r\n            strHTML = strHTML + \'</tr>\';\r\n            //    " +
+"            strHTML = strHTML + \'<td><div class=\"trigger mt5 ent_add\"><a href=\"#" +
+"\" onclick=\"editRow(\' + Sno + \');\"><i class=\"fa fa-map-marker\"></i> Edit</a>  <a " +
+"href=\"#\" id=\"btAddDelete\" onclick=\"DeleteTableRow(\' + Sno + \')\">Delete</a> </div" +
+"> </td>\';\r\n\r\n\r\n            $(\"#tblListitem\").append(strHTML);\r\n            strHT" +
+"ML = \'<option value=\"\' + Sno + \'\" id=\"\' + Sno + \'\">\' + vTicketName + \'</option>\'" +
+";\r\n\r\n            $(\"#ddlListitem\").append(strHTML);\r\n        }\r\n\r\n    }\r\n    fun" +
+"ction showcardetails(e) {\r\n        debugger;\r\n        var selectvalue = $(\'#\' + " +
+"e).val();\r\n\r\n        if (selectvalue == \"A\") {\r\n            $(\'#cardshow\').css(\'" +
+"display\', \'block\');\r\n            $(\'#cardno\').val(\"\");\r\n            $(\'#expirati" +
+"ondate\').val(\"\");\r\n            $(\'#cvvcode\').val(\"\");\r\n            $(\'#divshippi" +
+"nginfo\').css(\'display\', \'block\');\r\n        }\r\n        else if (selectvalue == \"-" +
+"1\") {\r\n            $(\'#cardshow\').css(\'display\', \'none\');\r\n            $(\'#divsh" +
+"ippinginfo\').css(\'display\', \'block\');\r\n        }\r\n        else if (selectvalue =" +
+"= \"P\") {\r\n            $(\'#cardshow\').css(\'display\', \'none\');\r\n            $(\'#di" +
+"vshippinginfo\').css(\'display\', \'none\');\r\n            //$(\".divvisible\").css(\'dis" +
+"play\', \'none\');\r\n\r\n        }\r\n        else {\r\n\r\n            $(\'#cardshow\').css(\'" +
+"display\', \'block\');\r\n            $(\'#divshippinginfo\').css(\'display\', \'block\');\r" +
+"\n            //$(\".divvisible\").css(\'display\', \'none\');\r\n            $.ajax({\r\n " +
+"               url: \'");
 
             
-            #line 2222 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 2273 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                  Write(Url.Action("returncardetail", "TicketPayment"));
 
             
@@ -2954,14 +3039,14 @@ WriteLiteral(@"',
 
     }
     function NullSession(e) {
-       
+
         $(""#hdIsPostBack"").val(""Y"");
 
         $.ajax({
             url: '");
 
             
-            #line 2265 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 2316 "..\..\Views\TicketPayment\TicketPayment.cshtml"
              Write(Url.Action("Nullsession", "TicketPayment"));
 
             
@@ -2971,7 +3056,7 @@ WriteLiteral("\',\r\n            type: \"Post\",\r\n            success: functio
 "        window.location.href = \'");
 
             
-            #line 2269 "..\..\Views\TicketPayment\TicketPayment.cshtml"
+            #line 2320 "..\..\Views\TicketPayment\TicketPayment.cshtml"
                                    Write(Url.Action("TicketPayment", "TicketPayment"));
 
             
@@ -2981,10 +3066,10 @@ WriteLiteral(@"';
 
             }
         });
-       
+
         var eventid = $('#hdEventid').val();
         //alert(eventid);
-      
+
 
     }
     function UpdateTicket() {
