@@ -1920,6 +1920,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="TPD_Donate" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TPD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="TPD_EC_Fee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TPD_PromoCodeID" Type="Int32" />
+          <Property Name="TPD_PromoCodeAmount" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="Event" Relationship="EventComboModel.EventTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="Event" />
           <NavigationProperty Name="Ticket_Quantity_Detail" Relationship="EventComboModel.Ticket_Quantity_DetailTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="Ticket_Quantity_Detail" />
           <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.AspNetUserTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="AspNetUser" />
@@ -3204,24 +3206,6 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Ticket_Purchased_Detail">
-          <Key>
-            <PropertyRef Name="TPD_Id" />
-          </Key>
-          <Property Name="TPD_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TPD_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="TPD_Order_Id" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="TPD_Purchased_Qty" Type="Int64" />
-          <Property Name="TPD_TQD_Id" Type="Int64" />
-          <Property Name="TPD_Event_Id" Type="Int64" />
-          <Property Name="TPD_Amount" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="TPD_Donate" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="TPD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="TPD_EC_Fee" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="TPD_PromoCodeID" Type="Int32" />
-          <Property Name="TPD_PromoCodeAmount" Type="Decimal" Precision="18" Scale="2" />
-        </EntityType>
-
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

@@ -88,6 +88,7 @@ namespace EventCombo.Models
         public virtual DbSet<OrderTemplateQuestionVariant> OrderTemplateQuestionVariants { get; set; }
         public virtual DbSet<OrderTemplateGroupType> OrderTemplateGroupTypes { get; set; }
         public virtual DbSet<Promo_Code> Promo_Code { get; set; }
+        public virtual DbSet<Ticket_Purchased_Detail> Ticket_Purchased_Detail { get; set; }
         public virtual DbSet<OrderState> OrderStates { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]

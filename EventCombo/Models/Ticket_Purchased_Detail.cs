@@ -26,7 +26,7 @@ namespace EventCombo.Models
         public Nullable<decimal> TPD_EC_Fee { get; set; }
         public Nullable<int> TPD_PromoCodeID { get; set; }
         public Nullable<decimal> TPD_PromoCodeAmount { get; set; }
-
+    
         public virtual Event Event { get; set; }
         public virtual Ticket_Quantity_Detail Ticket_Quantity_Detail { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
