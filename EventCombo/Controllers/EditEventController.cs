@@ -1200,7 +1200,7 @@ namespace EventCombo.Controllers
                         strticketHtml.Append("<div class='col-sm-2 no_pad ipad-50'><div class='form-group'>");
                         strticketHtml.Append("<label class='col-sm-3 control-label ev_tickt_lebel xs-tkt-typ-pad-0'>Qty</label>");
                         strticketHtml.Append("<div class='col-sm-9 xs-tkt-typ-pad-0'>");
-                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont txtsum numbers' id='id_quantity_total-" + j + "' maxlength='6' placeholder='' onblur='changeqty(this.id)' onkeypress='allownumber(this,event,this.id)' value='" + ObjTick.Qty_Available + "' />");
+                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont txtsum numbers' id='id_quantity_total-" + j + "' maxlength='6' placeholder='' onblur='changeqty(this.id)' oncopy='return false' oncut='return false' onpaste='return false' onkeypress='allownumber(this,event,this.id)' value='" + ObjTick.Qty_Available + "' />");
                         strticketHtml.Append("</div></div> </div>");
                         if (ObjTick.TicketTypeID == 2)
                         {
@@ -1214,11 +1214,11 @@ namespace EventCombo.Controllers
                         strticketHtml.Append("<div class='col-sm-7 xs-tkt-typ-pad-0 ipad-pad-5'>");
                         if (ObjTick.TicketTypeID == 2)
                         {
-                            strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' id='id_cost-" + j + "' onkeypress='validatenumdec(this, event, this.id)' onkeyup='changefee(this.id, event)' onblur='tofixed(this.id)'   placeholder='0.00' maxlength='9' value=" + Price + " />");
+                            strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' id='id_cost-" + j + "' onkeypress='validatenumdec(this, event, this.id)' onkeyup='changefee(this.id, event)' onblur='tofixed(this.id)' oncopy='return false' oncut='return false' onpaste='return false'   placeholder='0.00' maxlength='9' value=" + Price + " />");
                         }
                         else
                         {
-                            strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' id='id_cost-" + j + "' onkeypress='validatenumdec(this, event, this.id)' onkeyup='changefee(this.id, event)' onblur='tofixed(this.id)'   placeholder='0.00' maxlength='9' />");
+                            strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' id='id_cost-" + j + "' onkeypress='validatenumdec(this, event, this.id)' onkeyup='changefee(this.id, event)' onblur='tofixed(this.id)' oncopy='return false' oncut='return false' onpaste='return false'   placeholder='0.00' maxlength='9' />");
 
                         }
                         strticketHtml.Append("</div></div>");
@@ -1287,7 +1287,7 @@ namespace EventCombo.Controllers
                         }
                         strticketHtml.Append("<label class='col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0 ipad-width-58 ipad-pl0'>Disc.$</label>");
                         strticketHtml.Append("<div class='col-sm-8 xs-tkt-typ-pad-0 ipad-pad-5'>");
-                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' placeholder='0' id='id_Discount-" + j + "' onkeypress='changefeetype(this, event, this.id)'  onblur='tofixed(this.id)' maxlength='9' value='" + discount + "' />");
+                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont numbers' placeholder='0' id='id_Discount-" + j + "' onkeypress='changefeetype(this, event, this.id)'  onblur='tofixed(this.id)' oncopy='return false' oncut='return false' onpaste='return false' maxlength='9' value='" + discount + "' />");
                         strticketHtml.Append("</div></div></div>");
                         strticketHtml.Append("<div class='clearfix'></div>");
                         if (Isadmin == "Y")
@@ -1314,11 +1314,11 @@ namespace EventCombo.Controllers
                         strticketHtml.Append("<div class='form-group'>");
                         strticketHtml.Append("<label class='col-sm-5 no_pad control-label ev_tickt_lebel xs-evnt-type-pad-0'>EC Fee</label>");
                         strticketHtml.Append("<label class='col-sm-1 no_pad control-label ev_tickt_lebel'>%</label>");
-                        strticketHtml.Append("<div class='col-sm-6 xs-evnt-type-pad-0'><input type='text' class='form-control evnt_inp_cont' placeholder='' id='id_ecfeeper-" + j + "' value=" + ecfeepercentage + "  onkeypress='allownumber(this,event,this.id)' onblur='changeinecfee(this.id)' maxlength=3  />");
+                        strticketHtml.Append("<div class='col-sm-6 xs-evnt-type-pad-0'><input type='text' class='form-control evnt_inp_cont' placeholder='' id='id_ecfeeper-" + j + "' value=" + ecfeepercentage + "  onkeypress='allownumber(this,event,this.id)' oncopy='return false' oncut='return false' onpaste='return false' onblur='changeinecfee(this.id)' maxlength=3  />");
                         strticketHtml.Append("  </div></div></div>");
                         strticketHtml.Append("<div class='col-sm-1 no_pad text-center ev_tickt_lebel'> + </div><div class='col-sm-2 no_pad'><div class='form-group'>");
                         strticketHtml.Append("<label class='col-sm-1 no_pad control-label ev_tickt_lebel'>$</label>");
-                        strticketHtml.Append("<div class='col-sm-11 xs-evnt-type-pad-0'><input type='text' class='form-control evnt_inp_cont'  id='id_ecfeeamt-" + j + "' value=" + ecamount + " onkeypress='validatenumdec(this, event, this.id)' onblur='tofixed(this.id);changeinecfee(this.id)'  maxlength=8 >");
+                        strticketHtml.Append("<div class='col-sm-11 xs-evnt-type-pad-0'><input type='text' class='form-control evnt_inp_cont'  id='id_ecfeeamt-" + j + "' value=" + ecamount + " onkeypress='validatenumdec(this, event, this.id)' onblur='tofixed(this.id);changeinecfee(this.id)' oncopy='return false' oncut='return false' onpaste='return false'  maxlength=8 >");
                         strticketHtml.Append("</div> </div></div>");
                         strticketHtml.Append("<div class='col-sm-1 no_pad text-center ev_tickt_lebel'> =   </div>");
                         strticketHtml.Append("<div class='col-sm-2 no_pad'>");
@@ -1333,7 +1333,7 @@ namespace EventCombo.Controllers
                         strticketHtml.Append("<label class='col-sm-4 no_pad control-label ev_tickt_lebel xs-evnt-type-pad-0'>Cutomer Fee</label>");
                         strticketHtml.Append("<label class='col-sm-1 no_pad control-label ev_tickt_lebel'>$</label>");
                         strticketHtml.Append("<div class='col-sm-5 xs-evnt-type-pad-0'>");
-                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont'  id='id_customerfee-" + j + "' placeholder='' value=" + customerfee + " onkeypress='validatenumdec(this, event, this.id)' onblur='tofixed(this.id);reflectfeechange(this.id)'  maxlength=8 />");
+                        strticketHtml.Append("<input type='text' class='form-control evnt_inp_cont'  id='id_customerfee-" + j + "' placeholder='' value=" + customerfee + " onkeypress='validatenumdec(this, event, this.id)' onblur='tofixed(this.id);reflectfeechange(this.id)' oncopy='return false' oncut='return false' onpaste='return false'  maxlength=8 />");
                         strticketHtml.Append("<input type='hidden'  id='hd_customerfee-" + j + "' value=" + customerfee + " />");
                         strticketHtml.Append("<input type='hidden'  id='hd_customchange-" + j + "' value=0 />");
                         strticketHtml.Append("</div></div ></div ></div ></div> </div>");
@@ -1532,9 +1532,9 @@ namespace EventCombo.Controllers
                         if (ObjTick.TicketTypeID != 3)
                         {
                             strticketHtml.Append("<div class='clearfix donateshow-" + j + "' id='cleafix-" + j + "'></div><div class='form-group donateshow-" + j + "' id='maxmin-" + j + "'><label class='label-control pl0 ev_tickt_lebel wd600'>Tickets allowed per order</label>");
-                            strticketHtml.Append("<div class='evnt_time_cont wd280 mr5_p'><input class='form-control evnt_inp_cont wd240 numbers' placeholder='0' id='id_min_ticket-" + j + "'  onkeypress='allownumber(this,event,this.id)' maxlength='6' value='" + ObjTick.Min_T_Qty + "' />");
+                            strticketHtml.Append("<div class='evnt_time_cont wd280 mr5_p'><input class='form-control evnt_inp_cont wd240 numbers' placeholder='0' id='id_min_ticket-" + j + "'  onkeypress='allownumber(this,event,this.id)' maxlength='6' oncopy='return false' oncut='return false' onpaste='return false' value='" + ObjTick.Min_T_Qty + "' />");
                             strticketHtml.Append("<label class='label-control lbl_bot_minim'>Minimum</label></div><div class='evnt_time_cont wd280'>");
-                            strticketHtml.Append("<input class='form-control evnt_inp_cont wd240 numbers' placeholder='0' id='id_max_ticket-" + j + "'  onkeypress='allownumber(this,event,this.id)' maxlength='6' value='" + ObjTick.Max_T_Qty + "' />");
+                            strticketHtml.Append("<input class='form-control evnt_inp_cont wd240 numbers' placeholder='0' id='id_max_ticket-" + j + "'  onkeypress='allownumber(this,event,this.id)' maxlength='6' oncopy='return false' oncut='return false' onpaste='return false' value='" + ObjTick.Max_T_Qty + "'  />");
                             strticketHtml.Append("<label class='label-control lbl_bot_minim '>Maximum</label><label class='col-sm-12 no_pad control-label' style='color:red;display:none' id='id_lblmax-" + j + "' >Please enter a valid number</label>");
                             strticketHtml.Append(" </div></div>");
                         }
@@ -1613,7 +1613,7 @@ namespace EventCombo.Controllers
                         strvariableHtml.Append("<div class='col-sm-7 col-xs-7'><input type='hidden' id='id_varid-" + k + "' value='" + Objvardesc.Variable_Id + "'/>");
                         strvariableHtml.Append("<input class='form-control evnt_inp_cont' type='text' placeholder='Variable Charges Description " + (k + 1) + "' id='id_varsubdesc-" + k + "' maxlength='256' value='" + Objvardesc.VariableDesc + "' onblur='checkvalidatetkt(this.id)'     >");
                         strvariableHtml.Append(" </div><div class='col-sm-4 col-xs-4'><label class='col-sm-1 control-label ev_tickt_lebel'>$</label> <div class='col-sm-10 no_pad'>");
-                        strvariableHtml.Append("<input class='form-control evnt_inp_cont' type='text' placeholder='0.00' id='id_varsubprice-" + k + "' maxlength='9'onkeypress='changefeetype(this, event, this.id);' onblur='tofixed(this.id);checkvalidatetkt(this.id);' value=" + PRICE + ">");
+                        strvariableHtml.Append("<input class='form-control evnt_inp_cont' type='text' placeholder='0.00' id='id_varsubprice-" + k + "' maxlength='9'onkeypress='changefeetype(this, event, this.id);' onblur='tofixed(this.id);checkvalidatetkt(this.id);' oncopy='return false' oncut='return false' onpaste='return false' value=" + PRICE + ">");
                         strvariableHtml.Append("</div> </div><div class='col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main'> <button class='btn' type='button' id='btn_vardelete-" + k + "' onclick='deletevariable(this.id)'><i class='fa fa-times'></i></button>");
                         strvariableHtml.Append("</div> </div></div> </div>");
 
@@ -2838,7 +2838,7 @@ namespace EventCombo.Controllers
                     ObjEC.Private_Password = model.Private_Password;
                     ObjEC.EventUrl = model.EventUrl;
                     ObjEC.PublishOnFB = model.PublishOnFB;
-                    ObjEC.EventStatus = model.EventStatus;
+                    ObjEC.EventStatus = "Live";
                     ObjEC.IsMultipleEvent = model.IsMultipleEvent;
                     ObjEC.TimeZone = model.TimeZone;
                     ObjEC.DisplayStartTime = model.DisplayStartTime;
