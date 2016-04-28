@@ -219,19 +219,18 @@ ul {
 
 .basicInfoUnCheckBox{
     background:url('../../images/unchecked.png') no-repeat;
-    background-position: left;
+    background-position: left top;
     padding-left: 33px;
     background-size: 23px;
-    line-height: 30px;
     font-size: 17px;
     min-width: 23px;
     min-height: 23px;
     cursor:pointer;
     overflow:hidden;
+    margin-bottom: 13px;
 }
 .basicInfoUnCheckBoxQuestion{
-    background-position: top left;
-    line-height: 19px;
+    background-position: left top;
 }
 .dragIconItems{
     display: block;
@@ -246,15 +245,15 @@ ul {
 
 .basicInfoCheckBox{
     background:url('../../images/checked.png') no-repeat;
-    background-position: left;
+    background-position: left top;
     padding-left: 33px;
     background-size: 23px;
-    line-height: 30px;
     font-size: 17px;
     min-width: 23px;
     min-height: 23px;
     cursor:pointer;
     overflow:hidden;
+    margin-bottom: 13px;
 }
 
 .onlyCheckBoxItem{
@@ -416,7 +415,7 @@ ul {
     height:auto!important;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (max-width: 500px) {
     .questionsDropDown {
         width: 63%;
         float: left;
