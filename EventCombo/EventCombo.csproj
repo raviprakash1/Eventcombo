@@ -509,6 +509,7 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DeleteLockTickets.cs" />
     <Compile Include="Services\EventStatusUpdate.cs" />
     <Compile Include="Services\TicketEmailer.cs" />
     <Compile Include="Startup.cs" />
