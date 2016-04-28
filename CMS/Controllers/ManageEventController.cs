@@ -296,14 +296,64 @@ namespace CMS.Controllers
         {
             try
             {
+                string sql = "";
+                List<Object> sqlParamsList = new List<object>();
                 var eventID = new SqlParameter("@EventID", Eventid);
-                db.Database.ExecuteSqlCommand("Delete from Event_Orgnizer_Detail where Orgnizer_Event_Id=@EventID", eventID);
-                db.Database.ExecuteSqlCommand("Delete from Event_VariableDesc where Event_Id=@EventID", eventID);
-                db.Database.ExecuteSqlCommand("Delete from Ticket where E_Id=@EventID", eventID);
-                db.Database.ExecuteSqlCommand("Delete from Address where EventId=@EventID", eventID);
-                db.Database.ExecuteSqlCommand("Delete from MultipleEvent where EventID=@EventID", eventID);
-                db.Database.ExecuteSqlCommand("Delete from EventVenue where EventID=@EventID", eventID);
-                db.Database.ExecuteSqlCommand("Delete from Event where EventID=@EventID", eventID);
+                 sql = @"delete from  Event_Orgnizer_Detail  where Orgnizer_Event_Id={0}";
+                sqlParamsList = new List<object>();
+                sqlParamsList.Add(Eventid);
+                db.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+                 sql = @"delete from  Event_VariableDesc  where Event_Id={0}";
+                 sqlParamsList = new List<object>();
+                sqlParamsList.Add(Eventid);
+                db.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+                sql = @"delete from  Ticket_Quantity_Detail  where TQD_Event_Id={0}";
+                sqlParamsList = new List<object>();
+                sqlParamsList.Add(Eventid);
+                db.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+                sql = @"delete from  Ticket  where E_Id={0}";
+                sqlParamsList = new List<object>();
+                sqlParamsList.Add(Eventid);
+                db.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+                 sql = @"delete from  Address  where EventId={0}";
+                sqlParamsList = new List<object>();
+                sqlParamsList.Add(Eventid);
+                db.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+                 sql = @"delete from  MultipleEvent  where EventID={0}";
+                 sqlParamsList = new List<object>();
+                sqlParamsList.Add(Eventid);
+                db.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+                  sql = @"delete from  EventVenue  where EventID={0}";
+                sqlParamsList = new List<object>();
+                sqlParamsList.Add(Eventid);
+                db.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+                sql = @"delete from  Event_OrganizerMessages  where EventId={0}";
+                sqlParamsList = new List<object>();
+                sqlParamsList.Add(Eventid);
+                db.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+                sql = @"delete from  EventFavourite  where eventId={0}";
+                sqlParamsList = new List<object>();
+                sqlParamsList.Add(Eventid);
+                db.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+                sql = @"delete from  EventImage  where EventID={0}";
+                sqlParamsList = new List<object>();
+                sqlParamsList.Add(Eventid);
+                db.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+                sql = @"delete from  EventVote  where eventId={0}";
+                sqlParamsList = new List<object>();
+                sqlParamsList.Add(Eventid);
+                db.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+                sql = @"delete from  Publish_Event_Detail  where PE_Event_Id={0}";
+                sqlParamsList = new List<object>();
+                sqlParamsList.Add(Eventid);
+                db.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+               
+                sql = @"delete from  Event  where EventID={0}";
+                sqlParamsList = new List<object>();
+                sqlParamsList.Add(Eventid);
+                db.Database.ExecuteSqlCommand(sql, sqlParamsList.ToArray());
+
+               
 
                 return Content("Deleted");
 

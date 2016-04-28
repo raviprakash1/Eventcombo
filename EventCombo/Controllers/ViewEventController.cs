@@ -421,6 +421,8 @@ namespace EventCombo.Controllers
             var ticketsDonation = (from r in db.Tickets where r.E_Id == EventId && r.TicketTypeID == 3 select r).Count();
 
             var itemsremainingInCart = (from o in db.Ticket_Quantity_Detail where o.TQD_Event_Id == EventId select o.TQD_Remaining_Quantity).Sum();
+            var ticketlockedqty = (from o in db.Ticket_Locked_Detail where o.TLD_Event_Id == EventId select o.TLD_Locked_Qty).Sum();
+            var remaining = itemsremainingInCart - ticketlockedqty;
 
 
             if (ticketsfree > 0 && ticketsPaid > 0 && ticketsDonation > 0)
@@ -472,6 +474,10 @@ namespace EventCombo.Controllers
             {
                 tickettype = "Sold Out";
 
+            }
+            if(remaining==0)
+            {
+                tickettype = "Sold Out";
             }
             viewEvent.Orderdetail = tickettype;
             return View(viewEvent);

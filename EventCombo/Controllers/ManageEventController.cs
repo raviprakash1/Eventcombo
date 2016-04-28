@@ -25,13 +25,16 @@ namespace EventCombo.Controllers
         EventComboEntities db = new EventComboEntities();
 
         [Authorize]
-        public ActionResult Index(long Eventlid, string type)
+        public ActionResult Index(long Eventlid=0, string type="")
         {
             if (Session["AppId"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-           
+           if(Eventlid==0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             ValidationMessage vmc = new ValidationMessage();
             var Eventid = vmc.GetLatestEventId(Eventlid);
@@ -1547,10 +1550,15 @@ namespace EventCombo.Controllers
 
         }
         [Authorize]
-        public ActionResult PromotionalCodes(long Eventlid, string strPageIndex = "page", string searchquery = "")
+        public ActionResult PromotionalCodes(long Eventlid=0, string strPageIndex = "page", string searchquery = "")
         {
             if (Session["AppId"] != null)
             {
+                if(Eventlid==0)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
                 ValidationMessage vmc = new ValidationMessage();
                 DateTimeWithZone dtzCreated;
                 var Eventid = vmc.GetLatestEventId(Eventlid);
@@ -1655,10 +1663,14 @@ namespace EventCombo.Controllers
         }
 
         [Authorize]
-        public ActionResult CreatePromotionalCodes(long Eventlid, long Promocode = 0)
+        public ActionResult CreatePromotionalCodes(long Eventlid=0, long Promocode = 0)
         {
             if (Session["AppId"] != null)
             {
+                if(Eventlid==0)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
 
                 ValidationMessage vmc = new ValidationMessage();
                 DateTimeWithZone dtzstart, dzend, dtzpcstart, dtzCreated, dtzpcend;
