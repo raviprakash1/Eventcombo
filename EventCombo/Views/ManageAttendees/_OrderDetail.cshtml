@@ -1,0 +1,53 @@
+﻿@using System.Collections.Generic;
+@using System.Linq;
+@using EventCombo.Models;
+@model EventOrderDetailViewModel
+<td colspan="6" style="padding:0px;">
+  <table class="table" style="margin-bottom:0px;">
+    @if (Model.Attendees.Count > 0)
+    {
+      for (var i = 0; i < Model.Attendees.Count; i++)
+      {
+        <tr class="UETableTDSUbDivBackColor">
+          <td class="subTableInnerTD">@(i == 0 ? "<b>Attendees</b>" : "")</td>
+          <td class="subTableInnerTD">@(Model.Attendees[i].Name) (<span style="color:#00CAFD;">@(Model.Attendees[i].Email)</span>)</td>
+          <td class="subTableInnerTD"></td>
+        </tr>
+
+      }
+    }
+    else
+    {
+      <tr class="UETableTDSUbDivBackColor">
+        <td class="subTableInnerTD"><b>No attendees</b></td>
+        <td class="subTableInnerTD"></td>
+        <td class="subTableInnerTD"></td>
+      </tr>
+    }
+
+    <tr class="UETableTDSUbDivBackColor">
+      <td class="subTableInnerTD"><b>Payment</b></td>
+      <td class="subTableInnerTD">Pay by @(Model.Payment)</td>
+      <td class="subTableInnerTD subContainerLastPadding"><b>Buyer Email: </b><span style="color:#00CAFD;">@(Model.Email)</span></td>
+    </tr>
+
+    <tr class="UETableTDSUbDivBackColor">
+      <td id="ajaxanswer@(Model.OrderId)" class="subTableInnerTD" colspan="3"></td>
+    </tr>
+
+    <tr class="UETableTDSUbDivBackColorFooter">
+      <td colspan="3">
+        <table style="width:100%;">
+          <tr>
+            <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubEdit()">EDIT</td>
+            <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubRefund()">REFUND</td>
+            <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubViewReport()">VIEW Report</td>
+            <td class="UETableTDSUbDivFooterLinks">@(Html.ActionLink("PRINT TICKETS", "Ticket", "Download", new { OrderId = Model.OrderId, format = "pdf" }, new { target = "_blank" }))</td>
+            <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubResend('@(Model.OrderId)')">RE-SEND CONFIRMATION</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</td>
+

@@ -1,0 +1,356 @@
+﻿@using System.Collections.Generic;
+@using System.Linq;
+@using EventCombo.Models;
+@model ManageAttendeesOrdersViewModel
+
+@{
+  ViewBag.Title = "Manage Attendees";
+  Layout = "~/Views/Shared/_ManageEventLayout.cshtml";
+}
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/manageattendees.css" rel="stylesheet" />
+
+<div id="purchasedTicketContainer" class="midd_cont">
+  <div class="headerPurchasedTicket">
+    <div class="col-sm-6 col-xs-6">
+      <h2 class="purchasedTitleHead">ORDERS</h2>
+    </div>
+    <div class="col-sm-6 col-xs-6 searchTxtOrderContainerCls">
+      <input id="SearchText" type="text" placeholder="Search orders" class="searchTxtOrderCls" onkeypress="return OnKeyPress(event)" />
+    </div>
+  </div>
+
+  <ul class="nav nav-tabs purchaseTicketHeaderTabs">
+    <li class="active"><a data-toggle="tab" href="#@(PaymentStates.Total.ToString())">ALL</a></li>
+    <li><a data-toggle="tab" href="#@(PaymentStates.Completed.ToString())">COMPLETED</a></li>
+    <li><a data-toggle="tab" href="#@(PaymentStates.Pending.ToString())">PENDING</a></li>
+  </ul>
+
+  <div class="tab-content">
+    @foreach (var order in Model.OrdersSummary)
+    {
+      <div id="@(order.PaymentState.ToString())" class="tab-pane fade@(order.PaymentState == PaymentStates.Total ? " in active" : "")">
+        <div class="dateTimeForm">
+          <a id="oneDayDate@(order.PaymentState.ToString())" class="dateTopHeaderCls" href="javascript:void(0)" onclick="setSelectedDate('oneDayDate', 1, '@(order.PaymentState.ToString())' )">1 DAY</a>
+          <a id="oneWeekDate@(order.PaymentState.ToString())" class="dateTopHeaderCls dateTopHeaderClsSelected" href="javascript:void(0)" onclick="setSelectedDate('oneWeekDate', 2, '@(order.PaymentState.ToString())')">1 WEEK</a>
+          <a id="oneMonthDate@(order.PaymentState.ToString())" class="dateTopHeaderCls" href="javascript:void(0)" onclick="setSelectedDate('oneMonthDate', 3, '@(order.PaymentState.ToString())')">1 MONTH</a>
+          <a id="oneYearDate@(order.PaymentState.ToString())" class="dateTopHeaderCls" href="javascript:void(0)" onclick="setSelectedDate('oneYearDate', 4, '@(order.PaymentState.ToString())')">1 YEAR</a>
+          <a id="customDate@(order.PaymentState.ToString())" class="dateTopHeaderCls" href="javascript:void(0)">CUSTOM: <input type="text" id="datepicker@(order.PaymentState.ToString())" class="datePickerCustomCls"></a>
+        </div>
+        @{ double perc = order.TicketsTotal == 0 ? 0.00 : ((double)order.TicketsSold * 100) / order.TicketsTotal; }
+        <div class="ticketSoldPercent">
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="col-xs-6 paddingBootstrap">
+              <h3 class="ticketSoldPercentTxt">@(perc.ToString("N2"))% Tickets Sold</h3>
+            </div>
+            <div class="col-xs-6 paddingBootstrap">
+              <a href="javascript:void(0)" class="ticketSoldSaleReport">Sale Report</a>
+            </div>
+            <div class="col-xs-12 mainContainerLoading">
+              <div class="filledContainer" style="width: @(perc.ToString("F0"))%;">
+              </div>
+              <div class="filledTxtContain">@(order.TicketsSold.ToString("N0"))</div>
+              <div class="filledTxtTotal">Total: @(order.TicketsTotal.ToString("N0"))</div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-sm-6 col-xs-12 ticketSold2Div">
+            <div class="ticketSoldTxt">
+              <h3 class="ticketSoldPercentTxt">For the total of</h3>
+            </div>
+            <div class="ticketSoldPriceTotal">
+              $@(order.Amount.ToString("N3"))
+            </div>
+          </div>
+        </div>
+
+        <div class="ticketSoldPercent">
+          <div class="orderListCsvCon">
+            <div class="col-sm-6 col-xs-12 orderTxtHead">ORDER LIST</div>
+            <div class="col-sm-6 col-xs-12 orderTxtExport">
+              Export to:
+              <a href="javascript:void(0)" class="linkReportHead">CSV</a>
+              <a href="javascript:void(0)" class="linkReportHead">TXT</a>
+              <a href="javascript:void(0)" class="linkReportHead">EXL</a>
+            </div>
+          </div>
+        </div>
+
+        <div id="OrderListDiv@(order.PaymentState.ToString())" class="table-responsive tableResponsiveOrderList">
+        </div>
+
+        <div id="orderPaginationMainContainer" class="orderListPagination">
+          <div id="orderPaginationPages@(order.PaymentState.ToString())" class="col-sm-8 col-xs-12 orderPagination">
+            <ul id="paginationRecordUL@(order.PaymentState.ToString())" class="pagination"></ul>
+          </div>
+          <div id="orderPaginationCapacity@(order.PaymentState.ToString())" class="col-sm-4 col-xs-12 orderViewCount">
+            <ul class="pagination">
+              <li id="recordShow20" onclick="SetPerPage(this, '@(order.PaymentState.ToString())', 1)" class="active recordLiItem"><a href="javascript:void(0)">20</a></li>
+              <li id="recordShow50" onclick="SetPerPage(this, '@(order.PaymentState.ToString())', 2)" class="recordLiItem"><a href="javascript:void(0)">50</a></li>
+              <li id="recordShow100" onclick="SetPerPage(this, '@(order.PaymentState.ToString())', 100)" class="recordLiItem"><a href="javascript:void(0)">100</a></li>
+              <li id="recordShow0" onclick="SetPerPage(this, '@(order.PaymentState.ToString())', 0)" class="recordLiItem"><a href="javascript:void(0)">ALL</a></li>
+            </ul>
+          </div>
+        </div>
+        <script type="text/javascript">
+          $(function () {
+            setPagination("@(order.PaymentState.ToString())", "@(order.Count.ToString())", 0);
+            $("#datepicker" + "@(order.PaymentState.ToString())").datepicker({
+              onSelect: function (dateText) { setSelectedDate("customDate", 0, "@(order.PaymentState.ToString())") }
+            });
+          });
+        </script>
+      </div>
+    }
+  </div>
+  <div id="spinner" class="spinner" style="display:none;">
+    <img id="img-spinner" src="~/Images/ajaxloader1.gif" alt="Loading" />
+  </div>
+</div>
+
+<script type="text/javascript">
+  var cStates = [{
+    EventId: "@(Model.EventId)",
+    Page: "@(Model.DefaultState.Page)",
+    PerPage: "@(Model.DefaultState.PerPage)",
+    SortBy: "@(Model.DefaultState.SortBy)",
+    SortDesc: "@(Model.DefaultState.SortDesc)",
+    DateFrom: "@(Model.DefaultState.DateFrom)",
+    Search: "@(Model.DefaultState.Search)",
+    PaymentState: "@(PaymentStates.Total.ToString())",
+    Total: 0
+  }, {
+    EventId: "@(Model.EventId)",
+    Page: "@(Model.DefaultState.Page)",
+    PerPage: "@(Model.DefaultState.PerPage)",
+    SortBy: "@(Model.DefaultState.SortBy)",
+    SortDesc: "@(Model.DefaultState.SortDesc)",
+    DateFrom: "@(Model.DefaultState.DateFrom)",
+    Search: "@(Model.DefaultState.Search)",
+    PaymentState: "@(PaymentStates.Completed.ToString())",
+    Total: 0
+  }, {
+    EventId: "@(Model.EventId)",
+    Page: "@(Model.DefaultState.Page)",
+    PerPage: "@(Model.DefaultState.PerPage)",
+    SortBy: "@(Model.DefaultState.SortBy)",
+    SortDesc: "@(Model.DefaultState.SortDesc)",
+    DateFrom: "@(Model.DefaultState.DateFrom)",
+    Search: "@(Model.DefaultState.Search)",
+    PaymentState: "@(PaymentStates.Pending.ToString())",
+    Total: 0
+  }];
+
+  $(function () {
+    $(document).on({
+      ajaxStart: function () { $("#spinner").show(); },
+      ajaxStop: function () { $("#spinner").hide(); }
+    });
+  });
+
+  function setPagination(page, total, cur) {
+    $('#paginationRecordUL' + page).empty();
+    var cState = getCurrentState(page);
+    if (cState != null) {
+      cState.Total = total;
+      var totalPages = Math.ceil(cState.Total / cState.PerPage);
+      cur = cur >= totalPages ? totalPages - 1 : cur;
+      cState.Page = cur;
+      LoadOrdersList(page, cState);
+    }
+  }
+
+  function setPaginationAfterReload(page, cState) {
+    console.debug(cState);
+
+    if (cState.Total > 1)
+      $('#orderPaginationCapacity' + page).show();
+    else
+      $('#orderPaginationCapacity' + page).hide();
+
+    if ((cState.Total > cState.PerPage) && (cState.PerPage > 0)) {
+      var totalPages = Math.ceil(cState.Total / cState.PerPage);
+      var cur = cState.Page >= totalPages ? totalPages - 1 : cState.Page;
+      var startVal = ((cur + 2) >= totalPages) ? (totalPages - 5) : (cur - 2);
+      startVal = (startVal >= 0) ? startVal : 0;
+      var endVal = ((startVal + 4) >= totalPages) ? totalPages - 1 : (startVal + 4);
+      $("#paginationRecordUL" + page).append('<li id="paginationFirst" onclick="setPagination(\'' + page + '\', ' + cState.Total + ', 0)" class="paginationLiItem" ><a href="javascript:void(0)">First</a></li>' +
+        '<li id="paginationPrevious" onclick="setPagination(\'' + page + '\', ' + cState.Total + ', ' + (cur > 0 ? cur - 1 : cur) + ')" class="paginationLiItem"><a href="javascript:void(0)">Previous</a></li>');
+      if (startVal > 0)
+        $("#paginationRecordUL" + page).append('<li id="paginationPrevSome" onclick="setPagination(\'' + page + '\', ' + cState.Total + ', ' + (startVal - 1) + ')" class="paginationLiItem" ><a href="javascript:void(0)">...</a></li>');
+      for (i = startVal; i <= endVal; i++) {
+        $("#paginationRecordUL" + page).append('<li id="pagination"' + i + ' onclick="setPagination(\'' + page + '\', ' + cState.Total + ', ' + i + ')" class="paginationLiItem' + (i == cur ? ' active' : '') + '" ><a href="javascript:void(0)">' + (i + 1) + '</a></li>');
+      }
+      if (endVal < totalPages - 1)
+        $("#paginationRecordUL" + page).append('<li id="paginationNextSome" onclick="setPagination(\'' + page + '\', ' + cState.Total + ', ' + (endVal + 1) + ')" class="paginationLiItem" ><a href="javascript:void(0)">...</a></li>');
+      $("#paginationRecordUL" + page).append('<li id="paginationNext" onclick="setPagination(\'' + page + '\', ' + cState.Total + ', ' + (cur < (totalPages - 1) ? cur + 1 : cur) + ')" class="paginationLiItem" ><a href="javascript:void(0)">Next</a></li>' +
+        '<li id="paginationLast" onclick="setPagination(\'' + page + '\', ' + cState.Total + ', ' + (totalPages - 1) + ')" class="paginationLiItem"><a href="javascript:void(0)">Last</a></li>');
+      cState.Page = cur;
+    }
+    else {
+      cState.Page = 0;
+    }
+  }
+
+  function getCurrentState(state) {
+    var cState = null;
+    cStates.forEach(function (x) {
+      if (x.PaymentState == state)
+        cState = x;
+    });
+    return cState;
+  }
+
+
+  function setSelectedDate(objName, type, page) {
+    console.debug(page);
+    $('#' + objName + page).siblings('a').removeClass('dateTopHeaderClsSelected');
+    $('#' + objName + page).addClass('dateTopHeaderClsSelected');
+
+    var cState = getCurrentState(page);
+    if (cState != null) {
+      var oldDate = cState.DateFrom;
+      switch (type) {
+        case 0:
+          var cdate = new Date($('#datepicker' + page).datepicker('getDate'));
+          cState.DateFrom = formatDateTime(cdate);
+          break;
+        case 1:
+          var cdate = new Date();
+          cdate.setDate(cdate.getDate() - 1);
+          cState.DateFrom = formatDateTime(cdate);
+          break;
+        case 3:
+          var cdate = new Date();
+          cdate = new Date(cdate.getFullYear(), cdate.getMonth(), 1);
+          cState.DateFrom = formatDateTime(cdate);
+          break;
+        case 4:
+          var cdate = new Date();
+          cdate = new Date(cdate.getFullYear(), 0, 1);
+          cState.DateFrom = formatDateTime(cdate);
+          break;
+        default:
+          var cdate = new Date();
+          var day = cdate.getDay(), diff = cdate.getDate() - day + (day == 0 ? -6 : 1);
+          cdate = new Date(cdate.setDate(diff));
+          cState.DateFrom = formatDateTime(cdate);
+      }
+      console.debug(oldDate);
+      console.debug(cState.DateFrom);
+      if (oldDate != cState.DateFrom)
+        setPagination(page, cState.Total, 0);
+    }
+  }
+
+  function SetPerPage(obj, page, num) {
+    $(obj).siblings('li').removeClass('active');
+    $(obj).addClass('active');
+    var cState = getCurrentState(page);
+    if (cState != null) {
+      var curRec = cState.Page * cState.PerPage;
+      cState.PerPage = num;
+      setPagination(page, cState.Total, Math.floor(curRec / num));
+    }
+  }
+
+  function LoadOrdersList(page, query) {
+    console.debug(query);
+    $.ajax({
+      type: "GET",
+      url: "@Url.Action("GetOrderList", "ManageAttendees")",
+      data: query,
+      datatype: "html",
+      success: function (data) {
+        console.debug(data);
+        $('#OrderListDiv' + page).html(data);
+        query.Total = $('#OrderListTable' + page).data('totalrecords');
+        setPaginationAfterReload(page, query);
+      }
+    });
+  }
+
+  function sortBy(page, sort) {
+    var cState = getCurrentState(page);
+    if (cState != null) {
+      if ((cState.SortDesc == 'False') && (cState.SortBy == sort))
+        cState.SortDesc = 'True';
+      else
+        cState.SortDesc = 'False';
+      cState.SortBy = sort;
+      setPagination(page, cState.Total, 0);
+    }
+  }
+
+  function expandEditMenu(obj, page, id) {
+    var detail = $('#OrderDetail' + page + id);
+    if ($(detail).data('popped') == '0') {
+      $.ajax({
+        type: "GET",
+        url: "@Url.Action("GetOrderDetail", "ManageAttendees")",
+        data: { OrderId: id },
+        datatype: "html",
+        success: function (data) {
+          console.debug(data);
+          $(obj).parent().parent().css('background-color', '#f1f1f1');
+          $(detail).html(data);
+          $(detail).css('background-color', '#f1f1f1');
+          $(detail).css('border-top', 'none');
+          $(detail).data('popped', '1');
+          $(detail).slideDown();
+        }
+      });
+    }
+    else {
+      $(detail).html('');
+      $(obj).parent().parent().css('background-color', '#ffffff');
+      $(detail).data('popped', '0');
+      $(detail).slideUp();
+    }
+  }
+
+  function formatDateTime(date) {
+    console.debug(date);
+    var cdate = new Date(date);
+    var day = cdate.getDate();
+    var month = cdate.getMonth() + 1;
+    var year = cdate.getFullYear();
+    var res = month + "/" + day + "/" + year;
+    return res;
+  }
+
+  function OnKeyPress(ev) {
+    if (ev.keyCode == 13) {
+      SearchOrders();
+      return false;
+    }
+    return true;
+  }
+
+  function SearchOrders() {
+    var searchStr = $('#SearchText').val();
+    console.debug(searchStr);
+    for (var i = 0; i < cStates.length; i++) {
+      cStates[i].Search = searchStr;
+      console.debug(cStates[i]);
+      setPagination(cStates[i].PaymentState, cStates[i].Total, 0);
+    }
+  }
+
+  function orderListSubResend(oid) {
+    $.ajax({
+      type: "POST",
+      url: "@Url.Action("ResendConfirmations", "ManageAttendees")",
+      data: { orderId: oid },
+      datatype: "html",
+      success: function (data) {
+        if (data > 0) {
+          $('#ajaxanswer' + oId).html("Confirmations sent.");
+        }
+        else
+          $('#ajaxanswer' + oId).html("Confirmations not sent.");
+      }
+    });
+  }
+
+</script>

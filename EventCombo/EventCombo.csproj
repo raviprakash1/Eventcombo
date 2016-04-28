@@ -254,6 +254,7 @@
     <Compile Include="Controllers\Html2PdfController.cs" />
     <Compile Include="Controllers\ImageFiles.cs" />
     <Compile Include="Controllers\InbetweenController.cs" />
+    <Compile Include="Controllers\ManageAttendeesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageEventController.cs" />
     <Compile Include="Controllers\OrganizerInfoController.cs" />
@@ -397,6 +398,7 @@
     <Compile Include="Models\Language.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ManageAttendeesViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
@@ -512,7 +514,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\DBAccessService.cs" />
     <Compile Include="Service\IDBAccessService.cs" />
+    <Compile Include="Service\IManageAttendeesService.cs" />
     <Compile Include="Service\IManageEventService.cs" />
+    <Compile Include="Service\Notification\INotificationSender.cs" />
+    <Compile Include="Service\ManageAttendeesService.cs" />
+    <Compile Include="Service\Notification\NotificationSender.cs" />
     <Compile Include="Service\Notification\INotification.cs" />
     <Compile Include="Service\IOrderOptionsService.cs" />
     <Compile Include="Service\Notification\ISendMailService.cs" />
@@ -1292,6 +1298,13 @@
     <Content Include="Views\Account\_PurchasedTicketList.cshtml" />
     <Content Include="Views\Account\_PurchasedTicketDetail.cshtml" />
     <Content Include="Views\Account\_PurchasedTicketFavoriteList.cshtml" />
+    <Content Include="Views\ManageAttendees\Orders.cshtml" />
+    <Content Include="Views\ManageAttendees\Add.cshtml" />
+    <Content Include="Views\ManageAttendees\Email.cshtml" />
+    <Content Include="Views\ManageAttendees\Guests.cshtml" />
+    <Content Include="Views\ManageAttendees\Checkin.cshtml" />
+    <Content Include="Views\ManageAttendees\_OrderList.cshtml" />
+    <Content Include="Views\ManageAttendees\_OrderDetail.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

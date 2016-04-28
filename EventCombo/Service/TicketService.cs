@@ -126,15 +126,7 @@ namespace EventCombo.Service
         return null;
 
       OrderDetailsViewModel details = new OrderDetailsViewModel() { OrderId = orderId };
-
-      if (String.IsNullOrEmpty(order.O_PayPal_TrancId))
-      {
-        IRepository<BillingAddress> billRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
-        var billing = billRepo.Get(filter: (b => b.OrderId == orderId)).FirstOrDefault();
-        details.Payment = (billing == null) ? "No information" : billing.card_type + " XXXX-XXXX-XXXX-" + billing.CardId.Substring(billing.CardId.Length - 4);
-      }
-      else
-        details.Payment = "PayPal ID: XXXXXXXXXXXX" + order.O_PayPal_TrancId.Substring(order.O_PayPal_TrancId.Length - 4);
+      details.Payment = _dbservice.GetPaymentInfo(orderId);
 
       IRepository<EventCombo.Models.Profile> userRepo = new GenericRepository<EventCombo.Models.Profile>(_factory.ContextFactory);
       var user = userRepo.Get(filter: (u => u.UserID == userId)).First();
@@ -191,7 +183,7 @@ namespace EventCombo.Service
             foreach (var att in selected)
               if (!String.IsNullOrWhiteSpace(att.Email))
               {
-                notification.Receiver = att.Name;
+                notification.ReceiverName = att.Name;
                 sendService.Message.To.Clear();
                 sendService.Message.To.Add(new MailAddress(att.Email, att.Name));
                 notification.SendNotification(sendService);

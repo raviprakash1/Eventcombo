@@ -59,7 +59,7 @@
       </a>
       <div id="collapseManageAttendees" class="panel-collapse collapse">
         <div class="panel-body no-padding">
-          <p>@Html.ActionLink("Orders", "Orders", "ManageAttendees")</p>
+          <p>@Html.ActionLink("Orders", "Orders", "ManageAttendees", new { eventId = @ViewBag.EventId }, null)</p>
           <p>@Html.ActionLink("Add Attendees", "Add", "ManageAttendees")</p>
           <p>@Html.ActionLink("Emails to Attendees", "Email", "ManageAttendees")</p>
           <p>@Html.ActionLink("Guest List", "Guests", "ManageAttendees")</p>

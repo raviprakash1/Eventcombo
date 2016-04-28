@@ -8,6 +8,7 @@ namespace EventCombo.Service
 {
   public interface INotification
   {
+    string ReceiverName { get; set; }
     void SendNotification(ISendMailService _service);
   }
 }

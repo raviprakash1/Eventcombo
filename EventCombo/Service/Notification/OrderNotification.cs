@@ -35,7 +35,7 @@ namespace EventCombo.Service
       _baseUrl = baseUrl;
     }
 
-    public string Receiver
+    public string ReceiverName
     {
       get { return _receiver; }
       set { _receiver = value; }
@@ -47,7 +47,7 @@ namespace EventCombo.Service
         PrepareNotification();
       _service.Message.Subject = _subject;
       _service.Message.IsBodyHtml = true;
-      _service.Message.Body = _body.Replace("¶¶UserFirstNameID¶¶", Receiver);
+      _service.Message.Body = _body.Replace("¶¶UserFirstNameID¶¶", ReceiverName);
       _service.SendMail();
     }
 

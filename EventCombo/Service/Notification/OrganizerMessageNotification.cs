@@ -33,5 +33,12 @@ namespace EventCombo.Service
       });
       _service.SendMail();
     }
+
+    private string _receiver;
+    public string ReceiverName
+    {
+      get { return _receiver; }
+      set { _receiver = value; }
+    }
   }
 }

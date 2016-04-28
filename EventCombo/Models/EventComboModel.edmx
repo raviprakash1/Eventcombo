@@ -1398,6 +1398,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
           <NavigationProperty Name="Ticket_Purchased_Details" Relationship="EventComboModel.AspNetUserTicket_Purchased_Detail" FromRole="AspNetUser" ToRole="Ticket_Purchased_Detail" />
           <NavigationProperty Name="Organizer_Masters" Relationship="EventComboModel.AspNetUserOrganizer_Master" FromRole="AspNetUser" ToRole="Organizer_Master" />
+          <NavigationProperty Name="Order_Detail_T" Relationship="EventComboModel.AspNetUserOrder_Detail_T" FromRole="AspNetUser" ToRole="Order_Detail_T" />
         </EntityType>
         <EntityType Name="BillingAddress">
           <Key>
@@ -1671,6 +1672,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="O_PayPal_TrancId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="OrderStateId" Type="Byte" />
           <NavigationProperty Name="OrderState" Relationship="EventComboModel.OrderStateOrder_Detail_T" FromRole="Order_Detail_T" ToRole="OrderState" />
+          <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.AspNetUserOrder_Detail_T" FromRole="Order_Detail_T" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="Payment_Info">
           <Key>
@@ -2382,6 +2384,10 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <AssociationSet Name="AspNetUserOrganizer_Master" Association="EventComboModel.AspNetUserOrganizer_Master">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="Organizer_Master" EntitySet="Organizer_Master" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserOrder_Detail_T" Association="EventComboModel.AspNetUserOrder_Detail_T">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Order_Detail_T" EntitySet="Order_Detail_T" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
@@ -3097,6 +3103,18 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             </Principal>
             <Dependent Role="Organizer_Master">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserOrder_Detail_T">
+          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="EventComboModel.Order_Detail_T" Role="Order_Detail_T" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order_Detail_T">
+              <PropertyRef Name="O_User_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

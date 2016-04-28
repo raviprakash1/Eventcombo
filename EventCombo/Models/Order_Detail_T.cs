@@ -29,5 +29,6 @@ namespace EventCombo.Models
         public Nullable<byte> OrderStateId { get; set; }
     
         public virtual OrderState OrderState { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

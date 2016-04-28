@@ -113,6 +113,7 @@
         <AssociationConnector Association="EventComboModel.EventEvent_OrganizerMessages" />
         <AssociationConnector Association="EventComboModel.Organizer_MasterEvent_OrganizerMessages" />
         <AssociationConnector Association="EventComboModel.AspNetUserOrganizer_Master" />
+        <AssociationConnector Association="EventComboModel.AspNetUserOrder_Detail_T" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
