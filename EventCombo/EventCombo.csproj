@@ -626,6 +626,7 @@
     <Content Include="Content\filter-dropdown.css" />
     <Content Include="Content\flipclock.css" />
     <Content Include="email-content-pdf%281%29.html" />
+    <Content Include="html\error.html" />
     <Content Include="Images\ajax-loader.gif" />
     <Content Include="Images\ajax-loaderMini.gif" />
     <Content Include="Images\amr-exp.png" />
@@ -644,6 +645,7 @@
     <Content Include="Images\loading.gif" />
     <Content Include="Images\login_img.png" />
     <Content Include="Images\online-icn.png" />
+    <Content Include="Images\oops.png" />
     <Content Include="Images\paper_tic.png" />
     <Content Include="Images\PromoCodeLoader.gif" />
     <Content Include="Images\qwe.png" />
