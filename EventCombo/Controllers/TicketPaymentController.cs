@@ -142,14 +142,10 @@ namespace EventCombo.Controllers
                                     orderby c.Country1 ascending
                                     select c).Distinct();
                 List<SelectListItem> countryList = new List<SelectListItem>();
-                if (!string.IsNullOrEmpty(Country))
-                {
-                    defaultCountry = Country;
-                }
-                else
-                {
+              
+               
                     defaultCountry = "United States";
-                }
+              
 
 
                 foreach (var item in countryQuery)
@@ -161,7 +157,9 @@ namespace EventCombo.Controllers
                         Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
                     });
                 }
+              
                 ViewBag.CountryID = countryList;
+                //ViewBag.BillcountryID = billcountryList;
                 Cardview card = new Cardview();
                 card.value = "-1";
                 card.text = "Select a Card";

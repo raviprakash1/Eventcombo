@@ -2709,9 +2709,9 @@ namespace EventCombo.Controllers
                                     //var ids = new HashSet<long>(objEnt.Tickets.Where(x => x.E_Id== lEventId).Select(x=>x.T_Id));
 
                                     var resultticks = objEnt.Tickets.Where(x => !ids.Contains(x.T_Id) && x.E_Id == lEventId).ToList();
+                                  
                                     if (resultticks != null)
-                                    {
-                                        objEnt.Tickets.RemoveRange(resultticks);
+                                    {objEnt.Tickets.RemoveRange(resultticks);
                                     }
 
 
@@ -3281,6 +3281,11 @@ namespace EventCombo.Controllers
                         //var ids = new HashSet<long>(objEnt.Tickets.Where(x => x.E_Id== lEventId).Select(x=>x.T_Id));
 
                         var resultticks = objEnt.Tickets.Where(x => !ids.Contains(x.T_Id) && x.E_Id == lEventId).ToList();
+                        var resulttickqty = objEnt.Ticket_Quantity_Detail.Where(x => !ids.Contains(x.TQD_Ticket_Id ?? 0) && x.TQD_Event_Id == lEventId).ToList();
+                        if(resulttickqty!=null)
+                        {
+                            objEnt.Ticket_Quantity_Detail.RemoveRange(resulttickqty);
+                        }
                         if (resultticks != null)
                         {
                             objEnt.Tickets.RemoveRange(resultticks);

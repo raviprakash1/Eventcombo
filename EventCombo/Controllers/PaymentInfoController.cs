@@ -150,8 +150,13 @@ namespace EventCombo.Controllers
 
             if (string.IsNullOrEmpty(objPI.PaymentInfo_Id.ToString()) || objPI.PaymentInfo_Id == 0)
             {
-                db.Payment_Info.Add(objPI);
-                db.SaveChanges();
+                try {
+                    db.Payment_Info.Add(objPI);
+                    db.SaveChanges();
+                }catch(Exception ex)
+                {
+                    ExceptionLogging.SendErrorToText(ex);
+                }
             }
             else
             {
