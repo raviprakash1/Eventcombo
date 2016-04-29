@@ -1,0 +1,384 @@
+-----------Exception Details on  4/29/2016 11:37:49 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/29/2016 11:37:49 AM
+
+Error Line No : ine 155
+
+Error Message: DbEntityValidationException
+
+Exception Type: System.Data.Entity.Validation.DbEntityValidationException
+
+Error Location : Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+
+ Error Page Url: http://localhost:10159/PaymentInfo/SavePaymentInfo
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/29/2016 12:12:02 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/29/2016 12:12:02 PM
+
+Error Line No : ne 2170
+
+Error Message: DbUpdateException
+
+Exception Type: System.Data.Entity.Infrastructure.DbUpdateException
+
+Error Location : An error occurred while updating the entries. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/29/2016 12:16:34 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/29/2016 12:16:34 PM
+
+Error Line No : ne 2170
+
+Error Message: DbUpdateException
+
+Exception Type: System.Data.Entity.Infrastructure.DbUpdateException
+
+Error Location : An error occurred while updating the entries. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/29/2016 12:46:01 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/29/2016 12:46:01 PM
+
+Error Line No : licate)
+
+Error Message: DbUpdateException
+
+Exception Type: System.Data.Entity.Infrastructure.DbUpdateException
+
+Error Location : An error occurred while updating the entries. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/29/2016 12:48:28 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/29/2016 12:48:28 PM
+
+Error Line No : token()
+
+Error Message: WebException
+
+Exception Type: System.Net.WebException
+
+Error Location : The remote server returned an error: (500) Internal Server Error.
+
+ Error Page Url: http://localhost:10159/cart/paypaltoken
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/29/2016 12:48:43 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/29/2016 12:48:43 PM
+
+Error Line No : token()
+
+Error Message: Exception
+
+Exception Type: System.Exception
+
+Error Location : Order total is invalid.
+
+ Error Page Url: http://localhost:10159/cart/paypaltoken
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/29/2016 12:48:50 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/29/2016 12:48:50 PM
+
+Error Line No : token()
+
+Error Message: Exception
+
+Exception Type: System.Exception
+
+Error Location : Order total is invalid.
+
+ Error Page Url: http://localhost:10159/cart/paypaltoken
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/29/2016 12:51:02 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/29/2016 12:51:02 PM
+
+Error Line No : token()
+
+Error Message: WebException
+
+Exception Type: System.Net.WebException
+
+Error Location : The remote server returned an error: (500) Internal Server Error.
+
+ Error Page Url: http://localhost:10159/cart/paypaltoken
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/29/2016 12:52:36 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/29/2016 12:52:36 PM
+
+Error Line No : token()
+
+Error Message: WebException
+
+Exception Type: System.Net.WebException
+
+Error Location : The remote server returned an error: (500) Internal Server Error.
+
+ Error Page Url: http://localhost:10159/cart/paypaltoken
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/29/2016 12:54:04 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/29/2016 12:54:04 PM
+
+Error Line No : ayerID)
+
+Error Message: WebException
+
+Exception Type: System.Net.WebException
+
+Error Location : The remote server returned an error: (500) Internal Server Error.
+
+ Error Page Url: http://localhost:10159/cart/docheckoutpayment?token=EC-12K187674D190021B&PayerID=3V4P29FJC94V6
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/29/2016 12:55:46 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/29/2016 12:55:46 PM
+
+Error Line No : ne 1863
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/manageevent/createpromotionalcodes
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/29/2016 12:56:03 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/29/2016 12:56:03 PM
+
+Error Line No : ne 1863
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/manageevent/createpromotionalcodes
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/29/2016 12:57:05 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/29/2016 12:57:05 PM
+
+Error Line No : line 44
+
+Error Message: WebException
+
+Exception Type: System.Net.WebException
+
+Error Location : The remote server returned an error: (500) Internal Server Error.
+
+ Error Page Url: http://localhost:10159/Cart/CheckoutReview?token=EC-5W5266796B7754915&PayerID=3V4P29FJC94V6
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/29/2016 12:57:59 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/29/2016 12:57:59 PM
+
+Error Line No : line 27
+
+Error Message: WebException
+
+Exception Type: System.Net.WebException
+
+Error Location : The remote server returned an error: (500) Internal Server Error.
+
+ Error Page Url: http://localhost:10159/cart/paypaltoken
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/29/2016 12:58:41 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/29/2016 12:58:41 PM
+
+Error Line No : line 44
+
+Error Message: WebException
+
+Exception Type: System.Net.WebException
+
+Error Location : The remote server returned an error: (500) Internal Server Error.
+
+ Error Page Url: http://localhost:10159/Cart/CheckoutReview?token=EC-0U351503PA418354C&PayerID=3V4P29FJC94V6
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/29/2016 1:01:04 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/29/2016 1:01:04 PM
+
+Error Line No : ne 1863
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/manageevent/createpromotionalcodes
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

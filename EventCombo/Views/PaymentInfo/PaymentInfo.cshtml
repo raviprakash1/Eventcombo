@@ -200,7 +200,7 @@
                                             <div class="col-sm-12 col-xs-12 no_pad">
                                                 <div class="row">
                                                     <div class="col-xs-12 ">
-                                                        <input id="txtName" name="Name" class="form-control"
+                                                        <input id="txtName" name="Name" class="form-control"  maxlength="1000"
                                                                placeholder="Name" type="text" value="@Model.PI_AccCompName">
                                                     </div>
                                                 </div>
@@ -215,7 +215,7 @@
                                             <div class="col-sm-12 col-xs-12 no_pad">
                                                 <div class="row">
                                                     <div class="col-xs-12 ">
-                                                        <input id="txtName" name="Name" class="form-control"
+                                                        <input id="txtName" name="Name" class="form-control"  maxlength="1000"
                                                                placeholder="Name" type="text">
                                                     </div>
                                                 </div>
@@ -229,24 +229,24 @@
                                         <div class="col-md-12 col-xs-12 no_pad">
                                             @if (Model != null && !String.IsNullOrEmpty(Model.PI_Address))
                                             {
-                                                <input id="txtAddress1" name="Address1" class="form-control" placeholder="Address 1"
+                                                <input id="txtAddress1" name="Address1" class="form-control" placeholder="Address 1"  maxlength="256"
                                                        type="text" value="@Model.PI_Address" required>
                                             }
                                             else
                                             {
-                                                <input id="txtAddress1" name="Address1" class="form-control" placeholder="Address 1"
+                                                <input id="txtAddress1" name="Address1" class="form-control" placeholder="Address 1" maxlength="256"
                                                        type="text">
                                             }
                                         </div>
                                         <div class="col-md-12 col-xs-12 no_pad mt10">
                                             @if (Model != null && !String.IsNullOrEmpty(Model.PI_Address2))
                                             {
-                                                <input id="txtAddress2" name="Address2" class="form-control" placeholder="Address 2"
+                                                <input id="txtAddress2" name="Address2" class="form-control" placeholder="Address 2" maxlength="256"
                                                        type="text" value="@Model.PI_Address2" required>
                                             }
                                             else
                                             {
-                                                <input id="txtAddress2" name="Address2" class="form-control" placeholder="Address 2"
+                                                <input id="txtAddress2" name="Address2" class="form-control" placeholder="Address 2" maxlength="256"
                                                        type="text">
                                             }
 
@@ -258,25 +258,25 @@
                                             <div class="col-xs-6 dropheight pay100">
                                                 @if (Model != null && !String.IsNullOrEmpty(Model.PI_City))
                                                 {
-                                                    <input id="txtCity1" name="City1" class="form-control" placeholder="City"
-                                                           maxlength="500" type="text" value="@Model.PI_City" />
+                                                    <input id="txtCity1" name="City1" class="form-control" placeholder="City" maxlength="256"
+                                                            type="text" value="@Model.PI_City" />
                                                 }
                                                 else
                                                 {
                                                     <input id="txtCity1" name="City1" class="form-control" placeholder="City"
-                                                           maxlength="500" type="text" />
+                                                          maxlength="256" type="text" />
                                                 }
                                             </div>
                                             <div class="col-xs-6 dropheight pay100">
                                                 @if (Model != null && !String.IsNullOrEmpty(Model.PI_State))
                                                 {
                                                     <input id="txtState1" name="State1" class="form-control" placeholder="State"
-                                                           maxlength="500" type="text" value="@Model.PI_State" />
+                                                           maxlength="256" type="text" value="@Model.PI_State" />
                                                 }
                                                 else
                                                 {
                                                     <input id="txtState1" name="State1" class="form-control" placeholder="State"
-                                                           maxlength="500" type="text" />
+                                                           maxlength="256" type="text" />
                                                 }
                                             </div>
                                         </div>
@@ -467,24 +467,24 @@
                                     <div class="col-md-12 col-xs-12 no_pad">
                                         @if (Model != null && !String.IsNullOrEmpty(Model.PI_Address))
                                         {
-                                            <input id="txtMailingAddress1" name="MailingAddress1" class="form-control" placeholder="Address 1"
+                                            <input id="txtMailingAddress1" name="MailingAddress1" class="form-control" placeholder="Address 1" maxlength="256"
                                                    type="text" value="@Model.PI_Address">
                                         }
                                         else
                                         {
-                                            <input id="txtMailingAddress1" name="MailingAddress1" class="form-control" placeholder="Address 1"
+                                            <input id="txtMailingAddress1" name="MailingAddress1" class="form-control" placeholder="Address 1" maxlength="256"
                                                    type="text">
                                         }
                                     </div>
                                     <div class="col-md-12 col-xs-12 no_pad mt10">
                                         @if (Model != null && !String.IsNullOrEmpty(Model.PI_Address2))
                                         {
-                                            <input id="txtMailingAddress2" name="MailingAddress2" class="form-control" placeholder="Address 2" type="text"
+                                            <input id="txtMailingAddress2" name="MailingAddress2" class="form-control" placeholder="Address 2" type="text" maxlength="256"
                                                    value="@Model.PI_Address2" />
                                         }
                                         else
                                         {
-                                            <input id="txtMailingAddress2" name="MailingAddress2" class="form-control" placeholder="Address 2" type="text" />
+                                            <input id="txtMailingAddress2" name="MailingAddress2" class="form-control" placeholder="Address 2" type="text" maxlength="256" />
                                         }
 
                                     </div>
@@ -496,24 +496,24 @@
                                             @if (Model != null && !String.IsNullOrEmpty(Model.PI_City))
                                             {
                                                 <input id="txtCity2" name="City2" class="form-control" placeholder="City"
-                                                       maxlength="500" type="text" value="@Model.PI_City" />
+                                                      maxlength="256" type="text" value="@Model.PI_City" />
                                             }
                                             else
                                             {
                                                 <input id="txtCity2" name="City2" class="form-control" placeholder="City"
-                                                       maxlength="500" type="text" />
+                                                      maxlength="256" type="text" />
                                             }
                                         </div>
                                         <div class="col-xs-6 dropheight pay100">
                                             @if (Model != null && !String.IsNullOrEmpty(Model.PI_State))
                                             {
                                                 <input id="txtState2" name="State2" class="form-control" placeholder="State"
-                                                       maxlength="500" type="text" value="@Model.PI_State" />
+                                                      maxlength="256" type="text" value="@Model.PI_State" />
                                             }
                                             else
                                             {
                                                 <input id="txtState2" name="State2" class="form-control" placeholder="State"
-                                                       maxlength="500" type="text" />
+                                                      maxlength="256" type="text" />
                                             }
                                         </div>
                                     </div>
@@ -541,12 +541,12 @@
                                             @if (Model != null && !String.IsNullOrEmpty(Model.PI_PostalCode))
                                             {
                                                 <input id="txtPostalCode2" name="PostalCode2" class="form-control" placeholder="Zip Code"
-                                                       maxlength="5" type="text" value="@Model.PI_PostalCode">
+                                                       maxlength="6" type="text" value="@Model.PI_PostalCode">
                                             }
                                             else
                                             {
                                                 <input id="txtPostalCode2" name="PostalCode2" class="form-control" placeholder="Zip Code"
-                                                       maxlength="5" type="text" />
+                                                       maxlength="6" type="text" />
                                             }
                                         </div>
                                     </div>
