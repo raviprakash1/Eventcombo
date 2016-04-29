@@ -2538,73 +2538,50 @@ WriteLiteral(@"',
             
             #line default
             #line hidden
-WriteLiteral(@"';
-                        }
-                    });
-                }
-            }
-        });
+WriteLiteral("\';\r\n                        }\r\n                    });\r\n                }\r\n      " +
+"      }\r\n        });\r\n\r\n\r\n\r\n    });\r\n\r\n    ");
 
-
-
-    });
-
-    $(window).unload(function () {
-        if ($(""#hdIsPostBack"").val() != ""Y"") {
-            $(""#hdIsPostBack"").val(""N"");
-            $.ajax({
-                url: '");
-
-            
-            #line 1515 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                 Write(Url.Action("ReleaseTickets", "TicketPayment"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\',\r\n                type: \"Post\",\r\n                success: function (response) {" +
-"\r\n                }\r\n            });\r\n        }\r\n    });\r\n\r\n    history.pushStat" +
-"e(null, null, \'TicketPayment\');\r\n    window.addEventListener(\'popstate\', functio" +
-"n (event) {\r\n        history.pushState(null, null, \'TicketPayment\');\r\n    });\r\n\r" +
-"\n\r\n    function SavePaypaldetail() {\r\n        var flag = true;\r\n        var Emai" +
-"llogin = $(\"#Email\").val();\r\n\r\n\r\n        var NameList = [];\r\n\r\n\r\n\r\n\r\n\r\n\r\n       " +
-" var confirmemail = \"\", cardno = \"\", expirydate = \"\", cvv = \"\", cardtype = \"\";\r\n" +
-"        var type = \'\';\r\n\r\n\r\n        $(\"#tblListitem tr\").each(function () {\r\n   " +
-"         var Sno = $(this).find(\"td:first\").html();\r\n\r\n            // Multiple A" +
-"ddress\r\n            if (Sno != \'\') {\r\n                NameList.push({\r\n         " +
-"           Name: $(\"#TicketName_\" + Sno).text(),\r\n                    Email: $(\"" +
-"#TicketEmail_\" + Sno).text(),\r\n                });\r\n            }\r\n        });\r\n" +
-"        debugger;\r\n\r\n        //if ($(\'#shippinginfo\').is(\":checked\") == true) {\r" +
-"\n\r\n\r\n\r\n        //}\r\n        var totalorder = $(\'#hdOrderTotal\').val();\r\n        " +
-"var type = \'\';\r\n        if (totalorder > 0) {\r\n\r\n            type = \'Paid\';\r\n   " +
-"     } else {\r\n\r\n            type = \'Free\';\r\n\r\n        }\r\n\r\n        //----------" +
-"---------------------------Saving Payment Detail--------------------------------" +
-"-------\r\n\r\n\r\n        var vOrderTotal = $(\"#hdOrderTotal\").val();\r\n        var vG" +
-"randTotal = $(\"#hdGrandTotal\").val();\r\n        var vPromoId = $(\"#hdPromoId\").va" +
-"l();\r\n        var vVarChanges = $(\"#hdVarChanges\").val();\r\n        var vVarId = " +
-"$(\"#hdVChg\").val();\r\n        var Eventid = $(\'#hdEventid\').val();\r\n        var P" +
-"aymentType = $(\"#selectcard\").val();\r\n\r\n        debugger;\r\n        var model = {" +
-"\r\n\r\n            \'AccFname\': $(\'#accfname\').val(),\r\n            \'AccLname\': $(\'#a" +
-"ccLname\').val(),\r\n            \'AccEmail\': $(\'#Email\').val(),\r\n            \'Accco" +
-"nfirmEmail\': $(\'#confirmEmail\').val(),\r\n            \'Accpassword\': $(\'#password\'" +
-").val(),\r\n            \'Accconfirmpassword\': \'\',\r\n            \'Accountphnno\': \'\'," +
-"\r\n            \'AccCity\': \'\',\r\n            \'AccState\': \'\',\r\n            \'Acczip\':" +
-" \'\',\r\n            \'Acccountry\': \'\',\r\n            \'cardno\': \'\',\r\n            \'car" +
-"d_type\': \'\',\r\n            \'expirydate\': \'\',\r\n            \'cvv\': \'\',\r\n           " +
-" \'billfname\': \'\',\r\n            \'billLname\': \'\',\r\n            \'billingphno\': \'\',\r" +
-"\n            \'billaddress1\': \'\',\r\n            \'billaddress2\': \'\',\r\n            \'" +
-"billcity\': \'\',\r\n            \'billzip\': \'\',\r\n            \'billstate\': \'\',\r\n      " +
-"      \'billcountry\': \'\',\r\n            \'shipfname\': \'\',\r\n            \'shipLname\':" +
-" \'\',\r\n            \'shipphno\': \'\',\r\n            \'shipaddress1\': \'\',\r\n            " +
-"\'shipaddress2\': \'\',\r\n            \'shipcity\': \'\',\r\n            \'shipzip\': \'\',\r\n  " +
-"          \'shipstate\': \'\',\r\n            \'shipcountry\': \'\',\r\n            \'NameLis" +
-"t\': NameList,\r\n            \'Savecarddetail\': \'\',\r\n            \'Saveshipdetail\': " +
-"\'\',\r\n            \'sameshipbilldetail\': \'\',\r\n            \'Ticketname\': type,\r\n   " +
-"         \'strOrderTotal\': vOrderTotal,\r\n            \'strGrandTotal\': vGrandTotal" +
-",\r\n            \'strPromId\': vPromoId,\r\n            \'strVarChanges\': vVarChanges," +
-"\r\n            \'strVarId\': vVarId,\r\n            \'strPaymentType\': PaymentType\r\n  " +
-"      }\r\n\r\n\r\n        var sessionResponse = \'\';\r\n        $.ajax({\r\n            ur" +
-"l: \'");
+WriteLiteral("\r\n\r\n    history.pushState(null, null, \'TicketPayment\');\r\n    window.addEventListe" +
+"ner(\'popstate\', function (event) {\r\n        history.pushState(null, null, \'Ticke" +
+"tPayment\');\r\n    });\r\n\r\n\r\n    function SavePaypaldetail() {\r\n        var flag = " +
+"true;\r\n        var Emaillogin = $(\"#Email\").val();\r\n\r\n\r\n        var NameList = [" +
+"];\r\n\r\n\r\n\r\n\r\n\r\n\r\n        var confirmemail = \"\", cardno = \"\", expirydate = \"\", cvv" +
+" = \"\", cardtype = \"\";\r\n        var type = \'\';\r\n\r\n\r\n        $(\"#tblListitem tr\")." +
+"each(function () {\r\n            var Sno = $(this).find(\"td:first\").html();\r\n\r\n  " +
+"          // Multiple Address\r\n            if (Sno != \'\') {\r\n                Nam" +
+"eList.push({\r\n                    Name: $(\"#TicketName_\" + Sno).text(),\r\n       " +
+"             Email: $(\"#TicketEmail_\" + Sno).text(),\r\n                });\r\n     " +
+"       }\r\n        });\r\n        debugger;\r\n\r\n        //if ($(\'#shippinginfo\').is(" +
+"\":checked\") == true) {\r\n\r\n\r\n\r\n        //}\r\n        var totalorder = $(\'#hdOrderT" +
+"otal\').val();\r\n        var type = \'\';\r\n        if (totalorder > 0) {\r\n\r\n        " +
+"    type = \'Paid\';\r\n        } else {\r\n\r\n            type = \'Free\';\r\n\r\n        }\r" +
+"\n\r\n        //-------------------------------------Saving Payment Detail---------" +
+"------------------------------\r\n\r\n\r\n        var vOrderTotal = $(\"#hdOrderTotal\")" +
+".val();\r\n        var vGrandTotal = $(\"#hdGrandTotal\").val();\r\n        var vPromo" +
+"Id = $(\"#hdPromoId\").val();\r\n        var vVarChanges = $(\"#hdVarChanges\").val();" +
+"\r\n        var vVarId = $(\"#hdVChg\").val();\r\n        var Eventid = $(\'#hdEventid\'" +
+").val();\r\n        var PaymentType = $(\"#selectcard\").val();\r\n\r\n        debugger;" +
+"\r\n        var model = {\r\n\r\n            \'AccFname\': $(\'#accfname\').val(),\r\n      " +
+"      \'AccLname\': $(\'#accLname\').val(),\r\n            \'AccEmail\': $(\'#Email\').val" +
+"(),\r\n            \'AccconfirmEmail\': $(\'#confirmEmail\').val(),\r\n            \'Accp" +
+"assword\': $(\'#password\').val(),\r\n            \'Accconfirmpassword\': \'\',\r\n        " +
+"    \'Accountphnno\': \'\',\r\n            \'AccCity\': \'\',\r\n            \'AccState\': \'\'," +
+"\r\n            \'Acczip\': \'\',\r\n            \'Acccountry\': \'\',\r\n            \'cardno\'" +
+": \'\',\r\n            \'card_type\': \'\',\r\n            \'expirydate\': \'\',\r\n            " +
+"\'cvv\': \'\',\r\n            \'billfname\': \'\',\r\n            \'billLname\': \'\',\r\n        " +
+"    \'billingphno\': \'\',\r\n            \'billaddress1\': \'\',\r\n            \'billaddres" +
+"s2\': \'\',\r\n            \'billcity\': \'\',\r\n            \'billzip\': \'\',\r\n            \'" +
+"billstate\': \'\',\r\n            \'billcountry\': \'\',\r\n            \'shipfname\': \'\',\r\n " +
+"           \'shipLname\': \'\',\r\n            \'shipphno\': \'\',\r\n            \'shipaddre" +
+"ss1\': \'\',\r\n            \'shipaddress2\': \'\',\r\n            \'shipcity\': \'\',\r\n       " +
+"     \'shipzip\': \'\',\r\n            \'shipstate\': \'\',\r\n            \'shipcountry\': \'\'" +
+",\r\n            \'NameList\': NameList,\r\n            \'Savecarddetail\': \'\',\r\n       " +
+"     \'Saveshipdetail\': \'\',\r\n            \'sameshipbilldetail\': \'\',\r\n            \'" +
+"Ticketname\': type,\r\n            \'strOrderTotal\': vOrderTotal,\r\n            \'strG" +
+"randTotal\': vGrandTotal,\r\n            \'strPromId\': vPromoId,\r\n            \'strVa" +
+"rChanges\': vVarChanges,\r\n            \'strVarId\': vVarId,\r\n            \'strPaymen" +
+"tType\': PaymentType\r\n        }\r\n\r\n\r\n        var sessionResponse = \'\';\r\n        $" +
+".ajax({\r\n            url: \'");
 
             
             #line 1637 "..\..\Views\TicketPayment\TicketPayment.cshtml"

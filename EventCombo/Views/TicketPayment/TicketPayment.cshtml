@@ -1508,7 +1508,7 @@
 
     });
 
-    $(window).unload(function () {
+    @*$(window).unload(function () {
         if ($("#hdIsPostBack").val() != "Y") {
             $("#hdIsPostBack").val("N");
             $.ajax({
@@ -1518,7 +1518,7 @@
                 }
             });
         }
-    });
+    });*@
 
     history.pushState(null, null, 'TicketPayment');
     window.addEventListener('popstate', function (event) {
