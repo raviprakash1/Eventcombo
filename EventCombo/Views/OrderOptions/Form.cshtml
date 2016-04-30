@@ -148,7 +148,7 @@
                       </div>
                       <div id="QuestionMainContainer">
                         <div class="form-group" style="padding-bottom: 31px;">
-                          <input type="text" class="form-control questionsTxtbox" id="questions" placeholder="Question" maxlength="255">
+                          <input type="text" class="form-control questionsTxtbox" id="questions" placeholder="Question" maxlength="255" onkeydown="$('#questions').removeClass('validatorTxt');">
                           <div class="dropdown questionsDropDown">
                             <button class="btn btn-default dropdown-toggle questionsBtn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" value="@ViewBag.ControlType[0].ControlTypeId" onkeydown="$('#questions').removeClass('validatorTxt');">
                               <span class="text">@ViewBag.ControlType[0].ControlTypeName</span>
@@ -174,6 +174,7 @@
                               <div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainHead3" style="display:none;">ORDERS</div>
                               <div class="col-md-1 col-sm-1 col-xs-12 checkBoxQuesMainHeadTrash"></div>
                             </div>
+
                             <div id="checkBoxQuesMainBodyConID1" class="checkBoxQuesMainBodyCon1">
                               <div class="col-md-11 col-sm-11 col-xs-12 checkBoxQuesMainBody1">
                                 <div class="form-group">
