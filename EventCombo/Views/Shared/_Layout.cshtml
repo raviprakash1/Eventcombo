@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using EventCombo.ViewModels
+<!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -107,23 +108,49 @@
                 </div>
                 <div class="Fix_Head" title="Turn on to fix header">
                     <label class="switch">
-                        @if (Session["Header"] == null)
+                       
+        
+
+@{
+
+    string header = CookieStore.GetCookie("ckHeader");
+
+    <input type="hidden" value=@CookieStore.GetCookie("ckHeader") id="hdheader" />
+    if ((header != null) && (header != ""))
+    {
+        if (header == "on")
+        {
+            <input type="checkbox" class="switch-input" id="idchecked" checked onchange="changeheader(this.id);">
+        }
+        else
+        {
+            <input type="checkbox" class="switch-input" id="idchecked" onchange="changeheader(this.id);">
+        }
+    }
+    else
+    {
+        <input type="checkbox" class="switch-input" id="idchecked" onchange="changeheader(this.id);">
+    }
+
+}
+    
+    @*if ()
                         {
-                         <input type="checkbox" class="switch-input" checked id="idchecked" onchange="changeheader(this.id);">
+                         <input type="checkbox" class="switch-input"  id="idchecked" onchange="changeheader(this.id);">
 
                         }
                         else
                         {
-                            if (Session["Header"].ToString() == " " || Session["Header"].ToString()=="on")
+                            if (Session["Header"].ToString() == " " || Session["Header"].ToString()=="off")
                             {
-                                <input type="checkbox" class="switch-input" checked id="idchecked" onchange="changeheader(this.id);">
+                               
 
                             }
                             else
                             {
-                                <input type="checkbox" class="switch-input" id="idchecked" onchange="changeheader(this.id);">
+                                <input type="checkbox" class="switch-input" checked id="idchecked" onchange="changeheader(this.id);">
                             }
-                        }
+                        }*@
                        
 
                         <span class="switch-label" data-on="On" data-off="Off"></span>
@@ -612,6 +639,7 @@
     }
 
     function changeheader(e) {
+      
         if ($('#idchecked').is(":checked") == true) {
             $.ajax({
                 url: '@Url.Action("Setheader", "Home")',
@@ -627,6 +655,8 @@
                 }
             });
           
+           // $.cookie("header", "on", { expire: 1,path:'/' });
+            //$.cookie("header") = "on";
             $('#divmain').addClass('home_fixed_header');
             $('#eventtopscoll').addClass('event_top');
             $('#scrollhome').addClass('con_scr0l_home');
@@ -650,6 +680,8 @@
                     return false
                 }
             });
+            //$.cookie("header", "off", { expire: 1, path: '/' });
+            //$.cookie("header", "off", { expire: 1 });
             $('#eventtopscoll').removeClass('event_top');
             $('#scrollhome').removeClass('con_scr0l_home');
             $('#divmain').removeClass('home_fixed_header');
@@ -825,7 +857,7 @@
 
         }
        
-        var sessionheader = "@Session["Header"]";
+        @*var sessionheader = "@Session["Header"]";
         
         if (sessionheader == "" || sessionheader=="on")
         {
@@ -848,11 +880,73 @@
             $('#eventtopscoll').removeClass('viewevent_container');
             $('#forgotcheck').removeClass('forgot_top');
             
-        }
+        }*@
 
     });
 
     $(document).ready(function () {
+        var headervale = $("#hdheader").val();;
+     
+       
+        if (headervale != undefined && headervale != null && headervale != '')
+        {
+            
+            if (headervale == "on") {
+                
+                $('#divmain').addClass('home_fixed_header');
+                $('#eventtopscoll').addClass('event_top');
+                $('#scrollhome').addClass('con_scr0l_home');
+                $('#divcontmain').addClass('mt15');
+                $('#eventtopscoll').addClass('viewevent_container');
+                $('#forgotcheck').addClass('forgot_top');
+                //if ($('#idchecked').attr('checked')) {
+
+                //} else {
+                 
+                //    $("#idchecked").attr('checked', true);
+                //}
+                //$("#idchecked").attr('checked', true);
+               
+
+            }
+            else if (headervale == "off")
+            {
+              
+
+                $('#eventtopscoll').removeClass('event_top');
+                $('#scrollhome').removeClass('con_scr0l_home');
+                $('#divmain').removeClass('home_fixed_header');
+
+                $('#divcontmain').removeClass('mt15');
+
+                $('#eventtopscoll').removeClass('viewevent_container');
+                $('#forgotcheck').removeClass('forgot_top');
+                //if ($('#idchecked').attr('checked')) {
+
+                //} else {
+                //    $("#idchecked").attr('checked', false);
+                //}
+               
+                //$("#idchecked").attr('checked', false);
+               
+            }
+        } else {
+            $('#eventtopscoll').removeClass('event_top');
+            $('#scrollhome').removeClass('con_scr0l_home');
+            $('#divmain').removeClass('home_fixed_header');
+
+            $('#divcontmain').removeClass('mt15');
+
+            $('#eventtopscoll').removeClass('viewevent_container');
+            $('#forgotcheck').removeClass('forgot_top');
+            //if ($('#idchecked').attr('checked')) {
+
+            //} else {
+            //    $("#idchecked").attr('checked', false);
+            //}
+            //$("#idchecked").attr('checked', false);
+        }
+
         $("#btSearchEvent").on('click', function () {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (p) {

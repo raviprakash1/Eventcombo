@@ -26,6 +26,7 @@ using System.Net.Http;
 using Microsoft.Owin.Security.OAuth;
 using PagedList;
 using EventCombo.Utils;
+using EventCombo.ViewModels;
 
 namespace EventCombo.Controllers
 {
@@ -2411,7 +2412,9 @@ namespace EventCombo.Controllers
 
         public void Setheader(string header)
         {
-           Session["Header"] = header;
+
+            CookieStore.SetCookie("ckHeader", header, TimeSpan.FromDays(1));
+            //Session["Header"] = header;
         }
 
     }

@@ -21,6 +21,8 @@ namespace CMS.Models
         public string EventEndDate { get; set; }
         public string EventStartTime { get; set; }
         public string EventEndTime { get; set; }
+        public Nullable<System.DateTime> E_Startdate { get; set; }
+        public Nullable<System.DateTime> E_Enddate { get; set; }
     
         public virtual Event Event { get; set; }
         public virtual EventVenue EventVenue1 { get; set; }
