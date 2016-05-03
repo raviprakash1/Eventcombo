@@ -115,11 +115,15 @@ namespace CMS.Controllers
 
                 //}
                 int iCount = 0;
-                int i = 0; int z = 0; int iUcount = objuser.Count; int iGapValue = 50;
+                int i = 0; int z = 0; double iUcount = objuser.Count; int iGapValue = 50;
                 string strText = "";
                 if (iUcount > iGapValue)
                 {
-                    for (i = 0; i < iUcount; i++)
+                    double dRowCnt = iUcount / iGapValue;
+
+                    if ((dRowCnt - (int)dRowCnt) != 0) dRowCnt = (int)dRowCnt + 1;
+
+                    for (i = 0; i < dRowCnt; i++)
                     {
                         strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
                         PageFilter.Add(new SelectListItem()
@@ -130,16 +134,41 @@ namespace CMS.Controllers
                         });
                         z = z + iGapValue;
                         iUcount = iUcount - iGapValue;
-                        if (iUcount < iGapValue)
-                        {
-                            strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
-                            PageFilter.Add(new SelectListItem()
-                            {
-                                Text = strText,
-                                Value = (i + 1).ToString(),
-                                Selected = (iCount == z ? true : false)
-                            });
-                        }
+                        //if (iUcount < iGapValue)
+                        //{
+                        //    strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
+                        //    PageFilter.Add(new SelectListItem()
+                        //    {
+                        //        Text = strText,
+                        //        Value = (i + 1).ToString(),
+                        //        Selected = (iCount == z ? true : false)
+                        //    });
+                        //}
+                        //for (i = 0; i < iUcount; i++)
+                        //{
+                        //    if ((z + iGapValue) == 106000)
+                        //    {
+                        //        string str = "";
+                        //    }
+                        //    strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
+                        //    PageFilter.Add(new SelectListItem()
+                        //    {
+                        //        Text = strText,
+                        //        Value = (i).ToString(),
+                        //        Selected = (iCount == z ? true : false)
+                        //    });
+                        //    z = z + iGapValue;
+                        //    iUcount = iUcount - iGapValue;
+                        //    if (iUcount < iGapValue)
+                        //    {
+                        //        strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
+                        //        PageFilter.Add(new SelectListItem()
+                        //        {
+                        //            Text = strText,
+                        //            Value = (i + 1).ToString(),
+                        //            Selected = (iCount == z ? true : false)
+                        //        });
+                        //    }
                     }
                     if (iCount > 0)
                     {
