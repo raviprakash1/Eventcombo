@@ -77,6 +77,7 @@ namespace CMS.Models
         public virtual DbSet<TicketBack2015> TicketBack2015 { get; set; }
         public virtual DbSet<v_RetrieveEventid> v_RetrieveEventid { get; set; }
         public virtual DbSet<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
+        public virtual DbSet<V_Users> V_Users { get; set; }
     
         [DbFunction("EmsEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)

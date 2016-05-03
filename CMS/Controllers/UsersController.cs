@@ -8,6 +8,7 @@ using System.Data;
 using System.Text;
 using EventCombo;
 using System.Configuration;
+using PagedList;
 
 namespace CMS.Controllers
 {
@@ -43,145 +44,156 @@ namespace CMS.Controllers
 
         }
 
-        public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail,string PageF)
+        public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail,int PageF=0)
         {
           
             
             if ((Session["UserID"] != null))
-            {
-
+            {int page_live = 1;
+               
+                int pageSize = 50;
+                PageF = PageF > 0 ? PageF : 1;
+             
+                pageSize = pageSize > 0 ? pageSize : 50;
                 ViewData["EventComboClientDomain"] = ConfigurationManager.AppSettings["EventComboClientDomain"];
 
-                List<UsersTemplate> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
+                List<V_Users> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
+              var users= objuser.ToPagedList(PageF, pageSize);
+              
                 ViewData["Userscount"] = objuser.Count();
                 if (objuser.Count == 0)
                     ViewData["SearchedUser"] = 0;
-            foreach (var item in objuser)
-            {
-                var ans = db.Database.SqlQuery<string>("select RoleId from AspNetUserRoles where Userid=@p0", item.Id).FirstOrDefault();
-                    ans = (ans != null ? ans : "0");
-                    if (int.Parse(ans) == 1)
-                    {
-                        item.RoleType = "Super Admin";
-                    }
-                    if (int.Parse(ans) == 2)
-                    {
-                        item.RoleType = "Admin";
-                    }
-                    if (int.Parse(ans) == 3)
-                    {
-                        var countperrm = db.Permission_Detail.Where(x => x.Permission_Category == "APP").Count();
-                        var countuserperm = db.User_Permission_Detail.Where(x => x.UP_User_Id == item.Id).Count();
+            //foreach (var item in objuser)
+            //{
+                //var ans = db.Database.SqlQuery<string>("select RoleId from AspNetUserRoles where Userid=@p0", item.Id).FirstOrDefault();
+                //    ans = (ans != null ? ans : "0");
+                //    if (int.Parse(ans) == 1)
+                //    {
+                //        item.RoleType = "Super Admin";
+                //    }
+                //    if (int.Parse(ans) == 2)
+                //    {
+                //        item.RoleType = "Admin";
+                //    }
+                //    if (int.Parse(ans) == 3)
+                //    {
+                //        var countperrm = db.Permission_Detail.Where(x => x.Permission_Category == "APP").Count();
+                //        var countuserperm = db.User_Permission_Detail.Where(x => x.UP_User_Id == item.Id).Count();
 
-                        if (countuserperm < countperrm)
-                        {
-                            item.RoleType = "Member-Limited";
+                //        if (countuserperm < countperrm)
+                //        {
+                //            item.RoleType = "Member-Limited";
 
-                            ans = "4";
-                        }
-                        else
-                        {
-                            item.RoleType = "Member";
-                        }
-                    }
-                    item.Role = ans;
-                var evtcount = db.Database.SqlQuery<Int32>("select count(*) from Event  where isnull(Parent_EventID,0)=0 and Userid=@p0", item.Id).FirstOrDefault();
-                item.EventCount = evtcount;
-                var ticketpurchased= db.Database.SqlQuery<Int64>("select isnull(sum(TPD_Purchased_Qty),0) from Ticket_Purchased_Detail  where TPD_User_Id=@p0", item.Id).FirstOrDefault();
-                item.TicketPurchased = ticketpurchased;
-            }
-            int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
+                //            ans = "4";
+                //        }
+                //        else
+                //        {
+                //            item.RoleType = "Member";
+                //        }
+                //    }
+                //    item.Role = ans;
+                //var evtcount = db.Database.SqlQuery<Int32>("select count(*) from Event  where isnull(Parent_EventID,0)=0 and Userid=@p0", item.Id).FirstOrDefault();
+                //item.EventCount = evtcount;
+                //var ticketpurchased= db.Database.SqlQuery<Int32>("select isnull(sum(TPD_Purchased_Qty),0) from Ticket_Purchased_Detail  where TPD_User_Id=@p0", item.Id).FirstOrDefault();
+                //item.TicketPurchased = ticketpurchased;
+           // }
+            //int iCount = (PageF == 1 ? 0:PageF-1);
             List<SelectListItem> PageFilter = new List<SelectListItem>();
-             
-            //PageFilter.Add(new SelectListItem()
-            //{
-            //    Text = "Select",
-            //    Value = "0",
-            //    Selected = (iCount == 0 ? true : false)
-            //});
-            //List<UsersTemplate> objuser1 = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
-            //foreach (var item in objuser1)
-            //{
-            //    var ans = db.Database.SqlQuery<Int32>("select count(*) from Event  where Userid=@p0", item.Id).FirstOrDefault();
-            //    item.EventCount = ans;
+
+                //PageFilter.Add(new SelectListItem()
+                //{
+                //    Text = "Select",
+                //    Value = "0",
+                //    Selected = (iCount == 0 ? true : false)
+                //});
+                //List<UsersTemplate> objuser1 = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
+                //foreach (var item in objuser1)
+                //{
+                //    var ans = db.Database.SqlQuery<Int32>("select count(*) from Event  where Userid=@p0", item.Id).FirstOrDefault();
+                //    item.EventCount = ans;
 
 
-            //}
-           int i = 0; int z = 0; int iUcount = objuser.Count;int iGapValue = 50;
-            string strText = "";
-            if (iUcount > iGapValue)
-            {
-                for (i = 0; i < iUcount; i++)
+                //}
+                int iCount = 0;
+                int i = 0; int z = 0; int iUcount = objuser.Count; int iGapValue = 50;
+                string strText = "";
+                if (iUcount > iGapValue)
                 {
-                    strText = (z+1).ToString() + " - " + (z + iGapValue).ToString();
-                    PageFilter.Add(new SelectListItem()
+                    for (i = 0; i < iUcount; i++)
                     {
-                        Text = strText,
-                        Value = (i).ToString(),
-                        Selected = (iCount == z ? true : false)
-                    });
-                    z = z + iGapValue;
-                    iUcount = iUcount - iGapValue;
-                    if (iUcount < iGapValue)
-                    {
-                        strText = (z+1).ToString() + " - " + (z + iGapValue).ToString();
+                        strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
                         PageFilter.Add(new SelectListItem()
                         {
                             Text = strText,
-                            Value = (i+1).ToString(),
+                            Value = (i).ToString(),
                             Selected = (iCount == z ? true : false)
                         });
+                        z = z + iGapValue;
+                        iUcount = iUcount - iGapValue;
+                        if (iUcount < iGapValue)
+                        {
+                            strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
+                            PageFilter.Add(new SelectListItem()
+                            {
+                                Text = strText,
+                                Value = (i + 1).ToString(),
+                                Selected = (iCount == z ? true : false)
+                            });
+                        }
                     }
-                }
-                if (iCount > 0)
-                {
-                    if (iCount < objuser.Count)
-                        objuser = objuser.GetRange(iCount - iGapValue, iGapValue);
-                    else
+                    if (iCount > 0)
                     {
-                        //objuser = objuser.GetRange(iCount - iGapValue, ((iCount - (objuser.Count + 1))));
-                        int iGap = (iCount - iGapValue);
-                        objuser = objuser.GetRange(iGap, (objuser.Count-iGap));
-                        //objlst = objlst.GetRange(iGap, (objlst.Count - iGap));
+                        if (iCount < objuser.Count)
+                            objuser = objuser.GetRange(iCount - iGapValue, iGapValue);
+                        else
+                        {
+                            //objuser = objuser.GetRange(iCount - iGapValue, ((iCount - (objuser.Count + 1))));
+                            int iGap = (iCount - iGapValue);
+                            objuser = objuser.GetRange(iGap, (objuser.Count - iGap));
+                            //objlst = objlst.GetRange(iGap, (objlst.Count - iGap));
+                        }
                     }
                 }
-            }
-            else
-            {
-                PageFilter.Add(new SelectListItem()
+                else
                 {
-                    Text = "1 - 50",
-                    Value = "0",
-                    Selected = (iCount == 50 ? true : false)
-                });
+                    PageFilter.Add(new SelectListItem()
+                    {
+                        Text = "1 - 50",
+                        Value = "0",
+                        Selected = (iCount == 50 ? true : false)
+                    });
+
+
+
+                }
+
 
              
 
-            }
+                //PageFilter.Add(new SelectListItem()
+                //{
+                //    Text = "1 - 5",
+                //    Value = "5",
+                //    Selected = (iCount == 5 ? true : false)
+                //});
+                //PageFilter.Add(new SelectListItem()
+                //{
+                //    Text = "5 - 10",
+                //    Value = "10",
+                //    Selected = (iCount == 10 ? true : false)
+                //});
 
-            //PageFilter.Add(new SelectListItem()
-            //{
-            //    Text = "1 - 5",
-            //    Value = "5",
-            //    Selected = (iCount == 5 ? true : false)
-            //});
-            //PageFilter.Add(new SelectListItem()
-            //{
-            //    Text = "5 - 10",
-            //    Value = "10",
-            //    Selected = (iCount == 10 ? true : false)
-            //});
-
-            ViewBag.PageF = PageFilter;
+                ViewBag.PageF = PageFilter;
                 var userid = Session["UserID"].ToString();
-           
+                TempData["Pagesize"] = pageSize;
+                TempData["PageNo"] = PageF;
 
 
             // List<Permissions> objPerm = GetPermission("APP");
             // UsersTemplate objU = new UsersTemplate();
             //  objU.objPermissions = GetPermission("APP");
             // objuser.Add(objU);
-            return View(objuser);
+                return View(users);
             }
             else
             {
@@ -189,7 +201,7 @@ namespace CMS.Controllers
 
             }
         }
-        public List<UsersTemplate> GetAllUsers(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail)
+        public List<V_Users> GetAllUsers(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail)
         {
             string user = (Session["UserID"] != null ? Session["UserID"].ToString() : string.Empty);
 
@@ -199,28 +211,29 @@ namespace CMS.Controllers
 
             using (EmsEntities objEntity = new EmsEntities())
             {
-                var modelUserTemp = (from UserTemp in objEntity.AspNetUsers
-                                     join Pr in objEntity.Profiles on UserTemp.Id equals Pr.UserID
-                                     orderby Pr.FirstName ascending
-                                    select new UsersTemplate
-                                     {
-                                         EMail = UserTemp.Email,
-                                         UserName = UserTemp.UserName,
-                                         Id = UserTemp.Id,
-                                         Organiser = Pr.Organiser.Trim(),
-                                         Merchant = Pr.Merchant.Trim(),
-                                         UserStatus = Pr.UserStatus.Trim(),
-                                         FirstName = Pr.FirstName,
-                                         LastName = Pr.LastName,
-                                         Online = (!string.IsNullOrEmpty(UserTemp.LoginStatus) ? UserTemp.LoginStatus : "N"),
-                                         Role ="",
-                                         State=!string.IsNullOrEmpty(Pr.State)? Pr.State:"",
-                                         OrganiserId= Pr.Organiser.Trim()=="Y"?"Yes":"No",
-                                         MerchantId= Pr.Merchant.Trim()=="Y"?"Yes":"No",
-                                         UserStatusId= Pr.UserStatus.Trim()=="Y"?"Enable":"Disable",
-                                         Ipcountry=Pr.Ipcountry
-                                     }
-                                    );
+                var modelUserTemp = (from x in objEntity.V_Users select x).OrderBy(x=>x.FirstName);
+                //(from UserTemp in objEntity.AspNetUsers
+                //                     join Pr in objEntity.Profiles on UserTemp.Id equals Pr.UserID
+                //                     orderby Pr.FirstName ascending
+                //                    select new UsersTemplate
+                //                     {
+                //                         EMail = UserTemp.Email,
+                //                         UserName = UserTemp.UserName,
+                //                         Id = UserTemp.Id,
+                //                         Organiser = Pr.Organiser.Trim(),
+                //                         Merchant = Pr.Merchant.Trim(),
+                //                         UserStatus = Pr.UserStatus.Trim(),
+                //                         FirstName = Pr.FirstName,
+                //                         LastName = Pr.LastName,
+                //                         Online = (!string.IsNullOrEmpty(UserTemp.LoginStatus) ? UserTemp.LoginStatus : "N"),
+                //                         Role ="",
+                //                         State=!string.IsNullOrEmpty(Pr.State)? Pr.State:"",
+                //                         OrganiserId= Pr.Organiser.Trim()=="Y"?"Yes":"No",
+                //                         MerchantId= Pr.Merchant.Trim()=="Y"?"Yes":"No",
+                //                         UserStatusId= Pr.UserStatus.Trim()=="Y"?"Enable":"Disable",
+                //                         Ipcountry=Pr.Ipcountry
+                //                     }
+                //                    );
 
                 
                 //return modelUserTemp.ToList();

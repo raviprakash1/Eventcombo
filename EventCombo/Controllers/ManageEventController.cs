@@ -1858,29 +1858,77 @@ namespace EventCombo.Controllers
                 {
                     if (model.Formtype == "E")
                     {
+                        if (model.PC_Code == null)
+                        {
+                            Promo_Code org = (from x in db.Promo_Code where x.PC_id == model.PC_id select x).FirstOrDefault();
+                            org.PC_Eventid = model.PC_Eventid;
+                            org.PC_Type = model.PC_Type;
+                           // org.PC_Code = model.PC_Code;
 
-
-                        if (Regex.IsMatch(model.PC_Code.ToString(), "^[a-zA-Z0-9@_,-]+$"))
-                        { if (model.PC_Code.Length > 15)
+                            if (model.Discount_Type == "A")
                             {
-                                if (!string.IsNullOrEmpty(model.PC_Code))
-                                {
-                                    if (Invalidrepeatcode == "")
-                                    {
-                                        Invalidrepeatcode += model.PC_Code;
-                                    }
-                                    else
-                                    {
-                                        Invalidrepeatcode += "," + model.PC_Code;
-                                    }
-                                }
+                                org.PC_Amount = model.PC_Amount;
+                                org.PC_Percentage = null;
+                            }
+                            else
+                            {
+                                org.PC_Percentage = model.PC_Amount;
+                                org.PC_Amount = null;
+                            }
 
+
+                            org.PC_Uses = model.PC_Uses;
+                            org.PC_Startdatetype = model.PC_Startdatetype;
+                            if (model.PC_Startdatetype == "1")
+                            {
+                                org.PC_Start = model.startdays;
                             }
                             else
                             {
 
-                                var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() && v.PC_id != model.PC_id && v.PC_Eventid == model.PC_Eventid select v).Any();
-                                if (ifany)
+                                dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_Start), userTimeZone);
+
+                                org.P_Startdate = dtz.UniversalTime;
+                            }
+                            org.Pc_Enddatetype = model.Pc_Enddatetype;
+                            if (model.Pc_Enddatetype == "1")
+                            {
+                                org.PC_End = model.enddays;
+                            }
+                            else
+                            {
+                                dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_End), userTimeZone);
+
+
+                                org.P_Enddate = dtz.UniversalTime;
+                            }
+
+                            org.PC_Apply = model.PC_Apply;
+                            org.PC_Eventid = model.PC_Eventid;
+                            org.SavedDate = dtzCreated.UniversalTime;
+
+
+
+
+
+                            try
+                            {
+                                int i = db.SaveChanges();
+                                msg = "S";
+
+                            }
+                            catch (Exception ex)
+                            {
+                                ExceptionLogging.SendErrorToText(ex);
+                                msg = "N";
+                            }
+                        }
+                        else
+                        {
+
+                            if (Regex.IsMatch(model.PC_Code.ToString(), "^[a-zA-Z0-9@_,-]+$"))
+                            {
+                                if (model.PC_Code.Length > 15)
                                 {
                                     if (!string.IsNullOrEmpty(model.PC_Code))
                                     {
@@ -1897,86 +1945,106 @@ namespace EventCombo.Controllers
                                 }
                                 else
                                 {
-                                    Promo_Code org = (from x in db.Promo_Code where x.PC_id == model.PC_id select x).FirstOrDefault();
-                                    org.PC_Eventid = model.PC_Eventid;
-                                    org.PC_Type = model.PC_Type;
-                                    org.PC_Code = model.PC_Code;
 
-                                    if (model.Discount_Type == "A")
+                                    var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() && v.PC_id != model.PC_id && v.PC_Eventid == model.PC_Eventid select v).Any();
+                                    if (ifany)
                                     {
-                                        org.PC_Amount = model.PC_Amount;
-                                        org.PC_Percentage = null;
+                                        if (!string.IsNullOrEmpty(model.PC_Code))
+                                        {
+                                            if (Invalidrepeatcode == "")
+                                            {
+                                                Invalidrepeatcode += model.PC_Code;
+                                            }
+                                            else
+                                            {
+                                                Invalidrepeatcode += "," + model.PC_Code;
+                                            }
+                                        }
+
                                     }
                                     else
                                     {
-                                        org.PC_Percentage = model.PC_Amount;
-                                        org.PC_Amount = null;
-                                    }
+                                        Promo_Code org = (from x in db.Promo_Code where x.PC_id == model.PC_id select x).FirstOrDefault();
+                                        org.PC_Eventid = model.PC_Eventid;
+                                        org.PC_Type = model.PC_Type;
+                                        org.PC_Code = model.PC_Code;
+
+                                        if (model.Discount_Type == "A")
+                                        {
+                                            org.PC_Amount = model.PC_Amount;
+                                            org.PC_Percentage = null;
+                                        }
+                                        else
+                                        {
+                                            org.PC_Percentage = model.PC_Amount;
+                                            org.PC_Amount = null;
+                                        }
 
 
-                                    org.PC_Uses = model.PC_Uses;
-                                    org.PC_Startdatetype = model.PC_Startdatetype;
-                                    if (model.PC_Startdatetype == "1")
-                                    {
-                                        org.PC_Start = model.startdays;
-                                    }
-                                    else
-                                    {
+                                        org.PC_Uses = model.PC_Uses;
+                                        org.PC_Startdatetype = model.PC_Startdatetype;
+                                        if (model.PC_Startdatetype == "1")
+                                        {
+                                            org.PC_Start = model.startdays;
+                                        }
+                                        else
+                                        {
 
-                                        dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_Start), userTimeZone);
+                                            dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_Start), userTimeZone);
 
-                                        org.P_Startdate = dtz.UniversalTime;
-                                    }
-                                    org.Pc_Enddatetype = model.Pc_Enddatetype;
-                                    if (model.Pc_Enddatetype == "1")
-                                    {
-                                        org.PC_End = model.enddays;
-                                    }
-                                    else
-                                    {
-                                        dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_End), userTimeZone);
-
-
-                                        org.P_Enddate = dtz.UniversalTime;
-                                    }
-
-                                    org.PC_Apply = model.PC_Apply;
-                                    org.PC_Eventid = model.PC_Eventid;
-                                    org.SavedDate = dtzCreated.UniversalTime;
+                                            org.P_Startdate = dtz.UniversalTime;
+                                        }
+                                        org.Pc_Enddatetype = model.Pc_Enddatetype;
+                                        if (model.Pc_Enddatetype == "1")
+                                        {
+                                            org.PC_End = model.enddays;
+                                        }
+                                        else
+                                        {
+                                            dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_End), userTimeZone);
 
 
+                                            org.P_Enddate = dtz.UniversalTime;
+                                        }
+
+                                        org.PC_Apply = model.PC_Apply;
+                                        org.PC_Eventid = model.PC_Eventid;
+                                        org.SavedDate = dtzCreated.UniversalTime;
 
 
 
-                                    try
-                                    {
-                                        int i = db.SaveChanges();
-                                        msg = "S";
 
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        ExceptionLogging.SendErrorToText(ex);
-                                        msg = "N";
+
+                                        try
+                                        {
+                                            int i = db.SaveChanges();
+                                            msg = "S";
+
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            ExceptionLogging.SendErrorToText(ex);
+                                            msg = "N";
+                                        }
                                     }
                                 }
                             }
-                        }
-                        else
-                        {
-                            containsspecial++;
-                            if (!string.IsNullOrEmpty(model.PC_Code))
+                            else
                             {
-                                if (Invalidrepeatcode == "")
+                                containsspecial++;
+                                if (!string.IsNullOrEmpty(model.PC_Code))
                                 {
-                                    Invalidrepeatcode += model.PC_Code;
+                                    if (Invalidrepeatcode == "")
+                                    {
+                                        Invalidrepeatcode += model.PC_Code;
+                                    }
+                                    else
+                                    {
+                                        Invalidrepeatcode += "," + model.PC_Code;
+                                    }
                                 }
-                                else
-                                {
-                                    Invalidrepeatcode += "," + model.PC_Code;
-                                }
-                            }
 
+                            }
                         }
                     }
                     else

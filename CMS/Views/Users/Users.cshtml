@@ -1,4 +1,5 @@
-﻿@model IEnumerable<CMS.Models.UsersTemplate>
+﻿@model PagedList.IPagedList<CMS.Models.V_Users>
+@using PagedList.Mvc;
 @using CMS.Models;
 @{
     ViewBag.Title = "Users";
@@ -127,10 +128,24 @@
                                         </thead>
                                         <tbody>
 
-                                            @{ int i = 0;
-                                                foreach (var obj in Model)
-                                                {
-                                                    i = i + 1;
+                                            @{
+                                                    int i = 0;
+                                                    int pagenumber =Convert.ToInt32(TempData["PageNo"]);
+                                                    int pagesize= Convert.ToInt32(TempData["Pagesize"]);
+                                                    if (pagenumber==1)
+                                                    {
+                                                        i = 0;
+                                                    }
+                                                    else
+                                                    {
+                                                        i = pagesize*(pagenumber-1);
+                                                    }
+
+                                                    foreach (var obj in Model)
+                                                    {
+
+
+                                                        i = i + 1;
                                                     <tr>
 
                                                         <td>@i</td>
@@ -140,6 +155,7 @@
 
                                                         </td>
                                                         <td>
+                                                            <label id="lblRole-@i" style="display:none">@obj.RoleType</label>
                                                             <a class="holder-active animation-switcher" href="#modal-panel" id="aRoles-@i">
                                                                 <button class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)',@i)" type="button">@obj.RoleType</button>
                                                                 @*<input type="button" class="btn btn-warning br2 btn-xs fs12" data-effect="mfp-flipInY" id="btnRoles" onclick="AssignUserId('@(obj.Id)')" value="Manage" />*@
@@ -318,7 +334,10 @@
                                         </tfoot>
 
                                     </table>
-                                    @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"]!=null)
+                                   
+                                    
+                                    @Html.PagedListPager(Model, pageF => Url.Action("Users", new { pageF }))
+                                     @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"]!=null)
                                     {
                                        <span>No Result Found.</span> 
                                     }
@@ -523,11 +542,11 @@
 
     function checkeventcount(id, UserID)
     {
-      
+
 
         var value = $('#' + id).text();
         if (parseInt(value) == 0) {
-          
+
             $('#btnYes').hide();
             $('#hId').text(GetMess("CMSUsers", "NoEvents"));
             $('#btnNo').hide();
@@ -543,26 +562,25 @@
             popupWindow.focus(); return false;
         }
         //console.log($('#'+id).text());
-        
+
     }
 
-    $('#ulpage').click(function () {
-        console.log(this);
+    //$('#ulpage').click(function () {
+    //    console.log(this);
 
-        console.log($('#ulpage li.active'));
-        var datapage = $('#ulpage li.active').children().attr('data-page');
+    //    console.log($('#ulpage li.active'));
+    //    var datapage = $('#ulpage li.active').children().attr('data-page');
 
-        $('#PageF').val(datapage);
+    //    $('#PageF').val(datapage);
 
-    });
+    //});
 
     $('#PageF').change(function () {
         var value = $(this).val();
-        console.log($(this).val());
-        $("#ulpage li").removeClass('active');
-        $('#ulpage li a[data-page=' + value + ']').click();
-        console.log($('#ulpage li a[data-page=' + value + ']').parent().addClass('active'));
-        //console.log($("#ulpage li").find("a", "[data-page=" + value + "]"));
+        value = parseInt(value) + 1;
+        window.location.href = '@Url.Action("Users", "Users", new { })?PageF=' + value + '';
+       
+     
 
 
     });
@@ -866,9 +884,9 @@
         return msgnew;
     }
     function SaveFields(UserId, strId, dlValue, id) {
-      
+
         var el = id.substr(id.indexOf('-') + 1, id.length - id.indexOf('-'));
-       
+
         //console.log($(this).attr(id));
         var vvalue = '';
         var sFields = '';
@@ -892,27 +910,27 @@
 
 
         if (sFields == "UserStatus" && vvalue == 'Y') {
-          
+
             $("#lblstatus-"+el).html("Enable");
-           
+
         }else if (sFields == "UserStatus" && vvalue == 'N') {
-           
+
             $("#lblstatus-"+el).html("Disable");
 
         }else if (sFields == "Merchant" && vvalue == 'Y') {
-           
+
             $("#lblMer-"+el).html("Yes");
 
         }else if (sFields == "Merchant" && vvalue == 'N') {
-            
+
             $("#lblMer-"+el).html("No");
 
         }else if (sFields == "Organiser" && vvalue == 'Y') {
-           
+
             $("#lblorg-"+el).html("Yes");
 
         }else if (sFields == "Organiser" && vvalue == 'N') {
-         
+
             $("#lblorg-"+el).html("No");
 
         }
@@ -960,12 +978,12 @@
             datatype: "Text",
             type: "Post",
             success: function (response) {
-              
+
             }
-               
+
         });
 
-        
+
         $('#mainframe').prop('src', 'http://localhost:10159/EventList/EventList')
         $("#btnevents-"+id).attr("data-toggle","modal");
         $("#btnevents-"+id).attr("data-target","#modaliframe");

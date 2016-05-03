@@ -85,6 +85,7 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="LoginStatus" Type="varchar" MaxLength="1" />
+          <Property Name="OldUserID" Type="int" />
         </EntityType>
         <EntityType Name="BillingAddress">
           <Key>
@@ -104,10 +105,10 @@
           <Property Name="Zip" Type="varchar" MaxLength="256" />
           <Property Name="Country" Type="varchar" MaxLength="26" />
           <Property Name="PaymentType" Type="varchar" MaxLength="50" />
-          <Property Name="CardId" Type="varchar" MaxLength="50" />
-          <Property Name="card_type" Type="varchar" MaxLength="150" />
-          <Property Name="ExpirationDate" Type="varchar" MaxLength="50" />
-          <Property Name="Cvv" Type="varchar" MaxLength="50" />
+          <Property Name="CardId" Type="varchar" MaxLength="500" />
+          <Property Name="card_type" Type="varchar" MaxLength="500" />
+          <Property Name="ExpirationDate" Type="varchar" MaxLength="500" />
+          <Property Name="Cvv" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="CardDetails">
           <Key>
@@ -117,10 +118,10 @@
           <Property Name="UserId" Type="nchar" MaxLength="128" />
           <Property Name="OrderId" Type="varchar" MaxLength="1000" />
           <Property Name="Guid" Type="nchar" MaxLength="128" />
-          <Property Name="CardNumber" Type="varchar" MaxLength="50" />
-          <Property Name="ExpirationDate" Type="varchar" MaxLength="50" />
-          <Property Name="Cvv" Type="varchar" MaxLength="50" />
-          <Property Name="card_type" Type="varchar" MaxLength="150" />
+          <Property Name="CardNumber" Type="varchar" MaxLength="500" />
+          <Property Name="ExpirationDate" Type="varchar" MaxLength="500" />
+          <Property Name="Cvv" Type="varchar" MaxLength="500" />
+          <Property Name="card_type" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -292,6 +293,8 @@
           <Property Name="EventEndDate" Type="varchar" MaxLength="50" />
           <Property Name="EventStartTime" Type="varchar" MaxLength="50" />
           <Property Name="EventEndTime" Type="varchar" MaxLength="50" />
+          <Property Name="E_Startdate" Type="datetime" />
+          <Property Name="E_Enddate" Type="datetime" />
         </EntityType>
         <EntityType Name="EventVote">
           <Key>
@@ -335,6 +338,8 @@
           <Property Name="EndTime" Type="varchar" MaxLength="50" />
           <Property Name="MonthlyWeek" Type="varchar" MaxLength="10" />
           <Property Name="MonthlyWeekDays" Type="varchar" MaxLength="100" />
+          <Property Name="M_Startfrom" Type="datetime" />
+          <Property Name="M_StartTo" Type="datetime" />
         </EntityType>
         <EntityType Name="Order_Detail_T">
           <Key>
@@ -355,6 +360,8 @@
           <Property Name="O_First_Name" Type="varchar" MaxLength="100" />
           <Property Name="O_Last_Name" Type="varchar" MaxLength="100" />
           <Property Name="O_Email" Type="varchar" MaxLength="100" />
+          <Property Name="O_Card_TransHash" Type="varchar" MaxLength="100" />
+          <Property Name="O_Card_TransId" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Organizer_Master">
           <Key>
@@ -465,7 +472,7 @@
           <Property Name="PC_End" Type="varchar" MaxLength="50" />
           <Property Name="PC_Apply" Type="varchar" MaxLength="50" />
           <Property Name="PC_URL" Type="varchar" MaxLength="150" />
-          <Property Name="PC_Eventid" Type="bigint" />
+          <Property Name="PC_Eventid" Type="bigint" Nullable="false" />
           <Property Name="SavedDate" Type="datetime" />
           <Property Name="PC_Startdatetype" Type="nchar" MaxLength="1" />
           <Property Name="Pc_Enddatetype" Type="nchar" MaxLength="1" />
@@ -599,7 +606,7 @@
           <Property Name="TQD_StartTime" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EventCombo.dbo.TicketBack2015' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EC2.dbo.TicketBack2015' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TicketBack2015">
           <Key>
             <PropertyRef Name="T_Id" />
@@ -709,7 +716,7 @@ warning 6002: The table/view 'EventCombo.dbo.TicketBack2015' does not have a pri
           <Property Name="VenueName" Type="varchar" MaxLength="200" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EC2.dbo.v_RetrieveEventid' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="v_RetrieveEventid">
           <Key>
             <PropertyRef Name="EventID" />
@@ -755,7 +762,37 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="Parent_EventID" Type="bigint" />
           <Property Name="EventCancel" Type="varchar" MaxLength="2" />
         </EntityType>
-        <Association Name="FK__EventSubC__Event__019419E5">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="V_Users">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Online" />
+            <PropertyRef Name="OrganiserId" />
+            <PropertyRef Name="MerchantId" />
+            <PropertyRef Name="UserStatusId" />
+          </Key>
+          <Property Name="EMail" Type="nvarchar" MaxLength="256" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Organiser" Type="varchar" MaxLength="2" />
+          <Property Name="Merchant" Type="varchar" MaxLength="2" />
+          <Property Name="UserStatus" Type="varchar" MaxLength="2" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="Online" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="State" Type="varchar" MaxLength="256" />
+          <Property Name="Ipcountry" Type="varchar" MaxLength="100" />
+          <Property Name="IpState" Type="varchar" MaxLength="100" />
+          <Property Name="Ipcity" Type="varchar" MaxLength="100" />
+          <Property Name="OrganiserId" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="MerchantId" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="UserStatusId" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="Role" Type="int" />
+          <Property Name="EventCount" Type="int" />
+          <Property Name="TicketPurchased" Type="bigint" />
+          <Property Name="RoleType" Type="varchar" MaxLength="14" />
+        </EntityType>
+        <Association Name="FK__EventSubC__Event__45BE5BA9">
           <End Role="EventCategory" Type="Self.EventCategory" Multiplicity="1" />
           <End Role="EventSubCategory" Type="Self.EventSubCategory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -767,7 +804,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TicketDel__Deliv__08411774">
+        <Association Name="FK__TicketDel__Deliv__4C6B5938">
           <End Role="DeliveryMethod" Type="Self.DeliveryMethod" Multiplicity="1" />
           <End Role="TicketDeliveryMethod" Type="Self.TicketDeliveryMethod" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1163,11 +1200,34 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
     [v_RetrieveEventid].[EventCancel] AS [EventCancel]
     FROM [dbo].[v_RetrieveEventid] AS [v_RetrieveEventid]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__EventSubC__Event__019419E5" Association="Self.FK__EventSubC__Event__019419E5">
+          <EntitySet Name="V_Users" EntityType="Self.V_Users" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_Users].[EMail] AS [EMail], 
+    [V_Users].[Id] AS [Id], 
+    [V_Users].[Organiser] AS [Organiser], 
+    [V_Users].[Merchant] AS [Merchant], 
+    [V_Users].[UserStatus] AS [UserStatus], 
+    [V_Users].[FirstName] AS [FirstName], 
+    [V_Users].[LastName] AS [LastName], 
+    [V_Users].[Online] AS [Online], 
+    [V_Users].[State] AS [State], 
+    [V_Users].[Ipcountry] AS [Ipcountry], 
+    [V_Users].[IpState] AS [IpState], 
+    [V_Users].[Ipcity] AS [Ipcity], 
+    [V_Users].[OrganiserId] AS [OrganiserId], 
+    [V_Users].[MerchantId] AS [MerchantId], 
+    [V_Users].[UserStatusId] AS [UserStatusId], 
+    [V_Users].[Role] AS [Role], 
+    [V_Users].[EventCount] AS [EventCount], 
+    [V_Users].[TicketPurchased] AS [TicketPurchased], 
+    [V_Users].[RoleType] AS [RoleType]
+    FROM [dbo].[V_Users] AS [V_Users]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__EventSubC__Event__45BE5BA9" Association="Self.FK__EventSubC__Event__45BE5BA9">
             <End Role="EventCategory" EntitySet="EventCategory" />
             <End Role="EventSubCategory" EntitySet="EventSubCategory" />
           </AssociationSet>
-          <AssociationSet Name="FK__TicketDel__Deliv__08411774" Association="Self.FK__TicketDel__Deliv__08411774">
+          <AssociationSet Name="FK__TicketDel__Deliv__4C6B5938" Association="Self.FK__TicketDel__Deliv__4C6B5938">
             <End Role="DeliveryMethod" EntitySet="DeliveryMethod" />
             <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethod" />
           </AssociationSet>
@@ -1320,6 +1380,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_Profile" FromRole="AspNetUsers" ToRole="Profile" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <Property Name="OldUserID" Type="Int32" />
         </EntityType>
         <EntityType Name="BillingAddress">
           <Key>
@@ -1339,10 +1400,10 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="Zip" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Country" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
           <Property Name="PaymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CardId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="card_type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="ExpirationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Cvv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CardId" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="card_type" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ExpirationDate" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Cvv" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CardDetail">
           <Key>
@@ -1352,10 +1413,10 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="CardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ExpirationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Cvv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="card_type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CardNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ExpirationDate" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Cvv" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="card_type" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -1518,6 +1579,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <NavigationProperty Name="Event" Relationship="Self.FK_EventVenue_Event" FromRole="EventVenue" ToRole="Event" />
           <NavigationProperty Name="EventVenue1" Relationship="Self.FK_EventVenue_EventVenue" FromRole="EventVenue" ToRole="EventVenue1" />
           <NavigationProperty Name="EventVenue2" Relationship="Self.FK_EventVenue_EventVenue" FromRole="EventVenue1" ToRole="EventVenue" />
+          <Property Name="E_Startdate" Type="DateTime" Precision="3" />
+          <Property Name="E_Enddate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="EventVote">
           <Key>
@@ -1552,6 +1615,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="MonthlyWeek" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="MonthlyWeekDays" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Event" Relationship="Self.FK_MultipleEvent_Event" FromRole="MultipleEvent" ToRole="Event" />
+          <Property Name="M_Startfrom" Type="DateTime" Precision="3" />
+          <Property Name="M_StartTo" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -2130,6 +2195,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             <End Role="Organizer_Master" EntitySet="Organizer_Master" />
             <End Role="Event_Orgnizer_Detail" EntitySet="Event_Orgnizer_Detail" />
           </AssociationSet>
+          <EntitySet Name="V_Users" EntityType="Cmsdata.V_Users" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -2245,6 +2311,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="O_First_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_Last_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_Card_TransHash" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_Card_TransId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Fee_Structure">
           <Key>
@@ -2296,7 +2364,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="PC_End" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PC_Apply" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PC_URL" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="PC_Eventid" Type="Int64" />
+          <Property Name="PC_Eventid" Type="Int64" Nullable="false" />
           <Property Name="SavedDate" Type="DateTime" Precision="3" />
           <Property Name="PC_Startdatetype" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
           <Property Name="Pc_Enddatetype" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
@@ -2437,6 +2505,34 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="V_Users">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Online" />
+            <PropertyRef Name="OrganiserId" />
+            <PropertyRef Name="MerchantId" />
+            <PropertyRef Name="UserStatusId" />
+          </Key>
+          <Property Name="EMail" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Organiser" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Merchant" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="UserStatus" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Online" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Ipcountry" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IpState" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Ipcity" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OrganiserId" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="MerchantId" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="UserStatusId" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="Role" Type="Int32" />
+          <Property Name="EventCount" Type="Int32" />
+          <Property Name="TicketPurchased" Type="Int64" />
+          <Property Name="RoleType" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2503,6 +2599,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="Cmsdata.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="OldUserID" ColumnName="OldUserID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
@@ -2704,6 +2801,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySetMapping Name="EventVenues">
             <EntityTypeMapping TypeName="Cmsdata.EventVenue">
               <MappingFragment StoreEntitySet="EventVenue">
+                <ScalarProperty Name="E_Enddate" ColumnName="E_Enddate" />
+                <ScalarProperty Name="E_Startdate" ColumnName="E_Startdate" />
                 <ScalarProperty Name="EventVenueID" ColumnName="EventVenueID" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="AddressId" ColumnName="AddressId" />
@@ -2736,6 +2835,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySetMapping Name="MultipleEvents">
             <EntityTypeMapping TypeName="Cmsdata.MultipleEvent">
               <MappingFragment StoreEntitySet="MultipleEvent">
+                <ScalarProperty Name="M_StartTo" ColumnName="M_StartTo" />
+                <ScalarProperty Name="M_Startfrom" ColumnName="M_Startfrom" />
                 <ScalarProperty Name="MultipleEventID" ColumnName="MultipleEventID" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="Frequency" ColumnName="Frequency" />
@@ -3111,6 +3212,8 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <EntitySetMapping Name="Order_Detail_T">
             <EntityTypeMapping TypeName="Cmsdata.Order_Detail_T">
               <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="O_Card_TransId" ColumnName="O_Card_TransId" />
+                <ScalarProperty Name="O_Card_TransHash" ColumnName="O_Card_TransHash" />
                 <ScalarProperty Name="O_Email" ColumnName="O_Email" />
                 <ScalarProperty Name="O_Last_Name" ColumnName="O_Last_Name" />
                 <ScalarProperty Name="O_First_Name" ColumnName="O_First_Name" />
@@ -3299,6 +3402,31 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Orgnizer_Event_Id" ColumnName="Orgnizer_Event_Id" />
                 <ScalarProperty Name="Orgnizer_Id" ColumnName="Orgnizer_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_Users">
+            <EntityTypeMapping TypeName="Cmsdata.V_Users">
+              <MappingFragment StoreEntitySet="V_Users">
+                <ScalarProperty Name="RoleType" ColumnName="RoleType" />
+                <ScalarProperty Name="TicketPurchased" ColumnName="TicketPurchased" />
+                <ScalarProperty Name="EventCount" ColumnName="EventCount" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="UserStatusId" ColumnName="UserStatusId" />
+                <ScalarProperty Name="MerchantId" ColumnName="MerchantId" />
+                <ScalarProperty Name="OrganiserId" ColumnName="OrganiserId" />
+                <ScalarProperty Name="Ipcity" ColumnName="Ipcity" />
+                <ScalarProperty Name="IpState" ColumnName="IpState" />
+                <ScalarProperty Name="Ipcountry" ColumnName="Ipcountry" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Online" ColumnName="Online" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserStatus" ColumnName="UserStatus" />
+                <ScalarProperty Name="Merchant" ColumnName="Merchant" />
+                <ScalarProperty Name="Organiser" ColumnName="Organiser" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

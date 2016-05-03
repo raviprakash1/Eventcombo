@@ -25,6 +25,8 @@ namespace CMS.Models
         public string EndTime { get; set; }
         public string MonthlyWeek { get; set; }
         public string MonthlyWeekDays { get; set; }
+        public Nullable<System.DateTime> M_Startfrom { get; set; }
+        public Nullable<System.DateTime> M_StartTo { get; set; }
     
         public virtual Event Event { get; set; }
     }

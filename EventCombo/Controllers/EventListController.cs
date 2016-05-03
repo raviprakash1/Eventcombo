@@ -44,7 +44,7 @@ namespace EventCombo.Controllers
             page_live = page_live > 0 ? page_live : 1;
             page_saved = page_saved > 0 ? page_saved : 1;
             page_past = page_past > 0 ? page_past : 1;
-            pageSize = pageSize > 0 ? pageSize : 2;
+            pageSize = pageSize > 0 ? pageSize : 20;
             if (string.IsNullOrEmpty(SearchStringEventTitle))
                 SearchStringEventTitle = "";
             List<GetEventsListByStatus1_Result> objLiveEventList = GetLiveEvents(SearchStringEventTitle);

@@ -72,6 +72,7 @@
         <EntityTypeShape EntityType="Cmsdata.Event_Orgnizer_Detail" Width="1.5" PointX="25" PointY="10.125" />
         <AssociationConnector Association="Cmsdata.FK_Event_Orgnizer_Detail_Event" />
         <AssociationConnector Association="Cmsdata.FK_Event_Orgnizer_Detail_Organizer_Master" />
+        <EntityTypeShape EntityType="Cmsdata.V_Users" Width="1.5" PointX="22.375" PointY="19.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
