@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using CMS.Models;
 using System.Text;
 using System.Data.SqlClient;
+using PagedList;
 
 namespace CMS.Controllers
 {
@@ -14,74 +15,76 @@ namespace CMS.Controllers
     {
         EmsEntities db = new EmsEntities();
         // GET: ManageEvent
-        [HttpPost]
-        public ActionResult Index(string SearchStringEventTitle, string EventType, string ddlEventCategory, string ddlEventSubCategory, string Features, string PageF, string Events, string Tickets)
-        {
-            if ((Session["UserID"] == null))
-            {
-                return RedirectToAction("Login", "Home");
-            }
-            List<EventCreation> objlst = GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features, Events, Tickets);
-            if (objlst.Count == 0)
-                ViewData["SearchedUser"] = 0;
-            int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
-            ViewData["Eventscount"] = objlst.Count;
-            List<SelectListItem> PageFilter = new List<SelectListItem>();
-            int i = 0; int z = 0; int iUcount = objlst.Count; int iGapValue = 25;
-            string strText = "";
-            if (iUcount > iGapValue)
-            {
-                for (i = 0; i < iUcount; i++)
-                {
-                    if (strText != (z + 1).ToString() + " - " + (z + iGapValue).ToString())
-                    {
-                        strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
-                        PageFilter.Add(new SelectListItem()
-                        {
-                            Text = strText,
-                            Value = (i).ToString(),
-                            Selected = (iCount == z ? true : false)
-                        });
-                    }
-                    z = z + iGapValue;
-                    iUcount = iUcount - iGapValue;
-                    if (iUcount < iGapValue && iUcount > 0)
-                    {
-                        strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
-                        PageFilter.Add(new SelectListItem()
-                        {
-                            Text = strText,
-                            Value = (i + 1).ToString(),
-                            Selected = (iCount == z ? true : false)
-                        });
-                    }
-                }
-                if (iCount > 0)
-                {
+        //[HttpPost]
+        //public ActionResult Index(string SearchStringEventTitle, string EventType, string ddlEventCategory, string ddlEventSubCategory, string Features, int PageF, string Events, string Tickets)
+        //{
+        //    if ((Session["UserID"] == null))
+        //    {
+        //        return RedirectToAction("Login", "Home");
+        //    }
+        //    List<EventCreation> objlst = GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features, Events, Tickets);
+        //    if (objlst.Count == 0)
+        //        ViewData["SearchedUser"] = 0;
+        //    int iCount = (PageF != null ? Convert.ToInt32(PageF) : 0);
+        //    ViewData["Eventscount"] = objlst.Count;
+        //    List<SelectListItem> PageFilter = new List<SelectListItem>();
+        //    int i = 0; int z = 0; int iUcount = objlst.Count; int iGapValue = 25;
+        //    string strText = "";
+        //    if (iUcount > iGapValue)
+        //    {
+        //        for (i = 0; i < iUcount; i++)
+        //        {
+        //            if (strText != (z + 1).ToString() + " - " + (z + iGapValue).ToString())
+        //            {
+        //                strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
+        //                PageFilter.Add(new SelectListItem()
+        //                {
+        //                    Text = strText,
+        //                    Value = (i).ToString(),
+        //                    Selected = (iCount == z ? true : false)
+        //                });
+        //            }
+        //            z = z + iGapValue;
+        //            iUcount = iUcount - iGapValue;
+        //            if (iUcount < iGapValue && iUcount > 0)
+        //            {
+        //                strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
+        //                PageFilter.Add(new SelectListItem()
+        //                {
+        //                    Text = strText,
+        //                    Value = (i + 1).ToString(),
+        //                    Selected = (iCount == z ? true : false)
+        //                });
+        //            }
+        //        }
+        //        if (iCount > 0)
+        //        {
 
-                }
-            }
-            else
-            {
-                PageFilter.Add(new SelectListItem()
-                {
-                    Text = "1 - 25",
-                    Value = "0",
-                    Selected = (iCount == 25 ? true : false)
-                });
+        //        }
+        //    }
+        //    else
+        //    {
+        //        PageFilter.Add(new SelectListItem()
+        //        {
+        //            Text = "1 - 25",
+        //            Value = "0",
+        //            Selected = (iCount == 25 ? true : false)
+        //        });
 
-            }
+        //    }
 
-            ViewBag.PageF = PageFilter;
+        //    ViewBag.PageF = PageFilter;
 
-            List<EventCreation> objlst1 = GetAllEvents("", "", "", "", "", "", "");
+        //    List<EventCreation> objlst1 = GetAllEvents("", "", "", "", "", "", "");
 
-            ViewData["Eventscount"] = objlst1.Count;
+        //    ViewData["Eventscount"] = objlst1.Count;
+        //    int pageSize = 25;
+        //    PageF = PageF > 0 ? PageF : 1;
+        //    pageSize = pageSize > 0 ? pageSize : 25;
+        //    var eventlist = objlst.ToPagedList(PageF, pageSize);
+        //    return View(eventlist);
 
-
-            return View(objlst);
-
-        }
+        //}
 
 
         public ActionResult EventPaymentInfo(long lEventId)
@@ -102,15 +105,146 @@ namespace CMS.Controllers
             }
 
         }
+        public ActionResult EventsList(string SearchStringEventTitle, string EventType, string ddlEventCategory, string ddlEventSubCategory, string Features, string Events, string Tickets, int PageF = 0)
+        {
 
-        public ActionResult Index()
+
+            if ((Session["UserID"] != null))
+            {
+                int page_live = 1;
+
+                int pageSize = 25;
+                PageF = PageF > 0 ? PageF : 1;
+
+                pageSize = pageSize > 0 ? pageSize :25;
+
+                EventType = EventType != null ? EventType : "0";
+                ddlEventSubCategory = ddlEventSubCategory != null ? ddlEventSubCategory : "0";
+                ddlEventCategory = ddlEventCategory != null ? ddlEventCategory : "0";
+                Features = Features != null ? Features : "0";
+                Events = Events != null ? Events : "0";
+                Tickets = Tickets != null ? Tickets : "0";
+                List <EventCreation> objlst = GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features, Events, Tickets);
+
+               
+
+                 var users = objlst.ToPagedList(PageF, pageSize);
+
+                ViewData["Userscount"] = objlst.Count();
+                if (objlst.Count == 0)
+                    ViewData["SearchedUser"] = 0;
+              
+                List<SelectListItem> PageFilter = new List<SelectListItem>();
+
+                int iCount = 0;
+                int i = 0; int z = 0; int iUcount = objlst.Count; int iGapValue = 25;
+                string strText = "";
+                if (iUcount > iGapValue)
+                {
+                    for (i = 0; i < iUcount; i++)
+                    {
+                        strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
+                        PageFilter.Add(new SelectListItem()
+                        {
+                            Text = strText,
+                            Value = (i).ToString(),
+                            Selected = (iCount == z ? true : false)
+                        });
+                        z = z + iGapValue;
+                        iUcount = iUcount - iGapValue;
+                        if (iUcount < iGapValue)
+                        {
+                            strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
+                            PageFilter.Add(new SelectListItem()
+                            {
+                                Text = strText,
+                                Value = (i + 1).ToString(),
+                                Selected = (iCount == z ? true : false)
+                            });
+                        }
+                    }
+                    if (iCount > 0)
+                    {
+                        if (iCount < objlst.Count)
+                            objlst = objlst.GetRange(iCount - iGapValue, iGapValue);
+                        else
+                        {
+                            //objuser = objuser.GetRange(iCount - iGapValue, ((iCount - (objuser.Count + 1))));
+                            int iGap = (iCount - iGapValue);
+                            objlst = objlst.GetRange(iGap, (objlst.Count - iGap));
+                            //objlst = objlst.GetRange(iGap, (objlst.Count - iGap));
+                        }
+                    }
+                }
+                else
+                {
+                    PageFilter.Add(new SelectListItem()
+                    {
+                        Text = "1 - 25",
+                        Value = "0",
+                        Selected = (iCount == 50 ? true : false)
+                    });
+
+
+
+                }
+
+                TempData["SearchStringEventTitle"] = SearchStringEventTitle;
+                TempData["EventType"] = EventType;
+                TempData["ddlEventCategory"] = ddlEventCategory;
+                TempData["ddlEventSubCategory"] = ddlEventSubCategory;
+                TempData["Features"] = Features;
+                TempData["Events"] = Events;
+                TempData["Tickets"] = Tickets;
+
+
+                //PageFilter.Add(new SelectListItem()
+                //{
+                //    Text = "1 - 5",
+                //    Value = "5",
+                //    Selected = (iCount == 5 ? true : false)
+                //});
+                //PageFilter.Add(new SelectListItem()
+                //{
+                //    Text = "5 - 10",
+                //    Value = "10",
+                //    Selected = (iCount == 10 ? true : false)
+                //});
+
+                ViewBag.ddlPageF = PageFilter;
+                var userid = Session["UserID"].ToString();
+                TempData["Pagesize"] = pageSize;
+                TempData["PageNo"] = PageF;
+
+
+                // List<Permissions> objPerm = GetPermission("APP");
+                // UsersTemplate objU = new UsersTemplate();
+                //  objU.objPermissions = GetPermission("APP");
+                // objuser.Add(objU);
+                return View(users);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+
+            }
+        }
+        public ActionResult Index(int ? page)
         {
             if ((Session["UserID"] == null))
             {
                 return RedirectToAction("Login", "Home");
             }
-
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             List<EventCreation> objlst = GetAllEvents("", "", "", "", "", "", "");
+           
+
+          
+           
+            var eventlist = objlst.ToPagedList(pageIndex, pageSize);
+
             int iCount = 0;
             List<SelectListItem> PageFilter = new List<SelectListItem>();
             ViewData["Eventscount"] = objlst.Count;
@@ -156,8 +290,10 @@ namespace CMS.Controllers
 
             }
 
-            ViewBag.PageF = PageFilter;
-            return View(objlst);
+            ViewBag.ddlPageF = PageFilter;
+           
+            ViewBag.OnePageOfProducts = eventlist;
+            return View(eventlist);
         }
         public List<EventCreation> GetAllEvents(string SearchStringEventTitle, string iEventType, string iEventCategory, string iEventSubCategory, string strFeature, string Events, string tickets)
         {
