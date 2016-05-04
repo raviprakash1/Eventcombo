@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<CMS.Models.EventCreation>
+﻿@model PagedList.IPagedList<CMS.Models.V_EventsList>
 @using PagedList.Mvc;
 @using CMS.Models;
 @{
@@ -39,7 +39,7 @@
             <div class="row" id="modal-content">
                 <div class="col-md-12">
 
-                    <div class="admin-panels ">
+                    <div class="admin-panels">
 
                         <div class="row">
                             <div class="col-md-12 admin-grid animated-delay" data-animate='["400","fadeIn"]'>
@@ -120,21 +120,56 @@
 
                             <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <table id="tblMain" class="table footable" data-page-navigation=".pagination" data-page-size="50">
+                                    <table id="tblMain" class="table">
                                         <thead class="bg_white">
                                             <tr>
-                                                <th data-column-id="id" data-type="numeric" data-identifier="true">Sno.</th>
-                                                <th>Title</th>
-                                                <th>Type</th>
-                                                <th>Category-SubCategory</th>
-                                                <th>Date(s)</th>
-                                                <th>Organizer Name & Email</th>
-                                                <th>Venue name & address</th>
+                                                <th>
+                                                    @{
+                                                        string sno = "/manageevent/EventsList?SearchStringEventTitle="+@TempData["SearchStringEventTitle"]+"&EventType="+@TempData["EventType"]+"&ddlEventCategory="+@TempData["ddlEventCategory"]+"&ddlEventSubCategory="+@TempData["ddlEventSubCategory"]+"&Features="+@TempData["Features"]+"&Events="+TempData["Events"]+"&Tickets="+@TempData["Tickets"]+ "&sortorder=sno";
+                                                        string snodesc = "/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=snodesc";
+                                                        string title = "/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=title";
+                                                        string titledesc = "/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=titledesc";
+                                                        string type = "/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=type";
+                                                        string typedesc = "/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=typedesc";
+                                                        string category = "/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=category";
+                                                        string categorydesc = "/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=categorydesc";
+                                                        string date = "/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=date";
+                                                        string datedesc = "/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=datedesc";
+                                                        string Organiser = "/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=Organiser";
+                                                        string Organiserdesc = "/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=Organiserdesc";
+                                                        string venue = "/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=venue";
+                                                        string venuedesc = "/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=venuedesc";
+                                                        string ticket = "/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=ticket";
+                                                        string ticketdesc = "/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=ticketdesc";
+                                                        string feature = "/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=feature";
+                                                        string featuredesc = "/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=featuredesc";
+                                                    }
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                Sno.<span class="crt_evnt_drop_up"> <a href="@sno"><i class="fa fa-angle-up"></i></a> </span>
+<span class="crt_evnt_drop_down"> <a href="@snodesc"><i class="fa fa-angle-down"></i></a> </span></th>
+                                                <th>Title <span class="crt_evnt_drop_up"> <a href="@title"><i class="fa fa-angle-up"></i></a> </span>
+<span class="crt_evnt_drop_down"> <a href="@titledesc"><i class="fa fa-angle-down"></i></a> </span></th>
+                                                <th>Type <span class="crt_evnt_drop_up"> <a href="@type"><i class="fa fa-angle-up"></i></a> </span>
+<span class="crt_evnt_drop_down"> <a href="@typedesc"><i class="fa fa-angle-down"></i></a> </span></th>
+                                                <th>Category-SubCategory <span class="crt_evnt_drop_up"> <a href="@category"><i class="fa fa-angle-up"></i></a> </span>
+<span class="crt_evnt_drop_down"> <a href="@categorydesc"><i class="fa fa-angle-down"></i></a> </span></th>
+                                                <th>Date(s)<span class="crt_evnt_drop_up"> <a href="@date"><i class="fa fa-angle-up"></i></a> </span>
+<span class="crt_evnt_drop_down"> <a href="@datedesc"><i class="fa fa-angle-down"></i></a> </span></th>
+                                                <th>Organizer Name & Email <span class="crt_evnt_drop_up"> <a href="@Organiser"><i class="fa fa-angle-up"></i></a> </span>
+<span class="crt_evnt_drop_down"> <a href="@Organiserdesc"><i class="fa fa-angle-down"></i></a> </span></th>
+                                                <th>Venue name & address <span class="crt_evnt_drop_up"> <a href="@venue"><i class="fa fa-angle-up"></i></a> </span>
+<span class="crt_evnt_drop_down"> <a href="@venuedesc"><i class="fa fa-angle-down"></i></a> </span></th>
                                                 <th>Action</th>
                                                 <th>$</th>
                                                 @*<th>Manage Ticketing</th>*@
-                                                <th>Tickets Sold</th>
-                                                <th>Feature </th>
+                                                <th>Tickets Sold <span class="crt_evnt_drop_up"> <a href="@ticket"><i class="fa fa-angle-up"></i></a> </span>
+<span class="crt_evnt_drop_down"> <a href="@ticketdesc"><i class="fa fa-angle-down"></i></a> </span></th>
+                                                <th>Feature <span class="crt_evnt_drop_up"> <a href="@feature"><i class="fa fa-angle-up"></i></a> </span>
+<span class="crt_evnt_drop_down"> <a href="@featuredesc"><i class="fa fa-angle-down"></i></a> </span> </th>
 
                                             </tr>
                                         </thead>
@@ -160,7 +195,7 @@
 
                                                     i = i + 1;
                                                     <tr>
-                                                        <td>@i.ToString()</td>
+                                                        <td>@obj.Sno</td>
                                                         <td><a target="_blank" href="http://@host/ViewEvent/ViewEvent?strEventDs=@obj.EventTitle.Trim().Replace(" ", "-")&strEventId=@obj.EventID">@obj.EventTitle</a></td>
                                                         <td>@obj.EventType</td>
                                                         <td>@obj.EventCategory-@obj.EventSubCategory</td>
@@ -173,7 +208,7 @@
                                                         <td>@obj.EventAddress</td>
                                                         <td>
                                                             <a href="#" class="btn btn-success br2 btn-xs fs12" onclick="EditEvent('@obj.EventID','@obj.UserID');"><i class="fa fa-edit"></i> </a>
-                                                            @if (obj.Purchasedqty <= 0)
+                                                            @if (Double.Parse(obj.Purchasedqty) <= 0)
                                                             {
                                                                 <a class="td-btn" type="button" onclick="ConfirmDelete('@obj.EventID');" href="#confirm-delete-ok" data-toggle="modal" id="adelete-@i">
                                                                     <i class="fa fa-remove"></i>
@@ -252,7 +287,7 @@
                                                 }
                                             }
                                         </tbody>
-                                        <tfoot class="footer-menu">
+                                        @*<tfoot class="footer-menu">
                                             <tr>
                                                 <td colspan="15">
                                                     <nav class="text-right">
@@ -260,12 +295,12 @@
                                                     </nav>
                                                 </td>
                                             </tr>
-                                        </tfoot>
+                                        </tfoot>*@
 
                                     </table>
 
                                     <div style="float:right">
-                                        @Html.PagedListPager(Model, pageF => Url.Action("EventsList", new { pageF, SearchStringEventTitle = TempData["SearchStringEventTitle"], EventType = TempData["EventType"], ddlEventCategory = TempData["ddlEventCategory"], ddlEventSubCategory=TempData["ddlEventSubCategory"], Features= TempData["Features"], Events=TempData["Events"], Tickets= TempData["Tickets"] }))
+                                        @Html.PagedListPager(Model, pageF => Url.Action("EventsList", new { pageF, SearchStringEventTitle = TempData["SearchStringEventTitle"], EventType = TempData["EventType"], ddlEventCategory = TempData["ddlEventCategory"], ddlEventSubCategory=TempData["ddlEventSubCategory"], Features= TempData["Features"], Events=TempData["Events"], Tickets= TempData["Tickets"], sortorder=TempData["sortorder"] }))
                                     </div>
                                     @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"] != null)
                                     {

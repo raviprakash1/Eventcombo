@@ -319,9 +319,6 @@
     <Compile Include="Models\GetEventDateList_Result.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\GetEventListing_Result.cs">
-      <DependentUpon>Cmsdata.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\GetEventsListByStatus_Result.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
@@ -408,6 +405,9 @@
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Venue.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\V_EventsList.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\v_RetrieveEventid.cs">
