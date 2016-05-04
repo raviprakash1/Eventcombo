@@ -8765,11 +8765,11 @@ WriteLiteral(";\r\n\r\n\r\n        $(\'#input2\').filer({\r\n            limit: 
 "unction onlyAlphabets(e, t) {\r\n\r\n\r\n\r\n            if (window.event) {\r\n\r\n        " +
 "        var charCode = window.event.keyCode;\r\n\r\n            }\r\n\r\n            els" +
 "e if (e) {\r\n\r\n                var charCode = e.which;\r\n\r\n            }\r\n\r\n      " +
-"      else { return true; }\r\n\r\n            if ((charCode > 64 && charCode < 91) " +
-"|| (charCode > 96 && charCode < 123) || charCode == 32 ||charCode == 8 || charCo" +
-"de == 0)\r\n\r\n                return true;\r\n\r\n            else\r\n\r\n                " +
-"return false;\r\n\r\n        }\r\n        $(document).prop(\'title\', \'EventCombo - Edit" +
-" ");
+"      else { return true; }\r\n\r\n            if ((charCode >= 48 && charCode <= 57" +
+")||(charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || char" +
+"Code == 32 ||charCode == 8 || charCode == 0)\r\n\r\n                return true;\r\n\r\n" +
+"            else\r\n\r\n                return false;\r\n\r\n        }\r\n        $(docume" +
+"nt).prop(\'title\', \'EventCombo - Edit ");
 
             
             #line 7497 "..\..\Views\EditEvent\ModifyEvent.cshtml"
