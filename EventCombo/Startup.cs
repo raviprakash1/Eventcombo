@@ -32,8 +32,9 @@ namespace EventCombo
             TicketEmailer ticketEmailer = new TicketEmailer();
             RecurringJob.AddOrUpdate(() => ticketEmailer.send(), "*/5 * * * *");
 
+            DeleteLockTickets locktickets = new DeleteLockTickets();
+            RecurringJob.AddOrUpdate(() => locktickets.Delete(), "*/1 * * * *");
 
-            
 
 
             app.UseHangfireDashboard();

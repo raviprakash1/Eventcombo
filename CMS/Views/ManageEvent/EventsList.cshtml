@@ -76,7 +76,7 @@
                                             </div>
                                             <div class="col-md-3 col-sm-3">
                                                 <label>Event SubCategory</label>
-                                                <select id="ddlEventSubCategory" class="form-control"></select>
+                                                <select id="ddlEventSubCategory" name="ddlEventSubCategory" class="form-control"></select>
                                             </div>
 
 
@@ -161,7 +161,7 @@
                                                     i = i + 1;
                                                     <tr>
                                                         <td>@i.ToString()</td>
-                                                        <td><a target="_blank" href="http://@host/ViewEvent/ViewEvent?strUrlData=@obj.EventTitle.Trim()౼@obj.EventID౼N">@obj.EventTitle</a></td>
+                                                        <td><a target="_blank" href="http://@host/ViewEvent/ViewEvent?strEventDs=@obj.EventTitle.Trim().Replace(" ", "-")&strEventId=@obj.EventID">@obj.EventTitle</a></td>
                                                         <td>@obj.EventType</td>
                                                         <td>@obj.EventCategory-@obj.EventSubCategory</td>
                                                         <td>@obj.EventTiming</td>
@@ -265,7 +265,7 @@
                                     </table>
 
                                     <div style="float:right">
-                                        @Html.PagedListPager(Model, pageF => Url.Action("EventsList", new { pageF, SearchStringFirstName = TempData["SearchStringFirstName"], SearchStringLastName = TempData["SearchStringLastName"], SearchStringEmail = TempData["SearchStringEmail"] }))
+                                        @Html.PagedListPager(Model, pageF => Url.Action("EventsList", new { pageF, SearchStringEventTitle = TempData["SearchStringEventTitle"], EventType = TempData["EventType"], ddlEventCategory = TempData["ddlEventCategory"], ddlEventSubCategory=TempData["ddlEventSubCategory"], Features= TempData["Features"], Events=TempData["Events"], Tickets= TempData["Tickets"] }))
                                     </div>
                                     @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"] != null)
                                     {
@@ -344,7 +344,7 @@
             }
             function EditEvent(eventId, UserID) {
                 var appSetting = '@(System.Configuration.ConfigurationManager.AppSettings["EventComboClientDomain"].ToString())';
-               
+
                 var url = appSetting + '/CMS/Index?id=' + eventId + '&e=' + UserID;
                 alert(url);
                 var w = 960, h = 600,
@@ -364,7 +364,7 @@
                 $('#Events').val(0);
                 $('#Tickets').val(0);
                 $('#ddlEventSubCategory').empty();
-                $('#formuser').submit();
+                window.location.href = '@Url.Action("EventsList", "ManageEvent", new { })?PageF=1';
 
             });
             //$('#ulpage').click(function () {
@@ -377,14 +377,24 @@
 
             //});
 
-            $('#ddlPageF').change(function () {
+    $('#ddlPageF').change(function () {
+        debugger;
                 var value = $(this).val();
-                console.log($(this).val());
-                $("#ulpage li").removeClass('active');
-                $('#ulpage li a[data-page=' + value + ']').click();
-                console.log($('#ulpage li a[data-page=' + value + ']').parent().addClass('active'));
-                //console.log($("#ulpage li").find("a", "[data-page=" + value + "]"));
+                var SearchStringEventTitle = $("#SearchStringEventTitle").val();
+                var EventType = $("#EventType").val();
+                var ddlEventCategory = $("#ddlEventCategory").val();
+                var ddlEventSubCategory = $("#ddlEventSubCategory").val();
+                var Features = $("#Features").val();
+                var Events = $("#Events").val();
+                var Tickets = $("#Tickets").val();
+                var PageF = value;
 
+                //console.log($(this).val());
+                //$("#ulpage li").removeClass('active');
+                //$('#ulpage li a[data-page=' + value + ']').click();
+                //console.log($('#ulpage li a[data-page=' + value + ']').parent().addClass('active'));
+                //console.log($("#ulpage li").find("a", "[data-page=" + value + "]"));
+                window.location.href = '@Url.Action("EventsList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Features=' + Features + '&Tickets=' + Tickets + '&PageF=' + PageF + '';
 
             });
             function ConfirmDelete(userId) {
@@ -447,7 +457,32 @@
             }
             $(document).ready(function () {
 
+                var vCatId = "@TempData["ddlEventCategory"]";
+                var vSubcatID="@TempData["ddlEventSubCategory"]";
+                if (vCatId != "") {
+                    $.ajax({
+                        url: '@Url.Action("GetSubCat", "ManageEvent")',
+                        data: { lECatId: vCatId },
+                        type: "Post",
+                        success: function (data) {
+                            //$.each(data, function () {
+                            // debugger;
+                            //                   alert(data.length);
+                            $("#ddlEventSubCategory").html(data);
+                            // items.push("<option value=" + this.Value + ">" + this.Text + "</option>");
+                            //});
+                        },
+                        error: function (data) {
+                            //alert("Sorry there is some problem.");
+                        }
+                    });
+                    if(vSubcatID!='')
+                    {
+                        
 
+                        $("#ddlEventSubCategory").val(vSubcatID);
+                    }
+                }
                 $("#btnYes").click(function () {
                     $.ajax({
                         url: '@Url.Action("Deleteevent","ManageEvent")',

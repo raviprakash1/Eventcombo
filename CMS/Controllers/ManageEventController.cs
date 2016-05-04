@@ -116,13 +116,19 @@ namespace CMS.Controllers
                 int pageSize = 25;
                 PageF = PageF > 0 ? PageF : 1;
 
-                pageSize = pageSize > 0 ? pageSize : 50;
+                pageSize = pageSize > 0 ? pageSize :25;
 
-                List<EventCreation> objlst = GetAllEvents("", "", "", "", "", "", "");
-
+                EventType = EventType != null ? EventType : "0";
+                ddlEventSubCategory = ddlEventSubCategory != null ? ddlEventSubCategory : "0";
+                ddlEventCategory = ddlEventCategory != null ? ddlEventCategory : "0";
+                Features = Features != null ? Features : "0";
+                Events = Events != null ? Events : "0";
+                Tickets = Tickets != null ? Tickets : "0";
+                List <EventCreation> objlst = GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features, Events, Tickets);
 
                
-                var users = objlst.ToPagedList(PageF, pageSize);
+
+                 var users = objlst.ToPagedList(PageF, pageSize);
 
                 ViewData["Userscount"] = objlst.Count();
                 if (objlst.Count == 0)
@@ -174,7 +180,7 @@ namespace CMS.Controllers
                 {
                     PageFilter.Add(new SelectListItem()
                     {
-                        Text = "1 - 50",
+                        Text = "1 - 25",
                         Value = "0",
                         Selected = (iCount == 50 ? true : false)
                     });

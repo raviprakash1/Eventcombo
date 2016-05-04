@@ -22,3 +22,27 @@ User Host IP:
 
 
 
+-----------Exception Details on  4/27/2016 8:27:40 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/27/2016 8:27:40 PM
+
+Error Line No : ne 3389
+
+Error Message: EntityCommandExecutionException
+
+Exception Type: System.Data.Entity.Core.EntityCommandExecutionException
+
+Error Location : An error occurred while executing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

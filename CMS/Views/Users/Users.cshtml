@@ -58,7 +58,8 @@
                                         <span class="view_evnt fs15 col-sm-4 text-right">Total no. of members:@ViewData["Userscount"] </span>
                                         <label class="field select admin-form col-sm-2 text-right srh-by-no">
 
-                                            @Html.DropDownList("ddlPageF", ViewBag.ddlPageF as List<SelectListItem>, new { })
+                                            @Html.DropDownList("ddlPageF", ViewBag.ddlPageF as List<SelectListItem>, new { style = "width: 300px;" })
+
 
                                             @*<select>
                                                     <option value="0">Select</option>
