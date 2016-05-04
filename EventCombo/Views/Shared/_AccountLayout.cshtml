@@ -54,12 +54,7 @@
 {
             <div class="col-sm-5 head_left_nav">
                 <ul class="navbar-right frnt-top-header  xs-signup-height">
-
-
-
-
                     <li class="msg_icn"><span>12</span> </li>
-
                     <li><a href="#">Welcome @{Html.RenderAction("UserName", "Home");}!</a> </li>
                     <li>
                         @Html.ActionLink("My Account", "MyAccount", "Account", routeValues: null, htmlAttributes: new { title = "Account" })
@@ -70,12 +65,6 @@
                             <a href="javascript:document.getElementById('logoutForm').submit()">Log Out </a>
                         }
                     </li>
-
-
-
-
-
-
                 </ul>
             </div>
                         }
@@ -185,7 +174,6 @@
                                                     <p>@Html.ActionLink("Personal Information", "MyAccount", "Account") </p>
                                                     <p>@Html.ActionLink("My Purchased Ticket", "PurchasedTicket", "Account")</p>
                                                     <p>@Html.ActionLink("My Purchased Deals", "PurchasedDeals", "Account")</p>
-                                                    <p>@Html.ActionLink("Payment Information", "PaymentInformation", "Account")</p>
                                                     <p>@Html.ActionLink("Manage Organizer", "OrganizerProfile", "Account")</p>
                                                 </div>
                                             </div>
