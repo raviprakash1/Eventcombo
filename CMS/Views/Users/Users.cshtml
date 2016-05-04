@@ -56,9 +56,9 @@
 
                                         <span class="view_evnt fs26 col-sm-4">  Member Management</span>
                                         <span class="view_evnt fs15 col-sm-4 text-right">Total no. of members:@ViewData["Userscount"] </span>
-                                        <label class="field select admin-form col-sm-2 text-right srh-by-no">
+                                        <label class="field select admin-form col-sm-3 text-right srh-by-no">
 
-                                            @Html.DropDownList("ddlPageF", ViewBag.ddlPageF as List<SelectListItem>, new { style = "width: 300px;" })
+                                            @Html.DropDownList("ddlPageF", ViewBag.ddlPageF as List<SelectListItem>, new { style = "width: 100%;" })
 
 
                                             @*<select>
@@ -140,62 +140,91 @@
                                                         string Onlinedesc = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Onlinedesc";
                                                     }
                                                 Sno.
-                                                    <span class="crt_evnt_drop_up"> <a href="@sno"><i class="fa fa-angle-up"></i></a> </span>
-                                                    <span class="crt_evnt_drop_down"> <a href="@snodesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                    <div class="">
+                                                        <span class="crt_evnt_drop_up"> <a href="@sno"><i class="fa fa-caret-up"></i></a> </span>
+                                                        <span class="crt_evnt_drop_down"> <a href="@snodesc"><i class="fa fa-caret-down"></i></a> </span>
+                                                    </div>
+                                                    
                                                 </th>
                                                 <th>Name
-                                                    <span class="crt_evnt_drop_up"> <a href="@name"><i class="fa fa-angle-up"></i></a> </span>
-                                                    <span class="crt_evnt_drop_down"> <a href="@namedesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                    <div class="">
+                                                        <span class="crt_evnt_drop_up"> <a href="@name"><i class="fa fa-caret-up"></i></a> </span>
+                                                        <span class="crt_evnt_drop_down"> <a href="@namedesc"><i class="fa fa-caret-down"></i></a> </span>
+                                                    </div>
                                                 </th>
+                                                 
                                                 <th>Role
-                                                    <span class="crt_evnt_drop_up"> <a href="@role"><i class="fa fa-angle-up"></i></a> </span>
-                                                    <span class="crt_evnt_drop_down"> <a href="@roledesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                   <div class="">
+                                                    <span class="crt_evnt_drop_up"> <a href="@role"><i class="fa fa-caret-up"></i></a> </span>
+                                                    <span class="crt_evnt_drop_down"> <a href="@roledesc"><i class="fa fa-caret-down"></i></a> </span>
+                                                   </div>
                                                 </th>
                                                 <th>Email
-                                                    <span class="crt_evnt_drop_up"> <a href="@email"><i class="fa fa-angle-up"></i></a> </span>
-                                                    <span class="crt_evnt_drop_down"> <a href="@emaildesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                    <div class="">
+                                                        <span class="crt_evnt_drop_up"> <a href="@email"><i class="fa fa-caret-up"></i></a> </span>
+                                                        <span class="crt_evnt_drop_down"> <a href="@emaildesc"><i class="fa fa-caret-down"></i></a> </span>
+                                                   </div>
                                                 </th>
                                                 <th>Event
-                                                    <span class="crt_evnt_drop_up"> <a href="@event1"><i class="fa fa-angle-up"></i></a> </span>
-                                                    <span class="crt_evnt_drop_down"> <a href="@eventdesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                    <div class="">
+                                                        <span class="crt_evnt_drop_up"> <a href="@event1"><i class="fa fa-caret-up"></i></a> </span>
+                                                        <span class="crt_evnt_drop_down"> <a href="@eventdesc"><i class="fa fa-caret-down"></i></a> </span>
+                                                    </div>
                                                 </th>
                                                 <th>Deals
-                                                    <span class="crt_evnt_drop_up"> <a href="@deals"><i class="fa fa-angle-up"></i></a> </span>
-                                                    <span class="crt_evnt_drop_down"> <a href="@dealsdesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                    <div class="">
+                                                        <span class="crt_evnt_drop_up"> <a href="@deals"><i class="fa fa-caret-up"></i></a> </span>
+                                                        <span class="crt_evnt_drop_down"> <a href="@dealsdesc"><i class="fa fa-caret-down"></i></a> </span>
+                                                    </div>
                                                 </th>
                                                 <th>Location
-                                                    <span class="crt_evnt_drop_up"> <a href="@location"><i class="fa fa-angle-up"></i></a> </span>
-                                                    <span class="crt_evnt_drop_down"> <a href="@locationdesc"><i class="fa fa-angle-down"></i></a> </span>
-                                                </th>
+                                                    <div class="">
+                                                        <span class="crt_evnt_drop_up"> <a href="@location"><i class="fa fa-caret-up"></i></a> </span>
+                                                        <span class="crt_evnt_drop_down"> <a href="@locationdesc"><i class="fa fa-caret-down"></i></a> </span>
+                                                    </div>
+                                                 </th>
                                                 <th>Tickets Purchased
-                                                    <span class="crt_evnt_drop_up"> <a href="@ticketpurchased"><i class="fa fa-angle-up"></i></a> </span>
-                                                    <span class="crt_evnt_drop_down"> <a href="@ticketpurchaseddesc"><i class="fa fa-angle-down"></i></a> </span>
-                                                </th>  
+                                                    <div class="">
+                                                        <span class="crt_evnt_drop_up"> <a href="@ticketpurchased"><i class="fa fa-caret-up"></i></a> </span>
+                                                        <span class="crt_evnt_drop_down"> <a href="@ticketpurchaseddesc"><i class="fa fa-caret-down"></i></a> </span>
+                                                    </div>
+                                                 </th>  
                                                 <th>Deals purchased
-                                                    <span class="crt_evnt_drop_up"> <a href="@dealpurchased"><i class="fa fa-angle-up"></i></a> </span>
-                                                    <span class="crt_evnt_drop_down"> <a href="@dealpurchaseddesc"><i class="fa fa-angle-down"></i></a> </span>
-                                                </th>
+                                                    <div class="">
+                                                        <span class="crt_evnt_drop_up"> <a href="@dealpurchased"><i class="fa fa-caret-up"></i></a> </span>
+                                                        <span class="crt_evnt_drop_down"> <a href="@dealpurchaseddesc"><i class="fa fa-caret-down"></i></a> </span>
+
+                                                    </div>
+                                                 </th>
                                                 <th>Organizer
-                                                    <span class="crt_evnt_drop_up"> <a href="@Orgaizer"><i class="fa fa-angle-up"></i></a> </span>
-                                                    <span class="crt_evnt_drop_down"> <a href="@Orgaizerdesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                    <div class="">
+                                                        <span class="crt_evnt_drop_up"> <a href="@Orgaizer"><i class="fa fa-caret-up"></i></a> </span>
+                                                        <span class="crt_evnt_drop_down"> <a href="@Orgaizerdesc"><i class="fa fa-caret-down"></i></a> </span>
+                                                    </div>
                                                 </th>
                                                 <th>Merchant
-                                                    <span class="crt_evnt_drop_up"> <a href="@Merchant"><i class="fa fa-angle-up"></i></a> </span>
-                                                    <span class="crt_evnt_drop_down"> <a href="@Merchantdesc"><i class="fa fa-angle-down"></i></a> </span>
-                                                </th>
+                                                    <div class="">
+                                                        <span class="crt_evnt_drop_up"> <a href="@Merchant"><i class="fa fa-caret-up"></i></a> </span>
+                                                        <span class="crt_evnt_drop_down"> <a href="@Merchantdesc"><i class="fa fa-caret-down"></i></a> </span>
+                                                    </div>
+                                                 </th>
                                                 <th data-column-id="status" data-order="desc" data-identifier="true">Status
-                                                    <span class="crt_evnt_drop_up"> <a href="@status"><i class="fa fa-angle-up"></i></a> </span>
-                                                    <span class="crt_evnt_drop_down"> <a href="@statusdesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                    <div class="">
+                                                        <span class="crt_evnt_drop_up"> <a href="@status"><i class="fa fa-caret-up"></i></a> </span>
+                                                        <span class="crt_evnt_drop_down"> <a href="@statusdesc"><i class="fa fa-caret-down"></i></a> </span>
+                                                    </div>
                                                 </th>
                                                 <th class="sornone">Action</th>
                                                 <th>Online
-                                                    <span class="crt_evnt_drop_up"> <a href="@Online"><i class="fa fa-angle-up"></i></a> </span>
-                                                    <span class="crt_evnt_drop_down"> <a href="@Onlinedesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                    <div class="">
+                                                        <span class="crt_evnt_drop_up"> <a href="@Online"><i class="fa fa-caret-up"></i></a> </span>
+                                                        <span class="crt_evnt_drop_down"> <a href="@Onlinedesc"><i class="fa fa-caret-down"></i></a> </span>
+                                                    </div>
                                                 </th>
                                                     
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody class="bg_white">
 
                                             @{
                                                 int i = 0;
@@ -392,7 +421,7 @@
                                                 }
                                             }
                                         </tbody>                                        
-                                        <tfoot class="footer-menu">
+                                        @*<tfoot class="footer-menu">
                                             <tr>
                                                 <td colspan="15">
                                                     <nav class="text-right">
@@ -400,7 +429,7 @@
                                                     </nav>
                                                 </td>
                                             </tr>
-                                        </tfoot>
+                                        </tfoot>*@
 
                                     </table>
                                    
