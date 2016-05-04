@@ -423,13 +423,13 @@
                 var Events = $("#Events").val();
                 var Tickets = $("#Tickets").val();
                 var PageF = value;
-
+                var sortorder = "@TempData["sortorder"]";
                 //console.log($(this).val());
                 //$("#ulpage li").removeClass('active');
                 //$('#ulpage li a[data-page=' + value + ']').click();
                 //console.log($('#ulpage li a[data-page=' + value + ']').parent().addClass('active'));
                 //console.log($("#ulpage li").find("a", "[data-page=" + value + "]"));
-                window.location.href = '@Url.Action("EventsList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Features=' + Features + '&Tickets=' + Tickets + '&PageF=' + PageF + '';
+        window.location.href = '@Url.Action("EventsList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Features=' + Features + '&Tickets=' + Tickets + '&sortorder=' + sortorder + '&PageF=' + PageF + '';
 
             });
             function ConfirmDelete(userId) {

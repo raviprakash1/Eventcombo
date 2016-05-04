@@ -808,7 +808,10 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
             <PropertyRef Name="OrganiserId" />
             <PropertyRef Name="MerchantId" />
             <PropertyRef Name="UserStatusId" />
+            <PropertyRef Name="deals" />
+            <PropertyRef Name="dealpurchased" />
           </Key>
+          <Property Name="Sno" Type="bigint" />
           <Property Name="EMail" Type="nvarchar" MaxLength="256" />
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Organiser" Type="varchar" MaxLength="2" />
@@ -828,6 +831,8 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Property Name="EventCount" Type="int" />
           <Property Name="TicketPurchased" Type="bigint" />
           <Property Name="RoleType" Type="varchar" MaxLength="14" />
+          <Property Name="deals" Type="int" Nullable="false" />
+          <Property Name="dealpurchased" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK__EventSubC__Event__45BE5BA9">
           <End Role="EventCategory" Type="Self.EventCategory" Multiplicity="1" />
@@ -1267,6 +1272,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           </EntitySet>
           <EntitySet Name="V_Users" EntityType="Self.V_Users" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
+    [V_Users].[Sno] AS [Sno], 
     [V_Users].[EMail] AS [EMail], 
     [V_Users].[Id] AS [Id], 
     [V_Users].[Organiser] AS [Organiser], 
@@ -1285,7 +1291,9 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
     [V_Users].[Role] AS [Role], 
     [V_Users].[EventCount] AS [EventCount], 
     [V_Users].[TicketPurchased] AS [TicketPurchased], 
-    [V_Users].[RoleType] AS [RoleType]
+    [V_Users].[RoleType] AS [RoleType], 
+    [V_Users].[deals] AS [deals], 
+    [V_Users].[dealpurchased] AS [dealpurchased]
     FROM [dbo].[V_Users] AS [V_Users]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__EventSubC__Event__45BE5BA9" Association="Self.FK__EventSubC__Event__45BE5BA9">
@@ -2567,6 +2575,8 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
             <PropertyRef Name="OrganiserId" />
             <PropertyRef Name="MerchantId" />
             <PropertyRef Name="UserStatusId" />
+            <PropertyRef Name="deals" />
+            <PropertyRef Name="dealpurchased" />
           </Key>
           <Property Name="EMail" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
@@ -2587,6 +2597,9 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Property Name="EventCount" Type="Int32" />
           <Property Name="TicketPurchased" Type="Int64" />
           <Property Name="RoleType" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="Sno" Type="Int64" />
+          <Property Name="deals" Type="Int32" Nullable="false" />
+          <Property Name="dealpurchased" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="V_EventsList">
           <Key>
@@ -3477,6 +3490,9 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySetMapping Name="V_Users">
             <EntityTypeMapping TypeName="Cmsdata.V_Users">
               <MappingFragment StoreEntitySet="V_Users">
+                <ScalarProperty Name="dealpurchased" ColumnName="dealpurchased" />
+                <ScalarProperty Name="deals" ColumnName="deals" />
+                <ScalarProperty Name="Sno" ColumnName="Sno" />
                 <ScalarProperty Name="RoleType" ColumnName="RoleType" />
                 <ScalarProperty Name="TicketPurchased" ColumnName="TicketPurchased" />
                 <ScalarProperty Name="EventCount" ColumnName="EventCount" />

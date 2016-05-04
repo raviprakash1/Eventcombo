@@ -107,49 +107,117 @@
 
                             <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <table id="tblMain" class="table footable" data-page-navigation=".pagination" data-page-size="50">
+                                    <table id="tblMain" class="table">
                                         <thead class="bg_white">
                                             <tr>
-                                                <th data-column-id="id" data-type="numeric" data-identifier="true">Sno.</th>
-                                                <th>Name</th>
-                                                <th>Role</th>
-                                                <th>Email Id</th>
-                                                <th>Event</th>
-                                                <th>Deals</th>
-                                                <th>Location</th>
-                                                <th>Tickets Purchased</th>  
-                                                <th>Deals purchased</th>
-                                                <th>Organizer</th>
-                                                <th>Merchant</th>
-                                                <th data-column-id="status" data-order="desc" data-identifier="true">Status</th>
+                                                <th>
+                                                    @{
+                                                        string sno = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] +"&sortorder=sno";
+                                                        string snodesc = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=snodesc";
+                                                        string name = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=name";
+                                                        string namedesc = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=namedesc";
+                                                        string role = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=role";
+                                                        string roledesc = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=roledesc";
+                                                        string email = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=email";
+                                                        string emaildesc = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=emaildesc";
+                                                        string event1 = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=event";
+                                                        string eventdesc="/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=eventdesc";
+                                                        string deals = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=deals";
+                                                        string dealsdesc = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=dealsdesc";
+                                                        string location = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=location";
+                                                        string locationdesc = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=location_desc";
+                                                        string ticketpurchased = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=ticketpurchased";
+                                                        string ticketpurchaseddesc = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=ticketpurchased_desc";
+                                                        string dealpurchased = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=dealpurchased";
+                                                        string dealpurchaseddesc = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=dealpurchased_desc";
+                                                        string Orgaizer = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Organiser";
+                                                        string Orgaizerdesc = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Orgaizerdesc";
+                                                        string Merchant = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Merchant";
+                                                        string Merchantdesc = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Merchantdesc";
+                                                        string status = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=status";
+                                                        string statusdesc = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=statusdesc";
+                                                        string Online = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Online";
+                                                        string Onlinedesc = "/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Onlinedesc";
+                                                    }
+                                                Sno.
+                                                    <span class="crt_evnt_drop_up"> <a href="@sno"><i class="fa fa-angle-up"></i></a> </span>
+                                                    <span class="crt_evnt_drop_down"> <a href="@snodesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                </th>
+                                                <th>Name
+                                                    <span class="crt_evnt_drop_up"> <a href="@name"><i class="fa fa-angle-up"></i></a> </span>
+                                                    <span class="crt_evnt_drop_down"> <a href="@namedesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                </th>
+                                                <th>Role
+                                                    <span class="crt_evnt_drop_up"> <a href="@role"><i class="fa fa-angle-up"></i></a> </span>
+                                                    <span class="crt_evnt_drop_down"> <a href="@roledesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                </th>
+                                                <th>Email
+                                                    <span class="crt_evnt_drop_up"> <a href="@email"><i class="fa fa-angle-up"></i></a> </span>
+                                                    <span class="crt_evnt_drop_down"> <a href="@emaildesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                </th>
+                                                <th>Event
+                                                    <span class="crt_evnt_drop_up"> <a href="@event1"><i class="fa fa-angle-up"></i></a> </span>
+                                                    <span class="crt_evnt_drop_down"> <a href="@eventdesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                </th>
+                                                <th>Deals
+                                                    <span class="crt_evnt_drop_up"> <a href="@deals"><i class="fa fa-angle-up"></i></a> </span>
+                                                    <span class="crt_evnt_drop_down"> <a href="@dealsdesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                </th>
+                                                <th>Location
+                                                    <span class="crt_evnt_drop_up"> <a href="@location"><i class="fa fa-angle-up"></i></a> </span>
+                                                    <span class="crt_evnt_drop_down"> <a href="@locationdesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                </th>
+                                                <th>Tickets Purchased
+                                                    <span class="crt_evnt_drop_up"> <a href="@ticketpurchased"><i class="fa fa-angle-up"></i></a> </span>
+                                                    <span class="crt_evnt_drop_down"> <a href="@ticketpurchaseddesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                </th>  
+                                                <th>Deals purchased
+                                                    <span class="crt_evnt_drop_up"> <a href="@dealpurchased"><i class="fa fa-angle-up"></i></a> </span>
+                                                    <span class="crt_evnt_drop_down"> <a href="@dealpurchaseddesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                </th>
+                                                <th>Organizer
+                                                    <span class="crt_evnt_drop_up"> <a href="@Orgaizer"><i class="fa fa-angle-up"></i></a> </span>
+                                                    <span class="crt_evnt_drop_down"> <a href="@Orgaizerdesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                </th>
+                                                <th>Merchant
+                                                    <span class="crt_evnt_drop_up"> <a href="@Merchant"><i class="fa fa-angle-up"></i></a> </span>
+                                                    <span class="crt_evnt_drop_down"> <a href="@Merchantdesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                </th>
+                                                <th data-column-id="status" data-order="desc" data-identifier="true">Status
+                                                    <span class="crt_evnt_drop_up"> <a href="@status"><i class="fa fa-angle-up"></i></a> </span>
+                                                    <span class="crt_evnt_drop_down"> <a href="@statusdesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                </th>
                                                 <th class="sornone">Action</th>
-                                                <th>Online</th>
+                                                <th>Online
+                                                    <span class="crt_evnt_drop_up"> <a href="@Online"><i class="fa fa-angle-up"></i></a> </span>
+                                                    <span class="crt_evnt_drop_down"> <a href="@Onlinedesc"><i class="fa fa-angle-down"></i></a> </span>
+                                                </th>
                                                     
                                             </tr>
                                         </thead>
                                         <tbody>
 
                                             @{
-                                                    int i = 0;
-                                                    int pagenumber =Convert.ToInt32(TempData["PageNo"]);
-                                                    int pagesize= Convert.ToInt32(TempData["Pagesize"]);
-                                                    if (pagenumber==1)
-                                                    {
-                                                        i = 0;
-                                                    }
-                                                    else
-                                                    {
-                                                        i = pagesize*(pagenumber-1);
-                                                    }
+                                                int i = 0;
+                                                int pagenumber =Convert.ToInt32(TempData["PageNo"]);
+                                                int pagesize= Convert.ToInt32(TempData["Pagesize"]);
+                                                if (pagenumber==1)
+                                                {
+                                                    i = 0;
+                                                }
+                                                else
+                                                {
+                                                    i = pagesize*(pagenumber-1);
+                                                }
 
-                                                    foreach (var obj in  Model   )
-                                                    {
+                                                foreach (var obj in  Model   )
+                                                {
 
 
-                                                        i = i + 1;
+                                                    i = i + 1;
                                                     <tr>
 
-                                                        <td>@i</td>
+                                                        <td>@obj.Sno</td>
                                                         <td class="eml-ellps" title="@obj.FirstName @obj.LastName">
 
                                                             @obj.FirstName  @obj.LastName
@@ -184,7 +252,7 @@
                                                         <td>
                                                             <div class="section" id="dvorganiser-@i">
                                                                 <label class="field select">
-                                                                    <label id="lblorg-@i" style="display:none">@obj.OrganiserId</label>
+                                                                  
                                                                     @if (obj.Organiser == "Y")
                                                                     { 
                                                                         <select id="dlOrgnizer-@i" onchange="SaveFields('@obj.Id','dlOrgnizer',this.value,this.id)">
@@ -223,7 +291,7 @@
                                                         <td>
                                                             <div class="section" id="dvmerchant-@i">
                                                                 <label class="field select">
-                                                                    <label id="lblMer-@i" style="display:none">@obj.MerchantId</label>
+                                                                   
                                                                     @if (obj.Merchant == "Y")
                                                                     {
                                                                         <select id="dlMerchant-@i" onchange="SaveFields('@obj.Id','dlMerchant',this.value,this.id)">
@@ -258,7 +326,7 @@
                                                         <td>
                                                             <div class="section" id="dvstatus-@i">
                                                                 <label class="field select">
-                                                                    <label id="lblstatus-@i" style="display:none">@obj.UserStatusId</label>
+                                                                 
                                                                     @if (obj.UserStatus == "Y")
                                                                     {
                                                                         <select id="dlStatus-@i" onchange="SaveFields('@obj.Id','dlStatus',this.value,this.id)">
@@ -308,7 +376,7 @@
 
                                                         </td>
                                                         <td>
-                                                            <label id="lblonline-@i" style="display:none">@obj.Online</label>
+                                                           
                                                             @if (obj.Online == "Y")
                                                             {
                                                                 <span class="fa fa-circle text-success fs14" title="online"></span>
@@ -337,7 +405,7 @@
                                     </table>
                                    
                                     <div style="float:right">
-                                        @Html.PagedListPager(Model, pageF => Url.Action("Users", new { pageF, SearchStringFirstName = TempData["SearchStringFirstName"], SearchStringLastName = TempData["SearchStringLastName"], SearchStringEmail = TempData["SearchStringEmail"] }))
+                                        @Html.PagedListPager(Model, pageF => Url.Action("Users", new { pageF, SearchStringFirstName = TempData["SearchStringFirstName"], SearchStringLastName = TempData["SearchStringLastName"], SearchStringEmail = TempData["SearchStringEmail"], sortorder= TempData["sortorder"]}))
                                     </div>
                                           @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"]!=null)
                                     {
@@ -584,7 +652,8 @@
         var email = $("#SearchStringEmail").val();
         var value = $(this).val();
         value = parseInt(value) + 1;
-        window.location.href = '@Url.Action("Users", "Users", new { })?SearchStringFirstName=' + firstname + '&SearchStringLastName=' + lastnmae + '&SearchStringEmail=' + email + '&PageF=' + value + '';
+        var sortorder = "@TempData["sortorder"]";
+        window.location.href = '@Url.Action("Users", "Users", new { })?SearchStringFirstName=' + firstname + '&SearchStringLastName=' + lastnmae + '&SearchStringEmail=' + email + '&sortorder=' + sortorder + '&PageF=' + value + '';
        
         //$("#ulpage li").removeClass('active');
         //$('#ulpage li a[data-page=' + value + ']').click();
