@@ -216,7 +216,7 @@ namespace CMS.Controllers
                         {
                             Text = strText,
                             Value = (i).ToString(),
-                            Selected = (iCount == z ? true : false)
+                            Selected = (PageF == i ? true : false)
                         }); 
                         z = z + iGapValue;
                         iUcount = iUcount - iGapValue;
