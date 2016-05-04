@@ -58,7 +58,7 @@
                                         <span class="view_evnt fs15 col-sm-4 text-right">Total no. of members:@ViewData["Userscount"] </span>
                                         <label class="field select admin-form col-sm-2 text-right srh-by-no">
 
-                                            @Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { })
+                                            @Html.DropDownList("ddlPageF", ViewBag.ddlPageF as List<SelectListItem>, new { })
 
                                             @*<select>
                                                     <option value="0">Select</option>
@@ -141,7 +141,7 @@
                                                         i = pagesize*(pagenumber-1);
                                                     }
 
-                                                    foreach (var obj in Model)
+                                                    foreach (var obj in  Model   )
                                                     {
 
 
@@ -335,9 +335,10 @@
 
                                     </table>
                                    
-                                    
-                                    @Html.PagedListPager(Model, pageF => Url.Action("Users", new { pageF }))
-                                     @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"]!=null)
+                                    <div style="float:right">
+                                        @Html.PagedListPager(Model, pageF => Url.Action("Users", new { pageF, SearchStringFirstName = TempData["SearchStringFirstName"], SearchStringLastName = TempData["SearchStringLastName"], SearchStringEmail = TempData["SearchStringEmail"] }))
+                                    </div>
+                                          @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"]!=null)
                                     {
                                        <span>No Result Found.</span> 
                                     }
@@ -575,12 +576,19 @@
 
     //});
 
-    $('#PageF').change(function () {
+    $('#ddlPageF').change(function () {
+
+        var firstname = $("#SearchStringFirstName").val();
+        var lastnmae = $("#SearchStringLastName").val();
+        var email = $("#SearchStringEmail").val();
         var value = $(this).val();
         value = parseInt(value) + 1;
-        window.location.href = '@Url.Action("Users", "Users", new { })?PageF=' + value + '';
+        window.location.href = '@Url.Action("Users", "Users", new { })?SearchStringFirstName=' + firstname + '&SearchStringLastName=' + lastnmae + '&SearchStringEmail=' + email + '&PageF=' + value + '';
        
-     
+        //$("#ulpage li").removeClass('active');
+        //$('#ulpage li a[data-page=' + value + ']').click();
+        //console.log($('#ulpage li a[data-page=' + value + ']').parent().addClass('active'));
+        //console.log($("#ulpage li").find("a", "[data-page=" + value + "]"));
 
 
     });

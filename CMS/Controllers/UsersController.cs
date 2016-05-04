@@ -167,8 +167,10 @@ namespace CMS.Controllers
 
                 }
 
+                TempData["SearchStringFirstName"] = SearchStringFirstName;
+                TempData["SearchStringLastName"] = SearchStringLastName;
+                TempData["SearchStringEmail"] = SearchStringEmail;
 
-             
 
                 //PageFilter.Add(new SelectListItem()
                 //{
@@ -183,7 +185,7 @@ namespace CMS.Controllers
                 //    Selected = (iCount == 10 ? true : false)
                 //});
 
-                ViewBag.PageF = PageFilter;
+                ViewBag.ddlPageF = PageFilter;
                 var userid = Session["UserID"].ToString();
                 TempData["Pagesize"] = pageSize;
                 TempData["PageNo"] = PageF;
