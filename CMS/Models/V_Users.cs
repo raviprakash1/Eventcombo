@@ -33,5 +33,8 @@ namespace CMS.Models
         public Nullable<int> EventCount { get; set; }
         public Nullable<long> TicketPurchased { get; set; }
         public string RoleType { get; set; }
+        public Nullable<long> Sno { get; set; }
+        public int deals { get; set; }
+        public int dealpurchased { get; set; }
     }
 }

@@ -44,7 +44,7 @@ namespace CMS.Controllers
 
         }
 
-        public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail,int PageF=0)
+        public ActionResult Users(string SearchStringFirstName, string SearchStringLastName, string SearchStringEmail,string sortorder,int PageF=0)
         {
           
             
@@ -58,7 +58,93 @@ namespace CMS.Controllers
                 ViewData["EventComboClientDomain"] = ConfigurationManager.AppSettings["EventComboClientDomain"];
 
                 List<V_Users> objuser = GetAllUsers(SearchStringFirstName, SearchStringLastName, SearchStringEmail);
-              var users= objuser.ToPagedList(PageF, pageSize);
+                switch (sortorder)
+                {
+                    case "sno":
+                        objuser = objuser.OrderBy(s => s.Sno).ToList();
+                        break;
+                    case "snodesc":
+                        objuser = objuser.OrderByDescending(s => s.Sno).ToList();
+                        break;
+                    case "name":
+                        objuser = objuser.OrderBy(s => s.FirstName).ToList();
+                        break;
+                    case "namedesc":
+                        objuser = objuser.OrderByDescending(s => s.FirstName).ToList();
+                        break;
+                    case "role":
+                        objuser = objuser.OrderBy(s => s.RoleType).ToList();
+                        break;
+                    case "roledesc":
+                        objuser = objuser.OrderByDescending(s => s.RoleType).ToList();
+                        break;
+                    case "email":
+                        objuser = objuser.OrderBy(s => s.EMail).ToList();
+                        break;
+                    case "emaildesc":
+                        objuser = objuser.OrderByDescending(s => s.EMail).ToList();
+                        break;
+                    case "event":
+                        objuser = objuser.OrderBy(s => s.EventCount).ToList();
+                        break;
+                    case "eventdesc":
+                        objuser = objuser.OrderByDescending(s => s.EventCount).ToList();
+                        break;
+                    case "deals":
+                        objuser = objuser.OrderBy(s => s.deals).ToList();
+                        break;
+                    case "dealsdesc":
+                        objuser = objuser.OrderByDescending(s => s.deals).ToList();
+                        break;
+                    case "location_desc":
+                        objuser = objuser.OrderByDescending(s => s.Ipcountry).ToList();
+                        break;
+                    case "location":
+                        objuser = objuser.OrderBy(s => s.Ipcountry).ToList();
+                        break;
+                    case "ticketpurchased_desc":
+                        objuser = objuser.OrderByDescending(s => s.TicketPurchased).ToList();
+                        break;
+                    case "ticketpurchased":
+                        objuser = objuser.OrderBy(s => s.TicketPurchased).ToList();
+                        break;
+                    case "dealpurchased_desc":
+                        objuser = objuser.OrderByDescending(s => s.dealpurchased).ToList();
+                        break;
+                    case "dealpurchased":
+                        objuser = objuser.OrderBy(s => s.dealpurchased).ToList();
+                        break;
+                    case "Organiser":
+                        objuser = objuser.OrderBy(s => s.OrganiserId).ToList();
+                        break;
+                    case "Orgaizerdesc":
+                        objuser = objuser.OrderByDescending(s => s.OrganiserId).ToList();
+                        break;
+                    case "Merchant":
+                        objuser = objuser.OrderBy(s => s.MerchantId).ToList();
+                        break;
+                    case "Merchantdesc":
+                        objuser = objuser.OrderByDescending(s => s.MerchantId).ToList();
+                       break;
+                    case "status":
+                        objuser = objuser.OrderBy(s => s.UserStatusId).ToList();
+                        break;
+                    case "statusdesc":
+                        objuser = objuser.OrderByDescending(s => s.UserStatusId).ToList();
+                        break;
+                    case "Online":
+                        objuser = objuser.OrderBy(s => s.Online).ToList();
+                        break;
+                    case "Onlinedesc":
+                        objuser = objuser.OrderByDescending(s => s.Online).ToList();
+                        break;
+                    default:
+                        objuser = objuser.OrderBy(s => s.Sno).ToList();
+                        break;
+                }
+
+
+                var users= objuser.ToPagedList(PageF, pageSize);
               
                 ViewData["Userscount"] = objuser.Count();
                 if (objuser.Count == 0)
@@ -200,7 +286,7 @@ namespace CMS.Controllers
                 TempData["SearchStringLastName"] = SearchStringLastName;
                 TempData["SearchStringEmail"] = SearchStringEmail;
 
-
+                TempData["sortorder"] = sortorder;
                 //PageFilter.Add(new SelectListItem()
                 //{
                 //    Text = "1 - 5",
