@@ -1937,7 +1937,7 @@
             $("#txtOrgLNlink").val('')
             $("#Incsocial").prop("checked", false);
             $("#dvOrgnizerFBTw").hide();
-
+            $('#ddlOrgnizers').selectpicker('refresh');
         }
 
         function editRow(Sno) {
@@ -3351,7 +3351,7 @@
                 var sno = $("#hidOrgnizer").val();
                 var name = $('#txtOrgnizer').val();
 
-                var regex = /^[a-zA-Z ]*$/;
+                var regex = /^[0-9a-zA-Z ]*$/;
                 isValid = regex.test(name);
                 if (isValid) {
                     var orgid = 0;

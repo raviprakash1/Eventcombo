@@ -11,7 +11,7 @@
 <link href="~/Content/flipclock.css" rel="stylesheet" />
 <script src="~/Scripts/jquery.creditCardValidator.js"></script>
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
-@using (Html.BeginForm())
+@using (Html.BeginForm(new { autocomplete = "off" }))
 {
     <input type="hidden" id="hdemailexist" />
     <input id="hidTicketbearer" type="hidden" />
@@ -157,7 +157,8 @@
                             @if (HttpContext.Current.Session["AppId"] == null)
                             {
                                 <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CONFIRM EMAIL" id="confirmEmail" maxlength=256 autocomplete="off">
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CONFIRM EMAIL" id="confirmEmail" maxlength=256  > 
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CONFIRM EMAIL" id="confirmEmailnone" maxlength=256 style="display:none">
                                 </div>
                             }
                         </div>
@@ -645,6 +646,8 @@
         $("#btPaypal").hide();
         $("#Email").on("blur", function () {
             var email = $("#Email").val();
+            var fname = $("#accfname").val();
+            var lname = $("#accLname").val();
             if (email != '') {
                 if (!validateEmail(email)) {
                     $("#Email").addClass('err-bor');
@@ -666,9 +669,13 @@
                         success: function (response) {
                             console.log(response);
                             if (response.Message == "F") {
-
-                                $("#accfname").val(response.Fname);
-                                $("#accLname").val(response.Lname);
+                                if (fname == '')
+                                {
+                                    $("#accfname").val(response.Fname);
+                                }
+                                if (lname == '') {
+                                    $("#accLname").val(response.Lname);
+                                }
                                 $("#password").hide();
                                 $("#password").val('');
                                 $("#hdemailexist").val(0);

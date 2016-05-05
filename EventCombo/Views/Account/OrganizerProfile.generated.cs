@@ -88,7 +88,7 @@ WriteAttribute("src", Tuple.Create(" src=\"", 379), Tuple.Create("\"", 416)
 WriteLiteral(@"></script>
 
 <style>
-.jFiler-input-dragDrop{width:200px; height:200px; padding:0px; }
+.jFiler-input-dragDrop{width:200px; height:200px; padding:0px; max-width: 100%; }
 .jFiler-item-thumb-image{height: 142px; line-height:142px; overflow: hidden; width: 100%; }
 .jFiler-item-thumb-image img{height: auto; max-height:100%;width:100%; left: 50%; position: relative;
     transform: translateX(-50%);-webkit-transform: translateX(-50%); max-width: none !important; }
@@ -127,16 +127,20 @@ WriteLiteral(" id=\"loader\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1911), Tuple.Create("\"", 1941)
-, Tuple.Create(Tuple.Create("", 1917), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajax-loader.gif")
-, 1917), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 1928), Tuple.Create("\"", 1958)
+, Tuple.Create(Tuple.Create("", 1934), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajax-loader.gif")
+, 1934), false)
 );
 
 WriteLiteral(" /></div>\r\n\r\n        <div");
 
 WriteLiteral(" class=\"col-sm-12\"");
 
-WriteLiteral(">\r\n         \r\n            <p");
+WriteLiteral(">\r\n            <h3");
+
+WriteLiteral(" class=\"acnt_title\"");
+
+WriteLiteral(">ORGANIZER</h3>\r\n            <p");
 
 WriteLiteral(" class=\"p_info\"");
 
@@ -231,14 +235,14 @@ WriteLiteral("> Add Organizer </option>\r\n");
             #line hidden
 WriteLiteral("                        <option");
 
-WriteAttribute("value", Tuple.Create(" value=", 3213), Tuple.Create("", 3237)
+WriteAttribute("value", Tuple.Create(" value=", 3270), Tuple.Create("", 3294)
             
             #line 74 "..\..\Views\Account\OrganizerProfile.cshtml"
-, Tuple.Create(Tuple.Create("", 3220), Tuple.Create<System.Object, System.Int32>(item.Orgnizer_Id
+, Tuple.Create(Tuple.Create("", 3277), Tuple.Create<System.Object, System.Int32>(item.Orgnizer_Id
             
             #line default
             #line hidden
-, 3220), false)
+, 3277), false)
 );
 
 WriteLiteral(">");
@@ -433,11 +437,11 @@ WriteLiteral("\');\r\n    }\r\n    $(document).ready(function () {\r\n        $(
 "\").prop(\"disabled\", true);\r\n            }\r\n\r\n        });\r\n\r\n        $(document)." +
 "on(\'blur\', \'#txt_name\', function () {\r\n            debugger;\r\n            var is" +
 "Valid = false;\r\n         \r\n            var name = $(\'#txt_name\').val();\r\n       " +
-"     var regex = /^[a-zA-Z ]*$/;\r\n            isValid = regex.test(name);\r\n     " +
-"       if (isValid) {\r\n                var orgid = 0;\r\n\r\n                orgid =" +
-" $(\'#hd_ID\').val();\r\n                if (typeof orgid === \"undefined\") {\r\n      " +
-"              orgid = 0;\r\n                }\r\n\r\n                $.ajax({\r\n       " +
-"             url: \'");
+"     var regex = /^[0-9a-zA-Z ]*$/;\r\n            isValid = regex.test(name);\r\n  " +
+"          if (isValid) {\r\n                var orgid = 0;\r\n\r\n                orgi" +
+"d = $(\'#hd_ID\').val();\r\n                if (typeof orgid === \"undefined\") {\r\n   " +
+"                 orgid = 0;\r\n                }\r\n\r\n                $.ajax({\r\n    " +
+"                url: \'");
 
             
             #line 206 "..\..\Views\Account\OrganizerProfile.cshtml"
