@@ -16,7 +16,7 @@ namespace EventCombo.Controllers
                 using (var objContent = new EventComboEntities())
                 {
                     // var EventOrderDetail = (from Order in objContent.Ticket_Purchased_Detail where Order.TPD_GUID == strGUID select Order).FirstOrDefault();
-                    // var OrderDetail = (from Orderd in objContent.Order_Detail_T where Orderd.O_Order_Id == EventOrderDetail.TPD_Order_Id select Orderd).FirstOrDefault();
+                    // var OrderDetail = (from Orderd in  objContent.Order_Detail_T where Orderd.O_Order_Id == EventOrderDetail.TPD_Order_Id select Orderd).FirstOrDefault();
                     try
                     {
                         TicketPayment TicketPayment = new TicketPayment();

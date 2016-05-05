@@ -949,12 +949,9 @@
         $("#btSearchEvent").on('click', function () {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (p) {
-
                     var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
-
                     var geocoder = new google.maps.Geocoder;
                     var infowindow = new google.maps.InfoWindow;
-
                     var mapOptions = {
                         center: { lat: p.coords.latitude, lng: p.coords.longitude },
                         zoom: 13,
@@ -963,17 +960,14 @@
                     var vLat = p.coords.latitude;
                     var vLong = p.coords.longitude;
                     var vTextSrh = $("#txtSearch").val();
-                    
                     var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none", strTextSearch="search" })';
                     vUrl = vUrl.replace("lat", vLat);
                     vUrl = vUrl.replace("long", vLong);
                     vUrl = vUrl.replace("search", vTextSrh);
-                    alert(vUrl);
                     window.location.href = vUrl;
                 }, function (p) {
                     navigator.geolocation.getCurrentPosition(onPositionUpdate);
                 });
-
             } else {
                 var vTextSrh = $("#txtSearch").val();
                 var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none", strTextSearch="search" })';
@@ -986,7 +980,6 @@
         $('#txtSearch').keydown(function (event) {
            
             var keyCode = (event.keyCode ? event.keyCode : event.which);
-            alert(keyCode);
             if (keyCode == 13) {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function (p) {
@@ -1040,12 +1033,10 @@
                     var vLat = p.coords.latitude;
                     var vLong = p.coords.longitude;
                     var vTextSrh = $("#txtSearch").val();
-                    alert(vTextSrh);
                     var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none", strTextSearch="search" })';
                     vUrl = vUrl.replace("lat", vLat);
                     vUrl = vUrl.replace("long", vLong);
                     vUrl = vUrl.replace("search", vTextSrh);
-                    alert(vUrl);
                     window.location.replace(vUrl);
                     window.location.href = vUrl;
                     return false;
