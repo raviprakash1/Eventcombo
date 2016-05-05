@@ -946,7 +946,7 @@
         //$("#btSearchEvent").on('click', function () {
         //    GetEvent();
         //});
-        $("#btSearchEvent").on('click', function () {
+        $("#btSearchEvent").click(function () {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (p) {
                     var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
@@ -966,7 +966,10 @@
                     vUrl = vUrl.replace("search", vTextSrh);
                     window.location.href = vUrl;
                 }, function (p) {
-                    navigator.geolocation.getCurrentPosition(onPositionUpdate);
+                    var vTextSrh = $("#txtSearch").val();
+                    var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none", strTextSearch="search" })';
+                    vUrl = vUrl.replace("search", vTextSrh);
+                    window.location.href = vUrl;
                 });
             } else {
                 var vTextSrh = $("#txtSearch").val();
@@ -1005,7 +1008,10 @@
                        
                         window.location.href = vUrl;
                     }, function (p) {
-                        navigator.geolocation.getCurrentPosition(onPositionUpdate);
+                        var vTextSrh = $("#txtSearch").val();
+                        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none", strTextSearch="search" })';
+                        vUrl = vUrl.replace("search", vTextSrh);
+                        window.location.href = vUrl;
                     });
 
                 } else {
