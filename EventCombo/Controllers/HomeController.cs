@@ -706,7 +706,7 @@ namespace EventCombo.Controllers
                 if (strEventIds.Trim() != "")
                 {
                     //sbQuery.Append("Select * from Event where EventStatus = 'Live' and isnull(Parent_EventID,0) = 0");
-                    sbQuery.Append("Select * from Event where EventStatus = 'Live' "); // No need of Parent Event check,  as we already filter address and address table only have latest event id's
+                    sbQuery.Append("Select * from Event where EventStatus = 'Live' and rtrim(ltrim(lower(EventPrivacy))) != 'private'"); // No need of Parent Event check,  as we already filter address and address table only have latest event id's
                     if (strEventTypeId.Trim() != string.Empty)
                         sbQuery.Append(" AND EventTypeID in (" + strEventTypeId + ")");
 
@@ -1065,7 +1065,7 @@ namespace EventCombo.Controllers
 
                 if (strEventIds.Trim() != "")
                 {
-                    sbQuery.Append("Select * from Event where EventStatus = 'Live' ");
+                    sbQuery.Append("Select * from Event where EventStatus = 'Live' and rtrim(ltrim(lower(EventPrivacy))) != 'private'");
                     sbQuery.Append(" and EventID in (" + strEventIds + ")");
 
                     var vEventList = db.Events.SqlQuery(sbQuery.ToString()).ToList();
