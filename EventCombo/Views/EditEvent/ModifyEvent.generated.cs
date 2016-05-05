@@ -5762,7 +5762,7 @@ WriteLiteral(@""";
             var sno = $(""#hidOrgnizer"").val();
             var name = $('#txtOrgnizer').val();
 
-            var regex = /^[a-zA-Z ]*$/;
+            var regex = /^[0-9a-zA-Z ]*$/;
             isValid = regex.test(name);
             if (isValid) {
                 var orgid = 0;
@@ -5916,157 +5916,158 @@ WriteLiteral("\';\r\n\r\n                        }\r\n                    }\r\n\
 "            $(\"#hidOrgnizer\").val(\'\');\r\n            $(\"#txtOrgnizer\").val(\'\');\r\n" +
 "            $(\"#edOrgDes\").code(\'\');\r\n            $(\"#txtOrgFBlink\").val(\'\');\r\n " +
 "           $(\"#txtOrgTWlink\").val(\'\');\r\n            $(\"#Incsocial\").prop(\"checke" +
-"d\", false);\r\n            $(\"#dvOrgnizerFBTw\").hide();\r\n\r\n        }\r\n\r\n        fu" +
-"nction editRow(Sno) {\r\n            //alert(ColumnValue);\r\n            $(\"#hidAdd" +
-"Sno\").val(Sno);\r\n            $(\"#VenueId\").val($(\"#VenueId\"+ Sno).val());\r\n     " +
-"       $(\"#VenueName\").val($(\"#VenueName\" + Sno).val());\r\n            $(\"#Addres" +
-"s1\").val($(\"#Address1\" + Sno).val());\r\n            $(\"#Address2\").val($(\"#Addres" +
-"s2\" + Sno).val());\r\n            $(\"#City\").val($(\"#City\" + Sno).val());\r\n       " +
-"     $(\"#State\").val($(\"#State\" + Sno).val());\r\n            $(\"#Zip\").val($(\"#Zi" +
-"p\" + Sno).val());\r\n            $(\"#CountryID\").val($(\"#CID\" + Sno).val());\r\n    " +
-"        //   var row_index = $(this).parent().index(\'tr\');\r\n\r\n\r\n            // v" +
-"ar i = 1;\r\n            //var myTr = [];\r\n            //$(\'#tblAddress tr\').each(" +
-"function () {\r\n            //    $(this).find(\'td\').each(function () {\r\n        " +
-"    //    });\r\n            //    alert(myTr);\r\n            //});\r\n\r\n            " +
-"//$(\'#tblAddress tr\').each(function () {\r\n            //    $(this).find(\'td\').e" +
-"ach(function () {\r\n            //        i =parseInt($(this).text());\r\n         " +
-"   //        if (parseInt(Sno) == )\r\n            //        {\r\n            //    " +
-"        myTr.push($(this).text());\r\n            //        }\r\n            //    }" +
-");\r\n            //    alert(myTr);\r\n            //});\r\n\r\n        }\r\n        func" +
-"tion editOrgnizer() {\r\n\r\n            var Sno = $(\"#ddlOrgnizers\").val();\r\n      " +
-"      $(\"#hidOrgnizer\").val(Sno);\r\n            var vOrgName = $(\"#OrgName_\" + Sn" +
-"o).text();\r\n            var vOrgDes = $(\"#OrgDes_\" + Sno).text();\r\n            v" +
-"ar vOrgFB = $(\"#OrgFB_\" + Sno).text();\r\n            var vOrgTw = $(\"#OrgTw_\" + S" +
-"no).text();\r\n            var vOrgLn= $(\"#OrgLn_\" + Sno).text();\r\n\r\n            $" +
-"(\"#txtOrgnizer\").val(vOrgName);\r\n            $(\"#edOrgDes\").code(vOrgDes);\r\n    " +
-"        $(\"#txtOrgFBlink\").val(vOrgFB);\r\n            $(\"#txtOrgTWlink\").val(vOrg" +
-"Tw);\r\n            $(\"#txtOrgLNlink\").val(vOrgLn);\r\n\r\n            if (vOrgFB != \'" +
-"\' || vOrgTw != \'\'|| vOrgLn!=\'\') {\r\n                $(\"#Incsocial\").prop(\"checked" +
-"\", true);\r\n                $(\"#dvOrgnizerFBTw\").show();\r\n            }\r\n        " +
-"    else {\r\n                $(\"#Incsocial\").prop(\"checked\", false);\r\n           " +
-"     $(\"#dvOrgnizerFBTw\").hide();\r\n            }\r\n\r\n        }\r\n\r\n        functio" +
-"n AddOrgnizer() {\r\n            debugger;\r\n            $(\"#hidOrgnizer\").val(\'\');" +
-"\r\n            var Sno = $(\"#tblOrgnizer tr\").length+1;\r\n            //alert(Sno)" +
-";\r\n            var vOrgName = $(\"#txtOrgnizer\").val();\r\n            var vOrgDes " +
-"= $(\"#edOrgDes\").code();\r\n            var vOrgFB = $(\"#txtOrgFBlink\").val();\r\n  " +
-"          var vOrgTw = $(\"#txtOrgTWlink\").val();\r\n            var vOrgLn = $(\"#t" +
-"xtOrgLNlink\").val();\r\n\r\n            var strHTML = \'<tr>\';\r\n            strHTML =" +
-" strHTML + \'<td style=\"display:none\" width=\"92%\">\' + Sno + \'</td>\';\r\n           " +
-" strHTML = strHTML + \'<td width=\"92%\"><label id=OrgName_\' + Sno + \'>\' + vOrgName" +
-" + \'</label></td>\';\r\n\r\n            strHTML = strHTML + \'<td style=\"display:none\"" +
-"><label id=OrgId_\' + Sno + \'>0</label><label id=OrgEdit_\' + Sno + \'>0</label><la" +
-"bel id=OrgDes_\' + Sno + \'>\' + vOrgDes + \'</label></td>\';\r\n            strHTML = " +
-"strHTML + \'<td style=\"display:none\"><label id=OrgFB_\' + Sno + \'>\' + vOrgFB + \'</" +
-"label></td>\';\r\n            strHTML = strHTML + \'<td style=\"display:none\"><label " +
-"id=OrgTw_\' + Sno + \'>\' + vOrgTw + \'</label></td>\';\r\n            strHTML = strHTM" +
-"L + \'<td style=\"display:none\"><label id=OrgLn_\' + Sno + \'>\' + vOrgLn + \'</label>" +
-"</td>\';\r\n            //strHTML = strHTML + \'<td align=\"right\"><a href=\"#\" onclic" +
-"k=\"editOrgnizer(\' + Sno + \');\"><i class=\"fa fa-pencil\"></i> </a> | <a href=\"#\"  " +
-"onclick=\"DeleteOrgnizer(\' + Sno + \');\"><i class=\"fa fa-trash\"></i> </a></td>\';\r\n" +
-"            strHTML = strHTML + \'<td align=\"right\"><i onclick=\"editOrgnizer(\' + " +
-"Sno + \')\"; class=\"fa fa-pencil\"></i> | <i onclick=\"DeleteOrgnizer(\' + Sno + \');\"" +
-" class=\"fa fa-trash\"></i></td>\';\r\n\r\n            strHTML = strHTML + \'</tr>\';\r\n  " +
-"          //                strHTML = strHTML + \'<td><div class=\"trigger mt5 ent" +
-"_add\"><a href=\"#\" onclick=\"editRow(\' + Sno + \');\"><i class=\"fa fa-map-marker\"></" +
-"i> Edit</a>  <a href=\"#\" id=\"btAddDelete\" onclick=\"DeleteTableRow(\' + Sno + \')\">" +
-"Delete</a> </div> </td>\';\r\n\r\n\r\n            $(\"#tblOrgnizer\").append(strHTML);\r\n " +
-"           strHTML = \'<option value=\"\' + Sno + \'\" id=\"\' + Sno + \'\">\' + vOrgName " +
-"+ \'</option>\';\r\n\r\n            $(\"#ddlOrgnizers\").append(strHTML);\r\n\r\n        }\r\n" +
-"\r\n        function UpdateOrgnizer() {\r\n            var Sno = $(\"#ddlOrgnizers\")." +
-"val();\r\n            //    alert(Sno);\r\n            vOrgName = $(\"#txtOrgnizer\")." +
-"val();\r\n            vOrgDes = $(\"#edOrgDes\").code();\r\n            vOrgFB = $(\"#t" +
-"xtOrgFBlink\").val();\r\n            vOrgTw = $(\"#txtOrgTWlink\").val();\r\n          " +
-"  vOrgLn = $(\"#txtOrgLNlink\").val();\r\n            $(\"#OrgName_\" + Sno).text(vOrg" +
-"Name);\r\n            $(\"#OrgDes_\" + Sno).text(vOrgDes);\r\n            $(\"#OrgFB_\" " +
-"+ Sno).text(vOrgFB);\r\n            $(\"#OrgTw_\" + Sno).text(vOrgTw);\r\n            " +
-"$(\"#OrgLn_\" + Sno).text(vOrgLn);\r\n            var id = $(\"#OrgId_\" + Sno);\r\n    " +
-"        if (id != 0) {\r\n                $(\"#OrgEdit_\" + Sno).text(1);\r\n         " +
-"   }\r\n\r\n            $(\"#ddlOrgnizers option\").each(function (i) {\r\n             " +
-"   if (Sno == $(this).val()) {\r\n                    $(this).remove();\r\n         " +
-"       }\r\n            });\r\n            var addOption = \'<option value=\"\' + Sno +" +
-" \'\" id=\"\' + Sno + \'\" >\' + $(\"#txtOrgnizer\").val() + \'</option>\';\r\n            $(" +
-"\"#ddlOrgnizers\").append(addOption);\r\n\r\n\r\n\r\n\r\n        }\r\n        function save(ty" +
-"pe)\r\n        {\r\n            debugger;\r\n\r\n            var status=\"\";\r\n           " +
-" if(type==\"Preview\")\r\n            {\r\n                status=\"Save\";\r\n           " +
-" }\r\n            else\r\n            {\r\n                status=type;\r\n            }" +
-"\r\n            // Address Entry\r\n            var SubmitAddress = [];\r\n           " +
-" var SingleTiming = [];\r\n            var MultipleSchedule = [];\r\n            var" +
-" Orgnizer = [];\r\n            var EventImage = [];\r\n            var EventVariable" +
-" = [];\r\n            //var table = $(\"#tblAddress\");\r\n\r\n\r\n            //Variable " +
-"charges\r\n            var varlength = $(\"#id_Mainvariable> div\").size();\r\n       " +
-"     if (varlength > 0) {\r\n                for (var i = 0; i < varlength; i++) {" +
-"\r\n                    //alert($(\'#id_varsubprice-\' + i).val());\r\n               " +
-"     var varprice = $(\'#id_varsubprice-\' + i).val().replace(\',\', \'\');\r\n         " +
-"           //alert(varprice);\r\n                    EventVariable.push({\r\n       " +
-"                 Variable_Id:$(\'#id_varid-\' + i).val(),\r\n                       " +
-" VariableDesc: $(\'#id_varsubdesc-\' + i).val(),\r\n                        Price: v" +
-"arprice\r\n\r\n                    });\r\n                }\r\n\r\n\r\n            }\r\n\r\n    " +
-"        //Image Section\r\n            debugger;\r\n            if ($(\"#image_count\"" +
-").val() > 0) {\r\n                $(\'[id^=image_hidden]\').each(function(i, item) {" +
-"\r\n                    var image =  $(item).val();\r\n                    var res =" +
-" image.split(\"####\");\r\n\r\n                        var imagename = res[0];\r\n      " +
-"                  var imagetype = res[1];\r\n\r\n                        EventImage." +
-"push({\r\n                            EventImageUrl: imagename,\r\n                 " +
-"           ImageType: imagetype,\r\n                        });\r\n                }" +
-");\r\n\r\n                //$(\"input[id^=\'image_hidden\']\").each(function (i, el) {\r\n" +
-"\r\n                //    var image=$(this).val();\r\n                //    var res " +
-"= image.split(\"####\");\r\n\r\n                //    var imagename = res[0];\r\n       " +
-"         //    var imagetype = res[1];\r\n\r\n                //    EventImage.push(" +
-"{\r\n                //        EventImageUrl: imagename,\r\n                //      " +
-"  ImageType: imagetype,\r\n                //    });\r\n\r\n                //});\r\n\r\n " +
-"               //var count = ($(\"#image_count\").val());\r\n                //for (" +
-"var i = 0; i < count; i++) {\r\n\r\n                //    var image = $(\"#image_hidd" +
-"en_\" + i).val();\r\n                //    var res = image.split(\"####\");\r\n\r\n      " +
-"          //    var imagename = res[0];\r\n                //    var imagetype = r" +
-"es[1];\r\n\r\n                //    EventImage.push({\r\n                //        Eve" +
-"ntImageUrl: imagename,\r\n                //        ImageType: imagetype,\r\n       " +
-"         //    });\r\n                //}\r\n\r\n            }\r\n\r\n\r\n            // Tic" +
-"ket\r\n            var Ticket = [];\r\n            var divlength = $(\"#MasterDiv> di" +
-"v\").size();\r\n            if (divlength > 0) {\r\n                var TicketPrice =" +
-" 0;\r\n                var Auto_Schedule = 0;\r\n                var AutoSechduleTyp" +
-"e = 0;\r\n                var TicketTypeID = 0;\r\n                var ecfee = 0;\r\n " +
-"               var hdecfee=0;\r\n                var hdcsfee=0;\r\n                v" +
-"ar customerfee = 0;\r\n                var total = 0;\r\n                var ecfeepe" +
-"rcent=0;\r\n                var ecfeeamount=0;\r\n                var customize=0;\r\n" +
-"\r\n                for (var i = 0; i < divlength; i++) {\r\n                    deb" +
-"ugger;\r\n                    if ($(\'#id_cost-\' + i).css(\'display\') == \"block\") {\r" +
-"\n                        TicketPrice = $(\'#id_cost-\' + i).val().replace(\',\', \'\')" +
-";\r\n\r\n                    } else { TicketPrice = 0; }\r\n                    if ($(" +
-"\'#id_CusdateCont-\' + i).css(\'display\') == \"block\") {\r\n\r\n                        " +
-"Auto_Schedule = 1;\r\n\r\n                        if ($(\'#id_auto_hide_type_0-\' + i)" +
-".is(\":checked\") == true) {\r\n                            AutoSechduleType = 0;\r\n\r" +
-"\n                        }\r\n                        if ($(\'#id_auto_hide_type_1-" +
-"\' + i).is(\":checked\") == true) {\r\n                            AutoSechduleType =" +
-" 1;\r\n\r\n                        }\r\n\r\n                    } else {\r\n              " +
-"          Auto_Schedule = 0;\r\n                    }\r\n\r\n                    if ($" +
-"(\'#id_Tickettype-\' + i).val() == \"Free\") {\r\n                        total=0;\r\n  " +
-"                      TicketTypeID = 1\r\n\r\n                    } else if ($(\'#id_" +
-"Tickettype-\' + i).val() == \"Paid\") {\r\n                        total = $(\'#id_tot" +
-"al-\' + i).val();\r\n                        TicketTypeID = 2\r\n\r\n                  " +
-"  } else {\r\n                        TicketTypeID = 3\r\n                        va" +
-"r t_id=  $(\'#id_ticket_id-\'+i).val();\r\n                        if(isadmin==\"Y\")\r" +
-"\n                        {\r\n                            ecfee = $(\'#id_ecfee-\'+i" +
-").html();\r\n                            customerfee = $(\'#id_customerfee-\'+i).val" +
-"();\r\n                            hdecfee=$(\'#hd_ecfee-\'+i).val();\r\n             " +
-"               hdcsfee=$(\'#hd_customerfee-\'+i).val();\r\n                         " +
-"   ecfeepercent=$(\'#id_ecfeeper-\'+i).val();\r\n                            ecfeeam" +
-"ount=$(\'#id_ecfeeamt-\'+i).val();\r\n                            total=0;\r\n\r\n      " +
-"                  }else\r\n                        {\r\n                            " +
-"if(t_id!=0)\r\n                            {\r\n                                ecfe" +
-"e=$(\'#id_ecfeeback_id-\'+i).val();\r\n\r\n                                customerfee" +
-" = $(\'#id_fee-\'+i).val();\r\n                                ecfeepercent=$(\'#id_e" +
-"cpercentback_id-\'+i).val();;\r\n                                ecfeeamount=$(\'#id" +
-"_ecammountback_id-\'+i).val();;\r\n                                customize=$(\"#id" +
-"_customize-\"+i).val()\r\n\r\n                                total=0;\r\n\r\n           " +
-"                 }else\r\n                            {\r\n                         " +
-"       ecfee=0;\r\n                                customerfee = 0;\r\n             " +
-"                   ecfeepercent=$(\'#id_percentage\').val();\r\n                    " +
-"            ecfeeamount=$(\'#id_value\').val();;\r\n                                " +
-"customize=0\r\n                            }\r\n                        }\r\n\r\n\r\n\r\n\r\n " +
-"                   }\r\n                    if($(\'#id_feestruct-\'+i).css(\'display\'" +
-") == \"block\")\r\n                    {\r\n                        var val=$(\'#id_inc" +
-"lude_ticket_fees-\' + i).val();\r\n                        var fee=$(\'#id_fee-\'+i)." +
-"val();\r\n\r\n                        var isadmin=\"");
+"d\", false);\r\n            $(\"#dvOrgnizerFBTw\").hide();\r\n            $(\'#ddlOrgniz" +
+"ers\').selectpicker(\'refresh\');\r\n        }\r\n\r\n        function editRow(Sno) {\r\n  " +
+"          //alert(ColumnValue);\r\n            $(\"#hidAddSno\").val(Sno);\r\n        " +
+"    $(\"#VenueId\").val($(\"#VenueId\"+ Sno).val());\r\n            $(\"#VenueName\").va" +
+"l($(\"#VenueName\" + Sno).val());\r\n            $(\"#Address1\").val($(\"#Address1\" + " +
+"Sno).val());\r\n            $(\"#Address2\").val($(\"#Address2\" + Sno).val());\r\n     " +
+"       $(\"#City\").val($(\"#City\" + Sno).val());\r\n            $(\"#State\").val($(\"#" +
+"State\" + Sno).val());\r\n            $(\"#Zip\").val($(\"#Zip\" + Sno).val());\r\n      " +
+"      $(\"#CountryID\").val($(\"#CID\" + Sno).val());\r\n            //   var row_inde" +
+"x = $(this).parent().index(\'tr\');\r\n\r\n\r\n            // var i = 1;\r\n            //" +
+"var myTr = [];\r\n            //$(\'#tblAddress tr\').each(function () {\r\n          " +
+"  //    $(this).find(\'td\').each(function () {\r\n            //    });\r\n          " +
+"  //    alert(myTr);\r\n            //});\r\n\r\n            //$(\'#tblAddress tr\').eac" +
+"h(function () {\r\n            //    $(this).find(\'td\').each(function () {\r\n      " +
+"      //        i =parseInt($(this).text());\r\n            //        if (parseInt" +
+"(Sno) == )\r\n            //        {\r\n            //            myTr.push($(this)" +
+".text());\r\n            //        }\r\n            //    });\r\n            //    ale" +
+"rt(myTr);\r\n            //});\r\n\r\n        }\r\n        function editOrgnizer() {\r\n\r\n" +
+"            var Sno = $(\"#ddlOrgnizers\").val();\r\n            $(\"#hidOrgnizer\").v" +
+"al(Sno);\r\n            var vOrgName = $(\"#OrgName_\" + Sno).text();\r\n            v" +
+"ar vOrgDes = $(\"#OrgDes_\" + Sno).text();\r\n            var vOrgFB = $(\"#OrgFB_\" +" +
+" Sno).text();\r\n            var vOrgTw = $(\"#OrgTw_\" + Sno).text();\r\n            " +
+"var vOrgLn= $(\"#OrgLn_\" + Sno).text();\r\n\r\n            $(\"#txtOrgnizer\").val(vOrg" +
+"Name);\r\n            $(\"#edOrgDes\").code(vOrgDes);\r\n            $(\"#txtOrgFBlink\"" +
+").val(vOrgFB);\r\n            $(\"#txtOrgTWlink\").val(vOrgTw);\r\n            $(\"#txt" +
+"OrgLNlink\").val(vOrgLn);\r\n\r\n            if (vOrgFB != \'\' || vOrgTw != \'\'|| vOrgL" +
+"n!=\'\') {\r\n                $(\"#Incsocial\").prop(\"checked\", true);\r\n              " +
+"  $(\"#dvOrgnizerFBTw\").show();\r\n            }\r\n            else {\r\n             " +
+"   $(\"#Incsocial\").prop(\"checked\", false);\r\n                $(\"#dvOrgnizerFBTw\")" +
+".hide();\r\n            }\r\n\r\n        }\r\n\r\n        function AddOrgnizer() {\r\n      " +
+"      debugger;\r\n            $(\"#hidOrgnizer\").val(\'\');\r\n            var Sno = $" +
+"(\"#tblOrgnizer tr\").length+1;\r\n            //alert(Sno);\r\n            var vOrgNa" +
+"me = $(\"#txtOrgnizer\").val();\r\n            var vOrgDes = $(\"#edOrgDes\").code();\r" +
+"\n            var vOrgFB = $(\"#txtOrgFBlink\").val();\r\n            var vOrgTw = $(" +
+"\"#txtOrgTWlink\").val();\r\n            var vOrgLn = $(\"#txtOrgLNlink\").val();\r\n\r\n " +
+"           var strHTML = \'<tr>\';\r\n            strHTML = strHTML + \'<td style=\"di" +
+"splay:none\" width=\"92%\">\' + Sno + \'</td>\';\r\n            strHTML = strHTML + \'<td" +
+" width=\"92%\"><label id=OrgName_\' + Sno + \'>\' + vOrgName + \'</label></td>\';\r\n\r\n  " +
+"          strHTML = strHTML + \'<td style=\"display:none\"><label id=OrgId_\' + Sno " +
+"+ \'>0</label><label id=OrgEdit_\' + Sno + \'>0</label><label id=OrgDes_\' + Sno + \'" +
+">\' + vOrgDes + \'</label></td>\';\r\n            strHTML = strHTML + \'<td style=\"dis" +
+"play:none\"><label id=OrgFB_\' + Sno + \'>\' + vOrgFB + \'</label></td>\';\r\n          " +
+"  strHTML = strHTML + \'<td style=\"display:none\"><label id=OrgTw_\' + Sno + \'>\' + " +
+"vOrgTw + \'</label></td>\';\r\n            strHTML = strHTML + \'<td style=\"display:n" +
+"one\"><label id=OrgLn_\' + Sno + \'>\' + vOrgLn + \'</label></td>\';\r\n            //st" +
+"rHTML = strHTML + \'<td align=\"right\"><a href=\"#\" onclick=\"editOrgnizer(\' + Sno +" +
+" \');\"><i class=\"fa fa-pencil\"></i> </a> | <a href=\"#\"  onclick=\"DeleteOrgnizer(\'" +
+" + Sno + \');\"><i class=\"fa fa-trash\"></i> </a></td>\';\r\n            strHTML = str" +
+"HTML + \'<td align=\"right\"><i onclick=\"editOrgnizer(\' + Sno + \')\"; class=\"fa fa-p" +
+"encil\"></i> | <i onclick=\"DeleteOrgnizer(\' + Sno + \');\" class=\"fa fa-trash\"></i>" +
+"</td>\';\r\n\r\n            strHTML = strHTML + \'</tr>\';\r\n            //             " +
+"   strHTML = strHTML + \'<td><div class=\"trigger mt5 ent_add\"><a href=\"#\" onclick" +
+"=\"editRow(\' + Sno + \');\"><i class=\"fa fa-map-marker\"></i> Edit</a>  <a href=\"#\" " +
+"id=\"btAddDelete\" onclick=\"DeleteTableRow(\' + Sno + \')\">Delete</a> </div> </td>\';" +
+"\r\n\r\n\r\n            $(\"#tblOrgnizer\").append(strHTML);\r\n            strHTML = \'<op" +
+"tion value=\"\' + Sno + \'\" id=\"\' + Sno + \'\">\' + vOrgName + \'</option>\';\r\n\r\n       " +
+"     $(\"#ddlOrgnizers\").append(strHTML);\r\n\r\n        }\r\n\r\n        function Update" +
+"Orgnizer() {\r\n            var Sno = $(\"#ddlOrgnizers\").val();\r\n            //   " +
+" alert(Sno);\r\n            vOrgName = $(\"#txtOrgnizer\").val();\r\n            vOrgD" +
+"es = $(\"#edOrgDes\").code();\r\n            vOrgFB = $(\"#txtOrgFBlink\").val();\r\n   " +
+"         vOrgTw = $(\"#txtOrgTWlink\").val();\r\n            vOrgLn = $(\"#txtOrgLNli" +
+"nk\").val();\r\n            $(\"#OrgName_\" + Sno).text(vOrgName);\r\n            $(\"#O" +
+"rgDes_\" + Sno).text(vOrgDes);\r\n            $(\"#OrgFB_\" + Sno).text(vOrgFB);\r\n   " +
+"         $(\"#OrgTw_\" + Sno).text(vOrgTw);\r\n            $(\"#OrgLn_\" + Sno).text(v" +
+"OrgLn);\r\n            var id = $(\"#OrgId_\" + Sno);\r\n            if (id != 0) {\r\n " +
+"               $(\"#OrgEdit_\" + Sno).text(1);\r\n            }\r\n\r\n            $(\"#d" +
+"dlOrgnizers option\").each(function (i) {\r\n                if (Sno == $(this).val" +
+"()) {\r\n                    $(this).remove();\r\n                }\r\n            });" +
+"\r\n            var addOption = \'<option value=\"\' + Sno + \'\" id=\"\' + Sno + \'\" >\' +" +
+" $(\"#txtOrgnizer\").val() + \'</option>\';\r\n            $(\"#ddlOrgnizers\").append(a" +
+"ddOption);\r\n\r\n\r\n\r\n\r\n        }\r\n        function save(type)\r\n        {\r\n         " +
+"   debugger;\r\n\r\n            var status=\"\";\r\n            if(type==\"Preview\")\r\n   " +
+"         {\r\n                status=\"Save\";\r\n            }\r\n            else\r\n   " +
+"         {\r\n                status=type;\r\n            }\r\n            // Address " +
+"Entry\r\n            var SubmitAddress = [];\r\n            var SingleTiming = [];\r\n" +
+"            var MultipleSchedule = [];\r\n            var Orgnizer = [];\r\n        " +
+"    var EventImage = [];\r\n            var EventVariable = [];\r\n            //var" +
+" table = $(\"#tblAddress\");\r\n\r\n\r\n            //Variable charges\r\n            var " +
+"varlength = $(\"#id_Mainvariable> div\").size();\r\n            if (varlength > 0) {" +
+"\r\n                for (var i = 0; i < varlength; i++) {\r\n                    //a" +
+"lert($(\'#id_varsubprice-\' + i).val());\r\n                    var varprice = $(\'#i" +
+"d_varsubprice-\' + i).val().replace(\',\', \'\');\r\n                    //alert(varpri" +
+"ce);\r\n                    EventVariable.push({\r\n                        Variable" +
+"_Id:$(\'#id_varid-\' + i).val(),\r\n                        VariableDesc: $(\'#id_var" +
+"subdesc-\' + i).val(),\r\n                        Price: varprice\r\n\r\n              " +
+"      });\r\n                }\r\n\r\n\r\n            }\r\n\r\n            //Image Section\r\n" +
+"            debugger;\r\n            if ($(\"#image_count\").val() > 0) {\r\n         " +
+"       $(\'[id^=image_hidden]\').each(function(i, item) {\r\n                    var" +
+" image =  $(item).val();\r\n                    var res = image.split(\"####\");\r\n\r\n" +
+"                        var imagename = res[0];\r\n                        var ima" +
+"getype = res[1];\r\n\r\n                        EventImage.push({\r\n                 " +
+"           EventImageUrl: imagename,\r\n                            ImageType: ima" +
+"getype,\r\n                        });\r\n                });\r\n\r\n                //$" +
+"(\"input[id^=\'image_hidden\']\").each(function (i, el) {\r\n\r\n                //    v" +
+"ar image=$(this).val();\r\n                //    var res = image.split(\"####\");\r\n\r" +
+"\n                //    var imagename = res[0];\r\n                //    var imaget" +
+"ype = res[1];\r\n\r\n                //    EventImage.push({\r\n                //    " +
+"    EventImageUrl: imagename,\r\n                //        ImageType: imagetype,\r\n" +
+"                //    });\r\n\r\n                //});\r\n\r\n                //var coun" +
+"t = ($(\"#image_count\").val());\r\n                //for (var i = 0; i < count; i++" +
+") {\r\n\r\n                //    var image = $(\"#image_hidden_\" + i).val();\r\n       " +
+"         //    var res = image.split(\"####\");\r\n\r\n                //    var image" +
+"name = res[0];\r\n                //    var imagetype = res[1];\r\n\r\n               " +
+" //    EventImage.push({\r\n                //        EventImageUrl: imagename,\r\n " +
+"               //        ImageType: imagetype,\r\n                //    });\r\n     " +
+"           //}\r\n\r\n            }\r\n\r\n\r\n            // Ticket\r\n            var Tick" +
+"et = [];\r\n            var divlength = $(\"#MasterDiv> div\").size();\r\n            " +
+"if (divlength > 0) {\r\n                var TicketPrice = 0;\r\n                var " +
+"Auto_Schedule = 0;\r\n                var AutoSechduleType = 0;\r\n                v" +
+"ar TicketTypeID = 0;\r\n                var ecfee = 0;\r\n                var hdecfe" +
+"e=0;\r\n                var hdcsfee=0;\r\n                var customerfee = 0;\r\n    " +
+"            var total = 0;\r\n                var ecfeepercent=0;\r\n               " +
+" var ecfeeamount=0;\r\n                var customize=0;\r\n\r\n                for (va" +
+"r i = 0; i < divlength; i++) {\r\n                    debugger;\r\n                 " +
+"   if ($(\'#id_cost-\' + i).css(\'display\') == \"block\") {\r\n                        " +
+"TicketPrice = $(\'#id_cost-\' + i).val().replace(\',\', \'\');\r\n\r\n                    " +
+"} else { TicketPrice = 0; }\r\n                    if ($(\'#id_CusdateCont-\' + i).c" +
+"ss(\'display\') == \"block\") {\r\n\r\n                        Auto_Schedule = 1;\r\n\r\n   " +
+"                     if ($(\'#id_auto_hide_type_0-\' + i).is(\":checked\") == true) " +
+"{\r\n                            AutoSechduleType = 0;\r\n\r\n                        " +
+"}\r\n                        if ($(\'#id_auto_hide_type_1-\' + i).is(\":checked\") == " +
+"true) {\r\n                            AutoSechduleType = 1;\r\n\r\n                  " +
+"      }\r\n\r\n                    } else {\r\n                        Auto_Schedule =" +
+" 0;\r\n                    }\r\n\r\n                    if ($(\'#id_Tickettype-\' + i).v" +
+"al() == \"Free\") {\r\n                        total=0;\r\n                        Tic" +
+"ketTypeID = 1\r\n\r\n                    } else if ($(\'#id_Tickettype-\' + i).val() =" +
+"= \"Paid\") {\r\n                        total = $(\'#id_total-\' + i).val();\r\n       " +
+"                 TicketTypeID = 2\r\n\r\n                    } else {\r\n             " +
+"           TicketTypeID = 3\r\n                        var t_id=  $(\'#id_ticket_id" +
+"-\'+i).val();\r\n                        if(isadmin==\"Y\")\r\n                        " +
+"{\r\n                            ecfee = $(\'#id_ecfee-\'+i).html();\r\n              " +
+"              customerfee = $(\'#id_customerfee-\'+i).val();\r\n                    " +
+"        hdecfee=$(\'#hd_ecfee-\'+i).val();\r\n                            hdcsfee=$(" +
+"\'#hd_customerfee-\'+i).val();\r\n                            ecfeepercent=$(\'#id_ec" +
+"feeper-\'+i).val();\r\n                            ecfeeamount=$(\'#id_ecfeeamt-\'+i)" +
+".val();\r\n                            total=0;\r\n\r\n                        }else\r\n" +
+"                        {\r\n                            if(t_id!=0)\r\n            " +
+"                {\r\n                                ecfee=$(\'#id_ecfeeback_id-\'+i" +
+").val();\r\n\r\n                                customerfee = $(\'#id_fee-\'+i).val();" +
+"\r\n                                ecfeepercent=$(\'#id_ecpercentback_id-\'+i).val(" +
+");;\r\n                                ecfeeamount=$(\'#id_ecammountback_id-\'+i).va" +
+"l();;\r\n                                customize=$(\"#id_customize-\"+i).val()\r\n\r\n" +
+"                                total=0;\r\n\r\n                            }else\r\n " +
+"                           {\r\n                                ecfee=0;\r\n        " +
+"                        customerfee = 0;\r\n                                ecfeep" +
+"ercent=$(\'#id_percentage\').val();\r\n                                ecfeeamount=$" +
+"(\'#id_value\').val();;\r\n                                customize=0\r\n            " +
+"                }\r\n                        }\r\n\r\n\r\n\r\n\r\n                    }\r\n   " +
+"                 if($(\'#id_feestruct-\'+i).css(\'display\') == \"block\")\r\n          " +
+"          {\r\n                        var val=$(\'#id_include_ticket_fees-\' + i).v" +
+"al();\r\n                        var fee=$(\'#id_fee-\'+i).val();\r\n\r\n               " +
+"         var isadmin=\"");
 
             
             #line 2671 "..\..\Views\EditEvent\ModifyEvent.cshtml"
@@ -8136,27 +8137,27 @@ WriteLiteral("\',\r\n                        data: { ticketid: ticketId },\r\n  
 
 WriteLiteral("\r\n    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 297414), Tuple.Create("\"", 297453)
-, Tuple.Create(Tuple.Create("", 297421), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 297421), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 297472), Tuple.Create("\"", 297511)
+, Tuple.Create(Tuple.Create("", 297479), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 297479), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n\r\n    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 297487), Tuple.Create("\"", 297544)
-, Tuple.Create(Tuple.Create("", 297494), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 297494), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 297545), Tuple.Create("\"", 297602)
+, Tuple.Create(Tuple.Create("", 297552), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 297552), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 297578), Tuple.Create("\"", 297615)
-, Tuple.Create(Tuple.Create("", 297584), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 297584), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 297636), Tuple.Create("\"", 297673)
+, Tuple.Create(Tuple.Create("", 297642), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 297642), false)
 );
 
 WriteLiteral("></script>\r\n\r\n\r\n    <script");
