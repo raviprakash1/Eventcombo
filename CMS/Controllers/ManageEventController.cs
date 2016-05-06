@@ -189,7 +189,7 @@ namespace CMS.Controllers
 
                 var users = objlst.ToPagedList(PageF, pageSize);
 
-                ViewData["Userscount"] = objlst.Count();
+                ViewData["Eventscount"] = objlst.Count();
                 if (objlst.Count == 0)
                     ViewData["SearchedUser"] = 0;
               
@@ -204,13 +204,12 @@ namespace CMS.Controllers
                     if ((dRowCnt - (int)dRowCnt) != 0) dRowCnt = (int)dRowCnt + 1;
                     for (i = 0; i < dRowCnt; i++)
                     {
-
                         strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
                         PageFilter.Add(new SelectListItem()
                         {
                             Text = strText,
                             Value = (i).ToString(),
-                            Selected = (iCount == i ? true : false)
+                            Selected = (PageF == i ? true : false)
                         });
                         z = z + iGapValue;
                         iUcount = iUcount - iGapValue;

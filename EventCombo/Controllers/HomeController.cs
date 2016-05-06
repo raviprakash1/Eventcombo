@@ -1131,7 +1131,7 @@ namespace EventCombo.Controllers
                         var vAddress = objEv.Addresses.FirstOrDefault();
                         if (vAddress != null)
                         {
-                            objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble(strLat), Convert.ToDouble(strLong), Convert.ToDouble(vAddress.Latitude), Convert.ToDouble(vAddress.Longitude));
+                            objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble((strLat != "" ? strLat:"0")), Convert.ToDouble((strLong != "" ? strLong : "0")), Convert.ToDouble((vAddress.Latitude != "" ? vAddress.Latitude : "0")), Convert.ToDouble((vAddress.Longitude != "" ? vAddress.Longitude : "0")));
                             if (vAddress.ConsolidateAddress.Trim() != string.Empty)
                             {
                                 objDisEv.EventAddress = vAddress.ConsolidateAddress;
