@@ -45,13 +45,10 @@ namespace EventCombo.Controllers
         {
             string retMsg = "";
             string PayerID1 = "";
-<<<<<<< HEAD
+
             try
             {
-=======
-            try {
 
->>>>>>> 4b301579c31dc656f8ecb5b277e2257e8a813537
                 TicketPayment TicketPayment = new TicketPayment();
                 TicketPayment = (TicketPayment)Session["TicketDatamodel"];
                 PayPal.GetCheckoutDetails(token, ref PayerID1, ref retMsg);
