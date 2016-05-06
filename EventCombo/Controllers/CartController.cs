@@ -21,6 +21,8 @@ namespace EventCombo.Controllers
                 // var OrderDetail = (from Orderd in  objContent.Order_Detail_T where Orderd.O_Order_Id == EventOrderDetail.TPD_Order_Id select Orderd).FirstOrDefault();
                 try
                 {
+                    Session["Fromname"] = "events";
+                    Session["logo"] = "events";
                     TicketPayment TicketPayment = new TicketPayment();
                     TicketPayment = (TicketPayment)Session["TicketDatamodel"];
                     PayPalOrder objPay = new PayPalOrder();
@@ -43,8 +45,13 @@ namespace EventCombo.Controllers
         {
             string retMsg = "";
             string PayerID1 = "";
+<<<<<<< HEAD
             try
             {
+=======
+            try {
+
+>>>>>>> 4b301579c31dc656f8ecb5b277e2257e8a813537
                 TicketPayment TicketPayment = new TicketPayment();
                 TicketPayment = (TicketPayment)Session["TicketDatamodel"];
                 PayPal.GetCheckoutDetails(token, ref PayerID1, ref retMsg);
@@ -65,6 +72,8 @@ namespace EventCombo.Controllers
             TicketPayment TicketPayment = new TicketPayment();
             try
             {
+                Session["Fromname"] = "events";
+                Session["logo"] = "events";
                 TicketPayment = (TicketPayment)Session["TicketDatamodel"];
 
                 if (PayPal.DoCheckoutPayment(TicketPayment.strGrandTotal, token, PayerID, ref retMsg))

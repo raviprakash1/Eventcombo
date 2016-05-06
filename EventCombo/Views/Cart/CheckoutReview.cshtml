@@ -46,7 +46,7 @@
                     <p class="chk_out_flot">Amount :</p>
                     @if (ViewData["ReturnMessage"] == null || string.IsNullOrEmpty(ViewData["ReturnMessage"].ToString()))
                     {
-                        <p>@ViewData["Amount"]</p>
+                        <p>$@ViewData["Amount"]</p>
 
                     }
                     else

@@ -798,7 +798,7 @@ namespace EventCombo.Controllers
             {
                 var ticketid = (from v in db.Tickets where v.E_Id == lEventId select v.T_Id).ToList();
                 string joined = string.Join(",", ticketid.ToArray());
-                string strQuery = "SELECT (isnull(sum(TPD_Amount),0) + isnull(sum(TPD_Donate),0)) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
+                string strQuery = "SELECT (isnull(sum(TPD_Amount),0) + convert(numeric,isnull(sum(TPD_Donate),0))) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
                 var vTotalAmt = objEnt.Database.SqlQuery<decimal>(strQuery).FirstOrDefault();
              
                 //var vTotalAmt = (from myRow in objEnt.Ticket_Purchased_Detail
