@@ -237,69 +237,58 @@ namespace EventCombo.Controllers
                 TempData["Success"] = null;
             }
             OrderAttendees CO = new OrderAttendees();
-            Mevent.Order = (from o in db.Order_Detail_T
+           var Order = (from o in db.Order_Detail_T
                             join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
-                            join a in db.Profiles on p.TPD_User_Id equals a.UserID
-                            where p.TPD_Event_Id == Eventid
-                            group new
+                          where p.TPD_Event_Id == Eventid
+                           select new OrderAttendees()
                             {
                                 OrderId = o.O_Order_Id,
-                                Price = o.O_TotalAmount,
-                                Qty = p.TPD_Purchased_Qty,
-                                Name = a.FirstName + " " + a.LastName,
-                                Date = o.O_OrderDateTime
-                            }
-                            by new
-                            {
-                                o.O_Order_Id,
-                                o.O_TotalAmount,
-                                p.TPD_Purchased_Qty,
-                                a.FirstName,
-                                a.LastName,
-                                o.O_OrderDateTime
-                            } into gc
-                            orderby gc.Key.O_Order_Id descending
-                            select new OrderAttendees()
-                            {
-                                OrderId = gc.Key.O_Order_Id,
-                                Amount = gc.Key.O_TotalAmount.ToString(),
-                                Qty = gc.ToList().Sum(a => a.Qty).ToString(),
-                                Name = gc.Key.FirstName + " " + gc.Key.LastName,
-                                Date = gc.Key.O_OrderDateTime.ToString()
-                            }).Take(3).ToList();
+                                Amount =o.O_TotalAmount.ToString(),
+                                Qty = "0",
+                                Name = o.O_First_Name + " " + o.O_Last_Name,
+                                Date = o.O_OrderDateTime.ToString()
+                            }).Distinct().Take(3).ToList();
 
 
+            foreach(var item in Order)
+            {
 
-            Mevent.Attendess = (from o in db.Order_Detail_T
-                                join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
-                                join a in db.Profiles on p.TPD_User_Id equals a.UserID
-                                where p.TPD_Event_Id == Eventid
-                                group new
-                                {
-                                    OrderId = o.O_Order_Id,
-                                    Price = o.O_TotalAmount,
-                                    Qty = p.TPD_Purchased_Qty,
-                                    Name = a.FirstName + " " + a.LastName,
-                                    Date = o.O_OrderDateTime
-                                }
-                                by new
-                                {
-                                    o.O_Order_Id,
-                                    o.O_TotalAmount,
-                                    p.TPD_Purchased_Qty,
-                                    a.FirstName,
-                                    a.LastName,
-                                    o.O_OrderDateTime
-                                } into gc
-                                orderby gc.Key.O_Order_Id descending, gc.Key.FirstName ascending
-                                select new OrderAttendees()
-                                {
-                                    OrderId = gc.Key.O_Order_Id,
-                                    Amount = gc.Key.O_TotalAmount.ToString(),
-                                    Qty = gc.ToList().Sum(a => a.Qty).ToString(),
-                                    Name = gc.Key.FirstName + " " + gc.Key.LastName,
-                                    Date = gc.Key.O_OrderDateTime.ToString()
-                                }).Take(3).ToList();
+                var qty = (from p in db.Ticket_Purchased_Detail where p.TPD_Order_Id == item.OrderId select p.TPD_Purchased_Qty).Sum();
+                item.Qty = qty.ToString();
+            }
+            Mevent.Order = Order;
+            Mevent.Attendess = Order;
+
+            //Mevent.Attendess = (from o in db.Order_Detail_T
+            //                    join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
+            //                    join a in db.Profiles on p.TPD_User_Id equals a.UserID
+            //                    where p.TPD_Event_Id == Eventid
+            //                    group new
+            //                    {
+            //                        OrderId = o.O_Order_Id,
+            //                        Price = o.O_TotalAmount,
+            //                        Qty = p.TPD_Purchased_Qty,
+            //                        Name = a.FirstName + " " + a.LastName,
+            //                        Date = o.O_OrderDateTime
+            //                    }
+            //                    by new
+            //                    {
+            //                        o.O_Order_Id,
+            //                        o.O_TotalAmount,
+            //                        p.TPD_Purchased_Qty,
+            //                        a.FirstName,
+            //                        a.LastName,
+            //                        o.O_OrderDateTime
+            //                    } into gc
+            //                    orderby gc.Key.O_Order_Id descending, gc.Key.FirstName ascending
+            //                    select new OrderAttendees()
+            //                    {
+            //                        OrderId = gc.Key.O_Order_Id,
+            //                        Amount = gc.Key.O_TotalAmount.ToString(),
+            //                        Qty = gc.ToList().Sum(a => a.Qty).ToString(),
+            //                        Name = gc.Key.FirstName + " " + gc.Key.LastName,
+            //                        Date = gc.Key.O_OrderDateTime.ToString()
+            //                    }).Take(3).ToList();
 
 
             DateTime dt = DateTime.Today.AddDays(-30);
@@ -809,7 +798,7 @@ namespace EventCombo.Controllers
             {
                 var ticketid = (from v in db.Tickets where v.E_Id == lEventId select v.T_Id).ToList();
                 string joined = string.Join(",", ticketid.ToArray());
-                string strQuery = "SELECT isnull(sum(TPD_Amount),0) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
+                string strQuery = "SELECT (isnull(sum(TPD_Amount),0) + isnull(sum(TPD_Donate),0)) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
                 var vTotalAmt = objEnt.Database.SqlQuery<decimal>(strQuery).FirstOrDefault();
              
                 //var vTotalAmt = (from myRow in objEnt.Ticket_Purchased_Detail
@@ -830,7 +819,7 @@ namespace EventCombo.Controllers
                     //              where myRow.TPD_Event_Id == lEventId
                     //              select myRow.TPD_EC_Fee).Sum();
 
-                    double dResult = Math.Round( Convert.ToDouble(vTotalAmt) - Convert.ToDouble(vEcFee), 2);
+                    double dResult = Math.Round( Convert.ToDouble(vTotalAmt - vEcFee), 2);
                     strResult = dResult.ToString("N", us);
                 }
             }

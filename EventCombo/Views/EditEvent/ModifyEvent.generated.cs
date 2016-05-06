@@ -7363,226 +7363,227 @@ WriteLiteral("\";\r\n            if (price == 0) {\r\n\r\n                $(\'#i
 "              total = 0;\r\n                fee = 0;\r\n\r\n            }\r\n           " +
 " else if (price > 0) {\r\n                var ccpamount = 0;\r\n                var " +
 "ccpfinal = 0;\r\n                $(\'#id_feestruct-\' + num).css(\'display\', \'block\')" +
-";\r\n                var val = $(\"#id_feetype-0\").val();\r\n                var fee " +
-"= 0;\r\n\r\n                var tid=  $(\'#id_ticket_id-\' + num).val();\r\n\r\n          " +
-"      if(tid!=0)\r\n                {\r\n\r\n                    if(isadmin==\"Y\")\r\n   " +
-"                 {\r\n\r\n                        var hdchange=$(\'#hd_customchange-\'" +
-"+ num).val();\r\n\r\n                        if(hdchange==\"1\")\r\n                    " +
-"    {\r\n                            ccp=parseFloat($(\'#id_customerfee-\'+num).val(" +
-")).toFixed(2);\r\n                            ccpamount=ccp;\r\n                    " +
-"    }else\r\n                        {\r\n                            var customize=" +
-"$(\'#id_customize-\'+ num).val();\r\n                            if(customize==1)\r\n " +
-"                           {\r\n                                ccp=parseFloat($(\'" +
-"#id_customerfee-\'+num).val()).toFixed(2);\r\n                                ccpam" +
-"ount=ccp;\r\n                            }else\r\n                            {\r\n\r\n " +
-"                               ccp = parseFloat($(\'#id_percentage\').val()).toFix" +
-"ed(2);\r\n                                ccpamount = parseFloat(((price * ccp) / " +
-"100)+parseFloat($(\'#id_value\').val())).toFixed(2);\r\n                            " +
-"}\r\n                        }\r\n\r\n                    }else\r\n                    {" +
-"\r\n                        var customize=$(\'#id_customize-\'+ num).val();\r\n       " +
-"                 if(customize==1)\r\n                        {\r\n                  " +
-"          ccp=parseFloat($(\'#id_customerfee-\'+num).val()).toFixed(2);\r\n         " +
-"                   ccpamount=ccp;\r\n                        }else\r\n              " +
-"          {\r\n\r\n                            ccp = parseFloat($(\'#id_percentage\')." +
-"val()).toFixed(2);\r\n                            ccpamount = parseFloat(((price *" +
-" ccp) / 100)+parseFloat($(\'#id_value\').val())).toFixed(2);\r\n                    " +
-"    }\r\n\r\n                    }\r\n                }else\r\n                {\r\n\r\n    " +
-"                ccp = parseFloat($(\'#id_percentage\').val()).toFixed(2);\r\n       " +
-"             ccpamount = (((price * ccp) / 100)+parseFloat($(\'#id_value\').val())" +
-").toFixed(2);\r\n                }\r\n\r\n\r\n\r\n                if (val == 0) {\r\n\r\n\r\n\r\n " +
-"                   ccpamount = ccpamount.toString().replace(/\\B(?=(\\d{3})+(?!\\d)" +
-")/g, \",\");\r\n                    ccpfinal = (parseFloat(ccpamount) + parseFloat(p" +
-"rice)).toFixed(2);\r\n                    ccpfinal = ccpfinal.toString().replace(/" +
-"\\B(?=(\\d{3})+(?!\\d))/g, \",\");\r\n                    price = price.toString().repl" +
-"ace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");\r\n                    var msg = \"Ticket Price " +
-" &nbsp; &nbsp; &nbsp;     $\" + price + \"<br/>\" + \"Fee    &nbsp;&nbsp; &nbsp; &nb" +
-"sp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;    $\" + ccpamount + \"<br/>\" + \"Buyer(s) T" +
-"otal   &nbsp;&nbsp; &nbsp;       $\" + ccpfinal;\r\n                    $(\'#id_buye" +
-"rprice-\' + num).html(\"$\" + ccpfinal);\r\n                    $(\'#id_tooltip-\' + nu" +
-"m).html(msg);\r\n                    total = ccpfinal;\r\n                    fee = " +
-"ccpamount;\r\n                }\r\n                if (val == 1) {\r\n\r\n              " +
-"      ccp = parseFloat($(\'#id_percentage\').val()).toFixed(2);\r\n                 " +
-"   ccpamount = ((price * ccp) / 100).toFixed(2);\r\n\r\n                    ccpamoun" +
-"t = ccpamount.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");\r\n               " +
-"     ccpfinal = price;\r\n                    ccpfinal = ccpfinal.toString().repla" +
-"ce(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");\r\n                    $(\'#id_buyerprice-\' + num" +
-").html(\"$\" + ccpfinal);\r\n                    var msg = \"Ticket Price  &nbsp; &nb" +
-"sp; &nbsp;     $\" + price + \"<br/>\" + \"Fee    &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &" +
-"nbsp;  &nbsp;  &nbsp;&nbsp;     $\" + ccpamount + \"<br/>\" + \"Buyer(s) Total    &n" +
-"bsp;&nbsp; &nbsp;      $\" + ccpfinal;\r\n\r\n                    $(\'#id_tooltip-\' + " +
-"num).html(msg);\r\n                    total = ccpfinal;\r\n                    fee " +
-"= ccpamount;\r\n                }\r\n\r\n                if(isadmin==\"Y\")\r\n           " +
-"     {\r\n                    //if($(\'#id_ecfee-\' + num).val()==\"\")\r\n             " +
-"       //{\r\n\r\n                    //}\r\n                    $(\'#id_ecfee-\' + num)" +
-".html(ccpamount.replace(\',\', \'\'));\r\n                    $(\'#id_customerfee-\' + n" +
-"um).val(ccpamount.replace(\',\', \'\'));\r\n\r\n\r\n                }\r\n                $(\"" +
-"#id_fee-\" + num).val(ccpamount.replace(\',\', \'\'));\r\n                $(\"#id_total-" +
-"\" + num).val(ccpfinal.replace(\',\', \'\'));\r\n                //$(\'#\' + id).val(pric" +
-"e)\r\n            }\r\n\r\n\r\n        }\r\n\r\n        function validatenumdec(el, evt, id)" +
-" {\r\n\r\n            var fee = 0;\r\n            var total = 0;\r\n\r\n            var ch" +
-"arCode = (evt.which) ? evt.which : event.keyCode;\r\n\r\n            var number = el" +
-".value.split(\'.\');\r\n            if (charCode != 46 && charCode > 31 && (charCode" +
-" < 48 || charCode > 57) && charCode != 44) {\r\n                evt.preventDefault" +
-"();\r\n                return false;\r\n\r\n            }\r\n\r\n            if (number.le" +
-"ngth > 1 && charCode == 46) {\r\n                evt.preventDefault();\r\n          " +
-"      return false;\r\n            }\r\n\r\n\r\n\r\n        }\r\n        function minimize(e" +
-") {\r\n\r\n            var id = e;\r\n            var el = e.substr(e.indexOf(\'-\') + 1" +
-", e.length - e.indexOf(\'-\'));\r\n\r\n            $(\'#evnt_set-\' + el).slideToggle(\"f" +
-"ast\");\r\n\r\n        }\r\n        $(\'.var_chg_btn\').click(function () {\r\n            " +
-"$(\"#id_Mainvariable\").css(\'display\', \'block\');\r\n            var divlength = $(\"#" +
-"id_Mainvariable> div\").size();\r\n            var data = $(\'#id_clonevariable-n\')." +
-"clone();\r\n            data.attr(\'id\', \'id_clonevariable-\' + divlength);\r\n       " +
-"     data.removeAttr(\"style\")\r\n            data.find(\'*[id]\').andSelf().each(fun" +
-"ction () {\r\n                //console.log($(this));\r\n\r\n                var id = " +
-"$(this).attr(\'id\');\r\n                //console.log(id);\r\n                id1 = i" +
-"d.substr(0, id.indexOf(\'-\'));\r\n                ////console.log(id);\r\n           " +
-"     var idn = id1 + \"-\" + divlength;\r\n                $(this).attr(\"id\", idn);\r" +
-"\n                $(this).val(\'\');\r\n\r\n                if(id1==\"id_varsubdesc\")\r\n " +
-"               {\r\n                    $(this).attr(\"placeholder\", \"Variable Char" +
-"ges Description \" + parseInt(divlength + 1));\r\n                }\r\n\r\n            " +
-"});\r\n\r\n\r\n            $(\'#id_Mainvariable\').append(data);\r\n            $(\"input[i" +
-"d^=\'id_varsubprice\']\").mask(\'000,000.00\', { reverse: true });\r\n            $(\'#b" +
-"tn_vardelete-\' + divlength).attr(\'href\', \'#cnfrmdeletevariable-\' + divlength);\r\n" +
-"        });\r\n        function disablebutton() {\r\n\r\n            var msg = \"\";\r\n  " +
-"          var count = 0;\r\n            var countqty = 0;\r\n            var countde" +
-"sc = 0;\r\n            var countvardesc = 0;\r\n            var countvarqty = 0;\r\n  " +
-"          var countprice = 0;\r\n            var title = $(\'#txtEventTitle\').val()" +
-";\r\n\r\n            if (title == \"\") {\r\n\r\n\r\n                msg += ajaxsetup(\"Creat" +
-"eEvent\", \"CreateEventTitileUI\") + \"<br/>\";\r\n\r\n            }\r\n\r\n            if ($" +
-"(\'#ddlOrgnizers option\').length <= 0) {\r\n\r\n                msg += ajaxsetup(\"Cre" +
-"ateEvent\", \"CreateEventOrganizerUI\") + \"<br/>\";;\r\n\r\n\r\n            }\r\n           " +
-" var type = $(\"#EventType\").val();\r\n            var cat = $(\"#ddlEventCategory\")" +
-".val();\r\n            if (type <= 0) {\r\n\r\n                msg += ajaxsetup(\"Creat" +
-"eEvent\", \"CreateEventtypeUI\") + \"<br/>\";;\r\n            }\r\n            if (cat <=" +
-" 0) {\r\n\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEventCategoryUI\"" +
-") + \"<br/>\";;\r\n            }\r\n\r\n\r\n\r\n            var divlength = $(\"#MasterDiv> d" +
-"iv\").size();\r\n            if (divlength <= 0) {\r\n                msg += \"Please " +
-"Enter atleast one ticket\";\r\n\r\n            }\r\n            if (divlength > 0) {\r\n\r" +
-"\n                for (var i = 0; i < divlength; i++) {\r\n\r\n                    va" +
-"r ticket_name = $(\'#id_ticket_type-\' + i).val();\r\n                    var ticket" +
-"_Qty = $(\'#id_quantity_total-\' + i).val();\r\n                    if (ticket_name " +
-"== \"\") {\r\n\r\n\r\n                        countdesc++;\r\n                    }\r\n     " +
-"               if (ticket_Qty == \"\") {\r\n\r\n\r\n                        countqty++;\r" +
-"\n                    } else {\r\n                        if (ticket_Qty <= 0) {\r\n\r" +
-"\n                            countqty++;\r\n\r\n                        }\r\n         " +
-"           }\r\n\r\n                    if ($(\'#id_paid-\' + i).css(\'display\') == \"bl" +
-"ock\") {\r\n\r\n                        var price = parseFloat($(\'#id_cost-\' + i).val" +
-"());\r\n                        if (isNaN(price)) {\r\n\r\n                           " +
-" countprice++;\r\n                        }\r\n                        if (price <= " +
-"0) {\r\n\r\n                            countprice++;\r\n                        }\r\n  " +
-"                  }\r\n                }\r\n\r\n\r\n            }\r\n            //if ($(\'" +
-"#hddiscount\').val() == 1) {\r\n            //    count++;\r\n\r\n            //}\r\n    " +
-"        //if (parseInt($(\'#hdMaxerr\').val()) == 1) {\r\n            //    count++;" +
-"\r\n            //}\r\n            if (countprice > 0) {\r\n                msg += aja" +
-"xsetup(\"CreateEvent\", \"PriceNotzeroUI\") + \"<br/>\";\r\n            }\r\n            i" +
-"f (countqty > 0) {\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEvent" +
-"QtyValidateUI\") + \"<br/>\";\r\n            }\r\n            if (countdesc > 0) {\r\n   " +
-"             msg += ajaxsetup(\"CreateEvent\", \"CreateEventHighlightFieldsUI\") + \"" +
-"<br/>\";\r\n\r\n            }\r\n\r\n            //if ($(\'#id_variablecharge\').is(\":check" +
-"ed\") == true) {\r\n            //    if ($(\'#id_vardesc\').val() == \"\") {\r\n\r\n      " +
-"      //        msg += ajaxsetup(\"CreateEvent\", \"CreateEventvariabledescUI\") + \"" +
-"<br/>\";;\r\n\r\n\r\n\r\n            //    } else {\r\n            //        $(\'#id_vardesc" +
-"\').removeClass(\'err-bor\');\r\n\r\n            //    }\r\n            //    var divvar " +
-"= $(\"#id_Mainvariable>div\").size();\r\n            //    if (divvar <= 0) {\r\n     " +
-"       //        msg += \"Please enter Variable valid charges by clicking on Add " +
-"button\" + \"<br/>\";;\r\n\r\n            //    }\r\n            //    if (divvar > 0) {\r" +
-"\n\r\n            //        for (var i = 0; i < divvar; i++) {\r\n            //     " +
-"       var subdesc_name = $(\'#id_varsubdesc-\' + i).val();\r\n            //       " +
-"     var subprice_Qty = $(\'#id_varsubprice-\' + i).val();\r\n\r\n            //      " +
-"      if (subdesc_name == \"\") {\r\n\r\n\r\n\r\n            //                countvardes" +
-"c++;\r\n            //            }\r\n            //            if (subprice_Qty ==" +
-" \"\") {\r\n\r\n\r\n            //                countvarqty++;\r\n            //        " +
-"    } else {\r\n            //                if (subprice_Qty <= 0) {\r\n\r\n        " +
-"    //                    countvarqty++;\r\n\r\n            //                }\r\n\r\n\r" +
-"\n            //            }\r\n\r\n            //        }\r\n\r\n            //    }\r\n" +
-"            //}\r\n\r\n\r\n\r\n            if (count > 0) {\r\n\r\n                msg += aj" +
-"axsetup(\"CreateEvent\", \"CreateEventHighlightFieldsUI\") + \"<br/>\";\r\n            }" +
-"\r\n            //if (countvardesc > 0) {\r\n            //    msg += ajaxsetup(\"Cre" +
-"ateEvent\", \"CreateEventSubDescUI\") + \"<br/>\";\r\n\r\n            //}\r\n            //" +
-"if (countvarqty > 0) {\r\n            //    msg += ajaxsetup(\"CreateEvent\", \"Creat" +
-"eEventSubQtyUI\") + \"<br/>\";\r\n\r\n            //}\r\n            //if ($(\'#chkReqPass" +
-"word\').is(\":checked\") == true) {\r\n            //    if ($(\'#txtReqPassword\').val" +
-"().length<6) {\r\n            //        $(\'#txtReqPassword\').addClass(\'err-bor\');\r" +
-"\n            //        msg += ajaxsetup(\"CreateEvent\", \"CreateEventPwdUI\") + \"<b" +
-"r/>\";;\r\n\r\n            //    }\r\n            //}\r\n            var weekcnt = 0;\r\n  " +
-"          var weekdaily = 0;\r\n            var weekmnth = 0;\r\n            var cus" +
-"tom = 0;\r\n            var days;\r\n            var single = 0;\r\n            var ty" +
-"pe = $(\"#dlSchOption\").val();\r\n            if ($(\"#hdSchType\").val() == \'Multipl" +
-"e\') {\r\n\r\n                if ($(\"#dlSchOption\").val() == \"Weekly\") {\r\n           " +
-"         days = $(\"#dllWeeklyDayChk\").val();\r\n\r\n                    if (days == " +
-"null) {\r\n                        weekcnt++;\r\n\r\n                    }\r\n          " +
-"          if ($(\"#txtTimeStart\").val() == \"\") {\r\n                        weekcnt" +
-"++;\r\n\r\n                    }\r\n                    if ($(\"#txtTimeEnd\").val() == " +
-"\"\") {\r\n                        weekcnt++;\r\n\r\n                    }\r\n            " +
-"        if ($(\"#txtTimeEnd\").val() == \"\") {\r\n                        weekcnt++;\r" +
-"\n\r\n                    }\r\n                    if ($(\"#txtDateFrom\").val() == \"\")" +
-" {\r\n                        weekcnt++;\r\n\r\n                    }\r\n               " +
-"     if ($(\"#txtDateTo\").val() == \"\") {\r\n                        weekcnt++;\r\n\r\n " +
-"                   }\r\n                }\r\n\r\n                if ($(\"#dlSchOption\")" +
-".val() == \"Daily\") {\r\n                    $(\"#txtDateFrom\").length;\r\n           " +
-"         if ($(\"#txtDateFrom\").val() == \"\") {\r\n                        weekdaily" +
-"++;\r\n\r\n                    }\r\n                    $(\"#txtDateTo\").length;\r\n     " +
-"               if ($(\"#txtDateTo\").val() == \"\") {\r\n                        weekd" +
-"aily++;\r\n\r\n                    }\r\n                    $(\"#txtTimeStart\").length;" +
-"\r\n                    if ($(\"#txtTimeStart\").val() == \"\") {\r\n                   " +
-"     weekdaily++;\r\n\r\n                    }\r\n                    $(\"#txtTimeEnd\")" +
-".length;\r\n                    if ($(\"#txtTimeEnd\").val() == \"\") {\r\n             " +
-"           weekdaily++;\r\n\r\n                    }\r\n\r\n                }\r\n         " +
-"       if ($(\"#dlSchOption\").val() == \"Monthly\") {\r\n                    days = $" +
-"(\"#dllMonthlyWeekDay\").val();\r\n                    if (days == null) {\r\n\r\n      " +
-"                  weekmnth++;\r\n\r\n                    }\r\n                    if (" +
-"$(\"#txtDateFrom\").val() == \"\") {\r\n                        weekmnth++;\r\n\r\n       " +
-"             }\r\n                    if ($(\"#txtDateFrom\").val() == \"\") {\r\n      " +
-"                  weekmnth++;\r\n\r\n                    }\r\n                    if (" +
-"$(\"#txtTimeStart\").val() == \"\") {\r\n                        weekmnth++;\r\n\r\n      " +
-"              }\r\n                    if ($(\"#txtDateTo\").val() == \"\") {\r\n       " +
-"                 weekmnth++;\r\n\r\n                    }\r\n\r\n                }\r\n    " +
-"            if ($(\"#dlSchOption\").val() == \"Custom\") {\r\n\r\n                    if" +
-" ($(\"#txtTimeStart\").val() == \"\") {\r\n                        custom++;\r\n\r\n      " +
-"              }\r\n                    if ($(\"#txtTimeEnd\").val() == \"\") {\r\n      " +
-"                  custom++;\r\n\r\n                    }\r\n                    if ($(" +
-"\"#txtDateFrom\").val() == \"\") {\r\n                        custom++;\r\n\r\n           " +
-"         }\r\n                    if ($(\"#txtDateTo\").val() == \"\") {\r\n            " +
-"            custom++;\r\n\r\n                    }\r\n\r\n                }\r\n\r\n         " +
-"   } else {\r\n\r\n                var str = $(\"#txtStartDate\").val();\r\n            " +
-"    if ($(\"#txtStartDate\").val() == \"\") {\r\n                    single++;\r\n\r\n    " +
-"            }\r\n                str = $(\"#txtStartTime\").val();\r\n                " +
-"if ($(\"#txtStartTime\").val() == \"\") {\r\n                    single++;\r\n\r\n        " +
-"        }\r\n                str = $(\"#txtEndDate\").val();\r\n                if ($(" +
-"\"#txtEndDate\").val() == \"\") {\r\n                    single++;\r\n\r\n                " +
-"}\r\n                str = $(\"#txtEndTime\").val();\r\n                if ($(\"#txtEnd" +
-"Time\").val() == \"\") {\r\n                    single++;\r\n\r\n                }\r\n\r\n   " +
-"         }\r\n\r\n            if (weekcnt > 0) {\r\n\r\n                msg += ajaxsetup" +
-"(\"CreateEvent\", \"Validdate\") + \"<br/>\";\r\n\r\n            }\r\n            if (weekda" +
-"ily > 0) {\r\n                $(\"#btEnterDates\").click();\r\n                msg += " +
-"ajaxsetup(\"CreateEvent\", \"Validdate\") + \"<br/>\";\r\n\r\n            }\r\n            i" +
-"f (weekmnth > 0) {\r\n\r\n                msg += ajaxsetup(\"CreateEvent\", \"Validdate" +
-"\") + \"<br/>\";\r\n\r\n            }\r\n            if (custom > 0) {\r\n\r\n               " +
-" msg += ajaxsetup(\"CreateEvent\", \"Validdate\") + \"<br/>\";\r\n            }\r\n       " +
-"     if (single > 0) {\r\n\r\n                msg += ajaxsetup(\"CreateEvent\", \"Valid" +
-"date\") + \"<br/>\";\r\n            }\r\n            debugger;\r\n            return msg;" +
-"\r\n\r\n\r\n\r\n        }\r\n\r\n        $(\'.save_btnpaid \').click(function () {\r\n          " +
-"  debugger;\r\n            $(\".ticket_panel\").show();\r\n            $(\"#id_ticket_f" +
-"ooter\").css(\'display\', \'block\');\r\n            var divlength = $(\"#MasterDiv> div" +
-"\").size();\r\n            var data = $(\'#clonediv-n\').clone();\r\n            data.a" +
-"ttr(\'id\', \'clonediv-\' + divlength);\r\n            data.removeAttr(\"style\")\r\n\r\n   " +
-"         data.find(\'*[id]\').andSelf().each(function () {\r\n                //cons" +
-"ole.log($(this));\r\n\r\n                var id = $(this).attr(\'id\');\r\n             " +
-"   //console.log(id);\r\n                id1 = id.substr(0, id.indexOf(\'-\'));\r\n   " +
-"             ////console.log(id);\r\n                var idn = id1 + \"-\" + divleng" +
-"th;\r\n                $(this).attr(\"id\", idn);\r\n                $(this).val(\'\');\r" +
-"\n\r\n                if ($(this).hasClass(\"paidticket-n\")) {\r\n                    " +
-"$(this).removeClass(\'paidticket-n\');\r\n                    $(this).addClass(\'paid" +
-"ticket-\' + divlength + \'\');\r\n                }\r\n                if ($(this).hasC" +
-"lass(\"normalticket-n\")) {\r\n                    $(this).removeClass(\'normalticket" +
-"-n\');\r\n                    $(this).addClass(\'normalticket-\' + divlength + \'\');\r\n" +
-"                }\r\n                if ($(this).hasClass(\"donateshow-n\")) {\r\n    " +
-"                $(this).removeClass(\'donateshow-n\');\r\n                    $(this" +
-").addClass(\'donateshow-\' + divlength + \'\');\r\n                }\r\n\r\n            })" +
-";\r\n\r\n\r\n            $(\'#MasterDiv\').append(data);\r\n            var isadmin=\"");
+";\r\n                $(\'#id_include_ticket_fees-\' + num).val(0);\r\n                " +
+"var val = $(\"#id_feetype-0\").val();\r\n                var fee = 0;\r\n\r\n           " +
+"     var tid=  $(\'#id_ticket_id-\' + num).val();\r\n\r\n                if(tid!=0)\r\n " +
+"               {\r\n\r\n                    if(isadmin==\"Y\")\r\n                    {\r" +
+"\n\r\n                        var hdchange=$(\'#hd_customchange-\'+ num).val();\r\n\r\n  " +
+"                      if(hdchange==\"1\")\r\n                        {\r\n            " +
+"                ccp=parseFloat($(\'#id_customerfee-\'+num).val()).toFixed(2);\r\n   " +
+"                         ccpamount=ccp;\r\n                        }else\r\n        " +
+"                {\r\n                            var customize=$(\'#id_customize-\'+" +
+" num).val();\r\n                            if(customize==1)\r\n                    " +
+"        {\r\n                                ccp=parseFloat($(\'#id_customerfee-\'+n" +
+"um).val()).toFixed(2);\r\n                                ccpamount=ccp;\r\n        " +
+"                    }else\r\n                            {\r\n\r\n                    " +
+"            ccp = parseFloat($(\'#id_percentage\').val()).toFixed(2);\r\n           " +
+"                     ccpamount = parseFloat(((price * ccp) / 100)+parseFloat($(\'" +
+"#id_value\').val())).toFixed(2);\r\n                            }\r\n                " +
+"        }\r\n\r\n                    }else\r\n                    {\r\n                 " +
+"       var customize=$(\'#id_customize-\'+ num).val();\r\n                        if" +
+"(customize==1)\r\n                        {\r\n                            ccp=parse" +
+"Float($(\'#id_customerfee-\'+num).val()).toFixed(2);\r\n                            " +
+"ccpamount=ccp;\r\n                        }else\r\n                        {\r\n\r\n    " +
+"                        ccp = parseFloat($(\'#id_percentage\').val()).toFixed(2);\r" +
+"\n                            ccpamount = parseFloat(((price * ccp) / 100)+parseF" +
+"loat($(\'#id_value\').val())).toFixed(2);\r\n                        }\r\n\r\n          " +
+"          }\r\n                }else\r\n                {\r\n\r\n                    ccp" +
+" = parseFloat($(\'#id_percentage\').val()).toFixed(2);\r\n                    ccpamo" +
+"unt = (((price * ccp) / 100)+parseFloat($(\'#id_value\').val())).toFixed(2);\r\n    " +
+"            }\r\n\r\n\r\n\r\n                if (val == 0) {\r\n\r\n\r\n\r\n                    " +
+"ccpamount = ccpamount.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");\r\n       " +
+"             ccpfinal = (parseFloat(ccpamount) + parseFloat(price)).toFixed(2);\r" +
+"\n                    ccpfinal = ccpfinal.toString().replace(/\\B(?=(\\d{3})+(?!\\d)" +
+")/g, \",\");\r\n                    price = price.toString().replace(/\\B(?=(\\d{3})+(" +
+"?!\\d))/g, \",\");\r\n                    var msg = \"Ticket Price  &nbsp; &nbsp; &nbs" +
+"p;     $\" + price + \"<br/>\" + \"Fee    &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &" +
+"nbsp;  &nbsp;&nbsp;    $\" + ccpamount + \"<br/>\" + \"Buyer(s) Total   &nbsp;&nbsp;" +
+" &nbsp;       $\" + ccpfinal;\r\n                    $(\'#id_buyerprice-\' + num).htm" +
+"l(\"$\" + ccpfinal);\r\n                    $(\'#id_tooltip-\' + num).html(msg);\r\n    " +
+"                total = ccpfinal;\r\n                    fee = ccpamount;\r\n       " +
+"         }\r\n                if (val == 1) {\r\n\r\n                    ccp = parseFl" +
+"oat($(\'#id_percentage\').val()).toFixed(2);\r\n                    ccpamount = ((pr" +
+"ice * ccp) / 100).toFixed(2);\r\n\r\n                    ccpamount = ccpamount.toStr" +
+"ing().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");\r\n                    ccpfinal = pri" +
+"ce;\r\n                    ccpfinal = ccpfinal.toString().replace(/\\B(?=(\\d{3})+(?" +
+"!\\d))/g, \",\");\r\n                    $(\'#id_buyerprice-\' + num).html(\"$\" + ccpfin" +
+"al);\r\n                    var msg = \"Ticket Price  &nbsp; &nbsp; &nbsp;     $\" +" +
+" price + \"<br/>\" + \"Fee    &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbs" +
+"p;&nbsp;     $\" + ccpamount + \"<br/>\" + \"Buyer(s) Total    &nbsp;&nbsp; &nbsp;  " +
+"    $\" + ccpfinal;\r\n\r\n                    $(\'#id_tooltip-\' + num).html(msg);\r\n  " +
+"                  total = ccpfinal;\r\n                    fee = ccpamount;\r\n     " +
+"           }\r\n\r\n                if(isadmin==\"Y\")\r\n                {\r\n           " +
+"         //if($(\'#id_ecfee-\' + num).val()==\"\")\r\n                    //{\r\n\r\n     " +
+"               //}\r\n                    $(\'#id_ecfee-\' + num).html(ccpamount.rep" +
+"lace(\',\', \'\'));\r\n                    $(\'#id_customerfee-\' + num).val(ccpamount.r" +
+"eplace(\',\', \'\'));\r\n\r\n\r\n                }\r\n                $(\"#id_fee-\" + num).va" +
+"l(ccpamount.replace(\',\', \'\'));\r\n                $(\"#id_total-\" + num).val(ccpfin" +
+"al.replace(\',\', \'\'));\r\n                //$(\'#\' + id).val(price)\r\n            }\r\n" +
+"\r\n\r\n        }\r\n\r\n        function validatenumdec(el, evt, id) {\r\n\r\n            v" +
+"ar fee = 0;\r\n            var total = 0;\r\n\r\n            var charCode = (evt.which" +
+") ? evt.which : event.keyCode;\r\n\r\n            var number = el.value.split(\'.\');\r" +
+"\n            if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode >" +
+" 57) && charCode != 44) {\r\n                evt.preventDefault();\r\n              " +
+"  return false;\r\n\r\n            }\r\n\r\n            if (number.length > 1 && charCod" +
+"e == 46) {\r\n                evt.preventDefault();\r\n                return false;" +
+"\r\n            }\r\n\r\n\r\n\r\n        }\r\n        function minimize(e) {\r\n\r\n            " +
+"var id = e;\r\n            var el = e.substr(e.indexOf(\'-\') + 1, e.length - e.inde" +
+"xOf(\'-\'));\r\n\r\n            $(\'#evnt_set-\' + el).slideToggle(\"fast\");\r\n\r\n        }" +
+"\r\n        $(\'.var_chg_btn\').click(function () {\r\n            $(\"#id_Mainvariable" +
+"\").css(\'display\', \'block\');\r\n            var divlength = $(\"#id_Mainvariable> di" +
+"v\").size();\r\n            var data = $(\'#id_clonevariable-n\').clone();\r\n         " +
+"   data.attr(\'id\', \'id_clonevariable-\' + divlength);\r\n            data.removeAtt" +
+"r(\"style\")\r\n            data.find(\'*[id]\').andSelf().each(function () {\r\n       " +
+"         //console.log($(this));\r\n\r\n                var id = $(this).attr(\'id\');" +
+"\r\n                //console.log(id);\r\n                id1 = id.substr(0, id.inde" +
+"xOf(\'-\'));\r\n                ////console.log(id);\r\n                var idn = id1 " +
+"+ \"-\" + divlength;\r\n                $(this).attr(\"id\", idn);\r\n                $(" +
+"this).val(\'\');\r\n\r\n                if(id1==\"id_varsubdesc\")\r\n                {\r\n " +
+"                   $(this).attr(\"placeholder\", \"Variable Charges Description \" +" +
+" parseInt(divlength + 1));\r\n                }\r\n\r\n            });\r\n\r\n\r\n          " +
+"  $(\'#id_Mainvariable\').append(data);\r\n            $(\"input[id^=\'id_varsubprice\'" +
+"]\").mask(\'000,000.00\', { reverse: true });\r\n            $(\'#btn_vardelete-\' + di" +
+"vlength).attr(\'href\', \'#cnfrmdeletevariable-\' + divlength);\r\n        });\r\n      " +
+"  function disablebutton() {\r\n\r\n            var msg = \"\";\r\n            var count" +
+" = 0;\r\n            var countqty = 0;\r\n            var countdesc = 0;\r\n          " +
+"  var countvardesc = 0;\r\n            var countvarqty = 0;\r\n            var count" +
+"price = 0;\r\n            var title = $(\'#txtEventTitle\').val();\r\n\r\n            if" +
+" (title == \"\") {\r\n\r\n\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEve" +
+"ntTitileUI\") + \"<br/>\";\r\n\r\n            }\r\n\r\n            if ($(\'#ddlOrgnizers opt" +
+"ion\').length <= 0) {\r\n\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateE" +
+"ventOrganizerUI\") + \"<br/>\";;\r\n\r\n\r\n            }\r\n            var type = $(\"#Eve" +
+"ntType\").val();\r\n            var cat = $(\"#ddlEventCategory\").val();\r\n          " +
+"  if (type <= 0) {\r\n\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEve" +
+"nttypeUI\") + \"<br/>\";;\r\n            }\r\n            if (cat <= 0) {\r\n\r\n          " +
+"      msg += ajaxsetup(\"CreateEvent\", \"CreateEventCategoryUI\") + \"<br/>\";;\r\n    " +
+"        }\r\n\r\n\r\n\r\n            var divlength = $(\"#MasterDiv> div\").size();\r\n     " +
+"       if (divlength <= 0) {\r\n                msg += \"Please Enter atleast one t" +
+"icket\";\r\n\r\n            }\r\n            if (divlength > 0) {\r\n\r\n                fo" +
+"r (var i = 0; i < divlength; i++) {\r\n\r\n                    var ticket_name = $(\'" +
+"#id_ticket_type-\' + i).val();\r\n                    var ticket_Qty = $(\'#id_quant" +
+"ity_total-\' + i).val();\r\n                    if (ticket_name == \"\") {\r\n\r\n\r\n     " +
+"                   countdesc++;\r\n                    }\r\n                    if (" +
+"ticket_Qty == \"\") {\r\n\r\n\r\n                        countqty++;\r\n                  " +
+"  } else {\r\n                        if (ticket_Qty <= 0) {\r\n\r\n                  " +
+"          countqty++;\r\n\r\n                        }\r\n                    }\r\n\r\n   " +
+"                 if ($(\'#id_paid-\' + i).css(\'display\') == \"block\") {\r\n\r\n        " +
+"                var price = parseFloat($(\'#id_cost-\' + i).val());\r\n             " +
+"           if (isNaN(price)) {\r\n\r\n                            countprice++;\r\n   " +
+"                     }\r\n                        if (price <= 0) {\r\n\r\n           " +
+"                 countprice++;\r\n                        }\r\n                    }" +
+"\r\n                }\r\n\r\n\r\n            }\r\n            //if ($(\'#hddiscount\').val()" +
+" == 1) {\r\n            //    count++;\r\n\r\n            //}\r\n            //if (parse" +
+"Int($(\'#hdMaxerr\').val()) == 1) {\r\n            //    count++;\r\n            //}\r\n" +
+"            if (countprice > 0) {\r\n                msg += ajaxsetup(\"CreateEvent" +
+"\", \"PriceNotzeroUI\") + \"<br/>\";\r\n            }\r\n            if (countqty > 0) {\r" +
+"\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEventQtyValidateUI\") + \"" +
+"<br/>\";\r\n            }\r\n            if (countdesc > 0) {\r\n                msg +=" +
+" ajaxsetup(\"CreateEvent\", \"CreateEventHighlightFieldsUI\") + \"<br/>\";\r\n\r\n        " +
+"    }\r\n\r\n            //if ($(\'#id_variablecharge\').is(\":checked\") == true) {\r\n  " +
+"          //    if ($(\'#id_vardesc\').val() == \"\") {\r\n\r\n            //        msg" +
+" += ajaxsetup(\"CreateEvent\", \"CreateEventvariabledescUI\") + \"<br/>\";;\r\n\r\n\r\n\r\n   " +
+"         //    } else {\r\n            //        $(\'#id_vardesc\').removeClass(\'err" +
+"-bor\');\r\n\r\n            //    }\r\n            //    var divvar = $(\"#id_Mainvariab" +
+"le>div\").size();\r\n            //    if (divvar <= 0) {\r\n            //        ms" +
+"g += \"Please enter Variable valid charges by clicking on Add button\" + \"<br/>\";;" +
+"\r\n\r\n            //    }\r\n            //    if (divvar > 0) {\r\n\r\n            //  " +
+"      for (var i = 0; i < divvar; i++) {\r\n            //            var subdesc_" +
+"name = $(\'#id_varsubdesc-\' + i).val();\r\n            //            var subprice_Q" +
+"ty = $(\'#id_varsubprice-\' + i).val();\r\n\r\n            //            if (subdesc_n" +
+"ame == \"\") {\r\n\r\n\r\n\r\n            //                countvardesc++;\r\n            /" +
+"/            }\r\n            //            if (subprice_Qty == \"\") {\r\n\r\n\r\n       " +
+"     //                countvarqty++;\r\n            //            } else {\r\n     " +
+"       //                if (subprice_Qty <= 0) {\r\n\r\n            //             " +
+"       countvarqty++;\r\n\r\n            //                }\r\n\r\n\r\n            //    " +
+"        }\r\n\r\n            //        }\r\n\r\n            //    }\r\n            //}\r\n\r\n" +
+"\r\n\r\n            if (count > 0) {\r\n\r\n                msg += ajaxsetup(\"CreateEven" +
+"t\", \"CreateEventHighlightFieldsUI\") + \"<br/>\";\r\n            }\r\n            //if " +
+"(countvardesc > 0) {\r\n            //    msg += ajaxsetup(\"CreateEvent\", \"CreateE" +
+"ventSubDescUI\") + \"<br/>\";\r\n\r\n            //}\r\n            //if (countvarqty > 0" +
+") {\r\n            //    msg += ajaxsetup(\"CreateEvent\", \"CreateEventSubQtyUI\") + " +
+"\"<br/>\";\r\n\r\n            //}\r\n            //if ($(\'#chkReqPassword\').is(\":checked" +
+"\") == true) {\r\n            //    if ($(\'#txtReqPassword\').val().length<6) {\r\n   " +
+"         //        $(\'#txtReqPassword\').addClass(\'err-bor\');\r\n            //    " +
+"    msg += ajaxsetup(\"CreateEvent\", \"CreateEventPwdUI\") + \"<br/>\";;\r\n\r\n         " +
+"   //    }\r\n            //}\r\n            var weekcnt = 0;\r\n            var weekd" +
+"aily = 0;\r\n            var weekmnth = 0;\r\n            var custom = 0;\r\n         " +
+"   var days;\r\n            var single = 0;\r\n            var type = $(\"#dlSchOptio" +
+"n\").val();\r\n            if ($(\"#hdSchType\").val() == \'Multiple\') {\r\n\r\n          " +
+"      if ($(\"#dlSchOption\").val() == \"Weekly\") {\r\n                    days = $(\"" +
+"#dllWeeklyDayChk\").val();\r\n\r\n                    if (days == null) {\r\n          " +
+"              weekcnt++;\r\n\r\n                    }\r\n                    if ($(\"#t" +
+"xtTimeStart\").val() == \"\") {\r\n                        weekcnt++;\r\n\r\n            " +
+"        }\r\n                    if ($(\"#txtTimeEnd\").val() == \"\") {\r\n            " +
+"            weekcnt++;\r\n\r\n                    }\r\n                    if ($(\"#txt" +
+"TimeEnd\").val() == \"\") {\r\n                        weekcnt++;\r\n\r\n                " +
+"    }\r\n                    if ($(\"#txtDateFrom\").val() == \"\") {\r\n               " +
+"         weekcnt++;\r\n\r\n                    }\r\n                    if ($(\"#txtDat" +
+"eTo\").val() == \"\") {\r\n                        weekcnt++;\r\n\r\n                    " +
+"}\r\n                }\r\n\r\n                if ($(\"#dlSchOption\").val() == \"Daily\") " +
+"{\r\n                    $(\"#txtDateFrom\").length;\r\n                    if ($(\"#tx" +
+"tDateFrom\").val() == \"\") {\r\n                        weekdaily++;\r\n\r\n            " +
+"        }\r\n                    $(\"#txtDateTo\").length;\r\n                    if (" +
+"$(\"#txtDateTo\").val() == \"\") {\r\n                        weekdaily++;\r\n\r\n        " +
+"            }\r\n                    $(\"#txtTimeStart\").length;\r\n                 " +
+"   if ($(\"#txtTimeStart\").val() == \"\") {\r\n                        weekdaily++;\r\n" +
+"\r\n                    }\r\n                    $(\"#txtTimeEnd\").length;\r\n         " +
+"           if ($(\"#txtTimeEnd\").val() == \"\") {\r\n                        weekdail" +
+"y++;\r\n\r\n                    }\r\n\r\n                }\r\n                if ($(\"#dlSc" +
+"hOption\").val() == \"Monthly\") {\r\n                    days = $(\"#dllMonthlyWeekDa" +
+"y\").val();\r\n                    if (days == null) {\r\n\r\n                        w" +
+"eekmnth++;\r\n\r\n                    }\r\n                    if ($(\"#txtDateFrom\").v" +
+"al() == \"\") {\r\n                        weekmnth++;\r\n\r\n                    }\r\n   " +
+"                 if ($(\"#txtDateFrom\").val() == \"\") {\r\n                        w" +
+"eekmnth++;\r\n\r\n                    }\r\n                    if ($(\"#txtTimeStart\")." +
+"val() == \"\") {\r\n                        weekmnth++;\r\n\r\n                    }\r\n  " +
+"                  if ($(\"#txtDateTo\").val() == \"\") {\r\n                        we" +
+"ekmnth++;\r\n\r\n                    }\r\n\r\n                }\r\n                if ($(\"" +
+"#dlSchOption\").val() == \"Custom\") {\r\n\r\n                    if ($(\"#txtTimeStart\"" +
+").val() == \"\") {\r\n                        custom++;\r\n\r\n                    }\r\n  " +
+"                  if ($(\"#txtTimeEnd\").val() == \"\") {\r\n                        c" +
+"ustom++;\r\n\r\n                    }\r\n                    if ($(\"#txtDateFrom\").val" +
+"() == \"\") {\r\n                        custom++;\r\n\r\n                    }\r\n       " +
+"             if ($(\"#txtDateTo\").val() == \"\") {\r\n                        custom+" +
+"+;\r\n\r\n                    }\r\n\r\n                }\r\n\r\n            } else {\r\n\r\n    " +
+"            var str = $(\"#txtStartDate\").val();\r\n                if ($(\"#txtStar" +
+"tDate\").val() == \"\") {\r\n                    single++;\r\n\r\n                }\r\n    " +
+"            str = $(\"#txtStartTime\").val();\r\n                if ($(\"#txtStartTim" +
+"e\").val() == \"\") {\r\n                    single++;\r\n\r\n                }\r\n        " +
+"        str = $(\"#txtEndDate\").val();\r\n                if ($(\"#txtEndDate\").val(" +
+") == \"\") {\r\n                    single++;\r\n\r\n                }\r\n                " +
+"str = $(\"#txtEndTime\").val();\r\n                if ($(\"#txtEndTime\").val() == \"\")" +
+" {\r\n                    single++;\r\n\r\n                }\r\n\r\n            }\r\n\r\n     " +
+"       if (weekcnt > 0) {\r\n\r\n                msg += ajaxsetup(\"CreateEvent\", \"Va" +
+"liddate\") + \"<br/>\";\r\n\r\n            }\r\n            if (weekdaily > 0) {\r\n       " +
+"         $(\"#btEnterDates\").click();\r\n                msg += ajaxsetup(\"CreateEv" +
+"ent\", \"Validdate\") + \"<br/>\";\r\n\r\n            }\r\n            if (weekmnth > 0) {\r" +
+"\n\r\n                msg += ajaxsetup(\"CreateEvent\", \"Validdate\") + \"<br/>\";\r\n\r\n  " +
+"          }\r\n            if (custom > 0) {\r\n\r\n                msg += ajaxsetup(\"" +
+"CreateEvent\", \"Validdate\") + \"<br/>\";\r\n            }\r\n            if (single > 0" +
+") {\r\n\r\n                msg += ajaxsetup(\"CreateEvent\", \"Validdate\") + \"<br/>\";\r\n" +
+"            }\r\n            debugger;\r\n            return msg;\r\n\r\n\r\n\r\n        }\r\n" +
+"\r\n        $(\'.save_btnpaid \').click(function () {\r\n            debugger;\r\n      " +
+"      $(\".ticket_panel\").show();\r\n            $(\"#id_ticket_footer\").css(\'displa" +
+"y\', \'block\');\r\n            var divlength = $(\"#MasterDiv> div\").size();\r\n       " +
+"     var data = $(\'#clonediv-n\').clone();\r\n            data.attr(\'id\', \'clonediv" +
+"-\' + divlength);\r\n            data.removeAttr(\"style\")\r\n\r\n            data.find(" +
+"\'*[id]\').andSelf().each(function () {\r\n                //console.log($(this));\r\n" +
+"\r\n                var id = $(this).attr(\'id\');\r\n                //console.log(id" +
+");\r\n                id1 = id.substr(0, id.indexOf(\'-\'));\r\n                ////co" +
+"nsole.log(id);\r\n                var idn = id1 + \"-\" + divlength;\r\n              " +
+"  $(this).attr(\"id\", idn);\r\n                $(this).val(\'\');\r\n\r\n                " +
+"if ($(this).hasClass(\"paidticket-n\")) {\r\n                    $(this).removeClass" +
+"(\'paidticket-n\');\r\n                    $(this).addClass(\'paidticket-\' + divlengt" +
+"h + \'\');\r\n                }\r\n                if ($(this).hasClass(\"normalticket-" +
+"n\")) {\r\n                    $(this).removeClass(\'normalticket-n\');\r\n            " +
+"        $(this).addClass(\'normalticket-\' + divlength + \'\');\r\n                }\r\n" +
+"                if ($(this).hasClass(\"donateshow-n\")) {\r\n                    $(t" +
+"his).removeClass(\'donateshow-n\');\r\n                    $(this).addClass(\'donates" +
+"how-\' + divlength + \'\');\r\n                }\r\n\r\n            });\r\n\r\n\r\n            " +
+"$(\'#MasterDiv\').append(data);\r\n            var isadmin=\"");
 
             
-            #line 5328 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5329 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                     Write(Model.Isadmin);
 
             
@@ -7672,7 +7673,7 @@ WriteLiteral("\";\r\n\r\n            if(isadmin==\"Y\")\r\n            {\r\n\r\n
 "   var isadmin=\"");
 
             
-            #line 5462 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5463 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                     Write(Model.Isadmin);
 
             
@@ -7864,7 +7865,7 @@ WriteLiteral("\";\r\n\r\n            if(isadmin==\"Y\")\r\n            {\r\n\r\n
 "          {\r\n                    $.ajax({\r\n                        url: \'");
 
             
-            #line 5793 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 5794 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                          Write(Url.Action("Checkticketstatus", "EditEvent"));
 
             
@@ -8137,27 +8138,27 @@ WriteLiteral("\',\r\n                        data: { ticketid: ticketId },\r\n  
 
 WriteLiteral("\r\n    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 297472), Tuple.Create("\"", 297511)
-, Tuple.Create(Tuple.Create("", 297479), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 297479), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 297533), Tuple.Create("\"", 297572)
+, Tuple.Create(Tuple.Create("", 297540), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 297540), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n\r\n    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 297545), Tuple.Create("\"", 297602)
-, Tuple.Create(Tuple.Create("", 297552), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 297552), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 297606), Tuple.Create("\"", 297663)
+, Tuple.Create(Tuple.Create("", 297613), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 297613), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 297636), Tuple.Create("\"", 297673)
-, Tuple.Create(Tuple.Create("", 297642), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 297642), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 297697), Tuple.Create("\"", 297734)
+, Tuple.Create(Tuple.Create("", 297703), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 297703), false)
 );
 
 WriteLiteral("></script>\r\n\r\n\r\n    <script");
@@ -8188,7 +8189,7 @@ WriteLiteral(">\r\n        $(document).ready(function () {\r\n\r\n            //
 "         var request = $.ajax({\r\n                url:\'");
 
             
-            #line 6396 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6397 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                 Write(Url.Action("Index", "ValidationMessage"));
 
             
@@ -8242,7 +8243,7 @@ WriteLiteral("\',\r\n                async: false,\r\n                data: { st
 "({\r\n                            url: \'");
 
             
-            #line 6497 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6498 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                              Write(Url.Action("Checkticketstatus", "EditEvent"));
 
             
@@ -8272,7 +8273,7 @@ WriteLiteral("\',\r\n                            data: { ticketid: ticketId },\r
 "      var isadmin=\"");
 
             
-            #line 6541 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 6542 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                             Write(Model.Isadmin);
 
             
@@ -8555,7 +8556,7 @@ WriteLiteral("\";\r\n                   \r\n                    if(isadmin==\"Y\
 "ar image=\"\";\r\n        var j= ");
 
             
-            #line 7103 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 7104 "..\..\Views\EditEvent\ModifyEvent.cshtml"
           Write(Html.Raw(ViewData["Image"]));
 
             
@@ -8773,7 +8774,7 @@ WriteLiteral(";\r\n\r\n\r\n        $(\'#input2\').filer({\r\n            limit: 
 "nt).prop(\'title\', \'EventCombo - Edit ");
 
             
-            #line 7497 "..\..\Views\EditEvent\ModifyEvent.cshtml"
+            #line 7498 "..\..\Views\EditEvent\ModifyEvent.cshtml"
                                                 Write(Model.EventTitle);
 
             
