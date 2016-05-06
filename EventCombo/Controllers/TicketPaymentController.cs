@@ -794,7 +794,14 @@ namespace EventCombo.Controllers
                             objTPD.TPD_TQD_Id = TLD.TLD_TQD_Id;
                             objTPD.TPD_GUID = TLD.TLD_GUID;
                             objTPD.TPD_User_Id = Userid;
-                            objTPD.TPD_EC_Fee = GetCurrentECFee(TLD.TLD_TQD_Id);
+                            if (objTPD.TPD_Amount > 0)
+                            {
+                                objTPD.TPD_EC_Fee = GetCurrentECFee(TLD.TLD_TQD_Id);
+                            }
+                            else
+                            {
+                                objTPD.TPD_EC_Fee = 0;
+                            }
                             objTPD.TPD_PromoCodeID = TLD.TLD_PromoCodeId;
                             objTPD.TPD_PromoCodeAmount = TLD.TLD_PromoCodeAmount;
                             objEntity.Ticket_Purchased_Detail.Add(objTPD);

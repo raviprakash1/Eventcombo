@@ -882,7 +882,7 @@
                                                         <div class="form-group" id="id_feestruct-n" style="display:none">
                                                             <label class="col-sm-1 control-label ev_tickt_lebel pl0">Fees</label>
                                                             <div class="col-sm-5">
-                                                                <select class="form-control ev_drop_label " id="id_include_ticket_fees-n" onchange="feechange(this.id)">
+                                                                <select class="form-control ev_drop_label" id="id_include_ticket_fees-n" onchange="feechange(this.id)">
                                                                     <option value="0">customer pays the fees</option>
                                                                     <option value="1">I absorb the fee</option>
                                                                 </select>
@@ -3591,6 +3591,7 @@
             $("#id_totalqty").html(sum);
         }
         function feechange(e) {
+           
             var fee = 0;
             var total = 0;
             var dropval = $('#' + e).val();
@@ -3756,6 +3757,7 @@
                 var ccpamount = 0;
                 var ccpfinal = 0;
                 $('#id_feestruct-' + num).css('display', 'block');
+                $('#id_include_ticket_fees-' + num).val(0);
                 var val = $("#id_feetype-0").val();
                 var fee = 0;
 

@@ -240,10 +240,10 @@ namespace CMS.Controllers
                             objlst = objlst.GetRange(iCount - iGapValue, iGapValue);
                         else
                         {
-                            //objuser = objuser.GetRange(iCount - iGapValue, ((iCount - (objuser.Count + 1))));
+                          
                             int iGap = (iCount - iGapValue);
                             objlst = objlst.GetRange(iGap, (objlst.Count - iGap));
-                            //objlst = objlst.GetRange(iGap, (objlst.Count - iGap));
+                           
                         }
                     }
                 }
@@ -270,18 +270,7 @@ namespace CMS.Controllers
                 TempData["sortorder"] = sortorder;
 
 
-                //PageFilter.Add(new SelectListItem()
-                //{
-                //    Text = "1 - 5",
-                //    Value = "5",
-                //    Selected = (iCount == 5 ? true : false)
-                //});
-                //PageFilter.Add(new SelectListItem()
-                //{
-                //    Text = "5 - 10",
-                //    Value = "10",
-                //    Selected = (iCount == 10 ? true : false)
-                //});
+             
 
                 ViewBag.ddlPageF = PageFilter;
                 var userid = Session["UserID"].ToString();
@@ -289,10 +278,7 @@ namespace CMS.Controllers
                 TempData["PageNo"] = PageF;
 
 
-                // List<Permissions> objPerm = GetPermission("APP");
-                // UsersTemplate objU = new UsersTemplate();
-                //  objU.objPermissions = GetPermission("APP");
-                // objuser.Add(objU);
+            
                 return View(users);
             }
             else
