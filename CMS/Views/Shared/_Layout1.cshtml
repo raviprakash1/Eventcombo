@@ -144,10 +144,9 @@
 
                     <li class="sidebar-label pt15">Exclusive Tools</li>
                     <li>
-                        <a href="#" onclick="checkPermission('3');">
+                        <a href="#" onclick="checkPermission('10');">
                             <span class="fa fa-user"></span>
                             <span class="sidebar-title">Member Management</span>
-
                         </a>
                     </li>
 
@@ -159,30 +158,22 @@
 
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#"  onclick="checkPermission('11');" >
                             <span class="fa fa-ticket"></span>
-                            <span class="sidebar-title">Ticket</span>
+                            <span class="sidebar-title">Fee Settings</span>
                         </a>
 
                     </li>
 
                     <li>                        
-                        <a href="@Url.Action("EventType", "EventType", new {Type="N"})">
+                        <a href="#"  onclick="checkPermission('8');" >
                             <span class="fa fa-ticket"></span>
                             <span class="sidebar-title">Event Type</span>
                         </a>
 
                     </li>
                     <li>
-                        <a href="@Url.Action("Index", "Article", new {msg="N"})">
-                            <span class="fa fa-ticket"></span>
-                            <span class="sidebar-title">Article Management</span>
-                        </a>
-
-                    </li>
-
-                    <li>
-                        <a href="@Url.Action("EventCategory", "EventCategory", new {msg="N"})">
+                        <a href="#" onclick="checkPermission('9');">
                             <span class="fa fa-ticket"></span>
                             <span class="sidebar-title">Event Category</span>
                         </a>
@@ -254,6 +245,12 @@
                                     <span class="sidebar-title act">Messages Form</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="#" onclick="checkPermission('7H');">
+                                    <span class="fa fa-circle-o"></span>
+                                    <span class="sidebar-title act">Organizer Master Form</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 
@@ -304,7 +301,7 @@
             //  alert(vPerm);
 
 
-            if (PermisionId == "7A" || PermisionId == "7B" || PermisionId == "7C" || PermisionId == "7D" || PermisionId == "7E" || PermisionId == "7F" || PermisionId == "7G")
+            if (PermisionId == "7A" || PermisionId == "7B" || PermisionId == "7C" || PermisionId == "7D" || PermisionId == "7E" || PermisionId == "7F" || PermisionId == "7G" || PermisionId == "7H")
             {
 
                 PermisionId = "7";
@@ -327,7 +324,7 @@
                     }
                     else {
                         //  alert(vPerm);
-                        if (vPerm == "3")
+                        if (vPerm == "10")
                             window.location.href = '@Url.Action("Users", "Users")';
                         else if (vPerm == "6")
 
@@ -357,10 +354,17 @@
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "CMSUsers" })';
                         else if (vPerm == "7G")
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "Messages" })';
+                        else if (vPerm == "7H")
+                            window.location.href = '@Url.Action("Index", "Messages", new { Form = "OrganizerMaster" })';
+
                         else if (vPerm == "4")
                             window.location.href = '@Url.Action("Index", "ManageEvent")';
-
-
+                        else if (vPerm == "8")
+                            window.location.href = '@Url.Action("EventType", "EventType", new {Type="N"})';
+                        else if (vPerm == "9")
+                            window.location.href = '@Url.Action("EventCategory", "EventCategory", new { msg = "N"})';
+                        else if (vPerm == "11")
+                            window.location.href = '@Url.Action("Index", "FeeSetting")';
                     }
                 }
             });
