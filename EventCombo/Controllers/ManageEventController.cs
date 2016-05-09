@@ -25,13 +25,13 @@ namespace EventCombo.Controllers
         EventComboEntities db = new EventComboEntities();
 
         [Authorize]
-        public ActionResult Index(long Eventlid=0, string type="")
+        public ActionResult Index(long Eventlid = 0, string type = "")
         {
             if (Session["AppId"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-           if(Eventlid==0)
+            if (Eventlid == 0)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -46,7 +46,7 @@ namespace EventCombo.Controllers
             ManageEvent Mevent = new ManageEvent();
             //Getting event details
             EventCreation createevent = new EventCreation();
-    
+
             var Edetails = createevent.GetEventdetail(Eventid);
             //Getting event details
             //Get Address detail
@@ -97,13 +97,13 @@ namespace EventCombo.Controllers
                 }
 
 
-             
+
                 DateTime sDate = new DateTime();
                 sDate = dtzstart.LocalTime;
                 startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
 
                 sDate_new = sDate.ToString("MMM dd, yyyy");
-             
+
 
                 DateTime eDate = new DateTime();
                 eDate = dzend.LocalTime;
@@ -134,18 +134,18 @@ namespace EventCombo.Controllers
                         dzend = new DateTimeWithZone(Convert.ToDateTime(evschdetails.E_Enddate), userTimeZone, true);
                     }
 
-                 
-                        DateTime sDate = new DateTime();
-                        sDate = dtzstart.LocalTime;
-                        startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
-                        sDate_new = sDate.ToString("MMM dd,yyyy");
-                   
-                  
-                        DateTime eDate = new DateTime();
+
+                    DateTime sDate = new DateTime();
+                    sDate = dtzstart.LocalTime;
+                    startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
+                    sDate_new = sDate.ToString("MMM dd,yyyy");
+
+
+                    DateTime eDate = new DateTime();
                     eDate = dzend.LocalTime;
-                        endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
-                        eDate_new = eDate.ToString("MMM dd,yyyy");
-                  
+                    endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
+                    eDate_new = eDate.ToString("MMM dd,yyyy");
+
 
                     starttime = sDate.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
                     endtime = eDate.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
@@ -154,7 +154,7 @@ namespace EventCombo.Controllers
             }
             var timezone = "";
             DateTime dateTime = new DateTime();
-           
+
             if (Timezonedetail != null)
             {
                 TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
@@ -225,8 +225,8 @@ namespace EventCombo.Controllers
             Mevent.DiscountCode = Discountcode;
             Session["logo"] = "events";
             Session["Fromname"] = "myevents";
-         
-           
+
+
 
             if (type == "P")
             {
@@ -237,20 +237,20 @@ namespace EventCombo.Controllers
                 TempData["Success"] = null;
             }
             OrderAttendees CO = new OrderAttendees();
-           var Order = (from o in db.Order_Detail_T
-                            join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
-                          where p.TPD_Event_Id == Eventid
-                           select new OrderAttendees()
-                            {
-                                OrderId = o.O_Order_Id,
-                                Amount =o.O_TotalAmount.ToString(),
-                                Qty = "0",
-                                Name = o.O_First_Name + " " + o.O_Last_Name,
-                                Date = o.O_OrderDateTime.ToString()
-                            }).Distinct().Take(3).ToList();
+            var Order = (from o in db.Order_Detail_T
+                         join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
+                         where p.TPD_Event_Id == Eventid
+                         select new OrderAttendees()
+                         {
+                             OrderId = o.O_Order_Id,
+                             Amount = o.O_TotalAmount.ToString(),
+                             Qty = "0",
+                             Name = o.O_First_Name + " " + o.O_Last_Name,
+                             Date = o.O_OrderDateTime.ToString()
+                         }).Distinct().Take(3).ToList();
 
 
-            foreach(var item in Order)
+            foreach (var item in Order)
             {
 
                 var qty = (from p in db.Ticket_Purchased_Detail where p.TPD_Order_Id == item.OrderId select p.TPD_Purchased_Qty).Sum();
@@ -545,7 +545,7 @@ namespace EventCombo.Controllers
             using (EventComboEntities objEnt = new EventComboEntities())
             {
                 var invitations = from invite_list in objEnt.Event_Email_List
-                                  group invite_list by invite_list.L_I_Id 
+                                  group invite_list by invite_list.L_I_Id
                                   into result1
                                   join invites in objEnt.Event_Email_Invitation on result1.FirstOrDefault().L_I_Id equals invites.I_Id
                                   where invites.I_Event_Id == levtId && (invites.I_Mode == "S" || invites.I_Mode == "N")
@@ -591,7 +591,7 @@ namespace EventCombo.Controllers
                 int pageSize = 10;
                 int pageNumber = (page ?? 1);
                 ViewBag.scheduled = invitations.ToPagedList(pageNumber, pageSize);
-                
+
                 //return View(invitations.ToPagedList(pageNumber, pageSize));
             }
 
@@ -601,7 +601,7 @@ namespace EventCombo.Controllers
                                   group invite_list by invite_list.L_I_Id
                                   into result1
                                   join invites in objEnt.Event_Email_Invitation on result1.FirstOrDefault().L_I_Id equals invites.I_Id
-                                  where invites.I_Event_Id == levtId && invites.I_Mode=="D"
+                                  where invites.I_Event_Id == levtId && invites.I_Mode == "D"
                                   orderby invites.I_ModifyDate
                                   select new EmailInvitation
                                   {
@@ -800,7 +800,7 @@ namespace EventCombo.Controllers
                 string joined = string.Join(",", ticketid.ToArray());
                 string strQuery = "SELECT (isnull(sum(TPD_Amount),0) + convert(numeric,isnull(sum(TPD_Donate),0))) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
                 var vTotalAmt = objEnt.Database.SqlQuery<decimal>(strQuery).FirstOrDefault();
-             
+
                 //var vTotalAmt = (from myRow in objEnt.Ticket_Purchased_Detail
                 //                 where myRow.TPD_Event_Id == lEventId
                 //                 select myRow.TPD_Amount).Sum();
@@ -812,14 +812,14 @@ namespace EventCombo.Controllers
                 else if (strAmtType == "NETSALE")
                 {
 
-                     string strQueryec = "SELECT isnull(sum(TPD_EC_Fee),0) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
+                    string strQueryec = "SELECT isnull(sum(TPD_EC_Fee),0) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
                     var vEcFee = objEnt.Database.SqlQuery<decimal>(strQueryec).FirstOrDefault();
 
                     //var vEcFee = (from myRow in objEnt.Ticket_Purchased_Detail
                     //              where myRow.TPD_Event_Id == lEventId
                     //              select myRow.TPD_EC_Fee).Sum();
 
-                    double dResult = Math.Round( Convert.ToDouble(vTotalAmt - vEcFee), 2);
+                    double dResult = Math.Round(Convert.ToDouble(vTotalAmt - vEcFee), 2);
                     strResult = dResult.ToString("N", us);
                 }
             }
@@ -1092,7 +1092,7 @@ namespace EventCombo.Controllers
                     {
                         //var vtotalty = (from myRow in objEnt.Ticket_Quantity_Detail where myRow.TQD_Event_Id == eventId select myRow.TQD_Quantity).Sum();
                         //lResult = (vtotalty != null ? Convert.ToInt64(vtotalty) : 0);
-                        var ticType = new long?[]{1,2};
+                        var ticType = new long?[] { 1, 2 };
                         var vtotalty = (from myRow in objEnt.Tickets where myRow.E_Id == eventId && (ticType.Contains(myRow.TicketTypeID)) select myRow.Qty_Available).Sum();
                         lResult = vtotalty;
                     }
@@ -1336,8 +1336,8 @@ namespace EventCombo.Controllers
                         //    objEnt.Addresses.Add(objAdd);
                         //}
                     }
-                  
-               var vEventVenue = (from myEnt in objEnt.EventVenues where myEnt.EventID == Eventid select myEnt).ToList();
+
+                    var vEventVenue = (from myEnt in objEnt.EventVenues where myEnt.EventID == Eventid select myEnt).ToList();
                     if (vEventVenue != null)
                     {
                         EventVenue objEVenue = new EventVenue();
@@ -1370,7 +1370,7 @@ namespace EventCombo.Controllers
                             objEnt.EventVenues.Add(objEVenue);
                         }
                     }
-                   
+
                     var vEventAddress = (from myEnt in objEnt.MultipleEvents where myEnt.EventID == Eventid select myEnt).ToList();
                     if (vEventAddress != null)
                     {
@@ -1378,7 +1378,7 @@ namespace EventCombo.Controllers
                         foreach (MultipleEvent objME in vEventAddress)
                         {
 
-                            
+
                             objMEvents = new MultipleEvent();
 
                             if (Timezonedetail != null)
@@ -1503,7 +1503,7 @@ namespace EventCombo.Controllers
                     objEnt.SaveChanges();
                     Eventid = (from myEvt in objEnt.Events select myEvt.EventID).Max();
                     EventCreation objCE = new EventCreation();
-                 
+
                     objCE.PublishEvent(Eventid);
                 }
             }
@@ -1542,11 +1542,11 @@ namespace EventCombo.Controllers
 
         }
         [Authorize]
-        public ActionResult PromotionalCodes(long Eventlid=0, string strPageIndex = "page", string searchquery = "")
+        public ActionResult PromotionalCodes(long Eventlid = 0, string strPageIndex = "page", string searchquery = "")
         {
             if (Session["AppId"] != null)
             {
-                if(Eventlid==0)
+                if (Eventlid == 0)
                 {
                     return RedirectToAction("Index", "Home");
                 }
@@ -1565,8 +1565,8 @@ namespace EventCombo.Controllers
                     pageIndex = Convert.ToInt32(strPageIndex);
                 List<Promocode> ls = new List<Promocode>();
                 EventCreation cms = new EventCreation();
-                  var Timezonedetail = DateTimeWithZone.Timezonedetail(Eventlid);
-               
+                var Timezonedetail = DateTimeWithZone.Timezonedetail(Eventlid);
+
                 TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail);
                 dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
                 var Eventdetail = cms.GetEventdetail(Eventid);
@@ -1575,18 +1575,18 @@ namespace EventCombo.Controllers
                 var lstpromo = new List<Promo_Code>();
                 if (!string.IsNullOrWhiteSpace(searchquery))
                 {
-                     lstpromo = (from x in db.Promo_Code 
-                          orderby x.SavedDate descending
-                          where x.PC_Eventid == Eventid && x.PC_Code.Contains(searchquery)
-                            select x).ToList();
+                    lstpromo = (from x in db.Promo_Code
+                                orderby x.SavedDate descending
+                                where x.PC_Eventid == Eventid && x.PC_Code.Contains(searchquery)
+                                select x).ToList();
 
                 }
                 else
                 {
                     lstpromo = (from x in db.Promo_Code
-                          orderby x.SavedDate descending
-                          where x.PC_Eventid == Eventid
-                          select x).ToList();
+                                orderby x.SavedDate descending
+                                where x.PC_Eventid == Eventid
+                                select x).ToList();
 
                 }
                 //select new Promocode
@@ -1607,14 +1607,14 @@ namespace EventCombo.Controllers
                     DateTimeWithZone dtzstart, dtzend;
                     DateTime dtstart = new DateTime();
                     DateTime dtnow = new DateTime();
-                    if (item.PC_Startdatetype=="0")
+                    if (item.PC_Startdatetype == "0")
                     {
-                        dtzstart=new DateTimeWithZone(Convert.ToDateTime(item.P_Startdate), userTimeZone, true);
-                       
+                        dtzstart = new DateTimeWithZone(Convert.ToDateTime(item.P_Startdate), userTimeZone, true);
+
                         dtstart = dtzstart.LocalTime;
                         dtnow = dtzCreated.LocalTime;
                         int result = DateTime.Compare(dtstart, dtnow);
-                        if (result==0)
+                        if (result == 0)
                         {
                             starttype = "Started";
                         }
@@ -1655,11 +1655,11 @@ namespace EventCombo.Controllers
         }
 
         [Authorize]
-        public ActionResult CreatePromotionalCodes(long Eventlid=0, long Promocode = 0)
+        public ActionResult CreatePromotionalCodes(long Eventlid = 0, long Promocode = 0)
         {
             if (Session["AppId"] != null)
             {
-                if(Eventlid==0)
+                if (Eventlid == 0)
                 {
                     return RedirectToAction("Index", "Home");
                 }
@@ -1677,9 +1677,9 @@ namespace EventCombo.Controllers
                 DateTime now = new DateTime();
                 Session["Fromname"] = "promotional";
                 Session["logo"] = "events";
-              
+
                 string startdate = "", enddate = "";
-           
+
                 var Eventdetail = cms.GetEventdetail(Eventid);
                 pm.Eventitle = Eventdetail.EventTitle;
                 pm.Eventitle = Eventdetail.EventTitle;
@@ -1693,14 +1693,14 @@ namespace EventCombo.Controllers
                 var startdatesave = "";
                 var singleevnt = (from x in db.EventVenues where x.EventID == Eventid select x).Any();
                 var Timezonedetail = DateTimeWithZone.Timezonedetail(Eventlid);
-               
+
                 TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail);
                 dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
                 now = dtzCreated.LocalTime;
                 if (singleevnt)
                 {
                     var y = (from x in db.EventVenues where x.EventID == Eventid select x).FirstOrDefault();
-                
+
                     dtzstart = new DateTimeWithZone(Convert.ToDateTime(y.E_Startdate), userTimeZone, true);
                     dzend = new DateTimeWithZone(Convert.ToDateTime(y.E_Enddate), userTimeZone, true);
                     end_date = dtzstart.LocalTime;
@@ -1710,7 +1710,7 @@ namespace EventCombo.Controllers
                 else
                 {
                     var y = (from x in db.MultipleEvents where x.EventID == Eventid select x).FirstOrDefault();
-                   
+
                     dtzstart = new DateTimeWithZone(Convert.ToDateTime(y.M_Startfrom), userTimeZone, true);
                     dzend = new DateTimeWithZone(Convert.ToDateTime(y.M_StartTo), userTimeZone, true);
                     end_date = dtzstart.LocalTime;
@@ -1737,7 +1737,7 @@ namespace EventCombo.Controllers
                     pm.PC_End = startdatesave;
                     pm.startdatesave = end_date.ToString();
                     pm.PC_id = 0;
-                    pm.PC_URL = baseurl +"/"+ urldb + "?discount=Example";
+                    pm.PC_URL = baseurl + "/" + urldb + "?discount=Example";
                     pm.Pc_Enddatetype = "0";
                     pm.PC_Startdatetype = "0";
                     if (end_date < now)
@@ -1845,7 +1845,8 @@ namespace EventCombo.Controllers
             var timezoneid = DateTimeWithZone.Timezonedetail(model.PC_Eventid);
             TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(timezoneid);
             dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
-            try {
+            try
+            {
                 using (EventComboEntities db = new EventComboEntities())
                 {
                     if (model.Formtype == "E")
@@ -1855,7 +1856,7 @@ namespace EventCombo.Controllers
                             Promo_Code org = (from x in db.Promo_Code where x.PC_id == model.PC_id select x).FirstOrDefault();
                             org.PC_Eventid = model.PC_Eventid;
                             org.PC_Type = model.PC_Type;
-                           // org.PC_Code = model.PC_Code;
+                            // org.PC_Code = model.PC_Code;
 
                             if (model.Discount_Type == "A")
                             {
@@ -2387,7 +2388,8 @@ namespace EventCombo.Controllers
                         }
                     }
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 ExceptionLogging.SendErrorToText(ex);
             }
@@ -2396,7 +2398,7 @@ namespace EventCombo.Controllers
             {
                 TempData["Invalidcode"] = Invalidrepeatcode;
 
-                return RedirectToAction("CreatePromotionalCodes", "ManageEvent", new { Eventlid =ValidationMessageController.GetParentEventId(model.PC_Eventid)});
+                return RedirectToAction("CreatePromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(model.PC_Eventid) });
             }
             else
             {
@@ -2459,7 +2461,7 @@ namespace EventCombo.Controllers
         {
             string str = "";
             DateTime endadte = DateTime.Parse(starttype);
-            
+
             if (typeofs == "s")
             {
                 if (type == "m")
@@ -2538,7 +2540,7 @@ namespace EventCombo.Controllers
         {
             try
             {
-                var countpru=(from x in db.Ticket_Purchased_Detail where x.TPD_PromoCodeID == promocode select x).Count();
+                var countpru = (from x in db.Ticket_Purchased_Detail where x.TPD_PromoCodeID == promocode select x).Count();
                 var countlock = (from x in db.Ticket_Locked_Detail where x.TLD_PromoCodeId == promocode select x).Count();
                 if (countpru > 0 || countlock > 0)
                 {
@@ -2556,7 +2558,7 @@ namespace EventCombo.Controllers
 
 
 
-               
+
 
             }
             catch (Exception ex)
@@ -2577,13 +2579,13 @@ namespace EventCombo.Controllers
         //}
 
         [Authorize]
-        public ActionResult CreateInvitations(long lId,long lEvtId,string strMode)
+        public ActionResult CreateInvitations(long lId, long lEvtId, string strMode)
         {
             if (Session["AppId"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            if (CommanClasses.CompareCurrentUser(lEvtId,Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
+            if (CommanClasses.CompareCurrentUser(lEvtId, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
 
 
             //strMode If comes from Event Live Then need to set as 'E' otherwise set as 'C'
@@ -2613,14 +2615,14 @@ namespace EventCombo.Controllers
                     {
                         TimeZoneInfo userTimeZone =
                         TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
-                        dtz = new DateTimeWithZone(Convert.ToDateTime(objEEI.I_ScheduleDate), userTimeZone,true);
+                        dtz = new DateTimeWithZone(Convert.ToDateTime(objEEI.I_ScheduleDate), userTimeZone, true);
 
                     }
                     else
                     {
                         TimeZoneInfo userTimeZone =
                         TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-                        dtz = new DateTimeWithZone(Convert.ToDateTime(objEEI.I_ScheduleDate), userTimeZone,true);
+                        dtz = new DateTimeWithZone(Convert.ToDateTime(objEEI.I_ScheduleDate), userTimeZone, true);
                     }
                     //Kannan End
 
@@ -2630,8 +2632,8 @@ namespace EventCombo.Controllers
                         objEEI.I_ScheduleDate = dtz.LocalTime; // DateTime.SpecifyKind(Convert.ToDateTime(objEEI.I_ScheduleDate), DateTimeKind.Local);
                 }
                 iElistCnt = (objEEI.Event_Email_List != null ? objEEI.Event_Email_List.Count() : 0);
-               // lEvtId = (objEEI.I_Event_Id != null ? Convert.ToInt64(objEEI.I_Event_Id):0);
-                
+                // lEvtId = (objEEI.I_Event_Id != null ? Convert.ToInt64(objEEI.I_Event_Id):0);
+
                 if (lEvtId > 0)
                 {
                     var vEvent = (from myEvent in objEnt.Events where myEvent.EventID == lEvtId select myEvent).FirstOrDefault();
@@ -2646,7 +2648,7 @@ namespace EventCombo.Controllers
                             if (vMultiDateTime != null)
                             {
                                 //strDateTime = Convert.ToDateTime(vMultiDateTime.StartingFrom).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.StartTime.ToString() + "(" + vMultiDateTime.Frequency + ")";
-                                strDateTime = Convert.ToDateTime(vMultiDateTime.StartingFrom).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.StartTime.ToString()  + " - " + Convert.ToDateTime(vMultiDateTime.StartingTo).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.EndTime.ToString();
+                                strDateTime = Convert.ToDateTime(vMultiDateTime.StartingFrom).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.StartTime.ToString() + " - " + Convert.ToDateTime(vMultiDateTime.StartingTo).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.EndTime.ToString();
                             }
                         }
                         else
@@ -2658,13 +2660,13 @@ namespace EventCombo.Controllers
                             int iTimezone = Convert.ToInt32(vEvent.TimeZone);
                             var vTimeZone = (from tmz in objEnt.TimeZoneDetails where tmz.TimeZone_Id == iTimezone select tmz.TimeZone_Name).FirstOrDefault();
                             objEEI.EventDate = strDateTime + "(" + vTimeZone + ")";
-                         }
+                        }
                         else
                         {
                             objEEI.EventDate = strDateTime;
                         }
                         var vOrgnizer = (from Ord in objEnt.Event_Orgnizer_Detail join orm in objEnt.Organizer_Master on Ord.OrganizerMaster_Id equals orm.Orgnizer_Id where Ord.Orgnizer_Event_Id == lEvtId select orm).FirstOrDefault();
-                        objEEI.EventOrgnizer = (vOrgnizer != null ? vOrgnizer.Orgnizer_Name  : "");
+                        objEEI.EventOrgnizer = (vOrgnizer != null ? vOrgnizer.Orgnizer_Name : "");
                         var vAddress = (from eAdd in objEnt.Addresses where eAdd.EventId == lEvtId select eAdd).FirstOrDefault();
                         if (vAddress != null)
                         {
@@ -2683,12 +2685,12 @@ namespace EventCombo.Controllers
                         var url = Request.Url;
                         var baseurl = url.GetLeftPart(UriPartial.Authority);
 
-                         
+
                         strviewEvent = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(vEvent.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(lEvtId).ToString() });
                         strOrgnizerUrl = baseurl + Url.Action("Index", "OrganizerInfo", new { id = vOrgnizer.Orgnizer_Id, eventid = lEvtId });
                     }
 
-              
+
 
                     EventCreation objCEv = new EventCreation();
                     string strImageUrl = objCEv.GetImages(lEvtId).FirstOrDefault();
@@ -2702,7 +2704,7 @@ namespace EventCombo.Controllers
 
                     objEEI.EventImg = strImageUrl;
 
-                  
+
                     //@Url.Action("Index", "OrganizerInfo", new { id = Model.organizerid, eventid = Model.eventId })
 
                 }
@@ -2715,7 +2717,7 @@ namespace EventCombo.Controllers
             TempData["OrgnizerUrl"] = strOrgnizerUrl;
             TempData["ViewEventUrl"] = strviewEvent;
             TempData["Lat"] = (objEEI.EventLat != null ? objEEI.EventLat.Trim() : "");
-            TempData["Long"] = (objEEI.EventLong != null ? objEEI.EventLong.Trim() : ""); 
+            TempData["Long"] = (objEEI.EventLong != null ? objEEI.EventLong.Trim() : "");
             TempData["lId"] = lId;
             TempData["EmailListCount"] = iElistCnt;
             TempData["Eventid"] = lEvtId;
@@ -2749,7 +2751,7 @@ namespace EventCombo.Controllers
 
             mailMessage.IsBodyHtml = true;
             mailMessage.To.Add(new MailAddress(model.To));
-      
+
             SmtpClient smtp = new SmtpClient();
             smtp.Host = ConfigurationManager.AppSettings["Host"];
             smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
@@ -2776,9 +2778,9 @@ namespace EventCombo.Controllers
                         Event_Email_Invitation objEInt = new Event_Email_Invitation();
                         objEInt.I_SenderName = Model.I_SenderName;
                         objEInt.I_SubjectLine = Model.I_SubjectLine;
-                        objEInt.I_Event_Id = ValidationMessageController.GetParentEventId((Model.I_Event_Id != null ? Convert.ToInt64(Model.I_Event_Id): 0));
+                        objEInt.I_Event_Id = ValidationMessageController.GetParentEventId((Model.I_Event_Id != null ? Convert.ToInt64(Model.I_Event_Id) : 0));
 
-                        
+
                         //Kannan Start
                         Event eventForTimeZone = objEnt.Events.First(i => i.EventID == Model.I_Event_Id);
                         int timeZoneID = Int32.Parse(eventForTimeZone.TimeZone);
@@ -2786,17 +2788,18 @@ namespace EventCombo.Controllers
                         TimeZoneDetail td = objEnt.TimeZoneDetails.First(i => i.TimeZone_Id == timeZoneID);
                         DateTimeWithZone dtz;
                         DateTimeWithZone dtzCreated;
-                        if (td!= null)
+                        if (td != null)
                         {
-                            TimeZoneInfo userTimeZone =TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
                             dtz = new DateTimeWithZone(Convert.ToDateTime(Model.I_ScheduleDate), userTimeZone);
-                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone,false);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
 
-                        } else
+                        }
+                        else
                         {
-                            TimeZoneInfo userTimeZone =TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
                             dtz = new DateTimeWithZone(Convert.ToDateTime(Model.I_ScheduleDate), userTimeZone);
-                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone,false);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
                         }
                         //Kannan End
 
@@ -2811,10 +2814,10 @@ namespace EventCombo.Controllers
                             else
                                 objEInt.I_ScheduleDate = Model.I_ScheduleDate;
                         }
-                        
+
 
                         objEInt.I_EditableContent = Model.I_EditableContent;
-                        objEInt.I_Mode  = Model.I_Mode;
+                        objEInt.I_Mode = Model.I_Mode;
                         objEInt.I_CreateDate = dtzCreated.UniversalTime; //DateTime.Now;
                         if (Model.EmailList != null)
                         {
@@ -2833,7 +2836,7 @@ namespace EventCombo.Controllers
                     }
                     else
                     {
-                        Event_Email_Invitation objEInt = objEnt.Event_Email_Invitation.First(i => i.I_Id  == Model.I_Id);
+                        Event_Email_Invitation objEInt = objEnt.Event_Email_Invitation.First(i => i.I_Id == Model.I_Id);
                         objEInt.I_SenderName = Model.I_SenderName;
                         objEInt.I_SubjectLine = Model.I_SubjectLine;
                         objEInt.I_Event_Id = ValidationMessageController.GetParentEventId((Model.I_Event_Id != null ? Convert.ToInt64(Model.I_Event_Id) : 0));
@@ -2849,14 +2852,14 @@ namespace EventCombo.Controllers
                             TimeZoneInfo userTimeZone =
                             TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
                             dtz = new DateTimeWithZone(Convert.ToDateTime(Model.I_ScheduleDate), userTimeZone);
-                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone,false);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
                         }
                         else
                         {
                             TimeZoneInfo userTimeZone =
                             TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
                             dtz = new DateTimeWithZone(Convert.ToDateTime(Model.I_ScheduleDate), userTimeZone);
-                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone,false);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
                         }
                         //Kannan End
 
@@ -2882,7 +2885,7 @@ namespace EventCombo.Controllers
                         }
                         objEnt.SaveChanges();
                         lResult = objEInt.I_Id;
-                      
+
                     }
                     if (Model.I_Mode.Trim() == "N")
                     {
@@ -2907,7 +2910,7 @@ namespace EventCombo.Controllers
             {
                 return lResult;
             }
-            
+
         }
 
         public string CopyInvitation(long l_Id)
@@ -2917,8 +2920,8 @@ namespace EventCombo.Controllers
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
-                        Event_Email_Invitation objEInt = new Event_Email_Invitation();
-                        var Model = (from Int in objEnt.Event_Email_Invitation where Int.I_Id == l_Id select Int).FirstOrDefault();
+                    Event_Email_Invitation objEInt = new Event_Email_Invitation();
+                    var Model = (from Int in objEnt.Event_Email_Invitation where Int.I_Id == l_Id select Int).FirstOrDefault();
                     if (Model != null)
                     {
                         objEInt.I_SenderName = Model.I_SenderName;
@@ -2947,7 +2950,7 @@ namespace EventCombo.Controllers
                         }
                         objEnt.Event_Email_Invitation.Add(objEInt);
                         objEnt.SaveChanges();
-                       return "Y";
+                        return "Y";
                     }
                 }
                 return "Y";
@@ -2964,7 +2967,7 @@ namespace EventCombo.Controllers
 
             Sidenav ss = new ViewModels.Sidenav();
             EventCreation cms = new EventCreation();
-           
+
             var Eventdetails = cms.GetEventdetail(eventid);
             var Discountcode = (from x in db.Promo_Code where x.PC_Eventid == eventid select x).Count();
             ss.Eventtitle = Eventdetails.EventTitle;

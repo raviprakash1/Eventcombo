@@ -467,6 +467,7 @@
                         <div class="col-sm-12 ">
                             <div class="form-group">
                                 <input class="form-control sharesocilform" id="txtEventUrl" readonly="readonly" placeholder="" type="text">
+                                <input class="form-control sharesocilform" id="txtEventTitle" readonly="readonly" placeholder="" type="hidden">
                             </div>
                         </div>
 
@@ -537,7 +538,8 @@
         });
     }
 
-    function ShowUrl(vurl) {
+    function ShowUrl(vtitle, vurl) {
+        $("#txtEventTitle").val(vtitle);
         $("#txtEventUrl").val(vurl);
     }
     function checkDate(field) {
@@ -929,6 +931,12 @@
         //    window.open('https://www.facebook.com/sharer.php?s=100&p[url]=' + encodeURIComponent(vUrl) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
         //    return false;
         //});
+        $('#fbsharessss').click(function () {
+            var vUrl = $("#txtEventUrl").val();
+            window.open('https://www.facebook.com/sharer.php?s=100&p[url]=' + encodeURIComponent(vUrl) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            return false;
+        });
+
 
         $('#twittershare').click(function () {
             var vUrl = $("#txtEventUrl").val();
@@ -1295,13 +1303,24 @@
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
-    var globalFacebookShareObject = { name: 'share', link: '' };
+//<<<<<<< HEAD
+//    var globalFacebookShareObject = { name: 'share', link: '' };
+//=======
+    var globalFacebookShareObject = { name: 'EventCombo', link: '' };
+
 
 
     $(document).ready(function () {
         $('#fbshare').click(function (e) {
-            var vUrl = urlprefix + $("#txtEventUrl").val();
-            globalFacebookShareObject.link = vUrl;
+//<<<<<<< HEAD
+//            var vUrl = urlprefix + $("#txtEventUrl").val();
+//            globalFacebookShareObject.link = vUrl;
+//=======
+            globalFacebookShareObject.link = urlprefix + $("#txtEventUrl").val();
+            globalFacebookShareObject.name = $("#txtEventTitle").val();
+            console.log(globalFacebookShareObject.link);
+            console.log(globalFacebookShareObject.name);
+//>>>>>>> b92edd51be79285657ae30ef8e75a4acf6b6d01e
             FB.ui({
                 method: 'feed',
                 name: globalFacebookShareObject.name,

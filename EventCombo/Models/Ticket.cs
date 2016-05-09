@@ -18,6 +18,9 @@ namespace EventCombo.Models
         public Ticket()
         {
             this.Ticket_Quantity_Detail = new HashSet<Ticket_Quantity_Detail>();
+            this.OrderTemplateTickets = new HashSet<OrderTemplateTicket>();
+            this.OrderTemplateQuestionTickets = new HashSet<OrderTemplateQuestionTicket>();
+            this.OrderTemplates = new HashSet<OrderTemplate>();
         }
     
         public long T_Id { get; set; }
@@ -61,5 +64,11 @@ namespace EventCombo.Models
         public virtual Event Event { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ticket_Quantity_Detail> Ticket_Quantity_Detail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderTemplateTicket> OrderTemplateTickets { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderTemplateQuestionTicket> OrderTemplateQuestionTickets { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderTemplate> OrderTemplates { get; set; }
     }
 }
