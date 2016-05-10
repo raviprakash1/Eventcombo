@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="607b8d9cb3484e1198fad08c1d058e16" Name="Diagram1" ZoomLevel="109">
+      <Diagram DiagramId="607b8d9cb3484e1198fad08c1d058e16" Name="Diagram1" ZoomLevel="77">
         <EntityTypeShape EntityType="Cmsdata.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Cmsdata.Address" Width="1.5" PointX="5.25" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Cmsdata.AspNetRole" Width="1.5" PointX="7.75" PointY="7" IsExpanded="true" />
@@ -72,6 +72,17 @@
         <EntityTypeShape EntityType="Cmsdata.Event_Orgnizer_Detail" Width="1.5" PointX="25" PointY="10.125" />
         <AssociationConnector Association="Cmsdata.FK_Event_Orgnizer_Detail_Event" />
         <AssociationConnector Association="Cmsdata.FK_Event_Orgnizer_Detail_Organizer_Master" />
+        <EntityTypeShape EntityType="Cmsdata.ArticleAuthor" Width="1.5" PointX="25.25" PointY="14.625" />
+        <EntityTypeShape EntityType="Cmsdata.ArticleImage" Width="1.5" PointX="28.25" PointY="18" />
+        <EntityTypeShape EntityType="Cmsdata.ECImage" Width="1.5" PointX="28.25" PointY="14.625" />
+        <EntityTypeShape EntityType="Cmsdata.ECImageType" Width="1.5" PointX="28.25" PointY="12.25" />
+        <AssociationConnector Association="Cmsdata.ECImageTypeECImage" />
+        <AssociationConnector Association="Cmsdata.ECImageArticleAuthor" />
+        <AssociationConnector Association="Cmsdata.ECImageArticleImage" />
+        <EntityTypeShape EntityType="Cmsdata.Article" Width="1.5" PointX="25.25" PointY="17.375" />
+        <AssociationConnector Association="Cmsdata.ArticleArticleImage" />
+        <AssociationConnector Association="Cmsdata.ECImageArticle" />
+        <AssociationConnector Association="Cmsdata.ArticleAuthorArticle" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

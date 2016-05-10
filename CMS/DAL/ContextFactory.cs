@@ -1,11 +1,11 @@
-﻿using EventCombo.Models;
+﻿using CMS.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace EventCombo.DAL
+namespace CMS.DAL
 {
   public interface IDbContextFactory
   {
@@ -19,7 +19,7 @@ namespace EventCombo.DAL
     public EventComboContextFactory(DbContext context = null)
     {
       if (context == null)
-        _context = new EventComboEntities();
+        _context = new EmsEntities();
       else
         _context = context;
     }

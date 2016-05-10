@@ -179,6 +179,13 @@
                         </a>
 
                     </li>
+                    <li>
+                      <a href="#" onclick="checkPermission('50');">
+                        <span class="fa fa-ticket"></span>
+                        <span class="sidebar-title">Articles</span>
+                      </a>
+
+                    </li>
 
                     <li class="sidebar-label pt20">Systems</li>
 
@@ -365,7 +372,9 @@
                             window.location.href = '@Url.Action("EventCategory", "EventCategory", new { msg = "N"})';
                         else if (vPerm == "11")
                             window.location.href = '@Url.Action("Index", "FeeSetting")';
-                    }
+                        else if (vPerm == "50")
+                          window.location.href = '@Url.Action("Index", "Article")';
+}
                 }
             });
 
