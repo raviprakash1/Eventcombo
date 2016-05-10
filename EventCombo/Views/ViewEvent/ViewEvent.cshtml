@@ -8,8 +8,8 @@
 </script>
 
 <meta property="og:type" content="article" />
-<meta property="og:title" content='@Html.DisplayFor(m => m.Title)' />
-<meta property="og:description" content='@Html.Raw(Model.EventDescription)' />
+<meta property="og:title" content="@Html.Raw(Model.Title)" />
+@*<meta property="og:description" content="@Html.Raw(@Model.EventDescription)" />*@
 <style type="text/css">
     .ui-tooltip, .arrow:after {
         background: #fff;
@@ -156,7 +156,7 @@
                                             <li class="dropdown-header drop_cus_header">Schedule Date List</li>
                                             <span class="cus-drop-list_high">
 
-                                                @foreach (var item in (List<GetEventDateList_Result>)ViewBag.DateList)
+                                                @foreach (var item in (List<listevent>)ViewBag.DateList)
                                                 {
                                                     <li>
 
@@ -207,12 +207,12 @@
                                 <div class="col-sm-4 col-xs-6 pb10">
                                     @if (Html.DisplayFor(m => m.Orderdetail).ToString() == "Sold Out")
                                     {
-                                        <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn">@Html.DisplayFor(m => m.Orderdetail)</a>
+                                        <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" id="btnorder">@Html.DisplayFor(m => m.Orderdetail)</a>
 
                                     }
                                     else
                                     {
-                                        <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" href="#Ticketinfo">@Html.DisplayFor(m => m.Orderdetail)</a>
+                                        <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" id="btnorder" href="#Ticketinfo">@Html.DisplayFor(m => m.Orderdetail)</a>
 
                                     }
                                     <a href="#DealInfo" class="xs-icondeal"><img src="/Images/icondeal.png" /></a>
@@ -683,7 +683,16 @@
                                     <div class="col-md-12 no_pad text-center">
                                         <div class="form-group mb5 ">
                                             <div class="col-sm-12 no_pad ev_ven_mod_lebel mb10">
-                                                <label class="alert-danger" id="lblwrongpwd" style="display:none;">You have entered incorrect password</label>
+
+                                                <div class="Moderor mb10" id="divpwderroacc" tabindex="-1">
+                                                    <div class="er_UI_main">
+                                                        <div class="er_warnui_img"></div>
+                                                        <div class="er_suc" id="erraccpwdmsg">You have entered incorrect password</div>
+                                                        <button class="close" aria-hidden="true" type="button" id="btnhidepwderror" onclick="$('#divpwderroacc').hide();">&#215;</button>
+
+                                                    </div>
+                                                </div>
+                                                @*<label class="alert-danger" id="lblwrongpwd" style="display:none;">You have entered incorrect password</label>*@
                                             </div>
                                             @*<div class="col-sm-12 no_pad ev_ven_mod_lebel mb10">
                                                 Enter Password to View the Event
@@ -724,6 +733,7 @@
 
             </a>
         </div>
+        @*<input type="hidden" id="hdremaningqty" value="0" />*@
 }
 
 @*<script src="~/Scripts/jquery.icalendar.pack.js"></script>*@
@@ -857,7 +867,8 @@
         //    keyboard: false
         //})
 
-        $('#lblwrongpwd').css('display', 'none');
+        //$('#lblwrongpwd').css('display', 'none');
+        $('#divpwderroacc').hide();
         var eventype = "@Model.PrivatePassword";
         if (eventype != "") {
 
@@ -892,19 +903,25 @@
                         if (response == "Y") {
                             $('#btnclosepwd').click();
                         } else {
-                            $('#lblwrongpwd').css('display', 'block');
-                            $('#lblwrongpwd').html('You have entered incorrect password');
+                            $('#divpwderroacc').show();
+                            //$('#lblwrongpwd').css('display', 'block');
+                            $('#erraccpwdmsg').html(ajaxsetup('ViewEvent', 'VEPasswordIncorrect'));
                         }
                     }
                 });
             } else {
-                $('#lblwrongpwd').css('display', 'block');
-                $('#lblwrongpwd').html('You have entered incorrect password');
+                $('#divpwderroacc').show();
+                //$('#lblwrongpwd').css('display', 'block');
+                $('#erraccpwdmsg').html(ajaxsetup('ViewEvent', 'VEPasswordIncorrect'));
                 return false;
             }
 
         });
 
+        $('#txtpwdlive').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        
         $('ul.dropdown-menu.dropdown-map').on('click', function (event) {
             event.stopPropagation();
         });
@@ -912,7 +929,20 @@
         //window.addEventListener('popstate', function (event) {
         //    history.pushState(null, null, 'ViewEvent');
         //});
+        $('body').on('keyup keypress', function (e) {
 
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                if ($("#viewticketpassword").css('display') == 'block') {
+                    $("#btnsubmitpwd").click();
+                   
+                } else {
+                    $("#btPayment").click();
+                }
+
+              
+            }
+        });
         $(document).click(function () {
             $('#orgerror').css('display', 'none');
 
@@ -1213,7 +1243,7 @@
                     }
                 },
                 error: function (data) {
-                    alert("Sorry there is some problem.");
+                    //alert("Sorry there is some problem.");
                     return false
                 }
             });
@@ -1463,10 +1493,16 @@
                     type: "Post",
                     success: function (data) {
                         $("#dvTicketInfo").append(data);
+                        var remainingqty = parseInt($("#hdremaningqty").val());
+                        if (remainingqty <= 0)
+                        {
+                            $("#btnorder").html("Sold Out");
+                            $("#btPayment").hide();
+                        }
                         $.removeCookie("Selection");
                     },
                     error: function (data) {
-                        alert("Sorry there is some problem.");
+                        //alert("Sorry there is some problem.");
                     }
                 });
             }
@@ -1505,7 +1541,7 @@
 
                 },
                 error: function (data) {
-                    alert("Sorry there is some problem.");
+                    //alert("Sorry there is some problem.");
                 }
             });
         }

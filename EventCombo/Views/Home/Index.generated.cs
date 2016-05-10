@@ -41,12 +41,12 @@ namespace ASP
             
             #line 1 "..\..\Views\Home\Index.cshtml"
   
-    ViewBag.Title = "Eventcombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free";
+    ViewBag.Title = "EventCombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free";
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n\r\n<div");
+WriteLiteral("\r\n\r\n<div");
 
 WriteLiteral(" class=\"container-fluid cont_margin no-padding con_scr0l_home\"");
 
@@ -54,60 +54,27 @@ WriteLiteral(" id=\"scrollhome\"");
 
 WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"col-md-9 col-sm-12 no-padding clearfix\"");
+WriteLiteral(" id=\"dvEventListing\"");
 
-WriteLiteral(">\r\n        <div");
+WriteLiteral(" class=\"col-sm-9 col-xs-12 ot_main_pad mb10\"");
 
-WriteLiteral(" class=\"col-md-4 col-xs-12 col-sm-6 wid_1024 \"");
+WriteLiteral(">\r\n");
 
-WriteLiteral(">\r\n            <div");
+            
+            #line 7 "..\..\Views\Home\Index.cshtml"
+       
+            
+            #line default
+            #line hidden
+            
+            #line 7 "..\..\Views\Home\Index.cshtml"
+         Html.RenderPartial("~/Views/Home/HomeEventList.cshtml"); 
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    </div>\r\n\r\n        <div");
 
-WriteLiteral(" class=\"event_list_main\"");
-
-WriteLiteral(">\r\n                <div");
-
-WriteLiteral(" class=\"event_list_left\"");
-
-WriteLiteral(">\r\n                    <img");
-
-WriteLiteral(" class=\"evnt_img\"");
-
-WriteAttribute("src", Tuple.Create(" src=\"", 450), Tuple.Create("\"", 475)
-, Tuple.Create(Tuple.Create("", 456), Tuple.Create<System.Object, System.Int32>(Href("~/Images/event1.jpg")
-, 456), false)
-);
-
-WriteLiteral(" alt=\"\"");
-
-WriteLiteral(">\r\n                   \r\n                </div>\r\n                <div");
-
-WriteLiteral(" class=\"event_list_right\"");
-
-WriteLiteral(">\r\n                    ");
-
-WriteLiteral("\r\n                    ");
-
-WriteLiteral("\r\n                    ");
-
-WriteLiteral("\r\n                    <select");
-
-WriteLiteral(" id=\"dllEventList\"");
-
-WriteLiteral(">\r\n\r\n\r\n                    </select>\r\n                    <p");
-
-WriteLiteral(" class=\"event_desc\"");
-
-WriteLiteral(">\r\n                        ");
-
-WriteLiteral("\r\n                    </p>\r\n                    ");
-
-WriteLiteral("\r\n\r\n                    ");
-
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n        ");
-
-WriteLiteral("\r\n    </div>\r\n    <div");
-
-WriteLiteral(" class=\"col-md-3 col-sm-12 clearfix\"");
+WriteLiteral(" class=\"col-sm-3 col-xs-12 ot_main_pad\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -119,24 +86,193 @@ WriteLiteral(" class=\"the_buz \"");
 
 WriteLiteral("><h2>What\'s the BUZZ?</h2></div>\r\n            <div");
 
-WriteLiteral(" class=\"event_list_main buzz_right_main \"");
+WriteLiteral(" class=\"col-sm-12 no_pad mb10\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"event_list_right buzz_right\"");
+WriteLiteral(" class=\"col-sm-12 no_pad\"");
 
-WriteLiteral(">\r\n                    <p");
+WriteLiteral(">\r\n                    <div");
 
-WriteLiteral(" class=\"event_tit buz_title\"");
+WriteLiteral(" class=\"home-buzz-img\"");
 
-WriteLiteral("><a");
+WriteLiteral("> <img");
 
-WriteLiteral(" href=\"#\"");
+WriteLiteral(" class=\"\"");
 
-WriteLiteral(">To Tattoo or Not... 5 of the Hottest Tat Types for Summer</a></p>\r\n             " +
-"       <p");
+WriteLiteral(" src=\"../images/event1.jpg\"");
 
-WriteLiteral(" class=\"event_desc buz_desc\"");
+WriteLiteral(" alt=\"\"");
+
+WriteLiteral("> </div>\r\n                </div>\r\n                <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad\"");
+
+WriteLiteral(">\r\n                    <h1");
+
+WriteLiteral(" class=\"list_event_desc_title\"");
+
+WriteLiteral(@">
+                        <a href = ""#"" >
+                            Sun National Bank Arena
+                            81 Hamilton Avenue
+                            Trenton, NJ , 08611
+                            New York, New York
+                        </a>
+                    </h1>
+                </div>
+                <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad \"");
+
+WriteLiteral(">\r\n                    <ul");
+
+WriteLiteral(" class=\"nav nav-pills list_inner_cat_tag buzz_bot_title\"");
+
+WriteLiteral(">\r\n                        <li><i");
+
+WriteLiteral(" class=\"fa fa-user\"");
+
+WriteLiteral("></i> Cheris Mcdonald</li>\r\n                        <li><i");
+
+WriteLiteral(" class=\"fa fa-clock-o\"");
+
+WriteLiteral("></i> 15 minutes ago</li>\r\n\r\n                    </ul>\r\n                </div>\r\n " +
+"           </div>\r\n\r\n            <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad mb10\"");
+
+WriteLiteral(">\r\n                <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad\"");
+
+WriteLiteral(">\r\n                    <div");
+
+WriteLiteral(" class=\"home-buzz-img\"");
+
+WriteLiteral("> <img");
+
+WriteLiteral(" class=\"\"");
+
+WriteLiteral(" src=\"../images/event1.jpg\"");
+
+WriteLiteral(" alt=\"\"");
+
+WriteLiteral("> </div>\r\n                </div>\r\n                <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad\"");
+
+WriteLiteral(">\r\n                    <h1");
+
+WriteLiteral(" class=\"list_event_desc_title\"");
+
+WriteLiteral(@">
+                        <a href = ""#"" >
+                            Sun National Bank Arena
+                            81 Hamilton Avenue
+                            Trenton, NJ , 08611
+                            New York, New York
+                        </a>
+                    </h1>
+                </div>
+                <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad \"");
+
+WriteLiteral(">\r\n                    <ul");
+
+WriteLiteral(" class=\"nav nav-pills list_inner_cat_tag buzz_bot_title\"");
+
+WriteLiteral(">\r\n                        <li><i");
+
+WriteLiteral(" class=\"fa fa-user\"");
+
+WriteLiteral("></i> Cheris Mcdonald</li>\r\n                        <li><i");
+
+WriteLiteral(" class=\"fa fa-clock-o\"");
+
+WriteLiteral("></i> 15 minutes ago</li>\r\n\r\n                    </ul>\r\n                </div>\r\n " +
+"           </div>\r\n\r\n            <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad mb10\"");
+
+WriteLiteral(">\r\n                <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad\"");
+
+WriteLiteral(">\r\n                    <div");
+
+WriteLiteral(" class=\"home-buzz-img\"");
+
+WriteLiteral("> <img");
+
+WriteLiteral(" class=\"\"");
+
+WriteLiteral(" src=\"../images/event1.jpg\"");
+
+WriteLiteral(" alt=\"\"");
+
+WriteLiteral("> </div>\r\n                </div>\r\n                <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad\"");
+
+WriteLiteral(">\r\n                    <h1");
+
+WriteLiteral(" class=\"list_event_desc_title\"");
+
+WriteLiteral(@">
+                        <a href = ""#"" >
+                            Sun National Bank Arena
+                            81 Hamilton Avenue
+                            Trenton, NJ , 08611
+                            New York, New York
+                        </a>
+                    </h1>
+                </div>
+                <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad \"");
+
+WriteLiteral(">\r\n                    <ul");
+
+WriteLiteral(" class=\"nav nav-pills list_inner_cat_tag buzz_bot_title\"");
+
+WriteLiteral(">\r\n                        <li><i");
+
+WriteLiteral(" class=\"fa fa-user\"");
+
+WriteLiteral("></i> Cheris Mcdonald</li>\r\n                        <li><i");
+
+WriteLiteral(" class=\"fa fa-clock-o\"");
+
+WriteLiteral("></i> 15 minutes ago</li>\r\n\r\n                    </ul>\r\n                </div>\r\n " +
+"           </div>\r\n\r\n            <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad mb10\"");
+
+WriteLiteral(">\r\n                <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad\"");
+
+WriteLiteral(">\r\n                    <div");
+
+WriteLiteral(" class=\"home-buzz-img\"");
+
+WriteLiteral("> <img");
+
+WriteLiteral(" class=\"\"");
+
+WriteLiteral(" src=\"../images/event1.jpg\"");
+
+WriteLiteral(" alt=\"\"");
+
+WriteLiteral("> </div>\r\n                </div>\r\n                <div");
+
+WriteLiteral(" class=\"col-sm-12 no_pad\"");
+
+WriteLiteral(">\r\n                    <h1");
+
+WriteLiteral(" class=\"list_event_desc_title\"");
 
 WriteLiteral(">\r\n                        <a");
 
@@ -148,112 +284,84 @@ WriteLiteral(@">
                             Trenton, NJ , 08611
                             New York, New York
                         </a>
-                    </p>
+                    </h1>
                 </div>
                 <div");
 
-WriteLiteral(" class=\"event_list_left\"");
+WriteLiteral(" class=\"col-sm-12 no_pad \"");
 
-WriteLiteral(">\r\n                    <img");
+WriteLiteral(">\r\n                    <ul");
 
-WriteLiteral(" class=\"evnt_img_right\"");
+WriteLiteral(" class=\"nav nav-pills list_inner_cat_tag buzz_bot_title\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 5234), Tuple.Create("\"", 5259)
-, Tuple.Create(Tuple.Create("", 5240), Tuple.Create<System.Object, System.Int32>(Href("~/Images/event1.jpg")
-, 5240), false)
-);
+WriteLiteral(">\r\n                        <li><i");
 
-WriteLiteral(" alt=\"\"");
+WriteLiteral(" class=\"fa fa-user\"");
 
-WriteLiteral(">\r\n                </div>\r\n            </div>\r\n            <div");
+WriteLiteral("></i> Cheris Mcdonald</li>\r\n                        <li><i");
 
-WriteLiteral(" class=\"event_list_main buzz_right_main\"");
+WriteLiteral(" class=\"fa fa-clock-o\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral("></i> 15 minutes ago</li>\r\n\r\n                    </ul>\r\n                </div>\r\n " +
+"           </div>\r\n\r\n\r\n        </div>\r\n    </div>\r\n\r\n</div>\r\n\r\n\r\n\r\n<script");
 
-WriteLiteral(" class=\"event_list_right buzz_right\"");
+WriteLiteral(" src=\"https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=plac" +
+"es\"");
 
-WriteLiteral(">\r\n                    <p");
-
-WriteLiteral(" class=\"event_tit buz_title\"");
-
-WriteLiteral("><a");
-
-WriteLiteral(" href=\"#\"");
-
-WriteLiteral(">To Tattoo or Not... 5 of the Hottest Tat Types for Summer</a></p>\r\n             " +
-"       <p");
-
-WriteLiteral(" class=\"event_desc buz_desc\"");
-
-WriteLiteral(">\r\n                        <a");
-
-WriteLiteral(" href=\"#\"");
-
-WriteLiteral(@">
-                            Sun National Bank Arena
-                            81 Hamilton Avenue
-                            Trenton, NJ , 08611
-                            New York, New York
-                        </a>
-                    </p>
-                </div>
-                <div");
-
-WriteLiteral(" class=\"event_list_left\"");
-
-WriteLiteral(">\r\n                    <img");
-
-WriteLiteral(" class=\"evnt_img_right\"");
-
-WriteAttribute("src", Tuple.Create(" src=\"", 6025), Tuple.Create("\"", 6050)
-, Tuple.Create(Tuple.Create("", 6031), Tuple.Create<System.Object, System.Int32>(Href("~/Images/event1.jpg")
-, 6031), false)
-);
-
-WriteLiteral(" alt=\"\"");
-
-WriteLiteral(@">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-    $(document).prop('title', 'Eventcombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free');
-    $(document).ready(function () {
-        $.ajax({
-            url: '");
+WriteLiteral("></script>\r\n<script>\r\n    $(document).prop(\'title\', \'Find and Enjoy Cool Events, " +
+"Create Your Own, Sell Tickets For Free\');\r\n    var getUrlParameter = function ge" +
+"tUrlParameter(sParam) {\r\n        var sPageURL = decodeURIComponent(window.locati" +
+"on.search.substring(1)),\r\n            sURLVariables = sPageURL.split(\'&\'),\r\n    " +
+"        sParameterName,\r\n            i;\r\n\r\n        for (i = 0; i < sURLVariables" +
+".length; i++) {\r\n            sParameterName = sURLVariables[i].split(\'=\');\r\n\r\n  " +
+"          if (sParameterName[0] === sParam) {\r\n                return sParameter" +
+"Name[1] === undefined ? true : sParameterName[1];\r\n            }\r\n        }\r\n   " +
+" };\r\n\r\n    $(document).ready(function () {\r\n        //url = url.replace(\"-parame" +
+"ter\", vEventId);\r\n      \r\n\r\n        var pg = getUrlParameter(\'page\');\r\n        i" +
+"f (!pg) {\r\n            if (navigator.geolocation) {\r\n                navigator.g" +
+"eolocation.getCurrentPosition(function (p) {\r\n                    var LatLng = n" +
+"ew google.maps.LatLng(p.coords.latitude, p.coords.longitude);\r\n                 " +
+"   var geocoder = new google.maps.Geocoder;\r\n                    var infowindow " +
+"= new google.maps.InfoWindow;\r\n\r\n                    var mapOptions = {\r\n       " +
+"                 center: { lat: p.coords.latitude, lng: p.coords.longitude },\r\n " +
+"                       zoom: 13,\r\n                        mapTypeId: google.maps" +
+".MapTypeId.ROADMAP\r\n                    };\r\n                    var vLat = p.coo" +
+"rds.latitude;\r\n                    var vLong = p.coords.longitude;\r\n\r\n          " +
+"          var vUrl = \'");
 
             
-            #line 126 "..\..\Views\Home\Index.cshtml"
-             Write(Url.Action("GetEventURL", "CreateEvent"));
+            #line 151 "..\..\Views\Home\Index.cshtml"
+                           Write(Html.Raw(Url.Action("Index", "Home", new {lat= "strLat", lng= "strLong", page = "1"})));
 
             
             #line default
             #line hidden
-WriteLiteral(@"',
-            type: ""Post"",
-            success: function (data) {
-                if (data != """")
-                    $(""#dllEventList"").html(data);
-           },
-        });
-        $(""#dllEventList"").change(function () {
-            window.location.href = $(""#dllEventList"").val();
-        });
-        $(""#btTest"").click(function () {
-           // alert(""button click"");
-            window.location.href = '");
+WriteLiteral("\';\r\n                    vUrl = vUrl.replace(\"strLat\", vLat);\r\n                   " +
+" vUrl = vUrl.replace(\"strLong\", vLong);\r\n                    window.location.rep" +
+"lace(vUrl);\r\n\r\n                }, function (p) {\r\n                    var vUrl =" +
+" \'");
 
             
-            #line 138 "..\..\Views\Home\Index.cshtml"
-                               Write(Url.Action("ViewEvent", "ViewEvent", new { strEventDs = "a", strEventId = "74" }));
+            #line 157 "..\..\Views\Home\Index.cshtml"
+                           Write(Html.Raw(Url.Action("Index", "Home", new {lat = "", lng = "", page = "1" })));
 
             
             #line default
             #line hidden
-WriteLiteral("\';\r\n\r\n        });\r\n    });\r\n  \r\n</script>\r\n");
+WriteLiteral("\';\r\n                    window.location.replace(vUrl);\r\n                });\r\n\r\n  " +
+"          } else {\r\n                var vUrl = \'");
+
+            
+            #line 162 "..\..\Views\Home\Index.cshtml"
+                       Write(Html.Raw(Url.Action("Index", "Home", new {lat = "", lng = "", page = "1" })));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n                window.location.replace(vUrl);\r\n            }\r\n\r\n        }\r\n\r" +
+"\n\r\n\r\n\r\n        ");
+
+WriteLiteral("\r\n    });\r\n\r\n</script>\r\n");
 
         }
     }

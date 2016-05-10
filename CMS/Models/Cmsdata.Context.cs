@@ -77,6 +77,8 @@ namespace CMS.Models
         public virtual DbSet<TicketBack2015> TicketBack2015 { get; set; }
         public virtual DbSet<v_RetrieveEventid> v_RetrieveEventid { get; set; }
         public virtual DbSet<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
+        public virtual DbSet<V_Users> V_Users { get; set; }
+        public virtual DbSet<V_EventsList> V_EventsList { get; set; }
     
         [DbFunction("EmsEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)
@@ -99,39 +101,6 @@ namespace CMS.Models
                 new ObjectParameter("EventId", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EventCreation>("GetEventDateList", eventIdParameter);
-        }
-    
-        public virtual ObjectResult<EventCreation> GetEventListing(string eventTitle, string eventType, string eventCat, string eventSubCat, string eventFeature, string eventStartdate, string eventTicket)
-        {
-            var eventTitleParameter = eventTitle != null ?
-                new ObjectParameter("EventTitle", eventTitle) :
-                new ObjectParameter("EventTitle", typeof(string));
-    
-            var eventTypeParameter = eventType != null ?
-                new ObjectParameter("EventType", eventType) :
-                new ObjectParameter("EventType", typeof(string));
-    
-            var eventCatParameter = eventCat != null ?
-                new ObjectParameter("EventCat", eventCat) :
-                new ObjectParameter("EventCat", typeof(string));
-    
-            var eventSubCatParameter = eventSubCat != null ?
-                new ObjectParameter("EventSubCat", eventSubCat) :
-                new ObjectParameter("EventSubCat", typeof(string));
-    
-            var eventFeatureParameter = eventFeature != null ?
-                new ObjectParameter("EventFeature", eventFeature) :
-                new ObjectParameter("EventFeature", typeof(string));
-    
-            var eventStartdateParameter = eventStartdate != null ?
-                new ObjectParameter("EventStartdate", eventStartdate) :
-                new ObjectParameter("EventStartdate", typeof(string));
-    
-            var eventTicketParameter = eventTicket != null ?
-                new ObjectParameter("EventTicket", eventTicket) :
-                new ObjectParameter("EventTicket", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EventCreation>("GetEventListing", eventTitleParameter, eventTypeParameter, eventCatParameter, eventSubCatParameter, eventFeatureParameter, eventStartdateParameter, eventTicketParameter);
         }
     
         public virtual ObjectResult<string> GetSelectedTicketListing(string gUID, Nullable<long> eventId)
@@ -244,6 +213,39 @@ namespace CMS.Models
                 new ObjectParameter("Masterid", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetOrganizerEventid_Result>("GetOrganizerEventid", masteridParameter);
+        }
+    
+        public virtual int GetEventListing(string eventTitle, string eventType, string eventCat, string eventSubCat, string eventFeature, string eventStartdate, string eventTicket)
+        {
+            var eventTitleParameter = eventTitle != null ?
+                new ObjectParameter("EventTitle", eventTitle) :
+                new ObjectParameter("EventTitle", typeof(string));
+    
+            var eventTypeParameter = eventType != null ?
+                new ObjectParameter("EventType", eventType) :
+                new ObjectParameter("EventType", typeof(string));
+    
+            var eventCatParameter = eventCat != null ?
+                new ObjectParameter("EventCat", eventCat) :
+                new ObjectParameter("EventCat", typeof(string));
+    
+            var eventSubCatParameter = eventSubCat != null ?
+                new ObjectParameter("EventSubCat", eventSubCat) :
+                new ObjectParameter("EventSubCat", typeof(string));
+    
+            var eventFeatureParameter = eventFeature != null ?
+                new ObjectParameter("EventFeature", eventFeature) :
+                new ObjectParameter("EventFeature", typeof(string));
+    
+            var eventStartdateParameter = eventStartdate != null ?
+                new ObjectParameter("EventStartdate", eventStartdate) :
+                new ObjectParameter("EventStartdate", typeof(string));
+    
+            var eventTicketParameter = eventTicket != null ?
+                new ObjectParameter("EventTicket", eventTicket) :
+                new ObjectParameter("EventTicket", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetEventListing", eventTitleParameter, eventTypeParameter, eventCatParameter, eventSubCatParameter, eventFeatureParameter, eventStartdateParameter, eventTicketParameter);
         }
     }
 }

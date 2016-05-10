@@ -1,17 +1,17 @@
-﻿@model IEnumerable<CMS.Models.EventCreation>
+﻿@model PagedList.IPagedList<CMS.Models.EventCreation>
+@using PagedList.Mvc;
+@using PagedList;
 @using CMS.Models;
 @{
     ViewBag.Title = "Event";
     //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
 
 <link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
 <link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">
 <link href="~/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet" />
-
-@using (Html.BeginForm("Index", "ManageEvent", FormMethod.Post, new { id = "formuser", cssClass = "admin-form" }))
+@using (Html.BeginForm())
 {
 
     <section id="content_wrapper">
@@ -57,10 +57,10 @@
                             <div class="col-md-12 admin-grid animated-delay" data-animate='["400","fadeIn"]'>
                                 <div class="panel sort-disable mb_0" id="p2" data-panel-color="false" data-panel-fullscreen="false" data-panel-remove="false" data-panel-title="false" data-panel-fullscreen="false">
                                     <div class="panel-heading panel_loader">
-                                        <span class="view_evnt fs26 col-sm-6"> Event</span>
-                                        <label class="field select admin-form col-sm-4 text-right srh-by-no">
+                                        <span class="view_evnt fs26 col-sm-3"> Event</span>
+                                        <label class="field select admin-form col-sm-7 text-right srh-by-no">
                                             Total no. of Events : @ViewData["Eventscount"] &nbsp; &nbsp; &nbsp; &nbsp;
-                                            @Html.DropDownList("PageF", ViewBag.PageF as List<SelectListItem>, new { @class = "pagination" })
+                                            @Html.DropDownList("ddlPageF", ViewBag.ddlPageF as List<SelectListItem>, new { @class = "pagination" })
                                             @*@Html.DropDownList("PaF", new { @class = "pagination" })*@
                                             @*<select name="forma" onchange="location = this.options[this.selectedIndex].value;">
                                                     <option value="Contact.php">Contact</option>
@@ -77,7 +77,7 @@
                                             <i class="arrow double"></i>
                                         </label>
                                     </div>
-                                    <div class="panel-body">
+                                    <div class="panel-body panel100">
                                         <!--  <hr class="short alt"> -->
                                         <form class="admin-form">
                                             <div class="col-md-2 col-sm-2">
@@ -260,18 +260,18 @@
                                         }
 
                                     </tbody>
-                                    <tfoot class="footer-menu">
+                                    @*<tfoot class="footer-menu">
                                         <tr>
                                             <td colspan="13">
-                                                <nav class="text-right">
-                                                    <ul class="pagination hide-if-no-paging" id="ulpage"></ul>
-                                                </nav>
+                                               
                                             </td>
                                         </tr>
-                                    </tfoot>
+                                    </tfoot>*@
 
                                 </table>
-                                @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"] != null)
+                                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                                 @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"] != null)
                                 {
                                     <span>No Result Found.</span>
                                 }
@@ -326,60 +326,19 @@
 
 
 
-                <!-- Confirm Msg OK Modal Box -->
-                <!--  <div id="modal-text" class="popup-basic p25 popup-lg mfp-with-anim mfp-hide">
-                     <div class="row">
-                       <div class="col-md-12"><h3>Select Role</h3></div>
-                       <div class="col-md-4 admin-form">
-                         <h3>Select Role</h3>
-                         <label class="field select">
-                            <select>
-                             <option value="0">Select</option>
-                              <option value="0">Admin</option>
-                              <option value="1">Member Limit</option>
-                              <option value="2">Member</option>
-                            </select>
-                            <i class="arrow double"></i>
-                          </label>
-                       </div>
-                       <div class="col-md-8">
-                          You may put any HTML here. This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed.
-
-                       </div>
-                     </div>
-                </div> -->
-                @*<div id="modal-panel" class="popup-basic bg-none mfp-hide">
-
-                        <div class="panel">
-
-                            <div class="panel-body">
-                                <div class="col-sm-12 text-center fs18">
-                                    <strong>Are you sure !</strong> <br>
-                                    You want to Delete ?
-                                </div>
-                                <br>
-                                <div class="col-sm-12 text-center">
-                                    <button class="btn btn-info " type="button">Delte</button>
-                                    <button class="btn btn-info " type="button">Cancel</button>
-                                </div>
-
-
-                            </div>
-
-                        </div>
-                    </div>*@
+              
 
             </div>
         </div>
 
 
-        @*<div id="payment-modal-panel" class="popup-basic bg-none popup-lg mfp-with-anim mfp-hide">
-                Testing
+      
 
-            </div>*@
-        <!-- End: Content -->
+        
+    </section>
+}
 
-        <script>
+<script>
             function LoadPaymentInfo(vEventId)
             {
                 var url = '@Url.Action("EventPaymentInfo", "ManageEvent", new { lEventId = "-parameter" })';
@@ -410,17 +369,17 @@
                 $('#formuser').submit();
 
             });
-            $('#ulpage').click(function () {
-                console.log(this);
+            //$('#ulpage').click(function () {
+            //    console.log(this);
 
-                console.log($('#ulpage li.active'));
-                var datapage = $('#ulpage li.active').children().attr('data-page');
+            //    console.log($('#ulpage li.active'));
+            //    var datapage = $('#ulpage li.active').children().attr('data-page');
 
-                $('#PageF').val(datapage);
+            //    $('#ddlPageF').val(datapage);
 
-            });
+            //});
 
-            $('#PageF').change(function () {
+            $('#ddlPageF').change(function () {
                 var value = $(this).val();
                 console.log($(this).val());
                 $("#ulpage li").removeClass('active');
@@ -482,7 +441,7 @@
                             alert("There is some Problem, not able to update.");
                     },
                     error: function (data) {
-                        alert("Sorry there is some problem.");
+                        //alert("Sorry there is some problem.");
                     }
                 });
 
@@ -525,7 +484,7 @@
                             //});
                         },
                         error: function (data) {
-                            alert("Sorry there is some problem.");
+                            //alert("Sorry there is some problem.");
                         }
                     });
                 });
@@ -533,11 +492,11 @@
 
 
                 $("#dlFeature").change(function () {
-                    alert("chal pya");
+                    //alert("chal pya");
                     var vValue = 0;
                     var EventId = $(this).val();
                     var Feature = $("#dlFeature option:selected").text();
-                    alert(Feature);
+                    //alert(Feature);
                     if (Feature == "Platinum")
                         vValue = 1;
                     else if (Feature == "Gold")
@@ -551,6 +510,4 @@
                 });
             });
 
-        </script>
-    </section>
-                                            }
+</script>

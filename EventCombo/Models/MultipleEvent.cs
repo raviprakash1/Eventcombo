@@ -17,14 +17,16 @@ namespace EventCombo.Models
         public long MultipleEventID { get; set; }
         public long EventID { get; set; }
         public string Frequency { get; set; }
-        public string StartingFrom { get; set; }
-        public string StartingTo { get; set; }
         public string WeeklyDay { get; set; }
         public Nullable<int> MonthlyDay { get; set; }
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
         public string MonthlyWeek { get; set; }
         public string MonthlyWeekDays { get; set; }
+        public Nullable<System.DateTime> M_Startfrom { get; set; }
+        public Nullable<System.DateTime> M_StartTo { get; set; }
+        public string StartingFrom { get; set; }
+        public string StartTime { get; set; }
+        public string StartingTo { get; set; }
+        public string EndTime { get; set; }
     
         public virtual Event Event { get; set; }
     }

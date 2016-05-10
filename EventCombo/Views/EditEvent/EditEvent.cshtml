@@ -1222,7 +1222,7 @@
                         </div>
                         <div class="col-sm-6 row pull-right">
                             <div class="form-group">
-                                <input id="Zip" class="form-control evnt_inp_cont" placeholder="Zip Code" />
+                                <input id="Zip" class="form-control evnt_inp_cont" placeholder="Zip Code" maxlength="6" />
                             </div>
                         </div>
                         <div class="clearfix"></div>
@@ -1294,7 +1294,7 @@
     // ---------------------Event Creation Script -------------------
     <script>
         $(document).ready(function () {
-            alert("Chal pya");
+            //alert("Chal pya");
             $.getJSON('@Url.Action("GetEventChildData", "EditEvent")',
                 function (data) {
                     if ($("#MultipleSchTime").val() == "S") {
@@ -2168,7 +2168,7 @@
                             $('#diverroacc').css('display', 'none');
                             $('#succaccmsg').html('Congratulations, your event is on Eventcombo!');
                             $("#hdEventId").val(response);
-                            alert(response);
+                            //alert(response);
                         }
                     });
                 }
@@ -2227,7 +2227,7 @@
 
 
                 if ($("#txtOrgnizer").val().trim() == '') {
-                    alert("Please enter valid organizer.");
+                    //alert("Please enter valid organizer.");
                     $("#txtOrgnizer").focus();
                     return false;
                 }
@@ -2236,7 +2236,7 @@
 
                 if ($("#hidOrgnizer").val() == '') {
                     if (parseInt($("#ddlOrgnizers option").length) > 24) {
-                        alert("Limit Exceeded, System Allow Only 25 Orgnizer.");
+                        //alert("Limit Exceeded, System Allow Only 25 Orgnizer.");
                         return false;
                     }
                     AddOrgnizer();
@@ -2338,7 +2338,7 @@
                             }
                         },
                         error: function (data) {
-                            alert("Sorry there is some problem.");
+                            //alert("Sorry there is some problem.");
                         }
                     });
                 }
@@ -2361,7 +2361,7 @@
                         //});
                     },
                     error: function (data) {
-                        alert("Sorry there is some problem.");
+                        //alert("Sorry there is some problem.");
                     }
                 });
             });
@@ -2487,7 +2487,7 @@
                         $("#dllPastLocation").html(data);
                     },
                     error: function (data) {
-                        alert("Sorry there is some problem.");
+                        //alert("Sorry there is some problem.");
                     }
                 });
 
@@ -2630,7 +2630,7 @@
             }
             function validateAddress() {
                 if ($("#VenueName").val().trim() == '') {
-                    alert("Please enter valid venue name");
+                    //alert("Please enter valid venue name");
                     $("#VenueName").focus();
                     return false;
                 }

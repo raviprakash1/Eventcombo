@@ -284,6 +284,9 @@
     <Compile Include="Models\Address.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AggregatedCounter.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -304,6 +307,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CommanClasses.cs" />
+    <Compile Include="Models\Counter.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ControlType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -406,8 +412,23 @@
     <Compile Include="Models\GetOrganizerEventid_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Hash.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Html2Pdf.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Job.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobParameter.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobQueue.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\List.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Language.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -415,6 +436,7 @@
     <Compile Include="Models\Message.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Metadata.cs" />
     <Compile Include="Models\MultipleEvent.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -470,6 +492,15 @@
     <Compile Include="Models\Publish_Event_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Schema.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Server.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Set.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\QuestionType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -477,6 +508,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ShippingAddress.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\State.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Status.cs">
@@ -513,21 +547,34 @@
     <Compile Include="Models\User_Permission_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ValidationMessage.cs" />
     <Compile Include="Models\Venue.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewEvent.cs" />
+    <Compile Include="Models\V_EventsList.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\v_RetrieveEventid.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\V_Users.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DeleteLockTickets.cs" />
+    <Compile Include="Services\EventStatusUpdate.cs" />
     <Compile Include="Services\TicketEmailer.cs" />
     <Compile Include="Service\IManageEventService.cs" />
     <Compile Include="Service\IOrderOptionsService.cs" />
     <Compile Include="Service\ManageEventService.cs" />
     <Compile Include="Service\OrderOptionsService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\DateTimeWithZone.cs" />
     <Compile Include="Utils\Email.cs" />
+    <Compile Include="Utils\Ip2Geo.cs" />
+    <Compile Include="Utils\ClientIPAddress.cs" />
+    <Compile Include="ViewModels\CookieStore.cs" />
     <Compile Include="ViewModels\EmailInvitation.cs" />
     <Compile Include="Utils\EncryptDecrypt.cs" />
     <Compile Include="ViewModels\Sidenav.cs" />
@@ -546,11 +593,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ViewCreateEvent.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CreateEvent\ViewEvent.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ViewEvent.cshtml</DependentUpon>
-    </Compile>
     <Compile Include="Views\EditEvent\EditEvent.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -566,15 +608,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventConfirmation.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Event\EventCreation.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventCreation.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Home\DiscoverEvents.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DiscoverEvents.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Home\ForgetPassword.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ForgetPassword.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Home\Index.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Home\PasswordReset.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PasswordReset.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shared\_AccountLayout.generated.cs">
       <AutoGen>True</AutoGen>
@@ -586,10 +643,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_Layout.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\_Login1Partial.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_Login1Partial.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shared\_Logout.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>_Logout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_signuppartial.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_signuppartial.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\TicketPayment\PaymentConfirmation.generated.cs">
       <AutoGen>True</AutoGen>
@@ -621,6 +688,7 @@
     <Content Include="Content\OrderForm.css" />
     <Content Include="Content\OrderFormDesign.css" />
     <Content Include="email-content-pdf%281%29.html" />
+    <Content Include="html\error.html" />
     <Content Include="Images\ajax-loader.gif" />
     <Content Include="Images\ajax-loaderMini.gif" />
     <Content Include="Images\amr-exp.png" />
@@ -645,6 +713,7 @@
     <Content Include="Images\loading.gif" />
     <Content Include="Images\login_img.png" />
     <Content Include="Images\online-icn.png" />
+    <Content Include="Images\oops.png" />
     <Content Include="Images\paper_tic.png" />
     <Content Include="Images\PromoCodeLoader.gif" />
     <Content Include="Images\qwe.png" />
@@ -941,6 +1010,10 @@
     <Content Include="Models\EventComboModel.edmx.diagram">
       <DependentUpon>EventComboModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Muneem\Views\OrderOptions\Confirmation.cshtml" />
+    <Content Include="Muneem\Views\OrderOptions\EventType.cshtml" />
+    <Content Include="Muneem\Views\OrderOptions\Form.cshtml" />
+    <Content Include="Muneem\Views\OrderOptions\Waitlist.cshtml" />
     <None Include="Properties\PublishProfiles\depoy1.pubxml" />
     <None Include="Properties\PublishProfiles\eventcombo.pubxml" />
     <None Include="Properties\PublishProfiles\IISHostDemo.pubxml" />
@@ -1119,6 +1192,7 @@
     </Content>
     <Content Include="Views\Shared\_Login1Partial.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_Login1Partial.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Shared\_AuthenticateLayout.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1140,12 +1214,15 @@
     </Content>
     <Content Include="Views\Shared\_signuppartial.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_signuppartial.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Home\ForgetPassword.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ForgetPassword.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Home\PasswordReset.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>PasswordReset.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Account\PurchasedTicket.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1218,9 +1295,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Event\EventCreation.cshtml">
       <Generator>RazorGenerator</Generator>
-    </Content>
-    <Content Include="Views\CreateEvent\CreateEvent.cshtml">
-      <LastGenOutput>CreateEvent1.generated.cs</LastGenOutput>
+      <LastGenOutput>EventCreation.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\EventConfirmation\EventConfirmation.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1229,10 +1304,6 @@
     <Content Include="Views\TicketPayment\TicketPayment.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>TicketPayment1.generated.cs</LastGenOutput>
-    </Content>
-    <Content Include="Views\CreateEvent\ViewEvent.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>ViewEvent.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\TicketPayment\PaymentConfirmation.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1284,6 +1355,8 @@
     <Content Include="Views\ManageEvent\EmailInvitations.cshtml" />
     <Content Include="Views\ManageEvent\CreateInvitations.cshtml" />
     <Content Include="Views\ManageEvent\SidenavPartialView.cshtml" />
+    <Content Include="Views\TicketPayment\LoadTicketsView.cshtml" />
+    <Content Include="Views\CreateEvent\CreateEvent.cshtml" />
     <Content Include="Views\Shared\_ManageEventLayout.cshtml" />
     <Content Include="Views\OrderOptions\Form.cshtml" />
     <Content Include="Views\OrderOptions\Confirmation.cshtml" />

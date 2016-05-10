@@ -118,6 +118,7 @@ namespace EventCombo.Models
         public string Limit { get; set; }
         public string code { get; set; }
         public long PCID { get; set; }
+        public Int64 Orderpromo { get; set; }
 
     }
     public partial class Promo_Code
@@ -132,9 +133,11 @@ namespace EventCombo.Models
         public string startdays { get; set; }
         public string enddays { get; set; }
         public string startdatesave { get; set; }
+        public bool orderrow { get; set; }
 
     
     }
+   
     public class Coordinates
         {
             public Coordinates(double latitude, double longitude)

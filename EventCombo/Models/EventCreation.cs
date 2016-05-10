@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 namespace EventCombo.Models
 {
     [Table("Event")]
+    
     public class EventCreation
     {
         EventComboEntities db = new EventComboEntities();
@@ -21,7 +23,7 @@ namespace EventCombo.Models
         public string DisplayStartTime { get; set; }
         public string DisplayEndTime { get; set; }
         public string DisplayTimeZone { get; set; }
-        //[AllowHtml]
+        [AllowHtml]
         public string EventDescription { get; set; } 
         public string EventPrivacy { get; set; }
         public string Private_ShareOnFB { get; set; }
@@ -127,13 +129,42 @@ namespace EventCombo.Models
                 return MyEvent;
             }
         }
-    }
 
+        public string PublishEvent(long lEventId)
+        {
+            string strResult = "N";
+            try
+            {
+                string strUserId = (HttpContext.Current.Session["AppId"] != null ? HttpContext.Current.Session["AppId"].ToString() : "");
+                if (strUserId != "" && lEventId > 0)
+                {
+                    using (EventComboEntities objEnt = new EventComboEntities())
+                    {
+                        try
+                        {
+                            objEnt.PublishEvent(lEventId, strUserId);
+                        }
+                        catch (Exception ex)
+                        {
+                            ExceptionLogging.SendErrorToText(ex);
+                        }
+                    }
+                    strResult = "Y";
+                }
+            }
+            catch (Exception)
+            {
+                strResult = "N";
+            }
+            return strResult;
+        }
+    }
+    [MetadataType(typeof(OrganiserMetadata))]
     public partial class Organizer_Master
     {
         public string DefaultOrg { get; set; }
         public string EditOrg { get; set; }
-
+     
         public long Eventid { get; set; }
 
         public List<Organiserevent> presentevent { get; set; }
@@ -142,6 +173,11 @@ namespace EventCombo.Models
         public int presentevtcount { get; set; }
      
         public int maxsetcount { get; set; }
+    }
+    [MetadataType(typeof(EventMetadata))]
+    public partial class Event
+    {
+        
     }
     public class ManageEvent
     {
@@ -184,4 +220,13 @@ namespace EventCombo.Models
         public string Venue { get; set; }
         public string eventpath { get; set; }
     }
-}
+
+    public class listevent
+    {
+        public String Dayofweek { get; set; }
+        public String Datefrom { get; set; }
+        public String Time { get; set; }
+    }
+
+
+    }

@@ -11,22 +11,25 @@
 <script src="~/Scripts/filer/jquery.filer.js"></script>
 
 <style>
-    .jFiler-input-dragDrop{width:200px; height:200px; padding:0px; }
-    .jFiler-item-thumb-image{ }
-    .jFiler-item-thumb-image img{ width:100%; height:137px; }
+    .jFiler-input-dragDrop{width:200px; height:200px; padding:0px; max-width: 100%; }
+    .jFiler-item-thumb-image{height: 142px; line-height:142px; overflow: hidden; width: 100%; }
+    .jFiler-item-thumb-image img{height: auto; max-height:100%;width:100%; left: 50%; position: relative;
+     transform: translateX(-50%);-webkit-transform: translateX(-50%); max-width: none !important; }
     .jFiler-item-list{ margin:0px;}
     .jFiler-item{ display:inline-block; float:none; }
-    .jFiler-input-dragDrop .jFiler-input-icon{ margin-top:0px; height: 150px;}
-    .jFiler-item .jFiler-item-container{ margin:0px; padding:0px; }
+    .jFiler-input-dragDrop .jFiler-input-icon{ margin-top:0px; height: 137px;}
+    .jFiler-item .jFiler-item-container{ margin:0px; padding:0px;  }
     .jFiler-item .jFiler-item-container .jFiler-item-assets{ margin-top:0px;}
+    /*.jFiler-item .jFiler-item-assets.jFiler-row{ display:none; }*/ 
+
     .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:auto;  margin-left:0px; }
     .can_btn i{ font-size:25px;}
     .can_btn{ padding:0px;}
     .jFiler-input-text{ margin-bottom:5px;}
-    .jFiler-input-icon i{position: relative;
-        top: 35px;}
-    .coun_lef{ color:#000; margin-top:5px;}
+    .jFiler-input-icon i{position: relative;top: 35px;}
     .jFiler-input-text h3{ word-break:normal !important; }
+
+    .coun_lef{ color:#000; margin-top:5px;}
 
 </style>
 
@@ -91,8 +94,7 @@
     </div>
         <div class="clearfix"></div>
         <div class="col-sm-3">
-            <div>
-
+            <div class="myacnt_image_upload">
                 <input type="file" name="image" id="input2">
             </div>
         </div>
@@ -140,7 +142,7 @@
                        }), new { @class = "form-control selectpicker" })
                         </div>
                         <div class="col-xs-4 add_form_bot mb0 dropheight">
-                            @Html.DropDownList("year", Enumerable.Range(1980, 36).Select(i => new SelectListItem
+                            @Html.DropDownList("year", Enumerable.Range(1901, (System.DateTime.Now.Year- 1901)+1).Select(i => new SelectListItem
                        {
                            Value = i.ToString(),
                            Text = i.ToString(),
@@ -215,7 +217,7 @@
                 <label class="col-md-3 control-label acnt_form_label">Home Number</label>
                 <div class="col-md-9">
                     <div class="row">
-                        <div class="col-xs-6 add_form_bot mb0">
+                        <div class="col-xs-12 add_form_bot mb0">
                             @Html.TextBoxFor(m => m.MainPhone, new { @class = "form-control" })
                         </div>
                     </div>
@@ -225,7 +227,7 @@
                 <label class="col-md-3 control-label acnt_form_label">Cellular Number</label>
                 <div class="col-md-9">
                     <div class="row">
-                        <div class="col-xs-6 add_form_bot mb0">
+                        <div class="col-xs-12 add_form_bot mb0">
                             @Html.TextBoxFor(m => m.SecondPhone, new { @class = "form-control" })
                         </div>
                     </div>
@@ -235,7 +237,7 @@
                 <label class="col-md-3 control-label acnt_form_label">Work Number</label>
                 <div class="col-md-9">
                     <div class="row">
-                        <div class="col-xs-6 add_form_bot mb0">
+                        <div class="col-xs-12 add_form_bot mb0">
                             @Html.TextBoxFor(m => m.WorkPhone, new { @class = "form-control" })
                         </div>
                     </div>
@@ -302,7 +304,7 @@
                     </div>
                 </div>
             </div>
-            <input type="submit" class="btn btn-info col-md-offset-3 acnt_btn mb10" value="Save" id="btnsave" />
+            <input type="submit" class="btn theme-btn btn-lg col-md-offset-3 acnt_btn mb10" value="Save" id="btnsave" />
             @Html.HiddenFor(m => m.ImagePresent)
             @Html.HiddenFor(m => m.userimage)
             <input id="image_count" type="hidden" />
@@ -540,6 +542,7 @@
                             image_count = parseInt(image_count) + 1;
                             $("#image_count").val(image_count);
                         }
+                       
 
                     },
                     error: function (el) {
@@ -748,7 +751,6 @@
         }
 
     });
-
 
 </script>
 <script type="text/javascript">
@@ -1012,6 +1014,8 @@
         });
         return msgnew;
     }
+   
+
     $(document).prop('title', 'My Account on Eventcombo');
 </script>
 <script src="~/Scripts/jquery.maskedinput.min.js"></script>

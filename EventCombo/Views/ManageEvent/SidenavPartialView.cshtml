@@ -56,20 +56,20 @@
 
             <div id="collapse2" class="panel-collapse collapse">
                 <div class="panel-body no-padding">
-                    <p>@Html.ActionLink("Email Invitations", "EmailInvitations", "ManageEvent", new { eventId = Model.EventId }, null)</p>
+                    <p class="invite_nav">@Html.ActionLink("Email Invitations", "EmailInvitations", "ManageEvent", new { eventId = ValidationMessageController.GetParentEventId(Model.EventId)}, null)</p>
                     @if (Model.DiscountCode > 0)
                     {
-                        <p>@Html.ActionLink("Promotional Code", "PromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.EventId) }, null)</p>
+                        <p class="invite_nav">@Html.ActionLink("Promotional Code", "PromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.EventId) }, null)</p>
                     }
                     else
                     {
-                        <p>@Html.ActionLink("Promotional Code", "CreatePromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.EventId) }, null)</p>
+                        <p class="invite_nav">@Html.ActionLink("Promotional Code", "CreatePromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.EventId) }, null)</p>
                     }
-                    <p>Facebook Integration</p>
-                    <p>Website Integration</p>
-                    <p>Tracing Links</p>
-                    <p>Affialate Programs</p>
-                    <p>Social Stream</p>
+                    <p class="invite_nav">Facebook Integration</p>
+                    <p class="invite_nav">Website Integration</p>
+                    <p class="invite_nav">Tracing Links</p>
+                    <p class="invite_nav">Affialate Programs</p>
+                    <p class="invite_nav">Social Stream</p>
 
 
 

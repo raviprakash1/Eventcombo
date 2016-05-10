@@ -137,11 +137,11 @@
                                                 {
                                                     if (itemType.EventHide == "N" || string.IsNullOrEmpty(itemType.EventHide))
                                                     {
-                                                <td class="pl5"><button id="btnHideCat-@i" type="button" onclick="HideType('@itemType.EventTypeID');" class="btn btn-block br2 btn-xs fs12"><i class="fa fa-eye"></i></button></td>
+                                                <td class="pl5"><button id="btnHideCat-@i" type="button" onclick="HideType('@itemType.EventTypeID');" class="btn btn-default br2 btn-xs fs12"><i class="fa fa-eye"></i></button></td>
                                                     }
                                                     else
                                                     {
-                                                <td class="pl5"><button id="btnHideCat-@i" type="button" onclick="HideType('@itemType.EventTypeID');" class="btn btn-block br2 btn-xs fs12"><i class="fa fa-eye-slash"></i></button></td>
+                                                <td class="pl5"><button id="btnHideCat-@i" type="button" onclick="HideType('@itemType.EventTypeID');" class="btn btn-default br2 btn-xs fs12"><i class="fa fa-eye-slash"></i></button></td>
 
                                                     }
                                                 }
@@ -272,7 +272,7 @@
                // window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=' + response;
             },
             error: function (data) {
-                alert("Sorry! there is some problem.");
+                //alert("Sorry! there is some problem.");
                 return false
             }
         });
@@ -304,7 +304,7 @@
                // window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=D';
             },
             error: function (data) {
-                alert("Sorry! there is some problem.");
+                //alert("Sorry! there is some problem.");
                 return false
             }
         });
@@ -327,7 +327,7 @@
                 //window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=' + response;
             },
             error: function (data) {
-                alert("Sorry! there is some problem.");
+                //alert("Sorry! there is some problem.");
                 return false
             }
         });
@@ -348,7 +348,7 @@
                 //window.location.href = '@Url.Action("EventType", "EventType", new { })?Type=' + response;
             },
             error: function (data) {
-                alert("Sorry! there is some problem.");
+                //alert("Sorry! there is some problem.");
                 return false
             }
         });
@@ -389,7 +389,7 @@
             debugger;
             var reqval = $("#EventType1").val();
             if (reqval == "") {
-                alert("Please Enter Event Type.");
+                //alert("Please Enter Event Type.");
                 return false;
             }
             else { return true; }

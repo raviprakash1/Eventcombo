@@ -1,4 +1,4 @@
-﻿
+﻿@using EventCombo.Controllers;
 @{
     ViewBag.Title = "DiscoverEvents";
 }
@@ -329,7 +329,7 @@
 
                                 </div>
                                 <div class="col-sm-8 no_pad">
-                                    <h1 class="list_event_desc_title xs-title-height d_xs_pad_l0 desc_pl_0"><a href='@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString() })'>@item.EventTitle</a></h1>
+                                    <h1 class="list_event_desc_title xs-title-height d_xs_pad_l0 desc_pl_0"><a href='@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(@item.EventId).ToString() })'>@item.EventTitle</a></h1>
                                     <p class="list_event_desc xs-address-height d_xs_pad_l0 desc_pl_0">
                                         @item.EventAddress
 
@@ -364,12 +364,12 @@
                                     </ul>
                                 </div>
                                 <div class="col-sm-3 col-xs-3 no_pad text-right ">
-                                    @*<button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" type="button">
-                                            <i class="fa fa-share-alt"></i>
-                                        </button>*@
-                                    <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Your Favourite" onclick="ShowUrl('@item.EventTitle', '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = @item.EventId.ToString() })');" type="button" data-toggle="modal" data-target="#sharemodal">
-                                        @*<i class="fa fa-share-alt"></i>*@ <img src="~/Images/share_icon.png" alt="share event" >
-                                    </button>
+                                    @if (@item.EventPrivacy == "Y")
+                                    {
+                                        <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Share @item.EventTitle" onclick="ShowUrl('@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(@item.EventId).ToString() })');" type="button" data-toggle="modal" data-target="#sharemodal">
+                                            <img src="~/Images/share_icon.png" alt="share event">
+                                        </button>
+                                    }
                                     @if (@item.EventLike == "I")
                                     {
                                         <button class="desc_btn_bg_none desc_btn_bg_active share_like_btn show_like_btn" id="btnfavourite-@item.EventId" title="Your Favourite" onclick="SaveFav('Y','@item.EventId');" type="button">
@@ -390,7 +390,8 @@
 
                 }
 
-                if (iCnt == 0) {
+                if (iCnt == 0)
+                {
                     <div class="col-sm-12 no_pad text-center no_event_found_text">
                         <span id="spInfo">No Events Found</span>
                     </div>
@@ -404,7 +405,7 @@
                 <ul class="pagination desc_pagination">
                     <li id="lileft">
                         <a href="javascript:void(0)" onclick="PreviousArrowPage();">
-                            <span><i class="fa fa-angle-double-left" ></i> </span>
+                            <span><i class="fa fa-angle-double-left"></i> </span>
                         </a>
                     </li>
                     @for (int i = 1; i <= Convert.ToInt32(@TempData["TotalPages"]); i++)
@@ -419,7 +420,7 @@
                         <li><a href="javascript:void(0)" onclick="NextPage(5);">5</a></li>*@
                     <li id="liright">
                         <a href="javascript:void(0)" onclick="NextArrowPage();">
-                            <span><i class="fa fa-angle-double-right" ></i> </span>
+                            <span><i class="fa fa-angle-double-right"></i> </span>
                         </a>
                     </li>
                 </ul>
@@ -438,6 +439,8 @@
     <input type="hidden" id="hdSort" value="@TempData["tSort"]" />
     <input type="hidden" id="hdDateFilter" value="@TempData["tDateFilter"]" />
     <input type="hidden" id="hdPageIndex" value="@TempData["PageIndex"]" />
+    <input type="hidden" id="hdSearchText" value="@TempData["SearchText"]" />
+    
 
 </div>
 
@@ -483,8 +486,7 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script>
-    function PreviousArrowPage()
-    {
+    function PreviousArrowPage() {
         var vPindex = parseFloat($("#hdPageIndex").val());
         if (isNaN(vPindex) == true) vPindex = 0;
 
@@ -496,7 +498,7 @@
         debugger;
         var vPindex = parseFloat($("#hdPageIndex").val());
         var vTotalPage = parseFloat(@TempData["TotalPages"]);
-        
+
         if (isNaN(vTotalPage) == true) vTotalPage = 0;
         if (isNaN(vPindex) == true) vPindex = 0;
 
@@ -530,7 +532,7 @@
                 }
             },
             error: function (data) {
-                alert("Sorry there is some problem.");
+                //alert("Sorry there is some problem.");
                 return false
             }
         });
@@ -612,7 +614,7 @@
     }
 
     function NextPage(vIndex) {
-        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex="Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" })';
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex="Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none", strTextSearch= "search" })';
 
         var vECat = ($("#hdEventCat").val() != '' ? $("#hdEventCat").val() : "evc");
         var vEtype = ($("#hdEventType").val() != '' ? $("#hdEventType").val() : "evt");
@@ -622,6 +624,8 @@
         var vSort = ($("#hdSort").val() != '' ? $("#hdSort").val() : "rel");
         var vDateFilter = ($("#hdDateFilter").val() != '' ? $("#hdDateFilter").val() : "none");
 
+        var vSearchText = ($("#hdSearchText").val() != '' ? $("#hdSearchText").val() : "");
+        
 
         vUrl = vUrl.replace("all", vPrice);
         vUrl = vUrl.replace("evc", vECat);
@@ -630,6 +634,7 @@
         vUrl = vUrl.replace("long", vlng);
         vUrl = vUrl.replace("rel", vSort);
         vUrl = vUrl.replace("none", vDateFilter);
+        vUrl = vUrl.replace("search", vSearchText);
         if (vIndex > 1)
             vUrl = vUrl.replace("page", vIndex);
 
@@ -793,17 +798,15 @@
         else {
             var vValues = $("#hdEventCat").val();
             vIds = vValues.split(',');
-            
-            var vflag =false;
-            for (i = 0; i < vIds.length; i++)
-            {
-                if (vIds[i] == vEvCatId)
-                {
+
+            var vflag = false;
+            for (i = 0; i < vIds.length; i++) {
+                if (vIds[i] == vEvCatId) {
                     vflag = true;
                     break;
                 }
             }
-            if (vflag == false ) {
+            if (vflag == false) {
                 vValues = vValues.concat(",", vEvCatId);
                 $("#hdEventCat").val(vValues);
             }
@@ -890,20 +893,18 @@
     $(document).ready(function () {
 
         var vPageIndex = $("#hdPageIndex").val();
-        
+
         $("#aPageLink-" + vPageIndex).addClass("active");
-        if ($("#spInfo").text().trim() == "No Events Found")
-        {
+        if ($("#spInfo").text().trim() == "No Events Found") {
             $("#lileft").hide();
             $("#liright").hide();
         }
-        else
-        {
+        else {
             $("#lileft").show();
             $("#liright").show();
         }
 
-        
+
 
 
         var vLat = '@TempData["NearLat"]';
@@ -917,7 +918,6 @@
                 if (results[1]) {
                     vAry = results[1].formatted_address.split(',');
                     var vResult = vAry[vAry.length - 2] + " - " + vAry[vAry.length - 1];
-                    //alert(vResult);
                     $("#hdcity").val(vResult);
                     $("#spEventAddress").text("Events " + vResult);
                     $(document).prop('title', vResult + ' Events | Eventcombo');
@@ -926,11 +926,17 @@
         });
 
 
+        //$('#fbshare').click(function () {
+        //    var vUrl = $("#txtEventUrl").val();
+        //    window.open('https://www.facebook.com/sharer.php?s=100&p[url]=' + encodeURIComponent(vUrl) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+        //    return false;
+        //});
         $('#fbsharessss').click(function () {
             var vUrl = $("#txtEventUrl").val();
             window.open('https://www.facebook.com/sharer.php?s=100&p[url]=' + encodeURIComponent(vUrl) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
         });
+
 
         $('#twittershare').click(function () {
             var vUrl = $("#txtEventUrl").val();
@@ -1140,7 +1146,7 @@
                 }
             });
         }
-        
+
         function geocodeLatLng(geocoder, map, infowindow) {
             var input = document.getElementById('txtAddress').value;
             var latlngStr = input.split(',', 2);
@@ -1267,11 +1273,10 @@
 
         var accordion = new Accordion($('#accordion'), false);
     });
-   
-  
+
+
 
 </script>
-
 
 <script type="text/javascript">
 
@@ -1298,15 +1303,24 @@
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
+//<<<<<<< HEAD
+//    var globalFacebookShareObject = { name: 'share', link: '' };
+//=======
     var globalFacebookShareObject = { name: 'EventCombo', link: '' };
+
 
 
     $(document).ready(function () {
         $('#fbshare').click(function (e) {
+//<<<<<<< HEAD
+//            var vUrl = urlprefix + $("#txtEventUrl").val();
+//            globalFacebookShareObject.link = vUrl;
+//=======
             globalFacebookShareObject.link = urlprefix + $("#txtEventUrl").val();
             globalFacebookShareObject.name = $("#txtEventTitle").val();
             console.log(globalFacebookShareObject.link);
             console.log(globalFacebookShareObject.name);
+//>>>>>>> b92edd51be79285657ae30ef8e75a4acf6b6d01e
             FB.ui({
                 method: 'feed',
                 name: globalFacebookShareObject.name,

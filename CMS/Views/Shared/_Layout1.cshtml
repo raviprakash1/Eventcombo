@@ -142,24 +142,24 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-label pt15">Exclusive Tools</li>
+                    @*<li class="sidebar-label pt15">Exclusive Tools</li>*@
                     <li>
                         <a href="#" onclick="checkPermission('10');">
-                            <span class="fa fa-user"></span>
+                            <span class="fa fa-users"></span>
                             <span class="sidebar-title">Member Management</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="#" onclick="checkPermission('4');">
-                            <span class="fa fa-lemon-o"></span>
+                            <span class="fa fa-cubes"></span>
                             <span class="sidebar-title">Event</span>
                         </a>
 
                     </li>
                     <li>
                         <a href="#"  onclick="checkPermission('11');" >
-                            <span class="fa fa-ticket"></span>
+                            <span class="fa fa-usd"></span>
                             <span class="sidebar-title">Fee Settings</span>
                         </a>
 
@@ -167,14 +167,14 @@
 
                     <li>                        
                         <a href="#"  onclick="checkPermission('8');" >
-                            <span class="fa fa-ticket"></span>
+                            <span class="fa fa-chain-broken"></span>
                             <span class="sidebar-title">Event Type</span>
                         </a>
 
                     </li>
                     <li>
                         <a href="#" onclick="checkPermission('9');">
-                            <span class="fa fa-ticket"></span>
+                            <span class="fa fa-life-ring"></span>
                             <span class="sidebar-title">Event Category</span>
                         </a>
 
@@ -199,56 +199,56 @@
 
                             <li>
                                 <a href="#" onclick="checkPermission('7');">
-                                    <span class="fa fa-circle-o"></span>
-                                    <span class="sidebar-title">My Account Form</span>
+                                    <span></span>
+                                    <span class="shw_menu sidebar-title">My Account Form</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" onclick="checkPermission('7A');">
-                                    <span class="fa fa-circle-o"></span>
-                                    <span class="sidebar-title act">Login Form</span>
+                                    <span></span>
+                                    <span class="shw_menu sidebar-title act">Login Form</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" onclick="checkPermission('7B');">
-                                    <span class="fa fa-circle-o"></span>
-                                    <span class="sidebar-title act">Sign Up Form</span>
+                                    <span></span>
+                                     <span class="shw_menu sidebar-title act">Sign Up Form</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" onclick="checkPermission('7C');">
-                                    <span class="fa fa-circle-o"></span>
-                                    <span class="sidebar-title act">Forgot Password Form</span>
+                                    <span></span>
+                                    <span class="shw_menu sidebar-title act">Forgot Password Form</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" onclick="checkPermission('7D');">
-                                    <span class="fa fa-circle-o"></span>
-                                    <span class="sidebar-title act">Reset Password Form</span>
+                                    <span></span>
+                                    <span class="shw_menu sidebar-title act">Reset Password Form</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" onclick="checkPermission('7E');">
-                                    <span class="fa fa-circle-o"></span>
-                                    <span class="sidebar-title act">Create Event Form</span>
+                                    <span></span>
+                                    <span class="shw_menu sidebar-title act">Create Event Form</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" onclick="checkPermission('7F');">
-                                    <span class="fa fa-circle-o"></span>
-                                    <span class="sidebar-title act">CMSUsers Form</span>
+                                    <span></span>
+                                    <span class="shw_menu sidebar-title act">CMSUsers Form</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" onclick="checkPermission('7G');">
-                                    <span class="fa fa-circle-o"></span>
-                                    <span class="sidebar-title act">Messages Form</span>
+                                    <span></span>
+                                    <span class="shw_menu sidebar-title act">Messages Form</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" onclick="checkPermission('7H');">
-                                    <span class="fa fa-circle-o"></span>
-                                    <span class="sidebar-title act">Organizer Master Form</span>
+                                    <span></span>
+                                    <span class="shw_menu sidebar-title act">Organizer Master Form</span>
                                 </a>
                             </li>
                         </ul>
@@ -315,33 +315,28 @@
                 datatype: "Text",
                 type: "Post",
                 success: function (response) {
-                    if (response != "Y") {
+                    //alert(response);
+                    if (response == "SE") {
+                        window.location.href = '@Url.Action("Login", "Home")';
+                        return false;
+                    }
+                    else if (response != "Y") {
                         alert("Access Denied !!!");
                         return false;
-                        //  $('#spanid').html("Record Updated.");
-                        // $('#divError').css('display', 'block');
-                        ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
                     }
                     else {
-                        //  alert(vPerm);
                         if (vPerm == "10")
                             window.location.href = '@Url.Action("Users", "Users")';
                         else if (vPerm == "6")
-
                             window.location.href = '@Url.Action("Index", "Email", new { templatetag = "email_welcome", templatename = "Welcome" })';
-
                         else if (vPerm == "7") {
-
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "MyAccount" })';
-
                         }
                         else if (vPerm == "7A") {
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "Login" })';
-
                         }
                         else if (vPerm == "7B") {
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "Signup" })';
-
                         }
                         else if (vPerm == "7C") {
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "ForgotPassword" })';
@@ -356,9 +351,8 @@
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "Messages" })';
                         else if (vPerm == "7H")
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "OrganizerMaster" })';
-
                         else if (vPerm == "4")
-                            window.location.href = '@Url.Action("Index", "ManageEvent")';
+                            window.location.href = '@Url.Action("EventsList", "ManageEvent")';
                         else if (vPerm == "8")
                             window.location.href = '@Url.Action("EventType", "EventType", new {Type="N"})';
                         else if (vPerm == "9")

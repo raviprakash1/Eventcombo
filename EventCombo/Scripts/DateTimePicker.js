@@ -884,8 +884,8 @@ $.cf = {
 		            hours = (hours == '00') ? 12 : hours;
 		          
 		            var minutes = test.getMinutes(); // =>  30
-		            var seconds = test.getSeconds(); //
-		            oDTP._setValueOfElement(curr_month + '-' + curr_date + '-' + curr_year + '  ' + hours + ':' + minutes + ':' + seconds + ' ' + suffix);
+		            //var seconds = test.getSeconds(); //
+		            oDTP._setValueOfElement(curr_month + '-' + curr_date + '-' + curr_year + '  ' + hours + ':' + minutes +  ' ' + suffix);
 		    }
 		    oDTP._hidePicker("");
 		},
