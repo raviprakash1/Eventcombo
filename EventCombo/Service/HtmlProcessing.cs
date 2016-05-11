@@ -17,6 +17,10 @@ namespace EventCombo.Service
 
     public static string GetShortString(string source, int minLength, int maxLength, string delimiter)
     {
+      if (minLength > maxLength)
+        throw new ArgumentException("Wrong minimum and maximum lengths.");
+      if (source.Length <= maxLength)
+        return source;
       string res = source.Substring(0, maxLength);
       string append = "";
       int pos = res.LastIndexOf(delimiter);

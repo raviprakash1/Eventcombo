@@ -177,7 +177,7 @@
   <div class="col-md-8 col-sm-8 col-xs-12 entrmentDetailContent">
     <div class="entrnmtHeaderContainer">
       <div class="col-md-3 col-sm-3 col-xs-5 entrmntHeaderImg">
-        <img src="@(String.IsNullOrWhiteSpace(Model.AuthorImage) ? "~/Images/mrblank.jpg" : Model.AuthorImage)" />
+        <img src="@(String.IsNullOrWhiteSpace(Model.AuthorImage) ? @Url.Content("~/Images/mrblank.jpg") : Model.AuthorImage)" />
       </div>
       <div class="col-md-9 col-sm-9 col-xs-7 entrmntHeaderName">
         <div class="entrmentPersonName">@Model.AuthorName</div>

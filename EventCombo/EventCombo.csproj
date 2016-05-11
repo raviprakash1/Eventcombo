@@ -661,6 +661,7 @@
     <Content Include="Images\linkedIn.png" />
     <Content Include="Images\loading.gif" />
     <Content Include="Images\login_img.png" />
+    <Content Include="Images\mrblank.jpg" />
     <Content Include="Images\online-icn.png" />
     <Content Include="Images\paper_tic.png" />
     <Content Include="Images\PromoCodeLoader.gif" />
