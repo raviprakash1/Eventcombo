@@ -45,7 +45,9 @@ namespace CMS
 
       //backward maps
       CreateMap<ArticleFullViewModel, Article>()
-        .ForMember(d => d.ArticleId, m => m.Ignore());
+        .ForMember(d => d.ArticleId, m => m.Ignore())
+        .ForMember(d => d.CreateDate, m => m.Ignore())
+        .ForMember(d => d.EditDate, m => m.Ignore());
     }
   }
 }

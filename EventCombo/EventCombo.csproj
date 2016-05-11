@@ -250,6 +250,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\AutomapperConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CMSController.cs" />
     <Compile Include="Controllers\CreateEventController.cs" />
@@ -539,6 +540,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\TicketEmailer.cs" />
     <Compile Include="Service\ArticleService.cs" />
+    <Compile Include="Service\HtmlProcessing.cs" />
     <Compile Include="Service\IArticleService.cs" />
     <Compile Include="Service\IManageEventService.cs" />
     <Compile Include="Service\IOrderOptionsService.cs" />
@@ -588,11 +590,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DiscoverEvents.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Home\Index.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Index.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shared\_AccountLayout.generated.cs">
       <AutoGen>True</AutoGen>
@@ -654,12 +651,14 @@
     <Content Include="Images\email_tw.png" />
     <Content Include="Images\em_ven_time.png" />
     <Content Include="Images\evnt_lik_1.png" />
+    <Content Include="Images\facebook.png" />
     <Content Include="Images\free-pinstripe.png" />
     <Content Include="Images\hjsdjd.png" />
     <Content Include="Images\Imagemap.png" />
     <Content Include="Images\Imagemap_T000000199.png" />
     <Content Include="Images\info.png" />
     <Content Include="Images\leftarrow.png" />
+    <Content Include="Images\linkedIn.png" />
     <Content Include="Images\loading.gif" />
     <Content Include="Images\login_img.png" />
     <Content Include="Images\online-icn.png" />
@@ -667,6 +666,7 @@
     <Content Include="Images\PromoCodeLoader.gif" />
     <Content Include="Images\qwe.png" />
     <Content Include="Images\share_icon.png" />
+    <Content Include="Images\twitter.png" />
     <Content Include="Images\unchecked.png" />
     <Content Include="Models\EventComboModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1308,6 +1308,9 @@
     <Content Include="Views\OrderOptions\EventType.cshtml" />
     <Content Include="Views\OrderOptions\Waitlist.cshtml" />
     <Content Include="Views\Shared\_ManageEventLeftMenu.cshtml" />
+    <Content Include="Views\Article\ShowArticle.cshtml" />
+    <Content Include="Views\Article\ShowLastArticles.cshtml" />
+    <Content Include="Views\Article\ShowPopularArticles.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

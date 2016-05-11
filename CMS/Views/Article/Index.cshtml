@@ -121,7 +121,7 @@
                 <td>@(article.CreateDate.ToShortDateString())</td>
                 <td>@(article.EditDate.ToShortDateString())</td>
                 <td>
-                  <a href="@Url.Action("Edit", "Article", new { ArticleId = article.ArticleId })">Edit</a>
+                  <a href="@Url.Action("ShowArticle", "Article", new { articleId = article.ArticleId })">View</a>
                 </td>
                 <td>
                   <a href="@Url.Action("Edit", "Article", new { ArticleId = article.ArticleId })" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
@@ -161,8 +161,8 @@
                 <h4 class="msg" id="hId">Are you sure you want to Delete?</h4>
               </div>
               <div class="modal-footer msg-action-btn ok">
-                <button type="submit" id="btnYes" class="btn btn-primary no" data-dismiss="modal">Yes</button>
-                <button type="button" class="btn btn-primary yes ok" id="btMesOk" data-dismiss="modal">OK</button>
+                <input type="hidden" id="DeleteArticleId" name="articleId" value="0" />
+                <button type="button" id="btnYes" class="btn btn-primary no" data-dismiss="modal" onclick="DeleteArticle()">Yes</button>
                 <button type="button" id="btnNo" class="btn btn-primary no" data-dismiss="modal">No</button>
               </div>
             </form>
@@ -178,11 +178,15 @@
 
 <script type="text/javascript">
   function ConfirmDelete(articleId) {
+    $("#DeleteArticleId").val(articleId);
     $("#btnYes").show();
     $("#btnNo").show();
-    $("#btMesOk").hide();
     $("#hId").text("Are you sure you want to delete article " + articleId + "?");
     return false;
+  }
+
+  function DeleteArticle() {
+    window.location.replace("@(Url.Action("Delete", "Article"))?articleId=" + $("#DeleteArticleId").val());
   }
 
 </script>

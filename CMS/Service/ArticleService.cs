@@ -56,7 +56,9 @@ namespace CMS.Service
         HomepageFlag = true,
         PremiumFlag = true,
         SubHeading = "",
-        Title = ""
+        Title = "",
+        CreateDate = DateTime.Now,
+        EditDate = DateTime.Now
       };
       return res;
     }
@@ -126,7 +128,7 @@ namespace CMS.Service
           }
 
           IRepository<ArticleImage> aiRepo = new GenericRepository<ArticleImage>(_factory.ContextFactory);
-          if (model.ImageFiles.Count() > 0)
+          if (model.ImageFiles.Where(f => (f != null)).Count() > 0)
             foreach (var aimage in article.ArticleImages.ToList())
             {
               DeleteImage(aimage.ECImageId, basePath);
@@ -185,6 +187,43 @@ namespace CMS.Service
       Directory.CreateDirectory(basePath);
       file.SaveAs(basePath + newName);
       return newName;
+    }
+
+    public void DeleteArticle(long articleId, string basePath)
+    {
+      if (articleId == 0)
+        return;
+      using (IUnitOfWork uow = _factory.GetUnitOfWork())
+      {
+        try
+        {
+          IRepository<Article> aRepo = new GenericRepository<Article>(_factory.ContextFactory);
+          IRepository<ArticleAuthor> aaRepo = new GenericRepository<ArticleAuthor>(_factory.ContextFactory);
+          IRepository<ArticleImage> aiRepo = new GenericRepository<ArticleImage>(_factory.ContextFactory);
+          Article article = aRepo.GetByID(articleId);
+          if (article != null)
+          {
+            if (article.ArticleAuthor.ECImageId != null)
+              DeleteImage(article.ArticleAuthor.ECImageId, basePath);
+            aaRepo.Delete(article.ArticleAuthor);
+            if (article.ECImageId != null)
+              DeleteImage(article.ECImageId, basePath);
+            foreach (var aimage in article.ArticleImages.ToList())
+            {
+              DeleteImage(aimage.ECImageId, basePath);
+              aiRepo.Delete(aimage);
+            }
+            aRepo.Delete(article);
+            uow.Context.SaveChanges();
+            uow.Commit();
+          }
+        }
+        catch (Exception ex)
+        {
+          uow.Rollback();
+          throw new Exception("Exception in the DeleteArticle. Transaction rolled back.", ex);
+        }
+      }
     }
   }
 }

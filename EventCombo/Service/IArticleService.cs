@@ -9,6 +9,20 @@ namespace EventCombo.Service
 {
   public interface IArticleService
   {
-    IEnumerable<ArticleShortViewModel> GetList();
+    string ImagePath { get; }
+
+    IEnumerable<ArticleShortViewModel> GetList(string urlPath);
+
+    ArticleFullViewModel GetNewArticle();
+
+    ArticleFullViewModel GetArticleByID(long ArticleId, string urlPath);
+
+    void SaveArticle(ArticleFullViewModel model, string basePath);
+
+    void DeleteArticle(long articleId, string basePath);
+
+    IEnumerable<ArticleShortViewModel> GetLastArticles(string urlPath);
+
+    IEnumerable<ArticleShortViewModel> GetPopularArticles(string urlPath);
   }
 }

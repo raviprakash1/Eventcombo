@@ -201,3 +201,8 @@ INSERT INTO ECImageType (ECImageTypeId, TypeName)
 VALUES (2, 'image/png')
 
 SET IDENTITY_INSERT ECImageType OFF
+
+SET IDENTITY_INSERT Permission_Detail ON
+INSERT INTO Permission_Detail (Permission_Id, Permission_Desc, Permission_Category)
+VALUES (12, 'Article Management', 'CMS') 
+SET IDENTITY_INSERT Permission_Detail OFF

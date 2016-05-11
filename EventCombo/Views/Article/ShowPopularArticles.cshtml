@@ -1,0 +1,26 @@
+﻿@using System.Collections.Generic
+@using EventCombo.Models
+@model IEnumerable<ArticleShortViewModel>
+@{
+  Layout = null;
+}
+<div class="entrmntLastestNewsTxt">Popular Stories</div>
+<div class="entrmntLastestNewsContent">
+
+  @foreach (var article in Model)
+  {
+
+    <div class="col-md-6 col-sm-6 col-xs-12 newsContentDetailCon">
+      <div class="newsContentInnerCon">
+        <a href="@(Url.Action("ShowArticle", "Article", new { articleId = article.ArticleId }))">
+          <div class="newsContentImg">
+            <img src="@article.ArticleImage" />
+          </div>
+          <div class="newsContentText">
+            @article.Title
+          </div>
+        </a>
+      </div>
+    </div>
+  }
+</div>

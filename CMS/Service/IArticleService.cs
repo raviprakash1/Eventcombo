@@ -16,5 +16,7 @@ namespace CMS.Service
     ArticleFullViewModel GetArticleByID(long ArticleId, string urlPath);
 
     void SaveArticle(ArticleFullViewModel model, string basePath);
+
+    void DeleteArticle(long articleId, string basePath);
   }
 }

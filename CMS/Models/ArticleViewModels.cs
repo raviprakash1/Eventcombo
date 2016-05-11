@@ -31,6 +31,8 @@ namespace CMS.Models
     public bool EnableFBComments { get; set; }
     public bool HomepageFlag { get; set; }
     public bool PremiumFlag { get; set; }
+    public DateTime CreateDate { get; set; }
+    public DateTime EditDate { get; set; }
 
     private List<string> _images = new List<string>();
     public List<string> Images

@@ -66,5 +66,29 @@ namespace CMS.Controllers
         return RedirectToAction("Login", "Home");
       }
     }
+
+    [HttpGet]
+    public ActionResult Delete(long articleId)
+    {
+      if ((Session["UserID"] != null))
+      {
+        _service.DeleteArticle(articleId, Server.MapPath("~/Images/ECImages/"));
+        return RedirectToAction("Index", "Article");
+      }
+      else
+      {
+        return RedirectToAction("Login", "Home");
+      }
+    }
+
+    [HttpGet]
+    public ActionResult ShowArticle(long articleId)
+    {
+      if ((Session["UserID"] == null))
+        return RedirectToAction("Login", "Home");
+
+      ArticleFullViewModel article = _service.GetArticleByID(articleId, Url.Content("~/Images/ECImages/"));
+      return View(article);
+    }
   }
 }
