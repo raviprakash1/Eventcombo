@@ -2,7 +2,7 @@
 @model EventCombo.Models.OrderTemplateViewModel
 @{
   ViewBag.Title = "Form";
-  Layout = "~/Views/Shared/_ManageEventLayout.cshtml";
+  Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
 <link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
@@ -17,6 +17,12 @@
 
 <link href='~/Content/OrderForm.css' rel='stylesheet' type='text/css'>
 <link href="~/Content/OrderFormDesign.css" rel="stylesheet" />
+
+@section sidenav{
+  <div id="sidebar" class="nav nav-stacked">
+    @Html.Action("Sidenav", "ManageEvent", new { eventid = ViewBag.Eventid, CurrentItem = "orderoptions" })
+  </div>
+}
 
 @using (Html.BeginForm())
 {
@@ -85,19 +91,21 @@
                         @{ var questions = Model.Questions.FindAll(q => q.Question.QuestionTypeGroupId == ViewBag.QuestionGroups[i].QuestionTypeGroupId); }
                         @for (int j = 0; j < questions.Count; j++)
                         {
-                          <div id="mainQuestion_@questions[j].OrderTemplateQuestionId" class="dragableDivContent" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                          <div id="mainQuestion_@questions[j].OrderTemplateQuestionId" class="dragableDivContent" ondragstart="handleDragStart(event, this, @i);" ondragenter="handleDragEnter(event, this);" ondragover="handleDragOver(event, this, @i);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this, @i);" ondragend="handleDragEnd(event, this);">
 
                             <input id="QuestionId" name="QuestionId" type="hidden" value="@questions[j].OrderTemplateQuestionId" />
 
                             <div class="col-xs-2">
-                              <div class="dragIconItems"><img src="../../images//drag.png" /></div>
+                              <div class="dragIconItems">
+                                <a href="javascript:void(0)" style="cursor:move;" draggable="true"><img src="../../images/drag.png" /></a>
+                              </div>
                             </div>
 
-                            <div class="col-xs-8">
+                            <div class="col-xs-8" style="cursor:pointer;">
                               <div id="Include" class="@(questions[j].Include ? "basicInfoCheckBox" : "basicInfoUnCheckBox")" onclick="setCheckBoxChecked(this); setRequiredUncheck(this);">@questions[j].Question.Title</div>
                             </div>
 
-                            <div class="col-xs-2">
+                            <div class="col-xs-2" style="cursor:pointer;">
                               <div id="Require" class="@(questions[j].Require ? "basicInfoCheckBox" : "basicInfoUnCheckBox") onlyCheckBoxItem" onclick="setCheckBoxChecked(this); setFieldCheck(this);"></div>
                             </div>
 
@@ -118,29 +126,31 @@
                       <div id="questionContainerDiv" style="display:@(Model.UserQuestions.Count > 0 ? "block" : "none")">
                         @for (var i = 0; i < Model.UserQuestions.Count; i++)
                         {
-                          <div id="userQuestion_@i" class="dragableDivContent" data-indexid="@i" data-questionid="@Model.UserQuestions[i].OrderTemplateQuestionId" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="handleDragEnter(event, this);" ondragover="handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);">
+                          <div id="userQuestion_@i" class="dragableDivContent dragableDivContentQuestion" data-indexid="@i" data-questionid="@Model.UserQuestions[i].OrderTemplateQuestionId" ondragstart="handleDragStart(event, this, -1);" ondragenter="handleDragEnter(event, this);" ondragover="handleDragOver(event, this, -1);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this, -1);" ondragend="handleDragEnd(event, this);">
                             <div class="col-xs-2">
                               <div class="dragIconItems">
-                                <img src="../../images//drag.png" />
+                                <a href="javascript:void(0)" style="cursor:move;" draggable="true"><img src="../../images/drag.png" /></a>
                               </div>
                             </div>
-                            <div class="col-xs-6">
-                              <div id="questionText" class="@(Model.UserQuestions[i].Include ? "basicInfoCheckBox" : "basicInfoUnCheckBox")" onclick="setCheckBoxChecked(this); setRequiredUncheck(this);">
+                            <div class="col-xs-6" style="cursor:pointer;">
+                              <div id="questionText" class="@(Model.UserQuestions[i].Include ? "basicInfoCheckBox " : "basicInfoUnCheckBox") basicInfoUnCheckBoxQuestion" onclick="setCheckBoxChecked(this); setRequiredUncheck(this);">
                                 @Model.UserQuestions[i].QuestionText
                               </div>
                             </div>
-                            <div class="col-xs-2">
+                            <div class="col-xs-2" style="cursor:pointer;">
                               <div id="require" class="@(Model.UserQuestions[i].Require ? "basicInfoCheckBox" : "basicInfoUnCheckBox") onlyCheckBoxItem" onclick="setCheckBoxChecked(this); setFieldCheck(this);"></div>
                             </div>
-                            <div class="col-xs-2"><a href="javascript:void(0)" class="removeIconAnchor" onclick="removeItemList(this)"><img src="../../images//cross.png" /></a></div>
+                            <div class="col-xs-2" style="cursor:pointer;">
+                              <a href="javascript:void(0)" class="removeIconAnchor" onclick="removeItemList(this)"><img src="../../images//cross.png" /></a>
+                            </div>
                           </div>
                         }
                       </div>
                       <div id="QuestionMainContainer">
                         <div class="form-group" style="padding-bottom: 31px;">
-                          <input type="text" class="form-control questionsTxtbox" id="questions" placeholder="Question" maxlength="255">
+                          <input type="text" class="form-control questionsTxtbox" id="questions" placeholder="Question" maxlength="255" onkeydown="$('#questions').removeClass('validatorTxt');">
                           <div class="dropdown questionsDropDown">
-                            <button class="btn btn-default dropdown-toggle questionsBtn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" value="@ViewBag.ControlType[0].ControlTypeId">
+                            <button class="btn btn-default dropdown-toggle questionsBtn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" value="@ViewBag.ControlType[0].ControlTypeId" onkeydown="$('#questions').removeClass('validatorTxt');">
                               <span class="text">@ViewBag.ControlType[0].ControlTypeName</span>
                               <span class="caret"></span>
                             </button>
@@ -164,10 +174,11 @@
                               <div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainHead3" style="display:none;">ORDERS</div>
                               <div class="col-md-1 col-sm-1 col-xs-12 checkBoxQuesMainHeadTrash"></div>
                             </div>
+
                             <div id="checkBoxQuesMainBodyConID1" class="checkBoxQuesMainBodyCon1">
                               <div class="col-md-11 col-sm-11 col-xs-12 checkBoxQuesMainBody1">
                                 <div class="form-group">
-                                  <input type="text" class="form-control optionNameQuestion" onblur="txtBoxQuestionAddtoList(this);" placeholder="Option Name" maxlength="255">
+                                  <input type="text" class="form-control optionNameQuestion" onblur="txtBoxQuestionAddtoList();" placeholder="Option Name" maxlength="255">
                                 </div>
                               </div>
                               <div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBody2" style="display:none;">
@@ -212,7 +223,7 @@
                         </div>
                       </div>
 
-                      <div class="form-group" style="margin: 20px 0px; overflow:hidden;">
+                      <div class="form-group" style="margin: 20px 0px; overflow:hidden; clear:both;">
                         <label for="title" style="display:block;">Optional settings</label>
                         <div id="ShowForTickets" class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this); showOtherBidsForOne(this, 'qTicket_');">SHOW THIS QUESTION FOR SPECIFIC TICKET TYPES</div>
                         @for (var i = 0; i < ViewBag.Tickets.Count; i++)
@@ -351,6 +362,7 @@
   var qvariants = [];
   var subquestions = [];
   var subvariants = [];
+  var handleDragGroup = -2;
 
   @for (var i = 0; i < Model.UserQuestions.Count; i++)
   {
@@ -420,21 +432,23 @@
 
   console.debug(storedQuestions);
 
-  function handleDragStart(e, obj) {
-    //$(obj).css("opacity", "0.4");  // this / e.target is the source node.
+  function handleDragStart(e, obj, i) {
     dragSrcEl = obj;
+    handleDragGroup = i;
 
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/html', obj.innerHTML);
   }
 
-  function handleDragOver(e) {
-    if (e.preventDefault) {
-      e.preventDefault(); // Necessary. Allows us to drop.
+  function handleDragOver(e, obj, i) {
+    console.debug("Stored = " + handleDragGroup + ", Current = " + i);
+    if (handleDragGroup == i)
+    {
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
     }
-
-    e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
-
+    else
+      e.dataTransfer.dropEffect = 'none';  // See the section on the DataTransfer object.
     return false;
   }
 
@@ -447,14 +461,14 @@
     //$(obj).removeClass('over');  // this / e.target is previous target element.
   }
 
-  function handleDrop(e, obj) {
+  function handleDrop(e, obj, i) {
     // this / e.target is current target element.
 
     if (e.stopPropagation) {
       e.stopPropagation(); // stops the browser from redirecting.
     }
     // Don't do anything if dropping the same column we're dragging.
-    if (dragSrcEl != obj) {
+    if ((dragSrcEl != obj) && (handleDragGroup == i)) {
       // Set the source column's HTML to the HTML of the column we dropped on.
       dragSrcEl.innerHTML = obj.innerHTML;
       obj.innerHTML = e.dataTransfer.getData('text/html');
@@ -505,17 +519,20 @@
   function addQuestionToContainer() {
     var question = $('#questions').val();
     var dropDownTxt = $('#dropdownMenu1 .text').html();
-    var innerHtml = '<div id="userQuestion_' + curQIndex + '" class="dragableDivContent" data-indexid="' + curQIndex + '" data-questionid="0" draggable="true" ondragstart="handleDragStart(event, this);" ondragenter="    handleDragEnter(event, this);" ondragover="    handleDragOver(event, this);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this);" ondragend="handleDragEnd(event, this);"><div class="col-xs-2"><div class="dragIconItems"><img src="../../images//drag.png" /></div></div><div class="col-xs-6"><div id="questionText" class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this); setRequiredUncheck(this);">' + question + '</div></div><div class="col-xs-2"><div id="require" class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this); setFieldCheck(this);"></div></div><div class="col-xs-2"><a href="javascript:void(0)" class="removeIconAnchor" onclick="removeItemList(this)"><img src="../../images//cross.png" /></a></div></div>';
-    $("#questionContainerDiv").append(innerHtml);
-    $("#questionContainerDiv").show();
 
-    storedQuestions.push(GetEditedQuestion())
-    console.debug(storedQuestions);
+    question = question.trim();
+    if (question == '') {
+      $('#questions').addClass('validatorTxt');
+    }
+    else {
+      var innerHtml = '<div id="userQuestion_' + curQIndex + '" class="dragableDivContent dragableDivContentQuestion" data-indexid="' + curQIndex + '" data-questionid="0" ondragstart="handleDragStart(event, this, -1);" ondragenter="handleDragEnter(event, this);" ondragover="handleDragOver(event, this, -1);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this, -1);" ondragend="handleDragEnd(event, this);"><div class="col-xs-2"><div class="dragIconItems"><a href="javascript:void(0)" style="cursor:move;" draggable="true"><img src="../../images/drag.png" /></a></div></div><div class="col-xs-6" style="cursor:pointer;"><div id="questionText" class="basicInfoUnCheckBox basicInfoUnCheckBoxQuestion" onclick="setCheckBoxChecked(this); setRequiredUncheck(this);">' + question + '</div></div><div class="col-xs-2" style="cursor:pointer;"><div id="require" class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this); setFieldCheck(this);"></div></div><div class="col-xs-2"><a href="javascript:void(0)" class="removeIconAnchor" onclick="removeItemList(this)"><img src="../../images//cross.png" /></a></div></div>';
+      $("#questionContainerDiv").append(innerHtml);
+      $("#questionContainerDiv").show();
 
-    $('#questions').val('');
-
-
-    curQIndex++;
+      storedQuestions.push(GetEditedQuestion())
+      $('#questions').val('');
+      curQIndex++;
+    }
   }
 
   function GetEditedQuestion()
@@ -811,16 +828,16 @@
   var textBoxID = 1
   function addAnotherOption() {
     textBoxID++;
-    $('#checkBoxQuesMain').append('<div id="checkBoxQuesMainBodyConID' + textBoxID + '" class="checkBoxQuesMainBodyCon1"><div class="col-md-11 col-sm-11 col-xs-12 checkBoxQuesMainBody1"><div class="form-group"><input type="text" class="form-control optionNameQuestion" onblur="txtBoxQuestionAddtoList(this);" placeholder="Option Name" maxlength="255"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBody2" style="display:none;"><div class="form-group"><input type="text" class="form-control " id="optionNameQuantity" placeholder="Quantity" maxlength="20"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBody3" style="display:none;"><div class="form-group">0 / 0</div></div><div id="checkBoxQuesMainBodyTrash" class="col-md-1 col-sm-1 col-xs-12"><div class="form-group"><a href="javascript:void(0)" onclick="removeThisDiv(\'checkBoxQuesMainBodyConID' + textBoxID + '\')" class="trackIConAnchor"><span class="glyphicon glyphicon glyphicon-trash"></span></a></div></div></div>');
+    $('#checkBoxQuesMain').append('<div id="checkBoxQuesMainBodyConID' + textBoxID + '" class="checkBoxQuesMainBodyCon1"><div class="col-md-11 col-sm-11 col-xs-12 checkBoxQuesMainBody1"><div class="form-group"><input type="text" class="form-control optionNameQuestion" onblur="txtBoxQuestionAddtoList();" placeholder="Option Name" maxlength="255"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBody2" style="display:none;"><div class="form-group"><input type="text" class="form-control " id="optionNameQuantity" placeholder="Quantity" maxlength="20"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBody3" style="display:none;"><div class="form-group">0 / 0</div></div><div id="checkBoxQuesMainBodyTrash" class="col-md-1 col-sm-1 col-xs-12"><div class="form-group"><a href="javascript:void(0)" onclick="removeThisDiv(\'checkBoxQuesMainBodyConID' + textBoxID + '\')" class="trackIConAnchor"><span class="glyphicon glyphicon glyphicon-trash"></span></a></div></div></div>');
     ShowHideQuantityOrder($('#checkBoxQuantity'));
   }
 
-  var textBoxIDSub = 1
+  var cbSubContainer = 0
   function addAnotherOptionSub(subConID) {
-    textBoxIDSub++;
-    $('#checkBoxQuesMainSub' + subConID).append('<div id="checkBoxQuesMainBodyConSubID' + textBoxID + '" class="checkBoxQuesMainBodyCon1 checkBoxQuesMainBodyConSubCls1"><div class="col-md-11 col-sm-11 col-xs-12 checkBoxQuesMainBodySub1"><div class="form-group"><input type="text" class="form-control optionNameQuestionSub" placeholder="Option Name" maxlength="255"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBodySub2" style="display:none;"><div class="form-group"><input type="text" class="form-control " id="optionNameQuantity" placeholder="Quantity" maxlength="20"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBodySub3" style="display:none;"><div class="form-group">0 / 0</div></div><div id="checkBoxQuesMainBodyTrash" class="col-md-1 col-sm-1 col-xs-12"><div class="form-group"><a href="javascript:void(0)" onclick="removeThisDivSub(\'checkBoxQuesMainBodyConSubID' + textBoxID + '\')" class="trackIConAnchor"><span class="glyphicon glyphicon glyphicon-trash"></span></a></div></div></div>');
+    cbSubContainer++;
+    $('#checkBoxQuesMainSub' + subConID).append('<div id="checkBoxQuesMainBodyConSubID' + cbSubContainer + '" class="checkBoxQuesMainBodyCon1 checkBoxQuesMainBodyConSubCls1"><div class="col-md-11 col-sm-11 col-xs-12 checkBoxQuesMainBodySub1"><div class="form-group"><input type="text" class="form-control optionNameQuestionSub" placeholder="Option Name" maxlength="255"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBodySub2" style="display:none;"><div class="form-group"><input type="text" class="form-control " id="optionNameQuantity" placeholder="Quantity" maxlength="20"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBodySub3" style="display:none;"><div class="form-group">0 / 0</div></div><div id="checkBoxQuesMainBodyTrash" class="col-md-1 col-sm-1 col-xs-12"><div class="form-group"><a href="javascript:void(0)" onclick="removeThisDivSub(this, ' + cbSubContainer + ')" class="trackIConAnchor"><span class="glyphicon glyphicon glyphicon-trash"></span></a></div></div></div>');
 
-    ShowHideQuantityOrderSub($('#checkBoxQuantitySub'), subContainer);
+    ShowHideQuantityOrderSub($('#AnotherSubQuestionMainContainer' + subConID + ' #checkBoxQuantitySub'), subConID);
   }
 
   function removeThisDiv(id) {
@@ -830,17 +847,19 @@
     }
     else {
       $('#' + id).remove();
+      txtBoxQuestionAddtoList();
     }
 
   }
 
-  function removeThisDivSub(id) {
-    var count = $('.checkBoxQuesMainBodyConSubCls1');
+  function removeThisDivSub(obj, id) {
+    var parent = $(obj).closest('#checkBoxQuesMainSub' + id);
+    var count = $(parent).find('.checkBoxQuesMainBodyConSubCls1');
     if (count.length == 1) {
       alert('You must have atleast one available choice');
     }
     else {
-      $('#' + id).remove();
+      $(obj).closest('#checkBoxQuesMainBodyConSubID' + id).remove();
     }
 
   }
@@ -922,11 +941,12 @@
     });
     if (questionTxt.length > 0) {
       subContainer++;
-      $('#AppendSubOptionToSubDiv').append('<div id="AnotherSubQuestionMainContainer' + subContainer + '" class="AnotherSubQuestionMainContainerCls" ><div class="subQuestionHeadText"><span>Sub-Question ' + subContainer + '</span><a href="javascript:void(0)" onclick="removeSubQuestionDiv(\'AnotherSubQuestionMainContainer' + subContainer + '\')" class="trackIconAnchorSub"><span class="glyphicon glyphicon glyphicon-trash"></span></a></div><div class="subQuestionBodyTxt"><div class="form-group" style="margin: 20px 0px; "><label for="title" class="subLabelTitleTxt">If the attendee chooses:</label><div class="dropdown dropDownSubFullWidth"><button style="width: 100%;text-align: left;" class="btn btn-default dropdown-toggle questionsBtn" type="button" id="dropdownMenuSubHead2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="text"></span><span class="caret" style="float: right;margin-top: 8px;"></span></button><ul class="dropdown-menu dropdownMenuSubHeadLi2" aria-labelledby="dropdownMenuSubHead2"></ul></div></div><div class="form-group askQuestionSubTxtDiv"><label for="title" class="subLabelTitleTxt">Ask the question:</label><input type="text" class="form-control" id="askAQuestionSub" placeholder=""></div><div class="form-group" style="padding-bottom: 31px;clear: both;"><label for="title" class="subLabelTitleTxt">Question Type:</label><div class="dropdown dropDownSubFullWidth"><button class="btn btn-default dropdown-toggle questionsBtn" type="button" id="dropdownMenuSubOptions1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="text">Text</span><span class="caret"></span></button><ul class="dropdown-menu" aria-labelledby="dropdownMenuSubOptions1"><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 1); ShowHideRespectiveDivSub(null,' + subContainer + ');">Text</a></li><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 2); ShowHideRespectiveDivSub(null,' + subContainer + ');">Paragraph Text</a></li><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 3); ShowHideRespectiveDivSub(\'CheckBoxContainerSub\',' + subContainer + ');">CheckBoxes</a></li><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 4); ShowHideRespectiveDivSub(\'CheckBoxContainerSub\',' + subContainer + ');">Radio Buttons</a></li><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 5); ShowHideRespectiveDivSub(\'CheckBoxContainerSub\',' + subContainer + ');">Dropdown</a></li><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 6); ShowHideRespectiveDivSub(\'waivierTxtDivSub\',' + subContainer + ');">Waiver</a></li></ul></div></div><div id="CheckBoxContainerSub" style="display:none;"><div id="checkBoxQuantitySub" class="basicInfoUnCheckBox" style="font-size: 16px;" onclick="setCheckBoxChecked(this); ShowHideQuantityOrderSub(this, ' + subContainer + ');">LIMIT QUANTITY FOR EACH CHOICE</div><div id="checkBoxHeading">Options available</div><div id="checkBoxQuesMainSub' + subContainer + '"><div id="checkBoxQuesMainHeader"><div class="col-md-11 col-sm-11 col-xs-12 checkBoxQuesMainHeadSub1">Option Name</div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainHeadSub2" style="display:none;">QUANTITY</div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainHeadSub3" style="display:none;">ORDERS</div><div class="col-md-1 col-sm-1 col-xs-12 checkBoxQuesMainHeadSubTrash"></div></div><div id="checkBoxQuesMainBodyConSubID' + subContainer + '" class="checkBoxQuesMainBodyCon1 checkBoxQuesMainBodyConSubCls1"><div class="col-md-11 col-sm-11 col-xs-12 checkBoxQuesMainBodySub1"><div class="form-group"><input type="text" class="form-control optionNameQuestionSub" placeholder="Option Name" maxlength="255"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBodySub2" style="display:none;"><div class="form-group"><input type="text" class="form-control " id="optionNameQuantity" placeholder="Quantity" maxlength="20"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBodySub3" style="display:none;"><div class="form-group">0 / 0</div></div><div id="checkBoxQuesMainBodyTrash" class="col-md-1 col-sm-1 col-xs-12"><div class="form-group"><a href="javascript:void(0)" onclick="removeThisDivSub(\'checkBoxQuesMainBodyConSubID' + subContainer + '\')" class="trackIConAnchor"><span class="glyphicon glyphicon glyphicon-trash"></span></a></div></div></div></div><div class="col-xs-12" style="margin:10px 0px 20px 0px; padding: 0px;"><a href="javascript:void(0)" onclick="addAnotherOptionSub(' + subContainer + ')" class="btn btn-primary">Add Another Option</a></div></div><div id="waivierTxtDivSub" class="form-group" style="margin: 20px 0px; overflow:hidden; display:none;"><label for="Instruction">Waiver</label><textarea class="form-control setHeight" id="waiverTxtSub" placeholder=""></textarea></div></div></div>');
+      cbSubContainer++;
+      $('#AppendSubOptionToSubDiv').append('<div id="AnotherSubQuestionMainContainer' + subContainer + '" class="AnotherSubQuestionMainContainerCls" ><div class="subQuestionHeadText"><span>Sub-Question ' + subContainer + '</span><a href="javascript:void(0)" onclick="removeSubQuestionDiv(\'AnotherSubQuestionMainContainer' + subContainer + '\')" class="trackIconAnchorSub"><span class="glyphicon glyphicon glyphicon-trash"></span></a></div><div class="subQuestionBodyTxt"><div class="form-group" style="margin: 20px 0px; "><label for="title" class="subLabelTitleTxt">If the attendee chooses:</label><div class="dropdown dropDownSubFullWidth"><button style="width: 100%;text-align: left;" class="btn btn-default dropdown-toggle questionsBtn" type="button" id="dropdownMenuSubHead2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="text"></span><span class="caret" style="float: right;margin-top: 8px;"></span></button><ul class="dropdown-menu dropdownMenuSubHeadLi2" aria-labelledby="dropdownMenuSubHead2"></ul></div></div><div class="form-group askQuestionSubTxtDiv"><label for="title" class="subLabelTitleTxt">Ask the question:</label><input type="text" class="form-control" id="askAQuestionSub" placeholder=""></div><div class="form-group" style="padding-bottom: 31px;clear: both;"><label for="title" class="subLabelTitleTxt">Question Type:</label><div class="dropdown dropDownSubFullWidth"><button class="btn btn-default dropdown-toggle questionsBtn" type="button" id="dropdownMenuSubOptions1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="text">Text</span><span class="caret"></span></button><ul class="dropdown-menu" aria-labelledby="dropdownMenuSubOptions1"><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 1); ShowHideRespectiveDivSub(null,' + subContainer + ');">Text</a></li><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 2); ShowHideRespectiveDivSub(null,' + subContainer + ');">Paragraph Text</a></li><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 3); ShowHideRespectiveDivSub(\'CheckBoxContainerSub\',' + subContainer + ');">CheckBoxes</a></li><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 4); ShowHideRespectiveDivSub(\'CheckBoxContainerSub\',' + subContainer + ');">Radio Buttons</a></li><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 5); ShowHideRespectiveDivSub(\'CheckBoxContainerSub\',' + subContainer + ');">Dropdown</a></li><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 6); ShowHideRespectiveDivSub(\'waivierTxtDivSub\',' + subContainer + ');">Waiver</a></li></ul></div></div><div id="CheckBoxContainerSub" style="display:none;"><div id="checkBoxQuantitySub" class="basicInfoUnCheckBox" style="font-size: 16px;" onclick="setCheckBoxChecked(this); ShowHideQuantityOrderSub(this, ' + subContainer + ');">LIMIT QUANTITY FOR EACH CHOICE</div><div id="checkBoxHeading">Options available</div><div id="checkBoxQuesMainSub' + subContainer + '"><div id="checkBoxQuesMainHeader"><div class="col-md-11 col-sm-11 col-xs-12 checkBoxQuesMainHeadSub1">Option Name</div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainHeadSub2" style="display:none;">QUANTITY</div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainHeadSub3" style="display:none;">ORDERS</div><div class="col-md-1 col-sm-1 col-xs-12 checkBoxQuesMainHeadSubTrash"></div></div><div id="checkBoxQuesMainBodyConSubID' + cbSubContainer + '" class="checkBoxQuesMainBodyCon1 checkBoxQuesMainBodyConSubCls1"><div class="col-md-11 col-sm-11 col-xs-12 checkBoxQuesMainBodySub1"><div class="form-group"><input type="text" class="form-control optionNameQuestionSub" placeholder="Option Name" maxlength="255"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBodySub2" style="display:none;"><div class="form-group"><input type="text" class="form-control " id="optionNameQuantity" placeholder="Quantity" maxlength="20"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBodySub3" style="display:none;"><div class="form-group">0 / 0</div></div><div id="checkBoxQuesMainBodyTrash" class="col-md-1 col-sm-1 col-xs-12"><div class="form-group"><a href="javascript:void(0)" onclick="removeThisDivSub(this, ' + cbSubContainer + ')" class="trackIConAnchor"><span class="glyphicon glyphicon glyphicon-trash"></span></a></div></div></div></div><div class="col-xs-12" style="margin:10px 0px 20px 0px; padding: 0px;"><a href="javascript:void(0)" onclick="addAnotherOptionSub(' + subContainer + ')" class="btn btn-primary">Add Another Option</a></div></div><div id="waivierTxtDivSub" class="form-group" style="margin: 20px 0px; overflow:hidden; display:none;"><label for="Instruction">Waiver</label><textarea class="form-control setHeight" id="waiverTxtSub" placeholder=""></textarea></div></div></div>');
 
       $.each(questionsContainer, function (index, value) {
         if (index == 0) {
-          $('#dropdownMenuSubHead2 .text').html($(value).val());
+          $('#AnotherSubQuestionMainContainer' + subContainer + ' #dropdownMenuSubHead2 .text').html($(value).val());
 
           $('.dropdownMenuSubHeadLi2').html('<li><a href="javascript:void(0)" onclick="setdropDownItemsSub(this, ' + index + ')">' + $(value).val() + '</a></li>');
 
@@ -941,7 +961,7 @@
     }
   }
 
-  function txtBoxQuestionAddtoList(obj) {
+  function txtBoxQuestionAddtoList() {
     var questionsContainer = $('.optionNameQuestion');
     var questionTxt = [];
     console.debug();

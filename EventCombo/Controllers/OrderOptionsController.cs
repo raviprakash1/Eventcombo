@@ -62,6 +62,7 @@ namespace EventCombo.Controllers
       ViewBag.IsError = isError;
       ViewBag.EventId = eventId;
       ViewBag.DiscountCode = _manageService.GetPromoCodeCount(eventId);
+      ViewBag.CurrentMenuId = "orderoptions";
     }
 
     private bool CheckSecurity(string UserId)

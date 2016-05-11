@@ -10,9 +10,8 @@
 
 @section sidenav{
     <div id="sidebar" class="nav nav-stacked">
-  
+        @Html.Action("Sidenav", "ManageEvent", new { eventid = Model.Eventid, CurrentItem = "" })
     </div>
-    @Html.Partial("_ManageEventLeftMenu")
  }
 
 
@@ -621,8 +620,6 @@
 <script src="~/Scripts/Chart.js"></script>
 
 <script>
-
-    $('#sidebar').load('@Url.Action("Sidenav", "ManageEvent", new { eventid=Model.Eventid })');
     $(function () {
         $(document).tooltip();
     });

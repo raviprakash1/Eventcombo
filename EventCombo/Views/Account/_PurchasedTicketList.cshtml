@@ -1,0 +1,36 @@
+﻿@using System.Collections.Generic;
+@using System.Linq;
+@using EventCombo.Models;
+@model OrderListMainViewModel
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="UETableHead" width="15%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Name')">Event</a></th>
+        <th class="UETableHead" width="15%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Order')">Order Number</a></th>
+        <th class="UETableHead" width="15%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Date')">Date</a></th>
+        <th class="UETableHead" width="7%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Qty')">Qty.</a></th>
+        <th class="UETableHead"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Total')">Total Paid</a></th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var order in Model.Orders)
+      {
+        <tr>
+          <td class="UETableTD">@order.Name</td>
+          <td class="UETableTD">
+            <a href="javascript:void(0)" onclick="expandEditMenu(this, 'UETableTD@(Model.OrderType)_', '@(order.OrderId)')">
+              @((order.OrderId ?? "") == "" ? "Not assigned" : order.OrderId)
+            </a>
+          </td>
+          <td class="UETableTD">@(order.EventStartDate.Value.ToLongDateString())</td>
+          <td class="UETableTD">@order.Quantity</td>
+          <td class="UETableTD">$@(order.TotalPaid) @((order.OrderStateId ?? 1) != 1 ? "- Cancelled" : "")</td>
+        </tr>
+        <tr id="UETableTD@(Model.OrderType)_@(order.OrderId)" data-orderstate="@(order.OrderStateId ?? 1)" data-popped="0" style="display:none;"></tr>
+      }
+    </tbody>
+  </table>
+</div>
+

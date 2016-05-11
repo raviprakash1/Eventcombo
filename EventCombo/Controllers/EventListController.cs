@@ -6,11 +6,12 @@ using System.Web.Mvc;
 using EventCombo.Models;
 using System.Data;
 using PagedList;
+using DevTrends.MvcDonutCaching;
 
 namespace EventCombo.Controllers
 {
 
-    [OutputCacheAttribute(VaryByParam = "None", Duration = 0, NoStore = true)]
+    [DonutOutputCache(VaryByParam = "None", Duration = 0, NoStore = true)]
     public class EventListController : Controller
     {
         string UserId = string.Empty;

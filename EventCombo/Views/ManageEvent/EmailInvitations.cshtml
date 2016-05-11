@@ -5,7 +5,7 @@
 }
 @section sidenav{
     <div id="sidebar" class="nav nav-stacked">
-
+      @Html.Action("Sidenav", "ManageEvent", new { eventid = ViewBag.EventId, CurrentItem = "inviteandpromote" })
     </div>
 }
 
@@ -298,7 +298,6 @@
 
     }
     $(document).ready(function () {
-        $('#sidebar').load('@Url.Action("Sidenav", "ManageEvent", new { eventid= ViewBag.EventId })');
         $("#btnYes").click(function () {
             $.ajax({
                 url: '@Url.Action("DeleteInvitation", "ManageEvent")',

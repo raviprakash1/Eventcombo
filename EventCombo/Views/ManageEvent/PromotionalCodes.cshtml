@@ -7,9 +7,8 @@
 }
 @section sidenav{
     <div id="sidebar" class="nav nav-stacked">
-        
+      @Html.Action("Sidenav", "ManageEvent", new { eventid = Model.Eventid, CurrentItem = "inviteandpromote" })
     </div>
-  @Html.Partial("_ManageEventLeftMenu")
 }
 <style type="text/css">
 .dropheight .dropdown-menu.open .dropdown-menu.inner {
@@ -252,9 +251,6 @@
             $("#sidebar").find("#dvcrtpromcode").addClass("active");
             $("#sidebar").find("#dvcrtpromcode b").addClass('opened new-opend');
         });
-        $('#sidebar').load('@Url.Action("Sidenav", "ManageEvent", new { eventid=Model.Eventid })');
-       
-        $('#crt_promcode').click();
 
         var vPageIndex = $("#hdPageIndex").val();
         $("#aPageLink-" + vPageIndex).addClass("active");
