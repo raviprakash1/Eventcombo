@@ -25,9 +25,9 @@ namespace EventCombo.Models
             this.EventVenues = new HashSet<EventVenue>();
             this.MultipleEvents = new HashSet<MultipleEvent>();
             this.OrderTemplates = new HashSet<OrderTemplate>();
+            this.Event_OrganizerMessages = new HashSet<Event_OrganizerMessages>();
             this.Ticket_Purchased_Detail = new HashSet<Ticket_Purchased_Detail>();
             this.EventFavourites = new HashSet<EventFavourite>();
-            this.Event_OrganizerMessages = new HashSet<Event_OrganizerMessages>();
         }
     
         public long EventID { get; set; }
@@ -86,10 +86,10 @@ namespace EventCombo.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderTemplate> OrderTemplates { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Event_OrganizerMessages> Event_OrganizerMessages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ticket_Purchased_Detail> Ticket_Purchased_Detail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventFavourite> EventFavourites { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Event_OrganizerMessages> Event_OrganizerMessages { get; set; }
     }
 }

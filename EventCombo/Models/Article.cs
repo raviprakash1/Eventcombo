@@ -32,9 +32,9 @@ namespace EventCombo.Models
         public System.DateTime CreateDate { get; set; }
         public System.DateTime EditDate { get; set; }
     
-        public virtual ArticleAuthor ArticleAuthor { get; set; }
         public virtual ECImage ECImage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArticleImage> ArticleImages { get; set; }
+        public virtual ArticleAuthor ArticleAuthor { get; set; }
     }
 }

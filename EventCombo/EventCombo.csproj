@@ -1060,10 +1060,6 @@
     <Content Include="Models\EventComboModel.edmx.diagram">
       <DependentUpon>EventComboModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Muneem\Views\OrderOptions\Confirmation.cshtml" />
-    <Content Include="Muneem\Views\OrderOptions\EventType.cshtml" />
-    <Content Include="Muneem\Views\OrderOptions\Form.cshtml" />
-    <Content Include="Muneem\Views\OrderOptions\Waitlist.cshtml" />
     <None Include="Properties\PublishProfiles\depoy1.pubxml" />
     <None Include="Properties\PublishProfiles\eventcombo.pubxml" />
     <None Include="Properties\PublishProfiles\IISHostDemo.pubxml" />

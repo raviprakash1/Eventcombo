@@ -119,7 +119,6 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="LoginStatus" Type="varchar" MaxLength="1" />
-          <Property Name="OldUserID" Type="int" />
         </EntityType>
         <EntityType Name="BillingAddress">
           <Key>
@@ -457,7 +456,7 @@
           <Property Name="PI_AccountNumber" Type="varchar" MaxLength="100" />
           <Property Name="PI_ReAccountNumber" Type="varchar" MaxLength="100" />
           <Property Name="PI_PayTo" Type="varchar" MaxLength="500" />
-          <Property Name="PI_EventId" Type="bigint" />
+          <Property Name="PI_EventId" Type="bigint" Nullable="false" />
           <Property Name="PI_Address2" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Permission_Detail">
@@ -526,6 +525,8 @@
           <Property Name="SavedDate" Type="datetime" />
           <Property Name="PC_Startdatetype" Type="nchar" MaxLength="1" />
           <Property Name="Pc_Enddatetype" Type="nchar" MaxLength="1" />
+          <Property Name="P_Startdate" Type="datetime" />
+          <Property Name="P_Enddate" Type="datetime" />
         </EntityType>
         <EntityType Name="Publish_Event_Detail">
           <Key>
@@ -656,7 +657,7 @@
           <Property Name="TQD_StartTime" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EC2.dbo.TicketBack2015' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EventCombo.dbo.TicketBack2015' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TicketBack2015">
           <Key>
             <PropertyRef Name="T_Id" />
@@ -766,7 +767,7 @@ warning 6002: The table/view 'EC2.dbo.TicketBack2015' does not have a primary ke
           <Property Name="VenueName" Type="varchar" MaxLength="200" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EC2.dbo.V_EventsList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EventCombo.dbo.V_EventsList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="V_EventsList">
           <Key>
             <PropertyRef Name="EventID" />
@@ -803,7 +804,7 @@ warning 6002: The table/view 'EC2.dbo.V_EventsList' does not have a primary key 
           <Property Name="EventTiming" Type="varchar" MaxLength="49" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EC2.dbo.v_RetrieveEventid' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="v_RetrieveEventid">
           <Key>
             <PropertyRef Name="EventID" />
@@ -850,7 +851,7 @@ warning 6002: The table/view 'EC2.dbo.v_RetrieveEventid' does not have a primary
           <Property Name="EventCancel" Type="varchar" MaxLength="2" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="V_Users">
           <Key>
             <PropertyRef Name="Id" />
@@ -884,7 +885,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Property Name="deals" Type="int" Nullable="false" />
           <Property Name="dealpurchased" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__EventSubC__Event__45BE5BA9">
+        <Association Name="FK__EventSubC__Event__2CAA2BCA">
           <End Role="EventCategory" Type="Self.EventCategory" Multiplicity="1" />
           <End Role="EventSubCategory" Type="Self.EventSubCategory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -896,7 +897,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TicketDel__Deliv__4C6B5938">
+        <Association Name="FK__TicketDel__Deliv__33572959">
           <End Role="DeliveryMethod" Type="Self.DeliveryMethod" Multiplicity="1" />
           <End Role="TicketDeliveryMethod" Type="Self.TicketDeliveryMethod" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1351,11 +1352,11 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
     [V_Users].[dealpurchased] AS [dealpurchased]
     FROM [dbo].[V_Users] AS [V_Users]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__EventSubC__Event__45BE5BA9" Association="Self.FK__EventSubC__Event__45BE5BA9">
+          <AssociationSet Name="FK__EventSubC__Event__2CAA2BCA" Association="Self.FK__EventSubC__Event__2CAA2BCA">
             <End Role="EventCategory" EntitySet="EventCategory" />
             <End Role="EventSubCategory" EntitySet="EventSubCategory" />
           </AssociationSet>
-          <AssociationSet Name="FK__TicketDel__Deliv__4C6B5938" Association="Self.FK__TicketDel__Deliv__4C6B5938">
+          <AssociationSet Name="FK__TicketDel__Deliv__33572959" Association="Self.FK__TicketDel__Deliv__33572959">
             <End Role="DeliveryMethod" EntitySet="DeliveryMethod" />
             <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethod" />
           </AssociationSet>
@@ -1508,7 +1509,6 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_Profile" FromRole="AspNetUsers" ToRole="Profile" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-          <Property Name="OldUserID" Type="Int32" />
         </EntityType>
         <EntityType Name="BillingAddress">
           <Key>
@@ -2427,7 +2427,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Property Name="PI_AccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PI_ReAccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PI_PayTo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="PI_EventId" Type="Int64" />
+          <Property Name="PI_EventId" Type="Int64" Nullable="false" />
           <Property Name="PI_Address2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TicketOrderDetail">
@@ -2516,6 +2516,8 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Property Name="SavedDate" Type="DateTime" Precision="3" />
           <Property Name="PC_Startdatetype" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
           <Property Name="Pc_Enddatetype" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="P_Startdate" Type="DateTime" Precision="3" />
+          <Property Name="P_Enddate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="TimeZoneDetail1">
           <Key>
@@ -2920,7 +2922,6 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="Cmsdata.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="OldUserID" ColumnName="OldUserID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
@@ -3573,6 +3574,8 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySetMapping Name="Promo_Code">
             <EntityTypeMapping TypeName="Cmsdata.Promo_Code">
               <MappingFragment StoreEntitySet="Promo_Code">
+                <ScalarProperty Name="P_Enddate" ColumnName="P_Enddate" />
+                <ScalarProperty Name="P_Startdate" ColumnName="P_Startdate" />
                 <ScalarProperty Name="Pc_Enddatetype" ColumnName="Pc_Enddatetype" />
                 <ScalarProperty Name="PC_Startdatetype" ColumnName="PC_Startdatetype" />
                 <ScalarProperty Name="SavedDate" ColumnName="SavedDate" />

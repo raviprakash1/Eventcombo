@@ -17,7 +17,7 @@ namespace EventCombo.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MultipleEvent()
         {
-            this.Publish_Event_Details = new HashSet<Publish_Event_Detail>();
+            this.Publish_Event_Detail = new HashSet<Publish_Event_Detail>();
         }
     
         public long MultipleEventID { get; set; }
@@ -36,6 +36,6 @@ namespace EventCombo.Models
     
         public virtual Event Event { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Publish_Event_Detail> Publish_Event_Details { get; set; }
+        public virtual ICollection<Publish_Event_Detail> Publish_Event_Detail { get; set; }
     }
 }

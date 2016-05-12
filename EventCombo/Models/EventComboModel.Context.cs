@@ -98,16 +98,16 @@ namespace EventCombo.Models
         public virtual DbSet<OrderTemplateGroupType> OrderTemplateGroupTypes { get; set; }
         public virtual DbSet<Promo_Code> Promo_Code { get; set; }
         public virtual DbSet<Ticket_Purchased_Detail> Ticket_Purchased_Detail { get; set; }
-        public virtual DbSet<ArticleAuthor> ArticleAuthors { get; set; }
-        public virtual DbSet<ArticleImage> ArticleImages { get; set; }
-        public virtual DbSet<ECImage> ECImages { get; set; }
-        public virtual DbSet<ECImageType> ECImageTypes { get; set; }
-        public virtual DbSet<Article> Articles { get; set; }
-        public virtual DbSet<OrderState> OrderStates { get; set; }
         public virtual DbSet<EventVenue> EventVenues { get; set; }
         public virtual DbSet<MultipleEvent> MultipleEvents { get; set; }
         public virtual DbSet<V_EventsList> V_EventsList { get; set; }
         public virtual DbSet<V_Users> V_Users { get; set; }
+        public virtual DbSet<Article> Articles { get; set; }
+        public virtual DbSet<ArticleAuthor> ArticleAuthors { get; set; }
+        public virtual DbSet<ArticleImage> ArticleImages { get; set; }
+        public virtual DbSet<ECImage> ECImages { get; set; }
+        public virtual DbSet<ECImageType> ECImageTypes { get; set; }
+        public virtual DbSet<OrderState> OrderStates { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)

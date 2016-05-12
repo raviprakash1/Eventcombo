@@ -32,7 +32,5 @@ namespace EventCombo.Models
         public string O_Card_TransHash { get; set; }
         public string O_Card_TransId { get; set; }
         public Nullable<byte> OrderStateId { get; set; }
-    
-        public virtual OrderState OrderState { get; set; }
     }
 }
