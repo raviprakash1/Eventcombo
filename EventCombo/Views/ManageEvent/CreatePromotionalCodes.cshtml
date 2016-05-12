@@ -52,7 +52,14 @@
         <div class="col-sm-12 no_pad mt20">
                 <div class="col-sm-2 no_pad">
                     <div class="form-group">
-                        <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code" value="@Model.PC_Code" maxlength="20">
+                        @if (Model.orderrow)
+                        {
+                        <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code" value="@Model.PC_Code" maxlength="15" disabled>
+                        }
+                        else
+                        {
+                            <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code" value="@Model.PC_Code" maxlength="15">
+                        }
                     </div>
                 </div>
             @if (Model.Formtype == "S")
@@ -112,7 +119,7 @@ else
 {
 if (Model.Formtype == "S")
 {
-                <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Value" id="txt_discountmnt" name="PC_Amount" value="@Model.PC_Amount"  maxlength="7">
+                <input class="form-control evnt_inp_cont " type="text" placeholder="Enter Discount Value" id="txt_discountmnt" name="PC_Amount" value="@Model.PC_Amount"  maxlength="7" >
 }
 else
 {
@@ -214,20 +221,20 @@ else
                         @if (Model.Formtype == "S")
                         {
                         <input type="text" class="form-control evnt_inp_cont" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start" value="@Model.PC_Start" />
-                        <input type="text" class="form-control evnt_inp_cont dayspickerclick" id="txtstartdatedays" name="startdays" value="@Model.startdays" style="display:none"  readonly="readonly" />
+                        <input type="text" class="form-control evnt_inp_cont dayspickerclick promotional-readonly" id="txtstartdatedays" name="startdays" value="@Model.startdays" style="display:none"  readonly="readonly" />
                         }
                         else
                         {
                             if (Model.PC_Startdatetype == "1")
                             {
                                 <input type="text" class="form-control evnt_inp_cont" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start" value="@Model.PC_Start" style="display:none"/>
-                                <input type="text" class="form-control evnt_inp_cont dayspickerclick" id="txtstartdatedays" name="startdays" value="@Model.startdays"  readonly="readonly"  />
+                                <input type="text" class="form-control evnt_inp_cont dayspickerclick promotional-readonly" id="txtstartdatedays" name="startdays" value="@Model.startdays"  readonly="readonly"  />
 
                             }
                             else
                             {
                                 <input type="text" class="form-control evnt_inp_cont" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtstartdate" name="PC_Start" value="@Model.PC_Start" />
-                                <input type="text" class="form-control evnt_inp_cont dayspickerclick" id="txtstartdatedays" name="startdays" value="@Model.startdays" style="display:none" readonly="readonly" />
+                                <input type="text" class="form-control evnt_inp_cont dayspickerclick promotional-readonly" id="txtstartdatedays" name="startdays" value="@Model.startdays" style="display:none" readonly="readonly" />
 
                             }
                         }
@@ -284,20 +291,20 @@ else
 @if (Model.Formtype == "S")
 {
                         <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" />
-                        <input type="text" class="form-control evnt_inp_cont dayspickerclick2" id="txtenddatedays" name="enddays" value="@Model.enddays" style="display:none" readonly="readonly"  />
+                        <input type="text" class="form-control evnt_inp_cont dayspickerclick2 promotional-readonly" id="txtenddatedays" name="enddays" value="@Model.enddays" style="display:none" readonly="readonly"  />
 }
 else
 {
     if (Model.Pc_Enddatetype == "1")
     {
         <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" style="display:none"/>
-        <input type="text" class="form-control evnt_inp_cont dayspickerclick2" id="txtenddatedays" name="enddays" value="@Model.enddays"  readonly="readonly"  />
+        <input type="text" class="form-control evnt_inp_cont dayspickerclick2 promotional-readonly" id="txtenddatedays" name="enddays" value="@Model.enddays"  readonly="readonly"  />
 
     }
     else
     {
         <input type="text" class="form-control evnt_inp_cont " data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" id="txtenddate" name="PC_End" value="@Model.PC_End" />
-        <input type="text" class="form-control evnt_inp_cont dayspickerclick2" id="txtenddatedays" name="enddays" value="@Model.enddays" style="display:none" readonly="readonly"   />
+        <input type="text" class="form-control evnt_inp_cont dayspickerclick2 promotional-readonly" id="txtenddatedays" name="enddays" value="@Model.enddays" style="display:none" readonly="readonly"   />
 
     }
 }
@@ -390,8 +397,8 @@ else
                 <div class="col-sm-12 no_pad mt10">
                     <div class="col-md-6 col-sm-12 no_pad">
                         <div class="col-sm-12 apply_code_head">
-                            <div class="col-sm-11 no_pad">Discout URL </div>
-                            <div class="col-sm-1 no_pad text-right">
+                            <div class="col-sm-11 col-xs-6 no_pad">Discout URL </div>
+                            <div class="col-sm-1 col-xs-6 no_pad text-right">
                                 <img src="/Images/icon-question.gif" />
                             </div>
 
@@ -427,7 +434,7 @@ else
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-sm-12 no_pad mt10 mb10">
-                    <button class="btn btn-info acnt_btn" type="submit" title="" id="btnsave">Save</button>
+                    <button class="btn theme-btn btn-info acnt_btn" type="submit" title="" id="btnsave">Save</button>
                 </div>
             </div>
  }
@@ -505,10 +512,20 @@ else
                 //    alert('button clicked');
                 //});
 
+                $('#txt_discountmnt').bind("cut copy paste", function (e) {
+                    e.preventDefault();
+                });
+                $('#txt_use').bind("cut copy paste", function (e) {
+                    e.preventDefault();
+                });
+                
                 $(document).ajaxStop(function() {
-                    $(document).find("#crt_promcode").click();
-                    $("#sidebar").find("#dvcrtpromcode").addClass("active");
-                    $("#sidebar").find("#dvcrtpromcode b").addClass('opened new-opend');
+                    if( !$("#collapse2").hasClass("in"))
+                    {
+                        $(document).find("#crt_promcode").click();
+                        $("#sidebar").find("#dvcrtpromcode").addClass("active");
+                        $("#sidebar").find("#dvcrtpromcode b").addClass('opened new-opend');
+                    }
                 });
               
                 $(".upload_help_icn_inner").css("display", "none");
@@ -553,15 +570,10 @@ else
                 $(document).ready(function () {
 
                     $('#befendevnt').change(function(){
-                    
+                        debugger;
                         if ($(this).is(":checked")==true)
                         {
                             $('#hd_enddatetype').val('1');
-                           
-                            //$('#txtenddatedays').val("0 Days 0 Hrs 0 Min");
-                            $('#txtenddatedays').css('display','block');
-                            $('#txtenddate').css('display','none');
-
                             var value=$('#txtenddate').val();
                             var startdatef=$('#idstartdate').val();
                             $.ajax({
@@ -569,12 +581,17 @@ else
                                 data: { date: value ,type:"d",starttype:startdatef,typeofs:'e'},
                                 type: "Post",
                                 success: function (data) {
-                                    
+                                    //$('#txtenddatedays').css('display','block');
                                     $('#txtenddatedays').val(data);
                                   
                                 }
                             });
-                        }else{
+                          
+                            $('#txtenddatedays').css('display','block');
+                            $('#txtenddate').css('display','none');
+                        }
+                        else
+                        {
 
                             var value=$('#txtenddatedays').val();
                             var startdatef=$('#idstartdate').val();
@@ -846,7 +863,7 @@ else
                         newFileUpload.attr("name", name);
 
                     });
-                    $('#txt_Promocode').blur(function (e) {
+                    $('#txt_Promocode').keyup(function (e) {
 
                         var value = $(this).val();
                         if(value!='')
@@ -1132,27 +1149,59 @@ else
                 function compare(chkstart, chkend) {
                     debugger;
                     var errorMsg = "";
-                    var arr1= chkstart.split(" ");
-                    var dates1=arr1[0].split("-");
-                    var time=arr1[1].split(":");
+                    var dates1="";
+                    var time="";
+                    var AMPM="";
+                    var arr1= chkstart.trim().split(" ");
+                    var alength=arr1.length;
+                    for(var i=0;i<alength;i++)
+                    {
+                        if(arr1[i].indexOf("-")>0)
+                        {
+                            dates1=arr1[i].split("-");
+                        }
+                        if(arr1[i].indexOf(":")>0)
+                        {
+                            time=arr1[i].split(":");
+                        }
+                       
+                    }
+                   
+                    AMPM=arr1[alength-1];
+                  
                     var hours=parseInt(time[0]);
                     var minutes=parseInt(time[1]);
-                    var AMPM=arr1[2].toLowerCase();
+                    
                     if(AMPM == "pm" && hours<12) hours = hours+12;
                     if(AMPM == "am" && hours==12) hours = hours-12;
                     var sHours1 = hours.toString();
                     var sMinutes1 = minutes.toString();
                     if(hours<10) sHours1 = "0" + sHours1;
                     if(minutes<10) sMinutes1 = "0" + sMinutes1;
-                           
+                    //sseconds= parseInt(time[2])   ;
                             
                             
-                    var arr2= chkend.split(" ");
-                    var dates2=arr2[0].split("-");
-                    var time2=arr2[1].split(":");
+                    var arr2= chkend.trim().split(" ");
+                    var dates2="";
+                    var time2="";
+                    var alength2=arr2.length;
+                    for(var i=0;i<alength2;i++)
+                    {
+                        if(arr2[i].indexOf("-")>0)
+                        {
+                            dates2=arr2[i].split("-");
+                        }
+                        if(arr2[i].indexOf(":")>0)
+                        {
+                            time2=arr2[i].split(":");
+                        }
+                       
+                    }
+                    AMPM2=arr2[alength2-1].toLowerCase();
+                   
                     var hours2=parseInt(time2[0]);
                     var minutes2=parseInt(time2[1]);
-                    var AMPM2=arr2[2].toLowerCase();
+                 
                   
                     if(AMPM2 == "pm" && hours2<12) hours2 = hours2+12;
                     if(AMPM2 == "am" && hours2==12) hours2 = hours2-12;
@@ -1160,16 +1209,16 @@ else
                     var sMinutes2= minutes2.toString();
                     if(hours2<10) sHours2 = "0" + sHours2;
                     if(minutes2<10) sMinutes2 = "0" + sMinutes2;
-                        
+                    //sseconds2=parseInt(time2[2]);
                            
 
                     var a = new Date(dates1[2], dates1[0], dates1[1], sHours1, sMinutes1);
                          
                     var b = new Date(dates2[2], dates2[0], dates2[1], sHours2, sMinutes2);
-
+                   
                     //var msDateA = Date.UTC(a.getFullYear(), a.getMonth() + 1, a.getDate());
                     //var msDateB = Date.UTC(b.getFullYear(), b.getMonth() + 1, b.getDate());
-
+                  
                     if (a < b)
                         return errorMsg = "";  // less than
                     else if (a == b)

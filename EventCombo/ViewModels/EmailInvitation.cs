@@ -19,5 +19,11 @@ namespace EventCombo.ViewModels
         public long I_Id   { get; set; }
 
     }
+
+    public class ticketbox
+    {
+
+        public string ticketinfo { get; set; }
+    }
       
 }

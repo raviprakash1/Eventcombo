@@ -13,6 +13,7 @@ using PagedList;
 using EventCombo.ViewModels;
 using System.Net.Mail;
 using System.Configuration;
+using EventCombo.Utils;
 using DevTrends.MvcDonutCaching;
 
 namespace EventCombo.Controllers
@@ -25,18 +26,28 @@ namespace EventCombo.Controllers
         EventComboEntities db = new EventComboEntities();
 
         [Authorize]
-        public ActionResult Index(long Eventlid, string type)
+        public ActionResult Index(long Eventlid = 0, string type = "")
         {
-            ValidationMessageController vmc = new ValidationMessageController();
-            vmc.ControllerContext = new ControllerContext(this.Request.RequestContext, vmc);
+            if (Session["AppId"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (Eventlid == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ValidationMessage vmc = new ValidationMessage();
             var Eventid = vmc.GetLatestEventId(Eventlid);
+            if (CommanClasses.CompareCurrentUser(Eventid, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
+
             var TopAddress = ""; var Topvenue = "";
             string sDate_new = "", eDate_new = "";
             string startday = "", endday = "", starttime = "", endtime = "";
             ManageEvent Mevent = new ManageEvent();
             //Getting event details
-            CreateEventController createevent = new CreateEventController();
-            createevent.ControllerContext = new ControllerContext(this.Request.RequestContext, createevent);
+            EventCreation createevent = new EventCreation();
+
             var Edetails = createevent.GetEventdetail(Eventid);
             //Getting event details
             //Get Address detail
@@ -65,27 +76,44 @@ namespace EventCombo.Controllers
             }
             //Get Address detail
             //Get Event Date
+            var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == Edetails.TimeZone select ev).FirstOrDefault();
+            DateTimeWithZone dtzstart, dzend, dtznewstart, dtzCreated;
             DateTime ENDATE = new DateTime();
             var chkdate = (from ev in db.MultipleEvents where ev.EventID == Eventid select ev).Any();
             if (chkdate)
             {
                 var evschdetails = (from ev in db.MultipleEvents where ev.EventID == Eventid select ev).FirstOrDefault();
-                var startdate = (evschdetails.StartingFrom);
+
+                if (Timezonedetail != null)
+                {
+                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(evschdetails.M_Startfrom), userTimeZone, true);
+                    dzend = new DateTimeWithZone(Convert.ToDateTime(evschdetails.M_StartTo), userTimeZone, true);
+                }
+                else
+                {
+                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(evschdetails.M_Startfrom), userTimeZone, true);
+                    dzend = new DateTimeWithZone(Convert.ToDateTime(evschdetails.M_StartTo), userTimeZone, true);
+                }
+
+
+
                 DateTime sDate = new DateTime();
-                sDate = DateTime.Parse(startdate);
+                sDate = dtzstart.LocalTime;
                 startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
 
                 sDate_new = sDate.ToString("MMM dd, yyyy");
-                var enddate = evschdetails.StartingTo;
+
 
                 DateTime eDate = new DateTime();
-                eDate = DateTime.Parse(enddate);
+                eDate = dzend.LocalTime;
                 endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
                 eDate_new = eDate.ToString("MMM dd, yyyy");
 
-                starttime = evschdetails.StartTime.ToUpper();
-                endtime = evschdetails.EndTime.ToUpper();
-                ENDATE = DateTime.Parse(enddate + " " + endtime);
+                starttime = sDate.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
+                endtime = eDate.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
+                ENDATE = dzend.LocalTime;
 
             }
             else
@@ -93,42 +121,57 @@ namespace EventCombo.Controllers
                 var evschdetails = (from ev in db.EventVenues where ev.EventID == Eventid select ev).FirstOrDefault();
                 if (evschdetails != null)
                 {
-                    var startdate = (evschdetails.EventStartDate);
-                    if (startdate != null)
+
+                    if (Timezonedetail != null)
                     {
-                        DateTime sDate = new DateTime();
-                        sDate = DateTime.Parse(startdate.ToString(), new CultureInfo("en-US", false));
-                        startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
-                        sDate_new = sDate.ToString("MMM dd,yyyy");
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                        dtzstart = new DateTimeWithZone(Convert.ToDateTime(evschdetails.E_Startdate), userTimeZone, true);
+                        dzend = new DateTimeWithZone(Convert.ToDateTime(evschdetails.E_Enddate), userTimeZone, true);
                     }
-                    var enddate = evschdetails.EventEndDate;
-                    if (enddate != null)
+                    else
                     {
-                        DateTime eDate = new DateTime();
-                        eDate = DateTime.Parse(enddate.ToString(), new CultureInfo("en-US", false));
-                        endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
-                        eDate_new = eDate.ToString("MMM dd,yyyy");
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                        dtzstart = new DateTimeWithZone(Convert.ToDateTime(evschdetails.E_Startdate), userTimeZone, true);
+                        dzend = new DateTimeWithZone(Convert.ToDateTime(evschdetails.E_Enddate), userTimeZone, true);
                     }
 
-                    starttime = evschdetails.EventStartTime.ToString();
-                    endtime = evschdetails.EventEndTime.ToString();
-                    ENDATE = DateTime.Parse(enddate + " " + endtime, new CultureInfo("en-US", false));
+
+                    DateTime sDate = new DateTime();
+                    sDate = dtzstart.LocalTime;
+                    startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
+                    sDate_new = sDate.ToString("MMM dd,yyyy");
+
+
+                    DateTime eDate = new DateTime();
+                    eDate = dzend.LocalTime;
+                    endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
+                    eDate_new = eDate.ToString("MMM dd,yyyy");
+
+
+                    starttime = sDate.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
+                    endtime = eDate.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
+                    ENDATE = dzend.LocalTime;
                 }
             }
             var timezone = "";
             DateTime dateTime = new DateTime();
-            var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == Edetails.TimeZone select ev).FirstOrDefault();
+
             if (Timezonedetail != null)
             {
-                timezone = Timezonedetail.TimeZone;
-                TimeZoneInfo timeZoneInfo;
+                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
 
 
-                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timezone);
-                dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, timeZoneInfo);
                 //Timezone value
 
             }
+            else
+            {
+                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+            }
+
+            dateTime = dtzCreated.LocalTime;
             if (!string.IsNullOrEmpty(eDate_new))
             {
 
@@ -183,8 +226,8 @@ namespace EventCombo.Controllers
             Mevent.DiscountCode = Discountcode;
             Session["logo"] = "events";
             Session["Fromname"] = "myevents";
-         
-           
+
+
 
             if (type == "P")
             {
@@ -195,69 +238,58 @@ namespace EventCombo.Controllers
                 TempData["Success"] = null;
             }
             OrderAttendees CO = new OrderAttendees();
-            Mevent.Order = (from o in db.Order_Detail_T
-                            join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
-                            join a in db.Profiles on p.TPD_User_Id equals a.UserID
-                            where p.TPD_Event_Id == Eventid
-                            group new
-                            {
-                                OrderId = o.O_Order_Id,
-                                Price = o.O_TotalAmount,
-                                Qty = p.TPD_Purchased_Qty,
-                                Name = a.FirstName + " " + a.LastName,
-                                Date = o.O_OrderDateTime
-                            }
-                            by new
-                            {
-                                o.O_Order_Id,
-                                o.O_TotalAmount,
-                                p.TPD_Purchased_Qty,
-                                a.FirstName,
-                                a.LastName,
-                                o.O_OrderDateTime
-                            } into gc
-                            orderby gc.Key.O_Order_Id descending
-                            select new OrderAttendees()
-                            {
-                                OrderId = gc.Key.O_Order_Id,
-                                Amount = gc.Key.O_TotalAmount.ToString(),
-                                Qty = gc.ToList().Sum(a => a.Qty).ToString(),
-                                Name = gc.Key.FirstName + " " + gc.Key.LastName,
-                                Date = gc.Key.O_OrderDateTime.ToString()
-                            }).Take(3).ToList();
+            var Order = (from o in db.Order_Detail_T
+                         join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
+                         where p.TPD_Event_Id == Eventid
+                         select new OrderAttendees()
+                         {
+                             OrderId = o.O_Order_Id,
+                             Amount = o.O_TotalAmount.ToString(),
+                             Qty = "0",
+                             Name = o.O_First_Name + " " + o.O_Last_Name,
+                             Date = o.O_OrderDateTime.ToString()
+                         }).Distinct().Take(3).ToList();
 
 
+            foreach (var item in Order)
+            {
 
-            Mevent.Attendess = (from o in db.Order_Detail_T
-                                join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
-                                join a in db.Profiles on p.TPD_User_Id equals a.UserID
-                                where p.TPD_Event_Id == Eventid
-                                group new
-                                {
-                                    OrderId = o.O_Order_Id,
-                                    Price = o.O_TotalAmount,
-                                    Qty = p.TPD_Purchased_Qty,
-                                    Name = a.FirstName + " " + a.LastName,
-                                    Date = o.O_OrderDateTime
-                                }
-                                by new
-                                {
-                                    o.O_Order_Id,
-                                    o.O_TotalAmount,
-                                    p.TPD_Purchased_Qty,
-                                    a.FirstName,
-                                    a.LastName,
-                                    o.O_OrderDateTime
-                                } into gc
-                                orderby gc.Key.O_Order_Id descending, gc.Key.FirstName ascending
-                                select new OrderAttendees()
-                                {
-                                    OrderId = gc.Key.O_Order_Id,
-                                    Amount = gc.Key.O_TotalAmount.ToString(),
-                                    Qty = gc.ToList().Sum(a => a.Qty).ToString(),
-                                    Name = gc.Key.FirstName + " " + gc.Key.LastName,
-                                    Date = gc.Key.O_OrderDateTime.ToString()
-                                }).Take(3).ToList();
+                var qty = (from p in db.Ticket_Purchased_Detail where p.TPD_Order_Id == item.OrderId select p.TPD_Purchased_Qty).Sum();
+                item.Qty = qty.ToString();
+            }
+            Mevent.Order = Order;
+            Mevent.Attendess = Order;
+
+            //Mevent.Attendess = (from o in db.Order_Detail_T
+            //                    join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
+            //                    join a in db.Profiles on p.TPD_User_Id equals a.UserID
+            //                    where p.TPD_Event_Id == Eventid
+            //                    group new
+            //                    {
+            //                        OrderId = o.O_Order_Id,
+            //                        Price = o.O_TotalAmount,
+            //                        Qty = p.TPD_Purchased_Qty,
+            //                        Name = a.FirstName + " " + a.LastName,
+            //                        Date = o.O_OrderDateTime
+            //                    }
+            //                    by new
+            //                    {
+            //                        o.O_Order_Id,
+            //                        o.O_TotalAmount,
+            //                        p.TPD_Purchased_Qty,
+            //                        a.FirstName,
+            //                        a.LastName,
+            //                        o.O_OrderDateTime
+            //                    } into gc
+            //                    orderby gc.Key.O_Order_Id descending, gc.Key.FirstName ascending
+            //                    select new OrderAttendees()
+            //                    {
+            //                        OrderId = gc.Key.O_Order_Id,
+            //                        Amount = gc.Key.O_TotalAmount.ToString(),
+            //                        Qty = gc.ToList().Sum(a => a.Qty).ToString(),
+            //                        Name = gc.Key.FirstName + " " + gc.Key.LastName,
+            //                        Date = gc.Key.O_OrderDateTime.ToString()
+            //                    }).Take(3).ToList();
 
 
             DateTime dt = DateTime.Today.AddDays(-30);
@@ -313,9 +345,6 @@ namespace EventCombo.Controllers
             TempData["ForSale"] = GetSaleAmount(Eventid, "FORSALE");
             TempData["NETSale"] = GetSaleAmount(Eventid, "NETSALE");
 
-            ViewBag.EventId = Eventid;
-            ViewBag.EventTitle = Mevent.Eventtitle;
-            ViewBag.DiscountCode = Mevent.DiscountCode;
             return View(Mevent);
         }
 
@@ -500,18 +529,27 @@ namespace EventCombo.Controllers
         [Authorize]
         public ActionResult EmailInvitations(long eventId, string tab, string sortOrder, int? page)
         {
-            
-            ViewBag.CurrentSort = (sortOrder ?? "subject");
+            if (Session["AppId"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (CommanClasses.CompareCurrentUser(eventId, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
 
+            ViewBag.CurrentSort = (sortOrder ?? "subject");
+            ValidationMessageController vmc = new ValidationMessageController();
+            eventId = vmc.GetLatestEventId(eventId);
+            long levtId = ValidationMessageController.GetParentEventId(eventId);
             ViewBag.tab = tab;
             ViewBag.EventId = eventId;
+            Session["Fromname"] = "emailinvitation";
+            Session["logo"] = "events";
             using (EventComboEntities objEnt = new EventComboEntities())
             {
                 var invitations = from invite_list in objEnt.Event_Email_List
-                                  group invite_list by invite_list.L_I_Id 
+                                  group invite_list by invite_list.L_I_Id
                                   into result1
                                   join invites in objEnt.Event_Email_Invitation on result1.FirstOrDefault().L_I_Id equals invites.I_Id
-                                  where invites.I_Event_Id == eventId && invites.I_Mode == "S"
+                                  where invites.I_Event_Id == levtId && (invites.I_Mode == "S" || invites.I_Mode == "N")
                                   orderby invites.I_ModifyDate
                                   select new EmailInvitation
                                   {
@@ -523,7 +561,6 @@ namespace EventCombo.Controllers
                                       NoOfRecipients = result1.Count()
                                   };
                 ViewBag.scheduledCount = invitations.Count();
-
                 switch (sortOrder)
                 {
                     case "subject_desc":
@@ -548,14 +585,14 @@ namespace EventCombo.Controllers
                         invitations = invitations.OrderByDescending(s => s.NoOfRecipients);
                         break;
                     default:
-                        invitations = invitations.OrderBy(s => s.Subject);
+                        invitations = invitations.OrderBy(s => s.SendOn);
                         break;
                 }
 
-                int pageSize = 9;
+                int pageSize = 10;
                 int pageNumber = (page ?? 1);
                 ViewBag.scheduled = invitations.ToPagedList(pageNumber, pageSize);
-                
+
                 //return View(invitations.ToPagedList(pageNumber, pageSize));
             }
 
@@ -565,7 +602,7 @@ namespace EventCombo.Controllers
                                   group invite_list by invite_list.L_I_Id
                                   into result1
                                   join invites in objEnt.Event_Email_Invitation on result1.FirstOrDefault().L_I_Id equals invites.I_Id
-                                  where invites.I_Event_Id == eventId && invites.I_Mode=="D"
+                                  where invites.I_Event_Id == levtId && invites.I_Mode == "D"
                                   orderby invites.I_ModifyDate
                                   select new EmailInvitation
                                   {
@@ -578,7 +615,6 @@ namespace EventCombo.Controllers
                                   };
 
                 ViewBag.draftCount = invitations.Count();
-
                 switch (sortOrder)
                 {
                     case "subject_desc":
@@ -603,11 +639,11 @@ namespace EventCombo.Controllers
                         invitations = invitations.OrderByDescending(s => s.NoOfRecipients);
                         break;
                     default:
-                        invitations = invitations.OrderBy(s => s.Subject);
+                        invitations = invitations.OrderBy(s => s.SendOn);
                         break;
                 }
 
-                int pageSize = 9;
+                int pageSize = 10;
                 int pageNumber = (page ?? 1);
                 ViewBag.draft = invitations.ToPagedList(pageNumber, pageSize);
 
@@ -664,7 +700,7 @@ namespace EventCombo.Controllers
                                 where myRow.E_Id == EventId
                                 select myRow).ToList().OrderBy(y => y.T_name);
                 long dSoldQty = 0;
-                strResult.Append("<table id='tbSaleTicket' class='table ft_black table - bordered mb0'>");
+                strResult.Append("<table id='tbSaleTicket' class='crt_event_list_tabl sales_by_tkt_tab'>");
                 strResult.Append("<thead>");
                 strResult.Append("<tr>");
                 strResult.Append("<th>Ticket Type</th>");
@@ -689,7 +725,14 @@ namespace EventCombo.Controllers
                     }
                     else
                     {
-                        strResult.Append("<td>"); strResult.Append(obj.Price); strResult.Append("</td>");
+                        if (obj.Price != null && obj.Price > 0)
+                        {
+                            strResult.Append("<td>"); strResult.Append(obj.Price); strResult.Append("</td>");
+                        }
+                        else
+                        {
+                            strResult.Append("<td>"); strResult.Append("-"); strResult.Append("</td>");
+                        }
                     }
 
                     var vRemQty = (from myRow in objEnt.Ticket_Quantity_Detail
@@ -738,8 +781,8 @@ namespace EventCombo.Controllers
                     {
                         strResult.Append("<td>"); strResult.Append("On Sale"); strResult.Append("</td>");
                     }
-                    strResult.Append("<td>"); strResult.Append((obj.Sale_End_Date != null ? obj.Sale_End_Date.ToString() : "")); strResult.Append("</td>");
-                    strResult.Append("<td>"); strResult.Append(""); strResult.Append("</td>");
+                    strResult.Append("<td>"); strResult.Append((obj.Sale_End_Date != null ? obj.Sale_End_Date.ToString() : "-")); strResult.Append("</td>");
+                    strResult.Append("<td>"); strResult.Append("-"); strResult.Append("</td>");
                     strResult.Append("</tr>");
                 }
                 strResult.Append("</tbody>");
@@ -754,21 +797,30 @@ namespace EventCombo.Controllers
             CultureInfo us = new CultureInfo("en-US");
             using (EventComboEntities objEnt = new EventComboEntities())
             {
-                var vTotalAmt = (from myRow in objEnt.Ticket_Purchased_Detail
-                                 where myRow.TPD_Event_Id == lEventId
-                                 select myRow.TPD_Amount).Sum();
+                var ticketid = (from v in db.Tickets where v.E_Id == lEventId select v.T_Id).ToList();
+                string joined = string.Join(",", ticketid.ToArray());
+                string strQuery = "SELECT (isnull(sum(TPD_Amount),0) + convert(numeric,isnull(sum(TPD_Donate),0))) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
+                var vTotalAmt = objEnt.Database.SqlQuery<decimal>(strQuery).FirstOrDefault();
+
+                //var vTotalAmt = (from myRow in objEnt.Ticket_Purchased_Detail
+                //                 where myRow.TPD_Event_Id == lEventId
+                //                 select myRow.TPD_Amount).Sum();
 
                 if (strAmtType == "FORSALE")
                 {
-                    strResult = Math.Round((vTotalAmt == null ? 0 : Convert.ToDouble(vTotalAmt)), 2).ToString("N", us);
+                    strResult = Math.Round(vTotalAmt, 2).ToString("N", us);
                 }
                 else if (strAmtType == "NETSALE")
                 {
-                    var vEcFee = (from myRow in objEnt.Ticket_Purchased_Detail
-                                  where myRow.TPD_Event_Id == lEventId
-                                  select myRow.TPD_EC_Fee).Sum();
 
-                    double dResult = Math.Round((vTotalAmt == null ? 0 : Convert.ToDouble(vTotalAmt)) - (vEcFee == null ? 0 : Convert.ToDouble(vEcFee)), 2);
+                    string strQueryec = "SELECT isnull(sum(TPD_EC_Fee),0) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
+                    var vEcFee = objEnt.Database.SqlQuery<decimal>(strQueryec).FirstOrDefault();
+
+                    //var vEcFee = (from myRow in objEnt.Ticket_Purchased_Detail
+                    //              where myRow.TPD_Event_Id == lEventId
+                    //              select myRow.TPD_EC_Fee).Sum();
+
+                    double dResult = Math.Round(Convert.ToDouble(vTotalAmt - vEcFee), 2);
                     strResult = dResult.ToString("N", us);
                 }
             }
@@ -1001,8 +1053,8 @@ namespace EventCombo.Controllers
                 {
                     if (strTicketType == "P")
                     {
-                        var vtotalqty = objEnt.Database.SqlQuery<long>("SELECT sum(TQD_Quantity) TQty From (Ticket_Quantity_Detail TQD LEFT JOIN  Ticket T on TQD.TQD_Ticket_Id = T.T_Id)  where TQD_Event_Id = " + eventId + " and T.TicketTypeID in (1,2)").FirstOrDefault();
-                        var vremqty = objEnt.Database.SqlQuery<long>("SELECT sum(TQD_Remaining_Quantity) TRQty From (Ticket_Quantity_Detail TQD LEFT JOIN  Ticket T on TQD.TQD_Ticket_Id = T.T_Id)  where TQD_Event_Id = " + eventId + " and T.TicketTypeID in (1,2)").FirstOrDefault();
+                        var vtotalqty = objEnt.Database.SqlQuery<long>("SELECT sum(TQD_Quantity) TQty From (Ticket_Quantity_Detail TQD LEFT JOIN  Ticket T on TQD.TQD_Ticket_Id = T.T_Id)  where TQD_Event_Id = " + eventId + " and T.TicketTypeID =2").FirstOrDefault();
+                        var vremqty = objEnt.Database.SqlQuery<long>("SELECT sum(TQD_Remaining_Quantity) TRQty From (Ticket_Quantity_Detail TQD LEFT JOIN  Ticket T on TQD.TQD_Ticket_Id = T.T_Id)  where TQD_Event_Id = " + eventId + " and T.TicketTypeID = 2").FirstOrDefault();
                         dResult = ((vtotalqty - vremqty) * 100) / vtotalqty;
                     }
                     else
@@ -1039,8 +1091,11 @@ namespace EventCombo.Controllers
                     }
                     else
                     {
-                        var vtotalty = (from myRow in objEnt.Ticket_Quantity_Detail where myRow.TQD_Event_Id == eventId select myRow.TQD_Quantity).Sum();
-                        lResult = (vtotalty != null ? Convert.ToInt64(vtotalty) : 0);
+                        //var vtotalty = (from myRow in objEnt.Ticket_Quantity_Detail where myRow.TQD_Event_Id == eventId select myRow.TQD_Quantity).Sum();
+                        //lResult = (vtotalty != null ? Convert.ToInt64(vtotalty) : 0);
+                        var ticType = new long?[] { 1, 2 };
+                        var vtotalty = (from myRow in objEnt.Tickets where myRow.E_Id == eventId && (ticType.Contains(myRow.TicketTypeID)) select myRow.Qty_Available).Sum();
+                        lResult = vtotalty;
                     }
                 }
             }
@@ -1201,6 +1256,8 @@ namespace EventCombo.Controllers
                     //objEnt.Events.Add(vEvent);
                     if (strEventTitle.Trim().Equals("")) strEventTitle = vEvent.EventTitle;
                     Event ObjEC = new Event();
+                    var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == vEvent.TimeZone select ev).FirstOrDefault();
+
                     ObjEC.EventTypeID = vEvent.EventTypeID;
                     ObjEC.EventCategoryID = vEvent.EventCategoryID;
                     ObjEC.EventSubCategoryID = vEvent.EventSubCategoryID;
@@ -1237,7 +1294,20 @@ namespace EventCombo.Controllers
                     ObjEC.Ticket_variabletype = vEvent.Ticket_variabletype;
                     ObjEC.ShowMap = vEvent.ShowMap;
                     ObjEC.Parent_EventID = 0;
-                    ObjEC.CreateDate = DateTime.Now;
+                    DateTimeWithZone dtzstart, dtzend, dtzCreated;
+                    if (Timezonedetail != null)
+                    {
+
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                        //Timezone value
+                        dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                    }
+                    else
+                    {
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                        dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                    }
+                    ObjEC.CreateDate = dtzCreated.UniversalTime;
                     ObjEC.EventStatus = "Save";
                     objEnt.Events.Add(ObjEC);
 
@@ -1267,6 +1337,7 @@ namespace EventCombo.Controllers
                         //    objEnt.Addresses.Add(objAdd);
                         //}
                     }
+
                     var vEventVenue = (from myEnt in objEnt.EventVenues where myEnt.EventID == Eventid select myEnt).ToList();
                     if (vEventVenue != null)
                     {
@@ -1274,11 +1345,29 @@ namespace EventCombo.Controllers
                         foreach (EventVenue objEv in vEventVenue)
                         {
                             objEVenue = new EventVenue();
+                            if (Timezonedetail != null)
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objEv.EventStartDate + " " + objEv.EventStartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objEv.EventEndDate + " " + objEv.EventEndTime), userTimeZone);
+
+
+                            }
+                            else
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objEv.EventStartDate + " " + objEv.EventStartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objEv.EventEndDate + " " + objEv.EventEndTime), userTimeZone);
+
+                            }
+
                             objEVenue.EventID = ObjEC.EventID;
                             objEVenue.EventStartDate = objEv.EventStartDate;
                             objEVenue.EventEndDate = objEv.EventEndDate;
                             objEVenue.EventStartTime = objEv.EventStartTime;
                             objEVenue.EventEndTime = objEv.EventEndTime;
+                            objEVenue.E_Startdate = dtzstart.UniversalTime;
+                            objEVenue.E_Enddate = dtzend.UniversalTime;
                             objEnt.EventVenues.Add(objEVenue);
                         }
                     }
@@ -1289,7 +1378,25 @@ namespace EventCombo.Controllers
                         MultipleEvent objMEvents = new MultipleEvent();
                         foreach (MultipleEvent objME in vEventAddress)
                         {
+
+
                             objMEvents = new MultipleEvent();
+
+                            if (Timezonedetail != null)
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objME.StartingFrom + " " + objME.StartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objME.StartingTo + " " + objME.EndTime), userTimeZone);
+
+
+                            }
+                            else
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(objME.StartingFrom + " " + objME.StartTime), userTimeZone);
+                                dtzend = new DateTimeWithZone(Convert.ToDateTime(objME.StartingTo + " " + objME.EndTime), userTimeZone);
+
+                            }
                             objMEvents.EventID = ObjEC.EventID;
                             objMEvents.Frequency = objME.Frequency;
                             objMEvents.WeeklyDay = objME.WeeklyDay;
@@ -1300,6 +1407,8 @@ namespace EventCombo.Controllers
                             objMEvents.StartingTo = objME.StartingTo;
                             objMEvents.StartTime = objME.StartTime;
                             objMEvents.EndTime = objME.EndTime;
+                            objMEvents.M_Startfrom = dtzstart.UniversalTime;
+                            objMEvents.M_StartTo = dtzend.UniversalTime;
                             objEnt.MultipleEvents.Add(objMEvents);
                         }
                     }
@@ -1394,8 +1503,8 @@ namespace EventCombo.Controllers
                     }
                     objEnt.SaveChanges();
                     Eventid = (from myEvt in objEnt.Events select myEvt.EventID).Max();
-                    CreateEventController objCE = new CreateEventController();
-                    objCE.ControllerContext = new ControllerContext(this.Request.RequestContext, objCE);
+                    EventCreation objCE = new EventCreation();
+
                     objCE.PublishEvent(Eventid);
                 }
             }
@@ -1434,14 +1543,21 @@ namespace EventCombo.Controllers
 
         }
         [Authorize]
-        public ActionResult PromotionalCodes(long Eventlid, string strPageIndex = "page", string searchquery = "")
+        public ActionResult PromotionalCodes(long Eventlid = 0, string strPageIndex = "page", string searchquery = "")
         {
             if (Session["AppId"] != null)
             {
+                if (Eventlid == 0)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
 
-                ValidationMessageController vmc = new ValidationMessageController();
-                vmc.ControllerContext = new ControllerContext(this.Request.RequestContext, vmc);
+                ValidationMessage vmc = new ValidationMessage();
+                DateTimeWithZone dtzCreated;
                 var Eventid = vmc.GetLatestEventId(Eventlid);
+                if (CommanClasses.CompareCurrentUser(Eventid, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
+                Session["Fromname"] = "promotional";
+                Session["logo"] = "events";
                 showPromocode sc = new showPromocode();
                 sc.Eventid = Eventid;
                 int pageSize = 20;
@@ -1449,48 +1565,78 @@ namespace EventCombo.Controllers
                 if (strPageIndex != null && strPageIndex != string.Empty && strPageIndex != "page")
                     pageIndex = Convert.ToInt32(strPageIndex);
                 List<Promocode> ls = new List<Promocode>();
-                CreateEventController cms = new CreateEventController();
+                EventCreation cms = new EventCreation();
+                var Timezonedetail = DateTimeWithZone.Timezonedetail(Eventlid);
+
+                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail);
+                dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
                 var Eventdetail = cms.GetEventdetail(Eventid);
                 var Discountcode = (from x in db.Promo_Code where x.PC_Eventid == Eventid select x).Count();
                 sc.Eventtitle = Eventdetail.EventTitle;
+                var lstpromo = new List<Promo_Code>();
                 if (!string.IsNullOrWhiteSpace(searchquery))
                 {
-                    ls = (from x in db.Promo_Code
-                          orderby x.SavedDate descending
-                          where x.PC_Eventid == Eventid && x.PC_Code.Contains(searchquery)
-                          select new Promocode
-                          {
-                              code = x.PC_Code,
-                              Amount = (x.PC_Amount != null || x.PC_Percentage != null) ? (x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%") : "-",
-                              Start = (x.PC_Startdatetype != null && x.PC_Startdatetype == "1") ? x.PC_Start + " before event" : SqlFunctions.DateDiff("s", x.PC_Start, DateTime.Now) == 0 ? "Started" : x.PC_Start,
-                              End = (x.Pc_Enddatetype != null && x.Pc_Enddatetype == "1") ? x.PC_End + " before event" : x.PC_End,
-                              Limit = x.PC_Uses != null ? x.PC_Uses.ToString() : "No Limit",
-                              PCID = x.PC_id,
-
-
-
-                          }).ToList();
+                    lstpromo = (from x in db.Promo_Code
+                                orderby x.SavedDate descending
+                                where x.PC_Eventid == Eventid && x.PC_Code.Contains(searchquery)
+                                select x).ToList();
 
                 }
                 else
                 {
-                    ls = (from x in db.Promo_Code
-                          orderby x.SavedDate descending
-                          where x.PC_Eventid == Eventid
-                          select new Promocode
-                          {
-                              code = x.PC_Code,
-                              Amount = (x.PC_Amount != null || x.PC_Percentage != null) ? (x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%") : "-",
-                              Start = (x.PC_Startdatetype != null && x.PC_Startdatetype == "1") ? x.PC_Start + " before event" : SqlFunctions.DateDiff("s", x.PC_Start, DateTime.Now) == 0 ? "Started" : x.PC_Start,
-                              End = (x.Pc_Enddatetype != null && x.Pc_Enddatetype == "1") ? x.PC_End + " before event" : x.PC_End,
-                              Limit = x.PC_Uses != null ? x.PC_Uses : "No Limit",
-                              PCID = x.PC_id
-
-
-                          }).ToList();
+                    lstpromo = (from x in db.Promo_Code
+                                orderby x.SavedDate descending
+                                where x.PC_Eventid == Eventid
+                                select x).ToList();
 
                 }
+                //select new Promocode
+                //{
+                //    code = x.PC_Code,
+                //    Amount = (x.PC_Amount != null || x.PC_Percentage != null) ? (x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%") : "-",
+                //    Start = (x.PC_Startdatetype != null && x.PC_Startdatetype == "1") ? x.PC_Start + " before event" : SqlFunctions.DateDiff("s", new DateTimeWithZone(Convert.ToDateTime(x.P_Startdate), userTimeZone, true).LocalTime, dtzCreated.LocalTime) == 0 ? "Started" : new DateTimeWithZone(Convert.ToDateTime(x.P_Startdate), userTimeZone, true).LocalTime.ToString("MM-dd-yyyy hh:mm tt"),
+                //    End = (x.Pc_Enddatetype != null && x.Pc_Enddatetype == "1") ? x.PC_End + " before event" : new DateTimeWithZone(Convert.ToDateTime(x.P_Enddate), userTimeZone, true).LocalTime.ToString("MM-dd-yyyy hh:mm tt"),
+                //    Limit = x.PC_Uses != null ? x.PC_Uses.ToString() : "No Limit",
+                //    PCID = x.PC_id,
+                //    Orderpromo = (from v in db.Order_Detail_T where v.O_PromoCodeId == x.PC_id select v).Count()
+                foreach (var item in lstpromo)
+                {
+                    Promocode pr = new Promocode();
+                    pr.Amount = (item.PC_Amount != null || item.PC_Percentage != null) ? (item.PC_Amount != null ? "$" + item.PC_Amount.ToString() : item.PC_Percentage + "%") : "-";
+                    pr.code = item.PC_Code;
+                    var starttype = "";
+                    DateTimeWithZone dtzstart, dtzend;
+                    DateTime dtstart = new DateTime();
+                    DateTime dtnow = new DateTime();
+                    if (item.PC_Startdatetype == "0")
+                    {
+                        dtzstart = new DateTimeWithZone(Convert.ToDateTime(item.P_Startdate), userTimeZone, true);
+
+                        dtstart = dtzstart.LocalTime;
+                        dtnow = dtzCreated.LocalTime;
+                        int result = DateTime.Compare(dtstart, dtnow);
+                        if (result == 0)
+                        {
+                            starttype = "Started";
+                        }
+                        else
+                        {
+                            starttype = dtstart.ToString("MM-dd-yyyy hh:mm tt");
+                        }
+                    }
+                    else
+                    {
+                        starttype = item.PC_Start + " before event";
+                    }
+                    pr.Start = starttype;
+                    pr.End = (item.Pc_Enddatetype != null && item.Pc_Enddatetype == "1") ? item.PC_End + " before event" : new DateTimeWithZone(Convert.ToDateTime(item.P_Enddate), userTimeZone, true).LocalTime.ToString("MM-dd-yyyy hh:mm tt");
+                    pr.Limit = item.PC_Uses != null ? item.PC_Uses.ToString() : "No Limit";
+                    pr.PCID = item.PC_id;
+                    pr.Orderpromo = (from v in db.Order_Detail_T where v.O_PromoCodeId == item.PC_id select v).Count();
+                    ls.Add(pr);
+                }
                 double dPageCount = ls.Count;
+                ViewData["countlist"] = ls.Count;
                 double dTotalPages = dPageCount / pageSize;
                 int lTotalPages = (ls.Count / pageSize);
                 if (dTotalPages.ToString().Contains(".") == true)
@@ -1501,10 +1647,6 @@ namespace EventCombo.Controllers
                 sc.searchquery = searchquery;
                 sc.discountcode = Discountcode;
                 TempData["PageIndex"] = (strPageIndex.ToLower() == "page" ? "1" : strPageIndex);
-
-                ViewBag.EventId = Eventid;
-                ViewBag.EventTitle = sc.Eventtitle;
-                ViewBag.DiscountCode = sc.discountcode;
                 return View(sc);
             }
             else
@@ -1514,20 +1656,31 @@ namespace EventCombo.Controllers
         }
 
         [Authorize]
-        public ActionResult CreatePromotionalCodes(long Eventlid, long Promocode = 0)
+        public ActionResult CreatePromotionalCodes(long Eventlid = 0, long Promocode = 0)
         {
             if (Session["AppId"] != null)
             {
+                if (Eventlid == 0)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
 
-                ValidationMessageController vmc = new ValidationMessageController();
-                vmc.ControllerContext = new ControllerContext(this.Request.RequestContext, vmc);
+                ValidationMessage vmc = new ValidationMessage();
+                DateTimeWithZone dtzstart, dzend, dtzpcstart, dtzCreated, dtzpcend;
+                //DateTimeWithZone tz = new DateTimeWithZone();
                 var Eventid = vmc.GetLatestEventId(Eventlid);
+                if (CommanClasses.CompareCurrentUser(Eventid, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
 
                 Promo_Code pm = new Promo_Code();
                 var ttype = 0;
                 DateTime end_date = new DateTime();
-                CreateEventController cms = new CreateEventController();
+                EventCreation cms = new EventCreation();
+                DateTime now = new DateTime();
+                Session["Fromname"] = "promotional";
+                Session["logo"] = "events";
+
                 string startdate = "", enddate = "";
+
                 var Eventdetail = cms.GetEventdetail(Eventid);
                 pm.Eventitle = Eventdetail.EventTitle;
                 pm.Eventitle = Eventdetail.EventTitle;
@@ -1540,18 +1693,29 @@ namespace EventCombo.Controllers
                 pm.PC_Eventid = Eventid;
                 var startdatesave = "";
                 var singleevnt = (from x in db.EventVenues where x.EventID == Eventid select x).Any();
+                var Timezonedetail = DateTimeWithZone.Timezonedetail(Eventlid);
+
+                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail);
+                dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                now = dtzCreated.LocalTime;
                 if (singleevnt)
                 {
                     var y = (from x in db.EventVenues where x.EventID == Eventid select x).FirstOrDefault();
-                    end_date = DateTime.Parse(y.EventStartDate + " " + y.EventEndTime);
-                    startdatesave = DateTime.Parse(y.EventStartDate + " " + y.EventEndTime).ToString("MM-dd-yyyy hh:mm:ss tt");
+
+                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(y.E_Startdate), userTimeZone, true);
+                    dzend = new DateTimeWithZone(Convert.ToDateTime(y.E_Enddate), userTimeZone, true);
+                    end_date = dtzstart.LocalTime;
+                    startdatesave = dtzstart.LocalTime.ToString("MM-dd-yyyy hh:mm tt");
 
                 }
                 else
                 {
                     var y = (from x in db.MultipleEvents where x.EventID == Eventid select x).FirstOrDefault();
-                    end_date = DateTime.Parse(y.StartingFrom + " " + y.StartTime);
-                    startdatesave = DateTime.Parse(y.StartingFrom + " " + y.StartTime).ToString("MM-dd-yyyy hh:mm:ss tt");
+
+                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(y.M_Startfrom), userTimeZone, true);
+                    dzend = new DateTimeWithZone(Convert.ToDateTime(y.M_StartTo), userTimeZone, true);
+                    end_date = dtzstart.LocalTime;
+                    startdatesave = dtzstart.LocalTime.ToString("MM-dd-yyyy hh:mm tt");
 
                 }
                 if (Promocode == 0)
@@ -1567,24 +1731,24 @@ namespace EventCombo.Controllers
                     pm.ticketype = ttype;
                     pm.Formtype = "S";
 
-                    startdate = DateTime.UtcNow.ToString("MM-dd-yyyy hh:mm:ss tt");
+                    startdate = now.ToString("MM-dd-yyyy hh:mm tt");
 
-
+                    pm.orderrow = false;
                     pm.PC_Start = startdate;
                     pm.PC_End = startdatesave;
                     pm.startdatesave = end_date.ToString();
                     pm.PC_id = 0;
-                    pm.PC_URL = baseurl + urldb + "?discount=Example";
+                    pm.PC_URL = baseurl + "/" + urldb + "?discount=Example";
                     pm.Pc_Enddatetype = "0";
                     pm.PC_Startdatetype = "0";
-                    if (end_date < DateTime.Now)
+                    if (end_date < now)
                     {
                         pm.startdays = "0 Days 0 Hrs 0 Min";
 
                     }
                     else
                     {
-                        TimeSpan span = (end_date - DateTime.Now);
+                        TimeSpan span = (end_date - now);
                         pm.startdays = span.Days.ToString() + " Days " + span.Hours.ToString() + " Hrs " + span.Minutes.ToString() + " Min";
 
                     }
@@ -1592,7 +1756,11 @@ namespace EventCombo.Controllers
                 }
                 else
                 {
+
+
+                    var Orderdetail = (from x in db.Order_Detail_T where x.O_PromoCodeId == Promocode select x).Any();
                     var p = (from x in db.Promo_Code where x.PC_id == Promocode select x).FirstOrDefault();
+                    pm.orderrow = Orderdetail;
                     pm.PC_Code = p.PC_Code;
                     pm.PC_id = p.PC_id;
                     pm.PC_Uses = p.PC_Uses;
@@ -1610,9 +1778,9 @@ namespace EventCombo.Controllers
                     {
                         pm.startdays = p.PC_Start;
                         string[] words = p.PC_Start.Split(' ');
-                        if (end_date < DateTime.Now)
+                        if (end_date < now)
                         {
-                            pm.PC_Start = DateTime.Now.ToString("MM-dd-yyyy hh:mm:ss tt");
+                            pm.PC_Start = now.ToString("MM-dd-yyyy hh:mm tt");
                         }
                         else
                         {
@@ -1620,14 +1788,15 @@ namespace EventCombo.Controllers
                             datenew = datenew.AddHours(-double.Parse(words[2]));
 
                             datenew = datenew.AddMinutes(-double.Parse(words[4]));
-                            pm.PC_Start = datenew.ToString("MM-dd-yyyy hh:mm:ss tt");
+                            pm.PC_Start = datenew.ToString("MM-dd-yyyy hh:mm tt");
                         }
 
 
                     }
                     else
                     {
-                        pm.PC_Start = p.PC_Start;
+                        dtzpcstart = new DateTimeWithZone(Convert.ToDateTime(p.P_Startdate), userTimeZone, true);
+                        pm.PC_Start = dtzpcstart.LocalTime.ToString("MM-dd-yyyy hh:mm tt"); ;
 
                         pm.startdays = "0 Days 0 Hrs 0 Min";
                     }
@@ -1640,12 +1809,12 @@ namespace EventCombo.Controllers
                         datenew = datenew.AddHours(-double.Parse(words[2]));
 
                         datenew = datenew.AddMinutes(-double.Parse(words[4]));
-                        pm.PC_End = datenew.ToString("MM-dd-yyyy hh:mm:ss tt"); ;
+                        pm.PC_End = datenew.ToString("MM-dd-yyyy hh:mm tt"); ;
                     }
                     else
                     {
-
-                        pm.PC_End = p.PC_End;
+                        dtzpcend = new DateTimeWithZone(Convert.ToDateTime(p.P_Enddate), userTimeZone, true);
+                        pm.PC_End = dtzpcend.LocalTime.ToString("MM-dd-yyyy hh:mm tt"); ;
                         pm.enddays = "0 Days 0 Hrs 0 Min";
                     }
                     pm.PC_Amount = p.PC_Amount != null ? p.PC_Amount : p.PC_Percentage;
@@ -1659,9 +1828,6 @@ namespace EventCombo.Controllers
                     pm.Pc_Enddatetype = p.Pc_Enddatetype != null ? p.Pc_Enddatetype : "0";
                 }
 
-                ViewBag.EventId = Eventid;
-                ViewBag.EventTitle = pm.Eventitle;
-                ViewBag.DiscountCode = pm.discountcode;
                 return View(pm);
             }
             else
@@ -1676,35 +1842,23 @@ namespace EventCombo.Controllers
             var msg = "";
             var containsspecial = 0;
             var Invalidrepeatcode = "";
-            using (EventComboEntities db = new EventComboEntities())
+            DateTimeWithZone dtz, dtzCreated;
+            var timezoneid = DateTimeWithZone.Timezonedetail(model.PC_Eventid);
+            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(timezoneid);
+            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+            try
             {
-                if (model.Formtype == "E")
+                using (EventComboEntities db = new EventComboEntities())
                 {
-
-                    if (Regex.IsMatch(model.PC_Code.ToString(), "^[a-zA-Z0-9@_,-]+$"))
+                    if (model.Formtype == "E")
                     {
-                        var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() && v.PC_id != model.PC_id && v.PC_Eventid == model.PC_Eventid select v).Any();
-                        if (ifany)
-                        {
-                            if (!string.IsNullOrEmpty(model.PC_Code))
-                            {
-                                if (Invalidrepeatcode == "")
-                                {
-                                    Invalidrepeatcode += model.PC_Code;
-                                }
-                                else
-                                {
-                                    Invalidrepeatcode += "," + model.PC_Code;
-                                }
-                            }
-
-                        }
-                        else
+                        if (model.PC_Code == null)
                         {
                             Promo_Code org = (from x in db.Promo_Code where x.PC_id == model.PC_id select x).FirstOrDefault();
                             org.PC_Eventid = model.PC_Eventid;
                             org.PC_Type = model.PC_Type;
-                            org.PC_Code = model.PC_Code;
+                            // org.PC_Code = model.PC_Code;
+
                             if (model.Discount_Type == "A")
                             {
                                 org.PC_Amount = model.PC_Amount;
@@ -1725,7 +1879,10 @@ namespace EventCombo.Controllers
                             }
                             else
                             {
-                                org.PC_Start = model.PC_Start;
+
+                                dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_Start), userTimeZone);
+
+                                org.P_Startdate = dtz.UniversalTime;
                             }
                             org.Pc_Enddatetype = model.Pc_Enddatetype;
                             if (model.Pc_Enddatetype == "1")
@@ -1734,12 +1891,15 @@ namespace EventCombo.Controllers
                             }
                             else
                             {
-                                org.PC_End = model.PC_End;
+                                dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_End), userTimeZone);
+
+
+                                org.P_Enddate = dtz.UniversalTime;
                             }
 
                             org.PC_Apply = model.PC_Apply;
                             org.PC_Eventid = model.PC_Eventid;
-                            org.SavedDate = DateTime.Now;
+                            org.SavedDate = dtzCreated.UniversalTime;
 
 
 
@@ -1753,37 +1913,231 @@ namespace EventCombo.Controllers
                             }
                             catch (Exception ex)
                             {
+                                ExceptionLogging.SendErrorToText(ex);
                                 msg = "N";
+                            }
+                        }
+                        else
+                        {
+
+                            if (Regex.IsMatch(model.PC_Code.ToString(), "^[a-zA-Z0-9@_,-]+$"))
+                            {
+                                if (model.PC_Code.Length > 15)
+                                {
+                                    if (!string.IsNullOrEmpty(model.PC_Code))
+                                    {
+                                        if (Invalidrepeatcode == "")
+                                        {
+                                            Invalidrepeatcode += model.PC_Code;
+                                        }
+                                        else
+                                        {
+                                            Invalidrepeatcode += "," + model.PC_Code;
+                                        }
+                                    }
+
+                                }
+                                else
+                                {
+
+                                    var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() && v.PC_id != model.PC_id && v.PC_Eventid == model.PC_Eventid select v).Any();
+                                    if (ifany)
+                                    {
+                                        if (!string.IsNullOrEmpty(model.PC_Code))
+                                        {
+                                            if (Invalidrepeatcode == "")
+                                            {
+                                                Invalidrepeatcode += model.PC_Code;
+                                            }
+                                            else
+                                            {
+                                                Invalidrepeatcode += "," + model.PC_Code;
+                                            }
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        Promo_Code org = (from x in db.Promo_Code where x.PC_id == model.PC_id select x).FirstOrDefault();
+                                        org.PC_Eventid = model.PC_Eventid;
+                                        org.PC_Type = model.PC_Type;
+                                        org.PC_Code = model.PC_Code;
+
+                                        if (model.Discount_Type == "A")
+                                        {
+                                            org.PC_Amount = model.PC_Amount;
+                                            org.PC_Percentage = null;
+                                        }
+                                        else
+                                        {
+                                            org.PC_Percentage = model.PC_Amount;
+                                            org.PC_Amount = null;
+                                        }
+
+
+                                        org.PC_Uses = model.PC_Uses;
+                                        org.PC_Startdatetype = model.PC_Startdatetype;
+                                        if (model.PC_Startdatetype == "1")
+                                        {
+                                            org.PC_Start = model.startdays;
+                                        }
+                                        else
+                                        {
+
+                                            dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_Start), userTimeZone);
+
+                                            org.P_Startdate = dtz.UniversalTime;
+                                        }
+                                        org.Pc_Enddatetype = model.Pc_Enddatetype;
+                                        if (model.Pc_Enddatetype == "1")
+                                        {
+                                            org.PC_End = model.enddays;
+                                        }
+                                        else
+                                        {
+                                            dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_End), userTimeZone);
+
+
+                                            org.P_Enddate = dtz.UniversalTime;
+                                        }
+
+                                        org.PC_Apply = model.PC_Apply;
+                                        org.PC_Eventid = model.PC_Eventid;
+                                        org.SavedDate = dtzCreated.UniversalTime;
+
+
+
+
+
+                                        try
+                                        {
+                                            int i = db.SaveChanges();
+                                            msg = "S";
+
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            ExceptionLogging.SendErrorToText(ex);
+                                            msg = "N";
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                containsspecial++;
+                                if (!string.IsNullOrEmpty(model.PC_Code))
+                                {
+                                    if (Invalidrepeatcode == "")
+                                    {
+                                        Invalidrepeatcode += model.PC_Code;
+                                    }
+                                    else
+                                    {
+                                        Invalidrepeatcode += "," + model.PC_Code;
+                                    }
+                                }
+
                             }
                         }
                     }
                     else
                     {
-                        containsspecial++;
-                        if (!string.IsNullOrEmpty(model.PC_Code))
+
+
+                        if (!string.IsNullOrWhiteSpace(model.PC_Code))
                         {
-                            if (Invalidrepeatcode == "")
+                            if (Regex.IsMatch(model.PC_Code.ToString(), "^[a-zA-Z0-9@_,-]+$"))
                             {
-                                Invalidrepeatcode += model.PC_Code;
+                                if (model.PC_Code.Length > 15)
+                                {
+                                    if (!string.IsNullOrEmpty(model.PC_Code))
+                                    {
+                                        if (Invalidrepeatcode == "")
+                                        {
+                                            Invalidrepeatcode += model.PC_Code;
+                                        }
+                                        else
+                                        {
+                                            Invalidrepeatcode += "," + model.PC_Code;
+                                        }
+                                    }
+
+                                }
+                                else {
+                                    var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() && v.PC_Eventid == model.PC_Eventid select v).Any();
+                                    if (ifany)
+                                    {
+                                        if (Invalidrepeatcode == "")
+                                        {
+                                            Invalidrepeatcode += model.PC_Code;
+                                        }
+                                        else
+                                        {
+                                            Invalidrepeatcode += "," + model.PC_Code;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Promo_Code org = new Promo_Code();
+                                        org.PC_Eventid = model.PC_Eventid;
+                                        org.PC_Type = model.PC_Type;
+                                        org.PC_Code = model.PC_Code;
+                                        if (model.Discount_Type == "A")
+                                        {
+                                            org.PC_Amount = model.PC_Amount;
+                                        }
+                                        else
+                                        {
+                                            org.PC_Percentage = model.PC_Amount;
+
+                                        }
+
+
+                                        org.PC_Uses = model.PC_Uses;
+                                        org.PC_Startdatetype = model.PC_Startdatetype;
+                                        if (model.PC_Startdatetype == "1")
+                                        {
+                                            org.PC_Start = model.startdays;
+                                        }
+                                        else
+                                        {
+                                            dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_Start), userTimeZone);
+                                            org.P_Startdate = dtz.UniversalTime;
+                                        }
+
+                                        org.Pc_Enddatetype = model.Pc_Enddatetype;
+                                        if (model.Pc_Enddatetype == "1")
+                                        {
+                                            org.PC_End = model.enddays;
+                                        }
+                                        else
+                                        {
+                                            dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_End), userTimeZone);
+                                            org.P_Enddate = dtz.UniversalTime;
+                                        }
+                                        org.PC_Apply = model.PC_Apply;
+                                        org.PC_Eventid = model.PC_Eventid;
+
+                                        org.SavedDate = dtzCreated.UniversalTime;
+
+
+
+                                        db.Promo_Code.Add(org);
+                                        try
+                                        {
+                                            int i = db.SaveChanges();
+                                            msg = "S";
+
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            msg = "N";
+                                        }
+                                    }
+                                }
                             }
                             else
-                            {
-                                Invalidrepeatcode += "," + model.PC_Code;
-                            }
-                        }
-
-                    }
-                }
-                else
-                {
-
-
-                    if (!string.IsNullOrWhiteSpace(model.PC_Code))
-                    {
-                        if (Regex.IsMatch(model.PC_Code.ToString(), "^[a-zA-Z0-9@_,-]+$"))
-                        {
-                            var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == model.PC_Code.Trim().ToLower() && v.PC_Eventid == model.PC_Eventid select v).Any();
-                            if (ifany)
                             {
                                 if (Invalidrepeatcode == "")
                                 {
@@ -1793,182 +2147,227 @@ namespace EventCombo.Controllers
                                 {
                                     Invalidrepeatcode += "," + model.PC_Code;
                                 }
-                            }
-                            else
-                            {
-                                Promo_Code org = new Promo_Code();
-                                org.PC_Eventid = model.PC_Eventid;
-                                org.PC_Type = model.PC_Type;
-                                org.PC_Code = model.PC_Code;
-                                if (model.Discount_Type == "A")
-                                {
-                                    org.PC_Amount = model.PC_Amount;
-                                }
-                                else
-                                {
-                                    org.PC_Percentage = model.PC_Amount;
-
-                                }
-
-
-                                org.PC_Uses = model.PC_Uses;
-                                org.PC_Startdatetype = model.PC_Startdatetype;
-                                if (model.PC_Startdatetype == "1")
-                                {
-                                    org.PC_Start = model.startdays;
-                                }
-                                else
-                                {
-                                    org.PC_Start = model.PC_Start;
-                                }
-
-                                org.Pc_Enddatetype = model.Pc_Enddatetype;
-                                if (model.Pc_Enddatetype == "1")
-                                {
-                                    org.PC_End = model.enddays;
-                                }
-                                else
-                                {
-                                    org.PC_End = model.PC_End;
-                                }
-                                org.PC_Apply = model.PC_Apply;
-                                org.PC_Eventid = model.PC_Eventid;
-
-                                org.SavedDate = DateTime.Now;
-
-
-
-                                db.Promo_Code.Add(org);
-                                try
-                                {
-                                    int i = db.SaveChanges();
-                                    msg = "S";
-
-                                }
-                                catch (Exception ex)
-                                {
-                                    msg = "N";
-                                }
+                                containsspecial++;
                             }
                         }
                         else
                         {
-                            if (Invalidrepeatcode == "")
+                            if (file != null && file.ContentLength > 0)
                             {
-                                Invalidrepeatcode += model.PC_Code;
-                            }
-                            else
-                            {
-                                Invalidrepeatcode += "," + model.PC_Code;
-                            }
-                            containsspecial++;
-                        }
-                    }
-                    else
-                    {
-                        if (file != null && file.ContentLength > 0)
-                        {
-                            var fileName = Path.GetFileName(file.FileName);
-                            string ext = System.IO.Path.GetExtension(file.FileName);
-                            string[] allowedExtenstions = new string[] { ".txt", ".csv" };
-                            if (allowedExtenstions.Contains(ext))
-                            {
-                                StreamReader csvreader = new StreamReader(file.InputStream);
-                                while (!csvreader.EndOfStream)
+                                var fileName = Path.GetFileName(file.FileName);
+                                string ext = System.IO.Path.GetExtension(file.FileName);
+                                string[] allowedExtenstions = new string[] { ".txt", ".csv" };
+                                if (allowedExtenstions.Contains(ext))
                                 {
-                                    var line = csvreader.ReadLine();
-                                    if (line.Contains(','))
+                                    StreamReader csvreader = new StreamReader(file.InputStream);
+                                    while (!csvreader.EndOfStream)
                                     {
-                                        var innerlines = line.Split(',');
-                                        foreach (var item in innerlines)
+                                        var line = csvreader.ReadLine();
+                                        if (line.Contains(','))
                                         {
-                                            if (Regex.IsMatch(item.ToString(), "^[a-zA-Z0-9@_,-]+$"))
+                                            var innerlines = line.Split(',');
+                                            foreach (var item in innerlines)
                                             {
-                                                var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == item.Trim().ToLower() && v.PC_Eventid == model.PC_Eventid select v).Any();
-                                                if (ifany)
+                                                if (Regex.IsMatch(item.ToString(), "^[a-zA-Z0-9@_,-]+$"))
                                                 {
-                                                    Invalidrepeatcode += item.Trim();
+                                                    if (item.Length > 15)
+                                                    {
+                                                        if (!string.IsNullOrEmpty(item))
+                                                        {
+                                                            if (Invalidrepeatcode == "")
+                                                            {
+                                                                Invalidrepeatcode += item;
+                                                            }
+                                                            else
+                                                            {
+                                                                Invalidrepeatcode += "," + item;
+                                                            }
+                                                        }
+
+                                                    }
+                                                    else
+                                                    {
+                                                        var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == item.Trim().ToLower() && v.PC_Eventid == model.PC_Eventid select v).Any();
+                                                        if (ifany)
+                                                        {
+                                                            Invalidrepeatcode += item.Trim();
+                                                        }
+                                                        else
+                                                        {
+                                                            Promo_Code org = new Promo_Code();
+                                                            org.PC_Eventid = model.PC_Eventid;
+                                                            org.PC_Type = model.PC_Type;
+                                                            org.PC_Code = item.Trim();
+                                                            if (model.Discount_Type == "A")
+                                                            {
+                                                                org.PC_Amount = model.PC_Amount;
+                                                            }
+                                                            else
+                                                            {
+                                                                org.PC_Percentage = model.PC_Amount;
+
+                                                            }
+
+
+                                                            org.PC_Uses = model.PC_Uses;
+                                                            org.PC_Startdatetype = model.PC_Startdatetype;
+                                                            if (model.PC_Startdatetype == "1")
+                                                            {
+                                                                org.PC_Start = model.startdays;
+                                                            }
+                                                            else
+                                                            {
+                                                                dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_Start), userTimeZone);
+                                                                org.P_Startdate = dtz.UniversalTime;
+                                                            }
+                                                            org.Pc_Enddatetype = model.Pc_Enddatetype;
+                                                            if (model.Pc_Enddatetype == "1")
+                                                            {
+                                                                org.PC_End = model.enddays;
+                                                            }
+                                                            else
+                                                            {
+                                                                dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_End), userTimeZone);
+                                                                org.P_Enddate = dtz.UniversalTime;
+                                                            }
+                                                            org.PC_Apply = model.PC_Apply;
+                                                            org.PC_Eventid = model.PC_Eventid;
+                                                            org.SavedDate = dtzCreated.UniversalTime;
+
+
+
+
+                                                            db.Promo_Code.Add(org);
+                                                            try
+                                                            {
+                                                                int i = db.SaveChanges();
+                                                                msg = "S";
+
+                                                            }
+                                                            catch (Exception ex)
+                                                            {
+                                                                msg = "N";
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    Promo_Code org = new Promo_Code();
-                                                    org.PC_Eventid = model.PC_Eventid;
-                                                    org.PC_Type = model.PC_Type;
-                                                    org.PC_Code = item.Trim();
-                                                    if (model.Discount_Type == "A")
+                                                    if (!string.IsNullOrEmpty(item))
                                                     {
-                                                        org.PC_Amount = model.PC_Amount;
+                                                        if (Invalidrepeatcode == "")
+                                                        {
+                                                            Invalidrepeatcode += item.Trim();
+                                                        }
+                                                        else
+                                                        {
+                                                            Invalidrepeatcode += "," + item.Trim();
+                                                        }
+                                                    }
+
+                                                    containsspecial++;
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (Regex.IsMatch(line.ToString(), "^[a-zA-Z0-9@_,-]+$"))
+                                            {
+
+                                                if (line.Length > 15)
+                                                {
+                                                    if (!string.IsNullOrEmpty(line))
+                                                    {
+                                                        if (Invalidrepeatcode == "")
+                                                        {
+                                                            Invalidrepeatcode += line;
+                                                        }
+                                                        else
+                                                        {
+                                                            Invalidrepeatcode += "," + line;
+                                                        }
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == line.Trim().ToLower() && v.PC_Eventid == model.PC_Eventid select v).Any();
+                                                    if (ifany)
+                                                    {
+                                                        if (!string.IsNullOrEmpty(line))
+                                                        {
+                                                            if (Invalidrepeatcode == "")
+                                                            {
+                                                                Invalidrepeatcode += line.Trim();
+                                                            }
+                                                            else
+                                                            {
+                                                                Invalidrepeatcode += "," + line.Trim();
+                                                            }
+                                                        }
+
                                                     }
                                                     else
                                                     {
-                                                        org.PC_Percentage = model.PC_Amount;
+                                                        Promo_Code org = new Promo_Code();
+                                                        org.PC_Eventid = model.PC_Eventid;
+                                                        org.PC_Type = model.PC_Type;
+                                                        org.PC_Code = line;
+                                                        if (model.Discount_Type == "A")
+                                                        {
+                                                            org.PC_Amount = model.PC_Amount;
+                                                        }
+                                                        else
+                                                        {
+                                                            org.PC_Percentage = model.PC_Amount;
 
-                                                    }
-
-
-                                                    org.PC_Uses = model.PC_Uses;
-                                                    org.PC_Startdatetype = model.PC_Startdatetype;
-                                                    if (model.PC_Startdatetype == "1")
-                                                    {
-                                                        org.PC_Start = model.startdays;
-                                                    }
-                                                    else
-                                                    {
-                                                        org.PC_Start = model.PC_Start;
-                                                    }
-                                                    org.Pc_Enddatetype = model.Pc_Enddatetype;
-                                                    if (model.Pc_Enddatetype == "1")
-                                                    {
-                                                        org.PC_End = model.enddays;
-                                                    }
-                                                    else
-                                                    {
-                                                        org.PC_End = model.PC_End;
-                                                    }
-                                                    org.PC_Apply = model.PC_Apply;
-                                                    org.PC_Eventid = model.PC_Eventid;
-                                                    org.SavedDate = DateTime.Now;
+                                                        }
 
 
+                                                        org.PC_Uses = model.PC_Uses;
+                                                        org.PC_Startdatetype = model.PC_Startdatetype;
+                                                        if (model.PC_Startdatetype == "1")
+                                                        {
+                                                            org.PC_Start = model.startdays;
+                                                        }
+                                                        else
+                                                        {
+                                                            dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_Start), userTimeZone);
+                                                            org.P_Startdate = dtz.UniversalTime;
+                                                        }
+                                                        org.Pc_Enddatetype = model.Pc_Enddatetype;
+                                                        if (model.Pc_Enddatetype == "1")
+                                                        {
+                                                            org.PC_End = model.enddays;
+                                                        }
+                                                        else
+                                                        {
+                                                            dtz = new DateTimeWithZone(Convert.ToDateTime(model.PC_End), userTimeZone);
+
+                                                            org.P_Enddate = dtz.UniversalTime;
+                                                        }
+                                                        org.PC_Apply = model.PC_Apply;
+                                                        org.PC_Eventid = model.PC_Eventid;
 
 
-                                                    db.Promo_Code.Add(org);
-                                                    try
-                                                    {
-                                                        int i = db.SaveChanges();
-                                                        msg = "S";
+                                                        org.SavedDate = dtzCreated.UniversalTime;
 
-                                                    }
-                                                    catch (Exception ex)
-                                                    {
-                                                        msg = "N";
+
+                                                        db.Promo_Code.Add(org);
+                                                        try
+                                                        {
+                                                            int i = db.SaveChanges();
+                                                            msg = "S";
+
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+                                                            msg = "N";
+                                                        }
                                                     }
                                                 }
                                             }
                                             else
-                                            {
-                                                if (!string.IsNullOrEmpty(item))
-                                                {
-                                                    if (Invalidrepeatcode == "")
-                                                    {
-                                                        Invalidrepeatcode += item.Trim();
-                                                    }
-                                                    else
-                                                    {
-                                                        Invalidrepeatcode += "," + item.Trim();
-                                                    }
-                                                }
-
-                                                containsspecial++;
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (Regex.IsMatch(line.ToString(), "^[a-zA-Z0-9@_,-]+$"))
-                                        {
-                                            var ifany = (from v in db.Promo_Code where v.PC_Code.Trim().ToLower() == line.Trim().ToLower() && v.PC_Eventid == model.PC_Eventid select v).Any();
-                                            if (ifany)
                                             {
                                                 if (!string.IsNullOrEmpty(line))
                                                 {
@@ -1981,78 +2380,8 @@ namespace EventCombo.Controllers
                                                         Invalidrepeatcode += "," + line.Trim();
                                                     }
                                                 }
-
+                                                containsspecial++;
                                             }
-                                            else
-                                            {
-                                                Promo_Code org = new Promo_Code();
-                                                org.PC_Eventid = model.PC_Eventid;
-                                                org.PC_Type = model.PC_Type;
-                                                org.PC_Code = line;
-                                                if (model.Discount_Type == "A")
-                                                {
-                                                    org.PC_Amount = model.PC_Amount;
-                                                }
-                                                else
-                                                {
-                                                    org.PC_Percentage = model.PC_Amount;
-
-                                                }
-
-
-                                                org.PC_Uses = model.PC_Uses;
-                                                org.PC_Startdatetype = model.PC_Startdatetype;
-                                                if (model.PC_Startdatetype == "1")
-                                                {
-                                                    org.PC_Start = model.startdays;
-                                                }
-                                                else
-                                                {
-                                                    org.PC_Start = model.PC_Start;
-                                                }
-                                                org.Pc_Enddatetype = model.Pc_Enddatetype;
-                                                if (model.Pc_Enddatetype == "1")
-                                                {
-                                                    org.PC_End = model.enddays;
-                                                }
-                                                else
-                                                {
-                                                    org.PC_End = model.PC_End;
-                                                }
-                                                org.PC_Apply = model.PC_Apply;
-                                                org.PC_Eventid = model.PC_Eventid;
-
-
-                                                org.SavedDate = DateTime.Now;
-
-
-                                                db.Promo_Code.Add(org);
-                                                try
-                                                {
-                                                    int i = db.SaveChanges();
-                                                    msg = "S";
-
-                                                }
-                                                catch (Exception ex)
-                                                {
-                                                    msg = "N";
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (!string.IsNullOrEmpty(line))
-                                            {
-                                                if (Invalidrepeatcode == "")
-                                                {
-                                                    Invalidrepeatcode += line.Trim();
-                                                }
-                                                else
-                                                {
-                                                    Invalidrepeatcode += "," + line.Trim();
-                                                }
-                                            }
-                                            containsspecial++;
                                         }
                                     }
                                 }
@@ -2061,12 +2390,16 @@ namespace EventCombo.Controllers
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                ExceptionLogging.SendErrorToText(ex);
+            }
 
             if (!string.IsNullOrWhiteSpace(Invalidrepeatcode))
             {
                 TempData["Invalidcode"] = Invalidrepeatcode;
 
-                return RedirectToAction("CreatePromotionalCodes", "ManageEvent", new { Eventlid =ValidationMessageController.GetParentEventId(model.PC_Eventid)});
+                return RedirectToAction("CreatePromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(model.PC_Eventid) });
             }
             else
             {
@@ -2208,18 +2541,25 @@ namespace EventCombo.Controllers
         {
             try
             {
+                var countpru = (from x in db.Ticket_Purchased_Detail where x.TPD_PromoCodeID == promocode select x).Count();
+                var countlock = (from x in db.Ticket_Locked_Detail where x.TLD_PromoCodeId == promocode select x).Count();
+                if (countpru > 0 || countlock > 0)
+                {
+                    return "N";
+                }
+                else
+                {
+                    Promo_Code prof = db.Promo_Code.Where(i => i.PC_id == promocode).FirstOrDefault();
+                    db.Promo_Code.Remove(prof);
+                    db.SaveChanges();
+                    return "D";
+
+                }
 
 
 
 
-                Promo_Code prof = db.Promo_Code.Where(i => i.PC_id == promocode).FirstOrDefault();
-                db.Promo_Code.Remove(prof);
-                db.SaveChanges();
 
-
-
-
-                return "D";
 
             }
             catch (Exception ex)
@@ -2240,9 +2580,15 @@ namespace EventCombo.Controllers
         //}
 
         [Authorize]
-       
-        public ActionResult CreateInvitations(long lId,long lEvtId,string strMode)
+        public ActionResult CreateInvitations(long lId, long lEvtId, string strMode)
         {
+            if (Session["AppId"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (CommanClasses.CompareCurrentUser(lEvtId, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
+
+
             //strMode If comes from Event Live Then need to set as 'E' otherwise set as 'C'
             Event_Email_Invitation objEEI = new Event_Email_Invitation();
             int iElistCnt = 0;
@@ -2259,12 +2605,36 @@ namespace EventCombo.Controllers
                 if (vObj != null)
                 {
                     objEEI = vObj;
+
+
+                    //Kannan Start
+                    Event eventForTimeZone = objEnt.Events.First(i => i.EventID == objEEI.I_Event_Id);
+                    int timeZoneID = Int32.Parse(eventForTimeZone.TimeZone);
+                    TimeZoneDetail td = objEnt.TimeZoneDetails.First(i => i.TimeZone_Id == timeZoneID);
+                    DateTimeWithZone dtz;
+                    if (td != null)
+                    {
+                        TimeZoneInfo userTimeZone =
+                        TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                        dtz = new DateTimeWithZone(Convert.ToDateTime(objEEI.I_ScheduleDate), userTimeZone, true);
+
+                    }
+                    else
+                    {
+                        TimeZoneInfo userTimeZone =
+                        TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                        dtz = new DateTimeWithZone(Convert.ToDateTime(objEEI.I_ScheduleDate), userTimeZone, true);
+                    }
+                    //Kannan End
+
+
+
                     if (objEEI.I_ScheduleDate != null)
-                        objEEI.I_ScheduleDate = DateTime.SpecifyKind(Convert.ToDateTime(objEEI.I_ScheduleDate), DateTimeKind.Local);
+                        objEEI.I_ScheduleDate = dtz.LocalTime; // DateTime.SpecifyKind(Convert.ToDateTime(objEEI.I_ScheduleDate), DateTimeKind.Local);
                 }
                 iElistCnt = (objEEI.Event_Email_List != null ? objEEI.Event_Email_List.Count() : 0);
-               // lEvtId = (objEEI.I_Event_Id != null ? Convert.ToInt64(objEEI.I_Event_Id):0);
-                
+                // lEvtId = (objEEI.I_Event_Id != null ? Convert.ToInt64(objEEI.I_Event_Id):0);
+
                 if (lEvtId > 0)
                 {
                     var vEvent = (from myEvent in objEnt.Events where myEvent.EventID == lEvtId select myEvent).FirstOrDefault();
@@ -2278,7 +2648,8 @@ namespace EventCombo.Controllers
                             var vMultiDateTime = (from myDt in objEnt.MultipleEvents where myDt.EventID == lEvtId select myDt).FirstOrDefault();
                             if (vMultiDateTime != null)
                             {
-                                strDateTime = Convert.ToDateTime(vMultiDateTime.StartingFrom).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.StartTime.ToString() + "(" + vMultiDateTime.Frequency + ")";
+                                //strDateTime = Convert.ToDateTime(vMultiDateTime.StartingFrom).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.StartTime.ToString() + "(" + vMultiDateTime.Frequency + ")";
+                                strDateTime = Convert.ToDateTime(vMultiDateTime.StartingFrom).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.StartTime.ToString() + " - " + Convert.ToDateTime(vMultiDateTime.StartingTo).ToString("ddd MMM dd, yyyy") + "," + vMultiDateTime.EndTime.ToString();
                             }
                         }
                         else
@@ -2290,13 +2661,13 @@ namespace EventCombo.Controllers
                             int iTimezone = Convert.ToInt32(vEvent.TimeZone);
                             var vTimeZone = (from tmz in objEnt.TimeZoneDetails where tmz.TimeZone_Id == iTimezone select tmz.TimeZone_Name).FirstOrDefault();
                             objEEI.EventDate = strDateTime + "(" + vTimeZone + ")";
-                         }
+                        }
                         else
                         {
                             objEEI.EventDate = strDateTime;
                         }
                         var vOrgnizer = (from Ord in objEnt.Event_Orgnizer_Detail join orm in objEnt.Organizer_Master on Ord.OrganizerMaster_Id equals orm.Orgnizer_Id where Ord.Orgnizer_Event_Id == lEvtId select orm).FirstOrDefault();
-                        objEEI.EventOrgnizer = (vOrgnizer != null ? vOrgnizer.Orgnizer_Name  : "");
+                        objEEI.EventOrgnizer = (vOrgnizer != null ? vOrgnizer.Orgnizer_Name : "");
                         var vAddress = (from eAdd in objEnt.Addresses where eAdd.EventId == lEvtId select eAdd).FirstOrDefault();
                         if (vAddress != null)
                         {
@@ -2314,14 +2685,19 @@ namespace EventCombo.Controllers
 
                         var url = Request.Url;
                         var baseurl = url.GetLeftPart(UriPartial.Authority);
-                        strviewEvent = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(vEvent.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = lEvtId.ToString() });
+
+
+                        strviewEvent = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(vEvent.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(lEvtId).ToString() });
                         strOrgnizerUrl = baseurl + Url.Action("Index", "OrganizerInfo", new { id = vOrgnizer.Orgnizer_Id, eventid = lEvtId });
                     }
-                    CreateEventController objCEv = new CreateEventController();
+
+
+
+                    EventCreation objCEv = new EventCreation();
                     string strImageUrl = objCEv.GetImages(lEvtId).FirstOrDefault();
                     if (strImageUrl != null && strImageUrl != "")
                     {
-                        if (!System.IO.File.Exists(strImageUrl)) // Need to check on server
+                        if (!System.IO.File.Exists(Server.MapPath(strImageUrl))) // Need to check on server
                             strImageUrl = "/Images/default_event_image.jpg";
                     }
                     else
@@ -2329,7 +2705,7 @@ namespace EventCombo.Controllers
 
                     objEEI.EventImg = strImageUrl;
 
-                  
+
                     //@Url.Action("Index", "OrganizerInfo", new { id = Model.organizerid, eventid = Model.eventId })
 
                 }
@@ -2342,7 +2718,7 @@ namespace EventCombo.Controllers
             TempData["OrgnizerUrl"] = strOrgnizerUrl;
             TempData["ViewEventUrl"] = strviewEvent;
             TempData["Lat"] = (objEEI.EventLat != null ? objEEI.EventLat.Trim() : "");
-            TempData["Long"] = (objEEI.EventLong != null ? objEEI.EventLong.Trim() : ""); 
+            TempData["Long"] = (objEEI.EventLong != null ? objEEI.EventLong.Trim() : "");
             TempData["lId"] = lId;
             TempData["EmailListCount"] = iElistCnt;
             TempData["Eventid"] = lEvtId;
@@ -2376,7 +2752,7 @@ namespace EventCombo.Controllers
 
             mailMessage.IsBodyHtml = true;
             mailMessage.To.Add(new MailAddress(model.To));
-      
+
             SmtpClient smtp = new SmtpClient();
             smtp.Host = ConfigurationManager.AppSettings["Host"];
             smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
@@ -2403,16 +2779,47 @@ namespace EventCombo.Controllers
                         Event_Email_Invitation objEInt = new Event_Email_Invitation();
                         objEInt.I_SenderName = Model.I_SenderName;
                         objEInt.I_SubjectLine = Model.I_SubjectLine;
-                        objEInt.I_Event_Id = Model.I_Event_Id;
-                        objEInt.I_EmailContent = Model.I_EmailContent;
-                        if (Model.I_ScheduleDate != null)
-                            objEInt.I_ScheduleDate = DateTime.SpecifyKind(Convert.ToDateTime(Model.I_ScheduleDate), DateTimeKind.Utc);
+                        objEInt.I_Event_Id = ValidationMessageController.GetParentEventId((Model.I_Event_Id != null ? Convert.ToInt64(Model.I_Event_Id) : 0));
+
+
+                        //Kannan Start
+                        Event eventForTimeZone = objEnt.Events.First(i => i.EventID == Model.I_Event_Id);
+                        int timeZoneID = Int32.Parse(eventForTimeZone.TimeZone);
+
+                        TimeZoneDetail td = objEnt.TimeZoneDetails.First(i => i.TimeZone_Id == timeZoneID);
+                        DateTimeWithZone dtz;
+                        DateTimeWithZone dtzCreated;
+                        if (td != null)
+                        {
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                            dtz = new DateTimeWithZone(Convert.ToDateTime(Model.I_ScheduleDate), userTimeZone);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+
+                        }
                         else
-                            objEInt.I_ScheduleDate = Model.I_ScheduleDate;
+                        {
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                            dtz = new DateTimeWithZone(Convert.ToDateTime(Model.I_ScheduleDate), userTimeZone);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                        }
+                        //Kannan End
+
+                        objEInt.I_EmailContent = Model.I_EmailContent;
+                        if (Model.I_Mode == "N")
+                        {
+                            objEInt.I_ScheduleDate = DateTime.Now;
+                        }
+                        else {
+                            if (Model.I_ScheduleDate != null)
+                                objEInt.I_ScheduleDate = dtz.UniversalTime; // DateTime.SpecifyKind(Convert.ToDateTime(Model.I_ScheduleDate), DateTimeKind.Utc);
+                            else
+                                objEInt.I_ScheduleDate = Model.I_ScheduleDate;
+                        }
+
 
                         objEInt.I_EditableContent = Model.I_EditableContent;
-                        objEInt.I_Mode  = Model.I_Mode;
-                        objEInt.I_CreateDate = DateTime.Now;
+                        objEInt.I_Mode = Model.I_Mode;
+                        objEInt.I_CreateDate = dtzCreated.UniversalTime; //DateTime.Now;
                         if (Model.EmailList != null)
                         {
                             Event_Email_List objEList = new Event_Email_List();
@@ -2430,18 +2837,41 @@ namespace EventCombo.Controllers
                     }
                     else
                     {
-                        Event_Email_Invitation objEInt = objEnt.Event_Email_Invitation.First(i => i.I_Id  == Model.I_Id);
+                        Event_Email_Invitation objEInt = objEnt.Event_Email_Invitation.First(i => i.I_Id == Model.I_Id);
                         objEInt.I_SenderName = Model.I_SenderName;
                         objEInt.I_SubjectLine = Model.I_SubjectLine;
-                        objEInt.I_Event_Id = Model.I_Event_Id;
+                        objEInt.I_Event_Id = ValidationMessageController.GetParentEventId((Model.I_Event_Id != null ? Convert.ToInt64(Model.I_Event_Id) : 0));
                         objEInt.I_EmailContent = Model.I_EmailContent;
+                        //Kannan Start
+                        Event eventForTimeZone = objEnt.Events.First(i => i.EventID == Model.I_Event_Id);
+                        int timeZoneID = Int32.Parse(eventForTimeZone.TimeZone);
+                        TimeZoneDetail td = objEnt.TimeZoneDetails.First(i => i.TimeZone_Id == timeZoneID);
+                        DateTimeWithZone dtz;
+                        DateTimeWithZone dtzCreated;
+                        if (td != null)
+                        {
+                            TimeZoneInfo userTimeZone =
+                            TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                            dtz = new DateTimeWithZone(Convert.ToDateTime(Model.I_ScheduleDate), userTimeZone);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                        }
+                        else
+                        {
+                            TimeZoneInfo userTimeZone =
+                            TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                            dtz = new DateTimeWithZone(Convert.ToDateTime(Model.I_ScheduleDate), userTimeZone);
+                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                        }
+                        //Kannan End
+
+
                         if (Model.I_ScheduleDate != null)
-                            objEInt.I_ScheduleDate = DateTime.SpecifyKind(Convert.ToDateTime(Model.I_ScheduleDate), DateTimeKind.Utc);
+                            objEInt.I_ScheduleDate = dtz.UniversalTime; // DateTime.SpecifyKind(Convert.ToDateTime(Model.I_ScheduleDate), DateTimeKind.Utc);
                         else
                             objEInt.I_ScheduleDate = Model.I_ScheduleDate;
                         objEInt.I_EditableContent = Model.I_EditableContent;
                         objEInt.I_Mode = Model.I_Mode;
-                        objEInt.I_ModifyDate = DateTime.Now;
+                        objEInt.I_ModifyDate = dtzCreated.UniversalTime; //DateTime.Now;
                         objEnt.Event_Email_List.RemoveRange(objEnt.Event_Email_List.Where(x => x.L_I_Id == Model.I_Id));
                         if (Model.EmailList != null)
                         {
@@ -2456,7 +2886,7 @@ namespace EventCombo.Controllers
                         }
                         objEnt.SaveChanges();
                         lResult = objEInt.I_Id;
-                      
+
                     }
                     if (Model.I_Mode.Trim() == "N")
                     {
@@ -2481,7 +2911,7 @@ namespace EventCombo.Controllers
             {
                 return lResult;
             }
-            
+
         }
 
         public string CopyInvitation(long l_Id)
@@ -2491,8 +2921,8 @@ namespace EventCombo.Controllers
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
-                        Event_Email_Invitation objEInt = new Event_Email_Invitation();
-                        var Model = (from Int in objEnt.Event_Email_Invitation where Int.I_Id == l_Id select Int).FirstOrDefault();
+                    Event_Email_Invitation objEInt = new Event_Email_Invitation();
+                    var Model = (from Int in objEnt.Event_Email_Invitation where Int.I_Id == l_Id select Int).FirstOrDefault();
                     if (Model != null)
                     {
                         objEInt.I_SenderName = Model.I_SenderName;
@@ -2521,7 +2951,7 @@ namespace EventCombo.Controllers
                         }
                         objEnt.Event_Email_Invitation.Add(objEInt);
                         objEnt.SaveChanges();
-                       return "Y";
+                        return "Y";
                     }
                 }
                 return "Y";
@@ -2537,8 +2967,8 @@ namespace EventCombo.Controllers
         {
 
             Sidenav ss = new ViewModels.Sidenav();
-            CreateEventController cms = new CreateEventController();
-            cms.ControllerContext = new ControllerContext(this.Request.RequestContext, cms);
+            EventCreation cms = new EventCreation();
+
             var Eventdetails = cms.GetEventdetail(eventid);
             var Discountcode = (from x in db.Promo_Code where x.PC_Eventid == eventid select x).Count();
             ss.Eventtitle = Eventdetails.EventTitle;

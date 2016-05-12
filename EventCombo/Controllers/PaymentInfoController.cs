@@ -13,10 +13,21 @@ namespace EventCombo.Controllers
         public ActionResult PaymentInfo(long EventId)
         {
             //long EventId = 1;
+
+            if (Session["AppId"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (Session["logo"] != null)
             {
+                ValidationMessageController vmc = new ValidationMessageController();
+                EventId = vmc.GetLatestEventId(EventId);
                 ViewBag.EventId = EventId;
                 Payment_Info objPI = new Payment_Info();
+
+                if (CommanClasses.CompareCurrentUser(EventId, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
+
 
                 EventComboEntities db = new EventComboEntities();
                 objPI = db.Payment_Info.Where(x => x.PI_EventId == EventId).SingleOrDefault();
@@ -139,8 +150,13 @@ namespace EventCombo.Controllers
 
             if (string.IsNullOrEmpty(objPI.PaymentInfo_Id.ToString()) || objPI.PaymentInfo_Id == 0)
             {
-                db.Payment_Info.Add(objPI);
-                db.SaveChanges();
+                try {
+                    db.Payment_Info.Add(objPI);
+                    db.SaveChanges();
+                }catch(Exception ex)
+                {
+                    ExceptionLogging.SendErrorToText(ex);
+                }
             }
             else
             {
@@ -182,7 +198,7 @@ namespace EventCombo.Controllers
             }
             ViewBag.CountryID = countryList;
 
-            return RedirectToAction("Index", "ManageEvent", new { Eventid = Eventid, type="N" });
+            return RedirectToAction("Index", "ManageEvent", new { Eventlid = Eventid, type="N" });
         }
 
 

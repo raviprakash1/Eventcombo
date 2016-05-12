@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using EventCombo.ViewModels
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -53,12 +54,7 @@
 {
             <div class="col-sm-5 head_left_nav">
                 <ul class="navbar-right frnt-top-header  xs-signup-height">
-
-
-
-
                     <li class="msg_icn"><span>12</span> </li>
-
                     <li><a href="#">Welcome @{Html.RenderAction("UserName", "Home");}!</a> </li>
                     <li>
                         @Html.ActionLink("My Account", "MyAccount", "Account", routeValues: null, htmlAttributes: new { title = "Account" })
@@ -69,12 +65,6 @@
                             <a href="javascript:document.getElementById('logoutForm').submit()">Log Out </a>
                         }
                     </li>
-
-
-
-
-
-
                 </ul>
             </div>
                         }
@@ -102,7 +92,29 @@
             </div>
             <div class="Fix_Head mt10" title="Turn on to fix header">
                 <label class="switch">
-                    <input type="checkbox" class="switch-input" checked  onchange="changeheader(this.id)" id="idchecked">
+                  @{
+
+                      string header = CookieStore.GetCookie("ckHeader");
+
+                    <input type="hidden" value=@CookieStore.GetCookie("ckHeader") id="hdheader" />
+                      if ((header != null) && (header != ""))
+                      {
+                          if (header == "on")
+                          {
+                            <input type="checkbox" class="switch-input" id="idchecked" checked onchange="changeheader(this.id);">
+                          }
+                          else
+                          {
+                            <input type="checkbox" class="switch-input" id="idchecked" onchange="changeheader(this.id);">
+                          }
+                      }
+                      else
+                      {
+                        <input type="checkbox" class="switch-input" id="idchecked" onchange="changeheader(this.id);">
+                      }
+
+                }
+
                     <span class="switch-label" data-on="On" data-off="Off" ></span>
                     <span class="switch-handle"></span>
                 </label>
@@ -115,10 +127,12 @@
         </div>
 
     </div>
+
    <div class="container-fluid cont_margin" id="bodysec">
         @if (HttpContext.Current.Session["Fromname"].ToString() == "events" || HttpContext.Current.Session["Fromname"].ToString() == "deals")
         {
             @RenderBody()
+         
 
         }
         else
@@ -160,7 +174,6 @@
                                               <p>@Html.ActionLink("Personal Information", "MyAccount", "Account") </p>
                                               <p>@Html.ActionLink("My Purchased Ticket", "PurchasedTicket", "Account")</p>
                                               <p>@Html.ActionLink("My Purchased Deals", "PurchasedDeals", "Account")</p>
-                                              <p>@Html.ActionLink("Payment Information", "PaymentInformation", "Account")</p>
                                               <p>@Html.ActionLink("Manage Organizer", "OrganizerProfile", "Account")</p>
                                             </div>
                                           </div>
@@ -236,7 +249,71 @@
 
 
     <script type="text/javascript">
-   
+        $(window).load(function () {
+
+            var headervale = $("#hdheader").val();;
+            //alert(headervale);
+            if (headervale != undefined && headervale != null && headervale != '') {
+
+                if (headervale == "on") {
+                    $('#mainhead').addClass('fix_head');
+                    $('#bodysec').addClass('cont_margin');
+                    $('#navtop').addClass('affix-top');
+                    $('#midsection').addClass('midd_cont');
+                    $('#eventtop').addClass('event_top');
+                    $('#eventtopscoll').addClass('event_top');
+
+                    $('#divsuccerr').addClass('aler_container');
+                    $('#eventtopscoll').addClass('viewevent_container');
+                    //if ($('#idchecked').attr('checked')) {
+
+                    //} else {
+                    //    $("#idchecked").attr('checked', true);
+                    //}
+                    //$("#idchecked").attr('checked', true);
+                }
+                else {
+                    $('#mainhead').removeClass('fix_head');
+                    $('#bodysec').removeClass('cont_margin');
+                    $('#navtop').removeClass('affix-top');
+                    $('#midsection').removeClass('midd_cont');
+                    $('#eventtopscoll').removeClass('event_top');
+                    $('#eventtop').removeClass('event_top');
+                    $('#divsuccerr').removeClass('aler_container');
+
+                    $('#eventtopscoll').removeClass('viewevent_container');
+                    //$("#idchecked").attr('checked', false);
+                    //if ($('#idchecked').attr('checked')) {
+
+                    //} else {
+                    //    $("#idchecked").attr('checked', false);
+                    //}
+
+                }
+            } else {
+                $('#mainhead').removeClass('fix_head');
+                $('#bodysec').removeClass('cont_margin');
+                $('#navtop').removeClass('affix-top');
+                $('#midsection').removeClass('midd_cont');
+                $('#eventtopscoll').removeClass('event_top');
+                $('#eventtop').removeClass('event_top');
+                $('#divsuccerr').removeClass('aler_container');
+
+                $('#eventtopscoll').removeClass('viewevent_container');;
+                //if ($('#idchecked').attr('checked')) {
+
+                //} else {
+                //    $("#idchecked").attr('checked', false);
+                //}
+                //$("#idchecked").attr('checked', false);
+            }
+
+
+
+
+        
+
+        });
 
         function checkPermission(PermisionId) {
             @*$.ajax({
@@ -271,7 +348,21 @@
     function changeheader(e)
     {
         if ($('#idchecked').is(":checked") == true) {
-          
+            $.ajax({
+                url: '@Url.Action("Setheader", "Home")',
+                type: "Post",
+                data: { header: "on" },
+                success: function (data) {
+
+
+                },
+                error: function (data) {
+                    //alert("Sorry there is some problem.");
+                    return false
+                }
+            });
+       
+            //$.cookie("header", "on", { expire: 1 });
             $('#mainhead').addClass('fix_head');
             $('#bodysec').addClass('cont_margin');
             $('#navtop').addClass('affix-top');
@@ -283,6 +374,20 @@
             $('#eventtopscoll').addClass('viewevent_container');
         } else
         {
+            $.ajax({
+                url: '@Url.Action("Setheader", "Home")',
+                type: "Post",
+                data: { header: "off" },
+                success: function (data) {
+
+
+                },
+                error: function (data) {
+                    //alert("Sorry there is some problem.");
+                    return false
+                }
+            });
+            //$.cookie("header", "off", { expire: 1 });
             $('#mainhead').removeClass('fix_head');
             $('#bodysec').removeClass('cont_margin');
             $('#navtop').removeClass('affix-top');

@@ -272,5 +272,68 @@ namespace EventCombo.Models
                 smtp.Send(mailMessage);
             }
         }
+
+        public bool Getprofiledetails(string id)
+        {
+            using (EventComboEntities objEntity = new EventComboEntities())
+            {
+
+                var modelmyaccount = (from cpd in objEntity.AspNetUsers
+                                      join pfd in objEntity.Profiles
+    on cpd.Id equals pfd.UserID
+                                      where cpd.Id == id
+                                      select new ExternalLogin
+                                      {
+                                          userid = cpd.Id,
+                                          email = cpd.Email
+
+                                      }).FirstOrDefault();
+
+
+                if (modelmyaccount == null)
+                {
+
+                    return false;
+                }
+                else
+                {
+                    return true;
+
+                }
+            }
+        }
+        public bool GetExternalLogindetails(string userid, string loginprovider)
+        {
+            using (EventComboEntities objEntity = new EventComboEntities())
+            {
+
+                var modelmyaccount = (from cpd in objEntity.AspNetUsers
+                                      join pfd in objEntity.AspNetUserLogins
+    on cpd.Id equals pfd.UserId
+                                      where cpd.Id == userid && pfd.LoginProvider == loginprovider
+                                      select new ExternalLogin
+                                      {
+                                          userid = cpd.Id,
+                                          email = cpd.Email
+
+                                      }).FirstOrDefault();
+
+
+                if (modelmyaccount == null)
+                {
+
+                    return false;
+                }
+                else
+                {
+                    return true;
+
+                }
+
+
+            }
+
+
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace EventCombo
         {
             ConfigureAuth(app);
 
-            TicketEmailer ticketEmailer = new TicketEmailer();
+            
 
             var options = new SqlServerStorageOptions
             {
@@ -26,7 +26,16 @@ namespace EventCombo
             GlobalConfiguration.Configuration
                 .UseSqlServerStorage("MyConnection");
 
+            EventStatusUpdate eventStatus = new EventStatusUpdate();
+            RecurringJob.AddOrUpdate(() => eventStatus.Update(), "*/4 * * * *");
+
+            TicketEmailer ticketEmailer = new TicketEmailer();
             RecurringJob.AddOrUpdate(() => ticketEmailer.send(), "*/5 * * * *");
+
+            DeleteLockTickets locktickets = new DeleteLockTickets();
+            RecurringJob.AddOrUpdate(() => locktickets.Delete(), "*/1 * * * *");
+
+
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();

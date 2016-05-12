@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EventCombo.Models;
+using System.Text.RegularExpressions;
+
 namespace EventCombo.Controllers
 {
     public class CartController : Controller
@@ -12,33 +14,41 @@ namespace EventCombo.Controllers
         public JsonResult PayPaltoken()
         {
             PayPalRedirect redirect = new PayPalRedirect();
-                string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
-                using (var objContent = new EventComboEntities())
+            string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
+            using (var objContent = new EventComboEntities())
+            {
+                // var EventOrderDetail = (from Order in objContent.Ticket_Purchased_Detail where Order.TPD_GUID == strGUID select Order).FirstOrDefault();
+                // var OrderDetail = (from Orderd in  objContent.Order_Detail_T where Orderd.O_Order_Id == EventOrderDetail.TPD_Order_Id select Orderd).FirstOrDefault();
+                try
                 {
-                    // var EventOrderDetail = (from Order in objContent.Ticket_Purchased_Detail where Order.TPD_GUID == strGUID select Order).FirstOrDefault();
-                    // var OrderDetail = (from Orderd in objContent.Order_Detail_T where Orderd.O_Order_Id == EventOrderDetail.TPD_Order_Id select Orderd).FirstOrDefault();
-                    try
-                    {
-                        TicketPayment TicketPayment = new TicketPayment();
+                    Session["Fromname"] = "events";
+                    Session["logo"] = "events";
+                    TicketPayment TicketPayment = new TicketPayment();
                     TicketPayment = (TicketPayment)Session["TicketDatamodel"];
                     PayPalOrder objPay = new PayPalOrder();
                     objPay.Amount = Convert.ToDecimal(TicketPayment.strGrandTotal);
                     objPay.OrderId = "";
-                     redirect = PayPal.ExpressCheckout(objPay);
-                    }
-                    catch (Exception ex)
-                    {
-                        ExceptionLogging.SendErrorToText(ex);
-                    }
-                    return Json(redirect.Token, JsonRequestBehavior.AllowGet);
+                    var url = Request.Url;
+                    var baseurl = url.GetLeftPart(UriPartial.Authority);
+                    objPay.CancelUrl = baseurl + Url.Action("TicketPayment", "TicketPayment");
+                    redirect = PayPal.ExpressCheckout(objPay);
                 }
-         
+                catch (Exception ex)
+                {
+                    ExceptionLogging.SendErrorToText(ex);
+                }
+                return Json(redirect.Token, JsonRequestBehavior.AllowGet);
+            }
+
         }
         public ActionResult CheckoutReview(string token, string PayerID)
         {
             string retMsg = "";
             string PayerID1 = "";
-            try {
+
+            try
+            {
+
                 TicketPayment TicketPayment = new TicketPayment();
                 TicketPayment = (TicketPayment)Session["TicketDatamodel"];
                 PayPal.GetCheckoutDetails(token, ref PayerID1, ref retMsg);
@@ -46,18 +56,21 @@ namespace EventCombo.Controllers
                 ViewData["token"] = token;
                 ViewData["PayerID"] = PayerID1;
                 ViewData["Amount"] = TicketPayment.strGrandTotal;
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 ExceptionLogging.SendErrorToText(ex);
             }
             return View();
         }
-        public  ActionResult DoCheckoutPayment(string token, string PayerID)
+        public ActionResult DoCheckoutPayment(string token, string PayerID)
         {
             string retMsg = "";
             TicketPayment TicketPayment = new TicketPayment();
             try
             {
+                Session["Fromname"] = "events";
+                Session["logo"] = "events";
                 TicketPayment = (TicketPayment)Session["TicketDatamodel"];
 
                 if (PayPal.DoCheckoutPayment(TicketPayment.strGrandTotal, token, PayerID, ref retMsg))
@@ -87,7 +100,8 @@ namespace EventCombo.Controllers
                     ViewData["Amount"] = "";
                     ViewData["ReturnMessage"] = retMsg;
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 ExceptionLogging.SendErrorToText(ex);
             }

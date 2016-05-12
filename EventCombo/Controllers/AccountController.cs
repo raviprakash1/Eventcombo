@@ -24,6 +24,7 @@ using System.Security.Cryptography;
 using System.Text;
 using EventCombo.DAL;
 using EventCombo.Service;
+using EventCombo.Utils;
 
 namespace EventCombo.Controllers
 {
@@ -254,11 +255,13 @@ namespace EventCombo.Controllers
         userid = Session["AppId"].ToString();
       }
 
-      var modelPerm = (from Org in db.Organizer_Master
-                       where Org.Orgnizer_Id == id
-                       select Org).FirstOrDefault();
-      if (string.IsNullOrEmpty(modelPerm.Organizer_Image))
-      {
+                var modelPerm = (from Org in db.Organizer_Master
+                             where Org.Orgnizer_Id == id
+                             select Org).FirstOrDefault();
+            var Orgdesc =new HtmlString( Server.HtmlDecode(modelPerm.Organizer_Desc));
+            modelPerm.Organizer_Desc = Orgdesc.ToString();
+            if (string.IsNullOrEmpty(modelPerm.Organizer_Image))
+            {
 
         modelPerm.Organizer_Image = "";
         modelPerm.contenttype = "";
@@ -338,30 +341,30 @@ namespace EventCombo.Controllers
           ImagePath = "/Images/Organizer/Organizer_Images/" + images[0];
         }
 
-        using (EventComboEntities db = new EventComboEntities())
-        {
-          Organizer_Master org = (from o in db.Organizer_Master where o.Orgnizer_Id == model.Orgnizer_Id select o).FirstOrDefault();
-          org.Orgnizer_Name = model.Orgnizer_Name;
-          org.Organizer_Desc = model.Organizer_Desc;
-          org.Organizer_FBLink = model.Organizer_FBLink;
-          org.Organizer_Twitter = model.Organizer_Twitter;
-          org.Organizer_Linkedin = model.Organizer_Linkedin;
-          org.UserId = userid;
-          org.Organizer_Image = UserProfileImage;
-          org.contenttype = ContentType;
-          org.Organizer_Address1 = model.Organizer_Address1;
-          org.Organizer_Address2 = model.Organizer_Address2;
-          org.Organizer_City = model.Organizer_City;
-          org.Organizer_State = model.Organizer_State;
-          org.Organizer_CountryId = model.Organizer_CountryId;
-          org.Organizer_Zipcode = model.Organizer_Zipcode;
-          org.Organizer_Email = model.Organizer_Email;
-
-
-          org.Organizer_Phoneno = model.Organizer_Phoneno;
-          org.Organizer_Websiteurl = model.Organizer_Websiteurl;
-          org.Organizer_Status = "A";
-          org.Imagepath = ImagePath;
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    Organizer_Master org = (from o in db.Organizer_Master where o.Orgnizer_Id==model.Orgnizer_Id select o).FirstOrDefault();
+                    org.Orgnizer_Name = model.Orgnizer_Name;
+                    org.Organizer_Desc =Server.HtmlEncode(model.Organizer_Desc);
+                    org.Organizer_FBLink = model.Organizer_FBLink;
+                    org.Organizer_Twitter = model.Organizer_Twitter;
+                    org.Organizer_Linkedin = model.Organizer_Linkedin;
+                    org.UserId = userid;
+                    org.Organizer_Image = UserProfileImage;
+                    org.contenttype = ContentType;
+                    org.Organizer_Address1 = model.Organizer_Address1;
+                    org.Organizer_Address2 = model.Organizer_Address2;
+                    org.Organizer_City = model.Organizer_City;
+                    org.Organizer_State = model.Organizer_State;
+                    org.Organizer_CountryId = model.Organizer_CountryId;
+                    org.Organizer_Zipcode = model.Organizer_Zipcode;
+                    org.Organizer_Email = model.Organizer_Email;
+                   
+                   
+                    org.Organizer_Phoneno = model.Organizer_Phoneno;
+                    org.Organizer_Websiteurl = model.Organizer_Websiteurl;
+                    org.Organizer_Status = "A";
+                    org.Imagepath = ImagePath;
 
 
 
@@ -530,68 +533,52 @@ namespace EventCombo.Controllers
 
         return "";
 
-      }
-    }
-    [HttpGet]
-
-    [Authorize]
-    public ActionResult MyAccount()
-    {
-      string defaultCountry = "";
-      HomeController hmc = new HomeController();
-      hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
-      Session["logo"] = "account";
-      Session["Fromname"] = "account";
-      string city = "", state = "", zipcode = "", country = "";
-      if ((Session["AppId"] != null))
-      {
-        string usernme = hmc.getusername();
-        if (string.IsNullOrEmpty(usernme))
-        {
-          return RedirectToAction("Index", "Home");
-        }
-
-        try
-        {
-          using (WebClient client = new WebClient())
-          {
-            string ip = GetLanIPAddress().Replace("::ffff:", "");
-            var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
-            dynamic stuff = JsonConvert.DeserializeObject(json);
-            if (stuff != null)
-            {
-              city = stuff.city;
-              state = stuff.region_name;
-              zipcode = stuff.zip_code;
-              country = stuff.country_name;
             }
-            else
+        }
+        [HttpGet]
+    
+        [Authorize]
+        public ActionResult MyAccount()
+        {
+            string defaultCountry = "";
+            myAccount myacc = new myAccount();
+            MyAccount myac = new MyAccount();
+          
+            Session["logo"] = "account";
+            Session["Fromname"] = "account";
+            string city = "", state = "", zipcode = "", country = "";
+            if ((Session["AppId"] != null))
             {
-              city = "";
-              state = "";
-              zipcode = "";
-              country = "";
+              string usernme= myac.getusername();
+                if(string.IsNullOrEmpty(usernme))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
 
-            }
-          }
+                try {
+                    Ip2Geo ip2Geo = new Ip2Geo();
+                    GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+                    city = geoAddress.cityName;
+                    country = geoAddress.countryName;
+                    zipcode = geoAddress.zipCode;
+                    state = geoAddress.regionName;
+                }
+                catch (Exception ex)
+                {
+                    city = "";
+                    state = "";
+                    zipcode = "";
+                    country = "";
+
         }
-        catch (Exception ex)
-        {
-          city = "";
-          state = "";
-          zipcode = "";
-          country = "";
-
-        }
 
 
 
-        string userid = Session["AppId"].ToString();
-        myAccount myacc = new myAccount();
-        MyAccount myac = new MyAccount();
-        var accountdetail = myac.GetLoginDetails(userid);
-        if (accountdetail != null)
-        {
+                string userid = Session["AppId"].ToString();
+               
+                var accountdetail = myac.GetLoginDetails(userid);
+                if (accountdetail != null)
+                {
 
           myacc = accountdetail;
         }
@@ -762,7 +749,7 @@ namespace EventCombo.Controllers
                 string Userid = Session["AppId"].ToString();
                 string imagepresent = model.ImagePresent;
 
-                ValidationMessageController vmc = new ValidationMessageController();
+                ValidationMessage vmc = new ValidationMessage();
                 MyAccount mac = new MyAccount();
                 validationresult = vmc.Index("", "");
                 var accountdetail = mac.GetLoginDetails(Userid);
@@ -1657,42 +1644,49 @@ namespace EventCombo.Controllers
         case SignInStatus.Success:
           var User = UserManager.FindByEmail(model.Email.ToString());
 
-          //var roleMemeber = (from r in db.AspNetRoles where r.Name.Contains("Member") select r).FirstOrDefault();
-          //var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleMemeber.Id)).ToList();
-          //if (users.Find(x => x.Id == User.Id) != null)
-          //{
-          try
-          {
-            using (WebClient client = new WebClient())
-            {
-              string ip = GetLanIPAddress().Replace("::ffff:", "");
+                    //var roleMemeber = (from r in db.AspNetRoles where r.Name.Contains("Member") select r).FirstOrDefault();
+                    //var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleMemeber.Id)).ToList();
+                    //if (users.Find(x => x.Id == User.Id) != null)
+                    //{
+                    try
+                    {
+
+                        Ip2Geo ip2Geo = new Ip2Geo();
+                        GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+                       city = geoAddress.cityName;
+                        country = geoAddress.countryName;
+                        zipcode = geoAddress.zipCode;
+                        state = geoAddress.regionName;
+                        //using (WebClient client = new WebClient())
+                        //{
+                        //    string ip = GetLanIPAddress().Replace("::ffff:", "");
 
 
-              var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
-              dynamic stuff = JsonConvert.DeserializeObject(json);
-              if (stuff != null)
-              {
-                city = stuff.city;
-                state = stuff.region_name;
-                zipcode = stuff.zip_code;
-                country = stuff.country_name;
-              }
-              else
-              {
-                city = "";
-                state = "";
-                zipcode = "";
-                country = "";
+                        //    var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
+                        //    dynamic stuff = JsonConvert.DeserializeObject(json);
+                        //    if (stuff != null)
+                        //    {
+                        //        city = stuff.city;
+                        //        state = stuff.region_name;
+                        //        zipcode = stuff.zip_code;
+                        //        country = stuff.country_name;
+                        //    }
+                        //    else
+                        //    {
+                        //        city = "";
+                        //        state = "";
+                        //        zipcode = "";
+                        //        country = "";
 
-              }
-            }
-          }
-          catch (Exception ex)
-          {
-            city = "";
-            state = "";
-            zipcode = "";
-            country = "";
+                        //    }
+                        //}
+                    }
+                    catch (Exception ex)
+                    {
+                        city = "";
+                        state = "";
+                        zipcode = "";
+                        country = "";
 
           }
           var status = db.Profiles.Where(x => x.UserID == User.Id).Select(x => x.UserStatus).FirstOrDefault();
@@ -2044,44 +2038,29 @@ namespace EventCombo.Controllers
       return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
     }
 
-    //
-    // GET: /Account/ExternalLoginCallback
-    [AllowAnonymous]
-    public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
-    {
-      string city = "", state = "", zipcode = "", country = "";
-      try
-      {
-        using (WebClient client = new WebClient())
+        //
+        // GET: /Account/ExternalLoginCallback
+        [AllowAnonymous]
+        public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
-          string ip = GetLanIPAddress().Replace("::ffff:", "");
+            string city = "", state = "", zipcode = "", country = "";
+            MyAccount acc = new Models.MyAccount();
+            try
+            {
 
-
-          var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
-          dynamic stuff = JsonConvert.DeserializeObject(json);
-          if (stuff != null)
-          {
-            city = stuff.city;
-            state = stuff.region_name;
-            zipcode = stuff.zip_code;
-            country = stuff.country_name;
-          }
-          else
-          {
-            city = "";
-            state = "";
-            zipcode = "";
-            country = "";
-
-          }
-        }
-      }
-      catch (Exception ex)
-      {
-        city = "";
-        state = "";
-        zipcode = "";
-        country = "";
+                Ip2Geo ip2Geo = new Ip2Geo();
+                GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+                city = geoAddress.cityName;
+                country = geoAddress.countryName;
+                zipcode = geoAddress.zipCode;
+                state = geoAddress.regionName;
+            }
+            catch (Exception ex)
+            {
+                city = "";
+                state = "";
+                zipcode = "";
+                country = "";
 
       }
       var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
@@ -2161,13 +2140,13 @@ namespace EventCombo.Controllers
               firstname = givenNameClaim.Value != null ? givenNameClaim.Value : "";
               Lastnmae = lastNameClaim.Value != null ? lastNameClaim.Value : "";
 
-            }
-            bool getprofstatus = Getprofiledetails(user1.Id);
-            if (getprofstatus == false)
-            {
-              using (EventComboEntities objEntity = new EventComboEntities())
-              {
-                Profile prof = new Profile();
+                        }
+                        bool getprofstatus = acc.Getprofiledetails(user1.Id);
+                        if (getprofstatus == false)
+                        {
+                            using (EventComboEntities objEntity = new EventComboEntities())
+                            {
+                                Profile prof = new Profile();
 
                 prof.FirstName = firstname;
                 prof.LastName = Lastnmae;
@@ -2218,12 +2197,12 @@ namespace EventCombo.Controllers
 
         }
 
-      }
-      else
-      {
-        bool getstatus = GetExternalLogindetails(user.Id, loginInfo.Login.LoginProvider);
-        if (getstatus)
-        {
+            }
+            else
+            {
+                bool getstatus = acc.GetExternalLogindetails(user.Id, loginInfo.Login.LoginProvider);
+                if (getstatus)
+                {
 
 
         }
@@ -2266,23 +2245,24 @@ namespace EventCombo.Controllers
           var lastNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname);
           var givenNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName);
 
-          Email = emailClaim.Value != null ? emailClaim.Value : "";
-          firstname = givenNameClaim.Value != null ? givenNameClaim.Value : "";
-          Lastnmae = lastNameClaim.Value != null ? lastNameClaim.Value : "";
-          ////request profile image
-          //using (var webClient = new System.Net.WebClient())
-          //{
-          //    var json = webClient.DownloadString(apiRequestUri);
-          //    dynamic me2 = JsonConvert.DeserializeObject(json);
-          //    //userPicture = result.picture;
-          //}
-        }
-        bool getprofstatus = Getprofiledetails(user.Id);
-        if (getprofstatus == false)
-        {
-          using (EventComboEntities objEntity = new EventComboEntities())
-          {
-            Profile prof = new Profile();
+                    Email = emailClaim.Value!=null? emailClaim.Value:"";
+                    firstname = givenNameClaim.Value!=null? givenNameClaim.Value:"";
+                    Lastnmae = lastNameClaim.Value != null ? lastNameClaim.Value:"";
+                    ////request profile image
+                    //using (var webClient = new System.Net.WebClient())
+                    //{
+                    //    var json = webClient.DownloadString(apiRequestUri);
+                    //    dynamic me2 = JsonConvert.DeserializeObject(json);
+                    //    //userPicture = result.picture;
+                    //}
+                }
+               
+                bool getprofstatus = acc.Getprofiledetails(user.Id);
+                if (getprofstatus == false)
+                {
+                    using (EventComboEntities objEntity = new EventComboEntities())
+                    {
+                        Profile prof = new Profile();
 
             prof.FirstName = firstname;
             prof.LastName = Lastnmae;
@@ -2335,87 +2315,27 @@ namespace EventCombo.Controllers
       }
     }
 
-    public bool Getprofiledetails(string id)
-    {
-      using (EventComboEntities objEntity = new EventComboEntities())
-      {
+      
 
-        var modelmyaccount = (from cpd in objEntity.AspNetUsers
-                              join pfd in objEntity.Profiles
-on cpd.Id equals pfd.UserID
-                              where cpd.Id == id
-                              select new ExternalLogin
-                              {
-                                userid = cpd.Id,
-                                email = cpd.Email
+       
 
-                              }).FirstOrDefault();
-
-
-        if (modelmyaccount == null)
+      
+        [AllowAnonymous]
+        public ActionResult Confirm(string Email)
         {
-
-          return false;
+            ViewBag.Email = Email; return View();
         }
-        else
+        //
+        // POST: /Account/ExternalLoginConfirmation
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ExternalLoginConfirmation(LoginViewModel model, string returnUrl)
         {
-          return true;
-
-        }
-      }
-    }
-
-    public bool GetExternalLogindetails(string userid, string loginprovider)
-    {
-      using (EventComboEntities objEntity = new EventComboEntities())
-      {
-
-        var modelmyaccount = (from cpd in objEntity.AspNetUsers
-                              join pfd in objEntity.AspNetUserLogins
-on cpd.Id equals pfd.UserId
-                              where cpd.Id == userid && pfd.LoginProvider == loginprovider
-                              select new ExternalLogin
-                              {
-                                userid = cpd.Id,
-                                email = cpd.Email
-
-                              }).FirstOrDefault();
-
-
-        if (modelmyaccount == null)
-        {
-
-          return false;
-        }
-        else
-        {
-          return true;
-
-        }
-
-
-      }
-
-
-    }
-
-
-    [AllowAnonymous]
-    public ActionResult Confirm(string Email)
-    {
-      ViewBag.Email = Email; return View();
-    }
-    //
-    // POST: /Account/ExternalLoginConfirmation
-    [HttpPost]
-    [AllowAnonymous]
-    [ValidateAntiForgeryToken]
-    public async Task<ActionResult> ExternalLoginConfirmation(LoginViewModel model, string returnUrl)
-    {
-      if (User.Identity.IsAuthenticated)
-      {
-        return RedirectToAction("Index", "Manage");
-      }
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Manage");
+            }
 
       if (ModelState.IsValid)
       {
@@ -2573,28 +2493,28 @@ on cpd.Id equals pfd.UserId
           ImagePath = "/Images/Organizer/Organizer_Images/" + images[0];
         }
 
-        using (EventComboEntities db = new EventComboEntities())
-        {
-          Organizer_Master org = new Organizer_Master();
-          org.Orgnizer_Name = model.Orgnizer_Name;
-          org.Organizer_Desc = model.Organizer_Desc;
-          org.Organizer_FBLink = model.Organizer_FBLink;
-          org.Organizer_Twitter = model.Organizer_Twitter;
-          org.Organizer_Linkedin = model.Organizer_Linkedin;
-          org.UserId = userid;
-          org.Organizer_Image = UserProfileImage;
-          org.contenttype = ContentType;
-          org.Organizer_Address1 = model.Organizer_Address1;
-          org.Organizer_Address2 = model.Organizer_Address2;
-          org.Organizer_City = model.Organizer_City;
-          org.Organizer_State = model.Organizer_State;
-          org.Organizer_CountryId = model.Organizer_CountryId;
-          org.Organizer_Zipcode = model.Organizer_Zipcode;
-          org.Organizer_Email = model.Organizer_Email;
-          org.Organizer_Phoneno = model.Organizer_Phoneno;
-          org.Organizer_Websiteurl = model.Organizer_Websiteurl;
-          org.Organizer_Status = "A";
-          org.Imagepath = ImagePath;
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    Organizer_Master org = new Organizer_Master();
+                    org.Orgnizer_Name = model.Orgnizer_Name;
+                    org.Organizer_Desc =Server.HtmlEncode(model.Organizer_Desc);
+                    org.Organizer_FBLink = model.Organizer_FBLink;
+                    org.Organizer_Twitter = model.Organizer_Twitter;
+                    org.Organizer_Linkedin = model.Organizer_Linkedin;
+                    org.UserId = userid;
+                    org.Organizer_Image = UserProfileImage;
+                    org.contenttype = ContentType;
+                    org.Organizer_Address1 = model.Organizer_Address1;
+                    org.Organizer_Address2 = model.Organizer_Address2;
+                    org.Organizer_City = model.Organizer_City;
+                    org.Organizer_State = model.Organizer_State;
+                    org.Organizer_CountryId = model.Organizer_CountryId;
+                    org.Organizer_Zipcode = model.Organizer_Zipcode;
+                    org.Organizer_Email = model.Organizer_Email;
+                    org.Organizer_Phoneno = model.Organizer_Phoneno;
+                    org.Organizer_Websiteurl = model.Organizer_Websiteurl;
+                    org.Organizer_Status = "A";
+                    org.Imagepath = ImagePath;
 
 
 

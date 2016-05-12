@@ -25,6 +25,8 @@ using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using Microsoft.Owin.Security.OAuth;
 using PagedList;
+using EventCombo.Utils;
+using EventCombo.ViewModels;
 
 namespace EventCombo.Controllers
 {
@@ -78,33 +80,17 @@ namespace EventCombo.Controllers
             var fbuserid = "";
 
 
-            AccountController acc = new AccountController();
+            MyAccount acc = new MyAccount();
             try
             {
-                using (WebClient wbclient = new WebClient())
-                {
-                    string ip = GetLanIPAddress().Replace("::ffff:", "");
-
-
-                    var json = wbclient.DownloadString("http://freegeoip.net/json/" + ip + "");
-                    dynamic stuff = JsonConvert.DeserializeObject(json);
-                    if (stuff != null)
-                    {
-                        city = stuff.city;
-                        state = stuff.region_name;
-                        zipcode = stuff.zip_code;
-                        country = stuff.country_name;
-                    }
-                    else
-                    {
-                        city = "";
-                        state = "";
-                        zipcode = "";
-                        country = "";
-
-                    }
-                }
-            }
+               
+                    Ip2Geo ip2Geo = new Ip2Geo();
+                    GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+                    city = geoAddress.cityName;
+                    country = geoAddress.countryName;
+                    zipcode = geoAddress.zipCode;
+                    state = geoAddress.regionName;
+             }
             catch (Exception ex)
             {
                 city = "";
@@ -334,7 +320,7 @@ namespace EventCombo.Controllers
 
 
         }
-        public string Discoversavefavourite(long Eventid, string strUrl)
+        public string Discoversavefavourite(long Eventid, string strUrl,string strType="")
         {
            
             if (Session["AppId"] != null)
@@ -346,10 +332,14 @@ namespace EventCombo.Controllers
                     var vfav = (from ev in db.EventFavourites where ev.eventId == lEventid && ev.UserID == strUserId select ev.UserID).FirstOrDefault();
                     if (vfav != null && vfav.Trim() != "")
                     {
-                        var userid = Session["AppId"].ToString().Trim();
-                        objEnt.Database.ExecuteSqlCommand("Delete from EventFavourite where UserID='" + userid + "' AND eventId=" + Eventid + "");
-                        objEnt.SaveChanges();
-                        return "D";
+                        if (strType == "")
+                        {
+                            var userid = Session["AppId"].ToString().Trim();
+                            objEnt.Database.ExecuteSqlCommand("Delete from EventFavourite where UserID='" + userid + "' AND eventId=" + Eventid + "");
+                            objEnt.SaveChanges();
+                        }
+                            return "D";
+                        
                     }
                     else
                     {
@@ -378,18 +368,31 @@ namespace EventCombo.Controllers
 
         public ActionResult DiscoverEvents(string strEt, string strEc, string strPrice, string strPageIndex, string strLat, string strLong, string strSort, string strDateFilter,string strTextSearch)
         {
-
-            if (string.IsNullOrEmpty(strLat))
+            if (strLat == "lat")
             {
-                strLat = "28.6139";
-                strLong = "77.2090";
+                try
+                {
+                    Ip2Geo ip2Geo = new Ip2Geo();
+                    GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+                    strLat = geoAddress.latitude;
+                    strLong = geoAddress.longitude;
+                    if (string.IsNullOrEmpty(strLat) || strLat == "0")
+                    {
+                        strLat = "28.6139";
+                        strLong = "77.2090";
+                    }
+                }
+                catch (Exception)
+                {
+                    strLat = "28.6139";
+                    strLong = "77.2090";
+                }
             }
 
-
+            MyAccount hmc = new MyAccount();
             if ((Session["AppId"] != null))
             {
-                HomeController hmc = new HomeController();
-                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+               
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -406,7 +409,7 @@ namespace EventCombo.Controllers
                     long lEventId = Convert.ToInt32(str[0].ToString());
                     if (lEventId > 0)
                     {
-                        Discoversavefavourite(lEventId,strUrl);
+                        Discoversavefavourite(lEventId,strUrl,"FromLogin");
                     }
                 }
                 else
@@ -458,6 +461,10 @@ namespace EventCombo.Controllers
             else
                 ViewBag.ECatSelected = null;
 
+           
+
+
+            TempData["SearchText"] = strTextSearch;
             TempData["ETypeSelected"] = strEt;
             TempData["ECatSelected"] = strEc;
             TempData["TotalPages"] = lTotalPages;
@@ -469,6 +476,7 @@ namespace EventCombo.Controllers
             TempData["NearLong"] = strNearLong;
             TempData["PageIndex"] = (strPageIndex.ToLower() == "page" ? "1" : strPageIndex);
             ViewData["tempPrice"] = (strPrice != null ? strPrice.ToUpper() : "ALL");
+
             return View();
         }
 
@@ -661,6 +669,8 @@ namespace EventCombo.Controllers
         {
 
             List<DiscoverEvent> lsDisEvt = new List<DiscoverEvent>();
+            EventCreation cs = new EventCreation();
+            ValidationMessage vmc = new ValidationMessage();
             using (EventComboEntities db = new EventComboEntities())
             {
                 StringBuilder sbQuery = new StringBuilder();
@@ -696,7 +706,7 @@ namespace EventCombo.Controllers
                 if (strEventIds.Trim() != "")
                 {
                     //sbQuery.Append("Select * from Event where EventStatus = 'Live' and isnull(Parent_EventID,0) = 0");
-                    sbQuery.Append("Select * from Event where EventStatus = 'Live' "); // No need of Parent Event check,  as we already filter address and address table only have latest event id's
+                    sbQuery.Append("Select * from Event where EventStatus = 'Live' and rtrim(ltrim(lower(EventPrivacy))) != 'private'"); // No need of Parent Event check,  as we already filter address and address table only have latest event id's
                     if (strEventTypeId.Trim() != string.Empty)
                         sbQuery.Append(" AND EventTypeID in (" + strEventTypeId + ")");
 
@@ -723,10 +733,10 @@ namespace EventCombo.Controllers
                     }
 
                     var vEventList = db.Events.SqlQuery(sbQuery.ToString()).ToList();
-                    CreateEventController objCEv = new CreateEventController();
+                  
 
                     string strImageUrl = "";
-                    ValidationMessageController vmc = new ValidationMessageController();
+                  
                     string strUserId = "";
                     if (Session["AppId"] != null && Session["AppId"].ToString() != string.Empty) strUserId = Session["AppId"].ToString();
                     bool bflag = true;
@@ -748,7 +758,7 @@ namespace EventCombo.Controllers
 
 
 
-                        strImageUrl = objCEv.GetImages(lEventId).FirstOrDefault();
+                        strImageUrl = cs.GetImages(lEventId).FirstOrDefault();
 
                         if (strImageUrl != null && strImageUrl != "")
                         {
@@ -776,7 +786,11 @@ namespace EventCombo.Controllers
                         {
                             objDisEv.EventType = objDisEv.EventType.Substring(0, 16) + "...";
                         }
-
+                        objDisEv.EventPrivacy = "Y";
+                        if (objEv.EventPrivacy.Trim().ToLower() == "private" && objEv.Private_ShareOnFB.Trim() == "N")
+                        {
+                            objDisEv.EventPrivacy = "N";
+                        }
 
                         objDisEv.EventCatId = objEv.EventCategoryID;
                         objDisEv.EventTypeId = objEv.EventTypeID;
@@ -785,7 +799,7 @@ namespace EventCombo.Controllers
                         var vAddress = objEv.Addresses.FirstOrDefault();
                         if (vAddress != null)
                         {
-                            objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble(strLat), Convert.ToDouble(strLong), Convert.ToDouble(vAddress.Latitude), Convert.ToDouble(vAddress.Longitude));
+                            objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble((strLat != "" ? strLat:"0")), Convert.ToDouble((strLong != "" ? strLong : "0")), Convert.ToDouble((vAddress.Latitude != "" ? vAddress.Latitude : "0")), Convert.ToDouble((vAddress.Longitude != "" ? vAddress.Longitude : "0")));
                             if (vAddress.ConsolidateAddress.Trim() != string.Empty)
                             {
                                 objDisEv.EventAddress = vAddress.ConsolidateAddress;
@@ -812,12 +826,31 @@ namespace EventCombo.Controllers
                             strNearLong = vAddress.Longitude;
                             bflag = false;
                         }
+                        var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == objEv.TimeZone select ev).FirstOrDefault();
+                        DateTimeWithZone dtzstart, dzend, dtznewstart, dtzCreated;
+
 
                         var vTimings = objEv.EventVenues.FirstOrDefault();
                         if (vTimings != null)
                         {
-                            objDisEv.EventTimings = Convert.ToDateTime(vTimings.EventStartDate).ToString("ddd MMM dd, yyyy") + " " + vTimings.EventStartTime;
-                            objDisEv.EventDate = (vTimings.EventStartDate != null ? Convert.ToDateTime(vTimings.EventStartDate + " " + vTimings.EventStartTime) : DateTime.Now);
+                            if (Timezonedetail != null)
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(vTimings.E_Startdate), userTimeZone, true);
+                                dzend = new DateTimeWithZone(Convert.ToDateTime(vTimings.E_Enddate), userTimeZone, true);
+                            }
+                            else
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(vTimings.E_Startdate), userTimeZone, true);
+                                dzend = new DateTimeWithZone(Convert.ToDateTime(vTimings.E_Enddate), userTimeZone, true);
+                            }
+
+                            objDisEv.EventTimings = dtzstart.LocalTime.ToString("ddd MMM dd, yyyy") + " " + dtzstart.LocalTime.ToString("h:mm tt").ToLower().Trim().Replace(" ", "");
+                            objDisEv.EventDate = dtzstart.LocalTime;
+
+                            //objDisEv.EventTimings = Convert.ToDateTime(vTimings.EventStartDate).ToString("ddd MMM dd, yyyy") + " " + vTimings.EventStartTime;
+                            //objDisEv.EventDate = (vTimings.EventStartDate != null ? Convert.ToDateTime(vTimings.EventStartDate + " " + vTimings.EventStartTime) : DateTime.Now);
                         }
                         else
                         {
@@ -843,7 +876,25 @@ namespace EventCombo.Controllers
                                 var vMax = (from evt in db.Publish_Event_Detail where evt.PE_Id == lMax select evt).FirstOrDefault();
                                 strTiming = strTiming + " - " + vMax.PE_Scheduled_Date + " " + vMax.PE_End_Time;
                             }
-                            objDisEv.EventTimings = strTiming;
+                            //objDisEv.EventTimings = strTiming;
+
+                            var vMultiple = objEv.MultipleEvents.FirstOrDefault();
+                            if (vMultiple != null)
+                            {
+                                if (Timezonedetail != null)
+                                {
+                                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_Startfrom), userTimeZone, true);
+                                    dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_StartTo), userTimeZone, true);
+                                }
+                                else
+                                {
+                                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_Startfrom), userTimeZone, true);
+                                    dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_StartTo), userTimeZone, true);
+                                }
+                                objDisEv.EventTimings = dtzstart.LocalTime.ToString("ddd MMM dd, yyyy") + " " + dtzstart.LocalTime.ToString("h:mm tt").ToLower().Trim().Replace(" ", "") + " - " + dzend.LocalTime.ToString("ddd MMM dd, yyyy") + " " + dzend.LocalTime.ToString("h:mm tt").ToLower().Trim().Replace(" ", "");
+                            }
                         }
 
                         lsDisEvt.Add(objDisEv);
@@ -997,7 +1048,9 @@ namespace EventCombo.Controllers
             //    Session["ReturnUrl"] = "0~" + strUrl;
 
             //}
+            EventCreation objCEv = new EventCreation();
 
+            ValidationMessage vmc = new ValidationMessage();
 
             List<DiscoverEvent> lsDisEvt = new List<DiscoverEvent>();
             using (EventComboEntities db = new EventComboEntities())
@@ -1012,13 +1065,12 @@ namespace EventCombo.Controllers
 
                 if (strEventIds.Trim() != "")
                 {
-                    sbQuery.Append("Select * from Event where EventStatus = 'Live' ");
+                    sbQuery.Append("Select * from Event where EventStatus = 'Live' and rtrim(ltrim(lower(EventPrivacy))) != 'private'");
                     sbQuery.Append(" and EventID in (" + strEventIds + ")");
 
                     var vEventList = db.Events.SqlQuery(sbQuery.ToString()).ToList();
-                    CreateEventController objCEv = new CreateEventController();
+                  
                     string strImageUrl = "";
-                    ValidationMessageController vmc = new ValidationMessageController();
                     string strUserId = "";
                     if (Session["AppId"] != null && Session["AppId"].ToString() != string.Empty) strUserId = Session["AppId"].ToString();
                     bool bflag = true;
@@ -1054,17 +1106,32 @@ namespace EventCombo.Controllers
                             objDisEv.EventType = objDisEv.EventType.Substring(0, 16) + "...";
                         }
 
+                        objDisEv.EventPrivacy = "Y";
+                        if (objEv.EventPrivacy.Trim().ToLower() == "private" && objEv.Private_ShareOnFB.Trim() == "N")
+                        {
+                            objDisEv.EventPrivacy = "N";
+                        }
+
+                        objDisEv.AddressStatus = 0;
+                        if (objEv.AddressStatus != null)
+                            objDisEv.AddressStatus = (objEv.AddressStatus.ToLower().Trim() == "online" ? 1 : 0);
+                        
 
                         objDisEv.EventCatId = objEv.EventCategoryID;
                         objDisEv.EventTypeId = objEv.EventTypeID;
                         objDisEv.PriceLable = GetPriceLabel(lEventId);
                         objDisEv.EventLike = GetDiscoverEventFavLikes(lEventId, strUserId);
-                        objDisEv.EventFeature = (objEv.Feature != null ? Convert.ToInt16(objEv.Feature) : 10); // 10 - becz if feature is null then that event have to show at last according to feature sorting 
+                        objDisEv.EventFeature = int.MaxValue;
+                        if (objEv.Feature != null)
+                            objDisEv.EventFeature = (objEv.Feature == 0 ? int.MaxValue : Convert.ToInt16(objEv.Feature)); // 10 - becz if feature is null then that event have to show at last according to feature sorting 
+                        
+
+
                         objDisEv.FeatureDateTime = (objEv.FeatureUpdateDate != null ? Convert.ToDateTime(objEv.FeatureUpdateDate) : DateTime.Now);
                         var vAddress = objEv.Addresses.FirstOrDefault();
                         if (vAddress != null)
                         {
-                            objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble(strLat), Convert.ToDouble(strLong), Convert.ToDouble(vAddress.Latitude), Convert.ToDouble(vAddress.Longitude));
+                            objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble((strLat != "" ? strLat:"0")), Convert.ToDouble((strLong != "" ? strLong : "0")), Convert.ToDouble((vAddress.Latitude != "" ? vAddress.Latitude : "0")), Convert.ToDouble((vAddress.Longitude != "" ? vAddress.Longitude : "0")));
                             if (vAddress.ConsolidateAddress.Trim() != string.Empty)
                             {
                                 objDisEv.EventAddress = vAddress.ConsolidateAddress;
@@ -1092,12 +1159,28 @@ namespace EventCombo.Controllers
                             strNearLong = vAddress.Longitude;
                             bflag = false;
                         }
-
+                        var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == objEv.TimeZone select ev).FirstOrDefault();
+                        DateTimeWithZone dtzstart, dzend, dtznewstart, dtzCreated;
                         var vTimings = objEv.EventVenues.FirstOrDefault();
                         if (vTimings != null)
                         {
-                            objDisEv.EventTimings = Convert.ToDateTime(vTimings.EventStartDate).ToString("ddd MMM dd, yyyy") + " " + vTimings.EventStartTime;
-                            objDisEv.EventDate = (vTimings.EventStartDate != null ? Convert.ToDateTime(vTimings.EventStartDate + " " + vTimings.EventStartTime) : DateTime.Now);
+                            if (Timezonedetail != null)
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(vTimings.E_Startdate), userTimeZone, true);
+                                dzend = new DateTimeWithZone(Convert.ToDateTime(vTimings.E_Enddate), userTimeZone, true);
+                            }
+                            else
+                            {
+                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                dtzstart = new DateTimeWithZone(Convert.ToDateTime(vTimings.E_Startdate), userTimeZone, true);
+                                dzend = new DateTimeWithZone(Convert.ToDateTime(vTimings.E_Enddate), userTimeZone, true);
+                            }
+                            objDisEv.EventTimings = dtzstart.LocalTime.ToString("ddd MMM dd, yyyy") + " " + dtzstart.LocalTime.ToString("h:mm tt").ToLower().Trim().Replace(" ", "");
+                            objDisEv.EventDate = dtzstart.LocalTime;
+
+                            //objDisEv.EventTimings = Convert.ToDateTime(vTimings.EventStartDate).ToString("ddd MMM dd, yyyy") + " " + vTimings.EventStartTime;
+                            //objDisEv.EventDate = (vTimings.EventStartDate != null ? Convert.ToDateTime(vTimings.EventStartDate + " " + vTimings.EventStartTime) : DateTime.Now);
                         }
                         else
                         {
@@ -1123,13 +1206,36 @@ namespace EventCombo.Controllers
                                 var vMax = (from evt in db.Publish_Event_Detail where evt.PE_Id == lMax select evt).FirstOrDefault();
                                 strTiming = strTiming + " - " + vMax.PE_Scheduled_Date + " " + vMax.PE_End_Time;
                             }
-                            objDisEv.EventTimings = strTiming;
+                            var vMultiple = objEv.MultipleEvents.FirstOrDefault();
+                            if (vMultiple != null)
+                            {
+                                if (Timezonedetail != null)
+                                {
+                                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_Startfrom), userTimeZone, true);
+                                    dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_StartTo), userTimeZone, true);
+                                }
+                                else
+                                {
+                                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                    dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_Startfrom), userTimeZone, true);
+                                    dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiple.M_StartTo), userTimeZone, true);
+                                }
+                                //objDisEv.EventTimings = strTiming;
+                                objDisEv.EventTimings = dtzstart.LocalTime.ToString("ddd MMM dd, yyyy") + " " + dtzstart.LocalTime.ToString("h:mm tt").ToLower().Trim().Replace(" ", "") + " - " + dzend.LocalTime.ToString("ddd MMM dd, yyyy") + " " + dzend.LocalTime.ToString("h:mm tt").ToLower().Trim().Replace(" ", "");
+                            }
                         }
 
                         lsDisEvt.Add(objDisEv);
                     }
                     //lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventFeature).OrderBy(m => m.FeatureDateTime) .ToList();
-                    lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventFeature).ToList();
+                    //lsDisEvt = lsDisEvt.OrderBy(m => m.EventDistance).ToList().OrderBy(m => m.EventFeature).ToList().OrderBy(m => m.EventDate).ToList();
+                    //lsDisEvt = lsDisEvt.OrderBy(m => m.EventFeature).ToList().OrderBy(m => m.EventDate).ToList().OrderBy(m => m.FeatureDateTime).ToList().OrderBy(m => m.EventDistance).ToList();
+                    //lsDisEvt = lsDisEvt.OrderBy(m => m.AddressStatus).ToList();
+                    lsDisEvt = lsDisEvt.OrderBy(m => m.EventFeature).ThenBy(m => m.EventDate).ThenBy(m => m.FeatureDateTime).ThenBy(m => m.EventDistance).ToList();
+                    
+
+
                 }
                 return lsDisEvt;
             }
@@ -1137,10 +1243,10 @@ namespace EventCombo.Controllers
 
         public ActionResult DiscoverEventsTiles()
         {
+            MyAccount hmc = new MyAccount();
             if ((Session["AppId"] != null))
             {
-                HomeController hmc = new HomeController();
-                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+               
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -1153,10 +1259,10 @@ namespace EventCombo.Controllers
         }
         public ActionResult GetBuzz()
         {
+            MyAccount hmc = new MyAccount();
             if ((Session["AppId"] != null))
             {
-                HomeController hmc = new HomeController();
-                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+               
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -1170,10 +1276,10 @@ namespace EventCombo.Controllers
         }
         public ActionResult EventOraganizer()
         {
+            MyAccount hmc = new MyAccount();
             if ((Session["AppId"] != null))
             {
-                HomeController hmc = new HomeController();
-                hmc.ControllerContext = new ControllerContext(this.Request.RequestContext, hmc);
+               
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -1203,7 +1309,8 @@ namespace EventCombo.Controllers
 
         public ActionResult Index(string lat, string lng, int? page)
         {
-
+            //EventCombo.Services.EventStatus obj = new EventCombo.Services.EventStatus();
+            //obj.Update();
             Session["Fromname"] = "Home";
             if (Session["AppId"] != null)
             {
@@ -1224,7 +1331,7 @@ namespace EventCombo.Controllers
                     long lEventId = Convert.ToInt32(str[0].ToString());
                     if (lEventId > 0)
                     {
-                        Discoversavefavourite(lEventId, strUrl);
+                        Discoversavefavourite(lEventId, strUrl, "FromLogin");
                     }
                 }
                 else
@@ -1242,9 +1349,28 @@ namespace EventCombo.Controllers
 
             if (string.IsNullOrEmpty(lat))
             {
-                lat = "28.6139";
-                lng = "77.2090";
+                try
+                {
+                    Ip2Geo ip2Geo = new Ip2Geo();
+                    GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+                    lat = geoAddress.latitude;
+                    lng = geoAddress.longitude;
+                    if (string.IsNullOrEmpty(lat) || lat == "0")
+                    {
+                        lat = "28.6139";
+                        lng = "77.2090";
+                    }
+                }
+                catch (Exception)
+                {
+                    lat = "28.6139";
+                    lng = "77.2090";
+                }
+
             }
+
+         
+
 
             int pageSize = 15;
             int pageNumber = (page ?? 1);
@@ -1261,8 +1387,13 @@ namespace EventCombo.Controllers
             ViewBag.lat = lat;
             ViewBag.lng = lng;
 
-            System.Diagnostics.Debug.Print("LAT" + lat + "LNG" + lng);
+        
 
+
+
+
+
+            System.Diagnostics.Debug.Print("LAT" + lat + "LNG" + lng);
             return View(objDiscEvt.ToPagedList(pageNumber, pageSize));
 
         }
@@ -1320,7 +1451,7 @@ namespace EventCombo.Controllers
             var error = "";
             var success = "";
             Session["Fromname"] = "PasswordReset";
-            ValidationMessageController vmc = new ValidationMessageController();
+            ValidationMessage vmc = new ValidationMessage();
             if (model.Password != model.ConfirmPassword)
             {
                 error = vmc.Index("ResetPassword", "PwdResetPwdValidationSys");
@@ -1752,7 +1883,7 @@ namespace EventCombo.Controllers
                 }
                 ac.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, tag, emailname);
             }
-            ValidationMessageController vmc = new ValidationMessageController();
+            ValidationMessage vmc = new ValidationMessage();
             var msg = vmc.Index("ForgotPassword", "ForgotPwdSuccessInitSY");
             ViewData["Message"] = msg;
             return View();
@@ -1948,29 +2079,12 @@ namespace EventCombo.Controllers
 
                         try
                         {
-                            using (WebClient client = new WebClient())
-                            {
-                                string ip = GetLanIPAddress().Replace("::ffff:", "");
-
-
-                                var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
-                                dynamic stuff = JsonConvert.DeserializeObject(json);
-                                if (stuff != null)
-                                {
-                                    city = stuff.city;
-                                    state = stuff.region_name;
-                                    zipcode = stuff.zip_code;
-                                    country = stuff.country_name;
-                                }
-                                else
-                                {
-                                    city = "";
-                                    state = "";
-                                    zipcode = "";
-                                    country = "";
-
-                                }
-                            }
+                            Ip2Geo ip2Geo = new Ip2Geo();
+                            GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+                            city = geoAddress.cityName;
+                            country = geoAddress.countryName;
+                            zipcode = geoAddress.zipCode;
+                            state = geoAddress.regionName;
                         }
                         catch (Exception ex)
                         {
@@ -2294,6 +2408,13 @@ namespace EventCombo.Controllers
             {
                 ModelState.AddModelError("", error);
             }
+        }
+
+        public void Setheader(string header)
+        {
+
+            CookieStore.SetCookie("ckHeader", header, TimeSpan.FromDays(1));
+            //Session["Header"] = header;
         }
 
     }

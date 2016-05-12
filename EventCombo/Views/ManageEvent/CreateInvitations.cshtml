@@ -18,7 +18,7 @@
         <div class="er_UI_main">
             <div class="er_UI_img"></div>
             <div class="er_suc" id="erraccmsg"></div>
-            <button class="close" type="button" id="btndiverrsuc">&#215;</button>
+            <button class="close" type="button" id="btndiverrsuc" onclick="$('#diverroacc').hide();">&#215;</button>
 
         </div>
     </div>
@@ -73,11 +73,11 @@
             <div class="form-group">
                 @if (Model != null && !String.IsNullOrEmpty(Model.I_SubjectLine))
                 {
-                <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" maxlength="256" type="text" value="@Model.I_SubjectLine" placeholder="">
+                    <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" maxlength="256" type="text" value="@Model.I_SubjectLine" placeholder="">
                 }
                 else
                 {
-                <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" maxlength="256" type="text" placeholder="">
+                    <input class="form-control invite_mail_inp_cont " id="txtSubjectLine" maxlength="256" type="text" placeholder="">
                 }
                 <p class="bottom-label">Subject Line</p>
             </div>
@@ -167,13 +167,13 @@
 
                             </div>
                             <div class="col-xs-12 no_pad mb10">
-                                <p class="inv_mail_date ">Share:</p>
-                                <p>
-                                    <a href="#"><img src="~/images/fb.png" /></a>
-                                    <a href="#"><img src="~/images/tw.png" /></a>
-                                    <a href="#"><img src="~/images/linkid.png" /></a>
-                                    <a href="#"><img src="~/images/msg.png" /></a>
-                                </p>
+                                @*<p class="inv_mail_date ">Share:</p>
+                                    <p>
+                                        <a href="#"><img src="~/images/fb.png" /></a>
+                                        <a href="#"><img src="~/images/tw.png" /></a>
+                                        <a href="#"><img src="~/images/linkid.png" /></a>
+                                        <a href="#"><img src="~/images/msg.png" /></a>
+                                    </p>*@
                             </div>
                         </div>
                     </div>
@@ -201,7 +201,7 @@
                     and the password above to attend this event. )
                 </p>
                 <p>
-                    <button class="btn def_btn acnt_btn edit_editor_btn" type="button" title="" data-toggle="modal" id="btEditEditor" data-target="#invite_email_desc">Edit</button>
+                    <button class="btn theme-btn def_btn acnt_btn edit_editor_btn" type="button" title="" data-toggle="modal" id="btEditEditor" data-target="#invite_email_desc">Edit</button>
                 </p>
             </div>
             <div class="clearfix"></div>
@@ -220,15 +220,15 @@
         <div class="clearfix"></div>
         <div class="col-sm-6 col-xs-12 no_pad ">
             <div class="col-sm-12 no_pad">
-                <div class="col-sm-6 col-xs-12 no_pad ">
+                <div class="col-sm-6 col-xs-12 no_pad inp100">
                     <div class="form-group">
                         <input class="form-control invite_mail_inp_cont " id="txtTestEmail" type="text" placeholder="">
                         <p class="bottom-label">Send test to email address</p>
                     </div>
                 </div>
-                <div class="col-sm-3 col-xs-12 no_pad  text-center">
+                <div class="col-sm-3 col-xs-12 no_pad  text-center ipad_send_test">
                     <button class="btn def_btn acnt_btn send_test_btn" style="display:none" type="button" data-toggle="modal" id="btPopUp" data-target="#test_inv_email"></button>
-                    <button class="btn def_btn acnt_btn send_test_btn" type="button" id="btTestEmail">Send Test</button>
+                    <button class="btn theme-btn def_btn acnt_btn send_test_btn" type="button" id="btTestEmail">Send Test</button>
 
                 </div>
                 <div class="invitation-loader" id="dvAjxLoader">
@@ -246,10 +246,10 @@
             <div class="col-sm-12 col-xs-12 no_pad">
                 <div class="col-sm-12 col-xs-12 no_pad">
                     <div class="col-sm-6 col-xs-6 no_pad">
-                        <button class="InvAddlist btn def_btn acnt_btn send_test_btn" type="submit">Add List + </button>
+                        <button class="InvAddlist btn theme-btn def_btn acnt_btn send_test_btn" type="submit">Add List + </button>
                     </div>
                     <div class="col-sm-6 col-xs-6 no_pad">
-                        <button class="btn def_btn acnt_btn send_test_btn" id="btDeleteEmail" style="display:none;" type="button">Delete </button>
+                        <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btDeleteEmail" style="display:none;" type="button">Delete </button>
                     </div>
 
                 </div>
@@ -261,12 +261,12 @@
                             </div>
                         </div>
                         <div class="col-sm-2 col-xs-12 no_pad  text-center">
-                            <button class="btn def_btn acnt_btn send_test_btn" id="btAddEmail" type="button">Add</button>
+                            <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btAddEmail" type="button">Add</button>
                         </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 col-xs-12 no_pad mt10">
-                        @if (Model.Event_Email_List != null && Model.Event_Email_List.Count>0)
+                        @if (Model.Event_Email_List != null && Model.Event_Email_List.Count > 0)
                         {
                             <div id="dvEmaillistHeader" class="col-sm-12 no_pad">
                                 <ul class="inv_mail_list_head">
@@ -281,7 +281,7 @@
                         }
                         else
                         {
-                            <div id="dvEmaillistHeader" class="col-sm-12 no_pad" style="display:none;" >
+                            <div id="dvEmaillistHeader" class="col-sm-12 no_pad" style="display:none;">
                                 <ul class="inv_mail_list_head">
                                     <li><input id="chkSelectAll" onclick="SelectAllList();" type="checkbox"></li>
                                     <li>
@@ -347,7 +347,7 @@
                 </div>
                 <div class="col-sm-4 no_pad">
                     <div class="form-group">
-                        @if (Model != null && Model.I_ScheduleDate != null)
+                        @if (Model != null && Model.I_ScheduleDate != null && Model.I_Mode != "N")
                         {
                             <input type="text" class="form-control evnt_inp_cont" value="@Model.I_ScheduleDate" id="txtSchDate" data-format="MM-dd-yyyy HH:mm AA" data-field="datetime" />
                         }
@@ -367,23 +367,23 @@
                 {
                     if (Model.I_Mode.Trim() == "N" || Model.I_Mode.Trim() == "D")
                     {
-                        <button class="btn def_btn acnt_btn send_test_btn" id="btSendNow" onclick="SaveDetail('N');" type="button">Send Now</button>
-                        <button class="btn def_btn acnt_btn send_test_btn" id="btSchdule" style="display:none" onclick="SaveDetail('S');" type="button">Schedule</button>
+                        <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btSendNow" onclick="SaveDetail('N');" type="button">Send Now</button>
+                        <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btSchdule" style="display:none" onclick="SaveDetail('S');" type="button">Schedule</button>
                     }
                     else
                     {
-                        <button class="btn def_btn acnt_btn send_test_btn" id="btSchdule" onclick="SaveDetail('S');" type="button">Schedule</button>
-                        <button class="btn def_btn acnt_btn send_test_btn" id="btSendNow" style="display:none" onclick="SaveDetail('N');" type="button">Send Now</button>
+                        <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btSchdule" onclick="SaveDetail('S');" type="button">Schedule</button>
+                        <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btSendNow" style="display:none" onclick="SaveDetail('N');" type="button">Send Now</button>
                     }
                 }
                 else
                 {
-                    <button class="btn def_btn acnt_btn send_test_btn" id="btSendNow" onclick="SaveDetail('N');" type="button">Send Now</button>
-                    <button class="btn def_btn acnt_btn send_test_btn" id="btSchdule" style="display:none" onclick="SaveDetail('S');" type="button">Schedule</button>
+                    <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btSendNow" onclick="SaveDetail('N');" type="button">Send Now</button>
+                    <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btSchdule" style="display:none" onclick="SaveDetail('S');" type="button">Schedule</button>
                 }
             </div>
             <div class="col-sm-4 col-xs-6 no_pad">
-                <button class="btn def_btn acnt_btn send_test_btn" id="btSaveDraft" onclick="SaveDetail('D');" type="button">Save Draft</button>
+                <button class="btn theme-btn def_btn acnt_btn send_test_btn" id="btSaveDraft" onclick="SaveDetail('D');" type="button">Save Draft</button>
             </div>
             <div id="dvAjxLoaderSave" style="display:none;">
                 <img src="~/Images/ajaxloader1.gif" /> Please wait ...
@@ -392,7 +392,7 @@
             <input type="hidden" id="hdId" value="@Model.I_Id" />
             <input type="hidden" id="hdEventId" value="@TempData["Eventid"]" />
             <input type="hidden" id="hdEventIMode" value="@TempData["EventIMode"]" />
-            
+
 
             @if (Model != null && !String.IsNullOrEmpty(Model.I_EditableContent))
             {
@@ -464,9 +464,9 @@
                     </div>
                 </div>
                 <div style="width: 100%; float:left; margin-top: 10px;">
-                    <div style="width:175px; float:left; margin-right: 35px;" >
+                    <div style="width:175px; float:left; margin-right: 35px;">
                         @*<div id="dvMapMailss" style="width:175px;height:175px;">*@
-                            <img style="width:175px;height:175px;" src='https://maps.googleapis.com/maps/api/staticmap?center=@TempData["Lat"],@TempData["Long"]&zoom=15&size=400x400&maptype=roadmap' />
+                        <img style="width:175px;height:175px;" src='https://maps.googleapis.com/maps/api/staticmap?center=@TempData["Lat"],@TempData["Long"]&zoom=15&size=400x400&maptype=roadmap' />
 
                         @*</div>*@
                     </div>
@@ -488,7 +488,7 @@
 
                         </div>
                         <div style="width: 100%; float:left; margin-bottom: 10px;">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -539,7 +539,7 @@
                 <div class="col-sm-12 text-center">
                     <h3>Success! </h3>
                     <p class="email_send_desc">The Email has been send. </p>
-                    <button type="button" class="btn def_btn acnt_btn send_test_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Ok</span></button>
+                    <button type="button" class="btn theme-btn def_btn acnt_btn send_test_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Ok</span></button>
                 </div>
             </div>
 
@@ -559,7 +559,7 @@
                     <div class="summernote" id="dvEditor"></div>
 
                     <div class="col-sm-12 text-center">
-                        <button type="button" id="btSaveEditor" class="btn def_btn acnt_btn send_test_btn" data-dismiss="modal" aria-label="Close">
+                        <button type="button" id="btSaveEditor" class="btn theme-btn def_btn acnt_btn send_test_btn" data-dismiss="modal" aria-label="Close">
                             Save
                         </button>
                     </div>
@@ -640,14 +640,14 @@
         });
 
 
-        $('#crt_promcode').click();
-        $('#dvcrtpromcode').addClass("active");
-        $('#dvcrtpromcode b').addClass('opened new-opend');
-        
+        //$('#crt_promcode').click();
+        //$('#dvcrtpromcode').addClass("active");
+        //$('#dvcrtpromcode b').addClass('opened new-opend');
+
 
 
         $("#txtSenderName").on("input", function () {
-            var regexp = /[^a-zA-Z]/g;
+            var regexp = /[^a-zA-Z ]/g;
             if ($(this).val().match(regexp)) {
                 $(this).val($(this).val().replace(regexp, ''));
             }
@@ -664,7 +664,7 @@
         }
         var map = new google.maps.Map(document.getElementById("dvMap"), myOptions);
 
-       // var maps = new google.maps.Map(document.getElementById("dvMapMail"), myOptions);
+        // var maps = new google.maps.Map(document.getElementById("dvMapMail"), myOptions);
         $("#befendevnt").click(function () {
             if ($("#befendevnt").is(":checked") == false) {
                 $("#txtSchDate").attr("disabled", true);
@@ -680,39 +680,45 @@
 
 
         $("#btTestEmail").click(function () {
-
             var vTo = $("#txtTestEmail").val().trim();
-            if (validateEmail(vTo) == true && vTo != "") {
-                var vFrom = "shweta.sindhu@kiwitech.com";
-                var vSubject = $("#txtSubjectLine").val();
-                var vBody = $("#dvUserMail").html();
-                var vCc = "";
-                var vBcc = "";
-                var vFromname = $("#txtSenderName").val();
-                var model = {
-                    'To': vTo,
-                    'From': vFrom,
-                    'Body': vBody,
-                    'Subject': vSubject,
-                    'Cc': vCc,
-                    'Bcc': vBcc,
-                    'Fromname': vFromname
-                };
-                //var params = 'To=' + vTo, from: vFrom, body: vBody 'tree_contents=' + treeInnerHTML;
-                $.ajax({
-                    url: '@Url.Action("SendHtmlFormattedEmail", "ManageEvent")',
-                    data: { model: model },
-                    beforeSend: function () { $('#dvAjxLoader').show(); },
-                    complete: function () { $('#dvAjxLoader').hide(); },
-                    type: "Post",
-                    success: function (response) {
-                        $("#btPopUp").click();
-                    }
-                });
+            var vMsg = validateTest()
+            if (vMsg == "") {
+                if (validateEmail(vTo) == true && vTo != "") {
+                    $("#txtTestEmail").removeClass('err-bor');
+                    var vFrom = "shweta.sindhu@kiwitech.com";
+                    var vSubject = $("#txtSubjectLine").val();
+                    var vBody = $("#dvUserMail").html();
+                    var vCc = "";
+                    var vBcc = "";
+                    var vFromname = $("#txtSenderName").val();
+                    var model = {
+                        'To': vTo,
+                        'From': vFrom,
+                        'Body': vBody,
+                        'Subject': vSubject,
+                        'Cc': vCc,
+                        'Bcc': vBcc,
+                        'Fromname': vFromname
+                    };
+                    //var params = 'To=' + vTo, from: vFrom, body: vBody 'tree_contents=' + treeInnerHTML;
+                    $.ajax({
+                        url: '@Url.Action("SendHtmlFormattedEmail", "ManageEvent")',
+                        data: { model: model },
+                        beforeSend: function () { $('#dvAjxLoader').show(); },
+                        complete: function () { $('#dvAjxLoader').hide(); },
+                        type: "Post",
+                        success: function (response) {
+                            $("#btPopUp").click();
+                        }
+                    });
+                }
+                else {
+                    ShowMessage('E', ajaxsetup('CreateInvitations', 'EmailValidationUI'));
+                    $("#txtTestEmail").addClass('err-bor');
+                }
             }
-            else
-            {
-                ShowMessage('E', ajaxsetup('CreateInvitations', 'EmailValidationUI'));
+            else {
+                ShowMessage('E', vMsg);
             }
         });
 
@@ -739,10 +745,13 @@
 
         $("#btAddEmail").click(function () {
             var vValue = $("#txtAddEmail").val().trim();
-
             if (vValue != "") {
                 AddEmail(vValue);
-
+                $("#txtAddEmail").removeClass('err-bor');
+            }
+            else {
+                ShowMessage('E', ajaxsetup('CreateInvitations', 'EmailValidationUI'));
+                $("#txtAddEmail").addClass('err-bor');
             }
         });
         $("#btDeleteEmail").click(function () {
@@ -769,12 +778,10 @@
                 }
             }
 
-            if (vFlag == true)
-            {
+            if (vFlag == true) {
                 $("#dvEmaillistHeader").show();
             }
-            else
-            {
+            else {
                 $("#dvEmaillistHeader").hide();
             }
 
@@ -785,8 +792,7 @@
 
 
     });
-    function SelectAllList()
-    {
+    function SelectAllList() {
         //debugger;
         var vIds = parseFloat($("#hdListId").val());
         if (isNaN(vIds) == true) vIds = 0;
@@ -798,10 +804,9 @@
             }
             for (i = 0; i <= vIds; i++) {
                 if (vflag == true)
-                    $("#chk_" + i).attr("checked", "checked");
-                else
-                {
-                    $("#chk_" + i).attr("checked", false);
+                    $("#chk_" + i).prop("checked", true);
+                else {
+                    $("#chk_" + i).prop("checked", false);
                 }
             }
         }
@@ -809,8 +814,7 @@
 
     }
 
-    function CheckDeleteOption()
-    {
+    function CheckDeleteOption() {
         var vFlag = false;
         var vIds = parseFloat($("#hdListId").val());
         if (isNaN(vIds) == true) vIds = 0;
@@ -876,7 +880,29 @@
         }
 
     }
+    function validateTest() {
+        var msg = "";
+        var vval = $("#txtSenderName").val().trim();
 
+        if ($("#txtSenderName").val().trim() == "") {
+            //$('#txtEventTitle').addClass('err-bor');
+            msg += ajaxsetup("CreateInvitations", "SenderNameValidateUI") + "<br/>";
+            $("#txtSenderName").addClass('err-bor');
+        }
+        else {
+            $("#txtSenderName").removeClass('err-bor');
+        }
+
+        if ($("#txtSubjectLine").val().trim() == "") {
+            //$('#txtEventTitle').addClass('err-bor');
+            msg += ajaxsetup("CreateInvitations", "SubjectValidateUI") + "<br/>";
+            $("#txtSubjectLine").addClass('err-bor');
+        }
+        else {
+            $("#txtSubjectLine").removeClass('err-bor');
+        }
+        return msg;
+    }
     function validatemain() {
         var msg = "";
         var vval = $("#txtSenderName").val().trim();
@@ -884,11 +910,19 @@
         if ($("#txtSenderName").val().trim() == "") {
             //$('#txtEventTitle').addClass('err-bor');
             msg += ajaxsetup("CreateInvitations", "SenderNameValidateUI") + "<br/>";
+            $("#txtSenderName").addClass('err-bor');
+        }
+        else {
+            $("#txtSenderName").removeClass('err-bor');
         }
 
         if ($("#txtSubjectLine").val().trim() == "") {
             //$('#txtEventTitle').addClass('err-bor');
             msg += ajaxsetup("CreateInvitations", "SubjectValidateUI") + "<br/>";
+            $("#txtSubjectLine").addClass('err-bor');
+        }
+        else {
+            $("#txtSubjectLine").removeClass('err-bor');
         }
 
         var vFlag = true;
@@ -902,8 +936,11 @@
             }
         }
         if (vFlag == true) {
-            //$('#txtEventTitle').addClass('err-bor');
             msg += ajaxsetup("CreateInvitations", "EmailValidationUI") + "<br/>";
+            $("#txtAddEmail").addClass('err-bor');
+        }
+        else {
+            $("#txtAddEmail").removeClass('err-bor');
         }
         return msg;
     }
@@ -947,22 +984,25 @@
                 success: function (response) {
                     $("#hdId").val(response);
                     var vUrl = "";
-                    if ($("#hdEventIMode").val().trim() == "E")
-                    {
+                    if ($("#hdEventIMode").val().trim() == "E") {
                         vUrl = '@Url.Action("EventConfirmation", "EventConfirmation",new { eventId = "eveid"})';
                     }
-                    else
-                    {
-                        vUrl = '@Url.Action("EmailInvitations", "ManageEvent", new { eventId = "eveid"})';
+                    else {
+                        if (Mode == 'D') {
+                            tab = 'drt';
+                        } else {
+                            tab = 'sch';
+                        }
+                        vUrl = '@Html.Raw(@Url.Action("EmailInvitations", "ManageEvent", new { eventId = "eveid", tab = "tabValue" }))';
                     }
                     vUrl = vUrl.replace("eveid", $("#hdEventId").val());
+                    vUrl = vUrl.replace("tabValue", tab);
                     window.location.href = vUrl;
                 }
 
             });
         }
-        else
-        {
+        else {
             ShowMessage('E', vMsg);
         }
     }
@@ -971,6 +1011,8 @@
         debugger;
         var vAry = vValue.split(',');
         var vInvalidData = '';
+        var vIds = parseFloat($("#hdListId").val());
+        var vFlag = true;
         for (i = 0; i < vAry.length; i++) {
             var vData = vAry[i];
             if (validateEmail(vData) == true) {

@@ -1,5 +1,8 @@
 ﻿@using EventCombo.Controllers;
 @using PagedList.Mvc;
+@using EventCombo.Models;
+@using EventCombo.Utils;
+
 @{
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
@@ -8,7 +11,6 @@
       @Html.Action("Sidenav", "ManageEvent", new { eventid = ViewBag.EventId, CurrentItem = "inviteandpromote" })
     </div>
 }
-
 
 
 
@@ -29,7 +31,7 @@
 <div class="clearfix"></div>
 
 <div class="col-sm-12 col-xs-12 mb10">
-    <button class="btn def_btn acnt_btn invite_email_attend_btn crt_inv_btn crt_inv_btn" title="" id="btCreateInv" type="button">Create Invitation</button>
+    <button class="btn theme-btn acnt_btn btn" title="" id="btCreateInv" type="button">Create Invitation</button>
 </div>
 <div class="clearfix"></div>
 <div class="col-sm-12 ipad_min_height">
@@ -62,85 +64,116 @@
     <div class="tab-content mt10">
         <div id="sectionA" class="tab-pane @strSchTab">
             <div class="col-sm-12 no_pad">
-                <div class="crt_inv_table">
-                    <div class="crt_inv_tablehead">
-                        <div class="crt_inv_tableCell">
-                            Subject
-                            @{
-                                string subjecturl = "/manageevent/emailinvitations?tab=sch&eventId=" + ViewBag.EventId + "&sortOrder=subject";
-                                string subjecturldesc = "/manageevent/emailinvitations?tab=sch&eventId=" + ViewBag.EventId + "&sortOrder=subject_desc";
-                                string recipienturl = "/manageevent/emailinvitations?tab=sch&eventId=" + ViewBag.EventId + "&sortOrder=recipient";
-                                string recipienturldesc = "/manageevent/emailinvitations?tab=sch&eventId=" + ViewBag.EventId + "&sortOrder=recipient_desc";
-                                string createddateurl = "/manageevent/emailinvitations?tab=sch&eventId=" + ViewBag.EventId + "&sortOrder=created_date";
-                                string createddateurldesc = "/manageevent/emailinvitations?tab=sch&eventId=" + ViewBag.EventId + "&sortOrder=created_date_desc";
-                                string senddateurl = "/manageevent/emailinvitations?tab=sch&eventId=" + ViewBag.EventId + "&sortOrder=send_date";
-                                string senddateurldesc = "/manageevent/emailinvitations?tab=sch&eventId=" + ViewBag.EventId + "&sortOrder=send_date_desc";
-                            }
-                            <span class="crt_evnt_drop_up"> <a href="@subjecturldesc"><i class="fa fa-angle-up"></i></a> </span>
-                            <span class="crt_evnt_drop_down"> <a href="@subjecturl"><i class="fa fa-angle-down"></i></a> </span>
-                        </div>
-                        <div class="crt_inv_tableCell ">
-                            Recipients
-                            <span class="crt_evnt_drop_up"> <a href="@subjecturldesc"><i class="fa fa-angle-up"></i></a> </span>
-                            <span class="crt_evnt_drop_down"> <a href="@subjecturl"><i class="fa fa-angle-down"></i></a> </span>
-                        </div>
-                        <div class="crt_inv_tableCell ">
-                            Created
-                            <span class="crt_evnt_drop_up"> <a href="@createddateurldesc"><i class="fa fa-angle-up"></i></a> </span>
-                            <span class="crt_evnt_drop_down"> <a href="@createddateurl"><i class="fa fa-angle-down"></i></a> </span>
-                        </div>
-                        <div class="crt_inv_tableCell ">
-                            Send On
-                            <span class="crt_evnt_drop_up"> <a href="@senddateurldesc"><i class="fa fa-angle-up"></i></a> </span>
-                            <span class="crt_evnt_drop_down"> <a href="@senddateurl"><i class="fa fa-angle-down"></i></a> </span>
-                        </div>
-                        <div class="crt_inv_tableCell ">
-                            Action
-                        </div>
-                    </div>
 
+                <table class="crt_event_list_tabl crt_inv_tab">
+                    <thead>
+                        <tr>
+                            <th>
+                                Subject
+                                @{
+                                    string subjecturl = "/manageevent/emailinvitations?tab=sch&eventId=" + ViewBag.EventId + "&sortOrder=subject";
+                                    string subjecturldesc = "/manageevent/emailinvitations?tab=sch&eventId=" + ViewBag.EventId + "&sortOrder=subject_desc";
+                                    string recipienturl = "/manageevent/emailinvitations?tab=sch&eventId=" + ViewBag.EventId + "&sortOrder=recipient";
+                                    string recipienturldesc = "/manageevent/emailinvitations?tab=sch&eventId=" + ViewBag.EventId + "&sortOrder=recipient_desc";
+                                    string createddateurl = "/manageevent/emailinvitations?tab=sch&eventId=" + ViewBag.EventId + "&sortOrder=created_date";
+                                    string createddateurldesc = "/manageevent/emailinvitations?tab=sch&eventId=" + ViewBag.EventId + "&sortOrder=created_date_desc";
+                                    string senddateurl = "/manageevent/emailinvitations?tab=sch&eventId=" + ViewBag.EventId + "&sortOrder=send_date";
+                                    string senddateurldesc = "/manageevent/emailinvitations?tab=sch&eventId=" + ViewBag.EventId + "&sortOrder=send_date_desc";
+                                }
+                                <span class="crt_evnt_drop_up"> <a href="@subjecturldesc"><i class="fa fa-angle-up"></i></a> </span>
+                                <span class="crt_evnt_drop_down"> <a href="@subjecturl"><i class="fa fa-angle-down"></i></a> </span>
+                            </th>
+                            <th>
+                                Recipients
+                                <span class="crt_evnt_drop_up"> <a href="@subjecturldesc"><i class="fa fa-angle-up"></i></a> </span>
+                                <span class="crt_evnt_drop_down"> <a href="@subjecturl"><i class="fa fa-angle-down"></i></a> </span>
+                            </th>
+                            <th>
+                                Created
+                                <span class="crt_evnt_drop_up"> <a href="@createddateurldesc"><i class="fa fa-angle-up"></i></a> </span>
+                                <span class="crt_evnt_drop_down"> <a href="@createddateurl"><i class="fa fa-angle-down"></i></a> </span>
+                            </th>
+                            <th>
+                                Send On
+                                <span class="crt_evnt_drop_up"> <a href="@senddateurldesc"><i class="fa fa-angle-up"></i></a> </span>
+                                <span class="crt_evnt_drop_down"> <a href="@senddateurl"><i class="fa fa-angle-down"></i></a> </span>
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.scheduled != null && ViewBag.scheduled.Count >0)
+                        {
+                            
+                                EventComboEntities objEnt = new EventComboEntities();
 
-                    @foreach (var item in (PagedList.IPagedList<EventCombo.ViewModels.EmailInvitation>)ViewBag.scheduled)
-                    {
-                        <div class="crt_inv_mid_row">
-                            <div class="crt_inv_mid_cell">
-                                @Html.DisplayFor(modelItem => item.Subject)
-                            </div>
-                            <div class="crt_inv_mid_cell ">
-                                @Html.DisplayFor(modelItem => item.NoOfRecipients)
-                            </div>
-                            <div class="crt_inv_mid_cell ">
-                                @Html.DisplayFor(modelItem => item.CreatedOn)
-                            </div>
-                            <div class="crt_inv_mid_cell ">
-                                @Html.DisplayFor(modelItem => item.SendOn)
-                            </div>
-                            <div class="crt_inv_mid_cell create_invite_action ">
-                                @Html.ActionLink("Edit", "CreateInvitations", "ManageEvent", new { lId = item.I_Id, lEvtId = item.EventID, strMode = "C" }, null)  <a href="javascript:void(0)">Copy</a>  <a href="#confirm-delete-ok" data-toggle="modal" onclick="ConfirmDelete(@item.I_Id);">Delete</a>
-                            </div>
-                        </div>
-                    }
+                            
 
-                    
-                   
-                </div>
+                                foreach (var item in (PagedList.IPagedList
+<EventCombo.ViewModels.EmailInvitation>
+    )ViewBag.scheduled)
+                                {
+
+                                    Event eventForTimeZone = objEnt.Events.First(i => i.EventID == item.EventID);
+                                    int timeZoneID = Int32.Parse(eventForTimeZone.TimeZone);
+                                    TimeZoneDetail td = objEnt.TimeZoneDetails.First(i => i.TimeZone_Id == timeZoneID);
+                                    DateTimeWithZone dtz;
+                                    DateTimeWithZone dtzcreated;
+                                    if (td != null)
+                                    {
+                                        TimeZoneInfo userTimeZone =
+                                        TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                                        dtz = new DateTimeWithZone(Convert.ToDateTime(item.SendOn), userTimeZone, true);
+                                        dtzcreated = new DateTimeWithZone(Convert.ToDateTime(item.CreatedOn), userTimeZone, true);
+                                    }
+                                    else
+                                    {
+                                        TimeZoneInfo userTimeZone =
+                                        TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                        dtz = new DateTimeWithZone(Convert.ToDateTime(item.SendOn), userTimeZone, true);
+                                        dtzcreated = new DateTimeWithZone(Convert.ToDateTime(item.CreatedOn), userTimeZone, true);
+                                    }
+
+                                    <tr>
+                                        <td class="word_brack">@Html.DisplayFor(modelItem => item.Subject)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.NoOfRecipients)</td>
+                                        <td>@dtzcreated.LocalTime</td>
+                                        <td>@dtz.LocalTime </td>
+                                        <td>
+                                            @Html.ActionLink("Edit", "CreateInvitations", "ManageEvent", new { lId = item.I_Id, lEvtId = item.EventID, strMode = "C" }, null)  <a href="javascript:void(0)">Copy</a>  <a href="#confirm-delete-ok" data-toggle="modal" onclick="ConfirmDelete(@item.I_Id);">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="5">You do not have any invitations listed in this category</td>
+                                    </tr>
+
+                                }
+                    </tbody>
+                </table>
+
                 <div class="col-sm-12 col-xs-12 text-center mb10">
                     <nav class="home-pagination">
                         @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
 
-                        @Html.PagedListPager((PagedList.IPagedList<EventCombo.ViewModels.EmailInvitation>)ViewBag.scheduled, page => Url.Action("EmailInvitations", "ManageEvent",
-                                new { eventId = ViewBag.EventId, sortOrder = ViewBag.CurrentSort, page, tab = ViewBag.tab }))
+                        @Html.PagedListPager((PagedList.IPagedList<EventCombo.ViewModels.EmailInvitation>
+                            )ViewBag.scheduled, page => Url.Action("EmailInvitations", "ManageEvent",
+                            new { eventId = ViewBag.EventId, sortOrder = ViewBag.CurrentSort, page, tab = ViewBag.tab }))
                     </nav>
                 </div>
             </div>
         </div>
         <div id="sectionB" class="tab-pane @strDrtTab">
             <div class="col-sm-12 no_pad">
-                <div class="crt_inv_table">
-                    <div class="crt_inv_tablehead">
-                        <div class="crt_inv_tableCell">
-                            Subject
-                            @{
+                <table class="crt_event_list_tabl crt_inv_tab">
+                    <thead>
+                        <tr>
+                            <th>
+                                Subject
+                                @{
                                 subjecturl = "/manageevent/emailinvitations?tab=drt&eventId=" + ViewBag.EventId + "&sortOrder=subject";
                                 subjecturldesc = "/manageevent/emailinvitations?tab=drt&eventId=" + ViewBag.EventId + "&sortOrder=subject_desc";
                                 recipienturl = "/manageevent/emailinvitations?tab=drt&eventId=" + ViewBag.EventId + "&sortOrder=recipient";
@@ -149,57 +182,79 @@
                                 createddateurldesc = "/manageevent/emailinvitations?tab=drt&eventId=" + ViewBag.EventId + "&sortOrder=created_date_desc";
                                 senddateurl = "/manageevent/emailinvitations?tab=drt&eventId=" + ViewBag.EventId + "&sortOrder=send_date";
                                 senddateurldesc = "/manageevent/emailinvitations?tab=drt&eventId=" + ViewBag.EventId + "&sortOrder=send_date_desc";
-                            }
-                            <span class="crt_evnt_drop_up"> <a href="@subjecturldesc"><i class="fa fa-angle-up"></i></a> </span>
-                            <span class="crt_evnt_drop_down"> <a href="@subjecturl"><i class="fa fa-angle-down"></i></a> </span>
-                        </div>
-                        <div class="crt_inv_tableCell ">
-                            Recipients
-                            <span class="crt_evnt_drop_up"> <a href="@subjecturldesc"><i class="fa fa-angle-up"></i></a> </span>
-                            <span class="crt_evnt_drop_down"> <a href="@subjecturl"><i class="fa fa-angle-down"></i></a> </span>
-                        </div>
-                        <div class="crt_inv_tableCell ">
-                            Created
-                            <span class="crt_evnt_drop_up"> <a href="@createddateurldesc"><i class="fa fa-angle-up"></i></a> </span>
-                            <span class="crt_evnt_drop_down"> <a href="@createddateurl"><i class="fa fa-angle-down"></i></a> </span>
-                        </div>
-                        <div class="crt_inv_tableCell ">
-                            Send On
-                            <span class="crt_evnt_drop_up"> <a href="@senddateurldesc"><i class="fa fa-angle-up"></i></a> </span>
-                            <span class="crt_evnt_drop_down"> <a href="@senddateurl"><i class="fa fa-angle-down"></i></a> </span>
-                        </div>
-                        <div class="crt_inv_tableCell ">
-                            Action
-                        </div>
-                    </div>
-                    
-                        @foreach (var item in (PagedList.IPagedList<EventCombo.ViewModels.EmailInvitation>)ViewBag.draft)
+                                }
+                                <span class="crt_evnt_drop_up"> <a href="@subjecturldesc"><i class="fa fa-angle-up"></i></a> </span>
+                                <span class="crt_evnt_drop_down"> <a href="@subjecturl"><i class="fa fa-angle-down"></i></a> </span>
+                            </th>
+                            <th>
+                                Recipients
+                                <span class="crt_evnt_drop_up"> <a href="@subjecturldesc"><i class="fa fa-angle-up"></i></a> </span>
+                                <span class="crt_evnt_drop_down"> <a href="@subjecturl"><i class="fa fa-angle-down"></i></a> </span>
+                            </th>
+                            <th>
+                                Created
+                                <span class="crt_evnt_drop_up"> <a href="@createddateurldesc"><i class="fa fa-angle-up"></i></a> </span>
+                                <span class="crt_evnt_drop_down"> <a href="@createddateurl"><i class="fa fa-angle-down"></i></a> </span>
+                            </th>
+                            <th>
+                                Send On
+                                <span class="crt_evnt_drop_up"> <a href="@senddateurldesc"><i class="fa fa-angle-up"></i></a> </span>
+                                <span class="crt_evnt_drop_down"> <a href="@senddateurl"><i class="fa fa-angle-down"></i></a> </span>
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.draft != null && ViewBag.draft.Count > 0)
                         {
-                            <div class="crt_inv_mid_row">
-                                <div class="crt_inv_mid_cell">
-                                    @Html.DisplayFor(modelItem => item.Subject)
-                                </div>
-                                <div class="crt_inv_mid_cell ">
-                                    @Html.DisplayFor(modelItem => item.NoOfRecipients)
-                                </div>
-                                <div class="crt_inv_mid_cell ">
-                                    @Html.DisplayFor(modelItem => item.CreatedOn)
-                                </div>
-                                <div class="crt_inv_mid_cell ">
-                                    @Html.DisplayFor(modelItem => item.SendOn)
-                                </div>
-                                <div class="crt_inv_mid_cell create_invite_action ">
-                                    @Html.ActionLink("Edit", "CreateInvitations", "ManageEvent", new { lId = item.I_Id, lEvtId = item.EventID, strMode = "C" }, null)  <a href="javascript:void(0);">Copy</a>  <a href="#confirm-delete-ok" data-toggle="modal" onclick="ConfirmDelete(@item.I_Id);">Delete</a>
-                                </div>
-                            </div>
+                            EventComboEntities objEnt = new EventComboEntities();
+                            foreach (var item in (PagedList.IPagedList<EventCombo.ViewModels.EmailInvitation>)ViewBag.draft)
+                            {
+                                Event eventForTimeZone = objEnt.Events.First(i => i.EventID == item.EventID);
+                                int timeZoneID = Int32.Parse(eventForTimeZone.TimeZone);
+                                TimeZoneDetail td = objEnt.TimeZoneDetails.First(i => i.TimeZone_Id == timeZoneID);
+                                DateTimeWithZone dtz;
+                                DateTimeWithZone dtzcreated;
+                                if (td != null)
+                                {
+                                    TimeZoneInfo userTimeZone =
+                                    TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                                    dtz = new DateTimeWithZone(Convert.ToDateTime(item.SendOn), userTimeZone, true);
+                                    dtzcreated = new DateTimeWithZone(Convert.ToDateTime(item.CreatedOn), userTimeZone, true);
+                                }
+                                else
+                                {
+                                    TimeZoneInfo userTimeZone =
+                                    TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                    dtz = new DateTimeWithZone(Convert.ToDateTime(item.SendOn), userTimeZone, true);
+                                    dtzcreated = new DateTimeWithZone(Convert.ToDateTime(item.CreatedOn), userTimeZone, true);
+                                }
+                                <tr>
+                                    <td class="word_brack">@Html.DisplayFor(modelItem => item.Subject)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.NoOfRecipients)</td>
+                                    <td>@dtzcreated.LocalTime</td>
+                                    <td>@dtz.LocalTime </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "CreateInvitations", "ManageEvent", new { lId = item.I_Id, lEvtId = item.EventID, strMode = "C" }, null)  <a href="javascript:void(0);">Copy</a>  <a href="#confirm-delete-ok" data-toggle="modal" onclick="ConfirmDelete(@item.I_Id);">Delete</a>
+                                    </td>
+                                </tr>
+                            }
                         }
-                            
-                    
-                </div>
+                        else
+                        {
+                            <tr>
+                                <td colspan="5">You do not have any invitations listed in this category</td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+
+
                 <div class="col-sm-12 col-xs-12 text-center mb10">
                     <nav class="home-pagination">
                         @Html.PagedListPager((PagedList.IPagedList<EventCombo.ViewModels.EmailInvitation>)ViewBag.draft, page => Url.Action("EmailInvitations", "ManageEvent",
-                                new { eventId = ViewBag.EventId, sortOrder = ViewBag.CurrentSort, page, tab = ViewBag.tab }))
+                        new { eventId = ViewBag.EventId, sortOrder = ViewBag.CurrentSort, page, tab = ViewBag.tab }))
                     </nav>
                 </div>
             </div>
@@ -234,7 +289,7 @@
     </a>
     <input id="hdDeleteId" type="hidden" />
 </div>
-                                
+
 <script>
 
     function ConfirmDelete(vId) {
@@ -284,11 +339,10 @@
         }
 
     }
-    function CopyInvitation(vId)
-    {
+    function CopyInvitation(vId) {
         $.ajax({
             url: '@Url.Action("CopyInvitation", "ManageEvent")',
-            data: { l_Id: vId},
+            data: { l_Id: vId },
             datatype: "Text",
             type: "Post",
             success: function (response) {
@@ -298,6 +352,13 @@
 
     }
     $(document).ready(function () {
+        $(document).ajaxStop(function () {
+            $(document).find("#crt_promcode").click();
+            $("#sidebar").find("#dvcrtpromcode").addClass("active");
+            $("#sidebar").find("#dvcrtpromcode b").addClass('opened new-opend');
+        });
+
+        $('#sidebar').load('@Url.Action("Sidenav", "ManageEvent", new { eventid= ViewBag.EventId })');
         $("#btnYes").click(function () {
             $.ajax({
                 url: '@Url.Action("DeleteInvitation", "ManageEvent")',
@@ -305,7 +366,7 @@
                 datatype: "Text",
                 type: "Post",
                 success: function (response) {
-                   window.location.href=  '@Html.Raw(@Url.Action("EmailInvitations", "ManageEvent", new { eventId = ViewBag.EventId }))';
+                    window.location.href = '@Html.Raw(@Url.Action("EmailInvitations", "ManageEvent", new { eventId = ViewBag.EventId }))';
                 }
             });
         });

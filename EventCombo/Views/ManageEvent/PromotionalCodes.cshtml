@@ -64,7 +64,7 @@
     font-size: 18px;
     display: table-cell;
     padding: 5px 5px;
-    word-break: break-all;}
+    }
 .discmidtablecell {
     width: 16.66%;
     height: 100%;
@@ -72,7 +72,7 @@
     display: table-cell;
     padding: 5px 5px;
     vertical-align: top;
-    word-break: break-all;
+    
 }
 .discmidtablecell_amount{
     width: 10%;
@@ -105,12 +105,12 @@
     <input type="hidden" id="hdPageIndex" value="@TempData["PageIndex"]" />
 
     <div class="col-sm-12 ">
-        <h3 class="acnt_title">Manage Discount Code</h3>
+        <h3 class="acnt_title inv_eml_title">Manage Discount Code</h3>
         <!--  <p class="p_info">Payment Information</p> -->
     </div>
     <div class="col-sm-12 text-right mb10">
         <div class="col-sm-5 col-xs-12 no_pad text-left xs_create_code_mb10">
-            <a href="@Url.Action("CreatePromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.Eventid) })" class="btn-info acnt_btn btn">Create Code</a>
+            <a href="@Url.Action("CreatePromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.Eventid) })" class="btn theme-btn acnt_btn btn">Create Code</a>
         </div>
         <div class="col-sm-3 col-xs-12 no_pad disnt_srh_right ">
             <form>
@@ -128,71 +128,58 @@
         <input type="hidden" name="Eventlid" value="@Model.Eventid" />
     </div>
 
+
     <div class="col-sm-12 col-xs-12 ipad_min_height">
-        <div class="discTable">
-            <div class="discTablehead">
-                <div class="discTableCell">
-                    Promo Code
-                </div>
-                <div class="discTableCell_amount ">
-                    Amount
-                </div>
-                <div class="discTableCell_start ">
-                    Starts
-                </div>
-                <div class="discTableCell ">
-                    Ends
-                </div>
-                <div class="discTableCell ">
-                    Available
-                </div>
-                <div class="discTableCell ">
-                    Actions
-                </div>
-
-            </div>
-
-            @foreach (var item in (PagedList.IPagedList<Promocode>)Model.Promocode)
+        <table class="crt_event_list_tabl promocode_list">
+            <thead>
+                <tr>
+                    <th>Promo Code</th>
+                    <th>Amount</th>
+                    <th>Starts </th>
+                    <th>Ends</th>
+                    <th>Available</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (Convert.ToInt64(@ViewData["countlist"]) > 0)
             {
-                <div class="discTableRow">
-                    <div class="discmidtablecell">
-                        @item.code
-                    </div>
-                    <div class="discmidtablecell_amount ">
-                        @item.Amount
-                    </div>
-                    <div class="discmidtablecell_start ">
-                        @item.Start
-                    </div>
-                    <div class="discmidtablecell ">
-                        @item.End
-                    </div>
-                    <div class="discmidtablecell ">
-                        @item.Limit
-                    </div>
-                    <div class="discmidtablecell ">
-                        <div class="dis_code_action">
-
-                            <a href="@Url.Action("CreatePromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.Eventid), Promocode = @item.PCID })">Edit </a> |
-                            <a href="#confirm-delete-ok" data-toggle="modal" onclick="ConfirmDelete('@item.PCID');">Delete</a>
-
-
-                        </div>
-                    </div>
-                </div>
+                foreach (var item in (PagedList.IPagedList<Promocode>)Model.Promocode)
+                {
+                            <tr>
+                                <td>@item.code </td>
+                                <td>@item.Amount</td>
+                                <td>@item.Start </td>
+                                <td>@item.End </td>
+                                <td>@item.Limit</td>
+                                <td><a href="@Url.Action("CreatePromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.Eventid), Promocode = @item.PCID })">Edit </a>
+            @if (item.Orderpromo > 0)
+            {
+                <text>Delete</text>
             }
+            else
+            {
+                <a href="#confirm-delete-ok" data-toggle="modal" onclick="ConfirmDelete('@item.PCID');">Delete</a>
+            }</td>
+                            </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5">No Codes available</td>
+                </tr>
 
+                    }
 
+</tbody>
+        </table>
 
-
-
-
-
-        </div>
+       
     </div>
-
-    if (Convert.ToInt32(@TempData["TotalPages"]) > 1)
-    {
+    <a href="#confirm-delete-ok" data-toggle="modal" style="display:none" id="idshowmsg"></a>
+        if (Convert.ToInt32(@TempData["TotalPages"]) > 1)
+        {
         <div class="col-sm-12 col-xs-12 text-center">
             <nav>
                 <ul class="pagination desc_pagination">
@@ -219,8 +206,9 @@
 
             </div>
         </div>
-    }
-    <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        }
+   
+    <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
             <div class="modal-content">
 
@@ -254,6 +242,9 @@
 
         var vPageIndex = $("#hdPageIndex").val();
         $("#aPageLink-" + vPageIndex).addClass("active");
+        $("#btMesOk").click(function () {
+            location.reload();
+        });
         $("#btnYes").click(function () {
             $.ajax({
                 url: '@Url.Action("DeletePromocode","ManageEvent")',
@@ -261,7 +252,18 @@
                 datatype: "Text",
                 type: "Post",
                 success: function (response) {
-                    location.reload();
+                    if (response == "N")
+                    {
+                        $("#btnYes").hide();
+                        $("#btnNo").hide();
+                        $("#btMesOk").show();
+                        $("#hId").text("Cannot delete as it is in use!!");
+                        $("#idshowmsg").click();
+
+                    } else {
+                        location.reload();
+                    }
+                   
                 }
             });
         });
@@ -273,7 +275,7 @@
         vUrl = vUrl.replace("&amp;", "&");
         if (vIndex > 1)
             vUrl = vUrl.replace("page", vIndex);
-        alert(vUrl);
+       
 
 
         window.location.href = vUrl;

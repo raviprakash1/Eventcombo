@@ -23,6 +23,8 @@ namespace EventCombo.Models
         public long EventVenueID { get; set; }
         public long EventID { get; set; }
         public long AddressId { get; set; }
+        public Nullable<System.DateTime> E_Startdate { get; set; }
+        public Nullable<System.DateTime> E_Enddate { get; set; }
         public string EventStartDate { get; set; }
         public string EventEndDate { get; set; }
         public string EventStartTime { get; set; }

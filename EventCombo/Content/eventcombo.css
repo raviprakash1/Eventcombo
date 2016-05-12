@@ -169,7 +169,7 @@ button:focus { outline: none;}
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;}
-.disc_title_head a{ color: #fff;}
+.disc_title_head a{ color: #fff; word-break:normal !important; }
 .disc_title_head a:hover{ text-decoration: none;}
 
 
@@ -468,7 +468,7 @@ span.evnt_toltip{
 
 /************Create Ticket**********************/
 .ticket_panel{ box-shadow: none !important; border-radius: 3px !important; border: 0px;}
-.ticket_footer{ text-align: left !important;}
+.ticket_footer{ text-align: left !important; border: 0 none; padding-top: 0; }
 
 .evnt_setting{}
 .evnt_setting .evnt_setting_list a i{font-size: 1.3em !important; margin-left: 8%;}
@@ -662,19 +662,19 @@ span.evnt_toltip{
 
 
 .place_hold::-webkit-input-placeholder {
-   font-size: 1.4em; font-style: italic;
+   font-size: 1.4em; font-style: italic; line-height:18px;
 }
 
 .place_hold:-moz-placeholder { /* Firefox 18- */
-   font-size: 1.4em; font-style: italic;
+   font-size: 1.4em; font-style: italic; line-height:18px;
 }
 
 .place_hold::-moz-placeholder {  /* Firefox 19+ */
-   font-size: 1.4em; font-style: italic;  
+   font-size: 1.4em; font-style: italic; line-height:18px; 
 }
 
 .place_hold:-ms-input-placeholder {  
-   font-size: 1.4em; font-style: italic;
+   font-size: 1.4em; font-style: italic;line-height:18px;
 }
 
 .login_place::-webkit-input-placeholder{ 
@@ -742,9 +742,11 @@ span.evnt_toltip{
     
 
     .affix-top{top: 147px !important;max-width:130px; }
+    #accordion a { word-break:normal !important; }
+
     #scrollhome.con_scr0l_home{margin-top:156px !important;}
     /*#eventtopscoll.event_top{ margin-top:132px !important; }*/ 
-    .cyan-line-new .stylish-input-group .form-control{ height:56px; line-height:56px; }
+    .cyan-line-new .stylish-input-group .form-control{ height:56px;  }
     .cyan-line-new .psst{ line-height:56px; }
 
     .xs768det-del {width: 150px;}
@@ -762,6 +764,20 @@ span.evnt_toltip{
 
     #forgotcheck.forgot_top{ margin-top:161px !important;}
     #forgotcheck{ margin-top:-10px; }
+    .ipad-50{ width:45%; float:left; margin-bottom:10px;}
+    .ipad-50-ml10{ width:45%; float:left; margin-left:15px; margin-bottom:10px;}
+    .ipad-pad-5{ padding:0 5px;}
+    .ipad-width-58{ width:58px;}
+    .ipad-tkt-recpt-btn{padding: 0px; float: right; width: 80px;}
+    .ipad-tkt-recpt-btn{padding: 0px; float: right; width: 80px;}
+    .ipad-tkt-recpt-btn button{ width:100%;}
+    .ipad-tkt-recpt-btn-mt10{ margin-top:10px;}
+    .ipad-pl0{ padding-left:0px !important;}
+
+    
+    /*.jFiler-input-dragDrop{width:160px; height:160px; padding:0px; }
+    .jFiler-item-thumb-image{height: 142px; line-height:142px; overflow: hidden; width: 100%; }*/
+
 }
 
 
@@ -773,9 +789,20 @@ span.evnt_toltip{
    #mainhead{ height:150px;}
    .createeventtop.event_top{ margin-top:137px;}
    .createeventtop{margin-top:2px;}
+.affix-top{top: 147px !important;max-width:130px; }
+#accordion a { word-break:normal !important; }
 
  #forgotcheck.forgot_top{ margin-top:161px !important;}
  #forgotcheck{ margin-top:-10px; }
+
+    .ipad-50{ width:45%; float:left; margin-bottom:10px;}
+    .ipad-50-ml10{ width:45%; float:left; margin-left:15px; margin-bottom:10px;}
+    .ipad-pad-5{ padding:0 5px;}
+    .ipad-width-58{ width:58px;}
+    .ipad-tkt-recpt-btn{padding: 0px; float: right; width: 80px;}
+    .ipad-tkt-recpt-btn{padding: 0px; float: right; width: 80px;}
+    .ipad-tkt-recpt-btn button{ width:100%;}
+    .ipad-tkt-recpt-btn-mt10{ margin-top:10px;}
 
 }
 @media (max-width: 768px)  {
@@ -848,10 +875,20 @@ span.evnt_toltip{
 .xs-evnt-type-pad-0{ padding:0px;}
 .xs-tkt-typ-pad-0{ padding:0px !important;}
 .xs-buyer-total{ top:15px !important;}
+.xs-tkt-pay-pl-0{ padding-right:0px; margin-bottom:10px;}
+.xs-var-chrg-btn-mt10{ margin-top:10px;}
+.xs-multi-add-ven{ width:100%; float:left; padding:0px; margin:0px; }
+.xs-incld-link-social{ padding:0px;}
+.online_check_box{ height:auto !important;}
+.col_days_hrs_picker_main{ margin-top:-15px !important;}
+.ft4em{ font-size:2.5em !important;}
 }
 @media (width: 320px) {
 .ev_loc_icn{ left:-10px !important; }
 #midsection.midd_cont {top:134px !important;}
+
+#mainhead .social_icn{ position: relative; top: -55px;}
+#mainhead .Fix_Head{ top: 0;}
 
 #mainhead{ height:155px;}
 .createeventtop.event_top{ margin-top:155px;}
@@ -862,7 +899,7 @@ span.evnt_toltip{
 
 
 #eventtopscoll.view_evnt_top.viewevent_container{margin-top:163px !important;}
-#divmain .Fix_Head{ position:absolute; top:20px;}
+#divmain .Fix_Head{ position:absolute; top:5px;}
 /*#divmain .social_icn{ position:absolute; margin-top:0 !important; right:15px;}*/
 .cont_margin{ margin-top: 3px; margin-bottom: 0px;}
 
@@ -874,6 +911,13 @@ span.evnt_toltip{
 .xs-upload-container{ border:10px solid #f0f0f0;}
 .xs-upload-container-15{ border:15px solid #f0f0f0;}
 .xs-evnt-fb-mr-0{ margin-right:0px !important;}
+
+.xs-var-chg-lebel{float: left; font-size: 1em!important; margin-top: 5px; width: 20px;}
+.xs-var-chg-div{float: left;width: 55px;}
+.xs-date-icon-remv{ display:none;}
+.xs-loc-icon-rem{ display:none}
+.pay100{ width:100%; margin-bottom:10px;}
+
 }
 @media (width: 480px){
 
@@ -943,6 +987,12 @@ span.evnt_toltip{
 .xs-evnt-type-pad-0{ padding:0px;}
 .xs-tkt-typ-pad-0{ padding:0px !important;}
 .xs-buyer-total{ top:15px !important;}
+.xs-tkt-pay-pl-0{ padding-right:0px; margin-bottom:10px;}
+.xs-var-chrg-btn-mt10{ margin-top:10px;}
+.xs-incld-link-social{ padding:0px;}
+.online_check_box{ height:auto !important;}
+.col_days_hrs_picker_main{ margin-top:-15px !important;}
+.ft4em{ font-size:2.5em !important;}
 }
 
 @media (width: 360px) {
@@ -974,6 +1024,8 @@ span.evnt_toltip{
 
 #forgotcheck{ margin-top:-10px; }
 #forgotcheck.forgot_top{ margin-top:207px !important;}
+.xs-date-icon-remv{ display:none;}
+.xs-loc-icon-rem{ display:none}
 }
 
 
@@ -1017,6 +1069,16 @@ span.evnt_toltip{
 .xs-signup-height{ min-height:50px;}
 .xs-desk-show{ display: none; }
 .desc_pl_0{ padding-left:0px !important}
+
+.xs-evnt-type-pad-0{ padding:0px;}
+.xs-tkt-typ-pad-0{ padding:0px !important;}
+.xs-buyer-total{ top:15px !important;}
+.xs-tkt-pay-pl-0{ padding-right:0px; margin-bottom:10px;}
+.xs-var-chrg-btn-mt10{ margin-top:10px;}
+.xs-incld-link-social{ padding:0px;}
+.online_check_box{ height:auto !important;}
+.col_days_hrs_picker_main{ margin-top:-15px !important;}
+.ft4em{ font-size:2.5em !important;}
 }
 @media (width: 375px) {
 #scrollhome.con_scr0l_home{margin-top:215px !important;}
@@ -1050,10 +1112,15 @@ span.evnt_toltip{
 .ev_date_icn{  margin-top: 0px !important; left: 0px !important; }
 .promo_code_btn{ margin-top:10px;}
 
+#forgotcheck{ margin-top:-10px; }
+#forgotcheck.forgot_top{ margin-top:205px !important;}
+
 #mainhead .col-sm-1{top:18px !important; }
 #mainhead .Fix_Head{top: -6px !important;}
 #divmain .Fix_Head{ margin-top:-8px; }
 #divmain .social_icn{margin-top:-15px !important;}
+.xs-date-icon-remv{ display:none;}
+.xs-loc-icon-rem{ display:none}
 
 }
 
@@ -1082,7 +1149,12 @@ span.evnt_toltip{
 .frnt_cret_evnt{ display:inline;}
 #scrollhome.con_scr0l_home{margin-top:214px !important;}
 /*#eventtopscoll.event_top{ margin-top:159px !important; }*/ 
+.event-upload-container .jFiler-input-dragDrop{ padding:15px; }
 .event-upload-container .jFiler-item-thumb-image{width: 80px !important; height: 90px !important;}
+.event-upload-container .jFiler-item-container{width: 80px; }
+.event-upload-container .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:68px; }
+.event-upload-container .jFiler-items ul li.jFiler-item:last-child{ margin-right:0px;}
+
 
 #eventtopscoll.view_evnt_top.viewevent_container{margin-top:170px !important;}
 
@@ -1098,12 +1170,25 @@ span.evnt_toltip{
 .xspad0{ padding:0px;}
 .ev_date_icn{  margin-top: 5px !important; left: 0px !important; }
 .dis_evnt_img{height:auto !important; padding:0px!important;} 
+
+
+#forgotcheck{ margin-top:-10px; }
+#forgotcheck.forgot_top{ margin-top:204px !important;}
 }
 
 @media (min-width: 414px) and (max-width: 736px){
 .xs-signup-height{ min-height:50px;}
 .xs-desk-show{ display: none; }
 .desc_pl_0{ padding-left:0px !important}
+
+.xs-evnt-type-pad-0{ padding:0px;}
+.xs-tkt-typ-pad-0{ padding:0px !important;}
+.xs-buyer-total{ top:15px !important;}
+.xs-tkt-pay-pl-0{ padding-right:0px; margin-bottom:10px;}
+.xs-var-chrg-btn-mt10{ margin-top:10px;}
+.xs-incld-link-social{ padding:0px;}
+.online_check_box{ height:auto !important;}
+.ft4em{ font-size:2.5em !important;}
 }
 
 
@@ -1132,6 +1217,9 @@ span.evnt_toltip{
 
 #eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 153px !important;}
 .xs-paymentconf-inner{ margin-top:-10px;}
+
+#forgotcheck{ margin-top:-10px; }
+#forgotcheck.forgot_top{ margin-top:205px !important;}
 
 /*.ev_btn_type .col12{ width:100%; float:left; }*/
 #divmain .social_icn{  margin-top:4px !important;}
@@ -1170,8 +1258,10 @@ span.evnt_toltip{
 .frnt_cret_evnt{ display:inline;}
 #scrollhome.con_scr0l_home{margin-top:214px !important;}
 /*#eventtopscoll.event_top{ margin-top:159px !important; }*/
-.event-upload-container .jFiler-item-thumb-image{width: 90px;  height: 95px;}
+
 .event-upload-container .jFiler-item-thumb-image{width: 80px !important; height: 90px !important;}
+ .event-upload-container .jFiler-item-container{width: 80px; }
+ .event-upload-container .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:68px; }
 
 #eventtopscoll.view_evnt_top.viewevent_container{margin-top:170px !important;}
 
@@ -1182,6 +1272,8 @@ span.evnt_toltip{
 #eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 174px !important;}
 .xs-paymentconf-inner{ margin-top:-10px;}
 
+#forgotcheck{ margin-top:-10px; }
+#forgotcheck.forgot_top{ margin-top:204px !important;}
 
 #mainhead{ height:140px;}
 .createeventtop.event_top{ margin-top:145px;}
@@ -1210,14 +1302,24 @@ span.evnt_toltip{
 #midsection.midd_cont {top: 135px !important;}
 .nav_ipad_left{ width:160px; position:absolute; z-index:9; }
 .nav_ipad_right{ left:125px;}
+.xs-tkt-pay-pl-0{ padding-right:0px; margin-bottom:10px;}
+.ipad-w-100{ width:45%; margin-right:10px;}
+.ipad_online_evnt{ font-size:1.8em !important;}
+.online_check_box{ height:17px !important}
+.email_box_container{ width:550px;}
+.inp100{ width:100%;}
+.ft4em{ font-size:2.5em !important;}
 }
 
 @media (min-width: 800px) and (max-width: 1280px) {
+.ipad_send_test{ text-align:left; }
 .xs-signup-height{ min-height:50px;}
 
 #eventtopscoll.viewevent_container .xs-viewevent-inner{ margin-top: 22px !important;}
 .xs-viewevent-inner{margin-top: 3px;}
-
+.online_check_box{ height:17px !important}
+.email_box_container{ width:550px;}
+.inp100{ width:100%;}
 }
 
 @media (width: 1280px){
@@ -1720,7 +1822,7 @@ span.evnt_toltip{
 
 /*Discount page Listing*/
    .dropheight .dropdown-menu.open .dropdown-menu.inner{ max-height: 150px !important; }
-   .bootstrap-select .dropdown-toggle:focus{ outline: none !important }
+   
 
     .discTable { width: 100%; display: table; }
     .discTablehead{width: 100%; height: 100%; display: table-row; background: #8c8c8c; padding: 10px 0; font-size: 16px; color: #fff; padding: 5px; }
@@ -1759,7 +1861,7 @@ input.file {
   border-right: 0;
   color: #888;
   padding: 5px;
-  border-radius: 5px;
+  border-radius: 3px;
   outline: none;
   cursor: pointer;
 }
@@ -1771,7 +1873,7 @@ div.file_upload {
   position: absolute;
   overflow: hidden;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 3px;
   color: #FFF;
   text-align: center;
   padding-top: 8px;
@@ -2181,6 +2283,7 @@ div.dis_file_upld{ background:#ccc !important;}
 .help_icon_hov.help_ml{ margin-left:5px;}
 .modal-backdrop.fade.in{ z-index:1111; }
  .ipad_min_height{ min-height:470px;}
+ .forgot_height{ min-height:370px;}
  .crt_map{ margin-right: 8px; width: 175px;}
 
 #forgotcheck{ margin-top:-10px; }
@@ -2189,3 +2292,139 @@ div.dis_file_upld{ background:#ccc !important;}
 .vw_tkt_modal{ background:#fff; }
 .vw_tkt_modal_body{ padding:15px 30px;}
 .no-shdw{ box-shadow:none !important;}
+.form-control.promotional-readonly{ background:#fff;}
+.crt-code-no-listing{ font-size:18px; color:#000;}
+.invite_nav{ color:#337ab7}
+.invite_nav a{ color:#337ab7;}
+.invite_nav a:hover{ color:#23527c;}
+.online_check_box{ 
+    display: inline;
+    height: 17px;
+    width: auto;}
+
+input[type="file"]:focus, input[type="radio"]:focus, input[type="checkbox"]:focus{ outline:none !important;}
+
+.theme-btn{ color:#fff; background:#3cf; border-radius:3px; }
+.theme-btn:hover, .theme-btn.active, .theme-btn:focus{ color: #fff; background:#3cf;border-radius:3px; }
+.orgz-selectpick button{ height:38px; }
+.brnone{ border:0px !important;}
+
+
+
+
+
+/*Responsive table start*/
+table.crt_event_list_tabl { width: 100%; border-collapse: collapse; }             
+.crt_event_list_tabl tr:nth-of-type(odd) { 
+    background: #fff; 
+}
+.crt_event_list_tabl th { 
+    background: #fff; 
+    color: #000; 
+    font-weight: bold; font-size: 18px;
+}
+.crt_event_list_tabl td, .crt_event_list_tabl th { 
+    padding: 10px 6px; 
+    border-bottom: 1px solid #ccc; 
+    font-size: 16px;
+}
+.crt_event_list_tabl a{ margin-right: 5px; }
+.crt_event_list_tabl .word_brack{ word-break: break-all; max-width:150px;  }
+
+.promocode_list th { 
+    background: #8c8c8c; 
+    color: #fff; 
+   }
+.promocode_list td, .promocode_list th { 
+    padding: 8px 6px; 
+   
+}
+
+@media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+table.crt_event_list_tabl, .crt_event_list_tabl thead, .crt_event_list_tabl tbody, .crt_event_list_tabl th, .crt_event_list_tabl td, .crt_event_list_tabl tr { 
+   display: inline-block;
+   width: 100%;
+   text-align:left;
+}
+.crt_event_list_tabl th{ background-color: #333 ; }
+/* Hide table headers (but not display: none;, for accessibility) */
+.crt_event_list_tabl thead tr { 
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+.crt_event_list_tabl .word_brack{ word-break: break-all; max-width:100%;  }
+.crt_event_list_tabl tr:nth-of-type(even) {  background: #eee;}
+
+.crt_event_list_tabl tr { border: 1px solid #ccc; }
+.recnt_ord_tab tr{border:0px; }
+.sales_by_tkt_tab tr { border:0px; }
+            
+.crt_event_list_tabl td { 
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee; 
+    position: relative;
+    padding-left: 50%; 
+}
+            
+.crt_event_list_tabl td:before { 
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%; 
+    padding-right: 10px; 
+    white-space: nowrap;
+}
+            
+/*
+Label the data
+*/
+.crt_event_list_tabl td:nth-of-type(1):before { content: "Event Title"; }
+.crt_event_list_tabl td:nth-of-type(2):before { content: "Event Date /Time"; }
+.crt_event_list_tabl td:nth-of-type(3):before { content: "Sold / Total No."; }
+.crt_event_list_tabl td:nth-of-type(4):before { content: "Action"; }
+
+.crt_inv_tab td:nth-of-type(1):before { content: "Subject"; }
+.crt_inv_tab td:nth-of-type(2):before { content: "Recipients"; }
+.crt_inv_tab td:nth-of-type(3):before { content: "Created"; }
+.crt_inv_tab td:nth-of-type(4):before { content: "Send On"; }
+.crt_inv_tab td:nth-of-type(5):before { content: "Action"; }
+
+.promocode_list td:nth-of-type(1):before { content: "Promo Code"; }
+.promocode_list td:nth-of-type(2):before { content: "Amounts"; }
+.promocode_list td:nth-of-type(3):before { content: "Starts"; }
+.promocode_list td:nth-of-type(4):before { content: "Ends"; }
+.promocode_list td:nth-of-type(5):before { content: "Available"; }
+.promocode_list td:nth-of-type(6):before { content: "Actions"; }
+
+.recnt_ord_tab td:nth-of-type(1):before { content: "#Order"; }
+.recnt_ord_tab td:nth-of-type(2):before { content: "Ticket Buyer"; }
+.recnt_ord_tab td:nth-of-type(3):before { content: "Quantity"; }
+.recnt_ord_tab td:nth-of-type(4):before { content: "Price"; }
+.recnt_ord_tab td:nth-of-type(5):before { content: "Date"; }
+.recnt_ord_tab td:nth-of-type(6):before { content: "Payment"; }
+
+
+.sales_by_tkt_tab td:nth-of-type(1):before { content: "Ticket Type"; }
+.sales_by_tkt_tab td:nth-of-type(2):before { content: "Price"; }
+.sales_by_tkt_tab td:nth-of-type(3):before { content: "Sold"; }
+.sales_by_tkt_tab td:nth-of-type(4):before { content: "Status"; }
+.sales_by_tkt_tab td:nth-of-type(5):before { content: "End Sales"; }
+.sales_by_tkt_tab td:nth-of-type(6):before { content: "View Sale"; }
+            
+}
+/*Responsive table End*/     
+       
+      
+.event-upload-container input[type="file"]{ opacity:0 !important;}
+.myacnt_image_upload input[type="file"]{ opacity:0 !important;}
+.orgnz_image_upload input[type="file"]{ opacity:0 !important;}
+
+.evnt_mg_word_brack{ word-break:normal!important;}
+.carousel-control{ z-index:99;}
+.hidediv{ display:none;}
+.novisiblediv{ visibility:hidden;}

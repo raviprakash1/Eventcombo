@@ -1,0 +1,623 @@
+﻿@model PagedList.IPagedList<CMS.Models.V_EventsList>
+@using PagedList.Mvc;
+@using CMS.Models;
+@{
+    ViewBag.Title = "EventsList";
+    //Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>EventsList</h2>
+<link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
+<link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">
+<link href="~/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet" />
+@using (Html.BeginForm())
+{
+    <!-- Start: Content-Wrapper -->
+    <section id="content_wrapper">
+
+        <!-- Start: Topbar -->
+        <header id="topbar" class="alt">
+            <div class="topbar-left">
+                <ol class="breadcrumb">
+
+                    <li class="crumb-icon">
+                        <a href="dashboard.html">
+                            <span class="glyphicon glyphicon-home"></span>
+                        </a>
+                    </li>
+                    <li class="crumb-active">
+                        Dashboard
+                    </li>
+                </ol>
+            </div>
+
+        </header>
+        <!-- End: Topbar -->
+        <!-- Begin: Content -->
+
+        <div id="content" class="animated fadeIn">
+            <div class="row" id="modal-content">
+                <div class="col-md-12">
+
+                    <div class="admin-panels">
+
+                        <div class="row">
+                            <div class="col-md-12 admin-grid animated-delay" data-animate='["400","fadeIn"]'>
+                                <div class="panel sort-disable mb_0" id="p2" data-panel-color="false" data-panel-fullscreen="false" data-panel-remove="false" data-panel-title="false" data-panel-fullscreen="false">
+                                    <div class="panel-heading panel_loader">
+                                        <span class="view_evnt fs26 col-sm-3"> Event</span>
+                                        <label class="field select admin-form col-sm-7 text-right srh-by-no">
+                                            Total no. of Events : @ViewData["Eventscount"] &nbsp; &nbsp; &nbsp; &nbsp;
+                                            @Html.DropDownList("ddlPageF", ViewBag.ddlPageF as List<SelectListItem>, new { @class = "pagination" })
+                                          
+                                            <i class="arrow double"></i>
+                                        </label>
+                                    </div>
+                                    <div class="panel-body panel100">
+                                        <!--  <hr class="short alt"> -->
+                                        <form class="admin-form">
+                                            <div class="col-md-2 col-sm-2">
+
+                                                <label> Event Title </label>
+                                                @Html.TextBox("SearchStringEventTitle", "", new { Class = "form-control", placeholder = "Search Event Title" })
+                                                @*<input type="text" class="form-control" placeholder="Search Event Title" value="Search Event Title">*@
+
+                                            </div>
+
+
+                                            <div class="col-md-3 col-sm-3">
+                                                <label>Event Type</label>
+                                                @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-3 col-sm-3">
+                                                <label>Event Category</label>
+                                                @*<select id="ddlEventCategory" class="form-control evnt_inp_cont wd600"></select>*@
+                                                @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-3 col-sm-3">
+                                                <label>Event SubCategory</label>
+                                                <select id="ddlEventSubCategory" name="ddlEventSubCategory" class="form-control"></select>
+                                            </div>
+
+
+
+                                            <div class="col-md-2 col-sm-2 mt10">
+                                                <label> Feature </label>
+                                                <div class="section">
+
+                                                    @Html.DropDownList("Features", ViewBag.Features as List<SelectListItem>, new { @class = "form-control" })
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 col-sm-2 mt10">
+                                                <label> Any Event </label>
+                                                <div class="section">
+                                                    @Html.DropDownList("Events", ViewBag.Events as List<SelectListItem>, new { @class = "form-control" })
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 col-sm-2 mt10">
+                                                <label> Any Ticket Sales </label>
+                                                <div class="section">
+                                                    @Html.DropDownList("Tickets", ViewBag.Tickets as List<SelectListItem>, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 col-sm-2 mt10">
+                                                <label> &nbsp;  </label>
+                                                <button class="btn btn-info br2 col-md-12 fs15">Search</button>
+
+                                            </div>
+                                            <div class="col-md-2 col-sm-2 mt10">
+                                                <label> &nbsp;  </label>
+                                                <button class="btn btn-info br2 col-md-12 fs15" type="button" id="btnReset">Reset</button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table id="tblMain" class="table">
+                                        <thead class="bg_white">
+                                            <tr>
+                                                <th class="tab-wid1">
+                                                    @{
+                                                        string url = Request.Url.GetLeftPart(UriPartial.Authority);
+                                                        string sno = url+ "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"]+"&EventType="+@TempData["EventType"]+"&ddlEventCategory="+@TempData["ddlEventCategory"]+"&ddlEventSubCategory="+@TempData["ddlEventSubCategory"]+"&Features="+@TempData["Features"]+"&Events="+TempData["Events"]+"&Tickets="+@TempData["Tickets"]+ "&sortorder=sno";
+                                                        string snodesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=snodesc";
+                                                        string title = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=title";
+                                                        string titledesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=titledesc";
+                                                        string type = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=type";
+                                                        string typedesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=typedesc";
+                                                        string category = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=category";
+                                                        string categorydesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=categorydesc";
+                                                        string date = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=date";
+                                                        string datedesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=datedesc";
+                                                        string Organiser = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=Organiser";
+                                                        string Organiserdesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=Organiserdesc";
+                                                        string venue = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=venue";
+                                                        string venuedesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=venuedesc";
+                                                        string ticket = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=ticket";
+                                                        string ticketdesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=ticketdesc";
+                                                        string feature = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=feature";
+                                                        string featuredesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=featuredesc";
+                                                    }
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <span class="sss1">Sno.</span>
+                                                    <div class="sor-evnt-cls">
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@sno"><img  src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_down"> <a  href="@snodesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
+                                                    </div>
+                                                    </th>
+                                                <th>Title 
+                                                    <div class="sor-evnt-cls">
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@title"><img  src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_down"> <a href="@titledesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
+                                                    </div>
+                                                </th>
+                                                <th class="tab-wid1">Type 
+                                                    <div class="sor-evnt-cls">
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@type"><img  src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_down"> <a href="@typedesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
+                                                    </div>
+                                                </th>
+                                                <th>Category-SubCategory 
+                                                    <div class="sor-evnt-cls">
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@category"><img  src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_down"> <a href="@categorydesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
+                                                    </div>
+                                                </th>
+                                                <th>Date(s)
+                                                    <div class="sor-evnt-cls">
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@date"><img  src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_down"> <a href="@datedesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
+                                                    </div>
+                                                </th>
+                                                <th>Organizer Name & Email 
+                                                    <div class="sor-evnt-cls">
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@Organiser"><img  src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_down"> <a href="@Organiserdesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
+                                                    </div>
+                                                </th>
+                                                <th>Venue name & address 
+                                                    <div class="sor-evnt-cls">
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@venue"><img  src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_down"> <a href="@venuedesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
+                                                    </div>
+                                                </th>
+                                                <th>Action</th>
+                                                <th>$</th>
+                                                @*<th>Manage Ticketing</th>*@
+                                                <th>Tickets Sold 
+                                                    <div class="sor-evnt-cls">
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@ticket"><img  src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_down"> <a href="@ticketdesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
+                                                    </div>
+                                                </th>
+                                                <th>Feature 
+                                                    <div class="sor-evnt-cls">
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@feature"><img  src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_down"> <a href="@featuredesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
+                                                    </div>
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg_white">
+
+                                            @{
+                                                int i = 0;
+                                                string host = Request.Url.Host;
+                                                int pagenumber = Convert.ToInt32(TempData["PageNo"]);
+                                                int pagesize = Convert.ToInt32(TempData["Pagesize"]);
+                                                if (pagenumber == 1)
+                                                {
+                                                    i = 0;
+                                                }
+                                                else
+                                                {
+                                                    i = pagesize * (pagenumber - 1);
+                                                }
+
+                                                foreach (var obj in Model)
+                                                {
+
+
+                                                    i = i + 1;
+                                                    <tr>
+                                                        <td>@obj.Sno</td>
+                                                        <td><a target="_blank" href="http://@host/ViewEvent/ViewEvent?strEventDs=@obj.EventTitle.Trim().Replace(" ", "-")&strEventId=@obj.EventID">@obj.EventTitle</a></td>
+                                                        <td>@obj.EventType</td>
+                                                        <td>@obj.EventCategory-@obj.EventSubCategory</td>
+                                                        <td>@obj.EventTiming</td>
+                                                        <td style="table-layout: fixed; word-break: break-all;">
+                                                            @obj.Orgnizer_Name  &
+
+                                                            <a href="mailto:@obj.Email">@obj.Email</a>
+                                                        </td>
+                                                        <td>@obj.EventAddress</td>
+                                                        <td>
+                                                            <a href="#" class="btn btn-success br2 btn-xs fs12" onclick="EditEvent('@obj.EventID','@obj.UserID');"><i class="fa fa-edit"></i> </a>
+                                                            @if (Double.Parse(obj.Purchasedqty) <= 0)
+                                                            {
+                                                                <a class="td-btn" type="button" onclick="ConfirmDelete('@obj.EventID');" href="#confirm-delete-ok" data-toggle="modal" id="adelete-@i">
+                                                                    <i class="fa fa-remove"></i>
+                                                                </a>
+                                                            }
+                                                            @*@Html.ActionLink("Edit Event", "EditEvent", "EditEvent")/*@
+                                                        </td>
+                                                        @*<td>Manage Ticketing</td>*@
+                                                        <td>
+                                                            <a class="holder-active animation-switcher" href="#modal-panel" id="payment-@obj.EventID">
+                                                                <button class="pay_dollar_btn" data-effect="mfp-flipInY" onclick="LoadPaymentInfo('@obj.EventID');" id="btnRoles" type="button">$</button>
+                                                            </a>
+                                                        </td>
+                                                        <td>@obj.Purchasedqty</td>
+                                                        <td>
+                                                            <div class="view_sel_wid">
+                                                                @if (obj.Feature == 1)
+                                                                {
+                                                                    <select class="dlFeature" onchange="SaveFeature('@obj.EventID',this.value)">
+                                                                        <option text=0 value="0">Select</option>
+                                                                        <option value=1 selected="selected">Platinum</option>
+                                                                        <option value=2>Gold</option>
+                                                                        <option value=3>Silver</option>
+                                                                        <option value=4>Bronze</option>
+                                                                    </select>
+                                                                }
+                                                                else if (obj.Feature == 2)
+                                                                {
+                                                                    <select class="dlFeature" onchange="SaveFeature('@obj.EventID',this.value)">
+                                                                        <option text=0 value="0">Select</option>
+                                                                        <option value=1>Platinum</option>
+                                                                        <option value=2 selected="selected">Gold</option>
+                                                                        <option value=3>Silver</option>
+                                                                        <option value=4>Bronze</option>
+                                                                    </select>
+                                                                }
+
+                                                                else if (obj.Feature == 3)
+                                                                {
+                                                                    <select class="dlFeature" onchange="SaveFeature('@obj.EventID',this.value)">
+                                                                        <option text=0 value="0">Select</option>
+                                                                        <option value=1>Platinum</option>
+                                                                        <option value=2>Gold</option>
+                                                                        <option value=3 selected="selected">Silver</option>
+                                                                        <option value=4>Bronze</option>
+                                                                    </select>
+                                                                }
+                                                                else if (obj.Feature == 4)
+                                                                {
+                                                                    <select class="dlFeature" onchange="SaveFeature('@obj.EventID',this.value)">
+                                                                        <option text=0 value="0">Select</option>
+                                                                        <option value=1>Platinum</option>
+                                                                        <option value=2>Gold</option>
+                                                                        <option value=3>Silver</option>
+                                                                        <option value=4 selected="selected">Bronze</option>
+                                                                    </select>
+                                                                }
+                                                                else if (obj.Feature == 0)
+                                                                {
+                                                                    <select class="dlFeature" onchange="SaveFeature('@obj.EventID',this.value)">
+                                                                        <option text=0 value="0">Select</option>
+                                                                        <option value=1>Platinum</option>
+                                                                        <option value=2>Gold</option>
+                                                                        <option value=3>Silver</option>
+                                                                        <option value=4>Bronze</option>
+                                                                    </select>
+                                                                }
+
+                                                            </div>
+                                                        </td>
+
+
+
+
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                        @*<tfoot class="footer-menu">
+                                            <tr>
+                                                <td colspan="15">
+                                                    <nav class="text-right">
+                                                        <ul class="pagination hide-if-no-paging" id="ulpage"></ul>
+                                                    </nav>
+                                                </td>
+                                            </tr>
+                                        </tfoot>*@
+
+                                    </table>
+
+                                    <div style="float:right">
+                                        @Html.PagedListPager(Model, pageF => Url.Action("EventsList", new { pageF, SearchStringEventTitle = TempData["SearchStringEventTitle"], EventType = TempData["EventType"], ddlEventCategory = TempData["ddlEventCategory"], ddlEventSubCategory=TempData["ddlEventSubCategory"], Features= TempData["Features"], Events=TempData["Events"], Tickets= TempData["Tickets"], sortorder=TempData["sortorder"] }))
+                                    </div>
+                                    @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"] != null)
+                                    {
+                                        <span>No Result Found.</span>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- Confirm Msg OK Modal Box -->
+                <div id="modal-panel" class="popup-basic bg-none popup-lg mfp-with-anim mfp-hide">
+                    <div class="panel-heading">
+                        <span class="panel-title">Payment Info</span>
+
+                    </div>
+
+                    <div id="dvLoadPaymentInfo" class="panel-body admin-form Payment-form-body">
+
+
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+                        <div class="modal-content">
+
+                            <form id="contactForm" class="fullw1 add">
+                                <div class="modal-body text-center pv50 txt-msg">
+
+                                    <h4 class="msg" id="hId"></h4>
+                                </div>
+                                <div class="modal-footer msg-action-btn ok">
+                                    <button type="submit" id="btnYes" class="btn btn-primary no" data-dismiss="modal">Yes</button>
+                                    <button type="button" class="btn btn-primary yes ok" id="btMesOk" data-dismiss="modal">OK</button>
+                                    <button type="button" id="btnNo" class="btn btn-primary no" data-dismiss="modal">No</button>
+                                </div>
+                            </form>
+                            <input type="hidden" id="hdUserId" value="" />
+                        </div>
+                    </div><!-- confirm-msg -->
+                </div>
+
+                <div>
+                    <a class="td-btn" id="btOk" type="button" href="#confirm-delete-ok" data-toggle="modal" style="display:none">
+
+                    </a>
+                </div>
+                <input type="hidden" id="hdUserId" value="" />
+                
+            </div>
+        </div>
+       
+
+        <div id="dvEventListDialog" style="display:none"></div>
+
+        <div id="divId" title="Dialog Title" />
+    </section>
+
+ }
+
+<script>
+    function LoadPaymentInfo(vEventId)
+    {
+        var url = '@Url.Action("EventPaymentInfo", "ManageEvent", new { lEventId = "-parameter" })';
+        url = url.replace("-parameter", vEventId);
+        $('#dvLoadPaymentInfo').load(url);
+
+    }
+    function EditEvent(eventId, UserID) {
+        var appSetting = '@(System.Configuration.ConfigurationManager.AppSettings["EventComboClientDomain"].ToString())';
+
+        var url = appSetting + '/CMS/Index?id=' + eventId + '&e=' + UserID;
+        //alert(url);
+        var w = 960, h = 600,
+        left = Number((screen.width / 2) - (w / 2)), tops = Number((screen.height / 2) - (h / 2)),
+        popupWindow = window.open(url, 'targetWindow', 'toolbar=no,location=Center,status=no,menubar=no,scrollbars=yes,resizable=yes,width=' + w + ',height=' + h + ', top=' + tops + ', left=' + left);
+        popupWindow.focus(); return false;
+    }
+
+    @*$("#snoclick").click(function(){
+
+        var url = '@Url.Action("EventsList", "ManageEvent", new { })?SearchStringEventTitle=@TempData["SearchStringEventTitle"]&EventType=@TempData["EventType"]&ddlEventCategory=@TempData["ddlEventCategory"]&Features=@TempData["Features"]&Tickets=@TempData["Tickets"]&sortorder=sno';
+        alert(url);
+        window.location.replace(url);
+    });*@
+
+    $('#btnReset').click(function () {
+
+        $('#SearchStringEventTitle').val('');
+        $('#EventType').val(0);
+        $('#ddlEventCategory').val(0);
+        $('#Features').val(0);
+        $('#Events').val(0);
+        $('#Tickets').val(0);
+        $('#ddlEventSubCategory').empty();
+        window.location.href = '@Url.Action("EventsList", "ManageEvent", new { })?PageF=1';
+
+    });
+    //$('#ulpage').click(function () {
+    //    console.log(this);
+
+    //    console.log($('#ulpage li.active'));
+    //    var datapage = $('#ulpage li.active').children().attr('data-page');
+
+    //    $('#ddlPageF').val(datapage);
+
+    //});
+
+    $('#ddlPageF').change(function () {
+        debugger;
+        var value = $(this).val();
+        var SearchStringEventTitle = $("#SearchStringEventTitle").val();
+        var EventType = $("#EventType").val();
+        var ddlEventCategory = $("#ddlEventCategory").val();
+        var ddlEventSubCategory = $("#ddlEventSubCategory").val();
+        var Features = $("#Features").val();
+        var Events = $("#Events").val();
+        var Tickets = $("#Tickets").val();
+        var PageF = value;
+        var sortorder = "@TempData["sortorder"]";
+        //console.log($(this).val());
+        //$("#ulpage li").removeClass('active');
+        //$('#ulpage li a[data-page=' + value + ']').click();
+        //console.log($('#ulpage li a[data-page=' + value + ']').parent().addClass('active'));
+        //console.log($("#ulpage li").find("a", "[data-page=" + value + "]"));
+        window.location.href = '@Url.Action("EventsList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Features=' + Features + '&Tickets=' + Tickets + '&sortorder=' + sortorder + '&PageF=' + PageF + '';
+
+    });
+    function ConfirmDelete(userId) {
+        $("#hdUserId").val(userId);
+        $("#btnYes").show();
+        $("#btnNo").show();
+        $("#btMesOk").hide();
+
+        // $("#btOk").click();
+
+        $("#hId").text(GetMess("CMSUsers", "UsersDeleteUI"));
+
+        //var x = confirm("Are you sure you want to delete?");
+
+        //if (x) {
+
+
+        //    return true;
+        //}
+        //else
+        return false;
+
+    }
+
+    function GetMess(strname, strFormTag) {
+        var msgnew = "";
+
+        var request = $.ajax({
+            url: '@Url.Action("Index", "ValidationMessage")',
+            async: false,
+            data: { strFormName: strname, strFormTag: strFormTag },
+            type: 'Post'
+        });
+        request.done(function (msg) {
+            msgnew += msg;
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            msgnew += "Some Error occur!!";
+        });
+        return msgnew;
+    }
+    function SaveFeature(EventId, vValue) {
+        $.ajax({
+            url: '@Url.Action("UpdateEventFeature", "ManageEvent")',
+            data: { iFid: parseInt(vValue), lEventId: parseInt(EventId) },
+            type: "Post",
+            success: function (data) {
+                if (data == "Y")
+                    alert("Event Feature Updated Successfully.");
+                else
+                    alert("There is some Problem, not able to update.");
+            },
+            error: function (data) {
+                //alert("Sorry there is some problem.");
+            }
+        });
+
+
+    }
+    $(document).ready(function () {
+
+        var vCatId = "@TempData["ddlEventCategory"]";
+        var vSubcatID="@TempData["ddlEventSubCategory"]";
+        if (vCatId != "") {
+            $.ajax({
+                url: '@Url.Action("GetSubCat", "ManageEvent")',
+                data: { lECatId: vCatId },
+                type: "Post",
+                success: function (data) {
+                    //$.each(data, function () {
+                    // debugger;
+                    //                   alert(data.length);
+                    $("#ddlEventSubCategory").html(data);
+                    // items.push("<option value=" + this.Value + ">" + this.Text + "</option>");
+                    //});
+                },
+                error: function (data) {
+                    //alert("Sorry there is some problem.");
+                }
+            });
+            if(vSubcatID!='')
+            {
+
+
+                $("#ddlEventSubCategory").val(vSubcatID);
+            }
+        }
+        $("#btnYes").click(function () {
+            $.ajax({
+                url: '@Url.Action("Deleteevent","ManageEvent")',
+                data: { Eventid: $("#hdUserId").val() },
+                datatype: "Text",
+                type: "Post",
+                success: function (response) {
+                    $("#formuser").submit();
+                    //$.post("Users\Users");
+                    // if (response == "Deleted")
+                    // alert("Record Deleted Successfully.");
+                    //$("#hId").text(GetMess("CMSUsers", "UsersDeleteSuccUI"));
+
+                    //else
+                    //    alert("Some error occur while Deleting");
+                }
+            });
+        });
+        $("#ddlEventCategory").change(function () {
+            //alert("change Fires");
+            var vCatId = $("#ddlEventCategory").val();
+            $.ajax({
+                url: '@Url.Action("GetSubCat", "ManageEvent")',
+                data: { lECatId: vCatId },
+                type: "Post",
+                success: function (data) {
+                    //$.each(data, function () {
+                    // debugger;
+                    //                   alert(data.length);
+                    $("#ddlEventSubCategory").html(data);
+                    // items.push("<option value=" + this.Value + ">" + this.Text + "</option>");
+                    //});
+                },
+                error: function (data) {
+                    //alert("Sorry there is some problem.");
+                }
+            });
+        });
+
+
+
+        $("#dlFeature").change(function () {
+            //alert("chal pya");
+            var vValue = 0;
+            var EventId = $(this).val();
+            var Feature = $("#dlFeature option:selected").text();
+            //alert(Feature);
+            if (Feature == "Platinum")
+                vValue = 1;
+            else if (Feature == "Gold")
+                vValue = 2;
+            else if (Feature == "Silver")
+                vValue = 3;
+            else if (Feature == "Bronze")
+                vValue = 4;
+
+            //   alert(Feature + " " + EventId);
+        });
+    });
+
+</script>

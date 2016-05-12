@@ -16,7 +16,7 @@
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 <link href="~/Content/MapPlaces.css" rel="stylesheet" />
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { autocomplete = "off"}))
 {
     <input type="hidden" id="hdimage" />
     <div class="event_container">
@@ -77,14 +77,14 @@
                     </div>
                     <div class="col-sm-3 no_pad ev_loca_check_main">
                         <div class="form-group mb0">
-                            <label class="label-control evnt_title_date evnt_title_online fs24">
+                            <label class="label-control evnt_title_date evnt_title_online fs24 ipad_online_evnt">
                                 @if (Model.AddressStatus == "Online")
                                 {
-                                    <input id="btOnlineEvent" checked="checked" type="checkbox" />
+                                    <input id="btOnlineEvent" class="form-control online_check_box" checked="checked" type="checkbox" />
                                 }
                                 else
                                 {
-                                    <input id="btOnlineEvent" type="checkbox" />
+                                    <input id="btOnlineEvent" class="form-control online_check_box" type="checkbox" />
                                 }
                                 Online Event
                             </label>
@@ -93,7 +93,7 @@
                     </div>
                     <div class="col-sm-9 text-right no_pad">
                         <div class="form-group mb0 ">
-                            <div class="ev_date_icn StartDate"></div>
+                            <div class="ev_date_icn StartDate xs-date-icon-remv"></div>
                             <label id="btEnterDates" class="StartDate label-control evnt_title_date fs24">Click here to enter the start and end date*</label>
                             <div class="form-group mb5">
                                 <label class="Timezone label-control evnt_title_timezone mb0" id="lblTimeZone">Timezone & date setting</label>
@@ -155,7 +155,7 @@
 
                                             </div>
                                             <div class="clearfix"></div>
-                                            <div class="modal-footer">
+                                            <div class="modal-footer brnone">
                                                 @*<button type="button" id="btSaveTimeZone" class="closetimemodal btn btn-primary  ev_add_sub_btn">Save</button>*@
                                             </div>
                                         </div>
@@ -166,9 +166,9 @@
                             <div class="col-sm-12 no_pad" id="dvAddress">
                                 <div class="form-group mb5">
                                     <div class="EntVenAdd col-sm-12 no_pad">
-                                        <div class="ev_loc_icn"></div>
+                                        <div class="ev_loc_icn xs-loc-icon-rem"></div>
                                         <div class="col-sm-10 no_pad mb5 pull-right">
-                                            <input id="txtEventLocation" onkeypress="txtEventLocation_KeyPress(event);" class="form-control evnt_title_control evnt_title_location evnt_placehold" placeholder="Click here to enter venue address" />
+                                            <input id="txtEventLocation" onkeypress="txtEventLocation_KeyPress(event);" class="form-control evnt_title_control evnt_title_location evnt_placehold" placeholder="Click here to enter venue address*" />
                                         </div>
                                     </div>
                                     <div class="PastLocat col-sm-12 no_pad">
@@ -183,7 +183,7 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div class="col-sm-6 ">
+                                <div class="col-sm-6 novisiblediv">
                                     <label class="label-control evnt_title_multi">
                                         <a data-target="#myModal" id="btMultiVenue" data-toggle="modal" href="#" draggable="false">
                                             Multiple Venue
@@ -254,7 +254,7 @@
                                                 </div>
 
                                             </div>
-                                            <div class="col-sm-12 no_pad mt10 ">
+                                            <div class="col-sm-12 no_pad mt10 hidediv">
                                                 <label id="btSchMultipleEv" class="SchmultiEvnt label-control lbl_bot_text">Schedule multiple events</label>
                                             </div>
                                         </div>
@@ -273,8 +273,8 @@
                                                     </label>
                                                 </div>
                                                 <div class="col-sm-12 no_pad"><label class="label-control ev_ven_mod_lebel">How often does this event occur?</label></div>
-                                                <div class="col-sm-8 no_pad">
-                                                    <select id="dlSchOption" class="form-control evnt_inp_cont ">
+                                                <div class="col-sm-8 no_pad dropheight">
+                                                    <select id="dlSchOption" class="form-control evnt_inp_cont selectpicker ">
                                                         <option>Daily</option>
                                                         <option>Weekly</option>
                                                         <option>Monthly</option>
@@ -413,7 +413,7 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div class="modal-footer mt10">
+                                <div class="modal-footer mt10 brnone">
                                     @*<button type="button" id="btnAddSch" class="closemodal btn btn-primary btn-lg ev_add_sub_btn">Save</button>*@
                                 </div>
                             </div>
@@ -451,8 +451,8 @@
                         <div class="col-sm-4 pl0 xs-evnt-type-pad-0">
                             <div class="form-group">
                                 <label class="col-sm-5 control-label ev_tickt_lebel no_pad">Sub Category</label>
-                                <div class="col-sm-7 xs-evnt-type-pad-0">
-                                    <select id="ddlEventSubCategory" class="form-control evnt_inp_cont wd600"></select>
+                                <div class="col-sm-7 xs-evnt-type-pad-0 dropheight">
+                                    <select id="ddlEventSubCategory" class="form-control selectpicker evnt_inp_cont wd600"></select>
                                     <input type="hidden" id="hidSubCat" value="@Model.EventSubCategoryID" />
                                 </div>
                             </div>
@@ -566,8 +566,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 mt10 no_pad">
-                        <button type="button" id="btAddOrg" class="btn btn-primary btn-lg ev_add_sub_btn"> Add New Organizer </button>
+                    <div class="clearfix"></div>
+                    <div class="col-sm-12 mt10 ">
+                        <button type="button" id="btAddOrg" class="btn theme-btn btn-lg ev_add_sub_btn"> Add New Organizer </button>
                     </div>
                     <div class="col-sm-12 mt20 no_pad">
                         <div class="form-group">
@@ -579,14 +580,14 @@
                                     </span>
                                 </div>*@
                             <div class="col-sm-12 no_pad">
-                                <div class="col-sm-8 no_pad col-xs-4 xs_crt_evnt_edit_org_btn">
-                                    <select id="ddlOrgnizers" class="form-control evnt_inp_cont"></select>
+                                <div class="col-sm-8 no_pad col-xs-4 xs_crt_evnt_edit_org_btn dropheight">
+                                    <select id="ddlOrgnizers" class="form-control selectpicker evnt_inp_cont"></select>
                                 </div>
                                 <div class="col-sm-2 col-xs-4 xs_crt_evnt_edit_org_btn xs_crt_evnt_edit_org_btn">
-                                    <button type="button" onclick="editOrgnizer();" class="btn btn-primary ev_add_sub_btn org_dele_btn" id="btneditorg">Edit <i class="fa fa-pencil"></i></button>
+                                    <button type="button" onclick="editOrgnizer();" class="btn theme-btn ev_add_sub_btn org_dele_btn" id="btneditorg">Edit <i class="fa fa-pencil"></i></button>
                                 </div>
                                 <div class="col-sm-2 col-xs-4 xs_crt_evnt_edit_org_btn xs_crt_evnt_edit_org_btn">
-                                    <button type="button" id="btndeleteorg" class="btn btn-primary ev_add_sub_btn org_dele_btn">Delete <i class="fa fa-trash"></i></button>
+                                    <button type="button" id="btndeleteorg" class="btn theme-btn ev_add_sub_btn org_dele_btn">Delete <i class="fa fa-trash"></i></button>
                                 </div>
                                 <table style="display:none;" id="tblOrgnizer"></table>
                             </div>
@@ -657,27 +658,27 @@
                                         <input type="text" value="0" id="id_totalamt-n" hidden="hidden" />
                                         <input type="text" value="0" id="id_msg-n" hidden />
                                     </div>
-                                    <div class="col-sm-3 no_pad">
+                                    <div class="col-sm-3 no_pad ipad-50">
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Ticket*</label>
-                                            <div class="col-sm-9 xs-tkt-typ-pad-0">
+                                            <label class="col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Ticket*</label>
+                                            <div class="col-sm-8 xs-tkt-typ-pad-0">
                                                 <input type="text" class="form-control evnt_inp_cont chkvalidation" id="id_ticket_type-n" placeholder="Early Bird, RSVP..." maxlength="256" onblur="checkvalidatetkt(this.id)" />
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2 no_pad">
+                                    <div class="col-sm-2 no_pad ipad-50">
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Qty*</label>
                                             <div class="col-sm-9 xs-tkt-typ-pad-0">
-                                                <input type="text" class="form-control evnt_inp_cont txtsum numbers" id="id_quantity_total-n" maxlength="6" placeholder="" onblur="changeqty(this.id)" onkeypress="allownumber(this,event,this.id)" />
+                                                <input type="text" class="form-control evnt_inp_cont txtsum numbers" id="id_quantity_total-n" maxlength="6" placeholder="" onblur="changeqty(this.id)" onkeypress="allownumber(this,event,this.id)" oncopy="return false" oncut="return false" onpaste="return false"  />
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-3 no_pad">
+                                    <div class="col-sm-3 no_pad ipad-50-ml10">
                                         <div class="form-group paidticket-n" id="id_paid-n">
                                             <label class="col-sm-5 no_pad control-label ev_tickt_lebel xs-tkt-typ-pad-0">Price $*</label>
-                                            <div class="col-sm-7 xs-tkt-typ-pad-0">
-                                                <input type="text" class="form-control evnt_inp_cont numbers" id="id_cost-n" onkeypress="validatenumdec(this, event, this.id)" onkeyup="changefee(this.id, event)" onblur="tofixed(this.id)" placeholder="0.00" maxlength="9" />
+                                            <div class="col-sm-7 xs-tkt-typ-pad-0 ipad-pad-5">
+                                                <input type="text" class="form-control evnt_inp_cont numbers" id="id_cost-n" onkeypress="validatenumdec(this, event, this.id)" onkeyup="changefee(this.id, event)" onblur="tofixed(this.id)" placeholder="0.00" maxlength="9" oncopy="return false" oncut="return false" onpaste="return false" />
                                             </div>
 
                                         </div>
@@ -696,11 +697,11 @@
                                        
                                         <div class="clearfix"></div>
                                     </div>
-                                    <div class="col-sm-3 no_pad xs768det-del">
+                                    <div class="col-sm-3 no_pad xs768det-del ipad-50-ml10">
                                         <div class="form-group paidticket-n" id="id_Disc-n">
-                                            <label class="col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Disc.$</label>
-                                            <div class="col-sm-8 xs-tkt-typ-pad-0">
-                                                <input type="text" class="form-control evnt_inp_cont numbers" placeholder="0" id="id_Discount-n" onkeypress="validatenumdec(this, event, this.id)" onblur="tofixed(this.id)" maxlength="9" />
+                                            <label class="col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0 ipad-width-58 ipad-pl0">Disc.$</label>
+                                            <div class="col-sm-8 xs-tkt-typ-pad-0 ipad-pad-5">
+                                                <input type="text" class="form-control evnt_inp_cont numbers" placeholder="0" id="id_Discount-n" onkeypress="validatenumdec(this, event, this.id)" onblur="tofixed(this.id)" maxlength="9" oncopy="return false" oncut="return false" onpaste="return false" />
 
                                             </div>
                                         </div>
@@ -717,7 +718,7 @@
                                                 <label class="col-sm-1 no_pad control-label ev_tickt_lebel">%</label>
                                                 <div class="col-sm-6">
 
-                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" id="id_ecfeeper-n" onkeypress="allownumber(this,event,this.id)" onblur="changeinecfee(this.id)" maxlength="3" />
+                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" id="id_ecfeeper-n" onkeypress="allownumber(this,event,this.id)" onblur="changeinecfee(this.id)" maxlength="3"  oncopy="return false" oncut="return false" onpaste="return false"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -730,7 +731,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-1 no_pad control-label ev_tickt_lebel">$</label>
                                                 <div class="col-sm-11">
-                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" id="id_ecfeeamt-n" onkeypress="validatenumdec(this, event, this.id)" onblur="tofixed(this.id);changeinecfee(this.id)"   maxlength="8"/>
+                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" id="id_ecfeeamt-n" onkeypress="validatenumdec(this, event, this.id)" onblur="tofixed(this.id);changeinecfee(this.id)"   maxlength="8" oncopy="return false" oncut="return false" onpaste="return false"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -756,7 +757,7 @@
                                                     <label class="col-sm-1 no_pad control-label ev_tickt_lebel">$</label>
                                                     <div class="col-sm-5">
                                                       
-                                                        <input type="text" class="form-control evnt_inp_cont"  id="id_customerfee-n" placeholder=""  onkeypress="validatenumdec(this, event, this.id)" onblur="tofixed(this.id);reflectfeechange(this.id)"  maxlength="8"/>
+                                                        <input type="text" class="form-control evnt_inp_cont"  id="id_customerfee-n" placeholder=""  onkeypress="validatenumdec(this, event, this.id)" onblur="tofixed(this.id);reflectfeechange(this.id)"  maxlength="8" oncopy="return false" oncut="return false" onpaste="return false"/>
                                                         <input type="hidden"  id="hd_customerfee-n" value="0" />
                                                         <input type="hidden" id="hd_customchange-n" value="0" />
                                                     </div>
@@ -789,10 +790,10 @@
                                         <div class="col-sm-12 no_pad ">
                                             <div class="modal-content evnt_set_panel">
                                                 <div class="modal-body pb0">
-                                                    <div class="col-sm-12">
+                                                    <div class="col-sm-12 no_pad">
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label ev_tickt_lebel pl0">Description</label>
-                                                            <div class="col-sm-6">
+                                                            <div class="col-sm-6 xs-tkt-typ-pad-0">
                                                                 <input type="text" class="form-control evnt_inp_cont" id="id_descriptionclass-n" placeholder="Ticket description" maxlength="1000" />
                                                             </div>
                                                         </div>
@@ -815,7 +816,7 @@
                                                         </div>
                                                         <div class="clearfix"></div>
                                                         <div class="form-group mt20">
-                                                            <div class="col-sm-6 ev_pad_l0">
+                                                            <div class="col-sm-6 ev_pad_l0 xs-tkt-typ-pad-0">
                                                                 <div class="col-sm-12 no_pad">
                                                                     <label class="label-control pl0 ev_tickt_lebel">Ticket Sales Start</label>
                                                                     <div class="upload_help_icn pull-right">
@@ -854,10 +855,10 @@
                                                                         </div>
                                                                    
                                                                 </div>
-                                                                <div class="col-sm-8 ev_pad_l0 mb5">
+                                                                <div class="col-sm-8 ev_pad_l0 mb5 xs-tkt-typ-pad-0">
                                                                     <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n"  disabled="disabled" />
                                                                 </div>
-                                                                <div class="col-sm-4 ev_pad_l0 mb5">
+                                                                <div class="col-sm-4 ev_pad_l0 mb5 xs-tkt-typ-pad-0">
                                                                     @*<input type="hidden" value="0" id="id_hdsaletimeend-n" />*@
                                                                     <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am"  disabled="disabled" />
                                                                 </div>
@@ -925,12 +926,12 @@
                                                         <div class="form-group donateshow-n" id="maxmin-n">
                                                             <label class="label-control pl0 ev_tickt_lebel wd600">Tickets allowed per order</label>
                                                             <div class="evnt_time_cont wd280 mr5_p">
-                                                                <input class="form-control evnt_inp_cont wd240 numbers " placeholder="0" id="id_min_ticket-n" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
+                                                                <input class="form-control evnt_inp_cont wd240 numbers " placeholder="0" id="id_min_ticket-n" onkeypress="allownumber(this,event,this.id)" maxlength="6" oncopy="return false" oncut="return false" onpaste="return false" />
                                                                 <label class="label-control lbl_bot_minim ">Minimum</label>
 
                                                             </div>
                                                             <div class="evnt_time_cont wd280">
-                                                                <input class="form-control evnt_inp_cont wd240 numbers" placeholder="0" id="id_max_ticket-n" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
+                                                                <input class="form-control evnt_inp_cont wd240 numbers" placeholder="0" id="id_max_ticket-n" onkeypress="allownumber(this,event,this.id)" maxlength="6" oncopy="return false" oncut="return false" onpaste="return false"/>
                                                                 <label class="label-control lbl_bot_minim ">Maximum</label>
                                                                 <label class="col-sm-12 no_pad control-label" style="color:red;display:none" id="id_lblmax-n">Please enter a valid number</label>
 
@@ -1063,14 +1064,14 @@ else
                         <div class="TicketFees col-sm-12 no_pad">
                             <div class="form-group">
                                 <div class="col-sm-5 no_pad">
-                                    <label class="col-sm-4 control-label ev_tickt_lebel">Description*</label>
-                                    <div class="col-sm-8">
+                                    <label class="col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Description*</label>
+                                    <div class="col-sm-8 xs-tkt-typ-pad-0">
                                         <input class="form-control evnt_inp_cont chkvalidation" type="text" placeholder="" id="id_vardesc" value="@Model.Ticket_variabledesc">
                                     </div>
                                 </div>
                                 <div class="col-sm-5 no_pad">
-                                    <label class="col-sm-2 control-label ev_tickt_lebel">Type</label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-2 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Type</label>
+                                    <div class="col-sm-10 xs-tkt-typ-pad-0">
                                         @if (Model.Ticket_variabletype == "R")
                                         {
                                             <select class="form-control ev_drop_label" id="variabletype">
@@ -1098,8 +1099,8 @@ else
                                         }
                                     </div>
                                 </div>
-                                <div class="col-sm-2 no_pad">
-                                    <button class="btn btn-primary btn-lg  ev_add_sub_btn var_chg_btn" type="button">Add</button>
+                                <div class="col-sm-2 no_pad xs-var-chrg-btn-mt10">
+                                    <button class="btn theme-btn btn-lg  ev_add_sub_btn var_chg_btn" type="button">Add</button>
                                 </div>
                             </div>
                             <div class="col-sm-12 mt20 no_pad">
@@ -1111,18 +1112,20 @@ else
                                 </div>
                                 <div class="col-sm-12 no_pad" id="id_clonevariable-n" style="display:none;">
                                     <div class="list-group-item ev_var_chrg_list">
-                                        <div class="form-group">
-                                            <div class="col-sm-7 col-xs-7">
+                                        <div class="col-sm-10 col-xs-10 no_pad">
+                                            <div class="col-sm-5 col-xs-6 no_pad">
                                                 <input type='hidden' id="id_varid-n" value=0 />
                                                 <input class="form-control evnt_inp_cont" type="text" placeholder="Description" id="id_varsubdesc-n" maxlength="256" onblur="checkvalidatetkt(this.id)">
                                             </div>
-                                            <div class="col-sm-4 col-xs-4">
-                                                <label class="col-sm-1 control-label ev_tickt_lebel">$</label>
-                                                <div class="col-sm-10 no_pad">
-                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="0.00" id="id_varsubprice-n" maxlength="9" onkeypress="validatenumdec(this, event, this.id);" onblur="    tofixed(this.id); checkvalidatetkt(this.id);" >
+                                            <div class="col-sm-7 col-xs-6 no_pad">
+                                                <label class="col-sm-2 col-xs-3 control-label ev_tickt_lebel text-center xs-var-chg-lebel">$</label>
+                                                <div class="col-sm-10 col-xs-9 no_pad xs-var-chg-div">
+                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="0.00" id="id_varsubprice-n" maxlength="9" onkeypress="validatenumdec(this, event, this.id);" onblur="tofixed(this.id); checkvalidatetkt(this.id);" oncopy="return false" oncut="return false" onpaste="return false">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main">
+                                        </div>
+                                        <div class="col-sm-2 col-xs-2 no_pad">
+                                            <div class="col-sm-12 col-xs-12 no_pad text-right var_chrg_edt_main">
                                                 <button class="btn" type="button" id="btn_vardelete-n" onclick="deletevariable(this.id)"><i class="fa fa-times"></i></button>
                                             </div>
                                         </div>
@@ -1253,7 +1256,8 @@ else
                                 @*}*@
                                 Require a password to view the event page
                             </label>
-                            <input type="password" id="txtReqPassword" readonly="readonly" value="@Model.Private_Password" class="form-control evnt_inp_cont mb10 wd500 chkvalidation" placeholder="Enter Password" />
+                            <input type="password" id="txtReqPasswordTemp" name="somePass" style="display:none;"  value=""  placeholder="Enter Password"  maxlength="15" />
+                            <input type="password" id="txtReqPassword" name="somePass" readonly="readonly" value="@Model.Private_Password" class="form-control evnt_inp_cont mb10 wd500 chkvalidation" placeholder="Enter Password" autocomplete="off" maxlength="15" />
 
                         </div>
                     </div>
@@ -1398,14 +1402,14 @@ else
                                 <input id="State" class="form-control evnt_inp_cont" placeholder="State" />
                             </div>
                         </div>
-                        <div class="col-sm-6 row pull-right">
+                        <div class="col-sm-6 row pull-right xs-multi-add-ven">
                             <div class="form-group">
                                 <input id="Zip" class="form-control evnt_inp_cont" placeholder="Zip Code" maxlength="6" />
                             </div>
                         </div>
                         <div class="clearfix"></div>
-                        <div class="form-group mb5 ">
-                            @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control evnt_inp_cont" })
+                        <div class="form-group mb5 dropheight">
+                            @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control evnt_inp_cont selectpicker" })
                         </div>
 
                     </div>
@@ -1459,7 +1463,7 @@ else
                     </div>
                     </div>
                 <div class="modal-footer no_pad">
-                    <button type="button" id="btSaveAddress" data-dismiss="modal" aria-label="Close" class="btn btn-primary col-sm-12 ev_add_sub_btn ad_ven_mod_btn">SAVE</button>
+                    <button type="button" id="btSaveAddress" data-dismiss="modal" aria-label="Close" class="btn btn-primary col-sm-12 col-xs-12 ev_add_sub_btn ad_ven_mod_btn">SAVE</button>
                 </div>
 
             </div>
@@ -1489,7 +1493,11 @@ else
     @*// ---------------------Event Creation Script -------------------*@
 
     <script type="text/javascript">
-
+        $(document).on('keypress keydown keyup', function (e) {
+            if (e.keyCode == 27) {
+                $('.date_picker').blur();
+            }
+        });
 
 
         var map_canvas ;
@@ -1673,6 +1681,14 @@ else
 
     <script>
         $(document).ready(function () {
+            $("#txtReqPassword").on("keypress", function (e) {
+                
+                if (e.which == 32)
+                    return false;
+            });
+            $('#txtReqPassword').bind("cut copy paste", function (e) {
+                e.preventDefault();
+            });
             $("#btProgress").click();
             var vVal = '@TempData["IsNewEvent"].ToString()';
             if (vVal == "Y")
@@ -1961,7 +1977,7 @@ else
             {
                 $('#chkReqPassword').prop("checked","true");
                 $('#txtReqPassword').attr('readonly', false);
-
+       
 
             }
             $(".cdisable").removeAttr("disabled");
@@ -1980,7 +1996,7 @@ else
             var sno = $("#hidOrgnizer").val();
             var name = $('#txtOrgnizer').val();
 
-            var regex = /^[a-zA-Z ]*$/;
+            var regex = /^[0-9a-zA-Z ]*$/;
             isValid = regex.test(name);
             if (isValid) {
                 var orgid = 0;
@@ -2342,7 +2358,7 @@ else
             $("#txtOrgTWlink").val('');
             $("#Incsocial").prop("checked", false);
             $("#dvOrgnizerFBTw").hide();
-
+            $('#ddlOrgnizers').selectpicker('refresh');
         }
 
         function editRow(Sno) {
@@ -2916,7 +2932,7 @@ else
                     Orgnizer.push({
                         Orgnizer_Id: $("#OrgId_"+Sno).text(),
                         Orgnizer_Name: $("#OrgName_"+Sno).html(),
-                        Organizer_Desc: escape($("#OrgDes_" + Sno).text()),
+                        Organizer_Desc: $("#OrgDes_" + Sno).text(),
                         Organizer_FBLink: $("#OrgFB_" + Sno).text(),
                         Organizer_Twitter: $("#OrgTw_" + Sno).text(),
                         Organizer_Linkedin: $("#OrgLn_" + Sno).text(),
@@ -2941,7 +2957,7 @@ else
                 varDescritpion = $('#id_vardesc').val();
                 optionalvariable = $('#variabletype').val();
             }
-            var evDec = escape($("#edEventDesc").code());
+            var evDec = $("#edEventDesc").code();
             var model = {
                 'EventID': $("#hdEventId").val(),
                 'EventTypeID': $("#EventType").val(),
@@ -3077,7 +3093,7 @@ else
             $("#hidSchLastState").val($("#dlSchOption").val());
             if ($(".SchmultiDetail").css('display') == 'block') {
                 $("#hdSchType").val('Multiple');
-                vSelecttextDates = "Click here to enter the start and end date";
+                vSelecttextDates = "Click here to enter the start and end date*";
                 if ($("#txtDateFrom").val() != '' && $("#txtDateFrom").val() != null) {
                     if ($("#dlSchOption").val() == "Daily") {
                         vSelecttextDates = "Daily : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
@@ -3103,7 +3119,7 @@ else
                 $("#btEnterDates").text(vSelecttextDates);
             }
             else {
-                vSelecttextDates = "Click here to enter the start and end date";
+                vSelecttextDates = "Click here to enter the start and end date*";
                 if ($("#txtStartDate").val() != '' && $("#txtStartDate").val() != null)
                 {
                     vSelecttextDates = $("#txtStartDate").val() + " " + $("#txtStartTime").val() + " To " + $("#txtEndDate").val() + " " + $("#txtEndTime").val()
@@ -3154,6 +3170,7 @@ else
                     // debugger;
                     //                   alert(data.length);
                     $("#ddlEventSubCategory").html(data);
+                    $('#ddlEventSubCategory').selectpicker('refresh');
                     // items.push("<option value=" + this.Value + ">" + this.Text + "</option>");
                     //});
                 },
@@ -3170,7 +3187,7 @@ else
                     var getHtml = data.split('¶');
                     $("#tblOrgnizer").append(getHtml[0]);
                     $("#ddlOrgnizers").append(getHtml[1]);
-
+                    $('#ddlOrgnizers').selectpicker('refresh');
                   var msg = disablebutton();
 
                     if(msg=="")
@@ -3400,6 +3417,7 @@ else
                     $(".cdisable").removeAttr("disabled");
                 }
                 $("#txtOrgnizer").removeClass("err-bor");
+                $('#ddlOrgnizers').selectpicker('refresh');
                 //alert(divlength);
                 //var addOption = '<div class="list-group-item ev_orgz_list"></div> <div id = dvOrg_' + vLenght.toString() + '  class="col-sm-8 no_pad">' + $("#txtOrgnizer").val() + '</div><div class="col-sm-4 no_pad text-right ev_org_edt_main"><a href="#"><i class="fa fa-pencil"></i> </a> | <a href="#"><i class="fa fa-trash"></i></a></div>';
                 //$("#dvOrganizer").append(addOption)
@@ -4777,6 +4795,7 @@ else
                 var ccpamount = 0;
                 var ccpfinal = 0;
                 $('#id_feestruct-' + num).css('display', 'block');
+                $('#id_include_ticket_fees-' + num).val(0);
                 var val = $("#id_feetype-0").val();
                 var fee = 0;
 
@@ -5022,13 +5041,13 @@ else
 
 
             }
-            if ($('#hddiscount').val() == 1) {
-                count++;
+            //if ($('#hddiscount').val() == 1) {
+            //    count++;
 
-            }
-            if (parseInt($('#hdMaxerr').val()) == 1) {
-                count++;
-            }
+            //}
+            //if (parseInt($('#hdMaxerr').val()) == 1) {
+            //    count++;
+            //}
             if (countprice > 0) {
                 msg += ajaxsetup("CreateEvent", "PriceNotzeroUI") + "<br/>";
             }
@@ -5040,52 +5059,52 @@ else
 
             }
 
-            if ($('#id_variablecharge').is(":checked") == true) {
-                if ($('#id_vardesc').val() == "") {
+            //if ($('#id_variablecharge').is(":checked") == true) {
+            //    if ($('#id_vardesc').val() == "") {
 
-                    msg += ajaxsetup("CreateEvent", "CreateEventvariabledescUI") + "<br/>";;
-
-
-
-                } else {
-                    $('#id_vardesc').removeClass('err-bor');
-
-                }
-                var divvar = $("#id_Mainvariable>div").size();
-                if (divvar <= 0) {
-                    msg += "Please enter Variable valid charges by clicking on Add button" + "<br/>";;
-
-                }
-                if (divvar > 0) {
-
-                    for (var i = 0; i < divvar; i++) {
-                        var subdesc_name = $('#id_varsubdesc-' + i).val();
-                        var subprice_Qty = $('#id_varsubprice-' + i).val();
-
-                        if (subdesc_name == "") {
+            //        msg += ajaxsetup("CreateEvent", "CreateEventvariabledescUI") + "<br/>";;
 
 
 
-                            countvardesc++;
-                        }
-                        if (subprice_Qty == "") {
+            //    } else {
+            //        $('#id_vardesc').removeClass('err-bor');
+
+            //    }
+            //    var divvar = $("#id_Mainvariable>div").size();
+            //    if (divvar <= 0) {
+            //        msg += "Please enter Variable valid charges by clicking on Add button" + "<br/>";;
+
+            //    }
+            //    if (divvar > 0) {
+
+            //        for (var i = 0; i < divvar; i++) {
+            //            var subdesc_name = $('#id_varsubdesc-' + i).val();
+            //            var subprice_Qty = $('#id_varsubprice-' + i).val();
+
+            //            if (subdesc_name == "") {
 
 
-                            countvarqty++;
-                        } else {
-                            if (subprice_Qty <= 0) {
 
-                                countvarqty++;
-
-                            }
+            //                countvardesc++;
+            //            }
+            //            if (subprice_Qty == "") {
 
 
-                        }
+            //                countvarqty++;
+            //            } else {
+            //                if (subprice_Qty <= 0) {
 
-                    }
+            //                    countvarqty++;
 
-                }
-            }
+            //                }
+
+
+            //            }
+
+            //        }
+
+            //    }
+            //}
 
 
 
@@ -5093,21 +5112,21 @@ else
 
                 msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
             }
-            if (countvardesc > 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventSubDescUI") + "<br/>";
+            //if (countvardesc > 0) {
+            //    msg += ajaxsetup("CreateEvent", "CreateEventSubDescUI") + "<br/>";
 
-            }
-            if (countvarqty > 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventSubQtyUI") + "<br/>";
+            //}
+            //if (countvarqty > 0) {
+            //    msg += ajaxsetup("CreateEvent", "CreateEventSubQtyUI") + "<br/>";
 
-            }
-            if ($('#chkReqPassword').is(":checked") == true) {
-                if ($('#txtReqPassword').val() == "") {
+            //}
+            //if ($('#chkReqPassword').is(":checked") == true) {
+            //    if ($('#txtReqPassword').val().length<6) {
+            //        $('#txtReqPassword').addClass('err-bor');
+            //        msg += ajaxsetup("CreateEvent", "CreateEventPwdUI") + "<br/>";;
 
-                    msg += ajaxsetup("CreateEvent", "CreateEventPwdUI") + "<br/>";;
-
-                }
-            }
+            //    }
+            //}
             var weekcnt = 0;
             var weekdaily = 0;
             var weekmnth = 0;
@@ -6753,7 +6772,7 @@ else
 
             }
             if ($('#chkReqPassword').is(":checked") == true) {
-                if ($('#txtReqPassword').val() == "") {
+                if ($('#txtReqPassword').val().length<6) {
                     $('#txtReqPassword').addClass('err-bor');
                     msg += ajaxsetup("CreateEvent", "CreateEventPwdUI") + "<br/>";;
 
@@ -7395,46 +7414,59 @@ else
         //    e.stopPropagation();
         //});
 
-        $(document).on('click', function (e) {
+        //$(document).on('click', function (e) {
 
-         
+        //    debugger;
 
-            var $target = $(e.target);
+        //    var $target = $(e.target);
 
-            var id = $(e.target)[0].id;
-          
-         
-            var uiclasstimepicker = $($(e.target)[0]).attr("class");
-            var uiclassdatepicker=$($(e.target)[0]).parent().parents("div").attr("class") 
-            var uidatepickerheader = $($(e.target)[0]).parent().parents("div").attr("class");
-            if (typeof uiclasstimepicker === "undefined" && typeof uiclassdatepicker === "undefined" && typeof uidatepickerheader === "undefined")
-            {
-                AddDates();
-              
-                $(".StartDatemodal").hide();
-            } else {
-                if ((uiclasstimepicker != "ui-timepicker-selected") && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker-header") < 0) && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker") < 0)) {
-
-                    if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null) {
-                        AddDates();
-
-                        $(".StartDatemodal").hide();
-
-                    }
+        //    var id = $(e.target)[0].id;
 
 
-                }
-            }
-           
-            if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
-                AddTimeZone();
-                $(".TmezoneSet").hide();
-            }
+        //    var uiclasstimepicker = $($(e.target)[0]).attr("class");
+        //    var uiclassdatepicker = $($(e.target)[0]).parent().parents("div").attr("class")
+        //    var uidatepickerheader = $($(e.target)[0]).parent().parents("div").attr("class");
+        //    if (typeof uiclasstimepicker === "undefined" && typeof uiclassdatepicker === "undefined" && typeof uidatepickerheader === "undefined") {
+        //        AddDates();
+
+        //        $(".StartDatemodal").hide();
+        //    } else
+        //    {
+        //        if (typeof uiclasstimepicker === "undefined" && (typeof uiclassdatepicker != "undefined" || typeof uidatepickerheader != "undefined"))
+        //        {
+        //            AddDates();
+
+        //            $(".StartDatemodal").hide();
+        //        }
+        //        if(typeof uiclasstimepicker!="undefined"&& (typeof uiclassdatepicker != "undefined" || typeof uidatepickerheader != "undefined"))
+        //        {
+        //            if ((uiclasstimepicker != "ui-timepicker-selected") && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker-header") < 0) && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker") < 0))
+        //            {
+
+        //                if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null)
+        //                {
+        //                    AddDates();
+
+        //                    $(".StartDatemodal").hide();
+
+        //                }
+        //            }
+        //        }
+             
 
 
-              
+        //        //}
+        //    }
 
-        });
+        //    if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
+        //        AddTimeZone();
+        //        $(".TmezoneSet").hide();
+        //    }
+
+
+
+
+        //});
 
         function onlyAlphabets(e, t) {
 
@@ -7454,7 +7486,7 @@ else
 
             else { return true; }
 
-            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 32)
+            if ((charCode >= 48 && charCode <= 57)||(charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 32 ||charCode == 8 || charCode == 0)
 
                 return true;
 

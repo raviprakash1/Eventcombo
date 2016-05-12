@@ -345,9 +345,6 @@
     <Compile Include="Models\GetEventDateList_Result.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\GetEventListing_Result.cs">
-      <DependentUpon>Cmsdata.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\GetEventsListByStatus_Result.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
@@ -436,7 +433,13 @@
     <Compile Include="Models\Venue.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\V_EventsList.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\v_RetrieveEventid.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\V_Users.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -490,6 +493,8 @@
     <Content Include="assets\fonts\stateface\stateface.css" />
     <Content Include="assets\fonts\zocial\zocial-regular-webfont.svg" />
     <Content Include="assets\fonts\zocial\zocial.css" />
+    <Content Include="assets\img\arw-dwn1.png" />
+    <Content Include="assets\img\arw-up.png" />
     <Content Include="assets\img\avatars\1.jpg" />
     <Content Include="assets\img\avatars\2.jpg" />
     <Content Include="assets\img\avatars\3.jpg" />
@@ -1170,6 +1175,7 @@
     <Content Include="Views\EventCategory\EventCategoryListPartial.cshtml" />
     <Content Include="Views\EventType\EventTypeListPartial.cshtml" />
     <Content Include="Views\ManageEvent\EventPaymentInfo.cshtml" />
+    <Content Include="Views\ManageEvent\EventsList.cshtml" />
     <Content Include="Views\Article\Index.cshtml" />
     <Content Include="Views\Article\Edit.cshtml" />
     <Content Include="Views\Article\ShowArticle.cshtml" />

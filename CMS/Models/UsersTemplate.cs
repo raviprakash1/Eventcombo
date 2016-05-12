@@ -36,7 +36,10 @@ namespace CMS.Models
 
     }
 
-
+    public class users
+    {
+        public PagedList.IPagedList<V_Users> Users { get; set; }
+    }
 
     public class Eventtype
     {

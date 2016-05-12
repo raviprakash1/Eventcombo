@@ -3,19 +3,18 @@
     ViewBag.Title = "CheckoutReview";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<br /><br /><br />
-<br /><br /><br />
-<h2>CheckoutReview</h2>
-@ViewData["ReturnMessage"]
-<br /><br />
- Amount: @ViewData["Amount"]<br /><br />
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 
-<a href="@Url.Action("DoCheckoutPayment","Cart",new {token=ViewData["token"],PayerID=ViewData["PayerID"] })">Confirm Payment</a>&nbsp;&nbsp;&nbsp;
-<a href="@Url.Action("Index","Home")">Cancel Payment</a>
+@*<h2>CheckoutReview</h2>*@
 
-<div class="event_container " style="display:none;">
-    <div class="event_inner_container event_top">
-        <div class="event_detail_container">
+
+
+
+
+
+<div class="event_container"  >
+    <div class="event_inner_container event_top view_evnt_top viewevent_container xs-paymentconf-top" id="eventtopscoll" >
+        <div class="event_detail_container xs-paymentconf-inner">
             <div class="col-sm-12"><h3 class="acnt_title"></h3></div>
         </div>
     </div>
@@ -30,30 +29,57 @@
         </div>
         <div class="evnt_details_body2">
             <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
+                @if (ViewData["ReturnMessage"] != null && !string.IsNullOrEmpty(ViewData["ReturnMessage"].ToString()))
+                {
+                <div class="Moderor mb10" id="divpwderroacc" tabindex="-1">
+                    <div class="er_UI_main">
+                        <div class="er_warnui_img"></div>
+                        <div class="er_suc" id="erraccpwdmsg">@ViewData["ReturnMessage"]</div>
+                        <button class="close" aria-hidden="true" type="button" id="btnhidepwderror" onclick="$('#divpwderroacc').hide();">&#215;</button>
+
+                    </div>
+                </div>
+                }
+
 
                 <div class="col-sm-12 no_pad chek_out_desc">
-                    <p>Amount : </p>
+                    <p class="chk_out_flot">Amount :</p>
+                    @if (ViewData["ReturnMessage"] == null || string.IsNullOrEmpty(ViewData["ReturnMessage"].ToString()))
+                    {
+                        <p>$@ViewData["Amount"]</p>
 
+                    }
+                    else
+                    {
+                       <p>0</p>
+                    }
+@if (ViewData["ReturnMessage"] == null || string.IsNullOrEmpty(ViewData["ReturnMessage"].ToString()))
+{
                     <p class="text-center">Please confirm to continue  </p>
+}
 
 
                     <div class="clearfix"></div>
 
                     <div class="col-sm-12 col-xs-12 no_pad text-center">
-                        <button class="btn ev_live_btn cap_l" type="button">
+@if (ViewData["ReturnMessage"] == null || string.IsNullOrEmpty(ViewData["ReturnMessage"].ToString()))
+{
+                        <a class="btn ev_live_btn cap_l" href="@Url.Action("DoCheckoutPayment", "Cart", new { token = ViewData["token"], PayerID = ViewData["PayerID"] })">
                             Confirm
-                        </button>
-                        <button class="btn ev_live_btn cap_l" type="button">
-                            Cancel
-                        </button>
-                    </div>
+                            </a>
+}
+                        <a href="@Url.Action("TicketPayment", "TicketPayment")" class="btn ev_live_btn cap_l">
+                           
+                                Cancel
+                            </a>
+</div>
                     <div class="clearfix"></div>
                 </div>
 
-                <div class="col-sm-12 no_pad chek_out_desc">
-                    <p class="text-center"><img src="images/ajax-loader.gif"> </p>
+                @*<div class="col-sm-12 no_pad chek_out_desc">
+                    <p class="text-center"><img src="~/Images/ajax-loader.gif"> </p>
                     <p class="text-center">Your Payment is processing, Please wait </p>
-                </div>
+                </div>*@
 
             </div>
 
