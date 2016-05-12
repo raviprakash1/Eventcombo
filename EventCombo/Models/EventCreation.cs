@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -9,8 +10,10 @@ using System.Web.Mvc;
 namespace EventCombo.Models
 {
     [Table("Event")]
+    
     public class EventCreation
     {
+        EventComboEntities db = new EventComboEntities();
         public long EventID { get; set; }
         public long EventTypeID { get; set; }
         public long EventCategoryID { get; set; }
@@ -20,7 +23,7 @@ namespace EventCombo.Models
         public string DisplayStartTime { get; set; }
         public string DisplayEndTime { get; set; }
         public string DisplayTimeZone { get; set; }
-        //[AllowHtml]
+        [AllowHtml]
         public string EventDescription { get; set; } 
         public string EventPrivacy { get; set; }
         public string Private_ShareOnFB { get; set; }
@@ -59,13 +62,109 @@ namespace EventCombo.Models
 
         public long? Parent_EventID { get; set; }
 
-    }
 
+
+        public Event GetEventdetail(long eventid)
+        {
+            return ((from ev in db.Events where ev.EventID == eventid select ev).FirstOrDefault());
+        }
+        public List<string> GetImages(long EventId)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+
+                return (from myRow in db.EventImages
+
+                        where myRow.EventID == EventId
+                        orderby myRow.EventImageID
+                        select "/Images/events/event_flyers/imagepath/" + myRow.EventImageUrl).ToList();
+
+
+
+            }
+
+
+        }
+
+        public long GetLatestEventId(long lEvntId)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var lParentID = (from myEvt in db.Events
+                                 where myEvt.EventID == lEvntId
+                                 select myEvt.Parent_EventID).FirstOrDefault();
+                if (lParentID > 0)
+                {
+                    lParentID = (from myEvt in db.Events
+                                 where myEvt.Parent_EventID == lParentID
+                                 select myEvt.EventID).Max();
+                }
+                else
+                {
+                    int lCnt = (from myEvt in db.Events
+                                where myEvt.Parent_EventID == lEvntId
+                                select myEvt.EventID).Count();
+
+                    if (lCnt > 0)
+                    {
+                        lParentID = (from myEvt in db.Events
+                                     where myEvt.Parent_EventID == lEvntId
+                                     select myEvt.EventID).Max();
+                    }
+                }
+                if (lParentID == null || lParentID <= 0) lParentID = lEvntId;
+
+                return (long)lParentID;
+            }
+        }
+
+        public Event GetSelectedEventDetail(string strGuid)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var EventId = (from MyE in db.Ticket_Locked_Detail where MyE.TLD_GUID == strGuid select MyE.TLD_Event_Id).FirstOrDefault();
+                var MyEvent = (from MyEv in db.Events
+                               where MyEv.EventID == EventId
+                               select MyEv).FirstOrDefault();
+                return MyEvent;
+            }
+        }
+
+        public string PublishEvent(long lEventId)
+        {
+            string strResult = "N";
+            try
+            {
+                string strUserId = (HttpContext.Current.Session["AppId"] != null ? HttpContext.Current.Session["AppId"].ToString() : "");
+                if (strUserId != "" && lEventId > 0)
+                {
+                    using (EventComboEntities objEnt = new EventComboEntities())
+                    {
+                        try
+                        {
+                            objEnt.PublishEvent(lEventId, strUserId);
+                        }
+                        catch (Exception ex)
+                        {
+                            ExceptionLogging.SendErrorToText(ex);
+                        }
+                    }
+                    strResult = "Y";
+                }
+            }
+            catch (Exception)
+            {
+                strResult = "N";
+            }
+            return strResult;
+        }
+    }
+    [MetadataType(typeof(OrganiserMetadata))]
     public partial class Organizer_Master
     {
         public string DefaultOrg { get; set; }
         public string EditOrg { get; set; }
-
+     
         public long Eventid { get; set; }
 
         public List<Organiserevent> presentevent { get; set; }
@@ -74,6 +173,11 @@ namespace EventCombo.Models
         public int presentevtcount { get; set; }
      
         public int maxsetcount { get; set; }
+    }
+    [MetadataType(typeof(EventMetadata))]
+    public partial class Event
+    {
+        
     }
     public class ManageEvent
     {
@@ -116,4 +220,13 @@ namespace EventCombo.Models
         public string Venue { get; set; }
         public string eventpath { get; set; }
     }
-}
+
+    public class listevent
+    {
+        public String Dayofweek { get; set; }
+        public String Datefrom { get; set; }
+        public String Time { get; set; }
+    }
+
+
+    }

@@ -1,127 +1,79 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "EventCombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free";
 }
 
-
 <div class="container-fluid cont_margin no-padding con_scr0l_home" id="scrollhome">
-    <div class="col-md-9 col-sm-12 no-padding clearfix">
-        <div class="col-md-4 col-xs-12 col-sm-6 wid_1024 ">
-            <div class="event_list_main">
-                <div class="event_list_left">
-                    <img class="evnt_img" src="~/Images/event1.jpg" alt="">
-                   
-                </div>
-                <div class="event_list_right">
-                    @*<p class="event_tit"><a class="aclick" href='@Url.RouteUrl("ViewEvent",new {strEventDs ="a",strEventId="74"})'>Campagnolo Gran Fondo New York 2015</a></p>*@
-                    @*<p class="event_tit"><a class="aclick" href='@Url.Action("ViewEvent","ViewEvent",new {strEventDs ="a",strEventId="74"})'>Campagnolo Gran Fondo New York 2015</a></p>*@
-                    @*<button type="button" value="EventView" id="btTest">Event View</button>*@
-                    <select id="dllEventList">
-
-
-                    </select>
-                    <p class="event_desc">
-                        @*<a class="aclick" href='@Url.RouteUrl("ViewEvent",new {strEventDesc="a",strEventId="74"})'>
-                            Sun National Bank Arena
-                            81 Hamilton Avenue
-                            Trenton, NJ , 08611
-                            New York, New York
-                        </a>*@
-                    </p>
-                    @*<p class="event_date_time"><a class="aclick" href='@Url.RouteUrl("ViewEvent",new {strEventDesc="a",strEventId="74"})'>Saturday, Aug 2, 2014 8:00 PM</a> </p>*@
-
-                    @*<p class="event_tit"><a class="aclick" href='@Url.Action("ViewEvent", "ViewEvent",new { strUrlData="a౼74౼N"})'>Campagnolo Gran Fondo New York 2015</a></p>
-                    <p class="event_desc">
-                        <a class="aclick" href='@Url.Action("ViewEvent", "ViewEvent",new { strUrlData="a౼74౼N"})'>
-                            Sun National Bank Arena
-                            81 Hamilton Avenue
-                            Trenton, NJ , 08611
-                            New York, New York
-                        </a>
-                    </p>
-                    <p  class="event_date_time"><a class="aclick" href='@Url.Action("ViewEvent", "ViewEvent",new { strUrlData="a౼74౼N"})'>Saturday, Aug 2, 2014 8:00 PM</a> </p>*@
-                </div>
-            </div>
-        </div>
-        @*<div class="col-md-4 col-xs-12 col-sm-6 wid_1024">
-            <div class="event_list_main">
-                <div class="event_list_left">
-                    <img class="evnt_img" src="~/Images/event1.jpg" alt="">
-                </div>
-                <div class="event_list_right">
-                    <p class="event_tit"><a href="#">Campagnolo Gran Fondo New York 2015</a></p>
-                    <p class="event_desc">
-                        <a href="#">
-                            Sun National Bank Arena
-                            81 Hamilton Avenue
-                            Trenton, NJ , 08611
-                            New York, New York
-                        </a>
-                    </p>
-                    <p class="event_date_time"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 col-xs-12 col-sm-6 wid_1024">
-            <div class="event_list_main">
-                <div class="event_list_left">
-                    <img class="evnt_img" src="~/Images/event1.jpg" alt="">
-                </div>
-                <div class="event_list_right">
-                    <p class="event_tit"><a href="#">Campagnolo Gran Fondo New York 2015</a></p>
-                    <p class="event_desc">
-                        <a href="#">
-                            Sun National Bank Arena
-                            81 Hamilton Avenue
-                            Trenton, NJ , 08611
-                            New York, New York
-                        </a>
-                    </p>
-                    <p class="event_date_time"><a href="#">Saturday, Aug 2, 2014 8:00 PM</a> </p>
-                </div>
-            </div>
-        </div>*@
+    <div id="dvEventListing" class="col-sm-9 col-xs-12 ot_main_pad mb10">
+       @{Html.RenderPartial("~/Views/Home/HomeEventList.cshtml"); }
     </div>
-    <div class="col-md-3 col-sm-12 clearfix">
-        <div class="col-sm-12 no-padding">
-            <div class="the_buz "><h2>What's the BUZZ?</h2></div>
-            <div class="event_list_main buzz_right_main ">
-                <div class="event_list_right buzz_right">
-                    <p class="event_tit buz_title"><a href="#">To Tattoo or Not... 5 of the Hottest Tat Types for Summer</a></p>
-                    <p class="event_desc buz_desc">
-                        <a href="#">
-                            Sun National Bank Arena
-                            81 Hamilton Avenue
-                            Trenton, NJ , 08611
-                            New York, New York
-                        </a>
-                    </p>
-                </div>
-                <div class="event_list_left">
-                    <img class="evnt_img_right" src="~/Images/event1.jpg" alt="">
-                </div>
-            </div>
-            <div class="event_list_main buzz_right_main">
-                <div class="event_list_right buzz_right">
-                    <p class="event_tit buz_title"><a href="#">To Tattoo or Not... 5 of the Hottest Tat Types for Summer</a></p>
-                    <p class="event_desc buz_desc">
-                        <a href="#">
-                            Sun National Bank Arena
-                            81 Hamilton Avenue
-                            Trenton, NJ , 08611
-                            New York, New York
-                        </a>
-                    </p>
-                </div>
-                <div class="event_list_left">
-                    <img class="evnt_img_right" src="~/Images/event1.jpg" alt="">
-                </div>
-            </div>
-        </div>
+
+    <div class="col-sm-3 col-xs-12 ot_main_pad">
+      @{ Html.RenderAction("ShowLastArticles", "Article"); }
     </div>
+
 </div>
+
+
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script>
+    $(document).prop('title', 'Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free');
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
+
     $(document).ready(function () {
-        $.ajax({
+        //url = url.replace("-parameter", vEventId);
+      
+
+        var pg = getUrlParameter('page');
+        if (!pg) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (p) {
+                    var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+                    var geocoder = new google.maps.Geocoder;
+                    var infowindow = new google.maps.InfoWindow;
+
+                    var mapOptions = {
+                        center: { lat: p.coords.latitude, lng: p.coords.longitude },
+                        zoom: 13,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+                    var vLat = p.coords.latitude;
+                    var vLong = p.coords.longitude;
+
+                    var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat= "strLat", lng= "strLong", page = "1"}))';
+                    vUrl = vUrl.replace("strLat", vLat);
+                    vUrl = vUrl.replace("strLong", vLong);
+                    window.location.replace(vUrl);
+
+                }, function (p) {
+                    var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = "", lng = "", page = "1" }))';
+                    window.location.replace(vUrl);
+                });
+
+            } else {
+                var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = "", lng = "", page = "1" }))';
+                window.location.replace(vUrl);
+            }
+
+        }
+
+
+
+
+        @*$.ajax({
             url: '@Url.Action("GetEventURL", "CreateEvent")',
             type: "Post",
             success: function (data) {
@@ -136,7 +88,7 @@
            // alert("button click");
             window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = "a", strEventId = "74" })';
 
-        });
+        });*@
     });
-  
+
 </script>

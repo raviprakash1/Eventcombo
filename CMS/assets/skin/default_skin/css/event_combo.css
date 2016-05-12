@@ -61,3 +61,36 @@ top: 40%; left: 30%; border:1px solid #e2e2e2; display: none; }
 .pay_dollar_btn:hover{ color: #666666; background:none; }
 .Payment-form-body{ background:#fff; }
 .admin-form.Payment-form-body .panel{ border:0px;}
+
+.editr_email .cke_2 { width:100% !important;}
+.shw_menu{ display:block !important;}
+
+.sidebar-menu > li > ul > li > a > span:nth-child(1){ margin-right:0px !important; }
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .fs26 {font-size: 1.2em !important;}
+    .panel100{ width:100%;}
+}
+
+/*.crt_evnt_drop_up{ position:absolute; top:6px;}
+.crt_evnt_drop_up i{ color:#000;}
+.crt_evnt_drop_down{ position:absolute; top:13px;}
+.crt_evnt_drop_down i{ color:#000;}*/
+
+.crt_evnt_drop_up{ width:auto; float:left;  line-height:0px;}
+.crt_evnt_drop_up a{ line-height:0px; display:inline-block; }
+.crt_evnt_drop_down{ width:auto; float:left;  line-height:0px; top:8px; position:relative; margin-left:-11px;}
+.crt_evnt_drop_down a{line-height:0px; display:inline-block; }
+
+
+.table > thead > tr > th, 
+.table > thead > tr > td{ line-height:normal;}
+
+.sss1{ width:100%; float:left;}
+.sor-evnt-cls{ width:100%; float:left; /*position:absolute; margin-top:-8px;*/ }
+
+.tab-wid1{ min-width:50px;}
+.sor_evnt_cls_drop_up{ width:auto; float:left;  line-height:0px; }
+.sor_evnt_cls_drop_up a {  line-height:0px; display:inline-block; }
+.sor_evnt_cls_drop_down{ width:auto;float:left; line-height:0px; top:8px; position:relative; margin-left:-11px;}
+.sor_evnt_cls_drop_down a {  line-height:0px; display:inline-block;}

@@ -1,0 +1,96 @@
+-----------Exception Details on  4/22/2016 2:57:51 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/22/2016 2:57:51 PM
+
+Error Line No : ventId)
+
+Error Message: TargetException
+
+Exception Type: System.Reflection.TargetException
+
+Error Location : Non-static field requires a target.
+
+ Error Page Url: http://localhost:10159/editevent/geteventchilddata?lEventId=10286
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/22/2016 3:40:58 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/22/2016 3:40:58 PM
+
+Error Line No : ne 1791
+
+Error Message: EntityCommandExecutionException
+
+Exception Type: System.Data.Entity.Core.EntityCommandExecutionException
+
+Error Location : An error occurred while executing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/createevent/saveevent
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/22/2016 3:41:33 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/22/2016 3:41:33 PM
+
+Error Line No : ne 1791
+
+Error Message: EntityCommandExecutionException
+
+Exception Type: System.Data.Entity.Core.EntityCommandExecutionException
+
+Error Location : An error occurred while executing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/createevent/saveevent
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/22/2016 4:54:58 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/22/2016 4:54:58 PM
+
+Error Line No : ne 1791
+
+Error Message: EntityCommandExecutionException
+
+Exception Type: System.Data.Entity.Core.EntityCommandExecutionException
+
+Error Location : An error occurred while executing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/createevent/saveevent
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

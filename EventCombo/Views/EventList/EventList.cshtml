@@ -3,9 +3,14 @@
 @using PagedList.Mvc;
 @using EventCombo.Models;
 @using EventCombo.Controllers;
+@using EventCombo.Utils;
 @{
     ViewBag.Title = "EventList";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+@{
+    EventComboEntities objEnt = new EventComboEntities();
+  
 }
 <div class="col-sm-12">
     <h3 class="acnt_title">My Events</h3>
@@ -35,7 +40,7 @@
 
     <!-- Search box close -- -->
     <!-- -- 3 tabs open -->
-    <div class="col-sm-12 row">
+    <div class="col-sm-12 row ipad_min_height">
 
 @if ((Convert.ToInt32(TempData["LiveEventscnt"]) > 0 && TempData["LiveEventscnt"] != null) || (Convert.ToInt32(TempData["SavedEventscnt"]) > 0 && TempData["SavedEventscnt"] != null) || (Convert.ToInt32(TempData["PastEventscnt"]) > 0 && TempData["PastEventscnt"] != null))
 {
@@ -95,10 +100,10 @@
         </div>
         <div class="tab-content mt10">
             <div id="sectionA" class="tab-pane">
-                <table class="table fs20 mb0">
+                <table class="crt_event_list_tabl">
                     <thead>
                         <tr>
-                            <th class="evnt_mng_tit_200">Event Title</th>
+                            <th class="">Event Title</th>
                             <th>Event Date /Time</th>
                             <th>Ticket Sold / Total No.</th>
                             <th class="text-center">Action</th>
@@ -108,22 +113,41 @@
                         @{
                             foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.LiveEvent)
                             {
+
+                                Event eventForTimeZone = objEnt.Events.First(i => i.EventID == item.EventID);
+                                int timeZoneID = Int32.Parse(eventForTimeZone.TimeZone);
+                                TimeZoneDetail td = objEnt.TimeZoneDetails.First(i => i.TimeZone_Id == timeZoneID);
+                                DateTimeWithZone dtz;
+                                DateTimeWithZone dtzcreated;
+                                if (td != null)
+                                {
+                                    TimeZoneInfo userTimeZone =
+                                    TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                                    dtz = new DateTimeWithZone(Convert.ToDateTime(item.EventDate), userTimeZone, true);
+                                    
+                                }
+                                else
+                                {
+                                    TimeZoneInfo userTimeZone =
+                                    TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                    dtz = new DateTimeWithZone(Convert.ToDateTime(item.EventDate), userTimeZone, true);
+                                   
+                                }
                                 <tr>
 
-                                    <td class="evnt_mng_tit_200">@item.EventTitle</td>
+                                    <td class="word_brack">@item.EventTitle</td>
 
-                                    <td>@item.EventDate / @item.EventTime</td>
+                                    <td>@dtz.LocalTime.ToString("MMM dd, yyyy") /@dtz.LocalTime.ToString("h:mm tt")</td>
                                     <td>@item.TicketSold/@item.TotalTicket</td>
                                     <td class="text-center">
 
                                         <div class="event-btn-action">
-                                            <p class="btn-link manage">@Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventid =  item.EventID, type = "N" }, null)</p>
+                                            <p class="btn-link manage">@Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(item.EventID), type = "N" }, null)</p>
                                             <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = ValidationMessageController.GetParentEventId(item.EventID) }, null)</p>
-                                            <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(item.EventTitle.Replace(" ", "-"),"[^a-zA-Z0-9_-]+",""), strEventId = item.EventID.ToString() }, null) </p>
-                                            <p class="btn-link manage"><a href="Javscript:void(0)" onclick="DuplicateEvent(@item.EventID, '@item.EventTitle');">Duplicate</a>  </p>
+                                            <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(item.EventTitle.Replace(" ", "-"),"[^a-zA-Z0-9_-]+",""), strEventId = ValidationMessageController.GetParentEventId(item.EventID).ToString() }, null) </p>
+                                            <p class="btn-link manage"><a href="Javascript:void(0)" onclick="DuplicateEvent(@item.EventID, '@item.EventTitle');">Duplicate</a></p>
                                             @*<p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>*@
-                                     
-                                           </div>
+                                        </div>
                                     </td>
                                 </tr>
                             }
@@ -133,19 +157,19 @@
                 <!-- main-sec -->
                 @if (Convert.ToInt32(ViewData["LiveEvntCnt"]) == 0 && ViewData["LiveEvntCnt"] != null)
                 {
-                    <span>You don't have any live events.</span>
+                    <div class="col-sm-12 mt10 fs18 text-center">You don't have any live events.</div>
                 }
 
             </div>
 
             <div id="sectionB" class="tab-pane">
-                <table class="table fs20 mb0">
+                <table class="crt_event_list_tabl">
                     <thead>
                         <tr>
-                            <th class="evnt_mng_tit_200">Event Title</th>
+                            <th>Event Title</th>
                             <th>Event Date /Time</th>
                             <th>Ticket Sold / Total No.</th>
-                            <th class="text-center">Action</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -153,17 +177,37 @@
                             //foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.SavedEvent)
                             foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.SavedEvent)
                             {
+
+                                Event eventForTimeZone = objEnt.Events.First(i => i.EventID == item.EventID);
+                                int timeZoneID = Int32.Parse(eventForTimeZone.TimeZone);
+                                TimeZoneDetail td = objEnt.TimeZoneDetails.First(i => i.TimeZone_Id == timeZoneID);
+                                DateTimeWithZone dtz;
+                               
+                                if (td != null)
+                                {
+                                    TimeZoneInfo userTimeZone =
+                                    TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                                    dtz = new DateTimeWithZone(Convert.ToDateTime(item.EventDate), userTimeZone, true);
+
+                                }
+                                else
+                                {
+                                    TimeZoneInfo userTimeZone =
+                                    TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                    dtz = new DateTimeWithZone(Convert.ToDateTime(item.EventDate), userTimeZone, true);
+
+                                }
                                 <tr>
-                                    <td class="evnt_mng_tit_200">@item.EventTitle</td>
-                                    <td>@item.EventDate / @item.EventTime</td>
+                                    <td class="word_brack">@item.EventTitle</td>
+                                    <td>@dtz.LocalTime.ToString("MMM dd, yyyy") /@dtz.LocalTime.ToString("h:mm tt")</td>
                                     <td>@item.TicketSold/@item.TotalTicket</td>
                                     <td class="text-center">
                                         <div class="event-btn-action">
-                                            <p class="btn-link manage">@Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventid = item.EventID, type = "N" }, null)</p>
+                                            <p class="btn-link manage">@Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventlid = item.EventID, type = "N" }, null)</p>
 
                                             <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>
                                             <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = item.EventID.ToString() }, null) </p>
-                                            <p class="btn-link manage"><a href="Javscript:void(0)"  onclick="DuplicateEvent(@item.EventID, '@item.EventTitle');">Duplicate</a>  </p>
+                                            <p class="btn-link manage"><a href="Javscript:void(0)" onclick="DuplicateEvent(@item.EventID, '@item.EventTitle');">Duplicate</a>  </p>
                                             @*<p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "CreateEvent", new { strUrlData = item.EventTitle + "౼" + item.EventID + "౼N" }, null) </p>*@
                                         </div>
                                     </td>
@@ -174,7 +218,8 @@
                 </table><!-- main-sec -->
                 @if (Convert.ToInt32(ViewData["SavedEvntCnt"]) == 0 && ViewData["SavedEvntCnt"] != null)
                 {
-                    <span>You don't have any events in drafts.</span>
+                   
+                    <div class="col-sm-12 mt10 fs18 text-center">You don't have any events in drafts.</div>
                 }
 
 
@@ -182,13 +227,13 @@
             </div>
 
             <div id="sectionC" class="tab-pane">
-                <table class="table fs20 mb0">
+                <table class="crt_event_list_tabl">
                     <thead>
                         <tr>
-                            <th class="evnt_mng_tit_200">Event Title</th>
+                            <th>Event Title</th>
                             <th>Event Date /Time</th>
                             <th>Ticket Sold / Total No.</th>
-                            <th class="text-center">Action</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -196,31 +241,52 @@
                             //foreach (var item in (List<GetEventsListByStatus1_Result>)ViewBag.PastEvent)
                             foreach (var item in (PagedList.IPagedList<GetEventsListByStatus1_Result>)ViewBag.PastEvent)
                             {
+
+                                Event eventForTimeZone = objEnt.Events.First(i => i.EventID == item.EventID);
+                                int timeZoneID = Int32.Parse(eventForTimeZone.TimeZone);
+                                TimeZoneDetail td = objEnt.TimeZoneDetails.First(i => i.TimeZone_Id == timeZoneID);
+                                DateTimeWithZone dtz;
+
+                                if (td != null)
+                                {
+                                    TimeZoneInfo userTimeZone =
+                                    TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                                    dtz = new DateTimeWithZone(Convert.ToDateTime(item.EventDate), userTimeZone, true);
+
+                                }
+                                else
+                                {
+                                    TimeZoneInfo userTimeZone =
+                                    TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                                    dtz = new DateTimeWithZone(Convert.ToDateTime(item.EventDate), userTimeZone, true);
+
+                                }
+
                                 <tr>
-                                    <td class="evnt_mng_tit_200">@item.EventTitle</td>
-                                    <td>@item.EventDate/ @item.EventTime</td>
+                                    <td class="word_brack">@item.EventTitle</td>
+                                    <td>@dtz.LocalTime.ToString("MMM dd, yyyy") /@dtz.LocalTime.ToString("h:mm tt")</td>
                                     <td>@item.TicketSold/@item.TotalTicket</td>
                                     <td class="text-center">
                                         <div class="event-btn-action">
-                                            <p class="btn-link manage">@Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventid = item.EventID, type="N" }, null)</p>
-                                          @if (item.EventCancel != null)
-                                          {
-                                             if (item.EventCancel.ToString() == "Y")
-                                             {
-                                                <p class="btn-link manage"><text>Edit</text></p>
-                                                <p class="btn-link manage"><text>View</text> </p>
-                                             }
-                                             else
-                                             {
+                                            <p class="btn-link manage">@Html.ActionLink("Manage", "Index", "ManageEvent", new { Eventlid = item.EventID, type = "N" }, null)</p>
+                                            @if (item.EventCancel != null)
+                                            {
+                                                if (item.EventCancel.ToString() == "Y")
+                                                {
+                                                    <p class="btn-link manage"><text>Edit</text></p>
+                                                    <p class="btn-link manage"><text>View</text> </p>
+                                                }
+                                                else
+                                                {
+                                                    <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>
+                                                    <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = item.EventID.ToString() }, null) </p>
+                                                }
+                                            }
+                                            else
+                                            {
                                                 <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>
                                                 <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = item.EventID.ToString() }, null) </p>
-                                             }
-                                          }
-                                          else
-                                          {
-                                            <p class="btn-link manage">@Html.ActionLink("Edit", "ModifyEvent", "EditEvent", new { Eventid = item.EventID }, null)</p>
-                                            <p class="btn-link manage">@Html.ActionLink("View", "ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = item.EventID.ToString() }, null) </p>
-                                          }
+                                            }
                                             <p class="btn-link manage"><text>Duplicate</text> </p>
                                         </div>
                                     </td>
@@ -231,7 +297,8 @@
                 </table><!-- main-sec -->
                 @if (Convert.ToInt32(ViewData["PastEvntCnt"]) == 0 && ViewData["PastEvntCnt"] != null)
                 {
-                    <span>You don't have any past events.</span>
+                    
+                    <div class="col-sm-12 mt10 fs18 text-center">You don't have any past events.</div>
                 }
 
             </div>
@@ -382,5 +449,5 @@
             $("#DivPastPager").hide();
         }
     });
-
+    $(document).prop('title', 'Manage Events and Ticketing on Eventcombo');
 </script>

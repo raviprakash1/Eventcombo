@@ -14,8 +14,7 @@ namespace EventCombo.Models
     public partial class GetEventDateList_Result
     {
         public string Dayofweek { get; set; }
-        public string Datefrom { get; set; }
-        public string Time { get; set; }
+        public Nullable<System.DateTime> Datefrom { get; set; }
         public string type { get; set; }
     }
 }

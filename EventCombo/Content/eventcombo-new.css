@@ -241,7 +241,7 @@ textarea {resize: none;}
 
 /*Variable charges*/
 .ev_var_chrg_list{ min-height: 55px; border:0px; font-size: 1.2em;}
-.ev_var_chrg_group{ border-radius: 0px ; border:1px solid #aaa; min-height: 44px; max-height: 200px; overflow: auto;}
+.ev_var_chrg_group{ border-radius: 0px ; border:1px solid #f5f5f5; min-height: 57px; max-height: 200px; overflow: auto;}
 
 .var_chrg_edt_main{color:#00cfff; }
 .var_chrg_edt_main a{ color:#00cfff;  }
@@ -257,11 +257,10 @@ textarea {resize: none;}
 /*Start event display page*/
 
 .event-slide-container{
-    width: 100%; float: left; border:20px solid #f0f0f0; background: #c1c1c1; height: 600px;}
+    width: 100%; float: left; border:20px solid #f0f0f0; background: #c1c1c1; height: auto;}
 
 .carousel {
   min-height: 560px;
-  margin-bottom: 60px;
 }
 .carousel .item {
   height: 560px;
@@ -354,8 +353,8 @@ textarea {resize: none;}
 .ev_bre_cub li a{ color: #3cf;}
 .ev_bre_cub > li + li::before{content: "> ";}
 
-.strat_timer_cont{ width: 100%; float: left; position: fixed; bottom: 0px; }
-.strt_tim_desc{ font-size: 1.2em;}
+.strat_timer_cont{ width: 100%; float: left; position: fixed; bottom: 0px; z-index:1; }
+.strt_tim_desc{ font-size: 1em; padding:0 5px; }
 .strt_tim_desc2{font-size: 1.5em;}
 .evnt_timer_margin{ margin-bottom: 90px;}
 .bg-green{background: #8fcf68; }
@@ -503,18 +502,26 @@ textarea {resize: none;}
 .event-slide-container{ min-height: 240px; height: auto;}
 .carousel {min-height: 240px; height: auto; margin-bottom: 0px;}
 .carousel .item {min-height: 240px; height: auto;}
-.logo img{ width: 250px;}
+.logo img{ width: 245px;}
 .ev_loca_check_main{ margin-top:0px;}
 .headr_main{ padding-top:0px;}
 .event-upload-container .jFiler-item-thumb-image{width: 50px;  height: 55px;}
+.event-upload-container .jFiler-item-container{width: 50px; }
+.event-upload-container .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:38px; }
+.event-upload-container .jFiler-items ul li.jFiler-item:last-child{ margin-right:0px;}
+
 .jFiler-input-dragDrop{ padding:5px !important;}
 .ev_date_time_model{ top:80px;}
 .xs_mb10{ margin-bottom:10px;}
 .no_pad_res{ padding:0px;}
-#divsecmain .col-sm-1{ position:absolute; top:5px; right:-5px; }
-.Fix_Head{position:absolute; top:5px; right:5px;}
+/*#divsecmain .col-sm-1{ position:absolute; top:7px; right:-5px; }*/
+/*.Fix_Head{position:absolute; top:5px; right:5px;}*/
 
 .xs_pad_0{ padding: 0px;  }
+.xs-100-f-l{ float:left; width:100%;}
+
+ .event-upload-container{ height:auto;}
+ .event-upload-container .jFiler-input-dragDrop{ height:605px;}
 }
 
 @media (min-width: 360px) and (max-width: 640px) {
@@ -524,8 +531,11 @@ textarea {resize: none;}
 .logo img{ width: 260px;}
 .ev_loca_check_main{ margin-top:0px;}
 .ev_loca_check_main{ margin-top:0px;}
-.headr_main{ padding-top:0px;}
+/*.headr_main{ padding-top:0px;}*/
 .event-upload-container .jFiler-item-thumb-image{width: 50px;  height: 55px;}
+.event-upload-container .jFiler-item-container{width: 50px; }
+.event-upload-container .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:38px; }
+
 .jFiler-input-dragDrop{ padding:5px !important;}
 .Fix_Head{ display:block;}
 .ev_date_time_model{ top:80px;}
@@ -535,21 +545,35 @@ textarea {resize: none;}
 #mainhead .col-sm-1{ position:absolute; top:25px; right:0px; }
 #mainhead .Fix_Head {position:absolute; top:12px; right:10px;}
 .Fix_Head{position:absolute; top:40px; right:10px;}
-.filter_sep{ margin-top:15px !important; }
-.event-slide-container{ margin-top:95px;}
+/*.filter_sep{ margin-top:15px !important; }*/
+/*.event-slide-container{ margin-top:95px;}*/
 
 .xs_pad_0{ padding: 0px;  }
+.xs-100-f-l{ float:left; width:100%;}
+
+ .event-upload-container{ height:auto;}
+ .event-upload-container .jFiler-input-dragDrop{ height:580px;}
 }
 
 @media (width: 640px) {
-   .event-slide-container{ margin-top:40px;}
+   /*.event-slide-container{ margin-top:40px;}*/
    .event-upload-container .jFiler-item-thumb-image{width: 90px;  height: 95px;}
+   .event-upload-container .jFiler-item-container{width: 90px; }
+   .event-upload-container .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:78px; }
 }
 
 @media (width: 768px) {
 .event-upload-container .jFiler-item-thumb-image{width: 100px;  height: 75px;}
+.event-upload-container .jFiler-item-container{width: 100px; }
+.event-upload-container .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:88px; }
 
 
+}
+
+@media (width: 800px) {
+.event-upload-container .jFiler-item-thumb-image{width: 100px;  height: 75px;}
+.event-upload-container .jFiler-item-container{width: 100px; }
+.event-upload-container .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:88px; }
 
 }
 
@@ -580,12 +604,12 @@ textarea {resize: none;}
 .ev_detail a{ color: #3cf;}
 
 .for_net_amont{ color: #000; font-weight: bold; }
-.sales_ticket_ype{ border: 1px solid #d4d4d4; background: #fff; }
+.sales_ticket_ype{ background: #fff; }
 .sal_tic_bg{ background: #f4f4f4; padding: 5px 10px; font-size: 20px; color: #000; border-bottom: 1px solid #d4d4d4; margin-bottom: 15px; }
 .sales_ticket_inner{ clear: both; display: block; background: #fff; margin: 10px 15px;  }
-.traf_promo_inner{clear: both; display: block; background: #fff; }
+.traf_promo_inner{clear: both; display: block; background: #fff;  }
 
-.traf_promo_bg{ padding: 5px 0px; font-size: 20px; color: #000; }
+.traf_promo_bg{ padding: 5px; font-size: 20px; color: #000; background: #f4f4f4; }
 
 .order_attendee_tab{background: #fff; border-bottom: 1px solid #d4d4d4; border-left: 1px solid #d4d4d4; border-right: 1px solid #d4d4d4; }
 .order_attendee_inner {
@@ -715,3 +739,19 @@ textarea {resize: none;}
     }
 
 .eventdescfont{ font-weight:normal; font-size:1.2em; color:#000; }
+
+
+
+.ticketsubtotalerror{ padding:0px; margin-right:10px;}
+.promoerror{ font-family:Arial; font-size:12px;}
+.promoerrorred{ color:red;}
+.promoerrorgreen{ color:green}
+.PromoLoaderHide { display:none
+}
+.PromoLoaderShow {
+    display: block;
+}
+.promo_code_btn{ height:37px; color:#fff; text-transform:uppercase; vertical-align:top; }
+.chek_out_desc p{ font-size: 1.2em; font-weight: normal;}
+.chek_out_desc p label{font-weight: normal;}
+.chk_out_flot{ float:left; }

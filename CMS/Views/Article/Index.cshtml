@@ -1,0 +1,192 @@
+﻿@using System.Collections.Generic
+@using CMS.Models
+@model IEnumerable<ArticleShortViewModel>
+@{
+  ViewBag.Title = "Index";
+  Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<style type="text/css">
+  .listViewDataImg {
+    width: 50px;
+  }
+
+  .searchItemLbl {
+    max-width: 100% !important;
+    margin-bottom: 5px !important;
+    font-weight: 600 !important;
+  }
+</style>
+
+<link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
+<section id="content_wrapper">
+
+  <!-- Start: Topbar -->
+  <header id="topbar" class="alt">
+    <div class="topbar-left">
+      <ol class="breadcrumb">
+
+        <li class="crumb-icon">
+          <a href="dashboard.html">
+            <span class="glyphicon glyphicon-home"></span>
+          </a>
+        </li>
+        <li class="crumb-active">
+          Dashboard
+        </li>
+      </ol>
+    </div>
+
+  </header>
+  <!-- End: Topbar -->
+  <!-- Begin: Content -->
+  <div id="content" class="animated fadeIn">
+    <div class="row" id="modal-content">
+
+      <div class="col-md-12 admin-grid animated-delay" data-animate='["400","fadeIn"]'>
+        <div class="panel sort-disable mb_0" id="p2" data-panel-color="false" data-panel-fullscreen="false" data-panel-remove="false" data-panel-title="false" data-panel-fullscreen="false">
+          <div class="panel-heading panel_loader">
+            <span class="view_evnt fs26 col-sm-6"> Article</span>
+            <label class="field select admin-form col-sm-4 text-right srh-by-no">
+              Display:
+              <select>
+                <option value="0">Select</option>
+                <option value="0">01 - 25</option>
+                <option value="1">26 - 50</option>
+                <option value="2">51 - 75</option>
+              </select>
+              <i class="arrow double"></i>
+            </label>
+          </div>
+          <div class="panel-body">
+            <!--  <hr class="short alt"> -->
+            <form class="admin-form">
+              <div class="col-md-2 col-sm-2">
+
+                <label class="searchItemLbl"> Article Name </label>
+                <input type="text" class="form-control" placeholder="Search Article Title" value="">
+
+              </div>
+
+              <div class="col-md-2 col-sm-2">
+
+                <label class="searchItemLbl"> Author Name </label>
+                <input type="text" class="form-control" placeholder="AuthorName " value="">
+
+              </div>
+
+              <div class="col-md-2 col-sm-2">
+
+                <label class="searchItemLbl"> Article ID </label>
+                <input type="text" class="form-control" placeholder="Article ID" value="">
+
+              </div>
+
+              <div class="col-md-2 col-sm-2">
+                <label> &nbsp;  </label>
+                <button class="btn btn-info br2 col-md-12 fs15" type="submit">Search</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="col-md-12">
+        <table class="table footable" data-page-navigation=".pagination" data-page-size="25">
+          <thead class="bg_white">
+            <tr class="bg_white">
+              <th>Article ID</th>
+              <th>Article Title</th>
+              <th>Author Name</th>
+              <th>Author Image</th>
+              <th>Date Created</th>
+              <th>Date Edited</th>
+              <th>View Article</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (var article in Model)
+            {
+              <tr>
+                <td>@article.ArticleId</td>
+                <td>@article.Title</td>
+                <td>@article.AuthorName</td>
+                <td>
+                  <img class="listViewDataImg" src="@article.AuthorImage" />
+                </td>
+                <td>@(article.CreateDate.ToShortDateString())</td>
+                <td>@(article.EditDate.ToShortDateString())</td>
+                <td>
+                  <a href="@Url.Action("ShowArticle", "Article", new { articleId = article.ArticleId })">View</a>
+                </td>
+                <td>
+                  <a href="@Url.Action("Edit", "Article", new { ArticleId = article.ArticleId })" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
+                  <a class="td-btn" type="button" onclick="ConfirmDelete('@article.ArticleId');" href="#confirm-delete-ok" data-toggle="modal" id="adelete">
+                    <i class="fa fa-remove"></i>
+                  </a>
+
+                </td>
+              </tr>
+            }
+          </tbody>
+
+          <tfoot class="footer-menu">
+            <tr>
+              <td colspan="8">
+                <nav class="text-right">
+                  <ul class="pagination" id="ulpage"></ul>
+                </nav>
+              </td>
+            </tr>
+          </tfoot>
+
+        </table>
+      </div>
+
+      <div class="articleItemCon">
+        <a class="btn btn-info articleBtnCls" href="@(Url.Action("Edit", "Article", new { ArticleID = 0 }))">Add</a>
+      </div>
+
+      <div class="modal fade" id="confirm-delete-ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+          <div class="modal-content">
+
+            <form id="contactForm" class="fullw1 add">
+              <div class="modal-body text-center pv50 txt-msg">
+
+                <h4 class="msg" id="hId">Are you sure you want to Delete?</h4>
+              </div>
+              <div class="modal-footer msg-action-btn ok">
+                <input type="hidden" id="DeleteArticleId" name="articleId" value="0" />
+                <button type="button" id="btnYes" class="btn btn-primary no" data-dismiss="modal" onclick="DeleteArticle()">Yes</button>
+                <button type="button" id="btnNo" class="btn btn-primary no" data-dismiss="modal">No</button>
+              </div>
+            </form>
+            <input type="hidden" id="hdUserId" value="" />
+          </div>
+        </div><!-- confirm-msg -->
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+<script type="text/javascript">
+  function ConfirmDelete(articleId) {
+    $("#DeleteArticleId").val(articleId);
+    $("#btnYes").show();
+    $("#btnNo").show();
+    $("#hId").text("Are you sure you want to delete article " + articleId + "?");
+    return false;
+  }
+
+  function DeleteArticle() {
+    window.location.replace("@(Url.Action("Delete", "Article"))?articleId=" + $("#DeleteArticleId").val());
+  }
+
+</script>

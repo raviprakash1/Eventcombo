@@ -2,7 +2,7 @@
 @model EventCombo.Models.OrderTemplateViewModel
 @{
   ViewBag.Title = "EventType";
-  Layout = "~/Views/Shared/_ManageEventLayout.cshtml";
+  Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
 <link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
@@ -17,6 +17,12 @@
 
 <link href='~/Content/OrderForm.css' rel='stylesheet' type='text/css'>
 <link href="~/Content/OrderFormDesign.css" rel="stylesheet" />
+
+@section sidenav{
+  <div id="sidebar" class="nav nav-stacked">
+    @Html.Action("Sidenav", "ManageEvent", new { eventid = ViewBag.Eventid, CurrentItem = "orderoptions" })
+  </div>
+}
 
 @using (Html.BeginForm())
 {

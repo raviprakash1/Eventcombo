@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CMS.Models;
+
+
 namespace CMS.Controllers
 {
     public class MessagesController : Controller
@@ -11,6 +13,11 @@ namespace CMS.Controllers
         // GET: Messages
         public ActionResult Index(string Form)
         {
+            if ((Session["UserID"] == null))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
             List<MessageTemplate> lstmsg = new List<MessageTemplate>();
             TempData["FormName"] = Form;
             lstmsg = MessageData(Form);
@@ -19,6 +26,11 @@ namespace CMS.Controllers
         [HttpPost]
         public ActionResult Index(ICollection<MessageTemplate> MessageTemplates)
         {
+            if ((Session["UserID"] == null))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
             string form_name = "";
             EmsEntities objEntity = new EmsEntities();
             foreach (MessageTemplate item in MessageTemplates)
@@ -39,7 +51,7 @@ namespace CMS.Controllers
             lstmsg = MessageData(form_name);
 
             ValidationMessageController vmc = new ValidationMessageController();
-            var successmsg = vmc.Index("Messages", "MessageSuccSY");
+             var successmsg = vmc.Index("Messages", "MessageSuccSY");
             ViewData["Saved"] = successmsg;
             TempData["FormName"] = form_name;
             return View(lstmsg);

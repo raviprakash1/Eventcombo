@@ -16,11 +16,11 @@
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 <link href="~/Content/MapPlaces.css" rel="stylesheet" />
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { autocomplete = "off"}))
 {
     <input type="hidden" id="hdimage" />
     <div class="event_container">
-        <div class="event_inner_container event_top" id="eventtopscoll">
+        <div class="event_inner_container event_top createeventtop" id="eventtopscoll">
             <div class="col-sm-12 pt10 bggrey clearfix">
                 <div class="Moderor" style="display: none;" id="diverroacc" tabindex="-1">
                     <div class="er_UI_main">
@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-12 pt10 bggrey clearfix">
+            <div class="col-sm-12 bggrey clearfix">
                 <div class="col-sm-3 col-xs-12 pt10 text-left no_pad">
                     <label id="lblDft" class="btn ev_live_sub_btn yelw_live_btn" style="display:none">DRAFT</label>
                   <label id="lblLive" class="btn ev_live_sub_btn  grn_live_btn" style="display:none" > LIVE </label>
@@ -66,7 +66,7 @@
                 </div>
             </div>
 
-            <div class="event-upload-container">
+            <div class="event-upload-container xs-upload-container-15">
                 <input type="file" name="image" id="input2">
                 <div class="evnt_title_bg evnt_title_top">
                     <div class="form-group mb5">
@@ -77,14 +77,14 @@
                     </div>
                     <div class="col-sm-3 no_pad ev_loca_check_main">
                         <div class="form-group mb0">
-                            <label class="label-control evnt_title_date evnt_title_online fs24">
+                            <label class="label-control evnt_title_date evnt_title_online fs24 ipad_online_evnt">
                                 @if (Model.AddressStatus == "Online")
                                 {
-                                    <input id="btOnlineEvent" checked="checked" type="checkbox" />
+                                    <input id="btOnlineEvent" class="form-control online_check_box" checked="checked" type="checkbox" />
                                 }
                                 else
                                 {
-                                    <input id="btOnlineEvent" type="checkbox" />
+                                    <input id="btOnlineEvent" class="form-control online_check_box" type="checkbox" />
                                 }
                                 Online Event
                             </label>
@@ -93,7 +93,7 @@
                     </div>
                     <div class="col-sm-9 text-right no_pad">
                         <div class="form-group mb0 ">
-                            <div class="ev_date_icn"></div>
+                            <div class="ev_date_icn StartDate xs-date-icon-remv"></div>
                             <label id="btEnterDates" class="StartDate label-control evnt_title_date fs24">Click here to enter the start and end date*</label>
                             <div class="form-group mb5">
                                 <label class="Timezone label-control evnt_title_timezone mb0" id="lblTimeZone">Timezone & date setting</label>
@@ -101,7 +101,7 @@
                                     <div class="ev_time_zone_model">
                                         <div class="modal-content ev_tm_zon_cont">
                                             <div class="modal-header">
-                                                <button class="close closetimemodal" type="button">
+                                                <button class="close closetimemodal" type="button" id="btSaveTimeZone">
                                                     <span>&#215;</span>
                                                 </button>
                                                 <h4 class="modal-title ev_modal_header_title" id="myModalLabel">Timezone & date setting</h4>
@@ -155,8 +155,8 @@
 
                                             </div>
                                             <div class="clearfix"></div>
-                                            <div class="modal-footer">
-                                                <button type="button" id="btSaveTimeZone" class="closetimemodal btn btn-primary  ev_add_sub_btn">Save</button>
+                                            <div class="modal-footer brnone">
+                                                @*<button type="button" id="btSaveTimeZone" class="closetimemodal btn btn-primary  ev_add_sub_btn">Save</button>*@
                                             </div>
                                         </div>
                                     </div>
@@ -166,9 +166,9 @@
                             <div class="col-sm-12 no_pad" id="dvAddress">
                                 <div class="form-group mb5">
                                     <div class="EntVenAdd col-sm-12 no_pad">
-                                        <div class="ev_loc_icn"></div>
+                                        <div class="ev_loc_icn xs-loc-icon-rem"></div>
                                         <div class="col-sm-10 no_pad mb5 pull-right">
-                                            <input id="txtEventLocation" onkeypress="txtEventLocation_KeyPress(event);" class="form-control evnt_title_control evnt_title_location evnt_placehold" placeholder="Click here to enter venue address" />
+                                            <input id="txtEventLocation" onkeypress="txtEventLocation_KeyPress(event);" class="form-control evnt_title_control evnt_title_location evnt_placehold" placeholder="Click here to enter venue address*" />
                                         </div>
                                     </div>
                                     <div class="PastLocat col-sm-12 no_pad">
@@ -183,7 +183,7 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div class="col-sm-6 ">
+                                <div class="col-sm-6 novisiblediv">
                                     <label class="label-control evnt_title_multi">
                                         <a data-target="#myModal" id="btMultiVenue" data-toggle="modal" href="#" draggable="false">
                                             Multiple Venue
@@ -222,7 +222,7 @@
                         <div class="ev_time_zone_model">
                             <div class="modal-content ev_tm_zon_cont">
                                 <div class="modal-header">
-                                    <button class="close closemodal" type="button">
+                                    <button class="close closemodal" type="button" id="btnAddSch">
                                         <span>&#215;</span>
                                     </button><h4 class="modal-title ev_modal_header_title" id="myModalLabel">Schedule dates</h4>
                                 </div>
@@ -254,7 +254,7 @@
                                                 </div>
 
                                             </div>
-                                            <div class="col-sm-12 no_pad mt10 ">
+                                            <div class="col-sm-12 no_pad mt10 hidediv">
                                                 <label id="btSchMultipleEv" class="SchmultiEvnt label-control lbl_bot_text">Schedule multiple events</label>
                                             </div>
                                         </div>
@@ -273,8 +273,8 @@
                                                     </label>
                                                 </div>
                                                 <div class="col-sm-12 no_pad"><label class="label-control ev_ven_mod_lebel">How often does this event occur?</label></div>
-                                                <div class="col-sm-8 no_pad">
-                                                    <select id="dlSchOption" class="form-control evnt_inp_cont ">
+                                                <div class="col-sm-8 no_pad dropheight">
+                                                    <select id="dlSchOption" class="form-control evnt_inp_cont selectpicker ">
                                                         <option>Daily</option>
                                                         <option>Weekly</option>
                                                         <option>Monthly</option>
@@ -413,8 +413,8 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div class="modal-footer mt10">
-                                    <button type="button" id="btnAddSch" class="closemodal btn btn-primary btn-lg ev_add_sub_btn">Save</button>
+                                <div class="modal-footer mt10 brnone">
+                                    @*<button type="button" id="btnAddSch" class="closemodal btn btn-primary btn-lg ev_add_sub_btn">Save</button>*@
                                 </div>
                             </div>
                         </div>
@@ -432,27 +432,27 @@
                 </div>
                 <div class="evnt_details_body">
                     <div class="col-sm-12 mt20 no_pad">
-                        <div class="col-sm-4 pl0">
+                        <div class="col-sm-4 pl0 xs-evnt-type-pad-0">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label ev_tickt_lebel pl0">Type*</label>
-                                <div class="col-sm-9 dropheight">
+                                <div class="col-sm-9 xs-evnt-type-pad-0 dropheight">
                                     @Html.DropDownList("EventType", ViewBag.EventTypes as List<SelectListItem>, new { @class = "form-control selectpicker  wd600 chkvalidation" })
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 pl0">
+                        <div class="col-sm-4 pl0 xs-evnt-type-pad-0">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label ev_tickt_lebel pl0">Category*</label>
-                                <div class="col-sm-9 dropheight">
+                                <div class="col-sm-9 xs-evnt-type-pad-0 dropheight">
                                     @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control selectpicker  wd600 chkvalidation" })
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 pl0">
+                        <div class="col-sm-4 pl0 xs-evnt-type-pad-0">
                             <div class="form-group">
                                 <label class="col-sm-5 control-label ev_tickt_lebel no_pad">Sub Category</label>
-                                <div class="col-sm-7">
-                                    <select id="ddlEventSubCategory" class="form-control evnt_inp_cont wd600"></select>
+                                <div class="col-sm-7 xs-evnt-type-pad-0 dropheight">
+                                    <select id="ddlEventSubCategory" class="form-control selectpicker evnt_inp_cont wd600"></select>
                                     <input type="hidden" id="hidSubCat" value="@Model.EventSubCategoryID" />
                                 </div>
                             </div>
@@ -566,12 +566,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 mt10 no_pad">
-                        <button type="button" id="btAddOrg" class="btn btn-primary btn-lg ev_add_sub_btn">Add</button>
+                    <div class="clearfix"></div>
+                    <div class="col-sm-12 mt10 ">
+                        <button type="button" id="btAddOrg" class="btn theme-btn btn-lg ev_add_sub_btn"> Add New Organizer </button>
                     </div>
                     <div class="col-sm-12 mt20 no_pad">
                         <div class="form-group">
-                            <label class="col-sm-12 control-label ev_tickt_lebel pl0">Added Organizer</label>
+                            <label class="col-sm-12 control-label ev_tickt_lebel pl0">Choose Existing Organizer</label>
                             @*<div class="col-sm-8 Orgz_dro_con">
                                     Organizer(s) List
                                     <span class="OrgIcn org_right pull-right">
@@ -579,14 +580,14 @@
                                     </span>
                                 </div>*@
                             <div class="col-sm-12 no_pad">
-                                <div class="col-sm-8 no_pad col-xs-4">
-                                    <select id="ddlOrgnizers" class="form-control evnt_inp_cont"></select>
+                                <div class="col-sm-8 no_pad col-xs-4 xs_crt_evnt_edit_org_btn dropheight">
+                                    <select id="ddlOrgnizers" class="form-control selectpicker evnt_inp_cont"></select>
                                 </div>
-                                <div class="col-sm-2 col-xs-4">
-                                    <button type="button" onclick="editOrgnizer();" class="btn btn-primary ev_add_sub_btn org_dele_btn" id="btneditorg">Edit <i class="fa fa-pencil"></i></button>
+                                <div class="col-sm-2 col-xs-4 xs_crt_evnt_edit_org_btn xs_crt_evnt_edit_org_btn">
+                                    <button type="button" onclick="editOrgnizer();" class="btn theme-btn ev_add_sub_btn org_dele_btn" id="btneditorg">Edit <i class="fa fa-pencil"></i></button>
                                 </div>
-                                <div class="col-sm-2 col-xs-4">
-                                    <button type="button" id="btndeleteorg" class="btn btn-primary ev_add_sub_btn org_dele_btn">Delete <i class="fa fa-trash"></i></button>
+                                <div class="col-sm-2 col-xs-4 xs_crt_evnt_edit_org_btn xs_crt_evnt_edit_org_btn">
+                                    <button type="button" id="btndeleteorg" class="btn theme-btn ev_add_sub_btn org_dele_btn">Delete <i class="fa fa-trash"></i></button>
                                 </div>
                                 <table style="display:none;" id="tblOrgnizer"></table>
                             </div>
@@ -628,9 +629,9 @@
 
                     <div class="col-sm-12 no_pad text-left mt10 evnt_tct_btn ev_btn_type">
                         <label class="ev_add_tkt_tit col12">Add ticket type*</label>
-                        <button type="button" class="btn btn-primary save_btnfree save_btn">FREE <i class="fa fa-plus"></i> </button>
-                        <button type="button" class="btn btn-primary save_btnpaid save_btn">PAID <i class="fa fa-plus"></i></button>
-                        <button type="button" class="btn btn-primary save_btndonation save_btn xsmr0">DONATE <i class="fa fa-plus"></i> </button>
+                        <button type="button" class="btn btn-primary save_btnfree save_btn xs_tkt_typ_btn">FREE <i class="fa fa-plus"></i> </button>
+                        <button type="button" class="btn btn-primary save_btnpaid save_btn xs_tkt_typ_btn">PAID <i class="fa fa-plus"></i></button>
+                        <button type="button" class="btn btn-primary save_btndonation save_btn xsmr0 xs_tkt_typ_btn">DONATE <i class="fa fa-plus"></i> </button>
                     </div>
                     <div class="col-sm-12 no_pad">
                         <div class="modal-content ticket_panel mt10">
@@ -657,27 +658,27 @@
                                         <input type="text" value="0" id="id_totalamt-n" hidden="hidden" />
                                         <input type="text" value="0" id="id_msg-n" hidden />
                                     </div>
-                                    <div class="col-sm-3 no_pad">
+                                    <div class="col-sm-3 no_pad ipad-50">
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label ev_tickt_lebel">Ticket*</label>
-                                            <div class="col-sm-9">
+                                            <label class="col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Ticket*</label>
+                                            <div class="col-sm-8 xs-tkt-typ-pad-0">
                                                 <input type="text" class="form-control evnt_inp_cont chkvalidation" id="id_ticket_type-n" placeholder="Early Bird, RSVP..." maxlength="256" onblur="checkvalidatetkt(this.id)" />
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2 no_pad">
+                                    <div class="col-sm-2 no_pad ipad-50">
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label ev_tickt_lebel">Qty*</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control evnt_inp_cont txtsum numbers" id="id_quantity_total-n" maxlength="6" placeholder="" onblur="changeqty(this.id)" onkeypress="allownumber(this,event,this.id)" />
+                                            <label class="col-sm-3 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Qty*</label>
+                                            <div class="col-sm-9 xs-tkt-typ-pad-0">
+                                                <input type="text" class="form-control evnt_inp_cont txtsum numbers" id="id_quantity_total-n" maxlength="6" placeholder="" onblur="changeqty(this.id)" onkeypress="allownumber(this,event,this.id)" oncopy="return false" oncut="return false" onpaste="return false"  />
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-3 no_pad">
+                                    <div class="col-sm-3 no_pad ipad-50-ml10">
                                         <div class="form-group paidticket-n" id="id_paid-n">
-                                            <label class="col-sm-5 no_pad control-label ev_tickt_lebel">Price $*</label>
-                                            <div class="col-sm-7 ">
-                                                <input type="text" class="form-control evnt_inp_cont numbers" id="id_cost-n" onkeypress="validatenumdec(this, event, this.id)" onkeyup="changefee(this.id, event)" onblur="tofixed(this.id)" placeholder="0.00" maxlength="9" />
+                                            <label class="col-sm-5 no_pad control-label ev_tickt_lebel xs-tkt-typ-pad-0">Price $*</label>
+                                            <div class="col-sm-7 xs-tkt-typ-pad-0 ipad-pad-5">
+                                                <input type="text" class="form-control evnt_inp_cont numbers" id="id_cost-n" onkeypress="validatenumdec(this, event, this.id)" onkeyup="changefee(this.id, event)" onblur="tofixed(this.id)" placeholder="0.00" maxlength="9" oncopy="return false" oncut="return false" onpaste="return false" />
                                             </div>
 
                                         </div>
@@ -690,17 +691,17 @@
                                             <span class="buyer_price" id="id_buyerprice-n">$0.00 </span>
                                             <span class="evnt_toltip"><i class="fa fa-info-circle"></i></span>
 
-                                            <div class="tooltip" id="id_tooltip-n">Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $0.00 <br /> Buyer(s) Total &nbsp;&nbsp; &nbsp;  $0.00</div>
+                                            <div class="tooltip xs-buyer-total" id="id_tooltip-n">Ticket Price &nbsp; &nbsp; &nbsp; $0.00 <br /> Fee &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $0.00 <br /> Buyer(s) Total &nbsp;&nbsp; &nbsp;  $0.00</div>
                                             <label class="pull-right" style="color:red;display:none;" id="id_lblprice-n">Please enter valid number</label>
                                         </div>
                                        
                                         <div class="clearfix"></div>
                                     </div>
-                                    <div class="col-sm-3 no_pad xs768det-del">
+                                    <div class="col-sm-3 no_pad xs768det-del ipad-50-ml10">
                                         <div class="form-group paidticket-n" id="id_Disc-n">
-                                            <label class="col-sm-4 control-label ev_tickt_lebel">Disc.$</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control evnt_inp_cont numbers" placeholder="0" id="id_Discount-n" onkeypress="validatenumdec(this, event, this.id)" onblur="tofixed(this.id)" maxlength="9" />
+                                            <label class="col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0 ipad-width-58 ipad-pl0">Disc.$</label>
+                                            <div class="col-sm-8 xs-tkt-typ-pad-0 ipad-pad-5">
+                                                <input type="text" class="form-control evnt_inp_cont numbers" placeholder="0" id="id_Discount-n" onkeypress="validatenumdec(this, event, this.id)" onblur="tofixed(this.id)" maxlength="9" oncopy="return false" oncut="return false" onpaste="return false" />
 
                                             </div>
                                         </div>
@@ -717,7 +718,7 @@
                                                 <label class="col-sm-1 no_pad control-label ev_tickt_lebel">%</label>
                                                 <div class="col-sm-6">
 
-                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" id="id_ecfeeper-n" onkeypress="allownumber(this,event,this.id)" onblur="changeinecfee(this.id)" maxlength="3" />
+                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" id="id_ecfeeper-n" onkeypress="allownumber(this,event,this.id)" onblur="changeinecfee(this.id)" maxlength="3"  oncopy="return false" oncut="return false" onpaste="return false"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -730,7 +731,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-1 no_pad control-label ev_tickt_lebel">$</label>
                                                 <div class="col-sm-11">
-                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" id="id_ecfeeamt-n" onkeypress="validatenumdec(this, event, this.id)" onblur="tofixed(this.id);changeinecfee(this.id)"   maxlength="8"/>
+                                                    <input type="text" class="form-control evnt_inp_cont" placeholder="" id="id_ecfeeamt-n" onkeypress="validatenumdec(this, event, this.id)" onblur="tofixed(this.id);changeinecfee(this.id)"   maxlength="8" oncopy="return false" oncut="return false" onpaste="return false"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -756,7 +757,7 @@
                                                     <label class="col-sm-1 no_pad control-label ev_tickt_lebel">$</label>
                                                     <div class="col-sm-5">
                                                       
-                                                        <input type="text" class="form-control evnt_inp_cont"  id="id_customerfee-n" placeholder=""  onkeypress="validatenumdec(this, event, this.id)" onblur="tofixed(this.id);reflectfeechange(this.id)"  maxlength="8"/>
+                                                        <input type="text" class="form-control evnt_inp_cont"  id="id_customerfee-n" placeholder=""  onkeypress="validatenumdec(this, event, this.id)" onblur="tofixed(this.id);reflectfeechange(this.id)"  maxlength="8" oncopy="return false" oncut="return false" onpaste="return false"/>
                                                         <input type="hidden"  id="hd_customerfee-n" value="0" />
                                                         <input type="hidden" id="hd_customchange-n" value="0" />
                                                     </div>
@@ -789,10 +790,10 @@
                                         <div class="col-sm-12 no_pad ">
                                             <div class="modal-content evnt_set_panel">
                                                 <div class="modal-body pb0">
-                                                    <div class="col-sm-12">
+                                                    <div class="col-sm-12 no_pad">
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label ev_tickt_lebel pl0">Description</label>
-                                                            <div class="col-sm-6">
+                                                            <div class="col-sm-6 xs-tkt-typ-pad-0">
                                                                 <input type="text" class="form-control evnt_inp_cont" id="id_descriptionclass-n" placeholder="Ticket description" maxlength="1000" />
                                                             </div>
                                                         </div>
@@ -815,16 +816,25 @@
                                                         </div>
                                                         <div class="clearfix"></div>
                                                         <div class="form-group mt20">
-                                                            <div class="col-sm-6 ev_pad_l0">
+                                                            <div class="col-sm-6 ev_pad_l0 xs-tkt-typ-pad-0">
                                                                 <div class="col-sm-12 no_pad">
                                                                     <label class="label-control pl0 ev_tickt_lebel">Ticket Sales Start</label>
+                                                                    <div class="upload_help_icn pull-right">
+                                                                        <div class="tip">
+                                                                            <img class="help_icon_hov" src="~/Images/icon-question.gif" id="hovstart-n" onmouseover="showhover(this.id);" onmouseout="showhoverout(this.id)" />
+                                                                            <span class="upload_help_icn_inner" id="help_start_inner-n">
+                                                                                Your Event's date and time need to be
+                                                                                selected in order to update sales start date
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="col-sm-8 ev_pad_l0  mb5 xs_pad_0">
-                                                                    <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_salestart-n" onchange="changetext(this.id);" />
+                                                                    <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_salestart-n"   disabled="disabled"/>
                                                                 </div>
                                                                 <div class="col-sm-4 no_pad  mb5 xs_pad_0">
-                                                                    <input type="hidden" value="0" id="id_hdsaletimestart-n" />
-                                                                    <input id="id_saletimestart-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id)" />
+                                                                    @*<input type="hidden" value="0" id="id_hdsaletimestart-n" />*@
+                                                                    <input id="id_saletimestart-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am"  disabled="disabled" />
                                                                 </div>
 
                                                             </div>
@@ -832,13 +842,25 @@
                                                             <div class="col-sm-6 ev_pad_r0 xs_pad_0">
                                                                 <div class="col-sm-12 no_pad">
                                                                     <label class="label-control pl0 ev_tickt_lebel">Ticket Sales End</label>
+                                                                 
+                                                                       
+                                                                        <div class="upload_help_icn pull-right">
+                                                                            <div class="tip">
+                                                                                <img class="help_icon_hov" src="~/Images/icon-question.gif" id="hovend-n" onmouseover="showhover(this.id);" onmouseout="showhoverout(this.id)" />
+                                                                                <span class="upload_help_icn_inner" id="help_end_inner-n">
+                                                                                    Your Event's date and time need to be selected in order to update sales
+                                                                                    end date
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                   
                                                                 </div>
-                                                                <div class="col-sm-8 ev_pad_l0 mb5">
-                                                                    <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n" onchange="checkvalidDate(this.id)" />
+                                                                <div class="col-sm-8 ev_pad_l0 mb5 xs-tkt-typ-pad-0">
+                                                                    <input class="form-control event_time_str ev_tickt_input" placeholder="MM/DD/YYYY" id="id_saleend-n"  disabled="disabled" />
                                                                 </div>
-                                                                <div class="col-sm-4 ev_pad_l0 mb5">
-                                                                    <input type="hidden" value="0" id="id_hdsaletimeend-n" />
-                                                                    <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am" onchange="checkvalidtime(this.id) " />
+                                                                <div class="col-sm-4 ev_pad_l0 mb5 xs-tkt-typ-pad-0">
+                                                                    @*<input type="hidden" value="0" id="id_hdsaletimeend-n" />*@
+                                                                    <input id="id_saletimeend-n" type="text" class="time_picker form-control ev_tickt_input mr0" placeholder="00:00am"  disabled="disabled" />
                                                                 </div>
 
                                                             </div>
@@ -904,12 +926,12 @@
                                                         <div class="form-group donateshow-n" id="maxmin-n">
                                                             <label class="label-control pl0 ev_tickt_lebel wd600">Tickets allowed per order</label>
                                                             <div class="evnt_time_cont wd280 mr5_p">
-                                                                <input class="form-control evnt_inp_cont wd240 numbers " placeholder="0" id="id_min_ticket-n" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
+                                                                <input class="form-control evnt_inp_cont wd240 numbers " placeholder="0" id="id_min_ticket-n" onkeypress="allownumber(this,event,this.id)" maxlength="6" oncopy="return false" oncut="return false" onpaste="return false" />
                                                                 <label class="label-control lbl_bot_minim ">Minimum</label>
 
                                                             </div>
                                                             <div class="evnt_time_cont wd280">
-                                                                <input class="form-control evnt_inp_cont wd240 numbers" placeholder="0" id="id_max_ticket-n" onkeypress="allownumber(this,event,this.id)" maxlength="6" />
+                                                                <input class="form-control evnt_inp_cont wd240 numbers" placeholder="0" id="id_max_ticket-n" onkeypress="allownumber(this,event,this.id)" maxlength="6" oncopy="return false" oncut="return false" onpaste="return false"/>
                                                                 <label class="label-control lbl_bot_minim ">Maximum</label>
                                                                 <label class="col-sm-12 no_pad control-label" style="color:red;display:none" id="id_lblmax-n">Please enter a valid number</label>
 
@@ -988,6 +1010,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
                     <div class="col-sm-12 row mt10">
 
                         <div class="col-sm-12 no_pad">
@@ -1041,14 +1064,14 @@ else
                         <div class="TicketFees col-sm-12 no_pad">
                             <div class="form-group">
                                 <div class="col-sm-5 no_pad">
-                                    <label class="col-sm-4 control-label ev_tickt_lebel">Description*</label>
-                                    <div class="col-sm-8">
+                                    <label class="col-sm-4 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Description*</label>
+                                    <div class="col-sm-8 xs-tkt-typ-pad-0">
                                         <input class="form-control evnt_inp_cont chkvalidation" type="text" placeholder="" id="id_vardesc" value="@Model.Ticket_variabledesc">
                                     </div>
                                 </div>
                                 <div class="col-sm-5 no_pad">
-                                    <label class="col-sm-2 control-label ev_tickt_lebel">Type</label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-2 control-label ev_tickt_lebel xs-tkt-typ-pad-0">Type</label>
+                                    <div class="col-sm-10 xs-tkt-typ-pad-0">
                                         @if (Model.Ticket_variabletype == "R")
                                         {
                                             <select class="form-control ev_drop_label" id="variabletype">
@@ -1076,8 +1099,8 @@ else
                                         }
                                     </div>
                                 </div>
-                                <div class="col-sm-2 no_pad">
-                                    <button class="btn btn-primary btn-lg  ev_add_sub_btn var_chg_btn" type="button">Add</button>
+                                <div class="col-sm-2 no_pad xs-var-chrg-btn-mt10">
+                                    <button class="btn theme-btn btn-lg  ev_add_sub_btn var_chg_btn" type="button">Add</button>
                                 </div>
                             </div>
                             <div class="col-sm-12 mt20 no_pad">
@@ -1089,18 +1112,20 @@ else
                                 </div>
                                 <div class="col-sm-12 no_pad" id="id_clonevariable-n" style="display:none;">
                                     <div class="list-group-item ev_var_chrg_list">
-                                        <div class="form-group">
-                                            <div class="col-sm-7 col-xs-7">
+                                        <div class="col-sm-10 col-xs-10 no_pad">
+                                            <div class="col-sm-5 col-xs-6 no_pad">
                                                 <input type='hidden' id="id_varid-n" value=0 />
                                                 <input class="form-control evnt_inp_cont" type="text" placeholder="Description" id="id_varsubdesc-n" maxlength="256" onblur="checkvalidatetkt(this.id)">
                                             </div>
-                                            <div class="col-sm-4 col-xs-4">
-                                                <label class="col-sm-1 control-label ev_tickt_lebel">$</label>
-                                                <div class="col-sm-10 no_pad">
-                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="0.00" id="id_varsubprice-n" maxlength="9" onkeypress="validatenumdec(this, event, this.id);" onblur="    tofixed(this.id); checkvalidatetkt(this.id);" >
+                                            <div class="col-sm-7 col-xs-6 no_pad">
+                                                <label class="col-sm-2 col-xs-3 control-label ev_tickt_lebel text-center xs-var-chg-lebel">$</label>
+                                                <div class="col-sm-10 col-xs-9 no_pad xs-var-chg-div">
+                                                    <input class="form-control evnt_inp_cont" type="text" placeholder="0.00" id="id_varsubprice-n" maxlength="9" onkeypress="validatenumdec(this, event, this.id);" onblur="tofixed(this.id); checkvalidatetkt(this.id);" oncopy="return false" oncut="return false" onpaste="return false">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-1 col-xs-1 no_pad text-right var_chrg_edt_main">
+                                        </div>
+                                        <div class="col-sm-2 col-xs-2 no_pad">
+                                            <div class="col-sm-12 col-xs-12 no_pad text-right var_chrg_edt_main">
                                                 <button class="btn" type="button" id="btn_vardelete-n" onclick="deletevariable(this.id)"><i class="fa fa-times"></i></button>
                                             </div>
                                         </div>
@@ -1133,7 +1158,7 @@ else
 
                             </label>
 
-                            <label class="ev_fb_lable">
+                            <label class="ev_fb_lable xs-evnt-fb-mr-0">
                                 PUBLISH EVENT TO FACEBOOK
                                 @if (Model.PublishOnFB == "Y"|| Model.PublishOnFB == "y")
                                 {
@@ -1156,10 +1181,13 @@ else
                     <div class="evnt_tile_bg_l"></div>
                     <div class="col-sm-12 col-xs-12 text-left no_pad"  >
                         <h2 class="fb_dis_head pt5">
-                            EVENT SETTING
+                            EVENT SETTING <img class="help_icon_hov help_ml" src="~/Images/icon-question.gif" />
                         </h2>
                     </div>
                     <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+                    <div class="event_tip">
+                        When the event is set to private, it will not be listed in our directory and you will have a private link through which to access the listing. you will also have an opportunity to send out email invites after you publish this event.
+                    </div>
                 </div>
                 <div class="evnt_details_body" id="PrivaPub" tabindex="-1">
                     <div class="form-group">
@@ -1228,7 +1256,8 @@ else
                                 @*}*@
                                 Require a password to view the event page
                             </label>
-                            <input type="password" id="txtReqPassword" readonly="readonly" value="@Model.Private_Password" class="form-control evnt_inp_cont mb10 wd500 chkvalidation" placeholder="Enter Password" />
+                            <input type="password" id="txtReqPasswordTemp" name="somePass" style="display:none;"  value=""  placeholder="Enter Password"  maxlength="15" />
+                            <input type="password" id="txtReqPassword" name="somePass" readonly="readonly" value="@Model.Private_Password" class="form-control evnt_inp_cont mb10 wd500 chkvalidation" placeholder="Enter Password" autocomplete="off" maxlength="15" />
 
                         </div>
                     </div>
@@ -1324,7 +1353,17 @@ else
 
         </div>
     </div>
-    //----------Model Starts Here------------------
+
+    @*<input type="submit" name="btnSubmit" id="SubmitButton" value="Submit" />*@
+
+    <div id="imagetostore">
+
+
+
+    </div>
+}
+
+  @*Model Start here*@
 
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -1363,14 +1402,14 @@ else
                                 <input id="State" class="form-control evnt_inp_cont" placeholder="State" />
                             </div>
                         </div>
-                        <div class="col-sm-6 row pull-right">
+                        <div class="col-sm-6 row pull-right xs-multi-add-ven">
                             <div class="form-group">
-                                <input id="Zip" class="form-control evnt_inp_cont" placeholder="Zip Code" />
+                                <input id="Zip" class="form-control evnt_inp_cont" placeholder="Zip Code" maxlength="6" />
                             </div>
                         </div>
                         <div class="clearfix"></div>
-                        <div class="form-group mb5 ">
-                            @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control evnt_inp_cont" })
+                        <div class="form-group mb5 dropheight">
+                            @Html.DropDownList("CountryID", ViewBag.Countries as List<SelectListItem>, new { @class = "form-control evnt_inp_cont selectpicker" })
                         </div>
 
                     </div>
@@ -1424,7 +1463,7 @@ else
                     </div>
                     </div>
                 <div class="modal-footer no_pad">
-                    <button type="button" id="btSaveAddress" data-dismiss="modal" aria-label="Close" class="btn btn-primary col-sm-12 ev_add_sub_btn ad_ven_mod_btn">SAVE</button>
+                    <button type="button" id="btSaveAddress" data-dismiss="modal" aria-label="Close" class="btn btn-primary col-sm-12 col-xs-12 ev_add_sub_btn ad_ven_mod_btn">SAVE</button>
                 </div>
 
             </div>
@@ -1444,22 +1483,22 @@ else
         </div>
     </div>
 
-    <div id="imagetostore" >
-
-
-
-    </div>
+   
 
 
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 
     @*<script src = "~/Scripts/gmap.js" ></script>*@
-    // ---------------------Event Creation Script -------------------
+    @*// ---------------------Event Creation Script -------------------*@
 
     <script type="text/javascript">
+        $(document).on('keypress keydown keyup', function (e) {
+            if (e.keyCode == 27) {
+                $('.date_picker').blur();
+            }
+        });
 
-       
 
         var map_canvas ;
         var mapProp;
@@ -1515,7 +1554,7 @@ else
                     marker.setVisible(true);
                     console.log(place)
                     var address = '';
-                   
+
                     if (place.address_components) {
                         address = [
                           (place.address_components[0] && place.address_components[0].short_name || ''),
@@ -1529,9 +1568,9 @@ else
                         console.log(place.address_components[i].types[0]);
                         if(place.address_components[i].types[0].trim()=="postal_code")
                         {
-                            if (typeof place.address_components[i] === "undefined") 
+                            if (typeof place.address_components[i] === "undefined")
                             {
-                        
+
                             }else
                             {
                                 $("#Zip").val(place.address_components[i].long_name);
@@ -1539,9 +1578,9 @@ else
                         }
                         if(place.address_components[i].types[0].trim()=="locality" || place.address_components[i].types[0].trim()=="administrative_area_level_3")
                         {
-                            if (typeof place.address_components[i] === "undefined") 
+                            if (typeof place.address_components[i] === "undefined")
                             {
-                        
+
                             }else
                             {
                                 $("#City").val(place.address_components[i].long_name);
@@ -1549,9 +1588,9 @@ else
                         }
                         if(place.address_components[i].types[0].trim()=="administrative_area_level_1")
                         {
-                            if (typeof place.address_components[i] === "undefined") 
+                            if (typeof place.address_components[i] === "undefined")
                             {
-                        
+
                             }else
                             {
                                 $("#State").val(place.address_components[i].long_name);
@@ -1559,9 +1598,9 @@ else
                         }
                         if(place.address_components[i].types[0].trim()=="country")
                         {
-                            if (typeof place.address_components[i] === "undefined") 
+                            if (typeof place.address_components[i] === "undefined")
                             {
-                        
+
                             }else
                             {
                                 $('#CountryID option').each(function(){
@@ -1569,27 +1608,27 @@ else
                                         $(this).prop('selected', true).trigger('change');
                                     }
                                 });
-                             
+
                             }
                         }
-                       
-                       
+
+
 
                     }
-                   
-                  
-                   
-                    if (typeof place.address_components[0] === "undefined") 
+
+
+
+                    if (typeof place.address_components[0] === "undefined")
                     {
-                        
+
                     }else
                     {
                         $("#VenueName").val(place.address_components[0].long_name);
                     }
-                   
-             
-               
-               
+
+
+
+
 
                 $("#VenueName").val(address.toString());
                 $("#Address1").val(address[1].toString());
@@ -1642,6 +1681,14 @@ else
 
     <script>
         $(document).ready(function () {
+            $("#txtReqPassword").on("keypress", function (e) {
+                
+                if (e.which == 32)
+                    return false;
+            });
+            $('#txtReqPassword').bind("cut copy paste", function (e) {
+                e.preventDefault();
+            });
             $("#btProgress").click();
             var vVal = '@TempData["IsNewEvent"].ToString()';
             if (vVal == "Y")
@@ -1699,9 +1746,9 @@ else
                 $(".adminvis").css('display','block');
             }
 
-       
 
-           
+
+
             $.getJSON('@Url.Action("GetEventChildData", "EditEvent")',
                 { lEventId: lEventId},
                 function (data) {
@@ -1930,7 +1977,7 @@ else
             {
                 $('#chkReqPassword').prop("checked","true");
                 $('#txtReqPassword').attr('readonly', false);
-
+       
 
             }
             $(".cdisable").removeAttr("disabled");
@@ -1948,14 +1995,14 @@ else
             var isValid = false;
             var sno = $("#hidOrgnizer").val();
             var name = $('#txtOrgnizer').val();
-                
-            var regex = /^[a-zA-Z ]*$/; 
+
+            var regex = /^[0-9a-zA-Z ]*$/;
             isValid = regex.test(name);
             if (isValid) {
                 var orgid = 0;
 
                 orgid = $('#OrgId_' + sno).html();
-                 
+
                 if (typeof orgid === "undefined") {
                     orgid = 0;
                 }
@@ -1967,17 +2014,17 @@ else
                     success: function (data) {
 
                         if (data == "True") {
-                              
+
                             $('#erraccmsg').html("Organizer name already exist!");
                             $('#diverroacc').css('display', 'block');
                             $('#txtOrgnizer').addClass('err-bor');
                             $('#txtOrgnizer').val('');
                             $('html,body').animate({ scrollTop: 0 });
-                              
+
                             return false;
                         } else {
                             $('#txtOrgnizer').removeClass('err-bor');
-                               
+
                         }
 
                     }
@@ -2008,7 +2055,7 @@ else
         });
         $(".cbtPreview").click(function () {
             var msg = validatemain();
-       
+
             if (msg != "") {
 
                 $('#diverroacc').css('display', 'block');
@@ -2027,7 +2074,7 @@ else
 
     </script>
 
-    // ---------------------Event Creation Script -------------------
+   @* // ---------------------Event Creation Script -------------------*@
     <script>
 
         $(".chkvalidation").blur(function () {
@@ -2276,14 +2323,14 @@ else
                     }
 
 
-                      
+
 
                 });
             } else
             {
-                
+
             }
-        
+
             $('#tblOrgnizer tr').each(function () {
                 if (Sno.trim() == $(this).find("td:first").html().trim()) {
                     $(this).remove();
@@ -2311,7 +2358,7 @@ else
             $("#txtOrgTWlink").val('');
             $("#Incsocial").prop("checked", false);
             $("#dvOrgnizerFBTw").hide();
-
+            $('#ddlOrgnizers').selectpicker('refresh');
         }
 
         function editRow(Sno) {
@@ -2389,7 +2436,7 @@ else
             var strHTML = '<tr>';
             strHTML = strHTML + '<td style="display:none" width="92%">' + Sno + '</td>';
             strHTML = strHTML + '<td width="92%"><label id=OrgName_' + Sno + '>' + vOrgName + '</label></td>';
-         
+
             strHTML = strHTML + '<td style="display:none"><label id=OrgId_' + Sno + '>0</label><label id=OrgEdit_' + Sno + '>0</label><label id=OrgDes_' + Sno + '>' + vOrgDes + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgFB_' + Sno + '>' + vOrgFB + '</label></td>';
             strHTML = strHTML + '<td style="display:none"><label id=OrgTw_' + Sno + '>' + vOrgTw + '</label></td>';
@@ -2492,7 +2539,7 @@ else
                         EventImage.push({
                             EventImageUrl: imagename,
                             ImageType: imagetype,
-                        }); 
+                        });
                 });
 
                 //$("input[id^='image_hidden']").each(function (i, el) {
@@ -2507,7 +2554,7 @@ else
                 //        EventImageUrl: imagename,
                 //        ImageType: imagetype,
                 //    });
-                   
+
                 //});
 
                 //var count = ($("#image_count").val());
@@ -2728,7 +2775,7 @@ else
 
             //  alert($("#tblAddress tr").length);
             var addressstatus=$('#hidAddressStatus').val();
-        
+
             if(addressstatus=="")
             {
                 if($("#txtEventLocation").val()!="")
@@ -2767,9 +2814,9 @@ else
                     //  alert(Sno);
                     // Multiple Address
                     if (Sno != '' && Sno != undefined && Sno != null) {
-                       
+
                         SubmitAddress.push({
-                            AddressId:$("#VenueId"+Sno).val(),  
+                            AddressId:$("#VenueId"+Sno).val(),
                             VenueName: $("#VenueName" + Sno).val(),
                             Address1: ($("#Address1" + Sno).val() != null ? $("#Address1" + Sno).val() : ''),
                             Address2: ($("#Address2" + Sno).val() != null ? $("#Address2" + Sno).val() : ''),
@@ -2885,7 +2932,7 @@ else
                     Orgnizer.push({
                         Orgnizer_Id: $("#OrgId_"+Sno).text(),
                         Orgnizer_Name: $("#OrgName_"+Sno).html(),
-                        Organizer_Desc: escape($("#OrgDes_" + Sno).text()),
+                        Organizer_Desc: $("#OrgDes_" + Sno).text(),
                         Organizer_FBLink: $("#OrgFB_" + Sno).text(),
                         Organizer_Twitter: $("#OrgTw_" + Sno).text(),
                         Organizer_Linkedin: $("#OrgLn_" + Sno).text(),
@@ -2910,7 +2957,7 @@ else
                 varDescritpion = $('#id_vardesc').val();
                 optionalvariable = $('#variabletype').val();
             }
-            var evDec = escape($("#edEventDesc").code());
+            var evDec = $("#edEventDesc").code();
             var model = {
                 'EventID': $("#hdEventId").val(),
                 'EventTypeID': $("#EventType").val(),
@@ -2975,6 +3022,7 @@ else
                             // alert(type);
 
                             var vMasterEventId =$("#hdParentEventId").val();
+                       
                             $("#hdEventId").val(response);
                             if(type=="Save")
                             {
@@ -3014,7 +3062,12 @@ else
                             if(type=="Live")
                             {
                                 @*window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' +response;*@
-                                window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' +response;
+                                if ($("#chkGuestonly").is(":checked") && $("#rdPrivate").is(":checked")) {
+                                    window.location.href = '@Url.Action("CreateInvitations", "ManageEvent", new {  })?lId=0&lEvtId='+response+'&strMode=E';
+                                } else {
+                                    window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' + response + '';
+                                }
+                               // window.location.href = '@Url.Action("EventConfirmation", "EventConfirmation",new { })?EventId=' +response;
                             }
                         }
                     }
@@ -3032,6 +3085,79 @@ else
 
 
         }
+
+        function AddDates()
+        {
+            var days;
+            var savedaddress = "";
+            $("#hidSchLastState").val($("#dlSchOption").val());
+            if ($(".SchmultiDetail").css('display') == 'block') {
+                $("#hdSchType").val('Multiple');
+                vSelecttextDates = "Click here to enter the start and end date*";
+                if ($("#txtDateFrom").val() != '' && $("#txtDateFrom").val() != null) {
+                    if ($("#dlSchOption").val() == "Daily") {
+                        vSelecttextDates = "Daily : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                        savedaddress = vSelecttextDates;
+                    }
+                    else if ($("#dlSchOption").val() == "Weekly") {
+                        days= $("#dllWeeklyDayChk").val();
+
+                        vSelecttextDates = "Weekly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                        savedaddress = vSelecttextDates;
+                    }
+                    else if ($("#dlSchOption").val() == "Monthly") {
+                        days=$("#dllMonthlyWeekDay").val();
+
+                        vSelecttextDates = "Monthly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                        savedaddress = vSelecttextDates;
+                    }
+                    else if ($("#dlSchOption").val() == "Custom") {
+                        vSelecttextDates = "Custom : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
+                        savedaddress = vSelecttextDates;
+                    }
+                }
+                $("#btEnterDates").text(vSelecttextDates);
+            }
+            else {
+                vSelecttextDates = "Click here to enter the start and end date*";
+                if ($("#txtStartDate").val() != '' && $("#txtStartDate").val() != null)
+                {
+                    vSelecttextDates = $("#txtStartDate").val() + " " + $("#txtStartTime").val() + " To " + $("#txtEndDate").val() + " " + $("#txtEndTime").val()
+                    savedaddress = vSelecttextDates;
+                }
+                $("#btEnterDates").text(vSelecttextDates);
+                $("#hdSchType").val('Single');
+            }
+
+            if (savedaddress != '')
+            {
+                $("input[id^='id_salestart']").attr("disabled", false);
+                $("input[id^='id_saletimestart']").attr("disabled", false);
+                $("input[id^='id_saleend']").attr("disabled", false);
+                $("input[id^='id_saletimeend']").attr("disabled", false);
+                $(".upload_help_icn").css('display', 'none');
+            } else {
+                $("input[id^='id_salestart']").attr("disabled", true);
+                $("input[id^='id_saletimestart']").attr("disabled", true);
+                $("input[id^='id_saleend']").attr("disabled", true);
+                $("input[id^='id_saletimeend']").attr("disabled", true);
+                $(".upload_help_icn").css('display', 'block');
+            }
+        }
+
+        function AddTimeZone()
+        {
+
+            var vval = $("#dllTimeZone option:selected").text();
+
+
+
+            if (vval == null || vval == '')
+                vval = "Timezone & date setting";
+
+            $("#lblTimeZone").text(vval);
+
+        }
         $(document).ready(function () {
             var vCatId = $("#ddlEventCategory").val();
             var vSubCatId = $("#hidSubCat").val();
@@ -3044,6 +3170,7 @@ else
                     // debugger;
                     //                   alert(data.length);
                     $("#ddlEventSubCategory").html(data);
+                    $('#ddlEventSubCategory').selectpicker('refresh');
                     // items.push("<option value=" + this.Value + ">" + this.Text + "</option>");
                     //});
                 },
@@ -3060,7 +3187,7 @@ else
                     var getHtml = data.split('¶');
                     $("#tblOrgnizer").append(getHtml[0]);
                     $("#ddlOrgnizers").append(getHtml[1]);
-
+                    $('#ddlOrgnizers').selectpicker('refresh');
                   var msg = disablebutton();
 
                     if(msg=="")
@@ -3161,9 +3288,9 @@ else
                     return false;
 
                 }
-                if ($("#status").val().trim().toUpperCase() == "LIVE")
-                    save("Live");
-                else
+                //if ($("#status").val().trim().toUpperCase() == "LIVE")
+                //    save("Live");
+                //else
                     save("Save");
 
             });
@@ -3290,6 +3417,7 @@ else
                     $(".cdisable").removeAttr("disabled");
                 }
                 $("#txtOrgnizer").removeClass("err-bor");
+                $('#ddlOrgnizers').selectpicker('refresh');
                 //alert(divlength);
                 //var addOption = '<div class="list-group-item ev_orgz_list"></div> <div id = dvOrg_' + vLenght.toString() + '  class="col-sm-8 no_pad">' + $("#txtOrgnizer").val() + '</div><div class="col-sm-4 no_pad text-right ev_org_edt_main"><a href="#"><i class="fa fa-pencil"></i> </a> | <a href="#"><i class="fa fa-trash"></i></a></div>';
                 //$("#dvOrganizer").append(addOption)
@@ -3432,11 +3560,17 @@ else
 
 
             $(".closemodal").click(function () {
+                AddDates();
                 $(".StartDatemodal").hide();
-
+               
+                $("input[id^='id_salestart']").attr("disabled", false);
+                $("input[id^='id_saletimestart']").attr("disabled", false);
+                $("input[id^='id_saleend']").attr("disabled", false);
+                $("input[id^='id_saletimeend']").attr("disabled", false);
             });
 
             $(".closetimemodal").click(function () {
+                AddTimeZone();
                 $(".TmezoneSet").hide();
 
             });
@@ -3536,52 +3670,14 @@ else
                 }
             });
             $("#btSaveTimeZone").click(function () {
-                var vval = $("#dllTimeZone option:selected").text();
-                if (vval == null || vval == '')
-                    vval = "Timezone & date setting";
-
-                $("#lblTimeZone").text(vval);
+                AddTimeZone();
 
             });
 
-            $("#btnAddSch").click(function () {
-                debugger;
-                var days;
-                $("#hidSchLastState").val($("#dlSchOption").val());
-                if ($(".SchmultiDetail").css('display') == 'block') {
-                    $("#hdSchType").val('Multiple');
-                    vSelecttextDates = "Click here to enter the start and end date";
-                    if ($("#txtDateFrom").val() != '' && $("#txtDateFrom").val() != null) {
-                        if ($("#dlSchOption").val() == "Daily") {
-                            vSelecttextDates = "Daily : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-                        }
-                        else if ($("#dlSchOption").val() == "Weekly") {
-                            days= $("#dllWeeklyDayChk").val();
-
-                            vSelecttextDates = "Weekly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-
-                        }
-                        else if ($("#dlSchOption").val() == "Monthly") {
-                            days=$("#dllMonthlyWeekDay").val();
-
-                            vSelecttextDates = "Monthly : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-
-                        }
-                        else if ($("#dlSchOption").val() == "Custom") {
-                            vSelecttextDates = "Custom : " + $("#txtDateFrom").val() + " " + $("#txtTimeStart").val() + " To " + $("#txtDateTo").val() + " " + $("#txtTimeEnd").val();
-
-                        }
-                    }
-                    $("#btEnterDates").text(vSelecttextDates);
-                }
-                else {
-                    vSelecttextDates = "Click here to enter the start and end date";
-                    if ($("#txtStartDate").val() != '' && $("#txtStartDate").val() != null)
-                        vSelecttextDates = $("#txtStartDate").val() + " " + $("#txtStartTime").val() + " To " + $("#txtEndDate").val() + " " + $("#txtEndTime").val()
-                    $("#btEnterDates").text(vSelecttextDates);
-                    $("#hdSchType").val('Single');
-                }
-            });
+            //$("#btnAddSch").click(function () {
+              
+              
+            //});
 
             if ($("#hidSchLastState").val() == "") {
                 $("#dlSchOption").val("Daily");
@@ -3832,7 +3928,16 @@ else
 
 
 
+            $(".event_tip").css({ "display": "none" });
+            $(".help_icon_hov").mouseover(function (e) {
+                var $target = $(e.currentTarget);
+                $(".event_tip").css({ "display": "block" });
+            });
 
+            $(".help_icon_hov").mouseout(function (e) {
+                var $target = $(e.currentTarget);
+               $(".event_tip").css({ "display": "none" });
+            });
 
             $('.summernote').summernote({
                 height: 70,   //set editable area's height
@@ -4074,7 +4179,7 @@ else
     </script>
 
 
-    //Ticket Section Starts
+    @*//Ticket Section Starts*@
     <script>
         function CannotFindLocation() {
             $("#dvAddFooter").hide();
@@ -4103,9 +4208,12 @@ else
 
                     $('#id_auto_hide_until_Date-' + el).focus();
                     $('#id_auto_hide_until_Date-' + el).val("");
-                  
 
                 }
+
+                //} else {
+                //    $('#id_auto_hide_after_Date-' + el).val($('#' + e).val());
+                //}
 
             }
             if (al == "id_salestart") {
@@ -4117,8 +4225,38 @@ else
                     $('#id_salestart-' + el).val("");
                     $('#id_saleend-' + el).val("");
 
-                } else {
-                    $('#id_saleend-' + el).val($('#' + e).val());
+                }
+                else
+                {
+                    var starttimetime1 = convertTo24Hour($("#id_saletimestart-" + el).val());
+                    var todayDate = new Date($('#id_salestart-' + el).val() + " " + starttimetime1);
+                    var enddate = convertTo24Hour($('#id_saletimeend-' + el).val());
+
+                    var dateOne = new Date($('#id_saleend-' + el).val() + " " + enddate);
+
+                    if (todayDate > dateOne)
+                    {
+                        $('#id_saleend-' + el).val($("#id_salestart-" + el).val());
+                        $('#id_saletimeend-' + el).val($("#id_saletimestart-" + el).val());
+                    } else
+                    {
+
+                        if ($("#hdSchType").val() == '') {
+                            $('#id_saleend-' + el).val($('#' + e).val());
+                        }
+
+                        if ($("#hdSchType").val() == 'Single') {
+                            $('#id_saleend-' + el).val($("#txtEndDate").val());
+                            $('#id_saletimeend-' + el).val($("#txtEndTime").val());
+
+                        }
+                        if ($("#hdSchType").val() == 'Multiple') {
+                            $('#id_saleend-' + el).val($("#txtDateTo").val());
+                            $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
+                        }
+                    }
+
+
                 }
 
             }
@@ -4392,8 +4530,8 @@ else
             if(tickettype=="Paid")
             {
                 var fee=parseFloat(parseFloat($('#' + id).val().replace(',','')).toFixed(2));
-              
-              
+
+
                 if (isNaN(fee) == true) fee = 0;
                 if(fee==0)
                 {
@@ -4412,12 +4550,12 @@ else
                 var price=parseFloat(parseFloat($('#id_cost-' + num).val().replace(',','')).toFixed(2));
                 var val = $('#id_feetype-' + num).val();
                 if (val == 0) {
-               
+
 
                     ccpamount = fee;
                     ccpamount = ccpamount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     ccpfinal = (parseFloat(fee) + parseFloat(price)).toFixed(2);
-               
+
                     ccpfinal = ccpfinal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     var msg = "Ticket Price  &nbsp; &nbsp; &nbsp;     $" + price + "<br/>" + "Fee    &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;&nbsp;    $" + ccpamount + "<br/>" + "Buyer(s) Total   &nbsp;&nbsp; &nbsp;       $" + ccpfinal;
@@ -4427,7 +4565,7 @@ else
                     fee = ccpamount;
                 }
                 if (val == 1) {
-               
+
                     ccpamount = fee;
                     ccpamount = ccpamount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     ccpfinal = price;
@@ -4457,8 +4595,8 @@ else
                 {
                     var feepercentage=$('#' + id).val();
                     if (isNaN(feepercentage) == true) feepercentage = 0;
-                   
-                   
+
+
                     if(feepercentage>0)
                     {
                         $('#' + id).removeClass('err-bor');
@@ -4657,6 +4795,7 @@ else
                 var ccpamount = 0;
                 var ccpfinal = 0;
                 $('#id_feestruct-' + num).css('display', 'block');
+                $('#id_include_ticket_fees-' + num).val(0);
                 var val = $("#id_feetype-0").val();
                 var fee = 0;
 
@@ -4669,7 +4808,7 @@ else
                     {
 
                         var hdchange=$('#hd_customchange-'+ num).val();
-                    
+
                         if(hdchange=="1")
                         {
                             ccp=parseFloat($('#id_customerfee-'+num).val()).toFixed(2);
@@ -4902,13 +5041,13 @@ else
 
 
             }
-            if ($('#hddiscount').val() == 1) {
-                count++;
+            //if ($('#hddiscount').val() == 1) {
+            //    count++;
 
-            }
-            if (parseInt($('#hdMaxerr').val()) == 1) {
-                count++;
-            }
+            //}
+            //if (parseInt($('#hdMaxerr').val()) == 1) {
+            //    count++;
+            //}
             if (countprice > 0) {
                 msg += ajaxsetup("CreateEvent", "PriceNotzeroUI") + "<br/>";
             }
@@ -4920,52 +5059,52 @@ else
 
             }
 
-            if ($('#id_variablecharge').is(":checked") == true) {
-                if ($('#id_vardesc').val() == "") {
+            //if ($('#id_variablecharge').is(":checked") == true) {
+            //    if ($('#id_vardesc').val() == "") {
 
-                    msg += ajaxsetup("CreateEvent", "CreateEventvariabledescUI") + "<br/>";;
-
-
-
-                } else {
-                    $('#id_vardesc').removeClass('err-bor');
-
-                }
-                var divvar = $("#id_Mainvariable>div").size();
-                if (divvar <= 0) {
-                    msg += "Please enter Variable valid charges by clicking on Add button" + "<br/>";;
-
-                }
-                if (divvar > 0) {
-
-                    for (var i = 0; i < divvar; i++) {
-                        var subdesc_name = $('#id_varsubdesc-' + i).val();
-                        var subprice_Qty = $('#id_varsubprice-' + i).val();
-
-                        if (subdesc_name == "") {
+            //        msg += ajaxsetup("CreateEvent", "CreateEventvariabledescUI") + "<br/>";;
 
 
 
-                            countvardesc++;
-                        }
-                        if (subprice_Qty == "") {
+            //    } else {
+            //        $('#id_vardesc').removeClass('err-bor');
+
+            //    }
+            //    var divvar = $("#id_Mainvariable>div").size();
+            //    if (divvar <= 0) {
+            //        msg += "Please enter Variable valid charges by clicking on Add button" + "<br/>";;
+
+            //    }
+            //    if (divvar > 0) {
+
+            //        for (var i = 0; i < divvar; i++) {
+            //            var subdesc_name = $('#id_varsubdesc-' + i).val();
+            //            var subprice_Qty = $('#id_varsubprice-' + i).val();
+
+            //            if (subdesc_name == "") {
 
 
-                            countvarqty++;
-                        } else {
-                            if (subprice_Qty <= 0) {
 
-                                countvarqty++;
-
-                            }
+            //                countvardesc++;
+            //            }
+            //            if (subprice_Qty == "") {
 
 
-                        }
+            //                countvarqty++;
+            //            } else {
+            //                if (subprice_Qty <= 0) {
 
-                    }
+            //                    countvarqty++;
 
-                }
-            }
+            //                }
+
+
+            //            }
+
+            //        }
+
+            //    }
+            //}
 
 
 
@@ -4973,21 +5112,21 @@ else
 
                 msg += ajaxsetup("CreateEvent", "CreateEventHighlightFieldsUI") + "<br/>";
             }
-            if (countvardesc > 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventSubDescUI") + "<br/>";
+            //if (countvardesc > 0) {
+            //    msg += ajaxsetup("CreateEvent", "CreateEventSubDescUI") + "<br/>";
 
-            }
-            if (countvarqty > 0) {
-                msg += ajaxsetup("CreateEvent", "CreateEventSubQtyUI") + "<br/>";
+            //}
+            //if (countvarqty > 0) {
+            //    msg += ajaxsetup("CreateEvent", "CreateEventSubQtyUI") + "<br/>";
 
-            }
-            if ($('#chkReqPassword').is(":checked") == true) {
-                if ($('#txtReqPassword').val() == "") {
+            //}
+            //if ($('#chkReqPassword').is(":checked") == true) {
+            //    if ($('#txtReqPassword').val().length<6) {
+            //        $('#txtReqPassword').addClass('err-bor');
+            //        msg += ajaxsetup("CreateEvent", "CreateEventPwdUI") + "<br/>";;
 
-                    msg += ajaxsetup("CreateEvent", "CreateEventPwdUI") + "<br/>";;
-
-                }
-            }
+            //    }
+            //}
             var weekcnt = 0;
             var weekdaily = 0;
             var weekmnth = 0;
@@ -5235,14 +5374,36 @@ else
                 $("#id_saleend-" + divlength).datepicker('hide');
             });
 
-          
+
 
             $("#id_saletimestart-" + divlength).timepicker();
 
             $("#id_saletimeend-" + divlength).timepicker();
-           
-            $("#id_saletimestart-" + divlength).val("7:00pm");
-            $("#id_saletimeend-" + divlength).val("7:00pm");
+
+            //var today = formatdate();
+            //var time = formatAMPM();
+            //if ($("#hdSchType").val() == '') {
+            //    $('#id_saleend-' + divlength).val(today);
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saletimeend-' + divlength).val(time);
+            //}
+
+            //if ($("#hdSchType").val() == 'Single') {
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saleend-' + divlength).val($("#txtEndDate").val());
+            //    $('#id_saletimeend-' + divlength).val($("#txtEndTime").val());
+
+            //}
+            //if ($("#hdSchType").val() == 'Multiple') {
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saleend-' + divlength).val($("#txtDateTo").val());
+            //    $('#id_saletimeend-' + divlength).val($("#txtTimeEnd").val());
+            //}
+            //$('#id_saletimestart-' + divlength).val("07:00pm");
+            //$('#id_saletimeend-' + divlength).val("07:00pm");
 
             $("#id_auto_hide_until_Date-" + divlength).attr("readonly", "readonly");
             $("#id_auto_hide_until_time-" + divlength).attr("readonly", "readonly");
@@ -5345,14 +5506,36 @@ else
                 $("#id_saleend-" + divlength).datepicker('hide');
             });
 
-         
-           
+
+
             $("#id_saletimestart-" + divlength).timepicker();
 
             $("#id_saletimeend-" + divlength).timepicker();
-         
-            $("#id_saletimestart-" + divlength).val("7:00pm");
-            $("#id_saletimeend-" + divlength).val("7:00pm");
+
+            //var today = formatdate();
+            //var time = formatAMPM();
+            //if ($("#hdSchType").val() == '') {
+            //    $('#id_saleend-' + divlength).val(today);
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saletimeend-' + divlength).val(time);
+            //}
+
+            //if ($("#hdSchType").val() == 'Single') {
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saleend-' + divlength).val($("#txtEndDate").val());
+            //    $('#id_saletimeend-' + divlength).val($("#txtEndTime").val());
+
+            //}
+            //if ($("#hdSchType").val() == 'Multiple') {
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saleend-' + divlength).val($("#txtDateTo").val());
+            //    $('#id_saletimeend-' + divlength).val($("#txtTimeEnd").val());
+            //}
+            //$('#id_saletimestart-' + divlength).val("07:00pm");
+            //$('#id_saletimeend-' + divlength).val("07:00pm");
             $("#id_auto_hide_until_Date-" + divlength).attr("readonly", "readonly");
             $("#id_auto_hide_until_time-" + divlength).attr("readonly", "readonly");
             $("#id_auto_hide_until_Date-" + divlength).datepicker("option", "minDate", -1);
@@ -5443,14 +5626,35 @@ else
                 $("#id_saleend-" + divlength).datepicker('hide');
             });
 
-         
+
 
             $("#id_saletimestart-" + divlength).timepicker();
 
             $("#id_saletimeend-" + divlength).timepicker();
-        
-            $("#id_saletimestart-" + divlength).val("7:00pm");
-            $("#id_saletimeend-" + divlength).val("7:00pm");
+            //$('#id_saletimestart-' + divlength).val("07:00pm");
+            //$('#id_saletimeend-' + divlength).val("07:00pm");
+            //var today = formatdate();
+            //var time = formatAMPM();
+            //if ($("#hdSchType").val() == '') {
+            //    $('#id_saleend-' + divlength).val(today);
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saletimeend-' + divlength).val(time);
+            //}
+
+            //if ($("#hdSchType").val() == 'Single') {
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saleend-' + divlength).val($("#txtEndDate").val());
+            //    $('#id_saletimeend-' + divlength).val($("#txtEndTime").val());
+
+            //}
+            //if ($("#hdSchType").val() == 'Multiple') {
+            //    $('#id_salestart-' + divlength).val(today);
+            //    $('#id_saletimestart-' + divlength).val(time);
+            //    $('#id_saleend-' + divlength).val($("#txtDateTo").val());
+            //    $('#id_saletimeend-' + divlength).val($("#txtTimeEnd").val());
+            //}
 
 
             $("#id_auto_hide_until_Date-" + divlength).attr("readonly", "readonly");
@@ -5533,9 +5737,41 @@ else
 
 
         }
+
+        function formatdate()
+        {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+
+            today = mm + '/' + dd + '/' + yyyy;
+            return today;
+        }
+        function formatAMPM() {
+            var date = new Date();
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var ampm = hours >= 12 ? 'pm' : 'am';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            var strTime = hours + ':' + minutes +ampm;
+            return strTime;
+        }
         function deletediv(e) {
             {
-
+                var id = e;
+                var deltedy=0;
+                var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
                 var divlength = $("#MasterDiv> div").size();
                 var status = $('#status').val();
                 console.log(status);
@@ -5549,8 +5785,40 @@ else
                 }
 
 
-                var id = e;
-                var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+
+
+                var ticketId=parseInt($("#id_ticket_id-"+el).val());
+                if(ticketId!=0)
+                {
+                    $.ajax({
+                        url: '@Url.Action("Checkticketstatus", "EditEvent")',
+                        data: { ticketid: ticketId },
+                        type: "Post",
+                        async:false,
+                        success: function (data) {
+
+                            if (data.Ticketsale == 0) {
+
+                                deltedy=0;
+
+
+                            } else {
+                                deltedy=data.Ticketsale;
+
+                            }
+
+                        }
+                    });
+                }
+                //alert(deltedy);
+                if(deltedy!=0)
+                {
+                    $('#nodeleteH4').text("You cannot delete this ticket since it has already been purchased/registered or donated.")
+                    $('#anodelete').click();
+                    $(".tab-content").hide();
+
+                    return false;
+                }
 
                 var div = document.getElementById("clonediv-" + el);
                 // var div = document.getElementById("clonediv-0");
@@ -5699,7 +5967,6 @@ else
 
         }
         function checkvalidtime(e) {
-            debugger;
             var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
             var al = e.substr(0, e.indexOf('-'));
 
@@ -5711,27 +5978,78 @@ else
 
                     $('#id_saletimestart-' + el).focus();
                     $('#id_saletimestart-' + el).val("7:00pm");
-                    $('#id_saletimeend-' + el).val("7:00pm");
 
-                } else {
-                    var txt=$('#' + e).val();
-                    $('#id_hdsaletimestart-' + el).val(txt);
-                    $('#id_hdsaletimeend-' + el).val(txt);
-                    $('#id_saletimeend-' + el).val($('#' + e).val());
+
+                }
+                else
+                {
+                    var starttimetime1 = convertTo24Hour($("#id_saletimestart-" + el).val());
+                    var todayDate = new Date($('#id_salestart-' + el).val() + " " + starttimetime1);
+                    var enddate = convertTo24Hour($('#id_saletimeend-' + el).val());
+
+                    var dateOne = new Date($('#id_saleend-' + el).val() + " " + enddate);
+
+                    if (todayDate > dateOne) {
+                        $('#id_saleend-' + el).val($("#id_salestart-" + el).val());
+                        $('#id_saletimeend-' + el).val($("#id_saletimestart-" + el).val());
+                    } else
+                    {
+
+                        var txt = $('#' + e).val();
+
+                        if ($("#hdSchType").val() == '') {
+                            $('#id_saletimeend-' + el).val($('#' + e).val());
+                        }
+
+                        if ($("#hdSchType").val() == 'Single') {
+
+                            $('#id_saletimeend-' + el).val($("#txtEndTime").val());
+
+                        }
+                        if ($("#hdSchType").val() == 'Multiple') {
+
+                            $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
+                        }
+                    }
+
+
 
                 }
             }
-            if (al == "id_saletimeend") {
+            if (al == "id_saletimeend")
+            {
                 errorMsg = checkTime(e);
-                if (errorMsg != "") {
+                if (errorMsg != "")
+                {
+                    if ($("#hdSchType").val() == '') {
+                        $('#id_saletimeend-' + el).val($('#id_saletimestart-' + el).val());
+                    }
 
+                    if ($("#hdSchType").val() == 'Single') {
 
-                    $('#id_saletimeend-' + el).val($('#id_saletimestart-' + el).val());
-                    $('#id_saletimeend-' + el).focus();
-                    $('#id_hdsaletimeend-' + el).val($('#id_saletimestart-' + el).val());
+                        $('#id_saletimeend-' + el).val($("#txtEndTime").val());
 
-                } else {
-                    $('#id_hdsaletimeend-' + el).val($('#' + e).val());
+                    }
+                    if ($("#hdSchType").val() == 'Multiple') {
+
+                        $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
+                    }
+
+                }
+                else
+                {
+
+                    var starttimetime1 = convertTo24Hour($("#id_saletimestart-" + el).val());
+                    var todayDate = new Date($("#id_salestart-"+el).val() + " " + starttimetime1);
+                    var enddatetime = convertTo24Hour($('#id_saletimeend-' + el).val());
+
+                    var dateOne = new Date($('#id_saleend-' + el).val() + " " + enddatetime);
+
+                    if (todayDate > dateOne) {
+
+                        $('#id_saleend-' + el).val($("#id_salestart-"+el).val());
+                        $('#id_saletimeend-' + el).val($("#id_saletimestart-" + el).val());
+                    }
                 }
             }
             if (al == "id_auto_hide_until_time") {
@@ -5740,15 +6058,15 @@ else
 
 
 
-                    $('#id_auto_hide_until_time-' + el).focus();
+                    //$('#id_auto_hide_until_time-' + el).focus();
                     $('#id_auto_hide_until_time-' + el).val("");
-                   
+                    //$('#id_auto_hide_after_Time-' + el).val("7:00pm");
 
                 } else {
 
                     $('#id_hdautohideuntil-' + el).val($('#' + e).val());
-                  
-                  
+                    //$('#id_hdautohideafter-' + el).val($('#' + e).val());
+                    //$('#id_auto_hide_after_Time-' + el).val($('#' + e).val());
 
                 }
 
@@ -5756,12 +6074,12 @@ else
             if (al == "id_auto_hide_after_Time") {
                 errorMsg = checkTime(e);
                 if (errorMsg != "") {
+                    $("#id_auto_hide_after_Time-" + el).val("");
+                    //$('#id_auto_hide_after_Time-' + el).val($('#id_auto_hide_until_time-' + el).val());
 
-                    $('#id_auto_hide_after_Time-' + el).val('');
+                    //$('#id_auto_hide_after_Time-' + el).focus();
 
-                    $('#id_auto_hide_after_Time-' + el).focus();
-
-                    $('#id_hdautohideafter-' + el).val('');
+                    $('#id_hdautohideafter-' + el).val("");
 
                 } else {
                     $('#id_hdautohideafter-' + el).val($('#' + e).val());
@@ -5770,6 +6088,17 @@ else
             }
 
 
+        }
+
+        function convertTo24Hour(time) {
+            var hours = parseInt(time.substr(0, 2));
+            if (time.indexOf('am') != -1 && hours == 12) {
+                time = time.replace('12', '0');
+            }
+            if (time.indexOf('pm') != -1 && hours < 12) {
+                time = time.replace(hours, (hours + 12));
+            }
+            return time.replace(/(am|pm)/, '');
         }
         function checkvalidDate(e) {
 
@@ -5782,30 +6111,44 @@ else
                 var startdate = $('#id_salestart-' + el).val();
                 if (errorMsg != "") {
 
+                    if ($("#hdSchType").val() == '') {
+                        $('#id_saleend-' + el).val(startdate);
+                    }
+
+                    if ($("#hdSchType").val() == 'Single') {
+                        $('#id_saleend-' + el).val($("#txtEndDate").val());
+                        $('#id_saletimeend-' + el).val($("#txtEndTime").val());
+
+                    }
+                    if ($("#hdSchType").val() == 'Multiple') {
+                        $('#id_saleend-' + el).val($("#txtDateTo").val());
+                        $('#id_saletimeend-' + el).val($("#txtTimeEnd").val());
+                    }
 
 
-                    $('#id_saleend-' + el).focus();
-                    $('#id_saleend-' + el).val(startdate);
+
+
+
 
 
                 }
+                var starttimetime1 = convertTo24Hour($("#id_saletimestart-" + el).val());
+                var todayDate = new Date(startdate + " " + starttimetime1);
+                var enddatetime = convertTo24Hour($('#id_saletimeend-' + el).val());
 
-                errorMsg = compare(startdate, enddate);
+                var dateOne = new Date(enddate + " " + enddatetime);
 
-                if (errorMsg != "") {
-
-
-
-                    $('#id_saleend-' + el).focus();
+                if (todayDate > dateOne) {
                     $('#id_saleend-' + el).val(startdate);
-                    // field.value = "";
-
-
+                    $('#id_saletimeend-' + el).val($("#id_saletimestart-" + el).val());
                 }
+
+
+
             }
             if (al == "id_auto_hide_after_Date") {
-                //var startdate = $('#id_auto_hide_until_Date-' + el).val();
-                //var enddate = $('#id_auto_hide_after_Date-' + el).val();
+                var startdate = $('#id_auto_hide_until_Date-' + el).val();
+                var enddate = $('#id_auto_hide_after_Date-' + el).val();
                 if (errorMsg != "") {
 
 
@@ -5816,18 +6159,7 @@ else
 
                 }
 
-                ////errorMsg = compare(startdate, enddate);
 
-                //if (errorMsg != "") {
-
-
-
-                //    $('#id_auto_hide_after_Date-' + el).focus();
-                //    $('#id_auto_hide_after_Date-' + el).val(startdate);
-                //    // field.value = "";
-
-
-                //}
 
 
             }
@@ -5939,7 +6271,7 @@ else
 
                 $("#id_hideuntil-"+ el).attr("checked", false);
                 $("#id_hideafter-"+ el).attr("checked", false);
-            
+
                 $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
@@ -5957,7 +6289,7 @@ else
                 $("#id_auto_hide_type_0-" + el).prop('checked', false);
                 $("#id_hideuntil-"+ el).attr("checked", false);
                 $("#id_hideafter-"+ el).attr("checked", false);
-            
+
                 $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
@@ -5977,7 +6309,7 @@ else
 
                 $("#id_hideuntil-" + el).attr("checked", false);
                 $("#id_hideafter-" + el).attr("checked", false);
-             
+
                 $("#id_auto_hide_until_Date-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_time-" + el).attr("readonly", "readonly");
                 $("#id_auto_hide_until_Date-" + el).datepicker("option", "minDate", -1);
@@ -6089,7 +6421,7 @@ else
             var countmax = 0;
             var countdiscount = 0;
             var eccount=0;
-
+            var purcsed=0;
             var hidecount = 0;
             var title = $('#txtEventTitle').val();
 
@@ -6118,7 +6450,13 @@ else
             }
 
 
-
+            if ($("#tblAddress tr").length <= 1) {
+                if ($("#btOnlineEvent").is(":checked") == false && $("#UsepastLoc").is(":checked") == false) {
+                    if ($("#txtEventLocation").val() == "") {
+                        msg += "Inavlid Address" + "<br/>";;
+                    }
+                }
+            }
             var divlength = $("#MasterDiv> div").size();
             if (divlength <= 0) {
                 msg += "Please Enter atleast one ticket";
@@ -6151,7 +6489,40 @@ else
                             $('#id_quantity_total-' + i).removeClass('err-bor');
                         }
                     }
+                    debugger;
+                    var ticketId=parseInt($("#id_ticket_id-"+i).val());
+                    var deltedy=0;
+                    if(ticketId!=0)
+                    {
+                        $.ajax({
+                            url: '@Url.Action("Checkticketstatus", "EditEvent")',
+                            data: { ticketid: ticketId },
+                            type: "Post",
+                            async:false,
+                            success: function (data) {
+                           
+                                if (data.Ticketsale == 0) {
 
+                                    deltedy=0;
+
+                           
+                                } else {
+                                    deltedy=data.Ticketsale;
+                               
+                                }
+
+                            }
+                        });
+                    }
+                    if(deltedy!=0)
+                    {
+                        if(ticket_Qty<=deltedy)
+                        {
+
+                            $('#id_quantity_total-' + i).addClass('err-bor');
+                            purcsed++;
+                        }
+                    }
                     if ($('#id_paid-' + i).css('display') == "block") {
 
                         var price = parseFloat($('#id_cost-' + i).val());
@@ -6315,6 +6686,10 @@ else
             {
                 msg+="Please Enter valid qty <br/>";
             }
+            if(purcsed>0)
+            {
+                msg+= ajaxsetup("CreateEvent", "CreateEventQtyPurchaseValidateUI") + "<br/>";
+            }
             if (countprice > 0) {
                 msg += ajaxsetup("CreateEvent", "PriceNotzeroUI") + "<br/>";
             }
@@ -6397,7 +6772,7 @@ else
 
             }
             if ($('#chkReqPassword').is(":checked") == true) {
-                if ($('#txtReqPassword').val() == "") {
+                if ($('#txtReqPassword').val().length<6) {
                     $('#txtReqPassword').addClass('err-bor');
                     msg += ajaxsetup("CreateEvent", "CreateEventPwdUI") + "<br/>";;
 
@@ -6693,8 +7068,32 @@ else
     </script>
 
     <script>
-        $(document).ready(function () {
+
       
+        $(document).ready(function () {
+            $('body').on('keyup keypress', function (e) {
+                debugger;
+                var keyCode = e.keyCode || e.which;
+                if (keyCode === 13) {
+                    var msg = validatemain();
+               
+                    if (msg != "") {
+                        $('#diverroacc').css('display', 'block');
+                        $('#erraccmsg').html(msg);
+                        $('#divaccsuc').css('display', 'none');
+                        $('html,body').animate({ scrollTop: 0 });
+                        return false;
+
+                    }
+                    //if ($("#status").val().trim().toUpperCase() == "LIVE")
+                    //    save("Live");
+                    //else
+                    save("Save");
+                    //e.preventDefault();
+                   
+                    //return false;
+                }
+            });
             $("#btndeleteorg").click(function()
             {
                 $("#hId").html(ajaxsetup('OrganizerMaster', 'OrgDeleteMessage'));
@@ -7015,15 +7414,59 @@ else
         //    e.stopPropagation();
         //});
 
-        $(document).on('click', function (e) {
-            var $target = $(e.target);
-            if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null) {
-                $(".StartDatemodal").hide();
-            };
-            if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
-                $(".TmezoneSet").hide();
-            }
-        });
+        //$(document).on('click', function (e) {
+
+        //    debugger;
+
+        //    var $target = $(e.target);
+
+        //    var id = $(e.target)[0].id;
+
+
+        //    var uiclasstimepicker = $($(e.target)[0]).attr("class");
+        //    var uiclassdatepicker = $($(e.target)[0]).parent().parents("div").attr("class")
+        //    var uidatepickerheader = $($(e.target)[0]).parent().parents("div").attr("class");
+        //    if (typeof uiclasstimepicker === "undefined" && typeof uiclassdatepicker === "undefined" && typeof uidatepickerheader === "undefined") {
+        //        AddDates();
+
+        //        $(".StartDatemodal").hide();
+        //    } else
+        //    {
+        //        if (typeof uiclasstimepicker === "undefined" && (typeof uiclassdatepicker != "undefined" || typeof uidatepickerheader != "undefined"))
+        //        {
+        //            AddDates();
+
+        //            $(".StartDatemodal").hide();
+        //        }
+        //        if(typeof uiclasstimepicker!="undefined"&& (typeof uiclassdatepicker != "undefined" || typeof uidatepickerheader != "undefined"))
+        //        {
+        //            if ((uiclasstimepicker != "ui-timepicker-selected") && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker-header") < 0) && ($($(e.target)[0]).parent().parents("div").attr("class").indexOf("ui-datepicker") < 0))
+        //            {
+
+        //                if ($target.closest(".StartDate").get(0) == null && $target.closest(".StartDatemodal").get(0) == null)
+        //                {
+        //                    AddDates();
+
+        //                    $(".StartDatemodal").hide();
+
+        //                }
+        //            }
+        //        }
+             
+
+
+        //        //}
+        //    }
+
+        //    if ($target.closest(".Timezone").get(0) == null && $target.closest(".TmezoneSet").get(0) == null) {
+        //        AddTimeZone();
+        //        $(".TmezoneSet").hide();
+        //    }
+
+
+
+
+        //});
 
         function onlyAlphabets(e, t) {
 
@@ -7043,7 +7486,7 @@ else
 
             else { return true; }
 
-            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 32)
+            if ((charCode >= 48 && charCode <= 57)||(charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 32 ||charCode == 8 || charCode == 0)
 
                 return true;
 
@@ -7052,10 +7495,38 @@ else
                 return false;
 
         }
+        $(document).prop('title', 'EventCombo - Edit @Model.EventTitle');
+
+        $(".upload_help_icn_inner").css({ "display": "none" });
+
+     
+        function showhover(e)
+        {
+            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+            var al = e.substr(0, e.indexOf('-'));
+            if (al == "hovstart") {
+                $("#help_start_inner-" + el).css({ "display": "block" });
+            }
+            if(al=="hovend")
+            {
+                $("#help_end_inner-" + el).css({ "display": "block" });
+            }
+        }
+
+        function showhoverout(e)
+        {
+            var el = e.substr(e.indexOf('-') + 1, e.length - e.indexOf('-'));
+            var al = e.substr(0, e.indexOf('-'));
+            if (al == "hovstart") {
+                $("#help_start_inner-" + el).css({ "display": "none" });
+            }
+            if (al == "hovend") {
+                $("#help_end_inner-" + el).css({ "display": "none" });
+            }
+
+        }
     </script>
-
-}
-
+   
 
 
 

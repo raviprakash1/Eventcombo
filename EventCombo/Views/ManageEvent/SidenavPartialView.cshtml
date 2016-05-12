@@ -1,0 +1,108 @@
+﻿
+@using EventCombo.Controllers
+@model EventCombo.ViewModels.Sidenav
+
+    <div id="accordion" class="panel-group">
+
+        <div class="panel panel-default menu_list">
+            <a class="menu_title" href="@Url.Action("MyAccount", "Account") ">
+                <div class="panel-heading">
+                    < My Account
+                </div>
+            </a>
+        </div>
+        <div class="panel panel-default menu_list">
+            <a class="menu_title" href="@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(Model.Eventtitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = Model.EventId.ToString() })" title="@Model.Eventtitle">
+                <div class="panel-heading activeyellow act_ellipses">
+                    @Model.Eventtitle
+                </div>
+            </a>
+        </div>
+        <div class="panel panel-default menu_list">
+            <a class="menu_title" href="#">
+                <div class="panel-heading">
+                    Event Help
+                </div>
+            </a>
+        </div>
+        <div class="panel panel-default menu_list">
+            <a class="menu_title" href="#">
+                <div class="panel-heading">
+                    Event Bundles
+                </div>
+            </a>
+        </div>
+        <div class="panel panel-default menu_list">
+            <a class="menu_title" href="@Url.Action("Index","ManageEvent",  new { Eventlid = ValidationMessageController.GetParentEventId(Model.EventId) , type = "N"})">
+                <div class="panel-heading">
+                    Event Dashboard
+                </div>
+            </a>
+        </div>
+        <div class="panel panel-default menu_list">
+          <a id="orderoptions" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapseOrderOption">
+            <div class="panel-heading @(Model.CurrentItem == "orderoptions" ? "active" : "")">
+              Modify Order Options <b class="closed"></b>
+            </div>
+
+          </a>
+          <div id="collapseOrderOption" class="panel-collapse collapse @(Model.CurrentItem == "orderoptions" ? "in" : "" )">
+            <div class="panel-body no-padding">
+              <p>@Html.ActionLink("Order Form", "Form", "OrderOptions", new { eventId = Model.EventId }, null) </p>
+              <p>@Html.ActionLink("Order Confirmation", "Confirmation", "OrderOptions", new { eventId = Model.EventId }, null)</p>
+              <p>@Html.ActionLink("Event Type & Language", "EventType", "OrderOptions", new { eventId = Model.EventId }, null)</p>
+              <p>@Html.ActionLink("Waitlist", "Waitlist", "OrderOptions", new { eventId = Model.EventId }, null)</p>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default menu_list">
+          <a id="manageattendees" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapseManageAttendees">
+            <div class="panel-heading @(Model.CurrentItem == "manageattendees" ? "active" : "")">
+              Manage Attendees <b class="closed"></b>
+            </div>
+          </a>
+          <div id="collapseManageAttendees" class="panel-collapse collapse @(Model.CurrentItem == "manageattendees" ? "in" : "")">
+            <div class="panel-body no-padding">
+              <p>@Html.ActionLink("Orders", "Orders", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
+              <p>@Html.ActionLink("Add Attendees", "Add", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
+              <p>@Html.ActionLink("Emails to Attendees", "Email", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
+              <p>@Html.ActionLink("Guest List", "Guests", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
+              <p>@Html.ActionLink("Name Badges", "Badges", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
+              <p>@Html.ActionLink("Check-in", "Checkin", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default menu_list">
+
+            <a id="crt_promcode" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+              <div id="dvcrtpromcode" class="panel-heading @(Model.CurrentItem == "inviteandpromote" ? "active" : "")">
+                Invite and Promote <b class="closed"></b>
+              </div>
+            </a>
+
+            <div id="collapse2" class="panel-collapse collapse @(Model.CurrentItem == "inviteandpromote" ? "in" : "")">
+                <div class="panel-body no-padding">
+                    <p class="invite_nav">@Html.ActionLink("Email Invitations", "EmailInvitations", "ManageEvent", new { eventId = ValidationMessageController.GetParentEventId(Model.EventId)}, null)</p>
+                    @if (Model.DiscountCode > 0)
+                    {
+                        <p class="invite_nav">@Html.ActionLink("Promotional Code", "PromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.EventId) }, null)</p>
+                    }
+                    else
+                    {
+                        <p class="invite_nav">@Html.ActionLink("Promotional Code", "CreatePromotionalCodes", "ManageEvent", new { Eventlid = ValidationMessageController.GetParentEventId(Model.EventId) }, null)</p>
+                    }
+                    <p class="invite_nav">Facebook Integration</p>
+                    <p class="invite_nav">Website Integration</p>
+                    <p class="invite_nav">Tracing Links</p>
+                    <p class="invite_nav">Affialate Programs</p>
+                    <p class="invite_nav">Social Stream</p>
+
+
+
+
+                </div>
+            </div>
+          </div>
+
+        </div>
+    </div>

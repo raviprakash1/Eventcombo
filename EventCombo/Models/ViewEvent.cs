@@ -43,7 +43,7 @@ namespace EventCombo.Models
         public string EventPrivacy { get; set; }
         public string EventCancel { get; set; }
         public string Orgevents { get; internal set; }
-
+        public string PrivatePassword { get; set; }
         public Coordinates Geocode(string address)
         {
             if (string.IsNullOrEmpty(address))
@@ -118,6 +118,7 @@ namespace EventCombo.Models
         public string Limit { get; set; }
         public string code { get; set; }
         public long PCID { get; set; }
+        public Int64 Orderpromo { get; set; }
 
     }
     public partial class Promo_Code
@@ -131,9 +132,12 @@ namespace EventCombo.Models
         public int ticketype { get; set; }
         public string startdays { get; set; }
         public string enddays { get; set; }
+        public string startdatesave { get; set; }
+        public bool orderrow { get; set; }
 
     
     }
+   
     public class Coordinates
         {
             public Coordinates(double latitude, double longitude)

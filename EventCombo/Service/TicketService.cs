@@ -10,6 +10,10 @@ using System.Net.Mail;
 using System.Configuration;
 using System.Text;
 using System.Web.Mvc;
+using System.IO;
+using System.Net.Mime;
+using EventCombo.Controllers;
+using EventCombo.Utils;
 
 namespace EventCombo.Service
 {
@@ -45,8 +49,8 @@ namespace EventCombo.Service
       foreach (var order in orderRepo.Get(filter: (o => o.O_User_Id == userId)))
       {
         var ptickets = tpdRepo.Get(filter: (t => t.TPD_Order_Id == order.O_Order_Id));
-        var firstticket = ptickets.First();
-        if (ptickets != null)
+        var firstticket = ptickets == null ? null : ptickets.FirstOrDefault();
+        if ((ptickets != null) && (firstticket != null))
         {
           oVM = new OrderMainViewModel()
           {
@@ -61,10 +65,11 @@ namespace EventCombo.Service
             OrderId = order.O_Order_Id,
             EventCancelled = (firstticket.Event.EventCancel == "Y"),
             Favorite = firstticket.Event.EventFavourites.Where(ef => ef.UserID == userId).Any(),
-            OrderStateId = order.OrderStateId
+            OrderStateId = order.OrderStateId,
+            EventId = firstticket.TPD_Event_Id
           };
+          ordersVM.Add(oVM);
         };
-        ordersVM.Add(oVM);
       }
       return ordersVM;
     }
@@ -147,7 +152,7 @@ namespace EventCombo.Service
     }
 
 
-    public bool SaveOrderDetails(OrderDetailsViewModel model, string userId, string baseUrl)
+    public bool SaveOrderDetails(OrderDetailsViewModel model, string userId, string baseUrl, string filePath)
     {
       bool res = true;
       using (var uow = _factory.GetUnitOfWork())
@@ -178,12 +183,15 @@ namespace EventCombo.Service
           uow.Context.SaveChanges();
           if (selected.Count > 0)
           {
-            OrderNotification notification = new OrderNotification(_factory, _dbservice, model.OrderId, baseUrl);
+            var mem = GetDownloadableTicket(model.OrderId, "pdf", filePath);
+            Attachment attach = new Attachment(mem, new ContentType(MediaTypeNames.Application.Pdf));
+            attach.ContentDisposition.FileName = "Ticket_EventCombo.pdf";
+            OrderNotification notification = new OrderNotification(_factory, _dbservice, model.OrderId, baseUrl, attach);
             ISendMailService sendService = CreateSendMailService();
             foreach (var att in selected)
               if (!String.IsNullOrWhiteSpace(att.Email))
               {
-                notification.ReceiverName = att.Name;
+                notification.Receiver = att.Name;
                 sendService.Message.To.Clear();
                 sendService.Message.To.Add(new MailAddress(att.Email, att.Name));
                 notification.SendNotification(sendService);
@@ -292,6 +300,26 @@ namespace EventCombo.Service
       }
 
       return true;
+    }
+
+
+    public MemoryStream GetDownloadableTicket(string orderId, string format, string filePath)
+    {
+      TicketPaymentController tpc = new TicketPaymentController();
+
+      IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+      IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
+
+      var ticket = tpdRepo.Get(filter: (t => t.TPD_Order_Id == orderId)).FirstOrDefault();
+      var order = orderRepo.Get(filter: (o => o.O_Order_Id == orderId)).FirstOrDefault();
+
+      if ((ticket == null) || (order == null))
+        return null;
+
+      var user = ticket.AspNetUser.Profiles.FirstOrDefault();
+      string name = !String.IsNullOrWhiteSpace(order.O_First_Name) ? order.O_First_Name : (user == null ? "" : user.FirstName);
+
+      return tpc.generateTicketPDF(ticket.TPD_GUID, ticket.TPD_Event_Id ?? 0, null, name, filePath);
     }
   }
 }

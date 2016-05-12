@@ -17,6 +17,10 @@ namespace CMS.Controllers
 
         public string GetPermission(int iPermissionId)
         {
+            if ((Session["UserID"] == null))
+            {
+                return "SE";
+            }
             string strPer = "N";
             try
             {

@@ -3,18 +3,39 @@
     ViewBag.Title = "DoCheckoutPayment";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<br /><br /><br />
-<br /><br /><br />
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 <div class="event_container">
-    <div class="event_inner_container event_top" id="eventtopscoll">
-        <div class="col-sm-12 pt10 bggrey clearfix">
-            <div class="col-sm-12">
-                @(ViewData["ReturnMessage"].ToString() == "" ? "Your payment is Successfully done." : "Your payement Unsuccess<br>" + ViewData["ReturnMessage"])<br />                
-                <input id="hdResult" type="hidden" value="@ViewData["ReturnMessage"]" />
-            </div>
-            <div class="col-sm-12">
-                <div id="dvAjxLoader">
-                    Please wait ...<img src="~/Images/ajaxloader1.gif" />
+    <div class="event_inner_container event_top view_evnt_top viewevent_container xs-paymentconf-top" id="eventtopscoll">
+        <div class="event_detail_container xs-paymentconf-inner">
+            <div class="col-sm-12 pt10 bggrey clearfix">
+                <div class="col-sm-12">
+                    @if (ViewData["ReturnMessage"] == "" )
+                {
+                    <div class="er_suc_main" id="divaccfrgtsuc">
+                        <button class="close" type="button" id="btndivaccfrgtsuc">&#215;</button>
+                        <div class="er_suc_img"></div>
+                        <div class="er_suc" id="divsuccfrgt">Your payment is Successfully done. </div>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="err_main" id="diverrofrgt">
+                        <div class="er_UI_main">
+                            <button class="close" type="button" id="btndiverrofrgt">&#215;</button>
+                            <div class="er_UI_img"></div>
+                            <div class="er_suc" id="dvfrgtui"> Your payement Unsuccess  @ViewData["ReturnMessage"]  </div>
+                        </div>
+                    </div>
+                }
+
+
+                    <input id="hdResult" type="hidden" value="@ViewData["ReturnMessage"]" />
+                </div>
+                <div class="col-sm-12 text-center">
+                    <div id="dvAjxLoader">
+                        <img src="~/Images/ajax-loader.gif" /> Please wait... 
+                    </div>
                 </div>
             </div>
         </div>

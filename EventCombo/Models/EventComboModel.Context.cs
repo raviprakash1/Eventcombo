@@ -48,10 +48,8 @@ namespace EventCombo.Models
         public virtual DbSet<Events_Hit> Events_Hit { get; set; }
         public virtual DbSet<EventSubCategory> EventSubCategories { get; set; }
         public virtual DbSet<EventType> EventTypes { get; set; }
-        public virtual DbSet<EventVenue> EventVenues { get; set; }
         public virtual DbSet<EventVote> EventVotes { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
-        public virtual DbSet<MultipleEvent> MultipleEvents { get; set; }
         public virtual DbSet<Order_Detail_T> Order_Detail_T { get; set; }
         public virtual DbSet<Payment_Info> Payment_Info { get; set; }
         public virtual DbSet<Permission_Detail> Permission_Detail { get; set; }
@@ -61,7 +59,6 @@ namespace EventCombo.Models
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<Ticket_Locked_Detail> Ticket_Locked_Detail { get; set; }
-        public virtual DbSet<Ticket_Purchased_Detail> Ticket_Purchased_Detail { get; set; }
         public virtual DbSet<Ticket_Quantity_Detail> Ticket_Quantity_Detail { get; set; }
         public virtual DbSet<TicketBearer> TicketBearers { get; set; }
         public virtual DbSet<TicketDeliveryMethod> TicketDeliveryMethods { get; set; }
@@ -74,6 +71,19 @@ namespace EventCombo.Models
         public virtual DbSet<Organizer_Master> Organizer_Master { get; set; }
         public virtual DbSet<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
         public virtual DbSet<v_RetrieveEventid> v_RetrieveEventid { get; set; }
+        public virtual DbSet<Event_Email_Invitation> Event_Email_Invitation { get; set; }
+        public virtual DbSet<Event_Email_List> Event_Email_List { get; set; }
+        public virtual DbSet<AggregatedCounter> AggregatedCounters { get; set; }
+        public virtual DbSet<Counter> Counters { get; set; }
+        public virtual DbSet<Hash> Hashes { get; set; }
+        public virtual DbSet<Job> Jobs { get; set; }
+        public virtual DbSet<JobParameter> JobParameters { get; set; }
+        public virtual DbSet<JobQueue> JobQueues { get; set; }
+        public virtual DbSet<List> Lists { get; set; }
+        public virtual DbSet<Schema> Schemata { get; set; }
+        public virtual DbSet<Server> Servers { get; set; }
+        public virtual DbSet<Set> Sets { get; set; }
+        public virtual DbSet<State> States { get; set; }
         public virtual DbSet<OrderTemplate> OrderTemplates { get; set; }
         public virtual DbSet<OrderTemplateQuestion> OrderTemplateQuestions { get; set; }
         public virtual DbSet<OrderTemplateType> OrderTemplateTypes { get; set; }
@@ -87,6 +97,16 @@ namespace EventCombo.Models
         public virtual DbSet<OrderTemplateQuestionVariant> OrderTemplateQuestionVariants { get; set; }
         public virtual DbSet<OrderTemplateGroupType> OrderTemplateGroupTypes { get; set; }
         public virtual DbSet<Promo_Code> Promo_Code { get; set; }
+        public virtual DbSet<Ticket_Purchased_Detail> Ticket_Purchased_Detail { get; set; }
+        public virtual DbSet<EventVenue> EventVenues { get; set; }
+        public virtual DbSet<MultipleEvent> MultipleEvents { get; set; }
+        public virtual DbSet<V_EventsList> V_EventsList { get; set; }
+        public virtual DbSet<V_Users> V_Users { get; set; }
+        public virtual DbSet<Article> Articles { get; set; }
+        public virtual DbSet<ArticleAuthor> ArticleAuthors { get; set; }
+        public virtual DbSet<ArticleImage> ArticleImages { get; set; }
+        public virtual DbSet<ECImage> ECImages { get; set; }
+        public virtual DbSet<ECImageType> ECImageTypes { get; set; }
         public virtual DbSet<OrderState> OrderStates { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
@@ -143,23 +163,6 @@ namespace EventCombo.Models
                 new ObjectParameter("EventTicket", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEventListing_Result>("GetEventListing", eventTitleParameter, eventTypeParameter, eventCatParameter, eventSubCatParameter, eventFeatureParameter, eventStartdateParameter, eventTicketParameter);
-        }
-    
-        public virtual ObjectResult<GetEventsListByStatus1_Result> GetEventsListByStatus1(string eventTitle, string eventStatus, string userID)
-        {
-            var eventTitleParameter = eventTitle != null ?
-                new ObjectParameter("EventTitle", eventTitle) :
-                new ObjectParameter("EventTitle", typeof(string));
-    
-            var eventStatusParameter = eventStatus != null ?
-                new ObjectParameter("EventStatus", eventStatus) :
-                new ObjectParameter("EventStatus", typeof(string));
-    
-            var userIDParameter = userID != null ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEventsListByStatus1_Result>("GetEventsListByStatus1", eventTitleParameter, eventStatusParameter, userIDParameter);
         }
     
         public virtual ObjectResult<string> GetSelectedTicketListing(string gUID, Nullable<long> eventId)
@@ -255,6 +258,32 @@ namespace EventCombo.Models
                 new ObjectParameter("long2", typeof(double));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("GetLantLongDistance", lat1Parameter, long1Parameter, lat2Parameter, long2Parameter);
+        }
+    
+        public virtual ObjectResult<GetEventsListByStatus1_Result> GetEventsListByStatus1(string eventTitle, string eventStatus, string userID)
+        {
+            var eventTitleParameter = eventTitle != null ?
+                new ObjectParameter("EventTitle", eventTitle) :
+                new ObjectParameter("EventTitle", typeof(string));
+    
+            var eventStatusParameter = eventStatus != null ?
+                new ObjectParameter("EventStatus", eventStatus) :
+                new ObjectParameter("EventStatus", typeof(string));
+    
+            var userIDParameter = userID != null ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEventsListByStatus1_Result>("GetEventsListByStatus1", eventTitleParameter, eventStatusParameter, userIDParameter);
+        }
+    
+        public virtual int PublishSingleEvent(Nullable<long> eventId)
+        {
+            var eventIdParameter = eventId.HasValue ?
+                new ObjectParameter("EventId", eventId) :
+                new ObjectParameter("EventId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PublishSingleEvent", eventIdParameter);
         }
     }
 }

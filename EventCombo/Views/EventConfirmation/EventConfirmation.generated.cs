@@ -314,18 +314,26 @@ WriteLiteral("></div>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"col-sm-12 no_pad mt20 text-right \"");
 
-WriteLiteral(">\r\n                \r\n                <button");
+WriteLiteral(">\r\n             \r\n                <a");
 
 WriteLiteral(" class=\"btn ev_live_sub_btn mb5 mr0\"");
 
 WriteLiteral(" id=\"btPreview\"");
 
-WriteLiteral(" type=\"button\"");
+WriteAttribute("href", Tuple.Create(" href=\"", 3584), Tuple.Create("\"", 3721)
+            
+            #line 90 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+, Tuple.Create(Tuple.Create("", 3591), Tuple.Create<System.Object, System.Int32>(Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.urlTitle.Replace(" ","") , strEventId = Model.EventId.ToString()})
+            
+            #line default
+            #line hidden
+, 3591), false)
+);
 
-WriteLiteral(@">
+WriteLiteral(@"  >
                     VIEW &#10;
                     <span>></span>
-                </button>
+                </a>
             </div>
         </div>
     </div>

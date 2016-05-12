@@ -17,7 +17,7 @@ namespace EventCombo.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Publish_Event_Detail()
         {
-            this.Ticket_Quantity_Details = new HashSet<Ticket_Quantity_Detail>();
+            this.Ticket_Quantity_Detail = new HashSet<Ticket_Quantity_Detail>();
         }
     
         public long PE_Id { get; set; }
@@ -31,7 +31,7 @@ namespace EventCombo.Models
         public string PE_End_Time { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ticket_Quantity_Detail> Ticket_Quantity_Details { get; set; }
+        public virtual ICollection<Ticket_Quantity_Detail> Ticket_Quantity_Detail { get; set; }
         public virtual EventVenue EventVenue { get; set; }
         public virtual MultipleEvent MultipleEvent { get; set; }
     }

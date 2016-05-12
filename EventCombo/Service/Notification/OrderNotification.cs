@@ -1,7 +1,9 @@
 ﻿using EventCombo.DAL;
 using EventCombo.Models;
+using EventCombo.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -19,9 +21,9 @@ namespace EventCombo.Service
     private string _subject;
     private string _orderId;
     private string _baseUrl;
-//    private AttachmentCollection _files = new AttachmentCollection();
+    private Attachment _attachment;
 
-    public OrderNotification(IUnitOfWorkFactory factory, IDBAccessService dbService, string orderId, string baseUrl)
+    public OrderNotification(IUnitOfWorkFactory factory, IDBAccessService dbService, string orderId, string baseUrl, Attachment attachment)
     {
       if (factory == null)
         throw new ArgumentNullException("factory");
@@ -33,9 +35,10 @@ namespace EventCombo.Service
       _dbservice = dbService;
       _orderId = orderId;
       _baseUrl = baseUrl;
+      _attachment = attachment;
     }
 
-    public string ReceiverName
+    public string Receiver
     {
       get { return _receiver; }
       set { _receiver = value; }
@@ -47,7 +50,9 @@ namespace EventCombo.Service
         PrepareNotification();
       _service.Message.Subject = _subject;
       _service.Message.IsBodyHtml = true;
-      _service.Message.Body = _body.Replace("¶¶UserFirstNameID¶¶", ReceiverName);
+      _service.Message.Body = _body.Replace("¶¶UserFirstNameID¶¶", Receiver);
+      if (_attachment != null)
+        _service.Message.Attachments.Add(_attachment);
       _service.SendMail();
     }
 
@@ -64,17 +69,6 @@ namespace EventCombo.Service
       _subject = eTemplate.Subject.Replace("¶¶EventTitleId¶¶", ticket.Event.EventTitle).Replace("¶¶EventOrderNO¶¶", _orderId);
       _body = new MvcHtmlString(HttpUtility.HtmlDecode(eTemplate.TemplateHtml)).ToHtmlString();
       PrepareBody();
-      /*      if (attachment != null)
-            {
-              if (attachment.Length != 0)
-              {
-                System.Net.Mime.ContentType ct = new System.Net.Mime.ContentType(System.Net.Mime.MediaTypeNames.Application.Pdf);
-                System.Net.Mail.Attachment attach = new System.Net.Mail.Attachment(attachment, ct);
-                attach.ContentDisposition.FileName = "Ticket_EventCombo.pdf";
-                mailMessage.Attachments.Add(attach);
-              }
-            }
-      */
     }
 
     private void PrepareBody()
@@ -135,9 +129,12 @@ namespace EventCombo.Service
         foreach (string word in variabledescid.Split(','))
         {
           var vardesc = varRepo.Get(filter: (p => ((p.Event_Id == cEvent.EventID) && (p.Variable_Id.ToString() == word)))).FirstOrDefault();
-          strHTML.Append("<tr align='right'> ");
-          strHTML.Append("<td colspan='4' style='font-size:15px;font-weight:bold;padding:10px 5px;border-bottom:1px solid #ccc;'>" + vardesc.VariableDesc + ":$ " + vardesc.Price + " </td>");
-          strHTML.Append("</tr> ");
+          if (vardesc != null)
+          {
+            strHTML.Append("<tr align='right'> ");
+            strHTML.Append("<td colspan='4' style='font-size:15px;font-weight:bold;padding:10px 5px;border-bottom:1px solid #ccc;'>" + vardesc.VariableDesc + ":$ " + vardesc.Price + " </td>");
+            strHTML.Append("</tr> ");
+          }
         }
       }
 
@@ -149,9 +146,17 @@ namespace EventCombo.Service
       {
         IRepository<BillingAddress> baRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
         var myBillingdeatils = baRepo.Get(filter: (ba => ba.OrderId == _orderId)).FirstOrDefault();
-        cardtext = myBillingdeatils == null ?
-          "Charge to : Paypal" :
-          "Charge to : " + myBillingdeatils.card_type.First().ToString().ToUpper() + myBillingdeatils.card_type.Substring(1) + " XXXX-XXXX-XXXX-" + myBillingdeatils.CardId.Substring(myBillingdeatils.CardId.Length - 4);
+        if (myBillingdeatils != null)
+        {
+          EncryptDecrypt encryptor = new EncryptDecrypt();
+          string cardtype = encryptor.DecryptText(myBillingdeatils.card_type);
+          string cardId = encryptor.DecryptText(myBillingdeatils.CardId);
+          cardtext = "Charge to : " + cardtype.First().ToString().ToUpper() + cardtype.Substring(1) + " XXXX-XXXX-XXXX-" + cardId.Substring(cardId.Length - 4);
+        }
+        else
+        {
+          cardtext = "Charge to : Paypal";
+        }
       }
 
       strHTML.Append("<tr align='center'> ");
@@ -172,7 +177,7 @@ namespace EventCombo.Service
         tagList.Add(new KeyValuePair<string, string>("EventOrganiserName", cEvent.Event_Orgnizer_Detail.FirstOrDefault().Organizer_Master.Orgnizer_Name));
         tagList.Add(new KeyValuePair<string, string>("EventOrganiserEmail", cEvent.Event_Orgnizer_Detail.FirstOrDefault().Organizer_Master.Organizer_Email));
         tagList.Add(new KeyValuePair<string, string>("EventDynamicTable", strHTML.ToString()));
-        tagList.Add(new KeyValuePair<string, string>("CreateEventurl", _baseUrl + "createevent/createevent"));
+        tagList.Add(new KeyValuePair<string, string>("CreateEventurl", _baseUrl + "/createevent/createevent"));
         tagList.Add(new KeyValuePair<string, string>("DiscoverEventurl", _baseUrl));
         tagList.Add(new KeyValuePair<string, string>("EventLogin", _baseUrl));
         tagList.Add(new KeyValuePair<string, string>("Eventtype", cEvent.AddressStatus == "Multiple" ? "* This event has multiple venues " : ""));
@@ -180,7 +185,7 @@ namespace EventCombo.Service
         tagList.Add(new KeyValuePair<string, string>("EventEndDateID", startend.End.ToString()));
         tagList.Add(new KeyValuePair<string, string>("EventVenueID", eventname));
         tagList.Add(new KeyValuePair<string, string>("EventMapImage", Imagecode));
-        tagList.Add(new KeyValuePair<string, string>("Downloadurl", _baseUrl + "download/ticket?OrderId=" + _orderId + "&format=pdf"));
+        tagList.Add(new KeyValuePair<string, string>("Downloadurl", _baseUrl + "/download/ticket?OrderId=" + _orderId + "&format=pdf"));
 
         foreach (var tag in tagList)
           sbBody.Replace("¶¶" + tag.Key + "¶¶", tag.Value);

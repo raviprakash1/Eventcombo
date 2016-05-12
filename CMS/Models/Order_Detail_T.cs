@@ -26,5 +26,11 @@ namespace CMS.Models
         public string O_PayPal_TokenId { get; set; }
         public string O_PayPal_PayerId { get; set; }
         public string O_PayPal_TrancId { get; set; }
+        public string O_First_Name { get; set; }
+        public string O_Last_Name { get; set; }
+        public string O_Email { get; set; }
+        public string O_Card_TransHash { get; set; }
+        public string O_Card_TransId { get; set; }
+        public Nullable<byte> OrderStateId { get; set; }
     }
 }

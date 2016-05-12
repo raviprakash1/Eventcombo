@@ -1,4 +1,5 @@
-﻿<div id="sidebar" class="nav nav-stacked">
+﻿@model string
+<div id="sidebar" class="nav nav-stacked">
   <div id="accordion" class="panel-group">
 
     <div class="panel panel-default menu_list">
@@ -37,12 +38,13 @@
       </a>
     </div>
     <div class="panel panel-default menu_list">
-      <a class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapseOrderOption">
-        <div class="panel-heading">
+      <a id="orderoptions" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapseOrderOption">
+        <div class="panel-heading @(Model == "orderoptions" ? "active" : "")">
           Modify Order Options <b class="closed"></b>
         </div>
+
       </a>
-      <div id="collapseOrderOption" class="panel-collapse collapse">
+      <div id="collapseOrderOption" class="panel-collapse collapse @(Model == "orderoptions" ? "in" : "" )">
         <div class="panel-body no-padding">
           <p>@Html.ActionLink("Order Form", "Form", "OrderOptions", new { eventId = @ViewBag.EventId }, null) </p>
           <p>@Html.ActionLink("Order Confirmation", "Confirmation", "OrderOptions", new { eventId = @ViewBag.EventId }, null)</p>
@@ -52,12 +54,12 @@
       </div>
     </div>
     <div class="panel panel-default menu_list">
-      <a class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapseManageAttendees">
-        <div class="panel-heading">
+      <a id="manageattendees" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapseManageAttendees">
+        <div class="panel-heading @(Model == "manageattendees" ? "active" : "")">
           Manage Attendees <b class="closed"></b>
         </div>
       </a>
-      <div id="collapseManageAttendees" class="panel-collapse collapse">
+      <div id="collapseManageAttendees" class="panel-collapse collapse @(Model == "manageattendees" ? "in" : "")">
         <div class="panel-body no-padding">
           <p>@Html.ActionLink("Orders", "Orders", "ManageAttendees", new { eventId = @ViewBag.EventId }, null)</p>
           <p>@Html.ActionLink("Add Attendees", "Add", "ManageAttendees")</p>
@@ -70,13 +72,13 @@
     </div>
     <div class="panel panel-default menu_list">
 
-      <a id="mgnav" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-        <div id="dvManage" class="panel-heading">
+      <a id="inviteandpromote" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+        <div class="panel-heading @(Model == "inviteandpromote" ? "active" : "")">
           Invite and Promote <b class="closed"></b>
         </div>
       </a>
 
-      <div id="collapse2" class="panel-collapse collapse">
+      <div id="collapse2" class="panel-collapse collapse @(Model == "inviteandpromote" ? "in" : "")">
         <div class="panel-body no-padding">
           <p>Email Invitations</p>
           @if (ViewBag.DiscountCode > 0)
@@ -102,4 +104,6 @@
 
   </div>
 </div>
+
+
 

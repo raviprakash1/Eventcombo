@@ -17,7 +17,7 @@ namespace EventCombo.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Ticket_Quantity_Detail()
         {
-            this.Ticket_Purchased_Details = new HashSet<Ticket_Purchased_Detail>();
+            this.Ticket_Purchased_Detail = new HashSet<Ticket_Purchased_Detail>();
         }
     
         public long TQD_Id { get; set; }
@@ -32,7 +32,7 @@ namespace EventCombo.Models
     
         public virtual Ticket Ticket { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ticket_Purchased_Detail> Ticket_Purchased_Details { get; set; }
+        public virtual ICollection<Ticket_Purchased_Detail> Ticket_Purchased_Detail { get; set; }
         public virtual Publish_Event_Detail Publish_Event_Detail { get; set; }
         public virtual Address Address { get; set; }
     }

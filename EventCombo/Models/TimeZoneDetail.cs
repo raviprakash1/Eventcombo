@@ -17,5 +17,6 @@ namespace EventCombo.Models
         public string TimeZone_Name { get; set; }
         public string TimeZone { get; set; }
         public int TimeZone_Id { get; set; }
+        public Nullable<int> Timezone_order { get; set; }
     }
 }

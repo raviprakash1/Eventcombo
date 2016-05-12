@@ -8,7 +8,7 @@
 
     <!-- Start: Topbar-Dropdown -->
 
-    <header id="topbar" class="alt">
+    @*<header id="topbar" class="alt">
         <div class="topbar-left">
             <ol class="breadcrumb">
 
@@ -23,7 +23,7 @@
             </ol>
         </div>
 
-    </header>
+    </header>*@
 
     <section id="content" class="table-layout animated fadeIn">
 
@@ -32,7 +32,7 @@
 
             <!-- dashboard tiles -->
             <div class="row">
-                <div class="col-sm-3 col-xl-3">
+                @*<div class="col-sm-3 col-xl-3">
                     <div class="panel panel-tile text-center br-a br-grey">
                         <div class="panel-body bg-primary light">
                             <i class="fa fa-tachometer text-muted fs70 mt10"></i>
@@ -44,11 +44,11 @@
                             </span>
                         </div>
                     </div>
-                </div>
+                </div>*@
                 <div class="col-sm-3 col-xl-3">
                     <div class="panel panel-tile text-center br-a br-grey">
                         <div class="panel-body bg-system light">
-                            <i class="fa fa-user text-muted fs70 mt10"></i>
+                            <i class="fa fa-users text-muted fs70 mt10"></i>
                         </div>
                         <div class="panel-footer br-t p12">
                             <span class="fs15">
@@ -60,7 +60,7 @@
                 <div class="col-sm-3 col-xl-3">
                     <div class="panel panel-tile text-center br-a br-grey">
                         <div class="panel-body bg-danger light">
-                            <i class="fa fa-lemon-o text-muted fs70 mt10"></i>
+                            <i class="fa fa-cubes text-muted fs70 mt10"></i>
                         </div>
                         <div class="panel-footer br-t p12">
                             <span class="fs15">
@@ -74,11 +74,11 @@
                 <div class="col-sm-3 col-xl-3">
                     <div class="panel panel-tile text-center br-a br-grey">
                         <div class="panel-body bg-warning light">
-                            <i class="fa fa-ticket text-muted fs70 mt10"></i>
+                            <i class="fa fa-usd text-muted fs70 mt10"></i>
                         </div>
                         <div class="panel-footer br-t p12">
                             <span class="fs15">
-                                <b><a href="#">Ticket</a></b>
+                                <b><a href="#">Fee Settings</a></b>
                             </span>
                         </div>
                     </div>
@@ -86,11 +86,11 @@
                 <div class="col-sm-3 col-xl-3">
                     <div class="panel panel-tile text-center br-a br-grey">
                         <div class="panel-body bg-dark">
-                            <i class="fa fa-ticket text-muted fs70 mt10"></i>
+                            <i class="fa fa-chain-broken text-muted fs70 mt10"></i>
                         </div>
                         <div class="panel-footer br-t p12">
                             <span class="fs15">
-                                <b><a href="#" onclick="checkPermission('8');">Event</a></b>
+                                <b><a href="#" onclick="checkPermission('8');">Event Type</a></b>
 
                               
                             </span>
@@ -99,8 +99,8 @@
                 </div>
                 <div class="col-sm-3 col-xl-3">
                     <div class="panel panel-tile text-center br-a br-grey">
-                        <div class="panel-body bg-alert light">
-                            <i class="fa fa-ticket text-muted fs70 mt10"></i>
+                        <div class="panel-body bg-info light">
+                            <i class="fa fa-life-ring text-muted fs70 mt10"></i>
                         </div>
                         <div class="panel-footer br-t p12">
                             <span class="fs15">
@@ -110,7 +110,8 @@
                         </div>
                     </div>
                 </div>
-
+               
+                
 
 
             </div>
@@ -136,13 +137,9 @@
 
 <script type="text/javascript">
     function checkPermission(PermisionId) {
-        debugger;
         var vPerm = PermisionId;
         //  alert(vPerm);
-
-
         if (PermisionId == "7A" || PermisionId == "7B" || PermisionId == "7C" || PermisionId == "7D" || PermisionId == "7E" || PermisionId == "7F" || PermisionId == "7G") {
-
             PermisionId = "7";
         }
 
@@ -154,16 +151,22 @@
             datatype: "Text",
             type: "Post",
             success: function (response) {
-                if (response != "Y") {
+                //alert(response);
+                if (response == "SE")
+                {
+                    window.location.href = '@Url.Action("Login", "Home")';
+                    return false;
+                }
+                else if (response != "Y") {
                     alert("Access Denied !!!");
                     return false;
                 }
+
                 else {
                     //  alert(vPerm);
                     if (vPerm == "10")
                         window.location.href = '@Url.Action("Users", "Users")';
                     else if (vPerm == "6")
-
                         window.location.href = '@Url.Action("Index", "Email", new { templatetag = "email_welcome", templatename = "Welcome" })';
 
                     else if (vPerm == "7") {
@@ -191,12 +194,12 @@
                     else if (vPerm == "7G")
                         window.location.href = '@Url.Action("Index", "Messages", new { Form = "Messages" })';
                     else if (vPerm == "4")
-                        window.location.href = '@Url.Action("Index", "ManageEvent")';
+                        window.location.href = '@Url.Action("EventsList", "ManageEvent")';
                     else if (vPerm == "8")
                         window.location.href = '@Url.Action("EventType", "EventType", new {Type="N"})';
                     else if (vPerm == "9")
                         window.location.href = '@Url.Action("EventCategory", "EventCategory", new { msg = "N"})';
-                    
+
                 }
             }
         });

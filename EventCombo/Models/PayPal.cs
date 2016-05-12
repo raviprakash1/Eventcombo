@@ -15,10 +15,12 @@ namespace EventCombo.Models
         public static PayPalRedirect ExpressCheckout(PayPalOrder order)
         {
             NameValueCollection values = new NameValueCollection();
+            //   string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
+            //values["CANCELURL"] = PayPalSettings.CancelUrl;
 
             values["METHOD"] = "SetExpressCheckout";
             values["RETURNURL"] = PayPalSettings.ReturnUrl;
-            values["CANCELURL"] = PayPalSettings.CancelUrl;
+            values["CANCELURL"] = order.CancelUrl;
             values["PAYMENTACTION"] = "SALE";
             values["CURRENCYCODE"] = "USD";
             values["BUTTONSOURCE"] = "PP-ECWizard";

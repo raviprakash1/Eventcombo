@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using EventCombo.Models;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using EventCombo.Utils;
 
 namespace EventCombo.Controllers
 {
@@ -22,11 +23,13 @@ namespace EventCombo.Controllers
             string startday = "", endday = "", starttime = "", endtime = "";
             DateTime ENDATE = new DateTime();
             DateTime SDATEN = new DateTime();
+            DateTime eDate = new DateTime();
+            DateTime dateTime = new DateTime();
             Organizer_Master mst = (from x in db.Organizer_Master where x.Orgnizer_Id == id select x).FirstOrDefault();
 
             mst.Imagepath = !string.IsNullOrEmpty(mst.Imagepath) ? mst.Imagepath : "Images/default_org_image.jpg";
             mst.Eventid = eventid;
-
+            mst.Organizer_Desc = Server.HtmlDecode(mst.Organizer_Desc);
             var OrganizerEvents =  db.GetOrganizerEventid(id).Select(x=>x.Orgnizer_Event_Id).ToList();
             mst.pastevent = new List<Organiserevent>();
             mst.presentevent = new List<Organiserevent>();
@@ -34,7 +37,7 @@ namespace EventCombo.Controllers
             foreach (var item in OrganizerEvents)
             {
                 Organiserevent orgev = new Organiserevent();
-                CreateEventController cms = new CreateEventController();
+                EventCreation cms = new EventCreation();
                 long ?Eventid = item;
                 var EventDetail = cms.GetEventdetail(Eventid??0);
                
@@ -48,7 +51,7 @@ namespace EventCombo.Controllers
                     orgev.FirstImage = "/Images/default_event_image.jpg";
                 }
 
-                DateTime dateTime = new DateTime();
+               
                 var timezone = "";
                 var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == EventDetail.TimeZone select ev).FirstOrDefault();
                 if (Timezonedetail != null)
@@ -85,27 +88,47 @@ namespace EventCombo.Controllers
                     }
                 }
                 orgev.Venue = TopAddress;
+                DateTimeWithZone dtzstart, dzend, dtzCreated;
                 var eventype = (from ev in db.MultipleEvents where ev.EventID == item select ev).Count();
                 if (eventype > 0)
                 {
                     var evschdetails = (from ev in db.MultipleEvents where ev.EventID == item select ev).FirstOrDefault();
-                    var startdate = (evschdetails.StartingFrom);
+                    
+                   
+                 
+                    if (Timezonedetail != null)
+                    {
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                        dtzstart = new DateTimeWithZone(Convert.ToDateTime(evschdetails.M_Startfrom), userTimeZone, true);
+                        dzend = new DateTimeWithZone(Convert.ToDateTime(evschdetails.M_StartTo), userTimeZone, true);
+                        dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                    }
+                    else
+                    {
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                        dtzstart = new DateTimeWithZone(Convert.ToDateTime(evschdetails.M_Startfrom), userTimeZone, true);
+                        dzend = new DateTimeWithZone(Convert.ToDateTime(evschdetails.M_StartTo), userTimeZone, true);
+                        dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                    }
+
+                    dateTime = dtzCreated.LocalTime;
+
                     DateTime sDate = new DateTime();
-                    sDate = DateTime.Parse(startdate);
+                    sDate = dtzstart.LocalTime;
                     startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
 
                     sDate_new = sDate.ToString("MMM dd, yyyy");
-                    var enddate = evschdetails.StartingTo;
+                  
 
-                    DateTime eDate = new DateTime();
-                    eDate = DateTime.Parse(enddate);
+                 
+                    eDate = dzend.LocalTime;
                     endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
                     eDate_new = eDate.ToString("MMM dd, yyyy");
 
-                    starttime = evschdetails.StartTime.ToUpper();
-                    endtime = evschdetails.EndTime.ToUpper();
-                    ENDATE = DateTime.Parse(enddate + " " + evschdetails.EndTime);
-                    SDATEN= DateTime.Parse(startdate + " " + evschdetails.StartTime);
+                    starttime = sDate.ToString("h:mm tt").Trim().Replace(" ", ""); ; ;
+                    endtime = eDate.ToString("h:mm tt").Trim().Replace(" ", ""); ;
+                    ENDATE = dzend.LocalTime;
+                    SDATEN= dtzstart.LocalTime;
                     orgev.Dateofevent = startday + "," + sDate_new + "," + starttime + "-" + endday + "," + eDate_new + "," + endtime;
 
                 }
@@ -114,39 +137,50 @@ namespace EventCombo.Controllers
                     var evschdetails = (from ev in db.EventVenues where ev.EventID == item select ev).FirstOrDefault();
                     if (evschdetails != null)
                     {
-                        var startdate = (evschdetails.EventStartDate);
-                        if (startdate != null)
+                        if (Timezonedetail != null)
                         {
-                            DateTime sDate = new DateTime();
-                            sDate = DateTime.Parse(startdate.ToString());
-                            startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
-                            sDate_new = sDate.ToString("MMM dd,yyyy");
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
+                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(evschdetails.E_Startdate), userTimeZone, true);
+                            dzend = new DateTimeWithZone(Convert.ToDateTime(evschdetails.E_Enddate), userTimeZone, true);
                         }
-                        var enddate = evschdetails.EventEndDate;
-                        if (enddate != null)
+                        else
                         {
-                            DateTime eDate = new DateTime();
-                            eDate = DateTime.Parse(enddate.ToString());
-                            endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
-                            eDate_new = eDate.ToString("MMM dd,yyyy");
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(evschdetails.E_Startdate), userTimeZone, true);
+                            dzend = new DateTimeWithZone(Convert.ToDateTime(evschdetails.E_Enddate), userTimeZone, true);
                         }
 
-                        starttime = evschdetails.EventStartTime.ToString();
-                        endtime = evschdetails.EventEndTime.ToString();
-                        ENDATE = DateTime.Parse(enddate + " " + endtime);
-                        SDATEN = DateTime.Parse(startdate + " " + starttime);
-                        orgev.Dateofevent = startday + "," + sDate_new + "," + starttime;
+
+                        DateTime sDate = new DateTime();
+                        sDate = dtzstart.LocalTime;
+                        startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
+
+                        sDate_new = sDate.ToString("MMM dd, yyyy");
+
+
+                       
+                        eDate = dzend.LocalTime;
+                        endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
+                        eDate_new = eDate.ToString("MMM dd, yyyy");
+
+                        starttime = sDate.ToString("h:mm tt").Trim().Replace(" ", ""); ; ;
+                        endtime = eDate.ToString("h:mm tt").Trim().Replace(" ", ""); ;
+                        ENDATE = dzend.LocalTime;
+                        SDATEN = dtzstart.LocalTime;
+                        orgev.Dateofevent = startday + "," + sDate_new + "," + starttime ;
+
+
                     }
+
+                  
                 }
                 orgev.Eventtitle = EventDetail.EventTitle;
                 orgev.Dateofeventsort = SDATEN;
                 orgev.eventpath = Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Regex.Replace(EventDetail.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = EventDetail.EventID.ToString() });
                 if (!string.IsNullOrEmpty(eDate_new))
                 {
-                    var enday = DateTime.Parse(eDate_new);
-
-                    var now = DateTime.Now;
-                    if (ENDATE < dateTime)
+                  
+                    if (eDate < dateTime)
                     {
 
                         mst.pastevent.Add(orgev);
@@ -206,21 +240,26 @@ namespace EventCombo.Controllers
                 {
                     orgev.FirstImage = "/Images/default_event_image.jpg";
                 }
-
+                int timeZoneID = Int32.Parse(EventDetail.TimeZone);
+                TimeZoneDetail td = db.TimeZoneDetails.First(x => x.TimeZone_Id == timeZoneID);
+                DateTimeWithZone dtzstart, dzend;
+                DateTimeWithZone dtzCreated;
                 DateTime dateTime = new DateTime();
+                DateTime sDate = new DateTime();
+                DateTime eDate = new DateTime();
                 var timezone = "";
                 var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == EventDetail.TimeZone select ev).FirstOrDefault();
-                if (Timezonedetail != null)
+                if (td != null)
                 {
-                    timezone = Timezonedetail.TimeZone;
-                    TimeZoneInfo timeZoneInfo;
-
-
-                    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timezone);
-                    dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, timeZoneInfo);
-                    //Timezone value
-
+                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                    dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
                 }
+                else
+                {
+                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                    dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+                }
+                dateTime = dtzCreated.LocalTime;
 
                 //Address
                 var Addresstype = EventDetail.AddressStatus;
@@ -248,23 +287,38 @@ namespace EventCombo.Controllers
                 if (eventype > 0)
                 {
                     var evschdetails = (from ev in db.MultipleEvents where ev.EventID == item select ev).FirstOrDefault();
-                    var startdate = (evschdetails.StartingFrom);
-                    DateTime sDate = new DateTime();
-                    sDate = DateTime.Parse(startdate);
+
+                    if (td != null)
+                    {
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                        dtzstart = new DateTimeWithZone(Convert.ToDateTime(evschdetails.M_Startfrom), userTimeZone, true);
+                        dzend = new DateTimeWithZone(Convert.ToDateTime(evschdetails.M_StartTo), userTimeZone, true);
+                    }
+                    else
+                    {
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                        dtzstart = new DateTimeWithZone(Convert.ToDateTime(evschdetails.M_Startfrom), userTimeZone, true);
+                        dzend = new DateTimeWithZone(Convert.ToDateTime(evschdetails.M_StartTo), userTimeZone, true);
+                    }
+
+                    
+                  
+                  
+                    sDate = dtzstart.LocalTime;
                     startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
 
                     sDate_new = sDate.ToString("MMM dd, yyyy");
-                    var enddate = evschdetails.StartingTo;
+                   
 
-                    DateTime eDate = new DateTime();
-                    eDate = DateTime.Parse(enddate);
+                   
+                    eDate = dzend.LocalTime;
                     endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
                     eDate_new = eDate.ToString("MMM dd, yyyy");
 
                     starttime = evschdetails.StartTime.ToUpper();
                     endtime = evschdetails.EndTime.ToUpper();
-                    ENDATE = DateTime.Parse(enddate + " " + evschdetails.EndTime);
-                    SDATEN = DateTime.Parse(startdate + " " + evschdetails.StartTime);
+                    ENDATE = dzend.LocalTime;
+                    SDATEN = dtzstart.LocalTime;
                     orgev.Dateofevent = startday + "," + sDate_new + "," + starttime + "-" + endday + "," + eDate_new + "," + endtime;
 
                 }
@@ -273,27 +327,38 @@ namespace EventCombo.Controllers
                     var evschdetails = (from ev in db.EventVenues where ev.EventID == item select ev).FirstOrDefault();
                     if (evschdetails != null)
                     {
-                        var startdate = (evschdetails.EventStartDate);
-                        if (startdate != null)
+
+                        if (td != null)
                         {
-                            DateTime sDate = new DateTime();
-                            sDate = DateTime.Parse(startdate.ToString());
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td.TimeZone);
+                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(evschdetails.E_Startdate), userTimeZone, true);
+                            dzend = new DateTimeWithZone(Convert.ToDateTime(evschdetails.E_Enddate), userTimeZone, true);
+                        }
+                        else
+                        {
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(evschdetails.E_Startdate), userTimeZone, true);
+                            dzend = new DateTimeWithZone(Convert.ToDateTime(evschdetails.E_Enddate), userTimeZone, true);
+                        }
+
+                       
+                        
+                        
+                            sDate = dtzstart.LocalTime;
                             startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
                             sDate_new = sDate.ToString("MMM dd,yyyy");
-                        }
-                        var enddate = evschdetails.EventEndDate;
-                        if (enddate != null)
-                        {
-                            DateTime eDate = new DateTime();
-                            eDate = DateTime.Parse(enddate.ToString());
+                      
+                     
+                          
+                            eDate = dzend.LocalTime;
                             endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
                             eDate_new = eDate.ToString("MMM dd,yyyy");
-                        }
+                       
 
                         starttime = evschdetails.EventStartTime.ToString();
                         endtime = evschdetails.EventEndTime.ToString();
-                        ENDATE = DateTime.Parse(enddate + " " + endtime);
-                        SDATEN = DateTime.Parse(startdate + " " + starttime);
+                        ENDATE = dzend.LocalTime;
+                        SDATEN = dtzstart.LocalTime;
                         orgev.Dateofevent = startday + "," + sDate_new + "," + starttime;
                     }
                 }
@@ -303,10 +368,10 @@ namespace EventCombo.Controllers
 
                 if (!string.IsNullOrEmpty(eDate_new))
                 {
-                    var enday = DateTime.Parse(eDate_new);
+                    
 
-                    var now = DateTime.Now;
-                    if (ENDATE < dateTime)
+                   
+                    if (eDate < dateTime)
                     {
                         pastlist.Add(orgev);
 

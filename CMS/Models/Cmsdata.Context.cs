@@ -40,7 +40,6 @@ namespace CMS.Models
         public virtual DbSet<Email_Template> Email_Template { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Event_OrganizerMessages> Event_OrganizerMessages { get; set; }
-        public virtual DbSet<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
         public virtual DbSet<Event_VariableDesc> Event_VariableDesc { get; set; }
         public virtual DbSet<EventCategory> EventCategories { get; set; }
         public virtual DbSet<EventFavourite> EventFavourites { get; set; }
@@ -72,6 +71,19 @@ namespace CMS.Models
         public virtual DbSet<TicketOrderDetail> TicketOrderDetails { get; set; }
         public virtual DbSet<Order_Detail_T> Order_Detail_T { get; set; }
         public virtual DbSet<Fee_Structure> Fee_Structure { get; set; }
+        public virtual DbSet<Organizer_Master> Organizer_Master { get; set; }
+        public virtual DbSet<Promo_Code> Promo_Code { get; set; }
+        public virtual DbSet<TimeZoneDetail1> TimeZoneDetail1 { get; set; }
+        public virtual DbSet<TicketBack2015> TicketBack2015 { get; set; }
+        public virtual DbSet<v_RetrieveEventid> v_RetrieveEventid { get; set; }
+        public virtual DbSet<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
+        public virtual DbSet<ArticleAuthor> ArticleAuthors { get; set; }
+        public virtual DbSet<ArticleImage> ArticleImages { get; set; }
+        public virtual DbSet<ECImage> ECImages { get; set; }
+        public virtual DbSet<ECImageType> ECImageTypes { get; set; }
+        public virtual DbSet<Article> Articles { get; set; }
+        public virtual DbSet<V_Users> V_Users { get; set; }
+        public virtual DbSet<V_EventsList> V_EventsList { get; set; }
     
         [DbFunction("EmsEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)
@@ -94,39 +106,6 @@ namespace CMS.Models
                 new ObjectParameter("EventId", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EventCreation>("GetEventDateList", eventIdParameter);
-        }
-    
-        public virtual ObjectResult<EventCreation> GetEventListing(string eventTitle, string eventType, string eventCat, string eventSubCat, string eventFeature, string eventStartdate, string eventTicket)
-        {
-            var eventTitleParameter = eventTitle != null ?
-                new ObjectParameter("EventTitle", eventTitle) :
-                new ObjectParameter("EventTitle", typeof(string));
-    
-            var eventTypeParameter = eventType != null ?
-                new ObjectParameter("EventType", eventType) :
-                new ObjectParameter("EventType", typeof(string));
-    
-            var eventCatParameter = eventCat != null ?
-                new ObjectParameter("EventCat", eventCat) :
-                new ObjectParameter("EventCat", typeof(string));
-    
-            var eventSubCatParameter = eventSubCat != null ?
-                new ObjectParameter("EventSubCat", eventSubCat) :
-                new ObjectParameter("EventSubCat", typeof(string));
-    
-            var eventFeatureParameter = eventFeature != null ?
-                new ObjectParameter("EventFeature", eventFeature) :
-                new ObjectParameter("EventFeature", typeof(string));
-    
-            var eventStartdateParameter = eventStartdate != null ?
-                new ObjectParameter("EventStartdate", eventStartdate) :
-                new ObjectParameter("EventStartdate", typeof(string));
-    
-            var eventTicketParameter = eventTicket != null ?
-                new ObjectParameter("EventTicket", eventTicket) :
-                new ObjectParameter("EventTicket", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EventCreation>("GetEventListing", eventTitleParameter, eventTypeParameter, eventCatParameter, eventSubCatParameter, eventFeatureParameter, eventStartdateParameter, eventTicketParameter);
         }
     
         public virtual ObjectResult<string> GetSelectedTicketListing(string gUID, Nullable<long> eventId)
@@ -196,6 +175,82 @@ namespace CMS.Models
                 new ObjectParameter("UserID", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEventsListByStatus_Result>("GetEventsListByStatus", eventTitleParameter, eventStatusParameter, userIDParameter);
+        }
+    
+        public virtual ObjectResult<string> GetLantLong(string lat, string @long)
+        {
+            var latParameter = lat != null ?
+                new ObjectParameter("Lat", lat) :
+                new ObjectParameter("Lat", typeof(string));
+    
+            var longParameter = @long != null ?
+                new ObjectParameter("Long", @long) :
+                new ObjectParameter("Long", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetLantLong", latParameter, longParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<double>> GetLantLongDistance(Nullable<double> lat1, Nullable<double> long1, Nullable<double> lat2, Nullable<double> long2)
+        {
+            var lat1Parameter = lat1.HasValue ?
+                new ObjectParameter("lat1", lat1) :
+                new ObjectParameter("lat1", typeof(double));
+    
+            var long1Parameter = long1.HasValue ?
+                new ObjectParameter("long1", long1) :
+                new ObjectParameter("long1", typeof(double));
+    
+            var lat2Parameter = lat2.HasValue ?
+                new ObjectParameter("lat2", lat2) :
+                new ObjectParameter("lat2", typeof(double));
+    
+            var long2Parameter = long2.HasValue ?
+                new ObjectParameter("long2", long2) :
+                new ObjectParameter("long2", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("GetLantLongDistance", lat1Parameter, long1Parameter, lat2Parameter, long2Parameter);
+        }
+    
+        public virtual ObjectResult<GetOrganizerEventid_Result> GetOrganizerEventid(Nullable<long> masterid)
+        {
+            var masteridParameter = masterid.HasValue ?
+                new ObjectParameter("Masterid", masterid) :
+                new ObjectParameter("Masterid", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetOrganizerEventid_Result>("GetOrganizerEventid", masteridParameter);
+        }
+    
+        public virtual int GetEventListing(string eventTitle, string eventType, string eventCat, string eventSubCat, string eventFeature, string eventStartdate, string eventTicket)
+        {
+            var eventTitleParameter = eventTitle != null ?
+                new ObjectParameter("EventTitle", eventTitle) :
+                new ObjectParameter("EventTitle", typeof(string));
+    
+            var eventTypeParameter = eventType != null ?
+                new ObjectParameter("EventType", eventType) :
+                new ObjectParameter("EventType", typeof(string));
+    
+            var eventCatParameter = eventCat != null ?
+                new ObjectParameter("EventCat", eventCat) :
+                new ObjectParameter("EventCat", typeof(string));
+    
+            var eventSubCatParameter = eventSubCat != null ?
+                new ObjectParameter("EventSubCat", eventSubCat) :
+                new ObjectParameter("EventSubCat", typeof(string));
+    
+            var eventFeatureParameter = eventFeature != null ?
+                new ObjectParameter("EventFeature", eventFeature) :
+                new ObjectParameter("EventFeature", typeof(string));
+    
+            var eventStartdateParameter = eventStartdate != null ?
+                new ObjectParameter("EventStartdate", eventStartdate) :
+                new ObjectParameter("EventStartdate", typeof(string));
+    
+            var eventTicketParameter = eventTicket != null ?
+                new ObjectParameter("EventTicket", eventTicket) :
+                new ObjectParameter("EventTicket", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetEventListing", eventTitleParameter, eventTypeParameter, eventCatParameter, eventSubCatParameter, eventFeatureParameter, eventStartdateParameter, eventTicketParameter);
         }
     }
 }

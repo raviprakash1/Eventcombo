@@ -57,8 +57,20 @@
       <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DevTrends.MvcDonutCaching, Version=1.3.0.0, Culture=neutral, PublicKeyToken=73c58d802958a09f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcDonutCaching.1.3.0\lib\net40\DevTrends.MvcDonutCaching.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Hangfire.Core, Version=1.5.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.Core.1.5.4\lib\net45\Hangfire.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Hangfire.SqlServer, Version=1.5.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.SqlServer.1.5.4\lib\net45\Hangfire.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="HtmlRenderer, Version=1.5.0.5, Culture=neutral, processorArchitecture=MSIL">
@@ -242,9 +254,11 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\AutomapperConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CMSController.cs" />
     <Compile Include="Controllers\CreateEventController.cs" />
+    <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\EditEventController.cs" />
     <Compile Include="Controllers\EventConfirmationController.cs" />
     <Compile Include="Controllers\EventController.cs" />
@@ -277,6 +291,19 @@
     <Compile Include="Models\Address.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AggregatedCounter.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Article.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArticleAuthor.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArticleImage.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArticleViewModels.cs" />
     <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -297,6 +324,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CommanClasses.cs" />
+    <Compile Include="Models\Counter.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ControlType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -307,6 +337,12 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DeliveryMethod.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ECImage.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ECImageType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Email_Tag.cs">
@@ -360,6 +396,12 @@
     <Compile Include="Models\EventVote.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Event_Email_Invitation.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event_Email_List.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Event_OrganizerMessages.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -393,8 +435,23 @@
     <Compile Include="Models\GetOrganizerEventid_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Hash.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Html2Pdf.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Job.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobParameter.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JobQueue.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\List.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Language.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -403,6 +460,7 @@
     <Compile Include="Models\Message.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Metadata.cs" />
     <Compile Include="Models\MultipleEvent.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -461,6 +519,15 @@
     <Compile Include="Models\Publish_Event_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Schema.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Server.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Set.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\QuestionType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -468,6 +535,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ShippingAddress.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\State.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Status.cs">
@@ -504,14 +574,27 @@
     <Compile Include="Models\User_Permission_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ValidationMessage.cs" />
     <Compile Include="Models\Venue.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewEvent.cs" />
+    <Compile Include="Models\V_EventsList.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\v_RetrieveEventid.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\V_Users.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DeleteLockTickets.cs" />
+    <Compile Include="Services\EventStatusUpdate.cs" />
+    <Compile Include="Services\TicketEmailer.cs" />
+    <Compile Include="Service\ArticleService.cs" />
+    <Compile Include="Service\HtmlProcessing.cs" />
+    <Compile Include="Service\IArticleService.cs" />
     <Compile Include="Service\DBAccessService.cs" />
     <Compile Include="Service\IDBAccessService.cs" />
     <Compile Include="Service\IManageAttendeesService.cs" />
@@ -531,6 +614,14 @@
     <Compile Include="Service\Notification\OrganizerMessageNotification.cs" />
     <Compile Include="Service\TicketService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\DateTimeWithZone.cs" />
+    <Compile Include="Utils\Email.cs" />
+    <Compile Include="Utils\Ip2Geo.cs" />
+    <Compile Include="Utils\ClientIPAddress.cs" />
+    <Compile Include="ViewModels\CookieStore.cs" />
+    <Compile Include="ViewModels\EmailInvitation.cs" />
+    <Compile Include="Utils\EncryptDecrypt.cs" />
+    <Compile Include="ViewModels\Sidenav.cs" />
     <Compile Include="Views\Account\MyAccount.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -545,11 +636,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ViewCreateEvent.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CreateEvent\ViewEvent.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ViewEvent.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditEvent\EditEvent.generated.cs">
       <AutoGen>True</AutoGen>
@@ -566,20 +652,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventConfirmation.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EventList\EventList.generated.cs">
+    <Compile Include="Views\Event\EventCreation.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EventList.cshtml</DependentUpon>
+      <DependentUpon>EventCreation.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Home\DiscoverEvents.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DiscoverEvents.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Home\ForgetPassword.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ForgetPassword.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Home\Index.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Home\PasswordReset.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PasswordReset.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shared\_AccountLayout.generated.cs">
       <AutoGen>True</AutoGen>
@@ -591,10 +687,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_Layout.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\_Login1Partial.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_Login1Partial.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shared\_Logout.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>_Logout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_signuppartial.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_signuppartial.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\TicketPayment\PaymentConfirmation.generated.cs">
       <AutoGen>True</AutoGen>
@@ -627,8 +733,11 @@
     <Content Include="Content\OrderForm.css" />
     <Content Include="Content\OrderFormDesign.css" />
     <Content Include="Content\PurchasedTicket.css" />
+    <Content Include="DevTrends.MvcDonutCaching.README.txt" />
     <Content Include="email-content-pdf%281%29.html" />
+    <Content Include="html\error.html" />
     <Content Include="Images\ajax-loader.gif" />
+    <Content Include="Images\ajax-loaderMini.gif" />
     <Content Include="Images\align_center.gif" />
     <Content Include="Images\align_left.gif" />
     <Content Include="Images\align_right.gif" />
@@ -646,17 +755,25 @@
     <Content Include="Images\email_tw.png" />
     <Content Include="Images\em_ven_time.png" />
     <Content Include="Images\evnt_lik_1.png" />
+    <Content Include="Images\facebook.png" />
     <Content Include="Images\free-pinstripe.png" />
     <Content Include="Images\hjsdjd.png" />
     <Content Include="Images\Imagemap.png" />
     <Content Include="Images\Imagemap_T000000199.png" />
     <Content Include="Images\info.png" />
     <Content Include="Images\leftarrow.png" />
+    <Content Include="Images\linkedIn.png" />
     <Content Include="Images\loading.gif" />
     <Content Include="Images\login_img.png" />
+    <Content Include="Images\mrblank.jpg" />
+    <Content Include="Images\online-icn.png" />
+    <Content Include="Images\oops.png" />
     <Content Include="Images\paper_tic.png" />
+    <Content Include="Images\PromoCodeLoader.gif" />
     <Content Include="Images\qwe.png" />
+    <Content Include="Images\share_icon.png" />
     <Content Include="Images\search.png" />
+    <Content Include="Images\twitter.png" />
     <Content Include="Images\unchecked.png" />
     <Content Include="Models\EventComboModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1127,6 +1244,7 @@
     </Content>
     <Content Include="Views\Shared\_Login1Partial.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_Login1Partial.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Shared\_AuthenticateLayout.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1148,12 +1266,15 @@
     </Content>
     <Content Include="Views\Shared\_signuppartial.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_signuppartial.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Home\ForgetPassword.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ForgetPassword.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Home\PasswordReset.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>PasswordReset.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Account\PurchasedTicket.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1226,9 +1347,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Event\EventCreation.cshtml">
       <Generator>RazorGenerator</Generator>
-    </Content>
-    <Content Include="Views\CreateEvent\CreateEvent.cshtml">
-      <LastGenOutput>CreateEvent1.generated.cs</LastGenOutput>
+      <LastGenOutput>EventCreation.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\EventConfirmation\EventConfirmation.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1237,10 +1356,6 @@
     <Content Include="Views\TicketPayment\TicketPayment.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>TicketPayment1.generated.cs</LastGenOutput>
-    </Content>
-    <Content Include="Views\CreateEvent\ViewEvent.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>ViewEvent.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\TicketPayment\PaymentConfirmation.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1251,7 +1366,6 @@
       <LastGenOutput>EditEvent.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\EventList\EventList.cshtml">
-      <Generator>RazorGenerator</Generator>
       <LastGenOutput>EventList.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Account\Loginresult.cshtml">
@@ -1289,12 +1403,21 @@
     <Content Include="Views\OrganizerInfo\OrganiserPresentPartialView.cshtml" />
     <Content Include="Views\ManageEvent\PromotionalCodes.cshtml" />
     <Content Include="Views\ManageEvent\CreatePromotionalCodes.cshtml" />
+    <Content Include="Views\Home\HomeEventList.cshtml" />
+    <Content Include="Views\ManageEvent\EmailInvitations.cshtml" />
+    <Content Include="Views\ManageEvent\CreateInvitations.cshtml" />
+    <Content Include="Views\ManageEvent\SidenavPartialView.cshtml" />
+    <Content Include="Views\TicketPayment\LoadTicketsView.cshtml" />
+    <Content Include="Views\CreateEvent\CreateEvent.cshtml" />
     <Content Include="Views\Shared\_ManageEventLayout.cshtml" />
     <Content Include="Views\OrderOptions\Form.cshtml" />
     <Content Include="Views\OrderOptions\Confirmation.cshtml" />
     <Content Include="Views\OrderOptions\EventType.cshtml" />
     <Content Include="Views\OrderOptions\Waitlist.cshtml" />
     <Content Include="Views\Shared\_ManageEventLeftMenu.cshtml" />
+    <Content Include="Views\Article\ShowArticle.cshtml" />
+    <Content Include="Views\Article\ShowLastArticles.cshtml" />
+    <Content Include="Views\Article\ShowPopularArticles.cshtml" />
     <Content Include="Views\Account\_PurchasedTicketList.cshtml" />
     <Content Include="Views\Account\_PurchasedTicketDetail.cshtml" />
     <Content Include="Views\Account\_PurchasedTicketFavoriteList.cshtml" />

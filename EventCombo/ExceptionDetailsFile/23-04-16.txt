@@ -1,0 +1,140 @@
+<<<<<<< HEAD
+-----------Exception Details on  4/23/2016 12:38:42 PM-----------------
+=======
+-----------Exception Details on  4/23/2016 4:46:21 PM-----------------
+>>>>>>> 23b1d3537927f82b6a90a7cb92b22262c2df973a
+-------------------------------------------------------------------------------------
+
+
+
+<<<<<<< HEAD
+Log Written Date: 4/23/2016 12:38:42 PM
+
+Error Line No : ine 437
+
+Error Message: ArgumentOutOfRangeException
+
+Exception Type: System.ArgumentOutOfRangeException
+
+Error Location : The added or subtracted value results in an un-representable DateTime.
+Parameter name: value
+
+ Error Page Url: http://localhost:10159/ticketpayment/calculatepromocode
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/23/2016 12:38:44 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/23/2016 12:38:44 PM
+
+Error Line No : ine 437
+
+Error Message: ArgumentOutOfRangeException
+
+Exception Type: System.ArgumentOutOfRangeException
+
+Error Location : The added or subtracted value results in an un-representable DateTime.
+Parameter name: value
+
+ Error Page Url: http://localhost:10159/ticketpayment/calculatepromocode
+=======
+Log Written Date: 4/23/2016 4:46:21 PM
+
+Error Line No : ine 178
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/editevent/modifyevent?strEventDs=Navreet-Singh-Live-case-testing-modify&amp;strEventId=12
+>>>>>>> 23b1d3537927f82b6a90a7cb92b22262c2df973a
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/23/2016 6:23:30 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/23/2016 6:23:30 PM
+
+Error Line No : line 58
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/ticketpayment/savedetails
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/23/2016 6:25:05 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/23/2016 6:25:05 PM
+
+Error Line No : line 58
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/ticketpayment/savedetails
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  4/23/2016 6:26:02 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 4/23/2016 6:26:02 PM
+
+Error Line No : line 58
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Error Page Url: http://localhost:10159/ticketpayment/savedetails
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
