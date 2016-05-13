@@ -167,8 +167,6 @@
   }
 
   function setPaginationAfterReload(page, cState) {
-    console.debug(cState);
-
     if (cState.Total > 1)
       $('#orderPaginationCapacity' + page).show();
     else
@@ -209,7 +207,6 @@
 
 
   function setSelectedDate(objName, type, page) {
-    console.debug(page);
     $('#' + objName + page).siblings('a').removeClass('dateTopHeaderClsSelected');
     $('#' + objName + page).addClass('dateTopHeaderClsSelected');
 
@@ -242,8 +239,6 @@
           cdate = new Date(cdate.setDate(diff));
           cState.DateFrom = formatDateTime(cdate);
       }
-      console.debug(oldDate);
-      console.debug(cState.DateFrom);
       if (oldDate != cState.DateFrom)
         setPagination(page, cState.Total, 0);
     }
@@ -261,14 +256,12 @@
   }
 
   function LoadOrdersList(page, query) {
-    console.debug(query);
     $.ajax({
       type: "GET",
       url: "@Url.Action("GetOrderList", "ManageAttendees")",
       data: query,
       datatype: "html",
       success: function (data) {
-        console.debug(data);
         $('#OrderListDiv' + page).html(data);
         query.Total = $('#OrderListTable' + page).data('totalrecords');
         setPaginationAfterReload(page, query);
@@ -297,7 +290,6 @@
         data: { OrderId: id },
         datatype: "html",
         success: function (data) {
-          console.debug(data);
           $(obj).parent().parent().css('background-color', '#f1f1f1');
           $(detail).html(data);
           $(detail).css('background-color', '#f1f1f1');
@@ -316,7 +308,6 @@
   }
 
   function formatDateTime(date) {
-    console.debug(date);
     var cdate = new Date(date);
     var day = cdate.getDate();
     var month = cdate.getMonth() + 1;
@@ -335,10 +326,8 @@
 
   function SearchOrders() {
     var searchStr = $('#SearchText').val();
-    console.debug(searchStr);
     for (var i = 0; i < cStates.length; i++) {
       cStates[i].Search = searchStr;
-      console.debug(cStates[i]);
       setPagination(cStates[i].PaymentState, cStates[i].Total, 0);
     }
   }

@@ -430,8 +430,6 @@
   </text>
   };
 
-  console.debug(storedQuestions);
-
   function handleDragStart(e, obj, i) {
     dragSrcEl = obj;
     handleDragGroup = i;
@@ -441,7 +439,6 @@
   }
 
   function handleDragOver(e, obj, i) {
-    console.debug("Stored = " + handleDragGroup + ", Current = " + i);
     if (handleDragGroup == i)
     {
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
@@ -562,7 +559,6 @@
 
         $('div[id^="AnotherSubQuestionMainContainer"]').each(function()
         {
-          console.debug($(this).find('#dropdownMenuSubHead2'));
           if ($(this).find('#dropdownMenuSubHead2').val() == i)
           {
             subvariants = [];
@@ -657,7 +653,6 @@
   }
 
   function saveOrderForm() {
-    console.debug($('#dropdownMenu2'));
     var model =
       {
         OrderTemplateId: $('#OrderTemplateId').val(),
@@ -733,7 +728,6 @@
     quests = [];
     for (var i = 0; i < storedQuestions.length; i++)
     {
-      console.debug($('div[id^="userQuestion_' + i + '"]'));
       var cquestion = $('div[id^="userQuestion_' + i + '"]');
       if ($(cquestion).is(':visible'))
         quests.push(
@@ -752,7 +746,6 @@
           QuestionVariants: storedQuestions[i].QuestionVariants
         });
     }
-    console.debug(quests);
     return quests;
   }
 
@@ -934,7 +927,6 @@
   function addAnotherSubQuestion() {
     var questionsContainer = $('.optionNameQuestion');
     var questionTxt = [];
-    console.debug();
     $.each(questionsContainer, function (index, value) {
       questionTxt = $(value).val();
 
@@ -964,7 +956,6 @@
   function txtBoxQuestionAddtoList() {
     var questionsContainer = $('.optionNameQuestion');
     var questionTxt = [];
-    console.debug();
     $.each(questionsContainer, function (index, value) {
       questionTxt = $(value).val();
 

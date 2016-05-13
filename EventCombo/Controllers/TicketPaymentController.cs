@@ -108,7 +108,6 @@ namespace EventCombo.Controllers
             tp.URLTitle = Regex.Replace(eventdetails.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", "");
             tp.Tickettype = "Paid";
             ViewData["Type"] = tp.Tickettype;
-            List<Cardview> Detailscard = new List<Cardview>();
             if (Session["AppId"] != null)
             {
                 string Userid = Session["AppId"].ToString();
@@ -159,78 +158,6 @@ namespace EventCombo.Controllers
                 }
               
                 ViewBag.CountryID = countryList;
-                //ViewBag.BillcountryID = billcountryList;
-                Cardview card = new Cardview();
-                card.value = "-1";
-                card.text = "Select a Card";
-                Detailscard.Add(card);
-                if (Session["AppId"] != null)
-                {
-                    var userid = Session["AppId"].ToString();
-                    var carddetails = db.CardDetails.Where(x => x.UserId == userid).ToList();
-
-                    if (carddetails != null)
-                    {
-                        foreach (var item in carddetails)
-                        {
-                            Cardview card1 = new Cardview();
-                            var Scardnumber = EDcode.DecryptText(item.CardNumber).Trim();
-                            var Icardlength = Scardnumber.Length;
-                            var WrVS = "";
-                            int k = 1;
-                            for (int i = 0; i < Icardlength; i++)
-                            {
-
-                                WrVS += "X";
-                                if (k == 4)
-                                {
-                                    WrVS += "-";
-                                    k = 0;
-                                }
-
-
-                                k++;
-
-                            }
-                            if (WrVS.EndsWith("-"))
-                            {
-                                WrVS = WrVS.Substring(0, WrVS.LastIndexOf("-"));
-                            }
-                            var rvrs = WrVS.Substring(0, WrVS.LastIndexOf("-") + 1);
-                            var rvrsd = rvrs.Replace("-", "");
-                            var chrlength = Icardlength - rvrsd.Length;
-                            var result = Scardnumber.Substring(Icardlength - Math.Min(chrlength, Icardlength));
-                            var finalstr = rvrs + result;
-                            card1.value = item.CardId.ToString();
-                            var touper = "";
-                            if (!string.IsNullOrWhiteSpace(item.card_type))
-                            {
-                                string cardtype = EDcode.DecryptText(item.card_type).Trim();
-                                touper = char.ToUpper(cardtype[0]) + cardtype.Substring(1);
-                            }
-                            else
-                            {
-                                touper = "";
-                            }
-                            card1.text = "Payment Method:Customer-" + Fname + "  " + touper + "  " + finalstr;
-                            Detailscard.Add(card1);
-
-
-                        }
-
-                    }
-
-                }
-                Cardview card2 = new Cardview();
-                card2.value = "A";
-                card2.text = "Add a new Card";
-                Detailscard.Add(card2);
-
-                Cardview card3 = new Cardview();
-                card3.value = "P";
-                card3.text = "Use Paypal";
-                Detailscard.Add(card3);
-                ViewBag.Detailscard = Detailscard;
             }
            tp.tickebox =  LoadTickets(Eventid.ToString());
 
@@ -818,9 +745,9 @@ namespace EventCombo.Controllers
                                     if (!objcarddetail)
                                     {
                                         CardDetail card = new CardDetail();
-                                        card.CardNumber = EDcode.EncryptText(model.cardno);
-                                        card.ExpirationDate = EDcode.EncryptText(model.expirydate);
-                                        card.Cvv = EDcode.EncryptText(model.cvv);
+                                        card.CardNumber = EDcode.EncryptText("XXXXXXXXXXXX" + model.cardno.Substring(model.cardno.Length - 4));
+                                        card.ExpirationDate = EDcode.EncryptText("Unknown");
+                                        card.Cvv = EDcode.EncryptText("Unknown");
                                         card.UserId = Userid;
                                         card.Guid = guid;
                                         card.card_type = EDcode.EncryptText(model.card_type);
@@ -846,10 +773,10 @@ namespace EventCombo.Controllers
                                     badd.Guid = guid;
                                     badd.OrderId = strOrderNo;
                                     badd.PaymentType = "C";
-                                    badd.CardId = EDcode.EncryptText(model.cardno);
+                                    badd.CardId = EDcode.EncryptText("XXXXXXXXXXXX" + model.cardno.Substring(model.cardno.Length - 4));
                                     badd.card_type = EDcode.EncryptText(model.card_type);
-                                    badd.Cvv = EDcode.EncryptText(model.cvv);
-                                    badd.ExpirationDate = EDcode.EncryptText(model.expirydate);
+                                    badd.Cvv = EDcode.EncryptText("Unknown");
+                                    badd.ExpirationDate = EDcode.EncryptText("Unknown");
                                     objEntity.BillingAddresses.Add(badd);
                                 }
                                 if (model.Saveshipdetail != "N")

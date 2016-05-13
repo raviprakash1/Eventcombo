@@ -224,29 +224,13 @@
                                 </label>
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad dropheight">
-                                @if (HttpContext.Current.Session["AppId"] != null)
-                                {
-
-                                    <select class="form-control selectpicker" id="selectcard" onchange="showcardetails(this.id)">
-                                        @foreach (var item in (List<Cardview>)ViewBag.Detailscard)
-                                        {
-                                            <option value="@item.value">@item.text</option>
-
-                                        }
-
-                                    </select>
-                                }
-                                else
-                                {
-                                    <select class="form-control selectpicker" id="selectcard" onchange="showcardetails(this.id)">
-                                        <option value="-1">Select</option>
-                                        <option value="A">Enter new card</option>
-                                        <option value="P">Use Paypal</option>
+                                <select class="form-control selectpicker" id="selectcard" onchange="showcardetails(this.id)">
+                                    <option value="-1">Select payment type</option>
+                                    <option value="A">Use credit card</option>
+                                    <option value="P">Use Paypal</option>
 
 
-                                    </select>
-
-                                }
+                                </select>
                             </div>
                             <div id="cardshow" style="display:none;">
                                 <div class="col-sm-10 col-xs-12 mb10 no_pad">
@@ -264,10 +248,6 @@
                                 </div>
                                 <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                     <input class="form-control evnt_inp_cont" type="text" placeholder="CVV CODE" id="cvvcode" onkeydown="return checknumber(event);" maxlength="5" oncopy="return false" oncut="return false" onpaste="return false">
-                                </div>
-                                <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                    <input type="checkbox" id="chkcarddetails" /> <span class="ev_pay_span">Save billing and payment info for easy ordering </span>
-
                                 </div>
                             </div>
                         </div>
@@ -1109,13 +1089,6 @@
 
                 var result = $("#cardno").validateCreditCard({ accept: ['visa', 'mastercard', 'discover', 'amex'] });
                 cardtype = result.card_type.name;
-                if ($('#chkcarddetails').is(":checked") == true) {
-                    cardno = $('#cardno').val();
-
-                    expirydate = $('#expirationdate').val();
-                    cvv = $('#cvvcode').val();
-
-                }
             } else {
 
                 type = 'Free';
@@ -1191,7 +1164,7 @@
                 'shipstate': $('#shipstate').val(),
                 'shipcountry': $('#shipcountry').val(),
                 'NameList': NameList,
-                'Savecarddetail': ($("#chkcarddetails").is(":checked") == true ? "Y" : "N"),
+                'Savecarddetail': "N",
                 'Saveshipdetail': ($("#shippinginfo").is(":checked") == true ? "Y" : "N"),
                 'sameshipbilldetail': ($("#sameshipping").is(":checked") == true ? "Y" : "N"),
                 'Ticketname': type,
@@ -2271,28 +2244,6 @@
             //$(".divvisible").css('display', 'none');
 
         }
-        else {
-
-            $('#cardshow').css('display', 'block');
-            $('#divshippinginfo').css('display', 'block');
-            //$(".divvisible").css('display', 'none');
-            $.ajax({
-                url: '@Url.Action("returncardetail", "TicketPayment")',
-                data: { 'cardid': selectvalue },
-                type: "Get",
-                success: function (response) {
-                    var value = response;
-
-                    var res = value.split('*');
-
-                    $('#cardno').val(res[0]);
-                    $('#expirationdate').val(res[1]);
-                    $('#cvvcode').val(res[2]);
-                },
-            });
-
-        }
-
     }
     function getcardvisa(e) {
         if ($("#" + e).val() != '') {
