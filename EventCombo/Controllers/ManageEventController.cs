@@ -14,11 +14,12 @@ using EventCombo.ViewModels;
 using System.Net.Mail;
 using System.Configuration;
 using EventCombo.Utils;
+using DevTrends.MvcDonutCaching;
 
 namespace EventCombo.Controllers
 {
 
-    [OutputCacheAttribute(VaryByParam = "None", Duration = 0, NoStore = true)]
+    [DonutOutputCache(VaryByParam = "None", Duration = 0, NoStore = true)]
     public class ManageEventController : Controller
     {
         // GET: ManageEvent
@@ -2962,7 +2963,7 @@ namespace EventCombo.Controllers
 
         }
 
-        public PartialViewResult Sidenav(long eventid)
+        public PartialViewResult Sidenav(long eventid, string CurrentItem)
         {
 
             Sidenav ss = new ViewModels.Sidenav();
@@ -2973,6 +2974,7 @@ namespace EventCombo.Controllers
             ss.Eventtitle = Eventdetails.EventTitle;
             ss.EventId = eventid;
             ss.DiscountCode = Discountcode;
+            ss.CurrentItem = CurrentItem;
             return PartialView("SideNavPartialView", ss);
         }
 

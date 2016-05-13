@@ -28,5 +28,7 @@ namespace CMS.Models
         public Nullable<System.DateTime> SavedDate { get; set; }
         public string PC_Startdatetype { get; set; }
         public string Pc_Enddatetype { get; set; }
+        public Nullable<System.DateTime> P_Startdate { get; set; }
+        public Nullable<System.DateTime> P_Enddate { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using AutoMapper;
 using EventCombo.Models;
+using EventCombo.Service;
 
 namespace EventCombo
 {
@@ -61,6 +62,20 @@ namespace EventCombo
         .ForMember(d => d.OrderTemplateGroupTicketId, m => m.MapFrom(s => s.OrderTemplateTicketId))
         .ForMember(d => d.GroupTicket, m => m.MapFrom(s => s.Ticket));
       CreateMap<OrderTemplateGroupType, OrderTemplateGroupTypeViewModel>();
+      CreateMap<Article, ArticleShortViewModel>()
+        .ForMember(d => d.AuthorName, m => m.MapFrom(s => s.ArticleAuthor.Name))
+        .ForMember(d => d.AuthorImage, m => m.MapFrom(s => s.ArticleAuthor.ECImage.ImagePath))
+        .ForMember(d => d.ArticleImage, m => m.MapFrom(s => s.ECImage.ImagePath))
+        .ForMember(d => d.ShortBody, m => m.MapFrom(s => HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(s.Body), 160, 220, ".")));
+      CreateMap<Article, ArticleFullViewModel>()
+        .ForMember(d => d.AuthorImage, m => m.MapFrom(s => s.ArticleAuthor.ECImage.ImagePath))
+        .ForMember(d => d.AuthorName, m => m.MapFrom(s => s.ArticleAuthor.Name))
+        .ForMember(d => d.AuthorTwitterUrl, m => m.MapFrom(s => s.ArticleAuthor.TwitterLink))
+        .ForMember(d => d.ArticleImageUrl, m => m.MapFrom(s => s.ECImage.ImagePath));
+      CreateMap<TicketBearer, AttendeeViewModel>()
+        .ForMember(d => d.Name, m => m.MapFrom(s => s.Name.Trim()))
+        .ForMember(d => d.Email, m => m.MapFrom(s => s.Email.Trim()));
+      CreateMap<Event_OrganizerMessages, OrganizerMessageViewModel>();
 
       //backward maps
       CreateMap<OrderTemplateViewModel, OrderTemplate>();
@@ -79,6 +94,10 @@ namespace EventCombo
       CreateMap<OrderTemplateQuestionVariantViewModel, OrderTemplateQuestionVariant>();
       CreateMap<OrderTemplateGroupTicketViewModel, OrderTemplateTicket>();
       CreateMap<OrderTemplateGroupTypeViewModel, OrderTemplateGroupType>();
+      CreateMap<AttendeeViewModel, TicketBearer>()
+        .ForMember(d => d.TicketbearerId, m => m.Ignore());
+      CreateMap<OrganizerMessageViewModel, Event_OrganizerMessages>()
+        .ForMember(d => d.MessageId, m => m.Ignore());
     }
   }
 }

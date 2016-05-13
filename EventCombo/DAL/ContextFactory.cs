@@ -16,9 +16,12 @@ namespace EventCombo.DAL
   {
     private readonly DbContext _context;
 
-    public EventComboContextFactory()
+    public EventComboContextFactory(DbContext context = null)
     {
-      _context = new EventComboEntities();
+      if (context == null)
+        _context = new EventComboEntities();
+      else
+        _context = context;
     }
 
     public DbContext GetContext()

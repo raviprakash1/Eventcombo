@@ -34,6 +34,40 @@
           <Property Name="Latitude" Type="varchar" MaxLength="50" />
           <Property Name="Longitude" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="ArticleId" />
+          </Key>
+          <Property Name="ArticleId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArticleAuthorId" Type="bigint" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ECImageId" Type="bigint" />
+          <Property Name="SubHeading" Type="nvarchar" MaxLength="500" />
+          <Property Name="EnableFBComments" Type="bit" Nullable="false" />
+          <Property Name="HomepageFlag" Type="bit" Nullable="false" />
+          <Property Name="PremiumFlag" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="EditDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArticleAuthor">
+          <Key>
+            <PropertyRef Name="ArticleAuthorId" />
+          </Key>
+          <Property Name="ArticleAuthorId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ECImageId" Type="bigint" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="TwitterLink" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="ArticleImage">
+          <Key>
+            <PropertyRef Name="ArticleImageId" />
+          </Key>
+          <Property Name="ArticleImageId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArticleId" Type="bigint" Nullable="false" />
+          <Property Name="ECImageId" Type="bigint" Nullable="false" />
+          <Property Name="Sort" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -144,6 +178,21 @@
           </Key>
           <Property Name="DeliveryMethodID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DeliveryMethod" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ECImage">
+          <Key>
+            <PropertyRef Name="ECImageId" />
+          </Key>
+          <Property Name="ECImageId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="ECImageTypeId" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ECImageType">
+          <Key>
+            <PropertyRef Name="ECImageTypeId" />
+          </Key>
+          <Property Name="ECImageTypeId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Email_Tag">
           <Key>
@@ -400,6 +449,14 @@
           <Property Name="O_Email" Type="varchar" MaxLength="100" />
           <Property Name="O_Card_TransHash" Type="varchar" MaxLength="100" />
           <Property Name="O_Card_TransId" Type="varchar" MaxLength="100" />
+          <Property Name="OrderStateId" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="OrderState">
+          <Key>
+            <PropertyRef Name="OrderStateId" />
+          </Key>
+          <Property Name="OrderStateId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderStateName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="OrderTemplate">
           <Key>
@@ -1062,7 +1119,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="deals" Type="int" Nullable="false" />
           <Property Name="dealpurchased" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__EventSubC__Event__019419E5">
+        <Association Name="FK__EventSubC__Event__2CAA2BCA">
           <End Role="EventCategory" Type="Self.EventCategory" Multiplicity="1" />
           <End Role="EventSubCategory" Type="Self.EventSubCategory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1074,7 +1131,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TicketDel__Deliv__08411774">
+        <Association Name="FK__TicketDel__Deliv__33572959">
           <End Role="DeliveryMethod" Type="Self.DeliveryMethod" Multiplicity="1" />
           <End Role="TicketDeliveryMethod" Type="Self.TicketDeliveryMethod" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1387,6 +1444,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
         <EntityContainer Name="EventComboModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticleAuthor" EntityType="Self.ArticleAuthor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticleImage" EntityType="Self.ArticleImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
@@ -1397,6 +1457,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="ControlType" EntityType="Self.ControlType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeliveryMethod" EntityType="Self.DeliveryMethod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ECImage" EntityType="Self.ECImage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ECImageType" EntityType="Self.ECImageType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Email_Tag" EntityType="Self.Email_Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Email_Template" EntityType="Self.Email_Template" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
@@ -1418,6 +1480,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MultipleEvent" EntityType="Self.MultipleEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Detail_T" EntityType="Self.Order_Detail_T" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderState" EntityType="Self.OrderState" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderTemplate" EntityType="Self.OrderTemplate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderTemplateEventType" EntityType="Self.OrderTemplateEventType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderTemplateGroupType" EntityType="Self.OrderTemplateGroupType" Schema="dbo" store:Type="Tables" />
@@ -1553,11 +1616,11 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
     [V_Users].[dealpurchased] AS [dealpurchased]
     FROM [dbo].[V_Users] AS [V_Users]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__EventSubC__Event__019419E5" Association="Self.FK__EventSubC__Event__019419E5">
+          <AssociationSet Name="FK__EventSubC__Event__2CAA2BCA" Association="Self.FK__EventSubC__Event__2CAA2BCA">
             <End Role="EventCategory" EntitySet="EventCategory" />
             <End Role="EventSubCategory" EntitySet="EventSubCategory" />
           </AssociationSet>
-          <AssociationSet Name="FK__TicketDel__Deliv__08411774" Association="Self.FK__TicketDel__Deliv__08411774">
+          <AssociationSet Name="FK__TicketDel__Deliv__33572959" Association="Self.FK__TicketDel__Deliv__33572959">
             <End Role="DeliveryMethod" EntitySet="DeliveryMethod" />
             <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethod" />
           </AssociationSet>
@@ -1671,6 +1734,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <NavigationProperty Name="Event" Relationship="Self.FK_Address_Event" FromRole="Address" ToRole="Event" />
           <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Ticket_Quantity_Detail" Relationship="EventComboModel.AddressTicket_Quantity_Detail" FromRole="Address" ToRole="Ticket_Quantity_Detail" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -1722,6 +1786,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_Profile" FromRole="AspNetUsers" ToRole="Profile" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="Ticket_Purchased_Detail" Relationship="EventComboModel.AspNetUserTicket_Purchased_Detail" FromRole="AspNetUser" ToRole="Ticket_Purchased_Detail" />
+          <NavigationProperty Name="Organizer_Master" Relationship="EventComboModel.AspNetUserOrganizer_Master" FromRole="AspNetUser" ToRole="Organizer_Master" />
         </EntityType>
         <EntityType Name="BillingAddress">
           <Key>
@@ -1848,6 +1914,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <NavigationProperty Name="MultipleEvents" Relationship="EventComboModel.FK_MultipleEvent_Event" FromRole="Event" ToRole="MultipleEvent" />
 
           <NavigationProperty Name="OrderTemplates" Relationship="EventComboModel.EventOrderTemplate" FromRole="Event" ToRole="OrderTemplate" />
+          <NavigationProperty Name="Event_OrganizerMessages" Relationship="EventComboModel.EventEvent_OrganizerMessages" FromRole="Event" ToRole="Event_OrganizerMessages" />
+          <NavigationProperty Name="Ticket_Purchased_Detail" Relationship="EventComboModel.EventTicket_Purchased_Detail" FromRole="Event" ToRole="Ticket_Purchased_Detail" />
+          <NavigationProperty Name="EventFavourites" Relationship="EventComboModel.EventEventFavourite" FromRole="Event" ToRole="EventFavourite" />
 
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
@@ -1861,6 +1930,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MessageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Event" Relationship="EventComboModel.EventEvent_OrganizerMessages" FromRole="Event_OrganizerMessages" ToRole="Event" />
+          <NavigationProperty Name="Organizer_Master" Relationship="EventComboModel.Organizer_MasterEvent_OrganizerMessages" FromRole="Event_OrganizerMessages" ToRole="Organizer_Master" />
         </EntityType>
         <EntityType Name="Event_VariableDesc">
           <Key>
@@ -1887,6 +1958,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="eventId" Type="Int64" />
           <Property Name="FavId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Event" Relationship="EventComboModel.EventEventFavourite" FromRole="EventFavourite" ToRole="Event" />
         </EntityType>
         <EntityType Name="EventImage">
           <Key>
@@ -1962,6 +2034,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="O_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_Card_TransHash" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_Card_TransId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OrderStateId" Type="Byte" />
         </EntityType>
         <EntityType Name="Payment_Info">
           <Key>
@@ -2047,6 +2120,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="PE_Scheduled_Date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PE_Start_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PE_End_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Ticket_Quantity_Detail" Relationship="EventComboModel.Publish_Event_DetailTicket_Quantity_Detail" FromRole="Publish_Event_Detail" ToRole="Ticket_Quantity_Detail" />
+          <NavigationProperty Name="EventVenue" Relationship="EventComboModel.EventVenuePublish_Event_Detail" FromRole="Publish_Event_Detail" ToRole="EventVenue" />
+          <NavigationProperty Name="MultipleEvent" Relationship="EventComboModel.MultipleEventPublish_Event_Detail" FromRole="Publish_Event_Detail" ToRole="MultipleEvent" />
         </EntityType>
         <EntityType Name="ShippingAddress">
           <Key>
@@ -2152,6 +2228,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="TQD_StartDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TQD_StartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_Quantity_Info_Ticket" FromRole="Ticket_Quantity_Detail" ToRole="Ticket" />
+          <NavigationProperty Name="Ticket_Purchased_Detail" Relationship="EventComboModel.Ticket_Quantity_DetailTicket_Purchased_Detail" FromRole="Ticket_Quantity_Detail" ToRole="Ticket_Purchased_Detail" />
+          <NavigationProperty Name="Publish_Event_Detail" Relationship="EventComboModel.Publish_Event_DetailTicket_Quantity_Detail" FromRole="Ticket_Quantity_Detail" ToRole="Publish_Event_Detail" />
+          <NavigationProperty Name="Address" Relationship="EventComboModel.AddressTicket_Quantity_Detail" FromRole="Ticket_Quantity_Detail" ToRole="Address" />
         </EntityType>
         <EntityType Name="TicketBearer">
           <Key>
@@ -2467,7 +2546,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             <Parameter Name="Long" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetOrganizerEventid" ReturnType="Collection(EventComboModel.GetOrganizerEventid_Result)">
-
           <Parameter Name="Masterid" Mode="In" Type="Int64" />
           </FunctionImport>
           <EntitySet Name="v_RetrieveEventid" EntityType="EventComboModel.v_RetrieveEventid" />
@@ -2602,6 +2680,80 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           </FunctionImport>
           <EntitySet Name="V_EventsList" EntityType="EventComboModel.V_EventsList" />
           <EntitySet Name="V_Users" EntityType="EventComboModel.V_Users" />
+          <EntitySet Name="Articles" EntityType="EventComboModel.Article" />
+          <EntitySet Name="ArticleAuthors" EntityType="EventComboModel.ArticleAuthor" />
+          <EntitySet Name="ArticleImages" EntityType="EventComboModel.ArticleImage" />
+          <EntitySet Name="ECImages" EntityType="EventComboModel.ECImage" />
+          <EntitySet Name="ECImageTypes" EntityType="EventComboModel.ECImageType" />
+          <EntitySet Name="OrderStates" EntityType="EventComboModel.OrderState" />
+          <AssociationSet Name="EventEvent_OrganizerMessages" Association="EventComboModel.EventEvent_OrganizerMessages">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Event_OrganizerMessages" EntitySet="Event_OrganizerMessages" />
+          </AssociationSet>
+          <AssociationSet Name="Organizer_MasterEvent_OrganizerMessages" Association="EventComboModel.Organizer_MasterEvent_OrganizerMessages">
+            <End Role="Organizer_Master" EntitySet="Organizer_Master" />
+            <End Role="Event_OrganizerMessages" EntitySet="Event_OrganizerMessages" />
+          </AssociationSet>
+          <AssociationSet Name="EventTicket_Purchased_Detail" Association="EventComboModel.EventTicket_Purchased_Detail">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Ticket_Purchased_Detail" EntitySet="Ticket_Purchased_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserTicket_Purchased_Detail" Association="EventComboModel.AspNetUserTicket_Purchased_Detail">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Ticket_Purchased_Detail" EntitySet="Ticket_Purchased_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="Ticket_Quantity_DetailTicket_Purchased_Detail" Association="EventComboModel.Ticket_Quantity_DetailTicket_Purchased_Detail">
+            <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
+            <End Role="Ticket_Purchased_Detail" EntitySet="Ticket_Purchased_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="Publish_Event_DetailTicket_Quantity_Detail" Association="EventComboModel.Publish_Event_DetailTicket_Quantity_Detail">
+            <End Role="Publish_Event_Detail" EntitySet="Publish_Event_Detail" />
+            <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="ECImageTypeECImage" Association="EventComboModel.ECImageTypeECImage">
+            <End Role="ECImageType" EntitySet="ECImageTypes" />
+            <End Role="ECImage" EntitySet="ECImages" />
+          </AssociationSet>
+          <AssociationSet Name="ECImageArticleAuthor" Association="EventComboModel.ECImageArticleAuthor">
+            <End Role="ECImage" EntitySet="ECImages" />
+            <End Role="ArticleAuthor" EntitySet="ArticleAuthors" />
+          </AssociationSet>
+          <AssociationSet Name="ECImageArticle" Association="EventComboModel.ECImageArticle">
+            <End Role="ECImage" EntitySet="ECImages" />
+            <End Role="Article" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="ECImageArticleImage" Association="EventComboModel.ECImageArticleImage">
+            <End Role="ECImage" EntitySet="ECImages" />
+            <End Role="ArticleImage" EntitySet="ArticleImages" />
+          </AssociationSet>
+          <AssociationSet Name="ArticleArticleImage" Association="EventComboModel.ArticleArticleImage">
+            <End Role="Article" EntitySet="Articles" />
+            <End Role="ArticleImage" EntitySet="ArticleImages" />
+          </AssociationSet>
+          <AssociationSet Name="ArticleAuthorArticle" Association="EventComboModel.ArticleAuthorArticle">
+            <End Role="ArticleAuthor" EntitySet="ArticleAuthors" />
+            <End Role="Article" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="EventVenuePublish_Event_Detail" Association="EventComboModel.EventVenuePublish_Event_Detail">
+            <End Role="EventVenue" EntitySet="EventVenues" />
+            <End Role="Publish_Event_Detail" EntitySet="Publish_Event_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="EventEventFavourite" Association="EventComboModel.EventEventFavourite">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="EventFavourite" EntitySet="EventFavourites" />
+          </AssociationSet>
+          <AssociationSet Name="AddressTicket_Quantity_Detail" Association="EventComboModel.AddressTicket_Quantity_Detail">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="MultipleEventPublish_Event_Detail" Association="EventComboModel.MultipleEventPublish_Event_Detail">
+            <End Role="MultipleEvent" EntitySet="MultipleEvents" />
+            <End Role="Publish_Event_Detail" EntitySet="Publish_Event_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserOrganizer_Master" Association="EventComboModel.AspNetUserOrganizer_Master">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Organizer_Master" EntitySet="Organizer_Master" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -2668,6 +2820,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="contenttype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Imagepath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="EventComboModel.FK_Event_Orgnizer_Detail_Organizer_Master" FromRole="Organizer_Master" ToRole="Event_Orgnizer_Detail" />
+          <NavigationProperty Name="Event_OrganizerMessages" Relationship="EventComboModel.Organizer_MasterEvent_OrganizerMessages" FromRole="Organizer_Master" ToRole="Event_OrganizerMessages" />
+          <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.AspNetUserOrganizer_Master" FromRole="Organizer_Master" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="Event_Orgnizer_Detail">
           <Key>
@@ -3323,6 +3477,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="TPD_EC_Fee" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="TPD_PromoCodeID" Type="Int32" />
           <Property Name="TPD_PromoCodeAmount" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Event" Relationship="EventComboModel.EventTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="Event" />
+          <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.AspNetUserTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="AspNetUser" />
+          <NavigationProperty Name="Ticket_Quantity_Detail" Relationship="EventComboModel.Ticket_Quantity_DetailTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="Ticket_Quantity_Detail" />
         </EntityType>
         <EntityType Name="EventVenue">
           <Key>
@@ -3340,6 +3497,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="EventEndDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EventStartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EventEndTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Publish_Event_Detail" Relationship="EventComboModel.EventVenuePublish_Event_Detail" FromRole="EventVenue" ToRole="Publish_Event_Detail" />
         </EntityType>
         <EntityType Name="MultipleEvent">
           <Key>
@@ -3359,6 +3517,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="StartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="StartingTo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EndTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Publish_Event_Detail" Relationship="EventComboModel.MultipleEventPublish_Event_Detail" FromRole="MultipleEvent" ToRole="Publish_Event_Detail" />
         </EntityType>
         <Association Name="FK_EventVenue_Event">
           <End Type="EventComboModel.Event" Role="Event" Multiplicity="1" />
@@ -3492,6 +3651,278 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="deals" Type="Int32" Nullable="false" />
           <Property Name="dealpurchased" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="ArticleId" />
+          </Key>
+          <Property Name="ArticleId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArticleAuthorId" Type="Int64" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ECImageId" Type="Int64" />
+          <Property Name="SubHeading" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EnableFBComments" Type="Boolean" Nullable="false" />
+          <Property Name="HomepageFlag" Type="Boolean" Nullable="false" />
+          <Property Name="PremiumFlag" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EditDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ECImage" Relationship="EventComboModel.ECImageArticle" FromRole="Article" ToRole="ECImage" />
+          <NavigationProperty Name="ArticleImages" Relationship="EventComboModel.ArticleArticleImage" FromRole="Article" ToRole="ArticleImage" />
+          <NavigationProperty Name="ArticleAuthor" Relationship="EventComboModel.ArticleAuthorArticle" FromRole="Article" ToRole="ArticleAuthor" />
+        </EntityType>
+        <EntityType Name="ArticleAuthor">
+          <Key>
+            <PropertyRef Name="ArticleAuthorId" />
+          </Key>
+          <Property Name="ArticleAuthorId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ECImageId" Type="Int64" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TwitterLink" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ECImage" Relationship="EventComboModel.ECImageArticleAuthor" FromRole="ArticleAuthor" ToRole="ECImage" />
+          <NavigationProperty Name="Articles" Relationship="EventComboModel.ArticleAuthorArticle" FromRole="ArticleAuthor" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="ArticleImage">
+          <Key>
+            <PropertyRef Name="ArticleImageId" />
+          </Key>
+          <Property Name="ArticleImageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArticleId" Type="Int64" Nullable="false" />
+          <Property Name="ECImageId" Type="Int64" Nullable="false" />
+          <Property Name="Sort" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="ECImage" Relationship="EventComboModel.ECImageArticleImage" FromRole="ArticleImage" ToRole="ECImage" />
+          <NavigationProperty Name="Article" Relationship="EventComboModel.ArticleArticleImage" FromRole="ArticleImage" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="ECImage">
+          <Key>
+            <PropertyRef Name="ECImageId" />
+          </Key>
+          <Property Name="ECImageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImagePath" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ECImageTypeId" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="ECImageType" Relationship="EventComboModel.ECImageTypeECImage" FromRole="ECImage" ToRole="ECImageType" />
+          <NavigationProperty Name="ArticleAuthors" Relationship="EventComboModel.ECImageArticleAuthor" FromRole="ECImage" ToRole="ArticleAuthor" />
+          <NavigationProperty Name="Articles" Relationship="EventComboModel.ECImageArticle" FromRole="ECImage" ToRole="Article" />
+          <NavigationProperty Name="ArticleImages" Relationship="EventComboModel.ECImageArticleImage" FromRole="ECImage" ToRole="ArticleImage" />
+        </EntityType>
+        <EntityType Name="ECImageType">
+          <Key>
+            <PropertyRef Name="ECImageTypeId" />
+          </Key>
+          <Property Name="ECImageTypeId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ECImages" Relationship="EventComboModel.ECImageTypeECImage" FromRole="ECImageType" ToRole="ECImage" />
+        </EntityType>
+        <EntityType Name="OrderState">
+          <Key>
+            <PropertyRef Name="OrderStateId" />
+          </Key>
+          <Property Name="OrderStateId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderStateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="EventEvent_OrganizerMessages">
+          <End Type="EventComboModel.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="EventComboModel.Event_OrganizerMessages" Role="Event_OrganizerMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Event_OrganizerMessages">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Organizer_MasterEvent_OrganizerMessages">
+          <End Type="EventComboModel.Organizer_Master" Role="Organizer_Master" Multiplicity="0..1" />
+          <End Type="EventComboModel.Event_OrganizerMessages" Role="Event_OrganizerMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizer_Master">
+              <PropertyRef Name="Orgnizer_Id" />
+            </Principal>
+            <Dependent Role="Event_OrganizerMessages">
+              <PropertyRef Name="OrganizerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventTicket_Purchased_Detail">
+          <End Type="EventComboModel.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="EventComboModel.Ticket_Purchased_Detail" Role="Ticket_Purchased_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Ticket_Purchased_Detail">
+              <PropertyRef Name="TPD_Event_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserTicket_Purchased_Detail">
+          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="EventComboModel.Ticket_Purchased_Detail" Role="Ticket_Purchased_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket_Purchased_Detail">
+              <PropertyRef Name="TPD_User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Ticket_Quantity_DetailTicket_Purchased_Detail">
+          <End Type="EventComboModel.Ticket_Quantity_Detail" Role="Ticket_Quantity_Detail" Multiplicity="0..1" />
+          <End Type="EventComboModel.Ticket_Purchased_Detail" Role="Ticket_Purchased_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket_Quantity_Detail">
+              <PropertyRef Name="TQD_Id" />
+            </Principal>
+            <Dependent Role="Ticket_Purchased_Detail">
+              <PropertyRef Name="TPD_TQD_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Publish_Event_DetailTicket_Quantity_Detail">
+          <End Type="EventComboModel.Publish_Event_Detail" Role="Publish_Event_Detail" Multiplicity="0..1" />
+          <End Type="EventComboModel.Ticket_Quantity_Detail" Role="Ticket_Quantity_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publish_Event_Detail">
+              <PropertyRef Name="PE_Id" />
+            </Principal>
+            <Dependent Role="Ticket_Quantity_Detail">
+              <PropertyRef Name="TQD_PE_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ECImageTypeECImage">
+          <End Type="EventComboModel.ECImageType" Role="ECImageType" Multiplicity="1" />
+          <End Type="EventComboModel.ECImage" Role="ECImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ECImageType">
+              <PropertyRef Name="ECImageTypeId" />
+            </Principal>
+            <Dependent Role="ECImage">
+              <PropertyRef Name="ECImageTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ECImageArticleAuthor">
+          <End Type="EventComboModel.ECImage" Role="ECImage" Multiplicity="0..1" />
+          <End Type="EventComboModel.ArticleAuthor" Role="ArticleAuthor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ECImage">
+              <PropertyRef Name="ECImageId" />
+            </Principal>
+            <Dependent Role="ArticleAuthor">
+              <PropertyRef Name="ECImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ECImageArticle">
+          <End Type="EventComboModel.ECImage" Role="ECImage" Multiplicity="0..1" />
+          <End Type="EventComboModel.Article" Role="Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ECImage">
+              <PropertyRef Name="ECImageId" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="ECImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ECImageArticleImage">
+          <End Type="EventComboModel.ECImage" Role="ECImage" Multiplicity="1" />
+          <End Type="EventComboModel.ArticleImage" Role="ArticleImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ECImage">
+              <PropertyRef Name="ECImageId" />
+            </Principal>
+            <Dependent Role="ArticleImage">
+              <PropertyRef Name="ECImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ArticleArticleImage">
+          <End Type="EventComboModel.Article" Role="Article" Multiplicity="1" />
+          <End Type="EventComboModel.ArticleImage" Role="ArticleImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="ArticleId" />
+            </Principal>
+            <Dependent Role="ArticleImage">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ArticleAuthorArticle">
+          <End Type="EventComboModel.ArticleAuthor" Role="ArticleAuthor" Multiplicity="1" />
+          <End Type="EventComboModel.Article" Role="Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArticleAuthor">
+              <PropertyRef Name="ArticleAuthorId" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="ArticleAuthorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventVenuePublish_Event_Detail">
+          <End Type="EventComboModel.EventVenue" Role="EventVenue" Multiplicity="0..1" />
+          <End Type="EventComboModel.Publish_Event_Detail" Role="Publish_Event_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventVenue">
+              <PropertyRef Name="EventVenueID" />
+            </Principal>
+            <Dependent Role="Publish_Event_Detail">
+              <PropertyRef Name="PE_SingleVenue_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventEventFavourite">
+          <End Type="EventComboModel.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="EventComboModel.EventFavourite" Role="EventFavourite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="EventFavourite">
+              <PropertyRef Name="eventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AddressTicket_Quantity_Detail">
+          <End Type="EventComboModel.Address" Role="Address" Multiplicity="0..1" />
+          <End Type="EventComboModel.Ticket_Quantity_Detail" Role="Ticket_Quantity_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="Ticket_Quantity_Detail">
+              <PropertyRef Name="TQD_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MultipleEventPublish_Event_Detail">
+          <End Type="EventComboModel.MultipleEvent" Role="MultipleEvent" Multiplicity="0..1" />
+          <End Type="EventComboModel.Publish_Event_Detail" Role="Publish_Event_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MultipleEvent">
+              <PropertyRef Name="MultipleEventID" />
+            </Principal>
+            <Dependent Role="Publish_Event_Detail">
+              <PropertyRef Name="PE_MultipleVenue_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserOrganizer_Master">
+          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="EventComboModel.Organizer_Master" Role="Organizer_Master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organizer_Master">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3796,6 +4227,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="Order_Detail_T">
             <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
               <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="OrderStateId" ColumnName="OrderStateId" />
                 <ScalarProperty Name="O_Card_TransId" ColumnName="O_Card_TransId" />
                 <ScalarProperty Name="O_Card_TransHash" ColumnName="O_Card_TransHash" />
                 <ScalarProperty Name="O_Email" ColumnName="O_Email" />
@@ -4679,6 +5111,68 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="EMail" ColumnName="EMail" />
                 <ScalarProperty Name="Sno" ColumnName="Sno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Articles">
+            <EntityTypeMapping TypeName="EventComboModel.Article">
+              <MappingFragment StoreEntitySet="Article">
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="PremiumFlag" ColumnName="PremiumFlag" />
+                <ScalarProperty Name="HomepageFlag" ColumnName="HomepageFlag" />
+                <ScalarProperty Name="EnableFBComments" ColumnName="EnableFBComments" />
+                <ScalarProperty Name="SubHeading" ColumnName="SubHeading" />
+                <ScalarProperty Name="ECImageId" ColumnName="ECImageId" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ArticleAuthorId" ColumnName="ArticleAuthorId" />
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticleAuthors">
+            <EntityTypeMapping TypeName="EventComboModel.ArticleAuthor">
+              <MappingFragment StoreEntitySet="ArticleAuthor">
+                <ScalarProperty Name="TwitterLink" ColumnName="TwitterLink" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ECImageId" ColumnName="ECImageId" />
+                <ScalarProperty Name="ArticleAuthorId" ColumnName="ArticleAuthorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticleImages">
+            <EntityTypeMapping TypeName="EventComboModel.ArticleImage">
+              <MappingFragment StoreEntitySet="ArticleImage">
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="ECImageId" ColumnName="ECImageId" />
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+                <ScalarProperty Name="ArticleImageId" ColumnName="ArticleImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ECImages">
+            <EntityTypeMapping TypeName="EventComboModel.ECImage">
+              <MappingFragment StoreEntitySet="ECImage">
+                <ScalarProperty Name="ECImageTypeId" ColumnName="ECImageTypeId" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="ECImageId" ColumnName="ECImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ECImageTypes">
+            <EntityTypeMapping TypeName="EventComboModel.ECImageType">
+              <MappingFragment StoreEntitySet="ECImageType">
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="ECImageTypeId" ColumnName="ECImageTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderStates">
+            <EntityTypeMapping TypeName="EventComboModel.OrderState">
+              <MappingFragment StoreEntitySet="OrderState">
+                <ScalarProperty Name="OrderStateName" ColumnName="OrderStateName" />
+                <ScalarProperty Name="OrderStateId" ColumnName="OrderStateId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
