@@ -9,7 +9,7 @@
       for (var i = 0; i < Model.Attendees.Count; i++)
       {
         <tr class="UETableTDSUbDivBackColor">
-          <td class="subTableInnerTD">@(i == 0 ? "<b>Attendees</b>" : "")</td>
+          <td class="subTableInnerTD">@Html.Raw(i == 0 ? "<b>Attendees</b>" : "")</td>
           <td class="subTableInnerTD">@(Model.Attendees[i].Name) (<span style="color:#00CAFD;">@(Model.Attendees[i].Email)</span>)</td>
           <td class="subTableInnerTD"></td>
         </tr>
@@ -42,7 +42,7 @@
             <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubEdit()">EDIT</td>
             <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubRefund()">REFUND</td>
             <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubViewReport()">VIEW Report</td>
-            <td class="UETableTDSUbDivFooterLinks">@(Html.ActionLink("PRINT TICKETS", "Ticket", "Download", new { OrderId = Model.OrderId, format = "pdf" }, new { target = "_blank" }))</td>
+            <td class="UETableTDSUbDivFooterLinks">@(Html.ActionLink("PRINT TICKETS", "Ticket", "Download", new { OrderId = Model.OrderId, format = "pdf" }, null))</td>
             <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubResend('@(Model.OrderId)')">RE-SEND CONFIRMATION</td>
           </tr>
         </table>

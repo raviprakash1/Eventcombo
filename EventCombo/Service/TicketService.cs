@@ -191,7 +191,7 @@ namespace EventCombo.Service
             foreach (var att in selected)
               if (!String.IsNullOrWhiteSpace(att.Email))
               {
-                notification.Receiver = att.Name;
+                notification.ReceiverName = att.Name;
                 sendService.Message.To.Clear();
                 sendService.Message.To.Add(new MailAddress(att.Email, att.Name));
                 notification.SendNotification(sendService);

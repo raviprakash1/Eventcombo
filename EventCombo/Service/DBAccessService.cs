@@ -5,6 +5,7 @@ using System.Web;
 using EventCombo.Models;
 using EventCombo.DAL;
 using AutoMapper;
+using EventCombo.Utils;
 
 namespace EventCombo.Service
 {
@@ -87,7 +88,15 @@ namespace EventCombo.Service
       {
         IRepository<BillingAddress> billRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
         var billing = billRepo.Get(filter: (b => b.OrderId == orderId)).FirstOrDefault();
-        res = (billing == null) ? "No information" : billing.card_type + " XXXX-XXXX-XXXX-" + billing.CardId.Substring(billing.CardId.Length - 4);
+        if (billing != null)
+        {
+          EncryptDecrypt encryptor = new EncryptDecrypt();
+          string cardtype = encryptor.DecryptText(billing.card_type);
+          string cardId = encryptor.DecryptText(billing.CardId);
+          res = cardtype.First().ToString().ToUpper() + cardtype.Substring(1) + " XXXX-XXXX-XXXX-" + cardId.Substring(cardId.Length - 4);
+        }
+        else
+          res = "No information";
       }
       else
         res = "PayPal ID: XXXXXXXXXXXX" + order.O_PayPal_TrancId.Substring(order.O_PayPal_TrancId.Length - 4);

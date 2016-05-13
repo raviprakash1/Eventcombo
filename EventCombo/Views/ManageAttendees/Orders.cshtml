@@ -5,10 +5,16 @@
 
 @{
   ViewBag.Title = "Manage Attendees";
-  Layout = "~/Views/Shared/_ManageEventLayout.cshtml";
+  Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/manageattendees.css" rel="stylesheet" />
+
+@section sidenav{
+  <div id="sidebar" class="nav nav-stacked">
+    @Html.Action("Sidenav", "ManageEvent", new { eventid = Model.EventId, CurrentItem = "manageattendees" })
+  </div>
+}
 
 <div id="purchasedTicketContainer" class="midd_cont">
   <div class="headerPurchasedTicket">
@@ -69,9 +75,9 @@
             <div class="col-sm-6 col-xs-12 orderTxtHead">ORDER LIST</div>
             <div class="col-sm-6 col-xs-12 orderTxtExport">
               Export to:
-              <a href="javascript:void(0)" class="linkReportHead">CSV</a>
-              <a href="javascript:void(0)" class="linkReportHead">TXT</a>
-              <a href="javascript:void(0)" class="linkReportHead">EXL</a>
+              <a href="@Url.Action("OrderList", "Download", new { state = order.PaymentState, eventId = Model.EventId, format = "csv"})" class="linkReportHead">CSV</a>
+              <a href="@Url.Action("OrderList", "Download", new { state = order.PaymentState, eventId = Model.EventId, format = "txt"})" class="linkReportHead">TXT</a>
+              <a href="@Url.Action("OrderList", "Download", new { state = order.PaymentState, eventId = Model.EventId, format = "xls"})" class="linkReportHead">EXL</a>
             </div>
           </div>
         </div>
@@ -85,8 +91,8 @@
           </div>
           <div id="orderPaginationCapacity@(order.PaymentState.ToString())" class="col-sm-4 col-xs-12 orderViewCount">
             <ul class="pagination">
-              <li id="recordShow20" onclick="SetPerPage(this, '@(order.PaymentState.ToString())', 1)" class="active recordLiItem"><a href="javascript:void(0)">20</a></li>
-              <li id="recordShow50" onclick="SetPerPage(this, '@(order.PaymentState.ToString())', 2)" class="recordLiItem"><a href="javascript:void(0)">50</a></li>
+              <li id="recordShow20" onclick="SetPerPage(this, '@(order.PaymentState.ToString())', 20)" class="active recordLiItem"><a href="javascript:void(0)">20</a></li>
+              <li id="recordShow50" onclick="SetPerPage(this, '@(order.PaymentState.ToString())', 50)" class="recordLiItem"><a href="javascript:void(0)">50</a></li>
               <li id="recordShow100" onclick="SetPerPage(this, '@(order.PaymentState.ToString())', 100)" class="recordLiItem"><a href="javascript:void(0)">100</a></li>
               <li id="recordShow0" onclick="SetPerPage(this, '@(order.PaymentState.ToString())', 0)" class="recordLiItem"><a href="javascript:void(0)">ALL</a></li>
             </ul>
@@ -345,10 +351,10 @@
       datatype: "html",
       success: function (data) {
         if (data > 0) {
-          $('#ajaxanswer' + oId).html("Confirmations sent.");
+          $('#ajaxanswer' + oid).html("Confirmations sent.");
         }
         else
-          $('#ajaxanswer' + oId).html("Confirmations not sent.");
+          $('#ajaxanswer' + oid).html("Confirmations not sent.");
       }
     });
   }

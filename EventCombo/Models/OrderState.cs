@@ -14,7 +14,16 @@ namespace EventCombo.Models
     
     public partial class OrderState
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public OrderState()
+        {
+            this.Order_Detail_T = new HashSet<Order_Detail_T>();
+        }
+    
         public byte OrderStateId { get; set; }
         public string OrderStateName { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order_Detail_T> Order_Detail_T { get; set; }
     }
 }

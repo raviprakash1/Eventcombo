@@ -144,17 +144,7 @@
         <AssociationConnector Association="EventComboModel.ArticleArticleImage" />
         <EntityTypeShape EntityType="EventComboModel.V_EventsList" Width="1.5" PointX="11.820360911926423" PointY="14.493559307648596" />
         <EntityTypeShape EntityType="EventComboModel.V_Users" Width="1.5" PointX="9.2190072262748188" PointY="13.72924321039079" />
-        <AssociationConnector Association="EventComboModel.ECImageTypeECImage" />
-        <AssociationConnector Association="EventComboModel.ECImageArticleAuthor" />
-        <AssociationConnector Association="EventComboModel.ECImageArticle" />
-        <AssociationConnector Association="EventComboModel.ECImageArticleImage" />
-        <AssociationConnector Association="EventComboModel.ArticleArticleImage" />
-        <AssociationConnector Association="EventComboModel.ArticleAuthorArticle" />
-        <AssociationConnector Association="EventComboModel.EventVenuePublish_Event_Detail" />
-        <AssociationConnector Association="EventComboModel.EventEventFavourite" />
-        <AssociationConnector Association="EventComboModel.AddressTicket_Quantity_Detail" />
-        <AssociationConnector Association="EventComboModel.MultipleEventPublish_Event_Detail" />
-        <AssociationConnector Association="EventComboModel.AspNetUserOrganizer_Master" />
+        <AssociationConnector Association="EventComboModel.OrderStateOrder_Detail_T" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

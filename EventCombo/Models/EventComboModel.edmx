@@ -2036,8 +2036,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="O_Card_TransHash" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="O_Card_TransId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="OrderStateId" Type="Byte" />
-          <NavigationProperty Name="OrderState" Relationship="EventComboModel.OrderStateOrder_Detail_T" FromRole="Order_Detail_T" ToRole="OrderState" />
           <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.AspNetUserOrder_Detail_T" FromRole="Order_Detail_T" ToRole="AspNetUser" />
+          <NavigationProperty Name="OrderState" Relationship="EventComboModel.OrderStateOrder_Detail_T" FromRole="Order_Detail_T" ToRole="OrderState" />
         </EntityType>
         <EntityType Name="Payment_Info">
           <Key>
@@ -2759,6 +2759,10 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           </AssociationSet>
           <AssociationSet Name="AspNetUserOrder_Detail_T" Association="EventComboModel.AspNetUserOrder_Detail_T">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Order_Detail_T" EntitySet="Order_Detail_T" />
+          </AssociationSet>
+          <AssociationSet Name="OrderStateOrder_Detail_T" Association="EventComboModel.OrderStateOrder_Detail_T">
+            <End Role="OrderState" EntitySet="OrderStates" />
             <End Role="Order_Detail_T" EntitySet="Order_Detail_T" />
           </AssociationSet>
         </EntityContainer>
@@ -3725,6 +3729,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           </Key>
           <Property Name="OrderStateId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="OrderStateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Order_Detail_T" Relationship="EventComboModel.OrderStateOrder_Detail_T" FromRole="OrderState" ToRole="Order_Detail_T" />
         </EntityType>
         <Association Name="EventEvent_OrganizerMessages">
           <End Type="EventComboModel.Event" Role="Event" Multiplicity="0..1" />
@@ -3939,6 +3944,18 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Principal>
             <Dependent Role="Order_Detail_T">
               <PropertyRef Name="O_User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrderStateOrder_Detail_T">
+          <End Type="EventComboModel.OrderState" Role="OrderState" Multiplicity="0..1" />
+          <End Type="EventComboModel.Order_Detail_T" Role="Order_Detail_T" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderState">
+              <PropertyRef Name="OrderStateId" />
+            </Principal>
+            <Dependent Role="Order_Detail_T">
+              <PropertyRef Name="OrderStateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

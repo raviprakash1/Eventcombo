@@ -7,7 +7,6 @@ namespace EventCombo.Models
 {
   public enum PaymentStates { Total, Completed, Pending }
   public enum EventOrderSortBy { Date, Price, Buyer, Order, Quantity, PaymentState }
-  public enum AccessLevel { EventOwner, OrderOwner, Public }
 
 
   public class ManageAttendeesOrdersViewModel
@@ -71,7 +70,7 @@ namespace EventCombo.Models
       EventId = 0;
       SortBy = EventOrderSortBy.Date;
       PaymentState = PaymentStates.Total;
-      PerPage = 1;
+      PerPage = 20;
       Page = 0;
       SortDesc = false;
       DateTime now = DateTime.Today;

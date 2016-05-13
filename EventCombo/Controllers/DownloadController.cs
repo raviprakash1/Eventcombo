@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using EventCombo.Service;
 using EventCombo.DAL;
 using System.IO;
+using EventCombo.Models;
 
 namespace EventCombo.Controllers
 {
@@ -14,6 +15,7 @@ namespace EventCombo.Controllers
   {
     IDBAccessService _dbservice;
     ITicketsService _tservice;
+    IManageAttendeesService _maservice;
 
     public DownloadController()
     {
@@ -21,6 +23,7 @@ namespace EventCombo.Controllers
       AutoMapper.IMapper mapper = AutomapperConfig.Config.CreateMapper();
       _dbservice = new DBAccessService(uowFactory, mapper);
       _tservice = new TicketService(uowFactory, mapper, _dbservice);
+      _maservice = new ManageAttendeesService(uowFactory, mapper, _dbservice);
     }
 
     [HttpGet]
@@ -34,8 +37,23 @@ namespace EventCombo.Controllers
         return null;
 
       MemoryStream mem = _tservice.GetDownloadableTicket(OrderId, format, Server.MapPath(".."));
-      
-      return new FileStreamResult(mem, "application/" + format.ToLower());
+
+      return new FileStreamResult(mem, "application/" + format.ToLower()) { FileDownloadName = "Ticket_" + OrderId + "." + format };
+    }
+
+    [HttpGet]
+    public FileStreamResult OrderList(PaymentStates state, long eventId, string format)
+    {
+      /*if (Session["AppId"] == null)
+        return null;
+
+      string userId = Session["AppId"].ToString();
+      if (_dbservice.GetEventAccess(eventId, userId) == AccessLevel.Public)
+        return null;
+      */
+      MemoryStream mem = _maservice.GetDownloadableOrderList(state, eventId, format);
+
+      return new FileStreamResult(mem, "application/" + format.ToLower()) { FileDownloadName = "OrderList_" + eventId.ToString() + "." + format };
     }
   }
 }

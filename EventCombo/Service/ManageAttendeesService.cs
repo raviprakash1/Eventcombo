@@ -6,6 +6,7 @@ using System.Web;
 using EventCombo.DAL;
 using AutoMapper;
 using System.Net.Mail;
+using System.IO;
 
 namespace EventCombo.Service
 {
@@ -78,7 +79,7 @@ namespace EventCombo.Service
         .Select(ticket => new EventOrderInfoViewModel()
         {
           OrderId = ticket.Key,
-          PaymentState = state,
+          PaymentState = PaymentStates.Completed,
           Price = ticket.Sum(t => t.TPD_Amount) ?? 0,
           BuyerName = ticket.FirstOrDefault().AspNetUser.Profiles.Select(p => p.FirstName + p.LastName).FirstOrDefault(),
           BuyerEmail = ticket.FirstOrDefault().AspNetUser.Profiles.Select(p => p.Email).FirstOrDefault(),
@@ -107,7 +108,7 @@ namespace EventCombo.Service
         Email = orderRepo.Get(filter: (o => o.O_Order_Id == orderId)).FirstOrDefault().AspNetUser.Profiles.FirstOrDefault().Email
       };
 
-      foreach(var attendee in tbRepo.Get(filter: (a => a.OrderId == orderId)))
+      foreach (var attendee in tbRepo.Get(filter: (a => a.OrderId == orderId)))
         res.Attendees.Add(_mapper.Map<AttendeeViewModel>(attendee));
 
       return res;
@@ -150,7 +151,7 @@ namespace EventCombo.Service
         addresses.Add(new MailAddress(profile.Email, profile.FirstName + " " + profile.LastName));
 
       IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
-      foreach(var attendee in attRepo.Get(filter: (a => a.OrderId == orderId)))
+      foreach (var attendee in attRepo.Get(filter: (a => a.OrderId == orderId)))
         if (!String.IsNullOrWhiteSpace(attendee.Email))
           addresses.Add(new MailAddress(attendee.Email, attendee.Name));
 
@@ -158,13 +159,98 @@ namespace EventCombo.Service
         return false;
       else
       {
-        INotification notification = new OrderNotification(_factory, _dbservice, orderId, baseUrl);
+        INotification notification = new OrderNotification(_factory, _dbservice, orderId, baseUrl, null);
         ISendMailService sendService = new SendMailService();
         INotificationSender sender = new NotificationSender(notification, sendService);
         sender.SendSeparately(addresses);
         return true;
       }
 
+    }
+
+    public MemoryStream GetDownloadableOrderList(PaymentStates state, long eventId, string format)
+    {
+      format = format.Trim().ToLower();
+      if ((format != "csv") && (format != "txt") && (format != "xls"))
+        return null;
+      IEnumerable<EventOrderInfoViewModel> orders = GetOrdersForEvent(state, eventId);
+      if (format == "csv")
+        return OrderListToCSV(orders, ",");
+      if (format == "xls")
+        return OrderListToXLS(orders);
+      return OrderListToTXT(orders);
+    }
+
+    private MemoryStream OrderListToXLS(IEnumerable<EventOrderInfoViewModel> orders)
+    {
+      throw new NotImplementedException();
+    }
+
+    private MemoryStream OrderListToTXT(IEnumerable<EventOrderInfoViewModel> orders)
+    {
+      MemoryStream res = new MemoryStream();
+      StreamWriter rw = new StreamWriter(res);
+
+      rw.Write("  ORDER #  |        TICKET BUYER        | QUANTITY |  PRICE  |   DATE   |  PAYMENT  ");
+      rw.WriteLine();
+      string str = "";
+      foreach (var order in orders)
+      {
+        rw.Write(order.OrderId + new String(' ', 11 - order.OrderId.Length) + "|");
+        str = order.BuyerName;
+        while (str.Length > 28)
+        {
+          rw.Write(str.Substring(0, 28) + "|          |         |          |           ");
+          rw.WriteLine();
+          rw.Write("           |");
+          str = str.Substring(28, str.Length - 28);
+        }
+        rw.Write(str + new String(' ', 28 - str.Length) + "|");
+        str = order.Quantity.ToString();
+        rw.Write(str + new String(' ', 10 - str.Length) + "|");
+        str = order.Price.ToString("N2");
+        rw.Write(str + new String(' ', 9 - str.Length) + "|");
+        str = order.Date.ToShortDateString();
+        rw.Write(str + new String(' ', 10 - str.Length) + "|");
+        str = order.PaymentState.ToString();
+        rw.Write(str);
+        rw.WriteLine();
+      }
+
+      rw.Flush();
+
+      res.Position = 0;
+      return res;
+    }
+
+    private MemoryStream OrderListToCSV(IEnumerable<EventOrderInfoViewModel> orders, string delimiter)
+    {
+      MemoryStream res = new MemoryStream();
+      StreamWriter rw = new StreamWriter(res);
+
+      rw.Write("ORDER #" + delimiter);
+      rw.Write("TICKET BUYER" + delimiter);
+      rw.Write("QUANTITY" + delimiter);
+      rw.Write("PRICE" + delimiter);
+      rw.Write("DATE" + delimiter);
+      rw.Write("PAYMENT");
+      rw.WriteLine();
+
+      foreach(var order in orders)
+      {
+        rw.Write(order.OrderId + delimiter);
+        rw.Write(order.BuyerName + delimiter);
+        rw.Write(order.Quantity.ToString() + delimiter);
+        rw.Write("$" + order.Price.ToString("N2") + delimiter);
+        rw.Write(order.Date.ToShortDateString() + delimiter);
+        rw.Write(order.PaymentState.ToString());
+        rw.WriteLine();
+      }
+
+      rw.Flush();
+
+      res.Position = 0;
+      return res;
     }
   }
 }

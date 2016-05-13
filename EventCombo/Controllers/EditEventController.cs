@@ -15,11 +15,11 @@ using System.Globalization;
 using System.Web.Script.Serialization;
 using System.Net;
 using EventCombo.Utils;
-using DevTrends.MvcDonutCaching;
+using System.Web.UI;
 
 namespace EventCombo.Controllers
 {
-    [DonutOutputCache(VaryByParam = "None", Duration = 0, NoStore = true)]
+    [OutputCache(NoStore = true, Location = OutputCacheLocation.None)]
     public class EditEventController : Controller
     {
         // GET: EditEvent
