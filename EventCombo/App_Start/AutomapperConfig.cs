@@ -76,6 +76,7 @@ namespace EventCombo
         .ForMember(d => d.Name, m => m.MapFrom(s => s.Name.Trim()))
         .ForMember(d => d.Email, m => m.MapFrom(s => s.Email.Trim()));
       CreateMap<Event_OrganizerMessages, OrganizerMessageViewModel>();
+      CreateMap<EventOrdersSummuryViewModel, EventOrdersSummuryViewModel>();
 
       //backward maps
       CreateMap<OrderTemplateViewModel, OrderTemplate>();

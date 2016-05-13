@@ -549,3 +549,20 @@
     font-size: 16px;
     margin-top: 10px;
 }
+
+.spinner {
+    display: none;
+    width:56px;
+    height: 56px;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    text-align:center;
+    padding:10px;
+    background: #FFF;
+    border:2px solid #EEE;
+    margin-left: -50px;
+    margin-top: -50px;
+    z-index:2;
+    overflow: auto;
+}

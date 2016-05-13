@@ -20,11 +20,11 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using EventCombo.Utils;
 using System.Data.Entity.SqlServer;
-using DevTrends.MvcDonutCaching;
+using System.Web.UI;
 
 namespace EventCombo.Controllers
 {
-    [DonutOutputCache(VaryByParam = "None", Duration = 0, NoStore = true)]
+    [OutputCache(NoStore = true, Location = OutputCacheLocation.None)]
     public class CreateEventController : Controller
     {
         string facebook_urlAuthorize_base = "https://graph.facebook.com/oauth/authorize";

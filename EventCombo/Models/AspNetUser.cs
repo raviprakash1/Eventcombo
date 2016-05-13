@@ -23,6 +23,7 @@ namespace EventCombo.Models
             this.AspNetRoles = new HashSet<AspNetRole>();
             this.Ticket_Purchased_Detail = new HashSet<Ticket_Purchased_Detail>();
             this.Organizer_Master = new HashSet<Organizer_Master>();
+            this.Order_Detail_T = new HashSet<Order_Detail_T>();
         }
     
         public string Id { get; set; }
@@ -51,5 +52,7 @@ namespace EventCombo.Models
         public virtual ICollection<Ticket_Purchased_Detail> Ticket_Purchased_Detail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Organizer_Master> Organizer_Master { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order_Detail_T> Order_Detail_T { get; set; }
     }
 }

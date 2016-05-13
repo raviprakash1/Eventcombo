@@ -10,7 +10,6 @@ using AutoMapper;
 
 namespace EventCombo.Controllers
 {
-  [Authorize]
   public class ArticleController : Controller
   {
     private IArticleService _service;

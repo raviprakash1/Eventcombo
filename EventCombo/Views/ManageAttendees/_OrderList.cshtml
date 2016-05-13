@@ -1,0 +1,35 @@
+﻿@using System.Collections.Generic;
+@using System.Linq;
+@using EventCombo.Models;
+@model EventOrderInfoListViewModel
+<table id="OrderListTable@(Model.PaymentState.ToString())" data-totalrecords="@(Model.Total.ToString())" class="table">
+  <thead>
+    <tr>
+      <th class="UETableHead" width="15%"><a href="javascript:void(0);" onclick="sortBy('@(Model.PaymentState.ToString())', '@EventOrderSortBy.Order')">Order #</a></th>
+      <th class="UETableHead" width="20%"><a href="javascript:void(0);" onclick="sortBy('@(Model.PaymentState.ToString())', '@EventOrderSortBy.Buyer')">Ticket Buyer</a></th>
+      <th class="UETableHead" width="15%"><a href="javascript:void(0);" onclick="sortBy('@(Model.PaymentState.ToString())', '@EventOrderSortBy.Quantity')">Quantity</a></th>
+      <th class="UETableHead" width="15%"><a href="javascript:void(0);" onclick="sortBy('@(Model.PaymentState.ToString())', '@EventOrderSortBy.Price')">Price</a></th>
+      <th class="UETableHead" width="20%"><a href="javascript:void(0);" onclick="sortBy('@(Model.PaymentState.ToString())', '@EventOrderSortBy.Date')">Date</a></th>
+      <th class="UETableHead" width="15%"><a href="javascript:void(0);" onclick="sortBy('@(Model.PaymentState.ToString())', '@EventOrderSortBy.PaymentState')">Payment</a></th>
+    </tr>
+  </thead>
+  <tbody class="tableRecorsTBody">
+    @foreach (var order in Model.Orders)
+    {
+      <tr>
+        <td class="UETableTD">
+          <a href="javascript:void(0)" onclick="expandEditMenu(this, '@(Model.PaymentState.ToString())', '@(order.OrderId)')">
+            @order.OrderId
+          </a>
+        </td>
+        <td class="UETableTD">@order.BuyerName</td>
+        <td class="UETableTD">@order.Quantity</td>
+        <td class="UETableTD">$@order.Price</td>
+        <td class="UETableTD">@(order.Date.ToLongDateString())</td>
+        <td class="UETableTD">@(order.PaymentState.ToString())</td>
+      </tr>
+      <tr id="OrderDetail@(Model.PaymentState.ToString() + order.OrderId)" style="display:none;" data-popped="0"></tr>
+    }
+  </tbody>
+</table>
+

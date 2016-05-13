@@ -5,6 +5,7 @@ using System.Web;
 using EventCombo.Models;
 using EventCombo.DAL;
 using AutoMapper;
+using EventCombo.Utils;
 
 namespace EventCombo.Service
 {
@@ -71,8 +72,62 @@ namespace EventCombo.Service
       return se;
     }
 
+    public string GetPaymentInfo(string orderId)
+    {
+      if (String.IsNullOrWhiteSpace(orderId))
+        throw new ArgumentNullException("orderId");
+
+      string res = "";
+      IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
+
+      var order = orderRepo.Get(filter: (o => o.O_Order_Id == orderId)).FirstOrDefault();
+      if (order == null)
+        return res;
+
+      if (String.IsNullOrEmpty(order.O_PayPal_TrancId))
+      {
+        IRepository<BillingAddress> billRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
+        var billing = billRepo.Get(filter: (b => b.OrderId == orderId)).FirstOrDefault();
+        if (billing != null)
+        {
+          EncryptDecrypt encryptor = new EncryptDecrypt();
+          string cardtype = encryptor.DecryptText(billing.card_type);
+          string cardId = encryptor.DecryptText(billing.CardId);
+          res = cardtype.First().ToString().ToUpper() + cardtype.Substring(1) + " XXXX-XXXX-XXXX-" + cardId.Substring(cardId.Length - 4);
+        }
+        else
+          res = "No information";
+      }
+      else
+        res = "PayPal ID: XXXXXXXXXXXX" + order.O_PayPal_TrancId.Substring(order.O_PayPal_TrancId.Length - 4);
+
+      return res;
+    }
+
+
+    public AccessLevel GetEventAccess(long eventId, string userId)
+    {
+      if (String.IsNullOrWhiteSpace(userId))
+        throw new ArgumentNullException("userId");
+
+      IRepository<Event> evRepo = new GenericRepository<Event>(_factory.ContextFactory);
+      Event ev = evRepo.Get(filter: (e => e.EventID == eventId)).SingleOrDefault();
+      if (ev == null)
+        return AccessLevel.Public;
+      if (ev.UserID == userId)
+        return AccessLevel.EventOwner;
+      if (ev.Ticket_Purchased_Detail.Any(t => t.TPD_User_Id == userId))
+        return AccessLevel.OrderOwner;
+      return AccessLevel.Public;
+    }
+
     public AccessLevel GetOrderAccess(string orderId, string userId)
     {
+      if (String.IsNullOrWhiteSpace(orderId))
+        throw new ArgumentNullException("orderId");
+      if (String.IsNullOrWhiteSpace(userId))
+        throw new ArgumentNullException("userId");
+
       IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
       var ticket = tpdRepo.Get(filter: (t => ((t.TPD_User_Id == userId) && (t.TPD_Order_Id == orderId)))).FirstOrDefault();
       if (ticket != null)
@@ -81,6 +136,5 @@ namespace EventCombo.Service
         return AccessLevel.EventOwner;
       return AccessLevel.Public;
     }
-
   }
 }

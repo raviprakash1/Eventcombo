@@ -36,5 +36,12 @@ namespace EventCombo.Service
       _service.Message.Body = String.Format("Order {0} for event {1} has been cancelled by user {2}", new string[] { _orderId, ticket.Event.EventTitle, ticket.AspNetUser.UserName });
       _service.SendMail();
     }
+
+    private string _receiver;
+    public string ReceiverName
+    {
+      get { return _receiver; }
+      set { _receiver = value; }
+    }
   }
 }

@@ -14,12 +14,13 @@ using EventCombo.ViewModels;
 using System.Net.Mail;
 using System.Configuration;
 using EventCombo.Utils;
-using DevTrends.MvcDonutCaching;
+using System.Web.UI;
+
 
 namespace EventCombo.Controllers
 {
 
-    [DonutOutputCache(VaryByParam = "None", Duration = 0, NoStore = true)]
+    [OutputCache(NoStore = true, Location = OutputCacheLocation.None)]
     public class ManageEventController : Controller
     {
         // GET: ManageEvent
