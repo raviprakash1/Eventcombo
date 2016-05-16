@@ -544,11 +544,11 @@
 </script>
 <script type="text/javascript">
 
-
+    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]';
     //Fb login
     window.fbAsyncInit = function () {
         FB.init({
-            appId: '1956731254551382',
+            appId: fbappid,
             oauth: true,
             status: true, // check login status
             cookie: true, // enable cookies to allow the server to access the session

@@ -20,6 +20,7 @@ using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
 using EventCombo.ViewModels;
 using System.Globalization;
+using System.Configuration;
 
 namespace EventCombo.Controllers
 {
@@ -585,8 +586,10 @@ namespace EventCombo.Controllers
                 {
                     if (strPaymentType == "A")
                     {
-                        ApiLoginID = "354v9ZufxM6";
-                        ApiTransactionKey = "68Et2R3KcV62rJ27";
+
+                     
+                        ApiLoginID = ConfigurationManager.AppSettings.Get("AuthorzieNetApiLoginID") ;
+                        ApiTransactionKey = ConfigurationManager.AppSettings.Get("AuthorzieNetApiTransactionKey");
                         strCardNo = model.cardno;
                         strExpDate = model.expirydate;
                         strCvvCode = model.cvv;
@@ -2667,7 +2670,7 @@ namespace EventCombo.Controllers
                         }
                         else
                         {
-                            from = "shweta.sindhu@kiwitech.com";
+                            from = ConfigurationManager.AppSettings.Get("UserName");
 
                         }
                         if (!(string.IsNullOrEmpty(Emailtemplate.CC)))

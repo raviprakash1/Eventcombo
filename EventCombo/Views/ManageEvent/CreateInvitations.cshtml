@@ -685,7 +685,7 @@
             if (vMsg == "") {
                 if (validateEmail(vTo) == true && vTo != "") {
                     $("#txtTestEmail").removeClass('err-bor');
-                    var vFrom = "shweta.sindhu@kiwitech.com";
+                    var vFrom = "@System.Configuration.ConfigurationManager.AppSettings["UserName"]";
                     var vSubject = $("#txtSubjectLine").val();
                     var vBody = $("#dvUserMail").html();
                     var vCc = "";
