@@ -533,11 +533,7 @@ namespace EventCombo.Controllers
             {
                 Random rnd = new Random();
                 var rndnumber = rnd.Next(1, 7);
-                //string Name = Request.Form[1];
-                //if (Request.Files.Count > 0)
-                //{
-                //    HttpPostedFileBase file = Request.Files[0];
-                //}
+             
                 string Userid = Session["AppId"].ToString();
                 bool isSavedSuccessfully = true;
                 string fName = "";
@@ -571,26 +567,7 @@ namespace EventCombo.Controllers
                             var imageformat = getImageFormat(path);
                             var NFilename = file.FileName;
                             pathnew = string.Format("{0}\\{1}", pathString, NFilename);
-                            //using (EventComboEntities objEntity = new EventComboEntities())
-                            //{
-                            //    EventTempImage Imageold = objEntity.EventTempImages.FirstOrDefault(i => i.EvenUniqueid == Uniqueid);
-
-
-
-                            //    //profile.UserProfileImage = fName;
-                            //    //Image.ContentType = content_type;
-
-                            //        EventTempImage Image = new EventTempImage();
-                            //        Image.EventImageUrl = NFilename;
-                            //        Image.EvenUniqueid = Uniqueid;
-                            //        Image.ImageType = content_type;
-                            //        Image.UserId = Userid;
-                            //        objEntity.EventTempImages.Add(Image);
-                            //        objEntity.SaveChanges();
-
-
-                            //}
-                            // file.SaveAs(path);
+                          
                             HandleImageUpload(file, pathnew);
                         }
 
