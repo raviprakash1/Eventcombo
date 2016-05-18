@@ -1,8 +1,9 @@
 ﻿@using System.Collections.Generic
 @using EventCombo.Models
+@using EventCombo.Service
 @model ArticleFullViewModel
 @{
-  ViewBag.Title = "Show Article";
+  ViewBag.Title = Model.Title + " | Eventcombo";
 }
 
 <style type="text/css">
@@ -181,11 +182,11 @@
       </div>
       <div class="col-md-9 col-sm-9 col-xs-7 entrmntHeaderName">
         <div class="entrmentPersonName">@Model.AuthorName</div>
-        <div class="entrmentNameTime">@Model.CreateDate.ToLongTimeString() @Model.CreateDate.ToShortDateString()</div>
+        <div class="entrmentNameTime">@Model.CreateDate.ToLongTimeString() @Model.CreateDate.ToString("MMMM dd, yyyy")</div>
         <div class="entrmentFollowTwitter">follow me on <a href="@(String.IsNullOrWhiteSpace(Model.AuthorTwitterUrl) ? "javascript:void(0)" : Model.AuthorTwitterUrl)" class="followOnTwitterAnchor">Twitter</a></div>
         <div class="entrmntSocialIcon">
           @{
-            string chref = Url.Action("ShowArticle", "Article", new { articleId = Model.ArticleId }, Request.Url.Scheme).Replace("util_admin_bolt/", "");
+            string chref = Url.Content(ArticleService.GetArticleUrl(Model.ArticleId, Model.Title));
           }
           <div class="col-md-3 col-sm-4 col-xs-6 entrmSocialDiv">
             <a href="javascript:void(0)" onclick="FacebookShare('@Model.Title','@chref')"><img src="~/Images/facebook.png" /></a>
@@ -212,44 +213,47 @@
       </div>
     </div>
 
-    <div class="col-md-6 col-sm-6 col-xs-12 photoGallaryContainer">
-      <div class="photoGallaryContainerTxt">Photo Gallary</div>
-      @for (var i = 0; i < Model.Images.Count; i++)
-      {
+    @if (Model.Images.Count > 0)
+    {
+      <div class="col-md-6 col-sm-6 col-xs-12 photoGallaryContainer">
+        <div class="photoGallaryContainerTxt">Photo Gallary</div>
+        @for (var i = 0; i < Model.Images.Count; i++)
+        {
         <div class="col-md-6 col-sm-6 col-xs-12 photoGallaryContent">
           <a href="javascript:void(0)" data-id="@((i + 1).ToString())" data-toggle="modal" data-target=".bs-example-modal-md" class="imageGallaryAnchorCls">
             <img src="@(Model.Images[i])" />
           </a>
         </div>
-      }
+        }
 
-      <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md">
-          <div class="modal-content">
-            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-              <div class="carousel-inner">
-                @for (var i = 0; i < Model.Images.Count; i++)
-                {
-                  <div id="gallarySlider@((i + 1).ToString())" class="gallarySliderClass item active">
-                    <img class="img-responsive sliderImgGallary" src="@(Model.Images[i])">
-                  </div>
-                }
+        <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-md">
+            <div class="modal-content">
+              <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                  @for (var i = 0; i < Model.Images.Count; i++)
+                  {
+                    <div id="gallarySlider@((i + 1).ToString())" class="gallarySliderClass item active">
+                      <img class="img-responsive sliderImgGallary" src="@(Model.Images[i])">
+                    </div>
+                  }
+                </div>
+
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" style="top:50%;">
+                  <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" style="top:50%;">
+                  <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
               </div>
-
-              <!-- Controls -->
-              <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" style="top:50%;">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-              </a>
-              <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" style="top:50%;">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-              </a>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    }
 
-    <div class="col-md-6 col-sm-6 col-xs-12 discussionFbContainer">
+    <div class="@(Model.Images.Count == 0 ? "col-md-12" : "col-md-6") col-sm-6 col-xs-12 discussionFbContainer">
       <div class="discussionFbContainerTxt">Discussion</div>
       <div id="fb-root"></div>
       <div class="fb-comments" data-href="@chref" data-width="404" data-numposts="5"></div>

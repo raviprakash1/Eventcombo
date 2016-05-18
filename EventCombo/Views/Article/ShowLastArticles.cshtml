@@ -1,5 +1,6 @@
 ﻿@using System.Collections.Generic
 @using EventCombo.Models
+@using EventCombo.Service
 @model IEnumerable<ArticleShortViewModel>
 @{
   Layout = null;
@@ -9,16 +10,17 @@
 
   @foreach (var article in Model)
   {
+    string articleURL = Url.Content(ArticleService.GetArticleUrl(article.ArticleId, article.Title));
     <div class="event_list_main buzz_right_main ">
       <div class="event_list_right buzz_right">
-        <p class="event_tit buz_title"><a href="@(Url.Action("ShowArticle", "Article", new { articleId = article.ArticleId }))">@(article.Title)</a></p>
+        <p class="event_tit buz_title"><a href="@articleURL">@(article.Title)</a></p>
         <p class="event_desc buz_desc">
-          <a href="@(Url.Action("ShowArticle", "Article", new { articleId = article.ArticleId }))">
+          <a href="@articleURL">
             @(article.ShortBody)
           </a>
         </p>
       </div>
-      <div class="event_list_left"><a href="@(Url.Action("ShowArticle", "Article", new { articleId = article.ArticleId }))"><img class="evnt_img_right" src="@(article.ArticleImage)" alt=""></a></div>
+      <div class="event_list_left"><a href="@articleURL"><img class="evnt_img_right" src="@(article.ArticleImage)" alt=""></a></div>
     </div>
   }
 </div>
