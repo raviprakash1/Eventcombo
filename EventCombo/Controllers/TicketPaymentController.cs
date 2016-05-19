@@ -54,7 +54,7 @@ namespace EventCombo.Controllers
             //ValidationMessageController vmc = new ValidationMessageController();
             if ((Session["AppId"] != null))
             {
-               
+
                 string usernme = AccDetail.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -66,14 +66,14 @@ namespace EventCombo.Controllers
             {
                 Event objMyEvent = new Event();
                 objMyEvent = cs.GetSelectedEventDetail(Session["TicketLockedId"].ToString());
-                if(objMyEvent==null)
+                if (objMyEvent == null)
                 {
                     return RedirectToAction("Index", "Home");
                 }
                 Eventid = objMyEvent.EventID;
-             
-                   
-               
+
+
+
 
             }
             else
@@ -93,7 +93,7 @@ namespace EventCombo.Controllers
             //var url = Url.RouteUrl("Payment");
             Session["ReturnUrl"] = "TicketPayment~" + url;
 
-          
+
             var tt = cs.GetImages(Eventid).FirstOrDefault();
             if (!string.IsNullOrWhiteSpace(tt))
             {
@@ -143,10 +143,10 @@ namespace EventCombo.Controllers
                                     orderby c.Country1 ascending
                                     select c).Distinct();
                 List<SelectListItem> countryList = new List<SelectListItem>();
-              
-               
-                    defaultCountry = "United States";
-              
+
+
+                defaultCountry = "United States";
+
 
 
                 foreach (var item in countryQuery)
@@ -158,10 +158,10 @@ namespace EventCombo.Controllers
                         Selected = (item.CountryID.ToString().Trim() == defaultCountry.Trim() ? true : false)
                     });
                 }
-              
+
                 ViewBag.CountryID = countryList;
             }
-           tp.tickebox =  LoadTickets(Eventid.ToString());
+            tp.tickebox = LoadTickets(Eventid.ToString());
 
             return View(tp);
         }
@@ -209,10 +209,11 @@ namespace EventCombo.Controllers
         public string CalculatePromoCode(string strTicketId, string strCode, long lEventId)
         {
             string strResult = "";
-            DateTimeWithZone dtzstart, dzend, dtzCreated,dzstartpromocode,dzendpromocode;
+            DateTimeWithZone dtzstart, dzend, dtzCreated, dzstartpromocode, dzendpromocode;
             string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
             string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
-            try {
+            try
+            {
                 using (var context = new EventComboEntities())
                 {
                     var Event = (from myEnt in db.Events where myEnt.EventID == lEventId select myEnt).FirstOrDefault();
@@ -228,25 +229,25 @@ namespace EventCombo.Controllers
 
                         var vMultiEv = (from Ev in db.MultipleEvents where Ev.EventID == lEventId select Ev).FirstOrDefault();
 
-                       
-                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
-                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiEv.M_Startfrom), userTimeZone, true);
-                            dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiEv.M_StartTo), userTimeZone, true);
-                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
-                      
+
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
+                        dtzstart = new DateTimeWithZone(Convert.ToDateTime(vMultiEv.M_Startfrom), userTimeZone, true);
+                        dzend = new DateTimeWithZone(Convert.ToDateTime(vMultiEv.M_StartTo), userTimeZone, true);
+                        dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+
                         dtStartDate = dtzstart.LocalTime;
                         dtEndDate = dzend.LocalTime;
                     }
                     else
                     {
-                        
-                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
-                            dtzstart = new DateTimeWithZone(Convert.ToDateTime(vEventVenue.E_Startdate), userTimeZone, true);
-                            dzend = new DateTimeWithZone(Convert.ToDateTime(vEventVenue.E_Enddate), userTimeZone, true);
-                            dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
-                     
-                         dtStartDate = dtzstart.LocalTime;
-                         dtEndDate = dzend.LocalTime;
+
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
+                        dtzstart = new DateTimeWithZone(Convert.ToDateTime(vEventVenue.E_Startdate), userTimeZone, true);
+                        dzend = new DateTimeWithZone(Convert.ToDateTime(vEventVenue.E_Enddate), userTimeZone, true);
+                        dtzCreated = new DateTimeWithZone(DateTime.Now, userTimeZone, false);
+
+                        dtStartDate = dtzstart.LocalTime;
+                        dtEndDate = dzend.LocalTime;
                     }
                     dtNow = dtzCreated.LocalTime;
                     string[] strTAry = strTicketId.Split(',');
@@ -263,21 +264,21 @@ namespace EventCombo.Controllers
                             return "OL";
                         }
                     }
-                 
+
                     if (PromoCode.PC_Startdatetype != null)
                     {
                         if (PromoCode.PC_Startdatetype.Trim() == "0")
                         {
 
-                          
 
-                           
-                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
-                                dzstartpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.P_Startdate), userTimeZone, true);
-                               
-                          
-                       
-                          
+
+
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
+                            dzstartpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.P_Startdate), userTimeZone, true);
+
+
+
+
                             dtStartDate = dzstartpromocode.LocalTime;
                             if (dtNow < dtStartDate)
                             {
@@ -286,7 +287,7 @@ namespace EventCombo.Controllers
                         }
                         else if (PromoCode.PC_Startdatetype.Trim() == "1")
                         {
-                           
+
                             string text = PromoCode.PC_Start;// "10 Days 24 Hrs 45 Min";
                             Regex pattern = new Regex(@"(?:(?<days>\d+) Days )?(?:(?<hrs>\d+) Hrs )?(?:(?<mins>\d+) Min)?");
                             Match match = pattern.Match(text);
@@ -310,22 +311,22 @@ namespace EventCombo.Controllers
 
                         if (PromoCode.Pc_Enddatetype.Trim() == "0")
                         {
-                           
-                                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
-                                dzendpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.P_Enddate), userTimeZone, true);
 
-                           
+                            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
+                            dzendpromocode = new DateTimeWithZone(Convert.ToDateTime(PromoCode.P_Enddate), userTimeZone, true);
+
+
                             dtEndDate = dzendpromocode.LocalTime;
 
-                         if (dtNow > dtEndDate)
+                            if (dtNow > dtEndDate)
                             {
                                 return "EDI";
                             }
                         }
                         else if (PromoCode.Pc_Enddatetype.Trim() == "1")
                         {
-                           
-                            
+
+
 
                             string text = PromoCode.PC_End;// "10 Days 24 Hrs 45 Min";
                             Regex pattern = new Regex(@"(?:(?<days>\d+) Days )?(?:(?<hrs>\d+) Hrs )?(?:(?<mins>\d+) Min)?");
@@ -380,7 +381,8 @@ namespace EventCombo.Controllers
                         //}
                     }
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 ExceptionLogging.SendErrorToText(ex);
             }
@@ -388,11 +390,12 @@ namespace EventCombo.Controllers
         }
 
 
-        public string ValidatePromoCode(long lEventId,string strCode)
+        public string ValidatePromoCode(long lEventId, string strCode)
         {
             string strResult = "Y";
             string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
-            try {
+            try
+            {
                 using (var context = new EventComboEntities())
                 {
                     var PromoCode = (from pc in db.Promo_Code where pc.PC_Code == strCode && pc.PC_Eventid == lEventId select pc).FirstOrDefault();
@@ -416,7 +419,7 @@ namespace EventCombo.Controllers
             return strResult;
         }
 
-        public string LockPromoCode(decimal dAmt, long lTQDId,long lEventId, string strCode)
+        public string LockPromoCode(decimal dAmt, long lTQDId, long lEventId, string strCode)
         {
             try
             {
@@ -428,7 +431,7 @@ namespace EventCombo.Controllers
                     bool bisPaid = false;
                     foreach (Ticket objTic in vTicket)
                     {
-                        if (objTic.TicketTypeID  == 2)
+                        if (objTic.TicketTypeID == 2)
                         {
                             bisPaid = true;
                             break;
@@ -445,7 +448,7 @@ namespace EventCombo.Controllers
                     else
                     {
                         Ticket_Locked_Detail objTLD = (from TLD in context.Ticket_Locked_Detail where TLD.TLD_GUID == strGUID && TLD.TLD_TQD_Id == lTQDId select TLD).FirstOrDefault();
-                        var vTicketId =  (from TQD in context.Ticket_Quantity_Detail where TQD.TQD_Id == lTQDId select TQD.TQD_Ticket_Id).FirstOrDefault();
+                        var vTicketId = (from TQD in context.Ticket_Quantity_Detail where TQD.TQD_Id == lTQDId select TQD.TQD_Ticket_Id).FirstOrDefault();
                         var vTicketType = (from Tic in context.Tickets where Tic.T_Id == vTicketId select Tic.TicketTypeID).FirstOrDefault();
                         if (vTicketType == 2)
                         {
@@ -471,10 +474,10 @@ namespace EventCombo.Controllers
                 string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
                 using (var context = new EventComboEntities())
                 {
-                        Ticket_Locked_Detail objTLD = (from TLD in context.Ticket_Locked_Detail where TLD.TLD_GUID == strGUID select TLD).FirstOrDefault();
-                        objTLD.TLD_PromoCodeId = 0;
-                        objTLD.TLD_PromoCodeAmount = 0;
-                        context.SaveChanges();
+                    Ticket_Locked_Detail objTLD = (from TLD in context.Ticket_Locked_Detail where TLD.TLD_GUID == strGUID select TLD).FirstOrDefault();
+                    objTLD.TLD_PromoCodeId = 0;
+                    objTLD.TLD_PromoCodeAmount = 0;
+                    context.SaveChanges();
                 }
                 return "Y";
             }
@@ -496,7 +499,7 @@ namespace EventCombo.Controllers
             EncryptDecrypt Ecode = new EncryptDecrypt();
             var Carddetails = (from ev in db.CardDetails where ev.CardId.ToString() == cardid select ev).FirstOrDefault();
 
-            return Ecode.DecryptText(Carddetails.CardNumber)+"*"+Ecode.DecryptText(Carddetails.ExpirationDate)+"*"+Ecode.DecryptText(Carddetails.Cvv);
+            return Ecode.DecryptText(Carddetails.CardNumber) + "*" + Ecode.DecryptText(Carddetails.ExpirationDate) + "*" + Ecode.DecryptText(Carddetails.Cvv);
 
         }
         public ApplicationSignInManager SignInManager
@@ -570,317 +573,329 @@ namespace EventCombo.Controllers
 
         public async Task<JsonResult> SaveDetails(TicketPayment model, string strOrderTotal, string strGrandTotal, string strPromId, string strVarChanges, string strVarId, string strPaymentType, string strTranId = null, string strPayerId = null, string strTokenNo = null)
         {
-            string ApiLoginID; string ApiTransactionKey; string strCardNo; string strExpDate; string strCvvCode; decimal dAmount;
-            ApiLoginID = ""; ApiTransactionKey = ""; strCardNo = ""; strExpDate = ""; strCvvCode = ""; dAmount = 0;
-
-            var usertype = 0;
-            var useridnew = "";
-            string message = "";
-
-            EncryptDecrypt EDcode = new EncryptDecrypt();
-
-            var grandtotal =double.Parse(strGrandTotal);
-            string Userid = "",transactionhash="",transactionid="";
-            using (var transaction = db.Database.BeginTransaction())
+            try
             {
-                if (grandtotal>0)
+
+
+                string ApiLoginID; string ApiTransactionKey; string strCardNo; string strExpDate; string strCvvCode; decimal dAmount;
+                ApiLoginID = ""; ApiTransactionKey = ""; strCardNo = ""; strExpDate = ""; strCvvCode = ""; dAmount = 0;
+
+                var usertype = 0;
+                var useridnew = "";
+                string message = "";
+
+                EncryptDecrypt EDcode = new EncryptDecrypt();
+
+                var grandtotal = double.Parse(strGrandTotal);
+                string Userid = "", transactionhash = "", transactionid = "";
+                using (var transaction = db.Database.BeginTransaction())
                 {
-                    if (strPaymentType == "A")
+                    if (grandtotal > 0)
+                    {
+                        if (strPaymentType == "A")
+                        {
+
+
+                            ApiLoginID = ConfigurationManager.AppSettings.Get("AuthorzieNetApiLoginID");
+                            ApiTransactionKey = ConfigurationManager.AppSettings.Get("AuthorzieNetApiTransactionKey");
+                            strCardNo = model.cardno;
+                            strExpDate = model.expirydate;
+                            strCvvCode = model.cvv;
+                            dAmount = (strGrandTotal != "" ? Convert.ToDecimal(strGrandTotal) : 0);
+                            var cardtransaction = PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
+                            message = cardtransaction.message;
+                            transactionhash = cardtransaction.Transactionhash;
+                            transactionid = cardtransaction.TransactionId;
+
+                        }
+                    }
+                    else
+                    {
+                        message = "O";
+                    }
+                    if (strPaymentType == "P" || message == "O")
                     {
 
-                     
-                        ApiLoginID = ConfigurationManager.AppSettings.Get("AuthorzieNetApiLoginID") ;
-                        ApiTransactionKey = ConfigurationManager.AppSettings.Get("AuthorzieNetApiTransactionKey");
-                        strCardNo = model.cardno;
-                        strExpDate = model.expirydate;
-                        strCvvCode = model.cvv;
-                        dAmount = (strGrandTotal != "" ? Convert.ToDecimal(strGrandTotal) : 0);
-                        var cardtransaction = PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
-                        message = cardtransaction.message;
-                        transactionhash = cardtransaction.Transactionhash;
-                        transactionid = cardtransaction.TransactionId;
-
-                    }
-                }
-                else
-                {
-                    message = "O";
-                }
-                if(strPaymentType == "P" || message=="O")
-                { 
-               
-                if (Session["AppId"] != null)
-                {
-                    Userid = Session["AppId"].ToString();
-                }
-                else
-                {
-                        var userdetail = (from v in db.AspNetUsers where v.Email == model.AccEmail select v).FirstOrDefault();
-                        if (userdetail == null)
+                        if (Session["AppId"] != null)
                         {
-                            usertype = 1;
-                            string userid = await saveuser(model.AccEmail, model.Accpassword);
-                            Userid = userid;
-                            if (!string.IsNullOrEmpty(userid))
-                            {
-                                using (EventComboEntities objEntity = new EventComboEntities())
-                                {
-
-                                    Profile prof = new Profile();
-                                    prof.FirstName = model.AccFname;
-                                    prof.Email = model.AccEmail;
-                                    prof.LastName = model.AccLname;
-                                    prof.UserID = Userid;
-                                    prof.UserStatus = "y";
-                                    objEntity.Profiles.Add(prof);
-
-                                    await this.UserManager.AddToRoleAsync(Userid, "Member");
-
-                                    User_Permission_Detail permdetail = new User_Permission_Detail();
-                                    for (int i = 1; i < 3; i++)
-                                    {
-
-                                        permdetail.UP_Permission_Id = i;
-                                        permdetail.UP_User_Id = Userid.ToString();
-                                        objEntity.User_Permission_Detail.Add(permdetail);
-                                        objEntity.SaveChanges();
-                                    }
-                                }
-                                //Session["AppId"] = userid;
-                            }
-
-
-
+                            Userid = Session["AppId"].ToString();
                         }
                         else
                         {
-                            Userid = userdetail.Id;
-                        }
-
-                   
-
-                }
-                    //if (usertype == 0)
-                    //{
-
-                    //    Userid = Userid;
-                    //}
-                    //else
-                    //{
-                    //    Userid = useridnew;
-                    //}
-                    string guid = Session["TicketLockedId"].ToString();
-                    using (EventComboEntities objEntity = new EventComboEntities())
-                    {
-                       
-
-
-
-                        List<Ticket_Locked_Detail_List> objLockedTic = new List<Ticket_Locked_Detail_List>();
-                        objLockedTic = GetLockTickets();
-                        Ticket_Purchased_Detail objTPD;
-                        long lPromoId = 0;
-                        foreach (Ticket_Locked_Detail_List TLD in objLockedTic)
-                        {
-                            lPromoId = (TLD.TLD_PromoCodeId != null ? Convert.ToInt32(TLD.TLD_PromoCodeId) : 0);
-                            break;
-                        }
-
-
-
-
-                        Order_Detail_T objOdr = new Order_Detail_T();
-                        objOdr.O_Order_Id = "";
-                        objOdr.O_TotalAmount = CommanClasses.ConvertToNumeric(strGrandTotal); ;
-                        objOdr.O_User_Id = Userid;
-                        objOdr.O_OrderAmount = CommanClasses.ConvertToNumeric(strOrderTotal);
-                        objOdr.O_VariableId = strVarId;
-                        objOdr.O_VariableAmount = CommanClasses.ConvertToNumeric(strVarChanges);
-                        objOdr.O_PromoCodeId = lPromoId;
-                        objOdr.O_OrderDateTime = DateTime.Now;
-                        objOdr.O_PayPal_PayerId = strPayerId;
-                        objOdr.O_PayPal_TokenId = strTokenNo;
-                        objOdr.O_PayPal_TrancId = strTranId;
-                        objOdr.O_Email = model.AccEmail;
-                        objOdr.O_First_Name = model.AccFname;
-                        objOdr.O_Last_Name = model.AccLname;
-                        objOdr.O_Card_TransHash = transactionhash;
-                        objOdr.O_Card_TransId = transactionid;
-                        objEntity.Order_Detail_T.Add(objOdr);
-                        objEntity.SaveChanges();
-
-                        string strOrderNo = GetOrderNo();
-
-                        //List<Ticket_Locked_Detail> objLockedTic = new List<Ticket_Locked_Detail>();
-
-
-                        foreach (Ticket_Locked_Detail_List TLD in objLockedTic)
-                        {
-                            objTPD = new Ticket_Purchased_Detail();
-                            objTPD.TPD_Amount = TLD.TicketAmount;
-                            objTPD.TPD_Donate = TLD.TLD_Donate;
-                            objTPD.TPD_Event_Id = TLD.TLD_Event_Id;
-                            objTPD.TPD_Order_Id = strOrderNo;
-                            objTPD.TPD_Purchased_Qty = TLD.TLD_Locked_Qty;
-                            objTPD.TPD_TQD_Id = TLD.TLD_TQD_Id;
-                            objTPD.TPD_GUID = TLD.TLD_GUID;
-                            objTPD.TPD_User_Id = Userid;
-                            if (objTPD.TPD_Amount > 0)
+                            var userdetail = (from v in db.AspNetUsers where v.Email == model.AccEmail select v).FirstOrDefault();
+                            if (userdetail == null)
                             {
-                                objTPD.TPD_EC_Fee = GetCurrentECFee(TLD.TLD_TQD_Id);
+                                usertype = 1;
+                                string userid = await saveuser(model.AccEmail, model.Accpassword);
+                                Userid = userid;
+                                if (!string.IsNullOrEmpty(userid))
+                                {
+                                    using (EventComboEntities objEntity = new EventComboEntities())
+                                    {
+
+                                        Profile prof = new Profile();
+                                        prof.FirstName = model.AccFname;
+                                        prof.Email = model.AccEmail;
+                                        prof.LastName = model.AccLname;
+                                        prof.UserID = Userid;
+                                        prof.UserStatus = "y";
+                                        objEntity.Profiles.Add(prof);
+
+                                        await this.UserManager.AddToRoleAsync(Userid, "Member");
+
+                                        User_Permission_Detail permdetail = new User_Permission_Detail();
+                                        for (int i = 1; i < 3; i++)
+                                        {
+
+                                            permdetail.UP_Permission_Id = i;
+                                            permdetail.UP_User_Id = Userid.ToString();
+                                            objEntity.User_Permission_Detail.Add(permdetail);
+                                            objEntity.SaveChanges();
+                                        }
+                                    }
+                                    //Session["AppId"] = userid;
+                                }
+
+
+
                             }
                             else
                             {
-                                objTPD.TPD_EC_Fee = 0;
+                                Userid = userdetail.Id;
                             }
-                            objTPD.TPD_PromoCodeID = TLD.TLD_PromoCodeId;
-                            objTPD.TPD_PromoCodeAmount = TLD.TLD_PromoCodeAmount;
-                            objEntity.Ticket_Purchased_Detail.Add(objTPD);
+
+
+
                         }
+                        //if (usertype == 0)
+                        //{
 
-
-                        if (grandtotal>0)
+                        //    Userid = Userid;
+                        //}
+                        //else
+                        //{
+                        //    Userid = useridnew;
+                        //}
+                        string guid = Session["TicketLockedId"].ToString();
+                        using (EventComboEntities objEntity = new EventComboEntities())
                         {
-                            if (model.strPaymentType != "P")
+
+
+
+
+                            List<Ticket_Locked_Detail_List> objLockedTic = new List<Ticket_Locked_Detail_List>();
+                            objLockedTic = GetLockTickets();
+                            Ticket_Purchased_Detail objTPD;
+                            long lPromoId = 0;
+                            foreach (Ticket_Locked_Detail_List TLD in objLockedTic)
                             {
-                                if (model.Savecarddetail != "N")
+                                lPromoId = (TLD.TLD_PromoCodeId != null ? Convert.ToInt32(TLD.TLD_PromoCodeId) : 0);
+                                break;
+                            }
+
+
+
+
+                            Order_Detail_T objOdr = new Order_Detail_T();
+                            objOdr.O_Order_Id = "";
+                            objOdr.O_TotalAmount = CommanClasses.ConvertToNumeric(strGrandTotal); ;
+                            objOdr.O_User_Id = Userid;
+                            objOdr.O_OrderAmount = CommanClasses.ConvertToNumeric(strOrderTotal);
+                            objOdr.O_VariableId = strVarId;
+                            objOdr.O_VariableAmount = CommanClasses.ConvertToNumeric(strVarChanges);
+                            objOdr.O_PromoCodeId = lPromoId;
+                            objOdr.O_OrderDateTime = DateTime.Now;
+                            objOdr.O_PayPal_PayerId = strPayerId;
+                            objOdr.O_PayPal_TokenId = strTokenNo;
+                            objOdr.O_PayPal_TrancId = strTranId;
+                            objOdr.O_Email = model.AccEmail;
+                            objOdr.O_First_Name = model.AccFname;
+                            objOdr.O_Last_Name = model.AccLname;
+                            objOdr.O_Card_TransHash = transactionhash;
+                            objOdr.O_Card_TransId = transactionid;
+                            objEntity.Order_Detail_T.Add(objOdr);
+                            objEntity.SaveChanges();
+
+                            string strOrderNo = GetOrderNo();
+
+                            //List<Ticket_Locked_Detail> objLockedTic = new List<Ticket_Locked_Detail>();
+
+
+                            foreach (Ticket_Locked_Detail_List TLD in objLockedTic)
+                            {
+                                objTPD = new Ticket_Purchased_Detail();
+                                objTPD.TPD_Amount = TLD.TicketAmount;
+                                objTPD.TPD_Donate = TLD.TLD_Donate;
+                                objTPD.TPD_Event_Id = TLD.TLD_Event_Id;
+                                objTPD.TPD_Order_Id = strOrderNo;
+                                objTPD.TPD_Purchased_Qty = TLD.TLD_Locked_Qty;
+                                objTPD.TPD_TQD_Id = TLD.TLD_TQD_Id;
+                                objTPD.TPD_GUID = TLD.TLD_GUID;
+                                objTPD.TPD_User_Id = Userid;
+                                if (objTPD.TPD_Amount > 0)
                                 {
-                                    var objcarddetail = (from objdetail in objEntity.CardDetails where objdetail.UserId == Userid && objdetail.CardNumber == model.cardno select objdetail).Any();
-                                    if (!objcarddetail)
+                                    objTPD.TPD_EC_Fee = GetCurrentECFee(TLD.TLD_TQD_Id);
+                                }
+                                else
+                                {
+                                    objTPD.TPD_EC_Fee = 0;
+                                }
+                                objTPD.TPD_PromoCodeID = TLD.TLD_PromoCodeId;
+                                objTPD.TPD_PromoCodeAmount = TLD.TLD_PromoCodeAmount;
+                                objEntity.Ticket_Purchased_Detail.Add(objTPD);
+                            }
+
+
+                            if (grandtotal > 0)
+                            {
+                                if (model.strPaymentType != "P")
+                                {
+                                    if (model.Savecarddetail != "N")
                                     {
-                                        CardDetail card = new CardDetail();
-                                        card.CardNumber = EDcode.EncryptText("XXXXXXXXXXXX" + model.cardno.Substring(model.cardno.Length - 4));
-                                        card.ExpirationDate = EDcode.EncryptText("Unknown");
-                                        card.Cvv = EDcode.EncryptText("Unknown");
-                                        card.UserId = Userid;
-                                        card.Guid = guid;
-                                        card.card_type = EDcode.EncryptText(model.card_type);
-                                        objEntity.CardDetails.Add(card);
+                                        var objcarddetail = (from objdetail in objEntity.CardDetails where objdetail.UserId == Userid && objdetail.CardNumber == model.cardno select objdetail).Any();
+                                        if (!objcarddetail)
+                                        {
+                                            CardDetail card = new CardDetail();
+                                            card.CardNumber = EDcode.EncryptText("XXXXXXXXXXXX" + model.cardno.Substring(model.cardno.Length - 4));
+                                            card.ExpirationDate = EDcode.EncryptText("Unknown");
+                                            card.Cvv = EDcode.EncryptText("Unknown");
+                                            card.UserId = Userid;
+                                            card.Guid = guid;
+                                            card.card_type = EDcode.EncryptText(model.card_type);
+                                            objEntity.CardDetails.Add(card);
+                                        }
+
+
                                     }
 
+                                    if (strTranId == "" || strTranId == null)
+                                    {
+                                        BillingAddress badd = new BillingAddress();
+                                        badd.Fname = model.billfname;
+                                        badd.Lname = model.billLname;
+                                        badd.Address1 = model.billaddress1;
+                                        badd.Address2 = model.billaddress2;
+                                        badd.City = model.billcity;
+                                        badd.State = model.billstate;
+                                        badd.Zip = model.billzip;
+                                        badd.Country = model.billcountry;
+                                        badd.Phone_Number = model.billingphno;
+                                        badd.UserId = Userid;
+                                        badd.Guid = guid;
+                                        badd.OrderId = strOrderNo;
+                                        badd.PaymentType = "C";
+                                        badd.CardId = EDcode.EncryptText("XXXXXXXXXXXX" + model.cardno.Substring(model.cardno.Length - 4));
+                                        badd.card_type = EDcode.EncryptText(model.card_type);
+                                        badd.Cvv = EDcode.EncryptText("Unknown");
+                                        badd.ExpirationDate = EDcode.EncryptText("Unknown");
+                                        objEntity.BillingAddresses.Add(badd);
+                                    }
+                                    if (model.Saveshipdetail != "N")
+                                    {
+                                        ShippingAddress shipadd = new ShippingAddress();
 
+                                        shipadd.Fname = model.shipfname;
+                                        shipadd.Lname = model.shipLname;
+                                        shipadd.Address1 = model.shipaddress1;
+                                        shipadd.Address2 = model.shipaddress2;
+                                        shipadd.City = model.shipcity;
+                                        shipadd.State = model.shipstate;
+                                        shipadd.Zip = model.shipzip;
+                                        shipadd.Country = model.shipcountry;
+                                        shipadd.Phone_Number = model.shipphno;
+                                        shipadd.UserId = Userid;
+                                        shipadd.Guid = guid;
+                                        shipadd.OrderId = strOrderNo;
+                                        objEntity.ShippingAddresses.Add(shipadd);
+                                    }
+                                    if (model.sameshipbilldetail == "Y")
+                                    {
+                                        ShippingAddress shipadd = new ShippingAddress();
+                                        shipadd.Fname = model.billfname;
+                                        shipadd.Lname = model.billLname;
+                                        shipadd.Address1 = model.billaddress1;
+                                        shipadd.Address2 = model.billaddress2;
+                                        shipadd.City = model.billcity;
+                                        shipadd.State = model.billstate;
+                                        shipadd.Zip = model.billzip;
+                                        shipadd.Country = model.billcountry;
+                                        shipadd.Phone_Number = model.billingphno;
+                                        shipadd.UserId = Userid;
+                                        shipadd.Guid = guid;
+                                        shipadd.OrderId = strOrderNo;
+                                        objEntity.ShippingAddresses.Add(shipadd);
+                                    }
+                                }
+                                if (model.NameList != null)
+                                {
+                                    TicketBearer ObjAdd = new TicketBearer();
+                                    foreach (TicketBearer objA in model.NameList)
+                                    {
+
+                                        ObjAdd = new TicketBearer();
+                                        ObjAdd.UserId = Userid;
+                                        ObjAdd.Guid = guid;
+                                        ObjAdd.Email = objA.Email;
+                                        ObjAdd.Name = objA.Name;
+                                        ObjAdd.OrderId = strOrderNo;
+                                        objEntity.TicketBearers.Add(ObjAdd);
+
+
+                                    }
                                 }
 
-                                if (strTranId == "" || strTranId == null)
-                                {
-                                    BillingAddress badd = new BillingAddress();
-                                    badd.Fname = model.billfname;
-                                    badd.Lname = model.billLname;
-                                    badd.Address1 = model.billaddress1;
-                                    badd.Address2 = model.billaddress2;
-                                    badd.City = model.billcity;
-                                    badd.State = model.billstate;
-                                    badd.Zip = model.billzip;
-                                    badd.Country = model.billcountry;
-                                    badd.Phone_Number = model.billingphno;
-                                    badd.UserId = Userid;
-                                    badd.Guid = guid;
-                                    badd.OrderId = strOrderNo;
-                                    badd.PaymentType = "C";
-                                    badd.CardId = EDcode.EncryptText("XXXXXXXXXXXX" + model.cardno.Substring(model.cardno.Length - 4));
-                                    badd.card_type = EDcode.EncryptText(model.card_type);
-                                    badd.Cvv = EDcode.EncryptText("Unknown");
-                                    badd.ExpirationDate = EDcode.EncryptText("Unknown");
-                                    objEntity.BillingAddresses.Add(badd);
-                                }
-                                if (model.Saveshipdetail != "N")
-                                {
-                                    ShippingAddress shipadd = new ShippingAddress();
 
-                                    shipadd.Fname = model.shipfname;
-                                    shipadd.Lname = model.shipLname;
-                                    shipadd.Address1 = model.shipaddress1;
-                                    shipadd.Address2 = model.shipaddress2;
-                                    shipadd.City = model.shipcity;
-                                    shipadd.State = model.shipstate;
-                                    shipadd.Zip = model.shipzip;
-                                    shipadd.Country = model.shipcountry;
-                                    shipadd.Phone_Number = model.shipphno;
-                                    shipadd.UserId = Userid;
-                                    shipadd.Guid = guid;
-                                    shipadd.OrderId = strOrderNo;
-                                    objEntity.ShippingAddresses.Add(shipadd);
-                                }
-                                if (model.sameshipbilldetail == "Y")
-                                {
-                                    ShippingAddress shipadd = new ShippingAddress();
-                                    shipadd.Fname = model.billfname;
-                                    shipadd.Lname = model.billLname;
-                                    shipadd.Address1 = model.billaddress1;
-                                    shipadd.Address2 = model.billaddress2;
-                                    shipadd.City = model.billcity;
-                                    shipadd.State = model.billstate;
-                                    shipadd.Zip = model.billzip;
-                                    shipadd.Country = model.billcountry;
-                                    shipadd.Phone_Number = model.billingphno;
-                                    shipadd.UserId = Userid;
-                                    shipadd.Guid = guid;
-                                    shipadd.OrderId = strOrderNo;
-                                    objEntity.ShippingAddresses.Add(shipadd);
-                                }
+                                // -------------------------------------------------- Payment Transfer Card detail -----------------------------------------
+
                             }
-                            if (model.NameList != null)
+                            try
                             {
-                                TicketBearer ObjAdd = new TicketBearer();
-                                foreach (TicketBearer objA in model.NameList)
-                                {
+                                objEntity.SaveChanges();
+                            }
+                            catch (Exception ex)
+                            {
+                                transaction.Rollback();
 
-                                    ObjAdd = new TicketBearer();
-                                    ObjAdd.UserId = Userid;
-                                    ObjAdd.Guid = guid;
-                                    ObjAdd.Email = objA.Email;
-                                    ObjAdd.Name = objA.Name;
-                                    ObjAdd.OrderId = strOrderNo;
-                                    objEntity.TicketBearers.Add(ObjAdd);
-
-
-                                }
+                                ExceptionLogging.SendErrorToText(ex);
                             }
 
+                            //else if (strPaymentType == "P")
+                            //{
+                            //    RedirectToAction("Pay", "Cart");
+                            //}
 
-                            // -------------------------------------------------- Payment Transfer Card detail -----------------------------------------
 
+
+
+
+
+                            //Session["AppId"] = Userid;
+                            Session["TicketLockedId"] = guid;
+
+                            return Json(new { Message = "S", Order = strOrderNo }); ;
                         }
-                        try
-                        {
-                            objEntity.SaveChanges();
-                        }
-                        catch (Exception ex)
-                        {
-                            transaction.Rollback();
-
-                            ExceptionLogging.SendErrorToText(ex);
-                        }
-
-                        //else if (strPaymentType == "P")
-                        //{
-                        //    RedirectToAction("Pay", "Cart");
-                        //}
 
 
-
-
-
-
-                        //Session["AppId"] = Userid;
-                        Session["TicketLockedId"] = guid;
-
-                         return Json(new { Message = "S",Order = strOrderNo }); ;
                     }
-
-
-                }
-                else
-                {
-                    if(message=="E")
+                    else
                     {
-                        message = "Not able to proceed with payment contact administrator";
+                        if (message == "E")
+                        {
+                            message = "Not able to proceed with payment contact administrator";
+                        }
+                        return Json(new { Message = message, Order = "" }); ;
                     }
-                    return Json(new { Message = message, Order = "" }); ;
                 }
             }
-            
-          
+            catch (Exception ex)
+            {
+                Console.Write("Exp");
+                ExceptionLogging.SendErrorToText(ex);
+                ExceptionLogging.SendErrorToText(ex.InnerException);
+                return Json(new { Message = ex.Message, Order = "" }); ;
+
+            }
+
         }
 
         public decimal GetCurrentECFee(long? lTQDId)
@@ -1010,7 +1025,8 @@ namespace EventCombo.Controllers
             MemoryStream mms = new MemoryStream();
             string htmlText = "";
             string htmlPath = Server.MapPath("..");
-            try {
+            try
+            {
                 var TicketDetail = (from Ord in db.TicketOrderDetails
                                     where Ord.T_Guid == guid
                                     select Ord).ToList();
@@ -1680,7 +1696,8 @@ namespace EventCombo.Controllers
                 Response.BinaryWrite(byteInfo);
                 mms.Close();
                 Response.End();
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 ExceptionLogging.SendErrorToText(ex);
             }
@@ -1691,7 +1708,8 @@ namespace EventCombo.Controllers
             MemoryStream mms = new MemoryStream();
             EncryptDecrypt Ecode = new EncryptDecrypt();
             string htmlText = "";
-            try {
+            try
+            {
                 var TicketDetail = (from Ord in db.TicketOrderDetails
                                     where Ord.T_Guid == guid
                                     select Ord).ToList();
@@ -1789,11 +1807,11 @@ namespace EventCombo.Controllers
                         string Imageevent = "";
                         if (string.IsNullOrEmpty(Images))
                         {
-                          Imageevent = htmlPath + "/Images/default_event_image.jpg";
+                            Imageevent = htmlPath + "/Images/default_event_image.jpg";
                         }
                         else
                         {
-                          Imageevent = htmlPath + Images;
+                            Imageevent = htmlPath + Images;
                         }
                         string Imagevent = "<img style='width:200px;height:200px;' src ='" + Imageevent + "' alt = 'Image' >";
 
@@ -2061,7 +2079,7 @@ namespace EventCombo.Controllers
                                                  join TP in db.Ticket_Purchased_Detail on p.TQD_Id equals TP.TPD_TQD_Id
                                                  join l in db.Profiles on TP.TPD_User_Id equals l.UserID
                                                  join t in db.Tickets on p.TQD_Ticket_Id equals t.T_Id
-                                                 where p.TQD_AddressId == item1 && TP.TPD_GUID == guid && TP.TPD_Event_Id == eventid 
+                                                 where p.TQD_AddressId == item1 && TP.TPD_GUID == guid && TP.TPD_Event_Id == eventid
                                                  select new
                                                  {
                                                      eventid = TP.TPD_Event_Id,
@@ -2347,7 +2365,7 @@ namespace EventCombo.Controllers
                         htmlText = htmlText.Replace("¶¶EventDescription¶¶", "");
                         htmlText = htmlText.Replace("¶¶Eventtypedetail¶¶", Etype);
                         htmlText = htmlText.Replace("¶¶OrderDetail¶¶", strHTML.ToString());
-                        htmlText = htmlText.Replace("¶¶EventOrganiserName¶¶",!string.IsNullOrEmpty(Organizerdetail.Orgnizer_Name)? Organizerdetail.Orgnizer_Name: Edtails.Organizername);
+                        htmlText = htmlText.Replace("¶¶EventOrganiserName¶¶", !string.IsNullOrEmpty(Organizerdetail.Orgnizer_Name) ? Organizerdetail.Orgnizer_Name : Edtails.Organizername);
                         htmlText = htmlText.Replace("¶¶EventOrganiserEmail¶¶", !string.IsNullOrEmpty(Organizerdetail.Organizer_Email) ? Organizerdetail.Organizer_Email : Edtails.OrganiserEmail);
                         if (count == lastcount)
                         {
@@ -2365,7 +2383,8 @@ namespace EventCombo.Controllers
                     var pdfBytes = htmlToPdf.GeneratePdf(htmlText);
                     mms = new MemoryStream(pdfBytes);
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 ExceptionLogging.SendErrorToText(ex);
             }
@@ -2379,16 +2398,18 @@ namespace EventCombo.Controllers
             {
                 using (EventComboEntities objECE = new EventComboEntities())
                 {
-                    try {
+                    try
+                    {
                         long lMax = (from Ord in objECE.Order_Detail_T
-                                     where (Ord.O_Order_Id ?? string.Empty)!= string.Empty
-                                     select Ord.O_Id  
+                                     where (Ord.O_Order_Id ?? string.Empty) != string.Empty
+                                     select Ord.O_Id
                                       ).Max();
 
                         strOrderNo = (from Ord in objECE.Order_Detail_T
                                       where Ord.O_Id == lMax
                                       select Ord.O_Order_Id).SingleOrDefault();
-                    }catch(Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         ExceptionLogging.SendErrorToText(ex);
                     }
@@ -2477,13 +2498,14 @@ namespace EventCombo.Controllers
             if (Session["TicketLockedId"] != null)
             {
                 PaymentConfirmation ps = new PaymentConfirmation();
-              
+
                 MyAccount ac = new MyAccount();
-               
+
                 EventCreation cs = new EventCreation();
-              
+
                 string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
-                try {
+                try
+                {
                     Session["TicketDatamodel"] = null;
                     string body = "";
                     string to = "", from = "", cc = "", bcc = "", subjectn = "";
@@ -2494,7 +2516,7 @@ namespace EventCombo.Controllers
                     Session["ReturnUrl"] = "PaymentConfirmation~" + currenturl;
                     var Emailtemplate = ac.getEmail("eticket");
                     List<paymentdate> Dateofevent = new List<paymentdate>();
-                   
+
                     List<Email_Tag> EmailTag = new List<Email_Tag>();
                     EventComboEntities objContent = new EventComboEntities();
                     var EvtOrDetail = (from Order in objContent.Ticket_Purchased_Detail where Order.TPD_GUID == strGUID select Order).FirstOrDefault();
@@ -2514,7 +2536,7 @@ namespace EventCombo.Controllers
 
 
                     var email = acountdedtails.Email;
-                    var username = (!String.IsNullOrEmpty(Orderdetail.O_First_Name)? Orderdetail.O_First_Name: acountdedtails.Firstname) + " " + (!String.IsNullOrEmpty(Orderdetail.O_First_Name)? Orderdetail.O_Last_Name:acountdedtails.Lastname);
+                    var username = (!String.IsNullOrEmpty(Orderdetail.O_First_Name) ? Orderdetail.O_First_Name : acountdedtails.Firstname) + " " + (!String.IsNullOrEmpty(Orderdetail.O_First_Name) ? Orderdetail.O_Last_Name : acountdedtails.Lastname);
 
                     string emailnames = "", emailonpayment = "";
                     string Organisername = "", Organiseremail = "";
@@ -2564,32 +2586,32 @@ namespace EventCombo.Controllers
                         paymentdate pdate = new paymentdate();
                         var tQntydetail = db.Ticket_Quantity_Detail.FirstOrDefault(i => i.TQD_Id == item.TPD_TQD_Id);
                         var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
-                       
-                        
+
+
                         if (tQntydetail.TQD_StartDate != null)
                         {
-                             datetime = DateTime.Parse(tQntydetail.TQD_StartDate);
-                             day = datetime.DayOfWeek;
-                             Sdate = datetime.ToString("MMM dd, yyyy");
-                          
-                             time = tQntydetail.TQD_StartTime;
+                            datetime = DateTime.Parse(tQntydetail.TQD_StartDate);
+                            day = datetime.DayOfWeek;
+                            Sdate = datetime.ToString("MMM dd, yyyy");
+
+                            time = tQntydetail.TQD_StartTime;
                         }
                         else
                         {
                             var td = DateTimeWithZone.Timezonedetail(eventdetail.EventID);
                             TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
-                            if(etype=="Single")
+                            if (etype == "Single")
                             {
-                               var ev= db.EventVenues.FirstOrDefault(i => i.EventID == Eventid);
+                                var ev = db.EventVenues.FirstOrDefault(i => i.EventID == Eventid);
                                 dtzstart = new DateTimeWithZone(Convert.ToDateTime(ev.E_Startdate), userTimeZone, true);
                                 datetime = dtzstart.LocalTime;
-                                day= CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(datetime);
+                                day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(datetime);
                                 Sdate = datetime.ToString("MMM dd, yyyy");
-                                time= datetime.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
+                                time = datetime.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
 
                             }
 
-                         
+
                         }
                         var addresslist = "";
 
@@ -2610,8 +2632,8 @@ namespace EventCombo.Controllers
                         {
                             Dateofevent.Add(pdate);
                         }
-                    
-                       
+
+
                         //Detail to send on page
                     }
                     var emailname = "";
@@ -2730,8 +2752,8 @@ namespace EventCombo.Controllers
                     //Send mail
 
 
-                  
-                  
+
+
                     var Eventdetails = cs.GetEventdetail(Eventid);
                     ps.imgurl = (!string.IsNullOrEmpty(cs.GetImages(Eventid).FirstOrDefault()) ? cs.GetImages(Eventid).FirstOrDefault() : "/Images/default_event_image.jpg");
                     ps.Tilte = Eventdetails.EventTitle;
@@ -2787,12 +2809,13 @@ namespace EventCombo.Controllers
                             }
                         }
                     }
-                   
-                }catch(Exception ex)
+
+                }
+                catch (Exception ex)
                 {
                     ExceptionLogging.SendErrorToText(ex);
                 }
-               Session["TicketLockedId"]  = strGUID;
+                Session["TicketLockedId"] = strGUID;
                 return View(ps);
             }
             else
@@ -2897,7 +2920,7 @@ namespace EventCombo.Controllers
                                OrganiserEmail = orgprof.Email,
                                Addresstatus = p.AddressStatus,
                            }).ToList().Distinct().FirstOrDefault();
-            var Organizerdetail = (from p in db.Event_Orgnizer_Detail join k in db.Organizer_Master on p.OrganizerMaster_Id equals k.Orgnizer_Id where p.Orgnizer_Event_Id == Eventid && p.DefaultOrg == "Y" select k).FirstOrDefault(); 
+            var Organizerdetail = (from p in db.Event_Orgnizer_Detail join k in db.Organizer_Master on p.OrganizerMaster_Id equals k.Orgnizer_Id where p.Orgnizer_Event_Id == Eventid && p.DefaultOrg == "Y" select k).FirstOrDefault();
             var url = Request.Url;
             var baseurl = url.GetLeftPart(UriPartial.Authority);
             string createevent = baseurl + Url.Action("Index", "Home");
@@ -2929,7 +2952,7 @@ namespace EventCombo.Controllers
             TimeZoneDetail td = db.TimeZoneDetails.First(x => x.TimeZone_Id == timeZoneID);
             DateTimeWithZone dtzstart, dzend;
             DateTimeWithZone dtzcreated;
-           
+
 
             var singledate = (from date in db.EventVenues where date.EventID == Eventid select date).FirstOrDefault();
             if (singledate != null)
@@ -2946,8 +2969,8 @@ namespace EventCombo.Controllers
                     dtzstart = new DateTimeWithZone(Convert.ToDateTime(singledate.E_Startdate), userTimeZone, true);
                     dzend = new DateTimeWithZone(Convert.ToDateTime(singledate.E_Enddate), userTimeZone, true);
                 }
-               
-               
+
+
             }
             else
             {
@@ -2964,7 +2987,7 @@ namespace EventCombo.Controllers
                     dtzstart = new DateTimeWithZone(Convert.ToDateTime(muldate.M_Startfrom), userTimeZone, true);
                     dzend = new DateTimeWithZone(Convert.ToDateTime(muldate.M_StartTo), userTimeZone, true);
                 }
-               
+
 
             }
             startdate = dtzstart.LocalTime.ToLongDateString() + " " + dtzstart.LocalTime.ToLongTimeString();
@@ -3015,8 +3038,8 @@ namespace EventCombo.Controllers
                 {
                     if (item == 0)
                     {
-                       
-                      
+
+
                         var myDatescnt = (from p in db.Ticket_Quantity_Detail where itemQuery.Contains(p.TQD_Id) select p.TQD_StartDate).ToList().Distinct();
 
                         foreach (var vdate in myDatescnt)
@@ -3035,9 +3058,9 @@ namespace EventCombo.Controllers
                                              where p.TQD_StartDate == vdate && TP.TPD_GUID == gUID && TP.TPD_Event_Id == Eventid
                                              select new
                                              {
-                                                 eventid=TP.TPD_Event_Id,
-                                                 Promocode=TP.TPD_PromoCodeID,
-                                                 Promocodeamt=TP.TPD_PromoCodeAmount,
+                                                 eventid = TP.TPD_Event_Id,
+                                                 Promocode = TP.TPD_PromoCodeID,
+                                                 Promocodeamt = TP.TPD_PromoCodeAmount,
                                                  username = l.FirstName,
                                                  Ticketname = t.T_name,
                                                  Quantity = TP.TPD_Purchased_Qty,
@@ -3045,14 +3068,14 @@ namespace EventCombo.Controllers
 
                                              }).ToList();
 
-                          
+
                             foreach (var qty in itemtoadd)
                             {
-                                
-                                if (qty.Promocode!=null && qty.Promocode != 0 )
+
+                                if (qty.Promocode != null && qty.Promocode != 0)
                                 {
                                     strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                                    strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + (!string.IsNullOrEmpty(username)? username:qty.username) + "</td>");
+                                    strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + (!string.IsNullOrEmpty(username) ? username : qty.username) + "</td>");
                                     strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
                                     strHTML.Append("<td style='width:10%font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
                                     strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Price + "</td>");
@@ -3096,9 +3119,9 @@ namespace EventCombo.Controllers
                                              where p.TQD_StartDate == vdate && TP.TPD_GUID == gUID && TP.TPD_Event_Id == Eventid
                                              select new
                                              {
-                                                 eventid=TP.TPD_Event_Id,
-                                                 Promocode=TP.TPD_PromoCodeID,
-                                                 Promocodeamt=TP.TPD_PromoCodeAmount,
+                                                 eventid = TP.TPD_Event_Id,
+                                                 Promocode = TP.TPD_PromoCodeID,
+                                                 Promocodeamt = TP.TPD_PromoCodeAmount,
                                                  username = l.FirstName,
                                                  Ticketname = t.T_name,
                                                  Quantity = TP.TPD_Purchased_Qty,
@@ -3115,11 +3138,11 @@ namespace EventCombo.Controllers
                             strHTML.Append("</tr>");
                             foreach (var qty in itemtoadd)
                             {
-                                
-                                if (qty.Promocode!=null && qty.Promocode != 0 )
+
+                                if (qty.Promocode != null && qty.Promocode != 0)
                                 {
                                     strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                                    strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + (!string.IsNullOrEmpty(username)? username:qty.username) + "</td>");
+                                    strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + (!string.IsNullOrEmpty(username) ? username : qty.username) + "</td>");
                                     strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
                                     strHTML.Append("<td style='width:10%font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
                                     strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Price + "</td>");
@@ -3148,10 +3171,10 @@ namespace EventCombo.Controllers
 
 
                         }
-                            
 
-                       
-                       
+
+
+
                     }
 
                 }
@@ -3197,7 +3220,7 @@ namespace EventCombo.Controllers
                     strHTML.Append("</tr>");
                     foreach (var qty in itemtoadd)
                     {
-                        
+
                         if (qty.Promocode != null && qty.Promocode != 0)
                         {
                             strHTML.Append("<tr align='left' style='color:#696564;'> ");
@@ -3307,7 +3330,7 @@ namespace EventCombo.Controllers
                 var finalstr = rvrs + result;
 
                 var touper = "";
-              
+
                 if (!string.IsNullOrWhiteSpace(myBillingdeatils.card_type))
                 {
                     var cardtype = Ecode.DecryptText(myBillingdeatils.card_type);
@@ -3369,12 +3392,12 @@ namespace EventCombo.Controllers
 
                         if (Emailtag[i].Tag_Name == "EventOrganiserName")
                         {
-                            bodyn = bodyn.Replace("¶¶EventOrganiserName¶¶", !string.IsNullOrEmpty(Organizerdetail.Orgnizer_Name)?Organizerdetail.Orgnizer_Name:Edtails.Organizername);
+                            bodyn = bodyn.Replace("¶¶EventOrganiserName¶¶", !string.IsNullOrEmpty(Organizerdetail.Orgnizer_Name) ? Organizerdetail.Orgnizer_Name : Edtails.Organizername);
 
                         }
                         if (Emailtag[i].Tag_Name == "EventOrganiserEmail")
                         {
-                            bodyn = bodyn.Replace("¶¶EventOrganiserEmail¶¶", !string.IsNullOrEmpty(Organizerdetail.Organizer_Email)? Organizerdetail.Organizer_Email: Edtails.OrganiserEmail);
+                            bodyn = bodyn.Replace("¶¶EventOrganiserEmail¶¶", !string.IsNullOrEmpty(Organizerdetail.Organizer_Email) ? Organizerdetail.Organizer_Email : Edtails.OrganiserEmail);
 
                         }
                         if (Emailtag[i].Tag_Name == "EventDynamicTable")
@@ -3433,7 +3456,8 @@ namespace EventCombo.Controllers
         public string GetOrderDetailForConfirmation(string guid)
         {
             string strResult = "";
-            try {
+            try
+            {
                 string strGuid = (guid != null ? guid : "");
                 if (strGuid != "")
                 {
@@ -3477,7 +3501,7 @@ namespace EventCombo.Controllers
                                         where OD.O_Order_Id == OrderNo
                                         select OD.O_TotalAmount
                                         ).FirstOrDefault();
-                        var Promocode = (from p in objEnt.Order_Detail_T join k in objEnt.Promo_Code on p.O_PromoCodeId equals k.PC_id where p.O_Order_Id== OrderNo select k.PC_Code).FirstOrDefault();
+                        var Promocode = (from p in objEnt.Order_Detail_T join k in objEnt.Promo_Code on p.O_PromoCodeId equals k.PC_id where p.O_Order_Id == OrderNo select k.PC_Code).FirstOrDefault();
 
                         if (iPaidCount == 1)
                         {
@@ -3500,16 +3524,17 @@ namespace EventCombo.Controllers
                             OrderAmt = (OrderAmt != null ? OrderAmt : 0);
                             strResult = "Order " + OrderNo.ToString() + " , " + TicketCount.totalOrder.ToString() + " ticket for $" + OrderAmt.ToString();
                         }
-                        if(!string.IsNullOrWhiteSpace(Promocode))
+                        if (!string.IsNullOrWhiteSpace(Promocode))
                         {
-                            strResult = strResult+"." + Environment.NewLine+ "You have applied " + Promocode + " as promo code for this transaction";
+                            strResult = strResult + "." + Environment.NewLine + "You have applied " + Promocode + " as promo code for this transaction";
                         }
 
                         //strResult = OrderNo + "~" + TicketCount.totalOrder + "~" + OrderAmt;
                     }
                 }
-            }catch(Exception ex)
-               {
+            }
+            catch (Exception ex)
+            {
                 ExceptionLogging.SendErrorToText(ex);
             }
             return strResult;
@@ -3519,7 +3544,8 @@ namespace EventCombo.Controllers
 
         public void getlatestsetting(string get)
         {
-            try {
+            try
+            {
                 string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : "");
                 using (EventComboEntities db = new EventComboEntities())
                 {
@@ -3531,7 +3557,8 @@ namespace EventCombo.Controllers
                     }
 
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ExceptionLogging.SendErrorToText(ex);
             }
