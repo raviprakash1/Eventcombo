@@ -219,6 +219,7 @@
     <Compile Include="Controllers\ManageEventController.cs" />
     <Compile Include="Controllers\MyAccController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValidationMessageController.cs" />
@@ -609,6 +610,7 @@
     <Content Include="Content\jquery-te.png" />
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\PurchasedTicket.css" />
     <Content Include="Content\unchecked.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -1179,6 +1181,10 @@
     <Content Include="Views\Article\Index.cshtml" />
     <Content Include="Views\Article\Edit.cshtml" />
     <Content Include="Views\Article\ShowArticle.cshtml" />
+    <Content Include="Views\Orders\_PurchasedTicketDetail.cshtml" />
+    <Content Include="Views\Orders\_PurchasedTicketFavoriteList.cshtml" />
+    <Content Include="Views\Orders\_PurchasedTicketList.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
