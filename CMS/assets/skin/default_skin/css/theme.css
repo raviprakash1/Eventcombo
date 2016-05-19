@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*===============================================
   Animate.css Helpers
 ================================================= */
@@ -7116,7 +7116,7 @@ perspective effects (not including the modals and the overlay).
 }
 /* ====== FlipInY ====== */
 .mfp-flipInY .mfp-content {
-  perspective: 2000px;
+  /*perspective: 2000px;*/
 }
 .mfp-flipInY .mfp-with-anim {
   opacity: 0;

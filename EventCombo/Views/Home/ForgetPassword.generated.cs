@@ -57,7 +57,7 @@ WriteLiteral(" ");
             #line hidden
 WriteLiteral("\r\n\r\n\r\n \r\n        <div");
 
-WriteLiteral(" class=\"col-sm-12 forgot_top\"");
+WriteLiteral(" class=\"col-sm-12 forgot_top forgot_height\"");
 
 WriteLiteral(" id=\"forgotcheck\"");
 
@@ -281,33 +281,33 @@ WriteLiteral(" type=\"text/javascript\"");
 WriteLiteral(">\r\n    $(document).click(function () {\r\n\r\n      \r\n        $(\'#divaccfrgtsuc\').css" +
 "(\'display\', \'none\');\r\n        $(\'#diverrofrgt\').css(\'display\', \'none\');\r\n       " +
 " $(\'#diverro1frgt\').css(\'display\', \'none\');\r\n\r\n        $(\"input\").removeClass(\'e" +
-"rr-bor\');\r\n    });\r\n\r\n    $(\'#EmailPAssword\').bind(\"cut copy paste\", function (e" +
-") {\r\n        e.preventDefault();\r\n    });\r\n    $(\"#EmailPAssword\").on(\"keypress\"" +
-", function (e) {\r\n\r\n        if (e.which == 32)\r\n            return false;\r\n    }" +
-");\r\n    $(\'#btndivaccfrgtsuc\').click(function () {\r\n        $(\'#divaccfrgtsuc\')." +
-"css(\'display\', \'none\');\r\n        $(\'#diverrofrgt\').css(\'display\', \'none\');\r\n    " +
-"    $(\'#diverro1frgt\').css(\'display\', \'none\');\r\n        $(\"input\").removeClass(\'" +
-"err-bor\');\r\n    })\r\n    $(\'#btndiverro1frgt\').click(function () {\r\n        $(\'#d" +
-"ivaccfrgtsuc\').css(\'display\', \'none\');\r\n        $(\'#diverrofrgt\').css(\'display\'," +
-" \'none\');\r\n        $(\'#diverro1frgt\').css(\'display\', \'none\');\r\n        $(\"input\"" +
-").removeClass(\'err-bor\');\r\n    })\r\n\r\n    $(\'#btndiverrofrgt\').click(function () " +
-"{\r\n        $(\'#divaccfrgtsuc\').css(\'display\', \'none\');\r\n        $(\'#diverrofrgt\'" +
-").css(\'display\', \'none\');\r\n        $(\'#diverro1frgt\').css(\'display\', \'none\');\r\n " +
-"       $(\"input\").removeClass(\'err-bor\');\r\n    })\r\n    $(document).ready(functio" +
-"n () {\r\n\r\n        $(\'#EmailPAssword\').keyup(function () {\r\n\r\n            if ($(t" +
-"his).val() != \'\') {\r\n                $(\'#btnSavePassword\').removeAttr(\"disabled\"" +
-");\r\n\r\n            } else {\r\n\r\n                $(\'#btnSavePassword\').attr(\"disabl" +
-"ed\", true);\r\n            }\r\n\r\n        })\r\n\r\n    });\r\n                function va" +
-"lidationfrgt()\r\n                {\r\n                    var msglogin = \"\";\r\n     " +
-"               var Emailforgot = $(\"#EmailPAssword\").val();\r\n\r\n                 " +
-"   if (!validateEmail(Emailforgot)) {\r\n                        $(\'#EmailPAssword" +
-"\').focus();\r\n                        $(\'#EmailPAssword\').addClass(\'err-bor\');\r\n\r" +
-"\n                        msglogin += ajaxsetup(\'ForgotPassword\', \'FrgtpwdEmailVa" +
-"lidationUI\');\r\n\r\n                    } else {\r\n\r\n                        msglogi" +
-"n = \"\";\r\n                        $(\'#EmailPAssword\').focus();\r\n                 " +
-"       $(\'#EmailPAssword\').removeClass(\'err-bor\');\r\n                    }\r\n\r\n   " +
-"                 return msglogin;\r\n                }\r\n                function v" +
-"alidateEmail(sEmail) {\r\n                    var filter = /^[\\w\\-\\.\\+]+\\");
+"rr-bor\');\r\n    });\r\n\r\n    //$(\'#EmailPAssword\').bind(\"cut copy paste\", function " +
+"(e) {\r\n    //    e.preventDefault();\r\n    //});\r\n    $(\"#EmailPAssword\").on(\"key" +
+"press\", function (e) {\r\n\r\n        if (e.which == 32)\r\n            return false;\r" +
+"\n    });\r\n    $(\'#btndivaccfrgtsuc\').click(function () {\r\n        $(\'#divaccfrgt" +
+"suc\').css(\'display\', \'none\');\r\n        $(\'#diverrofrgt\').css(\'display\', \'none\');" +
+"\r\n        $(\'#diverro1frgt\').css(\'display\', \'none\');\r\n        $(\"input\").removeC" +
+"lass(\'err-bor\');\r\n    })\r\n    $(\'#btndiverro1frgt\').click(function () {\r\n       " +
+" $(\'#divaccfrgtsuc\').css(\'display\', \'none\');\r\n        $(\'#diverrofrgt\').css(\'dis" +
+"play\', \'none\');\r\n        $(\'#diverro1frgt\').css(\'display\', \'none\');\r\n        $(\"" +
+"input\").removeClass(\'err-bor\');\r\n    })\r\n\r\n    $(\'#btndiverrofrgt\').click(functi" +
+"on () {\r\n        $(\'#divaccfrgtsuc\').css(\'display\', \'none\');\r\n        $(\'#diverr" +
+"ofrgt\').css(\'display\', \'none\');\r\n        $(\'#diverro1frgt\').css(\'display\', \'none" +
+"\');\r\n        $(\"input\").removeClass(\'err-bor\');\r\n    })\r\n    $(document).ready(f" +
+"unction () {\r\n\r\n        $(\'#EmailPAssword\').keyup(function () {\r\n\r\n            i" +
+"f ($(this).val() != \'\') {\r\n                $(\'#btnSavePassword\').removeAttr(\"dis" +
+"abled\");\r\n\r\n            } else {\r\n\r\n                $(\'#btnSavePassword\').attr(\"" +
+"disabled\", true);\r\n            }\r\n\r\n        })\r\n\r\n    });\r\n                funct" +
+"ion validationfrgt()\r\n                {\r\n                    var msglogin = \"\";\r" +
+"\n                    var Emailforgot = $(\"#EmailPAssword\").val();\r\n\r\n           " +
+"         if (!validateEmail(Emailforgot)) {\r\n                        $(\'#EmailPA" +
+"ssword\').focus();\r\n                        $(\'#EmailPAssword\').addClass(\'err-bor" +
+"\');\r\n\r\n                        msglogin += ajaxsetup(\'ForgotPassword\', \'FrgtpwdE" +
+"mailValidationUI\');\r\n\r\n                    } else {\r\n\r\n                        m" +
+"sglogin = \"\";\r\n                        $(\'#EmailPAssword\').focus();\r\n           " +
+"             $(\'#EmailPAssword\').removeClass(\'err-bor\');\r\n                    }\r" +
+"\n\r\n                    return msglogin;\r\n                }\r\n                func" +
+"tion validateEmail(sEmail) {\r\n                    var filter = /^[\\w\\-\\.\\+]+\\");
 
 WriteLiteral("@[a-zA-Z0-9\\.\\-]+\\.[a-zA-z0-9]{2,4}$/;\r\n\r\n                    if (filter.test(sEm" +
 "ail)) {\r\n\r\n                        return true;\r\n                    }\r\n        " +
