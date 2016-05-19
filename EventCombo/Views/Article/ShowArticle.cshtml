@@ -1,6 +1,7 @@
 ﻿@using System.Collections.Generic
 @using EventCombo.Models
 @using EventCombo.Service
+@using System.Configuration
 @model ArticleFullViewModel
 @{
   ViewBag.Title = Model.Title + " | Eventcombo";
@@ -152,6 +153,8 @@
   }
 </style>
 
+<meta property="fb:app_id" content="@(ConfigurationManager.AppSettings["FacebookAppId"])" />
+
 <script type="text/javascript">
   $(document).on("click", ".imageGallaryAnchorCls", function () {
     var imageID = $(this).data('id');
@@ -166,7 +169,7 @@
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
     js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.6";
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=@(ConfigurationManager.AppSettings["FacebookAppId"])";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
 </script>
@@ -256,7 +259,7 @@
     <div class="@(Model.Images.Count == 0 ? "col-md-12" : "col-md-6") col-sm-6 col-xs-12 discussionFbContainer">
       <div class="discussionFbContainerTxt">Discussion</div>
       <div id="fb-root"></div>
-      <div class="fb-comments" data-href="@chref" data-width="404" data-numposts="5"></div>
+      <div class="fb-comments" data-href="@Request.Url.AbsoluteUri" data-width="404" data-numposts="5"></div>
 
     </div>
   </div>

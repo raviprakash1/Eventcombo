@@ -258,7 +258,7 @@ namespace EventCombo.Service
 
     public static string GetArticleUrl(long articleId, string articleTitle)
     {
-      return String.Format("/a/{0}/{1}", articleId.ToString(), System.Text.RegularExpressions.Regex.Replace(articleTitle.Trim().ToLower().Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""));
+      return String.Format("~/a/{0}/{1}", articleId.ToString(), System.Text.RegularExpressions.Regex.Replace(articleTitle.Trim().ToLower().Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""));
     }
   }
 }
