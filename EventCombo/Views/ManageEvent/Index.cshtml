@@ -10,10 +10,10 @@
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 
 @section sidenav{
-<div id="sidebar" class="nav nav-stacked">
-  
+    <div id="sidebar" class="nav nav-stacked">
+        @Html.Action("Sidenav", "ManageEvent", new { eventid = Model.Eventid, CurrentItem = "" })
     </div>
-}
+ }
 
 
 @using (Html.BeginForm())
@@ -631,8 +631,6 @@
 <script src="~/Scripts/Chart.js"></script>
 
 <script>
-
-    $('#sidebar').load('@Url.Action("Sidenav", "ManageEvent", new { eventid=Model.Eventid })');
     $(function () {
         $(document).tooltip();
     });

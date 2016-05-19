@@ -1,0 +1,982 @@
+﻿@using EventCombo.Models
+@model EventCombo.Models.OrderTemplateViewModel
+@{
+  ViewBag.Title = "Form";
+  Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.masked.js"></script>
+<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+<script src="~/Scripts/filer/jquery.filer.js"></script>
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/summernote.css" rel="stylesheet" />
+
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<link href="~/Content/MapPlaces.css" rel="stylesheet" />
+
+<link href='~/Content/OrderForm.css' rel='stylesheet' type='text/css'>
+<link href="~/Content/OrderFormDesign.css" rel="stylesheet" />
+
+@section sidenav{
+  <div id="sidebar" class="nav nav-stacked">
+    @Html.Action("Sidenav", "ManageEvent", new { eventid = ViewBag.Eventid, CurrentItem = "orderoptions" })
+  </div>
+}
+
+@using (Html.BeginForm())
+{
+  <div class="event_container">
+    <div class="event_inner_container event_top" id="eventtopscoll">
+      @if ((ViewBag.StateMessage != null) && (ViewBag.StateMessage != ""))
+      {
+        <div class="col-sm-12 no_pad">
+          @ViewBag.StateMessage
+        </div>
+      }
+      @Html.HiddenFor(m => m.OrderTemplateId)
+      @Html.HiddenFor(m => m.EventId)
+
+      <div class="insideContainer col-md-9 col-xs-12">
+        <div id="mainForm1" style="display:block;">
+
+          <div class="orderFormTxt"><h2>Order Form Design</h2></div>
+
+          <div class="navTabs lastestBestSale">
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active first">
+                <a href="#latestOffer" role="tab" data-toggle="tab">Basic Information</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#saleOffOffer" role="tab" data-toggle="tab">Group Form</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="latestOffer">
+                <div class="form-group setFullSpaceforDiv">
+                  <input type="text" class="form-control timeRespondWidth2" id="Title" placeholder="Order Form" maxlength="500" value="@Model.Title">
+                  <input type="text" class="form-control timeRespondWidth1" id="TimeLimit" placeholder="10 min" value="@Model.TimeLimit">
+                </div>
+                <div class="form-group setFullSpaceforDiv">
+                  <label class="timeRespondWidth2 lblTxtClass">Order Page Title</label>
+                  <label class="timeRespondWidth1 lblTxtClass">Time Limit to Checkout (min)</label>
+                </div>
+
+                <div class="form-group setFullSpaceforDiv txtAreaMainDiv">
+                  <textarea class="form-control setHeight" id="Instruction" placeholder="Please complete this order form. You will recieve your tickets electronically." maxlength="2000" name="Instruction">@Model.Instruction</textarea>
+                </div>
+                <div class="form-group setFullSpaceforDiv">
+                  <label class="timeRespondWidth2 lblTxtClass">Instructions for ordering</label>
+                </div>
+
+                <div class="form-group">
+                  <label for="Instruction">Message for Order Confirmation Page</label>
+                  <textarea class="form-control setHeight" placeholder="e.g. Thanks for registering don't forget to keep your tickets handly, either in the Eventbrite app or print them out and bring them with you" maxlength="1000" name="AfterMessage" id="AfterMessage">@Model.AfterMessage</textarea>
+                </div>
+
+                @for (int i = 0; i < ViewBag.QuestionGroups.Count; i++)
+                {
+
+                  <div class="form-group dragDropItemsDiv">
+                    @if (i == 0)
+                    {
+                      <div class="requiredTxt">Required</div>
+                    }
+                    <div class="dragDropContainer">
+                      <div class="dragDropItemsHead">
+                        @ViewBag.QuestionGroups[i].GroupName
+                        <img src="../../images//info.png" alt="" style="height: 90%;float: right;" />
+                      </div>
+                      <div class="dragDropItemsBody">
+                        @{ var questions = Model.Questions.FindAll(q => q.Question.QuestionTypeGroupId == ViewBag.QuestionGroups[i].QuestionTypeGroupId); }
+                        @for (int j = 0; j < questions.Count; j++)
+                        {
+                          <div id="mainQuestion_@questions[j].OrderTemplateQuestionId" class="dragableDivContent" ondragstart="handleDragStart(event, this, @i);" ondragenter="handleDragEnter(event, this);" ondragover="handleDragOver(event, this, @i);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this, @i);" ondragend="handleDragEnd(event, this);">
+
+                            <input id="QuestionId" name="QuestionId" type="hidden" value="@questions[j].OrderTemplateQuestionId" />
+
+                            <div class="col-xs-2">
+                              <div class="dragIconItems">
+                                <a href="javascript:void(0)" style="cursor:move;" draggable="true"><img src="../../images/drag.png" /></a>
+                              </div>
+                            </div>
+
+                            <div class="col-xs-8" style="cursor:pointer;">
+                              <div id="Include" class="@(questions[j].Include ? "basicInfoCheckBox" : "basicInfoUnCheckBox")" onclick="setCheckBoxChecked(this); setRequiredUncheck(this);">@questions[j].Question.Title</div>
+                            </div>
+
+                            <div class="col-xs-2" style="cursor:pointer;">
+                              <div id="Require" class="@(questions[j].Require ? "basicInfoCheckBox" : "basicInfoUnCheckBox") onlyCheckBoxItem" onclick="setCheckBoxChecked(this); setFieldCheck(this);"></div>
+                            </div>
+
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  </div>
+
+                }
+
+                <div class="form-group dragDropItemsDiv">
+                  <div class="dragDropContainer">
+                    <div class="dragDropItemsHead">
+                      ADD A NEW QUESTION
+                    </div>
+                    <div class="questionItemsHead">
+                      <div id="questionContainerDiv" style="display:@(Model.UserQuestions.Count > 0 ? "block" : "none")">
+                        @for (var i = 0; i < Model.UserQuestions.Count; i++)
+                        {
+                          <div id="userQuestion_@i" class="dragableDivContent dragableDivContentQuestion" data-indexid="@i" data-questionid="@Model.UserQuestions[i].OrderTemplateQuestionId" ondragstart="handleDragStart(event, this, -1);" ondragenter="handleDragEnter(event, this);" ondragover="handleDragOver(event, this, -1);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this, -1);" ondragend="handleDragEnd(event, this);">
+                            <div class="col-xs-2">
+                              <div class="dragIconItems">
+                                <a href="javascript:void(0)" style="cursor:move;" draggable="true"><img src="../../images/drag.png" /></a>
+                              </div>
+                            </div>
+                            <div class="col-xs-6" style="cursor:pointer;">
+                              <div id="questionText" class="@(Model.UserQuestions[i].Include ? "basicInfoCheckBox " : "basicInfoUnCheckBox") basicInfoUnCheckBoxQuestion" onclick="setCheckBoxChecked(this); setRequiredUncheck(this);">
+                                @Model.UserQuestions[i].QuestionText
+                              </div>
+                            </div>
+                            <div class="col-xs-2" style="cursor:pointer;">
+                              <div id="require" class="@(Model.UserQuestions[i].Require ? "basicInfoCheckBox" : "basicInfoUnCheckBox") onlyCheckBoxItem" onclick="setCheckBoxChecked(this); setFieldCheck(this);"></div>
+                            </div>
+                            <div class="col-xs-2" style="cursor:pointer;">
+                              <a href="javascript:void(0)" class="removeIconAnchor" onclick="removeItemList(this)"><img src="../../images//cross.png" /></a>
+                            </div>
+                          </div>
+                        }
+                      </div>
+                      <div id="QuestionMainContainer">
+                        <div class="form-group" style="padding-bottom: 31px;">
+                          <input type="text" class="form-control questionsTxtbox" id="questions" placeholder="Question" maxlength="255" onkeydown="$('#questions').removeClass('validatorTxt');">
+                          <div class="dropdown questionsDropDown">
+                            <button class="btn btn-default dropdown-toggle questionsBtn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" value="@ViewBag.ControlType[0].ControlTypeId" onkeydown="$('#questions').removeClass('validatorTxt');">
+                              <span class="text">@ViewBag.ControlType[0].ControlTypeName</span>
+                              <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                              @foreach (var ctrl in ViewBag.ControlType)
+                              {
+                                <li><a href="javascript:void(0)" onclick="setdropDownItems(this, @ctrl.ControlTypeId); ShowHideRespectiveDiv('@(ctrl.JSFunction)')">@ctrl.ControlTypeName</a></li>
+                              }
+                            </ul>
+                          </div>
+                        </div>
+
+                        <div id="CheckBoxMainContainer" style="display:none;">
+                          <div id="checkBoxQuantity" class="basicInfoUnCheckBox" style="font-size: 16px;" onclick="setCheckBoxChecked(this); ShowHideQuantityOrder(this);">LIMIT QUANTITY FOR EACH CHOICE</div>
+
+                          <div id="checkBoxHeading">Options available</div>
+                          <div id="checkBoxQuesMain">
+                            <div id="checkBoxQuesMainHeader">
+                              <div class="col-md-11 col-sm-11 col-xs-12 checkBoxQuesMainHead1">Option Name</div>
+                              <div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainHead2" style="display:none;">QUANTITY</div>
+                              <div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainHead3" style="display:none;">ORDERS</div>
+                              <div class="col-md-1 col-sm-1 col-xs-12 checkBoxQuesMainHeadTrash"></div>
+                            </div>
+
+                            <div id="checkBoxQuesMainBodyConID1" class="checkBoxQuesMainBodyCon1">
+                              <div class="col-md-11 col-sm-11 col-xs-12 checkBoxQuesMainBody1">
+                                <div class="form-group">
+                                  <input type="text" class="form-control optionNameQuestion" onblur="txtBoxQuestionAddtoList();" placeholder="Option Name" maxlength="255">
+                                </div>
+                              </div>
+                              <div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBody2" style="display:none;">
+                                <div class="form-group">
+                                  <input type="text" class="form-control " id="optionNameQuantity" placeholder="Quantity" maxlength="20">
+                                </div>
+                              </div>
+                              <div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBody3" style="display:none;">
+                                <div class="form-group">
+                                  0 / 0
+                                </div>
+                              </div>
+                              <div id="checkBoxQuesMainBodyTrash" class="col-md-1 col-sm-1 col-xs-12">
+                                <div class="form-group">
+                                  <a href="javascript:void(0)" onclick="removeThisDiv('checkBoxQuesMainBodyConID1')" class="trackIConAnchor"><span class="glyphicon glyphicon glyphicon-trash"></span></a>
+                                </div>
+
+                              </div>
+                            </div>
+
+
+                          </div>
+                          <div class="col-xs-12" style="margin:10px 0px 20px 0px; padding: 0px;">
+                            <a href="javascript:void(0)" onclick="addAnotherOption()" class="btn btn-primary">Add Another Option</a>
+                          </div>
+
+                          <div id="EnableSubquestions" class="basicInfoUnCheckBox" style="font-size: 16px;" onclick="setCheckBoxChecked(this); showSubQuestionBtn(this);">ADD CONDITIONAL SUB-QUESTIONS</div>
+
+                          <div id="AppendSubOptionToSubDiv"></div>
+
+                          <div id="showSubQuestionDiv" class="col-xs-12" style="margin:10px 0px 15px 0px; padding: 0px; display:none;">
+                            <a href="javascript:void(0)" onclick="addAnotherSubQuestion()" class="btn btn-primary">Add Another Sub Question</a>
+                          </div>
+
+
+
+                        </div>
+
+                        <div id="waivierTxtDiv" class="form-group" style="margin: 20px 0px; overflow:hidden; display:none;">
+                          <label for="Instruction">Waiver</label>
+                          <textarea class="form-control setHeight" id="waiverTxt" placeholder=""></textarea>
+                        </div>
+                      </div>
+
+                      <div class="form-group" style="margin: 20px 0px; overflow:hidden; clear:both;">
+                        <label for="title" style="display:block;">Optional settings</label>
+                        <div id="ShowForTickets" class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this); showOtherBidsForOne(this, 'qTicket_');">SHOW THIS QUESTION FOR SPECIFIC TICKET TYPES</div>
+                        @for (var i = 0; i < ViewBag.Tickets.Count; i++)
+                        {
+                          <div class="basicInfoUnCheckBox" id="qTicket_@i" data-tid="@ViewBag.Tickets[i].T_Id" style="display:none; margin-left: 30px;" onclick="setCheckBoxChecked(this)">@ViewBag.Tickets[i].T_name</div>
+                        }
+
+                        <div id="ShowAnswer" class="basicInfoUnCheckBox" onclick="setCheckBoxChecked(this);">SHOW THE ATTENDEE ANSWER TO THIS QUESTION ON THE ORDER CONFIRMATION</div>
+
+                      </div>
+                      <div class="form-group">
+                        <a href="javascript:void(0)" onclick="addQuestionToContainer()" class="btn btn-primary">ADD <span class="glyphicon glyphicon-plus"></span></a>
+                      </div>
+
+
+                    </div>
+
+                    <div class="form-group" style="margin: 20px 0px; overflow:hidden;">
+                      <div class="@(Model.AllowCallPickup ? "basicInfoCheckBox" : "basicInfoUnCheckBox")" id="AllowCallPickup" onclick="setCheckBoxChecked(this);">ALLOW WILL CALL PICKUP</div>
+                      <div class="@(Model.AllowEdit ? "basicInfoCheckBox" : "basicInfoUnCheckBox")" id="AllowEdit" onclick="setCheckBoxChecked(this);">ALLOW ATTENDEES TO EDIT INFORMATION AFTER REGISTRATION</div>
+                      <div class="@(Model.AcceptRefund ? "basicInfoCheckBox" : "basicInfoUnCheckBox")" id="AcceptRefund" onclick="setCheckBoxChecked(this);">ACCEPT REFUND REQUESTS</div>
+                    </div>
+
+                    <div class="btnSaveCancel">
+                      <div class="col-xs-6" style="float:left; padding:0px;">
+                        <a href="javascript:void(0)" onclick="cancelOrderForm()" class="btn btn-default mainButtonSaveCancel" style="background-color: #c1c1c1;color: #fff;">CANCEL</a>
+                      </div>
+                      <div class="col-xs-6" style="float:right; text-align:right; padding:0px;">
+                        <a href="javascript:void(0)" onclick="saveOrderForm()" class="btn btn-primary mainButtonSaveCancel">SAVE</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div role="tabpanel" class="tab-pane" id="saleOffOffer">
+                <div style="font-size: 15px;line-height: 22px;font-weight: 400;">Allow people to create and join groups when they register. Groups get their own page to share and invite others to join.</div>
+
+                <div class="form-group" style="margin: 20px 0px; ">
+                  <label for="title" style="display:block">GROUP TYPE</label>
+
+                  <div class="dropdown" style="width: 46%;float:left;display: inline-block;">
+                    <button style="width: 46%;text-align: left;" class="btn btn-default dropdown-toggle questionsBtn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" value="@Model.OrderTemplateGroupTypeId">
+                      <span class="text">@((ViewBag.GroupTypes as List<OrderTemplateGroupTypeViewModel>).Find(gt => gt.OrderTemplateGroupTypeId == Model.OrderTemplateGroupTypeId).GroupName)</span>
+                      <span class="caret" style="float: right;margin-top: 8px;"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                      @for (int i = 0; i < ViewBag.GroupTypes.Count; i++)
+                      {
+                        <li><a href="javascript:void(0)" onclick="setdropDownItems1(this, @(ViewBag.GroupTypes[i].OrderTemplateGroupTypeId))">@(ViewBag.GroupTypes[i].GroupName)</a></li>
+                      }
+                    </ul>
+                  </div>
+                  <div style="color: #c1c1c1;display: inline-block;float: left;font-size: 13px;">This group type will appear when attendees register</div>
+                </div>
+
+                <div class="form-group" style="margin: 60px 0px 20px 0px;overflow: hidden;clear: both;">
+                  <label for="title" style="display:block;">MAX ATTENDEES PER TEAM</label>
+                  <input type="text" class="form-control timeRespondWidth" id="GroupMaxAttendees" placeholder="0" value="@Model.GroupMaxAttendees">
+                  <span style="font-size: 12px;padding-left: 10px;color: #888;">0 means no maximum</span>
+                </div>
+
+                <div class="form-group" style="margin: 20px 0px; overflow:hidden;">
+                  <label for="title" style="display:block;">ENABLE GROUP REGISTRATION BY TICKET TYPE</label>
+                  @for (var i = 0; i < Model.GroupTickets.Count; i++)
+                  {
+                    <div id="GroupTicket_@i">
+                      <input type="hidden" id="GroupTicketID_@Model.GroupTickets[i].OrderTemplateGroupTicketId" name="GroupTicketID" value="@Model.GroupTickets[i].OrderTemplateGroupTicketId" />
+                      <div class="@(Model.GroupTickets[i].EnableRegistration ? "basicInfoCheckBox" : "basicInfoUnCheckBox")"
+                           id="enablereg_@Model.GroupTickets[i].OrderTemplateGroupTicketId"
+                           onclick="setCheckBoxChecked(this); showOtherBids(this, 'grouponly_@Model.GroupTickets[i].OrderTemplateGroupTicketId', 'dontdisplay_@Model.GroupTickets[i].OrderTemplateGroupTicketId');">
+                        @(Model.GroupTickets[i].GroupTicket.T_name)
+                      </div>
+                      <div class="@(Model.GroupTickets[i].GroupOnly ? "basicInfoCheckBox" : "basicInfoUnCheckBox")"
+                           id="grouponly_@Model.GroupTickets[i].OrderTemplateGroupTicketId"
+                           style="@(Model.GroupTickets[i].EnableRegistration ? "display:block" : "display:none"); margin-left: 30px;"
+                           onclick="setCheckBoxChecked(this)">Group registrants only</div>
+                      <div class="@(Model.GroupTickets[i].DontDisplay ? "basicInfoCheckBox" : "basicInfoUnCheckBox")"
+                           id="dontdisplay_@Model.GroupTickets[i].OrderTemplateGroupTicketId"
+                           style="@(Model.GroupTickets[i].EnableRegistration ? "display:block" : "display:none"); margin-left: 30px;"
+                           onclick="setCheckBoxChecked(this)">Do not display registrants on team page</div>
+                    </div>
+                  }
+                </div>
+
+                <div class="form-group" style="margin: 20px 0px; overflow:hidden;">
+                  <label for="title" style="display:block;">GROUP PAGE HEADLINE</label>
+                  <input type="text" class="form-control timeRespondWidth2" id="GroupPageHeadline" placeholder="Eg. Join our team!" value="@Model.GroupPageHeadline">
+                </div>
+
+                <div class="form-group" style="margin: 20px 0px; overflow:hidden;">
+                  <label for="Instruction">GROUP PAGE DESCRIPTION</label>
+                  <textarea class="form-control setHeight" id="GroupPageDescription" placeholder="Eg. We are looking for a great group of people to join our team so we can raise money for our favorite charity!">@Model.GroupPageDescription</textarea>
+                </div>
+
+                <div style="border-bottom:1px solid #888;"><h2>Optional Settings</h2></div>
+
+                <div class="form-group" style="margin: 20px 0px; overflow:hidden;">
+                  <label for="title" style="display:block;">GROUP PASSWORDS</label>
+                  <div id="GroupAllowPassword"
+                       class="@(Model.GroupAllowPassword ? "basicInfoCheckBox" : "basicInfoUnCheckBox")"
+                       onclick="setCheckBoxChecked(this)">Allow group manager to password-protect their group</div>
+                </div>
+
+                <div class="form-group" style="margin: 20px 0px; overflow:hidden;">
+                  <label for="title" style="display:block;">PREFERRED GROUP START TIMES</label>
+                  <div id="GroupAllowSetTime"
+                       class="@(Model.GroupAllowSetTime ? "basicInfoCheckBox" : "basicInfoUnCheckBox")"
+                       onclick="setCheckBoxChecked(this)">Allow groups to select a preferred start time</div>
+                </div>
+
+                <div class="form-group" style="padding: 10px 0px 0px 0px;">
+                  <div class="btn btn-primary btn-lg" onclick="saveOrderForm()">Save</div>
+                  <div class="btn btn-primary btn-lg" style="background-color: #fff;color: #286090;" onclick="cancelOrderForm()">Cancel</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+}
+
+<script type="text/javascript">
+
+  var dragSrcEl = null;
+  var curQIndex = @Model.UserQuestions.Count;
+  var storedQuestions = [];
+  var qtickets = [];
+  var qvariants = [];
+  var subquestions = [];
+  var subvariants = [];
+  var handleDragGroup = -2;
+
+  @for (var i = 0; i < Model.UserQuestions.Count; i++)
+  {
+    <text>qtickets = []; qvariants = [];</text>
+
+    foreach (var ticket in Model.UserQuestions[i].QuestionTickets)
+    {
+    <text>
+  qtickets.push({
+    OrderTemplateQuestionTicketId: "@ticket.OrderTemplateQuestionTicketId.ToString()",
+    TicketId: "@ticket.TicketId.ToString()",
+    CollectInformation: "@ticket.CollectInformation.ToString()"
+  });
+  </text>
+    };
+
+    foreach (var variant in Model.UserQuestions[i].QuestionVariants)
+    {
+      <text>subquestions = [];</text>
+      foreach (var subquestion in variant.Subquestions)
+    {
+      <text>subvariants = [];</text>
+    foreach(var subvariant in subquestion.QuestionVariants)
+    {
+      <text>
+  subvariants.push({
+    OrderTemplateQuestionVariantId: "@subvariant.OrderTemplateQuestionVariantId.ToString()",
+    VariantText: "@subvariant.VariantText.ToString()",
+    Quantity: "@subvariant.Quantity.ToString()"
+  });
+  </text>
+    }
+
+    <text>
+  subquestions.push({
+    ControlTypeId: "@subquestion.ControlTypeId.ToString()",
+    LimitQuantity: "@subquestion.LimitQuantity.ToString()",
+    QuestionText: "@subquestion.QuestionText.ToString()",
+    QuestionVariants: subvariants
+  });
+  </text>
+    }
+
+      <text>
+  qvariants.push({
+    OrderTemplateQuestionVariantId: "@variant.OrderTemplateQuestionVariantId.ToString()",
+    VariantText: "@variant.VariantText.ToString()",
+    Quantity: "@variant.Quantity.ToString()",
+    Subquestions: subquestions
+  });
+  </text>
+    }
+
+  <text>
+  storedQuestions.push({
+    indexid: @i,
+    ControlTypeId: @Model.UserQuestions[i].ControlTypeId,
+    LimitQuantity: "@Model.UserQuestions[i].LimitQuantity.ToString()",
+    ShowAnswer: "@Model.UserQuestions[i].ShowAnswer.ToString()",
+    ShowForTickets: "@Model.UserQuestions[i].ShowForTickets.ToString()",
+    EnableSubquestions: "@Model.UserQuestions[i].EnableSubquestions.ToString()",
+    QuestionTickets: qtickets,
+    QuestionVariants: qvariants
+  });
+  </text>
+  };
+
+  function handleDragStart(e, obj, i) {
+    dragSrcEl = obj;
+    handleDragGroup = i;
+
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', obj.innerHTML);
+  }
+
+  function handleDragOver(e, obj, i) {
+    if (handleDragGroup == i)
+    {
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+    }
+    else
+      e.dataTransfer.dropEffect = 'none';  // See the section on the DataTransfer object.
+    return false;
+  }
+
+  function handleDragEnter(e, obj) {
+    // this / e.target is the current hover target.
+    //$(obj).addClass('over');
+  }
+
+  function handleDragLeave(e, obj) {
+    //$(obj).removeClass('over');  // this / e.target is previous target element.
+  }
+
+  function handleDrop(e, obj, i) {
+    // this / e.target is current target element.
+
+    if (e.stopPropagation) {
+      e.stopPropagation(); // stops the browser from redirecting.
+    }
+    // Don't do anything if dropping the same column we're dragging.
+    if ((dragSrcEl != obj) && (handleDragGroup == i)) {
+      // Set the source column's HTML to the HTML of the column we dropped on.
+      dragSrcEl.innerHTML = obj.innerHTML;
+      obj.innerHTML = e.dataTransfer.getData('text/html');
+    }
+    // See the section on the DataTransfer object.
+
+    return false;
+  }
+
+  function handleDragEnd(e, obj) {
+    // this/e.target is the source node.
+    //$(obj).removeClass('over');
+
+  }
+
+  function setCheckBoxChecked(obj) {
+    if ($(obj).hasClass('basicInfoUnCheckBox')) {
+      $(obj).addClass('basicInfoCheckBox');
+      $(obj).removeClass('basicInfoUnCheckBox');
+    }
+    else {
+      $(obj).removeClass('basicInfoCheckBox');
+      $(obj).addClass('basicInfoUnCheckBox');
+    }
+  }
+
+  function setdropDownItems(obj, id) {
+    $('#dropdownMenu1 .text').html($(obj).html());
+    $('#dropdownMenu1').val(id);
+  }
+
+  function setdropDownItems1(obj, id) {
+    $('#dropdownMenu2 .text').html($(obj).html());
+    $('#dropdownMenu2').val(id);
+  }
+
+  function setdropDownItemsSub(obj, id) {
+    var parent = $(obj).closest('.AnotherSubQuestionMainContainerCls');
+    $(parent).find('#dropdownMenuSubHead2 .text').html($(obj).html());
+    $(parent).find('#dropdownMenuSubHead2').val(id);
+  }
+
+  function setdropDownSubOptionsItems(obj, containerDiv, id) {
+    $('#AnotherSubQuestionMainContainer' + containerDiv + ' #dropdownMenuSubOptions1 .text').html($(obj).html());
+    $('#AnotherSubQuestionMainContainer' + containerDiv + ' #dropdownMenuSubOptions1').val(id);
+  }
+
+  function addQuestionToContainer() {
+    var question = $('#questions').val();
+    var dropDownTxt = $('#dropdownMenu1 .text').html();
+
+    question = question.trim();
+    if (question == '') {
+      $('#questions').addClass('validatorTxt');
+    }
+    else {
+      var innerHtml = '<div id="userQuestion_' + curQIndex + '" class="dragableDivContent dragableDivContentQuestion" data-indexid="' + curQIndex + '" data-questionid="0" ondragstart="handleDragStart(event, this, -1);" ondragenter="handleDragEnter(event, this);" ondragover="handleDragOver(event, this, -1);" ondragleave="handleDragLeave(event, this);" ondrop="handleDrop(event, this, -1);" ondragend="handleDragEnd(event, this);"><div class="col-xs-2"><div class="dragIconItems"><a href="javascript:void(0)" style="cursor:move;" draggable="true"><img src="../../images/drag.png" /></a></div></div><div class="col-xs-6" style="cursor:pointer;"><div id="questionText" class="basicInfoUnCheckBox basicInfoUnCheckBoxQuestion" onclick="setCheckBoxChecked(this); setRequiredUncheck(this);">' + question + '</div></div><div class="col-xs-2" style="cursor:pointer;"><div id="require" class="basicInfoUnCheckBox onlyCheckBoxItem" onclick="setCheckBoxChecked(this); setFieldCheck(this);"></div></div><div class="col-xs-2"><a href="javascript:void(0)" class="removeIconAnchor" onclick="removeItemList(this)"><img src="../../images//cross.png" /></a></div></div>';
+      $("#questionContainerDiv").append(innerHtml);
+      $("#questionContainerDiv").show();
+
+      storedQuestions.push(GetEditedQuestion())
+      $('#questions').val('');
+      curQIndex++;
+    }
+  }
+
+  function GetEditedQuestion()
+  {
+    var qtickets = [];
+    var qvariants = [];
+    var subquestions = [];
+    var subvariants = [];
+    var ctype = $('#dropdownMenu1').val();
+    var lquant = $('#checkBoxQuantity').hasClass('basicInfoCheckBox');
+
+    $('div[id^="qTicket_"]').each(function(){
+      qtickets.push({
+        OrderTemplateQuestionTicketId: 0,
+        TicketId: $(this).data('tid'),
+        CollectInformation: $(this).hasClass('basicInfoCheckBox')
+      })
+    });
+
+    if ($.inArray(ctype, ["3", "4", "5"]) >= 0)
+    {
+      var i = 0;
+      $('div[id^="checkBoxQuesMainBodyConID"]').each(function (){
+
+        subquestions = [];
+
+
+        $('div[id^="AnotherSubQuestionMainContainer"]').each(function()
+        {
+          if ($(this).find('#dropdownMenuSubHead2').val() == i)
+          {
+            subvariants = [];
+            var subctype = $(this).find('#dropdownMenuSubOptions1').val();
+            var sublquant = $(this).find('#checkBoxQuantitySub').hasClass('basicInfoCheckBox');
+
+            if ($.inArray(subctype, ["3", "4", "5"]) >= 0)
+            {
+              $(this).find('div[id^="checkBoxQuesMainBodyConSubID"]').each(function()
+              {
+                subvariants.push({
+                  OrderTemplateQuestionVariantId: 0,
+                  VariantText: $(this).find('.optionNameQuestionSub').val(),
+                  Quantity: sublquant ? $(this).find('#optionNameQuantity').val() : 0
+                });
+              });
+            }
+            else if (subctype == "6")
+            {
+              subvariants.push({
+                OrderTemplateQuestionVariantId: 0,
+                VariantText: $(this).find('#waiverTxtSub').val(),
+                Quantity: 0
+              });
+            }
+
+            subquestions.push({
+              OrderTemplateQuestionID: 0,
+              ControlTypeId: subctype,
+              LimitQuantity: sublquant,
+              QuestionText: $(this).find('#askAQuestionSub').val(),
+              QuestionVariants: subvariants
+            });
+          }
+        });
+
+        qvariants.push({
+          OrderTemplateQuestionVariantId: 0,
+          VariantText: $(this).find('.optionNameQuestion').val(),
+          Quantity: lquant ? $(this).find('#optionNameQuantity').val() : 0,
+          Subquestions: subquestions
+        });
+
+        i++;
+      })
+    }
+    else if (ctype == "6")
+    {
+      qvariants.push({
+        OrderTemplateQuestionVariantId: 0,
+        VariantText: $('#waiverTxt').val(),
+        Quantity: 0
+      });
+    }
+
+
+
+    return {
+      indexid: curQIndex,
+      OrderTemplateQuestionId: 0,
+      ControlTypeId: ctype,
+      LimitQuantity: lquant,
+      ShowAnswer: $('#ShowAnswer').hasClass('basicInfoCheckBox'),
+      ShowForTickets: $('#ShowForTickets').hasClass('basicInfoCheckBox'),
+      EnableSubquestions: $('#EnableSubquestions').hasClass('basicInfoCheckBox'),
+      QuestionTickets: qtickets,
+      QuestionVariants: qvariants,
+    }
+  }
+
+  function removeItemList(obj) {
+    var parent = $(obj).closest('div[class^="dragableDivContent"]');
+    $(parent).hide();
+  }
+
+  function showHideDiv(obj) {
+    if ($('#leftMenuHeaderID span img').attr('src').indexOf('downarrow.png') > -1) {
+      $('#leftMenuBodyID').slideUp();
+      $('#leftMenuHeaderID span img').attr('src', '../../images//leftarrow.png');
+    }
+    else {
+      $('#leftMenuBodyID').slideDown();
+      $('#leftMenuHeaderID span img').attr('src', '../../images//downarrow.png');
+    }
+  }
+
+  function showHideForm(id) {
+    for (var i = 1; i <= 4; i++) {
+      $('#mainForm' + i).hide();
+    }
+    $('#mainForm' + id).show();
+  }
+
+  function saveOrderForm() {
+    var model =
+      {
+        OrderTemplateId: $('#OrderTemplateId').val(),
+        EventId: $('#EventId').val(),
+
+        Title: $('#Title').val(),
+        TimeLimit: $('#TimeLimit').val(),
+        Instruction: $('#Instruction').val(),
+        AfterMessage: $('#AfterMessage').val(),
+        OrderTemplateGroupTypeId: $('#dropdownMenu2').val(),
+        GroupMaxAttendees: $('#GroupMaxAttendees').val(),
+        GroupPageHeadline: $('#GroupPageHeadline').val(),
+        GroupPageDescription: $('#GroupPageDescription').val(),
+        GroupAllowPassword: $('#GroupAllowPassword').hasClass('basicInfoCheckBox'),
+        GroupAllowSetTime: $('#GroupAllowSetTime').hasClass('basicInfoCheckBox'),
+        AllowCallPickup: $('#AllowCallPickup').hasClass('basicInfoCheckBox'),
+        AllowEdit: $('#AllowEdit').hasClass('basicInfoCheckBox'),
+        AcceptRefund: $('#AcceptRefund').hasClass('basicInfoCheckBox'),
+        GroupTickets: getGroupTickets(),
+        Questions: getQuestions(),
+        UserQuestions: getUserQuestions()
+      };
+    $.ajax({
+      type: "POST",
+      url: "@Url.Action("Form", "OrderOptions")",
+      data: model,
+      datatype: "html",
+      success: function (data) {
+        var newDoc = document.open("text/html", "replace");
+        newDoc.write(data);
+        newDoc.close();
+      }
+    });
+
+  }
+
+  function cancelOrderForm() {
+    window.location.reload(false);
+  }
+
+  function getGroupTickets() {
+    groupTicketArray = [];
+    $('div[id^="GroupTicket_"]').each(function () {
+      cid = $(this).find('input[type=hidden]').val();
+      groupTicketArray.push(
+        {
+          OrderTemplateGroupTicketId: cid,
+          EnableRegistration: $(this).find('#enablereg_' + cid).hasClass('basicInfoCheckBox'),
+          GroupOnly: $(this).find('#grouponly_' + cid).hasClass('basicInfoCheckBox'),
+          DontDisplay: $(this).find('#dontdisplay_' + cid).hasClass('basicInfoCheckBox')
+        });
+    });
+    return groupTicketArray;
+  }
+
+  function getQuestions() {
+    quests = [];
+    i = 0;
+    $('div[id^="mainQuestion_"]').each(function () {
+      quests.push(
+        {
+          SortNum: i,
+          OrderTemplateQuestionId: $(this).find('#QuestionId').val(),
+          Include: $(this).find('#Include').hasClass('basicInfoCheckBox'),
+          Require: $(this).find('#Require').hasClass('basicInfoCheckBox')
+        });
+      i = i + 1;
+    });
+    return quests;
+  }
+
+  function getUserQuestions() {
+    quests = [];
+    for (var i = 0; i < storedQuestions.length; i++)
+    {
+      var cquestion = $('div[id^="userQuestion_' + i + '"]');
+      if ($(cquestion).is(':visible'))
+        quests.push(
+        {
+          SortNum: i,
+          OrderTemplateQuestionId: $(cquestion).data('questionid'),
+          Include: $(cquestion).find('#questionText').hasClass('basicInfoCheckBox'),
+          Require: $(cquestion).find('#require').hasClass('basicInfoCheckBox'),
+          QuestionText: $.trim($(cquestion).find('#questionText').html()),
+          LimitQuantity: storedQuestions[i].LimitQuantity,
+          ShowAnswer: storedQuestions[i].ShowAnswer,
+          ShowForTickets: storedQuestions[i].ShowForTickets,
+          EnableSubquestions: storedQuestions[i].EnableSubquestions,
+          ControlTypeId: storedQuestions[i].ControlTypeId,
+          QuestionTickets: storedQuestions[i].QuestionTickets,
+          QuestionVariants: storedQuestions[i].QuestionVariants
+        });
+    }
+    return quests;
+  }
+
+
+  function setValidDate(id, obj) {
+    var val = $("#" + id).val();
+
+    var getMin = val.split(':');
+
+    if (getMin[0] >= 2 && getMin[0] <= 240) {
+      $(obj).removeClass('validatorTxt');
+      return false;
+    }
+    else {
+      $(obj).addClass('validatorTxt');
+      return false;
+    }
+  }
+
+  function showOtherBids(obj, id1, id2) {
+    if ($(obj).hasClass('basicInfoUnCheckBox')) {
+      $('#' + id1).hide();
+      $('#' + id2).hide();
+    }
+    else {
+      $('#' + id1).show();
+      $('#' + id2).show();
+    }
+  }
+
+  function showOtherBidsForOne(obj, id1) {
+    if ($(obj).hasClass('basicInfoUnCheckBox')) {
+      $('div[id^="' + id1 + '"]').hide();
+    }
+    else {
+      $('div[id^="' + id1 + '"]').show();
+    }
+  }
+
+  function ShowHideRespectiveDiv(id) {
+    $('#CheckBoxMainContainer').hide();
+    $('#waivierTxtDiv').hide();
+    $('#' + id).show();
+  }
+
+  function ShowHideRespectiveDivSub(id, containerDiv) {
+    $('#AnotherSubQuestionMainContainer' + containerDiv + ' #CheckBoxContainerSub').hide();
+    $('#AnotherSubQuestionMainContainer' + containerDiv + ' #waivierTxtDivSub').hide();
+    $('#AnotherSubQuestionMainContainer' + containerDiv + ' #' + id).show();
+  }
+
+  function setRequiredUncheck(obj) {
+
+    if ($(obj).hasClass('basicInfoUnCheckBox')) {
+      $(obj).parent().next().find('.onlyCheckBoxItem').removeClass('basicInfoCheckBox');
+      $(obj).parent().next().find('.onlyCheckBoxItem').addClass('basicInfoUnCheckBox');
+    }
+    else {
+
+    }
+  }
+
+  function setFieldCheck(obj) {
+    if ($(obj).hasClass('basicInfoCheckBox')) {
+      $(obj).parent().prev().find('.basicInfoUnCheckBox').addClass('basicInfoCheckBox');
+      $(obj).parent().prev().find('.basicInfoUnCheckBox').removeClass('basicInfoUnCheckBox');
+    }
+    else {
+
+    }
+  }
+
+  var textBoxID = 1
+  function addAnotherOption() {
+    textBoxID++;
+    $('#checkBoxQuesMain').append('<div id="checkBoxQuesMainBodyConID' + textBoxID + '" class="checkBoxQuesMainBodyCon1"><div class="col-md-11 col-sm-11 col-xs-12 checkBoxQuesMainBody1"><div class="form-group"><input type="text" class="form-control optionNameQuestion" onblur="txtBoxQuestionAddtoList();" placeholder="Option Name" maxlength="255"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBody2" style="display:none;"><div class="form-group"><input type="text" class="form-control " id="optionNameQuantity" placeholder="Quantity" maxlength="20"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBody3" style="display:none;"><div class="form-group">0 / 0</div></div><div id="checkBoxQuesMainBodyTrash" class="col-md-1 col-sm-1 col-xs-12"><div class="form-group"><a href="javascript:void(0)" onclick="removeThisDiv(\'checkBoxQuesMainBodyConID' + textBoxID + '\')" class="trackIConAnchor"><span class="glyphicon glyphicon glyphicon-trash"></span></a></div></div></div>');
+    ShowHideQuantityOrder($('#checkBoxQuantity'));
+  }
+
+  var cbSubContainer = 0
+  function addAnotherOptionSub(subConID) {
+    cbSubContainer++;
+    $('#checkBoxQuesMainSub' + subConID).append('<div id="checkBoxQuesMainBodyConSubID' + cbSubContainer + '" class="checkBoxQuesMainBodyCon1 checkBoxQuesMainBodyConSubCls1"><div class="col-md-11 col-sm-11 col-xs-12 checkBoxQuesMainBodySub1"><div class="form-group"><input type="text" class="form-control optionNameQuestionSub" placeholder="Option Name" maxlength="255"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBodySub2" style="display:none;"><div class="form-group"><input type="text" class="form-control " id="optionNameQuantity" placeholder="Quantity" maxlength="20"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBodySub3" style="display:none;"><div class="form-group">0 / 0</div></div><div id="checkBoxQuesMainBodyTrash" class="col-md-1 col-sm-1 col-xs-12"><div class="form-group"><a href="javascript:void(0)" onclick="removeThisDivSub(this, ' + cbSubContainer + ')" class="trackIConAnchor"><span class="glyphicon glyphicon glyphicon-trash"></span></a></div></div></div>');
+
+    ShowHideQuantityOrderSub($('#AnotherSubQuestionMainContainer' + subConID + ' #checkBoxQuantitySub'), subConID);
+  }
+
+  function removeThisDiv(id) {
+    var count = $('.checkBoxQuesMainBodyCon1');
+    if (count.length == 1) {
+      alert('You must have atleast one available choice');
+    }
+    else {
+      $('#' + id).remove();
+      txtBoxQuestionAddtoList();
+    }
+
+  }
+
+  function removeThisDivSub(obj, id) {
+    var parent = $(obj).closest('#checkBoxQuesMainSub' + id);
+    var count = $(parent).find('.checkBoxQuesMainBodyConSubCls1');
+    if (count.length == 1) {
+      alert('You must have atleast one available choice');
+    }
+    else {
+      $(obj).closest('#checkBoxQuesMainBodyConSubID' + id).remove();
+    }
+
+  }
+
+  function showSubQuestionBtn(obj) {
+    if ($(obj).hasClass('basicInfoUnCheckBox')) {
+      $('#showSubQuestionDiv').hide();
+      $('#AppendSubOptionToSubDiv').hide();
+    }
+    else {
+      $('#showSubQuestionDiv').show();
+      $('#AppendSubOptionToSubDiv').show();
+    }
+  }
+
+  function ShowHideQuantityOrder(obj) {
+    if ($(obj).hasClass('basicInfoUnCheckBox')) {
+      $('.checkBoxQuesMainHead2').hide();
+      $('.checkBoxQuesMainHead3').hide();
+      $('.checkBoxQuesMainHead1').removeClass('col-md-5 col-sm-5 col-xs-12');
+      $('.checkBoxQuesMainHead1').addClass('col-md-11 col-sm-11 col-xs-12');
+
+      $('.checkBoxQuesMainBody2').hide();
+      $('.checkBoxQuesMainBody3').hide();
+      $('.checkBoxQuesMainBody1').removeClass('col-md-5 col-sm-5 col-xs-12');
+      $('.checkBoxQuesMainBody1').addClass('col-md-11 col-sm-11 col-xs-12');
+
+    }
+    else {
+      $('.checkBoxQuesMainHead1').removeClass('col-md-11 col-sm-11 col-xs-12');
+      $('.checkBoxQuesMainHead1').addClass('col-md-5 col-sm-5 col-xs-12');
+      $('.checkBoxQuesMainHead2').show();
+      $('.checkBoxQuesMainHead3').show();
+
+      $('.checkBoxQuesMainBody1').removeClass('col-md-11 col-sm-11 col-xs-12');
+      $('.checkBoxQuesMainBody1').addClass('col-md-5 col-sm-5 col-xs-12');
+      $('.checkBoxQuesMainBody2').show();
+      $('.checkBoxQuesMainBody3').show();
+    }
+
+  }
+
+  function ShowHideQuantityOrderSub(obj, containerDiv) {
+    if ($(obj).hasClass('basicInfoUnCheckBox')) {
+      $('#AnotherSubQuestionMainContainer' + containerDiv + ' .checkBoxQuesMainHeadSub2').hide();
+      $('#AnotherSubQuestionMainContainer' + containerDiv + ' .checkBoxQuesMainHeadSub3').hide();
+      $('#AnotherSubQuestionMainContainer' + containerDiv + ' .checkBoxQuesMainHeadSub1').removeClass('col-md-5 col-sm-5 col-xs-12');
+      $('#AnotherSubQuestionMainContainer' + containerDiv + ' .checkBoxQuesMainHeadSub1').addClass('col-md-11 col-sm-11 col-xs-12');
+
+      $('#AnotherSubQuestionMainContainer' + containerDiv + ' .checkBoxQuesMainBodySub2').hide();
+      $('#AnotherSubQuestionMainContainer' + containerDiv + ' .checkBoxQuesMainBodySub3').hide();
+      $('#AnotherSubQuestionMainContainer' + containerDiv + ' .checkBoxQuesMainBodySub1').removeClass('col-md-5 col-sm-5 col-xs-12');
+      $('#AnotherSubQuestionMainContainer' + containerDiv + ' .checkBoxQuesMainBodySub1').addClass('col-md-11 col-sm-11 col-xs-12');
+
+    }
+    else {
+      $('#AnotherSubQuestionMainContainer' + containerDiv + ' .checkBoxQuesMainHeadSub1').removeClass('col-md-11 col-sm-11 col-xs-12');
+      $('#AnotherSubQuestionMainContainer' + containerDiv + ' .checkBoxQuesMainHeadSub1').addClass('col-md-5 col-sm-5 col-xs-12');
+      $('#AnotherSubQuestionMainContainer' + containerDiv + ' .checkBoxQuesMainHeadSub2').show();
+      $('#AnotherSubQuestionMainContainer' + containerDiv + ' .checkBoxQuesMainHeadSub3').show();
+
+      $('#AnotherSubQuestionMainContainer' + containerDiv + ' .checkBoxQuesMainBodySub1').removeClass('col-md-11 col-sm-11 col-xs-12');
+      $('#AnotherSubQuestionMainContainer' + containerDiv + ' .checkBoxQuesMainBodySub1').addClass('col-md-5 col-sm-5 col-xs-12');
+      $('#AnotherSubQuestionMainContainer' + containerDiv + ' .checkBoxQuesMainBodySub2').show();
+      $('#AnotherSubQuestionMainContainer' + containerDiv + ' .checkBoxQuesMainBodySub3').show();
+    }
+
+  }
+
+
+  var subContainer = 0;
+  function addAnotherSubQuestion() {
+    var questionsContainer = $('.optionNameQuestion');
+    var questionTxt = [];
+    $.each(questionsContainer, function (index, value) {
+      questionTxt = $(value).val();
+
+    });
+    if (questionTxt.length > 0) {
+      subContainer++;
+      cbSubContainer++;
+      $('#AppendSubOptionToSubDiv').append('<div id="AnotherSubQuestionMainContainer' + subContainer + '" class="AnotherSubQuestionMainContainerCls" ><div class="subQuestionHeadText"><span>Sub-Question ' + subContainer + '</span><a href="javascript:void(0)" onclick="removeSubQuestionDiv(\'AnotherSubQuestionMainContainer' + subContainer + '\')" class="trackIconAnchorSub"><span class="glyphicon glyphicon glyphicon-trash"></span></a></div><div class="subQuestionBodyTxt"><div class="form-group" style="margin: 20px 0px; "><label for="title" class="subLabelTitleTxt">If the attendee chooses:</label><div class="dropdown dropDownSubFullWidth"><button style="width: 100%;text-align: left;" class="btn btn-default dropdown-toggle questionsBtn" type="button" id="dropdownMenuSubHead2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="text"></span><span class="caret" style="float: right;margin-top: 8px;"></span></button><ul class="dropdown-menu dropdownMenuSubHeadLi2" aria-labelledby="dropdownMenuSubHead2"></ul></div></div><div class="form-group askQuestionSubTxtDiv"><label for="title" class="subLabelTitleTxt">Ask the question:</label><input type="text" class="form-control" id="askAQuestionSub" placeholder=""></div><div class="form-group" style="padding-bottom: 31px;clear: both;"><label for="title" class="subLabelTitleTxt">Question Type:</label><div class="dropdown dropDownSubFullWidth"><button class="btn btn-default dropdown-toggle questionsBtn" type="button" id="dropdownMenuSubOptions1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="text">Text</span><span class="caret"></span></button><ul class="dropdown-menu" aria-labelledby="dropdownMenuSubOptions1"><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 1); ShowHideRespectiveDivSub(null,' + subContainer + ');">Text</a></li><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 2); ShowHideRespectiveDivSub(null,' + subContainer + ');">Paragraph Text</a></li><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 3); ShowHideRespectiveDivSub(\'CheckBoxContainerSub\',' + subContainer + ');">CheckBoxes</a></li><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 4); ShowHideRespectiveDivSub(\'CheckBoxContainerSub\',' + subContainer + ');">Radio Buttons</a></li><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 5); ShowHideRespectiveDivSub(\'CheckBoxContainerSub\',' + subContainer + ');">Dropdown</a></li><li><a href="javascript:void(0)" onclick="setdropDownSubOptionsItems(this,' + subContainer + ', 6); ShowHideRespectiveDivSub(\'waivierTxtDivSub\',' + subContainer + ');">Waiver</a></li></ul></div></div><div id="CheckBoxContainerSub" style="display:none;"><div id="checkBoxQuantitySub" class="basicInfoUnCheckBox" style="font-size: 16px;" onclick="setCheckBoxChecked(this); ShowHideQuantityOrderSub(this, ' + subContainer + ');">LIMIT QUANTITY FOR EACH CHOICE</div><div id="checkBoxHeading">Options available</div><div id="checkBoxQuesMainSub' + subContainer + '"><div id="checkBoxQuesMainHeader"><div class="col-md-11 col-sm-11 col-xs-12 checkBoxQuesMainHeadSub1">Option Name</div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainHeadSub2" style="display:none;">QUANTITY</div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainHeadSub3" style="display:none;">ORDERS</div><div class="col-md-1 col-sm-1 col-xs-12 checkBoxQuesMainHeadSubTrash"></div></div><div id="checkBoxQuesMainBodyConSubID' + cbSubContainer + '" class="checkBoxQuesMainBodyCon1 checkBoxQuesMainBodyConSubCls1"><div class="col-md-11 col-sm-11 col-xs-12 checkBoxQuesMainBodySub1"><div class="form-group"><input type="text" class="form-control optionNameQuestionSub" placeholder="Option Name" maxlength="255"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBodySub2" style="display:none;"><div class="form-group"><input type="text" class="form-control " id="optionNameQuantity" placeholder="Quantity" maxlength="20"></div></div><div class="col-md-3 col-sm-3 col-xs-6 checkBoxQuesMainBodySub3" style="display:none;"><div class="form-group">0 / 0</div></div><div id="checkBoxQuesMainBodyTrash" class="col-md-1 col-sm-1 col-xs-12"><div class="form-group"><a href="javascript:void(0)" onclick="removeThisDivSub(this, ' + cbSubContainer + ')" class="trackIConAnchor"><span class="glyphicon glyphicon glyphicon-trash"></span></a></div></div></div></div><div class="col-xs-12" style="margin:10px 0px 20px 0px; padding: 0px;"><a href="javascript:void(0)" onclick="addAnotherOptionSub(' + subContainer + ')" class="btn btn-primary">Add Another Option</a></div></div><div id="waivierTxtDivSub" class="form-group" style="margin: 20px 0px; overflow:hidden; display:none;"><label for="Instruction">Waiver</label><textarea class="form-control setHeight" id="waiverTxtSub" placeholder=""></textarea></div></div></div>');
+
+      $.each(questionsContainer, function (index, value) {
+        if (index == 0) {
+          $('#AnotherSubQuestionMainContainer' + subContainer + ' #dropdownMenuSubHead2 .text').html($(value).val());
+
+          $('.dropdownMenuSubHeadLi2').html('<li><a href="javascript:void(0)" onclick="setdropDownItemsSub(this, ' + index + ')">' + $(value).val() + '</a></li>');
+
+        }
+        else {
+          $('.dropdownMenuSubHeadLi2').append('<li><a href="javascript:void(0)" onclick="setdropDownItemsSub(this, ' + index + ')">' + $(value).val() + '</a></li>');
+        }
+      });
+    }
+    else {
+      alert('you must create atleast one answer option in order to enable conditional questions. ')
+    }
+  }
+
+  function txtBoxQuestionAddtoList() {
+    var questionsContainer = $('.optionNameQuestion');
+    var questionTxt = [];
+    $.each(questionsContainer, function (index, value) {
+      questionTxt = $(value).val();
+
+    });
+    if (questionTxt.length > 0) {
+      $.each(questionsContainer, function (index, value) {
+        if (index == 0) {
+          $('#dropdownMenuSubHead2 .text').html($(value).val());
+          $('.dropdownMenuSubHeadLi2').html('<li><a href="javascript:void(0)" onclick="setdropDownItemsSub(this, ' + index + ')">' + $(value).val() + '</a></li>');
+
+        }
+        else {
+          $('.dropdownMenuSubHeadLi2').append('<li><a href="javascript:void(0)" onclick="setdropDownItemsSub(this, ' + index + ')">' + $(value).val() + '</a></li>');
+        }
+      });
+    }
+
+  }
+
+  function removeSubQuestionDiv(id) {
+    $('#' + id).remove();
+  }
+
+</script>

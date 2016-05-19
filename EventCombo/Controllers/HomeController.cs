@@ -1452,16 +1452,37 @@ namespace EventCombo.Controllers
             var success = "";
             Session["Fromname"] = "PasswordReset";
             ValidationMessage vmc = new ValidationMessage();
-            if (model.Password != model.ConfirmPassword)
-            {
-                error = vmc.Index("ResetPassword", "PwdResetPwdValidationSys");
-                ViewData["Error"] = error;
-                ModelState.AddModelError("Error", error);
+            //if (model.Password != model.ConfirmPassword)
+            //{
+            //    error = vmc.Index("ResetPassword", "PwdResetPwdValidationSys");
+            //    ViewData["Error"] = error;
+            //    ModelState.AddModelError("Error", error);
 
-            }
+            //}
             if (!ModelState.IsValid)
             {
+                var errors = ModelState.Select(x => x.Value.Errors)
+                         .Where(y => y.Count > 0)
+                         .ToList();
+                var ee = "";
+                foreach(var item in errors)
+                {
+                    if(!string.IsNullOrWhiteSpace(ee))
+                    {
+                        ee += "\r\n" + item[0].ErrorMessage ;
+                    }
+                    else
+                    {
+                        ee += item[0].ErrorMessage;
+                    }
+                   
+                }
+                ViewData["Error"] = ee;
                 return View();
+            }
+            else
+            {
+              
             }
             if (Session["code"] != null)
             {
@@ -1501,7 +1522,7 @@ namespace EventCombo.Controllers
                 ViewData["Message"] = success;
                 return View();
             }
-            AddErrors(result);
+           
             return View();
 
         }

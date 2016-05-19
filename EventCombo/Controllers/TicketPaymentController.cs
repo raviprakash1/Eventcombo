@@ -35,7 +35,8 @@ namespace EventCombo.Controllers
 
         //[Route("Payment", Name = "TPayment", Order=2)]
         //[OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
-        //[Route("",Name ="Payment"),HttpGet]   
+        //[Route("",Name ="Payment"),HttpGet] 
+        //[RequireHttps]  
         public ActionResult TicketPayment()
 
         {
@@ -108,7 +109,6 @@ namespace EventCombo.Controllers
             tp.URLTitle = Regex.Replace(eventdetails.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", "");
             tp.Tickettype = "Paid";
             ViewData["Type"] = tp.Tickettype;
-            List<Cardview> Detailscard = new List<Cardview>();
             if (Session["AppId"] != null)
             {
                 string Userid = Session["AppId"].ToString();
@@ -159,78 +159,6 @@ namespace EventCombo.Controllers
                 }
               
                 ViewBag.CountryID = countryList;
-                //ViewBag.BillcountryID = billcountryList;
-                Cardview card = new Cardview();
-                card.value = "-1";
-                card.text = "Select a Card";
-                Detailscard.Add(card);
-                if (Session["AppId"] != null)
-                {
-                    var userid = Session["AppId"].ToString();
-                    var carddetails = db.CardDetails.Where(x => x.UserId == userid).ToList();
-
-                    if (carddetails != null)
-                    {
-                        foreach (var item in carddetails)
-                        {
-                            Cardview card1 = new Cardview();
-                            var Scardnumber = EDcode.DecryptText(item.CardNumber).Trim();
-                            var Icardlength = Scardnumber.Length;
-                            var WrVS = "";
-                            int k = 1;
-                            for (int i = 0; i < Icardlength; i++)
-                            {
-
-                                WrVS += "X";
-                                if (k == 4)
-                                {
-                                    WrVS += "-";
-                                    k = 0;
-                                }
-
-
-                                k++;
-
-                            }
-                            if (WrVS.EndsWith("-"))
-                            {
-                                WrVS = WrVS.Substring(0, WrVS.LastIndexOf("-"));
-                            }
-                            var rvrs = WrVS.Substring(0, WrVS.LastIndexOf("-") + 1);
-                            var rvrsd = rvrs.Replace("-", "");
-                            var chrlength = Icardlength - rvrsd.Length;
-                            var result = Scardnumber.Substring(Icardlength - Math.Min(chrlength, Icardlength));
-                            var finalstr = rvrs + result;
-                            card1.value = item.CardId.ToString();
-                            var touper = "";
-                            if (!string.IsNullOrWhiteSpace(item.card_type))
-                            {
-                                string cardtype = EDcode.DecryptText(item.card_type).Trim();
-                                touper = char.ToUpper(cardtype[0]) + cardtype.Substring(1);
-                            }
-                            else
-                            {
-                                touper = "";
-                            }
-                            card1.text = "Payment Method:Customer-" + Fname + "  " + touper + "  " + finalstr;
-                            Detailscard.Add(card1);
-
-
-                        }
-
-                    }
-
-                }
-                Cardview card2 = new Cardview();
-                card2.value = "A";
-                card2.text = "Add a new Card";
-                Detailscard.Add(card2);
-
-                Cardview card3 = new Cardview();
-                card3.value = "P";
-                card3.text = "Use Paypal";
-                Detailscard.Add(card3);
-                ViewBag.Detailscard = Detailscard;
             }
            tp.tickebox =  LoadTickets(Eventid.ToString());
 
@@ -818,9 +746,9 @@ namespace EventCombo.Controllers
                                     if (!objcarddetail)
                                     {
                                         CardDetail card = new CardDetail();
-                                        card.CardNumber = EDcode.EncryptText(model.cardno);
-                                        card.ExpirationDate = EDcode.EncryptText(model.expirydate);
-                                        card.Cvv = EDcode.EncryptText(model.cvv);
+                                        card.CardNumber = EDcode.EncryptText("XXXXXXXXXXXX" + model.cardno.Substring(model.cardno.Length - 4));
+                                        card.ExpirationDate = EDcode.EncryptText("Unknown");
+                                        card.Cvv = EDcode.EncryptText("Unknown");
                                         card.UserId = Userid;
                                         card.Guid = guid;
                                         card.card_type = EDcode.EncryptText(model.card_type);
@@ -846,10 +774,10 @@ namespace EventCombo.Controllers
                                     badd.Guid = guid;
                                     badd.OrderId = strOrderNo;
                                     badd.PaymentType = "C";
-                                    badd.CardId = EDcode.EncryptText(model.cardno);
+                                    badd.CardId = EDcode.EncryptText("XXXXXXXXXXXX" + model.cardno.Substring(model.cardno.Length - 4));
                                     badd.card_type = EDcode.EncryptText(model.card_type);
-                                    badd.Cvv = EDcode.EncryptText(model.cvv);
-                                    badd.ExpirationDate = EDcode.EncryptText(model.expirydate);
+                                    badd.Cvv = EDcode.EncryptText("Unknown");
+                                    badd.ExpirationDate = EDcode.EncryptText("Unknown");
                                     objEntity.BillingAddresses.Add(badd);
                                 }
                                 if (model.Saveshipdetail != "N")
@@ -1754,13 +1682,12 @@ namespace EventCombo.Controllers
                 ExceptionLogging.SendErrorToText(ex);
             }
         }
-        public MemoryStream generateTicketPDF(string guid, long eventid, List<Email_Tag> emailtag, string fname)
+        public MemoryStream generateTicketPDF(string guid, long eventid, List<Email_Tag> emailtag, string fname, string htmlPath)
         {
             WebClient wc = new WebClient();
             MemoryStream mms = new MemoryStream();
             EncryptDecrypt Ecode = new EncryptDecrypt();
             string htmlText = "";
-            string htmlPath = Server.MapPath("..");
             try {
                 var TicketDetail = (from Ord in db.TicketOrderDetails
                                     where Ord.T_Guid == guid
@@ -1773,9 +1700,9 @@ namespace EventCombo.Controllers
                     {
                         count = count + 1;
 
-                        string barImgPath = Server.MapPath("..") + "/Images/br_" + item.T_Id + ".Png";
+                        string barImgPath = htmlPath + "/Images/br_" + item.T_Id + ".Png";
 
-                        string qrImgPath = Server.MapPath("..") + "/Images/QR_" + item.T_Id + ".Png";
+                        string qrImgPath = htmlPath + "/Images/QR_" + item.T_Id + ".Png";
 
                         // Ticket and event details
                         var TQtydetail = (from tQty in db.Ticket_Quantity_Detail
@@ -1852,18 +1779,18 @@ namespace EventCombo.Controllers
 
                         string Qrcode = "<img style = 'width:150px;height:150px' src ='" + qrImgPath + "' alt = 'QRCode' />";
                         string barcode = "<img  src ='" + barImgPath + "' alt = 'BarCode' >";
-                        string Imagelogo = Server.MapPath("..") + "/Images/logo_vertical.png";
+                        string Imagelogo = htmlPath + "/Images/logo_vertical.png";
                         string logoImage = "<img style='width:57px;height:375px' src ='" + Imagelogo + "' alt = 'Logo' >";
                         EventCreation ccEvent = new EventCreation();
                         var Images = ccEvent.GetImages(eventid).FirstOrDefault();
                         string Imageevent = "";
                         if (string.IsNullOrEmpty(Images))
                         {
-                            Imageevent = Server.MapPath("..") + "/Images/default_event_image.jpg";
+                          Imageevent = htmlPath + "/Images/default_event_image.jpg";
                         }
                         else
                         {
-                            Imageevent = Server.MapPath("..") + Images;
+                          Imageevent = htmlPath + Images;
                         }
                         string Imagevent = "<img style='width:200px;height:200px;' src ='" + Imageevent + "' alt = 'Image' >";
 
@@ -2714,7 +2641,7 @@ namespace EventCombo.Controllers
                     }
 
                     //email bearer
-                    MemoryStream attachment = generateTicketPDF(strGUID, Eventid, EmailTag, username);
+                    MemoryStream attachment = generateTicketPDF(strGUID, Eventid, EmailTag, username, Server.MapPath(".."));
 
                     var emailorder = Orderdetail.O_Email != null ? Orderdetail.O_Email : email;
                     if (Emailtemplate != null)

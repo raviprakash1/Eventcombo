@@ -10,6 +10,6 @@ namespace EventCombo.ViewModels
         public string Eventtitle { get; set; }
         public long EventId { get; set; }
         public int DiscountCode { get; set; }
-
+        public string CurrentItem { get; set; }
     }
 }

@@ -7,7 +7,7 @@
 }
 @section sidenav{
     <div id="sidebar" class="nav nav-stacked">
-        
+      @Html.Action("Sidenav", "ManageEvent", new { eventid = Model.Eventid, CurrentItem = "inviteandpromote" })
     </div>
 }
 <style type="text/css">
@@ -239,9 +239,6 @@
             $("#sidebar").find("#dvcrtpromcode").addClass("active");
             $("#sidebar").find("#dvcrtpromcode b").addClass('opened new-opend');
         });
-        $('#sidebar').load('@Url.Action("Sidenav", "ManageEvent", new { eventid=Model.Eventid })');
-       
-        $('#crt_promcode').click();
 
         var vPageIndex = $("#hdPageIndex").val();
         $("#aPageLink-" + vPageIndex).addClass("active");

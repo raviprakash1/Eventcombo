@@ -1,0 +1,198 @@
+﻿@using EventCombo.Models
+@model EventCombo.Models.OrderTemplateViewModel
+@{
+  ViewBag.Title = "Waitlist";
+  Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+
+<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.masked.js"></script>
+<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+<script src="~/Scripts/filer/jquery.filer.js"></script>
+
+<script type="text/javascript" src="~/Scripts/jquery-ui.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery-te-1.4.0.js"></script>
+
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/summernote.css" rel="stylesheet" />
+
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<link href="~/Content/MapPlaces.css" rel="stylesheet" />
+
+<link href='~/Content/jquery-te-1.4.0.css' rel='stylesheet' type='text/css'>
+<link href='~/Content/OrderForm.css' rel='stylesheet' type='text/css'>
+<link href="~/Content/OrderFormDesign.css" rel="stylesheet" />
+
+@section sidenav{
+  <div id="sidebar" class="nav nav-stacked">
+    @Html.Action("Sidenav", "ManageEvent", new { eventid = ViewBag.Eventid, CurrentItem = "orderoptions" })
+  </div>
+}
+
+@using (Html.BeginForm())
+{
+  <div class="event_container">
+    <div class="event_top">
+
+      @if ((ViewBag.StateMessage != null) && (ViewBag.StateMessage != ""))
+      {
+        <div class="col-sm-12 no_pad">
+          @ViewBag.StateMessage
+        </div>
+      }
+      @Html.HiddenFor(m => m.OrderTemplateId)
+      @Html.HiddenFor(m => m.EventId)
+
+      <div class="insideContainer col-md-9 col-xs-12">
+        <div id="mainForm2" style="display:block;">
+
+          <div class="orderFormTxt"><h1>Waitlist Settings</h1></div>
+          <div class="formText" style="font-weight:bold;">Enable Waitlist:</div>
+
+          <div class="radio" onclick="$('.waitListContainer').show();">
+            <label><input type="radio" id="EnableWaitlist" name="EnableWaitlist" value="True" checked="@(Model.EnableWaitlist)">Enable</label>
+          </div>
+          <div class="radio" onclick="$('.waitListContainer').hide();">
+            <label><input type="radio" id="EnableWaitlist" name="EnableWaitlist"  value="False" checked="@(!Model.EnableWaitlist)">Disable</label>
+          </div>
+
+          <div class="form-group" style="padding: 10px 0px 0px 0px;">
+            <div class="btn btn-primary btn-lg" onclick="SaveWaitlist()">Save</div>
+          </div>
+
+          <div class="waitListContainer">
+            <div class="formText">Waitlist Trigger:</div>
+
+            @foreach (var ticket in ViewBag.Tickets)
+            {
+              bool inputchecked = ticket.T_Id == Model.Waitlist.TicketId;
+              <div class="radio">
+                <label><input type="radio" id="WaitlistTicket" name="WaitlistTicket" value="@ticket.T_Id" checked="@inputchecked">When "@(ticket.T_name)" sells out</label>
+              </div>
+            }
+            <div class="radio">
+              <label><input type="radio" id="WaitlistTicket" name="WaitlistTicket" value="0" checked="@(Model.Waitlist.TicketId == 0)">When total event capacity is reached</label>
+            </div>
+
+
+            <div class="form-group">
+              <label for="title">Maximun Waitlist Size</label>
+              <input type="text" class="form-control" id="WaitlistMaxSize" placeholder="0" value="@Model.Waitlist.MaxSize">
+              <span style="font-size: 12px;padding-left: 10px;color: #888;">Zero for unlimited</span>
+            </div>
+
+            <div class="groupRegis">ATTENDEE INFORMATION TO COLLECT:</div>
+
+            <div id="NameRequired"
+                 class="@(Model.Waitlist.NameRequired ? "basicInfoCheckBox" : "basicInfoUnCheckBox")"
+                 style="font-size: 16px;">Full Name (Required)</div>
+            <div id="EmailRequired"
+                 class="@(Model.Waitlist.EmailRequired ? "basicInfoCheckBox" : "basicInfoUnCheckBox")"
+                 style="font-size: 16px;">Email Address (Required)</div>
+            <div id="PhoneRequired"
+                 class="@(Model.Waitlist.PhoneRequired ? "basicInfoCheckBox" : "basicInfoUnCheckBox")"
+                 style="font-size: 16px;"
+                 onclick="setCheckBoxChecked(this)">Phone Number</div>
+
+
+            <div class="form-group">
+              <label for="title" style="display:block;">TIME TO RESPOND:</label>
+              <input type="text" class="form-control timeRespondWidth" 
+                     id="RespondDays" placeholder="Day(s)" 
+                     value="@(Model.Waitlist.RespondDays > 0 ? Model.Waitlist.RespondDays.ToString() : "")">
+              <input type="text" class="form-control timeRespondWidth" 
+                     id="RespondHours" placeholder="Hour(s)" 
+                     value="@(Model.Waitlist.RespondHours > 0 ? Model.Waitlist.RespondHours.ToString() : "")">
+              <input type="text" class="form-control timeRespondWidth" 
+                     id="RespondMinutes" placeholder="Minute(s)" 
+                     value="@(Model.Waitlist.RespondMinutes > 0 ? Model.Waitlist.RespondMinutes.ToString() : "")">
+            </div>
+            <span style="font-size: 12px;padding-left: 0px;color: #888;">Time allowed for attendees to claim their ticket</span>
+
+            <div class="form-group">
+              <label for="title">AUTO-RESPONSE MESSAGE:</label>
+              <textarea id="ResponseMessage" class="form-control setHeight" name="text1" maxlength="2500">@Model.Waitlist.ResponseMessage</textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="title">WAITLIST TICKET RELEASE MESSAGE:</label>
+              <textarea id="ReleaseMessage" class="form-control setHeight" name="text1" maxlength="2500">@Model.Waitlist.ReleaseMessage</textarea>
+            </div>
+            <div class="form-group" style="padding: 10px 0px 0px 0px;">
+              <div class="btn btn-primary btn-lg" onclick="SaveWaitlist()">Save</div>
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+}
+
+<script type="text/javascript">
+
+  function setCheckBoxChecked(obj) {
+    if ($(obj).hasClass('basicInfoUnCheckBox')) {
+      $(obj).addClass('basicInfoCheckBox');
+      $(obj).removeClass('basicInfoUnCheckBox');
+    }
+    else {
+      $(obj).removeClass('basicInfoCheckBox');
+      $(obj).addClass('basicInfoUnCheckBox');
+    }
+  }
+
+  $(function () {
+    if (getRadioBoxValue('EnableWaitlist') == 'False')
+      $('.waitListContainer').hide();
+    $("#ResponseMessage").jqte();
+    $("#ReleaseMessage").jqte();
+
+  });
+
+  function SaveWaitlist() {
+    var model =
+      {
+        OrderTemplateId: $('#OrderTemplateId').val(),
+        EventId: $('#EventId').val(),
+        EnableWaitlist: getRadioBoxValue('EnableWaitlist'),
+        Waitlist: {
+          MaxSize: $('#WaitlistMaxSize').val(),
+          RespondDays: $('#RespondDays').val(),
+          RespondHours: $('#RespondHours').val(),
+          RespondMinutes: $('#RespondMinutes').val(),
+          NameRequired: $('#NameRequired').hasClass('basicInfoCheckBox'),
+          EmailRequired: $('#EmailRequired').hasClass('basicInfoCheckBox'),
+          PhoneRequired: $('#PhoneRequired').hasClass('basicInfoCheckBox'),
+          TicketId: getRadioBoxValue('WaitlistTicket'),
+          ResponseMessage: $('#ResponseMessage').val(),
+          ReleaseMessage: $('#ReleaseMessage').val()
+        }
+      };
+    $.ajax({
+      type: "POST",
+      url: "@Url.Action("Waitlist", "OrderOptions")",
+      data: model,
+      datatype: "html",
+      success: function (data) {
+        var newDoc = document.open("text/html", "replace");
+        newDoc.write(data);
+        newDoc.close();
+      }
+    });
+  }
+
+  function getRadioBoxValue(rname) {
+    var radioBoxes = $('input[type=radio][id=' + rname + ']:checked');
+    if (radioBoxes.length > 0) {
+      return radioBoxes.val();
+    }
+    else {
+      return "";
+    }
+  }
+
+</script>

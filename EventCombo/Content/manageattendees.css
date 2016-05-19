@@ -1,0 +1,568 @@
+﻿.manageAttendeesOrdercontainer{
+    font-size:16px;
+}
+
+#purchasedTicketContainer{
+    max-width: 780px;
+    padding-bottom: 40px;
+}
+
+.headerPurchasedTicket{
+    display: block;
+    clear: both;
+    overflow: hidden;
+}
+.searchTxtOrderContainerCls{
+    padding: 17px 0px 5px 0px;
+}
+.searchTxtOrderCls{
+    width: 100%;
+    border: 1px solid #c1c1c1;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 18px;
+    max-width: 250px;
+    float: right;
+}
+
+.purchasedTitleHead{
+    font-weight:bold;
+}
+.purchaseTicketHeaderTabs{
+    margin:20px 0px 10px 0px;
+}
+
+.dateTopHeaderCls{
+    padding: 0px 10px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #888;
+}
+
+.dateTopHeaderCls:hover {
+    text-decoration:none;
+    color:#00CAFD;
+}
+
+.dateTopHeaderClsSelected {
+    text-decoration:none;
+    color:#00CAFD !important;
+}
+
+.dateTimeForm{
+    margin-bottom:35px;
+}
+
+.mainContainerLoading{
+    background-color:#c1c1c1;
+    height:70px;
+    padding: 0px;
+    position:relative;
+}
+
+.filledTxtContain{
+    position: absolute;
+    top: 0px;
+    font-size: 53px;
+    color: #fff;
+    left: 20px;
+}
+.filledTxtTotal{
+    position: absolute;
+    font-size: 23px;
+    color: #333;
+    right: 10px;
+    bottom: 0px;
+}
+
+.filledContainer{
+    background:url('../images/blue.gif') repeat;
+    height: 100%;
+    background-size: 100%;
+    color: #fff;
+}
+
+.datePickerCustomCls{
+    background:url('../images/dateicon.png') no-repeat; 
+    padding: 0px 0px 0px 30px;
+    margin-left: 4px;
+    border: none;
+    vertical-align: top;
+    background-size: 21px;
+    width:130px;
+}
+.datePickerCustomCls:focus {
+    outline: none;
+}
+.purchaseTicketHeaderTabs li a{
+    color: #888 !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+}
+
+.purchaseTicketHeaderTabs li.active a{
+    color: #00CAFD !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+}
+
+.UETableHead{
+    border: 1px solid #888 !important;
+    background-color: #f1f1f1;
+}
+
+.UETableHead a{
+    color:#333;
+    text-transform:uppercase;
+}
+
+.UETableTD{
+    color:#333;
+    font-weight: bold;
+    border: 1px solid #c1c1c1;
+}
+
+.UETableTD a{
+    color:#00CAFD;
+}
+
+.emailAddressUETble{
+    color:#00CAFD;
+}
+
+.UETableTDSUbDivFooterLinks{
+    color:#00CAFD;
+    cursor:pointer;
+    padding-left: 25px !important;
+}
+
+.UETableTDSUbDivFooterLinks a{
+    color:#00CAFD;
+}
+
+.UETableTDSUbDivBackColor{
+    background-color:#f1f1f1;
+}
+
+.UETableTDSUbDivBackColorFooter{
+    background-color:#E8E8E8;
+    font-weight: bold; 
+}
+
+.subTableInnerTD{
+    padding-bottom:0px !important;
+    font-size: 17px;
+}
+
+.subContainerLastPadding{
+    padding-bottom: 40px !important;
+}
+
+.UETableTDSUbDiv1NameCls{
+    width: 100%;
+    border: 1px solid #c1c1c1;
+    padding: 5px;
+    border-radius: 2px;
+    min-width: 190px;
+}
+
+.cancelOrderTitleHead{
+    text-align: center;
+    color: #333;
+    font-weight: bold;
+}
+
+.contactOrderTitleHead{
+    color: #333;
+    font-weight: bold;
+}
+
+.cancelOrderHeader{
+    border-bottom: none !important;
+}
+
+.cancelOrderBodyTxt {
+    color: #333;
+    font-size:19px;
+}
+
+.contactBodyTxt{
+    padding: 20px 0px 0px 0px;
+    clear: both;
+}
+
+.txtAreaModelLbl{
+    color:#c1c1c1;
+    clear:both;
+    display:block;
+    margin-bottom:10px;
+}
+
+
+.cancelOrderBodyBtn {
+    padding: 10px 20px;
+    font-size: 18px;
+}
+
+.messageContact1Cls {
+    width: 100%;
+    height: 220px;
+}
+
+.basicInfoUnCheckBox{
+    background:url('../../images/unchecked.png') no-repeat;
+    background-position: left;
+    padding-left: 33px;
+    background-size: 23px;
+    line-height: 30px;
+    font-size: 17px;
+    min-width: 23px;
+    min-height: 23px;
+    cursor:pointer;
+    overflow:hidden;
+}
+
+.basicInfoCheckBox{
+    background:url('../../images/checked.png') no-repeat;
+    background-position: left;
+    padding-left: 33px;
+    background-size: 23px;
+    line-height: 30px;
+    font-size: 17px;
+    min-width: 23px;
+    min-height: 23px;
+    cursor:pointer;
+    overflow:hidden;
+}
+
+.ticketSoldPercentTxt{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.paddingBootstrap{
+    padding:0px;
+}
+
+.ticketSoldSaleReport{
+    float: right;
+    font-size: 20px;
+    margin-top: 15px;
+    color: #00CAFD;
+}
+
+.ticketSold2Div{
+    text-align: right;
+}
+
+.ticketSoldPriceTotal{
+    font-size: 45px;
+    color: #c1c1c1;
+}
+
+.ticketSoldPercent{
+    overflow: hidden;
+    clear: both;
+    display: block;
+    margin-bottom: 25px;
+}
+
+.orderListCsvCon{
+    background: #c1c1c1;
+    overflow: hidden;
+    display: block;
+    margin: 0px 15px;
+}
+
+.orderTxtHead{
+    font-size: 25px;
+    font-weight:bold;
+}
+
+.orderTxtExport{
+    text-align: right;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.linkReportHead{
+    padding:0px 10px;
+}
+
+.tableResponsiveOrderList{
+    margin: 0px 15px;
+}
+
+.orderViewCount{
+    text-align:right;
+}
+
+.orderListPagination li a{
+    font-weight:bold;
+}
+
+.addAttendessTxt{
+        border-bottom: 1px solid #333;
+}
+
+.addAttendessTxt h1{
+    font-weight:bold;
+    text-transform:uppercase;
+}
+
+.tableAttendeesTotal{
+    text-align:right;
+}
+
+.attendeesAddTable{
+    margin: 40px 0px 20px 0px;
+}
+
+.attendeesAddTableTHTR{
+    background: #3c3c3c;
+}
+
+.attendeesAddTableTH{
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: left;
+    color: #fff;
+    padding: 10px 10px;
+}
+
+.attendeesAddTableTD{
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 10px 10px;
+    background: #f1f1f1;
+}
+
+.attenTableQuantityCls{
+    padding: 3px 5px;
+    border-radius: 5px;
+    border: 1px solid #888;
+}
+
+.tableAttendeesTotalTxt{
+    font-size: 18px;
+    padding-right: 20px;
+}
+
+.attenTableTotalCls{
+    border-radius: 5px;
+    border: 1px solid #888;
+    width: 190px;
+    padding: 7px 5px;
+}
+
+.setHeight{
+    min-height:200px;
+}
+
+.addAttendeessStaticTxt{
+    margin: 20px 0px;
+    font-size: 18px;
+    color: #333;
+}
+
+.addAttendeessBtn{
+    font-size: 25px;
+    background-color: #00affc;
+    border-color: #00affc;
+    text-transform:uppercase;
+}
+
+.attendeesAddTableTDReminder{
+    color: #00CAFD;
+}
+
+.attendeesAddTableTDDelete{
+    color: #00CAFD;
+}
+
+.attendeesEmailTable{
+    margin: 20px 0px 20px 0px;
+}
+
+.emailNameClas{
+    max-width: 400px;
+    padding: 20px 10px;
+    font-size: 20px;
+}
+
+.labelForTxtEditor{
+    font-size: 18px;
+    margin-bottom: -20px;
+    display: block;
+}
+
+.lblForSendMsg{
+    font-size: 18px;
+    display: block;
+    margin-top: 20px;
+}
+
+.TxtForSendMsg{
+    float: left;
+    margin-right: 25px;
+    max-width: 400px;
+    padding: 20px 10px;
+    font-size: 20px;
+}
+
+.radioDateCustomCls{
+    margin: 0px 8px 0px 4px;
+    border: 1px solid #888;
+    vertical-align: top;
+    background-size: 21px;
+    width: 150px;
+    height:35px;
+    border-radius:5px;
+}
+
+.radioItemHead{
+    margin: 20px 0px;
+    font-size:22px;
+}
+
+.radioBtnTypeCls{
+    margin-top: 10px !important;
+}
+
+.sendEmailDayHM{
+    width: 60px;
+    border-radius: 5px;
+    border: 1px solid #888;
+}
+
+.txtDHM{
+    padding: 0px 10px;
+    font-size: 16px;
+}
+
+.EmailsentTabTxt{
+    font-size: 20px;
+    margin: 20px 0px;
+}
+
+.guestLblTxt{
+    font-size: 17px;
+}
+
+.guestBodyContainer{
+    margin:20px 0px;
+}
+
+.guestLbldropdown{
+    margin-bottom: 28px;
+}
+
+.guestCheckBoxMain{
+    margin-bottom: 28px;
+}
+
+.guestHeadTxt1{
+    font-weight: bold;
+    font-size: 23px;
+    color: #3c3c3c;
+}
+
+.guestHeadTxt2{
+    font-size: 17px;
+}
+
+.guestHeadMainContainer{
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.badgesAddTable{
+    margin: 10px 0px 20px 0px;
+}
+
+.badgeLayoutOtherCls{
+    width: 100%;
+    height: 41px;
+    border-radius: 5px;
+    border: 1px solid #888;
+    font-size:20px;
+}
+
+.badgeLayoutOtherContainer{
+    margin-top: 10px;
+}
+
+.badgeLayoutTxt{
+    font-size:21px;
+}
+
+.badgeAlignLeft{
+    margin: 0px 3px;
+    border: 1px solid #f1f1f1;
+}
+
+.badgeAlignLeftSelected{
+    border: 1px solid #888;
+}
+
+.attendeeBadgeCon{
+    margin: 20px 0px;
+    clear: both;
+    padding: 20px 0px;
+}
+
+.guestHeadTxtContainer{
+    margin-bottom:15px;
+}
+
+.badgeLayoutdropdown{
+    margin-bottom:15px;
+}
+
+.checkinHeadLoader{
+    line-height: 25px;
+    font-size: 20px;
+}
+
+.checkinSearchCls{
+    padding: 20px 40px;
+    border-radius: 5px;
+    background: url('../Images/search.png') no-repeat;
+    border: 1px solid #888;
+    background-position: 5px;
+    font-size: 20px;
+    
+}
+
+.checkinHeadingTxt1{
+    padding: 0px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.checkinHeadingTxt2{
+    text-align: right;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.spinner {
+    display: none;
+    width:56px;
+    height: 56px;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    text-align:center;
+    padding:10px;
+    background: #FFF;
+    border:2px solid #EEE;
+    margin-left: -50px;
+    margin-top: -50px;
+    z-index:2;
+    overflow: auto;
+}

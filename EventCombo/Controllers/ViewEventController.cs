@@ -21,7 +21,7 @@ namespace EventCombo.Controllers
     //[RoutePrefix("event")]
     //[RouteArea("Event", AreaPrefix = "E")]
     //[RoutePrefix("Ev")]
-  
+
     public class ViewEventController : Controller
     {
         EventComboEntities db = new EventComboEntities();
@@ -36,7 +36,7 @@ namespace EventCombo.Controllers
             MyAccount hmc = new MyAccount();
             if ((Session["AppId"] != null))
             {
-               
+
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -76,7 +76,7 @@ namespace EventCombo.Controllers
 
 
 
-            string sDate_new = "", eDate_new = "", orgevents="";
+            string sDate_new = "", eDate_new = "", orgevents = "";
             string startday = "", endday = "", starttime = "", endtime = "";
             Session["Fromname"] = "events";
             Session["logo"] = "events";
@@ -119,7 +119,7 @@ namespace EventCombo.Controllers
             enablediscussion = EventDetail.EnableFBDiscussion;
             viewEvent.showTimezone = showtimezone;
             var timezone = "";
-            DateTime dateTime= new DateTime();
+            DateTime dateTime = new DateTime();
             DateTime sDate = new DateTime();
             var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == EventDetail.TimeZone select ev).FirstOrDefault();
             DateTimeWithZone dtzstart, dzend, dtznewstart;
@@ -127,7 +127,7 @@ namespace EventCombo.Controllers
             DateTimeWithZone dtzCreated;
             if (Timezonedetail != null)
             {
-              
+
 
                 TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
 
@@ -179,13 +179,13 @@ namespace EventCombo.Controllers
                 fblink = OrganiserDetail.FBLink;
                 twitterlink = OrganiserDetail.Twitter;
                 organizerid = OrganiserDetail.Orgnizer_Id.ToString();
-               linkedin = OrganiserDetail.Linkedin;
-                var exceptionList = db.EventVenues.Where(x=> SqlFunctions.DateDiff("s", x.E_Startdate , DateTime.UtcNow) > 0 ).Select(e => e.EventID).ToList();
-                var exceptionList1 = db.MultipleEvents.Where(x => SqlFunctions.DateDiff("s", x.M_StartTo , DateTime.UtcNow) > 0 ).Select(e => e.EventID);
-                var Organizerevents = db.GetOrganizerEventid(OrganiserDetail.Orgnizer_Id) .ToList() ;
+                linkedin = OrganiserDetail.Linkedin;
+                var exceptionList = db.EventVenues.Where(x => SqlFunctions.DateDiff("s", x.E_Startdate, DateTime.UtcNow) > 0).Select(e => e.EventID).ToList();
+                var exceptionList1 = db.MultipleEvents.Where(x => SqlFunctions.DateDiff("s", x.M_StartTo, DateTime.UtcNow) > 0).Select(e => e.EventID);
+                var Organizerevents = db.GetOrganizerEventid(OrganiserDetail.Orgnizer_Id).ToList();
 
 
-                orgevents = (from x in Organizerevents where x.OrganizerMaster_Id == OrganiserDetail.Orgnizer_Id && !exceptionList.Contains(x.Orgnizer_Event_Id??0) && !exceptionList1.Contains(x.Orgnizer_Event_Id ?? 0)  select x).Count().ToString();
+                orgevents = (from x in Organizerevents where x.OrganizerMaster_Id == OrganiserDetail.Orgnizer_Id && !exceptionList.Contains(x.Orgnizer_Event_Id ?? 0) && !exceptionList1.Contains(x.Orgnizer_Event_Id ?? 0) select x).Count().ToString();
 
 
             }
@@ -197,7 +197,7 @@ namespace EventCombo.Controllers
             List<listevent> lstevent = new List<listevent>();
             foreach (var item in GetEventDate)
             {
-               listevent lst = new listevent();
+                listevent lst = new listevent();
                 if (Timezonedetail != null)
                 {
 
@@ -213,10 +213,10 @@ namespace EventCombo.Controllers
                     TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
                     dtznewstart = new DateTimeWithZone(Convert.ToDateTime(item.Datefrom), userTimeZone, true);
                 }
-             var datenew= dtznewstart.LocalTime;
-               var  endnewday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(datenew).ToString();
-               var eDatnew = datenew.ToString("MMM dd, yyyy");
-               var startnewtime = datenew.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
+                var datenew = dtznewstart.LocalTime;
+                var endnewday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(datenew).ToString();
+                var eDatnew = datenew.ToString("MMM dd, yyyy");
+                var startnewtime = datenew.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
                 lst.Dayofweek = endnewday;
                 lst.Datefrom = eDatnew;
                 lst.Time = startnewtime;
@@ -244,22 +244,22 @@ namespace EventCombo.Controllers
 
 
 
-              
-             
+
+
                 sDate = dtzstart.LocalTime;
                 startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
 
                 sDate_new = sDate.ToString("MMM dd, yyyy");
-              
 
-              
+
+
                 eDate = dzend.LocalTime;
                 endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
                 eDate_new = eDate.ToString("MMM dd, yyyy");
-                 starttime = sDate.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
-                 endtime = eDate.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
-              
-               
+                starttime = sDate.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
+                endtime = eDate.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
+
+
 
 
 
@@ -285,18 +285,18 @@ namespace EventCombo.Controllers
                     }
 
 
-                   
-                   
-                      
-                        sDate = dtzstart.LocalTime;
-                        startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
-                        sDate_new = sDate.ToString("MMM dd,yyyy");
-                  
-                
-                  
-                        eDate = dzend.LocalTime;
-                        endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
-                        eDate_new = eDate.ToString("MMM dd,yyyy");
+
+
+
+                    sDate = dtzstart.LocalTime;
+                    startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
+                    sDate_new = sDate.ToString("MMM dd,yyyy");
+
+
+
+                    eDate = dzend.LocalTime;
+                    endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
+                    eDate_new = eDate.ToString("MMM dd,yyyy");
 
 
                     starttime = sDate.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); ;
@@ -331,11 +331,11 @@ namespace EventCombo.Controllers
                 viewEvent.DisplaydateRange = startday.ToString() + " " + sDate_new + " " + starttime + "-" + endday.ToString() + " " + eDate_new;
 
             }
-           
+
             if (!string.IsNullOrEmpty(eDate_new))
             {
                 var enday = DateTime.Parse(eDate_new);
-             
+
                 var now = DateTime.Now;
                 if (eDate < dateTime)
                 {
@@ -349,10 +349,10 @@ namespace EventCombo.Controllers
                 TempData["ExpiredEvent"] = vmc.Index("ViewEvent", "ViewEventExpiredSy");
                 TempData["ForViewOnly"] = "Y";
             }
-            if (EventDetail.EventCancel=="Y")
+            if (EventDetail.EventCancel == "Y")
             {
                 TempData["EventCancel"] = "This event is canceled";
-             }
+            }
             viewEvent.typeofEvent = EventDetail.AddressStatus;
             viewEvent.Shareonfb = EventDetail.Private_ShareOnFB;
             viewEvent.showstarttime = displaystarttime;
@@ -363,7 +363,7 @@ namespace EventCombo.Controllers
             viewEvent.Title = EventDetail.EventTitle;
             viewEvent.eventId = EventDetail.EventID.ToString();
             viewEvent.TopVenue = Topvenue;
-            viewEvent.EventDescription = EventDescription.ToString(); 
+            viewEvent.EventDescription = EventDescription.ToString();
             viewEvent.organizername = organizername;
             viewEvent.organizerid = organizerid;
             viewEvent.fblink = fblink;
@@ -410,7 +410,7 @@ namespace EventCombo.Controllers
                 viewEvent.hdEventvote = "N";
 
             }
-            
+
             ViewBag.Images = objCE.GetImages(EventId);
 
             var cnt = objCE.GetImages(EventId).Count();
@@ -460,7 +460,7 @@ namespace EventCombo.Controllers
                 tickettype = "Donate";
 
             }
-            if (ticketsfree >0 && ticketsPaid <= 0 && ticketsDonation > 0)
+            if (ticketsfree > 0 && ticketsPaid <= 0 && ticketsDonation > 0)
             {
                 tickettype = "Register";
 
@@ -475,7 +475,7 @@ namespace EventCombo.Controllers
                 tickettype = "Sold Out";
 
             }
-            if(remaining==0)
+            if (remaining == 0)
             {
                 tickettype = "Sold Out";
             }
@@ -483,9 +483,9 @@ namespace EventCombo.Controllers
             return View(viewEvent);
         }
 
-     
 
-     
+
+
         public void EventHit(long EventId)
         {
             try
@@ -497,12 +497,12 @@ namespace EventCombo.Controllers
                     //                select myRow).FirstOrDefault();
                     //if (EventH == null)
                     //{
-                        Events_Hit objEHI = new Events_Hit();
-                        objEHI.EventHit_EventId = EventId;
-                        objEHI.EventHitDateTime = DateTime.Now;
-                        objEHI.EventHit_Hits = 1;
-                        
-                        objEnt.Events_Hit.Add(objEHI);
+                    Events_Hit objEHI = new Events_Hit();
+                    objEHI.EventHit_EventId = EventId;
+                    objEHI.EventHitDateTime = DateTime.Now;
+                    objEHI.EventHit_Hits = 1;
+
+                    objEnt.Events_Hit.Add(objEHI);
                     //}
                     //else
                     //{

@@ -1,0 +1,121 @@
+﻿@using EventCombo.Models
+@model EventCombo.Models.OrderTemplateViewModel
+@{
+  ViewBag.Title = "EventType";
+  Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.masked.js"></script>
+<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+<script src="~/Scripts/filer/jquery.filer.js"></script>
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/summernote.css" rel="stylesheet" />
+
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<link href="~/Content/MapPlaces.css" rel="stylesheet" />
+
+<link href='~/Content/OrderForm.css' rel='stylesheet' type='text/css'>
+<link href="~/Content/OrderFormDesign.css" rel="stylesheet" />
+
+@section sidenav{
+  <div id="sidebar" class="nav nav-stacked">
+    @Html.Action("Sidenav", "ManageEvent", new { eventid = ViewBag.Eventid, CurrentItem = "orderoptions" })
+  </div>
+}
+
+@using (Html.BeginForm())
+{
+  <div class="event_container">
+    <div class="event_top">
+      <div class="insideContainer col-md-9 col-xs-12">
+
+        @if ((ViewBag.StateMessage != null) && (ViewBag.StateMessage != ""))
+        {
+          <div class="col-sm-12 no_pad">
+            @ViewBag.StateMessage
+          </div>
+        }
+        @Html.HiddenFor(m => m.OrderTemplateId)
+        @Html.HiddenFor(m => m.EventId)
+
+        <div id="mainForm3" style="display:block;">
+
+          <div class="orderFormTxt"><h1>Event Type & Language</h1></div>
+
+          <div class="formText" style="font-weight:bold;">Event Type</div>
+          @foreach (var et in ViewBag.OrderTemplateEventTypes)
+          {
+            bool inputchecked = et.OrderTemplateEventTypeId == Model.OrderTemplateEventTypeId;
+            <div class="radio">
+              <label><input type="radio" id="OrderTemplateEventTypeId" name="OrderTemplateEventTypeId" value="@et.OrderTemplateEventTypeId" checked="@inputchecked">@et.Name</label><span style="font-size: 12px;padding-left: 10px;color: #888;">@et.Description</span>
+            </div>
+          }
+
+          <div class="formText">Event Page Language</div>
+          <div class="dropdown" style="margin-top:15px;">
+            <button class="btn btn-default dropdown-toggle dropdownItemClass" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" value="@Model.LanguageId">
+              @((ViewBag.Languages as List<LanguageViewModel>).Find(l => l.LanguageId == Model.LanguageId).LanguageName)
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            @foreach (var language in ViewBag.Languages)
+            { 
+              <li><a href="javascript:void(0)" onclick="setdropDownItems1(this, @language.LanguageId)">@language.LanguageName</a></li>
+            }
+            </ul>
+          </div>
+
+          <div class="form-group" style="padding: 10px 0px 0px 0px;">
+            <div class="btn btn-primary btn-lg" id="savebutton" onclick="SaveConfirmation()">Save</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+}
+
+<script type="text/javascript">
+  function setdropDownItems1(obj, id) {
+    $('#dropdownMenu1').html($(obj).html() + ' <span class="caret"></span>');
+    $('#dropdownMenu1').val(id);
+  }
+
+  function SaveConfirmation() {
+    var model =
+      {
+        OrderTemplateId: $('#OrderTemplateId').val(),
+        EventId: $('#EventId').val(),
+        OrderTemplateEventTypeId: getRadioBoxValue('OrderTemplateEventTypeId'),
+        LanguageId: $('#dropdownMenu1').val()
+      };
+    $.ajax({
+      type: "POST",
+      url: "@Url.Action("EventType", "OrderOptions")",
+      data: model,
+      datatype: "html",
+      success: function (data) {
+        var newDoc = document.open("text/html", "replace");
+        newDoc.write(data);
+        newDoc.close();
+      }
+    });
+  }
+
+  function getRadioBoxValue(rname)
+  {
+    var radioBoxes = $('input[type=radio][id='+ rname +']:checked');
+    if (radioBoxes.length > 0)
+    {
+      return radioBoxes.val();
+    }
+    else
+    {
+      return "";
+    }
+  }
+
+</script>

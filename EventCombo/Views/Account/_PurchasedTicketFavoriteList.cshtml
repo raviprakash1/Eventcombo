@@ -1,0 +1,66 @@
+﻿@using System.Collections.Generic;
+@using System.Linq;
+@using EventCombo.Models;
+@model OrderListMainViewModel
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="UETableHead" width="15%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Name')">Event</a></th>
+        <th class="UETableHead" width="15%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Date')">Date</a></th>
+        <th class="UETableHead">Favorite</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var order in Model.Orders)
+      {
+        <tr>
+          <td class="UETableTD">@order.Name</td>
+          <td class="UETableTD">@order.EventStartDate</td>
+          <td class="UETableTD">
+            <a data-toggle="modal" data-target="#shareModal@(order.OrderId)">
+              <button class="desc_btn_bg_none desc_btn_bg_active" id="btnfavourite-10174" title="Your Favourite" type="button">
+                <i class="fa fa-heart"></i>
+              </button>
+            </a>
+            <div class="modal fade" id="shareModal@(order.OrderId)" role="dialog">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header cancelOrderHeader">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h1 class="modal-title cancelOrderTitleHead">Share this Event</h1>
+                  </div>
+                  @{
+                    string chref = Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(order.Name.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = order.EventId.ToString() }, Request.Url.Scheme);
+                  }
+                  <div class="modal-body" style="width:100%;overflow: hidden;">
+                    <div class="col-md-4 col-xs-12" style="text-align:center;">
+                      <a href="javascript:void(0)" onclick="FacebookShare('@order.Name','@chref')">
+                        <img src="~/Images/facebook.png" style="width: 230px;height: 60px;margin: 0px 20px;" />
+                      </a>
+                    </div>
+
+                    <div class="col-md-4 col-xs-12" style="text-align:center;">
+                      <a href="javascript:void(0)" onclick="TwitterShare('@order.Name','@chref')">
+                        <img src="~/Images/twitter.png" style="width: 230px;height: 60px;margin: 0px 20px;" />
+                      </a>
+                    </div>
+
+                    <div class="col-md-4 col-xs-12" style="text-align:center;">
+                      <a href="javascript:void(0)" onclick="LinkedInShare('@order.Name','@chref')">
+                        <img src="~/Images/linkedIn.png" style="width: 230px;height: 60px;margin: 0px 20px;" />
+                      </a>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+

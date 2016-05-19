@@ -18,6 +18,7 @@ namespace EventCombo.Models
         public Organizer_Master()
         {
             this.Event_Orgnizer_Detail = new HashSet<Event_Orgnizer_Detail>();
+            this.Event_OrganizerMessages = new HashSet<Event_OrganizerMessages>();
         }
     
         public long Orgnizer_Id { get; set; }
@@ -43,5 +44,8 @@ namespace EventCombo.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Event_OrganizerMessages> Event_OrganizerMessages { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace EventCombo.Services
                                 "L_EmailId as EmailId FROM Event_Email_Invitation i inner join Event_Email_List l on i.I_Id = l.L_I_Id " +
                                 "where I_ScheduleDate between getutcdate() and DATEADD(MINUTE, 5, getutcdate()) and I_mode = 'S'";
 
+
                 template = db.Database.SqlQuery<TicketEmailTemplate>(query);
                 foreach (var item in template)
                 {

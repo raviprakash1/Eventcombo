@@ -8,7 +8,7 @@
 }
 @section sidenav{
     <div id="sidebar" class="nav nav-stacked">
-
+      @Html.Action("Sidenav", "ManageEvent", new { eventid = ViewBag.EventId, CurrentItem = "inviteandpromote" })
     </div>
 }
 

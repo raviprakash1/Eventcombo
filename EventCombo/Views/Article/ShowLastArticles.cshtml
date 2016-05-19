@@ -1,0 +1,25 @@
+﻿@using System.Collections.Generic
+@using EventCombo.Models
+@model IEnumerable<ArticleShortViewModel>
+@{
+  Layout = null;
+}
+<div class="col-sm-12 no-padding">
+  <div class="the_buz "><h2>What's the BUZZ?</h2></div>
+
+  @foreach (var article in Model)
+  {
+    <div class="event_list_main buzz_right_main ">
+      <div class="event_list_right buzz_right">
+        <p class="event_tit buz_title"><a href="@(Url.Action("ShowArticle", "Article", new { articleId = article.ArticleId }))">@(article.Title)</a></p>
+        <p class="event_desc buz_desc">
+          <a href="@(Url.Action("ShowArticle", "Article", new { articleId = article.ArticleId }))">
+            @(article.ShortBody)
+          </a>
+        </p>
+      </div>
+      <div class="event_list_left"><a href="@(Url.Action("ShowArticle", "Article", new { articleId = article.ArticleId }))"><img class="evnt_img_right" src="@(article.ArticleImage)" alt=""></a></div>
+    </div>
+  }
+</div>
+

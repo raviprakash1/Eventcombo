@@ -57,6 +57,7 @@
                                         <img src="~/Images/share_icon.png" alt="share event">
                                     </button>
                                 }
+
                                 @if (@item.EventLike == "I")
                                 {
                                     <button class="desc_btn_bg_none desc_btn_bg_active share_like_btn show_like_btn" id="btnfavourite-@item.EventId" title="Your Favourite" onclick="SaveFav('Y','@item.EventId');" type="button">
@@ -92,7 +93,7 @@
             @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
 
             @Html.PagedListPager(Model, page => Url.Action("Index",
-                    new { page, lat = ViewBag.lat, lng = ViewBag.lng }))
+             new { page, lat = ViewBag.lat, lng = ViewBag.lng }))
         </nav>
     </div>
 
@@ -123,6 +124,7 @@
                         <div class="col-sm-12 ">
                             <div class="form-group">
                                 <input class="form-control sharesocilform" id="txtEventUrl" readonly="readonly" placeholder="" type="text">
+                                <input class="form-control sharesocilform" id="txtEventTitle" placeholder="" type="hidden">
                             </div>
                         </div>
 
@@ -133,6 +135,7 @@
 
     </div>
     <input type="hidden" id="hdcity" />
+    <div id="fb-root"></div>
 </div>
 
 <script>
@@ -159,19 +162,19 @@
     }
 
     function NextPage(vIndex) {
-        var vUrl = '@Html.Raw(Url.Action("HomeEventList", "Home", new {strPageIndex="page", strLat= TempData["tLat"], strLong= TempData["tLng"]}))';
+        var vUrl = '@Html.Raw(Url.Action("HomeEventList", "Home", new { strPageIndex = "page", strLat = TempData["tLat"], strLong = TempData["tLng"] }))';
         if (vIndex > 1)
             vUrl = vUrl.replace("page", vIndex);
         window.location.href = vUrl;
     }
 
     function FilterEventType(vEvTypeId) {
-        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = ViewBag.lat, strLong = ViewBag.lng, strSort = "rel", strDateFilter = "none" })';
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = ViewBag.lat, strLong = ViewBag.lng, strSort = "rel", strDateFilter = "none" })';
         vUrl = vUrl.replace("evt", vEvTypeId);
         window.location.href = vUrl;
     }
     function FilterEventCategory(vEvCatId) {
-        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = ViewBag.lat, strLong = ViewBag.lng, strSort = "rel", strDateFilter = "none" })';
+        var vUrl = '@Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = ViewBag.lat, strLong = ViewBag.lng, strSort = "rel", strDateFilter = "none" })';
         vUrl = vUrl.replace("evc", vEvCatId);
         window.location.href = vUrl;
     }
@@ -205,7 +208,8 @@
         });
     }
 
-    function ShowUrl(vurl) {
+    function ShowUrl(vtitle, vurl) {
+        $("#txtEventTitle").val(vtitle);
         $("#txtEventUrl").val(vurl);
     }
 
@@ -214,6 +218,12 @@
     //    window.open('https://www.facebook.com/sharer.php?s=100&p[url]=' + encodeURIComponent(vUrl) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
     //    return false;
     //});
+
+    $('#fbsharessssss').click(function () {
+        var vUrl = $("#txtEventUrl").val();
+        window.open('https://www.facebook.com/sharer.php?s=100&p[url]=' + encodeURIComponent(vUrl) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+        return false;
+    });
 
     $('#twittershare').click(function () {
         var vUrl = $("#txtEventUrl").val();
@@ -231,7 +241,8 @@
 
 
 
-<script type="text/javascript">
+
+<script type="text/javascript">  
 
     var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
     @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
@@ -256,13 +267,19 @@
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
-    var globalFacebookShareObject = { name: 'share', link: '' };
+
+    var globalFacebookShareObject = { name: 'EventCombo', link: '' };
+
 
 
     $(document).ready(function () {
         $('#fbshare').click(function (e) {
-            var vUrl = urlprefix + $("#txtEventUrl").val();
-            globalFacebookShareObject.link = vUrl;
+
+            globalFacebookShareObject.link = urlprefix + $("#txtEventUrl").val();
+            globalFacebookShareObject.name = $("#txtEventTitle").val();
+            console.log(globalFacebookShareObject.link);
+            console.log(globalFacebookShareObject.name);
+
             FB.ui({
                 method: 'feed',
                 name: globalFacebookShareObject.name,
@@ -273,4 +290,6 @@
             });
         });
     });
+
 </script>
+

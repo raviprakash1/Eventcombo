@@ -1,0 +1,138 @@
+﻿@using System.Collections.Generic
+@using CMS.Models
+@model ArticleFullViewModel
+@{
+  ViewBag.Title = "Edit";
+  Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<style type="text/css">
+  .articleTxtBox {
+    max-width: 500px;
+  }
+
+  .articleItemCon {
+    margin: 10px 0px;
+  }
+
+  .articleBtnCls {
+    width: 200px;
+    margin-top: 25px;
+  }
+</style>
+
+<link href='~/Content/jquery-te-1.4.0.css' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="~/Scripts/jquery-te-1.4.0.js"></script>
+
+<section id="content_wrapper">
+
+  <!-- Start: Topbar -->
+  <header id="topbar" class="alt">
+    <div class="topbar-left">
+      <ol class="breadcrumb">
+
+        <li class="crumb-icon">
+          <a href="dashboard.html">
+            <span class="glyphicon glyphicon-home"></span>
+          </a>
+        </li>
+        <li class="crumb-active">
+          Dashboard
+        </li>
+      </ol>
+    </div>
+
+  </header>
+  <!-- End: Topbar -->
+  <!-- Begin: Content -->
+  <form action="@Url.Action("Save", "Article")" method="post" enctype="multipart/form-data">
+    @Html.HiddenFor(m => m.ArticleId)
+    @Html.HiddenFor(m => m.ArticleAuthorId)
+    <div id="content" class="animated fadeIn">
+      <div class="row" id="modal-content">
+        <div class="col-md-12">
+          <div class="articleItemCon">
+            <label>Article Title</label>
+            <input class="form-control articleTxtBox" id="Title" name="Title" placeholder="Article Title" type="text" value="@(Model.Title)">
+          </div>
+
+          <div class="articleItemCon">
+            <label>Author Image</label>
+            <input class="form-control articleTxtBox" id="AuthorImageFile" name="AuthorImageFile" type="file">
+          </div>
+
+          <div class="articleItemCon">
+            <label>Author Name</label>
+            <input class="form-control articleTxtBox" id="AuthorName" name="AuthorName" placeholder="Author Name" type="text" value="@(Model.AuthorName)">
+          </div>
+
+          <div class="articleItemCon">
+            <label>Author Twitter Link</label>
+            <input class="form-control articleTxtBox" id="AuthorTwitterUrl" name="AuthorTwitterUrl" placeholder="Article Twitter Link" type="text" value="@(Model.AuthorTwitterUrl)">
+          </div>
+
+          <div class="articleItemCon">
+            <label>Article Image</label>
+            <input class="form-control articleTxtBox" id="ArticleImageFile" name="ArticleImageFile" type="file">
+          </div>
+
+          <div class="articleItemCon">
+            <label>Article Body</label>
+            <textarea id="ArticleBody" class="editor jqte-test" name="Body">@(Model.Body)</textarea>
+          </div>
+
+          <div class="articleItemCon">
+            <label>Article SubHeading</label>
+            <input class="form-control articleTxtBox" id="SubHeading" name="SubHeading" placeholder="Article SubHeading" type="text" value="@(Model.SubHeading)">
+          </div>
+
+          <div class="articleItemCon">
+            <label>Article Additional Images</label>
+            <input class="form-control articleTxtBox" id="ImageFiles" name="ImageFiles" type="file" multiple>
+          </div>
+
+          <div class="articleItemCon">
+            <label>Facebook Comments</label>
+            <select id="EnableFBComments" name="EnableFBComments" class="form-control articleTxtBox">
+              <option value="True" @(Model.EnableFBComments ? "selected" : "")>Enabled</option>
+              <option value="False" @(Model.EnableFBComments ? "" : "selected")>Disabled</option>
+            </select>
+          </div>
+
+          <div class="articleItemCon">
+            <label>Homepage Flag</label>
+            <select id="HomepageFlag" name="HomepageFlag" class="form-control articleTxtBox">
+              <option value="True" @(Model.HomepageFlag ? "selected" : "")>Enabled</option>
+              <option value="False" @(Model.HomepageFlag ? "" : "selected")>Disabled</option>
+            </select>
+          </div>
+
+          <div class="articleItemCon">
+            <label>Premium Flag</label>
+            <select id="PremiumFlag" name="PremiumFlag" class="form-control articleTxtBox">
+              <option value="True" @(Model.PremiumFlag ? "selected" : "")>Enabled</option>
+              <option value="False" @(Model.PremiumFlag ? "" : "selected")>Disabled</option>
+            </select>
+          </div>
+
+          <div class="articleItemCon">
+            <button class="btn btn-info articleBtnCls" type="submit">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+
+<script type="text/javascript">
+
+  $(function () {
+    $("#ArticleBody").jqte();
+
+  });
+</script>
+
+
+
+
+

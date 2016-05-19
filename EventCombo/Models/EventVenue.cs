@@ -14,6 +14,12 @@ namespace EventCombo.Models
     
     public partial class EventVenue
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public EventVenue()
+        {
+            this.Publish_Event_Detail = new HashSet<Publish_Event_Detail>();
+        }
+    
         public long EventVenueID { get; set; }
         public long EventID { get; set; }
         public long AddressId { get; set; }
@@ -27,5 +33,7 @@ namespace EventCombo.Models
         public virtual Event Event { get; set; }
         public virtual EventVenue EventVenue1 { get; set; }
         public virtual EventVenue EventVenue2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Publish_Event_Detail> Publish_Event_Detail { get; set; }
     }
 }

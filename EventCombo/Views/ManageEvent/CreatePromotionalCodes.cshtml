@@ -12,7 +12,7 @@
 <script src="~/Scripts/jquery.masked.js"></script>
 @section sidenav{
     <div id="sidebar" class="nav nav-stacked">
-        
+      @Html.Action("Sidenav", "ManageEvent", new { eventid = Model.PC_Eventid, CurrentItem = "inviteandpromote" })
     </div>
 }
 
@@ -466,8 +466,7 @@ else
 
 <script>
     $(function() {
-        $('#sidebar').load('@Url.Action("Sidenav", "ManageEvent", new { eventid=Model.PC_Eventid })');
-    $( document ).tooltip();
+      $( document ).tooltip();
     });
 </script> 
 

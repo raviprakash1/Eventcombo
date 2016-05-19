@@ -164,19 +164,19 @@
 
                                         <div class="panel panel-default menu_list">
                                             <a id="mgacnt" class="menu_title" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                                                <div id="dvacmang" class="panel-heading">
-                                                    Account <b class="closed"></b>
-                                                </div>
+                                              <div id="dvacmang" class="panel-heading@(ViewBag.CurrentItem == "account" ? " active" : "")">
+                                                Account <b class="closed"></b>
+                                              </div>
                                             </a>
 
-                                            <div id="collapse1" class="panel-collapse collapse">
-                                                <div class="panel-body no-padding">
-                                                    <p>@Html.ActionLink("Personal Information", "MyAccount", "Account") </p>
-                                                    <p>@Html.ActionLink("My Purchased Ticket", "PurchasedTicket", "Account")</p>
-                                                    <p>@Html.ActionLink("My Purchased Deals", "PurchasedDeals", "Account")</p>
-                                                    <p>@Html.ActionLink("Manage Organizer", "OrganizerProfile", "Account")</p>
-                                                </div>
+                                          <div id="collapse1" class="panel-collapse collapse@(ViewBag.CurrentItem == "account" ? " in" : "")">
+                                            <div class="panel-body no-padding">
+                                              <p>@Html.ActionLink("Personal Information", "MyAccount", "Account") </p>
+                                              <p>@Html.ActionLink("My Purchased Ticket", "PurchasedTicket", "Account")</p>
+                                              <p>@Html.ActionLink("My Purchased Deals", "PurchasedDeals", "Account")</p>
+                                              <p>@Html.ActionLink("Manage Organizer", "OrganizerProfile", "Account")</p>
                                             </div>
+                                          </div>
                                         </div>
                                         <div class="panel panel-default menu_list">
 
