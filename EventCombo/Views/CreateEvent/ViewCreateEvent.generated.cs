@@ -1624,169 +1624,17 @@ WriteLiteral(" class=\"event_detail_container\"");
 
 WriteLiteral(" id=\"DealInfo\"");
 
-WriteLiteral(">\r\n\r\n        <div");
+WriteLiteral(">\r\n\r\n        ");
 
-WriteLiteral(" class=\" evnt_tile_deal_head\"");
-
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"evnt_tile_deal_bg_l\"");
-
-WriteLiteral("></div>\r\n            <div");
-
-WriteLiteral(" class=\"col-sm-12 col-xs-12 text-left no_pad\"");
-
-WriteLiteral(">\r\n                <h2");
-
-WriteLiteral(" class=\"fb_dis_head pt5\"");
-
-WriteLiteral(">AVAILABLE DEAL</h2>\r\n            </div>\r\n            <div");
-
-WriteLiteral(" class=\"evnt_tile_deal_bg_r evnt_tile_bg_r_call\"");
-
-WriteLiteral("></div>\r\n        </div>\r\n        <div");
+WriteLiteral("\r\n        <div");
 
 WriteLiteral(" class=\"evnt_details_body2\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n            ");
 
-WriteLiteral(" class=\"col-sm-12 ev_white_bg pt10 pb10 mt20\"");
+WriteLiteral("\r\n            <div");
 
-WriteLiteral(">\r\n                <div");
-
-WriteLiteral(" class=\"col-sm-4 no_pad \"");
-
-WriteLiteral(">\r\n                    <img");
-
-WriteLiteral(" class=\"img-responsive\"");
-
-WriteLiteral(" src=\"/Images/deal_img1.jpg\"");
-
-WriteLiteral(" />\r\n                    <div");
-
-WriteLiteral(" class=\"clearfix\"");
-
-WriteLiteral("></div>\r\n                    <div");
-
-WriteLiteral(" class=\"col-sm-8 no_pad mt10\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"col-sm-2 pl0\"");
-
-WriteLiteral("><img");
-
-WriteLiteral(" src=\"/Images/icon-location.png\"");
-
-WriteLiteral("></div>\r\n                        <div");
-
-WriteLiteral(" class=\"col-sm-10 dl_loc_desc\"");
-
-WriteLiteral(@">
-                            West Village <br>
-                            314 Bleecker Street<br>
-                            New York, New York 10014<br>
-                            www.bigburger.com
-                        </div>
-                    </div>
-                    <div");
-
-WriteLiteral(" class=\"col-sm-4 no_pad mt10\"");
-
-WriteLiteral(">\r\n                        <img");
-
-WriteLiteral(" title=\"stars\"");
-
-WriteLiteral(" src=\"/Images/rating-stars.gif\"");
-
-WriteLiteral("><br>\r\n                        <span");
-
-WriteLiteral(" class=\"dl_str_name\"");
-
-WriteLiteral(">yelp.com</span>\r\n                    </div>\r\n                </div>\r\n           " +
-"     <div");
-
-WriteLiteral(" class=\"col-sm-8\"");
-
-WriteLiteral(">\r\n                    <div");
-
-WriteLiteral(" class=\"col-sm-12 no_pad dl_title\"");
-
-WriteLiteral(">A.O.C. L\'aile ou la Cuisse – West Village</div>\r\n                    <div");
-
-WriteLiteral(" class=\"col-sm-12 no_pad\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"col-sm-3 no_pad dl_off \"");
-
-WriteLiteral(">50% off </div>\r\n                        <div");
-
-WriteLiteral(" class=\"col-sm-3 no_pad mt20 dl_val text-center\"");
-
-WriteLiteral(">Value $50 </div>\r\n                        <div");
-
-WriteLiteral(" class=\"col-sm-3 no_pad mt20 dl_save text-center\"");
-
-WriteLiteral("> You Save $25 </div>\r\n                        <div");
-
-WriteLiteral(" class=\"col-sm-3 no_pad mt20 dl_price text-center\"");
-
-WriteLiteral(">PRICE: $25</div>\r\n                    </div>\r\n                    <div");
-
-WriteLiteral(" class=\"col-sm-12 no_pad\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"col-sm-6 no_pad dl_title\"");
-
-WriteLiteral(">Upscale French Dinner</div>\r\n                        <div");
-
-WriteLiteral(" class=\"col-sm-2 mb5 dropheight\"");
-
-WriteLiteral(">\r\n                            <select");
-
-WriteLiteral(" class=\"form-control selectpicker\"");
-
-WriteLiteral(@">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </div>
-                        <div");
-
-WriteLiteral(" class=\"col-sm-4 mb5\"");
-
-WriteLiteral(">\r\n                            <button");
-
-WriteLiteral(" class=\"btn ev_live_btn\"");
-
-WriteLiteral(" type=\"button\"");
-
-WriteLiteral(">\r\n                                ADD TO PURCHASE\r\n                            <" +
-"/button>\r\n                        </div>\r\n                    </div>\r\n          " +
-"          <div");
-
-WriteLiteral(" class=\"col-sm-12 no_pad dl_desc\"");
-
-WriteLiteral(@">
-                        Head chef Romain Bonnans brings his family's recipes to A.O.C. L'aile ou la Cuisse, his own slice of France in the West Village. Bonnans lends his authentic touch to recipes both classic and contemporary, from niçoise salad with fresh tuna and string beans to coq au vin, a red-wine chicken stew. Guests dine amid exposed brick, wrought-iron accents, and French-inspired artwork in the main dining room. There, a surrounding wall that effectively cuts diners off from the outside world and gives them free, unabashed rein to try holding their fork in their other hand.
-                    </div>
-                </div>
-                <div");
-
-WriteLiteral(" class=\"col-sm-12 no_pad mt20 del_tc\"");
-
-WriteLiteral(@">
-                    Expires 90 days after purchase. <br>
-                    Limit 1 per person, may buy 2 additional as gifts. Limit 1 per table. Valid only for option purchased. Reservation required. Dine-in only. Alcohol is not discounted more than 50%. Merchant is solely responsible for all sales and delivery of alcohol. Must provide 21+ ID to receive alcoholic beverages. Not valid on Thanksgiving or other major holidays. Not valid with other offers. See the rules that apply to all deals.
-                </div>
-            </div>
-            <div");
-
-WriteLiteral(" class=\"col-sm-12 mt20 \"");
+WriteLiteral(" class=\"col-sm-12 mt10 \"");
 
 WriteLiteral(">\r\n                <div");
 

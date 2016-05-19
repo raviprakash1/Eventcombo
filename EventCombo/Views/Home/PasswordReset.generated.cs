@@ -333,13 +333,36 @@ WriteLiteral("  />\r\n");
             #line 72 "..\..\Views\Home\PasswordReset.cshtml"
 
 
+            
+            #line default
+            #line hidden
+WriteLiteral("                        <input");
+
+WriteLiteral(" type=\"hidden\"");
+
+WriteLiteral(" name=\"code\"");
+
+WriteAttribute("value", Tuple.Create(" value=\"", 3874), Tuple.Create("\"", 3893)
+            
+            #line 73 "..\..\Views\Home\PasswordReset.cshtml"
+, Tuple.Create(Tuple.Create("", 3882), Tuple.Create<System.Object, System.Int32>(Model.code
+            
+            #line default
+            #line hidden
+, 3882), false)
+);
+
+WriteLiteral(" />\r\n");
+
+            
+            #line 74 "..\..\Views\Home\PasswordReset.cshtml"
                     }
 
             
             #line default
             #line hidden
-WriteLiteral("                </div>\r\n            </div>\r\n        </div>\r\n\r\n</div>\r\n\r\n\r\n\r\n<scri" +
-"pt");
+WriteLiteral("                </div>\r\n            </div>\r\n        </div>\r\n  \r\n</div>\r\n\r\n\r\n\r\n<sc" +
+"ript");
 
 WriteLiteral(" type=\"text/javascript\"");
 
