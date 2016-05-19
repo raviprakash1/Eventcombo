@@ -1976,7 +1976,7 @@ namespace EventCombo.Controllers
         // Don't reveal that the user does not exist
         return RedirectToAction("ResetPasswordConfirmation", "Account");
       }
-      var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+      var result = await UserManager.ResetPasswordAsync(user.Id, model.code, model.Password);
       if (result.Succeeded)
       {
         return RedirectToAction("ResetPasswordConfirmation", "Account");
