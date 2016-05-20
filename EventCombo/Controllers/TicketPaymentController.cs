@@ -109,6 +109,28 @@ namespace EventCombo.Controllers
             tp.Title = eventdetails.EventTitle;
             tp.URLTitle = Regex.Replace(eventdetails.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", "");
             tp.Tickettype = "Paid";
+            var address = (from a in db.Addresses where a.EventId == Eventid select a).FirstOrDefault();
+
+
+            //datetime
+            DateTime datetime = new DateTime();
+            DateTimeWithZone dtzstart;
+            string day="", Sdate="", time="";
+            var td = DateTimeWithZone.Timezonedetail(eventdetails.EventID);
+            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
+            if (eventdetails.AddressStatus == "Single")
+            {
+                var ev = db.EventVenues.FirstOrDefault(i => i.EventID == Eventid);
+                dtzstart = new DateTimeWithZone(Convert.ToDateTime(ev.E_Startdate), userTimeZone, true);
+                datetime = dtzstart.LocalTime;
+                day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(datetime).ToString();
+                Sdate = datetime.ToString("MMM dd, yyyy");
+                time = datetime.ToString("h:mm tt").ToLower().Trim().Replace(" ", ""); 
+
+            }
+            //
+
+
             ViewData["Type"] = tp.Tickettype;
             if (Session["AppId"] != null)
             {
@@ -136,6 +158,8 @@ namespace EventCombo.Controllers
             tp.AccState = State;
             tp.AccCity = City;
             tp.Acczip = Zip;
+            TempData["address"] = !string.IsNullOrEmpty(address.ConsolidateAddress)? address.ConsolidateAddress:"";
+           TempData["eventdatetime"] = day +","+ Sdate + " " + time;
 
             using (EventComboEntities db = new EventComboEntities())
             {
@@ -928,7 +952,7 @@ namespace EventCombo.Controllers
         public void generateQR(string qrdata, string qrImgPath)
         {
             WebClient wc = new WebClient();
-            string url = "http://chart.apis.google.com/chart?cht=qr&chs=150x150&chl=" + qrdata;
+            string url = "https://chart.apis.google.com/chart?cht=qr&chs=150x150&chl=" + qrdata;
             byte[] qrImage = wc.DownloadData(url);
             MemoryStream ms = new MemoryStream(qrImage);
             Image img = Image.FromStream(ms);

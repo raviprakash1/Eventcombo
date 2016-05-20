@@ -4,7 +4,7 @@
     ViewBag.Title = "ViewEvent";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="http://maps.googleapis.com/maps/api/js">
+<script src="https://maps.googleapis.com/maps/api/js">
 </script>
 
 <meta property="og:type" content="article" />
@@ -1127,9 +1127,9 @@
         var variable = fullDateReal;
         $("#ioutlook").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
         $("#icalender").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
-        $("#yahoocal").attr("href", "http://calendar.yahoo.com/?v=60&view=d&type=20&title=" + title + "&st=" + isodatestart + "&desc=A%20traditional%20barbeque%20for%20our%20big%20day&in_loc=" + location + "")
+        $("#yahoocal").attr("href", "https://calendar.yahoo.com/?v=60&view=d&type=20&title=" + title + "&st=" + isodatestart + "&desc=A%20traditional%20barbeque%20for%20our%20big%20day&in_loc=" + location + "")
 
-        $("#googlecal").attr("href", "http://www.google.com/calendar/event?action=TEMPLATE&text=" + title + "&dates=" + isodatestart + "/" + isodatestart + "&location=" + location + "&sprop=website")
+        $("#googlecal").attr("href", "https://www.google.com/calendar/event?action=TEMPLATE&text=" + title + "&dates=" + isodatestart + "/" + isodatestart + "&location=" + location + "&sprop=website")
         var target = $(this).data("target");
         $(target).show();
     }

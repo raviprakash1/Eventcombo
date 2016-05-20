@@ -46,39 +46,50 @@
                         </div>
                         <div class="col-sm-9 pl0">
                             <h2 class="th_tilte" id="h2tag">@Html.DisplayFor(m => m.Title)</h2>
+                            <div class="col-sm-12 col-xs-12 text-left">
+                                <div class="form-group mb0">
 
-                            @*<div class="col-sm-12 col-xs-12 text-left">
-                                @*<div class="form-group mb0">
-                                        <div class="Timezone ev_date_icn ev_date_icn2 evnt_icn_xs"></div>
-                                        <label class="label-control evnt_title_date2 evnt_title_xs" title="see what happening on this date">
-
-                                           Add Schedule to calendar
-                                        </label>
-                                    </div>*@
-                            @*<div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal">
-                                    <div class="ev_time_zone_model date_time_modal">
-                                        <div class="modal-content ev_tm_zon_cont">
-                                            <div class="modal-header">
-                                                <button class="close closetimemodal" type="button">
-                                                    <span>&#215;</span>
-                                                </button>
-                                                <h4 class="modal-title date_time_list">Schedule Date List</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="col-sm-12 no_pad">
-                                                    <div class="form-group mb5 ">
-                                                        <label class="col-sm-12 no_pad label-control date_time_list">
-                                                            <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="Text" data-toggle="modal">Text</a>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
+                                    <label class="label-control " >
+                                        @TempData["address"]
+                                     <br />
+                                        @TempData["eventdatetime"]
+                                    </label>
+                                  
                                     </div>
-                                </div>*@
-                            @*</div>*@
+
+                                </div>
+                                @*<div class="col-sm-12 col-xs-12 text-left">
+            @*<div class="form-group mb0">
+                    <div class="Timezone ev_date_icn ev_date_icn2 evnt_icn_xs"></div>
+                    <label class="label-control evnt_title_date2 evnt_title_xs" title="see what happening on this date">
+
+                       Add Schedule to calendar
+                    </label>
+                </div>*@
+                                @*<div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal">
+                <div class="ev_time_zone_model date_time_modal">
+                    <div class="modal-content ev_tm_zon_cont">
+                        <div class="modal-header">
+                            <button class="close closetimemodal" type="button">
+                                <span>&#215;</span>
+                            </button>
+                            <h4 class="modal-title date_time_list">Schedule Date List</h4>
                         </div>
+                        <div class="modal-body">
+                            <div class="col-sm-12 no_pad">
+                                <div class="form-group mb5 ">
+                                    <label class="col-sm-12 no_pad label-control date_time_list">
+                                        <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="Text" data-toggle="modal">Text</a>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>*@
+                                @*</div>*@
+                            </div>
                     </div>
                 </div>
 
@@ -598,7 +609,13 @@
         });
 
 
-
+        $('.alphabets').bind('paste', function () {
+            var self = this;
+            setTimeout(function () {
+                if (!/^[a-zA-Z]+$/.test($(self).val()))
+                    $(self).val('');
+            }, 0);
+        });
 
 
 
