@@ -1458,6 +1458,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <NavigationProperty Name="Event" Relationship="Self.FK_Address_Event" FromRole="Address" ToRole="Event" />
           <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Ticket_Quantity_Detail" Relationship="Cmsdata.AddressTicket_Quantity_Detail" FromRole="Address" ToRole="Ticket_Quantity_Detail" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -1509,6 +1510,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_Profile" FromRole="AspNetUsers" ToRole="Profile" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="Ticket_Purchased_Detail" Relationship="Cmsdata.AspNetUserTicket_Purchased_Detail" FromRole="AspNetUser" ToRole="Ticket_Purchased_Detail" />
+          <NavigationProperty Name="Organizer_Master" Relationship="Cmsdata.AspNetUserOrganizer_Master" FromRole="AspNetUser" ToRole="Organizer_Master" />
         </EntityType>
         <EntityType Name="BillingAddress">
           <Key>
@@ -1626,6 +1629,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="EventCancel" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="FeatureUpdateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="Cmsdata.FK_Event_Orgnizer_Detail_Event" FromRole="Event" ToRole="Event_Orgnizer_Detail" />
+          <NavigationProperty Name="Event_OrganizerMessages" Relationship="Cmsdata.EventEvent_OrganizerMessages" FromRole="Event" ToRole="Event_OrganizerMessages" />
+          <NavigationProperty Name="Ticket_Purchased_Detail" Relationship="Cmsdata.EventTicket_Purchased_Detail" FromRole="Event" ToRole="Ticket_Purchased_Detail" />
+          <NavigationProperty Name="EventFavourites" Relationship="Cmsdata.EventEventFavourite" FromRole="Event" ToRole="EventFavourite" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -1638,6 +1644,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MessageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Event" Relationship="Cmsdata.EventEvent_OrganizerMessages" FromRole="Event_OrganizerMessages" ToRole="Event" />
+          <NavigationProperty Name="Organizer_Master" Relationship="Cmsdata.Organizer_MasterEvent_OrganizerMessages" FromRole="Event_OrganizerMessages" ToRole="Organizer_Master" />
         </EntityType>
         <EntityType Name="Event_VariableDesc">
           <Key>
@@ -1664,6 +1672,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="eventId" Type="Int64" />
           <Property Name="FavId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Event" Relationship="Cmsdata.EventEventFavourite" FromRole="EventFavourite" ToRole="Event" />
         </EntityType>
         <EntityType Name="EventImage">
           <Key>
@@ -1709,6 +1718,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <NavigationProperty Name="EventVenue2" Relationship="Self.FK_EventVenue_EventVenue" FromRole="EventVenue1" ToRole="EventVenue" />
           <Property Name="E_Startdate" Type="DateTime" Precision="3" />
           <Property Name="E_Enddate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Publish_Event_Detail" Relationship="Cmsdata.EventVenuePublish_Event_Detail" FromRole="EventVenue" ToRole="Publish_Event_Detail" />
         </EntityType>
         <EntityType Name="EventVote">
           <Key>
@@ -1745,6 +1755,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <NavigationProperty Name="Event" Relationship="Self.FK_MultipleEvent_Event" FromRole="MultipleEvent" ToRole="Event" />
           <Property Name="M_Startfrom" Type="DateTime" Precision="3" />
           <Property Name="M_StartTo" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Publish_Event_Detail" Relationship="Cmsdata.MultipleEventPublish_Event_Detail" FromRole="MultipleEvent" ToRole="Publish_Event_Detail" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -1808,6 +1819,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="PE_Scheduled_Date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PE_Start_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PE_End_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Ticket_Quantity_Detail" Relationship="Cmsdata.Publish_Event_DetailTicket_Quantity_Detail" FromRole="Publish_Event_Detail" ToRole="Ticket_Quantity_Detail" />
+          <NavigationProperty Name="MultipleEvent" Relationship="Cmsdata.MultipleEventPublish_Event_Detail" FromRole="Publish_Event_Detail" ToRole="MultipleEvent" />
+          <NavigationProperty Name="EventVenue" Relationship="Cmsdata.EventVenuePublish_Event_Detail" FromRole="Publish_Event_Detail" ToRole="EventVenue" />
         </EntityType>
         <EntityType Name="ShippingAddress">
           <Key>
@@ -1910,6 +1924,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="TPD_EC_Fee" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="TPD_PromoCodeID" Type="Int32" />
           <Property Name="TPD_PromoCodeAmount" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Event" Relationship="Cmsdata.EventTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="Event" />
+          <NavigationProperty Name="AspNetUser" Relationship="Cmsdata.AspNetUserTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="AspNetUser" />
+          <NavigationProperty Name="Ticket_Quantity_Detail" Relationship="Cmsdata.Ticket_Quantity_DetailTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="Ticket_Quantity_Detail" />
         </EntityType>
         <EntityType Name="Ticket_Quantity_Detail">
           <Key>
@@ -1925,6 +1942,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="TQD_StartDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TQD_StartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_Quantity_Info_Ticket" FromRole="Ticket_Quantity_Detail" ToRole="Ticket" />
+          <NavigationProperty Name="Ticket_Purchased_Detail" Relationship="Cmsdata.Ticket_Quantity_DetailTicket_Purchased_Detail" FromRole="Ticket_Quantity_Detail" ToRole="Ticket_Purchased_Detail" />
+          <NavigationProperty Name="Address" Relationship="Cmsdata.AddressTicket_Quantity_Detail" FromRole="Ticket_Quantity_Detail" ToRole="Address" />
+          <NavigationProperty Name="Publish_Event_Detail" Relationship="Cmsdata.Publish_Event_DetailTicket_Quantity_Detail" FromRole="Ticket_Quantity_Detail" ToRole="Publish_Event_Detail" />
         </EntityType>
         <EntityType Name="TicketBearer">
           <Key>
@@ -2354,6 +2374,50 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             <Parameter Name="EventTicket" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="V_EventsList" EntityType="Cmsdata.V_EventsList" />
+          <AssociationSet Name="EventEvent_OrganizerMessages" Association="Cmsdata.EventEvent_OrganizerMessages">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Event_OrganizerMessages" EntitySet="Event_OrganizerMessages" />
+          </AssociationSet>
+          <AssociationSet Name="EventTicket_Purchased_Detail" Association="Cmsdata.EventTicket_Purchased_Detail">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Ticket_Purchased_Detail" EntitySet="Ticket_Purchased_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="Organizer_MasterEvent_OrganizerMessages" Association="Cmsdata.Organizer_MasterEvent_OrganizerMessages">
+            <End Role="Organizer_Master" EntitySet="Organizer_Master" />
+            <End Role="Event_OrganizerMessages" EntitySet="Event_OrganizerMessages" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserTicket_Purchased_Detail" Association="Cmsdata.AspNetUserTicket_Purchased_Detail">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Ticket_Purchased_Detail" EntitySet="Ticket_Purchased_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="Ticket_Quantity_DetailTicket_Purchased_Detail" Association="Cmsdata.Ticket_Quantity_DetailTicket_Purchased_Detail">
+            <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
+            <End Role="Ticket_Purchased_Detail" EntitySet="Ticket_Purchased_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="AddressTicket_Quantity_Detail" Association="Cmsdata.AddressTicket_Quantity_Detail">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="Publish_Event_DetailTicket_Quantity_Detail" Association="Cmsdata.Publish_Event_DetailTicket_Quantity_Detail">
+            <End Role="Publish_Event_Detail" EntitySet="Publish_Event_Detail" />
+            <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="MultipleEventPublish_Event_Detail" Association="Cmsdata.MultipleEventPublish_Event_Detail">
+            <End Role="MultipleEvent" EntitySet="MultipleEvents" />
+            <End Role="Publish_Event_Detail" EntitySet="Publish_Event_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="EventVenuePublish_Event_Detail" Association="Cmsdata.EventVenuePublish_Event_Detail">
+            <End Role="EventVenue" EntitySet="EventVenues" />
+            <End Role="Publish_Event_Detail" EntitySet="Publish_Event_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="EventEventFavourite" Association="Cmsdata.EventEventFavourite">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="EventFavourite" EntitySet="EventFavourites" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserOrganizer_Master" Association="Cmsdata.AspNetUserOrganizer_Master">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Organizer_Master" EntitySet="Organizer_Master" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -2497,6 +2561,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="contenttype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Imagepath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="Cmsdata.FK_Event_Orgnizer_Detail_Organizer_Master" FromRole="Organizer_Master" ToRole="Event_Orgnizer_Detail" />
+          <NavigationProperty Name="Event_OrganizerMessages" Relationship="Cmsdata.Organizer_MasterEvent_OrganizerMessages" FromRole="Organizer_Master" ToRole="Event_OrganizerMessages" />
+          <NavigationProperty Name="AspNetUser" Relationship="Cmsdata.AspNetUserOrganizer_Master" FromRole="Organizer_Master" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="Promo_Code">
           <Key>
@@ -2856,6 +2922,138 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="Purchasedqty" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="EventTiming" Type="String" MaxLength="49" FixedLength="false" Unicode="false" />
         </EntityType>
+        <Association Name="EventEvent_OrganizerMessages">
+          <End Type="Cmsdata.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="Cmsdata.Event_OrganizerMessages" Role="Event_OrganizerMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Event_OrganizerMessages">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventTicket_Purchased_Detail">
+          <End Type="Cmsdata.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="Cmsdata.Ticket_Purchased_Detail" Role="Ticket_Purchased_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Ticket_Purchased_Detail">
+              <PropertyRef Name="TPD_Event_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Organizer_MasterEvent_OrganizerMessages">
+          <End Type="Cmsdata.Organizer_Master" Role="Organizer_Master" Multiplicity="0..1" />
+          <End Type="Cmsdata.Event_OrganizerMessages" Role="Event_OrganizerMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizer_Master">
+              <PropertyRef Name="Orgnizer_Id" />
+            </Principal>
+            <Dependent Role="Event_OrganizerMessages">
+              <PropertyRef Name="OrganizerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserTicket_Purchased_Detail">
+          <End Type="Cmsdata.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="Cmsdata.Ticket_Purchased_Detail" Role="Ticket_Purchased_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket_Purchased_Detail">
+              <PropertyRef Name="TPD_User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Ticket_Quantity_DetailTicket_Purchased_Detail">
+          <End Type="Cmsdata.Ticket_Quantity_Detail" Role="Ticket_Quantity_Detail" Multiplicity="0..1" />
+          <End Type="Cmsdata.Ticket_Purchased_Detail" Role="Ticket_Purchased_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket_Quantity_Detail">
+              <PropertyRef Name="TQD_Id" />
+            </Principal>
+            <Dependent Role="Ticket_Purchased_Detail">
+              <PropertyRef Name="TPD_TQD_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AddressTicket_Quantity_Detail">
+          <End Type="Cmsdata.Address" Role="Address" Multiplicity="0..1" />
+          <End Type="Cmsdata.Ticket_Quantity_Detail" Role="Ticket_Quantity_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="Ticket_Quantity_Detail">
+              <PropertyRef Name="TQD_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Publish_Event_DetailTicket_Quantity_Detail">
+          <End Type="Cmsdata.Publish_Event_Detail" Role="Publish_Event_Detail" Multiplicity="0..1" />
+          <End Type="Cmsdata.Ticket_Quantity_Detail" Role="Ticket_Quantity_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publish_Event_Detail">
+              <PropertyRef Name="PE_Id" />
+            </Principal>
+            <Dependent Role="Ticket_Quantity_Detail">
+              <PropertyRef Name="TQD_PE_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MultipleEventPublish_Event_Detail">
+          <End Type="Cmsdata.MultipleEvent" Role="MultipleEvent" Multiplicity="0..1" />
+          <End Type="Cmsdata.Publish_Event_Detail" Role="Publish_Event_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MultipleEvent">
+              <PropertyRef Name="MultipleEventID" />
+            </Principal>
+            <Dependent Role="Publish_Event_Detail">
+              <PropertyRef Name="PE_MultipleVenue_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventVenuePublish_Event_Detail">
+          <End Type="Cmsdata.EventVenue" Role="EventVenue" Multiplicity="0..1" />
+          <End Type="Cmsdata.Publish_Event_Detail" Role="Publish_Event_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventVenue">
+              <PropertyRef Name="EventVenueID" />
+            </Principal>
+            <Dependent Role="Publish_Event_Detail">
+              <PropertyRef Name="PE_SingleVenue_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventEventFavourite">
+          <End Type="Cmsdata.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="Cmsdata.EventFavourite" Role="EventFavourite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="EventFavourite">
+              <PropertyRef Name="eventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserOrganizer_Master">
+          <End Type="Cmsdata.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="Cmsdata.Organizer_Master" Role="Organizer_Master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organizer_Master">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

@@ -65,6 +65,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NReco.PdfGenerator, Version=1.1.11.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.PdfGenerator.1.1.11.0\lib\net20\NReco.PdfGenerator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
       <Private>True</Private>
@@ -445,8 +449,22 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ArticleService.cs" />
+    <Compile Include="Service\DBAccessService.cs" />
     <Compile Include="Service\IArticleService.cs" />
+    <Compile Include="Service\IDBAccessService.cs" />
+    <Compile Include="Service\ITicketsService.cs" />
+    <Compile Include="Service\Notification\INotification.cs" />
+    <Compile Include="Service\Notification\INotificationSender.cs" />
+    <Compile Include="Service\Notification\ISendMailService.cs" />
+    <Compile Include="Service\Notification\NotificationSender.cs" />
+    <Compile Include="Service\Notification\OrderCancelNotification.cs" />
+    <Compile Include="Service\Notification\OrderNotification.cs" />
+    <Compile Include="Service\Notification\OrganizerMessageNotification.cs" />
+    <Compile Include="Service\Notification\SendMailService.cs" />
+    <Compile Include="Service\TicketService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\DateTimeWithZone.cs" />
+    <Compile Include="Utils\EncryptDecrypt.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\admin-tools\admin-forms\css\admin-forms.css" />

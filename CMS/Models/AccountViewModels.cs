@@ -122,7 +122,7 @@ namespace CMS.Models
     }
 
     public enum OrderSortBy { Name, Order, Date, Qty, Total };
-    public enum OrderTypes { Upcoming, Past, Favorite };
+    public enum OrderTypes { Upcoming, Past };
 
     public class OrderListRequestViewModel
     {

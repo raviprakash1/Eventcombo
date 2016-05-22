@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using EventCombo.Models;
-using EventCombo.DAL;
+using CMS.Models;
+using CMS.DAL;
 using AutoMapper;
-using EventCombo.Utils;
+using CMS.Utils;
 
-namespace EventCombo.Service
+namespace CMS.Service
 {
   public class DBAccessService: IDBAccessService
   {

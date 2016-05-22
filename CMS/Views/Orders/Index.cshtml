@@ -9,99 +9,113 @@
 
 <link href="~/Content/PurchasedTicket.css" rel="stylesheet" />
 
+<section id="content_wrapper">
+  <header id="topbar" class="alt">
+    <div class="topbar-left">
+      <ol class="breadcrumb">
 
-
-<div id="purchasedTicketContainer">
-  <h2 class="purchasedTitleHead">TICKET ORDERS</h2>
-
-  @{
-    long upcomingCount = Model.OrderTypeInfo.Where(m => m.OrderType == OrderTypes.Upcoming).First().TotalCount;
-    long pastCount = Model.OrderTypeInfo.Where(m => m.OrderType == OrderTypes.Past).First().TotalCount;
-    long favoriteCount = Model.OrderTypeInfo.Where(m => m.OrderType == OrderTypes.Favorite).First().TotalCount;
-  }
-  <ul class="nav nav-tabs purchaseTicketHeaderTabs">
-    <li class="active"><a data-toggle="tab" href="#UpcomingEvents">Upcoming Events (@upcomingCount)</a></li>
-    <li><a data-toggle="tab" href="#PastEvents">Past Events (@pastCount)</a></li>
-    <li><a data-toggle="tab" href="#FavoriteEvents">Favorite Events (@favoriteCount)</a></li>
-  </ul>
-
-  <div class="tab-content">
-    <div id="UpcomingEvents" data-ttype="@OrderTypes.Upcoming" class="tab-pane fade in active">
-      <div id="tableplace@(OrderTypes.Upcoming.ToString())">
-        @{ Html.RenderAction("PurchasedTicketList", new { OrderType = OrderTypes.Upcoming, SortBy = Model.State.SortBy, Page = Model.State.Page, PerPage = Model.State.PerPage }); }
-      </div>
-      <div id="orderPaginationMainContainer@(OrderTypes.Upcoming.ToString())" class="orderListPagination">
-        <div class="col-sm-8 col-xs-12 orderPagination">
-          <ul id="paginationRecordUL@(OrderTypes.Upcoming.ToString())" class="pagination"></ul>
-        </div>
-        <script type="text/javascript">
-          $(function () {
-            setPagination("@(OrderTypes.Upcoming.ToString())", "@upcomingCount", 0);
-          });
-        </script>
-        <div class="col-sm-4 col-xs-12 orderViewCount" style="display:@(upcomingCount>20 ? "block" : "none");">
-          <ul class="pagination">
-            <li id="recordShow20" onclick="SetPerPage(this, '@(OrderTypes.Upcoming.ToString())', 1)" class="active recordLiItem"><a href="javascript:void(0)">20</a></li>
-            <li id="recordShow50" onclick="SetPerPage(this, '@(OrderTypes.Upcoming.ToString())', 2)" class="recordLiItem"><a href="javascript:void(0)">50</a></li>
-            <li id="recordShow100" onclick="SetPerPage(this, '@(OrderTypes.Upcoming.ToString())', 3)" class="recordLiItem"><a href="javascript:void(0)">100</a></li>
-            <li id="recordShow0" onclick="SetPerPage(this, '@(OrderTypes.Upcoming.ToString())', 0)" class="recordLiItem"><a href="javascript:void(0)">ALL</a></li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-    <div id="PastEvents" data-ttype="@OrderTypes.Past" class="tab-pane fade">
-      <div id="tableplace@(OrderTypes.Past.ToString())">
-        @{ Html.RenderAction("PurchasedTicketList", new { OrderType = OrderTypes.Past, SortBy = Model.State.SortBy, Page = Model.State.Page, PerPage = Model.State.PerPage }); }
-      </div>
-      <div id="orderPaginationMainContainer@(OrderTypes.Past.ToString())" class="orderListPagination">
-        <div class="col-sm-8 col-xs-12 orderPagination">
-          <ul id="paginationRecordUL@(OrderTypes.Past.ToString())" class="pagination"></ul>
-        </div>
-        <script type="text/javascript">
-          $(function () {
-            setPagination("@(OrderTypes.Past.ToString())", "@pastCount", 0);
-          });
-        </script>
-        <div class="col-sm-4 col-xs-12 orderViewCount" style="display:@(pastCount>20 ? "block" : "none");">
-          <ul class="pagination">
-            <li id="recordShow20" onclick="SetPerPage(this, '@(OrderTypes.Past.ToString())', 20)" class="active recordLiItem"><a href="javascript:void(0)">20</a></li>
-            <li id="recordShow50" onclick="SetPerPage(this, '@(OrderTypes.Past.ToString())', 50)" class="recordLiItem"><a href="javascript:void(0)">50</a></li>
-            <li id="recordShow100" onclick="SetPerPage(this, '@(OrderTypes.Past.ToString())', 100)" class="recordLiItem"><a href="javascript:void(0)">100</a></li>
-            <li id="recordShow0" onclick="SetPerPage(this, '@(OrderTypes.Past.ToString())', 0)" class="recordLiItem"><a href="javascript:void(0)">ALL</a></li>
-          </ul>
-        </div>
-      </div>
+        <li class="crumb-icon">
+          <a href="dashboard.html">
+            <span class="glyphicon glyphicon-home"></span>
+          </a>
+        </li>
+        <li class="crumb-active">
+          Dashboard
+        </li>
+      </ol>
     </div>
 
-    <div id="FavoriteEvents" data-ttype="@OrderTypes.Favorite" class="tab-pane fade">
-      <div id="tableplace@(OrderTypes.Favorite.ToString())">
-        @{ Html.RenderAction("PurchasedTicketList", new { OrderType = OrderTypes.Favorite, SortBy = Model.State.SortBy, Page = Model.State.Page, PerPage = Model.State.PerPage }); }
+  </header>
+  <!-- End: Topbar -->
+  <!-- Begin: Content -->
+  <section id="content" class="table-layout animated fadeIn">
+
+
+    <div id="purchasedTicketContainer">
+      <h2 class="purchasedTitleHead">TICKET ORDERS</h2>
+
+      @{
+        long upcomingCount = Model.OrderTypeInfo.Where(m => m.OrderType == OrderTypes.Upcoming).First().TotalCount;
+        long pastCount = Model.OrderTypeInfo.Where(m => m.OrderType == OrderTypes.Past).First().TotalCount;
+      }
+      <ul class="nav nav-tabs purchaseTicketHeaderTabs">
+        <li class="active"><a data-toggle="tab" href="#UpcomingEvents">Upcoming Events (@upcomingCount)</a></li>
+        <li><a data-toggle="tab" href="#PastEvents">Past Events (@pastCount)</a></li>
+      </ul>
+
+      <div class="tab-content">
+        <div id="UpcomingEvents" data-ttype="@OrderTypes.Upcoming" class="tab-pane fade in active">
+          <div id="tableplace@(OrderTypes.Upcoming.ToString())">
+            @{ Html.RenderAction("PurchasedTicketList", new { OrderType = OrderTypes.Upcoming, SortBy = Model.State.SortBy, Page = Model.State.Page, PerPage = Model.State.PerPage }); }
+          </div>
+          <div id="orderPaginationMainContainer@(OrderTypes.Upcoming.ToString())" class="orderListPagination">
+            <div class="col-sm-8 col-xs-12 orderPagination">
+              <ul id="paginationRecordUL@(OrderTypes.Upcoming.ToString())" class="pagination"></ul>
+            </div>
+            <script type="text/javascript">
+              $(function () {
+                setPagination("@(OrderTypes.Upcoming.ToString())", "@upcomingCount", 0);
+              });
+            </script>
+            <div class="col-sm-4 col-xs-12 orderViewCount" style="display:@(upcomingCount>20 ? "block" : "none");">
+              <ul class="pagination">
+                <li id="recordShow20" onclick="SetPerPage(this, '@(OrderTypes.Upcoming.ToString())', 1)" class="active recordLiItem"><a href="javascript:void(0)">20</a></li>
+                <li id="recordShow50" onclick="SetPerPage(this, '@(OrderTypes.Upcoming.ToString())', 2)" class="recordLiItem"><a href="javascript:void(0)">50</a></li>
+                <li id="recordShow100" onclick="SetPerPage(this, '@(OrderTypes.Upcoming.ToString())', 3)" class="recordLiItem"><a href="javascript:void(0)">100</a></li>
+                <li id="recordShow0" onclick="SetPerPage(this, '@(OrderTypes.Upcoming.ToString())', 0)" class="recordLiItem"><a href="javascript:void(0)">ALL</a></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+        <div id="PastEvents" data-ttype="@OrderTypes.Past" class="tab-pane fade">
+          <div id="tableplace@(OrderTypes.Past.ToString())">
+            @{ Html.RenderAction("PurchasedTicketList", new { OrderType = OrderTypes.Past, SortBy = Model.State.SortBy, Page = Model.State.Page, PerPage = Model.State.PerPage }); }
+          </div>
+          <div id="orderPaginationMainContainer@(OrderTypes.Past.ToString())" class="orderListPagination">
+            <div class="col-sm-8 col-xs-12 orderPagination">
+              <ul id="paginationRecordUL@(OrderTypes.Past.ToString())" class="pagination"></ul>
+            </div>
+            <script type="text/javascript">
+              $(function () {
+                setPagination("@(OrderTypes.Past.ToString())", "@pastCount", 0);
+              });
+            </script>
+            <div class="col-sm-4 col-xs-12 orderViewCount" style="display:@(pastCount>20 ? "block" : "none");">
+              <ul class="pagination">
+                <li id="recordShow20" onclick="SetPerPage(this, '@(OrderTypes.Past.ToString())', 20)" class="active recordLiItem"><a href="javascript:void(0)">20</a></li>
+                <li id="recordShow50" onclick="SetPerPage(this, '@(OrderTypes.Past.ToString())', 50)" class="recordLiItem"><a href="javascript:void(0)">50</a></li>
+                <li id="recordShow100" onclick="SetPerPage(this, '@(OrderTypes.Past.ToString())', 100)" class="recordLiItem"><a href="javascript:void(0)">100</a></li>
+                <li id="recordShow0" onclick="SetPerPage(this, '@(OrderTypes.Past.ToString())', 0)" class="recordLiItem"><a href="javascript:void(0)">ALL</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div id="orderPaginationMainContainer@(OrderTypes.Favorite.ToString())" class="orderListPagination">
-        <div class="col-sm-8 col-xs-12 orderPagination">
-          <ul id="paginationRecordUL@(OrderTypes.Favorite.ToString())" class="pagination"></ul>
-        </div>
-        <script type="text/javascript">
-          $(function () {
-            setPagination("@(OrderTypes.Favorite.ToString())", "@favoriteCount", 0);
-          });
-        </script>
-        <div class="col-sm-4 col-xs-12 orderViewCount" style="display:@(favoriteCount>20 ? "block" : "none");">
-          <ul class="pagination">
-            <li id="recordShow20" onclick="SetPerPage(this, '@(OrderTypes.Favorite.ToString())', 20)" class="active recordLiItem"><a href="javascript:void(0)">20</a></li>
-            <li id="recordShow50" onclick="SetPerPage(this, '@(OrderTypes.Favorite.ToString())', 50)" class="recordLiItem"><a href="javascript:void(0)">50</a></li>
-            <li id="recordShow100" onclick="SetPerPage(this, '@(OrderTypes.Favorite.ToString())', 100)" class="recordLiItem"><a href="javascript:void(0)">100</a></li>
-            <li id="recordShow0" onclick="SetPerPage(this, '@(OrderTypes.Favorite.ToString())', 0)" class="recordLiItem"><a href="javascript:void(0)">ALL</a></li>
-          </ul>
-        </div>
+      <div id="spinner" class="spinner" style="display:none;">
+        <img id="img-spinner" src="~/Images/ajaxloader1.gif" alt="Loading" />
       </div>
     </div>
-  </div>
-  <div id="spinner" class="spinner" style="display:none;">
-    <img id="img-spinner" src="~/Images/ajaxloader1.gif" alt="Loading" />
-  </div>
-</div>
+
+  </section>
+  <!-- Begin: Page Footer -->
+  <footer id="content-footer" class="affix">
+    <div class="row">
+      <div class="col-md-6">
+        <span class="footer-legal">© 2015 Eventcombo</span>
+      </div>
+      <div class="col-md-6 text-right">
+        <span class="footer-meta">Eventcombo<b></b></span>
+        <a href="#content" class="footer-return-top">
+          <span class="fa fa-arrow-up"></span>
+        </a>
+      </div>
+    </div>
+  </footer>
+  <!-- End: Page Footer -->
+  <!-- End: Content-Wrapper -->
+</section>
 
 
 <script type="text/javascript">
@@ -120,13 +134,6 @@
     SortDesc: "@(Model.State.SortDesc)",
     Total: "@pastCount",
     OrderType: "@OrderTypes.Past"
-  }, {
-    Page: "@(Model.State.Page)",
-    PerPage: "@(Model.State.PerPage)",
-    SortBy: "@(Model.State.SortBy)",
-    SortDesc: "@(Model.State.SortDesc)",
-    Total: "@favoriteCount",
-    OrderType: "@OrderTypes.Favorite"
   }];
 
   $(function () {
@@ -141,7 +148,7 @@
     if ($(detail).data('popped') == '0') {
       $.ajax({
         type: 'GET',
-        url: '@Url.Action("PurchasedTicketDetail", "Account")',
+        url: '@Url.Action("PurchasedTicketDetail", "Orders")',
         data: { OrderId: id },
         datatype: 'html',
         success: function (data) {
@@ -210,7 +217,7 @@
   function getTicketList(id, query) {
     $.ajax({
       type: "GET",
-      url: "@Url.Action("PurchasedTicketList", "Account")",
+      url: "@Url.Action("PurchasedTicketList", "Orders")",
       data: query,
       datatype: "html",
       success: function (data) {
@@ -234,7 +241,7 @@
     });
     $.ajax({
       type: "POST",
-      url: "@Url.Action("SavePurchasedTicketDetail", "Account")",
+      url: "@Url.Action("SavePurchasedTicketDetail", "Orders")",
       data: query,
       datatype: "html",
       success: function (data) {
@@ -250,7 +257,7 @@
     }
     $.ajax({
       type: "POST",
-      url: "@Url.Action("CancelOrder", "Account")",
+      url: "@Url.Action("CancelOrder", "Orders")",
       data: { OrderId: oId },
       datatype: "html",
       success: function (data) {
@@ -274,7 +281,7 @@
     }
     $.ajax({
       type: "POST",
-      url: "@Url.Action("SaveMessage", "Account")",
+      url: "@Url.Action("SaveMessage", "Orders")",
       data: query,
       datatype: "html",
       success: function (data) {
@@ -326,21 +333,6 @@
       cState.PerPage = num;
       setPagination(page, cState.Total, Math.floor(curRec / num));
     }
-  }
-
-  function FacebookShare(title, href) {
-    window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title.trim()) + '&p[url]=' + encodeURIComponent(href) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-    return false;
-  }
-
-  function TwitterShare(title, href) {
-    window.open('https://twitter.com/share?url=' + encodeURIComponent(href) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-    return false;
-  }
-
-  function LinkedInShare(title, href) {
-    window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(href) + '&title=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-    return false;
   }
 
 </script>

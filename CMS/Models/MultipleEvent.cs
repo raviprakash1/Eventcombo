@@ -14,6 +14,12 @@ namespace CMS.Models
     
     public partial class MultipleEvent
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public MultipleEvent()
+        {
+            this.Publish_Event_Detail = new HashSet<Publish_Event_Detail>();
+        }
+    
         public long MultipleEventID { get; set; }
         public long EventID { get; set; }
         public string Frequency { get; set; }
@@ -29,5 +35,7 @@ namespace CMS.Models
         public Nullable<System.DateTime> M_StartTo { get; set; }
     
         public virtual Event Event { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Publish_Event_Detail> Publish_Event_Detail { get; set; }
     }
 }

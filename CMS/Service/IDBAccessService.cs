@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using EventCombo.Models;
+using CMS.Models;
 
-namespace EventCombo.Service
+namespace CMS.Service
 {
   public enum AccessLevel { EventOwner, OrderOwner, Public }
 
