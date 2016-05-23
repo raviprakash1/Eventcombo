@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Contracts.V1;
 using AuthorizeNet.Api.Controllers.Bases;
+using System.Configuration;
 
 namespace EventCombo.Models
 {
@@ -19,7 +20,11 @@ namespace EventCombo.Models
             cardtransaction carddet = new cardtransaction();
             try
             {
-                ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = AuthorizeNet.Environment.SANDBOX;
+                string strEnv = ConfigurationManager.AppSettings.Get("AuthorzieNetEnvironment");
+                if (strEnv.ToLower() == "production")
+                    ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = AuthorizeNet.Environment.PRODUCTION;
+                else
+                    ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = AuthorizeNet.Environment.SANDBOX;
 
                 // define the merchant information (authentication / transaction id)
                 ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = new merchantAuthenticationType()

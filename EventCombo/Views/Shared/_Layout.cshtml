@@ -544,11 +544,11 @@
 </script>
 <script type="text/javascript">
 
-
+    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]';
     //Fb login
     window.fbAsyncInit = function () {
         FB.init({
-            appId: '1956731254551382',
+            appId: fbappid,
             oauth: true,
             status: true, // check login status
             cookie: true, // enable cookies to allow the server to access the session
@@ -1296,9 +1296,9 @@
             if (e.which == 32)
                 return false;
         });
-        $('#SignupEmail').bind("cut copy paste", function (e) {
-            e.preventDefault();
-        });
+        //$('#SignupEmail').bind("cut copy paste", function (e) {
+        //    e.preventDefault();
+        //});
         $("#SignupPassword").on("keypress", function (e) {
 
             if (e.which == 32)
@@ -1312,9 +1312,9 @@
             if (e.which == 32)
                 return false;
         });
-        $('#loginemail').bind("cut copy paste", function (e) {
-            e.preventDefault();
-        });
+        //$('#loginemail').bind("cut copy paste", function (e) {
+        //    e.preventDefault();
+        //});
         $("#loginpassword").on("keypress", function (e) {
 
             if (e.which == 32)

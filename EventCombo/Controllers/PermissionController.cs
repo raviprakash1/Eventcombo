@@ -27,9 +27,11 @@ namespace EventCombo.Controllers
                 string strUserId = (Session["AppId"] != null ? Session["AppId"].ToString() : string.Empty);
                 EventComboEntities objEms = new EventComboEntities();
                 var vRole = objEms.Database.SqlQuery<string>("Select RoleId from AspNetUserRoles where UserId='" + strUserId + "'").Single();
-                if (vRole != null && Convert.ToInt16(vRole) == 1)
-                    return "Y";
-
+                if (vRole != null)
+                {
+                    if (Convert.ToInt16(vRole) == 1  || Convert.ToInt16(vRole) == 2)
+                        return "Y";
+                }
 
 
                 //int iGet = 

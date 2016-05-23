@@ -1436,7 +1436,9 @@ namespace EventCombo.Controllers
             else
             {
                 Session["code"] = code;
-                return View();
+                ResetPasswordViewModel model = new ResetPasswordViewModel();
+                model.code = code;
+                return View(model);
 
             }
 
@@ -1444,65 +1446,94 @@ namespace EventCombo.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+      
         public async Task<ActionResult> PasswordReset(ResetPasswordViewModel model)
         {
-            string code = "";
-            var error = "";
-            var success = "";
-            Session["Fromname"] = "PasswordReset";
-            ValidationMessage vmc = new ValidationMessage();
-            if (model.Password != model.ConfirmPassword)
-            {
-                error = vmc.Index("ResetPassword", "PwdResetPwdValidationSys");
-                ViewData["Error"] = error;
-                ModelState.AddModelError("Error", error);
+            try {
+                string code = "";
+                var error = "";
+                var success = "";
+                Session["Fromname"] = "PasswordReset";
+                ValidationMessage vmc = new ValidationMessage();
 
-            }
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-            if (Session["code"] != null)
-            {
-
-                code = Session["code"].ToString();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-
-            }
-            using (EventComboEntities objEntity = new EventComboEntities())
-            {
-                var user = (from cpd in objEntity.AspNetUsers
-                            where cpd.Id.Trim() == code.Trim()
-                            select new ExternalLogin
-                            {
-                                userid = cpd.Id,
-                                email = cpd.Email
-
-                            }).FirstOrDefault();
-
-
-                if (user == null)
+                if (Session["code"] != null)
                 {
-                    // Don't reveal that the user does not exist
+
+                    code = Session["code"].ToString();
+                    model.code = code;
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+
+                }
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Select(x => x.Value.Errors)
+                             .Where(y => y.Count > 0)
+                             .ToList();
+                    var ee = "";
+                    foreach (var item in errors)
+                    {
+                        if (!string.IsNullOrWhiteSpace(ee))
+                        {
+                            ee += "\r\n" + item[0].ErrorMessage;
+                        }
+                        else
+                        {
+                            ee += item[0].ErrorMessage;
+                        }
+
+                    }
+                    ViewData["Error"] = ee;
+                    return View(model);
+                }
+                else
+                {
+
+                }
+                if (!string.IsNullOrWhiteSpace(code))
+                {
+                    using (EventComboEntities objEntity = new EventComboEntities())
+                    {
+                        var user = (from cpd in objEntity.AspNetUsers
+                                    where cpd.Id.Trim() == code.Trim()
+                                    select new ExternalLogin
+                                    {
+                                        userid = cpd.Id,
+                                        email = cpd.Email
+
+                                    }).FirstOrDefault();
+
+
+                        if (user == null)
+                        {
+                            // Don't reveal that the user does not exist
+                            return RedirectToAction("Index", "Home");
+                        }
+                    }
+                    var token = await UserManager.GeneratePasswordResetTokenAsync(code);
+
+                    var result = await UserManager.ResetPasswordAsync(code, token, model.Password);
+                    // var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+                    if (result.Succeeded)
+                    {
+                        success = vmc.Index("ResetPassword", "PwdResetSuccessInitSY");
+                        ViewData["Message"] = success;
+                        return View(model);
+                    }
+                }
+                else
+                {
                     return RedirectToAction("Index", "Home");
                 }
-            }
-            var token = await UserManager.GeneratePasswordResetTokenAsync(code);
-
-            var result = await UserManager.ResetPasswordAsync(code, token, model.Password);
-            // var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-            if (result.Succeeded)
+            }catch(Exception ex)
             {
-                success = vmc.Index("ResetPassword", "PwdResetSuccessInitSY");
-                ViewData["Message"] = success;
-                return View();
+                ExceptionLogging.SendErrorToText(ex);
+
             }
-            AddErrors(result);
-            return View();
+           
+            return View(model);
 
         }
         [AllowAnonymous]
@@ -1580,7 +1611,7 @@ namespace EventCombo.Controllers
                 }
                 else
                 {
-                    from = "shweta.sindhu@kiwitech.com";
+                    from = ConfigurationManager.AppSettings.Get("UserName");
 
                 }
                 if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
@@ -2155,7 +2186,7 @@ namespace EventCombo.Controllers
                         }
                         else
                         {
-                            from = "shweta.sindhu@kiwitech.com";
+                            from = ConfigurationManager.AppSettings.Get("UserName");
 
                         }
                         if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))

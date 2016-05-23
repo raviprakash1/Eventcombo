@@ -59,7 +59,10 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
+                Console.Write("CheckoutReview");
+                Console.Write(ex.InnerException.ToString());  
                 ExceptionLogging.SendErrorToText(ex);
+                ExceptionLogging.SendErrorToText(ex.InnerException);
             }
             return View();
         }

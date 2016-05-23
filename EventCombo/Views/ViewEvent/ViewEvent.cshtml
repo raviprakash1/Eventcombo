@@ -61,10 +61,10 @@
 @using (Html.BeginForm(new { autocomplete = "off" }))
 {
 
-    <div class="event_container">
+    <div class="event_container event_container_480">
         <div class="event_inner_container event_top view_evnt_top viewevent_container" id="eventtopscoll">
             
-            <div class="event-slide-container xs-viewevent-inner">
+            <div class="event-slide-container xs-viewevent-inner mob-sld-480">
                 <div class="col-sm-12 no_pad bggrey clearfix" id="buttonscroll">
                 @if (TempData["EventCancel"] != null)
                 {
@@ -123,34 +123,34 @@
             </div>
                 <div class="clearfix"></div>
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                    <div class="navbar-wrapper">
+                    <div class="navbar-wrapper mob-navbar-wrapper">
                         <div class="col-sm-12">
                             <div class="col-sm-3 no_pads">
-                                <div class="col-sm-6 col-xs-6 no_pad vot_count">
-                                    <button type="button" class="btn_bg_none " title="Add this event to your favourites" id="btnfavourite"><i class="fa fa-heart"></i></button>
+                                <div class="col-sm-6 col-xs-6 no_pad vot_count mob-btn">
+                                    <button type="button" class="btn_bg_none" title="Add this event to your favourites" id="btnfavourite"><i class="fa fa-heart"></i></button>
                                     <span class="ev_fav_count" title="count of people who saved this event" id="spanfav">@Html.DisplayFor(m => m.Favourite)</span>
                                 </div>
-                                <div class="col-sm-6 col-xs-6 no_pad vot_count">
+                                <div class="col-sm-6 col-xs-6 no_pad vot_count mob-btn">
                                     <button type="button" class="btn_bg_none" title="Vote this event" id="btnvote">
                                         <i class="fa fa-thumbs-up"></i>
                                     </button>
                                     <span class="ev_fav_count" title="Total votes" id="spanvotes">@Html.DisplayFor(m => m.Vote)</span>
                                 </div>
                             </div>
-                            <div class="col-sm-9 col-xs-12 text-right">
+                            <div class="col-sm-9 col-xs-12 text-right m480p5">
                                 <div class="form-group mb5">
                                     <!--  <input class="form-control evnt_title_control evnt_placehold" placeholder="Avicii"> -->
-                                    <label class="label-control evnt_title_control evnt_title_xs" id="evtitle">
+                                    <label class="label-control evnt_title_control evnt_title_xs m480-evnt-titl" id="evtitle">
                                         @Html.DisplayFor(m => m.Title)
                                     </label>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
-                            <div class="col-sm-12 col-xs-12 text-right">
-                                <div class="form-group mb0 pull-right">
+                            <div class="col-sm-12 col-xs-12 text-right m480p5">
+                                <div class="form-group mb0 pull-right m480-date">
                                     <div class="dropdown text-left">
-                                        <img class="evnt_clock evnt_cursor" data-toggle="dropdown" src="/Images/icon-date.png" />
-                                        <span class="evnt_title_date evnt_title_date2 evnt_title_xs" title="see what happening on this date">@Html.DisplayFor(m => m.DisplaydateRange)</span>
+                                        <span class="m480-date"><img class="evnt_clock evnt_cursor" data-toggle="dropdown" src="/Images/icon-date.png" /></span>
+                                        <span class="evnt_title_date evnt_title_date2 evnt_title_xs m480-date" title="see what happening on this date">@Html.DisplayFor(m => m.DisplaydateRange)</span>
                                         <ul class="dropdown-menu cus-drop-list mt10">
                                             <span class="caret caret_cus"></span>
                                             <li class="dropdown-header drop_cus_header">Schedule Date List</li>
@@ -203,8 +203,8 @@
                                     </label>
                                 </div>*@
                             @*<div class="clearfix"></div>*@
-                            <div class="col-sm-12 no_pad">
-                                <div class="col-sm-4 col-xs-6 pb10">
+                            <div class="col-sm-12 no_pad ">
+                                <div class="col-sm-4 col-xs-6 pb10 m480-ord-now">
                                     @if (Html.DisplayFor(m => m.Orderdetail).ToString() == "Sold Out")
                                     {
                                         <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" id="btnorder">@Html.DisplayFor(m => m.Orderdetail)</a>
@@ -219,7 +219,7 @@
                                 </div>
                                 @if (Html.DisplayFor(m => m.typeofEvent).ToString().Trim().ToLower() != "online")
                                 {
-                                    <div class="col-sm-8 col-xs-6 text-right ">
+                                    <div class="col-sm-8 col-xs-6 text-right m480-loc-add m480p5">
                                         <div class="form-group mb0">
                                             @*<a href="#" data-geo=""></a>*@
 
@@ -310,12 +310,12 @@
         <div class="event_detail_container">
             <div class="evnt_tile_head">
                 <div class="evnt_tile_bg_l"></div>
-                <div class="col-sm-6 col-xs-6 text-left no_pad">
+                <div class="col-sm-6 col-xs-6 text-left no_pad m480-h-titl-lft">
                     <h2 class="fb_dis_head no_pad pt5 pr0">COMPLETE INFO </h2>
                 </div>
                 @if (Model.EventPrivacy == "Public" || (Model.Shareonfb == "Y" || Model.Shareonfb == "y"))
                 {
-                    <div class="col-sm-6 col-xs-6 text-right pl0 ev_social_share_btn">
+                    <div class="col-sm-6 col-xs-6 text-right pl0 ev_social_share_btn  m480-h-titl-rit">
                         <a href="javascript:void(0)"><img src="/Images/mail.png"></a>
                         <a href="javascript:void(0)" id="twittershare"><img src="/Images/twi.png"></a>
                         <a href="javascript:void(0)" id="fbshare"><img src="/Images/fac.png"></a>
@@ -328,8 +328,8 @@
 
                     <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
                 </div>
-            <div class="evnt_details_body2">
-                <div class="col-sm-12 ev_white_bg pb10">
+            <div class="evnt_details_body2 m480-body2">
+                <div class="col-sm-12 ev_white_bg pb10 m480-inn-pad">
                     <div class="col-sm-8 view_sec_text mt10" id="eventdesc" >
                         <label id="eventdesc" class="eventdescfont">
                             @Html.Raw(Model.EventDescription)
@@ -376,7 +376,7 @@
                 </div>
                 <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
             </div>
-            <div class="evnt_details_body2">
+            <div class="evnt_details_body2 m480-body2">
                 <div class="col-sm-12 ev_white_bg pb10 mt20 pt10">
                     <label class="label-control evnt_ticket_label">
                         <a href="javascript:void(0)"><img src="~/Images/fb_connect.jpg" border="0" alt=""></a>
@@ -431,7 +431,7 @@
                     </div>
                     <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
                 </div>
-                <div class="evnt_details_body2">
+                <div class="evnt_details_body2 m480-body2">
                     <div id="dvTicketInfo" class="col-sm-12 mt10 no_pad">
                        
                             <div id="dvAjxLoader">
@@ -472,7 +472,7 @@
                     <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
                 </div>
 
-                <div class="evnt_details_body2">
+                <div class="evnt_details_body2 m480-body2">
                     <div class="row catgtype1 catgbg1">
                         <div class="col-sm-4 col-xs-4 fs16"><a href="javascript:void(0)">@TempData["EventType"]</a> </div>
                         <div class="col-sm-4 col-xs-4 fs16"><a href="javascript:void(0)">@TempData["EventCategory"]</a></div>
@@ -486,15 +486,15 @@
             <div class="clearfix"></div>
             <div class="event_detail_container" id="DealInfo">
 
-                <div class=" evnt_tile_deal_head">
+                @*<div class=" evnt_tile_deal_head">
                     <div class="evnt_tile_deal_bg_l"></div>
                     <div class="col-sm-12 col-xs-12 text-left no_pad">
                         <h2 class="fb_dis_head pt5">AVAILABLE DEAL</h2>
                     </div>
                     <div class="evnt_tile_deal_bg_r evnt_tile_bg_r_call"></div>
-                </div>
+                </div>*@
                 <div class="evnt_details_body2">
-                    <div class="col-sm-12 ev_white_bg pt10 pb10 mt20">
+                    @*<div class="col-sm-12 ev_white_bg pt10 pb10 mt20">
                         <div class="col-sm-4 no_pad ">
                             <img class="img-responsive" src="/Images/deal_img1.jpg" />
                             <div class="clearfix"></div>
@@ -544,8 +544,8 @@
                             Expires 90 days after purchase. <br>
                             Limit 1 per person, may buy 2 additional as gifts. Limit 1 per table. Valid only for option purchased. Reservation required. Dine-in only. Alcohol is not discounted more than 50%. Merchant is solely responsible for all sales and delivery of alcohol. Must provide 21+ ID to receive alcoholic beverages. Not valid on Thanksgiving or other major holidays. Not valid with other offers. See the rules that apply to all deals.
                         </div>
-                    </div>
-                    <div class="col-sm-12 mt20 ">
+                    </div>*@
+                    <div class="col-sm-12 mt10 ">
                         <div class="col-sm-12 text-right no_pad">
                             @if (Model.EventCancel == "Y")
                             {

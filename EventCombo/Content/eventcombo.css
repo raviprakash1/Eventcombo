@@ -944,6 +944,31 @@ span.evnt_toltip{
 .cont_margin{ margin-top: 11px; margin-bottom: 0px;}
 #scrollhome.con_scr0l_home{margin-top:205px !important;}
 #eventtopscoll.view_evnt_top.xs-paymentconf-top.viewevent_container{ margin-top: 154px !important;}
+
+/*mobile css 480*/
+.event_container_480{ max-width:100%;}
+.xs-viewevent-inner.mob-sld-480{ border:0px; margin-top:10px;}
+.xs-viewevent-inner .carousel{ min-height:550px;}
+.mob-navbar-wrapper .mob-btn{ width:70px; }
+.mob-navbar-wrapper .mob-btn button{font-size: 15px; margin-top: 13px;}
+.mob-navbar-wrapper .m480-evnt-titl{ font-size: 22px; margin-top:5px;}
+.xs-viewevent-inner .navbar-wrapper{  margin-top: 230px;}
+.xs-viewevent-inner .carousel .item{ min-height:270px;}
+.m480-date .evnt_title_date{font-size: 22px; }
+.m480-date{ width:100%; float:right; text-align:right; }
+.m480-loc-add{width:100%; float:right; text-align:right;}
+.m480-loc-add .evnt_title_date{font-size: 22px;}
+.m480-ord-now{ margin-left: 160px; margin-top: 40px; position: absolute; width:auto; }
+.m480-ord-now .xs-icondeal{  display: block;margin-top: 8px; text-align: center;}
+.m480-ord-now .xs-icondeal img{ width:auto;}
+.m480p5{ padding-left:5px; padding-right:5px;}
+.m480-h-titl-lft{ width:auto; }
+.m480-h-titl-rit{ width:74%;}
+.evnt_details_body2.m480-body2{ padding:0 10px;}
+.m480-inn-pad{ padding:0px;}
+
+
+
 }
 @media (min-width: 360px) and (max-width: 640px) {
 .xs_create_code_mb10{ margin-bottom:10px;}

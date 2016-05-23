@@ -333,13 +333,36 @@ WriteLiteral("  />\r\n");
             #line 72 "..\..\Views\Home\PasswordReset.cshtml"
 
 
+            
+            #line default
+            #line hidden
+WriteLiteral("                        <input");
+
+WriteLiteral(" type=\"hidden\"");
+
+WriteLiteral(" name=\"code\"");
+
+WriteAttribute("value", Tuple.Create(" value=\"", 3874), Tuple.Create("\"", 3893)
+            
+            #line 73 "..\..\Views\Home\PasswordReset.cshtml"
+, Tuple.Create(Tuple.Create("", 3882), Tuple.Create<System.Object, System.Int32>(Model.code
+            
+            #line default
+            #line hidden
+, 3882), false)
+);
+
+WriteLiteral(" />\r\n");
+
+            
+            #line 74 "..\..\Views\Home\PasswordReset.cshtml"
                     }
 
             
             #line default
             #line hidden
-WriteLiteral("                </div>\r\n            </div>\r\n        </div>\r\n\r\n</div>\r\n\r\n\r\n\r\n<scri" +
-"pt");
+WriteLiteral("                </div>\r\n            </div>\r\n        </div>\r\n  \r\n</div>\r\n\r\n\r\n\r\n<sc" +
+"ript");
 
 WriteLiteral(" type=\"text/javascript\"");
 
@@ -372,36 +395,36 @@ WriteLiteral(">\r\n    $(document).click(function () {\r\n        $(\'#dvrstsucc
 "eyup(function () {\r\n            if ($(this).val() != \'\' && $(\'#txtPaswordrst\').v" +
 "al() != \'\') {\r\n\r\n                $(\'#btnreset\').removeAttr(\"disabled\");\r\n\r\n     " +
 "       } else {\r\n\r\n                $(\'#btnreset\').attr(\"disabled\", true);\r\n     " +
-"       }\r\n\r\n        })\r\n\r\n    });\r\n    function validationResetPasword() {\r\n\r\n  " +
-"      var msgrst = \"\";\r\n        var pwdcount = 0;\r\n        var Password = $(\"#tx" +
-"tPaswordrst\").val();\r\n        var ConfirmPassword = $(\"#txtPaswordrstconfirm\").v" +
-"al();\r\n        if (Password.length < 4) {\r\n            $(\'#txtPaswordrst\').focus" +
-"();\r\n            $(\'#txtPaswordrst\').addClass(\'err-bor\');\r\n            pwdcount " +
-"+= 1;\r\n              }\r\n     \r\n        if (ConfirmPassword.length < 4) {\r\n      " +
-"      pwdcount += 1;\r\n                $(\'#txtPaswordrstconfirm\').focus();\r\n     " +
-"           $(\'#txtPaswordrstconfirm\').addClass(\'err-bor\');\r\n               \r\n   " +
-"         }\r\n\r\n        if (pwdcount > 0)\r\n        {\r\n            msgrst= ajaxsetu" +
-"p(\'ResetPassword\',\'ResetPasswordPwdValidationUI\');\r\n\r\n        }\r\n              \r" +
-"\n            return msgrst;\r\n           \r\n    }\r\n    $(\"#btnreset\").click(functi" +
-"on () {\r\n      \r\n       \r\n        var msgloginn = validationResetPasword();\r\n   " +
-"     console.log(msgloginn);\r\n       \r\n        //var flag1login = true;\r\n       " +
-" if (msgloginn == \"\") {\r\n            $(\'#diverrorst\').css(\"display\", \"none\");\r\n " +
-"           return true;\r\n          \r\n        }\r\n        else {\r\n            $(\'#" +
-"diverro1rst\').css(\"display\", \"none\");\r\n            $(\'#dvrstsucc\').css(\"display\"" +
-", \"none\");\r\n            $(\'#dvrstsuc\').html(msgloginn);\r\n            $(\'#diverro" +
-"rst\').css(\"display\", \"block\");\r\n            //setTimeout(function () {\r\n        " +
-"    //    $(\'#diverrorst\').fadeOut();\r\n            //    $(\'#txtPaswordrst\').val" +
-"(\"\");\r\n            //    $(\'#txtPaswordrstconfirm\').val(\"\");\r\n            //    " +
-"$(\'#txtPaswordrst\').css(\"border\", \"gray solid 1px\");\r\n            //    $(\'#txtP" +
-"aswordrstconfirm\').css(\"border\", \"gray solid 1px\");\r\n            //}, 900)\r\n    " +
-"        return false;\r\n        }\r\n    });\r\n\r\n    function ajaxsetup(strname, str" +
-"FormTag) {\r\n        var msgnew = \"\";\r\n\r\n        var request = $.ajax({\r\n        " +
-"    url: \"/ValidationMessage/Index\",\r\n            async: false,\r\n            dat" +
-"a: { strFormName: strname, strFormTag: strFormTag },\r\n            type: \'Post\'\r\n" +
-"        });\r\n        request.done(function (msg) {\r\n            msgnew += msg;\r\n" +
-"        });\r\n\r\n        request.fail(function (jqXHR, textStatus) {\r\n            " +
-"msgnew += \"Some Error occur!!\";\r\n        });\r\n        return msgnew;\r\n    }\r\n   " +
-" </script>");
+"       }\r\n\r\n        })\r\n\r\n    });\r\n    function validationResetPasword() {\r\n    " +
+"    debugger;\r\n        var msgrst = \"\";\r\n        var pwdcount = 0;\r\n        var " +
+"Password = $(\"#txtPaswordrst\").val();\r\n        var ConfirmPassword = $(\"#txtPasw" +
+"ordrstconfirm\").val();\r\n        if (Password.length < 4) {\r\n            $(\'#txtP" +
+"aswordrst\').focus();\r\n            $(\'#txtPaswordrst\').addClass(\'err-bor\');\r\n    " +
+"        pwdcount += 1;\r\n              }\r\n     \r\n        if (ConfirmPassword.leng" +
+"th < 4) {\r\n            pwdcount += 1;\r\n                $(\'#txtPaswordrstconfirm\'" +
+").focus();\r\n                $(\'#txtPaswordrstconfirm\').addClass(\'err-bor\');\r\n   " +
+"            \r\n            }\r\n\r\n        if (pwdcount > 0)\r\n        {\r\n           " +
+" msgrst= ajaxsetup(\'ResetPassword\',\'ResetPasswordPwdValidationUI\');\r\n\r\n        }" +
+"\r\n              \r\n            return msgrst;\r\n           \r\n    }\r\n    $(\"#btnres" +
+"et\").click(function () {\r\n      \r\n       \r\n        var msgloginn = validationRes" +
+"etPasword();\r\n        console.log(msgloginn);\r\n       \r\n        //var flag1login" +
+" = true;\r\n        if (msgloginn == \"\") {\r\n            $(\'#diverrorst\').css(\"disp" +
+"lay\", \"none\");\r\n            return true;\r\n          \r\n        }\r\n        else {\r" +
+"\n            $(\'#diverro1rst\').css(\"display\", \"none\");\r\n            $(\'#dvrstsuc" +
+"c\').css(\"display\", \"none\");\r\n            $(\'#dvrstsuc\').html(msgloginn);\r\n      " +
+"      $(\'#diverrorst\').css(\"display\", \"block\");\r\n            //setTimeout(functi" +
+"on () {\r\n            //    $(\'#diverrorst\').fadeOut();\r\n            //    $(\'#tx" +
+"tPaswordrst\').val(\"\");\r\n            //    $(\'#txtPaswordrstconfirm\').val(\"\");\r\n " +
+"           //    $(\'#txtPaswordrst\').css(\"border\", \"gray solid 1px\");\r\n         " +
+"   //    $(\'#txtPaswordrstconfirm\').css(\"border\", \"gray solid 1px\");\r\n          " +
+"  //}, 900)\r\n            return false;\r\n        }\r\n    });\r\n\r\n    function ajaxs" +
+"etup(strname, strFormTag) {\r\n        var msgnew = \"\";\r\n\r\n        var request = $" +
+".ajax({\r\n            url: \"/ValidationMessage/Index\",\r\n            async: false," +
+"\r\n            data: { strFormName: strname, strFormTag: strFormTag },\r\n         " +
+"   type: \'Post\'\r\n        });\r\n        request.done(function (msg) {\r\n           " +
+" msgnew += msg;\r\n        });\r\n\r\n        request.fail(function (jqXHR, textStatus" +
+") {\r\n            msgnew += \"Some Error occur!!\";\r\n        });\r\n        return ms" +
+"gnew;\r\n    }\r\n    </script>");
 
         }
     }

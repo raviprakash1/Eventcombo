@@ -482,7 +482,7 @@ namespace CMS.Controllers
                         }
                         else
                         {
-                            from = "shweta.sindhu@kiwitech.com";
+                            from = ConfigurationManager.AppSettings.Get("UserName");
 
                         }
                      
