@@ -481,7 +481,7 @@ namespace CMS.Controllers
                     if (!string.IsNullOrWhiteSpace(SearchStringEventTitle))
                     {
                         var str = "%" + SearchStringEventTitle + "%";
-                        strsql += " And rtrim(ltrim(EV.EventTitle)) like rtrim(ltrim('" + str + "'))";
+                        strsql += " And ( rtrim(ltrim(EV.EventTitle)) like rtrim(ltrim('" + str + "')) OR rtrim(ltrim(EV.EventID)) like rtrim(ltrim('" + str + "')))";
 
                     }
                     if (Convert.ToInt32(iEventType) > 0)

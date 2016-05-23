@@ -29,7 +29,7 @@ namespace EventCombo.Models
             values["SIGNATURE"] = PayPalSettings.Signature;
             values["SUBJECT"] = "";
             values["VERSION"] = "93";
-            values["BRANDNAME"] = "BRANDNAME1";
+            values["BRANDNAME"] = "Eventcombo.com";
             values["AMT"] = order.Amount.ToString();
 
             values = Submit(values);
