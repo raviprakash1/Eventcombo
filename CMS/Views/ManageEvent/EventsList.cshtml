@@ -336,12 +336,12 @@
 
                                     </table>
 
-                                    <div style="float:right">
+                                    <div class="col-xs-12 no_pad" style="text-align:right">
                                         @Html.PagedListPager(Model, pageF => Url.Action("EventsList", new { pageF, SearchStringEventTitle = TempData["SearchStringEventTitle"], EventType = TempData["EventType"], ddlEventCategory = TempData["ddlEventCategory"], ddlEventSubCategory=TempData["ddlEventSubCategory"], Features= TempData["Features"], Events=TempData["Events"], Tickets= TempData["Tickets"], sortorder=TempData["sortorder"] }))
                                     </div>
                                     @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"] != null)
                                     {
-                                        <span>No Result Found.</span>
+                                        <div class="col-xs-12 no_pad text-center">No Result Found.</div>
                                     }
 
                                 </div>

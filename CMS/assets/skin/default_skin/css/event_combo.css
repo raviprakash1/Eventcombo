@@ -101,10 +101,10 @@ top: 40%; left: 30%; border:1px solid #e2e2e2; display: none; }
 .search-pnl .panel-controls .panel-control-collapse{ text-decoration:none;}
 .search-mng-pnl .panel-controls .panel-control-collapse{ text-decoration:none;}
 
-.table-responsive.mngtable{ width:100%; overflow-x:scroll; }
+.table-responsive.mngtable{ width:100%; overflow-x:auto; }
 @media (width: 320px) {
 .table-responsive{ width:320px; overflow-x:scroll;}
-
+.table-responsive.mngtable{ width:320px; overflow-x:scroll; }
 }
 @media (width: 375px) {
 .table-responsive{ width:375px; overflow-x:scroll;}
