@@ -121,24 +121,26 @@ namespace CMS.Models
         public string Email { get; set; }
     }
 
-    public enum OrderSortBy { Name, Order, Date, Qty, Total };
+    public enum OrderSortBy { Name, Order, Date, Qty, Total, FullName, Email, Address, Status, OrderDate, EventId, DateDiff };
     public enum OrderTypes { Upcoming, Past };
 
     public class OrderListRequestViewModel
     {
       public OrderListRequestViewModel()
       {
-        SortBy = OrderSortBy.Date;
+        SortBy = OrderSortBy.OrderDate;
         OrderType = OrderTypes.Upcoming;
-        PerPage = 20;
+        PerPage = 25;
         Page = 0;
         SortDesc = false;
+        Search = "";
       }
       public OrderSortBy SortBy { get; set; }
       public OrderTypes OrderType { get; set; }
       public int PerPage { get; set; }
       public int Page { get; set; }
       public bool SortDesc { get; set; }
+      public string Search { get; set; }
     }
 
     public class OrderMainViewModel
@@ -154,6 +156,14 @@ namespace CMS.Models
       public bool Favorite { get; set; }
       public byte? OrderStateId { get; set; }
       public long? EventId { get; set; }
+      public string FirstName { get; set; }
+      public string LastName { get; set; }
+      public string Email { get; set; }
+      public string City { get; set; }
+      public string State { get; set; }
+      public DateTime? OrderDateTime { get; set; }
+      public string OrderStateName { get; set; }
+      public string UserId { get; set; }
     }
 
     public class OrderListMainViewModel

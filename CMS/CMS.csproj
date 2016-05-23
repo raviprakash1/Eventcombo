@@ -367,6 +367,9 @@
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MyAccount.cs" />
+    <Compile Include="Models\OrderState.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Order_Detail_T.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
@@ -439,6 +442,9 @@
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\V_EventsList.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\v_OrderList.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\v_RetrieveEventid.cs">

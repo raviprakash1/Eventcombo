@@ -68,6 +68,10 @@
     min-width: 190px;
 }
 
+.searchTxtOrderContainerCls{
+    padding: 17px 0px 5px 0px;
+}
+
 .cancelOrderTitleHead{
     text-align: center;
     color: #333;

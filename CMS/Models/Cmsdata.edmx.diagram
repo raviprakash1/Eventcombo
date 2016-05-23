@@ -96,6 +96,8 @@
         <AssociationConnector Association="Cmsdata.EventVenuePublish_Event_Detail" />
         <AssociationConnector Association="Cmsdata.EventEventFavourite" />
         <AssociationConnector Association="Cmsdata.AspNetUserOrganizer_Master" />
+        <EntityTypeShape EntityType="Cmsdata.OrderState" Width="1.5" PointX="3.375" PointY="6.75" />
+        <EntityTypeShape EntityType="Cmsdata.v_OrderList" Width="1.5" PointX="12.375" PointY="23.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

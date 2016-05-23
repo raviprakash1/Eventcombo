@@ -42,70 +42,65 @@ namespace CMS.Service
       _dbservice = dbService;
     }
 
-    private IEnumerable<OrderMainViewModel> GetOrdersForUser(string userId)
+    private IEnumerable<OrderMainViewModel> GetOrdersForUser(string userId, string searchStr)
     {
-      IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
-      IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+      IRepository<v_OrderList> orderRepo = new GenericRepository<v_OrderList>(_factory.ContextFactory);
 
       List<OrderMainViewModel> ordersVM = new List<OrderMainViewModel>();
       OrderMainViewModel oVM = null;
-      IEnumerable<Order_Detail_T> orders = null;
+      IEnumerable<v_OrderList> orders = null;
+
+      string srch = String.IsNullOrEmpty(searchStr) ? "" : searchStr.Trim();
+
       if (String.IsNullOrEmpty(userId))
-        orders = orderRepo.Get();
+      {
+        if (String.IsNullOrEmpty(srch))
+          orders = orderRepo.Get();
+        else
+          orders = orderRepo.Get(filter: (o => o.OrderId.Contains(srch) || o.Email.Contains(srch) || o.FirstName.Contains(srch)
+            || o.LastName.Contains(srch) || o.Name.Contains(srch) || (o.EventID.ToString() == srch)));
+      }
       else
-        orders = orderRepo.Get(filter: (o => o.O_User_Id == userId));
+      {
+        if (String.IsNullOrEmpty(srch))
+          orders = orderRepo.Get(filter: (o => o.UserId == userId));
+        else
+          orders = orderRepo.Get(filter: (o => (o.UserId == userId) &&
+            (o.OrderId.Contains(srch) || o.Email.Contains(srch) || o.FirstName.Contains(srch)
+            || o.LastName.Contains(srch) || o.Name.Contains(srch) || (o.EventID.ToString() == srch))));
+      }
       foreach (var order in orders)
       {
-        var ptickets = tpdRepo.Get(filter: (t => t.TPD_Order_Id == order.O_Order_Id));
-        var firstticket = ptickets == null ? null : ptickets.FirstOrDefault();
-        if ((ptickets != null) && (firstticket != null))
-        {
-          oVM = new OrderMainViewModel()
-          {
-            OId = order.O_Id,
-            Name = firstticket.Event.EventTitle,
-            Quantity = ptickets.Sum(pt => pt.TPD_Purchased_Qty),
-            TotalPaid = ptickets.Sum(pt => pt.TPD_Amount),
-            EventStartDate = DateTime.Parse(firstticket.Ticket_Quantity_Detail.Publish_Event_Detail.PE_Scheduled_Date),
-            EventEndDate = DateTime.Parse(firstticket.Ticket_Quantity_Detail.Publish_Event_Detail.PE_MultipleVenue_id > 0 ?
-              firstticket.Ticket_Quantity_Detail.Publish_Event_Detail.PE_Scheduled_Date :
-              firstticket.Ticket_Quantity_Detail.Publish_Event_Detail.EventVenue.EventEndDate),
-            OrderId = order.O_Order_Id,
-            EventCancelled = (firstticket.Event.EventCancel == "Y"),
-            Favorite = false,
-            OrderStateId = order.OrderStateId,
-            EventId = firstticket.TPD_Event_Id
-          };
-          ordersVM.Add(oVM);
-        };
+        oVM = _mapper.Map<OrderMainViewModel>(order);
+        ordersVM.Add(oVM);
       }
       return ordersVM;
     }
 
-    private IEnumerable<OrderMainViewModel> GetUpcomingOrdersForUser(string userId)
+    private IEnumerable<OrderMainViewModel> GetUpcomingOrdersForUser(string userId, string searchStr)
     {
-      IEnumerable<OrderMainViewModel> orders = GetOrdersForUser(userId)
+      IEnumerable<OrderMainViewModel> orders = GetOrdersForUser(userId, searchStr)
         .Where(t => ((!t.EventCancelled) && (t.EventEndDate >= DateTime.Today))).ToList();
       return orders;
     }
 
-    private IEnumerable<OrderMainViewModel> GetPastOrdersForUser(string userId)
+    private IEnumerable<OrderMainViewModel> GetPastOrdersForUser(string userId, string searchStr)
     {
-      IEnumerable<OrderMainViewModel> orders = GetOrdersForUser(userId)
+      IEnumerable<OrderMainViewModel> orders = GetOrdersForUser(userId, searchStr)
         .Where(t => ((t.EventCancelled) || (t.EventEndDate < DateTime.Today))).ToList();
       return orders;
     }
 
-    public IEnumerable<OrderMainViewModel> GetOrdersList(OrderTypes type, string userId)
+    public IEnumerable<OrderMainViewModel> GetOrdersList(OrderTypes type, string userId, string searchStr)
     {
       IEnumerable<OrderMainViewModel> orders = null;
       switch (type)
       {
         case OrderTypes.Upcoming:
-          orders = GetUpcomingOrdersForUser(userId);
+          orders = GetUpcomingOrdersForUser(userId, searchStr);
           break;
         case OrderTypes.Past:
-          orders = GetPastOrdersForUser(userId);
+          orders = GetPastOrdersForUser(userId, searchStr);
           break;
         default:
           break;
@@ -116,7 +111,41 @@ namespace CMS.Service
 
     public long GetOrdersCount(OrderTypes type, string userId)
     {
-      return GetOrdersList(type, userId).Count();
+      long res = 0;
+      switch (type)
+      {
+        case OrderTypes.Upcoming:
+          res = GetUpcomingOrdersCountForUser(userId);
+          break;
+        case OrderTypes.Past:
+          res = GetPastOrdersCountForUser(userId);
+          break;
+        default:
+          break;
+      }
+      return res;
+    }
+
+    private long GetPastOrdersCountForUser(string userId)
+    {
+      IRepository<v_OrderList> orderRepo = new GenericRepository<v_OrderList>(_factory.ContextFactory);
+      long result = 0;
+      if (String.IsNullOrEmpty(userId))
+        result = orderRepo.Get(filter: (o => o.EventEndDate < DateTime.Today)).Count();
+      else
+        result = orderRepo.Get(filter: (o => (o.EventEndDate < DateTime.Today) && (o.UserId == userId))).Count();
+      return result;
+    }
+
+    private long GetUpcomingOrdersCountForUser(string userId)
+    {
+      IRepository<v_OrderList> orderRepo = new GenericRepository<v_OrderList>(_factory.ContextFactory);
+      long result = 0;
+      if (String.IsNullOrEmpty(userId))
+        result = orderRepo.Get(filter: (o => o.EventEndDate >= DateTime.Today)).Count();
+      else
+        result = orderRepo.Get(filter: (o => (o.EventEndDate >= DateTime.Today) && (o.UserId == userId))).Count();
+      return result;
     }
 
 

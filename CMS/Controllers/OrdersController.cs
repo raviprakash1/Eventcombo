@@ -47,7 +47,7 @@ namespace CMS.Controllers
       OrderListMainViewModel olist = new OrderListMainViewModel();
       olist.OrderType = model.OrderType;
 
-      var orders = _tservice.GetOrdersList(model.OrderType, String.Empty);
+      var orders = _tservice.GetOrdersList(model.OrderType, String.Empty, model.Search);
       switch (model.SortBy)
       {
         case OrderSortBy.Date:
@@ -62,8 +62,32 @@ namespace CMS.Controllers
         case OrderSortBy.Qty:
           orders = model.SortDesc ? orders.OrderByDescending(t => t.Quantity) : orders.OrderBy(t => t.Quantity);
           break;
-        default:
+        case OrderSortBy.Address:
+          orders = model.SortDesc ? orders.OrderByDescending(t => t.State).ThenByDescending(t => t.City)
+            : orders.OrderBy(t => t.State).ThenBy(t => t.City);
+          break;
+        case OrderSortBy.FullName:
+          orders = model.SortDesc ? orders.OrderByDescending(t => t.FirstName).ThenByDescending(t => t.LastName)
+            : orders.OrderBy(t => t.FirstName).ThenBy(t => t.LastName);
+          break;
+        case OrderSortBy.Email:
+          orders = model.SortDesc ? orders.OrderByDescending(t => t.Email) : orders.OrderBy(t => t.Email);
+          break;
+        case OrderSortBy.EventId:
+          orders = model.SortDesc ? orders.OrderByDescending(t => t.EventId) : orders.OrderBy(t => t.EventId);
+          break;
+        case OrderSortBy.OrderDate:
+          orders = model.SortDesc ? orders.OrderByDescending(t => t.OrderDateTime) : orders.OrderBy(t => t.OrderDateTime);
+          break;
+        case OrderSortBy.Status:
+          orders = model.SortDesc ? orders.OrderByDescending(t => t.OrderStateName) : orders.OrderBy(t => t.OrderStateName);
+          break;
+        case OrderSortBy.Total:
           orders = model.SortDesc ? orders.OrderByDescending(t => t.TotalPaid) : orders.OrderBy(t => t.TotalPaid);
+          break;
+        default:
+          orders = model.SortDesc ? orders.OrderByDescending(t => Math.Abs(t.OrderDateTime.Value.Ticks - DateTime.Today.AddDays(1).Ticks))
+            : orders.OrderBy(t => Math.Abs(t.OrderDateTime.Value.Ticks - DateTime.Today.AddDays(1).Ticks));
           break;
       }
 

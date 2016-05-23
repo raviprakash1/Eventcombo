@@ -7,26 +7,34 @@
   <table class="table">
     <thead>
       <tr>
-        <th class="UETableHead" width="15%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Name')">Event</a></th>
-        <th class="UETableHead" width="15%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Order')">Order Number</a></th>
-        <th class="UETableHead" width="15%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Date')">Date</a></th>
-        <th class="UETableHead" width="7%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Qty')">Qty.</a></th>
-        <th class="UETableHead"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Total')">Total Paid</a></th>
+        <th class="UETableHead" width="11%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.EventId')">Event Id</a></th>
+        <th class="UETableHead" width="11%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Name')">Event</a></th>
+        <th class="UETableHead" width="11%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.FullName')">Customer Name</a></th>
+        <th class="UETableHead" width="11%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Email')">Email</a></th>
+        <th class="UETableHead" width="11%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Address')">City, State</a></th>
+        <th class="UETableHead" width="11%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Order')">Order Number</a></th>
+        <th class="UETableHead" width="11%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Total')">Total</a></th>
+        <th class="UETableHead" width="11%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.OrderDate')">Order date, time</a></th>
+        <th class="UETableHead"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Status')">Status</a></th>
       </tr>
     </thead>
     <tbody>
       @foreach (var order in Model.Orders)
       {
         <tr>
+          <td class="UETableTD">@(order.EventId.ToString())</td>
           <td class="UETableTD">@order.Name</td>
+          <td class="UETableTD">@order.FirstName @order.LastName</td>
+          <td class="UETableTD">@order.Email</td>
+          <td class="UETableTD">@(order.City), @order.State</td>
           <td class="UETableTD">
             <a href="javascript:void(0)" onclick="expandEditMenu(this, 'UETableTD@(Model.OrderType)_', '@(order.OrderId)')">
               @((order.OrderId ?? "") == "" ? "Not assigned" : order.OrderId)
             </a>
           </td>
-          <td class="UETableTD">@(order.EventStartDate.Value.ToLongDateString())</td>
-          <td class="UETableTD">@order.Quantity</td>
-          <td class="UETableTD">$@(order.TotalPaid) @((order.OrderStateId ?? 1) != 1 ? "- Cancelled" : "")</td>
+          <td class="UETableTD">$@(order.TotalPaid)</td>
+          <td class="UETableTD">@(order.OrderDateTime.Value.ToShortDateString()) @(order.OrderDateTime.Value.ToShortTimeString())</td>
+          <td class="UETableTD">@order.OrderStateName</td>
         </tr>
         <tr id="UETableTD@(Model.OrderType)_@(order.OrderId)" data-orderstate="@(order.OrderStateId ?? 1)" data-popped="0" style="display:none;"></tr>
       }

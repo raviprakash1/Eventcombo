@@ -46,6 +46,7 @@ namespace CMS
         .ForMember(d => d.Name, m => m.MapFrom(s => s.Name.Trim()))
         .ForMember(d => d.Email, m => m.MapFrom(s => s.Email.Trim()));
       CreateMap<Event_OrganizerMessages, OrganizerMessageViewModel>();
+      CreateMap<v_OrderList, OrderMainViewModel>();
 
       //backward maps
       CreateMap<ArticleFullViewModel, Article>()
