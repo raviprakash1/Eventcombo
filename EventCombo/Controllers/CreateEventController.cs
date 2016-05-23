@@ -144,6 +144,7 @@ namespace EventCombo.Controllers
                     }
 
                     var rows = (from myRow in db.EventTypes where myRow.EventHide=="N" || string.IsNullOrEmpty(myRow.EventHide)
+                                orderby myRow.EventType1
                                 select myRow).ToList();
                     List<SelectListItem> EventType = new List<SelectListItem>();
                     EventType.Add(new SelectListItem()
@@ -163,6 +164,7 @@ namespace EventCombo.Controllers
 
 
                     var EventCat = (from myRow in db.EventCategories
+                                    orderby myRow.EventCategory1
                                     select myRow).ToList();
                     List<SelectListItem> EventCategory = new List<SelectListItem>();
                     EventCategory.Add(new SelectListItem()
@@ -305,7 +307,8 @@ namespace EventCombo.Controllers
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
                     var EventCat = (from myRow in objEnt.EventSubCategories
-                                    where myRow.EventCategoryID == lECatId
+                                    where myRow.EventCategoryID == lECatId  
+                                    orderby myRow.EventSubCategory1
                                     select myRow).ToList();
 
                     //strHtml.Append("< option value =0 selected=true>Select</ option > ");
