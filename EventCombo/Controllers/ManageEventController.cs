@@ -2896,7 +2896,7 @@ namespace EventCombo.Controllers
                         {
                             objEC = new EmailContent();
                             objEC.To = objEv.L_EmailId.Trim();
-                            objEC.From = "shweta.sindhu@kiwitech.com";
+                            objEC.From = ConfigurationManager.AppSettings.Get("UserName");
                             objEC.Body = Model.I_EmailContent;
                             objEC.Subject = Model.I_SubjectLine;
                             objEC.Cc = "";

@@ -46,39 +46,50 @@
                         </div>
                         <div class="col-sm-9 pl0">
                             <h2 class="th_tilte" id="h2tag">@Html.DisplayFor(m => m.Title)</h2>
+                            <div class="col-sm-12 col-xs-12 text-left">
+                                <div class="form-group mb0">
 
-                            @*<div class="col-sm-12 col-xs-12 text-left">
-                                @*<div class="form-group mb0">
-                                        <div class="Timezone ev_date_icn ev_date_icn2 evnt_icn_xs"></div>
-                                        <label class="label-control evnt_title_date2 evnt_title_xs" title="see what happening on this date">
-
-                                           Add Schedule to calendar
-                                        </label>
-                                    </div>*@
-                            @*<div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal">
-                                    <div class="ev_time_zone_model date_time_modal">
-                                        <div class="modal-content ev_tm_zon_cont">
-                                            <div class="modal-header">
-                                                <button class="close closetimemodal" type="button">
-                                                    <span>&#215;</span>
-                                                </button>
-                                                <h4 class="modal-title date_time_list">Schedule Date List</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="col-sm-12 no_pad">
-                                                    <div class="form-group mb5 ">
-                                                        <label class="col-sm-12 no_pad label-control date_time_list">
-                                                            <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="Text" data-toggle="modal">Text</a>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
+                                    <label class="label-control " >
+                                        @TempData["address"]
+                                     <br />
+                                        @TempData["eventdatetime"]
+                                    </label>
+                                  
                                     </div>
-                                </div>*@
-                            @*</div>*@
+
+                                </div>
+                                @*<div class="col-sm-12 col-xs-12 text-left">
+            @*<div class="form-group mb0">
+                    <div class="Timezone ev_date_icn ev_date_icn2 evnt_icn_xs"></div>
+                    <label class="label-control evnt_title_date2 evnt_title_xs" title="see what happening on this date">
+
+                       Add Schedule to calendar
+                    </label>
+                </div>*@
+                                @*<div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal">
+                <div class="ev_time_zone_model date_time_modal">
+                    <div class="modal-content ev_tm_zon_cont">
+                        <div class="modal-header">
+                            <button class="close closetimemodal" type="button">
+                                <span>&#215;</span>
+                            </button>
+                            <h4 class="modal-title date_time_list">Schedule Date List</h4>
                         </div>
+                        <div class="modal-body">
+                            <div class="col-sm-12 no_pad">
+                                <div class="form-group mb5 ">
+                                    <label class="col-sm-12 no_pad label-control date_time_list">
+                                        <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="Text" data-toggle="modal">Text</a>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>*@
+                                @*</div>*@
+                            </div>
                     </div>
                 </div>
 
@@ -280,10 +291,10 @@
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <div class="col-sm-6 col-xs-12 pl0 xs375zip xs-tkt-pay-pl-0 ipad-w-100">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength=256 id="billcity">
+                                    <input class="form-control evnt_inp_cont alphabets" type="text" placeholder="City" maxlength=256 id="billcity">
                                 </div>
                                 <div class="col-sm-6 col-xs-12 no_pad ">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="State" maxlength=256 id="billstate">
+                                    <input class="form-control evnt_inp_cont alphabets" type="text" placeholder="State" maxlength=256 id="billstate">
                                 </div>
 
 
@@ -339,10 +350,10 @@
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
                                 <div class="col-sm-6 col-xs-12 pl0">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="City" maxlength=256 id="shipcity">
+                                    <input class="form-control evnt_inp_cont alphabets" type="text" placeholder="City" maxlength=256 id="shipcity">
                                 </div>
                                 <div class="col-sm-6 col-xs-12 no_pad ">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="State" maxlength=256 id="shipstate">
+                                    <input class="form-control evnt_inp_cont alphabets" type="text" placeholder="State" maxlength=256 id="shipstate">
                                 </div>
 
 
@@ -411,7 +422,7 @@
                             < Back
                         </button>
                         <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn mb10" id="completeorder">
-                            COMPLTE ORDER >
+                            COMPLETE ORDER >
                         </button>
                         <button type="button" class="btn btn-lg ev_live_btn ev_live_sub_btn mb10" id="btPaypal">
                             Paypal >
@@ -577,6 +588,38 @@
     }
 
     $(document).ready(function () {
+
+        $('.alphabets').keypress(function (e) {
+            var regex = new RegExp("^[a-zA-Z ]+$");
+            var charCode = e.charCode ? e.which : e.charCode;
+
+            if (charCode == 8 || charCode == 0) {
+                return;
+            }
+            else {
+                var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                if (regex.test(str)) {
+                    return true;
+                }
+            }
+
+
+            e.preventDefault();
+            return false;
+        });
+
+
+        $('.alphabets').bind('paste', function () {
+            var self = this;
+            setTimeout(function () {
+                if (!/^[a-zA-Z]+$/.test($(self).val()))
+                    $(self).val('');
+            }, 0);
+        });
+
+
+
+
         var vGrdTotal = parseFloat($("#spGrdTotal").text());
         if (isNaN(vGrdTotal) == true) vGrdTotal = 0;
         var totqty = $('#hidQty').val();
@@ -898,7 +941,7 @@
 
 
             $.ajax({
-                url: 'http://maps.googleapis.com/maps/api/geocode/json',
+                url: 'https://maps.googleapis.com/maps/api/geocode/json',
                 data: '&address=' + pincode + '&sensor=true',
                 dataType: 'json',
                 cache: false,
@@ -913,52 +956,13 @@
                             var obj2 = obj['types'];
 
                             for (var j = 0; j < obj2.length; j++) {
-                                if (obj2[j] == 'locality') {
+
+                                if ((obj2[j] == 'locality') || (obj2[j] == 'sublocality_level_1') || (obj2[j] == 'sublocality_level_2') || (obj2[j] == 'sublocality_level_3') || (obj2[j] == 'sublocality_level_4') || (obj2[j] == 'sublocality_level_5') || (obj2[j] == 'ward') || (obj2[j] == 'sublocality_level_5') || (obj2[j] == 'postal_town'))
+                                {
                                     city = obj['long_name'];
-
-
                                 }
 
-                                if (obj2[j] == 'sublocality_level_1') {
-                                    city = obj['long_name'];
-
-
-                                }
-                                if (obj2[j] == 'sublocality_level_2') {
-                                    city = obj['long_name'];
-
-
-                                }
-                                if (obj2[j] == 'sublocality_level_3') {
-                                    city = obj['long_name'];
-
-
-                                }
-                                if (obj2[j] == 'sublocality_level_4') {
-                                    city = obj['long_name'];
-
-
-                                }
-                                if (obj2[j] == 'sublocality_level_5') {
-                                    city = obj['long_name'];
-
-
-                                }
-                                if (obj2[j] == 'ward') {
-                                    city = obj['long_name'];
-
-
-                                }
-                                if (obj2[j] == 'sublocality_level_5') {
-                                    city = obj['long_name'];
-
-
-                                }
-                                if (obj2[j] == 'postal_town') {
-                                    city = obj['long_name'];
-
-
-                                }
+                             
                                 if (obj2[j] == 'administrative_area_level_1') {
                                     state = obj['long_name'];
 
@@ -1230,7 +1234,7 @@
 
 
             $.ajax({
-                url: 'http://maps.googleapis.com/maps/api/geocode/json?address=' + pincode + '',
+                url: 'https://maps.googleapis.com/maps/api/geocode/json?address=' + pincode + '',
                 dataType: 'json',
                 cache: false,
                 success: function (data) {
@@ -1244,52 +1248,17 @@
                             var obj2 = obj['types'];
 
                             for (var j = 0; j < obj2.length; j++) {
-                                if (obj2[j] == 'locality') {
+                                if ((obj2[j] == 'locality') || (obj2[j] == 'sublocality_level_1') || (obj2[j] == 'sublocality_level_2') || (obj2[j] == 'sublocality_level_3') || (obj2[j] == 'sublocality_level_4') || (obj2[j] == 'sublocality_level_5') || (obj2[j] == 'ward') || (obj2[j] == 'sublocality_level_5') || (obj2[j] == 'postal_town'))
+                                {
                                     city = obj['long_name'];
 
 
                                 }
 
-                                if (obj2[j] == 'sublocality_level_1') {
-                                    city = obj['long_name'];
-
-
-                                }
-                                if (obj2[j] == 'sublocality_level_2') {
-                                    city = obj['long_name'];
-
-
-                                }
-                                if (obj2[j] == 'sublocality_level_3') {
-                                    city = obj['long_name'];
-
-
-                                }
-                                if (obj2[j] == 'sublocality_level_4') {
-                                    city = obj['long_name'];
-
-
-                                }
-                                if (obj2[j] == 'sublocality_level_5') {
-                                    city = obj['long_name'];
-
-
-                                }
-                                if (obj2[j] == 'ward') {
-                                    city = obj['long_name'];
-
-
-                                }
-                                if (obj2[j] == 'sublocality_level_5') {
-                                    city = obj['long_name'];
-
-
-                                }
-                                if (obj2[j] == 'postal_town') {
-                                    city = obj['long_name'];
-
-
-                                }
+                            
+                          
+                            
+                         
                                 if (obj2[j] == 'administrative_area_level_1') {
                                     state = obj['long_name'];
 

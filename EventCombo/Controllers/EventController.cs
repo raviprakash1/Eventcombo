@@ -576,6 +576,8 @@ namespace EventCombo.Controllers
                 }
                 catch (Exception ex)
                 {
+                    ExceptionLogging.SendErrorToText(ex);
+                    pathnew = ex.Message.ToString();
                     isSavedSuccessfully = false;
                 }
 
@@ -586,7 +588,7 @@ namespace EventCombo.Controllers
                 }
                 else
                 {
-                    return Json(new { Message = "Error in saving file" });
+                    return Json(new { Message = "Error in saving file " + pathnew });
                 }
             }
             else

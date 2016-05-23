@@ -1611,7 +1611,7 @@ namespace EventCombo.Controllers
                 }
                 else
                 {
-                    from = "shweta.sindhu@kiwitech.com";
+                    from = ConfigurationManager.AppSettings.Get("UserName");
 
                 }
                 if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
@@ -2186,7 +2186,7 @@ namespace EventCombo.Controllers
                         }
                         else
                         {
-                            from = "shweta.sindhu@kiwitech.com";
+                            from = ConfigurationManager.AppSettings.Get("UserName");
 
                         }
                         if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))

@@ -683,6 +683,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_Layout.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\_Layout1.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_Layout1.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shared\_Login1Partial.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1379,6 +1384,7 @@
     </Content>
     <Content Include="Views\Shared\_Layout1.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_Layout1.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\ViewEvent\ViewEvent.cshtml" />
     <Content Include="Views\PayPalReturn\PayPalReturn.cshtml" />

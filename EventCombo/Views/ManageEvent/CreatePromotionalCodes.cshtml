@@ -471,10 +471,12 @@ else
 </script> 
 
 <script>
+
+    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
   window.fbAsyncInit = function() {
     // init the FB JS SDK
     FB.init({
-      appId: '1956731254551382',                        // App ID from the app dashboard
+        appId: fbappid,                        // App ID from the app dashboard
       status     : true,                                 // Check Facebook Login status
       xfbml      : true                                  // Look for social plugins on the page
     });
