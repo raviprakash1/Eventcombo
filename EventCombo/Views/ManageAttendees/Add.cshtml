@@ -45,7 +45,7 @@
                      value="@((ticket.Ticket.TicketTypeID ?? 0) == 3 ? "1" : "0")"
                      style="display:@((ticket.Ticket.TicketTypeID ?? 0) == 3 ? "none" : "block")" />
             </td>
-            <td class="attendeesAddTableTD">$<input type="text" value="0  .00" id="totalprice@(ticket.Ticket.T_Id.ToString())" class="attenTableQuantityCls" onblur="updateTotal()" /></td>
+            <td class="attendeesAddTableTD">$<input type="text" value="0.00" id="totalprice@(ticket.Ticket.T_Id.ToString())" class="attenTableQuantityCls" onblur="updateTotal()" /></td>
           </tr>
         }
       </tbody>
