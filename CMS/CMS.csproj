@@ -65,6 +65,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NReco.PdfGenerator, Version=1.1.11.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.PdfGenerator.1.1.11.0\lib\net20\NReco.PdfGenerator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
       <Private>True</Private>
@@ -219,6 +223,7 @@
     <Compile Include="Controllers\ManageEventController.cs" />
     <Compile Include="Controllers\MyAccController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValidationMessageController.cs" />
@@ -362,6 +367,9 @@
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MyAccount.cs" />
+    <Compile Include="Models\OrderState.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Order_Detail_T.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
@@ -436,6 +444,9 @@
     <Compile Include="Models\V_EventsList.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\v_OrderList.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\v_RetrieveEventid.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
@@ -444,8 +455,22 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ArticleService.cs" />
+    <Compile Include="Service\DBAccessService.cs" />
     <Compile Include="Service\IArticleService.cs" />
+    <Compile Include="Service\IDBAccessService.cs" />
+    <Compile Include="Service\ITicketsService.cs" />
+    <Compile Include="Service\Notification\INotification.cs" />
+    <Compile Include="Service\Notification\INotificationSender.cs" />
+    <Compile Include="Service\Notification\ISendMailService.cs" />
+    <Compile Include="Service\Notification\NotificationSender.cs" />
+    <Compile Include="Service\Notification\OrderCancelNotification.cs" />
+    <Compile Include="Service\Notification\OrderNotification.cs" />
+    <Compile Include="Service\Notification\OrganizerMessageNotification.cs" />
+    <Compile Include="Service\Notification\SendMailService.cs" />
+    <Compile Include="Service\TicketService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\DateTimeWithZone.cs" />
+    <Compile Include="Utils\EncryptDecrypt.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\admin-tools\admin-forms\css\admin-forms.css" />
@@ -609,6 +634,7 @@
     <Content Include="Content\jquery-te.png" />
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\PurchasedTicket.css" />
     <Content Include="Content\unchecked.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -1179,6 +1205,10 @@
     <Content Include="Views\Article\Index.cshtml" />
     <Content Include="Views\Article\Edit.cshtml" />
     <Content Include="Views\Article\ShowArticle.cshtml" />
+    <Content Include="Views\Orders\_PurchasedTicketDetail.cshtml" />
+    <Content Include="Views\Orders\_PurchasedTicketFavoriteList.cshtml" />
+    <Content Include="Views\Orders\_PurchasedTicketList.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

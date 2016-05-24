@@ -12,17 +12,9 @@ namespace CMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Event_OrganizerMessages
+    public partial class OrderState
     {
-        public Nullable<long> EventId { get; set; }
-        public Nullable<long> OrganizerId { get; set; }
-        public string Userid { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Message { get; set; }
-        public long MessageId { get; set; }
-    
-        public virtual Event Event { get; set; }
-        public virtual Organizer_Master Organizer_Master { get; set; }
+        public byte OrderStateId { get; set; }
+        public string OrderStateName { get; set; }
     }
 }

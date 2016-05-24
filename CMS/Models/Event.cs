@@ -24,6 +24,9 @@ namespace CMS.Models
             this.MultipleEvents = new HashSet<MultipleEvent>();
             this.Tickets = new HashSet<Ticket>();
             this.Event_Orgnizer_Detail = new HashSet<Event_Orgnizer_Detail>();
+            this.Event_OrganizerMessages = new HashSet<Event_OrganizerMessages>();
+            this.Ticket_Purchased_Detail = new HashSet<Ticket_Purchased_Detail>();
+            this.EventFavourites = new HashSet<EventFavourite>();
         }
     
         public long EventID { get; set; }
@@ -80,5 +83,11 @@ namespace CMS.Models
         public virtual ICollection<Ticket> Tickets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Event_OrganizerMessages> Event_OrganizerMessages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Ticket_Purchased_Detail> Ticket_Purchased_Detail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventFavourite> EventFavourites { get; set; }
     }
 }

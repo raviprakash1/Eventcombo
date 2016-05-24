@@ -1,6 +1,6 @@
-﻿using EventCombo.DAL;
-using EventCombo.Models;
-using EventCombo.Utils;
+﻿using CMS.DAL;
+using CMS.Models;
+using CMS.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
-namespace EventCombo.Service
+namespace CMS.Service
 {
   public class OrderNotification: INotification
   {

@@ -20,9 +20,13 @@ namespace EventCombo.Controllers
     }
 
     [HttpGet]
-    public ActionResult ShowArticle(long articleId)
+    public ActionResult ShowArticle(long? articleId, string articleTitle)
     {
-      ArticleFullViewModel article = _service.GetArticleByID(articleId, Url.Content(_service.ImagePath));
+      ArticleFullViewModel article = _service.GetArticleByID(articleId ?? 0, Url.Content(_service.ImagePath));
+      string curUrl = ArticleService.GetArticleUrl(articleId ?? 0, articleTitle);
+      string realUrl = ArticleService.GetArticleUrl(article.ArticleId, article.Title);
+      if (curUrl != realUrl)
+        return RedirectPermanent(realUrl);
       return View(article);
     }
 
