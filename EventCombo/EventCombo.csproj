@@ -77,6 +77,10 @@
       <HintPath>..\packages\HtmlRenderer.PdfSharp.1.5.0.6\lib\net45\HtmlRenderer.PdfSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="itextsharp, Version=5.5.8.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\iTextSharp.5.5.8\lib\itextsharp.dll</HintPath>
       <Private>True</Private>
@@ -88,6 +92,22 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin.Cors, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Cors.3.0.1\lib\net45\Microsoft.Owin.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OOXML.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NReco.PdfGenerator, Version=1.1.11.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
@@ -498,6 +518,9 @@
     </Compile>
     <Compile Include="Models\PaymentConfirmation.cs" />
     <Compile Include="Models\PaymentProcess.cs" />
+    <Compile Include="Models\PaymentType.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Payment_Info.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -576,6 +599,9 @@
     </Compile>
     <Compile Include="Models\ViewEvent.cs" />
     <Compile Include="Models\V_EventsList.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\v_OrderList.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\v_RetrieveEventid.cs">
@@ -1404,12 +1430,10 @@
     <Content Include="Views\ManageEvent\SidenavPartialView.cshtml" />
     <Content Include="Views\TicketPayment\LoadTicketsView.cshtml" />
     <Content Include="Views\CreateEvent\CreateEvent.cshtml" />
-    <Content Include="Views\Shared\_ManageEventLayout.cshtml" />
     <Content Include="Views\OrderOptions\Form.cshtml" />
     <Content Include="Views\OrderOptions\Confirmation.cshtml" />
     <Content Include="Views\OrderOptions\EventType.cshtml" />
     <Content Include="Views\OrderOptions\Waitlist.cshtml" />
-    <Content Include="Views\Shared\_ManageEventLeftMenu.cshtml" />
     <Content Include="Views\Article\ShowArticle.cshtml" />
     <Content Include="Views\Article\ShowLastArticles.cshtml" />
     <Content Include="Views\Article\ShowPopularArticles.cshtml" />

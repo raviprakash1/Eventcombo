@@ -21,5 +21,7 @@ namespace EventCombo.Service
     bool SendConfirmations(string orderId, string baseUrl);
 
     MemoryStream GetDownloadableOrderList(PaymentStates state, long eventId, string format);
+
+    AddAttandeeOrder PrepareAddAttendeeOrder(long eventId);
   }
 }
