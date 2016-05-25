@@ -1,8 +1,153 @@
-﻿
+﻿@using EventCombo.Models
+@model AddAttandeeOrder
+
 @{
-    ViewBag.Title = "Add";
-    Layout = "~/Views/Shared/_ManageEventLayout.cshtml";
+  ViewBag.Title = "Manage Attendees - Add Attendees";
+  Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/manageattendees.css" rel="stylesheet" />
+
+@section sidenav{
+  <div id="sidebar" class="nav nav-stacked">
+    @Html.Action("Sidenav", "ManageEvent", new { eventid = Model.EventId, CurrentItem = "manageattendees" })
+  </div>
 }
 
-<h2>Add</h2>
+<div id="purchasedTicketContainer" class="midd_cont">
+  <div class="addAttendessTxt">
+    <h1>Add Attendees</h1>
+  </div>
 
+  <input type="hidden" id="EventId" value="@(Model.EventId.ToString())" />
+
+  <div class="table-responsive attendeesAddTable">
+    <table class="table" style="width:100%;">
+      <thead>
+        <tr class="attendeesAddTableTHTR">
+          <th class="attendeesAddTableTH">Ticket Type</th>
+          <th class="attendeesAddTableTH">Sold</th>
+          <th class="attendeesAddTableTH">Price *</th>
+          <th class="attendeesAddTableTH">Quantity</th>
+          <th class="attendeesAddTableTH">Amount Paid</th>
+        </tr>
+      </thead>
+      <tbody id="TicketsTable">
+        @foreach (var ticket in Model.Tickets)
+        {
+          <tr data-ticketid="@(ticket.Ticket.T_Id.ToString())" data-ticketprice="@((ticket.Ticket.Price ?? (decimal)0).ToString())"
+              data-ticketmax="@((ticket.Ticket.Qty_Available - (ticket.TicketSold ?? 0)).ToString())">
+            <td class="attendeesAddTableTD">@(ticket.Ticket.T_name)</td>
+            <td class="attendeesAddTableTD">@((ticket.TicketSold ?? 0).ToString())/@(ticket.Ticket.Qty_Available.ToString())</td>
+            <td class="attendeesAddTableTD">$@((ticket.Ticket.Price ?? (decimal)0).ToString("N2"))</td>
+            <td class="attendeesAddTableTD">
+              <input type="text" id="quantity@(ticket.Ticket.T_Id.ToString())" class="attenTableQuantityCls" onblur="setPrice(this)"
+                     value="@((ticket.Ticket.TicketTypeID ?? 0) == 3 ? "1" : "0")"
+                     style="display:@((ticket.Ticket.TicketTypeID ?? 0) == 3 ? "none" : "block")" />
+            </td>
+            <td class="attendeesAddTableTD">$<input type="text" value="0.00" id="totalprice@(ticket.Ticket.T_Id.ToString())" class="attenTableQuantityCls" onblur="updateTotal()" /></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <div class="tableAttendeesTotal">
+    <span class="tableAttendeesTotalTxt">TOTAL PAID</span>
+    <input type="text" id="TicketsTotal" class="attenTableTotalCls" value="$0.00" disabled />
+  </div>
+
+  <div class="addAttendeessStaticTxt">* Eventcombo does not charge any fees for manual orders.</div>
+
+  <div class="form-group" style="margin: 20px 0px; ">
+    <label for="title" style="display:block; font-size: 18px;">PAYMENT TYPE</label>
+
+    <div class="dropdown" style="width: 250px;display: block;">
+      <button style="width: 100%;text-align: left; font-size: 19px;" class="btn btn-default dropdown-toggle questionsBtn"
+              type="button" id="paymentTypeMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
+              data-ptid="@(Model.PaymentType.PaymentTypeId.ToString())">
+        <span class="text">@Model.PaymentType.PaymentTypeName</span>
+        <span class="caret" style="float: right;margin-top: 8px;"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="paymentTypeMenu">
+        @foreach (var pt in Model.AvailablePT)
+        {
+          <li><a href="javascript:void(0)" style="font-size: 19px;" onclick="setPaymentType(this, @(pt.PaymentTypeId.ToString()))">@pt.PaymentTypeName</a></li>
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="Instruction" style="font-size: 18px;">NOTE</label>
+    <textarea class="form-control setHeight" id="Instruction" maxlength="1000"></textarea>
+  </div>
+
+  <div>
+    <a href="javascript:void(0)" class="btn btn-primary addAttendeessBtn" onclick="sendAttendeeInfo()">Continue</a>
+  </div>
+
+</div>
+
+
+<script type="text/javascript">
+  function setPaymentType(obj, id) {
+    $('#paymentTypeMenu .text').html($(obj).html());
+    $('#paymentTypeMenu').data('ptid', id)
+  }
+
+  function setPrice(obj) {
+    var price = $(obj).closest('tr').data('ticketprice');
+    var q = parseInt($(obj).val());
+    var max = $(obj).closest('tr').data('ticketmax');
+    q = isNaN(q) ? 0 : (q > max ? max : (q < 0 ? 0 : q));
+    $(obj).val(q);
+    $(obj).closest('tr').find('input[id^="totalprice"]').val(price * q);
+    updateTotal();
+  }
+
+  function updateTotal() {
+    var total = 0;
+    var price = 0;
+    $('#TicketsTable tr').each(function (idx) {
+      price = parseFloat($(this).find('input[id^="totalprice"]').val());
+      price = isNaN(price) ? 0 : (price < 0 ? 0 : price);
+      $(this).find('input[id^="totalprice"]').val(price);
+      total += price;
+    });
+    $('#TicketsTotal').val("$" + total);
+  }
+
+  function sendAttendeeInfo() {
+    var collectedTickets = [];
+    $('#TicketsTable tr').each(function (idx) {
+      var ticket = {
+        Quantity: $(this).find('input[id^="quantity"]').val(),
+        Paid: $(this).find('input[id^="totalprice"]').val(),
+        Ticket: {
+          T_Id: $(this).data('ticketid')
+        }
+      };
+      collectedTickets.push(ticket);
+    });
+    var att = {
+      EventId: $('#EventId').val(),
+      PaymentType: $('#paymentTypeMenu').data('ptid'),
+      Note: $('#Instruction').val(),
+      Tickets: collectedTickets
+    }
+
+    $.ajax({
+      type: "POST",
+      url: "@Url.Action("ProcessAddAttendee", "ManageAttendees")",
+      data: att,
+      datatype: "html",
+      success: function (data) {
+        var newDoc = document.open("text/html", "replace");
+        newDoc.write(data);
+        newDoc.close();
+      }
+    });
+
+  }
+
+</script>

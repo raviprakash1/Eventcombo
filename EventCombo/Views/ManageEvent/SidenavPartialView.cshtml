@@ -64,7 +64,7 @@
           <div id="collapseManageAttendees" class="panel-collapse collapse @(Model.CurrentItem == "manageattendees" ? "in" : "")">
             <div class="panel-body no-padding">
               <p>@Html.ActionLink("Orders", "Orders", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
-              <p class="invite_nav">Add Attendees</p>
+              <p>@Html.ActionLink("Add Attendees", "Add", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
               <p class="invite_nav">Emails to Attendees</p>
               <p class="invite_nav">Guest List</p>
               <p class="invite_nav">Name Badges</p>
