@@ -2950,162 +2950,162 @@ namespace EventCombo.Controllers
 
 
 
-//                                string Organisername = "", Organiseremail = "", Organiserphn = ""; ;
-//                                var eventdetails = (from ev in db.Events where ev.EventID == lEventId select ev).FirstOrDefault();
-//                                if (eventdetails != null && eventdetails.EventStatus == "Live")
-//                                {
-//                                    var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail join pfd in db.Organizer_Master on ev.OrganizerMaster_Id equals pfd.Orgnizer_Id where ev.Orgnizer_Event_Id == lEventId && ev.DefaultOrg == "Y" select pfd).FirstOrDefault();
-//                                    var Organiserdetail = db.Profiles.FirstOrDefault(i => i.UserID == OrganiserDetail.UserId);
-//                                    var userdetail = db.Profiles.FirstOrDefault(i => i.UserID == strUserId);
-                                    
-//if (Organiserdetail != null)
-//                                    {
-//                                        Organisername = !String.IsNullOrEmpty(OrganiserDetail.Orgnizer_Name) ? OrganiserDetail.Orgnizer_Name : Organiserdetail.FirstName != null ? Organiserdetail.FirstName : "";
-//                                        Organiseremail = !String.IsNullOrEmpty(OrganiserDetail.Organizer_Email) ? OrganiserDetail.Organizer_Email : Organiserdetail.Email != null ? Organiserdetail.Email : "";
-//                                        Organiserphn = !string.IsNullOrEmpty(OrganiserDetail.Organizer_Phoneno) ? " or call " + OrganiserDetail.Organizer_Phoneno : Organiserdetail.MainPhone != null ? " or call " + Organiserdetail.MainPhone : "";
-//                                    }
+                                //string Organisername = "", Organiseremail = "", Organiserphn = ""; ;
+                                //var eventdetails = (from ev in db.Events where ev.EventID == lEventId select ev).FirstOrDefault();
+                                //if (eventdetails != null && eventdetails.EventStatus == "Live")
+                                //{
+                                //    var OrganiserDetail = (from ev in db.Event_Orgnizer_Detail join pfd in db.Organizer_Master on ev.OrganizerMaster_Id equals pfd.Orgnizer_Id where ev.Orgnizer_Event_Id == lEventId && ev.DefaultOrg == "Y" select pfd).FirstOrDefault();
+                                //    var Organiserdetail = db.Profiles.FirstOrDefault(i => i.UserID == OrganiserDetail.UserId);
+                                //    var userdetail = db.Profiles.FirstOrDefault(i => i.UserID == strUserId);
 
-//                                   if (Emailtemplate != null)
-//                                    {
-//                                        if (!string.IsNullOrEmpty(Emailtemplate.To))
-//                                        {
+                                //    if (Organiserdetail != null)
+                                //    {
+                                //        Organisername = !String.IsNullOrEmpty(OrganiserDetail.Orgnizer_Name) ? OrganiserDetail.Orgnizer_Name : Organiserdetail.FirstName != null ? Organiserdetail.FirstName : "";
+                                //        Organiseremail = !String.IsNullOrEmpty(OrganiserDetail.Organizer_Email) ? OrganiserDetail.Organizer_Email : Organiserdetail.Email != null ? Organiserdetail.Email : "";
+                                //        Organiserphn = !string.IsNullOrEmpty(OrganiserDetail.Organizer_Phoneno) ? " or call " + OrganiserDetail.Organizer_Phoneno : Organiserdetail.MainPhone != null ? " or call " + Organiserdetail.MainPhone : "";
+                                //    }
 
-
-//                                            to = Emailtemplate.To;
-//                                            if (to.Contains("¶¶UserEmailID¶¶"))
-//                                            {
-//                                                to = to.Replace("¶¶UserEmailID¶¶", userdetail.Email);
-
-//                                            }
-//                                        }
-//                                        if (!(string.IsNullOrEmpty(Emailtemplate.From)))
-//                                        {
-//                                            from = Emailtemplate.From;
-//                                            if (from.Contains("¶¶UserEmailID¶¶"))
-//                                            {
-//                                                from = from.Replace("¶¶UserEmailID¶¶", userdetail.Email);
-
-//                                            }
-
-//                                        }
-//                                        else
-//                                        {
-//                                            from = ConfigurationManager.AppSettings.Get("UserName");
-
-//                                        }
-//                                        if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
-//                                        {
-//                                            cc = Emailtemplate.CC;
-//                                            if (cc.Contains("¶¶UserEmailID¶¶"))
-//                                            {
-//                                                cc = cc.Replace("¶¶UserEmailID¶¶", userdetail.Email);
-
-//                                            }
-//                                        }
-//                                        if (!(string.IsNullOrEmpty(Emailtemplate.Bcc)))
-//                                        {
-//                                            bcc = Emailtemplate.Bcc;
-//                                            if (bcc.Contains("¶¶UserEmailID¶¶"))
-//                                            {
-//                                                bcc = bcc.Replace("¶¶UserEmailID¶¶", userdetail.Email);
-
-//                                            }
-//                                        }
-//                                        if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
-//                                        {
-//                                            emailname = Emailtemplate.From_Name;
-//                                        }
-//                                        else
-//                                        {
-//                                            emailname = from;
-//                                        }
-//                                        if (!string.IsNullOrEmpty(Emailtemplate.Subject))
-//                                        {
+                                //    if (Emailtemplate != null)
+                                //    {
+                                //        if (!string.IsNullOrEmpty(Emailtemplate.To))
+                                //        {
 
 
-//                                            subjectn = Emailtemplate.Subject;
+                                //            to = Emailtemplate.To;
+                                //            if (to.Contains("¶¶UserEmailID¶¶"))
+                                //            {
+                                //                to = to.Replace("¶¶UserEmailID¶¶", userdetail.Email);
 
-//                                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-//                                            {
+                                //            }
+                                //        }
+                                //        if (!(string.IsNullOrEmpty(Emailtemplate.From)))
+                                //        {
+                                //            from = Emailtemplate.From;
+                                //            if (from.Contains("¶¶UserEmailID¶¶"))
+                                //            {
+                                //                from = from.Replace("¶¶UserEmailID¶¶", userdetail.Email);
 
-//                                                if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
-//                                                {
-//                                                    if (EmailTag[i].Tag_Name == "EventOrganiserName")
-//                                                    {
-//                                                        subjectn = subjectn.Replace("¶¶EventOrganiserName¶¶", Organisername);
+                                //            }
 
-//                                                    }
-//                                                    if (EmailTag[i].Tag_Name == "EventTitleId")
-//                                                    {
-//                                                        subjectn = subjectn.Replace("¶¶EventTitleId¶¶", model.EventTitle);
+                                //        }
+                                //        else
+                                //        {
+                                //            from = ConfigurationManager.AppSettings.Get("UserName");
 
-//                                                    }
-//                                                    if (EmailTag[i].Tag_Name == "EventAddressID")
-//                                                    {
-//                                                        subjectn = subjectn.Replace("¶¶EventAddressID¶¶", address);
+                                //        }
+                                //        if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
+                                //        {
+                                //            cc = Emailtemplate.CC;
+                                //            if (cc.Contains("¶¶UserEmailID¶¶"))
+                                //            {
+                                //                cc = cc.Replace("¶¶UserEmailID¶¶", userdetail.Email);
 
-//                                                    }
+                                //            }
+                                //        }
+                                //        if (!(string.IsNullOrEmpty(Emailtemplate.Bcc)))
+                                //        {
+                                //            bcc = Emailtemplate.Bcc;
+                                //            if (bcc.Contains("¶¶UserEmailID¶¶"))
+                                //            {
+                                //                bcc = bcc.Replace("¶¶UserEmailID¶¶", userdetail.Email);
 
-//                                                    // All tags
+                                //            }
+                                //        }
+                                //        if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
+                                //        {
+                                //            emailname = Emailtemplate.From_Name;
+                                //        }
+                                //        else
+                                //        {
+                                //            emailname = from;
+                                //        }
+                                //        if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+                                //        {
 
 
+                                //            subjectn = Emailtemplate.Subject;
 
+                                //            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                                //            {
 
-//                                                }
+                                //                if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                //                {
+                                //                    if (EmailTag[i].Tag_Name == "EventOrganiserName")
+                                //                    {
+                                //                        subjectn = subjectn.Replace("¶¶EventOrganiserName¶¶", Organisername);
 
-//                                            }
-//                                        }
+                                //                    }
+                                //                    if (EmailTag[i].Tag_Name == "EventTitleId")
+                                //                    {
+                                //                        subjectn = subjectn.Replace("¶¶EventTitleId¶¶", model.EventTitle);
+
+                                //                    }
+                                //                    if (EmailTag[i].Tag_Name == "EventAddressID")
+                                //                    {
+                                //                        subjectn = subjectn.Replace("¶¶EventAddressID¶¶", address);
+
+                                //                    }
+
+                                //                    // All tags
 
 
 
-//                                        if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
-//                                        {
-//                                            bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
-//                                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-//                                            {
 
-//                                                if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
-//                                                {
-//                                                    if (EmailTag[i].Tag_Name == "EventOrganiserName")
-//                                                    {
-//                                                        bodyn = bodyn.Replace("¶¶EventOrganiserName¶¶", Organisername);
+                                //                }
 
-//                                                    }
-//                                                    if (EmailTag[i].Tag_Name == "EventTitleId")
-//                                                    {
-//                                                        bodyn = bodyn.Replace("¶¶EventTitleId¶¶", model.EventTitle);
-
-//                                                    }
-//                                                    if (EmailTag[i].Tag_Name == "EventOrganiserEmail")
-//                                                    {
-//                                                        bodyn = bodyn.Replace("¶¶EventOrganiserEmail¶¶", Organiseremail);
-
-//                                                    }
-//                                                    if (EmailTag[i].Tag_Name == "EventAddressID")
-//                                                    {
-//                                                        bodyn = bodyn.Replace("¶¶EventAddressID¶¶", address);
-
-//                                                    }
-//                                                    if (EmailTag[i].Tag_Name == "EventOrganiserNumber")
-//                                                    {
-//                                                        bodyn = bodyn.Replace("¶¶EventOrganiserNumber¶¶", Organiserphn);
-
-//                                                    }
-
-//                                                }
-
-//                                            }
-//                                        }
-
-//                                        // ImageMapPath = Server.MapPath("..") + "/Images/Imagemap_"+EvtOrDetail.TPD_Order_Id+ ".png";
-//                                        //Mail 
-//                                        ac.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, "", emailname);
-//                                        //Mail 
-//                                    }
+                                //            }
+                                //        }
 
 
 
-                                }
+                                //        if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
+                                //        {
+                                //            bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+                                //            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                                //            {
+
+                                //                if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                //                {
+                                //                    if (EmailTag[i].Tag_Name == "EventOrganiserName")
+                                //                    {
+                                //                        bodyn = bodyn.Replace("¶¶EventOrganiserName¶¶", Organisername);
+
+                                //                    }
+                                //                    if (EmailTag[i].Tag_Name == "EventTitleId")
+                                //                    {
+                                //                        bodyn = bodyn.Replace("¶¶EventTitleId¶¶", model.EventTitle);
+
+                                //                    }
+                                //                    if (EmailTag[i].Tag_Name == "EventOrganiserEmail")
+                                //                    {
+                                //                        bodyn = bodyn.Replace("¶¶EventOrganiserEmail¶¶", Organiseremail);
+
+                                //                    }
+                                //                    if (EmailTag[i].Tag_Name == "EventAddressID")
+                                //                    {
+                                //                        bodyn = bodyn.Replace("¶¶EventAddressID¶¶", address);
+
+                                //                    }
+                                //                    if (EmailTag[i].Tag_Name == "EventOrganiserNumber")
+                                //                    {
+                                //                        bodyn = bodyn.Replace("¶¶EventOrganiserNumber¶¶", Organiserphn);
+
+                                //                    }
+
+                                //                }
+
+                                //            }
+                                //        }
+
+                                //        // ImageMapPath = Server.MapPath("..") + "/Images/Imagemap_"+EvtOrDetail.TPD_Order_Id+ ".png";
+                                //        //Mail 
+                                //        ac.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, "", emailname);
+                                //        //Mail 
+                                //    }
+
+
+
+                                //}
 
 
 
