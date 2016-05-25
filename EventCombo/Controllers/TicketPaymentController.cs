@@ -952,7 +952,7 @@ namespace EventCombo.Controllers
         public void generateQR(string qrdata, string qrImgPath)
         {
             WebClient wc = new WebClient();
-            string url = "https://chart.apis.google.com/chart?cht=qr&chs=150x150&chl=" + qrdata;
+            string url = "http://chart.apis.google.com/chart?cht=qr&chs=150x150&chl=" + qrdata;
             byte[] qrImage = wc.DownloadData(url);
             MemoryStream ms = new MemoryStream(qrImage);
             Image img = Image.FromStream(ms);
@@ -1045,6 +1045,7 @@ namespace EventCombo.Controllers
         public void pdf(long eventid, string guid)
         {
             EncryptDecrypt Ecode = new EncryptDecrypt();
+            //System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) => { return true; };
             WebClient wc = new WebClient();
             MemoryStream mms = new MemoryStream();
             string htmlText = "";
@@ -1728,6 +1729,8 @@ namespace EventCombo.Controllers
         }
         public MemoryStream generateTicketPDF(string guid, long eventid, List<Email_Tag> emailtag, string fname, string htmlPath)
         {
+
+           // System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) => { return true; };
             WebClient wc = new WebClient();
             MemoryStream mms = new MemoryStream();
             EncryptDecrypt Ecode = new EncryptDecrypt();
