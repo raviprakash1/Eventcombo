@@ -101,4 +101,42 @@ namespace EventCombo.Models
     }
   }
 
+  public class PaymentTypeViewModel
+  {
+    public short PaymentTypeId { get; set; }
+    public string PaymentTypeName { get; set; }
+    public bool Active { get; set; }
+  }
+
+  public class TicketInfoAddViewModel
+  {
+    public TicketViewModel Ticket { get; set; }
+    public long? TicketSold { get; set; }
+    public int Quantity { get; set; }
+    public decimal Paid { get; set; }
+  }
+
+  public class AddAttandeeOrder
+  {
+    private List<TicketInfoAddViewModel> _tickets = new List<TicketInfoAddViewModel>();
+    public List<TicketInfoAddViewModel> Tickets
+    {
+      get { return _tickets; }
+      private set { _tickets = value; }
+    }
+
+    private List<PaymentTypeViewModel> _availablePT = new List<PaymentTypeViewModel>();
+    public List<PaymentTypeViewModel> AvailablePT
+    {
+      get { return _availablePT; }
+      private set { _availablePT = value; }
+    }
+
+    public PaymentTypeViewModel PaymentType { get; set; }
+
+    public string Note { get; set; }
+
+    public long EventId { get; set; }
+  }
+
 }

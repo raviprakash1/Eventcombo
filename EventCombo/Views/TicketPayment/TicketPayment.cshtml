@@ -916,12 +916,12 @@
         });
 
         $('#btBack').click(function () {
-          
+
             $.ajax({
                 url: '@Url.Action("ReleaseTickets", "CreateEvent")',
                 type: "Post",
                 success: function (response) {
-                  
+
                     window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.URLTitle.Replace(" ","-") , strEventId = Model.EventId.ToString()})';
                 }
             });
@@ -966,7 +966,7 @@
                                     city = obj['long_name'];
                                 }
 
-                             
+
                                 if (obj2[j] == 'administrative_area_level_1') {
                                     state = obj['long_name'];
 
@@ -1259,10 +1259,10 @@
 
                                 }
 
-                            
-                          
-                            
-                         
+
+
+
+
                                 if (obj2[j] == 'administrative_area_level_1') {
                                     state = obj['long_name'];
 
@@ -1600,10 +1600,10 @@
             success: function (response) {
                 sessionResponse = response;
 
-                
+
             }
         });
-        
+
         if (sessionResponse == "Y") {
             $("#btPaypalCheckout").trigger('click');
             console.log("Called");
@@ -1751,7 +1751,7 @@
 
             $("#spGrdTotal").text($("#spSubTotal").text());
             $("#hdGrandTotal").val($("#spSubTotal").text());
-           
+
         }
         //$("#imgPromoLoader").addClass("PromoLoaderHide");
         //$("#imgPromoLoader").removeClass("PromoLoaderShow");
@@ -2285,7 +2285,7 @@
         var addOption = '<option value="' + Sno + '" id="' + Sno + '" >' + vOrgName + '</option>';
         $("#ddlListitem").append(addOption);
 
-
+        $(document).prop('title', '@Model.Title,  @TempData["address"] | Eventcombo');
 
 
     }

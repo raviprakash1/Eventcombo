@@ -44,16 +44,16 @@ namespace EventCombo.Controllers
     [HttpGet]
     public FileStreamResult OrderList(PaymentStates state, long eventId, string format)
     {
-      /*if (Session["AppId"] == null)
+      if (Session["AppId"] == null)
         return null;
 
       string userId = Session["AppId"].ToString();
       if (_dbservice.GetEventAccess(eventId, userId) == AccessLevel.Public)
         return null;
-      */
+      
       MemoryStream mem = _maservice.GetDownloadableOrderList(state, eventId, format);
-
-      return new FileStreamResult(mem, "application/" + format.ToLower()) { FileDownloadName = "OrderList_" + eventId.ToString() + "." + format };
+      string appformat = "application/" + (format.ToLower() == "xls" ? "ms-excel" : format.ToLower());
+      return new FileStreamResult(mem, appformat) { FileDownloadName = "OrderList_" + eventId.ToString() + "." + format };
     }
   }
 }

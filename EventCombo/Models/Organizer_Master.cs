@@ -46,6 +46,5 @@ namespace EventCombo.Models
         public virtual ICollection<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event_OrganizerMessages> Event_OrganizerMessages { get; set; }
-        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

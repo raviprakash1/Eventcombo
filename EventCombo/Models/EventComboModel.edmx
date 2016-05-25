@@ -119,6 +119,7 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="LoginStatus" Type="varchar" MaxLength="1" />
+          <Property Name="OldUserID" Type="int" />
         </EntityType>
         <EntityType Name="BillingAddress">
           <Key>
@@ -450,6 +451,8 @@
           <Property Name="O_Card_TransHash" Type="varchar" MaxLength="100" />
           <Property Name="O_Card_TransId" Type="varchar" MaxLength="100" />
           <Property Name="OrderStateId" Type="tinyint" />
+          <Property Name="PaymentTypeId" Type="tinyint" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="OrderState">
           <Key>
@@ -616,7 +619,7 @@
           <Property Name="PI_AccountNumber" Type="varchar" MaxLength="100" />
           <Property Name="PI_ReAccountNumber" Type="varchar" MaxLength="100" />
           <Property Name="PI_PayTo" Type="varchar" MaxLength="500" />
-          <Property Name="PI_EventId" Type="bigint" Nullable="false" />
+          <Property Name="PI_EventId" Type="bigint" />
           <Property Name="PI_Address2" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Permission_Detail">
@@ -1001,7 +1004,7 @@
           <Property Name="Data" Type="nvarchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EventCombo.dbo.V_EventsList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EC2.dbo.V_EventsList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="V_EventsList">
           <Key>
             <PropertyRef Name="EventID" />
@@ -1038,7 +1041,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_EventsList' does not have a prima
           <Property Name="EventTiming" Type="varchar" MaxLength="49" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EC2.dbo.v_RetrieveEventid' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="v_RetrieveEventid">
           <Key>
             <PropertyRef Name="EventID" />
@@ -1085,7 +1088,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="EventCancel" Type="varchar" MaxLength="2" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="V_Users">
           <Key>
             <PropertyRef Name="Id" />
@@ -1119,7 +1122,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="deals" Type="int" Nullable="false" />
           <Property Name="dealpurchased" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__EventSubC__Event__2CAA2BCA">
+        <Association Name="FK__EventSubC__Event__45BE5BA9">
           <End Role="EventCategory" Type="Self.EventCategory" Multiplicity="1" />
           <End Role="EventSubCategory" Type="Self.EventSubCategory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1131,7 +1134,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TicketDel__Deliv__33572959">
+        <Association Name="FK__TicketDel__Deliv__4C6B5938">
           <End Role="DeliveryMethod" Type="Self.DeliveryMethod" Multiplicity="1" />
           <End Role="TicketDeliveryMethod" Type="Self.TicketDeliveryMethod" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1435,9 +1438,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Parameter Name="EventId" Type="bigint" Mode="In" />
           <Parameter Name="UserId" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="PublishSingleEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="EventId" Type="bigint" Mode="In" />
-        </Function>
         <Function Name="ReturnDayOfWeek" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
           <Parameter Name="dtDate" Type="datetime" Mode="In" />
         </Function>
@@ -1616,11 +1616,11 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
     [V_Users].[dealpurchased] AS [dealpurchased]
     FROM [dbo].[V_Users] AS [V_Users]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__EventSubC__Event__2CAA2BCA" Association="Self.FK__EventSubC__Event__2CAA2BCA">
+          <AssociationSet Name="FK__EventSubC__Event__45BE5BA9" Association="Self.FK__EventSubC__Event__45BE5BA9">
             <End Role="EventCategory" EntitySet="EventCategory" />
             <End Role="EventSubCategory" EntitySet="EventSubCategory" />
           </AssociationSet>
-          <AssociationSet Name="FK__TicketDel__Deliv__33572959" Association="Self.FK__TicketDel__Deliv__33572959">
+          <AssociationSet Name="FK__TicketDel__Deliv__4C6B5938" Association="Self.FK__TicketDel__Deliv__4C6B5938">
             <End Role="DeliveryMethod" EntitySet="DeliveryMethod" />
             <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethod" />
           </AssociationSet>
@@ -1742,7 +1742,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           </Key>
           <Property Name="Id" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers" Relationship="EventComboModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
@@ -1752,7 +1752,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUserLogin">
           <Key>
@@ -1763,32 +1763,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
-        </EntityType>
-        <EntityType Name="AspNetUser">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
-          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LoginStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_Profile" FromRole="AspNetUsers" ToRole="Profile" />
-          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-          <NavigationProperty Name="Ticket_Purchased_Detail" Relationship="EventComboModel.AspNetUserTicket_Purchased_Detail" FromRole="AspNetUser" ToRole="Ticket_Purchased_Detail" />
-          <NavigationProperty Name="Organizer_Master" Relationship="EventComboModel.AspNetUserOrganizer_Master" FromRole="AspNetUser" ToRole="Organizer_Master" />
-          <NavigationProperty Name="Order_Detail_T" Relationship="EventComboModel.AspNetUserOrder_Detail_T" FromRole="AspNetUser" ToRole="Order_Detail_T" />
+          <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="BillingAddress">
           <Key>
@@ -2014,31 +1989,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="Form_Tag" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Message1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="Order_Detail_T">
-          <Key>
-            <PropertyRef Name="O_Id" />
-          </Key>
-          <Property Name="O_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="O_Order_Id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="O_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="O_TotalAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="O_OrderAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="O_VariableId" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="O_VariableAmount" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="O_PromoCodeId" Type="Int64" />
-          <Property Name="O_OrderDateTime" Type="DateTime" Precision="3" />
-          <Property Name="O_PayPal_TokenId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="O_PayPal_PayerId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="O_PayPal_TrancId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="O_First_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="O_Last_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="O_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="O_Card_TransHash" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="O_Card_TransId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="OrderStateId" Type="Byte" />
-          <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.AspNetUserOrder_Detail_T" FromRole="Order_Detail_T" ToRole="AspNetUser" />
-          <NavigationProperty Name="OrderState" Relationship="EventComboModel.OrderStateOrder_Detail_T" FromRole="Order_Detail_T" ToRole="OrderState" />
-        </EntityType>
         <EntityType Name="Payment_Info">
           <Key>
             <PropertyRef Name="PaymentInfo_Id" />
@@ -2058,7 +2008,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="PI_AccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PI_ReAccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PI_PayTo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="PI_EventId" Type="Int64" Nullable="false" />
+          <Property Name="PI_EventId" Type="Int64" />
           <Property Name="PI_Address2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Permission_Detail">
@@ -2108,7 +2058,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="Ipcountry" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IpState" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Ipcity" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Profile_Profile" FromRole="Profile" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.FK_Profile_Profile" FromRole="Profile" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="Publish_Event_Detail">
           <Key>
@@ -2299,46 +2249,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserClaims">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserLogins">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Profile_Profile">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Profile">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__TicketDel__Deliv__08411774">
           <End Role="DeliveryMethod" Type="Self.DeliveryMethod" Multiplicity="1" />
           <End Role="TicketDeliveryMethod" Type="Self.TicketDeliveryMethod" Multiplicity="*" />
@@ -2411,17 +2321,12 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AspNetUserRoles">
-          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="EventComboEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="Addresses" EntityType="Self.Address" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
           <EntitySet Name="BillingAddresses" EntityType="Self.BillingAddress" />
           <EntitySet Name="CardDetails" EntityType="Self.CardDetail" />
           <EntitySet Name="Countries" EntityType="Self.Country" />
@@ -2439,7 +2344,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="EventTypes" EntityType="Self.EventType" />
           <EntitySet Name="EventVotes" EntityType="Self.EventVote" />
           <EntitySet Name="Messages" EntityType="Self.Message" />
-          <EntitySet Name="Order_Detail_T" EntityType="Self.Order_Detail_T" />
           <EntitySet Name="Payment_Info" EntityType="Self.Payment_Info" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" />
           <EntitySet Name="Profiles" EntityType="Self.Profile" />
@@ -2458,18 +2362,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <AssociationSet Name="FK_Address_Event" Association="Self.FK_Address_Event">
             <End Role="Event" EntitySet="Events" />
             <End Role="Address" EntitySet="Addresses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Profile_Profile" Association="Self.FK_Profile_Profile">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
           <AssociationSet Name="FK__TicketDel__Deliv__08411774" Association="Self.FK__TicketDel__Deliv__08411774">
             <End Role="DeliveryMethod" EntitySet="DeliveryMethods" />
@@ -2494,10 +2386,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <AssociationSet Name="FK_Ticket_Quantity_Info_Ticket" Association="Self.FK_Ticket_Quantity_Info_Ticket">
             <End Role="Ticket" EntitySet="Tickets" />
             <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
           <FunctionImport Name="func_Split" IsComposable="true" ReturnType="Collection(EventComboModel.func_Split_Result)">
             <Parameter Name="DelimitedString" Mode="In" Type="String" />
@@ -2701,10 +2589,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             <End Role="Event" EntitySet="Events" />
             <End Role="Ticket_Purchased_Detail" EntitySet="Ticket_Purchased_Detail" />
           </AssociationSet>
-          <AssociationSet Name="AspNetUserTicket_Purchased_Detail" Association="EventComboModel.AspNetUserTicket_Purchased_Detail">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="Ticket_Purchased_Detail" EntitySet="Ticket_Purchased_Detail" />
-          </AssociationSet>
           <AssociationSet Name="Ticket_Quantity_DetailTicket_Purchased_Detail" Association="EventComboModel.Ticket_Quantity_DetailTicket_Purchased_Detail">
             <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
             <End Role="Ticket_Purchased_Detail" EntitySet="Ticket_Purchased_Detail" />
@@ -2753,17 +2637,25 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             <End Role="MultipleEvent" EntitySet="MultipleEvents" />
             <End Role="Publish_Event_Detail" EntitySet="Publish_Event_Detail" />
           </AssociationSet>
-          <AssociationSet Name="AspNetUserOrganizer_Master" Association="EventComboModel.AspNetUserOrganizer_Master">
+          <EntitySet Name="PaymentTypes" EntityType="EventComboModel.PaymentType" />
+          <EntitySet Name="v_OrderList" EntityType="EventComboModel.v_OrderList" />
+          <EntitySet Name="Order_Detail_T" EntityType="EventComboModel.Order_Detail_T" />
+          <EntitySet Name="AspNetUsers" EntityType="EventComboModel.AspNetUser" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="EventComboModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="Organizer_Master" EntitySet="Organizer_Master" />
+            <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
           </AssociationSet>
-          <AssociationSet Name="AspNetUserOrder_Detail_T" Association="EventComboModel.AspNetUserOrder_Detail_T">
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="EventComboModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="Order_Detail_T" EntitySet="Order_Detail_T" />
+            <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
           </AssociationSet>
-          <AssociationSet Name="OrderStateOrder_Detail_T" Association="EventComboModel.OrderStateOrder_Detail_T">
-            <End Role="OrderState" EntitySet="OrderStates" />
-            <End Role="Order_Detail_T" EntitySet="Order_Detail_T" />
+          <AssociationSet Name="FK_Profile_Profile" Association="EventComboModel.FK_Profile_Profile">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Profile" EntitySet="Profiles" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="EventComboModel.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
@@ -2832,7 +2724,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="Imagepath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="EventComboModel.FK_Event_Orgnizer_Detail_Organizer_Master" FromRole="Organizer_Master" ToRole="Event_Orgnizer_Detail" />
           <NavigationProperty Name="Event_OrganizerMessages" Relationship="EventComboModel.Organizer_MasterEvent_OrganizerMessages" FromRole="Organizer_Master" ToRole="Event_OrganizerMessages" />
-          <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.AspNetUserOrganizer_Master" FromRole="Organizer_Master" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="Event_Orgnizer_Detail">
           <Key>
@@ -3489,7 +3380,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="TPD_PromoCodeID" Type="Int32" />
           <Property Name="TPD_PromoCodeAmount" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="Event" Relationship="EventComboModel.EventTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="Event" />
-          <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.AspNetUserTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="AspNetUser" />
           <NavigationProperty Name="Ticket_Quantity_Detail" Relationship="EventComboModel.Ticket_Quantity_DetailTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="Ticket_Quantity_Detail" />
         </EntityType>
         <EntityType Name="EventVenue">
@@ -3729,7 +3619,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           </Key>
           <Property Name="OrderStateId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="OrderStateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Order_Detail_T" Relationship="EventComboModel.OrderStateOrder_Detail_T" FromRole="OrderState" ToRole="Order_Detail_T" />
         </EntityType>
         <Association Name="EventEvent_OrganizerMessages">
           <End Type="EventComboModel.Event" Role="Event" Multiplicity="0..1" />
@@ -3764,18 +3653,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Principal>
             <Dependent Role="Ticket_Purchased_Detail">
               <PropertyRef Name="TPD_Event_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="AspNetUserTicket_Purchased_Detail">
-          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="EventComboModel.Ticket_Purchased_Detail" Role="Ticket_Purchased_Detail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Ticket_Purchased_Detail">
-              <PropertyRef Name="TPD_User_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3923,41 +3800,129 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AspNetUserOrganizer_Master">
-          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="EventComboModel.Organizer_Master" Role="Organizer_Master" Multiplicity="*" />
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="PaymentTypeId" />
+          </Key>
+          <Property Name="PaymentTypeId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="PaymentTypeName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="v_OrderList">
+          <Key>
+            <PropertyRef Name="OId" />
+            <PropertyRef Name="OrderStateId" />
+          </Key>
+          <Property Name="OId" Type="Int64" Nullable="false" />
+          <Property Name="OrderId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="OrderDateTime" Type="DateTime" Precision="3" />
+          <Property Name="Name" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="TotalPaid" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="Quantity" Type="Int64" />
+          <Property Name="EventStartDate" Type="DateTime" Precision="3" />
+          <Property Name="EventEndDate" Type="DateTime" Precision="3" />
+          <Property Name="EventCancelled" Type="Boolean" />
+          <Property Name="OrderStateId" Type="Byte" Nullable="false" />
+          <Property Name="OrderStateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventID" Type="Int64" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Order_Detail_T">
+          <Key>
+            <PropertyRef Name="O_Id" />
+          </Key>
+          <Property Name="O_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="O_Order_Id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="O_TotalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_OrderAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_VariableId" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="O_VariableAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="O_PromoCodeId" Type="Int64" />
+          <Property Name="O_OrderDateTime" Type="DateTime" Precision="3" />
+          <Property Name="O_PayPal_TokenId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_PayPal_PayerId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_PayPal_TrancId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_First_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_Last_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_Card_TransHash" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="O_Card_TransId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OrderStateId" Type="Byte" />
+          <Property Name="PaymentTypeId" Type="Byte" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="LoginStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="OldUserID" Type="Int32" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="EventComboModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="EventComboModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="Profiles" Relationship="EventComboModel.FK_Profile_Profile" FromRole="AspNetUser" ToRole="Profile" />
+          <NavigationProperty Name="AspNetRoles" Relationship="EventComboModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EventComboModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Organizer_Master">
+            <Dependent Role="AspNetUserClaim">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AspNetUserOrder_Detail_T">
-          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="EventComboModel.Order_Detail_T" Role="Order_Detail_T" Multiplicity="*" />
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EventComboModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Order_Detail_T">
-              <PropertyRef Name="O_User_Id" />
+            <Dependent Role="AspNetUserLogin">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="OrderStateOrder_Detail_T">
-          <End Type="EventComboModel.OrderState" Role="OrderState" Multiplicity="0..1" />
-          <End Type="EventComboModel.Order_Detail_T" Role="Order_Detail_T" Multiplicity="*" />
+        <Association Name="FK_Profile_Profile">
+          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="EventComboModel.Profile" Role="Profile" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="OrderState">
-              <PropertyRef Name="OrderStateId" />
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Order_Detail_T">
-              <PropertyRef Name="OrderStateId" />
+            <Dependent Role="Profile">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="EventComboModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -4019,25 +3984,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="EventComboModel.AspNetUser">
-              <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="LoginStatus" ColumnName="LoginStatus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4257,30 +4203,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
                 <ScalarProperty Name="Form_Name" ColumnName="Form_Name" />
                 <ScalarProperty Name="Form_Tag" ColumnName="Form_Tag" />
                 <ScalarProperty Name="Message1" ColumnName="Message" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Order_Detail_T">
-            <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
-              <MappingFragment StoreEntitySet="Order_Detail_T">
-                <ScalarProperty Name="OrderStateId" ColumnName="OrderStateId" />
-                <ScalarProperty Name="O_Card_TransId" ColumnName="O_Card_TransId" />
-                <ScalarProperty Name="O_Card_TransHash" ColumnName="O_Card_TransHash" />
-                <ScalarProperty Name="O_Email" ColumnName="O_Email" />
-                <ScalarProperty Name="O_Last_Name" ColumnName="O_Last_Name" />
-                <ScalarProperty Name="O_First_Name" ColumnName="O_First_Name" />
-                <ScalarProperty Name="O_PayPal_TrancId" ColumnName="O_PayPal_TrancId" />
-                <ScalarProperty Name="O_PayPal_PayerId" ColumnName="O_PayPal_PayerId" />
-                <ScalarProperty Name="O_PayPal_TokenId" ColumnName="O_PayPal_TokenId" />
-                <ScalarProperty Name="O_Id" ColumnName="O_Id" />
-                <ScalarProperty Name="O_Order_Id" ColumnName="O_Order_Id" />
-                <ScalarProperty Name="O_User_Id" ColumnName="O_User_Id" />
-                <ScalarProperty Name="O_TotalAmount" ColumnName="O_TotalAmount" />
-                <ScalarProperty Name="O_OrderAmount" ColumnName="O_OrderAmount" />
-                <ScalarProperty Name="O_VariableId" ColumnName="O_VariableId" />
-                <ScalarProperty Name="O_VariableAmount" ColumnName="O_VariableAmount" />
-                <ScalarProperty Name="O_PromoCodeId" ColumnName="O_PromoCodeId" />
-                <ScalarProperty Name="O_OrderDateTime" ColumnName="O_OrderDateTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4533,14 +4455,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="EventComboModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetRoles">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-            <EndProperty Name="AspNetUsers">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <FunctionImportMapping FunctionName="EventComboModel.Store.func_Split" FunctionImportName="func_Split">
             <ResultMapping>
               <ComplexTypeMapping TypeName="EventComboModel.func_Split_Result">
@@ -5091,7 +5005,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="PublishSingleEvent" FunctionName="EventComboModel.Store.PublishSingleEvent" />
           <EntitySetMapping Name="V_EventsList">
             <EntityTypeMapping TypeName="EventComboModel.V_EventsList">
               <MappingFragment StoreEntitySet="V_EventsList">
@@ -5212,8 +5125,61 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-
-        </EntityContainerMapping>
+          <EntitySetMapping Name="Order_Detail_T">
+            <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
+              <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="PaymentTypeId" ColumnName="PaymentTypeId" />
+                <ScalarProperty Name="OrderStateId" ColumnName="OrderStateId" />
+                <ScalarProperty Name="O_Card_TransId" ColumnName="O_Card_TransId" />
+                <ScalarProperty Name="O_Card_TransHash" ColumnName="O_Card_TransHash" />
+                <ScalarProperty Name="O_Email" ColumnName="O_Email" />
+                <ScalarProperty Name="O_Last_Name" ColumnName="O_Last_Name" />
+                <ScalarProperty Name="O_First_Name" ColumnName="O_First_Name" />
+                <ScalarProperty Name="O_PayPal_TrancId" ColumnName="O_PayPal_TrancId" />
+                <ScalarProperty Name="O_PayPal_PayerId" ColumnName="O_PayPal_PayerId" />
+                <ScalarProperty Name="O_PayPal_TokenId" ColumnName="O_PayPal_TokenId" />
+                <ScalarProperty Name="O_OrderDateTime" ColumnName="O_OrderDateTime" />
+                <ScalarProperty Name="O_PromoCodeId" ColumnName="O_PromoCodeId" />
+                <ScalarProperty Name="O_VariableAmount" ColumnName="O_VariableAmount" />
+                <ScalarProperty Name="O_VariableId" ColumnName="O_VariableId" />
+                <ScalarProperty Name="O_OrderAmount" ColumnName="O_OrderAmount" />
+                <ScalarProperty Name="O_TotalAmount" ColumnName="O_TotalAmount" />
+                <ScalarProperty Name="O_User_Id" ColumnName="O_User_Id" />
+                <ScalarProperty Name="O_Order_Id" ColumnName="O_Order_Id" />
+                <ScalarProperty Name="O_Id" ColumnName="O_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="EventComboModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="OldUserID" ColumnName="OldUserID" />
+                <ScalarProperty Name="LoginStatus" ColumnName="LoginStatus" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="EventComboModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

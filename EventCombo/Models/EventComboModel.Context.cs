@@ -32,7 +32,6 @@ namespace EventCombo.Models
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<BillingAddress> BillingAddresses { get; set; }
         public virtual DbSet<CardDetail> CardDetails { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
@@ -50,7 +49,6 @@ namespace EventCombo.Models
         public virtual DbSet<EventType> EventTypes { get; set; }
         public virtual DbSet<EventVote> EventVotes { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
-        public virtual DbSet<Order_Detail_T> Order_Detail_T { get; set; }
         public virtual DbSet<Payment_Info> Payment_Info { get; set; }
         public virtual DbSet<Permission_Detail> Permission_Detail { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
@@ -108,6 +106,10 @@ namespace EventCombo.Models
         public virtual DbSet<ECImage> ECImages { get; set; }
         public virtual DbSet<ECImageType> ECImageTypes { get; set; }
         public virtual DbSet<OrderState> OrderStates { get; set; }
+        public virtual DbSet<PaymentType> PaymentTypes { get; set; }
+        public virtual DbSet<v_OrderList> v_OrderList { get; set; }
+        public virtual DbSet<Order_Detail_T> Order_Detail_T { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)

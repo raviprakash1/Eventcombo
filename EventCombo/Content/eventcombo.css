@@ -1,11 +1,13 @@
 @import url(https://fonts.googleapis.com/css?family=Abel);
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
 
+
 h1,h2,h3,h4,h5,h6,p,a,span{ word-break: break-all !important; }
 html {
   position: relative;
   min-height: 100%;
 }
+
 
 body{font-family:"Abel",Arial,sans-serif;}
 a:focus { outline: none; text-decoration: none; }

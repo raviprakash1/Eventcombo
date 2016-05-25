@@ -64,7 +64,7 @@
                         </div>
                         <div class="panel-footer br-t p12">
                             <span class="fs15">
-                                <b><a href="#" onclick="checkPermission('4');">Event</a></b>
+                                <b><a href="#" onclick="checkPermission('4');">Manage Events</a></b>
                             </span>
                         </div>
 
@@ -142,7 +142,9 @@
         if (PermisionId == "7A" || PermisionId == "7B" || PermisionId == "7C" || PermisionId == "7D" || PermisionId == "7E" || PermisionId == "7F" || PermisionId == "7G") {
             PermisionId = "7";
         }
-
+        if (PermisionId == "4A") {
+            PermisionId = "4";
+        }
 
         $.ajax({
             url: '@Url.Action("GetPermission", "Permission")',
@@ -195,6 +197,8 @@
                         window.location.href = '@Url.Action("Index", "Messages", new { Form = "Messages" })';
                     else if (vPerm == "4")
                         window.location.href = '@Url.Action("EventsList", "ManageEvent")';
+                    else if (vPerm == "4A")
+                        window.location.href = '@Url.Action("ExpiredticketList", "ManageEvent")';
                     else if (vPerm == "8")
                         window.location.href = '@Url.Action("EventType", "EventType", new {Type="N"})';
                     else if (vPerm == "9")

@@ -16,6 +16,10 @@ namespace EventCombo.Models
     public long T_Id { get; set; }
     public Nullable<long> E_Id { get; set; }
     public string T_name { get; set; }
+    public Nullable<decimal> Price { get; set; }
+    public long Qty_Available { get; set; }
+    public Nullable<long> TicketTypeID { get; set; }
+
   }
 
   public class OrderTemplateTicketViewModel
