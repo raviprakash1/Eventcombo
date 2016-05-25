@@ -299,7 +299,7 @@
         //var range1 = droparea.selectionStart;
         //var range2 = droparea.selectionEnd;
        
-        if ((target.id == "To" || target.id == "From" || target.id == "CC" || target.id == "Bcc") && data.trim() == "UserEmailID")
+        if ((target.id == "To" || target.id == "From" || target.id == "CC" || target.id == "Bcc") && data.trim() == "UserEmailID" && data.trim()=="EventOrganiserEmail")
         {
 
            
@@ -446,19 +446,24 @@
                 $('#To').removeClass('err-bor');
 
             }
-
+            debugger
             if (tomail.indexOf('¶¶') > -1)
             {
                 var toReplace = tomail.replace('¶¶', '');
                 toReplace = toReplace.replace('¶¶', '');
                 console.log(toReplace)
-                if (toReplace.trim() != "UserEmailID")
+                if ((toReplace.trim() != "UserEmailID" ) )
                 {
-                    emailmsg += "Wrong Tag Inserted in to" + "\n";
-                    $('#To').addClass('err-bor');
-                    flag = true;
+                    if((toReplace.trimLeft().trimRight() != "EventOrganiserEmail"))
+                    {
+                        emailmsg += "Wrong Tag Inserted in to" + "\n";
+                        $('#To').addClass('err-bor');
+                        flag = true;
+                    }
+                   
 
                 }
+               
                    
                 
             } else {

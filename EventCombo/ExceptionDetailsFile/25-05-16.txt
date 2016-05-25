@@ -1,0 +1,24 @@
+-----------Exception Details on  5/25/2016 4:07:56 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 5/25/2016 4:07:56 PM
+
+Error Line No : ine 911
+
+Error Message: FormatException
+
+Exception Type: System.FormatException
+
+Error Location : The specified string is not in the form required for an e-mail address.
+
+ Error Page Url: http://localhost:10159/createevent/saveevent
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

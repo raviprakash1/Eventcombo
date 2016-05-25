@@ -153,10 +153,18 @@
                     <li>
                         <a href="#" onclick="checkPermission('4');">
                             <span class="fa fa-cubes"></span>
-                            <span class="sidebar-title">Event</span>
+                            <span class="sidebar-title">Manage Events</span>
                         </a>
 
                     </li>
+                    <li>
+                        <a href="#" onclick="checkPermission('4A');">
+                            <span class="fa fa-cubes"></span>
+                            <span class="sidebar-title">Expired Events</span>
+                        </a>
+
+                    </li>
+                    
                     <li>
                         <a href="#"  onclick="checkPermission('11');" >
                             <span class="fa fa-usd"></span>
@@ -313,7 +321,10 @@
 
                 PermisionId = "7";
             }
+            if (PermisionId == "4A" ) {
 
+                PermisionId = "4";
+            }
 
             $.ajax({
                 url: '@Url.Action("GetPermission", "Permission")',
@@ -322,6 +333,7 @@
                 datatype: "Text",
                 type: "Post",
                 success: function (response) {
+                    debugger;
                     //alert(response);
                     if (response == "SE") {
                         window.location.href = '@Url.Action("Login", "Home")';
@@ -360,6 +372,8 @@
                             window.location.href = '@Url.Action("Index", "Messages", new { Form = "OrganizerMaster" })';
                         else if (vPerm == "4")
                             window.location.href = '@Url.Action("EventsList", "ManageEvent")';
+                        else if (vPerm == "4A")
+                            window.location.href = '@Url.Action("ExpiredticketList", "ManageEvent")';
                         else if (vPerm == "8")
                             window.location.href = '@Url.Action("EventType", "EventType", new {Type="N"})';
                         else if (vPerm == "9")
