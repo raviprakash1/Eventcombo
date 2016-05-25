@@ -731,6 +731,7 @@
     <Content Include="Content\jquery-te-1.4.0.css" />
     <Content Include="Content\jquery-te.png" />
     <Content Include="Content\manageattendees.css" />
+    <Content Include="Content\mob-footer.css" />
     <Content Include="Content\OrderForm.css" />
     <Content Include="Content\OrderFormDesign.css" />
     <Content Include="Content\PurchasedTicket.css" />
