@@ -1,0 +1,96 @@
+-----------Exception Details on  05/25/2016 12:03:27 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 05/25/2016 12:03:27 PM
+
+Error Line No : ne 1822
+
+Error Message: WebException
+
+Exception Type: System.Net.WebException
+
+Error Location : The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel.
+
+ Error Page Url: http://localhost:10159/ticketpayment/paymentconfirmation
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  05/25/2016 12:04:19 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 05/25/2016 12:04:19 PM
+
+Error Line No : ne 1822
+
+Error Message: WebException
+
+Exception Type: System.Net.WebException
+
+Error Location : The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel.
+
+ Error Page Url: http://localhost:10159/ticketpayment/PaymentConfirmation
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  05/25/2016 12:34:44 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 05/25/2016 12:34:44 PM
+
+Error Line No : ne 1822
+
+Error Message: WebException
+
+Exception Type: System.Net.WebException
+
+Error Location : The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel.
+
+ Error Page Url: http://localhost:10159/ticketpayment/paymentconfirmation
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  05/25/2016 1:18:14 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 05/25/2016 1:18:14 PM
+
+Error Line No : ne 1822
+
+Error Message: WebException
+
+Exception Type: System.Net.WebException
+
+Error Location : The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel.
+
+ Error Page Url: http://localhost:10159/ticketpayment/paymentconfirmation
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
