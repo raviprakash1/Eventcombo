@@ -252,54 +252,15 @@
 
 
     </div>
-    <div>
+    <div class="wrap">
         @RenderBody()
     </div>
-
+    <div class="clearfix"></div>
     @if (HttpContext.Current.Session["Fromname"] == null)
     {
 
         <!--Footer Section-->
-        <div class="container-fluid foot_bg">
-            <div class="col-sm-12 no-padding">
-                <div class="col-sm-12 foot_logo">
-                    <a class="" href="javascript:void(0)"><img src="~/Images/logo_small.png" /></a>
-                </div>
-
-                <div class="row fot_cont">
-                    <div class="col-sm-4">
-                        <a href="javascript:void(0)">About Us</a>
-                        <br>
-                        <a href="javascript:void(0)">Contact Us</a>
-                        <br>
-                        <a href="javascript:void(0)">Terms Of Service</a>
-                    </div>
-                    <div class="col-sm-4">
-                        <a href="javascript:void(0)">Ticket Purchase FAQ </a>
-                        <br>
-                        <a href="javascript:void(0)">Ticket Fulfillment Policy</a>
-                        <br>
-                        <a href="javascript:void(0)">Privacy Policy</a>
-                    </div>
-                    <div class="col-sm-4">
-                        <a href="javascript:void(0)">Facebook</a>
-                        <br>
-                        <a href="javascript:void(0)">Twitter</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    }
-    else
-    {
-
-        if (HttpContext.Current.Session["Fromname"].ToString() == "events")
-        {
-        }
-        else
-        {
-
+        <footer class="footer">
             <div class="container-fluid foot_bg">
                 <div class="col-sm-12 no-padding">
                     <div class="col-sm-12 foot_logo">
@@ -329,31 +290,70 @@
                     </div>
                 </div>
             </div>
+        </footer>
+    }
+    else
+    {
 
+        if (HttpContext.Current.Session["Fromname"].ToString() == "events")
+        {
         }
+
+        <footer class="footer">
+            <div class="container-fluid foot_bg">
+                <div class="col-sm-12 no-padding">
+                    <div class="col-sm-12 foot_logo">
+                        <a class="" href="javascript:void(0)"><img src="~/Images/logo_small.png" /></a>
+                    </div>
+
+                    <div class="row fot_cont">
+                        <div class="col-sm-4">
+                            <a href="javascript:void(0)">About Us</a>
+                            <br>
+                            <a href="javascript:void(0)">Contact Us</a>
+                            <br>
+                            <a href="javascript:void(0)">Terms Of Service</a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="javascript:void(0)">Ticket Purchase FAQ </a>
+                            <br>
+                            <a href="javascript:void(0)">Ticket Fulfillment Policy</a>
+                            <br>
+                            <a href="javascript:void(0)">Privacy Policy</a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="javascript:void(0)">Facebook</a>
+                            <br>
+                            <a href="javascript:void(0)">Twitter</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
     }
 
-    <!-- Dialouge Box Start -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content login_pop" id="login_up">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="modal-title " id="myModalLabel">LogIn | SignUp</h3>
-                </div>
-                <div class="modal-body">
-                    <div class="col-md-12">
-                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = Session["ReturnUrl"] }, FormMethod.Post, new { role = "form", id = "formlogin", @class = "form-horizontal acnt_form" }))
-                        {
+            <!-- Dialouge Box Start -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content login_pop" id="login_up">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h3 class="modal-title " id="myModalLabel">LogIn | SignUp</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-md-12">
+                                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = Session["ReturnUrl"] }, FormMethod.Post, new { role = "form", id = "formlogin", @class = "form-horizontal acnt_form" }))
+                                {
 
 
 
 
-                            <div class="er_UI_main" id="diverrologin" style="display :none;">
-                                <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverrologin">&#215;</button>
-                                <div class="er_UI_img"></div>
-                                <div class="er_suc" id="dverrui">  </div>
-                            </div>
+                                    <div class="er_UI_main" id="diverrologin" style="display :none;">
+                                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverrologin">&#215;</button>
+                                        <div class="er_UI_img"></div>
+                                        <div class="er_suc" id="dverrui">  </div>
+                                    </div>
 
                                     <div class="er_UI_main" id="diverro1login" style="display :none;">
                                         <div class="er_sys_img"></div>
@@ -386,125 +386,163 @@
 
 
 
-                        }
+                                }
 
-                        @*@RenderPage("~/Views/Shared/_login1partial.cshtml",new { })*@
-                    </div>
-                    <div class="col-md-12">
-                        @*forgt_pass*@
-                        @Html.ActionLink("forgot password?", "ForgetPassword", "Home", null, null)
+                                @*@RenderPage("~/Views/Shared/_login1partial.cshtml",new { })*@
+                            </div>
+                            <div class="col-md-12">
+                                @*forgt_pass*@
+                                @Html.ActionLink("forgot password?", "ForgetPassword", "Home", null, null)
 
-                    </div>
-                    <div class="col-md-12">
-                        <span class="social_net_log">Use your social network login below or &nbsp;</span> <a href="javascript:void(0)" id="signUpPopup" class="btn btn-primary login_btn_sub">SignUp</a>
-                    </div>
-                    <div class="col-md-12 social-buttons text-center ">
-                        <div class="col-xs-6">
-                            <button type="button" onclick="return fb_login();" class="btn btn-block btn-social btn-facebook" id="Facebook" name="provider" value="Facebook" title="Log in using your Facebook account"><i class="fa fa-facebook"></i>Facebook</button>
+                            </div>
+                            <div class="col-md-12">
+                                <span class="social_net_log">Use your social network login below or &nbsp;</span> <a href="javascript:void(0)" id="signUpPopup" class="btn btn-primary login_btn_sub">SignUp</a>
+                            </div>
+                            <div class="col-md-12 social-buttons text-center ">
+                                <div class="col-xs-6">
+                                    <button type="button" onclick="return fb_login();" class="btn btn-block btn-social btn-facebook" id="Facebook" name="provider" value="Facebook" title="Log in using your Facebook account"><i class="fa fa-facebook"></i>Facebook</button>
 
+                                </div>
+
+                                <form id="login-launch" action="@Url.Action("ExternalLogin", "Account")" method="POST" target="login-popup" onsubmit="invokeLogin();">
+                                    @*@using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
+                                        {*@
+                                    <input type="hidden" id="provider" name="provider" />
+                                    <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+
+
+
+                                    <div class="col-xs-6">
+                                        <button type="submit" onclick="$('#provider').attr('value', 'Google'); $('#login-launch').submit(); " class="btn btn-block btn-social btn-google-plus" id="Google" name="provider" value="Google" title="Log in using your Google account"><i class="fa fa-google-plus"></i>Google</button>
+                                    </div>
+
+                                    @*}*@
+                                </form>
+                                @*@RenderPage("~/Views/Shared/_ExternalLoginsListPartial.cshtml")*@
+                            </div>
                         </div>
-
-                        <form id="login-launch" action="@Url.Action("ExternalLogin", "Account")" method="POST" target="login-popup" onsubmit="invokeLogin();">
-                            @*@using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
-                                {*@
-                            <input type="hidden" id="provider" name="provider" />
-                            <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
-
-
-
-                            <div class="col-xs-6">
-                                <button type="submit" onclick="$('#provider').attr('value', 'Google'); $('#login-launch').submit(); " class="btn btn-block btn-social btn-google-plus" id="Google" name="provider" value="Google" title="Log in using your Google account"><i class="fa fa-google-plus"></i>Google</button>
-                            </div>
-
-                            @*}*@
-                        </form>
-                        @*@RenderPage("~/Views/Shared/_ExternalLoginsListPartial.cshtml")*@
                     </div>
-                </div>
-            </div>
 
-            <div id="sign_up" class="modal-content login_pop sign_up" style="display:none;">
-                <div class="modal-header">
-                    <button type="button" class="close closefrgt" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="modal-title ">Sign-up</h3>
-                </div>
-                <div class="modal-body">
-                    <div class="col-md-12">
+                    <div id="sign_up" class="modal-content login_pop sign_up" style="display:none;">
+                        <div class="modal-header">
+                            <button type="button" class="close closefrgt" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h3 class="modal-title ">Sign-up</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-md-12">
 
-                        @using (Html.BeginForm("Signup", "Home", FormMethod.Post, new { role = "form", id = "form", @class = "form-horizontal acnt_form" }))
-                        {
+                                @using (Html.BeginForm("Signup", "Home", FormMethod.Post, new { role = "form", id = "form", @class = "form-horizontal acnt_form" }))
+                                {
 
-                            if (ViewData["Message"] != null)
-                            {<div class="err_main">
-                                <div class="er_suc_main">
-                                    <div class="er_suc_img"></div>
-                                    <div class="er_suc">ViewData["Message"] </div>
-                                </div>
+                                    if (ViewData["Message"] != null)
+                                    {<div class="err_main">
+                            <div class="er_suc_main">
+                                <div class="er_suc_img"></div>
+                                <div class="er_suc">ViewData["Message"] </div>
                             </div>
-                            }
-                            <div class="err_main" id="diverro" style="display :none;">
-                                <div class="er_UI_main alert-danger">
-                                    <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro">&#215;</button>
-                                    <div class="er_UI_img"></div>
-                                    <div class="er_suc" id="dverrsignui">  </div>
-                                </div>
-
-
-
-                            </div>
-
-
-                            <div class="err_main" id="diverro1" style="display :none;">
-                                <div class="er_UI_main alert-danger">
-                                    <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro1">&#215;</button>
-                                    <div class="er_sys_img"></div>
-                                    <div class="er_suc" id="dverrsignsys">  </div>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="row">
-                                        <div class="col-sm-5 login_form_bot">
-                                            <input type="text" id="SignupEmail" name="Email" placeholder="Email" class="form-control login_place" maxlength="256" autocomplete="off" />
-
-                                            @*@Html.TextBoxFor(m => m.Email, new { @maxlength = 256, @placeholder = "Email", @class = "form-control login_place", @id = "SignupEmail" })*@
+                        </div>
+                                    }
+                                    <div class="err_main" id="diverro" style="display :none;">
+                                        <div class="er_UI_main alert-danger">
+                                            <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro">&#215;</button>
+                                            <div class="er_UI_img"></div>
+                                            <div class="er_suc" id="dverrsignui">  </div>
                                         </div>
-                                        <div class="col-sm-5 login_form_bot">
-                                            <input type="password" id="SignupPassword" name="Password" placeholder="Password" class="form-control login_place" maxlength="15" autocomplete="off" />
 
-                                            @*@Html.PasswordFor(m => m.Password, new { @maxlength = 15, @placeholder = "Password", @class = "form-control login_place", @id = "SignupPassword" })*@
-
-                                        </div>
-                                        <div class="col-sm-2 login_form_bot">
-                                            @*<button type="button" class="btn btn-primary login_btn_sub" id="btnsave">SignUp</button>*@
-                                            <input type="button" value="SignUp" class="btn btn-primary login_btn_sub" id="btnsave" disabled="disabled" />
-                                        </div>
 
 
                                     </div>
-                                </div>
+
+
+                                    <div class="err_main" id="diverro1" style="display :none;">
+                                        <div class="er_UI_main alert-danger">
+                                            <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro1">&#215;</button>
+                                            <div class="er_sys_img"></div>
+                                            <div class="er_suc" id="dverrsignsys">  </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-sm-5 login_form_bot">
+                                                    <input type="text" id="SignupEmail" name="Email" placeholder="Email" class="form-control login_place" maxlength="256" autocomplete="off" />
+
+                                                    @*@Html.TextBoxFor(m => m.Email, new { @maxlength = 256, @placeholder = "Email", @class = "form-control login_place", @id = "SignupEmail" })*@
+                                                </div>
+                                                <div class="col-sm-5 login_form_bot">
+                                                    <input type="password" id="SignupPassword" name="Password" placeholder="Password" class="form-control login_place" maxlength="15" autocomplete="off" />
+
+                                                    @*@Html.PasswordFor(m => m.Password, new { @maxlength = 15, @placeholder = "Password", @class = "form-control login_place", @id = "SignupPassword" })*@
+
+                                                </div>
+                                                <div class="col-sm-2 login_form_bot">
+                                                    @*<button type="button" class="btn btn-primary login_btn_sub" id="btnsave">SignUp</button>*@
+                                                    <input type="button" value="SignUp" class="btn btn-primary login_btn_sub" id="btnsave" disabled="disabled" />
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="display:none" id="divsignupfrgt">
+
+                                        @Html.ActionLink("forgot password?", "ForgetPassword", "Home", null, new { id = "ASignupfrgt" })
+
+                                    </div>
+
+                                }
+
+
+                                @*@RenderPage("~/Views/Shared/_signuppartial.cshtml")*@
                             </div>
-                            <div class="col-md-12" style="display:none" id="divsignupfrgt">
-
-                                @Html.ActionLink("forgot password?", "ForgetPassword", "Home", null, new { id = "ASignupfrgt" })
-
-                            </div>
-
-                        }
-
-
-                        @*@RenderPage("~/Views/Shared/_signuppartial.cshtml")*@
+                        </div>
                     </div>
+                    <input type="hidden" id="url" />
                 </div>
             </div>
-            <input type="hidden" id="url" />
-        </div>
-    </div>
+
+    @*<script>
+        $(document).ready(function () {
+
+            var docHeight = $(window).height();
+            var footerHeight = $('footer').height();
+            var midcontainerHeight = $('.wrap').height();
+            var midConTop = $('.wrap').position().top;
+            if (midcontainerHeight > docHeight) {
+                var footerTop = ($('footer').position().top + midcontainerHeight + midConTop) - footerHeight;
+                $('footer').css('top', footerTop + 'px');
+            } else {
+                var footerTop = (midcontainerHeight + midConTop);
+                $('footer').css('top', footerTop + 'px');
+            }
+        });
+    </script>*@
 </body>
 </html>
 
+
 <script type="text/javascript">
+   /* $(document).ready(function () {
+
+        var docHeight = $(window).height();
+        var footerHeight = $('footer').height();
+        var midcontainerHeight = $('.wrap').height();
+        var midConTop = $('.wrap').position().top;
+        var footerTop = $('footer').position().top + footerHeight + midcontainerHeight;
+        //var footerTop = midcontainerHeight + footerHeight;
+
+        if (footerTop < docHeight) {
+            $('footer').css('margin-top', 10 + (docHeight - footerTop) + 'px');
+        }
+    });*/
+
+
+    
+     
+
+   
+
     //function SearchEvents() {
 
         

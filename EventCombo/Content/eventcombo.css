@@ -2,7 +2,10 @@
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
 
 h1,h2,h3,h4,h5,h6,p,a,span{ word-break: break-all !important; }
-
+html {
+  position: relative;
+  min-height: 100%;
+}
 
 body{font-family:"Abel",Arial,sans-serif;}
 a:focus { outline: none; text-decoration: none; }
@@ -134,7 +137,16 @@ button:focus { outline: none;}
 .psst_event_org{ margin-bottom: 10px;}
 
 
-.foot_bg{ background: #555; min-height: 180px; }
+.foot_bg{ background: #555; min-height: 180px; width:100%; float:left; padding-bottom:5px;  }
+.wrap{ min-height:400px;}
+/*.footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: auto;
+    width: 100%;
+}*/
+.mid-contain{ width:100%; float:left;}
 
 .foot_logo{border-bottom: 1px solid #fff; padding: 15px 0; margin-bottom: 15px;}
 .fot_cont a{ color: #fff; text-decoration: none; }
@@ -882,6 +894,7 @@ span.evnt_toltip{
 .online_check_box{ height:auto !important;}
 .col_days_hrs_picker_main{ margin-top:-15px !important;}
 .ft4em{ font-size:2.5em !important;}
+
 }
 @media (width: 320px) {
 .ev_loc_icn{ left:-10px !important; }
@@ -966,9 +979,9 @@ span.evnt_toltip{
 .m480-h-titl-rit{ width:74%;}
 .evnt_details_body2.m480-body2{ padding:0 10px;}
 .m480-inn-pad{ padding:0px;}
-
-
-
+.m480-time-drop img{ float:right;}
+.m480-time-drop .cus-drop-list{ margin-top:40px; right:0px; left:auto; }
+.m480-time-drop .caret_cus{ right:5px; left:auto !important;}
 }
 @media (min-width: 360px) and (max-width: 640px) {
 .xs_create_code_mb10{ margin-bottom:10px;}
@@ -1018,6 +1031,7 @@ span.evnt_toltip{
 .online_check_box{ height:auto !important;}
 .col_days_hrs_picker_main{ margin-top:-15px !important;}
 .ft4em{ font-size:2.5em !important;}
+
 }
 
 @media (width: 360px) {
