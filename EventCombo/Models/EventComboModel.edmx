@@ -119,6 +119,7 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="LoginStatus" Type="varchar" MaxLength="1" />
+          <Property Name="OldUserID" Type="int" />
         </EntityType>
         <EntityType Name="BillingAddress">
           <Key>
@@ -450,6 +451,8 @@
           <Property Name="O_Card_TransHash" Type="varchar" MaxLength="100" />
           <Property Name="O_Card_TransId" Type="varchar" MaxLength="100" />
           <Property Name="OrderStateId" Type="tinyint" />
+          <Property Name="PaymentTypeId" Type="tinyint" />
+          <Property Name="Note" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="OrderState">
           <Key>
@@ -616,8 +619,16 @@
           <Property Name="PI_AccountNumber" Type="varchar" MaxLength="100" />
           <Property Name="PI_ReAccountNumber" Type="varchar" MaxLength="100" />
           <Property Name="PI_PayTo" Type="varchar" MaxLength="500" />
-          <Property Name="PI_EventId" Type="bigint" Nullable="false" />
+          <Property Name="PI_EventId" Type="bigint" />
           <Property Name="PI_Address2" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="PaymentTypeId" />
+          </Key>
+          <Property Name="PaymentTypeId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaymentTypeName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Permission_Detail">
           <Key>
@@ -1038,6 +1049,32 @@ warning 6002: The table/view 'EventCombo.dbo.V_EventsList' does not have a prima
           <Property Name="EventTiming" Type="varchar" MaxLength="49" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'EventCombo.dbo.v_OrderList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_OrderList">
+          <Key>
+            <PropertyRef Name="OId" />
+            <PropertyRef Name="OrderStateId" />
+          </Key>
+          <Property Name="OId" Type="bigint" Nullable="false" />
+          <Property Name="OrderId" Type="varchar" MaxLength="100" />
+          <Property Name="FirstName" Type="varchar" MaxLength="100" />
+          <Property Name="LastName" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="City" Type="varchar" MaxLength="256" />
+          <Property Name="State" Type="varchar" MaxLength="256" />
+          <Property Name="OrderDateTime" Type="datetime" />
+          <Property Name="Name" Type="nvarchar" MaxLength="600" />
+          <Property Name="TotalPaid" Type="numeric" Precision="38" Scale="2" />
+          <Property Name="Quantity" Type="bigint" />
+          <Property Name="EventStartDate" Type="datetime" />
+          <Property Name="EventEndDate" Type="datetime" />
+          <Property Name="EventCancelled" Type="bit" />
+          <Property Name="OrderStateId" Type="tinyint" Nullable="false" />
+          <Property Name="OrderStateName" Type="varchar" MaxLength="50" />
+          <Property Name="EventID" Type="bigint" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="v_RetrieveEventid">
           <Key>
@@ -1119,7 +1156,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="deals" Type="int" Nullable="false" />
           <Property Name="dealpurchased" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__EventSubC__Event__2CAA2BCA">
+        <Association Name="FK__EventSubC__Event__2942188C">
           <End Role="EventCategory" Type="Self.EventCategory" Multiplicity="1" />
           <End Role="EventSubCategory" Type="Self.EventSubCategory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1131,7 +1168,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TicketDel__Deliv__33572959">
+        <Association Name="FK__TicketDel__Deliv__2FEF161B">
           <End Role="DeliveryMethod" Type="Self.DeliveryMethod" Multiplicity="1" />
           <End Role="TicketDeliveryMethod" Type="Self.TicketDeliveryMethod" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1491,6 +1528,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="OrderTemplateType" EntityType="Self.OrderTemplateType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Organizer_Master" EntityType="Self.Organizer_Master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment_Info" EntityType="Self.Payment_Info" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentType" EntityType="Self.PaymentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission_Detail" EntityType="Self.Permission_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Promo_Code" EntityType="Self.Promo_Code" Schema="dbo" store:Type="Tables" />
@@ -1548,6 +1586,28 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
     [V_EventsList].[Purchasedqty] AS [Purchasedqty], 
     [V_EventsList].[EventTiming] AS [EventTiming]
     FROM [dbo].[V_EventsList] AS [V_EventsList]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="v_OrderList" EntityType="Self.v_OrderList" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_OrderList].[OId] AS [OId], 
+    [v_OrderList].[OrderId] AS [OrderId], 
+    [v_OrderList].[FirstName] AS [FirstName], 
+    [v_OrderList].[LastName] AS [LastName], 
+    [v_OrderList].[Email] AS [Email], 
+    [v_OrderList].[City] AS [City], 
+    [v_OrderList].[State] AS [State], 
+    [v_OrderList].[OrderDateTime] AS [OrderDateTime], 
+    [v_OrderList].[Name] AS [Name], 
+    [v_OrderList].[TotalPaid] AS [TotalPaid], 
+    [v_OrderList].[Quantity] AS [Quantity], 
+    [v_OrderList].[EventStartDate] AS [EventStartDate], 
+    [v_OrderList].[EventEndDate] AS [EventEndDate], 
+    [v_OrderList].[EventCancelled] AS [EventCancelled], 
+    [v_OrderList].[OrderStateId] AS [OrderStateId], 
+    [v_OrderList].[OrderStateName] AS [OrderStateName], 
+    [v_OrderList].[EventID] AS [EventID], 
+    [v_OrderList].[UserId] AS [UserId]
+    FROM [dbo].[v_OrderList] AS [v_OrderList]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="v_RetrieveEventid" EntityType="Self.v_RetrieveEventid" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1616,11 +1676,11 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
     [V_Users].[dealpurchased] AS [dealpurchased]
     FROM [dbo].[V_Users] AS [V_Users]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__EventSubC__Event__2CAA2BCA" Association="Self.FK__EventSubC__Event__2CAA2BCA">
+          <AssociationSet Name="FK__EventSubC__Event__2942188C" Association="Self.FK__EventSubC__Event__2942188C">
             <End Role="EventCategory" EntitySet="EventCategory" />
             <End Role="EventSubCategory" EntitySet="EventSubCategory" />
           </AssociationSet>
-          <AssociationSet Name="FK__TicketDel__Deliv__33572959" Association="Self.FK__TicketDel__Deliv__33572959">
+          <AssociationSet Name="FK__TicketDel__Deliv__2FEF161B" Association="Self.FK__TicketDel__Deliv__2FEF161B">
             <End Role="DeliveryMethod" EntitySet="DeliveryMethod" />
             <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethod" />
           </AssociationSet>
@@ -1789,6 +1849,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <NavigationProperty Name="Ticket_Purchased_Detail" Relationship="EventComboModel.AspNetUserTicket_Purchased_Detail" FromRole="AspNetUser" ToRole="Ticket_Purchased_Detail" />
           <NavigationProperty Name="Organizer_Master" Relationship="EventComboModel.AspNetUserOrganizer_Master" FromRole="AspNetUser" ToRole="Organizer_Master" />
           <NavigationProperty Name="Order_Detail_T" Relationship="EventComboModel.AspNetUserOrder_Detail_T" FromRole="AspNetUser" ToRole="Order_Detail_T" />
+          <Property Name="OldUserID" Type="Int32" />
         </EntityType>
         <EntityType Name="BillingAddress">
           <Key>
@@ -2038,6 +2099,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="OrderStateId" Type="Byte" />
           <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.AspNetUserOrder_Detail_T" FromRole="Order_Detail_T" ToRole="AspNetUser" />
           <NavigationProperty Name="OrderState" Relationship="EventComboModel.OrderStateOrder_Detail_T" FromRole="Order_Detail_T" ToRole="OrderState" />
+          <Property Name="PaymentTypeId" Type="Byte" />
+          <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PaymentType" Relationship="EventComboModel.PaymentTypeOrder_Detail_T" FromRole="Order_Detail_T" ToRole="PaymentType" />
         </EntityType>
         <EntityType Name="Payment_Info">
           <Key>
@@ -2058,7 +2122,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="PI_AccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PI_ReAccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PI_PayTo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="PI_EventId" Type="Int64" Nullable="false" />
+          <Property Name="PI_EventId" Type="Int64" />
           <Property Name="PI_Address2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Permission_Detail">
@@ -2763,6 +2827,12 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           </AssociationSet>
           <AssociationSet Name="OrderStateOrder_Detail_T" Association="EventComboModel.OrderStateOrder_Detail_T">
             <End Role="OrderState" EntitySet="OrderStates" />
+            <End Role="Order_Detail_T" EntitySet="Order_Detail_T" />
+          </AssociationSet>
+          <EntitySet Name="PaymentTypes" EntityType="EventComboModel.PaymentType" />
+          <EntitySet Name="v_OrderList" EntityType="EventComboModel.v_OrderList" />
+          <AssociationSet Name="PaymentTypeOrder_Detail_T" Association="EventComboModel.PaymentTypeOrder_Detail_T">
+            <End Role="PaymentType" EntitySet="PaymentTypes" />
             <End Role="Order_Detail_T" EntitySet="Order_Detail_T" />
           </AssociationSet>
         </EntityContainer>
@@ -3959,6 +4029,51 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="PaymentTypeId" />
+          </Key>
+          <Property Name="PaymentTypeId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Order_Detail_T" Relationship="EventComboModel.PaymentTypeOrder_Detail_T" FromRole="PaymentType" ToRole="Order_Detail_T" />
+          <Property Name="PaymentTypeName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="v_OrderList">
+          <Key>
+            <PropertyRef Name="OId" />
+            <PropertyRef Name="OrderStateId" />
+          </Key>
+          <Property Name="OId" Type="Int64" Nullable="false" />
+          <Property Name="OrderId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="OrderDateTime" Type="DateTime" Precision="3" />
+          <Property Name="Name" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="TotalPaid" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="Quantity" Type="Int64" />
+          <Property Name="EventStartDate" Type="DateTime" Precision="3" />
+          <Property Name="EventEndDate" Type="DateTime" Precision="3" />
+          <Property Name="EventCancelled" Type="Boolean" />
+          <Property Name="OrderStateId" Type="Byte" Nullable="false" />
+          <Property Name="OrderStateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventID" Type="Int64" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="PaymentTypeOrder_Detail_T">
+          <End Type="EventComboModel.PaymentType" Role="PaymentType" Multiplicity="0..1" />
+          <End Type="EventComboModel.Order_Detail_T" Role="Order_Detail_T" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="PaymentTypeId" />
+            </Principal>
+            <Dependent Role="Order_Detail_T">
+              <PropertyRef Name="PaymentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4025,6 +4140,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="EventComboModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="OldUserID" ColumnName="OldUserID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
@@ -4263,6 +4379,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="Order_Detail_T">
             <EntityTypeMapping TypeName="EventComboModel.Order_Detail_T">
               <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="PaymentTypeId" ColumnName="PaymentTypeId" />
                 <ScalarProperty Name="OrderStateId" ColumnName="OrderStateId" />
                 <ScalarProperty Name="O_Card_TransId" ColumnName="O_Card_TransId" />
                 <ScalarProperty Name="O_Card_TransHash" ColumnName="O_Card_TransHash" />
@@ -5209,6 +5327,39 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
               <MappingFragment StoreEntitySet="OrderState">
                 <ScalarProperty Name="OrderStateName" ColumnName="OrderStateName" />
                 <ScalarProperty Name="OrderStateId" ColumnName="OrderStateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentTypes">
+            <EntityTypeMapping TypeName="EventComboModel.PaymentType">
+              <MappingFragment StoreEntitySet="PaymentType">
+                <ScalarProperty Name="PaymentTypeName" ColumnName="PaymentTypeName" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="PaymentTypeId" ColumnName="PaymentTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_OrderList">
+            <EntityTypeMapping TypeName="EventComboModel.v_OrderList">
+              <MappingFragment StoreEntitySet="v_OrderList">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="OrderStateName" ColumnName="OrderStateName" />
+                <ScalarProperty Name="OrderStateId" ColumnName="OrderStateId" />
+                <ScalarProperty Name="EventCancelled" ColumnName="EventCancelled" />
+                <ScalarProperty Name="EventEndDate" ColumnName="EventEndDate" />
+                <ScalarProperty Name="EventStartDate" ColumnName="EventStartDate" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="TotalPaid" ColumnName="TotalPaid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="OrderDateTime" ColumnName="OrderDateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="OId" ColumnName="OId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

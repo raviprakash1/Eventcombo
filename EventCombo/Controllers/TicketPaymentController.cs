@@ -2596,7 +2596,7 @@ namespace EventCombo.Controllers
                     }
                     //
                     var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == strGUID && i.TPD_Event_Id == Eventid).ToList();
-
+                    long sumqty = 0;
                     var bodyn = "";
                     var ticketP = "";
                     var eventdetail = db.Events.FirstOrDefault(i => i.EventID == Eventid);
@@ -2606,6 +2606,8 @@ namespace EventCombo.Controllers
                     DateTime datetime = new DateTime();
                     DayOfWeek day = new DayOfWeek();
                     string Sdate = "", time = "";
+                    var addresstemp = db.Addresses.FirstOrDefault(i => i.EventId == eventdetail.EventID);
+                    TempData["address"] = addresstemp;
                     //Get Email tags
                     foreach (var item in TicketPurchasedDetail)
                     {
@@ -2613,7 +2615,7 @@ namespace EventCombo.Controllers
                         paymentdate pdate = new paymentdate();
                         var tQntydetail = db.Ticket_Quantity_Detail.FirstOrDefault(i => i.TQD_Id == item.TPD_TQD_Id);
                         var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
-
+                        sumqty = sumqty + (item.TPD_Purchased_Qty??0);
 
                         if (tQntydetail.TQD_StartDate != null)
                         {
@@ -2774,6 +2776,156 @@ namespace EventCombo.Controllers
 
 
                     }
+                    var url = Request.Url;
+                    var baseurl = url.GetLeftPart(UriPartial.Authority);
+
+
+                    //send email to organizer
+
+                    Emailtemplate = ac.getEmail("email_ticket_purchase");
+
+                    if (Emailtemplate != null)
+                    {
+                        if (!string.IsNullOrEmpty(Emailtemplate.To))
+                        {
+
+
+                            to = Emailtemplate.To;
+                            if (to.Contains("¶¶EventOrganiserEmail¶¶"))
+                            {
+                                to = to.Replace("¶¶EventOrganiserEmail¶¶", Organiseremail);
+
+                            }
+                        }
+                        if (!(string.IsNullOrEmpty(Emailtemplate.From)))
+                        {
+                            from = Emailtemplate.From;
+                            if (from.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                from = from.Replace("¶¶UserEmailID¶¶", emailorder);
+
+                            }
+                            if (from.Contains("¶¶EventOrganiserEmail¶¶"))
+                            {
+                                from = from.Replace("¶¶EventOrganiserEmail¶¶", Organiseremail);
+
+                            }
+                        }
+                        else
+                        {
+                            from = ConfigurationManager.AppSettings.Get("UserName");
+
+                        }
+                        if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
+                        {
+                            cc = Emailtemplate.CC;
+                            if (cc.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                cc = cc.Replace("¶¶UserEmailID¶¶", emailorder);
+
+                            }
+                        }
+                        if (!(string.IsNullOrEmpty(Emailtemplate.Bcc)))
+                        {
+                            bcc = Emailtemplate.Bcc;
+                            if (bcc.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                bcc = bcc.Replace("¶¶UserEmailID¶¶", emailorder);
+
+                            }
+                        }
+                        if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
+                        {
+                            emailname = Emailtemplate.From_Name;
+                        }
+                        else
+                        {
+                            emailname = from;
+                        }
+                        if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+                        {
+
+
+                            subjectn = Emailtemplate.Subject;
+
+                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                            {
+
+                                if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                {
+                                    if (EmailTag[i].Tag_Name == "TicketQty")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶TicketQty¶¶", sumqty.ToString ());
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventTitleId")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶EventTitleId¶¶", eventdetail.EventTitle);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", username);
+
+                                    }
+
+                                    // All tags
+
+
+
+
+                                }
+
+                            }
+                        }
+
+                     
+                        string createevent = baseurl + Url.Action("Index", "Home");
+                        if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
+                        {
+                            bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                            {
+
+                                if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                {
+                                    if (EmailTag[i].Tag_Name == "TicketQty")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶TicketQty¶¶", sumqty.ToString());
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventTitleId")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶EventTitleId¶¶", eventdetail.EventTitle);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", username);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "ClickHere")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶ClickHere¶¶", createevent);
+
+                                    }
+
+                                }
+
+                            }
+                        }
+
+                        // ImageMapPath = Server.MapPath("..") + "/Images/Imagemap_"+EvtOrDetail.TPD_Order_Id+ ".png";
+                        //Mail 
+                        ac.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, "", emailname);
+                        //Mail 
+
+
+
+                    }
+
+
+                    //
 
 
                     //Send mail
@@ -2793,9 +2945,9 @@ namespace EventCombo.Controllers
                     ps.sendlatestdetails = acountdedtails.SendLatestdetails;
                     ps.Username = username;
                     ps.Email = emailorder;
-                    var url = Request.Url;
-                    var baseurl = url.GetLeftPart(UriPartial.Authority);
-                    ps.url = baseurl + Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + Eventdetails.EventTitle.Trim() + "౼" + Eventid + "౼N";
+                    ps.url = baseurl+Url.RouteUrl("ViewEvent", new { strEventDs = Regex.Replace(Eventdetails.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = Eventdetails.EventID.ToString() });
+
+                    //ps.url = baseurl + Url.Action("ViewEvent", "ViewEvent") + "?strEventDs="+ Eventid + "&strEventId";
                     ps.Guestlist = emailonpayment;
                     ps.EventPrivacy = Eventdetails.EventPrivacy;
                     ps.Shareonfb = Eventdetails.Private_ShareOnFB;

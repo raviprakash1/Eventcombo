@@ -1,5 +1,6 @@
 ﻿@using System.Collections.Generic
 @using EventCombo.Models
+@using EventCombo.Service
 @model IEnumerable<ArticleShortViewModel>
 @{
   Layout = null;
@@ -12,7 +13,7 @@
 
     <div class="col-md-6 col-sm-6 col-xs-12 newsContentDetailCon">
       <div class="newsContentInnerCon">
-        <a href="@(Url.Action("ShowArticle", "Article", new { articleId = article.ArticleId }))">
+        <a href="@(Url.Content(ArticleService.GetArticleUrl(article.ArticleId, article.Title)))">
           <div class="newsContentImg">
             <img src="@article.ArticleImage" />
           </div>

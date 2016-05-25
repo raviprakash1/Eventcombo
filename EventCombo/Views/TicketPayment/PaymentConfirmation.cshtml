@@ -90,7 +90,7 @@
             <div class="col-sm-6 col-xs-6 text-right pl0 ev_social_share_btn">
                 <a href="#"><img src="/Images/mail.png"></a>
                 <a href="#" id="twittershare"><img src="/Images/twi.png"></a>
-                <a href="#" id="fbshare"><img src="/Images/fac.png"></a>
+                <a href="#" class="sharefb" id="fbshare"><img src="/Images/fac.png"></a>
 
                 <a href="#" id="linkshare"><img src="/Images/lin.png"></a>
             </div>
@@ -143,7 +143,7 @@
                     <p>Events are better when your friends are there too. So, who's coming with you?</p>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 col-xs-12 no_pad">
-                        <button class="btn ev_live_btn fs18" type="button" id="shareonfb">
+                        <button class="btn ev_live_btn fs18 sharefb" type="button" id="shareonfb">
                             SHARE ON FACEBOOK
                         </button>
                     </div>
@@ -429,20 +429,20 @@
 
         });
 
-        $('#shareonfb').click(function () {
+        @*$('#shareonfb').click(function () {
             var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
             var description = '@Html.DisplayFor(m => m.description).ToString().Trim()';
             var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
             window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[summary]=' + encodeURIComponent(description) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
-        });
-        $('#fbshare').click(function () {
+        });*@
+        @*$('#fbshare').click(function () {
             var title='@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
             var description='@Html.DisplayFor(m => m.description).ToString().Trim()';
             var url='@Html.DisplayFor(m => m.url).ToString().Trim()';
             window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[summary]=' + encodeURIComponent(description) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             return false;
-        });
+        });*@
 
         $('#twittershare').click(function () {
             var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
@@ -573,5 +573,58 @@
         $(target).show();
     }
     function pad(n) { return n < 10 ? '0' + n : n };
+    $(document).prop('title', '@Model.Tilte,@TempData["address"]  | Eventcombo');
+</script>
+
+
+<script type="text/javascript">
+
+
+    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
+    @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
+    var urlprefix = '@strpr'
+
+    window.fbAsyncInit = function () {
+        // init the FB JS SDK
+        FB.init({
+            appId: fbappid,                        // App ID from the app dashboard
+            status: true,                                 // Check Facebook Login status
+            xfbml: true                                  // Look for social plugins on the page
+        });
+
+    };
+
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+
+    var globalFacebookShareObject = { name: 'EventCombo', link: '' };
+
+
+
+    $(document).ready(function () {
+        $('.sharefb').click(function (e) {
+            debugger;
+            globalFacebookShareObject.link ='@Model.url';
+            globalFacebookShareObject.name ='@Model.Tilte';
+            console.log(globalFacebookShareObject.link);
+            console.log(globalFacebookShareObject.name);
+
+            FB.ui({
+                method: 'feed',
+                name: globalFacebookShareObject.name,
+                link: globalFacebookShareObject.link
+            }, function (response) {
+                if (response && response.post_id) { }
+                else { }
+            });
+        });
+    });
 
 </script>

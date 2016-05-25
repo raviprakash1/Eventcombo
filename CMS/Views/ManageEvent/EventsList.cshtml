@@ -549,8 +549,17 @@
                 datatype: "Text",
                 type: "Post",
                 success: function (response) {
-                    window.location.href = window.location.href;
-                   
+
+                    var SearchStringEventTitle = $("#SearchStringEventTitle").val();
+                    var EventType = $("#EventType").val();
+                    var ddlEventCategory = $("#ddlEventCategory").val();
+                    var ddlEventSubCategory = $("#ddlEventSubCategory").val();
+                    var Features = $("#Features").val();
+                    var Events = $("#Events").val();
+                    var Tickets = $("#Tickets").val();
+                    var sortorder = "@TempData["sortorder"]";
+                    //window.location.href = window.location.href;
+                    window.location.href = '@Url.Action("EventsList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Features=' + Features + '&Tickets=' + Tickets + '&sortorder=' + sortorder + '';
                     //$.post("Users\Users");
                     // if (response == "Deleted")
                     // alert("Record Deleted Successfully.");

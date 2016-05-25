@@ -84,6 +84,8 @@ namespace CMS.Models
         public virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<V_Users> V_Users { get; set; }
         public virtual DbSet<V_EventsList> V_EventsList { get; set; }
+        public virtual DbSet<OrderState> OrderStates { get; set; }
+        public virtual DbSet<v_OrderList> v_OrderList { get; set; }
     
         [DbFunction("EmsEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)

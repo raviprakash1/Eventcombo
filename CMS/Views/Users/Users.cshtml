@@ -544,6 +544,11 @@
                                           <input type="checkbox" checked="" id="chk_12">
                                           <label for="chk_12">Article Management</label>
                                         </div>
+
+                                        <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
+                                          <input type="checkbox" checked="" id="chk_13">
+                                          <label for="chk_13">Ticket Orders</label>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -879,7 +884,7 @@
            var id = $("#HdId").val();
            var roletype = "";
             var Permisions = ""; var URole;
-            for (i = 1; i <= 12; i++) {
+            for (i = 1; i <= 13; i++) {
                 if ($("#chk_" + i).is(":checked") == true)
                 {
                     if (Permisions == "")
@@ -1106,7 +1111,7 @@
         document.getElementById("hdUName").value = userId;
         document.getElementById("HdId").value = id;
 
-        for (i = 1; i <= 12 ; i++) {
+        for (i = 1; i <= 13 ; i++) {
             $("#chk_" + i.toString()).prop("checked", false);
         }
         $("#rdAdmin").prop("checked", true);
