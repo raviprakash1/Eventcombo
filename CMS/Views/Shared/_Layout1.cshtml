@@ -195,6 +195,14 @@
 
                     </li>
 
+                    <li>
+                      <a href="#" onclick="checkPermission('13');">
+                        <span class="fa fa-ticket"></span>
+                        <span class="sidebar-title">Ticket Orders</span>
+                      </a>
+
+                    </li>
+
                     <li class="sidebar-label pt20">Systems</li>
 
                     <li>
@@ -382,7 +390,9 @@
                             window.location.href = '@Url.Action("Index", "FeeSetting")';
                         else if (vPerm == "12")
                           window.location.href = '@Url.Action("Index", "Article")';
-}
+                        else if (vPerm == "13")
+                          window.location.href = '@Url.Action("Index", "Orders")';
+                    }
                 }
             });
 

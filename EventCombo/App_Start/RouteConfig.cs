@@ -52,7 +52,11 @@ namespace EventCombo
                 defaults: new { controller = "Home", action = "DiscoverEvents",strEt = UrlParameter.Optional, strEc = UrlParameter.Optional, strPrice= UrlParameter.Optional, strPageIndex = UrlParameter.Optional , strLat = UrlParameter.Optional, strLong = UrlParameter.Optional, strSort = UrlParameter.Optional, strDateFilter = UrlParameter.Optional, strTextSearch = UrlParameter.Optional }
             );
 
-       
+            routes.MapRoute(
+                "ShowArticle",
+                "a/{articleId}/{articleTitle}",
+                new { controller = "Article", action = "ShowArticle", articleId = "", articleTitle = ""}
+              );
 
 
             routes.MapRoute(

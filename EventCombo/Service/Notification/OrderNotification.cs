@@ -91,7 +91,7 @@ namespace EventCombo.Service
         eventname = eAddresses.Select(a => a.ConsolidateAddress).FirstOrDefault();
 
       IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
-      var tickets = tpdRepo.Get(filter: (t => t.TPD_Event_Id == cEvent.EventID));
+      var tickets = tpdRepo.Get(filter: (t => t.TPD_Order_Id == _orderId));
       foreach (var ticket in tickets.Select(tp => new
       {
         AddressId = tp.Ticket_Quantity_Detail.TQD_AddressId,

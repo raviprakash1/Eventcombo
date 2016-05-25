@@ -7,6 +7,9 @@ using EventCombo.DAL;
 using AutoMapper;
 using System.Net.Mail;
 using System.IO;
+using NPOI;
+using NPOI.SS.UserModel;
+using NPOI.HSSF.UserModel;
 
 namespace EventCombo.Service
 {
@@ -181,9 +184,65 @@ namespace EventCombo.Service
       return OrderListToTXT(orders);
     }
 
+    private ICell AddStyledCell(IRow row, int cellnum, ICellStyle style, CellType ctype = CellType.String)
+    {
+      ICell cell = row.CreateCell(cellnum, ctype);
+      cell.CellStyle = style;
+      return cell;
+    }
+
     private MemoryStream OrderListToXLS(IEnumerable<EventOrderInfoViewModel> orders)
     {
-      throw new NotImplementedException();
+      MemoryStream res = new MemoryStream();
+      IWorkbook wb = new HSSFWorkbook();
+      ICellStyle style = wb.CreateCellStyle();
+      style.BorderBottom = BorderStyle.Thin;
+      style.BorderTop = BorderStyle.Thin;
+      style.BorderLeft = BorderStyle.Thin;
+      style.BorderRight = BorderStyle.Thin;
+      ICellStyle hstyle = wb.CreateCellStyle();
+      hstyle.BorderBottom = BorderStyle.Thin;
+      hstyle.BorderTop = BorderStyle.Thin;
+      hstyle.BorderLeft = BorderStyle.Thin;
+      hstyle.BorderRight = BorderStyle.Thin;
+      hstyle.Alignment = HorizontalAlignment.Center;
+      IFont bfont = wb.CreateFont();
+      bfont.Boldweight = (short)FontBoldWeight.Bold;
+      hstyle.SetFont(bfont);
+      ICellStyle datestyle = wb.CreateCellStyle();
+      datestyle.BorderBottom = BorderStyle.Thin;
+      datestyle.BorderTop = BorderStyle.Thin;
+      datestyle.BorderLeft = BorderStyle.Thin;
+      datestyle.BorderRight = BorderStyle.Thin;
+      datestyle.DataFormat = wb.CreateDataFormat().GetFormat("MMMM dd, yyyy");
+
+      ISheet sheet = wb.CreateSheet("Orders");
+      IRow row = sheet.CreateRow(0);
+      AddStyledCell(row, 0, hstyle).SetCellValue("ORDER #");
+      AddStyledCell(row, 1, hstyle).SetCellValue("TICKET BUYER");
+      AddStyledCell(row, 2, hstyle).SetCellValue("QUANTITY");
+      AddStyledCell(row, 3, hstyle).SetCellValue("PRICE");
+      AddStyledCell(row, 4, hstyle).SetCellValue("DATE");
+      AddStyledCell(row, 5, hstyle).SetCellValue("PAYMENT");
+      var i = 1;
+      foreach (var order in orders)
+      {
+        row = sheet.CreateRow(i++);
+        AddStyledCell(row, 0, style).SetCellValue(order.OrderId);
+        AddStyledCell(row, 1, style).SetCellValue(order.BuyerName);
+        AddStyledCell(row, 2, style).SetCellValue(order.Quantity);
+        AddStyledCell(row, 3, style).SetCellValue((double)order.Price);
+        AddStyledCell(row, 4, datestyle).SetCellValue(order.Date);
+        AddStyledCell(row, 5, style).SetCellValue(order.PaymentState.ToString());
+      }
+      for (i = 0; i <= 5; i++)
+      {
+        sheet.AutoSizeColumn(i);
+        sheet.SetColumnWidth(i, sheet.GetColumnWidth(i) + 1024);
+      }
+      wb.Write(res);
+      res.Position = 0;
+      return res;
     }
 
     private MemoryStream OrderListToTXT(IEnumerable<EventOrderInfoViewModel> orders)
@@ -236,7 +295,7 @@ namespace EventCombo.Service
       rw.Write("PAYMENT");
       rw.WriteLine();
 
-      foreach(var order in orders)
+      foreach (var order in orders)
       {
         rw.Write(order.OrderId + delimiter);
         rw.Write(order.BuyerName + delimiter);
@@ -251,6 +310,34 @@ namespace EventCombo.Service
 
       res.Position = 0;
       return res;
+    }
+
+    public AddAttandeeOrder PrepareAddAttendeeOrder(long eventId)
+    {
+      AddAttandeeOrder aa = new AddAttandeeOrder();
+      IRepository<Ticket> tRepo = new GenericRepository<Ticket>(_factory.ContextFactory);
+      IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+      IRepository<PaymentType> ptRepo = new GenericRepository<PaymentType>(_factory.ContextFactory);
+
+      aa.EventId = eventId;
+
+      foreach (var ticket in tRepo.Get(filter: (t => t.E_Id == eventId), orderBy: (query => query.OrderBy(t => t.TicketTypeID))))
+      {
+        TicketInfoAddViewModel ti = new TicketInfoAddViewModel();
+        ti.Ticket = _mapper.Map<TicketViewModel>(ticket);
+        ti.TicketSold = tpdRepo.Get(filter: (tpd => ((tpd.TPD_Event_Id == eventId) && (tpd.Ticket_Quantity_Detail.Ticket.T_Id == ticket.T_Id)))).Sum(tpd => tpd.TPD_Purchased_Qty);
+        ti.TicketSold = ti.TicketSold ?? 0;
+        aa.Tickets.Add(ti);
+      }
+
+      foreach (var pt in ptRepo.Get(filter: (p => p.Active), orderBy: (query => query.OrderBy(p => p.PaymentTypeId))))
+      {
+        if (aa.PaymentType == null)
+          aa.PaymentType = _mapper.Map<PaymentTypeViewModel>(pt);
+        aa.AvailablePT.Add(_mapper.Map<PaymentTypeViewModel>(pt));
+      }
+
+      return aa;
     }
   }
 }

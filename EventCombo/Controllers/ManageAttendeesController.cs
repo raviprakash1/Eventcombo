@@ -54,16 +54,41 @@ namespace EventCombo.Controllers
     }
 
     [HttpGet]
-    public ActionResult Add()
+    public ActionResult Add(long eventId)
     {
       if ((Session["AppId"] == null))
         return DefaultAction();
 
       string userId = Session["AppId"].ToString();
+
+      if (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner)
+        return DefaultAction();
+
       Session["logo"] = "events";
       Session["Fromname"] = "ManageAttendees";
       Session["ReturnUrl"] = Url.Action("Add", "ManageAttendees");
-      return View();
+
+      var addAttendee = _maservice.PrepareAddAttendeeOrder(eventId);
+
+      return View(addAttendee);
+    }
+
+    [HttpPost]
+    public ActionResult ProcessAddAttendee(AddAttandeeOrder model)
+    {
+      if ((Session["AppId"] == null))
+        return DefaultAction();
+
+      string userId = Session["AppId"].ToString();
+
+      if (_dbservice.GetEventAccess(model.EventId, userId) != AccessLevel.EventOwner)
+        return DefaultAction();
+
+      Session["logo"] = "events";
+      Session["Fromname"] = "ManageAttendees";
+      Session["ReturnUrl"] = Url.Action("Add", "ManageAttendees");
+
+      return View(model);
     }
 
     [HttpGet]

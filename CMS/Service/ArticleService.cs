@@ -88,6 +88,8 @@ namespace CMS.Service
       {
         try
         {
+          model.Title = model.Title ?? "";
+          model.Body = model.Body ?? "";
           IRepository<ECImage> iRepo = new GenericRepository<ECImage>(_factory.ContextFactory);
           IRepository<Article> aRepo = new GenericRepository<Article>(_factory.ContextFactory);
           Article article = null;
@@ -96,7 +98,7 @@ namespace CMS.Service
           if (article == null)
           {
             article = _mapper.Map<Article>(model);
-            article.ArticleAuthor = new ArticleAuthor() { Name = model.AuthorName, TwitterLink = model.AuthorTwitterUrl };
+            article.ArticleAuthor = new ArticleAuthor() { Name = model.AuthorName ?? "", TwitterLink = model.AuthorTwitterUrl ?? "" };
             article.CreateDate = DateTime.Now;
             aRepo.Insert(article);
           }
