@@ -15,24 +15,6 @@
     <!-- Start: Content-Wrapper -->
     <section id="content_wrapper">
 
-        <!-- Start: Topbar -->
-        <header id="topbar" class="alt">
-            <div class="topbar-left">
-                <ol class="breadcrumb">
-
-                    <li class="crumb-icon">
-                        <a href="dashboard.html">
-                            <span class="glyphicon glyphicon-home"></span>
-                        </a>
-                    </li>
-                    <li class="crumb-active">
-                        Dashboard
-                    </li>
-                </ol>
-            </div>
-
-        </header>
-        <!-- End: Topbar -->
         <!-- Begin: Content -->
 
         <div id="content" class="animated fadeIn">
@@ -156,7 +138,7 @@
                                                         <span class="sor_evnt_cls_drop_down"> <a  href="@snodesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                     </th>
-                                                <th>Title 
+                                                <th class="tit-evnt-width">Title 
                                                     <div class="sor-evnt-cls">
                                                         <span class="sor_evnt_cls_drop_up"> <a href="@title"><img  src="~/assets/img/arw-up.png" /></a> </span>
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@titledesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
@@ -233,7 +215,7 @@
                                                     i = i + 1;
                                                     <tr>
                                                         <td>@obj.Sno</td>
-                                                        <td><a target="_blank" href="http://@host/ViewEvent/ViewEvent?strEventDs=@obj.EventTitle.Trim().Replace(" ", "-")&strEventId=@obj.EventID">@obj.EventTitle</a></td>
+                                                        <td  class="tit-evnt-width"><a target="_blank" href="http://@host/ViewEvent/ViewEvent?strEventDs=@obj.EventTitle.Trim().Replace(" ", "-")&strEventId=@obj.EventID">@obj.EventTitle</a></td>
                                                         <td>@obj.EventType</td>
                                                         <td>@obj.EventCategory-@obj.EventSubCategory</td>
                                                         <td>@obj.EventTiming</td>
