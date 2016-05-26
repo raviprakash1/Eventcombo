@@ -14,16 +14,7 @@ namespace EventCombo.Models
     
     public partial class ECImageType
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ECImageType()
-        {
-            this.ECImages = new HashSet<ECImage>();
-        }
-    
         public byte ECImageTypeId { get; set; }
         public string TypeName { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ECImage> ECImages { get; set; }
     }
 }

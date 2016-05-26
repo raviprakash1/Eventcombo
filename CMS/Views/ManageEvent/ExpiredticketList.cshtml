@@ -49,7 +49,7 @@
                                         <label class="field select admin-form col-sm-7 text-right srh-by-no">
                                             Total no. of Events : @ViewData["Eventscount"] &nbsp; &nbsp; &nbsp; &nbsp;
                                             @Html.DropDownList("ddlPageF", ViewBag.ddlPageF as List<SelectListItem>, new { @class = "pagination" })
-                                          
+
                                             <i class="arrow double"></i>
                                         </label>
                                     </div>
@@ -126,7 +126,7 @@
                                                 <th class="tab-wid1">
                                                     @{
                                                         string url = Request.Url.GetLeftPart(UriPartial.Authority);
-                                                        string sno = url+ "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"]+"&EventType="+@TempData["EventType"]+"&ddlEventCategory="+@TempData["ddlEventCategory"]+"&ddlEventSubCategory="+@TempData["ddlEventSubCategory"]+"&Features="+@TempData["Features"]+"&Events="+TempData["Events"]+"&Tickets="+@TempData["Tickets"]+ "&sortorder=sno";
+                                                        string sno = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=sno";
                                                         string snodesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=snodesc";
                                                         string title = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=title";
                                                         string titledesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=titledesc";
@@ -145,65 +145,73 @@
                                                         string feature = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=feature";
                                                         string featuredesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=featuredesc";
                                                     }
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                <span class="sss1">Sno.</span>
+
+
+
+
+
+                                                    <span class="sss1">Sno.</span>
                                                     <div class="sor-evnt-cls">
-                                                        <span class="sor_evnt_cls_drop_up"> <a href="@sno"><img  src="~/assets/img/arw-up.png" /></a> </span>
-                                                        <span class="sor_evnt_cls_drop_down"> <a  href="@snodesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@sno"><img src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_down"> <a href="@snodesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
-                                                    </th>
-                                                <th>Title 
+                                                </th>
+                                                <th>
+                                                    Title
                                                     <div class="sor-evnt-cls">
-                                                        <span class="sor_evnt_cls_drop_up"> <a href="@title"><img  src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@title"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@titledesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
-                                                <th class="tab-wid1">Type 
+                                                <th class="tab-wid1">
+                                                    Type
                                                     <div class="sor-evnt-cls">
-                                                        <span class="sor_evnt_cls_drop_up"> <a href="@type"><img  src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@type"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@typedesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
-                                                <th>Category-SubCategory 
+                                                <th>
+                                                    Category-SubCategory
                                                     <div class="sor-evnt-cls">
-                                                        <span class="sor_evnt_cls_drop_up"> <a href="@category"><img  src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@category"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@categorydesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
-                                                <th>Date(s)
+                                                <th>
+                                                    Date(s)
                                                     <div class="sor-evnt-cls">
-                                                        <span class="sor_evnt_cls_drop_up"> <a href="@date"><img  src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@date"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@datedesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
-                                                <th>Organizer Name & Email 
+                                                <th>
+                                                    Organizer Name & Email
                                                     <div class="sor-evnt-cls">
-                                                        <span class="sor_evnt_cls_drop_up"> <a href="@Organiser"><img  src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@Organiser"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@Organiserdesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
-                                                <th>Venue name & address 
+                                                <th>
+                                                    Venue name & address
                                                     <div class="sor-evnt-cls">
-                                                        <span class="sor_evnt_cls_drop_up"> <a href="@venue"><img  src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@venue"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@venuedesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
                                                 <th>Action</th>
                                                 <th>$</th>
                                                 @*<th>Manage Ticketing</th>*@
-                                                <th>Tickets Sold 
+                                                <th>
+                                                    Tickets Sold
                                                     <div class="sor-evnt-cls">
-                                                        <span class="sor_evnt_cls_drop_up"> <a href="@ticket"><img  src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@ticket"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@ticketdesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
-                                                <th>Feature 
+                                                <th>
+                                                    Feature
                                                     <div class="sor-evnt-cls">
-                                                        <span class="sor_evnt_cls_drop_up"> <a href="@feature"><img  src="~/assets/img/arw-up.png" /></a> </span>
+                                                        <span class="sor_evnt_cls_drop_up"> <a href="@feature"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@featuredesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
@@ -325,19 +333,19 @@
                                             }
                                         </tbody>
                                         @*<tfoot class="footer-menu">
-                                            <tr>
-                                                <td colspan="15">
-                                                    <nav class="text-right">
-                                                        <ul class="pagination hide-if-no-paging" id="ulpage"></ul>
-                                                    </nav>
-                                                </td>
-                                            </tr>
-                                        </tfoot>*@
+                                                <tr>
+                                                    <td colspan="15">
+                                                        <nav class="text-right">
+                                                            <ul class="pagination hide-if-no-paging" id="ulpage"></ul>
+                                                        </nav>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>*@
 
                                     </table>
 
                                     <div class="col-xs-12 no_pad" style="text-align:right">
-                                        @Html.PagedListPager(Model, pageF => Url.Action("EventsList", new { pageF, SearchStringEventTitle = TempData["SearchStringEventTitle"], EventType = TempData["EventType"], ddlEventCategory = TempData["ddlEventCategory"], ddlEventSubCategory=TempData["ddlEventSubCategory"], Features= TempData["Features"], Events=TempData["Events"], Tickets= TempData["Tickets"], sortorder=TempData["sortorder"] }))
+                                        @Html.PagedListPager(Model, pageF => Url.Action("EventsList", new { pageF, SearchStringEventTitle = TempData["SearchStringEventTitle"], EventType = TempData["EventType"], ddlEventCategory = TempData["ddlEventCategory"], ddlEventSubCategory = TempData["ddlEventSubCategory"], Features = TempData["Features"], Events = TempData["Events"], Tickets = TempData["Tickets"], sortorder = TempData["sortorder"] }))
                                     </div>
                                     @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"] != null)
                                     {
@@ -394,17 +402,17 @@
                     </a>
                 </div>
                 <input type="hidden" id="hdUserId" value="" />
-                
+
             </div>
         </div>
-       
+
 
         <div id="dvEventListDialog" style="display:none"></div>
 
         <div id="divId" title="Dialog Title" />
     </section>
 
- }
+                                                }
 
 <script>
     function LoadPaymentInfo(vEventId)
@@ -567,7 +575,6 @@
                 datatype: "Text",
                 type: "Post",
                 success: function (response) {
-
                     var SearchStringEventTitle = $("#SearchStringEventTitle").val();
                     var EventType = $("#EventType").val();
                     var ddlEventCategory = $("#ddlEventCategory").val();
@@ -577,7 +584,9 @@
                     var Tickets = $("#Tickets").val();
                     var sortorder = "@TempData["sortorder"]";
                     //window.location.href = window.location.href;
-                    window.location.href = '@Url.Action("EventsList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Features=' + Features + '&Tickets=' + Tickets + '&sortorder=' + sortorder + '';
+                    window.location.href = '@Url.Action("ExpiredticketList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Features=' + Features + '&Tickets=' + Tickets + '&sortorder=' + sortorder + '';
+
+
                     //$.post("Users\Users");
                     // if (response == "Deleted")
                     // alert("Record Deleted Successfully.");

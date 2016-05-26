@@ -14,12 +14,6 @@ namespace EventCombo.Models
     
     public partial class Article
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Article()
-        {
-            this.ArticleImages = new HashSet<ArticleImage>();
-        }
-    
         public long ArticleId { get; set; }
         public long ArticleAuthorId { get; set; }
         public string Title { get; set; }
@@ -31,10 +25,5 @@ namespace EventCombo.Models
         public bool PremiumFlag { get; set; }
         public System.DateTime CreateDate { get; set; }
         public System.DateTime EditDate { get; set; }
-    
-        public virtual ECImage ECImage { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ArticleImage> ArticleImages { get; set; }
-        public virtual ArticleAuthor ArticleAuthor { get; set; }
     }
 }

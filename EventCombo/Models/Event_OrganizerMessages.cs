@@ -21,8 +21,5 @@ namespace EventCombo.Models
         public string Email { get; set; }
         public string Message { get; set; }
         public long MessageId { get; set; }
-    
-        public virtual Event Event { get; set; }
-        public virtual Organizer_Master Organizer_Master { get; set; }
     }
 }

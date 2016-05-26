@@ -22,8 +22,5 @@ namespace EventCombo.Models
         public bool EnableRegistration { get; set; }
         public bool GroupOnly { get; set; }
         public bool DontDisplay { get; set; }
-    
-        public virtual OrderTemplate OrderTemplate { get; set; }
-        public virtual Ticket Ticket { get; set; }
     }
 }

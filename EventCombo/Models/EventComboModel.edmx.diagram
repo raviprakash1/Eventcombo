@@ -4,150 +4,112 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e1003d660e264b6e9e2ff7b77ce7c251" Name="Diagram1" ZoomLevel="82">
-        <EntityTypeShape EntityType="EventComboModel.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Address" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.AspNetRole" Width="1.5" PointX="7.625" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.AspNetUserClaim" Width="1.5" PointX="10.25" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.AspNetUserLogin" Width="1.5" PointX="10.25" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.AspNetUser" Width="1.5" PointX="8" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.BillingAddress" Width="1.5" PointX="8.125" PointY="10.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.CardDetail" Width="1.5" PointX="12.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Country" Width="1.5" PointX="8" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.DeliveryMethod" Width="1.5" PointX="12.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Email_Tag" Width="1.5" PointX="12.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Email_Template" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Event" Width="1.5" PointX="0.75" PointY="12.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Event_OrganizerMessages" Width="1.5" PointX="14.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Event_VariableDesc" Width="1.5" PointX="3" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.EventCategory" Width="1.5" PointX="12.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.EventFavourite" Width="1.5" PointX="5" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.EventImage" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Events_Hit" Width="1.5" PointX="14.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.EventSubCategory" Width="1.5" PointX="15" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.EventType" Width="1.5" PointX="7.75" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.EventVote" Width="1.5" PointX="9.75" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Message" Width="1.5" PointX="16.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Order_Detail_T" Width="1.5" PointX="16.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Payment_Info" Width="1.5" PointX="14.75" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Permission_Detail" Width="1.5" PointX="16.75" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Profile" Width="1.5" PointX="10.25" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Publish_Event_Detail" Width="1.5" PointX="5.5" PointY="17.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.ShippingAddress" Width="1.5" PointX="11.75" PointY="17.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Status" Width="1.5" PointX="18.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Ticket" Width="1.5" PointX="3" PointY="23.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Ticket_Locked_Detail" Width="1.5" PointX="5.75" PointY="20.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Ticket_Purchased_Detail" Width="1.5" PointX="18.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Ticket_Quantity_Detail" Width="1.5" PointX="0.875" PointY="28.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.TicketBearer" Width="1.5" PointX="7.75" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.TicketDeliveryMethod" Width="1.5" PointX="15" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.TicketType" Width="1.5" PointX="18.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.TimeZoneDetail" Width="1.5" PointX="18.75" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.User_Permission_Detail" Width="1.5" PointX="18.75" PointY="17.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Venue" Width="1.5" PointX="19.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="642caea8b6cd42d1825fc950a870396e" Name="Diagram1">
+        <EntityTypeShape EntityType="EventComboModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Address" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Article" Width="1.5" PointX="5.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.ArticleAuthor" Width="1.5" PointX="0.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.ArticleImage" Width="1.5" PointX="2.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.AspNetRole" Width="1.5" PointX="5.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.AspNetUserClaim" Width="1.5" PointX="10.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.AspNetUserLogin" Width="1.5" PointX="10.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.AspNetUser" Width="1.5" PointX="8" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.BillingAddress" Width="1.5" PointX="8.75" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.CardDetail" Width="1.5" PointX="5.75" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.ControlType" Width="1.5" PointX="17.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Country" Width="1.5" PointX="17.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.DeliveryMethod" Width="1.5" PointX="12.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.ECImage" Width="1.5" PointX="17.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.ECImageType" Width="1.5" PointX="17.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Email_Tag" Width="1.5" PointX="17.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Email_Template" Width="1.5" PointX="14.75" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Event" Width="1.5" PointX="0.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Event_Email_Invitation" Width="1.5" PointX="12.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Event_Email_List" Width="1.5" PointX="15" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Event_OrganizerMessages" Width="1.5" PointX="17.75" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Event_Orgnizer_Detail" Width="1.5" PointX="6" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Event_VariableDesc" Width="1.5" PointX="3" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.EventCategory" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.EventFavourite" Width="1.5" PointX="10.75" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.EventImage" Width="1.5" PointX="3" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Events_Hit" Width="1.5" PointX="19.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.EventSubCategory" Width="1.5" PointX="15" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.EventType" Width="1.5" PointX="19.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.EventVenue" Width="1.5" PointX="3" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.EventVote" Width="1.5" PointX="5.75" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Fee_Structure" Width="1.5" PointX="19.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Language" Width="1.5" PointX="19.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Message" Width="1.5" PointX="19.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.MultipleEvent" Width="1.5" PointX="3" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Order_Detail_T" Width="1.5" PointX="19.75" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.OrderState" Width="1.5" PointX="16.75" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.OrderTemplate" Width="1.5" PointX="21.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.OrderTemplateEventType" Width="1.5" PointX="7.75" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.OrderTemplateGroupType" Width="1.5" PointX="9.75" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.OrderTemplateQuestion" Width="1.5" PointX="21.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.OrderTemplateQuestionTicket" Width="1.5" PointX="11.75" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.OrderTemplateQuestionVariant" Width="1.5" PointX="13.75" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.OrderTemplateTicket" Width="1.5" PointX="21.75" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.OrderTemplateType" Width="1.5" PointX="18.75" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Organizer_Master" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Payment_Info" Width="1.5" PointX="21.75" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Permission_Detail" Width="1.5" PointX="15.75" PointY="25.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Profile" Width="1.5" PointX="10.25" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Promo_Code" Width="1.5" PointX="23.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Publish_Event_Detail" Width="1.5" PointX="23.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.QuestionType" Width="1.5" PointX="23.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.QuestionTypeGroup" Width="1.5" PointX="23.75" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.ShippingAddress" Width="1.5" PointX="23.75" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Status" Width="1.5" PointX="23.75" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Ticket" Width="1.5" PointX="3" PointY="28.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Ticket_Locked_Detail" Width="1.5" PointX="7.75" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Ticket_Purchased_Detail" Width="1.5" PointX="9.75" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Ticket_Quantity_Detail" Width="1.5" PointX="5.25" PointY="31.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.TicketBearer" Width="1.5" PointX="11.75" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.TicketDeliveryMethod" Width="1.5" PointX="15" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.TicketOrderDetail" Width="1.5" PointX="17.75" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.TicketType" Width="1.5" PointX="23.75" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.TimeZoneDetail" Width="1.5" PointX="25.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.TimeZoneDetail1" Width="1.5" PointX="25.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.User_Permission_Detail" Width="1.5" PointX="25.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Venue" Width="1.5" PointX="25.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.AggregatedCounter" Width="1.5" PointX="25.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Counter" Width="1.5" PointX="13.75" PointY="28.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Hash" Width="1.5" PointX="25.75" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Job" Width="1.5" PointX="12.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.JobParameter" Width="1.5" PointX="15" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.JobQueue" Width="1.5" PointX="25.75" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.List" Width="1.5" PointX="19.75" PointY="28.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Schema" Width="1.5" PointX="25.75" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Server" Width="1.5" PointX="25.75" PointY="26.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Set" Width="1.5" PointX="25.75" PointY="29.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.State" Width="1.5" PointX="15" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.TicketBack2015" Width="1.5" PointX="27.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.V_EventsList" Width="1.5" PointX="27.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.v_RetrieveEventid" Width="1.5" PointX="15.75" PointY="30.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.V_Users" Width="1.5" PointX="27.75" PointY="19.5" IsExpanded="true" />
         <AssociationConnector Association="EventComboModel.FK_Address_Event" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_Profile_Profile" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK__TicketDel__Deliv__08411774" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK_Event_Orgnizer_Detail_Event" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_Event_VariableDesc_Event" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_EventImage_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK_EventVenue_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK_MultipleEvent_Event" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_Ticket_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK_Event_Email_List_Event_Email_Invitation" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK_Event_Orgnizer_Detail_Organizer_Master" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK__EventSubC__Event__019419E5" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK_EventVenue_EventVenue" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.FK_Ticket_Quantity_Info_Ticket" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK_HangFire_JobParameter_Job" ManuallyRouted="false" />
+        <AssociationConnector Association="EventComboModel.FK_HangFire_State_Job" ManuallyRouted="false" />
         <AssociationConnector Association="EventComboModel.AspNetUserRoles" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="EventComboModel.TicketOrderDetail" Width="1.5" PointX="18.5" PointY="19.875" />
-        <EntityTypeShape EntityType="EventComboModel.Fee_Structure" Width="1.5" PointX="20.625" PointY="20.625" />
-        <EntityTypeShape EntityType="EventComboModel.Organizer_Master" Width="1.5" PointX="21.375" PointY="3.75" />
-        <EntityTypeShape EntityType="EventComboModel.Event_Orgnizer_Detail" Width="1.75" PointX="3" PointY="7.875" />
-        <AssociationConnector Association="EventComboModel.FK_Event_Orgnizer_Detail_Event" />
-        <AssociationConnector Association="EventComboModel.FK_Event_Orgnizer_Detail_Organizer_Master" />
-        <EntityTypeShape EntityType="EventComboModel.Promo_Code" Width="1.5" PointX="11.98486792109202" PointY="28.749151675379441" />
-        <EntityTypeShape EntityType="EventComboModel.v_RetrieveEventid" Width="1.5" PointX="8.375" PointY="21.75" />
-        <EntityTypeShape EntityType="EventComboModel.Event_Email_Invitation" Width="1.5" PointX="21.375" PointY="9.75" />
-        <EntityTypeShape EntityType="EventComboModel.Event_Email_List" Width="1.5" PointX="21.375" PointY="13.75" />
-        <AssociationConnector Association="EventComboModel.FK_Event_Email_List_Event_Email_Invitation" />
-
-        <EntityTypeShape EntityType="EventComboModel.AggregatedCounter" Width="1.5" PointX="22.375" PointY="0.75" />
-        <EntityTypeShape EntityType="EventComboModel.Counter" Width="1.5" PointX="5.375" PointY="22.75" />
-        <EntityTypeShape EntityType="EventComboModel.Hash" Width="1.5" PointX="12.375" PointY="22.75" />
-        <EntityTypeShape EntityType="EventComboModel.Job" Width="1.5" PointX="21.375" PointY="18.25" />
-        <EntityTypeShape EntityType="EventComboModel.JobParameter" Width="1.5" PointX="23.625" PointY="17.125" />
-        <EntityTypeShape EntityType="EventComboModel.JobQueue" Width="1.5" PointX="14.375" PointY="22.75" />
-        <EntityTypeShape EntityType="EventComboModel.List" Width="1.5" PointX="23.375" PointY="3.75" />
-        <EntityTypeShape EntityType="EventComboModel.Schema" Width="1.5" PointX="16.875" PointY="7.75" />
-        <EntityTypeShape EntityType="EventComboModel.Server" Width="1.5" PointX="23.375" PointY="6.75" />
-        <EntityTypeShape EntityType="EventComboModel.Set" Width="1.5" PointX="23.375" PointY="9.75" />
-        <EntityTypeShape EntityType="EventComboModel.State" Width="1.5" PointX="23.625" PointY="19.75" />
-        <AssociationConnector Association="EventComboModel.FK_HangFire_JobParameter_Job" />
-        <AssociationConnector Association="EventComboModel.FK_HangFire_State_Job" />
-        <EntityTypeShape EntityType="EventComboModel.EventVenue" Width="1.5" PointX="3" PointY="19.5" />
-        <EntityTypeShape EntityType="EventComboModel.MultipleEvent" Width="1.5" PointX="3.125" PointY="15.375" />
-        <AssociationConnector Association="EventComboModel.FK_EventVenue_Event" />
-        <AssociationConnector Association="EventComboModel.FK_MultipleEvent_Event" />
-        <AssociationConnector Association="EventComboModel.FK_EventVenue_EventVenue" />
-
-        <EntityTypeShape EntityType="EventComboModel.OrderTemplate" Width="2.125" PointX="10.5" PointY="22.875" />
-        <EntityTypeShape EntityType="EventComboModel.OrderTemplateQuestion" Width="2" PointX="12.875" PointY="21.5" />
-        <EntityTypeShape EntityType="EventComboModel.OrderTemplateType" Width="2.125" PointX="13.875" PointY="29.25" />
-        <EntityTypeShape EntityType="EventComboModel.QuestionType" Width="1.875" PointX="16" PointY="21.5" />
-        <EntityTypeShape EntityType="EventComboModel.QuestionTypeGroup" Width="1.5" PointX="18.75" PointY="22.75" />
-        <AssociationConnector Association="EventComboModel.QuestionTypeGroupQuestionType" />
-        <AssociationConnector Association="EventComboModel.QuestionTypeOrderTemplateQuestion" />
-        <AssociationConnector Association="EventComboModel.OrderTemplateOrderTemplateQuestion" />
-        <AssociationConnector Association="EventComboModel.EventOrderTemplate" ManuallyRouted="false" >
-        </AssociationConnector>
-        <AssociationConnector Association="EventComboModel.OrderTemplateOrderTemplateType" />
-        <EntityTypeShape EntityType="EventComboModel.OrderTemplateEventType" Width="2.125" PointX="6.375" PointY="32.125" />
-        <AssociationConnector Association="EventComboModel.OrderTemplateOrderTemplateEventType" />
-        <EntityTypeShape EntityType="EventComboModel.OrderTemplateTicket" Width="1.875" PointX="6.75" PointY="27.5" />
-        <AssociationConnector Association="EventComboModel.OrderTemplateOrderTemplateTicket" />
-        <AssociationConnector Association="EventComboModel.TicketOrderTemplateTicket" />
-        <EntityTypeShape EntityType="EventComboModel.ControlType" Width="1.5" PointX="15.375" PointY="25" />
-        <EntityTypeShape EntityType="EventComboModel.Language" Width="1.5" PointX="13.875" PointY="27.5" />
-        <EntityTypeShape EntityType="EventComboModel.OrderTemplateQuestionTicket" Width="2.375" PointX="7.875" PointY="24" />
-        <EntityTypeShape EntityType="EventComboModel.OrderTemplateQuestionVariant" Width="2.5" PointX="17.25" PointY="25" />
-        <AssociationConnector Association="EventComboModel.LanguageOrderTemplate" />
-        <AssociationConnector Association="EventComboModel.OrderTemplateQuestionOrderTemplateQuestionVariant" />
-        <AssociationConnector Association="EventComboModel.ControlTypeOrderTemplateQuestion" ManuallyRouted="false" >
-        </AssociationConnector>
-        <AssociationConnector Association="EventComboModel.OrderTemplateQuestionOrderTemplateQuestionTicket" />
-        <AssociationConnector Association="EventComboModel.TicketOrderTemplateQuestionTicket" ManuallyRouted="false" >
-        </AssociationConnector>
-        <EntityTypeShape EntityType="EventComboModel.OrderTemplateGroupType" Width="2.25" PointX="13.875" PointY="31" />
-        <AssociationConnector Association="EventComboModel.OrderTemplateGroupTypeOrderTemplate" />
-        <AssociationConnector Association="EventComboModel.TicketOrderTemplate" />
-        <AssociationConnector Association="EventComboModel.EventTicket_Purchased_Detail" />
-        <AssociationConnector Association="EventComboModel.EventEventFavourite" />
-        <AssociationConnector Association="EventComboModel.Ticket_Quantity_DetailTicket_Purchased_Detail" />
-        <AssociationConnector Association="EventComboModel.Publish_Event_DetailTicket_Quantity_Detail" />
-        <AssociationConnector Association="EventComboModel.EventVenuePublish_Event_Detail" />
-        <AssociationConnector Association="EventComboModel.MultipleEventPublish_Event_Detail" />
-        <AssociationConnector Association="EventComboModel.AddressTicket_Quantity_Detail" />
-        <AssociationConnector Association="EventComboModel.AspNetUserTicket_Purchased_Detail" />
-        <EntityTypeShape EntityType="EventComboModel.OrderState" Width="1.5" PointX="5.5" PointY="3.375" />
-        <AssociationConnector Association="EventComboModel.OrderStateOrder_Detail_T" />
-        <AssociationConnector Association="EventComboModel.EventEvent_OrganizerMessages" />
-        <AssociationConnector Association="EventComboModel.Organizer_MasterEvent_OrganizerMessages" />
-        <AssociationConnector Association="EventComboModel.AspNetUserOrganizer_Master" />
-        <AssociationConnector Association="EventComboModel.AspNetUserOrder_Detail_T" />
-        <EntityTypeShape EntityType="EventComboModel.ArticleAuthor" Width="1.5" PointX="26" PointY="15.375" />
-        <EntityTypeShape EntityType="EventComboModel.ArticleImage" Width="1.5" PointX="28.625" PointY="19.25" />
-        <EntityTypeShape EntityType="EventComboModel.ECImage" Width="1.5" PointX="28.625" PointY="15.375" />
-        <EntityTypeShape EntityType="EventComboModel.ECImageType" Width="1.5" PointX="28.5" PointY="13.375" />
-        <AssociationConnector Association="EventComboModel.ECImageTypeECImage" />
-        <AssociationConnector Association="EventComboModel.ECImageArticleAuthor" />
-        <AssociationConnector Association="EventComboModel.ECImageArticleImage" />
-        <EntityTypeShape EntityType="EventComboModel.Article" Width="1.5" PointX="26" PointY="18" />
-        <AssociationConnector Association="EventComboModel.ArticleAuthorArticle" />
-        <AssociationConnector Association="EventComboModel.ECImageArticle" />
-        <AssociationConnector Association="EventComboModel.ArticleArticleImage" />
-        <EntityTypeShape EntityType="EventComboModel.V_EventsList" Width="1.5" PointX="11.820360911926423" PointY="14.493559307648596" />
-        <EntityTypeShape EntityType="EventComboModel.V_Users" Width="1.5" PointX="9.2190072262748188" PointY="13.72924321039079" />
-        <EntityTypeShape EntityType="EventComboModel.PaymentType" Width="1.5" PointX="5.375" PointY="11.75" />
-        <EntityTypeShape EntityType="EventComboModel.v_OrderList" Width="1.5" PointX="21.375" PointY="23.75" />
-        <AssociationConnector Association="EventComboModel.PaymentTypeOrder_Detail_T" />
-        </Diagram>
+        <EntityTypeShape EntityType="EventComboModel.v_OrderList" Width="1.5" PointX="28.375" PointY="25.75" />
+        <EntityTypeShape EntityType="EventComboModel.PaymentType" Width="1.5" PointX="0.75" PointY="0.75" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

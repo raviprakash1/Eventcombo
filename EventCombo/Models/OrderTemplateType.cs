@@ -14,16 +14,7 @@ namespace EventCombo.Models
     
     public partial class OrderTemplateType
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public OrderTemplateType()
-        {
-            this.OrderTemplates = new HashSet<OrderTemplate>();
-        }
-    
         public long OrderTemplateTypeId { get; set; }
         public string OrderTemplateTypeName { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderTemplate> OrderTemplates { get; set; }
     }
 }

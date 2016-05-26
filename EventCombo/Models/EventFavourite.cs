@@ -17,7 +17,5 @@ namespace EventCombo.Models
         public string UserID { get; set; }
         public Nullable<long> eventId { get; set; }
         public long FavId { get; set; }
-    
-        public virtual Event Event { get; set; }
     }
 }

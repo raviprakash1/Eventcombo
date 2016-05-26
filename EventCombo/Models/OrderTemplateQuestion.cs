@@ -14,13 +14,6 @@ namespace EventCombo.Models
     
     public partial class OrderTemplateQuestion
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public OrderTemplateQuestion()
-        {
-            this.OrderTemplateQuestionVariants = new HashSet<OrderTemplateQuestionVariant>();
-            this.OrderTemplateQuestionTickets = new HashSet<OrderTemplateQuestionTicket>();
-        }
-    
         public long OrderTemplateQuestionId { get; set; }
         public long OrderTemplateId { get; set; }
         public long QuestionTypeId { get; set; }
@@ -34,13 +27,5 @@ namespace EventCombo.Models
         public bool ShowAnswer { get; set; }
         public bool EnableSubquestions { get; set; }
         public long ParentId { get; set; }
-    
-        public virtual QuestionType QuestionType { get; set; }
-        public virtual OrderTemplate OrderTemplate { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderTemplateQuestionVariant> OrderTemplateQuestionVariants { get; set; }
-        public virtual ControlType ControlType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderTemplateQuestionTicket> OrderTemplateQuestionTickets { get; set; }
     }
 }

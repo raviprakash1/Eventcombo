@@ -14,19 +14,9 @@ namespace EventCombo.Models
     
     public partial class ArticleAuthor
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ArticleAuthor()
-        {
-            this.Articles = new HashSet<Article>();
-        }
-    
         public long ArticleAuthorId { get; set; }
         public Nullable<long> ECImageId { get; set; }
         public string Name { get; set; }
         public string TwitterLink { get; set; }
-    
-        public virtual ECImage ECImage { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Article> Articles { get; set; }
     }
 }

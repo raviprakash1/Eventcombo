@@ -14,18 +14,9 @@ namespace EventCombo.Models
     
     public partial class ControlType
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ControlType()
-        {
-            this.OrderTemplateQuestions = new HashSet<OrderTemplateQuestion>();
-        }
-    
         public long ControlTypeId { get; set; }
         public string ControlTypeName { get; set; }
         public int SortNum { get; set; }
         public string JSFunction { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderTemplateQuestion> OrderTemplateQuestions { get; set; }
     }
 }

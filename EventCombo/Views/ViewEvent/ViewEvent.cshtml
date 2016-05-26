@@ -148,8 +148,8 @@
                             <div class="clearfix"></div>
                             <div class="col-sm-12 col-xs-12 text-right m480p5">
                                 <div class="form-group mb0 pull-right m480-date">
-                                    <div class="dropdown text-left">
-                                        <span class="m480-date"><img class="evnt_clock evnt_cursor" data-toggle="dropdown" src="/Images/icon-date.png" /></span>
+                                    <div class="dropdown text-left m480-time-drop">
+                                       <img class="evnt_clock evnt_cursor" data-toggle="dropdown" src="/Images/icon-date.png" />
                                         <span class="evnt_title_date evnt_title_date2 evnt_title_xs m480-date" title="see what happening on this date">@Html.DisplayFor(m => m.DisplaydateRange)</span>
                                         <ul class="dropdown-menu cus-drop-list mt10">
                                             <span class="caret caret_cus"></span>
@@ -578,8 +578,9 @@
 
 
             </div>
-
+            <div class="clearfix"></div>
         </div>
+
         <div class="modal fade" id="contorganizer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -738,6 +739,7 @@
 
 @*<script src="~/Scripts/jquery.icalendar.pack.js"></script>*@
 @*<script src="~/Scripts/jquery.cookie.js"></script>*@
+
 <script>
 
     $(document).ready(function () {
@@ -1297,7 +1299,7 @@
 
                     var text = address;
                     return "<img class='map'  alt='" + text +
-                      "' src='http://maps.google.com/maps/api/staticmap?" +
+                      "' src='https://maps.google.com/maps/api/staticmap?" +
                       "zoom=15&size=250x250&maptype=roadmap& zoomControl=true&sensor=false&center=" +
                       text + "&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7C" + text + "'>";
                 }

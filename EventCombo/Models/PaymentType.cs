@@ -14,17 +14,8 @@ namespace EventCombo.Models
     
     public partial class PaymentType
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PaymentType()
-        {
-            this.Order_Detail_T = new HashSet<Order_Detail_T>();
-        }
-    
         public byte PaymentTypeId { get; set; }
-        public bool Active { get; set; }
         public string PaymentTypeName { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order_Detail_T> Order_Detail_T { get; set; }
+        public bool Active { get; set; }
     }
 }

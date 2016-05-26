@@ -18,7 +18,5 @@ namespace EventCombo.Models
         public long OrderTemplateQuestionId { get; set; }
         public string VariantText { get; set; }
         public long Quantity { get; set; }
-    
-        public virtual OrderTemplateQuestion OrderTemplateQuestion { get; set; }
     }
 }

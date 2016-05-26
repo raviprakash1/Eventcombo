@@ -18,8 +18,5 @@ namespace EventCombo.Models
         public long ArticleId { get; set; }
         public long ECImageId { get; set; }
         public long Sort { get; set; }
-    
-        public virtual ECImage ECImage { get; set; }
-        public virtual Article Article { get; set; }
     }
 }

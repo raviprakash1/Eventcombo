@@ -13,6 +13,7 @@ namespace EventCombo.Models
     
     public partial class GetEventListing_Result
     {
+        public string UserID { get; set; }
         public long EventID { get; set; }
         public string EventTitle { get; set; }
         public string EventType { get; set; }

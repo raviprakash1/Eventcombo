@@ -14,12 +14,6 @@ namespace EventCombo.Models
     
     public partial class QuestionType
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public QuestionType()
-        {
-            this.OrderTemplateQuestions = new HashSet<OrderTemplateQuestion>();
-        }
-    
         public long QuestionTypeId { get; set; }
         public long QuestionTypeGroupId { get; set; }
         public string Title { get; set; }
@@ -29,9 +23,5 @@ namespace EventCombo.Models
         public bool MustInclude { get; set; }
         public bool MustRequire { get; set; }
         public long SortNum { get; set; }
-    
-        public virtual QuestionTypeGroup QuestionTypeGroup { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderTemplateQuestion> OrderTemplateQuestions { get; set; }
     }
 }

@@ -12,11 +12,10 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class OrderTemplateQuestionTicket
+    public partial class TimeZoneDetail1
     {
-        public long OrderTemplateQuestionTicketId { get; set; }
-        public long OrderTemplateQuestionId { get; set; }
-        public long TicketId { get; set; }
-        public bool CollectInformation { get; set; }
+        public int TimeZone_Id { get; set; }
+        public string TimeZone_Name { get; set; }
+        public string TimeZone { get; set; }
     }
 }

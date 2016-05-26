@@ -14,13 +14,6 @@ namespace EventCombo.Models
     
     public partial class OrderTemplate
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public OrderTemplate()
-        {
-            this.OrderTemplateQuestions = new HashSet<OrderTemplateQuestion>();
-            this.OrderTemplateTickets = new HashSet<OrderTemplateTicket>();
-        }
-    
         public long OrderTemplateId { get; set; }
         public long EventID { get; set; }
         public string Title { get; set; }
@@ -36,9 +29,10 @@ namespace EventCombo.Models
         public string TicketMessage { get; set; }
         public bool CustomIncludeSettings { get; set; }
         public bool IncludePrintableTickets { get; set; }
+        public long OrderTemplateEventTypeID { get; set; }
         public long LanguageId { get; set; }
         public bool EnableWaitlist { get; set; }
-        public long OrderTemplateEventTypeID { get; set; }
+        public long OrderTemplateGroupTypeId { get; set; }
         public long GroupMaxAttendees { get; set; }
         public string GroupPageHeadline { get; set; }
         public string GroupPageDescription { get; set; }
@@ -50,7 +44,6 @@ namespace EventCombo.Models
         public Nullable<System.DateTime> GroupStartTime { get; set; }
         public Nullable<System.DateTime> GroupEndTime { get; set; }
         public int GroupMinutesBetween { get; set; }
-        public long OrderTemplateGroupTypeId { get; set; }
         public long MaxSize { get; set; }
         public bool NameRequired { get; set; }
         public bool EmailRequired { get; set; }
@@ -59,16 +52,5 @@ namespace EventCombo.Models
         public string ResponseMessage { get; set; }
         public string ReleaseMessage { get; set; }
         public long WaitlistTicketId { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderTemplateQuestion> OrderTemplateQuestions { get; set; }
-        public virtual Event Event { get; set; }
-        public virtual OrderTemplateType OrderTemplateType { get; set; }
-        public virtual OrderTemplateEventType OrderTemplateEventType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderTemplateTicket> OrderTemplateTickets { get; set; }
-        public virtual Language Language { get; set; }
-        public virtual OrderTemplateGroupType OrderTemplateGroupType { get; set; }
-        public virtual Ticket Ticket { get; set; }
     }
 }
