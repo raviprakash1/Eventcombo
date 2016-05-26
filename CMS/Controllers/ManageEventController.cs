@@ -183,7 +183,7 @@ namespace CMS.Controllers
                         objlst = objlst.OrderByDescending(s => s.Feature).ToList();
                         break;
                     default:
-                        objlst = objlst.OrderBy(s => s.Sno).ToList(); 
+                        //objlst = objlst.OrderByDescending(s => s.E_Startdate).ToList(); 
                         break;
                 }
 
@@ -894,18 +894,18 @@ namespace CMS.Controllers
                         }
                         else
                         {
-                            objEv = db.V_EventsList.SqlQuery("Select * from V_EventsList").ToList<V_EventsList>();
+                            objEv = db.V_EventsList.SqlQuery("Select *,1 sortby from V_EventsList ev where  ev.E_Startdate>=GETUTCDATE()  UNION ALL SELECT *, 2 sortby FROM V_EventsList  ev where  ev.E_Startdate<GETUTCDATE() ORDER   BY sortby,ev.E_Startdate").ToList<V_EventsList>();
                         }
                     }
                     else
                     {
                         if (!string.IsNullOrEmpty(strsql))
                         {
-                            objEv = db.V_EventsList.SqlQuery("Select * from V_EventsList EV where  EV.E_Enddate < GETUTCDATE() and ev.TicketDetail<=0 and 1=1  " + strsql + " ").ToList<V_EventsList>();
+                            objEv = db.V_EventsList.SqlQuery("Select * from [V_EventsexpiredList] and 1=1  " + strsql + " ").ToList<V_EventsList>();
                         }
                         else
                         {
-                            objEv = db.V_EventsList.SqlQuery("Select * from V_EventsList EV where EV.E_Enddate < GETUTCDATE() and ev.TicketDetail<=0 ").ToList<V_EventsList>();
+                            objEv = db.V_EventsList.SqlQuery("Select * from [V_EventsexpiredList] ").ToList<V_EventsList>();
                         }
                     }
 

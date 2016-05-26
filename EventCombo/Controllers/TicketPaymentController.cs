@@ -97,7 +97,7 @@ namespace EventCombo.Controllers
             }
             else
             {
-                tp.Imageurl = "/Images/default_event_image.jpg";
+                tp.Imageurl = "/Images/default_event_image.jpg"; 
             }
 
             var eventdetails = cs.GetEventdetail(Eventid);
@@ -2607,7 +2607,7 @@ namespace EventCombo.Controllers
                     DayOfWeek day = new DayOfWeek();
                     string Sdate = "", time = "";
                     var addresstemp = db.Addresses.FirstOrDefault(i => i.EventId == eventdetail.EventID);
-                    TempData["address"] = addresstemp;
+                    TempData["address"] = (!string.IsNullOrEmpty(addresstemp.ConsolidateAddress)) ? addresstemp.ConsolidateAddress : ""; 
                     //Get Email tags
                     foreach (var item in TicketPurchasedDetail)
                     {

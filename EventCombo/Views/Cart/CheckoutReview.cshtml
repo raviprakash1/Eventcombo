@@ -20,7 +20,39 @@
     <div class="event_inner_container event_top view_evnt_top viewevent_container xs-paymentconf-top" id="eventtopscoll" >
         <div class="event_detail_container xs-paymentconf-inner">
             <div class="col-sm-12"><h3 class="acnt_title"></h3></div>
+            @if (ViewData["ReturnMessage"] != null && !string.IsNullOrEmpty(ViewData["ReturnMessage"].ToString()))
+            {
+                <div class="Moderor" id="divpwderroacc" tabindex="-1">
+                    <div class="er_UI_main">
+                        <div class="er_warnui_img"></div>
+                        <div class="er_suc" id="erraccpwdmsg">@ViewData["ReturnMessage"]</div>
+                        <button class="close" aria-hidden="true" type="button" id="btnhidepwderror" onclick="$('#divpwderroacc').hide();">&#215;</button>
+
+                    </div>
+                </div>
+            }
+            <div class="col-sm-12  mb10 pt10">
+                <div class="col-sm-3 pl0">
+                    <img class="img-responsive" alt="" src="@TempData["ImagUrl"]" />
+                </div>
+                <div class="col-sm-9 pl0">
+                    <h2 class="th_tilte">@TempData["Title"]</h2>
+                    <div class="col-sm-12 col-xs-12 text-left">
+                        <div class="form-group mb0">
+
+                            <label class="label-control ">
+                                @TempData["address"]
+                                <br />
+                                @TempData["eventdatetime"]
+                            </label>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
+       
     </div>
 
     <div class="event_detail_container">
@@ -32,36 +64,10 @@
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
         </div>
         <div class="evnt_details_body2">
-                <div class="col-sm-12 no_pad mt10 pt10">
-                    <div class="col-sm-3 pl0">
-                        <img class="img-responsive" alt="" />
-                    </div>
-                    <div class="col-sm-9 pl0">
-                        <h2 class="th_tilte"></h2>
-                        <div class="col-sm-12 col-xs-12 text-left">
-                            <div class="form-group mb0">
 
-                                <label class="label-control ">
-                                   
-                                </label>
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
-                    @if (ViewData["ReturnMessage"] != null && !string.IsNullOrEmpty(ViewData["ReturnMessage"].ToString()))
-                    {
-                        <div class="Moderor mb10" id="divpwderroacc" tabindex="-1">
-                            <div class="er_UI_main">
-                                <div class="er_warnui_img"></div>
-                                <div class="er_suc" id="erraccpwdmsg">@ViewData["ReturnMessage"]</div>
-                                <button class="close" aria-hidden="true" type="button" id="btnhidepwderror" onclick="$('#divpwderroacc').hide();">&#215;</button>
-
-                            </div>
-                        </div>
-                    }
+                   
 
 
                     <div class="col-sm-12 no_pad chek_out_desc">
@@ -108,3 +114,7 @@
             </div>
     </div>
 </div>
+
+<script>
+    $(document).prop('title', '@TempData["Title"], @TempData["address"]  | Eventcombo');
+</script>

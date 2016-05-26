@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using EventCombo.Models;
 using System.Text.RegularExpressions;
+using EventCombo.Utils;
+using System.Globalization;
 
 namespace EventCombo.Controllers
 {
@@ -48,7 +50,41 @@ namespace EventCombo.Controllers
 
             try
             {
+                EventCreation cs = new EventCreation();
 
+
+                string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
+                using (var objContent = new EventComboEntities())
+                {
+                    var EventOrderDetail = (from Order in objContent.Ticket_Locked_Detail where Order.TLD_GUID == strGUID select Order).FirstOrDefault();
+                    var Eventid = EventOrderDetail.TLD_Event_Id??0;
+                    var Eventdetails = cs.GetEventdetail(Eventid);
+
+                 var imgurl = (!string.IsNullOrEmpty(cs.GetImages(Eventid).FirstOrDefault()) ? cs.GetImages(Eventid).FirstOrDefault() : "/Images/default_event_image.jpg");
+                    var Title = Eventdetails.EventTitle;
+                    var addresstemp = objContent.Addresses.FirstOrDefault(i => i.EventId == Eventid);
+                    DateTime datetime = new DateTime();
+                    DateTimeWithZone dtzstart;
+                    string day = "", Sdate = "", time = "";
+                    var td = DateTimeWithZone.Timezonedetail(Eventid);
+                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
+                    TempData["address"] = (!string.IsNullOrEmpty(addresstemp.ConsolidateAddress)) ? addresstemp.ConsolidateAddress : "";
+                  
+                    TempData["ImagUrl"] = imgurl;
+                    TempData["Title"] = Title;
+                    if (Eventdetails.AddressStatus == "Single")
+                    {
+                        var ev = objContent.EventVenues.FirstOrDefault(i => i.EventID == Eventid);
+                        dtzstart = new DateTimeWithZone(Convert.ToDateTime(ev.E_Startdate), userTimeZone, true);
+                        datetime = dtzstart.LocalTime;
+                        day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(datetime).ToString();
+                        Sdate = datetime.ToString("MMM dd, yyyy");
+                        time = datetime.ToString("h:mm tt").ToLower().Trim().Replace(" ", "");
+
+                    }
+                    TempData["eventdatetime"]=day + "," + Sdate + " " + time;
+
+                }
                 TicketPayment TicketPayment = new TicketPayment();
                 TicketPayment = (TicketPayment)Session["TicketDatamodel"];
                 PayPal.GetCheckoutDetails(token, ref PayerID1, ref retMsg);
@@ -75,7 +111,39 @@ namespace EventCombo.Controllers
                 Session["Fromname"] = "events";
                 Session["logo"] = "events";
                 TicketPayment = (TicketPayment)Session["TicketDatamodel"];
+                string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
+                EventCreation cs = new EventCreation();
+                using (var objContent = new EventComboEntities())
+                {
+                    var EventOrderDetail = (from Order in objContent.Ticket_Locked_Detail where Order.TLD_GUID == strGUID select Order).FirstOrDefault();
+                    var Eventid = EventOrderDetail.TLD_Event_Id ?? 0;
+                    var Eventdetails = cs.GetEventdetail(Eventid);
 
+                    var imgurl = (!string.IsNullOrEmpty(cs.GetImages(Eventid).FirstOrDefault()) ? cs.GetImages(Eventid).FirstOrDefault() : "/Images/default_event_image.jpg");
+                    var Title = Eventdetails.EventTitle;
+                    var addresstemp = objContent.Addresses.FirstOrDefault(i => i.EventId == Eventid);
+                    DateTime datetime = new DateTime();
+                    DateTimeWithZone dtzstart;
+                    string day = "", Sdate = "", time = "";
+                    var td = DateTimeWithZone.Timezonedetail(Eventid);
+                    TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
+                    TempData["address"] = (!string.IsNullOrEmpty(addresstemp.ConsolidateAddress)) ? addresstemp.ConsolidateAddress : "";
+
+                    TempData["ImagUrl"] = imgurl;
+                    TempData["Title"] = Title;
+                    if (Eventdetails.AddressStatus == "Single")
+                    {
+                        var ev = objContent.EventVenues.FirstOrDefault(i => i.EventID == Eventid);
+                        dtzstart = new DateTimeWithZone(Convert.ToDateTime(ev.E_Startdate), userTimeZone, true);
+                        datetime = dtzstart.LocalTime;
+                        day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(datetime).ToString();
+                        Sdate = datetime.ToString("MMM dd, yyyy");
+                        time = datetime.ToString("h:mm tt").ToLower().Trim().Replace(" ", "");
+
+                    }
+                    TempData["eventdatetime"] = day + "," + Sdate + " " + time;
+
+                }
                 if (PayPal.DoCheckoutPayment(TicketPayment.strGrandTotal, token, PayerID, ref retMsg))
                 {
                     ViewData["ReturnMessage"] = "";
