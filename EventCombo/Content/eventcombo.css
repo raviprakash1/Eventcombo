@@ -967,13 +967,13 @@ span.evnt_toltip{
 .mob-navbar-wrapper .mob-btn{ width:70px; }
 .mob-navbar-wrapper .mob-btn button{font-size: 15px; margin-top: 13px;}
 .mob-navbar-wrapper .m480-evnt-titl{ font-size: 22px; margin-top:5px;}
-.xs-viewevent-inner .navbar-wrapper{  margin-top: 230px;}
+/*.xs-viewevent-inner .navbar-wrapper{  margin-top: 230px;}*/
 .xs-viewevent-inner .carousel .item{ min-height:270px;}
 .m480-date .evnt_title_date{font-size: 22px; }
 .m480-date{ width:100%; float:right; text-align:right; }
-.m480-loc-add{width:100%; float:right; text-align:right;}
+.m480-loc-add{width:100%; float:right; text-align:right; position:absolute;}
 .m480-loc-add .evnt_title_date{font-size: 22px;}
-.m480-ord-now{ margin-left: 160px; margin-top: 40px; position: absolute; width:auto; }
+.m480-ord-now{ margin-left: 160px; margin-top: 40px;  width:auto; }
 .m480-ord-now .xs-icondeal{  display: block;margin-top: 8px; text-align: center;}
 .m480-ord-now .xs-icondeal img{ width:auto;}
 .m480p5{ padding-left:5px; padding-right:5px;}
@@ -984,6 +984,11 @@ span.evnt_toltip{
 .m480-time-drop img{ float:right;}
 .m480-time-drop .cus-drop-list{ margin-top:40px; right:0px; left:auto; }
 .m480-time-drop .caret_cus{ right:5px; left:auto !important;}
+
+.evnt-slider-innr-cont .carousel {min-height: 360px; height: auto; margin-bottom: 0px;}
+.evnt-slider-innr-cont .carousel .item {min-height: 360px; height: auto;}
+.evnt-slider-innr-cont .navbar-wrapper{ position:relative; margin-top:-40px; }
+
 }
 @media (min-width: 360px) and (max-width: 640px) {
 .xs_create_code_mb10{ margin-bottom:10px;}
@@ -1067,6 +1072,10 @@ span.evnt_toltip{
 #forgotcheck.forgot_top{ margin-top:207px !important;}
 .xs-date-icon-remv{ display:none;}
 .xs-loc-icon-rem{ display:none}
+
+.evnt-slider-innr-cont .carousel {min-height: 238px; height: auto; margin-bottom: 0px;}
+.evnt-slider-innr-cont .carousel .item {min-height: 238px; height: auto;}
+.evnt-slider-innr-cont .navbar-wrapper{ position:relative; margin-top:-40px;}
 }
 
 
@@ -1104,6 +1113,10 @@ span.evnt_toltip{
 
 #forgotcheck.forgot_top{ margin-top:194px !important;}
 #forgotcheck{ margin-top:-9px; }
+
+.evnt-slider-innr-cont .carousel {min-height: 295px; height: auto; margin-bottom: 0px;}
+.evnt-slider-innr-cont .carousel .item {min-height: 295px; height: auto;}
+
 }
 
 @media (min-width: 375px) and (max-width: 667px){
@@ -1162,6 +1175,10 @@ span.evnt_toltip{
 #divmain .social_icn{margin-top:-15px !important;}
 .xs-date-icon-remv{ display:none;}
 .xs-loc-icon-rem{ display:none}
+
+.evnt-slider-innr-cont .carousel {min-height: 248px; height: auto; margin-bottom: 0px;}
+.evnt-slider-innr-cont .carousel .item {min-height: 248px; height: auto;}
+.evnt-slider-innr-cont .navbar-wrapper{ position:relative;}
 
 }
 
@@ -1273,6 +1290,12 @@ span.evnt_toltip{
 #mainhead .Fix_Head{top: -6px !important;}
 #divmain .Fix_Head{ margin-top:-8px; }
 #divmain .social_icn{margin-top:-15px !important;}
+
+.evnt-slider-innr-cont .carousel {min-height: 275px; height: auto; margin-bottom: 0px;}
+.evnt-slider-innr-cont .carousel .item {min-height: 275px; height: auto;}
+.evnt-slider-innr-cont .navbar-wrapper{ position:relative; margin-top:-40px;}
+
+
 }
 @media (width: 736px) {
 .ev_loc_icn{ left:200px !important; }
@@ -2469,3 +2492,4 @@ Label the data
 .carousel-control{ z-index:99;}
 .hidediv{ display:none;}
 .novisiblediv{ visibility:hidden;}
+.evnt-slider-innr-cont{ width: 100%; float: left; min-height: 100%; position: relative; }
