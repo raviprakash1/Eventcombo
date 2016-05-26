@@ -112,3 +112,51 @@ User Host IP:
 
 
 
+-----------Exception Details on  5/25/2016 7:36:16 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 5/25/2016 7:36:16 PM
+
+Error Line No : ine 741
+
+Error Message: DbUpdateException
+
+Exception Type: System.Data.Entity.Infrastructure.DbUpdateException
+
+Error Location : An error occurred while updating the entries. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/ticketpayment/savedetails
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  5/25/2016 7:36:16 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 5/25/2016 7:36:16 PM
+
+Error Line No : anges()
+
+Error Message: UpdateException
+
+Exception Type: System.Data.Entity.Core.UpdateException
+
+Error Location : An error occurred while updating the entries. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/ticketpayment/savedetails
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
