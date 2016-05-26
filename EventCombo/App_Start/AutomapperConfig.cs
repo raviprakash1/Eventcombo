@@ -70,7 +70,7 @@ namespace EventCombo
       CreateMap<Article, ArticleFullViewModel>()
         .ForMember(d => d.AuthorImage, m => m.MapFrom(s => s.ArticleAuthor.ECImage.ImagePath))
         .ForMember(d => d.AuthorName, m => m.MapFrom(s => s.ArticleAuthor.Name))
-        .ForMember(d => d.AuthorTwitterUrl, m => m.MapFrom(s => s.ArticleAuthor.TwitterLink))
+            .ForMember(d => d.AuthorTwitterUrl, m => m.MapFrom(s => s.ArticleAuthor.TwitterLink))
         .ForMember(d => d.ArticleImageUrl, m => m.MapFrom(s => s.ECImage.ImagePath));
       CreateMap<TicketBearer, AttendeeViewModel>()
         .ForMember(d => d.Name, m => m.MapFrom(s => s.Name.Trim()))

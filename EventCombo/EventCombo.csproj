@@ -284,7 +284,6 @@
     <Compile Include="Controllers\Html2PdfController.cs" />
     <Compile Include="Controllers\ImageFiles.cs" />
     <Compile Include="Controllers\InbetweenController.cs" />
-    <Compile Include="Controllers\ManageAttendeesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageEventController.cs" />
     <Compile Include="Controllers\OrganizerInfoController.cs" />
@@ -1206,6 +1205,14 @@
     <Content Include="Scripts\Validation.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="ticketpdf.html" />
+    <Content Include="Views\ManageAttendees\Add.cshtml" />
+    <Content Include="Views\ManageAttendees\Checkin.cshtml" />
+    <Content Include="Views\ManageAttendees\Email.cshtml" />
+    <Content Include="Views\ManageAttendees\Guests.cshtml" />
+    <Content Include="Views\ManageAttendees\Orders.cshtml" />
+    <Content Include="Views\ManageAttendees\ProcessAddAttendee.cshtml" />
+    <Content Include="Views\ManageAttendees\_OrderDetail.cshtml" />
+    <Content Include="Views\ManageAttendees\_OrderList.cshtml" />
     <Content Include="Views\_ViewStart.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_ViewStart.generated.cs</LastGenOutput>
@@ -1453,14 +1460,6 @@
     <Content Include="Views\Account\_PurchasedTicketList.cshtml" />
     <Content Include="Views\Account\_PurchasedTicketDetail.cshtml" />
     <Content Include="Views\Account\_PurchasedTicketFavoriteList.cshtml" />
-    <Content Include="Views\ManageAttendees\Orders.cshtml" />
-    <Content Include="Views\ManageAttendees\Add.cshtml" />
-    <Content Include="Views\ManageAttendees\Email.cshtml" />
-    <Content Include="Views\ManageAttendees\Guests.cshtml" />
-    <Content Include="Views\ManageAttendees\Checkin.cshtml" />
-    <Content Include="Views\ManageAttendees\_OrderList.cshtml" />
-    <Content Include="Views\ManageAttendees\_OrderDetail.cshtml" />
-    <Content Include="Views\ManageAttendees\ProcessAddAttendee.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
