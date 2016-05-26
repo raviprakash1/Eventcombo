@@ -188,7 +188,9 @@ namespace EventCombo.Controllers
                 TempData["AccConfirmEmail"] = TicketPayment.AccconfirmEmail.ToString();
                 TempData["ReqFrom"] = "PP";
                 StringBuilder strHTML = new StringBuilder();
-                List<TicketBearer> objTB = new List<TicketBearer>();
+                StringBuilder strdll = new StringBuilder();
+                List<TicketBearer> objTB = TicketPayment.NameList;
+
                 int i = 0;
                 foreach(TicketBearer tb in objTB)
                 {
@@ -199,11 +201,16 @@ namespace EventCombo.Controllers
                     strHTML.Append("<td width='92 %'><label id=TicketName_" + i.ToString() + ">" + tb.Name + "</label></td>");
                     strHTML.Append("<td style='display: none'><label id=TicketEmail_" + i.ToString() + ">" + tb.Email + "</label></td>");
                     strHTML.Append("</tr>");
+                    strdll.Append("<option value=" + i.ToString() + " id=" + i.ToString() + ">" + tb.Name + "</option>");
                 }
                 TempData["GuestList"] = strHTML;
+                TempData["GuestListOption"] = strdll;
             }
             else
-            { TempData["ReqFrom"] = "B";
+            {
+                TempData["ReqFrom"] = "B";
+                TempData["GuestList"] = "";
+                TempData["GuestListOption"] = "";
             }
             return View(tp);
         }

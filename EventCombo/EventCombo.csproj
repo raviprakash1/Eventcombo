@@ -1200,14 +1200,6 @@
     <Content Include="Scripts\Validation.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="ticketpdf.html" />
-    <Content Include="Views\ManageAttendees\Add.cshtml" />
-    <Content Include="Views\ManageAttendees\Checkin.cshtml" />
-    <Content Include="Views\ManageAttendees\Email.cshtml" />
-    <Content Include="Views\ManageAttendees\Guests.cshtml" />
-    <Content Include="Views\ManageAttendees\Orders.cshtml" />
-    <Content Include="Views\ManageAttendees\ProcessAddAttendee.cshtml" />
-    <Content Include="Views\ManageAttendees\_OrderDetail.cshtml" />
-    <Content Include="Views\ManageAttendees\_OrderList.cshtml" />
     <Content Include="Views\_ViewStart.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_ViewStart.generated.cs</LastGenOutput>
