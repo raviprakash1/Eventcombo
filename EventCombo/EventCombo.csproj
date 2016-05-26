@@ -504,6 +504,7 @@
     <Compile Include="Models\OrderTemplateTicket.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderTemplateTicketType.cs" />
     <Compile Include="Models\OrderTemplateType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -564,9 +565,6 @@
     <Compile Include="Models\Ticket.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TicketBack2015.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\TicketBearer.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -590,9 +588,6 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TimeZoneDetail.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TimeZoneDetail1.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User_Permission_Detail.cs">

@@ -29,7 +29,7 @@ namespace EventCombo
     }
 
   }
-
+     
   public class EventComboProfile : AutoMapper.Profile
   {
     protected override void Configure()

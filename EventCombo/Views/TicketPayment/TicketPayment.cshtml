@@ -13,7 +13,9 @@
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 <link href="~/Content/mob-footer.css" rel="stylesheet" />
 <style>
-    footer{ margin-bottom:250px;}
+    footer {
+        margin-bottom: 250px;
+    }
 </style>
 @using (Html.BeginForm(new { autocomplete = "off" }))
 {
@@ -53,47 +55,47 @@
                             <div class="col-sm-12 col-xs-12 text-left">
                                 <div class="form-group mb0">
 
-                                    <label class="label-control " >
+                                    <label class="label-control ">
                                         @TempData["address"]
-                                     <br />
+                                        <br />
                                         @TempData["eventdatetime"]
                                     </label>
-                                  
+
+                                </div>
+
+                            </div>
+                            @*<div class="col-sm-12 col-xs-12 text-left">
+                                @*<div class="form-group mb0">
+                                        <div class="Timezone ev_date_icn ev_date_icn2 evnt_icn_xs"></div>
+                                        <label class="label-control evnt_title_date2 evnt_title_xs" title="see what happening on this date">
+
+                                           Add Schedule to calendar
+                                        </label>
+                                    </div>*@
+                            @*<div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal">
+                                    <div class="ev_time_zone_model date_time_modal">
+                                        <div class="modal-content ev_tm_zon_cont">
+                                            <div class="modal-header">
+                                                <button class="close closetimemodal" type="button">
+                                                    <span>&#215;</span>
+                                                </button>
+                                                <h4 class="modal-title date_time_list">Schedule Date List</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="col-sm-12 no_pad">
+                                                    <div class="form-group mb5 ">
+                                                        <label class="col-sm-12 no_pad label-control date_time_list">
+                                                            <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="Text" data-toggle="modal">Text</a>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
                                     </div>
-
-                                </div>
-                                @*<div class="col-sm-12 col-xs-12 text-left">
-            @*<div class="form-group mb0">
-                    <div class="Timezone ev_date_icn ev_date_icn2 evnt_icn_xs"></div>
-                    <label class="label-control evnt_title_date2 evnt_title_xs" title="see what happening on this date">
-
-                       Add Schedule to calendar
-                    </label>
-                </div>*@
-                                @*<div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal">
-                <div class="ev_time_zone_model date_time_modal">
-                    <div class="modal-content ev_tm_zon_cont">
-                        <div class="modal-header">
-                            <button class="close closetimemodal" type="button">
-                                <span>&#215;</span>
-                            </button>
-                            <h4 class="modal-title date_time_list">Schedule Date List</h4>
+                                </div>*@
+                            @*</div>*@
                         </div>
-                        <div class="modal-body">
-                            <div class="col-sm-12 no_pad">
-                                <div class="form-group mb5 ">
-                                    <label class="col-sm-12 no_pad label-control date_time_list">
-                                        <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="Text" data-toggle="modal">Text</a>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </div>*@
-                                @*</div>*@
-                            </div>
                     </div>
                 </div>
 
@@ -119,9 +121,6 @@
                             @Html.Raw(Model.tickebox);
                         }
                     </div>
-
-
-
                 </div>
             </div>
         </div>
@@ -161,19 +160,51 @@
                                 </label>
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" value="@Html.DisplayFor(m=>m.FName)" maxlength=50 id="accfname" />
+                                @if (TempData["accfname"] != null)
+                                {
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" value="@TempData["accfname"].ToString()" maxlength=50 id="accfname" />
+                                }
+                                else
+                                {
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="FIRST NAME" value="@Html.DisplayFor(m=>m.FName)" maxlength=50 id="accfname" />
+                                }
+
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" value="@Html.DisplayFor(m=>m.LName)" id="accLname" maxlength=50 />
+                                @if (TempData["accLname"] != null)
+                                {
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" value="@TempData["accLname"].ToString()" id="accLname" maxlength=50 />
+                                }
+                                else
+                                {
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="LAST NAME" value="@Html.DisplayFor(m => m.LName)" id="accLname" maxlength=50 />
+                                }
+
                             </div>
                             <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                <input class="form-control evnt_inp_cont" type="text" placeholder="EMAIL" value="@Html.DisplayFor(m=>m.Email)" id="Email" maxlength=256 autocomplete="off" />
+                                @if (TempData["AccEmail"] != null)
+                                {
+
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="EMAIL" value="@TempData["AccEmail"].ToString()" id="Email" maxlength=256 autocomplete="off" />
+                                }
+                                else
+                                {
+                                    <input class="form-control evnt_inp_cont" type="text" placeholder="EMAIL" value="@Html.DisplayFor(m => m.Email)" id="Email" maxlength=256 autocomplete="off" />
+                                }
                             </div>
                             @if (HttpContext.Current.Session["AppId"] == null)
                             {
                                 <div class="col-sm-10 col-xs-12 mb10 no_pad">
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CONFIRM EMAIL" id="confirmEmail" maxlength=256  > 
-                                    <input class="form-control evnt_inp_cont" type="text" placeholder="CONFIRM EMAIL" id="confirmEmailnone" maxlength=256 style="display:none">
+                                    @if (TempData["AccConfirmEmail"] != null)
+                                    {
+                                        <input class="form-control evnt_inp_cont" type="text" value="@TempData["AccConfirmEmail"].ToString()" placeholder="CONFIRM EMAIL" id="confirmEmail" maxlength=256>
+                                        <input class="form-control evnt_inp_cont" type="text" value="@TempData["AccConfirmEmail"].ToString()" placeholder="CONFIRM EMAIL" id="confirmEmailnone" maxlength=256 style="display:none">
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control evnt_inp_cont" type="text" placeholder="CONFIRM EMAIL" id="confirmEmail" maxlength=256>
+                                        <input class="form-control evnt_inp_cont" type="text" placeholder="CONFIRM EMAIL" id="confirmEmailnone" maxlength=256 style="display:none">
+                                    }
                                 </div>
                             }
                         </div>
@@ -485,6 +516,7 @@
                     <div class="clearfix"></div>
 
                     <input id="hdPromoCodetotal" type="hidden" value="" />
+                    <input id="hdReqFrom" type="hidden" value="@TempData["ReqFrom"].ToString()" />
                 </div>
 
             </div>
@@ -551,7 +583,7 @@
 
     <input type="hidden" id="hdemailexist" value="0" />
 
-}
+                            }
 <script src="~/Scripts/Commonfunction.js"></script>
 <script src="~/Scripts/flipclock.js"></script>
 <script src="~/Scripts/jquery.cookie.js"></script>
@@ -592,6 +624,11 @@
     }
 
     $(document).ready(function () {
+        if ($("#hdReqFrom").val() == "PP")
+        {
+            $("#selectcard").val("P");
+            showcardetails("selectcard");
+        }
 
         $('.alphabets').keypress(function (e) {
             var regex = new RegExp("^[a-zA-Z ]+$");
@@ -696,8 +733,7 @@
                         success: function (response) {
                             console.log(response);
                             if (response.Message == "F") {
-                                if (fname == '')
-                                {
+                                if (fname == '') {
                                     $("#accfname").val(response.Fname);
                                 }
                                 if (lname == '') {
@@ -961,8 +997,7 @@
 
                             for (var j = 0; j < obj2.length; j++) {
 
-                                if ((obj2[j] == 'locality') || (obj2[j] == 'sublocality_level_1') || (obj2[j] == 'sublocality_level_2') || (obj2[j] == 'sublocality_level_3') || (obj2[j] == 'sublocality_level_4') || (obj2[j] == 'sublocality_level_5') || (obj2[j] == 'ward') || (obj2[j] == 'sublocality_level_5') || (obj2[j] == 'postal_town'))
-                                {
+                                if ((obj2[j] == 'locality') || (obj2[j] == 'sublocality_level_1') || (obj2[j] == 'sublocality_level_2') || (obj2[j] == 'sublocality_level_3') || (obj2[j] == 'sublocality_level_4') || (obj2[j] == 'sublocality_level_5') || (obj2[j] == 'ward') || (obj2[j] == 'sublocality_level_5') || (obj2[j] == 'postal_town')) {
                                     city = obj['long_name'];
                                 }
 
@@ -1252,8 +1287,7 @@
                             var obj2 = obj['types'];
 
                             for (var j = 0; j < obj2.length; j++) {
-                                if ((obj2[j] == 'locality') || (obj2[j] == 'sublocality_level_1') || (obj2[j] == 'sublocality_level_2') || (obj2[j] == 'sublocality_level_3') || (obj2[j] == 'sublocality_level_4') || (obj2[j] == 'sublocality_level_5') || (obj2[j] == 'ward') || (obj2[j] == 'sublocality_level_5') || (obj2[j] == 'postal_town'))
-                                {
+                                if ((obj2[j] == 'locality') || (obj2[j] == 'sublocality_level_1') || (obj2[j] == 'sublocality_level_2') || (obj2[j] == 'sublocality_level_3') || (obj2[j] == 'sublocality_level_4') || (obj2[j] == 'sublocality_level_5') || (obj2[j] == 'ward') || (obj2[j] == 'sublocality_level_5') || (obj2[j] == 'postal_town')) {
                                     city = obj['long_name'];
 
 
@@ -1765,7 +1799,7 @@
             success: function (response) {
                 var vGTotal = parseFloat($("#hdGrandTotalWithoutPromo").val());
                 var vVarChanges = parseFloat($("#hdVarChanges").val()); if (isNaN(vVarChanges) == true) vVarChanges = 0;
-              //  alert(vVarChanges);
+                //  alert(vVarChanges);
                 if (isNaN(vGTotal) == true) vGTotal = 0;
                 var vval = (vGTotal + vVarChanges).toFixed(2);
                 $("#spGrdTotal").text(vval);

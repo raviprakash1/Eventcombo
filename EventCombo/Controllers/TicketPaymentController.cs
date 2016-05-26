@@ -71,10 +71,6 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
                 }
                 Eventid = objMyEvent.EventID;
-
-
-
-
             }
             else
             {
@@ -167,12 +163,7 @@ namespace EventCombo.Controllers
                                     orderby c.Country1 ascending
                                     select c).Distinct();
                 List<SelectListItem> countryList = new List<SelectListItem>();
-
-
                 defaultCountry = "United States";
-
-
-
                 foreach (var item in countryQuery)
                 {
                     countryList.Add(new SelectListItem()
@@ -184,9 +175,36 @@ namespace EventCombo.Controllers
                 }
 
                 ViewBag.CountryID = countryList;
+
             }
             tp.tickebox = LoadTickets(Eventid.ToString());
-
+            TicketPayment TicketPayment = new TicketPayment();
+            TicketPayment = (TicketPayment)Session["TicketDatamodel"];
+            if (TicketPayment != null)
+            {
+                TempData["accfname"] = TicketPayment.AccFname.ToString();
+                TempData["accLname"] = TicketPayment.AccLname.ToString();
+                TempData["AccEmail"] = TicketPayment.AccEmail.ToString();
+                TempData["AccConfirmEmail"] = TicketPayment.AccconfirmEmail.ToString();
+                TempData["ReqFrom"] = "PP";
+                StringBuilder strHTML = new StringBuilder();
+                List<TicketBearer> objTB = new List<TicketBearer>();
+                int i = 0;
+                foreach(TicketBearer tb in objTB)
+                {
+                    strHTML.Append("<tr>");
+                    strHTML.Append("<td style='display:none' width='92%'>");
+                    strHTML.Append(i.ToString());
+                    strHTML.Append("</td>");
+                    strHTML.Append("<td width='92 %'><label id=TicketName_" + i.ToString() + ">" + tb.Name + "</label></td>");
+                    strHTML.Append("<td style='display: none'><label id=TicketEmail_" + i.ToString() + ">" + tb.Email + "</label></td>");
+                    strHTML.Append("</tr>");
+                }
+                TempData["GuestList"] = strHTML;
+            }
+            else
+            { TempData["ReqFrom"] = "B";
+            }
             return View(tp);
         }
 
