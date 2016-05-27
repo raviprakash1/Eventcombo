@@ -9,7 +9,7 @@
 <script src="~/Scripts/filer/jquery.filer.js"></script>
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/summernote.css" rel="stylesheet" />
-
+    
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 <link href="~/Content/MapPlaces.css" rel="stylesheet" />
 
@@ -5296,7 +5296,7 @@
                             $('#id_varsubprice-' + i).addClass('err-bor');
                             countvarqty++;
                         } else {
-                            if (subprice_Qty <= 0) {
+                            if (subprice_Qty < 0) {
                                 $('#id_varsubprice-' + i).addClass('err-bor');
                                 countvarqty++;
 

@@ -901,7 +901,7 @@ namespace CMS.Controllers
                     {
                         if (!string.IsNullOrEmpty(strsql))
                         {
-                            objEv = db.V_EventsList.SqlQuery("Select * from [V_EventsexpiredList] and 1=1  " + strsql + " ").ToList<V_EventsList>();
+                            objEv = db.V_EventsList.SqlQuery("Select * from [V_EventsexpiredList] EV where 1=1  " + strsql + " ").ToList<V_EventsList>();
                         }
                         else
                         {
