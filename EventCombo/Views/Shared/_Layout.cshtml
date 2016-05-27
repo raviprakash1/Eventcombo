@@ -551,6 +551,7 @@
 
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13) {
+            //alert("test");
             if ($("#myModal").css('display') == 'block') {
                 if ($('#login_up').css('display') == 'block') {
 
@@ -673,7 +674,7 @@
     }
 
     function changeheader(e) {
-      
+
         if ($('#idchecked').is(":checked") == true) {
             $.ajax({
                 url: '@Url.Action("Setheader", "Home")',
@@ -688,7 +689,7 @@
                     return false
                 }
             });
-          
+
            // $.cookie("header", "on", { expire: 1,path:'/' });
             //$.cookie("header") = "on";
             $('#divmain').addClass('home_fixed_header');
@@ -698,7 +699,7 @@
             $('#eventtopscoll').addClass('viewevent_container');
             $('#forgotcheck').addClass('forgot_top');
 
-          
+
 
         } else {
             $.ajax({
@@ -741,40 +742,51 @@
         });
 
         if (e == "discover") {
-
-
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (p) {
-                    var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
-                    var geocoder = new google.maps.Geocoder;
-                    var infowindow = new google.maps.InfoWindow;
-
-                    var mapOptions = {
-                        center: { lat: p.coords.latitude, lng: p.coords.longitude },
-                        zoom: 13,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    };
-                    var vLat = p.coords.latitude;
-                    var vLong = p.coords.longitude;
-                    var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none" })';
-
-                    vUrl = vUrl.replace("lat", vLat);
-                    vUrl = vUrl.replace("long", vLong);
-                    window.location.href = vUrl;
-                }, function (p) {
-                    //alert("error");
-                    var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none" })';
-                    window.location.href = vUrl;
-                    
-                });
-
-            } else {
-                //alert('Geo Location feature is not supported in this browser.');
-                var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none" })';
-                window.location.href = vUrl;
-
+            var Lat = @CookieStore.GetCookie("Lat");
+            var Lng = @CookieStore.GetCookie("Long");
+            Lat  = parseFloat(Lat);
+            Lng = parseFloat(Lng);
+            if (isNaN(Lat) == true) Lat = 0;
+            if (isNaN(Lng) == true) Lng = 0;
+            if (Lat > 0)
+            {
+                var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = CookieStore.GetCookie("Lat") , strLong = CookieStore.GetCookie("Long"), strSort="rel", strDateFilter="none" })';
+                window.location.replace(vUrl);
             }
+            else
+            {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (p) {
+                        var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+                        var geocoder = new google.maps.Geocoder;
+                        var infowindow = new google.maps.InfoWindow;
 
+                        var mapOptions = {
+                            center: { lat: p.coords.latitude, lng: p.coords.longitude },
+                            zoom: 13,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                        };
+                        var vLat = p.coords.latitude;
+                        var vLong = p.coords.longitude;
+                        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none" })';
+
+                        vUrl = vUrl.replace("lat", vLat);
+                        vUrl = vUrl.replace("long", vLong);
+                        window.location.href = vUrl;
+                    }, function (p) {
+                        //alert("error");
+                        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none" })';
+                        window.location.href = vUrl;
+
+                    });
+
+                } else {
+                    //alert('Geo Location feature is not supported in this browser.');
+                    var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none" })';
+                    window.location.href = vUrl;
+
+                }
+            }
 
             function onPositionUpdate(position) {
                 var lat = position.coords.latitude;
@@ -988,51 +1000,30 @@
         //    GetEvent();
         //});
         $("#btSearchEvent").click(function () {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (p) {
-                    var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
-                    var geocoder = new google.maps.Geocoder;
-                    var infowindow = new google.maps.InfoWindow;
-                    var mapOptions = {
-                        center: { lat: p.coords.latitude, lng: p.coords.longitude },
-                        zoom: 13,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    };
-                    var vLat = p.coords.latitude;
-                    var vLong = p.coords.longitude;
-                    var vTextSrh = $("#txtSearch").val();
-                    var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none", strTextSearch="search" })';
-                    vUrl = vUrl.replace("lat", vLat);
-                    vUrl = vUrl.replace("long", vLong);
-                    vUrl = vUrl.replace("search", vTextSrh);
-                    window.location.href = vUrl;
-                }, function (p) {
-                    var vTextSrh = $("#txtSearch").val();
-                    var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none", strTextSearch="search" })';
-                    vUrl = vUrl.replace("search", vTextSrh);
-                    window.location.href = vUrl;
-                });
-            } else {
+
+            var Lat = @CookieStore.GetCookie("Lat");
+            var Lng = @CookieStore.GetCookie("Long");
+            Lat  = parseFloat(Lat);
+            Lng = parseFloat(Lng);
+            if (isNaN(Lat) == true) Lat = 0;
+            if (isNaN(Lng) == true) Lng = 0;
+            if (Lat > 0)
+            {
                 var vTextSrh = $("#txtSearch").val();
-                var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none", strTextSearch="search" })';
+                var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = CookieStore.GetCookie("Lat"), strLong = CookieStore.GetCookie("Long"), strSort="rel", strDateFilter="none", strTextSearch="search"})';
+                
                 vUrl = vUrl.replace("search", vTextSrh);
-                window.location.href = vUrl;
+
+                var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = CookieStore.GetCookie("Lat") , strLong = CookieStore.GetCookie("Long"), strSort="rel", strDateFilter="none" })';
+                window.location.replace(vUrl);
             }
-
-        });
-
-        $('#txtSearch').keydown(function (event) {
-           
-            var keyCode = (event.keyCode ? event.keyCode : event.which);
-            if (keyCode == 13) {
+            else
+            {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function (p) {
-
                         var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
-
                         var geocoder = new google.maps.Geocoder;
                         var infowindow = new google.maps.InfoWindow;
-
                         var mapOptions = {
                             center: { lat: p.coords.latitude, lng: p.coords.longitude },
                             zoom: 13,
@@ -1045,8 +1036,6 @@
                         vUrl = vUrl.replace("lat", vLat);
                         vUrl = vUrl.replace("long", vLong);
                         vUrl = vUrl.replace("search", vTextSrh);
-                        console.log(vUrl);
-                       
                         window.location.href = vUrl;
                     }, function (p) {
                         var vTextSrh = $("#txtSearch").val();
@@ -1054,12 +1043,84 @@
                         vUrl = vUrl.replace("search", vTextSrh);
                         window.location.href = vUrl;
                     });
-
                 } else {
                     var vTextSrh = $("#txtSearch").val();
                     var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none", strTextSearch="search" })';
                     vUrl = vUrl.replace("search", vTextSrh);
                     window.location.href = vUrl;
+                }
+            }
+
+        });
+
+        $('#txtSearch').keydown(function (event) {
+           
+            var keyCode = (event.keyCode ? event.keyCode : event.which);
+            if (keyCode == 13) {
+               // alert("in serach");
+                //event.keyCode =0;
+                
+                event.preventDefault();
+
+                var Lat = @CookieStore.GetCookie("Lat");
+                var Lng = @CookieStore.GetCookie("Long");
+                Lat  = parseFloat(Lat);
+                Lng = parseFloat(Lng);
+                if (isNaN(Lat) == true) Lat = 0;
+                if (isNaN(Lng) == true) Lng = 0;
+                if (Lat > 0)
+                {
+                    var vTextSrh = $("#txtSearch").val();
+                    var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = CookieStore.GetCookie("Lat"), strLong = CookieStore.GetCookie("Long"), strSort="rel", strDateFilter="none", strTextSearch="search"})';
+                    vUrl = vUrl.replace("search", vTextSrh);
+                  //  alert(vUrl);
+                    window.location.href = vUrl;
+                    window.location.replace(vUrl);
+                    return false;
+                }
+                else
+                {
+                
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function (p) {
+
+                            var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+
+                            var geocoder = new google.maps.Geocoder;
+                            var infowindow = new google.maps.InfoWindow;
+
+                            var mapOptions = {
+                                center: { lat: p.coords.latitude, lng: p.coords.longitude },
+                                zoom: 13,
+                                mapTypeId: google.maps.MapTypeId.ROADMAP
+                            };
+                            var vLat = p.coords.latitude;
+                            var vLong = p.coords.longitude;
+                            var vTextSrh = $("#txtSearch").val();
+                            var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none", strTextSearch="search" })';
+                            vUrl = vUrl.replace("lat", vLat);
+                            vUrl = vUrl.replace("long", vLong);
+                            vUrl = vUrl.replace("search", vTextSrh);
+                            console.log(vUrl);
+                       
+                            window.location.href = vUrl;
+                            window.location.replace(vUrl);
+                        }, function (p) {
+                            var vTextSrh = $("#txtSearch").val();
+                            var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none", strTextSearch="search" })';
+                            vUrl = vUrl.replace("search", vTextSrh);
+                            window.location.href = vUrl;
+                            window.location.replace(vUrl);
+                        });
+
+                    } else {
+                        var vTextSrh = $("#txtSearch").val();
+                        var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none", strTextSearch="search" })';
+                        vUrl = vUrl.replace("search", vTextSrh);
+                        window.location.href = vUrl;
+                        window.location.replace(vUrl);
+                    }
+                    return false;
                 }
             }
         });
