@@ -36,6 +36,16 @@ namespace EventCombo.Controllers
             MyAccount hmc = new MyAccount();
             if ((Session["AppId"] != null))
             {
+                string LgUser = Session["AppId"].ToString();
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == LgUser);
+
+                    aspuser.LastLoginTime = System.DateTime.UtcNow;
+                    db.SaveChanges();
+
+
+                }
 
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))

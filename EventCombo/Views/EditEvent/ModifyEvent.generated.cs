@@ -8381,179 +8381,180 @@ WriteLiteral("\";\r\n                   \r\n                    if(isadmin==\"Y\
 "                       $(\'#id_varsubdesc-\' + i).addClass(\'err-bor\');\r\n\r\n        " +
 "                    countvardesc++;\r\n                        } else {\r\n         " +
 "                   $(\'#id_varsubdesc-\' + i).removeClass(\'err-bor\');\r\n\r\n         " +
-"               }\r\n                        if (subprice_Qty == \"\") {\r\n\r\n         " +
-"                   $(\'#id_varsubprice-\' + i).addClass(\'err-bor\');\r\n             " +
-"               countvarqty++;\r\n                        } else {\r\n               " +
-"             if (subprice_Qty <= 0) {\r\n                                $(\'#id_va" +
-"rsubprice-\' + i).addClass(\'err-bor\');\r\n                                countvarq" +
-"ty++;\r\n\r\n                            } else {\r\n                                $" +
-"(\'#id_varsubprice-\' + i).removeClass(\'err-bor\');\r\n                            }\r" +
-"\n\r\n\r\n                        }\r\n\r\n                    }\r\n\r\n                }\r\n  " +
-"          }\r\n           \r\n\r\n         \r\n            if (count > 0)\r\n            {" +
-"\r\n\r\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEventHighlightFieldsU" +
-"I\") + \"<br/>\";\r\n            }\r\n            if (countvardesc > 0)\r\n            {\r" +
-"\n                msg += ajaxsetup(\"CreateEvent\", \"CreateEventSubDescUI\") + \"<br/" +
-">\";\r\n\r\n            }\r\n            if (countvarqty > 0) {\r\n                msg +=" +
-" ajaxsetup(\"CreateEvent\", \"CreateEventSubQtyUI\") + \"<br/>\";\r\n\r\n            }\r\n  " +
-"          if ($(\'#chkReqPassword\').is(\":checked\") == true) {\r\n                if" +
-" ($(\'#txtReqPassword\').val().length<6) {\r\n                    $(\'#txtReqPassword" +
-"\').addClass(\'err-bor\');\r\n                    msg += ajaxsetup(\"CreateEvent\", \"Cr" +
-"eateEventPwdUI\") + \"<br/>\";;\r\n\r\n                } else {\r\n                    $(" +
-"\'#txtReqPassword\').removeClass(\'err-bor\');\r\n                }\r\n\r\n            }\r\n" +
-"            var weekcnt = 0;\r\n            var weekdaily = 0;\r\n            var we" +
-"ekmnth = 0;\r\n            var custom = 0;\r\n            var days;\r\n            var" +
-" single = 0;\r\n            var type=  $(\"#dlSchOption\").val();\r\n            if ($" +
-"(\"#hdSchType\").val() == \'Multiple\') {\r\n\r\n                if ($(\"#dlSchOption\").v" +
-"al() == \"Weekly\") {\r\n                    days = $(\"#dllWeeklyDayChk\").val();\r\n\r\n" +
-"                    if (days == null) {\r\n                        weekcnt++;\r\n   " +
-"                     $(\"#dvWeeklyDayChk button\").addClass(\'err-bor\');\r\n         " +
-"           } else {\r\n                        $(\"#dvWeeklyDayChk button\").removeC" +
-"lass(\'err-bor\');\r\n                    }\r\n                    if ($(\"#txtTimeStar" +
-"t\").val() == \"\") {\r\n                        weekcnt++;\r\n                        " +
-"$(\"#txtTimeStart\").addClass(\'err-bor\');\r\n                    } else {\r\n         " +
-"               $(\"#txtTimeStart\").removeClass(\'err-bor\');\r\n                    }" +
-"\r\n                    if ($(\"#txtTimeEnd\").val() == \"\") {\r\n                     " +
-"   weekcnt++;\r\n                        $(\"#txtTimeEnd\").addClass(\'err-bor\');\r\n  " +
-"                  }\r\n                    if ($(\"#txtTimeEnd\").val() == \"\") {\r\n  " +
-"                      weekcnt++;\r\n                        $(\"#txtTimeEnd\").addCl" +
-"ass(\'err-bor\');\r\n                    }\r\n                    if ($(\"#txtDateFrom\"" +
-").val() == \"\") {\r\n                        weekcnt++;\r\n                        $(" +
-"\"#txtDateFrom\").addClass(\'err-bor\');\r\n                    }\r\n                   " +
-" if ($(\"#txtDateTo\").val() == \"\") {\r\n                        weekcnt++;\r\n       " +
-"                 $(\"#txtDateTo\").addClass(\'err-bor\');\r\n                    }\r\n  " +
-"              }\r\n\r\n                if ($(\"#dlSchOption\").val() == \"Daily\") {\r\n  " +
-"                  $(\"#txtDateFrom\").length;\r\n                    if ($(\"#txtDate" +
-"From\").val() == \"\") {\r\n                        weekdaily++;\r\n                   " +
-"     $(\"#txtDateFrom\").addClass(\'err-bor\');\r\n                    }\r\n            " +
-"        $(\"#txtDateTo\").length;\r\n                    if ($(\"#txtDateTo\").val() =" +
-"= \"\") {\r\n                        weekdaily++;\r\n                        $(\"#txtDa" +
-"teTo\").addClass(\'err-bor\');\r\n                    }\r\n                    $(\"#txtT" +
-"imeStart\").length;\r\n                    if ($(\"#txtTimeStart\").val() == \"\") {\r\n " +
-"                       weekdaily++;\r\n                        $(\"#txtTimeStart\")." +
-"addClass(\'err-bor\');\r\n                    }\r\n                    $(\"#txtTimeEnd\"" +
-").length;\r\n                    if ($(\"#txtTimeEnd\").val() == \"\") {\r\n            " +
-"            weekdaily++;\r\n                        $(\"#txtTimeEnd\").addClass(\'err" +
-"-bor\');\r\n                    }\r\n\r\n                }\r\n                if ($(\"#dlS" +
-"chOption\").val() == \"Monthly\") {\r\n                    days = $(\"#dllMonthlyWeekD" +
-"ay\").val();\r\n                    if (days == null) {\r\n\r\n                        " +
-"weekmnth++;\r\n                        $(\"#dvmonthchk button\").addClass(\'err-bor\')" +
-";\r\n                    }\r\n                    if ($(\"#txtDateFrom\").val() == \"\")" +
-" {\r\n                        weekmnth++;\r\n                        $(\"#txtDateFrom" +
-"\").addClass(\'err-bor\');\r\n                    }\r\n                    if ($(\"#txtD" +
-"ateFrom\").val() == \"\") {\r\n                        weekmnth++;\r\n                 " +
-"       $(\"#txtDateFrom\").addClass(\'err-bor\');\r\n                    }\r\n          " +
-"          if ($(\"#txtTimeStart\").val() == \"\") {\r\n                        weekmnt" +
-"h++;\r\n                        $(\"#txtTimeStart\").addClass(\'err-bor\');\r\n         " +
-"           }\r\n                    if ($(\"#txtDateTo\").val() == \"\") {\r\n          " +
-"              weekmnth++;\r\n                        $(\"#txtDateTo\").addClass(\'err" +
-"-bor\');\r\n                    }\r\n\r\n                }\r\n                if ($(\"#dlS" +
-"chOption\").val() == \"Custom\") {\r\n\r\n                    if ($(\"#txtTimeStart\").va" +
-"l() == \"\") {\r\n                        custom++;\r\n                        $(\"#txt" +
-"TimeStart\").addClass(\'err-bor\');\r\n                    }\r\n                    if " +
-"($(\"#txtTimeEnd\").val() == \"\") {\r\n                        custom++;\r\n           " +
-"             $(\"#txtTimeEnd\").addClass(\'err-bor\');\r\n                    }\r\n     " +
-"               if ($(\"#txtDateFrom\").val() == \"\") {\r\n                        cus" +
-"tom++;\r\n                        $(\"#txtDateFrom\").addClass(\'err-bor\');\r\n        " +
-"            }\r\n                    if ($(\"#txtDateTo\").val() == \"\") {\r\n         " +
-"               custom++;\r\n                        $(\"#txtDateTo\").addClass(\'err-" +
-"bor\');\r\n                    }\r\n\r\n                }\r\n\r\n            } else {\r\n\r\n  " +
-"              var str=   $(\"#txtStartDate\").val();\r\n                if ($(\"#txtS" +
-"tartDate\").val()==\"\") {\r\n                    single++;\r\n                    $(\"#" +
-"txtStartDate\").addClass(\'err-bor\');\r\n                }\r\n                str = $(" +
-"\"#txtStartTime\").val();\r\n                if ($(\"#txtStartTime\").val() == \"\") {\r\n" +
-"                    single++;\r\n                    $(\"#txtStartTime\").addClass(\'" +
-"err-bor\');\r\n                }\r\n                str=$(\"#txtEndDate\").val();\r\n    " +
-"            if ($(\"#txtEndDate\").val() == \"\") {\r\n                    single++;\r\n" +
-"                    $(\"#txtEndDate\").addClass(\'err-bor\');\r\n                }\r\n  " +
-"              str=  $(\"#txtEndTime\").val();\r\n                if ($(\"#txtEndTime\"" +
-").val() == \"\") {\r\n                    single++;\r\n                    $(\"#txtEndT" +
-"ime\").addClass(\'err-bor\');\r\n                }\r\n\r\n            }\r\n\r\n            if" +
-" (weekcnt > 0) {\r\n                $(\"#btEnterDates\").click();\r\n                m" +
-"sg += ajaxsetup(\"CreateEvent\", \"Validdate\") + \"<br/>\";\r\n\r\n            }\r\n       " +
-"     if (weekdaily > 0) {\r\n                $(\"#btEnterDates\").click();\r\n        " +
-"        msg += ajaxsetup(\"CreateEvent\", \"Validdate\") + \"<br/>\";\r\n\r\n            }" +
-"\r\n            if (weekmnth > 0) {\r\n                $(\"#btEnterDates\").click();\r\n" +
-"                msg += ajaxsetup(\"CreateEvent\", \"Validdate\") + \"<br/>\";\r\n\r\n     " +
-"       }\r\n            if (custom > 0) {\r\n                $(\"#btEnterDates\").clic" +
-"k();\r\n                msg += ajaxsetup(\"CreateEvent\", \"Validdate\") + \"<br/>\";\r\n " +
-"           }\r\n            if (single > 0) {\r\n                $(\"#btEnterDates\")." +
-"click();\r\n                msg += ajaxsetup(\"CreateEvent\", \"Validdate\") + \"<br/>\"" +
-";\r\n            }\r\n            return msg;\r\n        }\r\n        function compare(D" +
-"ateA, DateB) {\r\n            var errorMsg = \"\";\r\n            var a = new Date(Dat" +
-"eA);\r\n            var b = new Date(DateB);\r\n\r\n            var msDateA = Date.UTC" +
-"(a.getFullYear(), a.getMonth() + 1, a.getDate());\r\n            var msDateB = Dat" +
-"e.UTC(b.getFullYear(), b.getMonth() + 1, b.getDate());\r\n\r\n            if (parseF" +
-"loat(msDateA) < parseFloat(msDateB))\r\n                return errorMsg = \"\";  // " +
-"less than\r\n            else if (parseFloat(msDateA) == parseFloat(msDateB))\r\n   " +
-"             return errorMsg = \"\";  // equal\r\n            else if (parseFloat(ms" +
-"DateA) > parseFloat(msDateB))\r\n                return errorMsg =  ajaxsetup(\"Cre" +
-"ateEvent\", \"CreateEventCompareDateUI\") +\"<br/>\"; // greater than\r\n            el" +
-"se\r\n                return null;  // error\r\n\r\n\r\n        }\r\n        function chec" +
-"kTime(field) {\r\n            var errorMsg = \"\";\r\n            debugger;\r\n         " +
-"   // regular expression to match required time format\r\n            re = /^(\\d{1" +
-",2}):(\\d{2})(:00)?([ap]m)?$/;\r\n            var value = $(\"#\" + field).val();\r\n  " +
-"          if (value != \'\') {\r\n                if (regs = value.match(re)) {\r\n   " +
-"                 if (regs[4]) {\r\n                        // 12-hour time format " +
-"with am/pm\r\n                        if (regs[1] < 1 || regs[1] > 12) {\r\n        " +
-"                    errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInvalidTimeU" +
-"I\") +\"<br/>\";;\r\n                        }\r\n                    } else {\r\n       " +
-"                 // 24-hour time format\r\n                        if (regs[1] > 2" +
-"3) {\r\n                            errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEve" +
-"ntInvalidTimeUI\")+\"<br/>\";;\r\n                        }\r\n                    }\r\n " +
-"                   if (!errorMsg && regs[2] > 59) {\r\n                        err" +
-"orMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInvalidTimeUI\")+\"<br/>\";;\r\n        " +
-"            }\r\n                } else {\r\n                    errorMsg = ajaxsetu" +
-"p(\"CreateEvent\", \"CreateEventInvalidTimeUI\")+\"<br/>\";;\r\n                }\r\n     " +
-"       }\r\n\r\n            return errorMsg;\r\n        }\r\n        function checkDate(" +
-"field) {\r\n            var allowBlank = true;\r\n            var minYear = (new Dat" +
-"e()).getFullYear();\r\n            var maxYear = (new Date()).getFullYear() + 10;\r" +
-"\n            var d = new Date();\r\n\r\n            var errorMsg = \"\";\r\n            " +
-"var value = $(\"#\" + field).val();\r\n            var datelast = new Date(value);\r\n" +
-"\r\n            var msDateA = Date.UTC(d.getFullYear(), d.getMonth() + 1, d.getDat" +
-"e());\r\n            var msDateB = Date.UTC(datelast.getFullYear(), datelast.getMo" +
-"nth() + 1, datelast.getDate());\r\n\r\n\r\n\r\n            // regular expression to matc" +
-"h required date format\r\n            re = /^(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})$/;\r\n\r\n " +
-"           if (value != \'\') {\r\n                if (regs = value.match(re)) {\r\n  " +
-"                  if (regs[2] != \'\' && regs[2] != \'\' && regs[3] != \'\') {\r\n      " +
-"                  if (regs[2] < 1 || regs[2] > 31) {\r\n                          " +
+"               }\r\n                        if (subprice_Qty == \"\") {\r\n           " +
+"                 $(\'#id_varsubprice-\' + i).val(\"0.00\");\r\n                       " +
+"     //$(\'#id_varsubprice-\' + i).addClass(\'err-bor\');\r\n                         " +
+"   //countvarqty++;\r\n                        } else {\r\n                         " +
+"   if (subprice_Qty < 0) {\r\n                                $(\'#id_varsubprice-\'" +
+" + i).addClass(\'err-bor\');\r\n                                countvarqty++;\r\n\r\n  " +
+"                          } else {\r\n                                $(\'#id_varsu" +
+"bprice-\' + i).removeClass(\'err-bor\');\r\n                            }\r\n\r\n\r\n      " +
+"                  }\r\n\r\n                    }\r\n\r\n                }\r\n            }" +
+"\r\n           \r\n\r\n         \r\n            if (count > 0)\r\n            {\r\n\r\n       " +
+"         msg += ajaxsetup(\"CreateEvent\", \"CreateEventHighlightFieldsUI\") + \"<br/" +
+">\";\r\n            }\r\n            if (countvardesc > 0)\r\n            {\r\n          " +
+"      msg += ajaxsetup(\"CreateEvent\", \"CreateEventSubDescUI\") + \"<br/>\";\r\n\r\n    " +
+"        }\r\n            if (countvarqty > 0) {\r\n                msg += ajaxsetup(" +
+"\"CreateEvent\", \"CreateEventSubQtyUI\") + \"<br/>\";\r\n\r\n            }\r\n            i" +
+"f ($(\'#chkReqPassword\').is(\":checked\") == true) {\r\n                if ($(\'#txtRe" +
+"qPassword\').val().length<6) {\r\n                    $(\'#txtReqPassword\').addClass" +
+"(\'err-bor\');\r\n                    msg += ajaxsetup(\"CreateEvent\", \"CreateEventPw" +
+"dUI\") + \"<br/>\";;\r\n\r\n                } else {\r\n                    $(\'#txtReqPas" +
+"sword\').removeClass(\'err-bor\');\r\n                }\r\n\r\n            }\r\n           " +
+" var weekcnt = 0;\r\n            var weekdaily = 0;\r\n            var weekmnth = 0;" +
+"\r\n            var custom = 0;\r\n            var days;\r\n            var single = 0" +
+";\r\n            var type=  $(\"#dlSchOption\").val();\r\n            if ($(\"#hdSchTyp" +
+"e\").val() == \'Multiple\') {\r\n\r\n                if ($(\"#dlSchOption\").val() == \"We" +
+"ekly\") {\r\n                    days = $(\"#dllWeeklyDayChk\").val();\r\n\r\n           " +
+"         if (days == null) {\r\n                        weekcnt++;\r\n              " +
+"          $(\"#dvWeeklyDayChk button\").addClass(\'err-bor\');\r\n                    " +
+"} else {\r\n                        $(\"#dvWeeklyDayChk button\").removeClass(\'err-b" +
+"or\');\r\n                    }\r\n                    if ($(\"#txtTimeStart\").val() =" +
+"= \"\") {\r\n                        weekcnt++;\r\n                        $(\"#txtTime" +
+"Start\").addClass(\'err-bor\');\r\n                    } else {\r\n                    " +
+"    $(\"#txtTimeStart\").removeClass(\'err-bor\');\r\n                    }\r\n         " +
+"           if ($(\"#txtTimeEnd\").val() == \"\") {\r\n                        weekcnt+" +
+"+;\r\n                        $(\"#txtTimeEnd\").addClass(\'err-bor\');\r\n             " +
+"       }\r\n                    if ($(\"#txtTimeEnd\").val() == \"\") {\r\n             " +
+"           weekcnt++;\r\n                        $(\"#txtTimeEnd\").addClass(\'err-bo" +
+"r\');\r\n                    }\r\n                    if ($(\"#txtDateFrom\").val() == " +
+"\"\") {\r\n                        weekcnt++;\r\n                        $(\"#txtDateFr" +
+"om\").addClass(\'err-bor\');\r\n                    }\r\n                    if ($(\"#tx" +
+"tDateTo\").val() == \"\") {\r\n                        weekcnt++;\r\n                  " +
+"      $(\"#txtDateTo\").addClass(\'err-bor\');\r\n                    }\r\n             " +
+"   }\r\n\r\n                if ($(\"#dlSchOption\").val() == \"Daily\") {\r\n             " +
+"       $(\"#txtDateFrom\").length;\r\n                    if ($(\"#txtDateFrom\").val(" +
+") == \"\") {\r\n                        weekdaily++;\r\n                        $(\"#tx" +
+"tDateFrom\").addClass(\'err-bor\');\r\n                    }\r\n                    $(\"" +
+"#txtDateTo\").length;\r\n                    if ($(\"#txtDateTo\").val() == \"\") {\r\n  " +
+"                      weekdaily++;\r\n                        $(\"#txtDateTo\").addC" +
+"lass(\'err-bor\');\r\n                    }\r\n                    $(\"#txtTimeStart\")." +
+"length;\r\n                    if ($(\"#txtTimeStart\").val() == \"\") {\r\n            " +
+"            weekdaily++;\r\n                        $(\"#txtTimeStart\").addClass(\'e" +
+"rr-bor\');\r\n                    }\r\n                    $(\"#txtTimeEnd\").length;\r\n" +
+"                    if ($(\"#txtTimeEnd\").val() == \"\") {\r\n                       " +
+" weekdaily++;\r\n                        $(\"#txtTimeEnd\").addClass(\'err-bor\');\r\n  " +
+"                  }\r\n\r\n                }\r\n                if ($(\"#dlSchOption\")." +
+"val() == \"Monthly\") {\r\n                    days = $(\"#dllMonthlyWeekDay\").val();" +
+"\r\n                    if (days == null) {\r\n\r\n                        weekmnth++;" +
+"\r\n                        $(\"#dvmonthchk button\").addClass(\'err-bor\');\r\n        " +
+"            }\r\n                    if ($(\"#txtDateFrom\").val() == \"\") {\r\n       " +
+"                 weekmnth++;\r\n                        $(\"#txtDateFrom\").addClass" +
+"(\'err-bor\');\r\n                    }\r\n                    if ($(\"#txtDateFrom\").v" +
+"al() == \"\") {\r\n                        weekmnth++;\r\n                        $(\"#" +
+"txtDateFrom\").addClass(\'err-bor\');\r\n                    }\r\n                    i" +
+"f ($(\"#txtTimeStart\").val() == \"\") {\r\n                        weekmnth++;\r\n     " +
+"                   $(\"#txtTimeStart\").addClass(\'err-bor\');\r\n                    " +
+"}\r\n                    if ($(\"#txtDateTo\").val() == \"\") {\r\n                     " +
+"   weekmnth++;\r\n                        $(\"#txtDateTo\").addClass(\'err-bor\');\r\n  " +
+"                  }\r\n\r\n                }\r\n                if ($(\"#dlSchOption\")." +
+"val() == \"Custom\") {\r\n\r\n                    if ($(\"#txtTimeStart\").val() == \"\") " +
+"{\r\n                        custom++;\r\n                        $(\"#txtTimeStart\")" +
+".addClass(\'err-bor\');\r\n                    }\r\n                    if ($(\"#txtTim" +
+"eEnd\").val() == \"\") {\r\n                        custom++;\r\n                      " +
+"  $(\"#txtTimeEnd\").addClass(\'err-bor\');\r\n                    }\r\n                " +
+"    if ($(\"#txtDateFrom\").val() == \"\") {\r\n                        custom++;\r\n   " +
+"                     $(\"#txtDateFrom\").addClass(\'err-bor\');\r\n                   " +
+" }\r\n                    if ($(\"#txtDateTo\").val() == \"\") {\r\n                    " +
+"    custom++;\r\n                        $(\"#txtDateTo\").addClass(\'err-bor\');\r\n   " +
+"                 }\r\n\r\n                }\r\n\r\n            } else {\r\n\r\n             " +
+"   var str=   $(\"#txtStartDate\").val();\r\n                if ($(\"#txtStartDate\")." +
+"val()==\"\") {\r\n                    single++;\r\n                    $(\"#txtStartDat" +
+"e\").addClass(\'err-bor\');\r\n                }\r\n                str = $(\"#txtStartT" +
+"ime\").val();\r\n                if ($(\"#txtStartTime\").val() == \"\") {\r\n           " +
+"         single++;\r\n                    $(\"#txtStartTime\").addClass(\'err-bor\');\r" +
+"\n                }\r\n                str=$(\"#txtEndDate\").val();\r\n               " +
+" if ($(\"#txtEndDate\").val() == \"\") {\r\n                    single++;\r\n           " +
+"         $(\"#txtEndDate\").addClass(\'err-bor\');\r\n                }\r\n             " +
+"   str=  $(\"#txtEndTime\").val();\r\n                if ($(\"#txtEndTime\").val() == " +
+"\"\") {\r\n                    single++;\r\n                    $(\"#txtEndTime\").addCl" +
+"ass(\'err-bor\');\r\n                }\r\n\r\n            }\r\n\r\n            if (weekcnt >" +
+" 0) {\r\n                $(\"#btEnterDates\").click();\r\n                msg += ajaxs" +
+"etup(\"CreateEvent\", \"Validdate\") + \"<br/>\";\r\n\r\n            }\r\n            if (we" +
+"ekdaily > 0) {\r\n                $(\"#btEnterDates\").click();\r\n                msg" +
+" += ajaxsetup(\"CreateEvent\", \"Validdate\") + \"<br/>\";\r\n\r\n            }\r\n         " +
+"   if (weekmnth > 0) {\r\n                $(\"#btEnterDates\").click();\r\n           " +
+"     msg += ajaxsetup(\"CreateEvent\", \"Validdate\") + \"<br/>\";\r\n\r\n            }\r\n " +
+"           if (custom > 0) {\r\n                $(\"#btEnterDates\").click();\r\n     " +
+"           msg += ajaxsetup(\"CreateEvent\", \"Validdate\") + \"<br/>\";\r\n            " +
+"}\r\n            if (single > 0) {\r\n                $(\"#btEnterDates\").click();\r\n " +
+"               msg += ajaxsetup(\"CreateEvent\", \"Validdate\") + \"<br/>\";\r\n        " +
+"    }\r\n            return msg;\r\n        }\r\n        function compare(DateA, DateB" +
+") {\r\n            var errorMsg = \"\";\r\n            var a = new Date(DateA);\r\n     " +
+"       var b = new Date(DateB);\r\n\r\n            var msDateA = Date.UTC(a.getFullY" +
+"ear(), a.getMonth() + 1, a.getDate());\r\n            var msDateB = Date.UTC(b.get" +
+"FullYear(), b.getMonth() + 1, b.getDate());\r\n\r\n            if (parseFloat(msDate" +
+"A) < parseFloat(msDateB))\r\n                return errorMsg = \"\";  // less than\r\n" +
+"            else if (parseFloat(msDateA) == parseFloat(msDateB))\r\n              " +
+"  return errorMsg = \"\";  // equal\r\n            else if (parseFloat(msDateA) > pa" +
+"rseFloat(msDateB))\r\n                return errorMsg =  ajaxsetup(\"CreateEvent\", " +
+"\"CreateEventCompareDateUI\") +\"<br/>\"; // greater than\r\n            else\r\n       " +
+"         return null;  // error\r\n\r\n\r\n        }\r\n        function checkTime(field" +
+") {\r\n            var errorMsg = \"\";\r\n            debugger;\r\n            // regul" +
+"ar expression to match required time format\r\n            re = /^(\\d{1,2}):(\\d{2}" +
+")(:00)?([ap]m)?$/;\r\n            var value = $(\"#\" + field).val();\r\n            i" +
+"f (value != \'\') {\r\n                if (regs = value.match(re)) {\r\n              " +
+"      if (regs[4]) {\r\n                        // 12-hour time format with am/pm\r" +
+"\n                        if (regs[1] < 1 || regs[1] > 12) {\r\n                   " +
+"         errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInvalidTimeUI\") +\"<br/>" +
+"\";;\r\n                        }\r\n                    } else {\r\n                  " +
+"      // 24-hour time format\r\n                        if (regs[1] > 23) {\r\n     " +
+"                       errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInvalidTi" +
+"meUI\")+\"<br/>\";;\r\n                        }\r\n                    }\r\n            " +
+"        if (!errorMsg && regs[2] > 59) {\r\n                        errorMsg = aja" +
+"xsetup(\"CreateEvent\", \"CreateEventInvalidTimeUI\")+\"<br/>\";;\r\n                   " +
+" }\r\n                } else {\r\n                    errorMsg = ajaxsetup(\"CreateEv" +
+"ent\", \"CreateEventInvalidTimeUI\")+\"<br/>\";;\r\n                }\r\n            }\r\n\r" +
+"\n            return errorMsg;\r\n        }\r\n        function checkDate(field) {\r\n " +
+"           var allowBlank = true;\r\n            var minYear = (new Date()).getFul" +
+"lYear();\r\n            var maxYear = (new Date()).getFullYear() + 10;\r\n          " +
+"  var d = new Date();\r\n\r\n            var errorMsg = \"\";\r\n            var value =" +
+" $(\"#\" + field).val();\r\n            var datelast = new Date(value);\r\n\r\n         " +
+"   var msDateA = Date.UTC(d.getFullYear(), d.getMonth() + 1, d.getDate());\r\n    " +
+"        var msDateB = Date.UTC(datelast.getFullYear(), datelast.getMonth() + 1, " +
+"datelast.getDate());\r\n\r\n\r\n\r\n            // regular expression to match required " +
+"date format\r\n            re = /^(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})$/;\r\n\r\n            " +
+"if (value != \'\') {\r\n                if (regs = value.match(re)) {\r\n             " +
+"       if (regs[2] != \'\' && regs[2] != \'\' && regs[3] != \'\') {\r\n                 " +
+"       if (regs[2] < 1 || regs[2] > 31) {\r\n                            errorMsg " +
+"= \"<br/>\" + ajaxsetup(\"CreateEvent\", \"CreateEventInvalidDateUI\");\r\n             " +
+"           } else if (regs[1] < 1 || regs[1] > 12) {\r\n                          " +
 "  errorMsg = \"<br/>\" + ajaxsetup(\"CreateEvent\", \"CreateEventInvalidDateUI\");\r\n  " +
-"                      } else if (regs[1] < 1 || regs[1] > 12) {\r\n               " +
-"             errorMsg = \"<br/>\" + ajaxsetup(\"CreateEvent\", \"CreateEventInvalidDa" +
-"teUI\");\r\n                        } else if (regs[3] < minYear || regs[3] > maxYe" +
-"ar) {\r\n                            errorMsg = \"<br/>\" + ajaxsetup(\"CreateEvent\"," +
-" \"CreateEventInvalidDateUI\");\r\n                        }\r\n                    }\r" +
-"\n                } else {\r\n                    errorMsg = ajaxsetup(\"CreateEvent" +
-"\", \"CreateEventInvalidDateUI\")+\"<br/>\" ;\r\n                }\r\n            } else " +
-"if (!allowBlank) {\r\n                errorMsg = ajaxsetup(\"CreateEvent\", \"CreateE" +
-"ventInvalidDateUI\") + \"<br/>\";\r\n            }\r\n\r\n            if (parseFloat(msDa" +
-"teB) < parseFloat(msDateA)) {\r\n\r\n                errorMsg = ajaxsetup(\"CreateEve" +
-"nt\", \"CreateEventInvalidDateUI\") + \"<br/>\";\r\n            }\r\n            return e" +
-"rrorMsg;\r\n\r\n            //if (errorMsg != \"\") {\r\n            //    return errorM" +
-"sg;\r\n\r\n\r\n            //    field.focus();\r\n            //    field.value = \"\";\r\n" +
-"\r\n            //}\r\n\r\n            //return true;\r\n        }\r\n\r\n        $(document" +
-").ready(function () {\r\n            $(\'input.number\').keyup(function (event) {\r\n\r" +
-"\n                // skip for arrow keys\r\n\r\n\r\n                // format number\r\n " +
-"               $(this).val(function (index, value) {\r\n                    return" +
-" value\r\n                    .replace(/\\D/g, \"\")\r\n                    .replace(/\\" +
-"B(?=(\\d{3})+(?!\\d))/g, \",\")\r\n                    ;\r\n                });\r\n       " +
-"     });\r\n            $(\'.close-model\').on(\'click\', function (e) {\r\n            " +
-"    $.modal.close();\r\n            });\r\n\r\n           \r\n        });\r\n\r\n    </scrip" +
-"t>\r\n\r\n    <script>\r\n\r\n      \r\n        $(document).ready(function () {\r\n         " +
-"   $(\'body\').on(\'keyup keypress\', function (e) {\r\n                debugger;\r\n   " +
-"             var keyCode = e.keyCode || e.which;\r\n                if (keyCode ==" +
-"= 13) {\r\n                    var msg = validatemain();\r\n               \r\n       " +
-"             if (msg != \"\") {\r\n                        $(\'#diverroacc\').css(\'dis" +
-"play\', \'block\');\r\n                        $(\'#erraccmsg\').html(msg);\r\n          " +
-"              $(\'#divaccsuc\').css(\'display\', \'none\');\r\n                        $" +
-"(\'html,body\').animate({ scrollTop: 0 });\r\n                        return false;\r" +
-"\n\r\n                    }\r\n                    //if ($(\"#status\").val().trim().to" +
-"UpperCase() == \"LIVE\")\r\n                    //    save(\"Live\");\r\n               " +
-"     //else\r\n                    save(\"Save\");\r\n                    //e.preventD" +
-"efault();\r\n                   \r\n                    //return false;\r\n           " +
-"     }\r\n            });\r\n            $(\"#btndeleteorg\").click(function()\r\n      " +
-"      {\r\n                $(\"#hId\").html(ajaxsetup(\'OrganizerMaster\', \'OrgDeleteM" +
-"essage\'));\r\n                $(\"#btdeOrg\").click();\r\n            });\r\n\r\n        v" +
-"ar image=\"\";\r\n        var j= ");
+"                      } else if (regs[3] < minYear || regs[3] > maxYear) {\r\n    " +
+"                        errorMsg = \"<br/>\" + ajaxsetup(\"CreateEvent\", \"CreateEve" +
+"ntInvalidDateUI\");\r\n                        }\r\n                    }\r\n          " +
+"      } else {\r\n                    errorMsg = ajaxsetup(\"CreateEvent\", \"CreateE" +
+"ventInvalidDateUI\")+\"<br/>\" ;\r\n                }\r\n            } else if (!allowB" +
+"lank) {\r\n                errorMsg = ajaxsetup(\"CreateEvent\", \"CreateEventInvalid" +
+"DateUI\") + \"<br/>\";\r\n            }\r\n\r\n            if (parseFloat(msDateB) < pars" +
+"eFloat(msDateA)) {\r\n\r\n                errorMsg = ajaxsetup(\"CreateEvent\", \"Creat" +
+"eEventInvalidDateUI\") + \"<br/>\";\r\n            }\r\n            return errorMsg;\r\n\r" +
+"\n            //if (errorMsg != \"\") {\r\n            //    return errorMsg;\r\n\r\n\r\n  " +
+"          //    field.focus();\r\n            //    field.value = \"\";\r\n\r\n         " +
+"   //}\r\n\r\n            //return true;\r\n        }\r\n\r\n        $(document).ready(fun" +
+"ction () {\r\n            $(\'input.number\').keyup(function (event) {\r\n\r\n          " +
+"      // skip for arrow keys\r\n\r\n\r\n                // format number\r\n            " +
+"    $(this).val(function (index, value) {\r\n                    return value\r\n   " +
+"                 .replace(/\\D/g, \"\")\r\n                    .replace(/\\B(?=(\\d{3})" +
+"+(?!\\d))/g, \",\")\r\n                    ;\r\n                });\r\n            });\r\n " +
+"           $(\'.close-model\').on(\'click\', function (e) {\r\n                $.modal" +
+".close();\r\n            });\r\n\r\n           \r\n        });\r\n\r\n    </script>\r\n\r\n    <" +
+"script>\r\n\r\n      \r\n        $(document).ready(function () {\r\n            $(\'body\'" +
+").on(\'keyup keypress\', function (e) {\r\n                debugger;\r\n              " +
+"  var keyCode = e.keyCode || e.which;\r\n                if (keyCode === 13) {\r\n  " +
+"                  var msg = validatemain();\r\n               \r\n                  " +
+"  if (msg != \"\") {\r\n                        $(\'#diverroacc\').css(\'display\', \'blo" +
+"ck\');\r\n                        $(\'#erraccmsg\').html(msg);\r\n                     " +
+"   $(\'#divaccsuc\').css(\'display\', \'none\');\r\n                        $(\'html,body" +
+"\').animate({ scrollTop: 0 });\r\n                        return false;\r\n\r\n        " +
+"            }\r\n                    //if ($(\"#status\").val().trim().toUpperCase()" +
+" == \"LIVE\")\r\n                    //    save(\"Live\");\r\n                    //else" +
+"\r\n                    save(\"Save\");\r\n                    //e.preventDefault();\r\n" +
+"                   \r\n                    //return false;\r\n                }\r\n   " +
+"         });\r\n            $(\"#btndeleteorg\").click(function()\r\n            {\r\n  " +
+"              $(\"#hId\").html(ajaxsetup(\'OrganizerMaster\', \'OrgDeleteMessage\'));\r" +
+"\n                $(\"#btdeOrg\").click();\r\n            });\r\n\r\n        var image=\"\"" +
+";\r\n        var j= ");
 
             
             #line 7104 "..\..\Views\EditEvent\ModifyEvent.cshtml"

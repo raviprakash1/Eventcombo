@@ -54,7 +54,16 @@ namespace EventCombo.Controllers
             //ValidationMessageController vmc = new ValidationMessageController();
             if ((Session["AppId"] != null))
             {
+                string LgUser = Session["AppId"].ToString();
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == LgUser);
 
+                    aspuser.LastLoginTime = System.DateTime.UtcNow;
+                    db.SaveChanges();
+
+
+                }
                 string usernme = AccDetail.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -185,25 +194,39 @@ namespace EventCombo.Controllers
                 TempData["accfname"] = TicketPayment.AccFname.ToString();
                 TempData["accLname"] = TicketPayment.AccLname.ToString();
                 TempData["AccEmail"] = TicketPayment.AccEmail.ToString();
-                TempData["AccConfirmEmail"] = TicketPayment.AccconfirmEmail.ToString();
+                if (TicketPayment.AccconfirmEmail != null)
+                    TempData["AccConfirmEmail"] = TicketPayment.AccconfirmEmail.ToString();
+                else
+                    TempData["AccConfirmEmail"] = "";
+
                 TempData["ReqFrom"] = "PP";
                 StringBuilder strHTML = new StringBuilder();
-                List<TicketBearer> objTB = new List<TicketBearer>();
+                StringBuilder strdll = new StringBuilder();
+                List<TicketBearer> objTB = TicketPayment.NameList;
+
                 int i = 0;
-                foreach(TicketBearer tb in objTB)
+                if (objTB != null)
                 {
-                    strHTML.Append("<tr>");
-                    strHTML.Append("<td style='display:none' width='92%'>");
-                    strHTML.Append(i.ToString());
-                    strHTML.Append("</td>");
-                    strHTML.Append("<td width='92 %'><label id=TicketName_" + i.ToString() + ">" + tb.Name + "</label></td>");
-                    strHTML.Append("<td style='display: none'><label id=TicketEmail_" + i.ToString() + ">" + tb.Email + "</label></td>");
-                    strHTML.Append("</tr>");
+                    foreach (TicketBearer tb in objTB)
+                    {
+                        strHTML.Append("<tr>");
+                        strHTML.Append("<td style='display:none' width='92%'>");
+                        strHTML.Append(i.ToString());
+                        strHTML.Append("</td>");
+                        strHTML.Append("<td width='92 %'><label id=TicketName_" + i.ToString() + ">" + tb.Name + "</label></td>");
+                        strHTML.Append("<td style='display: none'><label id=TicketEmail_" + i.ToString() + ">" + tb.Email + "</label></td>");
+                        strHTML.Append("</tr>");
+                        strdll.Append("<option value=" + i.ToString() + " id=" + i.ToString() + ">" + tb.Name + "</option>");
+                    }
                 }
-                TempData["GuestList"] = strHTML;
+                TempData["GuestList"] = strHTML.ToString();
+                TempData["GuestListOption"] = strdll.ToString();
             }
             else
-            { TempData["ReqFrom"] = "B";
+            {
+                TempData["ReqFrom"] = "B";
+                TempData["GuestList"] = "";
+                TempData["GuestListOption"] = "";
             }
             return View(tp);
         }
@@ -2559,6 +2582,19 @@ namespace EventCombo.Controllers
                     var guid = Session["TicketLockedId"].ToString();
 
                     string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : EvtOrDetail.TPD_User_Id);
+                    if (Session["AppId"] != null)
+                    {
+                        string LgUser = Session["AppId"].ToString();
+                        using (EventComboEntities db = new EventComboEntities())
+                        {
+                            AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == LgUser);
+
+                            aspuser.LastLoginTime = System.DateTime.UtcNow;
+                            db.SaveChanges();
+
+
+                        }
+                    }
                     var acountdedtails = ac.GetLoginDetails(strUsers);
 
 

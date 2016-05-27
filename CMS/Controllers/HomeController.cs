@@ -184,6 +184,7 @@ namespace CMS.Controllers
                             {
                                 AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User.Id);
                                 aspuser.LoginStatus = "Y";
+                                aspuser.LastLoginTime = System.DateTime.UtcNow;
                                 db.SaveChanges();
 
                             }
@@ -209,6 +210,7 @@ namespace CMS.Controllers
                                 {
                                     AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User.Id);
                                     aspuser.LoginStatus = "Y";
+                                    aspuser.LastLoginTime = System.DateTime.UtcNow;
                                     db.SaveChanges();
 
                                 }

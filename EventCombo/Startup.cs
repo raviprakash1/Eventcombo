@@ -36,6 +36,10 @@ namespace EventCombo
             RecurringJob.AddOrUpdate(() => locktickets.Delete(), "*/1 * * * *");
 
 
+            LastLoginStatus loginStatus = new LastLoginStatus();
+            RecurringJob.AddOrUpdate(() => loginStatus.changeloginstatus(), "*/5 * * * *");
+
+
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();

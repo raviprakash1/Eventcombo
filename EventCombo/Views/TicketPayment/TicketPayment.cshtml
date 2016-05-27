@@ -517,6 +517,9 @@
 
                     <input id="hdPromoCodetotal" type="hidden" value="" />
                     <input id="hdReqFrom" type="hidden" value="@TempData["ReqFrom"].ToString()" />
+                    <input id="hdGuestList" type="hidden" value="@TempData["GuestList"].ToString()" />
+                    <input id="hdGuestListOption" type="hidden" value="@TempData["GuestListOption"].ToString()" />
+
                 </div>
 
             </div>
@@ -624,11 +627,17 @@
     }
 
     $(document).ready(function () {
-        if ($("#hdReqFrom").val() == "PP")
+        //if ($("#hdReqFrom").val() == "PP")
+        //{
+        //    //$("#selectcard").val("P");
+        //   // showcardetails("selectcard");
+        //}
+        if ($("#hdGuestList").val().trim() != "")
         {
-            $("#selectcard").val("P");
-            showcardetails("selectcard");
+            $("#tblListitem").append($("#hdGuestList").val());
+            $("#ddlListitem").append($("#hdGuestListOption").val());
         }
+
 
         $('.alphabets').keypress(function (e) {
             var regex = new RegExp("^[a-zA-Z ]+$");
@@ -2204,8 +2213,6 @@
 
     }
     function AddTicket() {
-
-
         $("#hidTicketbearer").val('');
         var qty = parseInt($('#hidQty').val());
         var ddlength = parseInt($("#ddlListitem option").length);

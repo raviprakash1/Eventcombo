@@ -397,7 +397,7 @@ namespace CMS.Controllers
                 {
                     var user = Session["UserID"].ToString();
                     AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user);
-                    aspuser.LoginStatus = "Y";
+                    aspuser.LoginStatus = "N";
                     db.SaveChanges();
                 }
 

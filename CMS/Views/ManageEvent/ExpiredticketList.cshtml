@@ -2,11 +2,11 @@
 @using PagedList.Mvc;
 @using CMS.Models;
 @{
-    ViewBag.Title = "EventsList";
+    ViewBag.Title = "ExpiredticketList";
     //Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 
-<h2>EventsList</h2>
+<h2>Expired Events List</h2>
 <link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
 <link rel="stylesheet" type="text/css" href="~/plugins/magnific/magnific-popup.css">
 <link href="~/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet" />
@@ -45,7 +45,7 @@
                             <div class="col-md-12 admin-grid animated-delay" data-animate='["400","fadeIn"]'>
                                 <div class="panel sort-disable mb_0" id="p2" data-panel-color="false" data-panel-fullscreen="false" data-panel-remove="false" data-panel-title="false" data-panel-fullscreen="false">
                                     <div class="panel-heading panel_loader search-mng-pnl">
-                                        <span class="view_evnt fs26 col-sm-3"> Event</span>
+                                        <span class="view_evnt fs26 col-sm-3"> Expired Events</span>
                                         <label class="field select admin-form col-sm-7 text-right srh-by-no">
                                             Total no. of Events : @ViewData["Eventscount"] &nbsp; &nbsp; &nbsp; &nbsp;
                                             @Html.DropDownList("ddlPageF", ViewBag.ddlPageF as List<SelectListItem>, new { @class = "pagination" })
@@ -126,24 +126,24 @@
                                                 <th class="tab-wid1">
                                                     @{
                                                         string url = Request.Url.GetLeftPart(UriPartial.Authority);
-                                                        string sno = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=sno";
-                                                        string snodesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=snodesc";
-                                                        string title = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=title";
-                                                        string titledesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=titledesc";
-                                                        string type = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=type";
-                                                        string typedesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=typedesc";
-                                                        string category = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=category";
-                                                        string categorydesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=categorydesc";
-                                                        string date = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=date";
-                                                        string datedesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=datedesc";
-                                                        string Organiser = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=Organiser";
-                                                        string Organiserdesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=Organiserdesc";
-                                                        string venue = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=venue";
-                                                        string venuedesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=venuedesc";
-                                                        string ticket = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=ticket";
-                                                        string ticketdesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=ticketdesc";
-                                                        string feature = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=feature";
-                                                        string featuredesc = url + "/util_admin_bolt/manageevent/EventsList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=featuredesc";
+                                                        string sno = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=sno";
+                                                        string snodesc = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=snodesc";
+                                                        string title = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=title";
+                                                        string titledesc = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=titledesc";
+                                                        string type = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=type";
+                                                        string typedesc = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=typedesc";
+                                                        string category = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=category";
+                                                        string categorydesc = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=categorydesc";
+                                                        string date = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=date";
+                                                        string datedesc = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=datedesc";
+                                                        string Organiser = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=Organiser";
+                                                        string Organiserdesc = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=Organiserdesc";
+                                                        string venue = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=venue";
+                                                        string venuedesc = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=venuedesc";
+                                                        string ticket = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=ticket";
+                                                        string ticketdesc = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=ticketdesc";
+                                                        string feature = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=feature";
+                                                        string featuredesc = url + "/util_admin_bolt/manageevent/ExpiredticketList?SearchStringEventTitle=" + @TempData["SearchStringEventTitle"] + "&EventType=" + @TempData["EventType"] + "&ddlEventCategory=" + @TempData["ddlEventCategory"] + "&ddlEventSubCategory=" + @TempData["ddlEventSubCategory"] + "&Features=" + @TempData["Features"] + "&Events=" + TempData["Events"] + "&Tickets=" + @TempData["Tickets"] + "&sortorder=featuredesc";
                                                     }
 
 
@@ -153,6 +153,8 @@
                                                     <span class="sss1">Sno.</span>
                                                     <div class="sor-evnt-cls">
                                                         <span class="sor_evnt_cls_drop_up"> <a href="@sno"><img src="~/assets/img/arw-up.png" /></a> </span>
+                                                        </div>
+                                                    <div class="sor-mng-evnt-cls2">
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@snodesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
@@ -160,6 +162,8 @@
                                                     Title
                                                     <div class="sor-evnt-cls">
                                                         <span class="sor_evnt_cls_drop_up"> <a href="@title"><img src="~/assets/img/arw-up.png" /></a> </span>
+                                                        </div>
+                                                    <div class="sor-mng-evnt-cls2">
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@titledesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
@@ -167,6 +171,8 @@
                                                     Type
                                                     <div class="sor-evnt-cls">
                                                         <span class="sor_evnt_cls_drop_up"> <a href="@type"><img src="~/assets/img/arw-up.png" /></a> </span>
+                                                        </div>
+                                                    <div class="sor-mng-evnt-cls2">
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@typedesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
@@ -174,6 +180,8 @@
                                                     Category-SubCategory
                                                     <div class="sor-evnt-cls">
                                                         <span class="sor_evnt_cls_drop_up"> <a href="@category"><img src="~/assets/img/arw-up.png" /></a> </span>
+                                                        </div>
+                                                    <div class="sor-mng-evnt-cls2">
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@categorydesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
@@ -181,6 +189,8 @@
                                                     Date(s)
                                                     <div class="sor-evnt-cls">
                                                         <span class="sor_evnt_cls_drop_up"> <a href="@date"><img src="~/assets/img/arw-up.png" /></a> </span>
+                                                        </div>
+                                                    <div class="sor-mng-evnt-cls2">
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@datedesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
@@ -188,6 +198,8 @@
                                                     Organizer Name & Email
                                                     <div class="sor-evnt-cls">
                                                         <span class="sor_evnt_cls_drop_up"> <a href="@Organiser"><img src="~/assets/img/arw-up.png" /></a> </span>
+                                                        </div>
+                                                    <div class="sor-mng-evnt-cls2">
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@Organiserdesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
@@ -195,6 +207,8 @@
                                                     Venue name & address
                                                     <div class="sor-evnt-cls">
                                                         <span class="sor_evnt_cls_drop_up"> <a href="@venue"><img src="~/assets/img/arw-up.png" /></a> </span>
+                                                        </div>
+                                                    <div class="sor-mng-evnt-cls2">
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@venuedesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
@@ -205,6 +219,8 @@
                                                     Tickets Sold
                                                     <div class="sor-evnt-cls">
                                                         <span class="sor_evnt_cls_drop_up"> <a href="@ticket"><img src="~/assets/img/arw-up.png" /></a> </span>
+                                                        </div>
+                                                    <div class="sor-mng-evnt-cls2">
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@ticketdesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
@@ -212,6 +228,8 @@
                                                     Feature
                                                     <div class="sor-evnt-cls">
                                                         <span class="sor_evnt_cls_drop_up"> <a href="@feature"><img src="~/assets/img/arw-up.png" /></a> </span>
+                                                        </div>
+                                                    <div class="sor-mng-evnt-cls2">
                                                         <span class="sor_evnt_cls_drop_down"> <a href="@featuredesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
@@ -345,7 +363,7 @@
                                     </table>
 
                                     <div class="col-xs-12 no_pad" style="text-align:right">
-                                        @Html.PagedListPager(Model, pageF => Url.Action("EventsList", new { pageF, SearchStringEventTitle = TempData["SearchStringEventTitle"], EventType = TempData["EventType"], ddlEventCategory = TempData["ddlEventCategory"], ddlEventSubCategory = TempData["ddlEventSubCategory"], Features = TempData["Features"], Events = TempData["Events"], Tickets = TempData["Tickets"], sortorder = TempData["sortorder"] }))
+                                        @Html.PagedListPager(Model, pageF => Url.Action("ExpiredticketList", new { pageF, SearchStringEventTitle = TempData["SearchStringEventTitle"], EventType = TempData["EventType"], ddlEventCategory = TempData["ddlEventCategory"], ddlEventSubCategory = TempData["ddlEventSubCategory"], Features = TempData["Features"], Events = TempData["Events"], Tickets = TempData["Tickets"], sortorder = TempData["sortorder"] }))
                                     </div>
                                     @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"] != null)
                                     {
@@ -449,7 +467,7 @@
         $('#Events').val(0);
         $('#Tickets').val(0);
         $('#ddlEventSubCategory').empty();
-        window.location.href = '@Url.Action("EventsList", "ManageEvent", new { })?PageF=1';
+        window.location.href = '@Url.Action("ExpiredticketList", "ManageEvent", new { })?PageF=1';
 
     });
     //$('#ulpage').click(function () {
@@ -479,7 +497,7 @@
         //$('#ulpage li a[data-page=' + value + ']').click();
         //console.log($('#ulpage li a[data-page=' + value + ']').parent().addClass('active'));
         //console.log($("#ulpage li").find("a", "[data-page=" + value + "]"));
-        window.location.href = '@Url.Action("EventsList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Features=' + Features + '&Tickets=' + Tickets + '&sortorder=' + sortorder + '&PageF=' + PageF + '';
+        window.location.href = '@Url.Action("ExpiredticketList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Features=' + Features + '&Tickets=' + Tickets + '&sortorder=' + sortorder + '&PageF=' + PageF + '';
 
     });
     function ConfirmDelete(userId) {

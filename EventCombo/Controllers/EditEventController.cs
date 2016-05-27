@@ -174,7 +174,16 @@ namespace EventCombo.Controllers
                             TempData["IsNewEvent"] = "N";
                     }
 
+                    string LgUser = Session["AppId"].ToString();
+                    using (EventComboEntities db = new EventComboEntities())
+                    {
+                        AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == LgUser);
 
+                        aspuser.LastLoginTime = System.DateTime.UtcNow;
+                        db.SaveChanges();
+
+
+                    }
 
                     long EventIid = 0;
                     string Isadmin = "N";
@@ -1609,7 +1618,7 @@ namespace EventCombo.Controllers
                     foreach (Event_VariableDesc Objvardesc in vardesc)
                     {
 
-                        var PRICE = String.Format("{0:#,###,###.00}", Objvardesc.Price);
+                        var PRICE = String.Format("{0:#,###,##0.00}", Objvardesc.Price);
 
                         strvariableHtml.Append(" <div class='col-sm-12 no_pad' id='id_clonevariable-" + k + "' >");
                         strvariableHtml.Append("<div class='list -group-item ev_var_chrg_list'>");
