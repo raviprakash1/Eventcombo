@@ -749,6 +749,17 @@ namespace EventCombo.Controllers
             {
                 string Userid = Session["AppId"].ToString();
                 string imagepresent = model.ImagePresent;
+                string LgUser = Session["AppId"].ToString();
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == LgUser);
+
+                    aspuser.LastLoginTime = System.DateTime.UtcNow;
+                    db.SaveChanges();
+
+
+                }
+
 
                 ValidationMessage vmc = new ValidationMessage();
                 MyAccount mac = new MyAccount();
@@ -1702,7 +1713,7 @@ namespace EventCombo.Controllers
             {
               AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User.Id);
               aspuser.LoginStatus = "Y";
-
+              aspuser.LastLoginTime = System.DateTime.UtcNow;
               Profile prof = db.Profiles.First(i => i.UserID == User.Id);
               prof.Ipcity = city;
               prof.Ipcountry = country;
@@ -2173,7 +2184,8 @@ namespace EventCombo.Controllers
               {
                 AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user1.Id);
                 aspuser.LoginStatus = "Y";
-                db.SaveChanges();
+                aspuser.LastLoginTime = System.DateTime.UtcNow;
+                 db.SaveChanges();
 
               }
 
@@ -2289,9 +2301,9 @@ namespace EventCombo.Controllers
           {
             AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user.Id);
             aspuser.LoginStatus = "Y";
+            aspuser.LastLoginTime = System.DateTime.UtcNow;
 
-
-            Profile prof = db.Profiles.First(i => i.UserID == user.Id);
+                        Profile prof = db.Profiles.First(i => i.UserID == user.Id);
             prof.Ipcountry = country;
             prof.IpState = state;
             prof.Ipcity = city;
@@ -2382,7 +2394,8 @@ namespace EventCombo.Controllers
             if (aspuser != null)
             {
               aspuser.LoginStatus = "N";
-              db.SaveChanges();
+                           
+            db.SaveChanges();
             }
 
           }

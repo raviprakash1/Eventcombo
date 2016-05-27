@@ -33,6 +33,16 @@ namespace EventCombo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            string User = Session["AppId"].ToString();
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User);
+
+                aspuser.LastLoginTime = System.DateTime.UtcNow;
+                db.SaveChanges();
+
+
+            }
             if (Eventlid == 0)
             {
                 return RedirectToAction("Index", "Home");
@@ -533,6 +543,16 @@ namespace EventCombo.Controllers
             if (Session["AppId"] == null)
             {
                 return RedirectToAction("Index", "Home");
+            }
+            string LgUser = Session["AppId"].ToString();
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == LgUser);
+
+                aspuser.LastLoginTime = System.DateTime.UtcNow;
+                db.SaveChanges();
+
+
             }
             if (CommanClasses.CompareCurrentUser(eventId, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
 
@@ -1720,6 +1740,17 @@ namespace EventCombo.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
+                string LgUser = Session["AppId"].ToString();
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == LgUser);
+
+                    aspuser.LastLoginTime = System.DateTime.UtcNow;
+                    db.SaveChanges();
+
+
+                }
+
 
                 ValidationMessage vmc = new ValidationMessage();
                 DateTimeWithZone dtzCreated;
@@ -1832,6 +1863,17 @@ namespace EventCombo.Controllers
                 if (Eventlid == 0)
                 {
                     return RedirectToAction("Index", "Home");
+                }
+
+                string LgUser = Session["AppId"].ToString();
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == LgUser);
+
+                    aspuser.LastLoginTime = System.DateTime.UtcNow;
+                    db.SaveChanges();
+
+
                 }
 
                 ValidationMessage vmc = new ValidationMessage();
@@ -2754,6 +2796,16 @@ namespace EventCombo.Controllers
             if (Session["AppId"] == null)
             {
                 return RedirectToAction("Index", "Home");
+            }
+            string LgUser = Session["AppId"].ToString();
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == LgUser);
+
+                aspuser.LastLoginTime = System.DateTime.UtcNow;
+                db.SaveChanges();
+
+
             }
             if (CommanClasses.CompareCurrentUser(lEvtId, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
 

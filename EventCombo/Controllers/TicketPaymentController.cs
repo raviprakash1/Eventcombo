@@ -54,7 +54,16 @@ namespace EventCombo.Controllers
             //ValidationMessageController vmc = new ValidationMessageController();
             if ((Session["AppId"] != null))
             {
+                string LgUser = Session["AppId"].ToString();
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == LgUser);
 
+                    aspuser.LastLoginTime = System.DateTime.UtcNow;
+                    db.SaveChanges();
+
+
+                }
                 string usernme = AccDetail.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -2566,6 +2575,19 @@ namespace EventCombo.Controllers
                     var guid = Session["TicketLockedId"].ToString();
 
                     string strUsers = (Session["AppId"] != null ? Session["AppId"].ToString() : EvtOrDetail.TPD_User_Id);
+                    if (Session["AppId"] != null)
+                    {
+                        string LgUser = Session["AppId"].ToString();
+                        using (EventComboEntities db = new EventComboEntities())
+                        {
+                            AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == LgUser);
+
+                            aspuser.LastLoginTime = System.DateTime.UtcNow;
+                            db.SaveChanges();
+
+
+                        }
+                    }
                     var acountdedtails = ac.GetLoginDetails(strUsers);
 
 

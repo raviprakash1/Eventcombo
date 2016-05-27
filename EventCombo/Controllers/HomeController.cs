@@ -190,7 +190,7 @@ namespace EventCombo.Controllers
 
                                 AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user1.Id);
                                 aspuser.LoginStatus = "Y";
-
+                                aspuser.LastLoginTime = System.DateTime.UtcNow;
 
                                 objEntity.SaveChanges();
                                 var externalIdentity = HttpContext.GetOwinContext().Authentication.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
@@ -256,7 +256,7 @@ namespace EventCombo.Controllers
 
                     AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user.Id);
                     aspuser.LoginStatus = "Y";
-
+                    aspuser.LastLoginTime = System.DateTime.UtcNow;
                     objEntity.SaveChanges();
                 }
                 var usernew = new ApplicationUser { UserName = email, Email = email };
@@ -392,7 +392,17 @@ namespace EventCombo.Controllers
             MyAccount hmc = new MyAccount();
             if ((Session["AppId"] != null))
             {
-               
+                string User = Session["AppId"].ToString();
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User);
+
+                    aspuser.LastLoginTime = System.DateTime.UtcNow;
+                    db.SaveChanges();
+
+
+                }
+
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -1314,6 +1324,16 @@ namespace EventCombo.Controllers
             Session["Fromname"] = "Home";
             if (Session["AppId"] != null)
             {
+                var user = Session["AppId"].ToString();
+                using (EventComboEntities db = new EventComboEntities())
+                {
+                    AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user);
+                 
+                    aspuser.LastLoginTime = System.DateTime.UtcNow;
+                    db.SaveChanges();
+
+
+                }
                 string var = getusername();
                 if (string.IsNullOrEmpty(var))
                 {
@@ -2147,7 +2167,7 @@ namespace EventCombo.Controllers
                             AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == Userid.Id);
 
                             aspuser.LoginStatus = "Y";
-
+                            aspuser.LastLoginTime = System.DateTime.UtcNow;
                             db.SaveChanges();
 
                         }

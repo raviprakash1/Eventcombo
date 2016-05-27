@@ -6735,11 +6735,11 @@ else
 
                         }
                         if (subprice_Qty == "") {
-
-                            $('#id_varsubprice-' + i).addClass('err-bor');
-                            countvarqty++;
+                            $('#id_varsubprice-' + i).val("0.00");
+                            //$('#id_varsubprice-' + i).addClass('err-bor');
+                            //countvarqty++;
                         } else {
-                            if (subprice_Qty <= 0) {
+                            if (subprice_Qty < 0) {
                                 $('#id_varsubprice-' + i).addClass('err-bor');
                                 countvarqty++;
 
