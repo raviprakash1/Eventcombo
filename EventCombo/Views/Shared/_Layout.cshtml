@@ -551,6 +551,7 @@
 
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13) {
+            //alert("test");
             if ($("#myModal").css('display') == 'block') {
                 if ($('#login_up').css('display') == 'block') {
 
@@ -1056,6 +1057,10 @@
            
             var keyCode = (event.keyCode ? event.keyCode : event.which);
             if (keyCode == 13) {
+               // alert("in serach");
+                //event.keyCode =0;
+                
+                event.preventDefault();
 
                 var Lat = @CookieStore.GetCookie("Lat");
                 var Lng = @CookieStore.GetCookie("Long");
@@ -1068,9 +1073,10 @@
                     var vTextSrh = $("#txtSearch").val();
                     var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = CookieStore.GetCookie("Lat"), strLong = CookieStore.GetCookie("Long"), strSort="rel", strDateFilter="none", strTextSearch="search"})';
                     vUrl = vUrl.replace("search", vTextSrh);
-                    //alert(vUrl);
-                   // window.location.href = vUrl;
+                  //  alert(vUrl);
+                    window.location.href = vUrl;
                     window.location.replace(vUrl);
+                    return false;
                 }
                 else
                 {
@@ -1098,11 +1104,13 @@
                             console.log(vUrl);
                        
                             window.location.href = vUrl;
+                            window.location.replace(vUrl);
                         }, function (p) {
                             var vTextSrh = $("#txtSearch").val();
                             var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none", strTextSearch="search" })';
                             vUrl = vUrl.replace("search", vTextSrh);
                             window.location.href = vUrl;
+                            window.location.replace(vUrl);
                         });
 
                     } else {
@@ -1110,7 +1118,9 @@
                         var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none", strTextSearch="search" })';
                         vUrl = vUrl.replace("search", vTextSrh);
                         window.location.href = vUrl;
+                        window.location.replace(vUrl);
                     }
+                    return false;
                 }
             }
         });
