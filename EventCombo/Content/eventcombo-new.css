@@ -274,8 +274,8 @@ textarea {resize: none;}
   height: auto;
 }
 
-.carousel-control.left { background-image: none;}
-.carousel-control.right { background-image: none;}
+.carousel-control.left { background-image: none; width:6%; }
+.carousel-control.right { background-image: none; width:6%;}
 
 .navbar-wrapper {
   position: absolute;
@@ -356,7 +356,7 @@ textarea {resize: none;}
 .strat_timer_cont{ width: 100%; float: left; position: fixed; bottom: 0px; z-index:1; }
 .strt_tim_desc{ font-size: 1em; padding:0 5px; }
 .strt_tim_desc2{font-size: 1.5em;}
-.evnt_timer_margin{ margin-bottom: 90px;}
+/*.evnt_timer_margin{ margin-bottom: 90px;}*/
 .bg-green{background: #8fcf68; }
 .bg-grey{background: #a3a3a3; }
 .card_list img{ border: 1px solid #aaa;}
@@ -499,9 +499,10 @@ textarea {resize: none;}
 @media (min-width: 320px) and (max-width: 480px) {
 .evnt_title_control{ font-size: 1.2em}
 .evnt_title_date{ font-size: 1.2em}
-.event-slide-container{ min-height: 240px; height: auto;}
-.carousel {min-height: 240px; height: auto; margin-bottom: 0px;}
-.carousel .item {min-height: 240px; height: auto;}
+.event-slide-container{ min-height: 210px; height: auto; border:0px; }
+.carousel {min-height: 210px; height: auto; margin-bottom: 0px;}
+.carousel .item {min-height: 210px; height: auto;}
+.navbar-wrapper{ position:relative; margin-top:-40px;}
 .logo img{ width: 245px;}
 .ev_loca_check_main{ margin-top:0px;}
 .headr_main{ padding-top:0px;}
@@ -528,6 +529,7 @@ textarea {resize: none;}
 .evnt_title_control{ font-size: 1.2em}
 .evnt_title_date{ font-size: 1.2em}
 .event-slide-container{ min-height: 240px; height: auto;}
+
 .logo img{ width: 260px;}
 .ev_loca_check_main{ margin-top:0px;}
 .ev_loca_check_main{ margin-top:0px;}

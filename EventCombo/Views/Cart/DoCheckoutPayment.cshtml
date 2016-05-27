@@ -4,6 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<style>
+    footer {
+       
+    }
+</style>
 <div class="event_container">
     <div class="event_inner_container event_top view_evnt_top viewevent_container xs-paymentconf-top" id="eventtopscoll">
         <div class="event_detail_container xs-paymentconf-inner">
@@ -32,6 +37,27 @@
 
                     <input id="hdResult" type="hidden" value="@ViewData["ReturnMessage"]" />
                 </div>
+
+                @*<div class="col-sm-12  mb10 pt10">
+                    <div class="col-sm-3 pl0">
+                        <img class="img-responsive" alt="" src="@TempData["ImagUrl"]" />
+                    </div>
+                    <div class="col-sm-9 pl0">
+                        <h2 class="th_tilte">@TempData["Title"]</h2>
+                        <div class="col-sm-12 col-xs-12 text-left">
+                            <div class="form-group mb0">
+
+                                <label class="label-control ">
+                                    @TempData["address"]
+                                    <br />
+                                    @TempData["eventdatetime"]
+                                </label>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>*@
                 <div class="col-sm-12 text-center">
                     <div id="dvAjxLoader">
                         <img src="~/Images/ajax-loader.gif" /> Please wait... 
@@ -39,6 +65,8 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 </div>
     <script>

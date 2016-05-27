@@ -340,10 +340,10 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CommanClasses.cs" />
-    <Compile Include="Models\Counter.cs">
+    <Compile Include="Models\ControlType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ControlType.cs">
+    <Compile Include="Models\Counter.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Country.cs">
@@ -465,10 +465,10 @@
     <Compile Include="Models\JobQueue.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\List.cs">
+    <Compile Include="Models\Language.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Language.cs">
+    <Compile Include="Models\List.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageAttendeesViewModels.cs" />
@@ -538,6 +538,12 @@
     <Compile Include="Models\Publish_Event_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\QuestionType.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QuestionTypeGroup.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Schema.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -545,12 +551,6 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Set.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\QuestionType.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\QuestionTypeGroup.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ShippingAddress.cs">
@@ -709,6 +709,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_Layout.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\_Layout1.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_Layout1.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shared\_Login1Partial.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -752,6 +757,7 @@
     <Content Include="Content\jquery-te-1.4.0.css" />
     <Content Include="Content\jquery-te.png" />
     <Content Include="Content\manageattendees.css" />
+    <Content Include="Content\mob-footer.css" />
     <Content Include="Content\OrderForm.css" />
     <Content Include="Content\OrderFormDesign.css" />
     <Content Include="Content\PurchasedTicket.css" />
@@ -1194,6 +1200,14 @@
     <Content Include="Scripts\Validation.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="ticketpdf.html" />
+    <Content Include="Views\ManageAttendees\Add.cshtml" />
+    <Content Include="Views\ManageAttendees\Checkin.cshtml" />
+    <Content Include="Views\ManageAttendees\Email.cshtml" />
+    <Content Include="Views\ManageAttendees\Guests.cshtml" />
+    <Content Include="Views\ManageAttendees\Orders.cshtml" />
+    <Content Include="Views\ManageAttendees\ProcessAddAttendee.cshtml" />
+    <Content Include="Views\ManageAttendees\_OrderDetail.cshtml" />
+    <Content Include="Views\ManageAttendees\_OrderList.cshtml" />
     <Content Include="Views\_ViewStart.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_ViewStart.generated.cs</LastGenOutput>
@@ -1402,6 +1416,7 @@
     </Content>
     <Content Include="Views\Shared\_Layout1.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_Layout1.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\ViewEvent\ViewEvent.cshtml" />
     <Content Include="Views\PayPalReturn\PayPalReturn.cshtml" />

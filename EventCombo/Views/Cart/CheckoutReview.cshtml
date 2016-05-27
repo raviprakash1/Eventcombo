@@ -4,6 +4,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<style>
+       
+   
+</style>
 
 @*<h2>CheckoutReview</h2>*@
 
@@ -16,7 +20,39 @@
     <div class="event_inner_container event_top view_evnt_top viewevent_container xs-paymentconf-top" id="eventtopscoll" >
         <div class="event_detail_container xs-paymentconf-inner">
             <div class="col-sm-12"><h3 class="acnt_title"></h3></div>
+            @if (ViewData["ReturnMessage"] != null && !string.IsNullOrEmpty(ViewData["ReturnMessage"].ToString()))
+            {
+                <div class="Moderor" id="divpwderroacc" tabindex="-1">
+                    <div class="er_UI_main">
+                        <div class="er_warnui_img"></div>
+                        <div class="er_suc" id="erraccpwdmsg">@ViewData["ReturnMessage"]</div>
+                        <button class="close" aria-hidden="true" type="button" id="btnhidepwderror" onclick="$('#divpwderroacc').hide();">&#215;</button>
+
+                    </div>
+                </div>
+            }
+            <div class="col-sm-12  mb10 pt10">
+                <div class="col-sm-3 pl0">
+                    <img class="img-responsive" alt="" src="@TempData["ImagUrl"]" />
+                </div>
+                <div class="col-sm-9 pl0">
+                    <h2 class="th_tilte">@TempData["Title"]</h2>
+                    <div class="col-sm-12 col-xs-12 text-left">
+                        <div class="form-group mb0">
+
+                            <label class="label-control ">
+                                @TempData["address"]
+                                <br />
+                                @TempData["eventdatetime"]
+                            </label>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
+       
     </div>
 
     <div class="event_detail_container">
@@ -28,61 +64,57 @@
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
         </div>
         <div class="evnt_details_body2">
-            <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
-                @if (ViewData["ReturnMessage"] != null && !string.IsNullOrEmpty(ViewData["ReturnMessage"].ToString()))
-                {
-                <div class="Moderor mb10" id="divpwderroacc" tabindex="-1">
-                    <div class="er_UI_main">
-                        <div class="er_warnui_img"></div>
-                        <div class="er_suc" id="erraccpwdmsg">@ViewData["ReturnMessage"]</div>
-                        <button class="close" aria-hidden="true" type="button" id="btnhidepwderror" onclick="$('#divpwderroacc').hide();">&#215;</button>
 
-                    </div>
-                </div>
-                }
+                
+                <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
+                   
 
 
-                <div class="col-sm-12 no_pad chek_out_desc">
-                    <p class="chk_out_flot">Amount :</p>
-                    @if (ViewData["ReturnMessage"] == null || string.IsNullOrEmpty(ViewData["ReturnMessage"].ToString()))
+                    <div class="col-sm-12 no_pad chek_out_desc">
+                        <p class="chk_out_flot">Amount :</p>
+                        @if (ViewData["ReturnMessage"] == null || string.IsNullOrEmpty(ViewData["ReturnMessage"].ToString()))
                     {
-                        <p>$@ViewData["Amount"]</p>
+                    <p>$@ViewData["Amount"]</p>
 
                     }
                     else
                     {
-                       <p>0</p>
+                    <p>0</p>
                     }
-@if (ViewData["ReturnMessage"] == null || string.IsNullOrEmpty(ViewData["ReturnMessage"].ToString()))
+                        @if (ViewData["ReturnMessage"] == null || string.IsNullOrEmpty(ViewData["ReturnMessage"].ToString()))
 {
                     <p class="text-center">Please confirm to continue  </p>
 }
 
 
-                    <div class="clearfix"></div>
+                        <div class="clearfix"></div>
 
-                    <div class="col-sm-12 col-xs-12 no_pad text-center">
-@if (ViewData["ReturnMessage"] == null || string.IsNullOrEmpty(ViewData["ReturnMessage"].ToString()))
+                        <div class="col-sm-12 col-xs-12 no_pad text-center">
+                            @if (ViewData["ReturnMessage"] == null || string.IsNullOrEmpty(ViewData["ReturnMessage"].ToString()))
 {
                         <a class="btn ev_live_btn cap_l" href="@Url.Action("DoCheckoutPayment", "Cart", new { token = ViewData["token"], PayerID = ViewData["PayerID"] })">
                             Confirm
-                            </a>
+                        </a>
 }
-                        <a href="@Url.Action("TicketPayment", "TicketPayment")" class="btn ev_live_btn cap_l">
-                           
+                            <a href="@Url.Action("TicketPayment", "TicketPayment")" class="btn ev_live_btn cap_l">
+
                                 Cancel
                             </a>
-</div>
-                    <div class="clearfix"></div>
-                </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
 
-                @*<div class="col-sm-12 no_pad chek_out_desc">
+                    @*<div class="col-sm-12 no_pad chek_out_desc">
                     <p class="text-center"><img src="~/Images/ajax-loader.gif"> </p>
                     <p class="text-center">Your Payment is processing, Please wait </p>
                 </div>*@
 
-            </div>
+                </div>
 
-        </div>
+            </div>
     </div>
 </div>
+
+<script>
+    $(document).prop('title', '@TempData["Title"], @TempData["address"]  | Eventcombo');
+</script>

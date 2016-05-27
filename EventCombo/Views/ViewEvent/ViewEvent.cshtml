@@ -4,8 +4,8 @@
     ViewBag.Title = "ViewEvent";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="http://maps.googleapis.com/maps/api/js">
-</script>
+@*<script src="https://maps.googleapis.com/maps/api/js">
+</script>*@
 
 <meta property="og:type" content="article" />
 <meta property="og:title" content="@Html.Raw(Model.Title)" />
@@ -122,136 +122,9 @@
                 </div>
             </div>
                 <div class="clearfix"></div>
-                <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                    <div class="navbar-wrapper mob-navbar-wrapper">
-                        <div class="col-sm-12">
-                            <div class="col-sm-3 no_pads">
-                                <div class="col-sm-6 col-xs-6 no_pad vot_count mob-btn">
-                                    <button type="button" class="btn_bg_none" title="Add this event to your favourites" id="btnfavourite"><i class="fa fa-heart"></i></button>
-                                    <span class="ev_fav_count" title="count of people who saved this event" id="spanfav">@Html.DisplayFor(m => m.Favourite)</span>
-                                </div>
-                                <div class="col-sm-6 col-xs-6 no_pad vot_count mob-btn">
-                                    <button type="button" class="btn_bg_none" title="Vote this event" id="btnvote">
-                                        <i class="fa fa-thumbs-up"></i>
-                                    </button>
-                                    <span class="ev_fav_count" title="Total votes" id="spanvotes">@Html.DisplayFor(m => m.Vote)</span>
-                                </div>
-                            </div>
-                            <div class="col-sm-9 col-xs-12 text-right m480p5">
-                                <div class="form-group mb5">
-                                    <!--  <input class="form-control evnt_title_control evnt_placehold" placeholder="Avicii"> -->
-                                    <label class="label-control evnt_title_control evnt_title_xs m480-evnt-titl" id="evtitle">
-                                        @Html.DisplayFor(m => m.Title)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="col-sm-12 col-xs-12 text-right m480p5">
-                                <div class="form-group mb0 pull-right m480-date">
-                                    <div class="dropdown text-left">
-                                        <span class="m480-date"><img class="evnt_clock evnt_cursor" data-toggle="dropdown" src="/Images/icon-date.png" /></span>
-                                        <span class="evnt_title_date evnt_title_date2 evnt_title_xs m480-date" title="see what happening on this date">@Html.DisplayFor(m => m.DisplaydateRange)</span>
-                                        <ul class="dropdown-menu cus-drop-list mt10">
-                                            <span class="caret caret_cus"></span>
-                                            <li class="dropdown-header drop_cus_header">Schedule Date List</li>
-                                            <span class="cus-drop-list_high">
-
-                                                @foreach (var item in (List<listevent>)ViewBag.DateList)
-                                                {
-                                                    <li>
-
-                                                        <a href="javascript:void(0)" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom-@item.Time" data-toggle="modal">@item.Dayofweek @item.Datefrom @item.Time.ToUpper()</a>
-
-                                                        @*@if((Html.DisplayFor(m=>m.showstarttime).ToString() == "Y"|| Html.DisplayFor(m=>m.showstarttime).ToString() == "y") && (Html.DisplayFor(m=>m.showendtime).ToString() == "Y"|| Html.DisplayFor(m=>m.showendtime).ToString() == "y"))
-                                                                                                                   {
-
-
-                                                                                                                     }
-                                                            @if ((Html.DisplayFor(m => m.showstarttime).ToString() == "n" || Html.DisplayFor(m => m.showstarttime).ToString() == "N") && (Html.DisplayFor(m => m.showendtime).ToString() == "N" || Html.DisplayFor(m => m.showendtime).ToString() == "n"))
-                                                            {
-                                                                <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek @item.Datefrom</a>
-
-                                                            }@if ((Html.DisplayFor(m => m.showstarttime).ToString() == "n" || Html.DisplayFor(m => m.showstarttime).ToString() == "N") && (Html.DisplayFor(m => m.showendtime).ToString() == "y" || Html.DisplayFor(m => m.showendtime).ToString() == "Y"))
-                                                            {
-                                                                <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek @item.Datefrom</a>
-
-                                                            }*@
-                                                    </li>
-
-
-
-                                                }
-                                            </span>
-
-
-                                            @if (Html.DisplayFor(m => m.showTimezone).ToString() == "Y" || Html.DisplayFor(m => m.showTimezone).ToString() == "y")
-                                            {
-                                                <li class="drop_time_zon"> Time Zone:@Html.DisplayFor(m => m.Timezone)</li>
-                                            }
-
-
-                                        </ul>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            <div class="clearfix"></div>
-                            @*<div class="col-sm-12 text-right">
-                                    <label class="label-control evnt_title_date ev_white evnt_title_xs">
-                                        @Html.DisplayFor(m => m.TopVenue)
-                                    </label>
-                                </div>*@
-                            @*<div class="clearfix"></div>*@
-                            <div class="col-sm-12 no_pad ">
-                                <div class="col-sm-4 col-xs-6 pb10 m480-ord-now">
-                                    @if (Html.DisplayFor(m => m.Orderdetail).ToString() == "Sold Out")
-                                    {
-                                        <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" id="btnorder">@Html.DisplayFor(m => m.Orderdetail)</a>
-
-                                    }
-                                    else
-                                    {
-                                        <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" id="btnorder" href="#Ticketinfo">@Html.DisplayFor(m => m.Orderdetail)</a>
-
-                                    }
-                                    <a href="#DealInfo" class="xs-icondeal"><img src="/Images/icondeal.png" /></a>
-                                </div>
-                                @if (Html.DisplayFor(m => m.typeofEvent).ToString().Trim().ToLower() != "online")
-                                {
-                                    <div class="col-sm-8 col-xs-6 text-right m480-loc-add m480p5">
-                                        <div class="form-group mb0">
-                                            @*<a href="#" data-geo=""></a>*@
-
-
-                                            <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips">
-                                                @if (Html.DisplayFor(m => m.showmaponevent).ToString() == "y" || Html.DisplayFor(m => m.showmaponevent).ToString() == "Y")
-                                                {
-
-                                                    <img class="evnt_clock evnt_cursor" data-toggle="dropdown" onclick="return FindLocaiton()" src="~/Images/icon-location.png">
-                                                }
-                                                <span title="@Html.DisplayFor(m => m.TopAddress)" id="lbltopaddress">@Html.DisplayFor(m => m.TopAddress)</span>
-                                                <ul class="dropdown-menu dropdown-map cus-drop-list mt10">
-                                                    <span class="caret caret_cus"></span>
-                                                    <li>
-                                                        <div id="googleMap" style="width:200px;height:300px;">
-
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </label>
-
-
-
-                                            @*<div class="ev_loc_icn ev_loc_icn2 evnt_icn_xs" ></div>*@
-
-
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    </div>
+                <div class="evnt-slider-innr-cont">
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    
                     <div class="carousel-inner" role="listbox" id="lstcarousel">
 
                         @if ((int)TempData["ImageCount"] > 0)
@@ -303,6 +176,137 @@
                         <span class="sr-only">Next</span>
 
                     </a>
+                </div>
+                    <div class="navbar-wrapper mob-navbar-wrapper">
+                    <div class="col-sm-12">
+                        <div class="col-sm-3 no_pads">
+                            <div class="col-sm-6 col-xs-6 no_pad vot_count mob-btn">
+                                <button type="button" class="btn_bg_none" title="Add this event to your favourites" id="btnfavourite"><i class="fa fa-heart"></i></button>
+                                <span class="ev_fav_count" title="count of people who saved this event" id="spanfav">@Html.DisplayFor(m => m.Favourite)</span>
+                            </div>
+                            <div class="col-sm-6 col-xs-6 no_pad vot_count mob-btn">
+                                <button type="button" class="btn_bg_none" title="Vote this event" id="btnvote">
+                                    <i class="fa fa-thumbs-up"></i>
+                                </button>
+                                <span class="ev_fav_count" title="Total votes" id="spanvotes">@Html.DisplayFor(m => m.Vote)</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-9 col-xs-12 text-right m480p5">
+                            <div class="form-group mb5">
+                                <!--  <input class="form-control evnt_title_control evnt_placehold" placeholder="Avicii"> -->
+                                <label class="label-control evnt_title_control evnt_title_xs m480-evnt-titl" id="evtitle">
+                                    @Html.DisplayFor(m => m.Title)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-12 col-xs-12 text-right m480p5">
+                            <div class="form-group mb0 pull-right m480-date">
+                                <div class="dropdown text-left m480-time-drop">
+                                    <img class="evnt_clock evnt_cursor" data-toggle="dropdown" src="/Images/icon-date.png" />
+                                    <span class="evnt_title_date evnt_title_date2 evnt_title_xs m480-date" title="see what happening on this date">@Html.DisplayFor(m => m.DisplaydateRange)</span>
+                                    <ul class="dropdown-menu cus-drop-list mt10">
+                                        <span class="caret caret_cus"></span>
+                                        <li class="dropdown-header drop_cus_header">Schedule Date List</li>
+                                        <span class="cus-drop-list_high">
+
+                                            @foreach (var item in (List<listevent>)ViewBag.DateList)
+                                            {
+                                                <li>
+
+                                                    <a href="javascript:void(0)" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom-@item.Time" data-toggle="modal">@item.Dayofweek @item.Datefrom @item.Time.ToUpper()</a>
+
+                                                    @*@if((Html.DisplayFor(m=>m.showstarttime).ToString() == "Y"|| Html.DisplayFor(m=>m.showstarttime).ToString() == "y") && (Html.DisplayFor(m=>m.showendtime).ToString() == "Y"|| Html.DisplayFor(m=>m.showendtime).ToString() == "y"))
+                                                                                                   {
+
+
+                                                                                                     }
+                                            @if ((Html.DisplayFor(m => m.showstarttime).ToString() == "n" || Html.DisplayFor(m => m.showstarttime).ToString() == "N") && (Html.DisplayFor(m => m.showendtime).ToString() == "N" || Html.DisplayFor(m => m.showendtime).ToString() == "n"))
+                                            {
+                                                <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek @item.Datefrom</a>
+
+                                            }@if ((Html.DisplayFor(m => m.showstarttime).ToString() == "n" || Html.DisplayFor(m => m.showstarttime).ToString() == "N") && (Html.DisplayFor(m => m.showendtime).ToString() == "y" || Html.DisplayFor(m => m.showendtime).ToString() == "Y"))
+                                            {
+                                                <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek @item.Datefrom</a>
+
+                                            }*@
+                                                </li>
+
+
+
+                                            }
+                                        </span>
+
+
+                                        @if (Html.DisplayFor(m => m.showTimezone).ToString() == "Y" || Html.DisplayFor(m => m.showTimezone).ToString() == "y")
+                                        {
+                                            <li class="drop_time_zon"> Time Zone:@Html.DisplayFor(m => m.Timezone)</li>
+                                        }
+
+
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="clearfix"></div>
+                        @*<div class="col-sm-12 text-right">
+                    <label class="label-control evnt_title_date ev_white evnt_title_xs">
+                        @Html.DisplayFor(m => m.TopVenue)
+                    </label>
+                </div>*@
+                        @*<div class="clearfix"></div>*@
+                        <div class="col-sm-12 no_pad clearfix ">
+                            <div class="col-sm-4 col-xs-6 pb10 m480-ord-now">
+                                @if (Html.DisplayFor(m => m.Orderdetail).ToString() == "Sold Out")
+                                {
+                                    <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" id="btnorder">@Html.DisplayFor(m => m.Orderdetail)</a>
+
+                                }
+                                else
+                                {
+                                    <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" id="btnorder" href="#Ticketinfo">@Html.DisplayFor(m => m.Orderdetail)</a>
+
+                                }
+                                <a href="#DealInfo" class="xs-icondeal"><img src="/Images/icondeal.png" /></a>
+                            </div>
+                            @if (Html.DisplayFor(m => m.typeofEvent).ToString().Trim().ToLower() != "online")
+                            {
+                                <div class="col-sm-8 col-xs-6 text-right m480-loc-add m480p5">
+                                    <div class="form-group mb0">
+                                        @*<a href="#" data-geo=""></a>*@
+
+
+                                        <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips">
+                                            @if (Html.DisplayFor(m => m.showmaponevent).ToString() == "y" || Html.DisplayFor(m => m.showmaponevent).ToString() == "Y")
+                                            {
+
+                                                <img class="evnt_clock evnt_cursor" data-toggle="dropdown" onclick="return FindLocaiton()" src="~/Images/icon-location.png">
+                                            }
+                                            <span title="@Html.DisplayFor(m => m.TopAddress)" id="lbltopaddress">@Html.DisplayFor(m => m.TopAddress)</span>
+                                            <ul class="dropdown-menu dropdown-map cus-drop-list mt10">
+                                                <span class="caret caret_cus"></span>
+                                                <li>
+                                                    <div id="googleMap" style="width:200px;height:300px;">
+
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </label>
+
+
+
+                                        @*<div class="ev_loc_icn ev_loc_icn2 evnt_icn_xs" ></div>*@
+
+
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -578,8 +582,9 @@
 
 
             </div>
-
+            <div class="clearfix"></div>
         </div>
+
         <div class="modal fade" id="contorganizer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -738,13 +743,14 @@
 
 @*<script src="~/Scripts/jquery.icalendar.pack.js"></script>*@
 @*<script src="~/Scripts/jquery.cookie.js"></script>*@
+
 <script>
 
     $(document).ready(function () {
         //window.location.hash = "ticketinfo";
         //$('.divTable').click();
         //alert(Chal);
-        console.log($('.divtabledrop'));
+    
         //input.removeAttr("title");
     });
 
@@ -1127,9 +1133,9 @@
         var variable = fullDateReal;
         $("#ioutlook").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
         $("#icalender").attr("href", '@Url.Action("Calendar", "CreateEvent",new {})' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&location=' + location + '&subject=' + title + '&description=Test');
-        $("#yahoocal").attr("href", "http://calendar.yahoo.com/?v=60&view=d&type=20&title=" + title + "&st=" + isodatestart + "&desc=A%20traditional%20barbeque%20for%20our%20big%20day&in_loc=" + location + "")
+        $("#yahoocal").attr("href", "https://calendar.yahoo.com/?v=60&view=d&type=20&title=" + title + "&st=" + isodatestart + "&desc=A%20traditional%20barbeque%20for%20our%20big%20day&in_loc=" + location + "")
 
-        $("#googlecal").attr("href", "http://www.google.com/calendar/event?action=TEMPLATE&text=" + title + "&dates=" + isodatestart + "/" + isodatestart + "&location=" + location + "&sprop=website")
+        $("#googlecal").attr("href", "https://www.google.com/calendar/event?action=TEMPLATE&text=" + title + "&dates=" + isodatestart + "/" + isodatestart + "&location=" + location + "&sprop=website")
         var target = $(this).data("target");
         $(target).show();
     }
@@ -1297,7 +1303,7 @@
 
                     var text = address;
                     return "<img class='map'  alt='" + text +
-                      "' src='http://maps.google.com/maps/api/staticmap?" +
+                      "' src='https://maps.google.com/maps/api/staticmap?" +
                       "zoom=15&size=250x250&maptype=roadmap& zoomControl=true&sensor=false&center=" +
                       text + "&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7C" + text + "'>";
                 }
@@ -1446,11 +1452,11 @@
             }
         });
 
-        $('#fbshare').click(function () {
-            var title = $('#evtitle').html();
-            window.open('https://www.facebook.com/sharer.php?s=100&p[title]='+encodeURIComponent(title.trim())+'&p[url]=' + encodeURIComponent(location.href) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-        });
+        //$('#fbshare').click(function () {
+        //    var title = $('#evtitle').html();
+        //    window.open('https://www.facebook.com/sharer.php?s=100&p[title]='+encodeURIComponent(title.trim())+'&p[url]=' + encodeURIComponent(location.href) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+        //    return false;
+        //});
 
         $('#twittershare').click(function () {
             var title = $('#evtitle').html();
@@ -1492,6 +1498,7 @@
                     data: { Eventid: veventId },
                     type: "Post",
                     success: function (data) {
+                      
                         $("#dvTicketInfo").append(data);
                         var remainingqty = parseInt($("#hdremaningqty").val());
                         if (remainingqty <= 0)
@@ -1516,7 +1523,21 @@
                 data: { Eventid: veventId },
                 type: "Post",
                 success: function (data) {
+                   
                     $("#dvTicketInfo").append(data);
+                   
+                    var hdid = $("#hdIds").val();
+                 
+                    if(hdid=="")
+                    {
+                        $("#btPayment").hide();
+
+                        $("#dvTicketInfo").append("<p class='eventdescfont'>" + ajaxsetup("ViewEvent", "VETicketnotpresent") + "</p>")
+
+                    } else {
+                        $("#btPayment").show();
+                    }
+
                     //alert($("#txtd_22").val());
 
                     //if ($.cookie("Selection") != undefined && $.cookie("Selection") != null && $.cookie("Selection") != '') {
@@ -1667,4 +1688,56 @@
         return msgnew;
     }
     $(document).prop('title', '@Model.Title, @Model.TopAddress | Eventcombo');
+</script>
+
+<script type="text/javascript">
+
+
+    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
+    @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
+    var urlprefix = '@strpr'
+
+    window.fbAsyncInit = function () {
+        // init the FB JS SDK
+        FB.init({
+            appId: fbappid,                        // App ID from the app dashboard
+            status: true,                                 // Check Facebook Login status
+            xfbml: true                                  // Look for social plugins on the page
+        });
+
+    };
+
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+
+    var globalFacebookShareObject = { name: 'EventCombo', link: '' };
+
+
+
+    $(document).ready(function () {
+        $('#fbshare').click(function (e) {
+            debugger;
+            globalFacebookShareObject.link =location.href;
+            globalFacebookShareObject.name ='@Model.Title';
+            console.log(globalFacebookShareObject.link);
+            console.log(globalFacebookShareObject.name);
+
+            FB.ui({
+                method: 'feed',
+                name: globalFacebookShareObject.name,
+                link: globalFacebookShareObject.link
+            }, function (response) {
+                if (response && response.post_id) { }
+                else { }
+            });
+        });
+    });
+
 </script>

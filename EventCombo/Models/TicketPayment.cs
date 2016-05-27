@@ -76,6 +76,7 @@ namespace EventCombo.Models
 
             public string strPaymentType { get; set; }
         public string tickebox { get; set; }
+      
     }
 
 

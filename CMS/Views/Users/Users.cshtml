@@ -52,11 +52,11 @@
                         <div class="row">
                             <div class="col-md-12 admin-grid animated-delay" data-animate='["400","fadeIn"]'>
                                 <div class="panel sort-disable mb_0" id="p2" data-panel-color="false" data-panel-fullscreen="false" data-panel-remove="false" data-panel-title="false" data-panel-fullscreen="false">
-                                    <div class="panel-heading panel_loader">
+                                    <div class="panel-heading panel_loader search-pnl">
 
                                         <span class="view_evnt fs26 col-sm-4">  Member Management</span>
                                         <span class="view_evnt fs15 col-sm-4 text-right">Total no. of members:@ViewData["Userscount"] </span>
-                                        <label class="field select admin-form col-sm-3 text-right srh-by-no">
+                                        <label class="field select admin-form col-sm-3 text-right srh-by-no width215">
 
                                             @Html.DropDownList("ddlPageF", ViewBag.ddlPageF as List<SelectListItem>, new { style = "width: 100%;" })
 
@@ -105,7 +105,7 @@
 
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-12 clearfix">
                                 <div class="table-responsive">
                                     <table id="tblMain" class="table">
                                         <thead class="bg_white">
@@ -434,12 +434,12 @@
 
                                     </table>
                                    
-                                    <div style="float:right">
+                                    <div class="col-xs-12 no_pad" style="text-align:right">
                                         @Html.PagedListPager(Model, pageF => Url.Action("Users", new { pageF, SearchStringFirstName = TempData["SearchStringFirstName"], SearchStringLastName = TempData["SearchStringLastName"], SearchStringEmail = TempData["SearchStringEmail"], sortorder= TempData["sortorder"]}))
                                     </div>
                                           @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"]!=null)
                                     {
-                                       <span>No Result Found.</span> 
+                                       <div class="col-xs-12 no_pad text-center">No Result Found.</div> 
                                     }
                                     
                                 </div>

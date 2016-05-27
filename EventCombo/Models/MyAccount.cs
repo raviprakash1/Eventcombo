@@ -188,65 +188,70 @@ namespace EventCombo.Models
             using (MailMessage mailMessage = new MailMessage())
             {
                 mailMessage.From = new MailAddress(from, emailname);
-                string[] arr = tags.Split('¶');
-                int length = arr.Length;
                 List<Email_Tag> EmailTag = new List<Email_Tag>();
                 EmailTag = getTag();
-
-                if (!string.IsNullOrEmpty(subject) && subject != null)
+                if (!string.IsNullOrWhiteSpace(tags))
                 {
+                    string[] arr = tags.Split('¶');
+                    int length = arr.Length;
 
 
-                    for (int j = 0; j < length; j++)
+
+                    if (!string.IsNullOrEmpty(subject) && subject != null)
                     {
-                        for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+
+
+                        for (int j = 0; j < length; j++)
                         {
-                            string[] arrtag = arr[j].Split(':');
-                            if (arrtag[0] == EmailTag[i].Tag_Name)
+                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
                             {
-                                if (subject.Contains(EmailTag[i].Tag_Name))
+                                string[] arrtag = arr[j].Split(':');
+                                if (arrtag[0] == EmailTag[i].Tag_Name)
                                 {
-                                    subject = subject.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", arrtag[1]);
+                                    if (subject.Contains(EmailTag[i].Tag_Name))
+                                    {
+                                        subject = subject.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", arrtag[1]);
+                                    }
                                 }
                             }
                         }
-                    }
-                    for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                    {
-                        if (subject.Contains(EmailTag[i].Tag_Name))
-                        {
-                            subject = subject.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", "");
-                        }
-                    }
-
-
-
-                }
-                if (body != null && !string.IsNullOrEmpty(body))
-                {
-                    for (int j = 0; j < length; j++)
-                    {
                         for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
                         {
-
-                            string[] arrtag = arr[j].Split(':');
-                            if (arrtag[0] == EmailTag[i].Tag_Name)
+                            if (subject.Contains(EmailTag[i].Tag_Name))
                             {
-                                if (body.Contains(EmailTag[i].Tag_Name))
+                                subject = subject.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", "");
+                            }
+                        }
+
+
+
+                    }
+                    if (body != null && !string.IsNullOrEmpty(body))
+                    {
+                        for (int j = 0; j < length; j++)
+                        {
+                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                            {
+
+                                string[] arrtag = arr[j].Split(':');
+                                if (arrtag[0] == EmailTag[i].Tag_Name)
                                 {
-                                    body = body.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", arrtag[1]);
+                                    if (body.Contains(EmailTag[i].Tag_Name))
+                                    {
+                                        body = body.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", arrtag[1]);
+                                    }
                                 }
                             }
                         }
-                    }
-                    for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
-                    {
-                        if (body.Contains(EmailTag[i].Tag_Name))
+                        for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
                         {
-                            body = body.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", "");
+                            if (body.Contains(EmailTag[i].Tag_Name))
+                            {
+                                body = body.Replace("¶¶" + EmailTag[i].Tag_Name + "¶¶", "");
+                            }
                         }
-                    }
 
+                    }
                 }
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;

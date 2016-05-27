@@ -1,19 +1,19 @@
------------Exception Details on  4/27/2016 4:27:48 PM-----------------
+-----------Exception Details on  5/26/2016 6:16:59 PM-----------------
 -------------------------------------------------------------------------------------
 
 
 
-Log Written Date: 4/27/2016 4:27:48 PM
+Log Written Date: 5/26/2016 6:16:59 PM
 
-Error Line No : ine 179
+Error Line No : ne 2920
 
-Error Message: NullReferenceException
+Error Message: SmtpException
 
-Exception Type: System.NullReferenceException
+Exception Type: System.Net.Mail.SmtpException
 
-Error Location : Object reference not set to an instance of an object.
+Error Location : Failure sending mail.
 
- Error Page Url: http://localhost:10159/editevent/modifyevent?strEventDs=createpromo&amp;strEventId=266
+ Error Page Url: http://localhost:10159/ticketpayment/paymentconfirmation
 
 User Host IP: 
 
@@ -22,14 +22,14 @@ User Host IP:
 
 
 
------------Exception Details on  4/27/2016 8:27:40 PM-----------------
+-----------Exception Details on  5/26/2016 6:43:08 PM-----------------
 -------------------------------------------------------------------------------------
 
 
 
-Log Written Date: 4/27/2016 8:27:40 PM
+Log Written Date: 5/26/2016 6:43:08 PM
 
-Error Line No : ne 3389
+Error Line No : ne 3724
 
 Error Message: EntityCommandExecutionException
 

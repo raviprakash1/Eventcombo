@@ -9,6 +9,7 @@ using System.Text;
 using EventCombo;
 using System.Configuration;
 using PagedList;
+using System.Data.SqlClient;
 
 namespace CMS.Controllers
 {
@@ -325,40 +326,70 @@ namespace CMS.Controllers
             if (SearchStringFirstName == null) SearchStringFirstName = "";
             if (SearchStringLastName == null) SearchStringLastName = "";
             if (SearchStringEmail == null) SearchStringEmail = "";
-
+            List<V_Users> objEv = new List<V_Users>();
             using (EmsEntities objEntity = new EmsEntities())
             {
-                var modelUserTemp = (from x in objEntity.V_Users select x).OrderBy(x=>x.FirstName);
-                //(from UserTemp in objEntity.AspNetUsers
-                //                     join Pr in objEntity.Profiles on UserTemp.Id equals Pr.UserID
-                //                     orderby Pr.FirstName ascending
-                //                    select new UsersTemplate
-                //                     {
-                //                         EMail = UserTemp.Email,
-                //                         UserName = UserTemp.UserName,
-                //                         Id = UserTemp.Id,
-                //                         Organiser = Pr.Organiser.Trim(),
-                //                         Merchant = Pr.Merchant.Trim(),
-                //                         UserStatus = Pr.UserStatus.Trim(),
-                //                         FirstName = Pr.FirstName,
-                //                         LastName = Pr.LastName,
-                //                         Online = (!string.IsNullOrEmpty(UserTemp.LoginStatus) ? UserTemp.LoginStatus : "N"),
-                //                         Role ="",
-                //                         State=!string.IsNullOrEmpty(Pr.State)? Pr.State:"",
-                //                         OrganiserId= Pr.Organiser.Trim()=="Y"?"Yes":"No",
-                //                         MerchantId= Pr.Merchant.Trim()=="Y"?"Yes":"No",
-                //                         UserStatusId= Pr.UserStatus.Trim()=="Y"?"Enable":"Disable",
-                //                         Ipcountry=Pr.Ipcountry
-                //                     }
-                //                    );
 
-                
-                //return modelUserTemp.ToList();
-                if (!SearchStringFirstName.Equals(string.Empty) || !SearchStringLastName.Equals(string.Empty) || !SearchStringEmail.Equals(string.Empty))
-                    return modelUserTemp.Where(us => us.FirstName.ToLower().Contains(SearchStringFirstName.ToLower()) || us.LastName.ToLower().Contains(SearchStringLastName.ToLower())
-                    || us.EMail.ToLower().Contains(SearchStringEmail.ToLower())).ToList();
+                string strsql = "";
+              
+                if (!string.IsNullOrWhiteSpace(SearchStringFirstName))
+                {
+                    var str = "%" + SearchStringFirstName + "%";
+                    strsql += " And (rtrim(ltrim(Us.FirstName)) like rtrim(ltrim('" + str + "')) OR rtrim(ltrim(Us.Id)) like rtrim(ltrim('" + str + "')))";
+
+                }
+             
+               
+                if (!string.IsNullOrWhiteSpace(SearchStringLastName))
+                {
+                    var str = "%" + SearchStringLastName + "%";
+                    strsql += " And rtrim(ltrim(Us.LastName)) like rtrim(ltrim('" + str + "'))";
+
+                }
+                if (!string.IsNullOrWhiteSpace(SearchStringEmail))
+                {
+                    var str = "%" + SearchStringEmail + "%";
+                    strsql += " And (rtrim(ltrim(Us.EMail)) like rtrim(ltrim('" + str + "')) OR rtrim(ltrim(Us.Id)) like rtrim(ltrim('" + str + "')))";
+
+                }
+              
+                List<Object> sqlParamsList = new List<object>();
+                var eventID = new SqlParameter("@EventID", strsql);
+                string sql = "";
+
+                if (!string.IsNullOrEmpty(strsql))
+                {
+                    objEv = db.V_Users.SqlQuery("Select * from V_Users Us where 1=1  " + strsql + " ").ToList<V_Users>();
+                }
                 else
-                    return modelUserTemp.ToList();
+                {
+                    objEv = db.V_Users.SqlQuery("Select * from V_Users").ToList<V_Users>();
+                }
+                //List<V_Users> modelUserTemp = (from x in objEntity.V_Users select x).OrderBy(x=>x.FirstName).ToList();
+              
+
+                ////return modelUserTemp.ToList();
+                //if (!SearchStringFirstName.Equals(string.Empty))
+                //{
+                //    modelUserTemp = modelUserTemp.Where(us => us.FirstName.Contains(SearchStringFirstName) ).ToList();
+                  
+                //}
+                //if (!SearchStringLastName.Equals(string.Empty))
+                //{
+                //    modelUserTemp = modelUserTemp.Where(us => us.LastName.Contains(SearchStringLastName) ).ToList();
+
+                //}
+                //if (!SearchStringEmail.Equals(string.Empty))
+                //{
+                //    modelUserTemp = modelUserTemp.Where(us => us.EMail.Contains(SearchStringEmail) ).ToList();
+
+                //}
+
+                //if (!SearchStringFirstName.Equals(string.Empty) || !SearchStringLastName.Equals(string.Empty) || !SearchStringEmail.Equals(string.Empty))
+                //    return modelUserTemp.Where(us => us.FirstName.ToLower().Contains(SearchStringFirstName.ToLower()) || us.LastName.ToLower().Contains(SearchStringLastName.ToLower())
+                //    || us.EMail.ToLower().Contains(SearchStringEmail.ToLower()) || us.Id.Contains(SearchStringFirstName)|| us.Id.Contains(SearchStringLastName) || us.Id.Contains(SearchStringEmail)).ToList();
+                //else
+                    return objEv.ToList();
 
                 
 

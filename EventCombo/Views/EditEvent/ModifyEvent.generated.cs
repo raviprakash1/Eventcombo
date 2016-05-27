@@ -6369,9 +6369,9 @@ WriteLiteral(@"' + '?Eventid=' + response;
             #line default
             #line hidden
 WriteLiteral("\';\r\n                                vUrl = vUrl.replace(\"%c3%9f\", vTitle);\r\n     " +
-"                           vUrl = vUrl.replace(\"~\", vMasterEventId);\r\n          " +
-"                      window.open(vUrl.toLowerCase());\r\n\r\n                      " +
-"          ");
+"                           vUrl = vUrl.replace(\"~\", response);\r\n                " +
+"                window.open(vUrl.toLowerCase());\r\n\r\n                            " +
+"    ");
 
 WriteLiteral("\r\n                            }\r\n                            if(type==\"Live\")\r\n  " +
 "                          {\r\n                                ");
@@ -8138,27 +8138,27 @@ WriteLiteral("\',\r\n                        data: { ticketid: ticketId },\r\n  
 
 WriteLiteral("\r\n    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 297533), Tuple.Create("\"", 297572)
-, Tuple.Create(Tuple.Create("", 297540), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 297540), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 297527), Tuple.Create("\"", 297566)
+, Tuple.Create(Tuple.Create("", 297534), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
+, 297534), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n\r\n    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 297606), Tuple.Create("\"", 297663)
-, Tuple.Create(Tuple.Create("", 297613), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 297613), false)
+WriteAttribute("href", Tuple.Create(" href=\"", 297600), Tuple.Create("\"", 297657)
+, Tuple.Create(Tuple.Create("", 297607), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
+, 297607), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
 WriteLiteral(" />\r\n    <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 297697), Tuple.Create("\"", 297734)
-, Tuple.Create(Tuple.Create("", 297703), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 297703), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 297691), Tuple.Create("\"", 297728)
+, Tuple.Create(Tuple.Create("", 297697), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
+, 297697), false)
 );
 
 WriteLiteral("></script>\r\n\r\n\r\n    <script");

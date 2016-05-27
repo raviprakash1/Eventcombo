@@ -71,10 +71,6 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
                 }
                 Eventid = objMyEvent.EventID;
-
-
-
-
             }
             else
             {
@@ -101,7 +97,7 @@ namespace EventCombo.Controllers
             }
             else
             {
-                tp.Imageurl = "/Images/default_event_image.jpg";
+                tp.Imageurl = "/Images/default_event_image.jpg"; 
             }
 
             var eventdetails = cs.GetEventdetail(Eventid);
@@ -109,6 +105,28 @@ namespace EventCombo.Controllers
             tp.Title = eventdetails.EventTitle;
             tp.URLTitle = Regex.Replace(eventdetails.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", "");
             tp.Tickettype = "Paid";
+            var address = (from a in db.Addresses where a.EventId == Eventid select a).FirstOrDefault();
+
+
+            //datetime
+            DateTime datetime = new DateTime();
+            DateTimeWithZone dtzstart;
+            string day = "", Sdate = "", time = "";
+            var td = DateTimeWithZone.Timezonedetail(eventdetails.EventID);
+            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(td);
+            if (eventdetails.AddressStatus == "Single")
+            {
+                var ev = db.EventVenues.FirstOrDefault(i => i.EventID == Eventid);
+                dtzstart = new DateTimeWithZone(Convert.ToDateTime(ev.E_Startdate), userTimeZone, true);
+                datetime = dtzstart.LocalTime;
+                day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(datetime).ToString();
+                Sdate = datetime.ToString("MMM dd, yyyy");
+                time = datetime.ToString("h:mm tt").ToLower().Trim().Replace(" ", "");
+
+            }
+            //
+
+
             ViewData["Type"] = tp.Tickettype;
             if (Session["AppId"] != null)
             {
@@ -136,6 +154,8 @@ namespace EventCombo.Controllers
             tp.AccState = State;
             tp.AccCity = City;
             tp.Acczip = Zip;
+            TempData["address"] = !string.IsNullOrEmpty(address.ConsolidateAddress) ? address.ConsolidateAddress : "";
+            TempData["eventdatetime"] = day + "," + Sdate + " " + time;
 
             using (EventComboEntities db = new EventComboEntities())
             {
@@ -143,12 +163,7 @@ namespace EventCombo.Controllers
                                     orderby c.Country1 ascending
                                     select c).Distinct();
                 List<SelectListItem> countryList = new List<SelectListItem>();
-
-
                 defaultCountry = "United States";
-
-
-
                 foreach (var item in countryQuery)
                 {
                     countryList.Add(new SelectListItem()
@@ -160,9 +175,36 @@ namespace EventCombo.Controllers
                 }
 
                 ViewBag.CountryID = countryList;
+
             }
             tp.tickebox = LoadTickets(Eventid.ToString());
-
+            TicketPayment TicketPayment = new TicketPayment();
+            TicketPayment = (TicketPayment)Session["TicketDatamodel"];
+            if (TicketPayment != null)
+            {
+                TempData["accfname"] = TicketPayment.AccFname.ToString();
+                TempData["accLname"] = TicketPayment.AccLname.ToString();
+                TempData["AccEmail"] = TicketPayment.AccEmail.ToString();
+                TempData["AccConfirmEmail"] = TicketPayment.AccconfirmEmail.ToString();
+                TempData["ReqFrom"] = "PP";
+                StringBuilder strHTML = new StringBuilder();
+                List<TicketBearer> objTB = new List<TicketBearer>();
+                int i = 0;
+                foreach(TicketBearer tb in objTB)
+                {
+                    strHTML.Append("<tr>");
+                    strHTML.Append("<td style='display:none' width='92%'>");
+                    strHTML.Append(i.ToString());
+                    strHTML.Append("</td>");
+                    strHTML.Append("<td width='92 %'><label id=TicketName_" + i.ToString() + ">" + tb.Name + "</label></td>");
+                    strHTML.Append("<td style='display: none'><label id=TicketEmail_" + i.ToString() + ">" + tb.Email + "</label></td>");
+                    strHTML.Append("</tr>");
+                }
+                TempData["GuestList"] = strHTML;
+            }
+            else
+            { TempData["ReqFrom"] = "B";
+            }
             return View(tp);
         }
 
@@ -576,18 +618,100 @@ namespace EventCombo.Controllers
             try
             {
 
-
+                string strOrderNo = "";
                 string ApiLoginID; string ApiTransactionKey; string strCardNo; string strExpDate; string strCvvCode; decimal dAmount;
                 ApiLoginID = ""; ApiTransactionKey = ""; strCardNo = ""; strExpDate = ""; strCvvCode = ""; dAmount = 0;
-
+                var grandtotal = double.Parse(strGrandTotal);
+                string Userid = "", transactionhash = "", transactionid = "";
                 var usertype = 0;
                 var useridnew = "";
                 string message = "";
 
+                if (Session["AppId"] != null)
+                {
+                    Userid = Session["AppId"].ToString();
+                }
+                else
+                {
+                    var userdetail = (from v in db.AspNetUsers where v.Email == model.AccEmail select v).FirstOrDefault();
+                    if (userdetail == null)
+                    {
+                        usertype = 1;
+                        string userid = await saveuser(model.AccEmail, model.Accpassword);
+                        Userid = userid;
+                        if (!string.IsNullOrEmpty(userid))
+                        {
+                            using (EventComboEntities objEntity = new EventComboEntities())
+                            {
+
+                                Profile prof = new Profile();
+                                prof.FirstName = model.AccFname;
+                                prof.Email = model.AccEmail;
+                                prof.LastName = model.AccLname;
+                                prof.UserID = Userid;
+                                prof.UserStatus = "y";
+                                objEntity.Profiles.Add(prof);
+
+                                await this.UserManager.AddToRoleAsync(Userid, "Member");
+
+                                User_Permission_Detail permdetail = new User_Permission_Detail();
+                                for (int i = 1; i < 3; i++)
+                                {
+
+                                    permdetail.UP_Permission_Id = i;
+                                    permdetail.UP_User_Id = Userid.ToString();
+                                    objEntity.User_Permission_Detail.Add(permdetail);
+                                    objEntity.SaveChanges();
+                                }
+                            }
+                            //Session["AppId"] = userid;
+                        }
+
+
+
+                    }
+                    else
+                    {
+                        Userid = userdetail.Id;
+                    }
+
+                }
+                List<Ticket_Locked_Detail_List> objLockedTic = new List<Ticket_Locked_Detail_List>();
+                objLockedTic = GetLockTickets();
+                Ticket_Purchased_Detail objTPD;
+                long lPromoId = 0;
+                foreach (Ticket_Locked_Detail_List TLD in objLockedTic)
+                {
+                    lPromoId = (TLD.TLD_PromoCodeId != null ? Convert.ToInt32(TLD.TLD_PromoCodeId) : 0);
+                    break;
+                }
+                using (EventComboEntities objEntity = new EventComboEntities())
+                {
+                    Order_Detail_T objOdr = new Order_Detail_T();
+                    objOdr.O_Order_Id = "";
+                    objOdr.O_TotalAmount = CommanClasses.ConvertToNumeric(strGrandTotal); ;
+                    objOdr.O_User_Id = Userid;
+                    objOdr.O_OrderAmount = CommanClasses.ConvertToNumeric(strOrderTotal);
+                    objOdr.O_VariableId = strVarId;
+                    objOdr.O_VariableAmount = CommanClasses.ConvertToNumeric(strVarChanges);
+                    objOdr.O_PromoCodeId = lPromoId;
+                    objOdr.O_OrderDateTime = DateTime.Now;
+                    objOdr.O_PayPal_PayerId = strPayerId;
+                    objOdr.O_PayPal_TokenId = strTokenNo;
+                    objOdr.O_PayPal_TrancId = strTranId;
+                    objOdr.O_Email = model.AccEmail;
+                    objOdr.O_First_Name = model.AccFname;
+                    objOdr.O_Last_Name = model.AccLname;
+                    objOdr.O_Card_TransHash = "";
+                    objOdr.O_Card_TransId = "";
+                    objEntity.Order_Detail_T.Add(objOdr);
+                    objEntity.SaveChanges();
+
+                    strOrderNo = GetOrderNo();
+                }
                 EncryptDecrypt EDcode = new EncryptDecrypt();
 
-                var grandtotal = double.Parse(strGrandTotal);
-                string Userid = "", transactionhash = "", transactionid = "";
+
                 using (var transaction = db.Database.BeginTransaction())
                 {
                     if (grandtotal > 0)
@@ -602,7 +726,7 @@ namespace EventCombo.Controllers
                             strExpDate = model.expirydate;
                             strCvvCode = model.cvv;
                             dAmount = (strGrandTotal != "" ? Convert.ToDecimal(strGrandTotal) : 0);
-                            var cardtransaction = PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount);
+                            var cardtransaction = PaymentProcess.CheckCreditCard(ApiLoginID, ApiTransactionKey, strCardNo, strExpDate, strCvvCode, dAmount,strOrderNo, model, Userid);
                             message = cardtransaction.message;
                             transactionhash = cardtransaction.Transactionhash;
                             transactionid = cardtransaction.TransactionId;
@@ -615,58 +739,6 @@ namespace EventCombo.Controllers
                     }
                     if (strPaymentType == "P" || message == "O")
                     {
-
-                        if (Session["AppId"] != null)
-                        {
-                            Userid = Session["AppId"].ToString();
-                        }
-                        else
-                        {
-                            var userdetail = (from v in db.AspNetUsers where v.Email == model.AccEmail select v).FirstOrDefault();
-                            if (userdetail == null)
-                            {
-                                usertype = 1;
-                                string userid = await saveuser(model.AccEmail, model.Accpassword);
-                                Userid = userid;
-                                if (!string.IsNullOrEmpty(userid))
-                                {
-                                    using (EventComboEntities objEntity = new EventComboEntities())
-                                    {
-
-                                        Profile prof = new Profile();
-                                        prof.FirstName = model.AccFname;
-                                        prof.Email = model.AccEmail;
-                                        prof.LastName = model.AccLname;
-                                        prof.UserID = Userid;
-                                        prof.UserStatus = "y";
-                                        objEntity.Profiles.Add(prof);
-
-                                        await this.UserManager.AddToRoleAsync(Userid, "Member");
-
-                                        User_Permission_Detail permdetail = new User_Permission_Detail();
-                                        for (int i = 1; i < 3; i++)
-                                        {
-
-                                            permdetail.UP_Permission_Id = i;
-                                            permdetail.UP_User_Id = Userid.ToString();
-                                            objEntity.User_Permission_Detail.Add(permdetail);
-                                            objEntity.SaveChanges();
-                                        }
-                                    }
-                                    //Session["AppId"] = userid;
-                                }
-
-
-
-                            }
-                            else
-                            {
-                                Userid = userdetail.Id;
-                            }
-
-
-
-                        }
                         //if (usertype == 0)
                         //{
 
@@ -679,48 +751,7 @@ namespace EventCombo.Controllers
                         string guid = Session["TicketLockedId"].ToString();
                         using (EventComboEntities objEntity = new EventComboEntities())
                         {
-
-
-
-
-                            List<Ticket_Locked_Detail_List> objLockedTic = new List<Ticket_Locked_Detail_List>();
-                            objLockedTic = GetLockTickets();
-                            Ticket_Purchased_Detail objTPD;
-                            long lPromoId = 0;
-                            foreach (Ticket_Locked_Detail_List TLD in objLockedTic)
-                            {
-                                lPromoId = (TLD.TLD_PromoCodeId != null ? Convert.ToInt32(TLD.TLD_PromoCodeId) : 0);
-                                break;
-                            }
-
-
-
-
-                            Order_Detail_T objOdr = new Order_Detail_T();
-                            objOdr.O_Order_Id = "";
-                            objOdr.O_TotalAmount = CommanClasses.ConvertToNumeric(strGrandTotal); ;
-                            objOdr.O_User_Id = Userid;
-                            objOdr.O_OrderAmount = CommanClasses.ConvertToNumeric(strOrderTotal);
-                            objOdr.O_VariableId = strVarId;
-                            objOdr.O_VariableAmount = CommanClasses.ConvertToNumeric(strVarChanges);
-                            objOdr.O_PromoCodeId = lPromoId;
-                            objOdr.O_OrderDateTime = DateTime.Now;
-                            objOdr.O_PayPal_PayerId = strPayerId;
-                            objOdr.O_PayPal_TokenId = strTokenNo;
-                            objOdr.O_PayPal_TrancId = strTranId;
-                            objOdr.O_Email = model.AccEmail;
-                            objOdr.O_First_Name = model.AccFname;
-                            objOdr.O_Last_Name = model.AccLname;
-                            objOdr.O_Card_TransHash = transactionhash;
-                            objOdr.O_Card_TransId = transactionid;
-                            objEntity.Order_Detail_T.Add(objOdr);
-                            objEntity.SaveChanges();
-
-                            string strOrderNo = GetOrderNo();
-
-                            //List<Ticket_Locked_Detail> objLockedTic = new List<Ticket_Locked_Detail>();
-
-
+                        //List<Ticket_Locked_Detail> objLockedTic = new List<Ticket_Locked_Detail>();
                             foreach (Ticket_Locked_Detail_List TLD in objLockedTic)
                             {
                                 objTPD = new Ticket_Purchased_Detail();
@@ -764,8 +795,6 @@ namespace EventCombo.Controllers
                                             card.card_type = EDcode.EncryptText(model.card_type);
                                             objEntity.CardDetails.Add(card);
                                         }
-
-
                                     }
 
                                     if (strTranId == "" || strTranId == null)
@@ -839,14 +868,9 @@ namespace EventCombo.Controllers
                                         ObjAdd.Name = objA.Name;
                                         ObjAdd.OrderId = strOrderNo;
                                         objEntity.TicketBearers.Add(ObjAdd);
-
-
                                     }
                                 }
-
-
                                 // -------------------------------------------------- Payment Transfer Card detail -----------------------------------------
-
                             }
                             try
                             {
@@ -1021,6 +1045,7 @@ namespace EventCombo.Controllers
         public void pdf(long eventid, string guid)
         {
             EncryptDecrypt Ecode = new EncryptDecrypt();
+            //System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) => { return true; };
             WebClient wc = new WebClient();
             MemoryStream mms = new MemoryStream();
             string htmlText = "";
@@ -1704,6 +1729,8 @@ namespace EventCombo.Controllers
         }
         public MemoryStream generateTicketPDF(string guid, long eventid, List<Email_Tag> emailtag, string fname, string htmlPath)
         {
+
+            // System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) => { return true; };
             WebClient wc = new WebClient();
             MemoryStream mms = new MemoryStream();
             EncryptDecrypt Ecode = new EncryptDecrypt();
@@ -2569,7 +2596,7 @@ namespace EventCombo.Controllers
                     }
                     //
                     var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == strGUID && i.TPD_Event_Id == Eventid).ToList();
-
+                    long sumqty = 0;
                     var bodyn = "";
                     var ticketP = "";
                     var eventdetail = db.Events.FirstOrDefault(i => i.EventID == Eventid);
@@ -2579,6 +2606,8 @@ namespace EventCombo.Controllers
                     DateTime datetime = new DateTime();
                     DayOfWeek day = new DayOfWeek();
                     string Sdate = "", time = "";
+                    var addresstemp = db.Addresses.FirstOrDefault(i => i.EventId == eventdetail.EventID);
+                    TempData["address"] = (!string.IsNullOrEmpty(addresstemp.ConsolidateAddress)) ? addresstemp.ConsolidateAddress : ""; 
                     //Get Email tags
                     foreach (var item in TicketPurchasedDetail)
                     {
@@ -2586,7 +2615,7 @@ namespace EventCombo.Controllers
                         paymentdate pdate = new paymentdate();
                         var tQntydetail = db.Ticket_Quantity_Detail.FirstOrDefault(i => i.TQD_Id == item.TPD_TQD_Id);
                         var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
-
+                        sumqty = sumqty + (item.TPD_Purchased_Qty??0);
 
                         if (tQntydetail.TQD_StartDate != null)
                         {
@@ -2747,6 +2776,156 @@ namespace EventCombo.Controllers
 
 
                     }
+                    var url = Request.Url;
+                    var baseurl = url.GetLeftPart(UriPartial.Authority);
+
+
+                    //send email to organizer
+
+                    Emailtemplate = ac.getEmail("email_ticket_purchase");
+
+                    if (Emailtemplate != null)
+                    {
+                        if (!string.IsNullOrEmpty(Emailtemplate.To))
+                        {
+
+
+                            to = Emailtemplate.To;
+                            if (to.Contains("¶¶EventOrganiserEmail¶¶"))
+                            {
+                                to = to.Replace("¶¶EventOrganiserEmail¶¶", Organiseremail);
+
+                            }
+                        }
+                        if (!(string.IsNullOrEmpty(Emailtemplate.From)))
+                        {
+                            from = Emailtemplate.From;
+                            if (from.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                from = from.Replace("¶¶UserEmailID¶¶", emailorder);
+
+                            }
+                            if (from.Contains("¶¶EventOrganiserEmail¶¶"))
+                            {
+                                from = from.Replace("¶¶EventOrganiserEmail¶¶", Organiseremail);
+
+                            }
+                        }
+                        else
+                        {
+                            from = ConfigurationManager.AppSettings.Get("UserName");
+
+                        }
+                        if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
+                        {
+                            cc = Emailtemplate.CC;
+                            if (cc.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                cc = cc.Replace("¶¶UserEmailID¶¶", emailorder);
+
+                            }
+                        }
+                        if (!(string.IsNullOrEmpty(Emailtemplate.Bcc)))
+                        {
+                            bcc = Emailtemplate.Bcc;
+                            if (bcc.Contains("¶¶UserEmailID¶¶"))
+                            {
+                                bcc = bcc.Replace("¶¶UserEmailID¶¶", emailorder);
+
+                            }
+                        }
+                        if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
+                        {
+                            emailname = Emailtemplate.From_Name;
+                        }
+                        else
+                        {
+                            emailname = from;
+                        }
+                        if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+                        {
+
+
+                            subjectn = Emailtemplate.Subject;
+
+                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                            {
+
+                                if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                {
+                                    if (EmailTag[i].Tag_Name == "TicketQty")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶TicketQty¶¶", sumqty.ToString ());
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventTitleId")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶EventTitleId¶¶", eventdetail.EventTitle);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶UserFirstNameID¶¶", username);
+
+                                    }
+
+                                    // All tags
+
+
+
+
+                                }
+
+                            }
+                        }
+
+                     
+                        string createevent = baseurl + Url.Action("Index", "Home");
+                        if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
+                        {
+                            bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+                            for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                            {
+
+                                if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                                {
+                                    if (EmailTag[i].Tag_Name == "TicketQty")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶TicketQty¶¶", sumqty.ToString());
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "EventTitleId")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶EventTitleId¶¶", eventdetail.EventTitle);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "UserFirstNameID")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶UserFirstNameID¶¶", username);
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "ClickHere")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶ClickHere¶¶", createevent);
+
+                                    }
+
+                                }
+
+                            }
+                        }
+
+                        // ImageMapPath = Server.MapPath("..") + "/Images/Imagemap_"+EvtOrDetail.TPD_Order_Id+ ".png";
+                        //Mail 
+                        ac.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, "", emailname);
+                        //Mail 
+
+
+
+                    }
+
+
+                    //
 
 
                     //Send mail
@@ -2766,9 +2945,9 @@ namespace EventCombo.Controllers
                     ps.sendlatestdetails = acountdedtails.SendLatestdetails;
                     ps.Username = username;
                     ps.Email = emailorder;
-                    var url = Request.Url;
-                    var baseurl = url.GetLeftPart(UriPartial.Authority);
-                    ps.url = baseurl + Url.Action("ViewEvent", "CreateEvent") + "?strUrlData=" + Eventdetails.EventTitle.Trim() + "౼" + Eventid + "౼N";
+                    ps.url = baseurl+Url.RouteUrl("ViewEvent", new { strEventDs = Regex.Replace(Eventdetails.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = Eventdetails.EventID.ToString() });
+
+                    //ps.url = baseurl + Url.Action("ViewEvent", "ViewEvent") + "?strEventDs="+ Eventid + "&strEventId";
                     ps.Guestlist = emailonpayment;
                     ps.EventPrivacy = Eventdetails.EventPrivacy;
                     ps.Shareonfb = Eventdetails.Private_ShareOnFB;
