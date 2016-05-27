@@ -339,10 +339,10 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CommanClasses.cs" />
-    <Compile Include="Models\Counter.cs">
+    <Compile Include="Models\ControlType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ControlType.cs">
+    <Compile Include="Models\Counter.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Country.cs">
@@ -464,10 +464,10 @@
     <Compile Include="Models\JobQueue.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\List.cs">
+    <Compile Include="Models\Language.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Language.cs">
+    <Compile Include="Models\List.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageAttendeesViewModels.cs" />
@@ -504,6 +504,7 @@
     <Compile Include="Models\OrderTemplateTicket.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderTemplateTicketType.cs" />
     <Compile Include="Models\OrderTemplateType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -537,6 +538,12 @@
     <Compile Include="Models\Publish_Event_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\QuestionType.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QuestionTypeGroup.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Schema.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -544,12 +551,6 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Set.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\QuestionType.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\QuestionTypeGroup.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ShippingAddress.cs">
@@ -1199,14 +1200,6 @@
     <Content Include="Scripts\Validation.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="ticketpdf.html" />
-    <Content Include="Views\ManageAttendees\Add.cshtml" />
-    <Content Include="Views\ManageAttendees\Checkin.cshtml" />
-    <Content Include="Views\ManageAttendees\Email.cshtml" />
-    <Content Include="Views\ManageAttendees\Guests.cshtml" />
-    <Content Include="Views\ManageAttendees\Orders.cshtml" />
-    <Content Include="Views\ManageAttendees\ProcessAddAttendee.cshtml" />
-    <Content Include="Views\ManageAttendees\_OrderDetail.cshtml" />
-    <Content Include="Views\ManageAttendees\_OrderList.cshtml" />
     <Content Include="Views\_ViewStart.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_ViewStart.generated.cs</LastGenOutput>
