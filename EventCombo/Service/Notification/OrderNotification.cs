@@ -51,6 +51,7 @@ namespace EventCombo.Service
       _service.Message.Subject = _subject;
       _service.Message.IsBodyHtml = true;
       _service.Message.Body = _body.Replace("¶¶UserFirstNameID¶¶", ReceiverName);
+      _service.Message.Attachments.Clear();
       if (_attachment != null)
         _service.Message.Attachments.Add(_attachment);
       _service.Message.From = new MailAddress("no-reply@eventcombo.com");

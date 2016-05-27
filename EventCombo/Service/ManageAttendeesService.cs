@@ -10,6 +10,9 @@ using System.IO;
 using NPOI;
 using NPOI.SS.UserModel;
 using NPOI.HSSF.UserModel;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Core.Objects;
+using System.Net.Mime;
 
 namespace EventCombo.Service
 {
@@ -18,8 +21,9 @@ namespace EventCombo.Service
     private IUnitOfWorkFactory _factory;
     private IMapper _mapper;
     private IDBAccessService _dbservice;
+    private ITicketsService _tservice;
 
-    public ManageAttendeesService(IUnitOfWorkFactory factory, IMapper mapper, IDBAccessService dbService)
+    public ManageAttendeesService(IUnitOfWorkFactory factory, IMapper mapper, IDBAccessService dbService, ITicketsService tService)
     {
       if (factory == null)
         throw new ArgumentNullException("factory");
@@ -30,9 +34,13 @@ namespace EventCombo.Service
       if (dbService == null)
         throw new ArgumentNullException("dbService");
 
+      if (tService == null)
+        throw new ArgumentNullException("tService");
+
       _factory = factory;
       _mapper = mapper;
       _dbservice = dbService;
+      _tservice = tService;
     }
 
     public ManageAttendeesOrdersViewModel GetEventOrdersSummary(long eventId)
@@ -41,14 +49,16 @@ namespace EventCombo.Service
       res.EventId = eventId;
 
       IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+      IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
       var tickets = tpdRepo.Get(filter: (t => t.TPD_Event_Id == eventId));
+      var ev = eRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();
 
       EventOrdersSummuryViewModel ordersTotal = new EventOrdersSummuryViewModel()
       {
         PaymentState = PaymentStates.Total,
         TicketsSold = tickets.Sum(t => t.TPD_Purchased_Qty) ?? 0,
         Amount = tickets.Sum(t => t.TPD_Amount) ?? 0,
-        TicketsTotal = tickets.Sum(t => t.Event.Tickets.Sum(tt => tt.Ticket_Quantity_Detail.Sum(q => q.TQD_Quantity))) ?? 0,
+        TicketsTotal = ev.Tickets.Sum(tt => tt.Ticket_Quantity_Detail.Sum(q => q.TQD_Quantity)) ?? 0,
         Count = tickets.Select(t => t.TPD_Order_Id).Distinct().Count()
       };
       EventOrdersSummuryViewModel ordersCompleted = _mapper.Map<EventOrdersSummuryViewModel>(ordersTotal);
@@ -138,7 +148,7 @@ namespace EventCombo.Service
       return details;
     }
 
-    public bool SendConfirmations(string orderId, string baseUrl)
+    public bool SendConfirmations(string orderId, string baseUrl, string filePath)
     {
       if (String.IsNullOrWhiteSpace(orderId))
         throw new ArgumentNullException("orderId");
@@ -156,13 +166,17 @@ namespace EventCombo.Service
       IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
       foreach (var attendee in attRepo.Get(filter: (a => a.OrderId == orderId)))
         if (!String.IsNullOrWhiteSpace(attendee.Email))
-          addresses.Add(new MailAddress(attendee.Email, attendee.Name));
+          if (!addresses.Any(a => a.Address == attendee.Email))
+            addresses.Add(new MailAddress(attendee.Email, attendee.Name));
 
       if (addresses.Count <= 0)
         return false;
       else
       {
-        INotification notification = new OrderNotification(_factory, _dbservice, orderId, baseUrl, null);
+        var mem = _tservice.GetDownloadableTicket(orderId, "pdf", filePath);
+        Attachment attach = new Attachment(mem, new ContentType(MediaTypeNames.Application.Pdf));
+        attach.ContentDisposition.FileName = "Ticket_EventCombo.pdf";
+        INotification notification = new OrderNotification(_factory, _dbservice, orderId, baseUrl, attach);
         ISendMailService sendService = new SendMailService();
         INotificationSender sender = new NotificationSender(notification, sendService);
         sender.SendSeparately(addresses);
@@ -312,12 +326,13 @@ namespace EventCombo.Service
       return res;
     }
 
-    public AddAttandeeOrder PrepareAddAttendeeOrder(long eventId)
+    public AddAttandeeOrder PrepareAddAttendeeOrder(long eventId, string userId)
     {
       AddAttandeeOrder aa = new AddAttandeeOrder();
       IRepository<Ticket> tRepo = new GenericRepository<Ticket>(_factory.ContextFactory);
       IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
       IRepository<PaymentType> ptRepo = new GenericRepository<PaymentType>(_factory.ContextFactory);
+      IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
 
       aa.EventId = eventId;
 
@@ -337,7 +352,101 @@ namespace EventCombo.Service
         aa.AvailablePT.Add(_mapper.Map<PaymentTypeViewModel>(pt));
       }
 
+      var profile = _dbservice.GetUserProfileById(userId);
+      if (profile != null)
+      {
+        aa.Email = profile.Email;
+        aa.FirstName = profile.FirstName;
+        aa.LastName = profile.LastName;
+      }
+
+      var ev = eRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();
+      if (ev != null)
+      {
+        aa.Title = ev.EventTitle;
+        //aa.ImageUrl = ev.
+      }
       return aa;
+    }
+
+    public string CreateManualOrder(AddAttandeeOrder model, string userId)
+    {
+      string newOrderId;
+      using(var uow = _factory.GetUnitOfWork())
+      try
+      {
+        IRepository<Order_Detail_T> oRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
+        IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+        IRepository<Ticket_Quantity_Detail> tqdRepo = new GenericRepository<Ticket_Quantity_Detail>(_factory.ContextFactory);
+        IRepository<TicketBearer> tbRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+        Guid guidId = Guid.NewGuid();
+        Order_Detail_T order = new Order_Detail_T()
+        {
+          O_User_Id = userId,
+          O_Email = model.Email,
+          O_First_Name = model.FirstName,
+          O_Last_Name = model.LastName,
+          O_OrderDateTime = DateTime.Now,
+          O_TotalAmount = model.Tickets.Sum(t => t.Paid),
+          O_OrderAmount = model.Tickets.Sum(t => t.Paid),
+          OrderStateId = 1,
+          PaymentTypeId = model.PaymentType.PaymentTypeId,
+          Note = model.Note,
+          O_VariableId = "0",
+          O_VariableAmount = 0,
+          O_PromoCodeId = 0,
+        };
+        oRepo.Insert(order);
+        uow.Context.SaveChanges();
+        //((IObjectContextAdapter)uow.Context).ObjectContext.ObjectStateManager.ChangeObjectState(order, System.Data.Entity.EntityState.Modified);
+        //uow.RefreshEntities();
+        oRepo.Reload(order); // Need to update values after trigger
+        _factory.ContextFactory.GetContext().Entry(order).Reference(o => o.AspNetUser).Load();
+        _factory.ContextFactory.GetContext().Entry(order).Reference(o => o.PaymentType).Load();
+        _factory.ContextFactory.GetContext().Entry(order).Reference(o => o.OrderState).Load();
+        newOrderId = order.O_Order_Id;
+        if (String.IsNullOrWhiteSpace(newOrderId))
+          throw new Exception("Order Id is empty.");
+        foreach(var ticket in model.Tickets)
+        {
+          var tq = tqdRepo.Get(filter: (tqd => (tqd.TQD_Ticket_Id == ticket.Ticket.T_Id))).FirstOrDefault();
+          Ticket_Purchased_Detail tpd = new Ticket_Purchased_Detail()
+          {
+            TPD_Event_Id = model.EventId,
+            TPD_Order_Id = newOrderId,
+            TPD_Amount = tq.Ticket.TicketTypeID == 3 ? 0 : ticket.Paid,
+            TPD_Donate = tq.Ticket.TicketTypeID == 3 ? ticket.Paid : 0,
+            TPD_Purchased_Qty = ticket.Quantity,
+            TPD_TQD_Id = tq.TQD_Id,            
+            TPD_GUID = guidId.ToString(),
+            TPD_User_Id = userId,
+            TPD_EC_Fee = 0
+          };
+          tpdRepo.Insert(tpd);
+        }
+
+        foreach(var attendee in model.Attendees)
+        {
+          TicketBearer tb = new TicketBearer()
+          {
+            OrderId = newOrderId,
+            Name = attendee.Name,
+            Email = attendee.Email,
+            Guid = guidId.ToString(),
+            UserId = userId
+          };
+          tbRepo.Insert(tb);
+        }
+
+        uow.Context.SaveChanges();
+        uow.Commit();
+      }
+      catch (Exception ex)
+      {
+        uow.Rollback();
+        throw new Exception("Error during CreateManualOrder", ex);
+      }
+      return newOrderId;
     }
   }
 }

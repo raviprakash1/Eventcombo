@@ -136,5 +136,17 @@ namespace EventCombo.Service
         return AccessLevel.EventOwner;
       return AccessLevel.Public;
     }
+
+    public EventCombo.Models.Profile GetUserProfileByEmail(string email)
+    {
+      IRepository<EventCombo.Models.Profile> pRepo = new GenericRepository<EventCombo.Models.Profile>(_factory.ContextFactory);
+      return pRepo.Get(filter: (pr => pr.Email.ToLower() == email.Trim().ToLower())).FirstOrDefault();
+    }
+
+    public EventCombo.Models.Profile GetUserProfileById(string userId)
+    {
+      IRepository<EventCombo.Models.Profile> pRepo = new GenericRepository<EventCombo.Models.Profile>(_factory.ContextFactory);
+      return pRepo.Get(filter: (pr => pr.UserID == userId)).FirstOrDefault();
+    }
   }
 }

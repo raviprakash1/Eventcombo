@@ -5,6 +5,7 @@ using System.Web;
 using System.Data.Entity;
 using System.Linq.Expressions;
 using EventCombo.Models;
+using System.Data.Entity.Infrastructure;
 
 namespace EventCombo.DAL
 {
@@ -16,6 +17,7 @@ namespace EventCombo.DAL
     void Update(TEntity entityToUpdate);
     void Delete(object id);
     void Delete(TEntity entityToDelete);
+    void Reload(TEntity entityToReload);
   }
 
   public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
@@ -104,6 +106,12 @@ namespace EventCombo.DAL
       _dbSet.Attach(entityToUpdate);
       _context.Entry(entityToUpdate).State = EntityState.Modified;
     }
+ 
+    public virtual  void Reload(TEntity entityToReload)
+    {
+      _context.Entry(entityToReload).Reload();
+    }
+
   }
 
 }
