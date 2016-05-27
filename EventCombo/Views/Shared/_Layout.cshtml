@@ -177,7 +177,7 @@
                         @*@Html.ActionLink("Discover Events", "DiscoverEvents", "Home")*@
                         <a href="javascript:void(0)" onclick="setsession(this.id);" id='discover'>Discover Events</a>
                     </div>
-                    <div class="col-sm-2 disc_title_head"><a href="#" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a>@*@Html.ActionLink("", "GetBuzz", "Home")*@  </div>
+                    <div class="col-sm-2 disc_title_head"><a href="@Url.Action("Buzz", "Article")" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a></div>
                     <div class="col-sm-5 frnt_cret_evnt">
                         <div class="psst">
                             <a href="javascript:void(0)" onclick="checksession();">Create Event</a>

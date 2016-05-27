@@ -21,8 +21,8 @@ namespace EventCombo.Service
 
     void DeleteArticle(long articleId, string basePath);
 
-    IEnumerable<ArticleShortViewModel> GetLastArticles(string urlPath);
+    IEnumerable<ArticleShortViewModel> GetLastArticles(string urlPath, int count);
 
-    IEnumerable<ArticleShortViewModel> GetPopularArticles(string urlPath);
+    IEnumerable<ArticleShortViewModel> GetPopularArticles(string urlPath, int count, bool addLatest);
   }
 }

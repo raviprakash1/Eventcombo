@@ -1259,20 +1259,7 @@ namespace EventCombo.Controllers
         }
         public ActionResult GetBuzz()
         {
-            MyAccount hmc = new MyAccount();
-            if ((Session["AppId"] != null))
-            {
-               
-                string usernme = hmc.getusername();
-                if (string.IsNullOrEmpty(usernme))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            Session["Fromname"] = "GetBuzz";
-            ViewBag.ReturnUrl = "~/Home/GetBuzz";
-            return View();
-
+          return RedirectToAction("Buzz", "Article");
         }
         public ActionResult EventOraganizer()
         {

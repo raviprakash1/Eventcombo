@@ -227,11 +227,11 @@ namespace EventCombo.Service
     }
 
 
-    public IEnumerable<ArticleShortViewModel> GetLastArticles(string urlPath)
+    public IEnumerable<ArticleShortViewModel> GetLastArticles(string urlPath, int count)
     {
       IRepository<Article> aRepo = new GenericRepository<Article>(_factory.ContextFactory);
       List<ArticleShortViewModel> res = new List<ArticleShortViewModel>();
-      foreach(var article in aRepo.Get(filter: (a => a.HomepageFlag)).OrderByDescending(a => a.EditDate).Take(8))
+      foreach (var article in aRepo.Get(filter: (a => a.HomepageFlag), orderBy: (query => query.OrderByDescending(a => a.EditDate))).Take(count))
         res.Add(MapArticleToShort(article, urlPath));
       return res;
     }
@@ -247,12 +247,18 @@ namespace EventCombo.Service
     }
 
 
-    public IEnumerable<ArticleShortViewModel> GetPopularArticles(string urlPath)
+    public IEnumerable<ArticleShortViewModel> GetPopularArticles(string urlPath, int count, bool addLatest)
     {
       IRepository<Article> aRepo = new GenericRepository<Article>(_factory.ContextFactory);
       List<ArticleShortViewModel> res = new List<ArticleShortViewModel>();
-      foreach (var article in aRepo.Get(filter: (a => a.PremiumFlag)).OrderByDescending(a => a.EditDate).Take(20))
+      foreach (var article in aRepo.Get(filter: (a => a.PremiumFlag), orderBy: (query => query.OrderByDescending(a => a.EditDate))).Take(count))
         res.Add(MapArticleToShort(article, urlPath));
+      var remains = count - res.Count();
+      if (addLatest && (remains > 0))
+        foreach(var article in aRepo.Get(filter: (a => !a.PremiumFlag), orderBy: (query => query.OrderByDescending(a => a.EditDate))).Take(remains))
+        {
+          res.Add(MapArticleToShort(article, urlPath));
+        }
       return res;
     }
 

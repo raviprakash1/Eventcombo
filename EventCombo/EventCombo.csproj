@@ -1353,9 +1353,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>DiscoverEvents.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Home\GetBuzz.cshtml">
-      <Generator>RazorGenerator</Generator>
-    </Content>
     <Content Include="Views\Shared\_OrganizerLayout.cshtml">
       <Generator>RazorGenerator</Generator>
     </Content>
@@ -1448,6 +1445,7 @@
     <Content Include="Views\ManageAttendees\_OrderList.cshtml" />
     <Content Include="Views\ManageAttendees\_OrderDetail.cshtml" />
     <Content Include="Views\ManageAttendees\ProcessAddAttendee.cshtml" />
+    <Content Include="Views\Article\Buzz.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
