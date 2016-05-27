@@ -33,6 +33,7 @@ namespace EventCombo.Controllers
                     var url = Request.Url;
                     var baseurl = url.GetLeftPart(UriPartial.Authority);
                     objPay.CancelUrl = baseurl + Url.Action("TicketPayment", "TicketPayment");
+
                     redirect = PayPal.ExpressCheckout(objPay);
                 }
                 catch (Exception ex)

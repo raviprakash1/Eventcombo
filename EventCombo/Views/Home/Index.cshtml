@@ -1,4 +1,5 @@
-﻿@{
+﻿@using EventCombo.ViewModels
+@{
     ViewBag.Title = "EventCombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free";
 }
 
@@ -34,37 +35,55 @@
 
     $(document).ready(function () {
         //url = url.replace("-parameter", vEventId);
-      
+
 
         var pg = getUrlParameter('page');
         if (!pg) {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (p) {
-                    var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
-                    var geocoder = new google.maps.Geocoder;
-                    var infowindow = new google.maps.InfoWindow;
+            var Lat = @CookieStore.GetCookie("Lat");
+            var Lng = @CookieStore.GetCookie("Long");
+            Lat  = parseFloat(Lat);
+            Lng = parseFloat(Lng);
+            if (isNaN(Lat) == true) Lat = 0;
+            if (isNaN(Lng) == true) Lng = 0;
+         //   alert(Lat);
+            if (Lat > 0)
+            { 
+                var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = CookieStore.GetCookie("Lat"), lng = CookieStore.GetCookie("Long"), page = "1"}))';
+                window.location.replace(vUrl);
+            }
+            else
+            {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (p) {
+                        var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+                        var geocoder = new google.maps.Geocoder;
+                        var infowindow = new google.maps.InfoWindow;
 
-                    var mapOptions = {
-                        center: { lat: p.coords.latitude, lng: p.coords.longitude },
-                        zoom: 13,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    };
-                    var vLat = p.coords.latitude;
-                    var vLong = p.coords.longitude;
+                        var mapOptions = {
+                            center: { lat: p.coords.latitude, lng: p.coords.longitude },
+                            zoom: 13,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                        };
+                        var vLat = p.coords.latitude;
+                        var vLong = p.coords.longitude;
 
-                    var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat= "strLat", lng= "strLong", page = "1"}))';
-                    vUrl = vUrl.replace("strLat", vLat);
-                    vUrl = vUrl.replace("strLong", vLong);
-                    window.location.replace(vUrl);
+                        //$.cookie("Lat", vLat, { expire: 365 });
+                        //$.cookie("Long", vLong, { expire: 365 });
 
-                }, function (p) {
+                        var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat= "strLat", lng= "strLong", page = "1"}))';
+                        vUrl = vUrl.replace("strLat", vLat);
+                        vUrl = vUrl.replace("strLong", vLong);
+                        window.location.replace(vUrl);
+
+                    }, function (p) {
+                        var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = "", lng = "", page = "1" }))';
+                        window.location.replace(vUrl);
+                    });
+
+                } else {
                     var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = "", lng = "", page = "1" }))';
                     window.location.replace(vUrl);
-                });
-
-            } else {
-                var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = "", lng = "", page = "1" }))';
-                window.location.replace(vUrl);
+                }
             }
 
         }

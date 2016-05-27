@@ -1389,7 +1389,9 @@ namespace EventCombo.Controllers
 
             }
 
-         
+            CookieStore.SetCookie("Lat", lat, TimeSpan.FromDays(365));
+            CookieStore.SetCookie("Long", lng, TimeSpan.FromDays(365));
+            
 
 
             int pageSize = 15;
