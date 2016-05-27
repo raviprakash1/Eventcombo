@@ -90,7 +90,7 @@ top: 40%; left: 30%; border:1px solid #e2e2e2; display: none; }
 .table > thead > tr > td{ line-height:normal;}
 
 .sss1{ width:100%; float:left;}
-.sor-evnt-cls{ width:100%; float:left; /*position:absolute; margin-top:-8px;*/ }
+.sor-evnt-cls{ width:100%; float:left; margin-bottom:2px; /*position:absolute; margin-top:-8px;*/ }
 .sor-evnt-cls2{ width:100%; float:left;  margin-top:4px; }
 
 .sor-mng-evnt-cls2{ width:100%; float:left;  }
