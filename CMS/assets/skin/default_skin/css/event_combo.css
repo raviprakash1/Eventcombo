@@ -81,24 +81,43 @@ top: 40%; left: 30%; border:1px solid #e2e2e2; display: none; }
 .crt_evnt_drop_down i{ color:#000;}*/
 
 .crt_evnt_drop_up{ width:auto; float:left;  line-height:0px;}
-.crt_evnt_drop_up a{ line-height:0px; display:inline-block; cursor:default;  }
+.crt_evnt_drop_up a{  display:inline-block; cursor:pointer;  }
 .crt_evnt_drop_down{ width:auto; float:left;  line-height:0px; top:0px; position:relative; margin-left:0px;}
-.crt_evnt_drop_down a{line-height:0px; display:inline-block; cursor:default; }
+.crt_evnt_drop_down a{line-height:0px; display:inline-block; cursor:pointer; }
 
 
 .table > thead > tr > th, 
 .table > thead > tr > td{ line-height:normal;}
 
 .sss1{ width:100%; float:left;}
-.sor-evnt-cls{ width:100%; float:left; margin-bottom:2px; /*position:absolute; margin-top:-8px;*/ }
-.sor-evnt-cls2{ width:100%; float:left;  margin-top:4px; }
+.sor-evnt-cls{ width:100%; float: none;
+    margin-bottom: 2px;
+    clear: both;
+    display: inherit; /*position:absolute; margin-top:-8px;*/ }
+.sor-evnt-cls2{ width:100%;  text-align: left;  margin-top:6px; }
 
-.sor-mng-evnt-cls2{ width:100%; float:left;  }
+
+
+
+
+.sor-mng-evnt-cls2{ width:100%; float:left;   }
 .tab-wid1{ min-width:50px;}
 .sor_evnt_cls_drop_up{ width:auto; float:left;  line-height:0px; }
-.sor_evnt_cls_drop_up a {  line-height:0px; display:inline-block; cursor:default; }
-.sor_evnt_cls_drop_down{ width:auto;float:left; line-height:0px; top:4px; position:relative;}
-.sor_evnt_cls_drop_down a {  line-height:0px; display:inline-block; cursor:default;}
+.sor_evnt_cls_drop_up a {   display:inline-block; cursor:default; }
+.sor_evnt_cls_drop_down{ 
+     width: auto;
+    float: none;
+    line-height: 0;
+    top: 0px;
+    display: inline-block;
+    position: relative;
+    margin-left: 0px;
+}
+.sor_evnt_cls_drop_down a {  
+    line-height: 0px;
+    display: inline-block;
+    cursor: pointer;
+}
 .clearfix{ clear:both; float:left;}
 .search-pnl .panel-controls .panel-control-collapse{ text-decoration:none;}
 .search-mng-pnl .panel-controls .panel-control-collapse{ text-decoration:none;}
