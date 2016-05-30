@@ -5,6 +5,11 @@
 @model ArticleFullViewModel
 @{
   ViewBag.Title = Model.Title + " | Eventcombo";
+  ViewBag.FBUrl = Request.Url.AbsoluteUri;
+  ViewBag.FBType = "article";
+  ViewBag.FBTitle = Model.Title;
+  ViewBag.FBDescription = HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Model.Body), 200, 250, ".");
+  ViewBag.FBImage = Model.ArticleImageUrl;
 }
 
 <style type="text/css">
@@ -189,12 +194,9 @@
         <div class="entrmentNameTime">@Model.CreateDate.ToLongTimeString() @Model.CreateDate.ToString("MMMM dd, yyyy")</div>
         <div class="entrmentFollowTwitter">follow me on <a href="@(String.IsNullOrWhiteSpace(Model.AuthorTwitterUrl) ? "javascript:void(0)" : Model.AuthorTwitterUrl)" class="followOnTwitterAnchor">Twitter</a></div>
         <div class="entrmntSocialIcon">
-          @{
-            string chref = Url.Content(ArticleService.GetArticleUrl(Model.ArticleId, Model.Title));
-          }
-          <a href="javascript:void(0)" class="entrmSocialDiv" onclick="FacebookShare('@Model.Title','@chref')"><img src="~/Images/facebook.png" /></a>
-          <a href="javascript:void(0)" class="entrmSocialDiv" onclick="TwitterShare('@Model.Title','@chref')"><img src="~/Images/twitter.png" /></a>
-          <a href="javascript:void(0)" class="entrmSocialDiv" onclick="LinkedInShare('@Model.Title','@chref')"><img src="~/Images/linkedIn.png" /></a>
+          <a href="javascript:void(0)" class="entrmSocialDiv" onclick="FacebookShare('@Model.Title','@(Request.Url.AbsoluteUri)')"><img src="~/Images/facebook.png" /></a>
+          <a href="javascript:void(0)" class="entrmSocialDiv" onclick="TwitterShare('@Model.Title','@(Request.Url.AbsoluteUri)')"><img src="~/Images/twitter.png" /></a>
+          <a href="javascript:void(0)" class="entrmSocialDiv" onclick="LinkedInShare('@Model.Title','@(Request.Url.AbsoluteUri)', '@(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Model.Body), 200, 250, "."))')"><img src="~/Images/linkedIn.png" /></a>
         </div>
       </div>
       <div class="col-md-12 col-sm-12 col-xs-12 entrmentHeaderQuestionContainer">
@@ -263,18 +265,21 @@
 
 <script type="text/javascript">
 
-  function FacebookShare(title, href) {
-    window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title.trim()) + '&p[url]=' + encodeURIComponent(href) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+  function FacebookShare(title, myhref) {
+    FB.ui({
+      method: 'share',
+      href: myhref,
+    }, function (response) { });
     return false;
   }
 
   function TwitterShare(title, href) {
-    window.open('https://twitter.com/share?url=' + encodeURIComponent(href) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+    window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(href) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
     return false;
   }
 
-  function LinkedInShare(title, href) {
-    window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(href) + '&title=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+  function LinkedInShare(title, href, summary) {
+    window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(href) + '&title=' + title + '&summary=' + summary + '&source=EventCombo', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
     return false;
   }
 

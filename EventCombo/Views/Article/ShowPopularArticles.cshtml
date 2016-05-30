@@ -15,7 +15,7 @@
       <div class="newsContentInnerCon">
         <a href="@(Url.Content(ArticleService.GetArticleUrl(article.ArticleId, article.Title)))">
           <div class="newsContentImg">
-            <img src="@article.ArticleImage" />
+            <img src="@article.ArticleImage" alt="@article.Title"/>
           </div>
           <div class="newsContentText">
             @article.Title
