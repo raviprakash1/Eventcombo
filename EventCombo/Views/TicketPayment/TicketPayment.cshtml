@@ -1,7 +1,7 @@
 ﻿@using EventCombo.Models
 @model TicketPayment
 @{
-    ViewBag.Title = "TicketPayment";
+    ViewBag.Title = @Model.Title+",  "+@TempData["address"]+" | Eventcombo";
     //Layout = "~/Views/Shared/_AccountLayout.cshtml";
     Layout = "~/Views/Shared/_Layout.cshtml";
 

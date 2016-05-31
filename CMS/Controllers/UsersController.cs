@@ -257,6 +257,20 @@ namespace CMS.Controllers
                         //        });
                         //    }
                     }
+
+                    if (iUcount > 0)
+                    {
+                        if (iUcount < iGapValue)
+                        {
+                            strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
+                            PageFilter.Add(new SelectListItem()
+                            {
+                                Text = strText,
+                                Value = (i).ToString(),
+                                Selected = (iCount == z ? true : false)
+                            });
+                        }
+                    }
                     if (iCount > 0)
                     {
                         if (iCount < objuser.Count)
@@ -282,6 +296,13 @@ namespace CMS.Controllers
 
 
                 }
+                PageFilter.Insert(0,new SelectListItem()
+                {
+                    Text = "Select",
+                    Value = "S",
+                    //Selected = (iCount == 50 ? true : false)
+                });
+
 
                 TempData["SearchStringFirstName"] = SearchStringFirstName;
                 TempData["SearchStringLastName"] = SearchStringLastName;

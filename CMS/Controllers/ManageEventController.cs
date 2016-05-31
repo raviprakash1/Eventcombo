@@ -187,7 +187,7 @@ namespace CMS.Controllers
                         break;
                 }
 
-                var users = objlst.ToPagedList(PageF, pageSize);
+               
 
                 ViewData["Eventscount"] = objlst.Count();
                 if (objlst.Count == 0)
@@ -234,6 +234,19 @@ namespace CMS.Controllers
                         //    });
                         //}
                     }
+                    if (iUcount > 0)
+                    {
+                        if (iUcount < iGapValue)
+                        {
+                            strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
+                            PageFilter.Add(new SelectListItem()
+                            {
+                                Text = strText,
+                                Value = (i).ToString(),
+                                Selected = (iCount == z ? true : false)
+                            });
+                        }
+                    }
                     if (iCount > 0)
                     {
                         if (iCount < objlst.Count)
@@ -260,6 +273,14 @@ namespace CMS.Controllers
 
                 }
 
+
+                PageFilter.Insert(0, new SelectListItem()
+                {
+                    Text = "Select",
+                    Value = "S",
+                    //Selected = (iCount == 50 ? true : false)
+                });
+                var users = objlst.ToPagedList(PageF, pageSize);
                 TempData["SearchStringEventTitle"] = SearchStringEventTitle;
                 TempData["EventType"] = EventType;
                 TempData["ddlEventCategory"] = ddlEventCategory;
@@ -416,6 +437,19 @@ namespace CMS.Controllers
                         //    });
                         //}
                     }
+                    if (iUcount > 0)
+                    {
+                        if (iUcount < iGapValue)
+                        {
+                            strText = (z + 1).ToString() + " - " + (z + iGapValue).ToString();
+                            PageFilter.Add(new SelectListItem()
+                            {
+                                Text = strText,
+                                Value = (i).ToString(),
+                                Selected = (iCount == z ? true : false)
+                            });
+                        }
+                    }
                     if (iCount > 0)
                     {
                         if (iCount < objlst.Count)
@@ -441,6 +475,13 @@ namespace CMS.Controllers
 
 
                 }
+
+                PageFilter.Insert(0, new SelectListItem()
+                {
+                    Text = "Select",
+                    Value = "S",
+                    //Selected = (iCount == 50 ? true : false)
+                });
 
                 TempData["SearchStringEventTitle"] = SearchStringEventTitle;
                 TempData["EventType"] = EventType;
@@ -480,6 +521,7 @@ namespace CMS.Controllers
                 using (EmsEntities objEntity = new EmsEntities())
                 {
                     var rows = (from myRow in objEntity.EventTypes
+                                orderby myRow.EventType1
                                 select myRow).ToList();
                     List<SelectListItem> EventType = new List<SelectListItem>();
                     EventType.Add(new SelectListItem()
@@ -499,6 +541,7 @@ namespace CMS.Controllers
 
 
                     var EventCat = (from myRow in objEntity.EventCategories
+                                    orderby myRow.EventCategory1
                                     select myRow).ToList();
                     List<SelectListItem> EventCategory = new List<SelectListItem>();
                     EventCategory.Add(new SelectListItem()
@@ -723,6 +766,7 @@ namespace CMS.Controllers
                 using (EmsEntities objEntity = new EmsEntities())
                 {
                     var rows = (from myRow in objEntity.EventTypes
+                                orderby myRow.EventType1
                                 select myRow).ToList();
                     List<SelectListItem> EventType = new List<SelectListItem>();
                     EventType.Add(new SelectListItem()
@@ -742,6 +786,7 @@ namespace CMS.Controllers
 
 
                     var EventCat = (from myRow in objEntity.EventCategories
+                                    orderby myRow.EventCategory1
                                     select myRow).ToList();
                     List<SelectListItem> EventCategory = new List<SelectListItem>();
                     EventCategory.Add(new SelectListItem()
@@ -1028,6 +1073,7 @@ namespace CMS.Controllers
                 using (EmsEntities objEnt = new EmsEntities())
                 {
                     var EventCat = (from myRow in objEnt.EventSubCategories
+                                    orderby myRow .EventSubCategory1
                                     where myRow.EventCategoryID == lECatId
                                     select myRow).ToList();
                     strHtml.Append("<option value=0>Select</option>");
