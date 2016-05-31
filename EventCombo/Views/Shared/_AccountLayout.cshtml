@@ -315,6 +315,21 @@
 
         });
 
+        function CheckUserOrgStatus()
+        {
+            $.ajax({
+                url: '@Url.Action("Setheader", "Home")',
+                type: "Post",
+                data: { header: "off" },
+                success: function (data) {
+                    
+                },
+                error: function (data) {
+                    return false
+                }
+            });
+
+        }
         function checkPermission(PermisionId) {
             @*$.ajax({
                 url: '@Url.Action("GetPermission", "Permission")',

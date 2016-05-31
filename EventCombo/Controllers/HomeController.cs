@@ -1317,7 +1317,7 @@ namespace EventCombo.Controllers
             SignInManager = signInManager;
         }
 
-        public ActionResult Index(string lat, string lng, int? page)
+        public ActionResult Index(string lat, string lng, int? page,string strParm ="")
         {
             //EventCombo.Services.EventStatus obj = new EventCombo.Services.EventStatus();
             //obj.Update();
@@ -1328,11 +1328,8 @@ namespace EventCombo.Controllers
                 using (EventComboEntities db = new EventComboEntities())
                 {
                     AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user);
-                 
                     aspuser.LastLoginTime = System.DateTime.UtcNow;
                     db.SaveChanges();
-
-
                 }
                 string var = getusername();
                 if (string.IsNullOrEmpty(var))
@@ -1408,8 +1405,9 @@ namespace EventCombo.Controllers
             ViewBag.DisEvnt = objDiscEvt.ToPagedList(pageNumber, pageSize);
             ViewBag.lat = lat;
             ViewBag.lng = lng;
+            ViewBag.UserOrg = strParm;
 
-        
+
 
 
 
@@ -2041,13 +2039,17 @@ namespace EventCombo.Controllers
 
             if (Session["AppId"] == null)
             {
-
-                return "Y";
-
+                
+                 return "Y";
+                
             }
             else
             {
                 return "N";
+                //if (CommanClasses.UserOrganizerStatus(Session["AppId"].ToString()) == true)
+                //{ return "N"; }
+                //else
+                //{ return "YN"; }
 
             }
         }

@@ -72,10 +72,20 @@ namespace EventCombo.Models
                 return true;
             }
         }
-
-
-
-}
+        public static bool UserOrganizerStatus(string strUserId)
+        {
+            using (EventComboEntities objEnt = new EventComboEntities())
+            {
+                var vUserOrgStatus = (from myUser in objEnt.Profiles where myUser.UserID == strUserId select myUser.Organiser).FirstOrDefault();
+                if (vUserOrgStatus == null) return false;
+                if (vUserOrgStatus == "Y")
+                {
+                    return true;
+                }
+                else { return true; }
+            }
+        }
+    }
 
 
 public partial class Ticket_Locked_Detail

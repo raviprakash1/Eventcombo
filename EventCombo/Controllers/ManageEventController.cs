@@ -2797,15 +2797,13 @@ namespace EventCombo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+
             string LgUser = Session["AppId"].ToString();
             using (EventComboEntities db = new EventComboEntities())
             {
                 AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == LgUser);
-
                 aspuser.LastLoginTime = System.DateTime.UtcNow;
                 db.SaveChanges();
-
-
             }
             if (CommanClasses.CompareCurrentUser(lEvtId, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
 

@@ -345,10 +345,6 @@
                             <div class="col-md-12">
                                 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = Session["ReturnUrl"] }, FormMethod.Post, new { role = "form", id = "formlogin", @class = "form-horizontal acnt_form" }))
                                 {
-
-
-
-
                                     <div class="er_UI_main" id="diverrologin" style="display :none;">
                                         <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverrologin">&#215;</button>
                                         <div class="er_UI_img"></div>
@@ -501,6 +497,9 @@
                     <input type="hidden" id="url" />
                 </div>
             </div>
+
+
+
 
     @*<script>
         $(document).ready(function () {
@@ -845,7 +844,9 @@
                     $("#loginPopup").click();
                     // url.val('@Url.Action("CreateEvent", "CreateEvent")');
                     return false;
-                } else {
+                }
+                else {
+                    
                     window.location.href = '@Url.Action("CreateEvent", "CreateEvent")';
                     return true;
                 }
@@ -866,11 +867,8 @@
 
     $(document).click(function () {
 
-
-
         $('#diverrologin').css('display', 'none');
         $('#diverro1login').css('display', 'none');
-
 
         $("input").removeClass('err-bor');
     });
