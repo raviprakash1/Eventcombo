@@ -1187,8 +1187,14 @@
 
 </script>
 <script>
+
+    $("document").ready(function () {
+
+        var pagef= parseInt('@TempData["PageNo"]')-1;
+        $('#ddlPageF').val(pagef);
+    });
     @*function OpenEventDialog(UserID) {
-       
+
         $('#dvEventListDialog').dialog({
             autoOpen: true,
             width: 900,
@@ -1197,7 +1203,7 @@
             title: 'Dialog Box',
             modal: true,
             open: function (event, ui) {
-               
+
                 $(this).load('@ViewData["EventComboClientDomain"]/EventList/EventList');
             },
             buttons: {

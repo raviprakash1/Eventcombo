@@ -490,7 +490,7 @@
         var Features = $("#Features").val();
         var Events = $("#Events").val();
         var Tickets = $("#Tickets").val();
-        var PageF = value;
+        var PageF = parseInt(value) + 1;
         var sortorder = "@TempData["sortorder"]";
         //console.log($(this).val());
         //$("#ulpage li").removeClass('active');
@@ -572,6 +572,11 @@
                     // debugger;
                     //                   alert(data.length);
                     $("#ddlEventSubCategory").html(data);
+                    if (vSubcatID != '') {
+
+                        //alert(vSubcatID);
+                        $("#ddlEventSubCategory").val(vSubcatID);
+                    }
                     // items.push("<option value=" + this.Value + ">" + this.Text + "</option>");
                     //});
                 },
@@ -579,12 +584,12 @@
                     //alert("Sorry there is some problem.");
                 }
             });
-            if(vSubcatID!='')
-            {
+            //if(vSubcatID!='')
+            //{
 
 
-                $("#ddlEventSubCategory").val(vSubcatID);
-            }
+            //    $("#ddlEventSubCategory").val(vSubcatID);
+            //}
         }
         $("#btnYes").click(function () {
             $.ajax({
@@ -655,6 +660,9 @@
 
             //   alert(Feature + " " + EventId);
         });
+
+        var pagef = parseInt('@TempData["PageNo"]') - 1;
+        $('#ddlPageF').val(pagef);
     });
 
 </script>
