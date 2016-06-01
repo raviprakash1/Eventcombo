@@ -56,7 +56,7 @@
                 <ul class="navbar-right frnt-top-header  xs-signup-height">
                     <li class="msg_icn"><span>12</span> </li>
                     <li><a href="#">Welcome @{Html.RenderAction("UserName", "Home");}!</a> </li>
-                    <li>
+                    <li onclick="CheckUserOrgStatus();">
                         @Html.ActionLink("My Account", "MyAccount", "Account", routeValues: null, htmlAttributes: new { title = "Account" })
                     </li>
                     <li>
@@ -171,7 +171,9 @@
 
                                           <div id="collapse1" class="panel-collapse collapse@(ViewBag.CurrentItem == "account" ? " in" : "")">
                                             <div class="panel-body no-padding">
-                                              <p>@Html.ActionLink("Personal Information", "MyAccount", "Account") </p>
+                                              <p><a href="#" id="pAcc">My Account</a></p>
+                                                @*@Html.ActionLink("Personal Information", "MyAccount", "Account")*@
+                                                
                                               <p>@Html.ActionLink("My Purchased Ticket", "PurchasedTicket", "Account")</p>
                                               <p>@Html.ActionLink("My Purchased Deals", "PurchasedDeals", "Account")</p>
                                               <p>@Html.ActionLink("Manage Organizer", "OrganizerProfile", "Account")</p>
@@ -311,25 +313,30 @@
 
 
 
-        
+
 
         });
 
-        function CheckUserOrgStatus()
-        {
+        $("#pAcc").click(function () {
             $.ajax({
-                url: '@Url.Action("Setheader", "Home")',
-                type: "Post",
-                data: { header: "off" },
+                url: '@Url.Action("UserOrgStatus", "CommanClasses")',
+                type: "GET",
+                datatype: "Text",
                 success: function (data) {
-                    
+                    alert(data);
                 },
                 error: function (data) {
                     return false
+
+
+
+
                 }
             });
 
-        }
+        });
+
+        
         function checkPermission(PermisionId) {
             @*$.ajax({
                 url: '@Url.Action("GetPermission", "Permission")',
@@ -376,7 +383,7 @@
                     return false
                 }
             });
-       
+
             //$.cookie("header", "on", { expire: 1 });
             $('#mainhead').addClass('fix_head');
             $('#bodysec').addClass('cont_margin');
@@ -384,7 +391,7 @@
             $('#midsection').addClass('midd_cont');
             $('#eventtop').addClass('event_top');
             $('#eventtopscoll').addClass('event_top');
-            
+
             $('#divsuccerr').addClass('aler_container');
             $('#eventtopscoll').addClass('viewevent_container');
         } else
@@ -410,7 +417,7 @@
             $('#eventtopscoll').removeClass('event_top');
             $('#eventtop').removeClass('event_top');
             $('#divsuccerr').removeClass('aler_container');
-            
+
             $('#eventtopscoll').removeClass('viewevent_container');
         }
     }

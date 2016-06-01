@@ -76,6 +76,9 @@ namespace EventCombo.Models
         {
             using (EventComboEntities objEnt = new EventComboEntities())
             {
+                if (HttpContext.Current.Session["AppId"] != null && strUserId == "")
+                    strUserId = HttpContext.Current.Session["AppId"].ToString();
+
                 var vUserOrgStatus = (from myUser in objEnt.Profiles where myUser.UserID == strUserId select myUser.Organiser).FirstOrDefault();
                 if (vUserOrgStatus == null) return false;
                 if (vUserOrgStatus == "Y")
@@ -83,6 +86,31 @@ namespace EventCombo.Models
                     return true;
                 }
                 else { return true; }
+            }
+        }
+
+
+        public string UserOrgStatus()
+        {
+            using (EventComboEntities objEnt = new EventComboEntities())
+            {
+                string strUserId = "";
+                if (HttpContext.Current.Session["AppId"] != null && strUserId == "")
+                    strUserId = HttpContext.Current.Session["AppId"].ToString();
+                if (strUserId != "")
+                {
+                    var vUserOrgStatus = (from myUser in objEnt.Profiles where myUser.UserID == strUserId select myUser.Organiser).FirstOrDefault();
+                    if (vUserOrgStatus == null) return "N";
+                    if (vUserOrgStatus == "Y")
+                    {
+                        return "Y";
+                    }
+                    else { return "N"; }
+                }
+                else
+                {
+                    return "N";
+                }
             }
         }
     }
