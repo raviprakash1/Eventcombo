@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<CMS.Models.V_EventsList>
+﻿@model PagedList.IPagedList<CMS.Models.EventList>
 @using PagedList.Mvc;
 @using CMS.Models;
 @{
@@ -497,7 +497,7 @@
         //$('#ulpage li a[data-page=' + value + ']').click();
         //console.log($('#ulpage li a[data-page=' + value + ']').parent().addClass('active'));
         //console.log($("#ulpage li").find("a", "[data-page=" + value + "]"));
-        window.location.href = '@Url.Action("ExpiredticketList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Features=' + Features + '&Tickets=' + Tickets + '&sortorder=' + sortorder + '&PageF=' + PageF + '';
+        window.location.href = '@Url.Action("ExpiredticketList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Events=' + Events + '&Features=' + Features + '&Tickets=' + Tickets + '&sortorder=' + sortorder + '&PageF=' + PageF + '';
 
     });
     function ConfirmDelete(userId) {

@@ -317,6 +317,7 @@
     <Compile Include="Models\EventImage.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventList.cs" />
     <Compile Include="Models\EventSubCategory.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
@@ -439,6 +440,9 @@
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Venue.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\V_EventsexpiredList.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\V_EventsList.cs">
@@ -1205,14 +1209,11 @@
     <Content Include="Views\Article\Index.cshtml" />
     <Content Include="Views\Article\Edit.cshtml" />
     <Content Include="Views\Article\ShowArticle.cshtml" />
-
     <Content Include="Views\ManageEvent\ExpiredticketList.cshtml" />
-
     <Content Include="Views\Orders\_PurchasedTicketDetail.cshtml" />
     <Content Include="Views\Orders\_PurchasedTicketFavoriteList.cshtml" />
     <Content Include="Views\Orders\_PurchasedTicketList.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
-
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

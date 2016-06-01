@@ -1473,6 +1473,9 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Parameter Name="EventId" Type="bigint" Mode="In" />
           <Parameter Name="UserId" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="PublishSingleEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EventId" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="ReturnDayOfWeek" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
           <Parameter Name="dtDate" Type="datetime" Mode="In" />
         </Function>
@@ -2834,6 +2837,9 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
             <End Role="PaymentType" EntitySet="PaymentTypes" />
             <End Role="Order_Detail_T" EntitySet="Order_Detail_T" />
           </AssociationSet>
+          <FunctionImport Name="PublishSingleEvent1">
+            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -5362,6 +5368,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PublishSingleEvent1" FunctionName="EventComboModel.Store.PublishSingleEvent" />
 
         </EntityContainerMapping>
       </Mapping>

@@ -1,0 +1,264 @@
+-----------Exception Details on  6/1/2016 3:22:50 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 6/1/2016 3:22:50 PM
+
+Error Line No : ne 3733
+
+Error Message: EntityCommandCompilationException
+
+Exception Type: System.Data.Entity.Core.EntityCommandCompilationException
+
+Error Location : An error occurred while preparing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  6/1/2016 3:25:21 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 6/1/2016 3:25:21 PM
+
+Error Line No : ne 3733
+
+Error Message: EntityCommandCompilationException
+
+Exception Type: System.Data.Entity.Core.EntityCommandCompilationException
+
+Error Location : An error occurred while preparing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  6/1/2016 3:26:19 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 6/1/2016 3:26:19 PM
+
+Error Line No : ne 3733
+
+Error Message: EntityCommandCompilationException
+
+Exception Type: System.Data.Entity.Core.EntityCommandCompilationException
+
+Error Location : An error occurred while preparing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  6/1/2016 3:31:27 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 6/1/2016 3:31:27 PM
+
+Error Line No : ne 3733
+
+Error Message: EntityCommandCompilationException
+
+Exception Type: System.Data.Entity.Core.EntityCommandCompilationException
+
+Error Location : An error occurred while preparing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  6/1/2016 3:31:33 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 6/1/2016 3:31:33 PM
+
+Error Line No : ne 3733
+
+Error Message: EntityCommandCompilationException
+
+Exception Type: System.Data.Entity.Core.EntityCommandCompilationException
+
+Error Location : An error occurred while preparing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  6/1/2016 3:32:08 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 6/1/2016 3:32:08 PM
+
+Error Line No : ne 3733
+
+Error Message: EntityCommandCompilationException
+
+Exception Type: System.Data.Entity.Core.EntityCommandCompilationException
+
+Error Location : An error occurred while preparing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  6/1/2016 3:32:11 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 6/1/2016 3:32:11 PM
+
+Error Line No : ne 3733
+
+Error Message: EntityCommandCompilationException
+
+Exception Type: System.Data.Entity.Core.EntityCommandCompilationException
+
+Error Location : An error occurred while preparing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  6/1/2016 3:35:21 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 6/1/2016 3:35:21 PM
+
+Error Line No : ne 3733
+
+Error Message: EntityCommandCompilationException
+
+Exception Type: System.Data.Entity.Core.EntityCommandCompilationException
+
+Error Location : An error occurred while preparing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  6/1/2016 3:36:39 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 6/1/2016 3:36:39 PM
+
+Error Line No : ne 3733
+
+Error Message: EntityCommandCompilationException
+
+Exception Type: System.Data.Entity.Core.EntityCommandCompilationException
+
+Error Location : An error occurred while preparing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  6/1/2016 3:37:47 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 6/1/2016 3:37:47 PM
+
+Error Line No : ne 3733
+
+Error Message: EntityCommandCompilationException
+
+Exception Type: System.Data.Entity.Core.EntityCommandCompilationException
+
+Error Location : An error occurred while preparing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  6/1/2016 3:38:00 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 6/1/2016 3:38:00 PM
+
+Error Line No : ne 3733
+
+Error Message: EntityCommandCompilationException
+
+Exception Type: System.Data.Entity.Core.EntityCommandCompilationException
+
+Error Location : An error occurred while preparing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
