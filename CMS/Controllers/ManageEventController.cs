@@ -700,7 +700,7 @@ namespace CMS.Controllers
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
-            List<V_EventsList> objlst = GetAllEvents("", "", "", "", "", "", "","M");
+            List<EventList> objlst = GetAllEvents("", "", "", "", "", "", "","M");
            
 
           
@@ -757,11 +757,13 @@ namespace CMS.Controllers
             ViewBag.OnePageOfProducts = eventlist;
             return View(eventlist);
         }
-        public List<V_EventsList> GetAllEvents(string SearchStringEventTitle, string iEventType, string iEventCategory, string iEventSubCategory, string strFeature, string Events, string tickets ,string type)
+        public List<EventList> GetAllEvents(string SearchStringEventTitle, string iEventType, string iEventCategory, string iEventSubCategory, string strFeature, string Events, string tickets ,string type)
         {
             string user = (Session["UserID"] != null ? Session["UserID"].ToString() : string.Empty);
-            V_EventsList obj = new V_EventsList();
+            EventList obj = new EventList();
             List<V_EventsList> objEv = new List<V_EventsList>();
+            List<V_EventsexpiredList> objEv2 = new List<V_EventsexpiredList>();
+            List<EventList> objEv3 = new List<EventList>();
             try {
                 using (EmsEntities objEntity = new EmsEntities())
                 {
@@ -910,11 +912,14 @@ namespace CMS.Controllers
                     {
                         if (Convert.ToInt32(Events) == 1)
                         {
-                            strsql += " And EV.E_Enddate > GETUTCDATE()";
+                            type = "M";
+
+                            //strsql += " And EV.E_Enddate > GETUTCDATE()";
                         }
                         if (Convert.ToInt32(Events) == 2)
                         {
-                            strsql += " And EV.E_Enddate < GETUTCDATE()";
+                            //strsql += " And EV.E_Enddate < GETUTCDATE()";
+                            type = "E";
                         }
                     }
                     if (Convert.ToInt32(tickets) > 0)
@@ -930,7 +935,7 @@ namespace CMS.Controllers
                     }
                         List<Object> sqlParamsList = new List<object>();
                         var eventID = new SqlParameter("@EventID", strsql);
-                        string sql = "";
+                       
                     if (type == "M")
                     {
                         if (!string.IsNullOrEmpty(strsql))
@@ -939,22 +944,87 @@ namespace CMS.Controllers
                         }
                         else
                         {
-                            objEv = db.V_EventsList.SqlQuery("Select *,1 sortby from V_EventsList ev where  ev.E_Startdate>=GETUTCDATE()  UNION ALL SELECT *, 2 sortby FROM V_EventsList  ev where  ev.E_Startdate<GETUTCDATE() ORDER   BY sortby,ev.E_Startdate").ToList<V_EventsList>();
+                            objEv = db.V_EventsList.SqlQuery("Select *  from V_EventsList ev").ToList<V_EventsList>();
                         }
                     }
                     else
                     {
                         if (!string.IsNullOrEmpty(strsql))
                         {
-                            objEv = db.V_EventsList.SqlQuery("Select * from [V_EventsexpiredList] EV where 1=1  " + strsql + " ").ToList<V_EventsList>();
+                            objEv2 = db.V_EventsexpiredList.SqlQuery("Select * from [V_EventsexpiredList] EV where 1=1  " + strsql + " ").ToList<V_EventsexpiredList>();
                         }
                         else
                         {
-                            objEv = db.V_EventsList.SqlQuery("Select * from [V_EventsexpiredList] ").ToList<V_EventsList>();
+                            objEv2 = db.V_EventsexpiredList.SqlQuery("Select * from [V_EventsexpiredList] ").ToList<V_EventsexpiredList>();
                         }
                     }
 
                     }
+
+                if (objEv.Count > 0)
+                {
+                    objEv3 = (from x in objEv
+                              select new EventList
+                              {
+                                  Sno = x.Sno,
+                                  EventTitle = x.EventTitle,
+                                  UserID = x.UserID,
+                                  EventID = x.EventID,
+                                  EventCategoryID = x.EventCategoryID,
+                                  EventCategory = x.EventCategory,
+                                  EventTypeID = x.EventTypeID,
+                                  EventType = x.EventType,
+                                  EventSubCategoryID = x.EventSubCategoryID,
+                                  EventSubCategory = x.EventSubCategory,
+                                  StartingFrom = x.StartingFrom,
+                                  EventStartTime = x.EventStartTime,
+                                  EventEndDate = x.EventEndDate,
+                                  EventEndTime = x.EventEndTime,
+                                  E_Enddate = x.E_Enddate,
+                                  E_Startdate = x.E_Startdate,
+                                  Orgnizer_Name = x.Orgnizer_Name,
+                                  Email = x.Email,
+                                  Feature = x.Feature,
+                                  EventAddress = x.EventAddress,
+                                  VenueName = x.VenueName,
+                                  TicketDetail = x.TicketDetail,
+                                  Purchasedqty = x.Purchasedqty,
+                                  EventTiming = x.EventTiming
+
+                              }).ToList();
+                }
+                else
+                {
+                    objEv3 = (from x in objEv2
+                              select new EventList
+                              {
+                                  Sno = x.Sno,
+                                  EventTitle = x.EventTitle,
+                                  UserID = x.UserID,
+                                  EventID = x.EventID,
+                                  EventCategoryID = x.EventCategoryID,
+                                  EventCategory = x.EventCategory,
+                                  EventTypeID = x.EventTypeID,
+                                  EventType = x.EventType,
+                                  EventSubCategoryID = x.EventSubCategoryID,
+                                  EventSubCategory = x.EventSubCategory,
+                                  StartingFrom = x.StartingFrom,
+                                  EventStartTime = x.EventStartTime,
+                                  EventEndDate = x.EventEndDate,
+                                  EventEndTime = x.EventEndTime,
+                                  E_Enddate = x.E_Enddate,
+                                  E_Startdate = x.E_Startdate,
+                                  Orgnizer_Name = x.Orgnizer_Name,
+                                  Email = x.Email,
+                                  Feature = x.Feature,
+                                  EventAddress = x.EventAddress,
+                                  VenueName = x.VenueName,
+                                  TicketDetail = x.TicketDetail,
+                                  Purchasedqty = x.Purchasedqty,
+                                  EventTiming = x.EventTiming
+
+                              }).ToList();
+                }
                 
             }catch(Exception ex)
             {
@@ -965,7 +1035,7 @@ namespace CMS.Controllers
             //objEv = objEv.OrderBy(m => m.EventTiming);
 
 
-            return objEv;
+            return objEv3;
 
         }
 
