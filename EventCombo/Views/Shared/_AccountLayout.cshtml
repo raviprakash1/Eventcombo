@@ -171,9 +171,7 @@
 
                                           <div id="collapse1" class="panel-collapse collapse@(ViewBag.CurrentItem == "account" ? " in" : "")">
                                             <div class="panel-body no-padding">
-                                              <p><a href="#" id="pAcc">My Account</a></p>
-                                                @*@Html.ActionLink("Personal Information", "MyAccount", "Account")*@
-                                                
+                                              <p>@Html.ActionLink("Personal Information", "MyAccount", "Account")</p>
                                               <p>@Html.ActionLink("My Purchased Ticket", "PurchasedTicket", "Account")</p>
                                               <p>@Html.ActionLink("My Purchased Deals", "PurchasedDeals", "Account")</p>
                                               <p>@Html.ActionLink("Manage Organizer", "OrganizerProfile", "Account")</p>
@@ -190,7 +188,8 @@
 
                                             <div id="collapse2" class="panel-collapse collapse">
                                                 <div class="panel-body no-padding">
-                                                    <p>@Html.ActionLink("Create Event", "CreateEvent", "CreateEvent")</p>
+                                                    
+                                                    <p><a href="#" id="pAcc">Create Event</a></p>
                                                     <p>@Html.ActionLink("My Events", "EventList", "EventList")</p>
                                                     @*<p>@Html.ActionLink("Live Events", "LiveEvents", "Account")</p>*@
                                                     @*<p>@Html.ActionLink("Past Events", "PastEvents", "Account")</p>*@
@@ -248,7 +247,25 @@
 
     </div>
     <div id="dtBox"></div>
+    <div class="modal fade" id="UserOrgnizer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+            <div class="modal-content">
+                <form id="contactForm" class="fullw1 add">
+                    <div class="modal-body text-center pv50 txt-msg">
+                        <h4 class="msg" id="hId">You are not authorized to create event, please contact admin</h4>
+                    </div>
+                    <div class="modal-footer msg-action-btn ok">
+                        <button type="button" class="btn btn-primary yes ok" id="btMessOk" data-dismiss="modal">OK</button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- confirm-msg -->
+    </div>
 
+    <div>
+        <a class="td-btn" id="btOkMes" type="button" data-backdrop="static" data-keyboard="false" href="#UserOrgnizer" data-toggle="modal" style="display:none">
+        </a>
+    </div>
 
     <script type="text/javascript">
         $(window).load(function () {
@@ -319,18 +336,21 @@
 
         $("#pAcc").click(function () {
             $.ajax({
-                url: '@Url.Action("UserOrgStatus", "CommanClasses")',
+                url: '@Url.Action("UserOrgStatus", "Home")',
                 type: "GET",
                 datatype: "Text",
                 success: function (data) {
-                    alert(data);
+                    if (data=="N")
+                    {
+                        $("#btOkMes").click();
+                    }
+                    else {
+                        window.location.href = '@Url.Action("CreateEvent", "CreateEvent")';
+                        @*@Html.ActionLink("Create Event", "CreateEvent", "CreateEvent")*@
+                    }
                 },
                 error: function (data) {
                     return false
-
-
-
-
                 }
             });
 

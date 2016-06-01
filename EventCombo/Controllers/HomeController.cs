@@ -184,6 +184,7 @@ namespace EventCombo.Controllers
                                 prof.IpState = state;
                                 prof.Ipcity = city;
                                 prof.UserStatus = "Y";
+                                prof.Organiser = "Y";
 
                                 objEntity.Profiles.Add(prof);
 
@@ -1418,7 +1419,29 @@ namespace EventCombo.Controllers
 
         }
 
-
+        public string UserOrgStatus()
+        {
+            using (EventComboEntities objEnt = new EventComboEntities())
+            {
+                string strUserId = "";
+                if (Session["AppId"] != null && strUserId == "")
+                    strUserId = Session["AppId"].ToString();
+                if (strUserId != "")
+                {
+                    var vUserOrgStatus = (from myUser in objEnt.Profiles where myUser.UserID == strUserId select myUser.Organiser).FirstOrDefault();
+                    if (vUserOrgStatus == null) return "N";
+                    if (vUserOrgStatus == "Y")
+                    {
+                        return "Y";
+                    }
+                    else { return "N"; }
+                }
+                else
+                {
+                    return "N";
+                }
+            }
+        }
         public ActionResult HomeEventList(string strPageIndex, string strLat, string strLong)
         {
 
@@ -2158,6 +2181,7 @@ namespace EventCombo.Controllers
                         prof.Ipcountry = country;
                         prof.IpState = state;
                         prof.Ipcity = city;
+                        prof.Organiser = "Y";
                         objEntity.Profiles.Add(prof);
 
 

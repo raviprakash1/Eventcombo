@@ -90,29 +90,7 @@ namespace EventCombo.Models
         }
 
 
-        public string UserOrgStatus()
-        {
-            using (EventComboEntities objEnt = new EventComboEntities())
-            {
-                string strUserId = "";
-                if (HttpContext.Current.Session["AppId"] != null && strUserId == "")
-                    strUserId = HttpContext.Current.Session["AppId"].ToString();
-                if (strUserId != "")
-                {
-                    var vUserOrgStatus = (from myUser in objEnt.Profiles where myUser.UserID == strUserId select myUser.Organiser).FirstOrDefault();
-                    if (vUserOrgStatus == null) return "N";
-                    if (vUserOrgStatus == "Y")
-                    {
-                        return "Y";
-                    }
-                    else { return "N"; }
-                }
-                else
-                {
-                    return "N";
-                }
-            }
-        }
+       
     }
 
 
