@@ -325,9 +325,9 @@ namespace CMS.Controllers
                 ddlEventSubCategory = ddlEventSubCategory != null ? ddlEventSubCategory : "0";
                 ddlEventCategory = ddlEventCategory != null ? ddlEventCategory : "0";
                 Features = Features != null ? Features : "0";
-                Events = Events != null ? Events : "0";
-                Tickets = Tickets != null ? Tickets : "0";
-                var objlst = GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features, Events, Tickets,"E");
+                Events = Events != null ? Events : "2";
+               var  TTickets = Tickets != null ? Tickets : "2";
+                var objlst = GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features, Events, TTickets, "E");
 
                 switch (sortorder)
                 {
@@ -488,8 +488,9 @@ namespace CMS.Controllers
                 TempData["ddlEventCategory"] = ddlEventCategory;
                 TempData["ddlEventSubCategory"] = ddlEventSubCategory;
                 TempData["Features"] = Features;
+             
                 TempData["Events"] = Events;
-                TempData["Tickets"] = Tickets;
+                TempData["Tickets"] = TTickets;
                 TempData["sortorder"] = sortorder;
 
 
@@ -809,21 +810,46 @@ namespace CMS.Controllers
                     TagEvents.Add(new SelectListItem()
                     {
                         Text = "Select",
-                        Value = "0",
-                        Selected = true
+                        Value = "0"
+                        
                     });
-                    TagEvents.Add(new SelectListItem()
+                    if (type == "M")
                     {
-                        Text = "Upcoming Events",
-                        Value = "1",
-                        Selected = true
-                    });
-                    TagEvents.Add(new SelectListItem()
+                        TagEvents.Add(new SelectListItem()
+                        {
+                            Text = "Upcoming Events",
+                            Value = "1"
+
+                        });
+                    }
+                    else
                     {
-                        Text = "Expired Events",
-                        Value = "2",
-                        Selected = true
-                    });
+                        TagEvents.Add(new SelectListItem()
+                        {
+                            Text = "Upcoming Events",
+                            Value = "1",
+                            Selected = true
+                        });
+                    }
+                    if (type == "E")
+                    {
+                        TagEvents.Add(new SelectListItem()
+                        {
+                            Text = "Expired Events",
+                            Value = "2",
+                            Selected = true
+                        });
+                    }
+                    else
+                    {
+                        TagEvents.Add(new SelectListItem()
+                        {
+                            Text = "Expired Events",
+                            Value = "2"
+                           
+                        });
+
+                    }
 
                     List<SelectListItem> Tickets = new List<SelectListItem>();
                     Tickets.Add(new SelectListItem()
@@ -955,7 +981,7 @@ namespace CMS.Controllers
                         }
                         else
                         {
-                            objEv2 = db.V_EventsexpiredList.SqlQuery("Select * from [V_EventsexpiredList] ").ToList<V_EventsexpiredList>();
+                            objEv2 = db.V_EventsexpiredList.SqlQuery("Select * from [V_EventsexpiredList]  ").ToList<V_EventsexpiredList>();
                         }
                     }
 
