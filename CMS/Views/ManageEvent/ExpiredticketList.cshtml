@@ -663,6 +663,11 @@
 
         var pagef = parseInt('@TempData["PageNo"]') - 1;
         $('#ddlPageF').val(pagef);
+        var Events='@TempData["Events"]' ;
+        var Tickets = '@TempData["Tickets"]';
+        //alert(Tickets);
+        $("#Events").val(Events);
+        $("#Tickets").val(Tickets);
     });
 
 </script>
