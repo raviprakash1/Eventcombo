@@ -53,39 +53,36 @@ namespace ASP
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n\r\n<script");
+WriteLiteral("\r\n");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 164), Tuple.Create("\"", 205)
-, Tuple.Create(Tuple.Create("", 170), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
-, 170), false)
-);
+            
+            #line 7 "..\..\Views\Account\OrganizerProfile.cshtml"
+Write(Scripts.Render("~/bundles/masked_input"));
 
-WriteLiteral("></script>\r\n<link");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 223), Tuple.Create("\"", 262)
-, Tuple.Create(Tuple.Create("", 230), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 230), false)
-);
+            
+            #line 8 "..\..\Views\Account\OrganizerProfile.cshtml"
+Write(Styles.Render("~/Content/jqueryfiller"));
 
-WriteLiteral(" rel=\"stylesheet\"");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
-WriteLiteral(" />\r\n\r\n<link");
+            
+            #line 9 "..\..\Views\Account\OrganizerProfile.cshtml"
+Write(Scripts.Render("~/bundles/jqueryfiller"));
 
-WriteAttribute("href", Tuple.Create(" href=\"", 292), Tuple.Create("\"", 349)
-, Tuple.Create(Tuple.Create("", 299), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 299), false)
-);
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n");
 
-WriteLiteral(" rel=\"stylesheet\"");
-
-WriteLiteral(" />\r\n<script");
-
-WriteAttribute("src", Tuple.Create(" src=\"", 379), Tuple.Create("\"", 416)
-, Tuple.Create(Tuple.Create("", 385), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 385), false)
-);
-
-WriteLiteral(@"></script>
+WriteLiteral(@"
 
 <style>
 .jFiler-input-dragDrop{width:200px; height:200px; padding:0px; max-width: 100%; }
@@ -127,9 +124,9 @@ WriteLiteral(" id=\"loader\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1928), Tuple.Create("\"", 1958)
-, Tuple.Create(Tuple.Create("", 1934), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajax-loader.gif")
-, 1934), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 2058), Tuple.Create("\"", 2088)
+, Tuple.Create(Tuple.Create("", 2064), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajax-loader.gif")
+, 2064), false)
 );
 
 WriteLiteral(" /></div>\r\n\r\n        <div");
@@ -220,13 +217,13 @@ WriteLiteral(" value=\"A\"");
 WriteLiteral("> Add Organizer </option>\r\n");
 
             
-            #line 72 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 74 "..\..\Views\Account\OrganizerProfile.cshtml"
                        
             
             #line default
             #line hidden
             
-            #line 72 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 74 "..\..\Views\Account\OrganizerProfile.cshtml"
                         foreach (var item in Model.Organizerdetail)
                        {
 
@@ -235,20 +232,20 @@ WriteLiteral("> Add Organizer </option>\r\n");
             #line hidden
 WriteLiteral("                        <option");
 
-WriteAttribute("value", Tuple.Create(" value=", 3270), Tuple.Create("", 3294)
+WriteAttribute("value", Tuple.Create(" value=", 3400), Tuple.Create("", 3424)
             
-            #line 74 "..\..\Views\Account\OrganizerProfile.cshtml"
-, Tuple.Create(Tuple.Create("", 3277), Tuple.Create<System.Object, System.Int32>(item.Orgnizer_Id
+            #line 76 "..\..\Views\Account\OrganizerProfile.cshtml"
+, Tuple.Create(Tuple.Create("", 3407), Tuple.Create<System.Object, System.Int32>(item.Orgnizer_Id
             
             #line default
             #line hidden
-, 3277), false)
+, 3407), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 74 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 76 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                    Write(item.Orgnizer_Name);
 
             
@@ -257,7 +254,7 @@ WriteLiteral(">");
 WriteLiteral("</option>\r\n");
 
             
-            #line 75 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 77 "..\..\Views\Account\OrganizerProfile.cshtml"
                        }
 
             
@@ -398,7 +395,7 @@ WriteLiteral(">\r\n\r\n    $(document).click(function () {\r\n        $(\'#diver
 "();\r\n        $(\'#divorgprofile\').show();\r\n        $(\'#divorgprofile\').load(\'");
 
             
-            #line 134 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 136 "..\..\Views\Account\OrganizerProfile.cshtml"
                              Write(Url.Action("OrganiserEdit", "Account", new { }));
 
             
@@ -409,7 +406,7 @@ WriteLiteral("?id=\' + id + \'\');\r\n    }\r\n    function LoadOrganiserAddAsyn
 "ofile\').load(\'");
 
             
-            #line 140 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 142 "..\..\Views\Account\OrganizerProfile.cshtml"
                              Write(Url.Action("AddOrganiser", "Account"));
 
             
@@ -444,7 +441,7 @@ WriteLiteral("\');\r\n    }\r\n    $(document).ready(function () {\r\n        $(
 "                url: \'");
 
             
-            #line 206 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 208 "..\..\Views\Account\OrganizerProfile.cshtml"
                      Write(Url.Action("chkOrganizerName", "Account"));
 
             
@@ -518,7 +515,7 @@ WriteLiteral("\',\r\n                    data: { Name: name, id: orgid },\r\n   
 "al(),\r\n\r\n            };\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 336 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 338 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("saveOrganizer", "Account"));
 
             
@@ -544,7 +541,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 353 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 355 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                Write(Url.Action("Index", "Home"));
 
             
@@ -572,7 +569,7 @@ WriteLiteral("\';\r\n\r\n                        }\r\n\r\n\r\n                  
 "x({\r\n                    url: \'");
 
             
-            #line 407 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 409 "..\..\Views\Account\OrganizerProfile.cshtml"
                      Write(Url.Action("DeleteOrganizer", "Account"));
 
             
@@ -598,7 +595,7 @@ WriteLiteral(@"',
                                 window.location.href = '");
 
             
-            #line 424 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 426 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                    Write(Url.Action("Index", "Home"));
 
             
@@ -638,7 +635,7 @@ WriteLiteral("\';\r\n\r\n                            }\r\n\r\n\r\n              
 " };\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 487 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 489 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("EditOrganizer", "Account"));
 
             
@@ -664,7 +661,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 504 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 506 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                Write(Url.Action("Index", "Home"));
 
             
@@ -700,7 +697,7 @@ WriteLiteral("\';\r\n\r\n                        }\r\n\r\n\r\n                  
 "        var request = $.ajax({\r\n                url: \'");
 
             
-            #line 581 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 583 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("Index", "ValidationMessage"));
 
             

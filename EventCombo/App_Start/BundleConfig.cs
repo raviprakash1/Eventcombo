@@ -39,6 +39,21 @@ namespace EventCombo
             bundles.Add(new StyleBundle("~/Content/multiselect").Include(
 
                  "~/Content/bootstrap-multiselect.css"));
+            bundles.Add(new StyleBundle("~/Content/eventcombonew").Include(
+
+               "~/Content/eventcombo-new.css"));
+            bundles.Add(new StyleBundle("~/Content/mapplaces").Include(
+
+              "~/Content/MapPlaces.css"));
+            bundles.Add(new StyleBundle("~/Content/jquery_ui").Include(
+
+            "~/Content/jquery-ui.css"));
+            bundles.Add(new StyleBundle("~/Content/jquery_ui").Include(
+
+         "~/Content/jquery-ui.css"));
+            bundles.Add(new StyleBundle("~/Content/jqueryfiller").Include(
+                 "~/Content/Filer/jquery.filer.css",
+                 "~/Content/Filer/jquery.filer-dragdropbox-theme.css"));
             bundles.Add(new StyleBundle("~/Content/datetimepicker").Include(
 
             "~/Content/datepicker.css"));
@@ -49,6 +64,13 @@ namespace EventCombo
             #region ThirdPartyScripts
             bundles.Add(new ScriptBundle("~/bundles/dropzonescripts").Include(
                      "~/Scripts/dropzone/dropzone.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jqueryfiller").Include(
+                   "~/Scripts/filer/jquery.filer.js"));
+            bundles.Add(new ScriptBundle("~/bundles/masked").Include(
+             "~/Scripts/jquery.masked.js"));
+            bundles.Add(new ScriptBundle("~/bundles/masked_input").Include(
+           "~/Scripts/jquery.maskedinput.min.js"));
+           
             bundles.Add(new ScriptBundle("~/bundles/timezonescripts").Include(
                     "~/Scripts/jquery.timepicker.js",
                     "~/Scripts/jquery.cookie.js",
@@ -62,13 +84,13 @@ namespace EventCombo
                    "~/Scripts/summernote.min.js"));
             bundles.Add(new ScriptBundle("~/bundles/boostrapmulti").Include(
               "~/Scripts/bootstrap-multiselect.js",
-              "~/Scripts/DateTimePicker.js",
-              "~/Scripts/bootstrap-datepicker.js"
+              "~/Scripts/DateTimePicker.js"
+              
               ));
-            bundles.Add(new ScriptBundle("~/bundles/datetimepicker").Include(
-            "~/Scripts/DateTimePicker.js"
+           // bundles.Add(new ScriptBundle("~/bundles/datetimepicker").Include(
+           // "~/Scripts/DateTimePicker.js"
          
-           ));
+           //));
             #endregion
 
 

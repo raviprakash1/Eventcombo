@@ -4,13 +4,15 @@
     ViewBag.Title = "OrganizerProfile";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
+@Scripts.Render("~/bundles/masked_input")
+@Styles.Render("~/Content/jqueryfiller")
+@Scripts.Render("~/bundles/jqueryfiller")
 
-
-<script src="~/Scripts/jquery.maskedinput.min.js"></script>
+@*<script src="~/Scripts/jquery.maskedinput.min.js"></script>
 <link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
 
 <link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
-<script src="~/Scripts/filer/jquery.filer.js"></script>
+<script src="~/Scripts/filer/jquery.filer.js"></script>*@
 
 <style>
 .jFiler-input-dragDrop{width:200px; height:200px; padding:0px; max-width: 100%; }

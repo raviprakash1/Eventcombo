@@ -230,17 +230,8 @@ Write(Scripts.Render("~/bundles/validation"));
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\r\n    ");
 
-WriteLiteral("    ");
-
-            
-            #line 46 "..\..\Views\Shared\_AccountLayout.cshtml"
-Write(Scripts.Render("~/bundles/datetimepicker"));
-
-            
-            #line default
-            #line hidden
 WriteLiteral("\r\n    ");
 
 WriteLiteral("\r\n    ");
@@ -275,9 +266,9 @@ WriteLiteral(" href=\"/Home/Index\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 3016), Tuple.Create("\"", 3039)
-, Tuple.Create(Tuple.Create("", 3022), Tuple.Create<System.Object, System.Int32>(Href("~/Images/logo.png")
-, 3022), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 3020), Tuple.Create("\"", 3043)
+, Tuple.Create(Tuple.Create("", 3026), Tuple.Create<System.Object, System.Int32>(Href("~/Images/logo.png")
+, 3026), false)
 );
 
 WriteLiteral(" /></a>\r\n            </div>\r\n");
@@ -414,9 +405,9 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 4707), Tuple.Create("\"", 4728)
-, Tuple.Create(Tuple.Create("", 4713), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
-, 4713), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 4711), Tuple.Create("\"", 4732)
+, Tuple.Create(Tuple.Create("", 4717), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
+, 4717), false)
 );
 
 WriteLiteral(" /></a>\r\n                    <a");
@@ -427,9 +418,9 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 4823), Tuple.Create("\"", 4844)
-, Tuple.Create(Tuple.Create("", 4829), Tuple.Create<System.Object, System.Int32>(Href("~/Images/tw.png")
-, 4829), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 4827), Tuple.Create("\"", 4848)
+, Tuple.Create(Tuple.Create("", 4833), Tuple.Create<System.Object, System.Int32>(Href("~/Images/tw.png")
+, 4833), false)
 );
 
 WriteLiteral(" /></a>\r\n                    ");
@@ -468,14 +459,14 @@ WriteLiteral("                    <input");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=", 5359), Tuple.Create("", 5400)
+WriteAttribute("value", Tuple.Create(" value=", 5363), Tuple.Create("", 5404)
             
             #line 115 "..\..\Views\Shared\_AccountLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 5366), Tuple.Create<System.Object, System.Int32>(CookieStore.GetCookie("ckHeader")
+, Tuple.Create(Tuple.Create("", 5370), Tuple.Create<System.Object, System.Int32>(CookieStore.GetCookie("ckHeader")
             
             #line default
             #line hidden
-, 5366), false)
+, 5370), false)
 );
 
 WriteLiteral(" id=\"hdheader\"");
@@ -576,17 +567,17 @@ WriteLiteral(" class=\"col-sm-12 filter_sep cont_margin\"");
 
 WriteLiteral(">\r\n            <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 6477), Tuple.Create("\"", 6560)
-, Tuple.Create(Tuple.Create("", 6483), Tuple.Create<System.Object, System.Int32>(Href("~/Images/desi-")
-, 6483), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 6481), Tuple.Create("\"", 6564)
+, Tuple.Create(Tuple.Create("", 6487), Tuple.Create<System.Object, System.Int32>(Href("~/Images/desi-")
+, 6487), false)
             
             #line 140 "..\..\Views\Shared\_AccountLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 6497), Tuple.Create<System.Object, System.Int32>(HttpContext.Current.Session["logo"].ToString().Trim()
+, Tuple.Create(Tuple.Create("", 6501), Tuple.Create<System.Object, System.Int32>(HttpContext.Current.Session["logo"].ToString().Trim()
             
             #line default
             #line hidden
-, 6497), false)
-, Tuple.Create(Tuple.Create("", 6551), Tuple.Create("-logo.gif", 6551), true)
+, 6501), false)
+, Tuple.Create(Tuple.Create("", 6555), Tuple.Create("-logo.gif", 6555), true)
 );
 
 WriteLiteral(">\r\n            <div");
@@ -760,15 +751,15 @@ WriteLiteral(">\r\n                                              <div");
 
 WriteLiteral(" id=\"dvacmang\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 8528), Tuple.Create("\"", 8601)
-, Tuple.Create(Tuple.Create("", 8536), Tuple.Create("panel-heading", 8536), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 8532), Tuple.Create("\"", 8605)
+, Tuple.Create(Tuple.Create("", 8540), Tuple.Create("panel-heading", 8540), true)
             
             #line 183 "..\..\Views\Shared\_AccountLayout.cshtml"
-      , Tuple.Create(Tuple.Create("", 8549), Tuple.Create<System.Object, System.Int32>(ViewBag.CurrentItem == "account" ? " active" : ""
+      , Tuple.Create(Tuple.Create("", 8553), Tuple.Create<System.Object, System.Int32>(ViewBag.CurrentItem == "account" ? " active" : ""
             
             #line default
             #line hidden
-, 8549), false)
+, 8553), false)
 );
 
 WriteLiteral(">\r\n                                                Account <b");
@@ -780,16 +771,16 @@ WriteLiteral("></b>\r\n                                              </div>\r\n 
 
 WriteLiteral(" id=\"collapse1\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 8852), Tuple.Create("\"", 8931)
-, Tuple.Create(Tuple.Create("", 8860), Tuple.Create("panel-collapse", 8860), true)
-, Tuple.Create(Tuple.Create(" ", 8874), Tuple.Create("collapse", 8875), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 8856), Tuple.Create("\"", 8935)
+, Tuple.Create(Tuple.Create("", 8864), Tuple.Create("panel-collapse", 8864), true)
+, Tuple.Create(Tuple.Create(" ", 8878), Tuple.Create("collapse", 8879), true)
             
             #line 188 "..\..\Views\Shared\_AccountLayout.cshtml"
-             , Tuple.Create(Tuple.Create("", 8883), Tuple.Create<System.Object, System.Int32>(ViewBag.CurrentItem == "account" ? " in" : ""
+             , Tuple.Create(Tuple.Create("", 8887), Tuple.Create<System.Object, System.Int32>(ViewBag.CurrentItem == "account" ? " in" : ""
             
             #line default
             #line hidden
-, 8883), false)
+, 8887), false)
 );
 
 WriteLiteral(">\r\n                                            <div");
