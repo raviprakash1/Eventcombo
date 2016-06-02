@@ -33,6 +33,9 @@ namespace EventCombo
                     "~/Content/jquery.timepicker.css",
                    "~/Content/ec-select.css",
                    "~/Content/eventcombo.css"));
+            bundles.Add(new StyleBundle("~/Content/fontawsome").Include(
+                    "~/Content/font-awesome.min.css"));
+            
             bundles.Add(new StyleBundle("~/Content/summernote").Include(
 
                   "~/Content/summernote.css"));
@@ -53,7 +56,8 @@ namespace EventCombo
          "~/Content/jquery-ui.css"));
             bundles.Add(new StyleBundle("~/Content/jqueryfiller").Include(
                  "~/Content/Filer/jquery.filer.css",
-                 "~/Content/Filer/jquery.filer-dragdropbox-theme.css"));
+                 "~/Content/Filer/jquery.filer-dragdropbox-theme.css",
+                 "~/Content/Filer/assets/fonts/jquery.filer-icons/jquery-filer.css"));
             bundles.Add(new StyleBundle("~/Content/datetimepicker").Include(
 
             "~/Content/datepicker.css"));

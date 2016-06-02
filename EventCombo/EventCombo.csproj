@@ -755,6 +755,7 @@
     <Content Include="Content\eventcombo.css" />
     <Content Include="Content\filter-dropdown.css" />
     <Content Include="Content\flipclock.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\jquery-te-1.4.0.css" />
     <Content Include="Content\jquery-te.png" />
     <Content Include="Content\manageattendees.css" />
@@ -763,6 +764,7 @@
     <Content Include="Content\OrderFormDesign.css" />
     <Content Include="Content\PurchasedTicket.css" />
     <Content Include="email-content-pdf%281%29.html" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="html\error.html" />
     <Content Include="Images\ajax-loader.gif" />
     <Content Include="Images\ajax-loaderMini.gif" />
@@ -1094,6 +1096,12 @@
     <Content Include="Models\EventComboModel.edmx.diagram">
       <DependentUpon>EventComboModel.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\abel-regular.woff2" />
     <None Include="Properties\PublishProfiles\depoy1.pubxml" />
     <None Include="Properties\PublishProfiles\eventcombo.pubxml" />
     <None Include="Properties\PublishProfiles\IISHostDemo.pubxml" />
