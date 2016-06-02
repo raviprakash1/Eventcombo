@@ -11,6 +11,8 @@ namespace EventCombo
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jquery11.2").Include(
+                       "~/Scripts/jquery-1.11.2.min.js"));
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
@@ -21,21 +23,47 @@ namespace EventCombo
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js",
-                      "~/Scripts/main.js"));
+                       "~/Scripts/main.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css",
-                      "~/Content/jquery.timepicker.css",
-                      "~/Content/ec-select.css",
-                      "~/Content/eventcombo.css"));
+            bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
+                      "~/Content/bootstrap.css"));
+            #region ThirdPartycss
+            bundles.Add(new StyleBundle("~/Content/timepicker").Include(
+                   
+                    "~/Content/jquery.timepicker.css",
+                   "~/Content/ec-select.css",
+                   "~/Content/eventcombo.css"));
+            bundles.Add(new StyleBundle("~/Content/dropzonescss").Include(
+                  "~/Scripts/dropzone/css/basic.css",
+                  "~/Scripts/dropzone/css/dropzone.css"));
+            #endregion
+            #region ThirdPartyScripts
             bundles.Add(new ScriptBundle("~/bundles/dropzonescripts").Include(
                      "~/Scripts/dropzone/dropzone.js"));
-            bundles.Add(new StyleBundle("~/Content/dropzonescss").Include(
-                     "~/Scripts/dropzone/css/basic.css",
-                     "~/Scripts/dropzone/css/dropzone.css"));
-           
+            bundles.Add(new ScriptBundle("~/bundles/timezonescripts").Include(
+                    "~/Scripts/jquery.timepicker.js",
+                    "~/Scripts/jquery.cookie.js",
+                    "~/Scripts/ec-select.js"));
+            bundles.Add(new ScriptBundle("~/bundles/googleapis").Include(
+                   "~/Scripts/jquery.googleapis-places.js"));
+            bundles.Add(new ScriptBundle("~/bundles/validation").Include(
+                    "~/Scripts/Validation.js",
+                    "~/Scripts/jquery-ui.js"));
+            bundles.Add(new ScriptBundle("~/bundles/summernote").Include(
+                   "~/Scripts/summernote.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/boostrapmulti").Include(
+              "~/Scripts/bootstrap-multiselect.js",
+              "~/Scripts/DateTimePicker.js",
+              "~/Scripts/bootstrap-datepicker.js"
+              ));
+            bundles.Add(new ScriptBundle("~/bundles/datetimepicker").Include(
+            "~/Scripts/DateTimePicker.js"
+         
+           ));
+            #endregion
+
+
+
 
         }
     }

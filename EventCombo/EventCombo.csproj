@@ -1110,6 +1110,7 @@
     <Content Include="Scripts\image-upload.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-1.11.2.min.js" />
     <Content Include="Scripts\jquery-te-1.4.0.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\external\jquery\jquery.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -1134,6 +1135,7 @@
     <Content Include="Scripts\jquery-ui-1.11.4.custom\jquery-ui.structure.min.css" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\jquery-ui.theme.css" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\jquery-ui.theme.min.css" />
+    <Content Include="Scripts\jquery.1.11.2.js" />
     <Content Include="Scripts\jquery.appendGrid\appendGrid.jquery.json" />
     <Content Include="Scripts\jquery.appendGrid\CHANGELOG.md" />
     <Content Include="Scripts\jquery.appendGrid\LGPL-LICENSE.md" />
@@ -1160,6 +1162,7 @@
     <Content Include="Scripts\jquery.creditCardValidator.js" />
     <Content Include="Scripts\jquery.geocomplete.js" />
     <Content Include="Scripts\jquery.geocomplete.min.js" />
+    <Content Include="Scripts\jquery.googleapis-places.js" />
     <Content Include="Scripts\jquery.icalendar.pack.js" />
     <Content Include="Scripts\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\jquery.isotope.min.js" />
