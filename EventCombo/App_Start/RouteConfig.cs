@@ -63,7 +63,7 @@ namespace EventCombo
                 name: "Default",
                 namespaces: new[] { "EventCombo.Controllers" },
                 url: "{controller}/{action}",
-                defaults: new { controller = "Home", action = "Index" }
+                defaults: new { Controller = "Home", action = "Index"}
             );
             //routes.MapRoute("ViewEvent", "CreateEvent/{strUrlData} ", new { controller = "CreateEvent", action = "ViewEvent", strUrlData = UrlParameter.Optional });
         }

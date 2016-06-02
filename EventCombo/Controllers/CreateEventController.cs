@@ -22,6 +22,7 @@ using EventCombo.Utils;
 using System.Data.Entity.SqlServer;
 using System.Web.UI;
 using System.Configuration;
+using EventCombo.ViewModels;
 
 namespace EventCombo.Controllers
 {
@@ -104,7 +105,10 @@ namespace EventCombo.Controllers
             }
             return tickettype;
         }
-
+        public ActionResult UserOrgnizerStatus()
+        {
+            return View();
+        }
 
         public ActionResult CreateEvent()
         {
@@ -114,6 +118,12 @@ namespace EventCombo.Controllers
                 try {
 
                     string User = Session["AppId"].ToString();
+                    if (CommanClasses.UserOrganizerStatus(User) == false)
+                    {
+                        //string str = Url.Action("UserOrgnizerStatus", "UserOrgnizerStatus");
+                        //string str = Url.Action("Index", "Home", new { lat = CookieStore.GetCookie("Lat"), lng = CookieStore.GetCookie("Long"), page = "1", strParm="Y" });
+                        return RedirectToAction("Index", "Home", new { lat = CookieStore.GetCookie("Lat"), lng = CookieStore.GetCookie("Long"), page = "1", strParm = "Y" });
+                    }
                     using (EventComboEntities db = new EventComboEntities())
                     {
                         AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == User);

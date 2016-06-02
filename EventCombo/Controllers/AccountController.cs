@@ -2168,7 +2168,8 @@ namespace EventCombo.Controllers
                 prof.IpState = state;
                 prof.Ipcity = city;
                 prof.UserStatus = "Y";
-                objEntity.Profiles.Add(prof);
+                                prof.Organiser = "Y";
+                                objEntity.Profiles.Add(prof);
 
                 objEntity.SaveChanges();
 
