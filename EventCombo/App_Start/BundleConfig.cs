@@ -33,6 +33,15 @@ namespace EventCombo
                     "~/Content/jquery.timepicker.css",
                    "~/Content/ec-select.css",
                    "~/Content/eventcombo.css"));
+            bundles.Add(new StyleBundle("~/Content/summernote").Include(
+
+                  "~/Content/summernote.css"));
+            bundles.Add(new StyleBundle("~/Content/multiselect").Include(
+
+                 "~/Content/bootstrap-multiselect.css"));
+            bundles.Add(new StyleBundle("~/Content/datetimepicker").Include(
+
+            "~/Content/datepicker.css"));
             bundles.Add(new StyleBundle("~/Content/dropzonescss").Include(
                   "~/Scripts/dropzone/css/basic.css",
                   "~/Scripts/dropzone/css/dropzone.css"));
