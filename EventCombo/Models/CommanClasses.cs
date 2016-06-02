@@ -85,7 +85,7 @@ namespace EventCombo.Models
                 {
                     return true;
                 }
-                else { return true; }
+                else { return false; }
             }
         }
 
