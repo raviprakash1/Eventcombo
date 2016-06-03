@@ -19,7 +19,6 @@
   position: absolute;
   display: block;
   overflow: hidden;
-  zoom: 1;
 }
 
 .nav-collapse.opened {
@@ -33,7 +32,6 @@
   -moz-user-select: none;
   -ms-user-select: none;
   -o-user-select: none;
-  user-select: none;
 }
 
 @media screen and (min-width: 40em) {
