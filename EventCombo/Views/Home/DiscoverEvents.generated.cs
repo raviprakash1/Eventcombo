@@ -1768,6 +1768,7 @@ WriteLiteral(">\r\n");
                 foreach (var item in (PagedList.IPagedList<EventCombo.Models.DiscoverEvent>)ViewBag.DisEvnt)
                 {
                     iCnt = 1;
+                    string eventLink = Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(@item.EventId).ToString() });
 
             
             #line default
@@ -1792,21 +1793,41 @@ WriteLiteral(">\r\n                                    <div");
 
 WriteLiteral(" class=\"dis_evnt_img\"");
 
-WriteLiteral("><img");
+WriteLiteral("><a");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 20935), Tuple.Create("\"", 20957)
+WriteAttribute("href", Tuple.Create(" href=\'", 21222), Tuple.Create("\'", 21239)
             
-            #line 327 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 20941), Tuple.Create<System.Object, System.Int32>(item.EventImage
+            #line 328 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 21229), Tuple.Create<System.Object, System.Int32>(eventLink
             
             #line default
             #line hidden
-, 20941), false)
+, 21229), false)
 );
 
-WriteLiteral(" alt=\"\"");
+WriteLiteral("><img");
 
-WriteLiteral("></div>\r\n                                    ");
+WriteAttribute("src", Tuple.Create(" src=\"", 21245), Tuple.Create("\"", 21267)
+            
+            #line 328 "..\..\Views\Home\DiscoverEvents.cshtml"
+            , Tuple.Create(Tuple.Create("", 21251), Tuple.Create<System.Object, System.Int32>(item.EventImage
+            
+            #line default
+            #line hidden
+, 21251), false)
+);
+
+WriteAttribute("alt", Tuple.Create(" alt=\"", 21268), Tuple.Create("\"", 21290)
+            
+            #line 328 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                   , Tuple.Create(Tuple.Create("", 21274), Tuple.Create<System.Object, System.Int32>(item.EventTitle
+            
+            #line default
+            #line hidden
+, 21274), false)
+);
+
+WriteLiteral("></a></div>\r\n                                    ");
 
 WriteLiteral("\r\n\r\n                                </div>\r\n                                <div");
 
@@ -1818,21 +1839,21 @@ WriteLiteral(" class=\"list_event_desc_title xs-title-height d_xs_pad_l0 desc_pl
 
 WriteLiteral("><a");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 21344), Tuple.Create("\'", 21599)
+WriteAttribute("href", Tuple.Create(" href=\'", 21674), Tuple.Create("\'", 21691)
             
-            #line 332 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                    , Tuple.Create(Tuple.Create("", 21351), Tuple.Create<System.Object, System.Int32>(Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(@item.EventId).ToString() })
+            #line 333 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                    , Tuple.Create(Tuple.Create("", 21681), Tuple.Create<System.Object, System.Int32>(eventLink
             
             #line default
             #line hidden
-, 21351), false)
+, 21681), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 332 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                                                                                                                                                                                                                                                                                                                                          Write(item.EventTitle);
+            #line 333 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                            Write(item.EventTitle);
 
             
             #line default
@@ -1846,7 +1867,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                        ");
 
             
-            #line 334 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 335 "..\..\Views\Home\DiscoverEvents.cshtml"
                                    Write(item.EventAddress);
 
             
@@ -1862,13 +1883,13 @@ WriteLiteral(" class=\"col-sm-12 col-xs-12 no_pad\"");
 WriteLiteral(">\r\n");
 
             
-            #line 341 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 342 "..\..\Views\Home\DiscoverEvents.cshtml"
                                     
             
             #line default
             #line hidden
             
-            #line 341 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 342 "..\..\Views\Home\DiscoverEvents.cshtml"
                                      if (@item.PriceLable.ToLower().Trim() == "free")
                                     {
 
@@ -1884,7 +1905,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                            ");
 
             
-            #line 344 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 345 "..\..\Views\Home\DiscoverEvents.cshtml"
                                        Write(item.PriceLable);
 
             
@@ -1893,7 +1914,7 @@ WriteLiteral("                                            ");
 WriteLiteral("\r\n                                        </div>\r\n");
 
             
-            #line 346 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 347 "..\..\Views\Home\DiscoverEvents.cshtml"
 
                                     }
                                     else
@@ -1911,7 +1932,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                            ");
 
             
-            #line 351 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 352 "..\..\Views\Home\DiscoverEvents.cshtml"
                                        Write(item.PriceLable);
 
             
@@ -1920,7 +1941,7 @@ WriteLiteral("                                            ");
 WriteLiteral("\r\n                                        </div>\r\n");
 
             
-            #line 353 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 354 "..\..\Views\Home\DiscoverEvents.cshtml"
                                     }
 
             
@@ -1935,7 +1956,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                        ");
 
             
-            #line 355 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 356 "..\..\Views\Home\DiscoverEvents.cshtml"
                                    Write(item.EventTimings);
 
             
@@ -1958,22 +1979,22 @@ WriteLiteral(">\r\n                                        <li><a");
 
 WriteLiteral(" href=\"javascript:void(0);\"");
 
-WriteAttribute("onclick", Tuple.Create(" onclick=\"", 23423), Tuple.Create("\"", 23468)
-, Tuple.Create(Tuple.Create("", 23433), Tuple.Create("FilterEventType(", 23433), true)
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 23515), Tuple.Create("\"", 23560)
+, Tuple.Create(Tuple.Create("", 23525), Tuple.Create("FilterEventType(", 23525), true)
             
-            #line 362 "..\..\Views\Home\DiscoverEvents.cshtml"
-                  , Tuple.Create(Tuple.Create("", 23449), Tuple.Create<System.Object, System.Int32>(item.EventTypeId
+            #line 363 "..\..\Views\Home\DiscoverEvents.cshtml"
+                  , Tuple.Create(Tuple.Create("", 23541), Tuple.Create<System.Object, System.Int32>(item.EventTypeId
             
             #line default
             #line hidden
-, 23449), false)
-, Tuple.Create(Tuple.Create("", 23466), Tuple.Create(");", 23466), true)
+, 23541), false)
+, Tuple.Create(Tuple.Create("", 23558), Tuple.Create(");", 23558), true)
 );
 
 WriteLiteral(">#");
 
             
-            #line 362 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 363 "..\..\Views\Home\DiscoverEvents.cshtml"
                                                                                                                     Write(item.EventType);
 
             
@@ -1983,22 +2004,22 @@ WriteLiteral(" </a></li>\r\n                                        <li><a");
 
 WriteLiteral(" href=\"javascript:void(0);\"");
 
-WriteAttribute("onclick", Tuple.Create(" onclick=\"", 23571), Tuple.Create("\"", 23619)
-, Tuple.Create(Tuple.Create("", 23581), Tuple.Create("FilterEventCategory(", 23581), true)
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 23663), Tuple.Create("\"", 23711)
+, Tuple.Create(Tuple.Create("", 23673), Tuple.Create("FilterEventCategory(", 23673), true)
             
-            #line 363 "..\..\Views\Home\DiscoverEvents.cshtml"
-                      , Tuple.Create(Tuple.Create("", 23601), Tuple.Create<System.Object, System.Int32>(item.EventCatId
+            #line 364 "..\..\Views\Home\DiscoverEvents.cshtml"
+                      , Tuple.Create(Tuple.Create("", 23693), Tuple.Create<System.Object, System.Int32>(item.EventCatId
             
             #line default
             #line hidden
-, 23601), false)
-, Tuple.Create(Tuple.Create("", 23617), Tuple.Create(");", 23617), true)
+, 23693), false)
+, Tuple.Create(Tuple.Create("", 23709), Tuple.Create(");", 23709), true)
 );
 
 WriteLiteral(">#");
 
             
-            #line 363 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 364 "..\..\Views\Home\DiscoverEvents.cshtml"
                                                                                                                        Write(item.EventCat);
 
             
@@ -2012,13 +2033,13 @@ WriteLiteral(" class=\"col-sm-3 col-xs-3 no_pad text-right \"");
 WriteLiteral(">\r\n");
 
             
-            #line 367 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 368 "..\..\Views\Home\DiscoverEvents.cshtml"
                                     
             
             #line default
             #line hidden
             
-            #line 367 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 368 "..\..\Views\Home\DiscoverEvents.cshtml"
                                      if (@item.EventPrivacy == "Y")
                                     {
 
@@ -2029,27 +2050,27 @@ WriteLiteral("                                        <button");
 
 WriteLiteral(" class=\"desc_btn_bg_none desc_share_btn share_like_btn\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 24025), Tuple.Create("\"", 24055)
-, Tuple.Create(Tuple.Create("", 24033), Tuple.Create("Share", 24033), true)
+WriteAttribute("title", Tuple.Create(" title=\"", 24117), Tuple.Create("\"", 24147)
+, Tuple.Create(Tuple.Create("", 24125), Tuple.Create("Share", 24125), true)
             
-            #line 369 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                  , Tuple.Create(Tuple.Create(" ", 24038), Tuple.Create<System.Object, System.Int32>(item.EventTitle
+            #line 370 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                  , Tuple.Create(Tuple.Create(" ", 24130), Tuple.Create<System.Object, System.Int32>(item.EventTitle
             
             #line default
             #line hidden
-, 24039), false)
+, 24131), false)
 );
 
-WriteAttribute("onclick", Tuple.Create(" onclick=\"", 24056), Tuple.Create("\"", 24326)
-, Tuple.Create(Tuple.Create("", 24066), Tuple.Create("ShowUrl(\'", 24066), true)
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 24148), Tuple.Create("\"", 24418)
+, Tuple.Create(Tuple.Create("", 24158), Tuple.Create("ShowUrl(\'", 24158), true)
             
-            #line 369 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                                       , Tuple.Create(Tuple.Create("", 24075), Tuple.Create<System.Object, System.Int32>(Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(@item.EventId).ToString() })
+            #line 370 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                       , Tuple.Create(Tuple.Create("", 24167), Tuple.Create<System.Object, System.Int32>(Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(@item.EventId).ToString() })
             
             #line default
             #line hidden
-, 24075), false)
-, Tuple.Create(Tuple.Create("", 24323), Tuple.Create("\');", 24323), true)
+, 24167), false)
+, Tuple.Create(Tuple.Create("", 24415), Tuple.Create("\');", 24415), true)
 );
 
 WriteLiteral(" type=\"button\"");
@@ -2060,9 +2081,9 @@ WriteLiteral(" data-target=\"#sharemodal\"");
 
 WriteLiteral(">\r\n                                            <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 24438), Tuple.Create("\"", 24467)
-, Tuple.Create(Tuple.Create("", 24444), Tuple.Create<System.Object, System.Int32>(Href("~/Images/share_icon.png")
-, 24444), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 24530), Tuple.Create("\"", 24559)
+, Tuple.Create(Tuple.Create("", 24536), Tuple.Create<System.Object, System.Int32>(Href("~/Images/share_icon.png")
+, 24536), false)
 );
 
 WriteLiteral(" alt=\"share event\"");
@@ -2070,7 +2091,7 @@ WriteLiteral(" alt=\"share event\"");
 WriteLiteral(">\r\n                                        </button>\r\n");
 
             
-            #line 372 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 373 "..\..\Views\Home\DiscoverEvents.cshtml"
                                     }
 
             
@@ -2079,7 +2100,7 @@ WriteLiteral(">\r\n                                        </button>\r\n");
 WriteLiteral("                                    ");
 
             
-            #line 373 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 374 "..\..\Views\Home\DiscoverEvents.cshtml"
                                      if (@item.EventLike == "I")
                                     {
 
@@ -2090,29 +2111,29 @@ WriteLiteral("                                        <button");
 
 WriteLiteral(" class=\"desc_btn_bg_none desc_btn_bg_active share_like_btn show_like_btn\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 24804), Tuple.Create("\"", 24835)
-, Tuple.Create(Tuple.Create("", 24809), Tuple.Create("btnfavourite-", 24809), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 24896), Tuple.Create("\"", 24927)
+, Tuple.Create(Tuple.Create("", 24901), Tuple.Create("btnfavourite-", 24901), true)
             
-            #line 375 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                         , Tuple.Create(Tuple.Create("", 24822), Tuple.Create<System.Object, System.Int32>(item.EventId
+            #line 376 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                         , Tuple.Create(Tuple.Create("", 24914), Tuple.Create<System.Object, System.Int32>(item.EventId
             
             #line default
             #line hidden
-, 24822), false)
+, 24914), false)
 );
 
 WriteLiteral(" title=\"Your Favourite\"");
 
-WriteAttribute("onclick", Tuple.Create(" onclick=\"", 24859), Tuple.Create("\"", 24898)
-, Tuple.Create(Tuple.Create("", 24869), Tuple.Create("SaveFav(\'Y\',\'", 24869), true)
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 24951), Tuple.Create("\"", 24990)
+, Tuple.Create(Tuple.Create("", 24961), Tuple.Create("SaveFav(\'Y\',\'", 24961), true)
             
-            #line 375 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                                                                                     , Tuple.Create(Tuple.Create("", 24882), Tuple.Create<System.Object, System.Int32>(item.EventId
+            #line 376 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                                     , Tuple.Create(Tuple.Create("", 24974), Tuple.Create<System.Object, System.Int32>(item.EventId
             
             #line default
             #line hidden
-, 24882), false)
-, Tuple.Create(Tuple.Create("", 24895), Tuple.Create("\');", 24895), true)
+, 24974), false)
+, Tuple.Create(Tuple.Create("", 24987), Tuple.Create("\');", 24987), true)
 );
 
 WriteLiteral(" type=\"button\"");
@@ -2124,7 +2145,7 @@ WriteLiteral(" class=\"fa fa-heart\"");
 WriteLiteral("></i>\r\n                                        </button>\r\n");
 
             
-            #line 378 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 379 "..\..\Views\Home\DiscoverEvents.cshtml"
                                     }
                                     else
                                     {
@@ -2136,29 +2157,29 @@ WriteLiteral("                                        <button");
 
 WriteLiteral(" class=\"desc_btn_bg_none desc_btn_bg_active share_like_btn\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 25266), Tuple.Create("\"", 25297)
-, Tuple.Create(Tuple.Create("", 25271), Tuple.Create("btnfavourite-", 25271), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 25358), Tuple.Create("\"", 25389)
+, Tuple.Create(Tuple.Create("", 25363), Tuple.Create("btnfavourite-", 25363), true)
             
-            #line 381 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                           , Tuple.Create(Tuple.Create("", 25284), Tuple.Create<System.Object, System.Int32>(item.EventId
+            #line 382 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                           , Tuple.Create(Tuple.Create("", 25376), Tuple.Create<System.Object, System.Int32>(item.EventId
             
             #line default
             #line hidden
-, 25284), false)
+, 25376), false)
 );
 
 WriteLiteral(" title=\"Your Favourite\"");
 
-WriteAttribute("onclick", Tuple.Create(" onclick=\"", 25321), Tuple.Create("\"", 25360)
-, Tuple.Create(Tuple.Create("", 25331), Tuple.Create("SaveFav(\'Y\',\'", 25331), true)
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 25413), Tuple.Create("\"", 25452)
+, Tuple.Create(Tuple.Create("", 25423), Tuple.Create("SaveFav(\'Y\',\'", 25423), true)
             
-            #line 381 "..\..\Views\Home\DiscoverEvents.cshtml"
-                                                                                                       , Tuple.Create(Tuple.Create("", 25344), Tuple.Create<System.Object, System.Int32>(item.EventId
+            #line 382 "..\..\Views\Home\DiscoverEvents.cshtml"
+                                                                                                       , Tuple.Create(Tuple.Create("", 25436), Tuple.Create<System.Object, System.Int32>(item.EventId
             
             #line default
             #line hidden
-, 25344), false)
-, Tuple.Create(Tuple.Create("", 25357), Tuple.Create("\');", 25357), true)
+, 25436), false)
+, Tuple.Create(Tuple.Create("", 25449), Tuple.Create("\');", 25449), true)
 );
 
 WriteLiteral(" type=\"button\"");
@@ -2170,7 +2191,7 @@ WriteLiteral(" class=\"fa fa-heart\"");
 WriteLiteral("></i>\r\n                                        </button>\r\n");
 
             
-            #line 384 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 385 "..\..\Views\Home\DiscoverEvents.cshtml"
                                     }
 
             
@@ -2180,7 +2201,7 @@ WriteLiteral("                                </div>\r\n                        
 "                   </div>\r\n\r\n                    </div>\r\n");
 
             
-            #line 390 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 391 "..\..\Views\Home\DiscoverEvents.cshtml"
 
                 }
 
@@ -2201,7 +2222,7 @@ WriteLiteral(" id=\"spInfo\"");
 WriteLiteral(">No Events Found</span>\r\n                    </div>\r\n");
 
             
-            #line 398 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 399 "..\..\Views\Home\DiscoverEvents.cshtml"
                 }
             
             
@@ -2232,13 +2253,13 @@ WriteLiteral(" class=\"fa fa-angle-double-left\"");
 WriteLiteral("></i> </span>\r\n                        </a>\r\n                    </li>\r\n");
 
             
-            #line 411 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 412 "..\..\Views\Home\DiscoverEvents.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 411 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 412 "..\..\Views\Home\DiscoverEvents.cshtml"
                      for (int i = 1; i <= Convert.ToInt32(@TempData["TotalPages"]); i++)
                     {
 
@@ -2249,33 +2270,33 @@ WriteLiteral("                        <li><a");
 
 WriteLiteral(" href=\"javascript:void(0)\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 26549), Tuple.Create("\"", 26566)
-, Tuple.Create(Tuple.Create("", 26554), Tuple.Create("aPageLink-", 26554), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 26641), Tuple.Create("\"", 26658)
+, Tuple.Create(Tuple.Create("", 26646), Tuple.Create("aPageLink-", 26646), true)
             
-            #line 413 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 26564), Tuple.Create<System.Object, System.Int32>(i
+            #line 414 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 26656), Tuple.Create<System.Object, System.Int32>(i
             
             #line default
             #line hidden
-, 26564), false)
+, 26656), false)
 );
 
-WriteAttribute("onclick", Tuple.Create(" onclick=\"", 26567), Tuple.Create("\"", 26590)
-, Tuple.Create(Tuple.Create("", 26577), Tuple.Create("NextPage(", 26577), true)
+WriteAttribute("onclick", Tuple.Create(" onclick=\"", 26659), Tuple.Create("\"", 26682)
+, Tuple.Create(Tuple.Create("", 26669), Tuple.Create("NextPage(", 26669), true)
             
-            #line 413 "..\..\Views\Home\DiscoverEvents.cshtml"
-            , Tuple.Create(Tuple.Create("", 26586), Tuple.Create<System.Object, System.Int32>(i
+            #line 414 "..\..\Views\Home\DiscoverEvents.cshtml"
+            , Tuple.Create(Tuple.Create("", 26678), Tuple.Create<System.Object, System.Int32>(i
             
             #line default
             #line hidden
-, 26586), false)
-, Tuple.Create(Tuple.Create("", 26588), Tuple.Create(");", 26588), true)
+, 26678), false)
+, Tuple.Create(Tuple.Create("", 26680), Tuple.Create(");", 26680), true)
 );
 
 WriteLiteral(">");
 
             
-            #line 413 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 414 "..\..\Views\Home\DiscoverEvents.cshtml"
                                                                                               Write(i);
 
             
@@ -2284,7 +2305,7 @@ WriteLiteral(">");
 WriteLiteral("</a></li>\r\n");
 
             
-            #line 414 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 415 "..\..\Views\Home\DiscoverEvents.cshtml"
                     }
 
             
@@ -2319,14 +2340,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdEventType\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 27587), Tuple.Create("\"", 27621)
+WriteAttribute("value", Tuple.Create(" value=\"", 27679), Tuple.Create("\"", 27713)
             
-            #line 434 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 27595), Tuple.Create<System.Object, System.Int32>(TempData["ETypeSelected"]
+            #line 435 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 27687), Tuple.Create<System.Object, System.Int32>(TempData["ETypeSelected"]
             
             #line default
             #line hidden
-, 27595), false)
+, 27687), false)
 );
 
 WriteLiteral(" />\r\n    <input");
@@ -2335,14 +2356,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdEventCat\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 27667), Tuple.Create("\"", 27700)
+WriteAttribute("value", Tuple.Create(" value=\"", 27759), Tuple.Create("\"", 27792)
             
-            #line 435 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 27675), Tuple.Create<System.Object, System.Int32>(TempData["ECatSelected"]
+            #line 436 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 27767), Tuple.Create<System.Object, System.Int32>(TempData["ECatSelected"]
             
             #line default
             #line hidden
-, 27675), false)
+, 27767), false)
 );
 
 WriteLiteral(" />\r\n    <input");
@@ -2351,14 +2372,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdPrice\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 27743), Tuple.Create("\"", 27773)
+WriteAttribute("value", Tuple.Create(" value=\"", 27835), Tuple.Create("\"", 27865)
             
-            #line 436 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 27751), Tuple.Create<System.Object, System.Int32>(ViewData["tempPrice"]
+            #line 437 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 27843), Tuple.Create<System.Object, System.Int32>(ViewData["tempPrice"]
             
             #line default
             #line hidden
-, 27751), false)
+, 27843), false)
 );
 
 WriteLiteral(" />\r\n    <input");
@@ -2367,14 +2388,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdlat\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 27814), Tuple.Create("\"", 27839)
+WriteAttribute("value", Tuple.Create(" value=\"", 27906), Tuple.Create("\"", 27931)
             
-            #line 437 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 27822), Tuple.Create<System.Object, System.Int32>(TempData["tLat"]
+            #line 438 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 27914), Tuple.Create<System.Object, System.Int32>(TempData["tLat"]
             
             #line default
             #line hidden
-, 27822), false)
+, 27914), false)
 );
 
 WriteLiteral(" />\r\n    <input");
@@ -2383,14 +2404,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdlng\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 27880), Tuple.Create("\"", 27905)
+WriteAttribute("value", Tuple.Create(" value=\"", 27972), Tuple.Create("\"", 27997)
             
-            #line 438 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 27888), Tuple.Create<System.Object, System.Int32>(TempData["tLng"]
+            #line 439 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 27980), Tuple.Create<System.Object, System.Int32>(TempData["tLng"]
             
             #line default
             #line hidden
-, 27888), false)
+, 27980), false)
 );
 
 WriteLiteral(" />\r\n    <input");
@@ -2399,14 +2420,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdSort\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 27947), Tuple.Create("\"", 27973)
+WriteAttribute("value", Tuple.Create(" value=\"", 28039), Tuple.Create("\"", 28065)
             
-            #line 439 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 27955), Tuple.Create<System.Object, System.Int32>(TempData["tSort"]
+            #line 440 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 28047), Tuple.Create<System.Object, System.Int32>(TempData["tSort"]
             
             #line default
             #line hidden
-, 27955), false)
+, 28047), false)
 );
 
 WriteLiteral(" />\r\n    <input");
@@ -2415,14 +2436,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdDateFilter\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 28021), Tuple.Create("\"", 28053)
+WriteAttribute("value", Tuple.Create(" value=\"", 28113), Tuple.Create("\"", 28145)
             
-            #line 440 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 28029), Tuple.Create<System.Object, System.Int32>(TempData["tDateFilter"]
+            #line 441 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 28121), Tuple.Create<System.Object, System.Int32>(TempData["tDateFilter"]
             
             #line default
             #line hidden
-, 28029), false)
+, 28121), false)
 );
 
 WriteLiteral(" />\r\n    <input");
@@ -2431,14 +2452,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdPageIndex\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 28100), Tuple.Create("\"", 28130)
+WriteAttribute("value", Tuple.Create(" value=\"", 28192), Tuple.Create("\"", 28222)
             
-            #line 441 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 28108), Tuple.Create<System.Object, System.Int32>(TempData["PageIndex"]
+            #line 442 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 28200), Tuple.Create<System.Object, System.Int32>(TempData["PageIndex"]
             
             #line default
             #line hidden
-, 28108), false)
+, 28200), false)
 );
 
 WriteLiteral(" />\r\n    <input");
@@ -2447,14 +2468,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" id=\"hdSearchText\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 28178), Tuple.Create("\"", 28209)
+WriteAttribute("value", Tuple.Create(" value=\"", 28270), Tuple.Create("\"", 28301)
             
-            #line 442 "..\..\Views\Home\DiscoverEvents.cshtml"
-, Tuple.Create(Tuple.Create("", 28186), Tuple.Create<System.Object, System.Int32>(TempData["SearchText"]
+            #line 443 "..\..\Views\Home\DiscoverEvents.cshtml"
+, Tuple.Create(Tuple.Create("", 28278), Tuple.Create<System.Object, System.Int32>(TempData["SearchText"]
             
             #line default
             #line hidden
-, 28186), false)
+, 28278), false)
 );
 
 WriteLiteral(" />\r\n    \r\n\r\n</div>\r\n\r\n<div");
@@ -2602,23 +2623,23 @@ WriteLiteral(" id=\"hdcity\"");
 
 WriteLiteral(" />\r\n</div>\r\n\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 30119), Tuple.Create("\"", 30158)
-, Tuple.Create(Tuple.Create("", 30125), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/bootstrap-datepicker.js")
-, 30125), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 30211), Tuple.Create("\"", 30250)
+, Tuple.Create(Tuple.Create("", 30217), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/bootstrap-datepicker.js")
+, 30217), false)
 );
 
 WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 30178), Tuple.Create("\"", 30206)
-, Tuple.Create(Tuple.Create("", 30184), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui.js")
-, 30184), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 30270), Tuple.Create("\"", 30298)
+, Tuple.Create(Tuple.Create("", 30276), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui.js")
+, 30276), false)
 );
 
 WriteLiteral("></script>\r\n<script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 30226), Tuple.Create("\"", 30258)
-, Tuple.Create(Tuple.Create("", 30232), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/custom-scroll.js")
-, 30232), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 30318), Tuple.Create("\"", 30350)
+, Tuple.Create(Tuple.Create("", 30324), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/custom-scroll.js")
+, 30324), false)
 );
 
 WriteLiteral("></script>\r\n\r\n");
@@ -2639,7 +2660,7 @@ WriteLiteral(@"
         var vTotalPage = parseFloat(");
 
             
-            #line 500 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 501 "..\..\Views\Home\DiscoverEvents.cshtml"
                                Write(TempData["TotalPages"]);
 
             
@@ -2665,7 +2686,7 @@ WriteLiteral(@");
             url: '");
 
             
-            #line 517 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 518 "..\..\Views\Home\DiscoverEvents.cshtml"
              Write(Url.Action("Discoversavefavourite", "CreateEvent"));
 
             
@@ -2726,7 +2747,7 @@ WriteLiteral(@"@"" + $(""#txtEndDate"").val().split(""/"").join(""."");
         var vUrl = '");
 
             
-            #line 617 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 618 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex="Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none", strTextSearch= "search" }));
 
             
@@ -2763,7 +2784,7 @@ WriteLiteral(@"';
         var vUrl = '");
 
             
-            #line 645 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 646 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -2792,7 +2813,7 @@ WriteLiteral(@"';
         var vUrl = '");
 
             
-            #line 665 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 666 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -2818,7 +2839,7 @@ WriteLiteral(@"';
         var vUrl = '");
 
             
-            #line 682 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 683 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -2854,7 +2875,7 @@ WriteLiteral(@"';
         var vUrl = '");
 
             
-            #line 709 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 710 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -2892,7 +2913,7 @@ WriteLiteral(@"';
         var vUrl = '");
 
             
-            #line 738 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 739 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -2921,7 +2942,7 @@ WriteLiteral("\';\r\n        var vEtype = ($(\"#hdEventType\").val() != \'\' ? $
 "  }\r\n        var vUrl = \'");
 
             
-            #line 775 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 776 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -2950,7 +2971,7 @@ WriteLiteral("\';\r\n        var vECat = ($(\"#hdEventCat\").val() != \'\' ? $(\
 "ues);\r\n            }\r\n        }\r\n\r\n        var vUrl = \'");
 
             
-            #line 815 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 816 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -2981,7 +3002,7 @@ WriteLiteral(@"';
         var vUrl = '");
 
             
-            #line 837 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 838 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -3009,7 +3030,7 @@ WriteLiteral(@"';
         var vUrl = '");
 
             
-            #line 856 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 857 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(Url.RouteUrl("EvType",new { strEt = "evt", strEc = "", strPrice = "all", strPageIndex = "Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -3042,7 +3063,7 @@ WriteLiteral("\';\r\n        vUrl = vUrl.replace(\"evt\", vEvTypeId);\r\n       
 "\n        var vLat = \'");
 
             
-            #line 910 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 911 "..\..\Views\Home\DiscoverEvents.cshtml"
                Write(TempData["NearLat"]);
 
             
@@ -3051,7 +3072,7 @@ WriteLiteral("\';\r\n        vUrl = vUrl.replace(\"evt\", vEvTypeId);\r\n       
 WriteLiteral("\';\r\n        var vLong = \'");
 
             
-            #line 911 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 912 "..\..\Views\Home\DiscoverEvents.cshtml"
                 Write(TempData["NearLong"]);
 
             
@@ -3140,7 +3161,7 @@ WriteLiteral("@\');\r\n            if (vAry.length > 1) {\r\n                var
 "();\r\n            var vUrl = \'");
 
             
-            #line 1050 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 1051 "..\..\Views\Home\DiscoverEvents.cshtml"
                    Write(Url.RouteUrl("EvType", new { strEt = "evt", strEc = "evc", strPrice="all", strPageIndex="Page", strLat = "lat", strLong = "long", strSort = "rel", strDateFilter = "none" }));
 
             
@@ -3256,7 +3277,7 @@ WriteLiteral(" type=\"text/javascript\"");
 WriteLiteral(">\r\n\r\n    var fbappid = \'");
 
             
-            #line 1283 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 1284 "..\..\Views\Home\DiscoverEvents.cshtml"
               Write(System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]);
 
             
@@ -3265,13 +3286,13 @@ WriteLiteral(">\r\n\r\n    var fbappid = \'");
 WriteLiteral("\'\r\n");
 
             
-            #line 1284 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 1285 "..\..\Views\Home\DiscoverEvents.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 1284 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 1285 "..\..\Views\Home\DiscoverEvents.cshtml"
        string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
             
             #line default
@@ -3279,7 +3300,7 @@ WriteLiteral("\'\r\n");
 WriteLiteral("\r\n    var urlprefix = \'");
 
             
-            #line 1285 "..\..\Views\Home\DiscoverEvents.cshtml"
+            #line 1286 "..\..\Views\Home\DiscoverEvents.cshtml"
                 Write(strpr);
 
             
