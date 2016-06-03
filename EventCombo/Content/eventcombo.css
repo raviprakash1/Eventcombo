@@ -1,17 +1,5 @@
 
 
-@font-face {
-  font-family: 'Abel';
-  font-style: normal;
-  font-weight: 400;
-  src: url('../fonts/abel-regular.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'fontawesome';
-  src: url('../fonts/fontawesome-webfont.eot');
-  src: url('../fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2') format('woff2'), url('../fonts/fontawesome-webfont.woff') format('woff'), url('../fonts/fontawesome-webfont.ttf') format('truetype'), url('../fonts/fontawesome-webfont.svg') format('svg');
-}
 
 
 h1,h2,h3,h4,h5,h6,p,a,span{ word-break: break-all !important; }

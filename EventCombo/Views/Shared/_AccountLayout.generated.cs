@@ -151,7 +151,16 @@ Write(Styles.Render("~/Content/fontawsome"));
             #line hidden
 WriteLiteral("\r\n    ");
 
-WriteLiteral("\r\n\r\n    <!-- Custom styles for this template -->\r\n   \r\n    ");
+WriteLiteral("\r\n    <link");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 887), Tuple.Create("\"", 912)
+, Tuple.Create(Tuple.Create("", 894), Tuple.Create<System.Object, System.Int32>(Href("~/Content/font.css")
+, 894), false)
+);
+
+WriteLiteral(" rel=\"stylesheet\"");
+
+WriteLiteral(" />\r\n    <!-- Custom styles for this template -->\r\n   \r\n    ");
 
 WriteLiteral("\r\n    ");
 
@@ -277,9 +286,9 @@ WriteLiteral(" href=\"/Home/Index\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 3066), Tuple.Create("\"", 3089)
-, Tuple.Create(Tuple.Create("", 3072), Tuple.Create<System.Object, System.Int32>(Href("~/Images/logo.png")
-, 3072), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 3121), Tuple.Create("\"", 3144)
+, Tuple.Create(Tuple.Create("", 3127), Tuple.Create<System.Object, System.Int32>(Href("~/Images/logo.png")
+, 3127), false)
 );
 
 WriteLiteral(" /></a>\r\n            </div>\r\n");
@@ -416,9 +425,9 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 4757), Tuple.Create("\"", 4778)
-, Tuple.Create(Tuple.Create("", 4763), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
-, 4763), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 4812), Tuple.Create("\"", 4833)
+, Tuple.Create(Tuple.Create("", 4818), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
+, 4818), false)
 );
 
 WriteLiteral(" /></a>\r\n                    <a");
@@ -429,9 +438,9 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 4873), Tuple.Create("\"", 4894)
-, Tuple.Create(Tuple.Create("", 4879), Tuple.Create<System.Object, System.Int32>(Href("~/Images/tw.png")
-, 4879), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 4928), Tuple.Create("\"", 4949)
+, Tuple.Create(Tuple.Create("", 4934), Tuple.Create<System.Object, System.Int32>(Href("~/Images/tw.png")
+, 4934), false)
 );
 
 WriteLiteral(" /></a>\r\n                    ");
@@ -470,14 +479,14 @@ WriteLiteral("                    <input");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=", 5409), Tuple.Create("", 5450)
+WriteAttribute("value", Tuple.Create(" value=", 5464), Tuple.Create("", 5505)
             
             #line 117 "..\..\Views\Shared\_AccountLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 5416), Tuple.Create<System.Object, System.Int32>(CookieStore.GetCookie("ckHeader")
+, Tuple.Create(Tuple.Create("", 5471), Tuple.Create<System.Object, System.Int32>(CookieStore.GetCookie("ckHeader")
             
             #line default
             #line hidden
-, 5416), false)
+, 5471), false)
 );
 
 WriteLiteral(" id=\"hdheader\"");
@@ -578,17 +587,17 @@ WriteLiteral(" class=\"col-sm-12 filter_sep cont_margin\"");
 
 WriteLiteral(">\r\n            <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 6527), Tuple.Create("\"", 6610)
-, Tuple.Create(Tuple.Create("", 6533), Tuple.Create<System.Object, System.Int32>(Href("~/Images/desi-")
-, 6533), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 6582), Tuple.Create("\"", 6665)
+, Tuple.Create(Tuple.Create("", 6588), Tuple.Create<System.Object, System.Int32>(Href("~/Images/desi-")
+, 6588), false)
             
             #line 142 "..\..\Views\Shared\_AccountLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 6547), Tuple.Create<System.Object, System.Int32>(HttpContext.Current.Session["logo"].ToString().Trim()
+, Tuple.Create(Tuple.Create("", 6602), Tuple.Create<System.Object, System.Int32>(HttpContext.Current.Session["logo"].ToString().Trim()
             
             #line default
             #line hidden
-, 6547), false)
-, Tuple.Create(Tuple.Create("", 6601), Tuple.Create("-logo.gif", 6601), true)
+, 6602), false)
+, Tuple.Create(Tuple.Create("", 6656), Tuple.Create("-logo.gif", 6656), true)
 );
 
 WriteLiteral(">\r\n            <div");
@@ -762,15 +771,15 @@ WriteLiteral(">\r\n                                              <div");
 
 WriteLiteral(" id=\"dvacmang\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 8578), Tuple.Create("\"", 8651)
-, Tuple.Create(Tuple.Create("", 8586), Tuple.Create("panel-heading", 8586), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 8633), Tuple.Create("\"", 8706)
+, Tuple.Create(Tuple.Create("", 8641), Tuple.Create("panel-heading", 8641), true)
             
             #line 185 "..\..\Views\Shared\_AccountLayout.cshtml"
-      , Tuple.Create(Tuple.Create("", 8599), Tuple.Create<System.Object, System.Int32>(ViewBag.CurrentItem == "account" ? " active" : ""
+      , Tuple.Create(Tuple.Create("", 8654), Tuple.Create<System.Object, System.Int32>(ViewBag.CurrentItem == "account" ? " active" : ""
             
             #line default
             #line hidden
-, 8599), false)
+, 8654), false)
 );
 
 WriteLiteral(">\r\n                                                Account <b");
@@ -782,16 +791,16 @@ WriteLiteral("></b>\r\n                                              </div>\r\n 
 
 WriteLiteral(" id=\"collapse1\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 8902), Tuple.Create("\"", 8981)
-, Tuple.Create(Tuple.Create("", 8910), Tuple.Create("panel-collapse", 8910), true)
-, Tuple.Create(Tuple.Create(" ", 8924), Tuple.Create("collapse", 8925), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 8957), Tuple.Create("\"", 9036)
+, Tuple.Create(Tuple.Create("", 8965), Tuple.Create("panel-collapse", 8965), true)
+, Tuple.Create(Tuple.Create(" ", 8979), Tuple.Create("collapse", 8980), true)
             
             #line 190 "..\..\Views\Shared\_AccountLayout.cshtml"
-             , Tuple.Create(Tuple.Create("", 8933), Tuple.Create<System.Object, System.Int32>(ViewBag.CurrentItem == "account" ? " in" : ""
+             , Tuple.Create(Tuple.Create("", 8988), Tuple.Create<System.Object, System.Int32>(ViewBag.CurrentItem == "account" ? " in" : ""
             
             #line default
             #line hidden
-, 8933), false)
+, 8988), false)
 );
 
 WriteLiteral(">\r\n                                            <div");

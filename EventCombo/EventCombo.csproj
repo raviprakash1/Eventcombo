@@ -756,6 +756,7 @@
     <Content Include="Content\filter-dropdown.css" />
     <Content Include="Content\flipclock.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\font.css" />
     <Content Include="Content\jquery-te-1.4.0.css" />
     <Content Include="Content\jquery-te.png" />
     <Content Include="Content\manageattendees.css" />
