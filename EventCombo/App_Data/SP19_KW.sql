@@ -112,3 +112,5 @@ GO
 
 
 UPDATE Order_Detail_T set O_Order_Id='T' + RIGHT('00000000' + convert(varchar,O_Id), 9) WHERE O_Order_Id=''
+
+Update Profile set Organiser = 'Y'
