@@ -8,11 +8,7 @@
 @Styles.Render("~/Content/jqueryfiller")
 @Scripts.Render("~/bundles/jqueryfiller")
 
-@*<script src="~/Scripts/jquery.maskedinput.min.js"></script>
-<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
 
-<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
-<script src="~/Scripts/filer/jquery.filer.js"></script>*@
 
 <style>
 .jFiler-input-dragDrop{width:200px; height:200px; padding:0px; max-width: 100%; }
@@ -24,7 +20,7 @@
 .jFiler-input-dragDrop .jFiler-input-icon{ margin-top:0px; height: 137px;}
 .jFiler-item .jFiler-item-container{ margin:0px; padding:0px;  }
 .jFiler-item .jFiler-item-container .jFiler-item-assets{ margin-top:0px;}
-/*.jFiler-item .jFiler-item-assets.jFiler-row{ display:none; }*/ 
+
 
 .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:auto;  margin-left:0px; }
 .can_btn i{ font-size:25px;}
@@ -313,8 +309,7 @@
             }
             
             var code = $("#txt_desc").code();
-            //var text = code.replace(/<p>/gi, " ");
-            //var plainText = $("<div />").html(text).text();
+           
             var model = {
                 'Orgnizer_Name': $("#txt_name").val(),
                 'Organizer_Desc': code,

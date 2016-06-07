@@ -18,26 +18,16 @@
     @Styles.Render("~/Content/multiselect")
     @Styles.Render("~/Content/datetimepicker")
     @Styles.Render("~/Content/fontawsome")
-    @*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
+   
 
     <!-- Custom styles for this template -->
    
-    @*<link href="~/Content/eventcombo.css" rel="stylesheet" />*@
-    @*<link href="~/Content/jquery.timepicker.css" rel="stylesheet" />*@
-    @*<link href="~/Content/ec-select.css" rel="stylesheet" />*@
-    @*<link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />*@
    
-   @* <link href="~/Content/summernote.css" rel="stylesheet" />*@
-    @*<link href="~/Content/datepicker.css" rel="stylesheet" />*@
-    
-
-    <!--  <link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    @*<script src="~/Scripts/Validation.js"></script>*@
-    @*<script src="~/Scripts/jquery.masked.js"></script>*@
+ 
     @Scripts.Render("~/bundles/jquery11.2")
    
     @Scripts.Render("~/bundles/bootstrap")
@@ -46,20 +36,9 @@
     @Scripts.Render("~/bundles/boostrapmulti")
     @Scripts.Render("~/bundles/validation")
 
-    @*@Scripts.Render("~/bundles/datetimepicker")*@
+   
     @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>*@
-    @*<script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/main.js"></script>*@
-    @*<script src="~/Scripts/summernote.min.js"></script>
-    <script src="~/Scripts/bootstrap-datepicker.js"></script>
-  
-    <script  src="~/Scripts/DateTimePicker.js"></script>
-
-    <script src="~/Scripts/bootstrap-multiselect.js"></script>*@
-    @*<script src="~/Scripts/jquery-ui.js"></script>*@
-    @*<script src="~/Scripts/jquery.timepicker.js"></script>
-    <script src="~/Scripts/ec-select.js"></script>
-    <script src="~/Scripts/jquery.cookie.js"></script>*@
+   
 
 </head>
 <body>
@@ -104,9 +83,7 @@
                 <div class="social_icn">
                     <a href="https://www.facebook.com/Eventcombo" target="_blank"><img src="~/Images/fb.png" /></a>
                     <a href="https://www.twitter.com/Eventcombo" target="_blank"><img src="~/Images/tw.png" /></a>
-                    @*<a href="#"><img src="~/Images/fb.png" /></a>
-                    <a href="#"><img src="~/Images/tw.png" /></a>*@
-                    @*<a href="#"><img src="~/Images/msg.png" /></a>*@
+                 
                 </div>
             </div>
             <div class="Fix_Head mt10" title="Turn on to fix header">
@@ -210,14 +187,10 @@
                                                     
                                                     <p><a href="#" id="pAcc">Create Event</a></p>
                                                     <p>@Html.ActionLink("My Events", "EventList", "EventList")</p>
-                                                    @*<p>@Html.ActionLink("Live Events", "LiveEvents", "Account")</p>*@
-                                                    @*<p>@Html.ActionLink("Past Events", "PastEvents", "Account")</p>*@
+                                                  
                                                     <p>@Html.ActionLink("Events Help", "EventHelp", "Account")</p>
 
-                                                    @*<p>@Html.ActionLink("Pay Pal", "Pay", "Cart")</p>*@
-                                                    @*<p>@Html.ActionLink("Edit Event", "EditEvent", "EditEvent")</p>*@
-                                                    @*<p>@Html.ActionLink("Edit Event", "ModifyEvent", "EditEvent", new { Eventid = 169 }, null)</p>*@
-                                                    @*<p>@Html.ActionLink("Manage Event", "EventList", "EventList")</p>*@
+                                                   
                                                 </div>
                                             </div>
                                         </div>
@@ -290,7 +263,7 @@
         $(window).load(function () {
 
             var headervale = $("#hdheader").val();;
-            //alert(headervale);
+         
             if (headervale != undefined && headervale != null && headervale != '') {
 
                 if (headervale == "on") {
@@ -303,12 +276,7 @@
 
                     $('#divsuccerr').addClass('aler_container');
                     $('#eventtopscoll').addClass('viewevent_container');
-                    //if ($('#idchecked').attr('checked')) {
-
-                    //} else {
-                    //    $("#idchecked").attr('checked', true);
-                    //}
-                    //$("#idchecked").attr('checked', true);
+                  
                 }
                 else {
                     $('#mainhead').removeClass('fix_head');
@@ -320,12 +288,7 @@
                     $('#divsuccerr').removeClass('aler_container');
 
                     $('#eventtopscoll').removeClass('viewevent_container');
-                    //$("#idchecked").attr('checked', false);
-                    //if ($('#idchecked').attr('checked')) {
-
-                    //} else {
-                    //    $("#idchecked").attr('checked', false);
-                    //}
+                  
 
                 }
             } else {
@@ -338,12 +301,7 @@
                 $('#divsuccerr').removeClass('aler_container');
 
                 $('#eventtopscoll').removeClass('viewevent_container');;
-                //if ($('#idchecked').attr('checked')) {
-
-                //} else {
-                //    $("#idchecked").attr('checked', false);
-                //}
-                //$("#idchecked").attr('checked', false);
+              
             }
 
 
@@ -365,7 +323,7 @@
                     }
                     else {
                         window.location.href = '@Url.Action("CreateEvent", "CreateEvent")';
-                        @*@Html.ActionLink("Create Event", "CreateEvent", "CreateEvent")*@
+                    
                     }
                 },
                 error: function (data) {
@@ -375,33 +333,7 @@
 
         });
 
-        
-        function checkPermission(PermisionId) {
-            @*$.ajax({
-                url: '@Url.Action("GetPermission", "Permission")',
-                data: { iPermissionId: PermisionId },
-                async: false,
-                datatype: "Text",
-                type: "Post",
-                success: function (response) {
-                    if (response != "Y") {
-                        alert("Access Denied !!!");
-                        return false;
-                        //  $('#spanid').html("Record Updated.");
-                        // $('#divError').css('display', 'block');
-                        ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
-                    }
-                    else {
-                        //  alert(vPerm);
-                        if (PermisionId == "1")
-                            window.location.href = '@Url.Action("CreateEvent", "CreateEvent")';
-                    }
-                }
-            });*@
-
-
-
-        }
+   
 
 
 
@@ -418,12 +350,12 @@
 
                 },
                 error: function (data) {
-                    //alert("Sorry there is some problem.");
+                   
                     return false
                 }
             });
 
-            //$.cookie("header", "on", { expire: 1 });
+           
             $('#mainhead').addClass('fix_head');
             $('#bodysec').addClass('cont_margin');
             $('#navtop').addClass('affix-top');
@@ -444,11 +376,11 @@
 
                 },
                 error: function (data) {
-                    //alert("Sorry there is some problem.");
+                   
                     return false
                 }
             });
-            //$.cookie("header", "off", { expire: 1 });
+           
             $('#mainhead').removeClass('fix_head');
             $('#bodysec').removeClass('cont_margin');
             $('#navtop').removeClass('affix-top');

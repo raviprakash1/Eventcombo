@@ -12,7 +12,7 @@
     @*<link rel="icon" href="javascript:void(0)">*@
     <title>@(ViewBag.Title ?? "Eventcombo")</title>
     @*Scripts*@
-    @*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
+  
     <link href="~/Content/font.css" rel="stylesheet" />
         @Styles.Render("~/Content/bootstrap")
     @Styles.Render("~/Content/timepicker")
@@ -21,36 +21,12 @@
     @Scripts.Render("~/bundles/jquery11.2")
     @Scripts.Render("~/bundles/timezonescripts")
     @Scripts.Render("~/bundles/googleapis")
-    @*@Scripts.Render("~/bundles/jquery")*@
+
     @Scripts.Render("~/bundles/bootstrap")
 
 
 
 
-    <!-- Bootstrap core CSS -->
-
-
-
-    @*<link href="~/Content/jquery.timepicker.css" rel="stylesheet" />
-
-
-    <link href="~/Content/ec-select.css" rel="stylesheet" />*@
-    <!-- Custom styles for this template -->
-    @*<link href="~/Content/eventcombo.css" rel="stylesheet" />*@
-    <!--  <link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    @*<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>*@
-    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>*@
-    @*<script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/main.js"></script>*@
-    @*<script src="~/Scripts/jquery.timepicker.js"></script>
-
-    <script src="~/Scripts/jquery.cookie.js"></script>
-
-    <script src="~/Scripts/ec-select.js"></script>*@
 
     <style type="text/css">
         html {
@@ -146,23 +122,7 @@
 
 }
     
-    @*if ()
-                        {
-                         <input type="checkbox" class="switch-input"  id="idchecked" onchange="changeheader(this.id);">
-
-                        }
-                        else
-                        {
-                            if (Session["Header"].ToString() == " " || Session["Header"].ToString()=="off")
-                            {
-                               
-
-                            }
-                            else
-                            {
-                                <input type="checkbox" class="switch-input" checked id="idchecked" onchange="changeheader(this.id);">
-                            }
-                        }*@
+   
                        
 
                         <span class="switch-label" data-on="On" data-off="Off"></span>
@@ -190,7 +150,7 @@
                         </form>
                     </div>
                     <div class="col-sm-2 disc_title_head">
-                        @*@Html.ActionLink("Discover Events", "DiscoverEvents", "Home")*@
+                   
                         <a href="javascript:void(0)" onclick="setsession(this.id);" id='discover'>Discover Events</a>
                     </div>
                     <div class="col-sm-2 disc_title_head"><a href="#" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a>@*@Html.ActionLink("", "GetBuzz", "Home")*@  </div>
@@ -245,7 +205,7 @@
                             </form>
                         </div>
                         <div class="col-sm-2 disc_title_head">
-                            @*@Html.ActionLink("Discover Events", "DiscoverEvents", "Home")*@
+                       
                             <a href="javascript:void(0)" onclick="setsession(this.id);" id='discover'>Discover Events</a>
                         </div>
                         <div class="col-sm-2 disc_title_head"><a href="javascript:void(0)" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a>@*@Html.ActionLink("", "GetBuzz", "Home")*@  </div>
@@ -380,12 +340,12 @@
                                             <div class="row">
                                                 <div class="col-sm-5 login_form_bot">
                                                     <input type="text" id="loginemail" name="Email" placeholder="Email" class="form-control login_place" maxlength="256" autocomplete="off" />
-                                                    @*@Html.TextBoxFor(m => m.Email, new { @placeholder = "Email", @class = "form-control login_place", @id = "loginemail", @maxlength = 256 })*@
+                                                   
                                                 </div>
                                                 <div class="col-sm-5 login_form_bot">
                                                     <input type="password" id="loginpassword" name="Password" placeholder="Password" class="form-control login_place" maxlength="15" autocomplete="off" />
 
-                                                    @*@Html.PasswordFor(m => m.Password, new { @placeholder = "Password", @class = "form-control login_place", @id = "loginpassword", @maxlength = 15 })*@
+                                                   
                                                 </div>
                                                 <div class="col-sm-2 login_form_bot">
                                                     <input type="hidden" id="hderror" />
@@ -400,7 +360,7 @@
 
                                 }
 
-                                @*@RenderPage("~/Views/Shared/_login1partial.cshtml",new { })*@
+                               
                             </div>
                             <div class="col-md-12">
                                 @*forgt_pass*@
@@ -417,8 +377,7 @@
                                 </div>
 
                                 <form id="login-launch" action="@Url.Action("ExternalLogin", "Account")" method="POST" target="login-popup" onsubmit="invokeLogin();">
-                                    @*@using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
-                                        {*@
+                                 
                                     <input type="hidden" id="provider" name="provider" />
                                     <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
 
@@ -428,9 +387,9 @@
                                         <button type="submit" onclick="$('#provider').attr('value', 'Google'); $('#login-launch').submit(); " class="btn btn-block btn-social btn-google-plus" id="Google" name="provider" value="Google" title="Log in using your Google account"><i class="fa fa-google-plus"></i>Google</button>
                                     </div>
 
-                                    @*}*@
+                                    
                                 </form>
-                                @*@RenderPage("~/Views/Shared/_ExternalLoginsListPartial.cshtml")*@
+                               
                             </div>
                         </div>
                     </div>
@@ -480,16 +439,16 @@
                                                 <div class="col-sm-5 login_form_bot">
                                                     <input type="text" id="SignupEmail" name="Email" placeholder="Email" class="form-control login_place" maxlength="256" autocomplete="off" />
 
-                                                    @*@Html.TextBoxFor(m => m.Email, new { @maxlength = 256, @placeholder = "Email", @class = "form-control login_place", @id = "SignupEmail" })*@
+                                                
                                                 </div>
                                                 <div class="col-sm-5 login_form_bot">
                                                     <input type="password" id="SignupPassword" name="Password" placeholder="Password" class="form-control login_place" maxlength="15" autocomplete="off" />
 
-                                                    @*@Html.PasswordFor(m => m.Password, new { @maxlength = 15, @placeholder = "Password", @class = "form-control login_place", @id = "SignupPassword" })*@
+                                                   
 
                                                 </div>
                                                 <div class="col-sm-2 login_form_bot">
-                                                    @*<button type="button" class="btn btn-primary login_btn_sub" id="btnsave">SignUp</button>*@
+                                                   
                                                     <input type="button" value="SignUp" class="btn btn-primary login_btn_sub" id="btnsave" disabled="disabled" />
                                                 </div>
 
@@ -506,7 +465,7 @@
                                 }
 
 
-                                @*@RenderPage("~/Views/Shared/_signuppartial.cshtml")*@
+       
                             </div>
                         </div>
                     </div>
@@ -517,51 +476,13 @@
 
 
 
-    @*<script>
-        $(document).ready(function () {
-
-            var docHeight = $(window).height();
-            var footerHeight = $('footer').height();
-            var midcontainerHeight = $('.wrap').height();
-            var midConTop = $('.wrap').position().top;
-            if (midcontainerHeight > docHeight) {
-                var footerTop = ($('footer').position().top + midcontainerHeight + midConTop) - footerHeight;
-                $('footer').css('top', footerTop + 'px');
-            } else {
-                var footerTop = (midcontainerHeight + midConTop);
-                $('footer').css('top', footerTop + 'px');
-            }
-        });
-    </script>*@
+   
 </body>
 </html>
 
 
 <script type="text/javascript">
-   /* $(document).ready(function () {
-
-        var docHeight = $(window).height();
-        var footerHeight = $('footer').height();
-        var midcontainerHeight = $('.wrap').height();
-        var midConTop = $('.wrap').position().top;
-        var footerTop = $('footer').position().top + footerHeight + midcontainerHeight;
-        //var footerTop = midcontainerHeight + footerHeight;
-
-        if (footerTop < docHeight) {
-            $('footer').css('margin-top', 10 + (docHeight - footerTop) + 'px');
-        }
-    });*/
-
-
-    
-     
-
    
-
-    //function SearchEvents() {
-
-        
-    //}
     $('body').on('keyup keypress', function (e) {
 
         var keyCode = e.keyCode || e.which;
@@ -642,7 +563,7 @@
                             }
                         },
                         error: function (data) {
-                            //alert("Sorry there is some problem.");
+                           
                             return false;
                         }
                     });
@@ -679,12 +600,7 @@
         if (returnUrl) {
             window.location.href = returnUrl;
         } else {
-            @*$.ajax({
-                url: '@Url.Action("LoginPartial", "Account")',
-                success: function (result) {
-                    $('#login').html(result);
-                }
-            });*@
+         
         }
     }
 
@@ -700,13 +616,12 @@
 
                 },
                 error: function (data) {
-                    //alert("Sorry there is some problem.");
+                  
                     return false
                 }
             });
 
-           // $.cookie("header", "on", { expire: 1,path:'/' });
-            //$.cookie("header") = "on";
+        
             $('#divmain').addClass('home_fixed_header');
             $('#eventtopscoll').addClass('event_top');
             $('#scrollhome').addClass('con_scr0l_home');
@@ -726,12 +641,11 @@
 
                 },
                 error: function (data) {
-                    //alert("Sorry there is some problem.");
+                   
                     return false
                 }
             });
-            //$.cookie("header", "off", { expire: 1, path: '/' });
-            //$.cookie("header", "off", { expire: 1 });
+            
             $('#eventtopscoll').removeClass('event_top');
             $('#scrollhome').removeClass('con_scr0l_home');
             $('#divmain').removeClass('home_fixed_header');
@@ -751,7 +665,7 @@
 
             },
             error: function (data) {
-                //alert("Sorry there is some problem.");
+             
                 return false
             }
         });
@@ -789,14 +703,14 @@
                         vUrl = vUrl.replace("long", vLong);
                         window.location.href = vUrl;
                     }, function (p) {
-                        //alert("error");
+                        
                         var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none" })';
                         window.location.href = vUrl;
 
                     });
 
                 } else {
-                    //alert('Geo Location feature is not supported in this browser.');
+                   
                     var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none" })';
                     window.location.href = vUrl;
 
@@ -806,9 +720,9 @@
             function onPositionUpdate(position) {
                 var lat = position.coords.latitude;
                 var lng = position.coords.longitude;
-                //alert("Current position: " + lat + " " + lng);
+               
             }
-            @*window.location.href = '@Url.Action("DiscoverEvents", "Home")';*@
+           
 
 
 
@@ -868,7 +782,7 @@
                 }
             },
             error: function (data) {
-                //alert("Sorry there is some problem.");
+              
                 return false
             }
         });
@@ -917,30 +831,7 @@
 
         }
 
-        @*var sessionheader = "@Session["Header"]";
-
-        if (sessionheader == "" || sessionheader=="on")
-        {
-            $('#divmain').addClass('home_fixed_header');
-            $('#eventtopscoll').addClass('event_top');
-            $('#scrollhome').addClass('con_scr0l_home');
-            $('#divcontmain').addClass('mt15');
-            $('#eventtopscoll').addClass('viewevent_container');
-            $('#forgotcheck').addClass('forgot_top');
-
-
-        }
-        if ( sessionheader == "off") {
-            $('#eventtopscoll').removeClass('event_top');
-            $('#scrollhome').removeClass('con_scr0l_home');
-            $('#divmain').removeClass('home_fixed_header');
-
-            $('#divcontmain').removeClass('mt15');
-
-            $('#eventtopscoll').removeClass('viewevent_container');
-            $('#forgotcheck').removeClass('forgot_top');
-
-        }*@
+       
 
     });
 
@@ -963,13 +854,7 @@
                 $('#divcontmain').addClass('mt15');
                 $('#eventtopscoll').addClass('viewevent_container');
                 $('#forgotcheck').addClass('forgot_top');
-                //if ($('#idchecked').attr('checked')) {
-
-                //} else {
-
-                //    $("#idchecked").attr('checked', true);
-                //}
-                //$("#idchecked").attr('checked', true);
+               
 
 
             }
@@ -985,13 +870,7 @@
 
                 $('#eventtopscoll').removeClass('viewevent_container');
                 $('#forgotcheck').removeClass('forgot_top');
-                //if ($('#idchecked').attr('checked')) {
-
-                //} else {
-                //    $("#idchecked").attr('checked', false);
-                //}
-
-                //$("#idchecked").attr('checked', false);
+              
 
             }
         } else {
@@ -1003,16 +882,9 @@
 
             $('#eventtopscoll').removeClass('viewevent_container');
             $('#forgotcheck').removeClass('forgot_top');
-            //if ($('#idchecked').attr('checked')) {
-
-            //} else {
-            //    $("#idchecked").attr('checked', false);
-            //}
-            //$("#idchecked").attr('checked', false);
+           
         }
-        //$("#btSearchEvent").on('click', function () {
-        //    GetEvent();
-        //});
+     
         $("#btSearchEvent").click(function () {
 
             var Lat = @CookieStore.GetCookie("Lat");
@@ -1071,8 +943,7 @@
            
             var keyCode = (event.keyCode ? event.keyCode : event.which);
             if (keyCode == 13) {
-               // alert("in serach");
-                //event.keyCode =0;
+              
                 
                 event.preventDefault();
 
@@ -1087,7 +958,7 @@
                     var vTextSrh = $("#txtSearch").val();
                     var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = CookieStore.GetCookie("Lat"), strLong = CookieStore.GetCookie("Long"), strSort="rel", strDateFilter="none", strTextSearch="search"})';
                     vUrl = vUrl.replace("search", vTextSrh);
-                  //  alert(vUrl);
+               
                     window.location.href = vUrl;
                     window.location.replace(vUrl);
                     return false;
@@ -1278,22 +1149,7 @@
 
         return msgnew;
 
-        @*var msgnew = "";
-
-                    var request = $.ajax({
-                        url: '@Url.Action("Index", "ValidationMessage")',
-                        async: false,
-                        data: { strFormName: strname, strFormTag: strFormTag },
-                        type: 'Post'
-                    });
-                    request.done(function (msg) {
-                        msgnew += msg;
-                    });
-
-                    request.fail(function (jqXHR, textStatus) {
-                        msgnew += "Some Error occur!!";
-                    });
-                    return msgnew;*@
+      
     }
     function validateEmail(sEmail) {
         var filter = /^[\w\-\.\+]+\@@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
@@ -1372,7 +1228,7 @@
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     this.disabled = false;
-                    //alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
+                  
                 }
             });
 
@@ -1413,9 +1269,7 @@
             if (e.which == 32)
                 return false;
         });
-        //$('#SignupEmail').bind("cut copy paste", function (e) {
-        //    e.preventDefault();
-        //});
+      
         $("#SignupPassword").on("keypress", function (e) {
 
             if (e.which == 32)
@@ -1429,9 +1283,7 @@
             if (e.which == 32)
                 return false;
         });
-        //$('#loginemail').bind("cut copy paste", function (e) {
-        //    e.preventDefault();
-        //});
+    
         $("#loginpassword").on("keypress", function (e) {
 
             if (e.which == 32)
@@ -1493,7 +1345,7 @@
             $('#SignupEmail').focus();
             $('#SignupEmail').removeClass('err-bor');
         }
-        //console.log(Passowrdw.length);
+       
         if (Passowrdw.length < 4) {
             $('#SignupPassword').focus();
             $('#SignupPassword').addClass('err-bor');
