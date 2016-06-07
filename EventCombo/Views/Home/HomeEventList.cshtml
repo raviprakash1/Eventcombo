@@ -135,6 +135,9 @@
 
     </div>
     <input type="hidden" id="hdcity" />
+    
+
+    @*<input type="hidden" id="hdUrl" value="@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", "")" />*@
     <div id="fb-root"></div>
 </div>
 
@@ -209,6 +212,7 @@
     }
 
     function ShowUrl(vtitle, vurl) {
+        //alert(vurl);
         $("#txtEventTitle").val(vtitle);
         $("#txtEventUrl").val(vurl);
     }
@@ -227,6 +231,7 @@
 
     $('#twittershare').click(function () {
         var vUrl = $("#txtEventUrl").val();
+       // alert(vUrl);
         window.open('https://twitter.com/share?url=' + encodeURIComponent(vUrl) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
         return false;
     });
