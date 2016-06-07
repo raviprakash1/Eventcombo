@@ -366,7 +366,7 @@
                                 <div class="col-sm-3 col-xs-3 no_pad text-right ">
                                     @if (@item.EventPrivacy == "Y")
                                     {
-                                        <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Share @item.EventTitle" onclick="ShowUrl('@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(@item.EventId).ToString() })');" type="button" data-toggle="modal" data-target="#sharemodal">
+                                        <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Share @item.EventTitle" onclick="ShowUrl('@item.EventTitle','@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(@item.EventId).ToString() })');" type="button" data-toggle="modal" data-target="#sharemodal">
                                             <img src="~/Images/share_icon.png" alt="share event">
                                         </button>
                                     }
@@ -925,31 +925,7 @@
             }
         });
 
-
-        //$('#fbshare').click(function () {
-        //    var vUrl = $("#txtEventUrl").val();
-        //    window.open('https://www.facebook.com/sharer.php?s=100&p[url]=' + encodeURIComponent(vUrl) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-        //    return false;
-        //});
-        $('#fbsharessss').click(function () {
-            var vUrl = $("#txtEventUrl").val();
-            window.open('https://www.facebook.com/sharer.php?s=100&p[url]=' + encodeURIComponent(vUrl) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-        });
-
-
-        $('#twittershare').click(function () {
-            var vUrl = $("#txtEventUrl").val();
-            window.open('https://twitter.com/share?url=' + encodeURIComponent(vUrl) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-        });
-
-        $('#linkshare').click(function () {
-            var vUrl = $("#txtEventUrl").val();
-            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(vUrl) + '&title=', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-        });
-
+       
 
         if ($("#hdDateFilter").val() != null && $("#hdDateFilter").val() != "") {
             var vAry = $("#hdDateFilter").val().split('@@');
@@ -1136,7 +1112,8 @@
                 infoWindow.open(map, marker);
             });
 
-            var locationurl = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + $("#hdlat").val() + ',' + $("#hdlng").val() + '&sensor=true';
+            var locationurl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $("#hdlat").val() + ',' + $("#hdlng").val() + '&sensor=true';
+            //var locationurl = "";
             $.ajax({
                 url: locationurl,
                 type: "Post",
@@ -1311,6 +1288,21 @@
 
 
     $(document).ready(function () {
+        $('#twittershare').click(function () {
+
+            var urlprefix = '@strpr'
+            var vUrl = urlprefix + $("#txtEventUrl").val();
+            window.open('https://twitter.com/share?url=' + encodeURIComponent(vUrl) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            return false;
+        });
+
+        $('#linkshare').click(function () {
+            var urlprefix = '@strpr'
+            var vUrl = urlprefix + $("#txtEventUrl").val();
+            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(vUrl) + '&title=', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            return false;
+        });
+
         $('#fbshare').click(function (e) {
 //<<<<<<< HEAD
 //            var vUrl = urlprefix + $("#txtEventUrl").val();

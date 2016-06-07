@@ -230,18 +230,6 @@
         return false;
     });
 
-    $('#twittershare').click(function () {
-        var vUrl = $("#txtEventUrl").val();
-       // alert(vUrl);
-        window.open('https://twitter.com/share?url=' + encodeURIComponent(vUrl) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-        return false;
-    });
-
-    $('#linkshare').click(function () {
-        var vUrl = $("#txtEventUrl").val();
-        window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(vUrl) + '&title=', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-        return false;
-    });
 </script>
 
 
@@ -265,7 +253,7 @@
 
     $('#linkshare').click(function () {
         var urlprefix = '@strpr'
-        var vUrl = $("#txtEventUrl").val();
+        var vUrl =urlprefix+ $("#txtEventUrl").val();
         window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(vUrl) + '&title=', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
         return false;
     });

@@ -20,8 +20,8 @@
     
     @Scripts.Render("~/bundles/jquery11.2")
     @Scripts.Render("~/bundles/timezonescripts")
-    @Scripts.Render("~/bundles/googleapis")
-
+    @*@Scripts.Render("~/bundles/googleapis")*@
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     @Scripts.Render("~/bundles/bootstrap")
 
 
@@ -150,7 +150,6 @@
                         </form>
                     </div>
                     <div class="col-sm-2 disc_title_head">
-                   
                         <a href="javascript:void(0)" onclick="setsession(this.id);" id='discover'>Discover Events</a>
                     </div>
                     <div class="col-sm-2 disc_title_head"><a href="#" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a>@*@Html.ActionLink("", "GetBuzz", "Home")*@  </div>
