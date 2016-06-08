@@ -111,6 +111,22 @@ GO
 
 
 
-UPDATE Order_Detail_T set O_Order_Id='T' + RIGHT('00000000' + convert(varchar,O_Id), 9) WHERE O_Order_Id=''
+UPDATE Order_Detail_T set O_Order_Id='T' + RIGHT('00000000' + convert(varchar,O_Id), 9) WHERE O_Order_Id='';
 
-Update Profile set Organiser = 'Y'
+Update Profile set Organiser = 'Y';
+
+
+insert into User_Permission_Detail (UP_User_Id, UP_Permission_Id)
+select UP_User_Id, 2 from User_Permission_Detail  where UP_Permission_Id=1;
+
+insert into User_Permission_Detail (UP_User_Id, UP_Permission_Id)
+select UP_User_Id, 1 from User_Permission_Detail  where UP_Permission_Id=2;
+
+;with cte as 
+(select UP_User_Id, [UP_Id], Up_Permission_Id, row_number() over(partition by UP_User_Id, Up_Permission_Id order by UP_User_Id, Up_Permission_Id) as rw from User_Permission_Detail
+)
+delete from cte where rw>1
+
+delete from User_Permission_Detail where (UP_Permission_Id=1 or UP_Permission_Id=2 ) and UP_User_Id in
+(select UP_User_Id from User_Permission_Detail where Up_Permission_Id>2);
+
