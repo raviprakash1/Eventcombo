@@ -55,8 +55,11 @@
 
     $(document).ready(function () {
         //url = url.replace("-parameter", vEventId);
+        
+       
 
-
+      
+        
         var pg = getUrlParameter('page');
         if (!pg) {
             var Lat = @CookieStore.GetCookie("Lat");
@@ -67,7 +70,7 @@
             if (isNaN(Lng) == true) Lng = 0;
          //   alert(Lat);
             if (Lat > 0)
-            { 
+            {
                 var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = CookieStore.GetCookie("Lat"), lng = CookieStore.GetCookie("Long"), page = "1"}))';
                 window.location.replace(vUrl);
             }
@@ -75,7 +78,7 @@
             {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function (p) {
-                        var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+                        var LatLng = new google.maps.LatLng(p.coords.latitude,p.coords.longitude);
                         var geocoder = new google.maps.Geocoder;
                         var infowindow = new google.maps.InfoWindow;
 
@@ -110,7 +113,6 @@
 
         if ('@ViewBag.UserOrg' == "Y")
         {
-           // alert("chal Bhai");
             $("#btOkMes").click();
         }
 

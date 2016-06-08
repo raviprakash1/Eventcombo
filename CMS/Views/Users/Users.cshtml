@@ -757,12 +757,10 @@
 
             if (role == 1)
             {
-               //console.log( $("#HdRole-" + i).parent().parent().parent());
                 $("#HdRole-" + i).parent().parent().parent().addClass('info');
-                    //('background-color', 'blue');
                 $('#aRoles-' + i).attr("disabled", "disabled");
                 $('#aRoles-' + i).children().attr("disabled", "disabled");
-                $('#aRoles-' + i).removeAttr("href");
+                //$('#aRoles-' + i).removeAttr("href");
                 $('#adelete-' + i).attr("disabled", "disabled");
                 $('#adelete-' + i).removeAttr("href");
                 $("#dvorganiser-" + i).children().children().prop('disabled', true);
