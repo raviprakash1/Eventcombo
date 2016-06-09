@@ -2456,7 +2456,7 @@ namespace EventCombo.Controllers
             CookieStore.SetCookie("ckHeader", header, TimeSpan.FromDays(1));
             //Session["Header"] = header;
         }
-
+        
     }
 
 
