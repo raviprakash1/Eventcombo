@@ -2546,8 +2546,7 @@ ul.dropdown-map{ padding:0px; left:10px; }
         .eventMainHead{
             display:block;
             font-weight: bold;
-            text-align: right;
-            font-size: 35px;
+            font-size: 22px;
             padding: 15px 10px;
         }
 
@@ -2664,8 +2663,8 @@ ul.dropdown-map{ padding:0px; left:10px; }
                 clear: both;
             }
             .eventMainHead {
-                text-align: center;
-                font-size: 30px;
+                text-align: left;
+                font-size: 18px;
             }
         }
 
