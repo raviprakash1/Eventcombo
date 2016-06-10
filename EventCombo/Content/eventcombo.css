@@ -2543,11 +2543,17 @@ ul.dropdown-map{ padding:0px; left:10px; }
             padding: 0px;
         }
 
-        .eventMainHead{
-            display:block;
+        .eventMainHead1{
+            font-size: 25px;
+            margin-bottom: 0px;
             font-weight: bold;
+        }
+
+        .eventMainHead2{
+            margin-top: 3px;
             font-size: 22px;
-            padding: 15px 10px;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
 
         .leftImgCon{
@@ -2662,9 +2668,12 @@ ul.dropdown-map{ padding:0px; left:10px; }
                 margin: 15px auto 10px auto;
                 clear: both;
             }
-            .eventMainHead {
-                text-align: left;
+            .eventMainHead1{
                 font-size: 18px;
+            }
+
+            .eventMainHead2{
+                font-size: 16px;
             }
         }
 
