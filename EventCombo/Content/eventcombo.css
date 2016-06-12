@@ -2537,6 +2537,9 @@ ul.dropdown-map{ padding:0px; left:10px; }
             background: #fff;
             overflow:hidden;
         }
+        .mainContainer header h1, .mainContainer header h2{
+            margin:auto 8px;
+        }
 
         ul{
             margin: 0px;
