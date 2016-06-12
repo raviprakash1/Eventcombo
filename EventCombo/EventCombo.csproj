@@ -781,6 +781,8 @@
     <Content Include="Images\drag.png" />
     <Content Include="Images\DreamTeam\calendar.png" />
     <Content Include="Images\DreamTeam\img1.jpg" />
+    <Content Include="Images\DreamTeam\img2.jpg" />
+    <Content Include="Images\DreamTeam\img3.jpg" />
     <Content Include="Images\email_fb.png" />
     <Content Include="Images\email_loc_icn.png" />
     <Content Include="Images\email_tw.png" />
