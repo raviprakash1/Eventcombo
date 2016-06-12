@@ -786,6 +786,13 @@
     <Content Include="Images\email_tw.png" />
     <Content Include="Images\em_ven_time.png" />
     <Content Include="Images\evnt_lik_1.png" />
+    <Content Include="Images\FabIcon\android-128x128.png" />
+    <Content Include="Images\FabIcon\android-192x192.png" />
+    <Content Include="Images\FabIcon\ios-120x120.png" />
+    <Content Include="Images\FabIcon\ios-152x152.png" />
+    <Content Include="Images\FabIcon\ios-180x180.png" />
+    <Content Include="Images\FabIcon\ios-57x57.png" />
+    <Content Include="Images\FabIcon\ios-76x76.png" />
     <Content Include="Images\facebook.png" />
     <Content Include="Images\free-pinstripe.png" />
     <Content Include="Images\hjsdjd.png" />
