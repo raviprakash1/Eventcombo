@@ -823,6 +823,7 @@
       <DependentUpon>EventComboModel.edmx</DependentUpon>
       <LastGenOutput>EventComboModel.cs</LastGenOutput>
     </Content>
+    <Content Include="favicon.ico" />
     <Content Include="Scripts\custom-scroll.js" />
     <Content Include="Scripts\DateTimePicker.js" />
     <Content Include="Scripts\gmap.js" />
@@ -899,7 +900,6 @@
     <Content Include="Content\style-test.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\summernote.css" />
-    <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="ForgotPassword.html" />
     <Content Include="Global.asax" />
