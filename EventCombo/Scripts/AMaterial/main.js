@@ -1,0 +1,477 @@
+﻿var buttnCount = 0;
+
+var createEventApp = angular.module("CreateEventApp", ['ngMaterial', 'ngMessages', 'color.picker', 'mdDatetimePickerDemo',
+  'ngGallery', 'ui.tinymce']);
+createEventApp.controller('CreateEventController', ['$scope', '$http', '$window', 'ngGallery', function ($scope, $http, $window, ngGallery) {
+
+  $scope.organiserInfo = [];
+
+  $scope.isPrivateEvent = false;
+  $scope.gPlace;
+
+  $scope.tinymceOptions = {
+    selector: "textarea",
+    height: 100,
+    mode: "textareas",
+    toolbar1: "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
+    toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
+    toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+
+    menubar: false,
+    toolbar_items_size: 'small',
+
+    style_formats: [{
+      title: 'Bold text',
+      inline: 'b'
+    }]
+  }
+
+  $scope.vartypes = [
+    { varId: "R", varName: "Required" },
+    { varId: "O", varName: "Optional" }
+  ];
+
+  $scope.occurences = [
+ "Daily",
+ "Weekly",
+ "Monthly"
+  ];
+
+  $scope.weekdays = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+  ];
+
+  $scope.subCategories = [];
+  $scope.organizerEditState = "Saved";
+
+  $scope.selectedDateTimeText = "Pick the date here";
+  $scope.showDateTimeDialog = false;
+
+  $http.get('/eventmanagement/getevent', { params: { eventId: 0 } }).then(function (response) {
+    $scope.eventInfo = response.data;
+    $scope.prepareEventInfo();
+  });
+
+  $scope.prepareEventInfo = function () {
+    $scope.startDateTime = new Date($scope.eventInfo.DateInfo.StartDateTime);
+    $scope.endDateTime = new Date($scope.eventInfo.DateInfo.EndDateTime);
+    var time = formatAMPM($scope.startDateTime);
+    console.log(time);
+    var ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
+    if (ctime.length > 0)
+      $scope.selectedstartTime = ctime[0];
+    else
+      $scope.selectedstartTime = null;
+    console.debug($scope.eventInfo.DateInfo.TimeList);
+    time = formatAMPM($scope.endDateTime);
+    ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
+    if (ctime.length > 0)
+      $scope.selectedendTime = ctime[0];
+    else
+      $scope.selectedendTime = null;
+    $scope.startingDate = new Date($scope.startDateTime.getFullYear(), $scope.startDateTime.getMonth(), $scope.startDateTime.getDate());
+    $scope.endingDate = new Date($scope.endDateTime.getFullYear(), $scope.endDateTime.getMonth(), $scope.endDateTime.getDate());
+    $scope.occurence = $scope.eventInfo.DateInfo.Frequency;
+    if ($scope.eventInfo.DateInfo.Frequency == "Single") {
+      $scope.dateTab = 0;
+      if (!$scope.eventInfo.DateInfo.IsNewDate)
+        $scope.showDates();
+    }
+    else {
+      $scope.dateTab = 1;
+      if (!$scope.eventInfo.DateInfo.IsNewDate)
+        $scope.showMultipleDates();
+    }
+    if ($scope.eventInfo.VariableChargesList.length <= 0)
+      $scope.addVarCharge();
+    $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
+      ticket.localSaleStartDate = ticket.Sale_Start_Date == null ? null : new Date(ticket.Sale_Start_Date);
+      ticket.localSaleEndDate = ticket.Sale_End_Date == null ? null : new Date(ticket.Sale_End_Date);
+      ticket.localHideUntillDate = ticket.Hide_Untill_Date == null ? null : new Date(ticket.Hide_Untill_Date);
+      ticket.localHideAfterDate = ticket.Hide_After_Date == null ? null : new Date(ticket.Hide_After_Date);
+    });
+  }
+
+  $scope.showDates = function () {
+    $scope.showDateTimeDialog = false;
+    $scope.eventInfo.DateInfo.IsNewDate = false;
+    var startingDate = ($scope.startingDate.getMonth() + 1) + "/" + $scope.startingDate.getDate() + "/" + $scope.startingDate.getFullYear();
+    var endingDate = ($scope.endingDate.getMonth() + 1) + "/" + $scope.endingDate.getDate() + "/" + $scope.endingDate.getFullYear();
+    $scope.occurence = "Single";
+    $scope.selectedDateTimeText = startingDate + " " + $scope.selectedstartTime.TimeString + " To " + endingDate + " " + $scope.selectedendTime.TimeString;
+  }
+
+  $scope.showMultipleDates = function () {
+    $scope.showDateTimeDialog = false;
+    $scope.eventInfo.DateInfo.IsNewDate = false;
+    var occurence = $scope.occurence;
+    console.log(occurence);
+    if (occurence == "Weekly") {
+
+      var alldays = "";
+      for (var day = 0; day < $scope.eventInfo.Weekdays.length; day++) {
+        alldays += $scope.eventInfo.Weekdays[day] + ",";
+      }
+
+      alldays = alldays.substr(0, alldays.length - 1);
+
+      $scope.selectedDateTimeText = "Days (" + alldays + ") Time " + $scope.selectedstartTime.TimeString + " To " + $scope.selectedendTime.TimeString;
+    }
+    else if (occurence == "Daily") {
+      $scope.selectedDateTimeText = "Daily Time " + $scope.selectedstartTime.TimeString + " To " + $scope.selectedendTime.TimeString;
+    }
+    else {
+      var startingDate = ($scope.startingDate.getMonth() + 1) + "/" + $scope.startingDate.getDate() + "/" + $scope.startingDate.getFullYear();
+      var endingDate = ($scope.endingDate.getMonth() + 1) + "/" + $scope.endingDate.getDate() + "/" + $scope.endingDate.getFullYear();
+      $scope.selectedDateTimeText = "Monthly " + startingDate + " " + $scope.selectedstartTime.TimeString + " To " + endingDate + " " + $scope.selectedendTime.TimeString;
+    }
+
+
+  }
+
+  $scope.onCategoryChange = function () {
+    $scope.subCategories = [];
+    $scope.eventInfo.EventCategoryList.forEach(function (cat, i, arr) {
+      if (cat.EventCategoryId == $scope.eventInfo.EventCategoryID)
+        $scope.subCategories = cat.SubCategories;
+    });
+  }
+
+  $scope.startDateChange = function () {
+    if ($scope.endingDate < $scope.startingDate)
+      $scope.endingDate = new Date($scope.startingDate.getFullYear(), $scope.startingDate.getMonth(), $scope.startingDate.getDate());
+  }
+
+  $scope.endDateChange = function () {
+    if ($scope.endingDate < $scope.startingDate)
+      $scope.startingDate = new Date($scope.endingDate.getFullYear(), $scope.endingDate.getMonth(), $scope.endingDate.getDate());
+  }
+
+  $scope.open = function () {
+    ngGallery.open({
+      template: '<p>Hello</p>',
+      plain: true,
+      images: [
+        'dw_1.jpg',
+        'dw_2.jpg',
+        'dw_3.jpg'
+      ],
+      prefix: './img/',
+      showClose: true,
+      closeByEscape: true,
+      closeLabel: '<i class="material-icons">clear</i>',
+      nextLabel: '<i class="material-icons">keyboard_arrow_right</i>',
+      prevLabel: '<i class="material-icons">keyboard_arrow_left</i>',
+      closeByNavigation: true,
+      infiniteLoop: false,
+      auto: false
+    });
+  };
+
+  $scope.openOrganiserImage = function () {
+    document.getElementById('organiserImage').click();
+  }
+  $scope.tellUsImage = function () {
+    document.getElementById("tellusImage").click();
+  }
+  $scope.bannerImageClick = function () {
+    document.getElementById("bannerImage").click();
+  }
+
+  $scope.organizerAdd = function () {
+    var i = Math.max.apply(Math, $scope.eventInfo.OrganizerList.map(function (o) { return o.InternalId; }));
+    $scope.eventInfo.CurrentOrganizer = {
+      Orgnizer_Id: 0,
+      Orgnizer_Name: "",
+      Organizer_Desc: "",
+      Organizer_FBLink: "",
+      Organizer_Twitter: "",
+      Organizer_Linkedin: "",
+      UserId: $scope.eventInfo.UserID,
+      Organizer_Email: "",
+      Organizer_Phoneno: "",
+      Organizer_Status: "A",
+      Imagepath: "",
+      ECImageId: null,
+      InternalId: i + 1
+    };
+    $scope.organizerEditState = "Add";
+  }
+
+  $scope.editOrganiser = function () {
+    $scope.eventInfo.CurrentOrganizer = null;
+    var org = $scope.eventInfo.OrganizerList.filter(function (obj) {
+      return obj.InternalId == $scope.eventInfo.InternalOrganizerId;
+    });
+    if (org.length > 0) {
+      $scope.eventInfo.CurrentOrganizer = {
+        InternalId: org[0].InternalId,
+        Orgnizer_Name: org[0].Orgnizer_Name,
+        Organizer_Email: org[0].Organizer_Email,
+        Organizer_Desc: org[0].Organizer_Desc
+      };
+      $scope.organizerEditState = "Edit";
+    }
+  }
+
+  $scope.saveNewOrganizer = function () {
+    if ($scope.eventInfo.CurrentOrganizer.Orgnizer_Name) {
+      var doubleObj = $scope.eventInfo.OrganizerList.filter(function (obj) {
+        return obj.Orgnizer_Name.trim() == $scope.eventInfo.CurrentOrganizer.Orgnizer_Name.trim();
+      });
+      if (doubleObj.length > 0) {
+        alert("Organizer with name " + $scope.eventInfo.CurrentOrganizer.Orgnizer_Name.trim() + " already exists. Please enter another name.");
+        return;
+      }
+      $scope.eventInfo.OrganizerList.push($scope.eventInfo.CurrentOrganizer);
+      $scope.eventInfo.InternalOrganizerId = $scope.eventInfo.CurrentOrganizer.InternalId;
+      $scope.eventInfo.CurrentOrganizer = null;
+    }
+    $scope.organizerEditState = "Saved";
+  }
+
+  $scope.saveEditedOrganizer = function () {
+    var org = $scope.eventInfo.OrganizerList.filter(function (obj) {
+      return obj.InternalId == $scope.eventInfo.InternalOrganizerId;
+    });
+    if (org.length > 0) {
+      org[0].Orgnizer_Name = $scope.eventInfo.CurrentOrganizer.Orgnizer_Name;
+      org[0].Organizer_Email = $scope.eventInfo.CurrentOrganizer.Organizer_Email;
+      org[0].Organizer_Desc = $scope.eventInfo.CurrentOrganizer.Organizer_Desc;
+    };
+    $scope.organizerEditState = "Saved";
+  }
+
+  $scope.getTotalTickets = function () {
+    var total = 0;
+    if (($scope.eventInfo != null) && ($scope.eventInfo.TicketList != null))
+      $scope.eventInfo.TicketList.forEach(function (t, i, arr) {
+        total = total + parseInt(t.Qty_Available);
+      });
+    return total;
+  }
+
+  $scope.addTicket = function (ttype) {
+    var i = 0;
+    if ($scope.eventInfo.TicketList.length > 0)
+      Math.max.apply(Math, $scope.eventInfo.TicketList.map(function (o) { return o.InternalId; }));
+    var newticket = {
+      T_Id: 0,
+      InternalId: i + 1,
+      E_Id: 0,
+      T_name: "",
+      Qty_Available: 0,
+      Price: 0,
+      TicketTypeID: ttype,
+      T_Sold: 0,
+      T_Desc: "",
+      Show_T_Desc: "0",
+      Fees_Type: "1",
+      Sale_Start_Date: null,
+      Sale_End_Date: null,
+      Hide_Ticket: "0",
+      Auto_Hide_Sche: "0",
+      Hide_Untill_Date: null,
+      Hide_After_Date: null,
+      Min_T_Qty: null,
+      Max_T_Qty: null,
+      T_Disable: 0,
+      T_Mark_SoldOut: "0",
+      EC_Fee: 0,
+      Customer_Fee: 0,
+      T_Displayremaining: "0",
+      T_AutoSechduleType: "0",
+      T_Discount: 0,
+      TicketType: {
+        TicketTypeId: ttype,
+        TicketType: (ttype == 1 ? "Free ticket" : ttype == 2 ? "Paid ticket" : ttype == 3 ? "Donation" : "Unkonwn")
+      },
+      TotalPrice: 0,
+      T_Customize: 0,
+      T_Ecpercent: 0,
+      T_EcAmount: 0,
+      localSaleStartDate: null,
+      localSaleEndDate: null,
+      localHideUntillDate: null,
+      localHideAfterDate: null
+    }
+    $scope.onPriceChange(newticket);
+    $scope.eventInfo.TicketList.push(newticket);
+  }
+
+  $scope.onPriceChange = function (ticket) {
+    ticket.EC_Fee = ticket.Price == 0 ? 0 : ticket.Price * $scope.eventInfo.FeeStruct.FS_Percentage / 100 + $scope.eventInfo.FeeStruct.FS_Amount;
+    ticket.Customer_Fee = ticket.EC_Fee;
+    ticket.TotalPrice = ticket.Price == 0 ? 0 : ticket.Price + ticket.EC_Fee - ticket.T_Discount;
+  }
+
+  $scope.deleteTicket = function (ticket) {
+    var idx = $scope.eventInfo.TicketList.indexOf(ticket);
+    if (idx >= 0)
+      $scope.eventInfo.TicketList.splice(idx, 1);
+  }
+
+  $scope.addVarCharge = function () {
+    var vcharge = {
+      VariableId: 0,
+      EventId: 0,
+      VariableDesc: null,
+      Price: 0.0,
+      Optional: false
+    }
+    $scope.eventInfo.VariableChargesList.push(vcharge);
+  }
+
+  $scope.deleteVarCharge = function (vcharge) {
+    var idx = $scope.eventInfo.VariableChargesList.indexOf(vcharge);
+    if (idx >= 0)
+      $scope.eventInfo.VariableChargesList.splice(idx, 1);
+  }
+
+  $scope.saveEvent = function () {
+    $scope.eventInfo.EventStatus = "Save";
+    console.debug($scope.eventInfo);
+    $scope.sendEvent();
+  }
+
+  $scope.previewEvent = function () {
+  }
+
+  $scope.publishEvent = function () {
+    $scope.eventInfo.EventStatus = "Live";
+    console.debug($scope.eventInfo);
+    $scope.sendEvent();
+  }
+
+  $scope.sendEvent = function () {
+    $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
+      ticket.Sale_Start_Date = ticket.localSaleStartDate == null ? null : formatDateTime(ticket.localSaleStartDate);
+      ticket.Sale_End_Date = ticket.localSaleEndDate == null ? null : formatDateTime(ticket.localSaleEndDate);
+      ticket.Hide_Untill_Date = ticket.localHideUntillDate == null ? null : formatDateTime(ticket.localHideUntillDate);
+      ticket.Hide_After_Date = ticket.localHideAfterDate == null ? null : formatDateTime(ticket.localHideAfterDate);
+    });
+    var startingDate = $scope.startingDate.setMinutes($scope.selectedstartTime.Minutes);
+    var endingDate = $scope.endingDate.setMinutes($scope.selectedendTime.Minutes);
+    $scope.eventInfo.DateInfo.Frequency = $scope.occurence;
+    $scope.eventInfo.DateInfo.StartDateTime = formatDateTime(new Date(startingDate));
+    $scope.eventInfo.DateInfo.EndDateTime = formatDateTime(new Date(endingDate));
+    $scope.eventInfo.CurrentEventType = null;
+    $scope.eventInfo.CurrentEventCategory = null;
+    $scope.eventInfo.CurrentEventSubCategory = null;
+    $scope.eventInfo.CurrentOrganizer = null;
+    $scope.eventInfo.CurrentInternalOrganizer = null;
+    var data = {
+      json: angular.toJson($scope.eventInfo)
+    };
+    $http.post('/eventmanagement/saveevent', data).then(function (response) {
+      $scope.eventInfo = response.data;
+      if ($scope.eventInfo.ErrorEvent)
+        $scope.prepareEventInfo();
+      else
+        $window.location.href = link_publish + "?EventId=" + $scope.eventInfo.EventID;
+    });
+  }
+}]);
+
+createEventApp.directive('ngInitial', function () {
+  return {
+    restrict: 'A',
+    controller: [
+      '$scope', '$element', '$attrs', '$parse', function ($scope, $element, $attrs, $parse) {
+        var getter, setter, val;
+        val = $attrs.ngInitial || $attrs.value;
+        getter = $parse($attrs.ngModel);
+        setter = getter.assign;
+        setter($scope, val);
+      }
+    ]
+  };
+});
+
+createEventApp.directive('numbersOnly', function () {
+  return {
+    require: 'ngModel',
+    link: function (scope, element, attr, ngModelCtrl) {
+      function fromUser(number) {
+        if (number) {
+          var transformedInput = number.replace(/[^0-9]/g, '');
+
+          if (transformedInput !== number) {
+            ngModelCtrl.$setViewValue(transformedInput);
+            ngModelCtrl.$render();
+          }
+          return transformedInput;
+        }
+        return undefined;
+      }
+      ngModelCtrl.$parsers.push(fromUser);
+    }
+  };
+});
+
+createEventApp.directive('googleplace', function () {
+  return {
+    require: 'ngModel',
+    link: function (scope, element, attrs, model) {
+      var options = {
+        types: [],
+        componentRestrictions: {}
+      };
+      scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
+
+      google.maps.event.addListener(scope.gPlace, 'place_changed', function () {
+        scope.$apply(function () {
+          model.$setViewValue(element.val());
+        });
+      });
+    }
+  };
+});
+
+createEventApp.controller('CreateEventHeaderController', ['$scope', function ($scope, $http) {
+  $scope.showAccountDiv = function () {
+
+    if ($('.myAccountDiv').is(':visible')) {
+      $('.down').text("keyboard_arrow_down");
+      $(' .myAccountDiv').hide();
+      $(".accountMainDiv").css("background-color", "unset");
+      $(".accountMainDiv").css("box-shadow", "unset");
+    }
+    else {
+      $(".accountMainDiv").css("background-color", "white");
+      $(".accountMainDiv").css("box-shadow", "0 2px 5px 0 rgba(0, 0, 0, 0.26)");
+      $('.down').text("keyboard_arrow_up")
+      $(' .myAccountDiv').show();
+    }
+
+  }
+
+}]);
+
+
+function formatAMPM(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  minutes = minutes < 30 ? '00' : '30';
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return strTime;
+}
+
+function formatDateTime(date) {
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var res = "" + year + "-" + (month < 10 ? "0" : "") + month + "-" + (day < 10 ? "0" : "") + day + "T" + (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":00";
+  return res;
+}

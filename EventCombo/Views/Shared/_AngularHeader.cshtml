@@ -1,0 +1,19 @@
+﻿@using EventCombo.Models
+@model IBaseViewModel
+
+<header ng-controller="CreateEventHeaderController">
+  <a href="@Url.Action("Index", "Home")"><img src="@Url.Content("~/Images/AMaterial/EventComboLogoWholePx.svg")" class="headerlogo" alt="Eventcombo" /></a>
+  <div class="accountMainDiv noOutline" style="float: right; margin-right: 50px; margin-top: 20px; position: absolute;top: 0px;right: 0px; cursor: pointer;" ng-click="showAccountDiv();">
+    <div class="myAccountDetail" style="width: 180px; padding-left: 15px; padding-right: 15px;">
+      <i class="material-icons" style="margin-right: 10px;color: red;">account_circle</i> <span style="position: absolute; margin-top: 3px">@Model.BaseUserName</span> <i class="material-icons down" style="margin-left: 90px;">keyboard_arrow_down</i>
+
+    </div>
+    <div class="myAccountDiv" style="display: none; width: 180px !important; margin-top: -2px;">
+      <div style="margin-top: 10px;"> <a href="@Url.Action("MyAccount", "Account")">My Account</a></div>
+      <div style="margin-top: 10px;"> <a href="@Url.Action("EventList", "EventList")">My Events</a></div>
+      <div style="margin-top: 10px;"><a href="@Url.Action("PurchasedTicket", "Account")">My Tickets</a></div>
+      <div style="float: right; margin-top: 10px;"><a href="#">Logout</a></div>
+      <div style="clear: both;"></div>
+    </div>
+  </div>
+</header>

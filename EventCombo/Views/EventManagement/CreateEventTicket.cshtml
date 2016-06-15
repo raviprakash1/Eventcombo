@@ -1,0 +1,112 @@
+﻿<div class="paidTicketContentCo" id="paid' + scope.count + '">
+  <div id="PaidTickets' + scope.count + '">
+    <div class="paidTicketContentCoHeader">
+      <div layout="row" layout-xs="column">
+        <span class="iconDragItem" ondragstart="handleDragStart1(event, this);" ondragenter="handleDragEnter1(event, this);" ondragover="handleDragOver1(event, this);" ondragleave="handleDragLeave1(event, this);" ondrop="handleDrop1(event, this);" ondragend="handleDragEnd1(event, this);" draggable="true">
+          <i class="material-icons">reorder</i>
+        </span>
+        <div flex>
+          <md-input-container class="ticketContTxtBox">
+            <label class="ticketNameLbl">Enter Ticket Name</label>
+            <input class="ticketNameLblTxtboxCls" required />
+          </md-input-container>
+        </div><div flex>
+          <md-input-container class="ticketContTxtBox qualityMdCon">
+            <label class="ticketQualityLbl">Quality</label>
+            <input input value=0 type="text" id=' + buttnCount + ' ng-model=paid' + buttncount + ' ng-init=paid' + buttncount + '=0 class="ticketQualityLblTxtboxCls" required check-quantity default-value=0 numbers-only   />
+          </md-input-container>
+        </div>
+        <div flex>
+          <md-input-container class="ticketContTxtBox qualityMdCon">
+            <label class="ticketPriceLbl">$ Price</label>
+            <input type="number" id="ticketPriceLblTxtbox" class="ticketPriceLblTxtboxCls" required ng-model="ticketPriceLbl' + scope.count + '" ng-init="ticketPriceLbl' + scope.count + '=0" default-value=0 input value=0 />
+          </md-input-container>
+        </div>
+        <div flex>
+          <md-input-container class="ticketContTxtBox qualityMdCon">
+            <label class="ticketDiscountLbl">$ Discount</label>
+            <input input value=0 type="number" id="ticketDiscountLblTxtbox" class="ticketDiscountLblTxtboxCls" required ng-model="ticketDiscountLbl' + scope.count + '" ng-init="ticketDiscountLbl' + scope.count + '=0" default-value=0 />
+          </md-input-container>
+        </div>
+        <div flex class="trashIconConCls">
+          <span style="cursor: pointer;" class="trashIconCls" ng-click="deleteTicket(\'paid' + scope.count + '\')">
+            <i class="material-icons">delete</i>
+          </span>
+        </div>
+      </div>
+      <div layout="row">
+        <div flex>
+          <a class="showHideOptionCls" href="javascript:void(0)" ng-click="showHideOptions(\'PaidTickets' + scope.count + '\')">
+            <span class="arrowDownOptions">
+              <i class="material-icons moreOptionright">keyboard_arrow_right</i>
+            </span>
+            <span class="moreOptionTxt">More Options</span>
+          </a>
+        </div>
+        <div flex style="position: relative;">
+          <span class="buyerTotalTxt">Buyer total: ${{((ticketPriceLbl' + scope.count + '*paid' + buttnCount + ')-ticketDiscountLbl' + scope.count + ')+2}}</span>
+          <span class="infoOptionIcon" onmouseover="showBuyerDiv(\'paid' + scope.count + '\');" onmouseout="hideBuyerDiv(\'paid' + scope.count + '\');">
+            <i class="material-icons">info</i>
+          </span>
+          <div class="buyerInfo" style="display: none;">
+            <div>Ticket Price: ${{ticketPriceLbl' + scope.count + '}} </div>
+            <div>Quantity: {{paid' + buttnCount + '}}</div>
+            <div>Discount: ${{ticketDiscountLbl' + scope.count + '}} </div>
+            <div>Fee: $2</div>
+            <div>Total: ${{((ticketPriceLbl' + scope.count + '*paid' + buttnCount + ')-ticketDiscountLbl' + scope.count + ')+2}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="paidTicketContentCoBody" style="display:none;">
+      <div class="pTCBTxt">Tickets allowed per order</div>
+      <div class="minMaxTxtBox">
+        <md-input-container class="ticketMinTxtBoxCon">
+          <label class="ticketMinTxtBoxLbl">Minimum</label>
+          <input type="text" ng-model="paidMinvalue' + scope.count + '" id="ticketMinTxtBox" class="ticketMinTxtBoxCls" numbers-only />
+        </md-input-container>
+        <md-input-container class="ticketMaxTxtBoxCon">
+          <label class="ticketMaxTxtBoxLbl">Maximum</label>
+          <input type="text" id="ticketMaxTxtBox" class="ticketMaxTxtBoxCls" ng-model="paidMaxvalue' + scope.count + '" numbers-only />
+        </md-input-container>
+      </div>
+      <div class="ticketDespCon">
+        <md-input-container class="ticketDespTxtBoxCon">
+          <label class="ticketDespTxtBoxLbl">Enter Ticket Description</label>
+          <input id="ticketDespTxtBox" class="ticketDespTxtBoxCls" />
+        </md-input-container>
+      </div>
+      <div class="ticketChkBoxCon">
+        <md-checkbox class="blue">Show ticket description on the event page</md-checkbox>
+      </div>
+      <div class="ticketStartEndDate">
+        <md-datepicker md-placeholder="Start date" ng-model="paidStartdate' + scope.count + '"></md-datepicker>
+        <md-datepicker md-placeholder="End date" ng-model="paidEndDate' + scope.count + '"></md-datepicker>
+      </div>
+      <div class="ticketChkBoxCon">
+        <md-checkbox class="blue">Hide this ticket type</md-checkbox>
+      </div>
+      <div class="ticketChkBoxCon">
+        <md-radio-group ng-model="data.group1' + scope.count + '">
+          <md-radio-button value="1" class="md-primary">When ticket is not on sale</md-radio-button>
+          <md-radio-button value="2" class="md-primary">At custom date and time</md-radio-button>
+        </md-radio-group>
+      </div>
+      <div class="hideUntilAfterCon">
+        <md-checkbox class="blue" style="width: 300px !important;">
+          <md-datepicker ng-model="PaidDateendHideUntil' + scope.count + '" md-placeholder="Hide until date and time" style="width: 300px !important;"></md-datepicker>
+        </md-checkbox>
+        <md-checkbox class="blue">
+          <md-datepicker ng-model="PaidDateendHideAfter' + scope.count + '" md-placeholder="Hide after date and time"></md-datepicker>
+        </md-checkbox>
+      </div>
+      <div class="markSoldCon">
+        <md-checkbox class="blue">Mark as sold out</md-checkbox>
+      </div>
+      <div class="displayRemCon">
+        <md-checkbox class="blue">Display remaining tickets</md-checkbox>
+      </div>
+    </div>
+  </div>
+</div>
+

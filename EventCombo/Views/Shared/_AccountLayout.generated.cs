@@ -856,7 +856,7 @@ WriteLiteral(">\r\n                                                    <p>");
 
             
             #line 191 "..\..\Views\Shared\_AccountLayout.cshtml"
-                                                  Write(Html.ActionLink("Create Event", "CreateEvent", "CreateEvent"));
+                                                  Write(Html.ActionLink("Create Event", "CreateEvent", "EventManagement"));
 
             
             #line default

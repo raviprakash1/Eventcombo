@@ -1,0 +1,616 @@
+﻿.md-datepicker-input
+{
+    width: 167px !important;
+}
+.tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.tooltiptext::after {
+    content: "Testing"; 
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+.infoOptionIcon:hover .tooltiptext {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.block
+{
+    display: block;
+}
+/* In angular ng-click or events there is outline so we need to remove that outline*/
+.noOutline:focus
+{
+    outline: none !important;
+}
+
+
+.ticketStartEndDate
+{
+    margin-bottom: 15px;
+}
+
+.myAccountDiv
+{
+    padding-left: 15px;
+ //   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+/*FOOTER CSS*/	
+
+footer {
+	position: relative;
+    bottom: -400px;
+    right: 0px;
+	font-weight:200;
+	line-height:1.4em;
+	}
+.footer-right {
+	float:right;
+	bottom:100px;
+	right: 50px;
+	position:absolute;
+	}
+.footer-left {
+	float:left;
+	bottom:100px;
+	left: 50px;
+	position:absolute;
+	}
+.footerlogo {
+	text-align: center;
+    width: 100%;
+    height: 40vh;
+	background: url(../../Images/AMaterial/EventComboLogo.svg) center no-repeat;
+	background-size: 700vw;
+	overflow:hidden;
+	background-position:top;
+	}
+.footerwhite {
+	background: rgba(255, 255, 255, 0.5);
+	width:100%;
+	height:77%;
+	}
+@media (max-width: 600px) {
+	.footer-left {
+		display: none;
+		}
+	.footer-right {
+		text-align:center;
+		margin: 0 auto;
+		width:100%;
+		right:0px;
+		}
+	}
+	
+/*HEADER CSS*/	
+	
+.headerlogo {
+	margin: 34px 10px 50px 34px;
+	width:30vw;
+	max-width: 360px;
+	min-width: 100px;
+	}
+header {
+	background:url(../../Images/AMaterial/stripes.png) repeat-x;
+	}
+    .headerCEHead{
+        color: #FF008A;
+        text-transform: uppercase;
+        font-size: 28px;
+        font-weight: bold;
+        margin-left:70px;
+    }
+
+    .headerCEHeadBtn{
+        text-align: right;
+        margin: 10px 70px 10px 0px;
+    }
+
+    .btnSaveHeadCE{
+        color: #fff;
+        border: 0px;
+        background: #00CAFD;
+        padding: 10px 40px;
+        font-size: 18px;
+        border-radius: 5px;
+        margin-right: 20px;
+        display: inline-block;
+    }
+
+    .btnPreviewHeadCE{
+        color: #fff;
+        border: 0px;
+        background: #00CAFD;
+        padding: 10px 40px;
+        font-size: 18px;
+        border-radius: 5px;
+        margin-right: 40px;
+        display: inline-block;
+    }
+
+    .btnMakeLiveHeadCE{
+        color: #fff;
+        border: 0px;
+        background: #1AFF1A;
+        padding: 10px 40px;
+        font-size: 18px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+
+    .headerCEHeadBtn a:hover{
+        color:#fff;
+        border:none;
+        text-decoration:none;
+    }
+
+    .eventDetailContainer{
+        background: #00CAFD;
+        margin:0px auto;
+        overflow:hidden;
+        padding:20px 0px 0px 0px;
+    }
+
+    .EDConInner{
+        max-width: 1100px;
+        margin: 0px auto;
+    }
+
+    .EDWebsiteUrlHead{
+        color:#fff;
+    }
+    
+    .EDWebsiteUrlHead md-input-container{
+        margin:0px;
+        height: 46px;
+    }
+
+    .websiteURLTxtboxCls{
+        color: #fff !important;
+        border-color: #fff !important;
+        font-size:14px !important;
+    }
+
+    .websiteURLTxtLblCls{
+        color: #fff !important;
+        font-size:14px !important;
+    }
+
+    .websiteUrlEnd{
+        color: #f1f1f1;
+    }
+
+    .eventDetailTxtFields{
+        background-color: #CCF4FF;
+        padding: 20px 10px 10px 20px;
+        display: block;
+        clear: both;
+    }
+
+    .EDTxtENTxtBox{
+        width: 100%;
+        border: none;
+        font-size: 30px;
+        font-weight: bold;
+        background: none;
+        color:#304756;
+    }
+
+    .EDTxtENTxtBox::-webkit-input-placeholder {
+       color: #304756;
+    }
+
+    .EDTxtENTxtBox:-moz-placeholder { /* Firefox 18- */
+       color: #304756;  
+    }
+
+    .EDTxtENTxtBox::-moz-placeholder {  /* Firefox 19+ */
+       color: #304756;  
+    }
+
+    .EDTxtENTxtBox:-ms-input-placeholder {  
+       color: #304756;  
+    }
+
+    .EDTxtENTxtBox:focus{
+        outline:none;
+        border:none
+    }
+
+    .EDTxtVNTxtBox{
+        width: 100%;
+        border: none;
+        font-size: 20px;
+        background: none;
+        color: #747474;
+    }
+
+    .EDTxtVNTxtBox::-webkit-input-placeholder {
+       color: #747474;
+    }
+
+    .EDTxtVNTxtBox:-moz-placeholder { /* Firefox 18- */
+       color: #747474;  
+    }
+
+    .EDTxtVNTxtBox::-moz-placeholder {  /* Firefox 19+ */
+       color: #747474;  
+    }
+
+    .EDTxtVNTxtBox:-ms-input-placeholder {  
+       color: #747474;  
+    }
+
+    .EDTxtVNTxtBox:focus{
+        outline:none;
+        border:none
+    }
+
+    .EDTxtVATxtBox{
+        width: 90%;
+        border: none;
+        font-size: 20px;
+        background: none;
+        color: #000;
+        padding-left: 10px;
+        font-weight:bold;
+        margin-left:20px;
+    }
+
+    .EDTxtVATxtBox::-webkit-input-placeholder {
+       color: #000;
+    }
+
+    .EDTxtVATxtBox:-moz-placeholder { /* Firefox 18- */
+       color: #000;  
+    }
+
+    .EDTxtVATxtBox::-moz-placeholder {  /* Firefox 19+ */
+       color: #000;  
+    }
+
+    .EDTxtVATxtBox:-ms-input-placeholder {  
+       color: #000;  
+    }
+
+    .EDTxtVATxtBox:focus{
+        outline:none;
+        border:none
+    }
+
+    .EDTxtVenueAddress{
+        margin-top: 15px;
+    }
+
+    .EDTxtEventDateTime{
+        color: #304756;
+        font-size: 19px;
+        font-weight: bold;
+        cursor:pointer;
+    }
+
+    .pickuptimeTxt{
+        padding-left: 12px;
+        margin-left:20px;
+    }
+
+    .pickuptimeIcon{
+        font-size: 16px;
+    }
+
+    md-checkbox.md-checked.blue .md-icon {
+     background-color: #00BCD4;
+    }
+
+    md-checkbox .md-label{
+        color: #000;
+        font-size: 16px;
+        font-weight: bold;
+        margin-left: 35px;
+    }
+
+    .EDTxtEventChkBxCon{
+        margin-top:20px;
+    }
+
+    .eventDtkHeadCon{
+        padding-left: 15px;
+    }
+
+    .EDTxtEventOnlineChkBxCon{
+        margin-top:20px;
+    }
+    
+    .onlineEventConChkBox{
+        margin-left: 30px !important;
+    }
+
+    .eventDtlBody{
+        margin: 20px 0px;
+    }
+
+    .eDAddTicketHead{
+        background: #CCF4FF;
+    }
+
+    .eDAddTicketInnerHead{
+        color:#FF008A;
+        font-weight:bold;
+        max-width:1100px;
+        font-size:25px;
+        margin: 0px auto;
+        padding: 5px 0px;
+    }
+
+    .addTicketsButtons{
+        max-width: 1100px;
+        margin: 0px auto;
+        padding: 5px 0px;
+    }
+
+    .ticketSubDivContainer{
+        max-width: 1100px;
+        margin: 0px auto;
+        padding: 5px 0px;
+    }
+    .eDAddTicketBody{
+        margin: 20px 0px 0px 20px;
+    }
+
+    .addTicketBtnCls{
+        color: #00CAFD !important;
+        font-weight: bold;
+        padding: 3px 10px;   
+    }
+
+    .addTicketBtnCls img{
+        width: 20px;
+        height: 20px;
+        margin: 0px 5px;
+    }
+
+    .addTicketBtnCls{
+        display: inline-block;
+        float: left;
+        margin-right: 25px;
+    }
+
+    .paidTicketContentCo{
+        padding: 10px 0px;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+        margin-bottom:20px;
+    }
+
+    .paidTicketContentCoHeader{
+        padding: 0px 10px;
+    }
+
+    .qualityMdCon{
+        max-width:150px;
+    }
+
+    .ticketContTxtBox{
+        margin: 14px 0px 0px 0px !important;
+    }
+
+    .arrowDownOptions{
+        color: #00CAFD;
+        font-weight: bold;
+        padding: 0px 10px;
+        font-size: 15px;
+    }
+
+    .moreOptionTxt{
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .buyerTotalTxt{
+        position: relative;
+        font-weight: bold;
+        font-size: 15px;
+        padding-right: 6px;
+    }
+
+    .infoOptionIcon{
+        color:#888;
+    }
+
+    .trashIconConCls{
+        width: 20px;
+        max-width: 20px;
+        height: 20px;
+        max-height: 20px;
+        color: #00CAFD;
+        margin-top: 19px;
+    }
+
+    .paidTicketContentCoBody{
+        margin: 10px 0px;
+        border-top: 1px dotted #000;
+        padding: 25px 20px;
+    }
+
+    .pTCBTxt{
+        font-weight:bold;
+    }
+
+    .ticketMinTxtBoxCon{
+        max-width: 150px;
+        margin-right: 30px;
+        margin-bottom: 0px;
+    }
+
+    .ticketMaxTxtBoxCon{
+        max-width: 150px;
+        margin-bottom: 0px;
+    }
+
+    .iconDragItem{
+        margin-top: 18px;
+        display: inline-block;
+        margin-right: 10px;
+        cursor:move;
+    }
+
+    .showHideOptionCls{
+        color: #000 !important;
+        text-decoration: none !important;
+        border-bottom:none !important;
+        transition:none !important;
+    }
+
+    .showHideOptionCls:hover{
+        color: #000 !important;
+        text-decoration: none !important;
+        border-bottom:none !important;
+        transition:none !important;
+    }
+
+    .totalCapacity{
+        margin: 0px auto 20px auto;
+        max-width: 1100px;
+        text-align: right;
+        font-weight: bold;
+        color: #00CAFD;
+        font-size: 23px;
+    }
+
+    .donationTxtCls{
+        font-weight: bold;
+        margin-top: 20px;
+    }
+    
+    .OrganizerBody
+    {
+        max-width:1100px;
+        margin: 0px auto;
+        padding: 5px 0px;
+    }
+     .btn-text
+            {
+                color: blue;
+            }
+            .btn-topmargin
+            {
+                margin-top: 20px;
+            }
+.eDBitMoreHead
+{
+        background: #CCF4FF;
+}
+.eDBitMoreInnerHead
+{
+        color: #FF008A;
+    font-weight: bold;
+    max-width: 1100px;
+    font-size: 25px;
+    margin: 0px auto;
+    padding: 5px 0px;
+}
+.textArea
+{
+    height: 100px;
+}
+.TellUs
+{
+        margin-top: 20px;
+}
+.tellus_pics
+{
+    display: inline;
+    position:relative;
+}
+
+md-tabs-canvas{
+    margin-left: 53px;
+}
+
+md-tabs-wrapper{
+    border:none !important;
+}
+
+md-dialog{
+    width:800px;
+}
+
+.md-tab{
+    color: #888 !important;
+}
+
+.md-tab.md-active {
+    color: rgb(63,81,181) !important;
+}
+
+.pickupDateContainer{
+    border: 1px solid #c1c1c1;
+    width: 880px;
+    margin: 0px auto;
+    position: absolute;
+    background: #fff;
+    z-index: 2;
+    box-shadow: 2px 2px 5px 0px #c1c1c1;
+    margin-top: -65px;
+    margin-left: 15px;
+}
+
+.color-picker-wrapper.color-picker-swatch-only .input-group .input-group-addon {
+    background-size: 50% !important;
+    height: 30px !important;
+    background-repeat: no-repeat !important;
+}
+
+.closeIconImage {
+    position: absolute;
+    right: 5px;
+    color: #fff;
+    background-color: #888;
+    font-weight: bold !important;
+    font-size: 16px !important;
+}
+
+.buyerInfo
+{
+    position: absolute !important;
+    border: 1px solid #888;
+    width: 150px;
+    text-align: center;
+    position: relative;
+    background-color: #888;
+    color: white;
+    top: -100px;
+}
+
+.buyerInfo:before
+{
+    position: absolute;
+    content: '';
+    width: 0px;
+    height: 0px;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid#888;
+    border-bottom: 15px solid transparent;
+    bottom: -31px;
+    left: 60px;
+}

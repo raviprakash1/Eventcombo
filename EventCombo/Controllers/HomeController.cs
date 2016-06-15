@@ -2023,7 +2023,7 @@ namespace EventCombo.Controllers
         }
         public string checkid()
         {
-            Session["ReturnUrl"] = "CreateEvent~" + Url.Action("CreateEvent", "CreateEvent");
+            Session["ReturnUrl"] = "CreateEvent~" + Url.Action("CreateEvent", "EventManagement");
 
 
             if (Session["AppId"] == null)
