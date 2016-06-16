@@ -48,6 +48,55 @@ namespace EventCombo.Models
     public int Minutes { get; set; }
   }
 
+  public class ImageViewModel
+  {
+    public long Id { get; set; }
+    public int ImageType { get; set; }
+    public string Filename { get; set; }
+    public string ContentType { get; set; }
+    public string ImageUrl 
+    {
+      get 
+      { 
+        return String.IsNullOrWhiteSpace(Path) || String.IsNullOrWhiteSpace(Filename) ? "" :
+          (UrlPath == null ? "/" + Path + Filename : UrlPath("~/" + Path + Filename)); 
+      }
+    }
+    [JsonIgnore]
+    public Func<string, string> MapPath;
+    [JsonIgnore]
+    public Func<string, string> UrlPath;
+    [JsonIgnore]
+    public string FilePath
+    {
+      get { return Path == "" ? "" : (MapPath == null ? "/" + Path + Filename : MapPath("/" + Path) + Filename); }
+    }
+    [JsonIgnore]
+    public string Path
+    {
+      get
+      {
+        switch (ImageType)
+        {
+          case 0: // Temp image
+            return "Images/Temp/";
+          case 1: // ECImage
+            return "Images/ECImages/";
+          case 2: // Event Images
+            return "Images/events/event_flyers/imagepath/";
+          case 3: // Organizer images
+            return "/Images/Organizer/Organizer_Images/";
+          case 4: // Profile Images
+            return "/Images/Profile/Profile_Images/imagepath/";
+          case 5: // Other images
+            return "Images/";
+          default:
+            return "";
+        }
+      }
+    }
+  }
+
   public enum ScheduleFrequency { Single, Monthly, Weekly, Daily }
 
   public class EventDateViewModel
@@ -81,6 +130,11 @@ namespace EventCombo.Models
 
   public class OrganizerViewModel
   {
+    public OrganizerViewModel()
+    {
+      Image = new ImageViewModel();
+    }
+
     public long OrgnizerId { get; set; }
     public string Orgnizer_Name { get; set; }
     public string Organizer_Desc { get; set; }
@@ -112,6 +166,7 @@ namespace EventCombo.Models
     public string Imagepath { get; set; }
     public long? ECImageId { get; set; }
     public int InternalId { get; set; }
+    public ImageViewModel Image { get; set; } 
   }
 
   public class VariableChargesViewModel
@@ -132,7 +187,7 @@ namespace EventCombo.Models
     public string FS_Apply { get; set; }
   }
 
-  public class EventViewModel: IBaseViewModel
+  public class EventViewModel : IBaseViewModel
   {
     public EventViewModel()
     {
@@ -145,6 +200,8 @@ namespace EventCombo.Models
       _ticketList = new List<TicketViewModel>();
       _feeStruct = new FeeStructureViewModel();
       _errorMessages = new List<string>();
+      _eventImages = new List<ImageViewModel>();
+      BGImage = new ImageViewModel();
     }
 
     // IBaseViewModel interface implementation
@@ -198,7 +255,7 @@ namespace EventCombo.Models
     public string Address { get; set; }
     public bool OnlineEvent { get; set; }
     public bool ErrorEvent { get; set; }
-    
+
     private List<string> _errorMessages;
     public List<string> ErrorMessages
     {
@@ -279,5 +336,13 @@ namespace EventCombo.Models
       set { _feeStruct = value; }
     }
 
+    public ImageViewModel BGImage { get; set; }
+
+    private List<ImageViewModel> _eventImages;
+    public List<ImageViewModel> EventImages
+    {
+      get { return _eventImages; }
+      set { _eventImages = value; }
+    }
   }
 }

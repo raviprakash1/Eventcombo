@@ -69,8 +69,7 @@ namespace EventCombo.Controllers
 
       if (_eService.ValidateEvent(ev))
       {
-        _eService.SaveEvent(ev);
-        //_eService.PublishEvent(ev.EventID, ev.UserID);
+        _eService.SaveEvent(ev, Server.MapPath);
       }
 
       JsonNetResult res = new JsonNetResult();

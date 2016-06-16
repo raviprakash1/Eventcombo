@@ -284,6 +284,7 @@
     <Compile Include="Controllers\EventViewCustomController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Html2PdfController.cs" />
+    <Compile Include="Controllers\ImageAPIController.cs" />
     <Compile Include="Controllers\ImageFiles.cs" />
     <Compile Include="Controllers\InbetweenController.cs" />
     <Compile Include="Controllers\JsonNetResult.cs" />
@@ -628,6 +629,8 @@
     <Compile Include="Service\DBAccessService.cs" />
     <Compile Include="Service\IDBAccessService.cs" />
     <Compile Include="Service\IEventService.cs" />
+    <Compile Include="Service\IImageService.cs" />
+    <Compile Include="Service\ImageService.cs" />
     <Compile Include="Service\IManageAttendeesService.cs" />
     <Compile Include="Service\IManageEventService.cs" />
     <Compile Include="Service\Notification\INotificationSender.cs" />
@@ -712,6 +715,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>_AccountLayout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_AuthenticateLayout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_AuthenticateLayout.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shared\_Layout.generated.cs">
       <AutoGen>True</AutoGen>
@@ -842,6 +850,7 @@
     <Content Include="Scripts\AMaterial\angular-material.js" />
     <Content Include="Scripts\AMaterial\angular-messages.min.js" />
     <Content Include="Scripts\AMaterial\angular-route.min.js" />
+    <Content Include="Scripts\AMaterial\angular-tinymce\tinymce.min.js" />
     <Content Include="Scripts\AMaterial\angular.js" />
     <Content Include="Scripts\AMaterial\angularjs-color-picker.min.js" />
     <Content Include="Scripts\AMaterial\controller.js" />
@@ -1400,6 +1409,7 @@
     </Content>
     <Content Include="Views\Shared\_AuthenticateLayout.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_AuthenticateLayout.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Shared\_Logout.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1596,6 +1606,7 @@
     <Folder Include="Properties\assets\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Html2Pdf\" />
+    <Folder Include="Views\ImageAPI\" />
     <Folder Include="Views\Permission\" />
     <Folder Include="Views\Validate\" />
     <Folder Include="Views\ValidationMessage\" />

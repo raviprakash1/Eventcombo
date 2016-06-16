@@ -14,6 +14,7 @@ namespace EventCombo.Service
   {
     private IUnitOfWorkFactory _factory;
     private IMapper _mapper;
+    private IImageService _iservice;
 
     public EventService(IUnitOfWorkFactory factory, IMapper mapper)
     {
@@ -24,6 +25,7 @@ namespace EventCombo.Service
 
       _factory = factory;
       _mapper = mapper;
+      _iservice = new ImageService();
     }
 
     private void LoadEventDictionaries(EventViewModel ev)
@@ -252,13 +254,14 @@ namespace EventCombo.Service
         if (tDB.T_Id == 0)
           tRepo.Insert(tDB);
         uow.Context.SaveChanges();
+        ticket.T_Id = tDB.T_Id;
       }
     }
 
     private void SaveVarCharges(EventViewModel ev, IUnitOfWork uow)
     {
       IRepository<Event_VariableDesc> vcRepo = new GenericRepository<Event_VariableDesc>(_factory.ContextFactory);
-      
+
       foreach (var varCharge in ev.VariableChargesList)
       {
         Event_VariableDesc vc = null;
@@ -271,10 +274,11 @@ namespace EventCombo.Service
         if (vc.Variable_Id == 0)
           vcRepo.Insert(vc);
         uow.Context.SaveChanges();
+        varCharge.VariableId = vc.Variable_Id;
       }
     }
 
-    private void SaveOrganizers(EventViewModel ev, IUnitOfWork uow)
+    private void SaveOrganizers(EventViewModel ev, IUnitOfWork uow, Func<string, string> mapPath)
     {
       IRepository<Organizer_Master> orgRepo = new GenericRepository<Organizer_Master>(_factory.ContextFactory);
       IRepository<Event_Orgnizer_Detail> evoRepo = new GenericRepository<Event_Orgnizer_Detail>(_factory.ContextFactory);
@@ -292,10 +296,29 @@ namespace EventCombo.Service
         }
 
         _mapper.Map(org, oDB);
+
+        org.Image.MapPath = mapPath;
+        if ((org.Image != null) && (org.Image.ImageType == 0) && (!String.IsNullOrWhiteSpace(org.Image.Filename)))
+        {
+          ImageViewModel tempImage = _iservice.CopyImage(org.Image, 3);
+          org.Organizer_Image = tempImage.Filename;
+          org.Imagepath = tempImage.Filename;
+        }
+        if ((org.Image != null) && (org.Image.ImageType == 0) && (!String.IsNullOrWhiteSpace(org.Image.Filename)))
+          oDB.ECImageId = _iservice.UpdateECImage(oDB.ECImageId ?? 0, org.Image, uow);
+        if (((oDB.ECImageId ?? 0) != 0) && (org.Image != null) && (String.IsNullOrWhiteSpace(org.Image.Filename)))
+        {
+          _iservice.DeleteECImage(oDB.ECImageId ?? 0, uow, mapPath);
+          oDB.ECImageId = 0;
+        }
+
+
         if (oDB.Orgnizer_Id == 0)
           orgRepo.Insert(oDB);
         uow.Context.SaveChanges();
 
+        org.OrgnizerId = oDB.Orgnizer_Id;
+        org.ECImageId = oDB.ECImageId;
         if (org.InternalId == ev.InternalOrganizerId)
           ev.OrganizerId = oDB.Orgnizer_Id;
       }
@@ -312,12 +335,52 @@ namespace EventCombo.Service
       uow.Context.SaveChanges();
     }
 
-    public void SaveEvent(EventViewModel ev)
+    private void SaveImages(EventViewModel ev, IUnitOfWork uow, Func<string, string> mapPath)
     {
+      IRepository<EventImage> eiRepo = new GenericRepository<EventImage>(_factory.ContextFactory);
 
+      var dbImages = eiRepo.Get(filter: (img => img.EventID == ev.EventID)).ToList();
+      foreach (var image in dbImages)
+      {
+        ImageViewModel cVM = ev.EventImages.Where(img => img.Id == image.EventImageID).FirstOrDefault();
+        if (cVM == null)
+          eiRepo.Delete(image);
+        else
+        {
+          if (cVM.ImageType == 0)
+          {
+            _iservice.DeleteImage(new ImageViewModel() { ImageType = 2, Filename = image.EventImageUrl, MapPath = mapPath });
+            cVM.MapPath = mapPath;
+            var newVM = _iservice.CopyImage(cVM, 2, true);
+            image.EventImageUrl = newVM.Filename;
+            image.ImageType = newVM.ContentType;
+            cVM.Filename = newVM.Filename;
+            cVM.ImageType = 2;
+          }
+        }
+      }
+
+      uow.Context.SaveChanges();
+      foreach(var cVM in ev.EventImages.Where(i => ((i.Id == 0) && (i.ImageType == 0) && (!String.IsNullOrWhiteSpace(i.Filename)))))
+      {
+        cVM.MapPath = mapPath;
+        var newVM = _iservice.CopyImage(cVM, 2, true);
+        EventImage image = new EventImage() { EventID = ev.EventID, EventImageUrl = newVM.Filename, ImageType = newVM.ContentType };
+        eiRepo.Insert(image);
+        uow.Context.SaveChanges();
+        cVM.Id = image.EventImageID;
+        cVM.Filename = newVM.Filename;
+        cVM.ImageType = 2;
+      }
+
+    }
+
+
+    public void SaveEvent(EventViewModel ev, Func<string, string> mapPath)
+    {
       using (var uow = _factory.GetUnitOfWork())
       {
-        try 
+        try
         {
           IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
 
@@ -338,6 +401,18 @@ namespace EventCombo.Service
           uow.Context.SaveChanges();
           ev.EventID = evDB.EventID;
 
+          ev.BGImage.MapPath = mapPath;
+          if ((ev.BGImage != null) && (ev.BGImage.ImageType == 0) && (!String.IsNullOrWhiteSpace(ev.BGImage.Filename)))
+            evDB.ECBackgroundId = _iservice.UpdateECImage(evDB.ECBackgroundId ?? 0, ev.BGImage, uow);
+          if (((evDB.ECBackgroundId ?? 0) != 0) && (ev.BGImage != null) && (String.IsNullOrWhiteSpace(ev.BGImage.Filename)))
+          {
+            _iservice.DeleteECImage(evDB.ECBackgroundId ?? 0, uow, mapPath);
+            evDB.ECBackgroundId = 0;
+          }
+          ev.ECBackgroundId = evDB.ECBackgroundId;
+
+          SaveImages(ev, uow, mapPath);
+
           var addressID = SaveAddress(ev, uow);
 
           if (ev.DateInfo.Frequency == ScheduleFrequency.Single)
@@ -345,7 +420,7 @@ namespace EventCombo.Service
           else
             SaveMultiplyDates(ev, uow);
 
-          SaveOrganizers(ev, uow);
+          SaveOrganizers(ev, uow, mapPath);
           SaveTickets(ev, uow);
           SaveVarCharges(ev, uow);
 
@@ -368,7 +443,7 @@ namespace EventCombo.Service
     {
       var param1 = new SqlParameter("@EventId", id);
       var param2 = new SqlParameter("@UserId", userId);
-      var tqList = _factory.ContextFactory.GetContext().Database. SqlQuery<Ticket_Quantity_Detail>("exec PublishEvent @EventId, @UserId", param1, param2);
+      var res = _factory.ContextFactory.GetContext().Database.ExecuteSqlCommand("EXEC PublishEvent @EventId, @UserId", param1, param2);
     }
 
 

@@ -2,7 +2,8 @@
 
 var createEventApp = angular.module("CreateEventApp", ['ngMaterial', 'ngMessages', 'color.picker', 'mdDatetimePickerDemo',
   'ngGallery', 'ui.tinymce']);
-createEventApp.controller('CreateEventController', ['$scope', '$http', '$window', 'ngGallery', function ($scope, $http, $window, ngGallery) {
+createEventApp.controller('CreateEventController', ['$scope', '$http', '$window', '$timeout', 'ngGallery',
+  function ($scope, $http, $window, $timeout, ngGallery) {
 
   $scope.organiserInfo = [];
 
@@ -62,13 +63,11 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     $scope.startDateTime = new Date($scope.eventInfo.DateInfo.StartDateTime);
     $scope.endDateTime = new Date($scope.eventInfo.DateInfo.EndDateTime);
     var time = formatAMPM($scope.startDateTime);
-    console.log(time);
     var ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
     if (ctime.length > 0)
       $scope.selectedstartTime = ctime[0];
     else
       $scope.selectedstartTime = null;
-    console.debug($scope.eventInfo.DateInfo.TimeList);
     time = formatAMPM($scope.endDateTime);
     ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
     if (ctime.length > 0)
@@ -111,7 +110,6 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     $scope.showDateTimeDialog = false;
     $scope.eventInfo.DateInfo.IsNewDate = false;
     var occurence = $scope.occurence;
-    console.log(occurence);
     if (occurence == "Weekly") {
 
       var alldays = "";
@@ -153,16 +151,16 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       $scope.startingDate = new Date($scope.endingDate.getFullYear(), $scope.endingDate.getMonth(), $scope.endingDate.getDate());
   }
 
-  $scope.open = function () {
+  $scope.openGallery = function () {
+    var iList = [];
+    $scope.eventInfo.EventImages.forEach(function (img, i, arr) {
+      iList.push(img.ImageUrl)
+    });
     ngGallery.open({
       template: '<p>Hello</p>',
       plain: true,
-      images: [
-        'dw_1.jpg',
-        'dw_2.jpg',
-        'dw_3.jpg'
-      ],
-      prefix: './img/',
+      images: iList,
+      prefix: '',
       showClose: true,
       closeByEscape: true,
       closeLabel: '<i class="material-icons">clear</i>',
@@ -174,14 +172,10 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     });
   };
 
-  $scope.openOrganiserImage = function () {
-    document.getElementById('organiserImage').click();
-  }
-  $scope.tellUsImage = function () {
-    document.getElementById("tellusImage").click();
-  }
-  $scope.bannerImageClick = function () {
-    document.getElementById("bannerImage").click();
+  $scope.callImageClick = function (imgctrl) {
+    $timeout(function () {
+      document.getElementById(imgctrl).click();
+    }, 100);
   }
 
   $scope.organizerAdd = function () {
@@ -199,7 +193,14 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       Organizer_Status: "A",
       Imagepath: "",
       ECImageId: null,
-      InternalId: i + 1
+      InternalId: i + 1,
+      Image: {
+        Id: 0,
+        ImageType: 0,
+        Filename: "",
+        ImageUrl: "",
+        ContentType: ""
+      }
     };
     $scope.organizerEditState = "Add";
   }
@@ -214,10 +215,18 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         InternalId: org[0].InternalId,
         Orgnizer_Name: org[0].Orgnizer_Name,
         Organizer_Email: org[0].Organizer_Email,
-        Organizer_Desc: org[0].Organizer_Desc
+        Organizer_Desc: org[0].Organizer_Desc,
+        Image: {
+          Id: org[0].Image.Id,
+          ImageType: org[0].Image.ImageType,
+          Filename: org[0].Image.Filename,
+          ImageUrl: org[0].Image.ImageUrl,
+          ContentType: org[0].Image.ContentType
+        }
       };
       $scope.organizerEditState = "Edit";
     }
+    console.debug($scope.eventInfo.CurrentOrganizer);
   }
 
   $scope.saveNewOrganizer = function () {
@@ -238,12 +247,17 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
 
   $scope.saveEditedOrganizer = function () {
     var org = $scope.eventInfo.OrganizerList.filter(function (obj) {
-      return obj.InternalId == $scope.eventInfo.InternalOrganizerId;
+      return obj.InternalId == $scope.eventInfo.CurrentOrganizer.InternalId;
     });
     if (org.length > 0) {
       org[0].Orgnizer_Name = $scope.eventInfo.CurrentOrganizer.Orgnizer_Name;
       org[0].Organizer_Email = $scope.eventInfo.CurrentOrganizer.Organizer_Email;
       org[0].Organizer_Desc = $scope.eventInfo.CurrentOrganizer.Organizer_Desc;
+      org[0].Image.Id = $scope.eventInfo.CurrentOrganizer.Image.Id;
+      org[0].Image.ImageType = $scope.eventInfo.CurrentOrganizer.Image.ImageType;
+      org[0].Image.Filename = $scope.eventInfo.CurrentOrganizer.Image.Filename;
+      org[0].Image.ImageUrl = $scope.eventInfo.CurrentOrganizer.Image.ImageUrl;
+      org[0].Image.ContentType = $scope.eventInfo.CurrentOrganizer.Image.ContentType;
     };
     $scope.organizerEditState = "Saved";
   }
@@ -377,6 +391,98 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         $window.location.href = link_publish + "?EventId=" + $scope.eventInfo.EventID;
     });
   }
+
+  $scope.UploadFiles = function (files, callback) {
+    var fd = new FormData();
+    for (var i = 0; i < files.length; i++) {
+      fd.append('files', files[i]);
+    }
+    $http.post('/imageAPI/UploadImages', fd, {
+      transformRequest: angular.identity,
+      headers: { 'Content-Type': undefined }
+    }).then(function (response) {
+      var images = response.data;
+      callback(images);
+    });
+  }
+
+  $scope.DeleteFile = function (image) {
+    var data = {
+      json: angular.toJson(image)
+    };
+    console.debug(data);
+    $http.post('/imageAPI/DeleteImage', data).then(function (response) {
+    });
+  }
+
+  $scope.uploadBGImage = function (event) {
+    var files = event.target.files;
+
+    $scope.UploadFiles(files, function (images) {
+      if ((images != null) && (images.length > 0)) {
+        var oldimage = null;
+        if ($scope.eventInfo.BGImage.ImageUrl)
+          oldimage = $scope.eventInfo.BGImage;
+        $scope.eventInfo.BGImage = images[0];
+        if (oldimage != null)
+          $scope.DeleteFile(oldimage);
+      }
+    });
+  };
+
+  $scope.onBGColorChange = function () {
+    $scope.clearImage($scope.eventInfo.BGImage);
+  }
+
+  $scope.deleteEventImage = function (image) {
+    var idx = $scope.eventInfo.EventImages.indexOf(image);
+    if (idx >= 0)
+      $scope.eventInfo.EventImages.splice(idx, 1);
+    $scope.DeleteFile(image);
+  }
+
+  $scope.uploadEventImage = function (event) {
+    var files = event.target.files;
+
+    $scope.UploadFiles(files, function (images) {
+      if ((images != null) && (images.length > 0)) {
+        Array.prototype.push.apply($scope.eventInfo.EventImages, images);
+      }
+    });
+  }
+
+  $scope.uploadOrganizerImage = function (event) {
+    var files = event.target.files;
+
+    $scope.UploadFiles(files, function (images) {
+      if ((images != null) && (images.length > 0)) {
+        var oldimage = null;
+        if (($scope.eventInfo.CurrentOrganizer.Image != null) && ($scope.eventInfo.CurrentOrganizer.Image.ImageUrl))
+          oldimage = $scope.eventInfo.CurrentOrganizer.Image;
+        $scope.eventInfo.CurrentOrganizer.Image = images[0];
+        if (oldimage != null)
+          $scope.DeleteFile(oldimage);
+      }
+    });
+  }
+
+  $scope.deleteOrganizerImage = function () {
+    console.debug($scope.eventInfo.CurrentOrganizer.Image);
+    $scope.clearImage($scope.eventInfo.CurrentOrganizer.Image);
+    console.debug($scope.eventInfo.CurrentOrganizer.Image);
+  }
+
+  $scope.clearImage = function (image) {
+    if (image != null) {
+      if (image.ImageUrl)
+        $scope.DeleteFile(image);
+      image.Filename = "";
+      image.ImageUrl = "";
+      image.ImageType = 0;
+      image.ContentType = "";
+    }
+  }
+
 }]);
 
 createEventApp.directive('ngInitial', function () {
@@ -430,6 +536,16 @@ createEventApp.directive('googleplace', function () {
           model.$setViewValue(element.val());
         });
       });
+    }
+  };
+});
+
+createEventApp.directive('customOnChange', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attrs) {
+      var onChangeHandler = scope.$eval(attrs.customOnChange);
+      element.bind('change', onChangeHandler);
     }
   };
 });

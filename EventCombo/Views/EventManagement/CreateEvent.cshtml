@@ -53,7 +53,7 @@
   var link_publish = "@Url.Action("EventConfirmation", "EventConfirmation", new { })";
 </script>
 
-<div id="createEventContainer" ng-controller="CreateEventController">
+<div id="createEventContainer" ng-controller="CreateEventController" ng-cloak>
   <div>
     <div class="headerCEHead">Create Event</div>
     <div class="headerCEHeadBtn">
@@ -66,7 +66,7 @@
         <span>{{message}}</span>
       </div>
     </div>
-    <div class="eventDetailContainer" style="background-color:{{eventInfo.BackgroundColor}}">
+    <div class="eventDetailContainer" style="background-image: url({{eventInfo.BGImage.ImageUrl}}); background-size: 100% 100%; background-color: {{eventInfo.BackgroundColor}};">
       <div class="EDConInner">
         <div class="col-md-12 EDWebsiteUrlHead">
           <div class="col-md-6" style="display:inline; ">
@@ -88,13 +88,14 @@
                           color-picker-swatch-only="true"
                           color-picker-pos="'bottom'"
                           color-picker-case="'lower'"
-                          color-picker-inline="false"></color-picker>
+                          color-picker-inline="false"
+                          color-picker-on-change="onBGColorChange()"></color-picker>
           </div>
-          <span style="float: right;margin-right: 10px; cursor: pointer;" ng-click="bannerImageClick();" class="noOutline">Design your Banner<i class="material-icons" style="margin-left: 10px;color: #858585;">add_a_photo</i><input type="file" name="bannerimage" id="bannerImage" accept="image/*" style="display: none;" />  </span>
+          <span style="float: right;margin-right: 10px; cursor: pointer;" ng-click="callImageClick('bannerImage'); $event.stopPropagation();" class="noOutline">Design your Banner<i class="material-icons" style="margin-left: 10px;color: #858585;">add_a_photo</i><input type="file" name="bannerimage" id="bannerImage" accept="image/*" style="display: none;" custom-on-change="uploadBGImage" /></span>
 
         </div>
 
-        <div class="eventDetailTxtFields">
+        <div class="eventDetailTxtFields" style="opacity: 0.8;">
           <div class="eventDtkHeadCon">
             <div class="EDTxtEventName">
               <input type="text" ng-model="eventInfo.EventTitle" placeholder="Enter the name of your event here" class="EDTxtENTxtBox" />
@@ -288,10 +289,10 @@
             </md-select>
           </md-input-container>
 
-          <span style="float: right; text-transform:uppercase; cursor: pointer;" ng-click="tellUsImage();" class="noOutline">
+          <span style="float: right; text-transform:uppercase; cursor: pointer;" ng-click="callImageClick('tellusImage'); $event.stopPropagation();" class="noOutline">
             <span style="display: inline-block;float: left;padding-right: 15px;">Have a filter?upload it here</span>
             <i class="material-icons" style="margin-left: -10px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">add_a_photo</i>
-            <input type="file" name="tellusimage" id="tellusImage" accept="image/*" style="display: none;" />
+            <input type="file" name="tellusimage" id="tellusImage" accept="image/*" style="display: none;" custom-on-change="uploadEventImage" />
           </span>
 
         </div>
@@ -304,22 +305,14 @@
           <div style="margin-top: 10px;">
             <span style="float: right">
               <span style="display: inline-block;float: left;padding-right: 31px;">A Whole Gallery? Sure!</span>
-              <i data-ng-click='ctrl.open()' class="material-icons" style="cursor:pointer;margin-left: -25px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">collections</i>
+              <i data-ng-click='openGallery()' class="material-icons" style="cursor:pointer;margin-left: -25px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">collections</i>
             </span>
           </div>
           <div class="imageGallery" style="clear: both; padding-top: 5px;">
             <div style="float: right;">
-              <div id="sliderImg1" class="tellus_pics">
-                <i class="material-icons closeIconImage" onclick="$('#sliderImg1').hide();" style="cursor:pointer;">clear</i>
-                <img src="img/dw_1.jpg" style="height:100px; width: 100px" />
-              </div>
-              <div id="sliderImg2" class="tellus_pics">
-                <i class="material-icons closeIconImage" onclick="$('#sliderImg2').hide();" style="cursor:pointer;">clear</i>
-                <img src="img/dw_2.jpg" style="height:100px; width: 100px" />
-              </div>
-              <div id="sliderImg3" class="tellus_pics">
-                <i class="material-icons closeIconImage" onclick="$('#sliderImg3').hide();" style="cursor:pointer;">clear</i>
-                <img src="img/dw_3.jpg" style="height:100px; width: 100px" />
+              <div class="tellus_pics" ng-repeat="img in eventInfo.EventImages">
+                <i class="material-icons closeIconImage" ng-click="deleteEventImage(img)" style="cursor:pointer;">clear</i>
+                <img src="{{img.ImageUrl}}" style="height:100px; width: 100px" />
               </div>
             </div>
           </div>
@@ -341,8 +334,6 @@
         </div>
 
         <div class="organiserDiv md-padding">
-
-
           <md-input-container style="margin-right: 10px;">
             <label>Select Organizer</label>
             <md-select ng-model="eventInfo.InternalOrganizerId">
@@ -353,6 +344,7 @@
             Edit
           </md-button>
         </div>
+
         <div class="newOrganizer" ng-show="(organizerEditState == 'Edit') || (organizerEditState == 'Add')">
           <md-input-container>
             <label class="organizerText">Organizer Name</label>
@@ -364,13 +356,18 @@
             <input class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_Email" />
           </md-input-container>
 
+          <div class="tellus_pics" style="float: right;" ng-show="eventInfo.CurrentOrganizer.Image.ImageUrl">
+            <i class="material-icons closeIconImage" ng-click="deleteOrganizerImage()" style="cursor:pointer;">clear</i>
+            <img src="{{eventInfo.CurrentOrganizer.Image.ImageUrl}}" style="height:100px; width: 100px" />
+          </div>
+
           <textarea class="textArea" ui-tinymce="tinymceOptions" ng-model="eventInfo.CurrentOrganizer.Organizer_Desc">
             <span> Organizer Info</span>
           </textarea>
-          <span class="newOrganiserBottomText noOutline" style="float: right;  margin-top: 15px; cursor: pointer;" ng-click="openOrganiserImage();">
+          <span class="newOrganiserBottomText noOutline" style="float: right;  margin-top: 15px; cursor: pointer;" ng-click="callImageClick('organiserImage'); $event.stopPropagation();">
             <span style="display: inline-block;float: left;padding-right: 31px;">Have a logo or picture?</span>
             <i class="material-icons" style="margin-left: -25px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">add_a_photo</i>
-            <input type="file" name="image" id="organiserImage" accept="image/*" style="display: none;" />
+            <input type="file" name="image" id="organiserImage" accept="image/*" style="display: none;" custom-on-change="uploadOrganizerImage" />
           </span>
 
 

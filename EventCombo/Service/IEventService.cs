@@ -10,7 +10,7 @@ namespace EventCombo.Service
   interface IEventService
   {
     EventViewModel CreateEvent(string userId);
-    void SaveEvent(EventViewModel ev);
+    void SaveEvent(EventViewModel ev, Func<string, string> mapPath);
     EventViewModel GetEventById(int id);
     bool ValidateEvent(EventViewModel ev);
     void PublishEvent(long id, string userId);
