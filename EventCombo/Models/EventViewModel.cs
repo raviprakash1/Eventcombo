@@ -166,7 +166,8 @@ namespace EventCombo.Models
     public string Imagepath { get; set; }
     public long? ECImageId { get; set; }
     public int InternalId { get; set; }
-    public ImageViewModel Image { get; set; } 
+    public ImageViewModel Image { get; set; }
+    public bool IncludeSocialLinks { get; set; }
   }
 
   public class VariableChargesViewModel

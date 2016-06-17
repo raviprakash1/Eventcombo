@@ -8,6 +8,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
   $scope.organiserInfo = [];
 
   $scope.isPrivateEvent = false;
+  $scope.includeSocial = 0;
   $scope.gPlace;
 
   $scope.tinymceOptions = {
@@ -28,8 +29,8 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
   }
 
   $scope.vartypes = [
-    { varId: "R", varName: "Required" },
-    { varId: "O", varName: "Optional" }
+    { varId: false, varName: "Required" },
+    { varId: true, varName: "Optional" }
   ];
 
   $scope.occurences = [
@@ -192,6 +193,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       Organizer_Phoneno: "",
       Organizer_Status: "A",
       Imagepath: "",
+      IncludeSocialLinks: false,
       ECImageId: null,
       InternalId: i + 1,
       Image: {
@@ -216,6 +218,10 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         Orgnizer_Name: org[0].Orgnizer_Name,
         Organizer_Email: org[0].Organizer_Email,
         Organizer_Desc: org[0].Organizer_Desc,
+        IncludeSocialLinks: org[0].IncludeSocialLinks,
+        Organizer_FBLink: org[0].Organizer_FBLink,
+        Organizer_Twitter: org[0].Organizer_Twitter,
+        Organizer_Linkedin: org[0].Organizer_Linkedin,
         Image: {
           Id: org[0].Image.Id,
           ImageType: org[0].Image.ImageType,
@@ -238,6 +244,13 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         alert("Organizer with name " + $scope.eventInfo.CurrentOrganizer.Orgnizer_Name.trim() + " already exists. Please enter another name.");
         return;
       }
+
+      if (!$scope.eventInfo.CurrentOrganizer.IncludeSocialLinks) {
+        $scope.eventInfo.CurrentOrganizer.Organizer_FBLink = null;
+        $scope.eventInfo.CurrentOrganizer.Organizer_Twitter = null;
+        $scope.eventInfo.CurrentOrganizer.Organizer_Linkedin = null;
+      }
+
       $scope.eventInfo.OrganizerList.push($scope.eventInfo.CurrentOrganizer);
       $scope.eventInfo.InternalOrganizerId = $scope.eventInfo.CurrentOrganizer.InternalId;
       $scope.eventInfo.CurrentOrganizer = null;
@@ -253,11 +266,17 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       org[0].Orgnizer_Name = $scope.eventInfo.CurrentOrganizer.Orgnizer_Name;
       org[0].Organizer_Email = $scope.eventInfo.CurrentOrganizer.Organizer_Email;
       org[0].Organizer_Desc = $scope.eventInfo.CurrentOrganizer.Organizer_Desc;
+      org[0].IncludeSocialLinks = $scope.eventInfo.CurrentOrganizer.IncludeSocialLinks;
+      org[0].Organizer_FBLink = org[0].IncludeSocialLinks ? $scope.eventInfo.CurrentOrganizer.Organizer_FBLink : null;
+      org[0].Organizer_Twitter = org[0].IncludeSocialLinks ? $scope.eventInfo.CurrentOrganizer.Organizer_Twitter : null;
+      org[0].Organizer_Linkedin = org[0].IncludeSocialLinks ? $scope.eventInfo.CurrentOrganizer.Organizer_Linkedin : null;
       org[0].Image.Id = $scope.eventInfo.CurrentOrganizer.Image.Id;
       org[0].Image.ImageType = $scope.eventInfo.CurrentOrganizer.Image.ImageType;
       org[0].Image.Filename = $scope.eventInfo.CurrentOrganizer.Image.Filename;
       org[0].Image.ImageUrl = $scope.eventInfo.CurrentOrganizer.Image.ImageUrl;
       org[0].Image.ContentType = $scope.eventInfo.CurrentOrganizer.Image.ContentType;
+      console.debug(org[0]);
+      console.debug($scope.eventInfo.CurrentOrganizer);
     };
     $scope.organizerEditState = "Saved";
   }
@@ -325,6 +344,12 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     ticket.TotalPrice = ticket.Price == 0 ? 0 : ticket.Price + ticket.EC_Fee - ticket.T_Discount;
   }
 
+  $scope.onPriceBlur = function (ticket) {
+    ticket.Price = ticket.Price < 0 ? 0 : ticket.Price > 100000 ? 99999 : ticket.Price;
+    ticket.T_Discount = ticket.T_Discount < 0 ? 0 : ticket.T_Discount > ticket.Price ? ticket.Price : ticket.T_Discount;
+    $scope.onPriceChange(ticket);
+  }
+
   $scope.deleteTicket = function (ticket) {
     var idx = $scope.eventInfo.TicketList.indexOf(ticket);
     if (idx >= 0)
@@ -355,6 +380,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
   }
 
   $scope.previewEvent = function () {
+    console.debug($scope.eventInfo);
   }
 
   $scope.publishEvent = function () {

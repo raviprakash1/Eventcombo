@@ -370,6 +370,34 @@
             <input type="file" name="image" id="organiserImage" accept="image/*" style="display: none;" custom-on-change="uploadOrganizerImage" />
           </span>
 
+          <div class="organiserbottomDiv" style="margin-top:10px">
+            <md-checkbox class="blue" ng-model="eventInfo.CurrentOrganizer.IncludeSocialLinks" ng-true-value="true" ng-false-value="false">
+              Include organizer link to social media
+            </md-checkbox>
+            <div ng-show="eventInfo.CurrentOrganizer.IncludeSocialLinks">
+              <div class="socialMediaIcon" style="margin-left: 15px">
+                <img src="~/Images/AMaterial/facebook.svg" style="height: 25px;" />
+                <md-input-container>
+                  <label class="organizerText">Facebook link</label>
+                  <input class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_FBLink" style="width: 250px;" />
+                </md-input-container>
+              </div>
+              <div class="socialMediaIcon" style="margin-left: 15px">
+                <img src="~/Images/AMaterial/twitter.svg" style="height: 25px;" />
+                <md-input-container>
+                  <label class="organizerText">Twitter link</label>
+                  <input class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_Twitter" style="width: 250px;" />
+                </md-input-container>
+              </div>
+              <div class="socialMediaIcon" style="margin-left: 15px">
+                <img src="~/Images/AMaterial/linkedin.svg" style="height: 25px;" />
+                <md-input-container>
+                  <label class="organizerText">LinkedIn link</label>
+                  <input class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_Linkedin" style="width: 250px;" />
+                </md-input-container>
+              </div>
+            </div>
+          </div>
 
           <div class="ticketButtonDiv" style="margin-bottom: 10px;">
             <md-button class="md-raised addTicketBtnCls" style="float:unset !important;" ng-show="organizerEditState == 'Add'" ng-click="saveNewOrganizer()">
@@ -379,21 +407,6 @@
               Update Organizer
             </md-button>
           </div>
-
-        </div>
-        <div class="organiserbottomDiv">
-          <md-checkbox class="blue">
-            Include organizer link to social media
-          </md-checkbox>
-          <a href="javascript:void(0)" class="socialMediaIcon" style="margin-left: 15px">
-            <img src="~/Images/AMaterial/facebook.svg" style="height: 25px;" />
-          </a>
-          <a href="javascript:void(0)" class="socialMediaIcon">
-            <img src="~/Images/AMaterial/linkedin.svg" style="height: 25px;" />
-          </a>
-          <a href="javascript:void(0)" class="socialMediaIcon">
-            <img src="~/Images/AMaterial/twitter.svg" style="height: 25px;" />
-          </a>
 
         </div>
       </div>
@@ -429,13 +442,13 @@
                   <div flex ng-show="ticket.TicketTypeID == 2">
                     <md-input-container class="ticketContTxtBox qualityMdCon">
                       <label class="ticketPriceLbl">$ Price</label>
-                      <input type="number" class="ticketPriceLblTxtboxCls" required ng-model="ticket.Price" ng-change="onPriceChange(ticket)" min="0" max="100000" input />
+                      <input type="number" class="ticketPriceLblTxtboxCls" required ng-model="ticket.Price" ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket)" input />
                     </md-input-container>
                   </div>
                   <div flex ng-show="ticket.TicketTypeID == 2">
                     <md-input-container class="ticketContTxtBox qualityMdCon">
                       <label class="ticketDiscountLbl">$ Discount</label>
-                      <input input type="number" class="ticketDiscountLblTxtboxCls" required ng-model="ticket.T_Discount" ng-change="onPriceChange(ticket)" min="0" max="100000" />
+                      <input input type="number" class="ticketDiscountLblTxtboxCls" required ng-model="ticket.T_Discount" ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket)" />
                     </md-input-container>
                   </div>
                   <div flex ng-show="ticket.TicketTypeID != 2">
@@ -471,8 +484,8 @@
                 </div>
               </div>
               <div class="paidTicketContentCoBody" ng-show="ticket.expandedOptions">
-                <div class="pTCBTxt">Tickets allowed per order</div>
-                <div class="minMaxTxtBox">
+                <div class="pTCBTxt" ng-show="ticket.TicketTypeID != 3">Tickets allowed per order</div>
+                <div class="minMaxTxtBox" ng-show="ticket.TicketTypeID != 3">
                   <md-input-container class="ticketMinTxtBoxCon">
                     <label class="ticketMinTxtBoxLbl">Minimum</label>
                     <input type="text" ng-model="ticket.Min_T_Qty" class="ticketMinTxtBoxCls" numbers-only />
@@ -504,7 +517,7 @@
                     <md-radio-button value="1" class="md-primary">At custom date and time</md-radio-button>
                   </md-radio-group>
                 </div>
-                <div class="hideUntilAfterCon">
+                <div class="hideUntilAfterCon" ng-show="ticket.T_AutoSechduleType == 1">
                   <md-checkbox class="blue" style="width: 300px !important;" ng-model="ticket.useUntilDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useUntilDate = '0'">
                     <md-datepicker ng-model="ticket.localHideUntillDate" md-placeholder="Hide until date and time" style="width: 300px !important;"></md-datepicker>
                   </md-checkbox>
@@ -566,28 +579,24 @@
 
 
     <div class="variabeDetails" style="max-width: 1100px;margin: 0px auto;padding: 5px 0px;" ng-show="eventInfo.Ticket_showvariable == 'Y'">
-      <md-input-container class="ticketDespTxtBoxCon" style="display: inline-block; float: left;">
-        <label class="ticketDespTxtBoxLbl">Description</label>
-        <input type="text" class="ticketDespTxtBoxCls" ng-model="eventInfo.Ticket_variabledesc" />
-      </md-input-container>
-      <md-input-container style="margin-right: 10px; display: inline-block; float: left;">
-        <label>Type</label>
-        <md-select ng-model="eventInfo.Ticket_variabletype">
-          <md-option ng-repeat="type in vartypes" value="{{type.varId}}">{{type.varName}}</md-option>
-        </md-select>
-      </md-input-container>
-
       <md-button class="md-raised addTicketBtnCls" ng-click="addVarCharge()">
         ADD
       </md-button>
       <div class="variableOptions" style="background-color: white;background-color: white;display: block;clear: both;max-width: 800px;border: 1px solid #888;box-shadow: 2px 2px 3px 0px #c1c1c1;padding: 20px;height: 300px;overflow-y: scroll;">
         <div ng-repeat="varCharge in eventInfo.VariableChargesList">
-          <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 40px;    width: 250px;">
+          <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 250px;">
             <label class="ticketDespTxtBoxLbl">Variable charge description</label>
             <input class="ticketDespTxtBoxCls" ng-model="varCharge.VariableDesc" />
           </md-input-container>
-          <span style="margin-left: 30px">  $</span>
-          <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 60px;">
+          <span style="margin-left: 20px">  $</span>
+          <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width:150px">
+            <label class="ticketDespTxtBoxLbl">Type</label>
+            <md-select class="ticketDespTxtBoxCls" ng-model="varCharge.Optional">
+              <md-option ng-repeat="type in vartypes" value="{{type.varId}}">{{type.varName}}</md-option>
+            </md-select>
+          </md-input-container>
+          <span style="margin-left: 20px">  $</span>
+          <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 100px;">
             <label class="ticketDespTxtBoxLbl">Amount</label>
             <input class="ticketDespTxtBoxCls" type="number" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="1.00" ng-model="varCharge.Price" required />
           </md-input-container>

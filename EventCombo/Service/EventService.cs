@@ -58,6 +58,9 @@ namespace EventCombo.Service
         {
           OrganizerViewModel orgVM = _mapper.Map<OrganizerViewModel>(org);
           orgVM.InternalId = i++;
+          orgVM.IncludeSocialLinks = !String.IsNullOrWhiteSpace(orgVM.Organizer_FBLink)
+            || !String.IsNullOrWhiteSpace(orgVM.Organizer_Linkedin)
+            || !String.IsNullOrWhiteSpace(orgVM.Organizer_Twitter); 
           ev.OrganizerList.Add(orgVM);
         }
       }
