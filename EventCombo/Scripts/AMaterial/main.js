@@ -305,7 +305,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       T_Sold: 0,
       T_Desc: "",
       Show_T_Desc: "0",
-      Fees_Type: "1",
+      Fees_Type: "0",
       Sale_Start_Date: null,
       Sale_End_Date: null,
       Hide_Ticket: "0",
@@ -341,11 +341,13 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
   $scope.onPriceChange = function (ticket) {
     ticket.EC_Fee = ticket.Price == 0 ? 0 : ticket.Price * $scope.eventInfo.FeeStruct.FS_Percentage / 100 + $scope.eventInfo.FeeStruct.FS_Amount;
     ticket.Customer_Fee = ticket.EC_Fee;
-    ticket.TotalPrice = ticket.Price == 0 ? 0 : ticket.Price + ticket.EC_Fee - ticket.T_Discount;
+    ticket.TotalPrice = ticket.Price == 0 ? 0 : ticket.Fees_Type == 0
+      ? ticket.Price + ticket.EC_Fee - ticket.T_Discount
+      : ticket.Price - ticket.T_Discount;
   }
 
   $scope.onPriceBlur = function (ticket) {
-    ticket.Price = ticket.Price < 0 ? 0 : ticket.Price > 100000 ? 99999 : ticket.Price;
+    ticket.Price = ticket.Price < 0 ? 0 : ticket.Price > 10000000 ? 9999999 : ticket.Price;
     ticket.T_Discount = ticket.T_Discount < 0 ? 0 : ticket.T_Discount > ticket.Price ? ticket.Price : ticket.T_Discount;
     $scope.onPriceChange(ticket);
   }

@@ -495,6 +495,15 @@
                     <input type="text" ng-model="ticket.Max_T_Qty" class="ticketMaxTxtBoxCls" numbers-only />
                   </md-input-container>
                 </div>
+                <div class="ticketChkBoxCon">
+                  <md-input-container>
+                    <label class="ticketDespTxtBoxLbl">Fee</label>
+                    <md-select style="width: 300px;" ng-model="ticket.Fees_Type" ng-change="onPriceChange(ticket)">
+                      <md-option value="0">Customer pays the fees</md-option>
+                      <md-option value="1">I absorb the fee</md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
                 <div class="ticketDespCon">
                   <md-input-container class="ticketDespTxtBoxCon">
                     <label class="ticketDespTxtBoxLbl">Enter Ticket Description</label>
