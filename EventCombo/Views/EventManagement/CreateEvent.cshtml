@@ -591,14 +591,14 @@
       <md-button class="md-raised addTicketBtnCls" ng-click="addVarCharge()">
         ADD
       </md-button>
-      <div class="variableOptions" style="background-color: white;background-color: white;display: block;clear: both;max-width: 800px;border: 1px solid #888;box-shadow: 2px 2px 3px 0px #c1c1c1;padding: 20px;height: 300px;overflow-y: scroll;">
+      <div class="variableOptions">
         <div ng-repeat="varCharge in eventInfo.VariableChargesList">
           <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 250px;">
             <label class="ticketDespTxtBoxLbl">Variable charge description</label>
             <input class="ticketDespTxtBoxCls" ng-model="varCharge.VariableDesc" />
           </md-input-container>
           <span style="margin-left: 20px">  $</span>
-          <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width:150px">
+          <md-input-container class="ticketDespTxtBoxCon variableType" style="margin-left: 20px; width:150px">
             <label class="ticketDespTxtBoxLbl">Type</label>
             <md-select class="ticketDespTxtBoxCls" ng-model="varCharge.Optional">
               <md-option ng-repeat="type in vartypes" value="{{type.varId}}">{{type.varName}}</md-option>
@@ -606,7 +606,7 @@
           </md-input-container>
           <span style="margin-left: 20px">  $</span>
           <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 100px;">
-            <label class="ticketDespTxtBoxLbl">Amount</label>
+            <label class="ticketDespTxtBoxLbl variableAmount">Amount</label>
             <input class="ticketDespTxtBoxCls" type="number" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="1.00" ng-model="varCharge.Price" required />
           </md-input-container>
           <i class="material-icons" style="float: right;margin-right: 20px; margin-top: 13px; cursor: pointer;" ng-click="deleteVarCharge(varCharge)">clear</i>
