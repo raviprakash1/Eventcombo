@@ -67,7 +67,21 @@ namespace EventCombo.Service
 
       ev.TimeZones.Clear();
       foreach (var timezone in tzRepo.Get(orderBy: (query => query.OrderBy(tz => tz.Timezone_order))))
-        ev.TimeZones.Add(_mapper.Map<TimeZoneViewModel>(timezone));
+      {
+        var tz = _mapper.Map<TimeZoneViewModel>(timezone);
+        string sign = tz.TimeZoneName.Substring(5, 1);
+        if ((sign == "+") || (sign == "-"))
+        {
+          int hours;
+          int minutes;
+          Int32.TryParse(tz.TimeZoneName.Substring(6, 2), out hours);
+          Int32.TryParse(tz.TimeZoneName.Substring(9, 2), out minutes);
+          tz.Offset = hours * 60 + minutes;
+        }
+        else
+          tz.Offset = 0;
+        ev.TimeZones.Add(tz);
+      }
 
       var fee = feeRepo.Get(orderBy: (query => query.OrderByDescending(f => f.FS_Id))).FirstOrDefault();
       if (fee != null)

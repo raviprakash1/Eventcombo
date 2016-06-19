@@ -614,3 +614,13 @@ md-dialog{
     bottom: -31px;
     left: 60px;
 }
+
+.validation-datepicker-messages {
+    font-size: 12px;
+    color: #dd2c00;
+    margin: 10px 0 0 65px; 
+}
+
+color-picker-wrapper .color-picker-panel.color-picker-panel-left {
+    left: -158px !important;
+}

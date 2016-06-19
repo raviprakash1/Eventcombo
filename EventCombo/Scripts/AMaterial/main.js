@@ -9,6 +9,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
 
   $scope.isPrivateEvent = false;
   $scope.includeSocial = 0;
+  $scope.minDate = new Date();
   $scope.gPlace;
 
   $scope.tinymceOptions = {
@@ -236,29 +237,32 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
   }
 
   $scope.saveNewOrganizer = function () {
-    if ($scope.eventInfo.CurrentOrganizer.Orgnizer_Name) {
-      var doubleObj = $scope.eventInfo.OrganizerList.filter(function (obj) {
-        return obj.Orgnizer_Name.trim() == $scope.eventInfo.CurrentOrganizer.Orgnizer_Name.trim();
-      });
-      if (doubleObj.length > 0) {
-        alert("Organizer with name " + $scope.eventInfo.CurrentOrganizer.Orgnizer_Name.trim() + " already exists. Please enter another name.");
-        return;
-      }
-
-      if (!$scope.eventInfo.CurrentOrganizer.IncludeSocialLinks) {
-        $scope.eventInfo.CurrentOrganizer.Organizer_FBLink = null;
-        $scope.eventInfo.CurrentOrganizer.Organizer_Twitter = null;
-        $scope.eventInfo.CurrentOrganizer.Organizer_Linkedin = null;
-      }
-
-      $scope.eventInfo.OrganizerList.push($scope.eventInfo.CurrentOrganizer);
-      $scope.eventInfo.InternalOrganizerId = $scope.eventInfo.CurrentOrganizer.InternalId;
-      $scope.eventInfo.CurrentOrganizer = null;
+    if (isEmptyOrSpaces($scope.eventInfo.CurrentOrganizer.Orgnizer_Name) || isEmptyOrSpaces($scope.eventInfo.CurrentOrganizer.Organizer_Email))
+      return;
+    var doubleObj = $scope.eventInfo.OrganizerList.filter(function (obj) {
+      return obj.Orgnizer_Name.trim() == $scope.eventInfo.CurrentOrganizer.Orgnizer_Name.trim();
+    });
+    if (doubleObj.length > 0) {
+      alert("Organizer with name " + $scope.eventInfo.CurrentOrganizer.Orgnizer_Name.trim() + " already exists. Please enter another name.");
+      return;
     }
+
+    if (!$scope.eventInfo.CurrentOrganizer.IncludeSocialLinks) {
+      $scope.eventInfo.CurrentOrganizer.Organizer_FBLink = null;
+      $scope.eventInfo.CurrentOrganizer.Organizer_Twitter = null;
+      $scope.eventInfo.CurrentOrganizer.Organizer_Linkedin = null;
+    }
+
+    $scope.eventInfo.OrganizerList.push($scope.eventInfo.CurrentOrganizer);
+    $scope.eventInfo.InternalOrganizerId = $scope.eventInfo.CurrentOrganizer.InternalId;
+    $scope.eventInfo.CurrentOrganizer = null;
     $scope.organizerEditState = "Saved";
+    
   }
 
   $scope.saveEditedOrganizer = function () {
+    if (isEmptyOrSpaces($scope.eventInfo.CurrentOrganizer.Orgnizer_Name) || isEmptyOrSpaces($scope.eventInfo.CurrentOrganizer.Organizer_Email))
+      return;
     var org = $scope.eventInfo.OrganizerList.filter(function (obj) {
       return obj.InternalId == $scope.eventInfo.CurrentOrganizer.InternalId;
     });
@@ -383,6 +387,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
 
   $scope.previewEvent = function () {
     console.debug($scope.eventInfo);
+    console.debug($scope.showDateTimeDialog);
   }
 
   $scope.publishEvent = function () {
@@ -618,4 +623,8 @@ function formatDateTime(date) {
   var minutes = date.getMinutes();
   var res = "" + year + "-" + (month < 10 ? "0" : "") + month + "-" + (day < 10 ? "0" : "") + day + "T" + (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":00";
   return res;
+}
+
+function isEmptyOrSpaces(str) {
+  return str === null || str.match(/^ *$/) !== null;
 }
