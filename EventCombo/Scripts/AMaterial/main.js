@@ -5,6 +5,15 @@ var createEventApp = angular.module("CreateEventApp", ['ngMaterial', 'ngMessages
 createEventApp.controller('CreateEventController', ['$scope', '$http', '$window', '$timeout', 'ngGallery',
   function ($scope, $http, $window, $timeout, ngGallery) {
 
+
+      angular.element(document).ready(function () {
+
+          // automatically adjust textarea
+          $('textarea').on('input', function () {
+              $(this).outerHeight(38).outerHeight(this.scrollHeight);
+          });
+      });
+
   $scope.organiserInfo = [];
 
   $scope.isPrivateEvent = false;

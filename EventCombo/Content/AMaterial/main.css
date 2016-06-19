@@ -1,4 +1,10 @@
-﻿/*Variable charges CSS*/
+﻿
+/*TextArea Height*/
+.textArea
+{
+    height: 35px;
+}
+/*Variable charges CSS*/
 .variableOptions{
     background-color: white;
     background-color: white;
