@@ -19,24 +19,26 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
   $scope.isPrivateEvent = false;
   $scope.includeSocial = 0;
   $scope.gPlace;
+  console.log("window width: ", $(window).width());
+  if ($(window).width() > 768) {
+      console.log("In iF check");
+      $scope.tinymceOptions = {
+          selector: "textarea",
+          height: 100,
+          mode: "textareas",
+          toolbar1: "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
+          toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
+          toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
 
-  $scope.tinymceOptions = {
-    selector: "textarea",
-    height: 100,
-    mode: "textareas",
-    toolbar1: "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
-    toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
-    toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+          menubar: false,
+          toolbar_items_size: 'small',
 
-    menubar: false,
-    toolbar_items_size: 'small',
-
-    style_formats: [{
-      title: 'Bold text',
-      inline: 'b'
-    }]
+          style_formats: [{
+              title: 'Bold text',
+              inline: 'b'
+          }]
+      }
   }
-
   $scope.vartypes = [
     { varId: false, varName: "Required" },
     { varId: true, varName: "Optional" }

@@ -1,54 +1,277 @@
-﻿/*TextArea Height*/
-.textAreaHeight{
-    height: 35px;
+﻿   @import url(https://fonts.googleapis.com/css?family=Roboto:100,200,400,300,300italic,400italic,500,700); @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700); @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+
+@media (max-width: 1100px)
+{
+
 }
 
-/*Datepicker floating text */
-.date-picker-row {
-    margin-left: -15px;
-    position: relative;
-    min-height: 60px;
+@media (min-width: 768px) and (max-width: 1100px){
+  /* Big view stuff goes here. */
+     .URLDiv, .eDBitMoreInnerHead, .eDAddTicketInnerHead, .addTicketsButtons, .variabeDetails
+    {
+        margin-left: 26px !important;
+    }
+       .OrganizerBody
+    {
+        padding-left: 26px !important;
+    }
+       .responsiveFilter
+       {
+           display: block !important;
+           margin-top: 10px;
+           margin-right: 30px;
+           margin-bottom: 10px;
+       }
+       .defaultFilter
+       {
+           display: none !important;
+       }
+       .wholegallery
+       {
+           margin-right: 30px;
+           margin-top: 15px;
+       }
+
 }
 
-.date-picker-row label {
-    position: absolute;
-    top: -10px;
-    left: 50px;
-    color: rgb(0, 202, 253) !important;
-    font-size: 12px;
+@media (min-width: 541px) and (max-width: 768px)
+{
+    
+    .OrganizerBody
+    {
+        padding-left: 26px !important;
+    }
+   .URLDiv , .eDBitMoreInnerHead, .eDAddTicketInnerHead, .addTicketsButtons, .variabeDetails
+    {
+        margin-left: 26px !important;
+    }
+
+/*Create Event always in center*/
+.createEvent{
+    text-align: center;
+    margin-bottom: 19px;
+}
+/*Color Picker adjust left margin for different screens*/
+.color-picker-panel
+    {
+        right: 15px;
+    }
+/*Top Butttons save,preview,live will be hide for smaller screens*/
+.topButtons
+{
+    display: none;
+
 }
 
-.date-picker-row .md-datepicker-input-container {
-    margin-left: 0;
+.EDTxtVNTxtBox 
+  {
+      font-size: 20px;
+  }
+  .EDTxtVATxtBox
+  {
+      font-size: 14px;
+  }
+    .variableClass
+    {
+        display: block !important;
+    }
+
+}
+@media (max-width: 540px) and (min-width: 400px)
+{
+      .variableClass
+    {
+        display: block !important;
+    }
+    .OrganizerBody
+    {
+        padding-left: 26px !important;
+    }
+    .eventDtkBodyCon
+    {
+        margin-left: 18px;
+    }
+
+
+    .color-picker-panel
+    {
+        right: 15px;
+    }
+    .URLDiv , .eDBitMoreInnerHead, .eDAddTicketInnerHead, .addTicketsButtons, .variabeDetails
+    {
+        margin-left: 26px !important;
+    }
+    .color_pick
+    {
+        margin-right: 15%;
+    }
+    .bannerPic
+{
+    margin-left: 30px !important;
+    margin-right: 30px;
+}
+  
+/*Create Event always in center*/
+.createEvent{
+    text-align: center;
+    margin-bottom: 19px;
+}
+/*Color Picker adjust left margin for different screens*/
+color-picker-wrapper .color-picker-panel.color-picker-panel-left {
+    left: -158px !important;
+}
+/*Top Butttons save,preview,live will be hide for smaller screens*/
+.topButtons
+{
+    display: none;
 }
 
-/*end date picker floating text*/
+.EDTxtVNTxtBox 
+  {
+      font-size: 20px;
+  }
+  .EDTxtVATxtBox
+  {
+      font-size: 14px;
+  }
+
+}
+@media (max-width: 399px){
+    .variableClass
+    {
+        display: block !important;
+    }
+       .OrganizerBody
+    {
+        padding-left: 26px !important;
+    }
+    .EDTxtVNTxtBox 
+  {
+      font-size: 20px;
+  }
+  .EDTxtVATxtBox
+  {
+      font-size: 14px;
+  }
+    .eventDtkBodyCon
+    {
+        margin-left: 18px
+    }
 
 
-/*Variable charges CSS*/
+       .color-picker-panel
+    {
+        right: 15px;
+    }
+        .URLDiv , .eDBitMoreInnerHead, .eDAddTicketInnerHead, .addTicketsButtons, .variabeDetails
+    {
+        margin-left: 26px !important;
+    }
+        .OrganizerBody
+        {
+            padding-left: 26px;
+        }
+    .color_pick
+    {
+        margin-right: 15%;
+    }
+    .bannerPic
+{
+    margin-left: 30px !important;
+    margin-right: 30px;
+}
+  /* Stuff for really small views goes here. */
+/*Create Event always in center*/
+.createEvent{
+    text-align: center;
+    margin-bottom: 19px;
+}
+/*Color Picker adjust left margin for different screens*/
+color-picker-wrapper .color-picker-panel.color-picker-panel-left {
+    left: -158px !important;
+}
+
+/*Top Butttons save,preview,live will be hide for smaller screens*/
+.topButtons
+{
+    display: none;
+}
+
+
+
+}
+  .variableClass
+    {
+        display: inline-block;
+    }
 .variableOptions{
-    background-color: white;
-    background-color: white;
-    display: block;
-    clear: both;
-    max-width: 1100px;    
-    box-shadow: 2px 2px 3px 0px #c1c1c1;
-    padding: 20px;
-    height: 170px;
-    overflow-y: scroll;
+        padding: 10px 0px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    margin-bottom: 20px;
+}
+.ticketButtonDiv
+{
+    display: inline-block;
+}
+ 
+.textAreaHeight
+{
+    height: 35px;
+
 }
 
-/* Variable Charges Textbo alligning on row*/
-.variableType
+  @import url(https://fonts.googleapis.com/css?family=Roboto:100,200,400,300,300italic,400italic,500,700); @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700); @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+
+
+  .selectdemoSelectHeader .demo-header-searchbox {
+    border: none;
+    outline: none;
+    height: 100%;
+    width: 100%;
+    padding: 0; }
+  .selectdemoSelectHeader .demo-select-header {
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12);
+    padding-left: 10.667px;
+    height: 48px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: auto; }
+  .selectdemoSelectHeader md-content._md {
+    max-height: 240px; }
+
+
+.imgdetails
 {
-    margin-top: 1px !important;
-}
-.variableAmount
-{
-    margin-top: 22px !important;
+     vertical-align: middle;
+  display: table-cell;
 }
 
+.fontStyles
+{
+        font-size: 18px;
+    font-family: 'Roboto';
+    color: rgb(48,71,86);
+    margin-left: 41px;
+  
+}
+
+.More{
+        margin-right: 19px;
+}
+/*Create event header styles*/
+.createEvent
+{
+font-size: 24px;
+font-family: 'Roboto';
+color: rgb(255,0,138);
+font-weight: bold;
+text-transform: uppercase;
+margin-left: 70px;
+
+
+}
 .md-datepicker-input
 {
     width: 167px !important;
@@ -131,7 +354,7 @@ footer {
 	text-align: center;
     width: 100%;
     height: 40vh;
-	background: url(../../Images/AMaterial/EventComboLogo.svg) center no-repeat;
+	background: url(../img/EventComboLogo.svg) center no-repeat;
 	background-size: 700vw;
 	overflow:hidden;
 	background-position:top;
@@ -141,7 +364,8 @@ footer {
 	width:100%;
 	height:77%;
 	}
-@media (max-width: 600px) {
+/*@media (max-width: 600px) 
+{
 	.footer-left {
 		display: none;
 		}
@@ -151,7 +375,7 @@ footer {
 		width:100%;
 		right:0px;
 		}
-	}
+	}*/
 	
 /*HEADER CSS*/	
 	
@@ -162,40 +386,37 @@ footer {
 	min-width: 100px;
 	}
 header {
-	background:url(../../Images/AMaterial/stripes.png) repeat-x;
+	background:url(../img/stripes.png) repeat-x;
 	}
-    .headerCEHead{
-        color: #FF008A;
-        text-transform: uppercase;
-        font-size: 28px;
-        font-weight: bold;
-        margin-left:70px;
-    }
+
+
 
     .headerCEHeadBtn{
         text-align: right;
-        margin: 10px 70px 10px 0px;
+        margin: 10px 70px 19px 0px;
     }
 
     .btnSaveHeadCE{
         color: #fff;
         border: 0px;
-        background: #00CAFD;
+        background-color: rgb(0,202,253) ;
         padding: 10px 40px;
-        font-size: 18px;
+        font-size: 14px;
         border-radius: 5px;
-        margin-right: 20px;
+        
         display: inline-block;
+        font-family: 'Roboto';
     }
 
     .btnPreviewHeadCE{
         color: #fff;
         border: 0px;
-        background: #00CAFD;
+      background-color: rgb(0,202,253) ;
         padding: 10px 40px;
-        font-size: 18px;
+        font-size: 14px;
+        font-family: 'Roboto';
         border-radius: 5px;
-        margin-right: 40px;
+        
         display: inline-block;
     }
 
@@ -204,7 +425,8 @@ header {
         border: 0px;
         background: #1AFF1A;
         padding: 10px 40px;
-        font-size: 18px;
+        font-size: 14px;
+        font-family:'Roboto';
         border-radius: 5px;
         display: inline-block;
     }
@@ -214,9 +436,16 @@ header {
         border:none;
         text-decoration:none;
     }
+    .have_a_filter
+    {
+        font-family: 'Roboto';
+        font-size: 11px;
+        color: rgb(0,0,0);
+        margin-right: 45px;
+    }
 
     .eventDetailContainer{
-        background: #00CAFD;
+            background: #00CAFD;
         margin:0px auto;
         overflow:hidden;
         padding:20px 0px 0px 0px;
@@ -229,6 +458,7 @@ header {
 
     .EDWebsiteUrlHead{
         color:#fff;
+        padding-left: 0px; /*Padding assigned while using c12 so we have to unset it manually*/
     }
     
     .EDWebsiteUrlHead md-input-container{
@@ -247,40 +477,44 @@ header {
         font-size:14px !important;
     }
 
-    .websiteUrlEnd{
-        color: #f1f1f1;
+    .eventcombo_com{
+        color: rgb(163,236,254) ;
+        font-family: 'Roboto';
+        font-size: 14px;
     }
 
     .eventDetailTxtFields{
-        background-color: #CCF4FF;
+        background: #FFFFFF;
         padding: 20px 10px 10px 20px;
         display: block;
         clear: both;
+        opacity: 0.8;
     }
 
     .EDTxtENTxtBox{
         width: 100%;
         border: none;
-        font-size: 30px;
+        font-size: 36px;
+        font-family: 'Roboto';
         font-weight: bold;
         background: none;
-        color:#304756;
+        color:rgb(48,71,86);
     }
 
     .EDTxtENTxtBox::-webkit-input-placeholder {
-       color: #304756;
+      color:rgb(48,71,86);
     }
 
     .EDTxtENTxtBox:-moz-placeholder { /* Firefox 18- */
-       color: #304756;  
+       color:rgb(48,71,86);  
     }
 
     .EDTxtENTxtBox::-moz-placeholder {  /* Firefox 19+ */
-       color: #304756;  
+        color:rgb(48,71,86);
     }
 
     .EDTxtENTxtBox:-ms-input-placeholder {  
-       color: #304756;  
+         color:rgb(48,71,86);
     }
 
     .EDTxtENTxtBox:focus{
@@ -291,25 +525,26 @@ header {
     .EDTxtVNTxtBox{
         width: 100%;
         border: none;
-        font-size: 20px;
+        font-size: 24px;
+        font-family: 'Roboto';
         background: none;
-        color: #747474;
+        color: rgb(116,116,116);
     }
 
     .EDTxtVNTxtBox::-webkit-input-placeholder {
-       color: #747474;
+     color: rgb(116,116,116);
     }
 
     .EDTxtVNTxtBox:-moz-placeholder { /* Firefox 18- */
-       color: #747474;  
+      color: rgb(116,116,116);
     }
 
     .EDTxtVNTxtBox::-moz-placeholder {  /* Firefox 19+ */
-       color: #747474;  
+    color: rgb(116,116,116); 
     }
 
     .EDTxtVNTxtBox:-ms-input-placeholder {  
-       color: #747474;  
+        color: rgb(116,116,116); 
     }
 
     .EDTxtVNTxtBox:focus{
@@ -362,6 +597,9 @@ header {
 
     .pickuptimeTxt{
         padding-left: 12px;
+        font-size: 18px;
+        font-family: 'Roboto';
+        color: rgb(48,71,86);
         margin-left:20px;
     }
 
@@ -381,6 +619,9 @@ header {
     }
 
     .EDTxtEventChkBxCon{
+        font-family:'Roboto';
+        font-size: 12px;
+        color: rgb(0,0,0);
         margin-top:20px;
     }
 
@@ -401,14 +642,15 @@ header {
     }
 
     .eDAddTicketHead{
-        background: #CCF4FF;
+        background: #EDFBFF;
     }
 
     .eDAddTicketInnerHead{
-        color:#FF008A;
+        color:rgb(255,0,138);
         font-weight:bold;
+        font-family: 'Roboto';
         max-width:1100px;
-        font-size:25px;
+        font-size:24px;
         margin: 0px auto;
         padding: 5px 0px;
     }
@@ -431,7 +673,10 @@ header {
     .addTicketBtnCls{
         color: #00CAFD !important;
         font-weight: bold;
-        padding: 3px 10px;   
+        padding: 3px 10px; 
+         display: inline-block;   
+        margin-right: 25px;
+        margin-left: 0px;  
     }
 
     .addTicketBtnCls img{
@@ -440,11 +685,7 @@ header {
         margin: 0px 5px;
     }
 
-    .addTicketBtnCls{
-        display: inline-block;
-        float: left;
-        margin-right: 25px;
-    }
+ 
 
     .paidTicketContentCo{
         padding: 10px 0px;
@@ -500,6 +741,7 @@ header {
         margin: 10px 0px;
         border-top: 1px dotted #000;
         padding: 25px 20px;
+        padding-left: 42px !important;
     }
 
     .pTCBTxt{
@@ -543,8 +785,9 @@ header {
         max-width: 1100px;
         text-align: right;
         font-weight: bold;
-        color: #00CAFD;
-        font-size: 23px;
+        font-family: 'Roboto';
+        color: rgb(3,147,239);
+        font-size: 24px;
     }
 
     .donationTxtCls{
@@ -568,16 +811,18 @@ header {
             }
 .eDBitMoreHead
 {
-        background: #CCF4FF;
+        background: #EDFBFF;
+        margin-bottom: 19px;
 }
 .eDBitMoreInnerHead
 {
-        color: #FF008A;
+    color: rgb(255,0,138);
     font-weight: bold;
     max-width: 1100px;
-    font-size: 25px;
+    font-size: 24px;
     margin: 0px auto;
     padding: 5px 0px;
+    font-family: 'Roboto';
 }
 .textArea
 {
@@ -585,7 +830,7 @@ header {
 }
 .TellUs
 {
-        margin-top: 20px;
+        margin-top: 19px;
 }
 .tellus_pics
 {
@@ -610,7 +855,7 @@ md-dialog{
 }
 
 .md-tab.md-active {
-    color: rgb(0, 202, 253) !important;
+    color: rgb(63,81,181) !important;
 }
 
 .pickupDateContainer{
@@ -623,6 +868,8 @@ md-dialog{
     box-shadow: 2px 2px 5px 0px #c1c1c1;
     margin-top: -65px;
     margin-left: 15px;
+    display:none;
+    font-family: 'Roboto';
 }
 
 .color-picker-wrapper.color-picker-swatch-only .input-group .input-group-addon {
@@ -665,3 +912,265 @@ md-dialog{
     bottom: -31px;
     left: 60px;
 }
+
+/*Rsponsive styling*/
+/*@media only screen and (max-width: 500px) 
+{
+     .TypeDiv
+    {
+        width: 100%;
+    }
+    .TypeEvent
+    {
+        width: 40%;
+    }
+    .categoryEvent
+    {
+        width: 40%;
+    }
+    .EDTxtENTxtBox
+  {
+      font-size: 20px;
+  }
+}
+@media only screen and (min-width: 500px) and (max-width: 600px)
+{
+    .TypeDiv
+    {
+        width: 100%;
+    }
+    .TypeEvent
+    {
+        width: 40%;
+    }
+    .categoryEvent
+    {
+        width: 40%;
+    }
+  .EDTxtENTxtBox
+  {
+      font-size: 30px;
+  }
+}
+@media only screen and (max-width: 600px) {
+    .TypeDiv
+    {
+        width: 100%;
+    }
+    .TypeEvent
+    {
+        width: 40%;
+    }
+    .categoryEvent
+    {
+        width: 40%;
+    }
+
+  .EDTxtVNTxtBox 
+  {
+      font-size: 20px;
+  }
+  .EDTxtVATxtBox
+  {
+      font-size: 14px;
+  }
+  .material-icons
+  {
+      font-size: 19px !important;
+  }
+  #PickUpTimeText
+  {
+      font-size: 12px;
+  }
+md-checkbox .md-label {
+    color: #000;
+    font-size: 10px;  <br>
+    font-weight: bold;
+    margin-left: 35px;
+}
+
+
+
+}
+@media handheld, only screen and (max-width: 768px), only screen and (max-device-width: 768px)
+{
+    .headerCEHeadBtn
+    {
+        margin: unset;
+    }
+    .btnSaveHeadCE
+    {
+        font-size: 7px !important;
+        margin-right: 15px;
+
+    }
+    .btnPreviewHeadCE
+    {
+        font-size: 7px !important;
+        margin-right: 5px;
+    }
+    .btnMakeLiveHeadCE
+    {
+        font-size: 7px !important;
+
+    }
+    .OrganizerBody
+    {
+        padding-left: 5px;
+    }
+    .eDBitMoreInnerHead
+    {
+        margin-left: 5px;
+    }
+    .ticketDelivery
+    {
+        margin-left: 22px !important;
+    }
+    .blueremainingTicket
+    {
+        margin-left: 22px !important;
+    }
+    .variableCharges
+    {
+        margin-left: 22px !important;
+    }
+    .organiserButtonDiv
+    {
+        text-align: center;
+    }
+    .organiserDiv
+    {
+        text-align: center;
+    }
+    .newOrganizer
+    {
+        padding-left: 30px;
+    }
+    .organiserbottomDiv
+    {
+        padding-left: 30px;
+    }
+    .eDAddTicketInnerHead
+    {
+        padding-left: 5px;
+    }
+    .totalCapacity
+    {
+        margin-right: 10px;
+    }
+    .addTicketBtnCls
+    {
+        float: unset;
+    }
+    .ticketButtonDiv
+    {
+        text-align: center;
+    }
+    .ticketButtonDiv
+    .have_a_filter
+    {
+        position: relative;
+        top: 198px;
+    }
+    .textArea{
+            width: 87%;
+    }
+        .pickupDateContainer
+    {
+        width: 400px;
+    }
+    .firstdiv  .md-datepicker-input
+    {
+        width: 90px !important;
+    }
+      .seconddiv  .md-datepicker-input
+    {
+        width: 90px !important;
+    }
+
+      .thirddiv 
+      {
+          margin-left: 20px;
+      }
+       .time-div
+       {
+           margin-left: unset !important;
+       }
+       .weekdiv
+       {
+           margin-left: 57px !important;
+       }
+      .time-div  .md-input-has-value
+      {
+          margin-left: 57px !important;
+      }
+      .time-zone
+      {
+          margin-left: 57px !important;
+      }
+      .dialogheader  .material-icons
+   {
+       top: 15px;
+   }
+     .dialogDate
+    {
+        font-size: 15px;
+    }
+.createEvent{
+    text-align: center;
+    margin-bottom: 19px;
+}
+color-picker-wrapper .color-picker-panel.color-picker-panel-left {
+    left: -158px !important;
+}
+.EDWebsiteUrlHead
+{
+    padding-left: 20px;
+}
+.topButtons
+{
+    display: none;
+}
+.bannerPic
+{
+    margin-left: 30px !important;
+    margin-right: 30px;
+}
+.designBanner
+{
+    font-size: 1.6rem;
+}
+.eventCheckBoxes
+{
+    padding-left: 20px;
+}
+md-checkbox.md-checked .md-icon:after {
+    box-sizing: border-box;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    position: absolute;
+    left: 3.66667px;
+    top: 2.22222px;
+    display: table;
+    width: 6.66667px;
+    height: 8.33333px;
+    border-width: 2px;
+    border-style: solid;
+    border-top: 0;
+    border-left: 0;
+    content: '';
+}
+md-checkbox .md-icon {
+    box-sizing: border-box;
+    transition: 240ms;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 2px;
+}
+
+}*/
