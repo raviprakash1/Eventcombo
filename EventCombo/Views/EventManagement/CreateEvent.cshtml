@@ -58,7 +58,7 @@
 </script>
 
 <div id="createEventContainer" class="grid" ng-controller="CreateEventController" ng-cloak>
-  <form name="MainForm">
+  <form name="MainForm" novalidate>
     <div>
       <div class="createEvent">Create Event</div>
       <div class="headerCEHeadBtn topButtons row">
@@ -104,16 +104,22 @@
           <div class="eventDetailTxtFields" style="opacity: 0.8;">
             <div class="eventDtkHeadCon">
               <div class="EDTxtEventName">
-                <textarea ng-model="eventInfo.EventTitle" placeholder="Enter the name of your event here" class="EDTxtENTxtBox textAreaHeight"></textarea>
+                <textarea ng-model="eventInfo.EventTitle" name="eventTitle" placeholder="Enter the name of your event here" class="EDTxtENTxtBox textAreaHeight" required></textarea>
+                <div ng-messages="MainForm.eventTitle.$error" class="validation-standard-messages" ng-show="MainForm.eventTitle.$touched">
+                  <div ng-message="required">Event title is required.</div>
+                </div>
               </div>
 
               <div class="EDTxtVenueName">
-                <textarea ng-model="eventInfo.VenueName" placeholder="Enter the venue name here" class="EDTxtVNTxtBox textAreaHeight"></textarea>
+                <textarea ng-model="eventInfo.VenueName" placeholder="Enter the venue name here" class="EDTxtVNTxtBox textAreaHeight" required></textarea>
               </div>
 
               <div class="EDTxtVenueAddress">
                 <i class="material-icons" style="position:absolute;">place</i>
-                <input type="text" ng-model="eventInfo.Address" placeholder="Enter venue address" class="EDTxtVATxtBox" googleplace />
+                <input type="text" ng-model="eventInfo.Address" name="eventAddress" placeholder="Enter venue address" class="EDTxtVATxtBox" googleplace required />
+                <div ng-messages="MainForm.eventAddress.$error" class="validation-standard-messages" ng-show="MainForm.eventAddress.$touched">
+                  <div ng-message="required">Event address is required.</div>
+                </div>
               </div>
 
               <div class="EDTxtEventDateTime">
@@ -299,19 +305,25 @@
 
             <md-input-container style="margin-right: 10px;">
               <label>Type Of event</label>
-              <md-select ng-model="eventInfo.EventTypeID">
+              <md-select ng-model="eventInfo.EventTypeID" name="eventType" ng-required="true">
                 <md-option ng-repeat="etype in eventInfo.EventTypeList" value="{{etype.EventTypeId}}">{{etype.EventType}}</md-option>
               </md-select>
+              <div class="validation-standard-messages" ng-show="MainForm.eventType.$touched && MainForm.eventType.$error">
+                You need to select type of event.
+              </div>
             </md-input-container>
 
             <md-input-container style="margin-right: 10px;">
               <label>Category</label>
-              <md-select ng-model="eventInfo.EventCategoryID" class="paras" ng-change="onCategoryChange();">
+              <md-select ng-model="eventInfo.EventCategoryID" class="paras" name="eventCategory" ng-change="onCategoryChange();" required>
                 <md-option ng-repeat="category in eventInfo.EventCategoryList" value="{{category.EventCategoryId}}">{{category.EventCategory}}</md-option>
               </md-select>
+              <div class="validation-standard-messages" ng-show="MainForm.eventCategory.$touched && MainForm.eventCategory.$error">
+                You need to select category of event.
+              </div>
             </md-input-container>
 
-            <md-input-container style="margin-right: 10px;">
+            <md-input-container style="margin-right: 10px;" ng-show="(subCategories!=null) && (subCategories.length>0)">
               <label>Subcategory</label>
               <md-select ng-model="eventInfo.EventSubCategoryID" class="paras">
                 <md-option ng-repeat="subcat in subCategories" value="{{subcat.EventSubCategoryId}}">{{subcat.EventSubCategory}}</md-option>
@@ -319,7 +331,7 @@
             </md-input-container>
 
             <span style="float: right; text-transform:uppercase; cursor: pointer;" ng-click="callImageClick('tellusImage'); $event.stopPropagation();" class="noOutline">
-              <span style="display: inline-block;float: left;padding-right: 15px;">Have a filter?upload it here</span>
+              <span style="display: inline-block;float: left;padding-right: 15px;">Have a flyer? Upload it here</span>
               <i class="material-icons" style="margin-left: -10px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">add_a_photo</i>
               <input type="file" name="tellusimage" id="tellusImage" accept="image/*" style="display: none;" custom-on-change="uploadEventImage" />
             </span>
@@ -365,9 +377,12 @@
           <div class="organiserDiv md-padding">
             <md-input-container style="margin-right: 10px;">
               <label>Select Organizer</label>
-              <md-select ng-model="eventInfo.InternalOrganizerId">
+              <md-select ng-model="eventInfo.InternalOrganizerId" name="selectOrganizer" required>
                 <md-option ng-repeat="org in eventInfo.OrganizerList" value="{{org.InternalId}}">{{org.Orgnizer_Name}}</md-option>
               </md-select>
+              <div class="validation-standard-messages" ng-show="MainForm.selectOrganizer.$touched && MainForm.selectOrganizer.$error">
+                You need to add at least one organizer.
+              </div>
             </md-input-container>
             <md-button class="md-raised addTicketBtnCls" style="float:unset !important;" ng-click="editOrganiser();">
               Edit

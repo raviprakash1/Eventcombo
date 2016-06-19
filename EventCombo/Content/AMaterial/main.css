@@ -668,8 +668,16 @@ md-dialog{
 
 .validation-datepicker-messages {
     font-size: 12px;
+    font-weight: normal;
     color: #dd2c00;
     margin: 10px 0 0 65px; 
+}
+
+.validation-standard-messages {
+    font-size: 12px;
+    font-weight: normal;
+    color: #dd2c00;
+    margin: 6px 0 6px 0; 
 }
 
 color-picker-wrapper .color-picker-panel.color-picker-panel-left {
