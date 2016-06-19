@@ -98,11 +98,11 @@
         <div class="eventDetailTxtFields" style="opacity: 0.8;">
           <div class="eventDtkHeadCon">
             <div class="EDTxtEventName">
-                <textarea ng-model="eventInfo.EventTitle" placeholder="Enter the name of your event here" class="EDTxtENTxtBox textArea"></textarea>
+                <textarea ng-model="eventInfo.EventTitle" placeholder="Enter the name of your event here" class="EDTxtENTxtBox textAreaHeight"></textarea>
             </div>
 
             <div class="EDTxtVenueName">
-                <textarea ng-model="eventInfo.VenueName" placeholder="Enter the venue name here" class="EDTxtVNTxtBox textArea"></textarea>
+                <textarea ng-model="eventInfo.VenueName" placeholder="Enter the venue name here" class="EDTxtVNTxtBox textAreaHeight"></textarea>
             </div>
 
             <div class="EDTxtVenueAddress">
@@ -148,24 +148,30 @@
                   <md-content class="md-padding">
                     <div class="firstdiv">
                       <div class="datediv">
-                        <md-datepicker ng-model="startingDate" md-placeholder="Start date" ng-change="startDateChange();"></md-datepicker>
-                        <md-input-container style="margin-right: 10px; margin-left: 20px;">
-                          <label>Start time</label>
-                          <md-select ng-model="selectedstartTime">
-                            <md-option ng-repeat="startTime in eventInfo.DateInfo.TimeList" ng-value="startTime">{{startTime.TimeString}}</md-option>
-                          </md-select>
-                        </md-input-container>
-                      </div>
+                          <div class="date-picker-row" flex-gt-sm >
+                              <label>Start Date</label>
+                              <md-datepicker ng-model="startingDate" md-placeholder="Start date" ng-change="startDateChange();"></md-datepicker>
+                          </div>
+                              <md-input-container style="margin-right: 10px; margin-left: 20px;">
+
+                                  <md-select ng-model="selectedstartTime">
+                                      <md-option ng-repeat="startTime in eventInfo.DateInfo.TimeList" ng-value="startTime">{{startTime.TimeString}}</md-option>
+                                  </md-select>
+                              </md-input-container>
+</div>
                     </div>
                     <div class="seconddiv">
-                      <md-datepicker ng-model="endingDate" md-placeholder="End date" ng-change="endDateChange();"></md-datepicker>
-                      <md-input-container style="margin-right: 10px; margin-left: 20px;">
-                        <label>End time</label>
-                        <md-select ng-model="selectedendTime">
-                          <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
-                        </md-select>
-                      </md-input-container>
-                    </div>
+                        <div class="date-picker-row" flex-gt-sm>
+                            <label>End Date</label>
+                            <md-datepicker ng-model="endingDate" md-placeholder="End date" ng-change="endDateChange();"></md-datepicker>
+                         </div>
+                               <md-input-container style="margin-right: 10px; margin-left: 20px;">
+
+                                <md-select ng-model="selectedendTime">
+                                    <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
                     <div class="thirddiv" style="float: left;">
                       <md-input-container style="margin-right: 10px;">
                         <label>Time Zone</label>
@@ -200,11 +206,17 @@
                     </div>
                     <div class="seconddiv second-tab">
                       <div class="datediv" style="margin-top: 13px;margin-left: 30px" ng-show="occurence == 'Monthly'">
-                        <md-datepicker ng-model="startingDate" md-placeholder="Start date" ng-change="startDateChange();"></md-datepicker>
-                        <md-datepicker ng-model="endingDate" md-placeholder="End date" ng-change="endDateChange();"></md-datepicker>
-                      </div>
+                          <div class="date-picker-row" flex-gt-sm>
+                              <label>Start Date</label>
+                              <md-datepicker ng-model="startingDate" md-placeholder="Start date" ng-change="startDateChange();"></md-datepicker>
+                              </div>
+                          <div class="date-picker-row" flex-gt-sm>
+                              <label>End Date</label>
+                              <md-datepicker ng-model="endingDate" md-placeholder="End date" ng-change="endDateChange();"></md-datepicker>
+    </div>
+                                                </div>
 
-                      <div class="weekdiv" style="margin-left: 88px;" ng-show="occurence == 'Weekly'">
+                      <div class="weekdiv" style="margin-left:57px;" ng-show="occurence == 'Weekly'">
                         <md-input-container style=" margin-right 10px;">
                           <label>Week Days</label>
                           <md-select multiple ng-model="eventInfo.Weekdays">
@@ -212,7 +224,7 @@
                           </md-select>
                         </md-input-container>
                       </div>
-                      <div class="time-div" style="margin-left: 32px;" ng-show="occurence != 'Single'">
+                      <div class="time-div" ng-show="occurence != 'Single'">
                         <md-input-container flex-gt-md=" 30">
                           <label>Start time</label>
                           <md-select ng-model="selectedstartTime">
@@ -226,8 +238,8 @@
                           </md-select>
                         </md-input-container>
                       </div>
-                      <div class="time-zone" style="margin-left: 88px;" ng-show="occurence != 'Single'">
-                        <md-input-container style=" margin-right 10px;">
+                      <div class="time-zone" ng-show="occurence != 'Single'">
+                        <md-input-container style=" margin-right:10px;">
                           <label>Time Zone</label>
                           <md-select ng-model="eventInfo.TimeZone">
                             <md-option ng-repeat="tzone2 in eventInfo.TimeZones" ng-value="tzone2.TimeZoneId">{{tzone2.TimeZoneName}}</md-option>
@@ -514,9 +526,15 @@
                   <md-checkbox class="blue" ng-model="ticket.Show_T_Desc" ng-true-value="'1'" ng-false-value="'0'">Show ticket description on the event page</md-checkbox>
                 </div>
                 <div class="ticketStartEndDate">
-                  <md-datepicker md-placeholder="Start date" ng-model="ticket.localSaleStartDate"></md-datepicker>
-                  <md-datepicker md-placeholder="End date" ng-model="ticket.localSaleEndDate"></md-datepicker>
-                </div>
+                    <div class="date-picker-row" flex-gt-sm>
+                        <label>Start Date</label>
+                        <md-datepicker md-placeholder="Start date" ng-model="ticket.localSaleStartDate"></md-datepicker>
+                       </div>
+                    <div class="date-picker-row" flex-gt-sm>
+                        <label>End Date</label>
+                        <md-datepicker md-placeholder="End date" ng-model="ticket.localSaleEndDate"></md-datepicker>
+    </div>
+                                    </div>
                 <div class="ticketChkBoxCon">
                   <md-checkbox class="blue" ng-model="ticket.Hide_Ticket" ng-true-value="'1'" ng-false-value="'0'">Hide this ticket type</md-checkbox>
                 </div>
