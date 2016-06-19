@@ -8,6 +8,10 @@
 }
 
 <style type="text/css">
+     md-input-container:not(.md-input-invalid).md-input-has-value label {
+    color: rgb(0, 202, 253) !important;
+}
+
   .gallery-close-btn {
     position: absolute;
     top: 2%;
@@ -150,7 +154,7 @@
                       <div class="datediv">
                           <div class="date-picker-row" flex-gt-sm >
                               <label>Start Date</label>
-                              <md-datepicker ng-model="startingDate" md-placeholder="Start date" ng-change="startDateChange();"></md-datepicker>
+                              <md-datepicker ng-model="startingDate" ng-change="startDateChange();"></md-datepicker>
                           </div>
                               <md-input-container style="margin-right: 10px; margin-left: 20px;">
 
@@ -163,7 +167,7 @@
                     <div class="seconddiv">
                         <div class="date-picker-row" flex-gt-sm>
                             <label>End Date</label>
-                            <md-datepicker ng-model="endingDate" md-placeholder="End date" ng-change="endDateChange();"></md-datepicker>
+                            <md-datepicker ng-model="endingDate" ng-change="endDateChange();"></md-datepicker>
                          </div>
                                <md-input-container style="margin-right: 10px; margin-left: 20px;">
 
@@ -208,11 +212,11 @@
                       <div class="datediv" style="margin-top: 13px;margin-left: 30px" ng-show="occurence == 'Monthly'">
                           <div class="date-picker-row" flex-gt-sm>
                               <label>Start Date</label>
-                              <md-datepicker ng-model="startingDate" md-placeholder="Start date" ng-change="startDateChange();"></md-datepicker>
+                              <md-datepicker ng-model="startingDate" ng-change="startDateChange();"></md-datepicker>
                               </div>
                           <div class="date-picker-row" flex-gt-sm>
                               <label>End Date</label>
-                              <md-datepicker ng-model="endingDate" md-placeholder="End date" ng-change="endDateChange();"></md-datepicker>
+                              <md-datepicker ng-model="endingDate" ng-change="endDateChange();"></md-datepicker>
     </div>
                                                 </div>
 
@@ -430,138 +434,139 @@
       </div>
       <div class="eDAddTicketBody">
 
-        <div class="ticketSubDivContainer">
+          <div class="ticketSubDivContainer">
 
-          <div class="paidTicketContentCo" ng-repeat="ticket in eventInfo.TicketList">
-            <div>
-              <div class="paidTicketContentCoHeader">
-                <div layout="row" layout-xs="column">
-                  <span class="iconDragItem" ondragstart="handleDragStart1(event, this);" ondragenter="handleDragEnter1(event, this);" ondragover="handleDragOver1(event, this);" ondragleave="handleDragLeave1(event, this);" ondrop="handleDrop1(event, this);" ondragend="handleDragEnd1(event, this);" draggable="true">
-                    <i class="material-icons">reorder</i>
-                  </span>
-                  <div flex>
-                    <md-input-container class="ticketContTxtBox">
-                      <label class="ticketNameLbl">Enter Ticket Name</label>
-                      <input class="ticketNameLblTxtboxCls" ng-model="ticket.T_name" required />
-                    </md-input-container>
+              <div class="paidTicketContentCo" drag-drop-elements ng-repeat="ticket in eventInfo.TicketList">
+                  <div>
+                      <div class="paidTicketContentCoHeader">
+                          <div layout="row" layout-xs="column">
+                              <span class="iconDragItem"  draggable="true">
+                                  <i class="material-icons">reorder</i>
+                              </span>
+                              <div flex>
+                                  <md-input-container class="ticketContTxtBox">
+                                      <label class="ticketNameLbl">Enter Ticket Name</label>
+                                      <input class="ticketNameLblTxtboxCls" ng-model="ticket.T_name" required />
+                                  </md-input-container>
+                              </div>
+                              <div flex>
+                                  <md-input-container class="ticketContTxtBox qualityMdCon">
+                                      <label class="ticketQualityLbl">Quantity</label>
+                                      <input input value=0 type="text" ng-model="ticket.Qty_Available" class="ticketQualityLblTxtboxCls" required check-quantity numbers-only />
+                                  </md-input-container>
+                              </div>
+                              <div flex ng-show="ticket.TicketTypeID == 2">
+                                  <md-input-container class="ticketContTxtBox qualityMdCon">
+                                      <label class="ticketPriceLbl">$ Price</label>
+                                      <input type="number" class="ticketPriceLblTxtboxCls" required ng-model="ticket.Price" ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket)" input />
+                                  </md-input-container>
+                              </div>
+                              <div flex ng-show="ticket.TicketTypeID == 2">
+                                  <md-input-container class="ticketContTxtBox qualityMdCon">
+                                      <label class="ticketDiscountLbl">$ Discount</label>
+                                      <input input type="number" class="ticketDiscountLblTxtboxCls" required ng-model="ticket.T_Discount" ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket)" />
+                                  </md-input-container>
+                              </div>
+                              <div flex ng-show="ticket.TicketTypeID != 2">
+                                  <div class="donationTxtCls">{{ticket.TicketType.TicketType}}</div>
+                              </div>
+                              <div flex class="trashIconConCls">
+                                  <span style="cursor: pointer;" class="trashIconCls" ng-click="deleteTicket(ticket)">
+                                      <i class="material-icons">delete</i>
+                                  </span>
+                              </div>
+                          </div>
+                          <div layout="row">
+                              <div flex>
+                                  <a class="showHideOptionCls" href="javascript:void(0)" ng-click="ticket.expandedOptions = !ticket.expandedOptions" ng-init="ticket.expandedOptions = false">
+                                      <span class="arrowDownOptions">
+                                          <i class="material-icons moreOptionright" ng-show="!ticket.expandedOptions">keyboard_arrow_right</i>
+                                          <i class="material-icons moreOptiondown" ng-show="ticket.expandedOptions">keyboard_arrow_down</i>
+                                      </span>
+                                      <span class="moreOptionTxt">More Options</span>
+                                  </a>
+                              </div>
+                              <div flex style="position: relative;" ng-show="ticket.TicketTypeID == 2">
+                                  <span class="buyerTotalTxt">Buyer total: ${{ticket.TotalPrice.toFixed(2)}}</span>
+                                  <span class="infoOptionIcon" ng-mouseenter="ticket.showBuyerInfo = true" ng-mouseleave="ticket.showBuyerInfo = false" ng-init="ticket.showBuyerInfo = false">
+                                      <i class="material-icons">info</i>
+                                  </span>
+                                  <div class="buyerInfo" ng-show="ticket.showBuyerInfo">
+                                      <div>Ticket Price: ${{ticket.Price.toFixed(2)}} </div>
+                                      <div>Fee: ${{ticket.Price > 0 ? ticket.EC_Fee.toFixed(2) : '0.00'}}</div>
+                                      <div>Discount: ${{ticket.Price > 0 ? ticket.T_Discount.toFixed(2) : '0.00'}} </div>
+                                      <div>Total: ${{ticket.TotalPrice.toFixed(2)}}</div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="paidTicketContentCoBody" ng-show="ticket.expandedOptions">
+                          <div class="pTCBTxt" ng-show="ticket.TicketTypeID != 3">Tickets allowed per order</div>
+                          <div class="minMaxTxtBox" ng-show="ticket.TicketTypeID != 3">
+                              <md-input-container class="ticketMinTxtBoxCon">
+                                  <label class="ticketMinTxtBoxLbl">Minimum</label>
+                                  <input type="text" ng-model="ticket.Min_T_Qty" class="ticketMinTxtBoxCls" numbers-only />
+                              </md-input-container>
+                              <md-input-container class="ticketMaxTxtBoxCon">
+                                  <label class="ticketMaxTxtBoxLbl">Maximum</label>
+                                  <input type="text" ng-model="ticket.Max_T_Qty" class="ticketMaxTxtBoxCls" numbers-only />
+                              </md-input-container>
+                          </div>
+                          <div class="ticketChkBoxCon">
+                              <md-input-container>
+                                  <label class="ticketDespTxtBoxLbl">Fee</label>
+                                  <md-select style="width: 300px;" ng-model="ticket.Fees_Type" ng-change="onPriceChange(ticket)">
+                                      <md-option value="0">Customer pays the fees</md-option>
+                                      <md-option value="1">I absorb the fee</md-option>
+                                  </md-select>
+                              </md-input-container>
+                          </div>
+                          <div class="ticketDespCon">
+                              <md-input-container class="ticketDespTxtBoxCon">
+                                  <label class="ticketDespTxtBoxLbl">Enter Ticket Description</label>
+                                  <input ng-model="ticket.T_Desc" class="ticketDespTxtBoxCls" />
+                              </md-input-container>
+                          </div>
+                          <div class="ticketChkBoxCon">
+                              <md-checkbox class="blue" ng-model="ticket.Show_T_Desc" ng-true-value="'1'" ng-false-value="'0'">Show ticket description on the event page</md-checkbox>
+                          </div>
+                          <div class="ticketStartEndDate">
+                              <div class="date-picker-row" flex-gt-sm>
+                                  <label>Start Date</label>
+                                  <md-datepicker ng-model="ticket.localSaleStartDate"></md-datepicker>
+                              </div>
+                              <div class="date-picker-row" flex-gt-sm>
+                                  <label>End Date</label>
+                                  <md-datepicker ng-model="ticket.localSaleEndDate"></md-datepicker>
+                              </div>
+                          </div>
+                          <div class="ticketChkBoxCon">
+                              <md-checkbox class="blue" ng-model="ticket.Hide_Ticket" ng-true-value="'1'" ng-false-value="'0'">Hide this ticket type</md-checkbox>
+                          </div>
+                          <div class="ticketChkBoxCon">
+                              <md-radio-group ng-model="ticket.T_AutoSechduleType">
+                                  <md-radio-button value="0" class="md-primary">When ticket is not on sale</md-radio-button>
+                                  <md-radio-button value="1" class="md-primary">At custom date and time</md-radio-button>
+                              </md-radio-group>
+                          </div>
+                          <div class="hideUntilAfterCon" ng-show="ticket.T_AutoSechduleType == 1">
+                              <md-checkbox class="blue" style="width: 300px !important;" ng-model="ticket.useUntilDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useUntilDate = '0'">
+                                  <md-datepicker ng-model="ticket.localHideUntillDate" md-placeholder="Hide until date and time" style="width: 300px !important;"></md-datepicker>
+                              </md-checkbox>
+                              <md-checkbox class="blue" ng-model="ticket.useAfterDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useAfterDate = '0'">
+                                  <md-datepicker ng-model="ticket.localHideAfterDate" md-placeholder="Hide after date and time"></md-datepicker>
+                              </md-checkbox>
+                          </div>
+                          <div class="markSoldCon">
+                              <md-checkbox class="blue" ng-model="ticket.T_Mark_SoldOut" ng-true-value="'1'" ng-false-value="'0'">Mark as sold out</md-checkbox>
+                          </div>
+                          <div class="displayRemCon" ng-show="ticket.TicketTypeID != 3">
+                              <md-checkbox class="blue" ng-model="ticket.T_Displayremaining" ng-true-value="'1'" ng-false-value="'0'">Display remaining tickets</md-checkbox>
+                          </div>
+                      </div>
                   </div>
-                  <div flex>
-                    <md-input-container class="ticketContTxtBox qualityMdCon">
-                      <label class="ticketQualityLbl">Quantity</label>
-                      <input input value=0 type="text" ng-model="ticket.Qty_Available" class="ticketQualityLblTxtboxCls" required check-quantity numbers-only />
-                    </md-input-container>
-                  </div>
-                  <div flex ng-show="ticket.TicketTypeID == 2">
-                    <md-input-container class="ticketContTxtBox qualityMdCon">
-                      <label class="ticketPriceLbl">$ Price</label>
-                      <input type="number" class="ticketPriceLblTxtboxCls" required ng-model="ticket.Price" ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket)" input />
-                    </md-input-container>
-                  </div>
-                  <div flex ng-show="ticket.TicketTypeID == 2">
-                    <md-input-container class="ticketContTxtBox qualityMdCon">
-                      <label class="ticketDiscountLbl">$ Discount</label>
-                      <input input type="number" class="ticketDiscountLblTxtboxCls" required ng-model="ticket.T_Discount" ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket)" />
-                    </md-input-container>
-                  </div>
-                  <div flex ng-show="ticket.TicketTypeID != 2">
-                    <div class="donationTxtCls">{{ticket.TicketType.TicketType}}</div>
-                  </div>
-                  <div flex class="trashIconConCls">
-                    <span style="cursor: pointer;" class="trashIconCls" ng-click="deleteTicket(ticket)">
-                      <i class="material-icons">delete</i>
-                    </span>
-                  </div>
-                </div>
-                <div layout="row">
-                  <div flex>
-                    <a class="showHideOptionCls" href="javascript:void(0)" ng-click="ticket.expandedOptions = !ticket.expandedOptions" ng-init="ticket.expandedOptions = false">
-                      <span class="arrowDownOptions">
-                        <i class="material-icons moreOptionright">keyboard_arrow_right</i>
-                      </span>
-                      <span class="moreOptionTxt">More Options</span>
-                    </a>
-                  </div>
-                  <div flex style="position: relative;" ng-show="ticket.TicketTypeID == 2">
-                    <span class="buyerTotalTxt">Buyer total: ${{ticket.TotalPrice.toFixed(2)}}</span>
-                    <span class="infoOptionIcon" ng-mouseenter="ticket.showBuyerInfo = true" ng-mouseleave="ticket.showBuyerInfo = false" ng-init="ticket.showBuyerInfo = false">
-                      <i class="material-icons">info</i>
-                    </span>
-                    <div class="buyerInfo" ng-show="ticket.showBuyerInfo">
-                      <div>Ticket Price: ${{ticket.Price.toFixed(2)}} </div>
-                      <div>Fee: ${{ticket.Price > 0 ? ticket.EC_Fee.toFixed(2) : '0.00'}}</div>
-                      <div>Discount: ${{ticket.Price > 0 ? ticket.T_Discount.toFixed(2) : '0.00'}} </div>
-                      <div>Total: ${{ticket.TotalPrice.toFixed(2)}}</div>
-                    </div>
-                  </div>
-                </div>
               </div>
-              <div class="paidTicketContentCoBody" ng-show="ticket.expandedOptions">
-                <div class="pTCBTxt" ng-show="ticket.TicketTypeID != 3">Tickets allowed per order</div>
-                <div class="minMaxTxtBox" ng-show="ticket.TicketTypeID != 3">
-                  <md-input-container class="ticketMinTxtBoxCon">
-                    <label class="ticketMinTxtBoxLbl">Minimum</label>
-                    <input type="text" ng-model="ticket.Min_T_Qty" class="ticketMinTxtBoxCls" numbers-only />
-                  </md-input-container>
-                  <md-input-container class="ticketMaxTxtBoxCon">
-                    <label class="ticketMaxTxtBoxLbl">Maximum</label>
-                    <input type="text" ng-model="ticket.Max_T_Qty" class="ticketMaxTxtBoxCls" numbers-only />
-                  </md-input-container>
-                </div>
-                <div class="ticketChkBoxCon">
-                  <md-input-container>
-                    <label class="ticketDespTxtBoxLbl">Fee</label>
-                    <md-select style="width: 300px;" ng-model="ticket.Fees_Type" ng-change="onPriceChange(ticket)">
-                      <md-option value="0">Customer pays the fees</md-option>
-                      <md-option value="1">I absorb the fee</md-option>
-                    </md-select>
-                  </md-input-container>
-                </div>
-                <div class="ticketDespCon">
-                  <md-input-container class="ticketDespTxtBoxCon">
-                    <label class="ticketDespTxtBoxLbl">Enter Ticket Description</label>
-                    <input ng-model="ticket.T_Desc" class="ticketDespTxtBoxCls" />
-                  </md-input-container>
-                </div>
-                <div class="ticketChkBoxCon">
-                  <md-checkbox class="blue" ng-model="ticket.Show_T_Desc" ng-true-value="'1'" ng-false-value="'0'">Show ticket description on the event page</md-checkbox>
-                </div>
-                <div class="ticketStartEndDate">
-                    <div class="date-picker-row" flex-gt-sm>
-                        <label>Start Date</label>
-                        <md-datepicker md-placeholder="Start date" ng-model="ticket.localSaleStartDate"></md-datepicker>
-                       </div>
-                    <div class="date-picker-row" flex-gt-sm>
-                        <label>End Date</label>
-                        <md-datepicker md-placeholder="End date" ng-model="ticket.localSaleEndDate"></md-datepicker>
-    </div>
-                                    </div>
-                <div class="ticketChkBoxCon">
-                  <md-checkbox class="blue" ng-model="ticket.Hide_Ticket" ng-true-value="'1'" ng-false-value="'0'">Hide this ticket type</md-checkbox>
-                </div>
-                <div class="ticketChkBoxCon">
-                  <md-radio-group ng-model="ticket.T_AutoSechduleType">
-                    <md-radio-button value="0" class="md-primary">When ticket is not on sale</md-radio-button>
-                    <md-radio-button value="1" class="md-primary">At custom date and time</md-radio-button>
-                  </md-radio-group>
-                </div>
-                <div class="hideUntilAfterCon" ng-show="ticket.T_AutoSechduleType == 1">
-                  <md-checkbox class="blue" style="width: 300px !important;" ng-model="ticket.useUntilDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useUntilDate = '0'">
-                    <md-datepicker ng-model="ticket.localHideUntillDate" md-placeholder="Hide until date and time" style="width: 300px !important;"></md-datepicker>
-                  </md-checkbox>
-                  <md-checkbox class="blue" ng-model="ticket.useAfterDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useAfterDate = '0'">
-                    <md-datepicker ng-model="ticket.localHideAfterDate" md-placeholder="Hide after date and time"></md-datepicker>
-                  </md-checkbox>
-                </div>
-                <div class="markSoldCon">
-                  <md-checkbox class="blue" ng-model="ticket.T_Mark_SoldOut" ng-true-value="'1'" ng-false-value="'0'">Mark as sold out</md-checkbox>
-                </div>
-                <div class="displayRemCon" ng-show="ticket.TicketTypeID != 3">
-                  <md-checkbox class="blue" ng-model="ticket.T_Displayremaining" ng-true-value="'1'" ng-false-value="'0'">Display remaining tickets</md-checkbox>
-                </div>
-              </div>
-            </div>
           </div>
-        </div>
       </div>
 
       <div class="totalCapacity">

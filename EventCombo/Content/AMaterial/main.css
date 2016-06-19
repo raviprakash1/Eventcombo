@@ -14,7 +14,7 @@
     position: absolute;
     top: -10px;
     left: 50px;
-    color: rgba(0, 0, 0, 0.541176);
+    color: rgb(0, 202, 253) !important;
     font-size: 12px;
 }
 

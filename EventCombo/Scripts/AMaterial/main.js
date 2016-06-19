@@ -70,6 +70,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
   });
 
   $scope.prepareEventInfo = function () {
+      console.log("Prepare event info called");
     $scope.startDateTime = new Date($scope.eventInfo.DateInfo.StartDateTime);
     $scope.endDateTime = new Date($scope.eventInfo.DateInfo.EndDateTime);
     var time = formatAMPM($scope.startDateTime);
@@ -98,7 +99,8 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         $scope.showMultipleDates();
     }
     if ($scope.eventInfo.VariableChargesList.length <= 0)
-      $scope.addVarCharge();
+        $scope.addVarCharge();
+    console.log("Prepare event called");
     $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
       ticket.localSaleStartDate = ticket.Sale_Start_Date == null ? null : new Date(ticket.Sale_Start_Date);
       ticket.localSaleEndDate = ticket.Sale_End_Date == null ? null : new Date(ticket.Sale_End_Date);
@@ -344,6 +346,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       localHideAfterDate: null
     }
     $scope.onPriceChange(newticket);
+    console.log("add ticket called");
     $scope.eventInfo.TicketList.push(newticket);
   }
 
@@ -401,6 +404,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
   }
 
   $scope.sendEvent = function () {
+      console.log("Send event called");
     $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
       ticket.Sale_Start_Date = ticket.localSaleStartDate == null ? null : formatDateTime(ticket.localSaleStartDate);
       ticket.Sale_End_Date = ticket.localSaleEndDate == null ? null : formatDateTime(ticket.localSaleEndDate);
@@ -607,6 +611,75 @@ createEventApp.controller('CreateEventHeaderController', ['$scope', function ($s
 
 }]);
 
+createEventApp.directive('dragDropElements', function ($compile) {
+    return {
+        restrict: 'A',
+        transclude: true,
+        template: '<div class="something" ng-transclude> This is my directive content</div>',
+        link: function (scope, element, attrs) {
+            // All dom manipulation should be in link function for better approach and making segreggation.
+
+            scope.handleDragObjReference1;
+            scope.handleDragObjReference2;
+            scope.handleDragObjReference3;
+            // scope.dragSrcEl;
+            scope.element = element;
+
+            scope.element.on('dragstart', function (event) {
+
+                dragSrcEl = element;
+                console.log(dragSrcEl);
+                scope.handleDragObjReference1 = false;
+                scope.handleDragObjReference2 = true;
+                scope.handleDragObjReference3 = false;
+
+                event.originalEvent.dataTransfer.effectAllowed = 'move';
+                event.originalEvent.dataTransfer.setData('text/html', element.html());
+            });
+
+            scope.element.on('dragover', function (event) {
+                console.log('flag:dragover');
+
+                if (event.preventDefault) {
+                    event.preventDefault();
+                }
+
+                event.originalEvent.dataTransfer.dropEffect = 'move';
+                return false;
+            });
+
+            scope.element.on('drop', function (event) {
+                console.log("Drop Element: ", element);
+                console.log('flag:drop');
+                console.log(element);
+                //    console.log("DragDrcElement");
+                //   console.log(dragSrcEl);
+
+                //   if (dragSrcEl != scope.element.parent().parent().parent().parent() && scope.handleDragObjReference1 == false && scope.handleDragObjReference2 == true && scope.handleDragObjReference3 == false) 
+                {
+                    //dragSrcEl.html($compile(element.parent().parent().parent().parent().html())(scope));
+
+                    //element.parent().parent().parent().parent().html($compile(event.originalEvent.dataTransfer.getData('text/html'))(scope));
+                   // dragSrcEl.html("");
+                    dragSrcEl.html(element.html());
+                    element.html(event.originalEvent.dataTransfer.getData('text/html'));
+                    $compile(element.contents())(scope);
+                    $compile(dragSrcEl.contents())(scope);
+                }
+                if (event.stopPropagation) {
+                    event.stopPropagation();
+                }
+                scope.$apply();
+                $(".duplicate").children(".md-container").empty();
+                $(".radio").children(".md-container").empty();
+
+                return false;
+
+            });
+        }
+    };
+});
+
 
 function formatAMPM(date) {
   var hours = date.getHours();
@@ -628,3 +701,4 @@ function formatDateTime(date) {
   var res = "" + year + "-" + (month < 10 ? "0" : "") + month + "-" + (day < 10 ? "0" : "") + day + "T" + (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":00";
   return res;
 }
+
