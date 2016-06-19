@@ -1,4 +1,55 @@
-﻿.md-datepicker-input
+﻿/*TextArea Height*/
+.textAreaHeight{
+    height: 35px;
+}
+
+/*Datepicker floating text */
+.date-picker-row {
+    margin-left: -15px;
+    position: relative;
+    min-height: 60px;
+}
+
+.date-picker-row label {
+    position: absolute;
+    top: -10px;
+    left: 50px;
+    color: rgb(0, 202, 253) !important;
+    font-size: 12px;
+}
+
+.date-picker-row .md-datepicker-input-container {
+    margin-left: 0;
+}
+
+/*end date picker floating text*/
+
+
+/*Variable charges CSS*/
+.variableOptions{
+    background-color: white;
+    background-color: white;
+    display: block;
+    clear: both;
+    max-width: 1100px;    
+    box-shadow: 2px 2px 3px 0px #c1c1c1;
+    padding: 20px;
+    height: 170px;
+    overflow-y: scroll;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+/* Variable Charges Textbo alligning on row*/
+.variableType
+{
+    margin-top: 1px !important;
+}
+.variableAmount
+{
+    margin-top: 22px !important;
+}
+
+.md-datepicker-input
 {
     width: 167px !important;
 }
@@ -559,7 +610,7 @@ md-dialog{
 }
 
 .md-tab.md-active {
-    color: rgb(63,81,181) !important;
+    color: rgb(0, 202, 253) !important;
 }
 
 .pickupDateContainer{
