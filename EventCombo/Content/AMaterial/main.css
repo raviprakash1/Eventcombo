@@ -329,65 +329,65 @@ margin-left: 70px;
  //   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
 
-/*FOOTER CSS*/	
+/*FOOTER CSS*/    
 
 footer {
-	position: relative;
+    position: relative;
     bottom: -400px;
     right: 0px;
-	font-weight:200;
-	line-height:1.4em;
-	}
+    font-weight:200;
+    line-height:1.4em;
+    }
 .footer-right {
-	float:right;
-	bottom:100px;
-	right: 50px;
-	position:absolute;
-	}
+    float:right;
+    bottom:100px;
+    right: 50px;
+    position:absolute;
+    }
 .footer-left {
-	float:left;
-	bottom:100px;
-	left: 50px;
-	position:absolute;
-	}
+    float:left;
+    bottom:100px;
+    left: 50px;
+    position:absolute;
+    }
 .footerlogo {
-	text-align: center;
+    text-align: center;
     width: 100%;
     height: 40vh;
-	background: url(../img/EventComboLogo.svg) center no-repeat;
-	background-size: 700vw;
-	overflow:hidden;
-	background-position:top;
-	}
+    background: url(../img/EventComboLogo.svg) center no-repeat;
+    background-size: 700vw;
+    overflow:hidden;
+    background-position:top;
+    }
 .footerwhite {
-	background: rgba(255, 255, 255, 0.5);
-	width:100%;
-	height:77%;
-	}
+    background: rgba(255, 255, 255, 0.5);
+    width:100%;
+    height:77%;
+    }
 /*@media (max-width: 600px) 
 {
-	.footer-left {
-		display: none;
-		}
-	.footer-right {
-		text-align:center;
-		margin: 0 auto;
-		width:100%;
-		right:0px;
-		}
-	}*/
-	
-/*HEADER CSS*/	
-	
+    .footer-left {
+        display: none;
+        }
+    .footer-right {
+        text-align:center;
+        margin: 0 auto;
+        width:100%;
+        right:0px;
+        }
+    }*/
+    
+/*HEADER CSS*/    
+    
 .headerlogo {
-	margin: 34px 10px 50px 34px;
-	width:30vw;
-	max-width: 360px;
-	min-width: 100px;
-	}
+    margin: 34px 10px 50px 34px;
+    width:30vw;
+    max-width: 360px;
+    min-width: 100px;
+    }
 header {
-	background:url(../img/stripes.png) repeat-x;
-	}
+    background:url(../img/stripes.png) repeat-x;
+    }
 
 
 
