@@ -292,7 +292,7 @@ color-picker-wrapper .color-picker-panel.color-picker-panel-left {
 .textAreaHeight
 {
     height: 35px;
-
+        overflow: hidden;
 }
 
   @import url(https://fonts.googleapis.com/css?family=Roboto:100,200,400,300,300italic,400italic,500,700); @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700); @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
@@ -393,6 +393,28 @@ margin-left: 70px;
 }
 
 
+
+/*Datepicker floating text */
+.date-picker-row {
+    margin-left: -15px;
+    position: relative;
+    min-height: 60px;
+}
+
+.date-picker-row label {
+    position: absolute;
+    top: -10px;
+    left: 50px;
+    color: rgb(0, 202, 253) !important;
+    font-size: 12px;
+}
+
+.date-picker-row .md-datepicker-input-container {
+    margin-left: 0;
+}
+
+/*end date picker floating text*/
+
 .ticketStartEndDate
 {
     margin-bottom: 15px;
@@ -439,19 +461,7 @@ footer {
     width:100%;
     height:77%;
     }
-/*@media (max-width: 600px) 
-{
-    .footer-left {
-        display: none;
-        }
-    .footer-right {
-        text-align:center;
-        margin: 0 auto;
-        width:100%;
-        right:0px;
-        }
-    }*/
-    
+
 /*HEADER CSS*/    
     
 .headerlogo {
@@ -672,9 +682,6 @@ header {
 
     .pickuptimeTxt{
         padding-left: 12px;
-        font-size: 18px;
-        font-family: 'Roboto';
-        color: rgb(48,71,86);
         margin-left:20px;
     }
 
@@ -934,8 +941,9 @@ md-dialog{
 }
 
 .pickupDateContainer{
+    min-width: 380px;
     border: 1px solid #c1c1c1;
-    width: 880px;
+    width: 70%;
     margin: 0px auto;
     position: absolute;
     background: #fff;
@@ -943,7 +951,6 @@ md-dialog{
     box-shadow: 2px 2px 5px 0px #c1c1c1;
     margin-top: -65px;
     margin-left: 15px;
-    display:none;
     font-family: 'Roboto';
 }
 
@@ -988,264 +995,3 @@ md-dialog{
     left: 60px;
 }
 
-/*Rsponsive styling*/
-/*@media only screen and (max-width: 500px) 
-{
-     .TypeDiv
-    {
-        width: 100%;
-    }
-    .TypeEvent
-    {
-        width: 40%;
-    }
-    .categoryEvent
-    {
-        width: 40%;
-    }
-    .EDTxtENTxtBox
-  {
-      font-size: 20px;
-  }
-}
-@media only screen and (min-width: 500px) and (max-width: 600px)
-{
-    .TypeDiv
-    {
-        width: 100%;
-    }
-    .TypeEvent
-    {
-        width: 40%;
-    }
-    .categoryEvent
-    {
-        width: 40%;
-    }
-  .EDTxtENTxtBox
-  {
-      font-size: 30px;
-  }
-}
-@media only screen and (max-width: 600px) {
-    .TypeDiv
-    {
-        width: 100%;
-    }
-    .TypeEvent
-    {
-        width: 40%;
-    }
-    .categoryEvent
-    {
-        width: 40%;
-    }
-
-  .EDTxtVNTxtBox 
-  {
-      font-size: 20px;
-  }
-  .EDTxtVATxtBox
-  {
-      font-size: 14px;
-  }
-  .material-icons
-  {
-      font-size: 19px !important;
-  }
-  #PickUpTimeText
-  {
-      font-size: 12px;
-  }
-md-checkbox .md-label {
-    color: #000;
-    font-size: 10px;  <br>
-    font-weight: bold;
-    margin-left: 35px;
-}
-
-
-
-}
-@media handheld, only screen and (max-width: 768px), only screen and (max-device-width: 768px)
-{
-    .headerCEHeadBtn
-    {
-        margin: unset;
-    }
-    .btnSaveHeadCE
-    {
-        font-size: 7px !important;
-        margin-right: 15px;
-
-    }
-    .btnPreviewHeadCE
-    {
-        font-size: 7px !important;
-        margin-right: 5px;
-    }
-    .btnMakeLiveHeadCE
-    {
-        font-size: 7px !important;
-
-    }
-    .OrganizerBody
-    {
-        padding-left: 5px;
-    }
-    .eDBitMoreInnerHead
-    {
-        margin-left: 5px;
-    }
-    .ticketDelivery
-    {
-        margin-left: 22px !important;
-    }
-    .blueremainingTicket
-    {
-        margin-left: 22px !important;
-    }
-    .variableCharges
-    {
-        margin-left: 22px !important;
-    }
-    .organiserButtonDiv
-    {
-        text-align: center;
-    }
-    .organiserDiv
-    {
-        text-align: center;
-    }
-    .newOrganizer
-    {
-        padding-left: 30px;
-    }
-    .organiserbottomDiv
-    {
-        padding-left: 30px;
-    }
-    .eDAddTicketInnerHead
-    {
-        padding-left: 5px;
-    }
-    .totalCapacity
-    {
-        margin-right: 10px;
-    }
-    .addTicketBtnCls
-    {
-        float: unset;
-    }
-    .ticketButtonDiv
-    {
-        text-align: center;
-    }
-    .ticketButtonDiv
-    .have_a_filter
-    {
-        position: relative;
-        top: 198px;
-    }
-    .textArea{
-            width: 87%;
-    }
-        .pickupDateContainer
-    {
-        width: 400px;
-    }
-    .firstdiv  .md-datepicker-input
-    {
-        width: 90px !important;
-    }
-      .seconddiv  .md-datepicker-input
-    {
-        width: 90px !important;
-    }
-
-      .thirddiv 
-      {
-          margin-left: 20px;
-      }
-       .time-div
-       {
-           margin-left: unset !important;
-       }
-       .weekdiv
-       {
-           margin-left: 57px !important;
-       }
-      .time-div  .md-input-has-value
-      {
-          margin-left: 57px !important;
-      }
-      .time-zone
-      {
-          margin-left: 57px !important;
-      }
-      .dialogheader  .material-icons
-   {
-       top: 15px;
-   }
-     .dialogDate
-    {
-        font-size: 15px;
-    }
-.createEvent{
-    text-align: center;
-    margin-bottom: 19px;
-}
-color-picker-wrapper .color-picker-panel.color-picker-panel-left {
-    left: -158px !important;
-}
-.EDWebsiteUrlHead
-{
-    padding-left: 20px;
-}
-.topButtons
-{
-    display: none;
-}
-.bannerPic
-{
-    margin-left: 30px !important;
-    margin-right: 30px;
-}
-.designBanner
-{
-    font-size: 1.6rem;
-}
-.eventCheckBoxes
-{
-    padding-left: 20px;
-}
-md-checkbox.md-checked .md-icon:after {
-    box-sizing: border-box;
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
-    position: absolute;
-    left: 3.66667px;
-    top: 2.22222px;
-    display: table;
-    width: 6.66667px;
-    height: 8.33333px;
-    border-width: 2px;
-    border-style: solid;
-    border-top: 0;
-    border-left: 0;
-    content: '';
-}
-md-checkbox .md-icon {
-    box-sizing: border-box;
-    transition: 240ms;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 15px;
-    height: 15px;
-    border-width: 2px;
-    border-style: solid;
-    border-radius: 2px;
-}
-
-}*/
