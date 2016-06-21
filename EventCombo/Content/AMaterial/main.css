@@ -7,7 +7,7 @@
 
 @media (min-width: 768px) and (max-width: 1100px){
   /* Big view stuff goes here. */
-     .URLDiv, .eDBitMoreInnerHead, .eDAddTicketInnerHead, .addTicketsButtons, .variabeDetails
+     .URLDiv, .eDBitMoreInnerHead, .eDAddTicketInnerHead, .addTicketsButtons, .variabeDetails, .TicketOptions
     {
         margin-left: 26px !important;
     }
@@ -32,10 +32,15 @@
            margin-top: 15px;
        }
 
+
 }
 
 @media (min-width: 541px) and (max-width: 768px)
 {
+    .totalCapacity
+    {
+        margin-right: 10px !important;
+    }
       .wholegallery
        {
            margin-right: 30px;
@@ -57,7 +62,7 @@
     {
         padding-left: 26px !important;
     }
-   .URLDiv , .eDBitMoreInnerHead, .eDAddTicketInnerHead, .addTicketsButtons, .variabeDetails
+   .URLDiv , .eDBitMoreInnerHead, .eDAddTicketInnerHead, .addTicketsButtons, .variabeDetails,.TicketOptions
     {
         margin-left: 26px !important;
     }
@@ -95,7 +100,10 @@
 }
 @media (max-width: 540px) and (min-width: 400px)
 {
- 
+    .totalCapacity
+    {
+        margin-right: 10px !important;
+    }
       .wholegallery
        {
            margin-right: 30px;
@@ -142,7 +150,7 @@
     {
         right: 15px;
     }
-    .URLDiv , .eDBitMoreInnerHead, .eDAddTicketInnerHead, .addTicketsButtons, .variabeDetails
+    .URLDiv , .eDBitMoreInnerHead, .eDAddTicketInnerHead, .addTicketsButtons, .variabeDetails, .TicketOptions
     {
         margin-left: 26px !important;
     }
@@ -182,6 +190,10 @@ color-picker-wrapper .color-picker-panel.color-picker-panel-left {
 
 }
 @media (max-width: 399px){
+    .totalCapacity
+    {
+        margin-right: 10px !important;
+    }
       .wholegallery
        {
            margin-right: 30px;
@@ -237,7 +249,7 @@ color-picker-wrapper .color-picker-panel.color-picker-panel-left {
     {
         right: 15px;
     }
-        .URLDiv , .eDBitMoreInnerHead, .eDAddTicketInnerHead, .addTicketsButtons, .variabeDetails
+        .URLDiv , .eDBitMoreInnerHead, .eDAddTicketInnerHead, .addTicketsButtons, .variabeDetails, .TicketOptions
     {
         margin-left: 26px !important;
     }
@@ -273,6 +285,13 @@ color-picker-wrapper .color-picker-panel.color-picker-panel-left {
 
 
 
+}
+
+.TicketOptions
+{
+        max-width: 1100px;
+    margin: 0px auto;
+    padding: 5px 0px;
 }
   .variableClass
     {
