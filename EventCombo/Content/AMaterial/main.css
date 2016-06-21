@@ -106,6 +106,17 @@
 }
 @media (max-width: 540px) and (min-width: 400px)
 {
+        .headerCEHeadBtn 
+    {
+        text-align: unset !important;
+        margin: unset !important;
+        padding-left: 10px !important;
+    }
+    .btnMakeLiveHeadCE
+    {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
         .weeklyEndTime
     {
         margin-left: 58px !important;
@@ -206,6 +217,17 @@ color-picker-wrapper .color-picker-panel.color-picker-panel-left {
 
 }
 @media (max-width: 399px){
+    .headerCEHeadBtn 
+    {
+        text-align: unset !important;
+        margin: unset !important;
+        padding-left: 10px !important;
+    }
+    .btnMakeLiveHeadCE
+    {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
     .pickupDateContainer
     {
         min-width: 300px !important;
