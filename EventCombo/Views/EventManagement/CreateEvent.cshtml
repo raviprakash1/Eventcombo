@@ -451,11 +451,11 @@
 
           <div class="ticketSubDivContainer">
 
-              <div class="paidTicketContentCo" drag-drop-elements ng-repeat="ticket in eventInfo.TicketList">
+              <div class="paidTicketContentCo" drag-drop-elements ng-class="{{$index}}" ng-repeat="ticket in eventInfo.TicketList">
                   <div>
                       <div class="paidTicketContentCoHeader">
                           <div layout="row" layout-xs="column">
-                              <span class="iconDragItem"  draggable="true">
+                              <span class="iconDragItem" draggable="true">
                                   <i class="material-icons">reorder</i>
                               </span>
                               <div flex>
