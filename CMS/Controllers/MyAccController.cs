@@ -482,7 +482,7 @@ namespace CMS.Controllers
                         }
                         else
                         {
-                            from = ConfigurationManager.AppSettings.Get("UserName");
+                            from = ConfigurationManager.AppSettings.Get("DefaultEmail"); //ConfigurationManager.AppSettings.Get("UserName");
 
                         }
                      
@@ -925,8 +925,12 @@ namespace CMS.Controllers
                 smtp.Host = ConfigurationManager.AppSettings["Host"];
                 smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
                 System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
-                NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"];
-                NetworkCred.Password = ConfigurationManager.AppSettings["Password"];
+                string s = ConfigurationManager.AppSettings["UserName"];
+                if (!String.IsNullOrEmpty(s))
+                {
+                    NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"];
+                    NetworkCred.Password = ConfigurationManager.AppSettings["Password"];
+                }
                 smtp.UseDefaultCredentials = true;
                 smtp.Credentials = NetworkCred;
                 smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]);

@@ -20,12 +20,12 @@ namespace EventCombo.Utils
                 {
                     if (string.IsNullOrEmpty(from))
                     {
-                        from = ConfigurationManager.AppSettings["UserName"];
+                        from = ConfigurationManager.AppSettings["DefaultEmail"]; //ConfigurationManager.AppSettings["UserName"];
                     }
 
                     if (string.IsNullOrEmpty(fromName))
                     {
-                        fromName = ConfigurationManager.AppSettings["UserName"];
+                        fromName = ConfigurationManager.AppSettings["DefaultEmail"]; //ConfigurationManager.AppSettings["UserName"];
                     }
 
                     mailMessage.From = new MailAddress(from, fromName);
@@ -45,8 +45,12 @@ namespace EventCombo.Utils
                     smtp.Host = ConfigurationManager.AppSettings["Host"];
                     smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
                     System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
-                    NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"];
-                    NetworkCred.Password = ConfigurationManager.AppSettings["Password"];
+                    string s = ConfigurationManager.AppSettings["UserName"];
+                    if (!String.IsNullOrEmpty(s))
+                    {
+                        NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"];
+                        NetworkCred.Password = ConfigurationManager.AppSettings["Password"];
+                    }
                     smtp.UseDefaultCredentials = true;
                     smtp.Credentials = NetworkCred;
                     smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]);
