@@ -244,7 +244,7 @@
                             <md-option ng-repeat="starttime in eventInfo.DateInfo.TimeList" ng-value="starttime">{{starttime.TimeString}}</md-option>
                           </md-select>
                         </md-input-container>
-                        <md-input-container style="margin-left: 80px;">
+                        <md-input-container style="margin-left: 80px;" class="weeklyEndTime">
                           <label>End time</label>
                           <md-select ng-model="selectedendTime">
                             <md-option ng-repeat="time in eventInfo.DateInfo.TimeList" ng-value="time">{{time.TimeString}}</md-option>
@@ -395,7 +395,7 @@
                     <span> Organizer Info</span>
                 </textarea>
             </div>
-          <span class="newOrganiserBottomText noOutline" style="float: right;  margin-top: 15px; cursor: pointer;" ng-click="callImageClick('organiserImage'); $event.stopPropagation();">
+          <span class="newOrganiserBottomText noOutline" style="float: right;  margin-top: 15px;margin-right: 15px; cursor: pointer;" ng-click="callImageClick('organiserImage'); $event.stopPropagation();">
             <span style="display: inline-block;float: left;padding-right: 31px;">Have a logo or picture?</span>
             <i class="material-icons" style="margin-left: -25px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">add_a_photo</i>
             <input type="file" name="image" id="organiserImage" accept="image/*" style="display: none;" custom-on-change="uploadOrganizerImage" />

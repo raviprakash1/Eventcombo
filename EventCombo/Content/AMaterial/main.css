@@ -37,6 +37,12 @@
 
 @media (min-width: 541px) and (max-width: 768px)
 {
+       .onlineEventConChkBox
+    {
+        margin-left: 0px !important;
+    }
+    .textAreaHeight 
+    {height: 35px !important;}
     .totalCapacity
     {
         margin-right: 10px !important;
@@ -100,6 +106,16 @@
 }
 @media (max-width: 540px) and (min-width: 400px)
 {
+        .weeklyEndTime
+    {
+        margin-left: 58px !important;
+    }
+       .onlineEventConChkBox
+    {
+        margin-left: 0px !important;
+    }
+    .textAreaHeight 
+    {height: 80px !important;}
     .totalCapacity
     {
         margin-right: 10px !important;
@@ -190,6 +206,20 @@ color-picker-wrapper .color-picker-panel.color-picker-panel-left {
 
 }
 @media (max-width: 399px){
+    .pickupDateContainer
+    {
+        min-width: 300px !important;
+    }
+    .weeklyEndTime
+    {
+        margin-left: 58px !important;
+    }
+    .onlineEventConChkBox
+    {
+        margin-left: 0px !important;
+    }
+    .textAreaHeight 
+    {height: 80px !important;}
     .totalCapacity
     {
         margin-right: 10px !important;
@@ -735,7 +765,7 @@ header {
     }
     
     .onlineEventConChkBox{
-        margin-left: 30px !important;
+        margin-left: 30px;
     }
 
     .eventDtlBody{
@@ -768,7 +798,7 @@ header {
         padding: 5px 0px;
     }
     .eDAddTicketBody{
-        margin: 20px 0px 0px 20px;
+        margin: 20px 10px 0px 20px;
     }
 
     .addTicketBtnCls{
@@ -882,7 +912,7 @@ header {
     }
 
     .totalCapacity{
-        margin: 0px auto 20px auto;
+        margin: 0px 10px 20px auto;
         max-width: 1100px;
         text-align: right;
         font-weight: bold;
