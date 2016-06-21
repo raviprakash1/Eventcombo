@@ -1,5 +1,5 @@
 ﻿var buttnCount = 0;
-
+var test;
 var createEventApp = angular.module("CreateEventApp", ['ngMaterial', 'ngMessages', 'color.picker', 'mdDatetimePickerDemo',
   'ngGallery', 'ui.tinymce']);
 createEventApp.controller('CreateEventController', ['$scope', '$http', '$window', '$timeout', 'ngGallery',
@@ -72,7 +72,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
   });
 
   $scope.prepareEventInfo = function () {
-      console.log("Prepare event info called");
+      
     $scope.startDateTime = new Date($scope.eventInfo.DateInfo.StartDateTime);
     $scope.endDateTime = new Date($scope.eventInfo.DateInfo.EndDateTime);
     var time = formatAMPM($scope.startDateTime);
@@ -102,7 +102,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     }
     if ($scope.eventInfo.VariableChargesList.length <= 0)
         $scope.addVarCharge();
-    console.log("Prepare event called");
+  
     $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
       ticket.localSaleStartDate = ticket.Sale_Start_Date == null ? null : new Date(ticket.Sale_Start_Date);
       ticket.localSaleEndDate = ticket.Sale_End_Date == null ? null : new Date(ticket.Sale_End_Date);
@@ -347,8 +347,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       localHideUntillDate: null,
       localHideAfterDate: null
     }
-    $scope.onPriceChange(newticket);
-    console.log("add ticket called");
+    $scope.onPriceChange(newticket);    
     $scope.eventInfo.TicketList.push(newticket);
   }
 
@@ -618,19 +617,22 @@ createEventApp.directive('dragDropElements', function ($compile) {
         restrict: 'A',
         transclude: true,
         template: '<div class="something" ng-transclude> This is my directive content</div>',
+      
         link: function (scope, element, attrs) {
-            // All dom manipulation should be in link function for better approach and making segreggation.
-
+            
             scope.handleDragObjReference1;
             scope.handleDragObjReference2;
             scope.handleDragObjReference3;
-            // scope.dragSrcEl;
+            
             scope.element = element;
 
             scope.element.on('dragstart', function (event) {
-
+              
+                console.log("Index: ", scope.$parent.$index);
                 dragSrcEl = element;
+                test = element;
                 console.log(dragSrcEl);
+                console.log($(test).attr("ng-class"));
                 scope.handleDragObjReference1 = false;
                 scope.handleDragObjReference2 = true;
                 scope.handleDragObjReference3 = false;
@@ -640,7 +642,7 @@ createEventApp.directive('dragDropElements', function ($compile) {
             });
 
             scope.element.on('dragover', function (event) {
-                console.log('flag:dragover');
+                
 
                 if (event.preventDefault) {
                     event.preventDefault();
@@ -651,30 +653,19 @@ createEventApp.directive('dragDropElements', function ($compile) {
             });
 
             scope.element.on('drop', function (event) {
-                console.log("Drop Element: ", element);
-                console.log('flag:drop');
-                console.log(element);
-                //    console.log("DragDrcElement");
-                //   console.log(dragSrcEl);
+           
+                var dragElem = scope.eventInfo.TicketList[$(dragSrcEl).attr("ng-class")];
+                var srcElem = scope.eventInfo.TicketList[$(element).attr("ng-class")];
+            
+                scope.eventInfo.TicketList[$(dragSrcEl).attr("ng-class")] = srcElem;
+                scope.eventInfo.TicketList[$(element).attr("ng-class")] = dragElem;
 
-                //   if (dragSrcEl != scope.element.parent().parent().parent().parent() && scope.handleDragObjReference1 == false && scope.handleDragObjReference2 == true && scope.handleDragObjReference3 == false) 
-                {
-                    //dragSrcEl.html($compile(element.parent().parent().parent().parent().html())(scope));
-
-                    //element.parent().parent().parent().parent().html($compile(event.originalEvent.dataTransfer.getData('text/html'))(scope));
-                   // dragSrcEl.html("");
-                    dragSrcEl.html(element.html());
-                    element.html(event.originalEvent.dataTransfer.getData('text/html'));
-                    $compile(element.contents())(scope);
-                    $compile(dragSrcEl.contents())(scope);
-                }
+         
                 if (event.stopPropagation) {
                     event.stopPropagation();
                 }
                 scope.$apply();
-                $(".duplicate").children(".md-container").empty();
-                $(".radio").children(".md-container").empty();
-
+     
                 return false;
 
             });
