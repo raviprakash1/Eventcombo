@@ -214,9 +214,32 @@ color-picker-wrapper .color-picker-panel.color-picker-panel-left {
   {
       font-size: 14px;
   }
+    .firstdiv .md-datepicker-input-container, .seconddiv .md-datepicker-input-container
+   {
+       width: 90px !important;
+   }
+     .firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input 
+   {
+    font-size: 16px !important;
+   }
+     md-ink-bar{
+         bottom: 10px !important;
+     }
 
 }
 @media (max-width: 399px){
+    md-ink-bar
+    {
+        bottom: 10px !important;
+    }
+   .firstdiv .md-datepicker-input-container, .seconddiv .md-datepicker-input-container
+   {
+       width: 90px !important;
+   }
+     .firstdiv .md-datepicker-input , .seconddiv .md-datepicker-input 
+   {
+    font-size: 16px !important;
+   }
     .headerCEHeadBtn 
     {
         text-align: unset !important;
