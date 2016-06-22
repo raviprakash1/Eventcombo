@@ -41,7 +41,7 @@
     {
         margin-left: 0px !important;
     }
-    .textAreaHeight 
+   .EDTxtEventName .textAreaHeight 
     {height: 35px !important;}
     .totalCapacity
     {
@@ -125,7 +125,7 @@
     {
         margin-left: 0px !important;
     }
-    .textAreaHeight 
+    .EDTxtEventName .textAreaHeight 
     {height: 80px !important;}
     .totalCapacity
     {
@@ -240,8 +240,28 @@ color-picker-wrapper .color-picker-panel.color-picker-panel-left {
     {
         margin-left: 0px !important;
     }
-    .textAreaHeight 
-    {height: 80px !important;}
+    .EDTxtEventName .textAreaHeight 
+    {
+        font-size: 30px !important;
+
+        height: 80px !important;
+
+    }
+    .EDTxtVenueName .textAreaHeight
+    {
+        font-size: 18px !important;
+    }
+    .EDTxtVATxtBox
+    {
+        font-size: 14px !important;
+    }
+    /*Setting font size of pickupdate*/
+    .pickuptimeTxt
+    {
+        font-size: 13px !important;
+    }
+
+
     .totalCapacity
     {
         margin-right: 10px !important;
@@ -338,6 +358,9 @@ color-picker-wrapper .color-picker-panel.color-picker-panel-left {
 
 
 }
+
+
+
 
 .TicketOptions
 {
