@@ -553,11 +553,25 @@
                               <div class="date-picker-row" flex-gt-sm>
                                   <label>Start Date</label>
                                   <md-datepicker ng-model="ticket.localSaleStartDate"></md-datepicker>
+                                  <md-input-container flex-gt-md=" 30">
+                                      <label>Time</label>
+                                      <md-select ng-model="ticket.ticketstartTime">
+                                          <md-option ng-repeat="ticketstarttime in eventInfo.DateInfo.TimeList" ng-value="ticketstarttime">{{ticketstarttime.TimeString}}</md-option>
+                                      </md-select>
+                                  </md-input-container>
                               </div>
+                      
                               <div class="date-picker-row" flex-gt-sm>
                                   <label>End Date</label>
                                   <md-datepicker ng-model="ticket.localSaleEndDate"></md-datepicker>
+                                  <md-input-container flex-gt-md=" 30">
+                                      <label>Time</label>
+                                      <md-select ng-model="ticket.ticketendTime">
+                                          <md-option ng-repeat="ticketendtime in eventInfo.DateInfo.TimeList" ng-value="ticketendtime">{{ticketendtime.TimeString}}</md-option>
+                                      </md-select>
+                                  </md-input-container>
                               </div>
+                        
                           </div>
                           <div class="ticketChkBoxCon">
                               <md-checkbox class="blue" ng-model="ticket.Hide_Ticket" ng-true-value="'1'" ng-false-value="'0'">Hide this ticket type</md-checkbox>
@@ -569,13 +583,31 @@
                               </md-radio-group>
                           </div>
                           <div class="hideUntilAfterCon" ng-show="ticket.T_AutoSechduleType == 1">
-                              <md-checkbox class="blue" style="width: 300px !important;" ng-model="ticket.useUntilDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useUntilDate = '0'">
-                                  <md-datepicker ng-model="ticket.localHideUntillDate" md-placeholder="Hide until date and time" style="width: 300px !important;"></md-datepicker>
-                              </md-checkbox>
-                              <md-checkbox class="blue" ng-model="ticket.useAfterDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useAfterDate = '0'">
-                                  <md-datepicker ng-model="ticket.localHideAfterDate" md-placeholder="Hide after date and time"></md-datepicker>
-                              </md-checkbox>
-                          </div>
+                              <div style="display: inline-block;">
+                                  <md-checkbox class="blue" style="width: 300px !important;" ng-model="ticket.useUntilDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useUntilDate = '0'">
+                                      <md-datepicker ng-model="ticket.localHideUntillDate" md-placeholder="Hide until date and time" style="width: 300px !important;"></md-datepicker>
+
+                                  </md-checkbox>
+                                  <md-input-container flex-gt-md=" 30" style="margin-left: 0px; margin-right: 60px;">
+                                      <label>Time</label>
+                                      <md-select ng-model="ticket.hidestartTime">
+                                          <md-option ng-repeat="hidestartTime in eventInfo.DateInfo.TimeList" ng-value="hidestartTime">{{hidestartTime.TimeString}}</md-option>
+                                      </md-select>
+                                  </md-input-container>
+                              </div>
+                              <div style="display: inline-block;">
+                                  <md-checkbox class="blue" ng-model="ticket.useAfterDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useAfterDate = '0'">
+                                      <md-datepicker ng-model="ticket.localHideAfterDate" md-placeholder="Hide after date and time"></md-datepicker>
+                                
+                                  </md-checkbox>
+                                  <md-input-container flex-gt-md=" 30" style="margin-left: 10px;">
+                                      <label>Time</label>
+                                      <md-select ng-model="ticket.hideendTime">
+                                          <md-option ng-repeat="hideendtime in eventInfo.DateInfo.TimeList" ng-value="hideendtime">{{hideendtime.TimeString}}</md-option>
+                                      </md-select>
+                                  </md-input-container>
+                                  </div>
+                              </div>
                           <div class="markSoldCon">
                               <md-checkbox class="blue" ng-model="ticket.T_Mark_SoldOut" ng-true-value="'1'" ng-false-value="'0'">Mark as sold out</md-checkbox>
                           </div>
