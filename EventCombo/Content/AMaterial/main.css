@@ -683,3 +683,7 @@ md-dialog{
 color-picker-wrapper .color-picker-panel.color-picker-panel-left {
     left: -158px !important;
 }
+
+.clearfix {
+  clear: both;
+}

@@ -1,6 +1,4 @@
-﻿var buttnCount = 0;
-
-var createEventApp = angular.module("CreateEventApp", ['ngMaterial', 'ngMessages', 'color.picker', 'mdDatetimePickerDemo',
+﻿var createEventApp = angular.module("CreateEventApp", ['ngMaterial', 'ngMessages', 'color.picker', 'mdDatetimePickerDemo',
   'ngGallery', 'ui.tinymce']);
 createEventApp.controller('CreateEventController', ['$scope', '$http', '$window', '$timeout', 'ngGallery',
   function ($scope, $http, $window, $timeout, ngGallery) {
@@ -19,7 +17,10 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     $scope.isPrivateEvent = false;
     $scope.includeSocial = 0;
     $scope.minDate = new Date();
+    $scope.minDate.setHours(0, 0, 0, 0);
+    $scope.formValidation = false;
     $scope.gPlace;
+    $scope.tempDateInfo = {};
 
     $scope.tinymceOptions = {
       selector: "textarea",
@@ -71,79 +72,109 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     });
 
     $scope.prepareEventInfo = function () {
-      console.log("Prepare event info called");
-      $scope.startDateTime = new Date($scope.eventInfo.DateInfo.StartDateTime);
-      $scope.endDateTime = new Date($scope.eventInfo.DateInfo.EndDateTime);
-      var time = formatAMPM($scope.startDateTime);
+      $scope.onShowDateTimeDialog(false);
+      if ($scope.eventInfo.VariableChargesList.length <= 0)
+        $scope.addVarCharge();
+      $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
+        ticket.localSaleStartDate = !ticket.Sale_Start_Date ? null : new Date(ticket.Sale_Start_Date);
+        ticket.localSaleEndDate = !ticket.Sale_End_Date ? null : new Date(ticket.Sale_End_Date);
+        ticket.localHideUntilDate = !ticket.Hide_Untill_Date ? null : new Date(ticket.Hide_Untill_Date);
+        ticket.localHideAfterDate = ticket.Hide_After_Date ? null : new Date(ticket.Hide_After_Date);
+      });
+    }
+
+    $scope.onShowDateTimeDialog = function (showDialog) {
+      console.log($scope.eventInfo.DateInfo.StartDateTime);
+      var startDateTime = new Date($scope.eventInfo.DateInfo.StartDateTime);
+      if ($scope.eventInfo.DateInfo.StartDateTime.length <= 19)
+        startDateTime = new Date(startDateTime.getTime() + startDateTime.getTimezoneOffset() * 60000);
+      console.log(startDateTime);
+      var endDateTime = new Date($scope.eventInfo.DateInfo.EndDateTime);
+      if ($scope.eventInfo.DateInfo.EndDateTime.length <= 19)
+        endDateTime = new Date(endDateTime.getTime() + endDateTime.getTimezoneOffset() * 60000);
+      var time = formatAMPM(startDateTime);
       var ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
       if (ctime.length > 0)
-        $scope.selectedstartTime = ctime[0];
+        $scope.tempDateInfo.selectedstartTime = ctime[0];
       else
-        $scope.selectedstartTime = null;
-      time = formatAMPM($scope.endDateTime);
+        $scope.tempDateInfo.selectedstartTime = null;
+      time = formatAMPM(endDateTime);
       ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
       if (ctime.length > 0)
-        $scope.selectedendTime = ctime[0];
+        $scope.tempDateInfo.selectedendTime = ctime[0];
       else
-        $scope.selectedendTime = null;
-      $scope.startingDate = new Date($scope.startDateTime.getFullYear(), $scope.startDateTime.getMonth(), $scope.startDateTime.getDate());
-      $scope.endingDate = new Date($scope.endDateTime.getFullYear(), $scope.endDateTime.getMonth(), $scope.endDateTime.getDate());
-      $scope.occurence = $scope.eventInfo.DateInfo.Frequency;
+        $scope.tempDateInfo.selectedendTime = null;
+      $scope.tempDateInfo.startingDate = new Date(startDateTime.getFullYear(), startDateTime.getMonth(), startDateTime.getDate());
+      $scope.tempDateInfo.endingDate = new Date(endDateTime.getFullYear(), endDateTime.getMonth(), endDateTime.getDate());
+      $scope.tempDateInfo.occurence = $scope.eventInfo.DateInfo.Frequency;
+      $scope.tempDateInfo.Weekdays = $scope.eventInfo.DateInfo.Weekdays.slice();
+      $scope.tempDateInfo.TimeZone = $scope.eventInfo.TimeZone;
       if ($scope.eventInfo.DateInfo.Frequency == "Single") {
         $scope.dateTab = 0;
         if (!$scope.eventInfo.DateInfo.IsNewDate)
-          $scope.showDates();
+          $scope.showDates(false);
       }
       else {
         $scope.dateTab = 1;
         if (!$scope.eventInfo.DateInfo.IsNewDate)
-          $scope.showMultipleDates();
+          $scope.showMultipleDates(false);
       }
-      if ($scope.eventInfo.VariableChargesList.length <= 0)
-        $scope.addVarCharge();
-      console.log("Prepare event called");
-      $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
-        ticket.localSaleStartDate = ticket.Sale_Start_Date == null ? null : new Date(ticket.Sale_Start_Date);
-        ticket.localSaleEndDate = ticket.Sale_End_Date == null ? null : new Date(ticket.Sale_End_Date);
-        ticket.localHideUntillDate = ticket.Hide_Untill_Date == null ? null : new Date(ticket.Hide_Untill_Date);
-        ticket.localHideAfterDate = ticket.Hide_After_Date == null ? null : new Date(ticket.Hide_After_Date);
-      });
+      $scope.showDateTimeDialog = showDialog;
     }
 
-    $scope.showDates = function () {
-      $scope.showDateTimeDialog = false;
+    $scope.saveDateTime = function () {
       $scope.eventInfo.DateInfo.IsNewDate = false;
-      var startingDate = ($scope.startingDate.getMonth() + 1) + "/" + $scope.startingDate.getDate() + "/" + $scope.startingDate.getFullYear();
-      var endingDate = ($scope.endingDate.getMonth() + 1) + "/" + $scope.endingDate.getDate() + "/" + $scope.endingDate.getFullYear();
-      $scope.occurence = "Single";
-      $scope.selectedDateTimeText = startingDate + " " + $scope.selectedstartTime.TimeString + " To " + endingDate + " " + $scope.selectedendTime.TimeString;
+      $scope.eventInfo.DateInfo.Frequency = $scope.tempDateInfo.occurence;
+      $scope.eventInfo.TimeZone = $scope.tempDateInfo.TimeZone;
+
+      $scope.eventInfo.DateInfo.StartDateTime = $scope.getDateTime($scope.tempDateInfo.startingDate, $scope.tempDateInfo.selectedstartTime);
+      $scope.eventInfo.DateInfo.EndDateTime = $scope.getDateTime($scope.tempDateInfo.endingDate, $scope.tempDateInfo.selectedendTime);
+
+      if ($scope.tempDateInfo.occurence == "Weekly")
+        $scope.eventInfo.DateInfo.Weekdays = $scope.tempDateInfo.Weekdays.slice();
+      else
+        $scope.eventInfo.DateInfo.Weekdays = [];
     }
 
-    $scope.showMultipleDates = function () {
+    $scope.showDates = function (save) {
+      $scope.dateInfoTouched = true;
+      $scope.tempDateInfo.occurence = "Single";
+      var check = $scope.checkTempDateInfo();
+      if (check.timezone || check.singleDates)
+        return;
       $scope.showDateTimeDialog = false;
-      $scope.eventInfo.DateInfo.IsNewDate = false;
-      var occurence = $scope.occurence;
-      if (occurence == "Weekly") {
+      var startingDate = ($scope.tempDateInfo.startingDate.getMonth() + 1) + "/" + $scope.tempDateInfo.startingDate.getDate() + "/" + $scope.tempDateInfo.startingDate.getFullYear();
+      var endingDate = ($scope.tempDateInfo.endingDate.getMonth() + 1) + "/" + $scope.tempDateInfo.endingDate.getDate() + "/" + $scope.tempDateInfo.endingDate.getFullYear();
+      $scope.selectedDateTimeText = startingDate + " " + $scope.tempDateInfo.selectedstartTime.TimeString + " To " + endingDate + " " + $scope.tempDateInfo.selectedendTime.TimeString;
+      if (save)
+        $scope.saveDateTime();
+    }
 
+    $scope.showMultipleDates = function (save) {
+      $scope.dateInfoTouched = true;
+      var check = $scope.checkTempDateInfo();
+      if (check.weekdays || check.timezone || check.multiDates)
+        return;
+      $scope.showDateTimeDialog = false;
+
+      if ($scope.tempDateInfo.occurence == "Weekly") {
         var alldays = "";
-        for (var day = 0; day < $scope.eventInfo.Weekdays.length; day++) {
-          alldays += $scope.eventInfo.Weekdays[day] + ",";
+        for (var day = 0; day < $scope.tempDateInfo.Weekdays.length; day++) {
+          alldays += $scope.tempDateInfo.Weekdays[day] + ",";
         }
-
         alldays = alldays.substr(0, alldays.length - 1);
-
-        $scope.selectedDateTimeText = "Days (" + alldays + ") Time " + $scope.selectedstartTime.TimeString + " To " + $scope.selectedendTime.TimeString;
+        $scope.selectedDateTimeText = "Days (" + alldays + ") Time " + $scope.tempDateInfo.selectedstartTime.TimeString + " To " + $scope.tempDateInfo.selectedendTime.TimeString;
       }
-      else if (occurence == "Daily") {
-        $scope.selectedDateTimeText = "Daily Time " + $scope.selectedstartTime.TimeString + " To " + $scope.selectedendTime.TimeString;
+      else if ($scope.tempDateInfo.occurence == "Daily") {
+        $scope.selectedDateTimeText = "Daily Time " + $scope.tempDateInfo.selectedstartTime.TimeString + " To " + $scope.tempDateInfo.selectedendTime.TimeString;
       }
       else {
-        var startingDate = ($scope.startingDate.getMonth() + 1) + "/" + $scope.startingDate.getDate() + "/" + $scope.startingDate.getFullYear();
-        var endingDate = ($scope.endingDate.getMonth() + 1) + "/" + $scope.endingDate.getDate() + "/" + $scope.endingDate.getFullYear();
-        $scope.selectedDateTimeText = "Monthly " + startingDate + " " + $scope.selectedstartTime.TimeString + " To " + endingDate + " " + $scope.selectedendTime.TimeString;
+        var startingDate = ($scope.tempDateInfo.startingDate.getMonth() + 1) + "/" + $scope.tempDateInfo.startingDate.getDate() + "/" + $scope.tempDateInfo.startingDate.getFullYear();
+        var endingDate = ($scope.tempDateInfo.endingDate.getMonth() + 1) + "/" + $scope.tempDateInfo.endingDate.getDate() + "/" + $scope.tempDateInfo.endingDate.getFullYear();
+        $scope.selectedDateTimeText = "Monthly " + startingDate + " " + $scope.tempDateInfo.selectedstartTime.TimeString + " To " + endingDate + " " + $scope.tempDateInfo.selectedendTime.TimeString;
       }
-
-
+      if (save)
+        $scope.saveDateTime();
     }
 
     $scope.onCategoryChange = function () {
@@ -155,13 +186,15 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     }
 
     $scope.startDateChange = function () {
-      if ($scope.endingDate < $scope.startingDate)
-        $scope.endingDate = new Date($scope.startingDate.getFullYear(), $scope.startingDate.getMonth(), $scope.startingDate.getDate());
+      if ($scope.tempDateInfo.endingDate < $scope.tempDateInfo.startingDate)
+        $scope.tempDateInfo.endingDate = new Date($scope.stempDateInfo.tartingDate.getFullYear(),
+          $scope.tempDateInfo.startingDate.getMonth(), $scope.tempDateInfo.startingDate.getDate());
     }
 
     $scope.endDateChange = function () {
-      if ($scope.endingDate < $scope.startingDate)
-        $scope.startingDate = new Date($scope.endingDate.getFullYear(), $scope.endingDate.getMonth(), $scope.endingDate.getDate());
+      if ($scope.tempDateInfo.endingDate < $scope.tempDateInfo.startingDate)
+        $scope.tempDateInfo.startingDate = new Date($scope.tempDateInfo.endingDate.getFullYear(),
+          $scope.tempDateInfo.endingDate.getMonth(), $scope.tempDateInfo.endingDate.getDate());
     }
 
     $scope.openGallery = function () {
@@ -247,11 +280,9 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         $scope.organizerEditState = "Edit";
         $scope.OrganizerForm.$setUntouched();
       }
-      console.debug($scope.eventInfo.CurrentOrganizer);
     }
 
     $scope.saveNewOrganizer = function () {
-      console.debug($scope.OrganizerForm.organizerEmail);
       $scope.OrganizerForm.$setSubmitted();
       if (isEmptyOrSpaces($scope.eventInfo.CurrentOrganizer.Orgnizer_Name) || isEmptyOrSpaces($scope.eventInfo.CurrentOrganizer.Organizer_Email))
         return;
@@ -297,17 +328,16 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         org[0].Image.Filename = $scope.eventInfo.CurrentOrganizer.Image.Filename;
         org[0].Image.ImageUrl = $scope.eventInfo.CurrentOrganizer.Image.ImageUrl;
         org[0].Image.ContentType = $scope.eventInfo.CurrentOrganizer.Image.ContentType;
-        console.debug(org[0]);
-        console.debug($scope.eventInfo.CurrentOrganizer);
       };
       $scope.organizerEditState = "Saved";
     }
 
     $scope.getTotalTickets = function () {
       var total = 0;
-      if (($scope.eventInfo != null) && ($scope.eventInfo.TicketList != null))
+      if ($scope.eventInfo && $scope.eventInfo.TicketList)
         $scope.eventInfo.TicketList.forEach(function (t, i, arr) {
-          total = total + parseInt(t.Qty_Available);
+          var val = parseInt(t.Qty_Available);
+          total = total + (isNaN(val) ? 0 : val);
         });
       return total;
     }
@@ -353,11 +383,14 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         T_EcAmount: 0,
         localSaleStartDate: null,
         localSaleEndDate: null,
-        localHideUntillDate: null,
-        localHideAfterDate: null
+        localHideUntilDate: null,
+        localHideAfterDate: null,
+        localSaleStartTime: null,
+        localSaleEndTime: null,
+        localHideUntilTime: null,
+        localHideAfterTime: null
       }
       $scope.onPriceChange(newticket);
-      console.log("add ticket called");
       $scope.eventInfo.TicketList.push(newticket);
     }
 
@@ -373,14 +406,36 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
 
     $scope.onPriceBlur = function (ticket) {
       ticket.Price = (ticket.Price < 0) || isNaN(ticket.Price) ? 0 : ticket.Price > 10000000 ? 9999999 : ticket.Price;
-      ticket.T_Discount = (ticket.T_Discount) || isNaN(ticket.T_Discount) < 0 ? 0 : ticket.T_Discount > ticket.Price ? ticket.Price : ticket.T_Discount;
+      ticket.T_Discount = isNaN(ticket.T_Discount) || (ticket.T_Discount < 0) ? 0 : ticket.T_Discount > ticket.Price ? ticket.Price : ticket.T_Discount;
       $scope.onPriceChange(ticket);
+    }
+
+    $scope.onQtyBlur = function (ticket) {
+      ticket.Qty_Available = isNaN(ticket.Qty_Available) ? 0 : ticket.Qty_Available;
+      console.log(ticket.Qty_Available);
     }
 
     $scope.deleteTicket = function (ticket) {
       var idx = $scope.eventInfo.TicketList.indexOf(ticket);
       if (idx >= 0)
         $scope.eventInfo.TicketList.splice(idx, 1);
+    }
+
+    $scope.onExpandTicketClick = function (ticket, form) {
+      console.debug(form);
+      if (!ticket.expandedOptions) {
+        ticket.expandedOptions = true;
+        return;
+      }
+
+      ticket.ticketValidation = true;
+
+      var hideDatesValid = ((ticket.useUntilDate == 1) && ticket.localHideUntilDate && !form.ticketHideUntilDate.$error.mindate) ||
+        ((ticket.useAfterDate == 1) && ticket.localHideAfterDate && !form.ticketHideAfterDate.$error.mindate);
+
+      ticket.expandedOptions = form.ticketStartDate.$error.mindate ||
+        form.ticketEndDate.$error.mindate ||
+        ((ticket.T_AutoSechduleType == 1) && !hideDatesValid);
     }
 
     $scope.addVarCharge = function () {
@@ -408,7 +463,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
 
     $scope.previewEvent = function () {
       console.debug($scope.eventInfo);
-      console.debug($scope.showDateTimeDialog);
+      console.debug($scope.MainForm.eventType);
     }
 
     $scope.publishEvent = function () {
@@ -417,19 +472,29 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       $scope.sendEvent();
     }
 
+    $scope.getDateTime = function (date, time) {
+      var cDate = date.setMinutes(!time ? 0 : time.Minutes);
+      return formatDateTime(new Date(cDate));
+    }
+
+
     $scope.sendEvent = function () {
-      console.log("Send event called");
+      var elem = $scope.validateEvent();
+      if (!elem.valid) {
+        alert("Form contain invalid data. Please, check all fields.");
+        return;
+      }
       $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
-        ticket.Sale_Start_Date = ticket.localSaleStartDate == null ? null : formatDateTime(ticket.localSaleStartDate);
-        ticket.Sale_End_Date = ticket.localSaleEndDate == null ? null : formatDateTime(ticket.localSaleEndDate);
-        ticket.Hide_Untill_Date = ticket.localHideUntillDate == null ? null : formatDateTime(ticket.localHideUntillDate);
-        ticket.Hide_After_Date = ticket.localHideAfterDate == null ? null : formatDateTime(ticket.localHideAfterDate);
+
+        ticket.Sale_Start_Date = !ticket.localSaleStartDate
+          ? null : $scope.getDateTime(ticket.localSaleStartDate, ticket.localSaleStartTime);
+        ticket.Sale_End_Date = !ticket.localSaleEndDate
+          ? null : $scope.getDateTime(ticket.localSaleEndDate, ticket.localSaleEndTime);
+        ticket.Hide_Untill_Date = !ticket.localHideUntilDate || (ticket.useUntilDate == 0)
+          ? null : $scope.getDateTime(ticket.localHideUntilDate, ticket.localHideUntilTime);
+        ticket.Hide_After_Date = !ticket.localHideAfterDate || (ticket.useAfterDate == 0)
+          ? null : $scope.getDateTime(ticket.localHideAfterDate, ticket.localHideAfterTime);
       });
-      var startingDate = $scope.startingDate.setMinutes($scope.selectedstartTime.Minutes);
-      var endingDate = $scope.endingDate.setMinutes($scope.selectedendTime.Minutes);
-      $scope.eventInfo.DateInfo.Frequency = $scope.occurence;
-      $scope.eventInfo.DateInfo.StartDateTime = formatDateTime(new Date(startingDate));
-      $scope.eventInfo.DateInfo.EndDateTime = formatDateTime(new Date(endingDate));
       $scope.eventInfo.CurrentEventType = null;
       $scope.eventInfo.CurrentEventCategory = null;
       $scope.eventInfo.CurrentEventSubCategory = null;
@@ -445,6 +510,82 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         else
           $window.location.href = link_publish + "?EventId=" + $scope.eventInfo.EventID;
       });
+    }
+
+    $scope.validateEvent = function () {
+      $scope.formValidation = true;
+      elem = {
+        valid: true,
+        messages: []
+      };
+      if (!$scope.MainForm.eventTitle.$valid)
+        elem.valid = false;
+      console.log(elem.valid);
+      if (!$scope.MainForm.eventVenueName.$valid && !$scope.eventInfo.OnlineEvent)
+        elem.valid = false;
+      console.log(elem.valid);
+      if (!$scope.MainForm.eventAddress.$valid && !$scope.eventInfo.OnlineEvent)
+        elem.valid = false;
+      console.log(elem.valid);
+      if (!$scope.checkDateInfo().valid)
+        elem.valid = false;
+      console.log(elem.valid);
+      if (!$scope.eventInfo.EventTypeID)
+        elem.valid = false;
+      console.log(elem.valid);
+      if (!$scope.eventInfo.EventCategoryID)
+        elem.valid = false;
+      console.log(elem.valid);
+      if (!$scope.eventInfo.InternalOrganizerId)
+        elem.valid = false;
+      console.log(elem.valid);
+      if ($scope.eventInfo.TicketList.length == 0)
+        elem.valid = false;
+      console.log(elem.valid);
+      console.log("Start tickets");
+      $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
+        var hideDatesValid = ((ticket.useUntilDate == 1) && ticket.localHideUntilDate && (ticket.localHideUntilDate >= $scope.minDate)) ||
+            ((ticket.useAfterDate == 1) && ticket.localHideAfterDate && (ticket.localHideAfterDate >= $scope.minDate));
+
+        console.log(hideDatesValid);
+        console.log(ticket.localSaleStartDate);
+        console.log($scope.minDate);
+        console.log(ticket.T_name);
+
+        if (!ticket.T_name ||
+            (ticket.T_name.trim().length == 0) ||
+            (ticket.Qty_Available <= 0) ||
+            (ticket.localSaleStartDate && (ticket.localSaleStartDate < $scope.minDate)) ||
+            (ticket.localSaleEndDate && (ticket.localSaleEndDate < $scope.minDate)) ||
+            ((ticket.T_AutoSechduleType == 1) && !hideDatesValid))
+          elem.valid = false;
+        console.log(elem.valid);
+      });
+      return elem;
+    }
+
+    $scope.checkDateInfo = function () {
+      var result = {
+        valid: true,
+        notselected: $scope.eventInfo.DateInfo.IsNewDate,
+        weekdays: ($scope.eventInfo.DateInfo.Frequency == 'Weekly') && ($scope.eventInfo.DateInfo.Weekdays.length == 0),
+        timezone: !$scope.eventInfo.TimeZone,
+      };
+      result.valid = !result.notselected && !result.weekdays && !result.timezone;
+      return result;
+    }
+
+    $scope.checkTempDateInfo = function () {
+      var result = {
+        valid: true,
+        notselected: $scope.tempDateInfo.IsNewDate,
+        weekdays: ($scope.tempDateInfo.occurence == 'Weekly') && ($scope.tempDateInfo.Weekdays.length == 0),
+        timezone: !$scope.tempDateInfo.TimeZone,
+        singleDates: ($scope.tempDateInfo.occurence == 'Single') && (!$scope.MainForm.singleStartDate.$valid || !$scope.MainForm.singleEndDate.$valid),
+        multiDates: ($scope.tempDateInfo.occurence == 'Monthly') && (!$scope.MainForm.multiStartDate.$valid || !$scope.MainForm.multiEndDate.$valid),
+      };
+      result.valid = !result.notselected && !result.weekdays && !result.timezone && !result.singleDates && !result.multiDates;
+      return result;
     }
 
     $scope.UploadFiles = function (files, callback) {
@@ -465,7 +606,6 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       var data = {
         json: angular.toJson(image)
       };
-      console.debug(data);
       $http.post('/imageAPI/DeleteImage', data).then(function (response) {
       });
     }
@@ -474,12 +614,12 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       var files = event.target.files;
 
       $scope.UploadFiles(files, function (images) {
-        if ((images != null) && (images.length > 0)) {
+        if (images && (images.length > 0)) {
           var oldimage = null;
           if ($scope.eventInfo.BGImage.ImageUrl)
             oldimage = $scope.eventInfo.BGImage;
           $scope.eventInfo.BGImage = images[0];
-          if (oldimage != null)
+          if (oldimage)
             $scope.DeleteFile(oldimage);
         }
       });
@@ -500,7 +640,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       var files = event.target.files;
 
       $scope.UploadFiles(files, function (images) {
-        if ((images != null) && (images.length > 0)) {
+        if (images && (images.length > 0)) {
           Array.prototype.push.apply($scope.eventInfo.EventImages, images);
         }
       });
@@ -510,25 +650,23 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       var files = event.target.files;
 
       $scope.UploadFiles(files, function (images) {
-        if ((images != null) && (images.length > 0)) {
+        if (images && (images.length > 0)) {
           var oldimage = null;
-          if (($scope.eventInfo.CurrentOrganizer.Image != null) && ($scope.eventInfo.CurrentOrganizer.Image.ImageUrl))
+          if ($scope.eventInfo.CurrentOrganizer.Image && ($scope.eventInfo.CurrentOrganizer.Image.ImageUrl))
             oldimage = $scope.eventInfo.CurrentOrganizer.Image;
           $scope.eventInfo.CurrentOrganizer.Image = images[0];
-          if (oldimage != null)
+          if (oldimage)
             $scope.DeleteFile(oldimage);
         }
       });
     }
 
     $scope.deleteOrganizerImage = function () {
-      console.debug($scope.eventInfo.CurrentOrganizer.Image);
       $scope.clearImage($scope.eventInfo.CurrentOrganizer.Image);
-      console.debug($scope.eventInfo.CurrentOrganizer.Image);
     }
 
     $scope.clearImage = function (image) {
-      if (image != null) {
+      if (image) {
         if (image.ImageUrl)
           $scope.DeleteFile(image);
         image.Filename = "";
@@ -569,7 +707,7 @@ createEventApp.directive('numbersOnly', function () {
           }
           return transformedInput;
         }
-        return undefined;
+        return number;
       }
       ngModelCtrl.$parsers.push(fromUser);
     }
@@ -623,6 +761,19 @@ createEventApp.controller('CreateEventHeaderController', ['$scope', function ($s
   }
 }]);
 
+createEventApp.directive('positiveValidation', function () {
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function ($scope, $element, $attrs, ngModel) {
+      ngModel.$validators.positive = function (modelValue) {
+        var val = parseInt(modelValue);
+        return isNaN(val) ? false : val > 0 ? true : false;
+      };
+    }
+  };
+});
+
 createEventApp.directive('dragDropElements', function ($compile) {
   return {
     restrict: 'A',
@@ -639,7 +790,6 @@ createEventApp.directive('dragDropElements', function ($compile) {
       scope.element.on('dragstart', function (event) {
 
         dragSrcEl = element;
-        console.log(dragSrcEl);
         scope.handleDragObjReference1 = false;
         scope.handleDragObjReference2 = true;
         scope.handleDragObjReference3 = false;
@@ -649,7 +799,6 @@ createEventApp.directive('dragDropElements', function ($compile) {
       });
 
       scope.element.on('dragover', function (event) {
-        console.log('flag:dragover');
 
         if (event.preventDefault) {
           event.preventDefault();
@@ -660,9 +809,6 @@ createEventApp.directive('dragDropElements', function ($compile) {
       });
 
       scope.element.on('drop', function (event) {
-        console.log("Drop Element: ", element);
-        console.log('flag:drop');
-        console.log(element);
         {
           dragSrcEl.html(element.html());
           element.html(event.originalEvent.dataTransfer.getData('text/html'));
