@@ -14,7 +14,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     });
 
     $scope.organiserInfo = [];
-
+    $scope.tempDateInfo = {};
     $scope.isPrivateEvent = false;
     $scope.includeSocial = 0;
     $scope.minDate = new Date();
