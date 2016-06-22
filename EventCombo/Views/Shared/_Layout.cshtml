@@ -7,8 +7,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="google-site-verification" content="AVZo78i_QGE67vJiD4QYO1HGWeTACG5zleYqEh-i6KI" />
+  @RenderSection("SeoMeta", false)
   @if (ViewBag.FBUrl != null)
     {
     <meta property="og:url" content="@ViewBag.FBUrl" />
@@ -17,7 +17,15 @@
     <meta property="og:description" content="@ViewBag.FBDescription" />
     <meta property="og:image" content="@ViewBag.FBImage" />
     }
-  <link rel="icon" href="javascript:void(0)">
+     <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+    <link href="~/Images/FabIcon/ios-57x57.png" rel="apple-touch-icon" />
+    <link href="~/Images/FabIcon/ios-76x76.png" rel="apple-touch-icon" sizes="76x76" />
+    <link href="~/Images/FabIcon/ios-120x120.png" rel="apple-touch-icon" sizes="120x120" />
+    <link href="~/Images/FabIcon/ios-152x152.png" rel="apple-touch-icon" sizes="152x152" />
+    <link href="~/Images/FabIcon/ios-180x180.png" rel="apple-touch-icon" sizes="180x180" />
+    <link href="~/Images/FabIcon/android-192x192.png" rel="icon" sizes="192x192" />
+    <link href="~/Images/FabIcon/android-128x128.png" rel="icon" sizes="128x128" />
+
   <title>@(ViewBag.Title ?? "Eventcombo")</title>
   <!-- Bootstrap core CSS -->
   <link href="~/Content/bootstrap.css" rel="stylesheet" />

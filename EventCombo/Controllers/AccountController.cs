@@ -973,7 +973,7 @@ namespace EventCombo.Controllers
               }
               else
               {
-                from = ConfigurationManager.AppSettings.Get("UserName");
+                from = ConfigurationManager.AppSettings.Get("DefaultEmail"); //ConfigurationManager.AppSettings.Get("UserName");
 
            }
 
@@ -1046,9 +1046,9 @@ namespace EventCombo.Controllers
               }
               else
               {
-                from = ConfigurationManager.AppSettings.Get("UserName");
+                from = ConfigurationManager.AppSettings.Get("DefaultEmail"); //ConfigurationManager.AppSettings.Get("UserName");
 
-             }
+                            }
               if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
               {
                 emailname = Emailtemplate.From_Name;
@@ -1117,7 +1117,7 @@ namespace EventCombo.Controllers
               }
               else
               {
-                from = ConfigurationManager.AppSettings.Get("UserName");
+                from = ConfigurationManager.AppSettings.Get("DefaultEmail"); //ConfigurationManager.AppSettings.Get("UserName");
 
                             }
               if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
@@ -1192,9 +1192,9 @@ namespace EventCombo.Controllers
               }
               else
               {
-                from = ConfigurationManager.AppSettings.Get("UserName");
+                from = ConfigurationManager.AppSettings.Get("DefaultEmail"); //ConfigurationManager.AppSettings.Get("UserName");
 
-            }
+                            }
               if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
               {
                 emailname = Emailtemplate.From_Name;
