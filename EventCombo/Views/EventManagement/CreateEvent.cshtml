@@ -8,9 +8,9 @@
 }
 
 <style type="text/css">
-     md-input-container:not(.md-input-invalid).md-input-has-value label {
+  md-input-container:not(.md-input-invalid).md-input-has-value label {
     color: rgb(0, 202, 253) !important;
-}
+  }
 
   .gallery-close-btn {
     position: absolute;
@@ -59,12 +59,12 @@
 
 <div id="createEventContainer" ng-controller="CreateEventController" ng-cloak>
   <div>
-      <div class="headerCEHead createEvent">Create Event</div>
-      <div class="headerCEHeadBtn topButtons">
-          <a href="javascript:void(0);" class="btnSaveHeadCE" ng-click="saveEvent()">SAVE</a>
-          <a href="javascript:void(0);" class="btnPreviewHeadCE" ng-click="previewEvent()">PREVIEW</a>
-          <a href="javascript:void(0);" class="btnMakeLiveHeadCE" ng-click="publishEvent()">MAKE LIVE NOW</a>
-      </div>
+    <div class="headerCEHead createEvent">Create Event</div>
+    <div class="headerCEHeadBtn topButtons">
+      <a href="javascript:void(0);" class="btnSaveHeadCE" ng-click="saveEvent()">SAVE</a>
+      <a href="javascript:void(0);" class="btnPreviewHeadCE" ng-click="previewEvent()">PREVIEW</a>
+      <a href="javascript:void(0);" class="btnMakeLiveHeadCE" ng-click="publishEvent()">MAKE LIVE NOW</a>
+    </div>
     <div ng-show="eventInfo.ErrorEvent">
       <div ng-repeat="message in eventInfo.ErrorMessages">
         <span>{{message}}</span>
@@ -73,59 +73,75 @@
     <div class="eventDetailContainer" style="background-image: url({{eventInfo.BGImage.ImageUrl}}); background-size: 100% 100%; background-color: {{eventInfo.BackgroundColor}};">
       <div class="EDConInner">
         <div class="col-md-12 EDWebsiteUrlHead">
-          
-            <div class="color_pick" style="float:right; margin-right: 15px;">
-                <color-picker ng-model="eventInfo.BackgroundColor"
-                              color-picker-disabled="false"
-                              color-picker-format="'hex'"
-                              color-picker-alpha="true"
-                              color-picker-swatch="true"
-                              color-picker-swatch-pos="left"
-                              color-picker-swatch-bootstrap="true"
-                              color-picker-swatch-only="true"
-                              color-picker-pos="'bottom'"
-                              color-picker-case="'lower'"
-                              color-picker-inline="false"
-                              color-picker-on-change="onBGColorChange()"></color-picker>
-            </div>
-            <span style="float: right;margin-right: 10px; cursor: pointer;" ng-click="callImageClick('bannerImage'); $event.stopPropagation();" class="noOutline designBanner">Design your Banner<i class="material-icons bannerPic" style="margin-left: 10px;color: #858585;">add_a_photo</i><input type="file" name="bannerimage" id="bannerImage" accept="image/*" style="display: none;" custom-on-change="uploadBGImage" /></span>
 
-            <div class="URLDiv" style="display:inline-block; ">
+          <div class="color_pick" style="float:right; margin-right: 15px;">
+            <color-picker ng-model="eventInfo.BackgroundColor"
+                          color-picker-disabled="false"
+                          color-picker-format="'hex'"
+                          color-picker-alpha="true"
+                          color-picker-swatch="true"
+                          color-picker-swatch-pos="left"
+                          color-picker-swatch-bootstrap="true"
+                          color-picker-swatch-only="true"
+                          color-picker-pos="'bottom'"
+                          color-picker-case="'lower'"
+                          color-picker-inline="false"
+                          color-picker-on-change="onBGColorChange()"></color-picker>
+          </div>
+          <span style="float: right;margin-right: 10px; cursor: pointer;" ng-click="callImageClick('bannerImage'); $event.stopPropagation();" class="noOutline designBanner">Design your Banner<i class="material-icons bannerPic" style="margin-left: 10px;color: #858585;">add_a_photo</i><input type="file" name="bannerimage" id="bannerImage" accept="image/*" style="display: none;" custom-on-change="uploadBGImage" /></span>
+
+          <div class="URLDiv" style="display:inline-block; ">
             <md-input-container>
               <label class="websiteURLTxtLblCls">Enter Unique URL</label>
-                <input class="websiteURLTxtboxCls" ng-model="eventInfo.EventUrl" name="url" required="" />
-                <div ng-messages="{'required':!url}">
-                    <div ng-message="required">This is required.</div>
-                </div>
+              <input class="websiteURLTxtboxCls" ng-model="eventInfo.EventUrl" name="url" required="" />
+              <div ng-messages="{'required':!url}">
+                <div ng-message="required">This is required.</div>
+              </div>
             </md-input-container>
-                <span class="websiteUrlEnd eventcombo_com">.eventcombo.com</span>
+            <span class="websiteUrlEnd eventcombo_com">.eventcombo.com</span>
 
           </div>
-         
+
         </div>
 
         <div class="eventDetailTxtFields" style="opacity: 0.8;">
           <div class="eventDtkHeadCon">
             <div class="EDTxtEventName">
-                <textarea ng-model="eventInfo.EventTitle" placeholder="Enter the name of your event here" class="EDTxtENTxtBox textAreaHeight" name="eventName"
-                    ng-minlength="1" ng-maxlength="10" required>
-                </textarea>
+              <textarea ng-model="eventInfo.EventTitle" name="eventTitle" id="eventTitle" placeholder="Enter the name of your event here" class="EDTxtENTxtBox textAreaHeight" required ng-maxlength="256"></textarea>
+              <div ng-messages="MainForm.eventTitle.$error" class="validation-standard-messages" ng-show="MainForm.eventTitle.$touched || !MainForm.eventTitle.$pristine || formValidation">
+                <div ng-message="required">Event name is required.</div>
+                <div ng-message="maxlength">Maximum length of event name is 256 characters.</div>
+              </div>
             </div>
 
-            <div class="EDTxtVenueName">
-                <textarea ng-model="eventInfo.VenueName" placeholder="Enter the venue name here" class="EDTxtVNTxtBox textAreaHeight" required="" name="venueName"></textarea>
-                
+            <div class="EDTxtVenueName" ng-show="!eventInfo.OnlineEvent">
+              <textarea ng-model="eventInfo.VenueName" placeholder="Enter the venue name here" name="eventVenueName" class="EDTxtVNTxtBox textAreaHeight" required ng-maxlength="256"></textarea>
+              <div ng-messages="MainForm.eventVenueName.$error" class="validation-standard-messages" ng-show="MainForm.eventVenueName.$touched || !MainForm.eventVenueName.$pristine || formValidation">
+                <div ng-message="required">Event venue name is required.</div>
+                <div ng-message="maxlength">Maximum length of event name is 256 characters.</div>
+              </div>
             </div>
 
-            <div class="EDTxtVenueAddress">
+            <div class="EDTxtVenueAddress" ng-show="!eventInfo.OnlineEvent">
               <i class="material-icons" style="position:absolute;">place</i>
-              <input type="text" ng-model="eventInfo.Address" placeholder="Enter venue address" class="EDTxtVATxtBox" googleplace required="" name="address" />
-                
+              <input type="text" ng-model="eventInfo.Address" name="eventAddress" placeholder="Enter venue address" class="EDTxtVATxtBox" googleplace required />
+              <div ng-messages="MainForm.eventAddress.$error" class="validation-standard-messages" ng-show="MainForm.eventAddress.$touched || formValidation">
+                <div ng-message="required">Event address is required.</div>
+              </div>
             </div>
 
             <div class="EDTxtEventDateTime">
               <i class="material-icons" style="position:absolute;">query_builder</i>
-                <span class="pickuptimeTxt noOutline" ng-click="showDateTimeDialog = true">{{selectedDateTimeText}}</span>
+              <span class="pickuptimeTxt noOutline" ng-click="onShowDateTimeDialog(true)">{{selectedDateTimeText}}</span>
+              <div class="validation-standard-messages" ng-show="(dateInfoTouched  || formValidation) && (checkDateInfo().notselected) && !showDateTimeDialog">
+                You need to select date and time for event.
+              </div>
+              <div class="validation-standard-messages" ng-show="(dateInfoTouched  || formValidation) && (checkDateInfo().timezone) && !showDateTimeDialog">
+                You need to select timezone for event.
+              </div>
+              <div class="validation-standard-messages" ng-show="(dateInfoTouched  || formValidation) && (checkDateInfo().weekdays) && !showDateTimeDialog">
+                You need to select weekdays for event.
+              </div>
             </div>
           </div>
 
@@ -142,143 +158,163 @@
         </div>
 
         <div aria-label="Pick the date here" class="pickupDateContainer" ng-show="showDateTimeDialog">
-          <form>
-            <md-toolbar>
-              <div class="md-toolbar-tools dialogheader">
-                <h2>
-                  <i class="material-icons" style="position: absolute; top: 20px;">query_builder</i>
-                  <span style="padding-left: 30px;">Pick the date here</span>
-                </h2>
-                <span flex></span>
-                <md-button class="md-icon-button" ng-click="showDateTimeDialog = false;">
-                  <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
-                </md-button>
-              </div>
-            </md-toolbar>
-            <div>
-              <md-tabs md-dynamic-height md-border-bottom md-selected="dateTab">
-                <md-tab label="SINGLE EVENT">
-                  <md-content class="md-padding">
-                    <div class="firstdiv">
-                      <div class="datediv">
-                          <div class="date-picker-row" flex-gt-sm >
-                              <label>Start Date</label>
-                              <md-datepicker ng-model="startingDate" ng-change="startDateChange();"></md-datepicker>
-                          </div>
-                              <md-input-container style="margin-right: 10px; margin-left: 20px;">
-
-                                  <md-select ng-model="selectedstartTime">
-                                      <md-option ng-repeat="startTime in eventInfo.DateInfo.TimeList" ng-value="startTime">{{startTime.TimeString}}</md-option>
-                                  </md-select>
-                              </md-input-container>
-</div>
-                    </div>
-                    <div class="seconddiv">
-                        <div class="date-picker-row" flex-gt-sm>
-                            <label>End Date</label>
-                            <md-datepicker ng-model="endingDate" ng-change="endDateChange();"></md-datepicker>
-                         </div>
-                               <md-input-container style="margin-right: 10px; margin-left: 20px;">
-
-                                <md-select ng-model="selectedendTime">
-                                    <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
-                                </md-select>
-                            </md-input-container>
-                        </div>
-                    <div class="thirddiv" style="float: left;">
-                      <md-input-container style="margin-right: 10px;">
-                        <label>Time Zone</label>
-                        <md-select ng-model="eventInfo.TimeZone">
-                          <md-option ng-repeat="tzone1 in eventInfo.TimeZones" ng-value="tzone1.TimeZoneId">{{tzone1.TimeZoneName}}</md-option>
-                        </md-select>
-                      </md-input-container>
-                    </div>
-                  </md-content>
-
-                  <div layout="row">
-
-                    <span flex></span>
-                    <md-button ng-click="showDateTimeDialog = false;" style="color: #888; font-weight: bold;">
-                      CANCEL
-                    </md-button>
-                    <md-button ng-click="showDates();" style="margin-right:20px; color: rgb(63,81,181); font-weight: bold;">
-                      DONE
-                    </md-button>
-                  </div>
-                </md-tab>
-                <md-tab label="MULTIPLE EVENT">
-                  <md-content class="md-padding">
-                    <div class="firstdiv second-tab" style="padding: 0px 30px;width: 200px;">
-                      <md-input-container style="margin-right: 10px;">
-                        <label>Occurence</label>
-                        <md-select ng-model="occurence">
-                          <md-option ng-repeat="occ in occurences" ng-value="occ">{{occ}}</md-option>
-                        </md-select>
-                      </md-input-container>
-
-                    </div>
-                    <div class="seconddiv second-tab">
-                      <div class="datediv" style="margin-top: 13px;margin-left: 30px" ng-show="occurence == 'Monthly'">
-                          <div class="date-picker-row" flex-gt-sm>
-                              <label>Start Date</label>
-                              <md-datepicker ng-model="startingDate" ng-change="startDateChange();"></md-datepicker>
-                              </div>
-                          <div class="date-picker-row" flex-gt-sm>
-                              <label>End Date</label>
-                              <md-datepicker ng-model="endingDate" ng-change="endDateChange();"></md-datepicker>
-    </div>
-                                                </div>
-
-                      <div class="weekdiv" style="margin-left:57px;" ng-show="occurence == 'Weekly'">
-                        <md-input-container style=" margin-right 10px;">
-                          <label>Week Days</label>
-                          <md-select multiple ng-model="eventInfo.Weekdays">
-                            <md-option ng-repeat="day in weekdays" value="{{day}}">{{day}}</md-option>
-                          </md-select>
-                        </md-input-container>
-                      </div>
-                      <div class="time-div" ng-show="occurence != 'Single'">
-                        <md-input-container flex-gt-md=" 30">
-                          <label>Start time</label>
-                          <md-select ng-model="selectedstartTime">
-                            <md-option ng-repeat="starttime in eventInfo.DateInfo.TimeList" ng-value="starttime">{{starttime.TimeString}}</md-option>
-                          </md-select>
-                        </md-input-container>
-                        <md-input-container style="margin-left: 80px;" class="weeklyEndTime">
-                          <label>End time</label>
-                          <md-select ng-model="selectedendTime">
-                            <md-option ng-repeat="time in eventInfo.DateInfo.TimeList" ng-value="time">{{time.TimeString}}</md-option>
-                          </md-select>
-                        </md-input-container>
-                      </div>
-                      <div class="time-zone" ng-show="occurence != 'Single'">
-                        <md-input-container style=" margin-right:10px;">
-                          <label>Time Zone</label>
-                          <md-select ng-model="eventInfo.TimeZone">
-                            <md-option ng-repeat="tzone2 in eventInfo.TimeZones" ng-value="tzone2.TimeZoneId">{{tzone2.TimeZoneName}}</md-option>
-                          </md-select>
-                        </md-input-container>
-                      </div>
-                    </div>
-
-                  </md-content>
-
-                  <div layout="row">
-
-                    <span flex></span>
-                    <md-button ng-click="showDateTimeDialog = false;" style="color: #888; font-weight: bold;">
-                      CANCEL
-                    </md-button>
-                    <md-button ng-click="showMultipleDates();" style="margin-right:20px; color: rgb(63,81,181); font-weight: bold;">
-                      DONE
-                    </md-button>
-                  </div>
-                </md-tab>
-
-              </md-tabs>
+          <md-toolbar>
+            <div class="md-toolbar-tools dialogheader">
+              <h2>
+                <i class="material-icons" style="position: absolute; top: 20px;">query_builder</i>
+                <span style="padding-left: 30px;">Pick the date here</span>
+              </h2>
+              <span flex></span>
+              <md-button class="md-icon-button" ng-click="showDateTimeDialog = false; dateInfoTouched = true; ">
+                <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+              </md-button>
             </div>
+          </md-toolbar>
+          <div>
+            <md-tabs md-dynamic-height md-border-bottom md-selected="dateTab">
+              <md-tab label="SINGLE EVENT">
+                <md-content class="md-padding">
+                  <div class="firstdiv">
+                    <div class="datediv">
+                      <div class="date-picker-row" flex-gt-sm>
+                        <label>Start Date</label>
+                        <md-datepicker name="singleStartDate" ng-model="tempDateInfo.startingDate"
+                                       ng-change="startDateChange();" md-min-date="minDate"></md-datepicker>
+                        <div class="validation-datepicker-messages" ng-messages="MainForm.singleStartDate.$error">
+                          <div ng-message="mindate">Date is too early.</div>
+                        </div>
+                      </div>
+                      <md-input-container style="margin-right: 10px; margin-left: 20px;">
+                        <md-select ng-model="tempDateInfo.selectedstartTime">
+                          <md-option ng-repeat="startTime in eventInfo.DateInfo.TimeList" ng-value="startTime">{{startTime.TimeString}}</md-option>
+                        </md-select>
+                      </md-input-container>
+                    </div>
+                  </div>
+                  <div class="seconddiv">
+                    <div class="date-picker-row" flex-gt-sm>
+                      <label>End Date</label>
+                      <md-datepicker name="singleEndDate" ng-model="tempDateInfo.endingDate"
+                                     ng-change="endDateChange();" md-min-date="minDate"></md-datepicker>
+                      <div class="validation-datepicker-messages" ng-messages="MainForm.singleEndDate.$error">
+                        <div ng-message="mindate">Date is too early.</div>
+                      </div>
+                    </div>
+                    <md-input-container style="margin-right: 10px; margin-left: 20px;">
+                      <md-select ng-model="tempDateInfo.selectedendTime">
+                        <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
+                      </md-select>
+                    </md-input-container>
+                  </div>
+                  <div class="thirddiv" style="float: left;">
+                    <md-input-container style="margin-right: 10px;">
+                      <label>Time Zone</label>
+                      <md-select ng-model="tempDateInfo.TimeZone">
+                        <md-option ng-repeat="tzone1 in eventInfo.TimeZones" ng-value="tzone1.TimeZoneId">{{tzone1.TimeZoneName}}</md-option>
+                      </md-select>
+                      <div class="validation-standard-messages" ng-show="(dateInfoTouched  || formValidation) && !tempDateInfo.TimeZone">
+                        You need to select timezone for event.
+                      </div>
+                    </md-input-container>
+                  </div>
+                </md-content>
 
-          </form>
+                <div layout="row">
+
+                  <span flex></span>
+                  <md-button ng-click="showDateTimeDialog = false; dateInfoTouched = true; " style="color: #888; font-weight: bold;">
+                    CANCEL
+                  </md-button>
+                  <md-button ng-click="showDates(true);" style="margin-right:20px; color: rgb(63,81,181); font-weight: bold;">
+                    DONE
+                  </md-button>
+                </div>
+              </md-tab>
+              <md-tab label="MULTIPLE EVENT">
+                <md-content class="md-padding">
+                  <div class="firstdiv second-tab" style="padding: 0px 30px;width: 200px;">
+                    <md-input-container style="margin-right: 10px;">
+                      <label>Occurence</label>
+                      <md-select ng-model="tempDateInfo.occurence">
+                        <md-option ng-repeat="occ in occurences" ng-value="occ">{{occ}}</md-option>
+                      </md-select>
+                    </md-input-container>
+
+                  </div>
+                  <div class="seconddiv second-tab">
+                    <div class="datediv" style="margin-top: 13px;margin-left: 30px" ng-show="tempDateInfo.occurence == 'Monthly'">
+                      <div class="date-picker-row" flex-gt-sm>
+                        <label>Start Date</label>
+                        <md-datepicker name="multiStartDate" ng-model="tempDateInfo.startingDate"
+                                       ng-change="startDateChange();" md-min-date="minDate"></md-datepicker>
+                        <div class="validation-datepicker-messages" ng-messages="MainForm.multiStartDate.$error">
+                          <div ng-message="mindate">Date is too early.</div>
+                        </div>
+                      </div>
+                      <div class="date-picker-row" flex-gt-sm>
+                        <label>End Date</label>
+                        <md-datepicker name="multiEndDate" ng-model="tempDateInfo.endingDate"
+                                       ng-change="endDateChange();" md-min-date="minDate"></md-datepicker>
+                        <div class="validation-datepicker-messages" ng-messages="MainForm.multiEndDate.$error">
+                          <div ng-message="mindate">Date is too early.</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="weekdiv" style="margin-left:57px;" ng-show="tempDateInfo.occurence == 'Weekly'">
+                      <md-input-container style=" margin-right 10px;">
+                        <label>Week Days</label>
+                        <md-select multiple ng-model="tempDateInfo.Weekdays">
+                          <md-option ng-repeat="day in weekdays" value="{{day}}">{{day}}</md-option>
+                        </md-select>
+                        <div class="validation-standard-messages" ng-show="(dateInfoTouched  || formValidation) && (tempDateInfo.Weekdays.length == 0)">
+                          You need to select weekdays for event.
+                        </div>
+                      </md-input-container>
+                    </div>
+                    <div class="time-div" ng-show="tempDateInfo.occurence != 'Single'">
+                      <md-input-container flex-gt-md=" 30">
+                        <label>Start time</label>
+                        <md-select ng-model="tempDateInfo.selectedstartTime">
+                          <md-option ng-repeat="starttime in eventInfo.DateInfo.TimeList" ng-value="starttime">{{starttime.TimeString}}</md-option>
+                        </md-select>
+                      </md-input-container>
+                      <md-input-container style="margin-left: 80px;" class="weeklyEndTime">
+                        <label>End time</label>
+                        <md-select ng-model="tempDateInfo.selectedendTime">
+                          <md-option ng-repeat="time in eventInfo.DateInfo.TimeList" ng-value="time">{{time.TimeString}}</md-option>
+                        </md-select>
+                      </md-input-container>
+                    </div>
+                    <div class="time-zone" ng-show="tempDateInfo.occurence != 'Single'">
+                      <md-input-container style=" margin-right:10px;">
+                        <label>Time Zone</label>
+                        <md-select ng-model="tempDateInfo.TimeZone">
+                          <md-option ng-repeat="tzone2 in eventInfo.TimeZones" ng-value="tzone2.TimeZoneId">{{tzone2.TimeZoneName}}</md-option>
+                        </md-select>
+                        <div class="validation-standard-messages" ng-show="(dateInfoTouched  || formValidation) && !tempDateInfo.TimeZone">
+                          You need to select timezone for event.
+                        </div>
+                      </md-input-container>
+                    </div>
+                  </div>
+
+                </md-content>
+
+                <div layout="row">
+
+                  <span flex></span>
+                  <md-button ng-click="showDateTimeDialog = false; dateInfoTouched = true;" style="color: #888; font-weight: bold;">
+                    CANCEL
+                  </md-button>
+                  <md-button ng-click="showMultipleDates(true);" style="margin-right:20px; color: rgb(63,81,181); font-weight: bold;">
+                    DONE
+                  </md-button>
+                </div>
+              </md-tab>
+
+            </md-tabs>
+          </div>
         </div>
       </div>
     </div>
@@ -295,19 +331,25 @@
 
           <md-input-container style="margin-right: 10px;">
             <label>Type Of event</label>
-            <md-select ng-model="eventInfo.EventTypeID">
+            <md-select ng-model="eventInfo.EventTypeID" name="eventType" ng-required="true">
               <md-option ng-repeat="etype in eventInfo.EventTypeList" value="{{etype.EventTypeId}}">{{etype.EventType}}</md-option>
             </md-select>
+            <div class="validation-standard-messages" ng-show="(MainForm.eventType.$touched  || formValidation) && (eventInfo.EventTypeID == 0)">
+              You need to select type of event.
+            </div>
           </md-input-container>
 
           <md-input-container style="margin-right: 10px;">
             <label>Category</label>
-            <md-select ng-model="eventInfo.EventCategoryID" class="paras" ng-change="onCategoryChange();">
+            <md-select ng-model="eventInfo.EventCategoryID" class="paras" name="eventCategory" ng-change="onCategoryChange();" required>
               <md-option ng-repeat="category in eventInfo.EventCategoryList" value="{{category.EventCategoryId}}">{{category.EventCategory}}</md-option>
             </md-select>
+            <div class="validation-standard-messages" ng-show="(MainForm.eventCategory.$touched  || formValidation) && (eventInfo.EventCategoryID == 0)">
+              You need to select category of event.
+            </div>
           </md-input-container>
 
-          <md-input-container style="margin-right: 10px;">
+          <md-input-container style="margin-right: 10px;" ng-show="(subCategories!=null) && (subCategories.length>0)">
             <label>Subcategory</label>
             <md-select ng-model="eventInfo.EventSubCategoryID" class="paras">
               <md-option ng-repeat="subcat in subCategories" value="{{subcat.EventSubCategoryId}}">{{subcat.EventSubCategory}}</md-option>
@@ -315,7 +357,7 @@
           </md-input-container>
 
           <span style="float: right; text-transform:uppercase; cursor: pointer; display: block;" ng-click="callImageClick('tellusImage'); $event.stopPropagation();" class="noOutline defaultFilter">
-            <span style="display: inline-block;float: left;padding-right: 15px;">Have a filter?upload it here</span>
+            <span style="display: inline-block;float: left;padding-right: 15px;">Have a flyer? Upload it here</span>
             <i class="material-icons" style="margin-left: -10px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">add_a_photo</i>
             <input type="file" name="tellusimage" id="tellusImage" accept="image/*" style="display: none;" custom-on-change="uploadEventImage" />
           </span>
@@ -328,11 +370,11 @@
         </div>
         <div style="height: 150px;">
           <div style="margin-top: 10px; float: right;">
-              <span style="text-transform:uppercase; cursor: pointer;display: none;" ng-click="callImageClick('tellusImage'); $event.stopPropagation();" class="noOutline responsiveFilter">
-                  <span style="display: inline-block;float: left;padding-right: 15px;">Have a filter?upload it here</span>
-                  <i class="material-icons" style="margin-left: -10px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">add_a_photo</i>
-                  <input type="file" name="tellusimage" id="tellusImage" accept="image/*" style="display: none;" custom-on-change="uploadEventImage" />
-              </span>
+            <span style="text-transform:uppercase; cursor: pointer;display: none;" ng-click="callImageClick('tellusImage'); $event.stopPropagation();" class="noOutline responsiveFilter">
+              <span style="display: inline-block;float: left;padding-right: 15px;">Have a filter?upload it here</span>
+              <i class="material-icons" style="margin-left: -10px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">add_a_photo</i>
+              <input type="file" name="tellusimage" id="tellusImage" accept="image/*" style="display: none;" custom-on-change="uploadEventImage" />
+            </span>
             <span style="float: right" class="wholegallery">
               <span style="display: inline-block;float: left;padding-right: 31px;">A Whole Gallery? Sure!</span>
               <i data-ng-click='openGallery()' class="material-icons" style="cursor:pointer;margin-left: -25px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">collections</i>
@@ -366,9 +408,12 @@
         <div class="organiserDiv md-padding">
           <md-input-container style="margin-right: 10px;">
             <label>Select Organizer</label>
-            <md-select ng-model="eventInfo.InternalOrganizerId">
+            <md-select ng-model="eventInfo.InternalOrganizerId" name="selectOrganizer" required>
               <md-option ng-repeat="org in eventInfo.OrganizerList" value="{{org.InternalId}}">{{org.Orgnizer_Name}}</md-option>
             </md-select>
+            <div class="validation-standard-messages" ng-show="(MainForm.selectOrganizer.$touched || formValidation) && (parseInt(eventInfo.InternalOrganizerId) > 0)">
+              You need to add at least one organizer.
+            </div>
           </md-input-container>
           <md-button class="md-raised addTicketBtnCls" style="float:unset !important;" ng-click="editOrganiser();">
             Edit
@@ -376,69 +421,78 @@
         </div>
 
         <div class="newOrganizer" ng-show="(organizerEditState == 'Edit') || (organizerEditState == 'Add')">
-          <md-input-container>
-            <label class="organizerText">Organizer Name</label>
-            <input class="websiteURLTxtboxCls1" ng-model="eventInfo.CurrentOrganizer.Orgnizer_Name" />
-          </md-input-container>
+          <ng-form name="OrganizerForm">
+            <md-input-container>
+              <label class="organizerText">Organizer Name</label>
+              <input class="websiteURLTxtboxCls1" name="organizerName" ng-model="eventInfo.CurrentOrganizer.Orgnizer_Name" required />
+              <div ng-messages="OrganizerForm.organizerName.$error" ng-show="OrganizerForm.organizerName.$touched">
+                <div ng-message="required">Organizer name is required.</div>
+              </div>
+            </md-input-container>
 
-          <md-input-container>
-            <label class="organizerText">Organizer Email</label>
-            <input class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_Email" />
-          </md-input-container>
+            <md-input-container>
+              <label class="organizerText">Organizer Email</label>
+              <input type="email" name="organizerEmail" class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_Email" required="Organizer e-mail is required" />
+              <div ng-messages="OrganizerForm.organizerEmail.$error"
+                   ng-show="(OrganizerForm.organizerEmail.$error.email || OrganizerForm.organizerEmail.$error.required) && OrganizerForm.organizerEmail.$touched">
+                <div ng-message="required">Organizer email is required.</div>
+                <div ng-message="email">This field must be a valid email address.</div>
+              </div>
+            </md-input-container>
 
-          <div class="tellus_pics" style="float: right;" ng-show="eventInfo.CurrentOrganizer.Image.ImageUrl">
-            <i class="material-icons closeIconImage" ng-click="deleteOrganizerImage()" style="cursor:pointer;">clear</i>
-            <img src="{{eventInfo.CurrentOrganizer.Image.ImageUrl}}" style="height:100px; width: 100px" />
-          </div>
+            <div class="tellus_pics" style="float: right;" ng-show="eventInfo.CurrentOrganizer.Image.ImageUrl">
+              <i class="material-icons closeIconImage" ng-click="deleteOrganizerImage()" style="cursor:pointer;">clear</i>
+              <img src="{{eventInfo.CurrentOrganizer.Image.ImageUrl}}" style="height:100px; width: 100px" />
+            </div>
             <div class="More">
-                <textarea class="textArea" ui-tinymce="tinymceOptions" ng-model="eventInfo.CurrentOrganizer.Organizer_Desc">
-                    <span> Organizer Info</span>
-                </textarea>
+              <textarea class="textArea" ui-tinymce="tinymceOptions" ng-model="eventInfo.CurrentOrganizer.Organizer_Desc">
+                <span> Organizer Info</span>
+              </textarea>
             </div>
-          <span class="newOrganiserBottomText noOutline" style="float: right;  margin-top: 15px;margin-right: 15px; cursor: pointer;" ng-click="callImageClick('organiserImage'); $event.stopPropagation();">
-            <span style="display: inline-block;float: left;padding-right: 31px;">Have a logo or picture?</span>
-            <i class="material-icons" style="margin-left: -25px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">add_a_photo</i>
-            <input type="file" name="image" id="organiserImage" accept="image/*" style="display: none;" custom-on-change="uploadOrganizerImage" />
-          </span>
+            <span class="newOrganiserBottomText noOutline" style="float: right;  margin-top: 15px;margin-right: 15px; cursor: pointer;" ng-click="callImageClick('organiserImage'); $event.stopPropagation();">
+              <span style="display: inline-block;float: left;padding-right: 31px;">Have a logo or picture?</span>
+              <i class="material-icons" style="margin-left: -25px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">add_a_photo</i>
+              <input type="file" name="image" id="organiserImage" accept="image/*" style="display: none;" custom-on-change="uploadOrganizerImage" />
+            </span>
 
-          <div class="organiserbottomDiv" style="margin-top:10px">
-            <md-checkbox class="blue" ng-model="eventInfo.CurrentOrganizer.IncludeSocialLinks" ng-true-value="true" ng-false-value="false">
-              Include organizer link to social media
-            </md-checkbox>
-            <div ng-show="eventInfo.CurrentOrganizer.IncludeSocialLinks">
-              <div class="socialMediaIcon" style="margin-left: 15px">
-                <img src="~/Images/AMaterial/facebook.svg" style="height: 25px;" />
-                <md-input-container>
-                  <label class="organizerText">Facebook link</label>
-                  <input class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_FBLink" style="width: 250px;" />
-                </md-input-container>
-              </div>
-              <div class="socialMediaIcon" style="margin-left: 15px">
-                <img src="~/Images/AMaterial/twitter.svg" style="height: 25px;" />
-                <md-input-container>
-                  <label class="organizerText">Twitter link</label>
-                  <input class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_Twitter" style="width: 250px;" />
-                </md-input-container>
-              </div>
-              <div class="socialMediaIcon" style="margin-left: 15px">
-                <img src="~/Images/AMaterial/linkedin.svg" style="height: 25px;" />
-                <md-input-container>
-                  <label class="organizerText">LinkedIn link</label>
-                  <input class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_Linkedin" style="width: 250px;" />
-                </md-input-container>
+            <div class="organiserbottomDiv" style="margin-top:10px">
+              <md-checkbox class="blue" ng-model="eventInfo.CurrentOrganizer.IncludeSocialLinks" ng-true-value="true" ng-false-value="false">
+                Include organizer link to social media
+              </md-checkbox>
+              <div ng-show="eventInfo.CurrentOrganizer.IncludeSocialLinks">
+                <div class="socialMediaIcon" style="margin-left: 15px">
+                  <img src="~/Images/AMaterial/facebook.svg" style="height: 25px;" />
+                  <md-input-container>
+                    <label class="organizerText">Facebook link</label>
+                    <input class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_FBLink" style="width: 250px;" />
+                  </md-input-container>
+                </div>
+                <div class="socialMediaIcon" style="margin-left: 15px">
+                  <img src="~/Images/AMaterial/twitter.svg" style="height: 25px;" />
+                  <md-input-container>
+                    <label class="organizerText">Twitter link</label>
+                    <input class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_Twitter" style="width: 250px;" />
+                  </md-input-container>
+                </div>
+                <div class="socialMediaIcon" style="margin-left: 15px">
+                  <img src="~/Images/AMaterial/linkedin.svg" style="height: 25px;" />
+                  <md-input-container>
+                    <label class="organizerText">LinkedIn link</label>
+                    <input class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_Linkedin" style="width: 250px;" />
+                  </md-input-container>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="ticketButtonDiv" style="margin-bottom: 10px;">
-            <md-button class="md-raised addTicketBtnCls" style="float:unset !important;" ng-show="organizerEditState == 'Add'" ng-click="saveNewOrganizer()">
-              Save Organizer
-            </md-button>
-            <md-button class="md-raised addTicketBtnCls" style="float:unset !important;" ng-show="organizerEditState == 'Edit'" ng-click="saveEditedOrganizer()">
-              Update Organizer
-            </md-button>
-          </div>
-
+            <div class="ticketButtonDiv" style="margin-bottom: 10px;">
+              <md-button class="md-raised addTicketBtnCls" style="float:unset !important;" ng-show="organizerEditState == 'Add'" ng-click="saveNewOrganizer()">
+                Save Organizer
+              </md-button>
+              <md-button class="md-raised addTicketBtnCls" style="float:unset !important;" ng-show="organizerEditState == 'Edit'" ng-click="saveEditedOrganizer()">
+                Update Organizer
+              </md-button>
+            </div>
+          </ng-form>
         </div>
       </div>
     </div>
@@ -449,139 +503,198 @@
       </div>
       <div class="eDAddTicketBody">
 
-          <div class="ticketSubDivContainer">
+        <div class="ticketSubDivContainer">
 
-              <div class="paidTicketContentCo" drag-drop-elements ng-class="{{$index}}" ng-repeat="ticket in eventInfo.TicketList">
-                  <div>
-                      <div class="paidTicketContentCoHeader">
-                          <div layout="row" layout-xs="column">
-                              <span class="iconDragItem" draggable="true">
-                                  <i class="material-icons">reorder</i>
-                              </span>
-                              <div flex>
-                                  <md-input-container class="ticketContTxtBox">
-                                      <label class="ticketNameLbl">Enter Ticket Name</label>
-                                      <input class="ticketNameLblTxtboxCls" ng-model="ticket.T_name" required />
-                                  </md-input-container>
-                              </div>
-                              <div flex>
-                                  <md-input-container class="ticketContTxtBox qualityMdCon">
-                                      <label class="ticketQualityLbl">Quantity</label>
-                                      <input input value=0 type="text" ng-model="ticket.Qty_Available" class="ticketQualityLblTxtboxCls" required check-quantity numbers-only />
-                                  </md-input-container>
-                              </div>
-                              <div flex ng-show="ticket.TicketTypeID == 2">
-                                  <md-input-container class="ticketContTxtBox qualityMdCon">
-                                      <label class="ticketPriceLbl">$ Price</label>
-                                      <input type="number" class="ticketPriceLblTxtboxCls" required ng-model="ticket.Price" ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket)" input />
-                                  </md-input-container>
-                              </div>
-                              <div flex ng-show="ticket.TicketTypeID == 2">
-                                  <md-input-container class="ticketContTxtBox qualityMdCon">
-                                      <label class="ticketDiscountLbl">$ Discount</label>
-                                      <input input type="number" class="ticketDiscountLblTxtboxCls" required ng-model="ticket.T_Discount" ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket)" />
-                                  </md-input-container>
-                              </div>
-                              <div flex ng-show="ticket.TicketTypeID != 2">
-                                  <div class="donationTxtCls">{{ticket.TicketType.TicketType}}</div>
-                              </div>
-                              <div flex class="trashIconConCls">
-                                  <span style="cursor: pointer;" class="trashIconCls" ng-click="deleteTicket(ticket)">
-                                      <i class="material-icons">delete</i>
-                                  </span>
-                              </div>
-                          </div>
-                          <div layout="row">
-                              <div flex>
-                                  <a class="showHideOptionCls" href="javascript:void(0)" ng-click="ticket.expandedOptions = !ticket.expandedOptions" ng-init="ticket.expandedOptions = false">
-                                      <span class="arrowDownOptions">
-                                          <i class="material-icons moreOptionright" ng-show="!ticket.expandedOptions">keyboard_arrow_right</i>
-                                          <i class="material-icons moreOptiondown" ng-show="ticket.expandedOptions">keyboard_arrow_down</i>
-                                      </span>
-                                      <span class="moreOptionTxt">More Options</span>
-                                  </a>
-                              </div>
-                              <div flex style="position: relative;" ng-show="ticket.TicketTypeID == 2">
-                                  <span class="buyerTotalTxt">Buyer total: ${{ticket.TotalPrice.toFixed(2)}}</span>
-                                  <span class="infoOptionIcon" ng-mouseenter="ticket.showBuyerInfo = true" ng-mouseleave="ticket.showBuyerInfo = false" ng-init="ticket.showBuyerInfo = false">
-                                      <i class="material-icons">info</i>
-                                  </span>
-                                  <div class="buyerInfo" ng-show="ticket.showBuyerInfo">
-                                      <div>Ticket Price: ${{ticket.Price.toFixed(2)}} </div>
-                                      <div>Fee: ${{ticket.Price > 0 ? ticket.EC_Fee.toFixed(2) : '0.00'}}</div>
-                                      <div>Discount: ${{ticket.Price > 0 ? ticket.T_Discount.toFixed(2) : '0.00'}} </div>
-                                      <div>Total: ${{ticket.TotalPrice.toFixed(2)}}</div>
-                                  </div>
-                              </div>
-                          </div>
+          <div class="paidTicketContentCo" drag-drop-elements ng-class="{{$index}}" ng-repeat="ticket in eventInfo.TicketList">
+            <ng-form name="TicketForm">
+              <div class="paidTicketContentCoHeader">
+                <div layout="row" layout-xs="column">
+                  <span class="iconDragItem" draggable="true">
+                    <i class="material-icons">reorder</i>
+                  </span>
+                  <div flex>
+                    <md-input-container class="ticketContTxtBox">
+                      <label class="ticketNameLbl">Enter Ticket Name</label>
+                      <input class="ticketNameLblTxtboxCls" name="TicketName" ng-model="ticket.T_name" required />
+                      <div ng-messages="TicketForm.TicketName.$error" ng-show="TicketForm.TicketName.$touched || formValidation">
+                        <div ng-message="required">Ticket name is required.</div>
                       </div>
-                      <div class="paidTicketContentCoBody" ng-show="ticket.expandedOptions">
-                          <div class="pTCBTxt" ng-show="ticket.TicketTypeID != 3">Tickets allowed per order</div>
-                          <div class="minMaxTxtBox" ng-show="ticket.TicketTypeID != 3">
-                              <md-input-container class="ticketMinTxtBoxCon">
-                                  <label class="ticketMinTxtBoxLbl">Minimum</label>
-                                  <input type="text" ng-model="ticket.Min_T_Qty" class="ticketMinTxtBoxCls" numbers-only />
-                              </md-input-container>
-                              <md-input-container class="ticketMaxTxtBoxCon">
-                                  <label class="ticketMaxTxtBoxLbl">Maximum</label>
-                                  <input type="text" ng-model="ticket.Max_T_Qty" class="ticketMaxTxtBoxCls" numbers-only />
-                              </md-input-container>
-                          </div>
-                          <div class="ticketChkBoxCon">
-                              <md-input-container>
-                                  <label class="ticketDespTxtBoxLbl">Fee</label>
-                                  <md-select style="width: 300px;" ng-model="ticket.Fees_Type" ng-change="onPriceChange(ticket)">
-                                      <md-option value="0">Customer pays the fees</md-option>
-                                      <md-option value="1">I absorb the fee</md-option>
-                                  </md-select>
-                              </md-input-container>
-                          </div>
-                          <div class="ticketDespCon">
-                              <md-input-container class="ticketDespTxtBoxCon">
-                                  <label class="ticketDespTxtBoxLbl">Enter Ticket Description</label>
-                                  <input ng-model="ticket.T_Desc" class="ticketDespTxtBoxCls" />
-                              </md-input-container>
-                          </div>
-                          <div class="ticketChkBoxCon">
-                              <md-checkbox class="blue" ng-model="ticket.Show_T_Desc" ng-true-value="'1'" ng-false-value="'0'">Show ticket description on the event page</md-checkbox>
-                          </div>
-                          <div class="ticketStartEndDate">
-                              <div class="date-picker-row" flex-gt-sm>
-                                  <label>Start Date</label>
-                                  <md-datepicker ng-model="ticket.localSaleStartDate"></md-datepicker>
-                              </div>
-                              <div class="date-picker-row" flex-gt-sm>
-                                  <label>End Date</label>
-                                  <md-datepicker ng-model="ticket.localSaleEndDate"></md-datepicker>
-                              </div>
-                          </div>
-                          <div class="ticketChkBoxCon">
-                              <md-checkbox class="blue" ng-model="ticket.Hide_Ticket" ng-true-value="'1'" ng-false-value="'0'">Hide this ticket type</md-checkbox>
-                          </div>
-                          <div class="ticketChkBoxCon">
-                              <md-radio-group ng-model="ticket.T_AutoSechduleType">
-                                  <md-radio-button value="0" class="md-primary">When ticket is not on sale</md-radio-button>
-                                  <md-radio-button value="1" class="md-primary">At custom date and time</md-radio-button>
-                              </md-radio-group>
-                          </div>
-                          <div class="hideUntilAfterCon" ng-show="ticket.T_AutoSechduleType == 1">
-                              <md-checkbox class="blue" style="width: 300px !important;" ng-model="ticket.useUntilDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useUntilDate = '0'">
-                                  <md-datepicker ng-model="ticket.localHideUntillDate" md-placeholder="Hide until date and time" style="width: 300px !important;"></md-datepicker>
-                              </md-checkbox>
-                              <md-checkbox class="blue" ng-model="ticket.useAfterDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useAfterDate = '0'">
-                                  <md-datepicker ng-model="ticket.localHideAfterDate" md-placeholder="Hide after date and time"></md-datepicker>
-                              </md-checkbox>
-                          </div>
-                          <div class="markSoldCon">
-                              <md-checkbox class="blue" ng-model="ticket.T_Mark_SoldOut" ng-true-value="'1'" ng-false-value="'0'">Mark as sold out</md-checkbox>
-                          </div>
-                          <div class="displayRemCon" ng-show="ticket.TicketTypeID != 3">
-                              <md-checkbox class="blue" ng-model="ticket.T_Displayremaining" ng-true-value="'1'" ng-false-value="'0'">Display remaining tickets</md-checkbox>
-                          </div>
-                      </div>
+                    </md-input-container>
                   </div>
+                  <div flex>
+                    <md-input-container class="ticketContTxtBox qualityMdCon">
+                      <label class="ticketQualityLbl">Quantity</label>
+                      <input input type="text" name="quantityAvailable" ng-model="ticket.Qty_Available" class="ticketQualityLblTxtboxCls" ng-blur="onQtyBlur(ticket)" required numbers-only positive-validation />
+                      <div ng-messages="TicketForm.quantityAvailable.$error" ng-show="TicketForm.quantityAvailable.$touched || formValidation">
+                        <div ng-message="positive">Quantity must be greater then zero.</div>
+                      </div>
+                    </md-input-container>
+                  </div>
+                  <div flex ng-show="ticket.TicketTypeID == 2">
+                    <md-input-container class="ticketContTxtBox qualityMdCon">
+                      <label class="ticketPriceLbl">$ Price</label>
+                      <input type="number" class="ticketPriceLblTxtboxCls" required ng-model="ticket.Price" ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket)" input />
+                    </md-input-container>
+                  </div>
+                  <div flex ng-show="ticket.TicketTypeID == 2">
+                    <md-input-container class="ticketContTxtBox qualityMdCon">
+                      <label class="ticketDiscountLbl">$ Discount</label>
+                      <input input type="number" class="ticketDiscountLblTxtboxCls" required ng-model="ticket.T_Discount" ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket)" />
+                    </md-input-container>
+                  </div>
+                  <div flex ng-show="ticket.TicketTypeID != 2">
+                    <div class="donationTxtCls">{{ticket.TicketType.TicketType}}</div>
+                  </div>
+                  <div flex class="trashIconConCls">
+                    <span style="cursor: pointer;" class="trashIconCls" ng-click="deleteTicket(ticket)">
+                      <i class="material-icons">delete</i>
+                    </span>
+                  </div>
+                </div>
+                <div layout="row">
+                  <div flex>
+                    <a class="showHideOptionCls" href="javascript:void(0)" ng-click="onExpandTicketClick(ticket, TicketForm);" ng-init="ticket.expandedOptions = false">
+                      <span class="arrowDownOptions">
+                        <i class="material-icons moreOptionright" ng-show="!ticket.expandedOptions">keyboard_arrow_right</i>
+                        <i class="material-icons moreOptiondown" ng-show="ticket.expandedOptions">keyboard_arrow_down</i>
+                      </span>
+                      <span class="moreOptionTxt">More Options</span>
+                    </a>
+                  </div>
+                  <div flex style="position: relative;" ng-show="ticket.TicketTypeID == 2">
+                    <span class="buyerTotalTxt">Buyer total: ${{ticket.TotalPrice.toFixed(2)}}</span>
+                    <span class="infoOptionIcon" ng-mouseenter="ticket.showBuyerInfo = true" ng-mouseleave="ticket.showBuyerInfo = false" ng-init="ticket.showBuyerInfo = false">
+                      <i class="material-icons">info</i>
+                    </span>
+                    <div class="buyerInfo" ng-show="ticket.showBuyerInfo">
+                      <div>Ticket Price: ${{ticket.Price.toFixed(2)}} </div>
+                      <div>Fee: ${{ticket.Price > 0 ? ticket.EC_Fee.toFixed(2) : '0.00'}}</div>
+                      <div>Discount: ${{ticket.Price > 0 ? ticket.T_Discount.toFixed(2) : '0.00'}} </div>
+                      <div>Total: ${{ticket.TotalPrice.toFixed(2)}}</div>
+                    </div>
+                  </div>
+                </div>
               </div>
+              <div class="paidTicketContentCoBody" ng-show="ticket.expandedOptions">
+                <div class="pTCBTxt" ng-show="ticket.TicketTypeID != 3">Tickets allowed per order</div>
+                <div class="minMaxTxtBox" ng-show="ticket.TicketTypeID != 3">
+                  <md-input-container class="ticketMinTxtBoxCon">
+                    <label class="ticketMinTxtBoxLbl">Minimum</label>
+                    <input type="text" ng-model="ticket.Min_T_Qty" class="ticketMinTxtBoxCls" numbers-only />
+                  </md-input-container>
+                  <md-input-container class="ticketMaxTxtBoxCon">
+                    <label class="ticketMaxTxtBoxLbl">Maximum</label>
+                    <input type="text" ng-model="ticket.Max_T_Qty" class="ticketMaxTxtBoxCls" numbers-only />
+                  </md-input-container>
+                </div>
+                <div class="ticketChkBoxCon" ng-show="ticket.TicketTypeID == 2">
+                  <md-input-container>
+                    <label class="ticketDespTxtBoxLbl">Fee</label>
+                    <md-select style="width: 300px;" ng-model="ticket.Fees_Type" ng-change="onPriceChange(ticket)">
+                      <md-option value="0">Customer pays the fees</md-option>
+                      <md-option value="1">I absorb the fee</md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
+                <div class="ticketDespCon" style="float:left">
+                  <md-input-container class="ticketDespTxtBoxCon">
+                    <label class="ticketDespTxtBoxLbl">Enter Ticket Description</label>
+                    <input ng-model="ticket.T_Desc" class="ticketDespTxtBoxCls" />
+                  </md-input-container>
+                </div>
+                <div class="ticketChkBoxCon">
+                  <md-checkbox class="blue" ng-model="ticket.Show_T_Desc" ng-true-value="'1'" ng-false-value="'0'" style="margin-top: 24px; margin-left: 12px">
+                    Show on the event page
+                  </md-checkbox>
+                </div>
+                <div class="ticketStartEndDate clearfix">
+                  <div>
+                    <div class="date-picker-row" flex-gt-sm style="float:left; margin-top: 14px;">
+                      <label>Sales start date</label>
+                      <md-datepicker name="ticketStartDate" ng-model="ticket.localSaleStartDate" md-min-date="minDate"></md-datepicker>
+                      <div class="validation-datepicker-messages" ng-messages="TicketForm.ticketStartDate.$error">
+                        <div ng-message="mindate">Date is too early.</div>
+                      </div>
+                    </div>
+                    <md-input-container style="margin-right: 10px; margin-left: 10px; float:left;">
+                      <label>Sales start time</label>
+                      <md-select ng-model="ticket.localSaleStartTime">
+                        <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
+                      </md-select>
+                    </md-input-container>
+                  </div>
+                  <div style="clear: both;">
+                    <div class="date-picker-row" flex-gt-sm style="float:left; margin-top: 14px;">
+                      <label>Sales end date</label>
+                      <md-datepicker name="ticketEndDate" ng-model="ticket.localSaleEndDate" md-min-date="minDate"></md-datepicker>
+                      <div class="validation-datepicker-messages" ng-messages="TicketForm.ticketEndDate.$error">
+                        <div ng-message="mindate">Date is too early.</div>
+                      </div>
+                    </div>
+                    <md-input-container style="margin-right: 10px; margin-left: 10px; float:left;">
+                      <label>Sales end time</label>
+                      <md-select ng-model="ticket.localSaleEndTime">
+                        <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
+                      </md-select>
+                    </md-input-container>
+                  </div>
+                </div>
+                <div class="ticketChkBoxCon clearfix">
+                  <md-checkbox class="blue" ng-model="ticket.Hide_Ticket" ng-true-value="'1'" ng-false-value="'0'">Hide this ticket type</md-checkbox>
+                </div>
+                <div class="ticketChkBoxCon">
+                  <md-radio-group ng-model="ticket.T_AutoSechduleType">
+                    <md-radio-button value="0" class="md-primary">When ticket is not on sale</md-radio-button>
+                    <md-radio-button value="1" class="md-primary">At custom date and time</md-radio-button>
+                  </md-radio-group>
+                </div>
+                <div class="hideUntilAfterCon" ng-show="ticket.T_AutoSechduleType == 1">
+                  <div class="date-picker-row" style="margin-left: 0px; float:left; margin-top: 14px;" flex-gt-sm>
+                    <label style="margin-left: 40px">Hide until date</label>
+                    <md-checkbox class="blue" ng-model="ticket.useUntilDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useUntilDate = '0'">
+                      <md-datepicker ng-model="ticket.localHideUntilDate" name="ticketHideUntilDate" style="width: 300px !important;" md-min-date="minDate"></md-datepicker>
+                    </md-checkbox>
+                    <div class="validation-datepicker-messages" ng-show="(TicketForm.ticketHideUntilDate.$touched  || formValidation || ticket.ticketValidation)">
+                      <div ng-show="(ticket.useUntilDate == 1) && (!ticket.localHideUntilDate)">Please, select date.</div>
+                      <div ng-show="(TicketForm.ticketHideUntilDate.$error.mindate)">Date is too early.</div>
+                      <div ng-show="(ticket.useUntilDate != 1) && (ticket.useAfterDate != 1)">Please, select at least one date.</div>
+                    </div>
+                  </div>
+                  <md-input-container style="margin-right: 10px; margin-left: 10px; float:left;">
+                    <label>Hide until time</label>
+                    <md-select ng-model="ticket.localHideUntilTime">
+                      <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
+                    </md-select>
+                  </md-input-container>
+                  <div class="clearfix"></div>
+                  <div class="date-picker-row" style="margin-left: 0px; float:left; margin-top: 14px;" flex-gt-sm>
+                    <label style="margin-left: 40px">Hide after date</label>
+                    <md-checkbox class="blue" ng-model="ticket.useAfterDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useAfterDate = '0'">
+                      <md-datepicker ng-model="ticket.localHideAfterDate" name="ticketHideAfterDate" md-min-date="minDate"></md-datepicker>
+                    </md-checkbox>
+                    <div class="validation-datepicker-messages" ng-show="(TicketForm.ticketHideUntilDate.$touched  || formValidation || ticket.ticketValidation)">
+                      <div ng-show="(ticket.useAfterDate == 1) && (!ticket.localHideAfterDate)">Please, select date.</div>
+                      <div ng-show="(TicketForm.ticketHideAfterDate.$error.mindate)">Date is too early.</div>
+                      <div ng-show="(ticket.useUntilDate != 1) && (ticket.useAfterDate != 1)">Please, select at least one date.</div>
+                    </div>
+                  </div>
+                  <md-input-container style="margin-right: 10px; margin-left: 10px; float:left;">
+                    <label>Hide after time</label>
+                    <md-select ng-model="ticket.localHideAfterTime">
+                      <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
+                <div class="markSoldCon clearfix">
+                  <md-checkbox class="blue" ng-model="ticket.T_Mark_SoldOut" ng-true-value="'1'" ng-false-value="'0'">Mark as sold out</md-checkbox>
+                </div>
+                <div class="displayRemCon" ng-show="ticket.TicketTypeID != 3">
+                  <md-checkbox class="blue" ng-model="ticket.T_Displayremaining" ng-true-value="'1'" ng-false-value="'0'">Display remaining tickets</md-checkbox>
+                </div>
+              </div>
+            </ng-form>
           </div>
+        </div>
       </div>
 
       <div class="totalCapacity">
@@ -611,50 +724,58 @@
           </md-button>
         </div>
 
-      </div>
-    </div>
-      <div class="TicketOptions">
-          <md-checkbox class="blue" style="font-weight: unset !important;display:block;" ng-model="eventInfo.Ticket_DAdress" ng-true-value="'Y'" ng-false-value="'N'">
-              Ticket Delivery Address
-          </md-checkbox>
-          <md-checkbox class="blue" style="font-weight: unset !important; display:block;" ng-model="eventInfo.Ticket_showremain" ng-true-value="'Y'" ng-false-value="'N'">
-              Show remianing tickets
-          </md-checkbox>
-          <md-checkbox class="blue" style="font-weight: unset !important;" ng-model="eventInfo.Ticket_showvariable" ng-true-value="'Y'" ng-false-value="'N'">
-              Variable charges
-          </md-checkbox>
+        <div class="validation-standard-messages clearfix" ng-show="(formValidation) && (eventInfo.TicketList.length == 0)">
+          You need to add at least one ticket.
+        </div>
 
       </div>
+
+    </div>
+    <div class="TicketOptions">
+      <md-checkbox class="blue" style="font-weight: unset !important;display:block;" ng-model="eventInfo.Ticket_DAdress" ng-true-value="'Y'" ng-false-value="'N'">
+        Ticket Delivery Address
+      </md-checkbox>
+      <md-checkbox class="blue" style="font-weight: unset !important; display:block;" ng-model="eventInfo.Ticket_showremain" ng-true-value="'Y'" ng-false-value="'N'">
+        Show remianing tickets
+      </md-checkbox>
+      <md-checkbox class="blue" style="font-weight: unset !important;" ng-model="eventInfo.Ticket_showvariable" ng-true-value="'Y'" ng-false-value="'N'">
+        Variable charges
+      </md-checkbox>
+
+    </div>
     <div class="variabeDetails" style="max-width: 1100px;margin: 0px auto;padding: 5px 0px;" ng-show="eventInfo.Ticket_showvariable == 'Y'">
       <md-button class="md-raised addTicketBtnCls" ng-click="addVarCharge()">
         ADD
       </md-button>
       <div class="variableOptions">
         <div ng-repeat="varCharge in eventInfo.VariableChargesList">
-            <i class="material-icons" style="float: right;margin-right: 20px; margin-top: 13px; cursor: pointer;" ng-click="deleteVarCharge(varCharge)">clear</i>
-         <div class="variableClass">
-             <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 250px;">
-            <label class="ticketDespTxtBoxLbl">Variable charge description</label>
-            <input class="ticketDespTxtBoxCls" ng-model="varCharge.VariableDesc" />
-          </md-input-container>
-          <span style="margin-left: 20px">  $</span>
-         </div>
-            <div class="variableClass">
-                <md-input-container class="ticketDespTxtBoxCon variableType" style="margin-left: 20px; width:150px">
-                    <label class="ticketDespTxtBoxLbl">Type</label>
-                    <md-select class="ticketDespTxtBoxCls" ng-model="varCharge.Optional">
-                        <md-option ng-repeat="type in vartypes" value="{{type.varId}}">{{type.varName}}</md-option>
-                    </md-select>
-                </md-input-container>
-                <span style="margin-left: 20px">  $</span>
-            </div>
-            <div class="variableClass">
-                <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 100px;">
-                    <label class="ticketDespTxtBoxLbl variableAmount">Amount</label>
-                    <input class="ticketDespTxtBoxCls" type="number" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="1.00" ng-model="varCharge.Price" required />
-                </md-input-container>
-            </div>    
-                  
+          <i class="material-icons" style="float: right;margin-right: 20px; margin-top: 13px; cursor: pointer;" ng-click="deleteVarCharge(varCharge)">clear</i>
+          <div class="variableClass">
+            <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 250px;">
+              <label class="ticketDespTxtBoxLbl">Variable charge description</label>
+              <input class="ticketDespTxtBoxCls" name="variableChargeDescription" ng-model="varCharge.VariableDesc" required />
+              <div ng-messages="MainForm.variableChargeDescription.$error">
+                <div ng-message="required">Variable charge description is required.</div>
+              </div>
+            </md-input-container>
+            <span style="margin-left: 20px">  $</span>
+          </div>
+          <div class="variableClass">
+            <md-input-container class="ticketDespTxtBoxCon variableType" style="margin-left: 20px; width:150px">
+              <label class="ticketDespTxtBoxLbl">Type</label>
+              <md-select class="ticketDespTxtBoxCls" ng-model="varCharge.Optional">
+                <md-option ng-repeat="type in vartypes" value="{{type.varId}}">{{type.varName}}</md-option>
+              </md-select>
+            </md-input-container>
+            <span style="margin-left: 20px">  $</span>
+          </div>
+          <div class="variableClass">
+            <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 100px;">
+              <label class="ticketDespTxtBoxLbl variableAmount">Amount</label>
+              <input class="ticketDespTxtBoxCls" type="number" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="1.00" ng-model="varCharge.Price" required />
+            </md-input-container>
+          </div>
+
         </div>
       </div>
     </div>
@@ -710,6 +831,7 @@
       <span>{{message}}</span>
     </div>
   </div>
+  </form>
 </div>
 
 @section ScriptSection

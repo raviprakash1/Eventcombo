@@ -6,6 +6,7 @@ using System.Web;
 using EventCombo.DAL;
 using AutoMapper;
 using System.Data.SqlClient;
+using EventCombo.Utils;
 
 
 namespace EventCombo.Service
@@ -67,7 +68,21 @@ namespace EventCombo.Service
 
       ev.TimeZones.Clear();
       foreach (var timezone in tzRepo.Get(orderBy: (query => query.OrderBy(tz => tz.Timezone_order))))
-        ev.TimeZones.Add(_mapper.Map<TimeZoneViewModel>(timezone));
+      {
+        var tz = _mapper.Map<TimeZoneViewModel>(timezone);
+        string sign = tz.TimeZoneName.Substring(5, 1);
+        if ((sign == "+") || (sign == "-"))
+        {
+          int hours;
+          int minutes;
+          Int32.TryParse(tz.TimeZoneName.Substring(6, 2), out hours);
+          Int32.TryParse(tz.TimeZoneName.Substring(9, 2), out minutes);
+          tz.Offset = hours * 60 + minutes;
+        }
+        else
+          tz.Offset = 0;
+        ev.TimeZones.Add(tz);
+      }
 
       var fee = feeRepo.Get(orderBy: (query => query.OrderByDescending(f => f.FS_Id))).FirstOrDefault();
       if (fee != null)
@@ -193,6 +208,7 @@ namespace EventCombo.Service
     {
       IRepository<MultipleEvent> multiRepo = new GenericRepository<MultipleEvent>(_factory.ContextFactory);
       IRepository<EventVenue> vRepo = new GenericRepository<EventVenue>(_factory.ContextFactory);
+      IRepository<TimeZoneDetail> tzRepo = new GenericRepository<TimeZoneDetail>(_factory.ContextFactory);
 
       var single = vRepo.Get(filter: (e => e.EventID == ev.EventID)).ToList();
       foreach (var se in single)
@@ -203,8 +219,21 @@ namespace EventCombo.Service
         me = new MultipleEvent();
       me.EventID = ev.EventID;
       me.Frequency = ev.DateInfo.Frequency.ToString();
-      me.M_Startfrom = ev.DateInfo.StartDateTime;
-      me.M_StartTo = ev.DateInfo.EndDateTime;
+
+      int tzId;
+      Int32.TryParse(ev.TimeZone, out tzId);
+      TimeZoneDetail tz = tzRepo.GetByID(tzId);
+      if (tz != null)
+      {
+        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(tz.TimeZone);
+        me.M_Startfrom = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.StartDateTime, userTimeZone);
+        me.M_StartTo = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.EndDateTime, userTimeZone); ;
+      }
+      else
+      {
+        me.M_Startfrom = ev.DateInfo.StartDateTime;
+        me.M_StartTo = ev.DateInfo.EndDateTime;
+      }
       if (ev.DateInfo.Frequency == ScheduleFrequency.Weekly)
         me.WeeklyDay = String.Join(",", ev.DateInfo.Weekdays);
       me.StartingFrom = ev.DateInfo.StartDateTime.ToString("MM/dd/yyyy"); ;
@@ -220,6 +249,7 @@ namespace EventCombo.Service
     {
       IRepository<MultipleEvent> multiRepo = new GenericRepository<MultipleEvent>(_factory.ContextFactory);
       IRepository<EventVenue> vRepo = new GenericRepository<EventVenue>(_factory.ContextFactory);
+      IRepository<TimeZoneDetail> tzRepo = new GenericRepository<TimeZoneDetail>(_factory.ContextFactory);
 
       var multi = multiRepo.Get(filter: (m => m.EventID == ev.EventID)).ToList();
       foreach (var me in multi)
@@ -229,8 +259,22 @@ namespace EventCombo.Service
       if (se == null)
         se = new EventVenue();
       se.EventID = ev.EventID;
-      se.E_Startdate = ev.DateInfo.StartDateTime;
-      se.E_Enddate = ev.DateInfo.EndDateTime;
+
+      
+      int tzId;
+      Int32.TryParse(ev.TimeZone, out tzId);
+      TimeZoneDetail tz = tzRepo.GetByID(tzId);
+      if (tz != null)
+      {
+        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(tz.TimeZone);
+        se.E_Startdate = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.StartDateTime, userTimeZone);
+        se.E_Enddate = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.EndDateTime, userTimeZone); ;
+      }
+      else
+      {
+        se.E_Startdate = ev.DateInfo.StartDateTime;
+        se.E_Enddate = ev.DateInfo.EndDateTime;
+      }
       se.EventStartDate = ev.DateInfo.StartDateTime.ToString("MM/dd/yyyy");
       se.EventStartTime = ev.DateInfo.StartDateTime.ToString("hh:mm tt");
       se.EventEndDate = ev.DateInfo.EndDateTime.ToString("MM/dd/yyyy");
@@ -244,6 +288,7 @@ namespace EventCombo.Service
     private void SaveTickets(EventViewModel ev, IUnitOfWork uow)
     {
       IRepository<Ticket> tRepo = new GenericRepository<Ticket>(_factory.ContextFactory);
+      IRepository<TimeZoneDetail> tzRepo = new GenericRepository<TimeZoneDetail>(_factory.ContextFactory);
       foreach (var ticket in ev.TicketList)
       {
         Ticket tDB = null;
@@ -254,6 +299,32 @@ namespace EventCombo.Service
 
         ticket.E_Id = ev.EventID;
         _mapper.Map(ticket, tDB);
+
+        int tzId;
+        Int32.TryParse(ev.TimeZone, out tzId);
+        TimeZoneDetail tz = tzRepo.GetByID(tzId);
+        DateTime? saleStart = ticket.Sale_Start_Date;
+        DateTime? saleEnd = ticket.Sale_End_Date;
+        DateTime? hideUntil = ticket.Hide_Untill_Date;
+        DateTime? hideAfter = ticket.Hide_After_Date;
+        if (tz != null)
+        {
+          TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(tz.TimeZone);
+          saleStart = saleStart == null ? null : (DateTime?)TimeZoneInfo.ConvertTimeToUtc(saleStart.Value, userTimeZone);
+          saleEnd = saleEnd == null ? null : (DateTime?)TimeZoneInfo.ConvertTimeToUtc(saleEnd.Value, userTimeZone);
+          hideUntil = hideUntil == null ? null : (DateTime?)TimeZoneInfo.ConvertTimeToUtc(hideUntil.Value, userTimeZone);
+          hideAfter = hideAfter == null ? null : (DateTime?)TimeZoneInfo.ConvertTimeToUtc(hideAfter.Value, userTimeZone);
+        }
+
+        tDB.Sale_Start_Date = saleStart == null ? null : (DateTime?)saleStart.Value.Date;
+        tDB.Sale_Start_Time = saleStart == null ? null : saleStart.Value.ToString("hh:mm tt");
+        tDB.Sale_End_Date = saleEnd == null ? null : (DateTime?)saleEnd.Value.Date;
+        tDB.Sale_End_Time = saleEnd == null ? null : saleEnd.Value.ToString("hh:mm tt");
+        tDB.Hide_Untill_Date = hideUntil == null ? null : (DateTime?)hideUntil.Value.Date;
+        tDB.Hide_Untill_Time = hideUntil == null ? null : hideUntil.Value.ToString("hh:mm tt");
+        tDB.Hide_After_Date = hideAfter == null ? null : (DateTime?)hideAfter.Value.Date;
+        tDB.Hide_After_Time = hideAfter == null ? null : hideAfter.Value.ToString("hh:mm tt");
+
         if (tDB.T_Id == 0)
           tRepo.Insert(tDB);
         uow.Context.SaveChanges();

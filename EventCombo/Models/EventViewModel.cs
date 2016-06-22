@@ -40,6 +40,7 @@ namespace EventCombo.Models
     public string TimeZone { get; set; }
     public int TimeZoneId { get; set; }
     public int TimeZoneOrder { get; set; }
+    public int Offset { get; set; }
   }
 
   public class PredefinedTimeViewModel

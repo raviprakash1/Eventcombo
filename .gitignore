@@ -194,3 +194,8 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+Eventcombo/Images/ECImages/
+Eventcombo/Images/Organizer/
+Eventcombo/Images/Temp/
+Eventcombo/Images/events/
+Eventcombo/ExceptionDetailsFile/
