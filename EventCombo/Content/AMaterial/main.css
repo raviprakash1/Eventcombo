@@ -16,14 +16,14 @@
   }
 
   .responsiveFilter {
-    display: block !important;
+    display: none !important;
     margin-top: 10px;
     margin-right: 30px;
     margin-bottom: 10px;
   }
 
   .defaultFilter {
-    display: none !important;
+    display: block !important;
   }
 
   .wholegallery {
@@ -37,7 +37,7 @@
     margin-left: 0px !important;
   }
 
-  .textAreaHeight {
+  .EDTxtEventName .textAreaHeight {
     height: 35px !important;
   }
 
@@ -51,14 +51,14 @@
   }
 
   .responsiveFilter {
-    display: block !important;
+    display: none !important;
     margin-top: 10px;
     margin-right: 30px;
     margin-bottom: 10px;
   }
 
   .defaultFilter {
-    display: none !important;
+    display: block !important;
   }
 
   .OrganizerBody {
@@ -97,6 +97,17 @@
 }
 
 @media (max-width: 540px) and (min-width: 400px) {
+  .headerCEHeadBtn {
+    text-align: unset !important;
+    margin: unset !important;
+    padding-left: 10px !important;
+  }
+
+  .btnMakeLiveHeadCE {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
   .weeklyEndTime {
     margin-left: 58px !important;
   }
@@ -105,7 +116,7 @@
     margin-left: 0px !important;
   }
 
-  .textAreaHeight {
+  .EDTxtEventName .textAreaHeight {
     height: 80px !important;
   }
 
@@ -119,14 +130,14 @@
   }
 
   .responsiveFilter {
-    display: block !important;
+    display: none !important;
     margin-top: 10px;
     margin-right: 30px;
     margin-bottom: 10px;
   }
 
   .defaultFilter {
-    display: none !important;
+    display: block !important;
   }
 
   .btnSaveHeadCE {
@@ -192,9 +203,66 @@
   .EDTxtVATxtBox {
     font-size: 14px;
   }
+
+  .firstdiv .md-datepicker-input-container, .seconddiv .md-datepicker-input-container {
+    width: 90px !important;
+  }
+
+  .firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input {
+    font-size: 16px !important;
+  }
+
+  md-ink-bar {
+    bottom: 10px !important;
+  }
+
+  .infoOptionIcon {
+    float: right !important;
+  }
+
+  .ticketChkBoxCon {
+    display: block !important;
+    margin-left: unset !important;
+  }
 }
 
 @media (max-width: 399px) {
+  .ticketChkBoxCon {
+    display: block !important;
+    margin-left: unset !important;
+  }
+
+  .infoOptionIcon {
+    float: right !important;
+  }
+
+  .moreOptionTxt, .buyerTotalTxt {
+    font-size: 12px !important;
+  }
+
+  md-ink-bar {
+    bottom: 10px !important;
+  }
+
+  .firstdiv .md-datepicker-input-container, .seconddiv .md-datepicker-input-container {
+    width: 90px !important;
+  }
+
+  .firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input {
+    font-size: 16px !important;
+  }
+
+  .headerCEHeadBtn {
+    text-align: unset !important;
+    margin: unset !important;
+    padding-left: 10px !important;
+  }
+
+  .btnMakeLiveHeadCE {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
   .pickupDateContainer {
     min-width: 300px !important;
   }
@@ -207,9 +275,23 @@
     margin-left: 0px !important;
   }
 
-  .textAreaHeight {
+  .EDTxtEventName .textAreaHeight {
+    font-size: 30px !important;
     height: 80px !important;
   }
+
+  .EDTxtVenueName .textAreaHeight {
+    font-size: 18px !important;
+  }
+
+  .EDTxtVATxtBox {
+    font-size: 14px !important;
+  }
+  /*Setting font size of pickupdate*/
+  .pickuptimeTxt {
+    font-size: 13px !important;
+  }
+
 
   .totalCapacity {
     margin-right: 10px !important;
@@ -221,14 +303,14 @@
   }
 
   .responsiveFilter {
-    display: block !important;
+    display: none !important;
     margin-top: 10px;
     margin-right: 30px;
     margin-bottom: 10px;
   }
 
   .defaultFilter {
-    display: none !important;
+    display: block !important;
   }
 
   .btnSaveHeadCE {
@@ -299,6 +381,11 @@
   .topButtons {
     display: none;
   }
+}
+
+
+.ticketChkBoxCon {
+  margin-left: 15px;
 }
 
 .TicketOptions {

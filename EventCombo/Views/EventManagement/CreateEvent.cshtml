@@ -325,6 +325,12 @@
         </div>
         <div class="OrganizerBody">
 
+          <span style="float: right; text-transform:uppercase; cursor: pointer; display: block; margin-right: 20px;" ng-click="callImageClick('tellusImage'); $event.stopPropagation();" class="noOutline defaultFilter">
+            <span style="display: inline-block;float: left;padding-right: 15px;">Have a flyer? Upload it here</span>
+            <i class="material-icons" style="margin-left: -10px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">add_a_photo</i>
+            <input type="file" name="tellusimage" id="tellusImage" accept="image/*" style="display: none;" custom-on-change="uploadEventImage" />
+          </span>
+
           <div class="organiserDiv md-padding">
 
             <md-input-container style="margin-right: 10px;">
@@ -354,12 +360,6 @@
               </md-select>
             </md-input-container>
 
-            <span style="float: right; text-transform:uppercase; cursor: pointer; display: block; margin-right: 20px;" ng-click="callImageClick('tellusImage'); $event.stopPropagation();" class="noOutline defaultFilter">
-              <span style="display: inline-block;float: left;padding-right: 15px;">Have a flyer? Upload it here</span>
-              <i class="material-icons" style="margin-left: -10px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">add_a_photo</i>
-              <input type="file" name="tellusimage" id="tellusImage" accept="image/*" style="display: none;" custom-on-change="uploadEventImage" />
-            </span>
-
           </div>
           <div class="More">
             <textarea class="textArea" ui-tinymce="tinymceOptions" ng-model="eventInfo.EventDescription">
@@ -369,7 +369,7 @@
           <div style="height: 150px;">
             <div style="margin-top: 10px; float: right;">
               <span style="text-transform:uppercase; cursor: pointer;display: none;" ng-click="callImageClick('tellusImage'); $event.stopPropagation();" class="noOutline responsiveFilter">
-                <span style="display: inline-block;float: left;padding-right: 15px;">Have a filter?upload it here</span>
+                <span style="display: inline-block;float: left;padding-right: 15px;">Have a flyer? Upload it here</span>
                 <i class="material-icons" style="margin-left: -10px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">add_a_photo</i>
                 <input type="file" name="tellusimage" id="tellusImage" accept="image/*" style="display: none;" custom-on-change="uploadEventImage" />
               </span>
