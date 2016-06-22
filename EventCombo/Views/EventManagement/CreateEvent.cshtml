@@ -290,7 +290,11 @@
         </div>
       </div>
       <div class="OrganizerBody">
-
+          <span style="float: right; text-transform:uppercase; cursor: pointer; display: block; margin-right: 20px;" ng-click="callImageClick('tellusImage'); $event.stopPropagation();" class="noOutline defaultFilter">
+              <span style="display: inline-block;float: left;padding-right: 15px;">Have a flyer?upload it here</span>
+              <i class="material-icons" style="margin-left: -10px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">add_a_photo</i>
+              <input type="file" name="tellusimage" id="tellusImage" accept="image/*" style="display: none;" custom-on-change="uploadEventImage" />
+          </span>
         <div class="organiserDiv md-padding">
 
           <md-input-container style="margin-right: 10px;">
@@ -314,11 +318,7 @@
             </md-select>
           </md-input-container>
 
-          <span style="float: right; text-transform:uppercase; cursor: pointer; display: block;" ng-click="callImageClick('tellusImage'); $event.stopPropagation();" class="noOutline defaultFilter">
-            <span style="display: inline-block;float: left;padding-right: 15px;">Have a filter?upload it here</span>
-            <i class="material-icons" style="margin-left: -10px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">add_a_photo</i>
-            <input type="file" name="tellusimage" id="tellusImage" accept="image/*" style="display: none;" custom-on-change="uploadEventImage" />
-          </span>
+       
 
         </div>
         <div class="More">
@@ -329,7 +329,7 @@
         <div style="height: 150px;">
           <div style="margin-top: 10px; float: right;">
               <span style="text-transform:uppercase; cursor: pointer;display: none;" ng-click="callImageClick('tellusImage'); $event.stopPropagation();" class="noOutline responsiveFilter">
-                  <span style="display: inline-block;float: left;padding-right: 15px;">Have a filter?upload it here</span>
+                  <span style="display: inline-block;float: left;padding-right: 15px;">Have a flyer?upload it here</span>
                   <i class="material-icons" style="margin-left: -10px;color: #858585;display: inline-block;position: absolute;margin-top: -5px;">add_a_photo</i>
                   <input type="file" name="tellusimage" id="tellusImage" accept="image/*" style="display: none;" custom-on-change="uploadEventImage" />
               </span>
@@ -494,11 +494,14 @@
                           <div layout="row">
                               <div flex>
                                   <a class="showHideOptionCls" href="javascript:void(0)" ng-click="ticket.expandedOptions = !ticket.expandedOptions" ng-init="ticket.expandedOptions = false">
-                                      <span class="arrowDownOptions">
-                                          <i class="material-icons moreOptionright" ng-show="!ticket.expandedOptions">keyboard_arrow_right</i>
-                                          <i class="material-icons moreOptiondown" ng-show="ticket.expandedOptions">keyboard_arrow_down</i>
+                                  
+                                      <span class="moreOptionTxt" style="vertical-align: middle">
+                                          <span class="arrowDownOptions" style="float: left;">
+                                              <i class="material-icons moreOptionright" ng-show="!ticket.expandedOptions">keyboard_arrow_right</i>
+                                              <i class="material-icons moreOptiondown" ng-show="ticket.expandedOptions">keyboard_arrow_down</i>
+                                          </span>
+                                      More Options
                                       </span>
-                                      <span class="moreOptionTxt">More Options</span>
                                   </a>
                               </div>
                               <div flex style="position: relative;" ng-show="ticket.TicketTypeID == 2">
@@ -530,7 +533,7 @@
                           <div class="ticketChkBoxCon">
                               <md-input-container>
                                   <label class="ticketDespTxtBoxLbl">Fee</label>
-                                  <md-select style="width: 300px;" ng-model="ticket.Fees_Type" ng-change="onPriceChange(ticket)">
+                                  <md-select style="width: 204px;" ng-model="ticket.Fees_Type" ng-change="onPriceChange(ticket)">
                                       <md-option value="0">Customer pays the fees</md-option>
                                       <md-option value="1">I absorb the fee</md-option>
                                   </md-select>
@@ -541,10 +544,11 @@
                                   <label class="ticketDespTxtBoxLbl">Enter Ticket Description</label>
                                   <input ng-model="ticket.T_Desc" class="ticketDespTxtBoxCls" />
                               </md-input-container>
+                              <span class="ticketChkBoxCon">
+                                  <md-checkbox class="blue" ng-model="ticket.Show_T_Desc" ng-true-value="'1'" ng-false-value="'0'">Show on event page</md-checkbox>
+                              </span>
                           </div>
-                          <div class="ticketChkBoxCon">
-                              <md-checkbox class="blue" ng-model="ticket.Show_T_Desc" ng-true-value="'1'" ng-false-value="'0'">Show ticket description on the event page</md-checkbox>
-                          </div>
+                        
                           <div class="ticketStartEndDate">
                               <div class="date-picker-row" flex-gt-sm>
                                   <label>Start Date</label>
