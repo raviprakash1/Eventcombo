@@ -17,14 +17,14 @@
     }
        .responsiveFilter
        {
-           display: block !important;
+           display: none !important;
            margin-top: 10px;
            margin-right: 30px;
            margin-bottom: 10px;
        }
        .defaultFilter
        {
-           display: none !important;
+           display: block !important;
        }
        .wholegallery
        {
@@ -55,14 +55,14 @@
      
        .responsiveFilter
        {
-           display: block !important;
+           display: none !important;
            margin-top: 10px;
            margin-right: 30px;
            margin-bottom: 10px;
        }
        .defaultFilter
        {
-           display: none !important;
+           display: block !important;
        }
     .OrganizerBody
     {
@@ -138,14 +138,14 @@
        }
         .responsiveFilter
        {
-           display: block !important;
+           display: none !important;
            margin-top: 10px;
            margin-right: 30px;
            margin-bottom: 10px;
        }
        .defaultFilter
        {
-           display: none !important;
+           display: block !important;
        }
        .btnSaveHeadCE
     {
@@ -225,9 +225,21 @@ color-picker-wrapper .color-picker-panel.color-picker-panel-left {
      md-ink-bar{
          bottom: 10px !important;
      }
+     .infoOptionIcon
+     {
+         float: right !important;
+     }
 
 }
 @media (max-width: 399px){
+    .infoOptionIcon
+    {
+        float: right !important;
+    }
+    .moreOptionTxt, .buyerTotalTxt
+    {
+        font-size: 12px !important;
+    }
     md-ink-bar
     {
         bottom: 10px !important;
@@ -296,14 +308,14 @@ color-picker-wrapper .color-picker-panel.color-picker-panel-left {
        }  
      .responsiveFilter
        {
-           display: block !important;
+           display: none !important;
            margin-top: 10px;
            margin-right: 30px;
            margin-bottom: 10px;
        }
        .defaultFilter
        {
-           display: none !important;
+           display: block !important;
        }
     
      .btnSaveHeadCE
