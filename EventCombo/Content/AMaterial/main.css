@@ -229,9 +229,19 @@ color-picker-wrapper .color-picker-panel.color-picker-panel-left {
      {
          float: right !important;
      }
+     .ticketChkBoxCon
+     {
+         display: block !important;
+         margin-left: unset !important;
+     }
 
 }
 @media (max-width: 399px){
+    .ticketChkBoxCon
+    {
+        display: block!important;
+        margin-left: unset !important;
+    }
     .infoOptionIcon
     {
         float: right !important;
@@ -395,7 +405,10 @@ color-picker-wrapper .color-picker-panel.color-picker-panel-left {
 }
 
 
-
+.ticketChkBoxCon
+{
+   margin-left: 15px;
+}
 
 .TicketOptions
 {
