@@ -377,7 +377,7 @@ namespace EventCombo.Controllers
 
         public long SaveEvent(EventCreation model)
         {
-            long lEventId = 0;
+            long lEventId = 0; string strEventTitle="";
             string lat="", lon="";
             ViewEvent vc = new ViewEvent();
             EventCreation obj = new EventCreation();
@@ -396,7 +396,7 @@ namespace EventCombo.Controllers
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
                     Event ObjEC = new Event();
-
+                    strEventTitle = model.EventTitle;
                     ObjEC.EventTypeID = model.EventTypeID;
                     ObjEC.EventCategoryID = model.EventCategoryID;
                     ObjEC.EventSubCategoryID = model.EventSubCategoryID;
@@ -925,8 +925,14 @@ namespace EventCombo.Controllers
                                             bodyn = bodyn.Replace("¶¶EventOrganiserNumber¶¶", Organiserphn);
 
                                         }
-
+                                    if (EmailTag[i].Tag_Name == "DiscoverEventurl")
+                                    {
+                                        var url = Request.Url;
+                                        var baseurl = url.GetLeftPart(UriPartial.Authority);
+                                        string strUrl = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(strEventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(lEventId).ToString() });
+                                        bodyn = bodyn.Replace("¶¶DiscoverEventurl¶¶", strUrl);
                                     }
+                                }
 
                                 }
                             }

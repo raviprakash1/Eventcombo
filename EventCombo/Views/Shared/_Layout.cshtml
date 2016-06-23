@@ -185,10 +185,10 @@
             @*@Html.ActionLink("Discover Events", "DiscoverEvents", "Home")*@
             <a href="javascript:void(0)" onclick="setsession(this.id);" id='discover'>Discover Events</a>
           </div>
-          <div class="col-sm-2 disc_title_head"><a href="@Url.Action("Buzz", "Article")" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a></div>
+          <div class="col-sm-2 disc_title_head"><a href="@Url.Action("Buzz", "Article")" onclick="return setsession(this.id);" id='GetBuzz'>Get the Buzz</a></div>
           <div class="col-sm-5 frnt_cret_evnt">
             <div class="psst">
-              <a href="javascript:void(0)" onclick="checksession();">Create Event</a>
+              <a href="@Url.Action("CreateEvent", "EventManagement")" onclick="return checksession();">Create Event</a>
             </div>
 
 
@@ -240,14 +240,11 @@
                     @*@Html.ActionLink("Discover Events", "DiscoverEvents", "Home")*@
                     <a href="javascript:void(0)" onclick="setsession(this.id);" id='discover'>Discover Events</a>
                   </div>
-                  <div class="col-sm-2 disc_title_head"><a href="javascript:void(0)" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a>@*@Html.ActionLink("", "GetBuzz", "Home")*@  </div>
+                  <div class="col-sm-2 disc_title_head"><a href="@Url.Action("Buzz", "Article")" onclick="return setsession(this.id);" id='GetBuzz'>Get the Buzz</a></div>
                   <div class="col-sm-5 frnt_cret_evnt">
                     <div class="psst">
-                      <a href="javascript:void(0)" onclick="checksession();">Create Event</a>
-
+                      <a href="@Url.Action("CreateEvent", "EventManagement")" onclick="return checksession();">Create Event</a>
                     </div>
-
-
                   </div>
 
                 </div>
@@ -673,12 +670,16 @@
             url: '@Url.Action("setsessid", "Home")',
             data: { id: e },
             type: "Post",
+            async: false,
             success: function (data) {
 
+<<<<<<< HEAD
             },
             error: function (data) {
              
                 return false
+=======
+>>>>>>> 39f0b45af2649f9ee8f4f1aeb66ed30d0420a06b
             }
         });
 
@@ -739,14 +740,7 @@
 
 
         }
-
-        if (e == "GetBuzz") {
-            window.location.href = '@Url.Action("GetBuzz", "Home")';
-
-
-
-
-        }
+      return true;
     }
     $("#signUpPopup").on('click', function () {
         $('#SignupEmail').css("border", "black solid 1px");
@@ -777,11 +771,14 @@
 
 
     function checksession() {
+        var result = false;
         $.ajax({
-            url: '@Url.Action("checkid", "Home")',
-            type: "Post",
-            success: function (data) {
+          url: '@Url.Action("checkid", "Home")',
+          type: "Post",
+          async: false,
+          success: function (data) {
 
+<<<<<<< HEAD
                 if (data == "Y") {
                     $("#loginPopup").click();
                     // url.val('@Url.Action("CreateEvent", "CreateEvent")');
@@ -796,9 +793,16 @@
             error: function (data) {
               
                 return false
+=======
+            if (data == "Y") {
+              $("#loginPopup").click();
+            } else {
+              result = true;
+>>>>>>> 39f0b45af2649f9ee8f4f1aeb66ed30d0420a06b
             }
+          }
         });
-
+        return result;
     }
 </script>
 
