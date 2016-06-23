@@ -175,6 +175,14 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         $scope.saveDateTime();
     }
 
+    $scope.cutOff = function (string, length) {
+      if (!string)
+        return string;
+      if (length <= 0)
+        return string;
+      return string.substring(0, length);
+    }
+
     $scope.onCategoryChange = function () {
       $scope.subCategories = [];
       $scope.eventInfo.EventCategoryList.forEach(function (cat, i, arr) {
@@ -184,8 +192,10 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     }
 
     $scope.startDateChange = function () {
+      console.debug($scope.tempDateInfo.startingDate);
+      console.debug($scope.tempDateInfo.endingDate);
       if ($scope.tempDateInfo.endingDate < $scope.tempDateInfo.startingDate)
-        $scope.tempDateInfo.endingDate = new Date($scope.stempDateInfo.tartingDate.getFullYear(),
+        $scope.tempDateInfo.endingDate = new Date($scope.tempDateInfo.startingDate.getFullYear(),
           $scope.tempDateInfo.startingDate.getMonth(), $scope.tempDateInfo.startingDate.getDate());
     }
 
@@ -223,8 +233,6 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     }
 
     $scope.organizerAdd = function () {
-      $scope.OrganizerForm.$setPristine();
-      $scope.OrganizerForm.$setUntouched();
       var i = Math.max.apply(Math, $scope.eventInfo.OrganizerList.map(function (o) { return o.InternalId; }));
       $scope.eventInfo.CurrentOrganizer = {
         Orgnizer_Id: 0,
@@ -241,6 +249,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         IncludeSocialLinks: false,
         ECImageId: null,
         InternalId: i + 1,
+        Validate: false,
         Image: {
           Id: 0,
           ImageType: 0,
@@ -250,6 +259,8 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         }
       };
       $scope.organizerEditState = "Add";
+      $scope.OrganizerForm.$setPristine();
+      $scope.OrganizerForm.$setUntouched();
     }
 
     $scope.editOrganiser = function () {
@@ -267,6 +278,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
           Organizer_FBLink: org[0].Organizer_FBLink,
           Organizer_Twitter: org[0].Organizer_Twitter,
           Organizer_Linkedin: org[0].Organizer_Linkedin,
+          Validate: false,
           Image: {
             Id: org[0].Image.Id,
             ImageType: org[0].Image.ImageType,
@@ -276,12 +288,13 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
           }
         };
         $scope.organizerEditState = "Edit";
+        $scope.OrganizerForm.$setPristine();
         $scope.OrganizerForm.$setUntouched();
       }
     }
 
     $scope.saveNewOrganizer = function () {
-      $scope.OrganizerForm.$setSubmitted();
+      $scope.eventInfo.CurrentOrganizer.Validate = true;
       if (isEmptyOrSpaces($scope.eventInfo.CurrentOrganizer.Orgnizer_Name) || isEmptyOrSpaces($scope.eventInfo.CurrentOrganizer.Organizer_Email))
         return;
       var doubleObj = $scope.eventInfo.OrganizerList.filter(function (obj) {
@@ -306,7 +319,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     }
 
     $scope.saveEditedOrganizer = function () {
-      $scope.OrganizerForm.$setSubmitted();
+      $scope.eventInfo.CurrentOrganizer.Validate = true;
       if (isEmptyOrSpaces($scope.eventInfo.CurrentOrganizer.Orgnizer_Name) || isEmptyOrSpaces($scope.eventInfo.CurrentOrganizer.Organizer_Email)) {
         return;
       }
@@ -431,6 +444,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
 
       ticket.expandedOptions = form.ticketStartDate.$error.mindate ||
         form.ticketEndDate.$error.mindate ||
+        form.TicketDescription.$error.maxlength ||
         ((ticket.T_AutoSechduleType == 1) && !hideDatesValid);
     }
 
@@ -457,6 +471,11 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     }
 
     $scope.previewEvent = function () {
+      var elem = $scope.validateEvent();
+      if (!elem.valid) {
+        alert("Form contain invalid data. Please, check all fields.");
+        return;
+      }
     }
 
     $scope.publishEvent = function () {
@@ -529,14 +548,19 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
         var hideDatesValid = ((ticket.useUntilDate == 1) && ticket.localHideUntilDate && (ticket.localHideUntilDate >= $scope.minDate)) ||
             ((ticket.useAfterDate == 1) && ticket.localHideAfterDate && (ticket.localHideAfterDate >= $scope.minDate));
-        if (!ticket.T_name ||
-            (ticket.T_name.trim().length == 0) ||
+        if (($scope.MainForm['TicketForm_' + i].TicketName.$error) ||
             (ticket.Qty_Available <= 0) ||
             (ticket.localSaleStartDate && (ticket.localSaleStartDate < $scope.minDate)) ||
             (ticket.localSaleEndDate && (ticket.localSaleEndDate < $scope.minDate)) ||
+            ($scope.MainForm['TicketForm_' + i].TicketDescription.$error) ||
             ((ticket.T_AutoSechduleType == 1) && !hideDatesValid))
           elem.valid = false;
       });
+      if ($scope.eventInfo.Ticket_showvariable == 'Y')
+        $scope.eventInfo.VariableChargesList.forEach(function (varcharge, i, arr) {
+          if ($scope.MainForm['VarChargeForm_' + i].variableChargeDescription.$error)
+            elem.valid = false;
+        });
       return elem;
     }
 
@@ -552,6 +576,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     }
 
     $scope.checkTempDateInfo = function () {
+      console.debug($scope.MainForm.singleStartDate);
       var result = {
         valid: true,
         notselected: $scope.tempDateInfo.IsNewDate,
@@ -718,6 +743,25 @@ createEventApp.directive('customOnChange', function () {
     }
   };
 });
+
+createEventApp.directive('ecMaxlength', ['$compile', function ($compile) {
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function (scope, elem, attrs, ctrl) {
+      attrs.$set("ngTrim", "false");
+      var maxlength = parseInt(attrs.ecMaxlength, 10);
+      ctrl.$parsers.push(function (value) {
+        if (value.length > maxlength) {
+          value = value.substr(0, maxlength);
+          ctrl.$setViewValue(value);
+          ctrl.$render();
+        }
+        return value;
+      });
+    }
+  };
+}]);
 
 createEventApp.controller('CreateEventHeaderController', ['$scope', function ($scope, $http) {
   $scope.showAccountDiv = function () {

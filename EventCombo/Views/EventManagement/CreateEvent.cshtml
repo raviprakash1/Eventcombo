@@ -105,26 +105,29 @@
           <div class="eventDetailTxtFields" style="opacity: 0.8;">
             <div class="eventDtkHeadCon">
               <div class="EDTxtEventName">
-                <textarea ng-model="eventInfo.EventTitle" name="eventTitle" id="eventTitle" placeholder="Enter the name of your event here" class="EDTxtENTxtBox textAreaHeight" required ng-maxlength="256"></textarea>
-                <div ng-messages="MainForm.eventTitle.$error" class="validation-standard-messages" ng-show="MainForm.eventTitle.$touched || !MainForm.eventTitle.$pristine || formValidation">
-                  <div ng-message="required">Event name is required.</div>
-                  <div ng-message="maxlength">Maximum length of event name is 256 characters.</div>
+                <textarea ng-model="eventInfo.EventTitle" name="eventTitle" id="eventTitle" 
+                          placeholder="Enter the name of your event here" class="EDTxtENTxtBox textAreaHeight"
+                          ec-maxlength="256" required ng-maxlength="256"></textarea>
+                <div class="validation-standard-messages" ng-show="MainForm.eventVenueName.$touched || !MainForm.eventTitle.$pristine || formValidation">
+                  <div ng-show="MainForm.eventTitle.$error.required">Event name is required.</div>
+                  <div ng-show="MainForm.eventTitle.$error.maxlength">Maximum length of event name is 256 characters.</div>
                 </div>
               </div>
 
               <div class="EDTxtVenueName" ng-show="!eventInfo.OnlineEvent">
-                <textarea ng-model="eventInfo.VenueName" placeholder="Enter the venue name here" name="eventVenueName" class="EDTxtVNTxtBox textAreaHeight" required ng-maxlength="256"></textarea>
-                <div ng-messages="MainForm.eventVenueName.$error" class="validation-standard-messages" ng-show="MainForm.eventVenueName.$touched || !MainForm.eventVenueName.$pristine || formValidation">
-                  <div ng-message="required">Event venue name is required.</div>
-                  <div ng-message="maxlength">Maximum length of event name is 256 characters.</div>
+                <textarea ng-model="eventInfo.VenueName" placeholder="Enter the venue name here" name="eventVenueName"
+                          class="EDTxtVNTxtBox textAreaHeight" required ng-maxlength="256" ec-maxlength="256"></textarea>
+                <div class="validation-standard-messages" ng-show="MainForm.eventVenueName.$touched || !MainForm.eventVenueName.$pristine || formValidation">
+                  <div ng-show="MainForm.eventVenueName.$error.required">Event venue name is required.</div>
+                  <div ng-show="MainForm.eventVenueName.$error.maxlength">Maximum length of event name is 256 characters.</div>
                 </div>
               </div>
 
               <div class="EDTxtVenueAddress" ng-show="!eventInfo.OnlineEvent">
                 <i class="material-icons" style="position:absolute;">place</i>
                 <input type="text" ng-model="eventInfo.Address" name="eventAddress" placeholder="Enter venue address" class="EDTxtVATxtBox" googleplace required />
-                <div ng-messages="MainForm.eventAddress.$error" class="validation-standard-messages" ng-show="MainForm.eventAddress.$touched || formValidation">
-                  <div ng-message="required">Event address is required.</div>
+                <div class="validation-standard-messages" ng-show="MainForm.eventAddress.$touched || !MainForm.eventAddress.$pristine || formValidation">
+                  <div ng-show="MainForm.eventAddress.$error.required">Event address is required.</div>
                 </div>
               </div>
 
@@ -177,9 +180,10 @@
                         <div class="date-picker-row" flex-gt-sm>
                           <label>Start Date</label>
                           <md-datepicker name="singleStartDate" ng-model="tempDateInfo.startingDate"
-                                         ng-change="startDateChange();" md-min-date="minDate"></md-datepicker>
-                          <div class="validation-datepicker-messages" ng-messages="MainForm.singleStartDate.$error">
-                            <div ng-message="mindate">Date is too early.</div>
+                                         ng-change="startDateChange();" md-min-date="minDate" required></md-datepicker>
+                          <div class="validation-datepicker-messages" ng-show="MainForm.singleStartDate.$touched || !MainForm.singleStartDate.$pristine || formValidation || dateInfoTouched">
+                            <div ng-show="!MainForm.singleStartDate.$valid && !MainForm.singleStartDate.$error.mindate">Please, select or enter date.</div>
+                            <div ng-show="MainForm.singleStartDate.$error.mindate">Date is too early.</div>
                           </div>
                         </div>
                         <md-input-container style="margin-right: 10px; margin-left: 20px;">
@@ -193,9 +197,10 @@
                       <div class="date-picker-row" flex-gt-sm>
                         <label>End Date</label>
                         <md-datepicker name="singleEndDate" ng-model="tempDateInfo.endingDate"
-                                       ng-change="endDateChange();" md-min-date="minDate"></md-datepicker>
-                        <div class="validation-datepicker-messages" ng-messages="MainForm.singleEndDate.$error">
-                          <div ng-message="mindate">Date is too early.</div>
+                                       ng-change="endDateChange();" md-min-date="minDate" required></md-datepicker>
+                        <div class="validation-datepicker-messages" ng-show="MainForm.singleEndDate.$touched || !MainForm.singleEndDate.$pristine || formValidation || dateInfoTouched">
+                          <div ng-show="!MainForm.singleEndDate.$valid &&!MainForm.singleEndDate.$error.mindate">Please, select or enter date.</div>
+                          <div ng-show="MainForm.singleEndDate.$error.mindate">Date is too early.</div>
                         </div>
                       </div>
                       <md-input-container style="margin-right: 10px; margin-left: 20px;">
@@ -207,10 +212,10 @@
                     <div class="thirddiv" style="float: left;">
                       <md-input-container style="margin-right: 10px;">
                         <label>Time Zone</label>
-                        <md-select ng-model="tempDateInfo.TimeZone">
+                        <md-select ng-model="tempDateInfo.TimeZone" name="singleTimeZone">
                           <md-option ng-repeat="tzone1 in eventInfo.TimeZones" ng-value="tzone1.TimeZoneId">{{tzone1.TimeZoneName}}</md-option>
                         </md-select>
-                        <div class="validation-standard-messages" ng-show="(dateInfoTouched  || formValidation) && !tempDateInfo.TimeZone">
+                        <div class="validation-standard-messages" ng-show="(MainForm.singleTimeZone.$touched || dateInfoTouched  || formValidation) && !tempDateInfo.TimeZone">
                           You need to select timezone for event.
                         </div>
                       </md-input-container>
@@ -244,17 +249,19 @@
                         <div class="date-picker-row" flex-gt-sm>
                           <label>Start Date</label>
                           <md-datepicker name="multiStartDate" ng-model="tempDateInfo.startingDate"
-                                         ng-change="startDateChange();" md-min-date="minDate"></md-datepicker>
-                          <div class="validation-datepicker-messages" ng-messages="MainForm.multiStartDate.$error">
-                            <div ng-message="mindate">Date is too early.</div>
+                                         ng-change="startDateChange();" md-min-date="minDate" required></md-datepicker>
+                          <div class="validation-datepicker-messages" ng-show="MainForm.multiStartDate.$touched || !MainForm.multiStartDate.$pristine || formValidation || dateInfoTouched">
+                            <div ng-show="!MainForm.multiStartDate.$valid &&!MainForm.multiStartDate.$error.mindate">Please, select or enter date.</div>
+                            <div ng-show="MainForm.multiStartDate.$error.mindate">Date is too early.</div>
                           </div>
                         </div>
                         <div class="date-picker-row" flex-gt-sm>
                           <label>End Date</label>
                           <md-datepicker name="multiEndDate" ng-model="tempDateInfo.endingDate"
-                                         ng-change="endDateChange();" md-min-date="minDate"></md-datepicker>
-                          <div class="validation-datepicker-messages" ng-messages="MainForm.multiEndDate.$error">
-                            <div ng-message="mindate">Date is too early.</div>
+                                         ng-change="endDateChange();" md-min-date="minDate" required></md-datepicker>
+                          <div class="validation-datepicker-messages" ng-show="MainForm.multiStartDate.$touched || !MainForm.multiStartDate.$pristine || formValidation || dateInfoTouched">
+                            <div ng-show="!MainForm.multiEndDate.$valid &&!MainForm.multiEndDate.$error.mindate">Please, select or enter date.</div>
+                            <div ng-show="MainForm.multiEndDate.$error.mindate">Date is too early.</div>
                           </div>
                         </div>
                       </div>
@@ -287,10 +294,10 @@
                       <div class="time-zone" ng-show="tempDateInfo.occurence != 'Single'">
                         <md-input-container style=" margin-right:10px;">
                           <label>Time Zone</label>
-                          <md-select ng-model="tempDateInfo.TimeZone">
+                          <md-select ng-model="tempDateInfo.TimeZone" name="multiTimeZone">
                             <md-option ng-repeat="tzone2 in eventInfo.TimeZones" ng-value="tzone2.TimeZoneId">{{tzone2.TimeZoneName}}</md-option>
                           </md-select>
-                          <div class="validation-standard-messages" ng-show="(dateInfoTouched  || formValidation) && !tempDateInfo.TimeZone">
+                          <div class="validation-standard-messages" ng-show="(MainForm.multiTimeZone.$touched || dateInfoTouched  || formValidation) && !tempDateInfo.TimeZone">
                             You need to select timezone for event.
                           </div>
                         </md-input-container>
@@ -404,7 +411,7 @@
           </div>
 
           <div class="organiserDiv md-padding">
-            <md-input-container style="margin-right: 10px;">
+            <md-input-container style="margin-right: 10px; min-width: 140px">
               <label>Select Organizer</label>
               <md-select ng-model="eventInfo.InternalOrganizerId" name="selectOrganizer" required>
                 <md-option ng-repeat="org in eventInfo.OrganizerList" value="{{org.InternalId}}">{{org.Orgnizer_Name}}</md-option>
@@ -423,18 +430,17 @@
               <md-input-container>
                 <label class="organizerText">Organizer Name</label>
                 <input class="websiteURLTxtboxCls1" name="organizerName" ng-model="eventInfo.CurrentOrganizer.Orgnizer_Name" required />
-                <div ng-messages="OrganizerForm.organizerName.$error" ng-show="OrganizerForm.organizerName.$touched">
-                  <div ng-message="required">Organizer name is required.</div>
+                <div class="validation-standard-messages" ng-show="OrganizerForm.organizerName.$touched || !OrganizerForm.organizerName.$pristine || eventInfo.CurrentOrganizer.Validate">
+                  <div ng-show="OrganizerForm.organizerName.$error.required">Organizer name is required.</div>
                 </div>
               </md-input-container>
 
               <md-input-container>
                 <label class="organizerText">Organizer Email</label>
                 <input type="email" name="organizerEmail" class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_Email" required />
-                <div ng-messages="OrganizerForm.organizerEmail.$error"
-                     ng-show="(OrganizerForm.organizerEmail.$error.email || OrganizerForm.organizerEmail.$error.required) && OrganizerForm.organizerEmail.$touched">
-                  <div ng-message="required">Organizer email is required.</div>
-                  <div ng-message="email">This field must be a valid email address.</div>
+                <div class="validation-standard-messages" ng-show="OrganizerForm.organizerEmail.$touched || !OrganizerForm.organizerEmail.$pristine || eventInfo.CurrentOrganizer.Validate">
+                  <div ng-show="OrganizerForm.organizerEmail.$error.required">Organizer email is required.</div>
+                  <div ng-show="OrganizerForm.organizerEmail.$error.email">This field must be a valid email address.</div>
                 </div>
               </md-input-container>
 
@@ -504,7 +510,7 @@
           <div class="ticketSubDivContainer">
 
             <div class="paidTicketContentCo" drag-drop-elements ng-class="{{$index}}" ng-repeat="ticket in eventInfo.TicketList">
-              <ng-form name="TicketForm">
+              <ng-form name="TicketForm_{{$index}}">
                 <div class="paidTicketContentCoHeader">
                   <div layout="row" layout-xs="column">
                     <span class="iconDragItem" draggable="true">
@@ -513,9 +519,11 @@
                     <div flex>
                       <md-input-container class="ticketContTxtBox">
                         <label class="ticketNameLbl">Enter Ticket Name</label>
-                        <input class="ticketNameLblTxtboxCls" name="TicketName" ng-model="ticket.T_name" required />
-                        <div ng-messages="TicketForm.TicketName.$error" ng-show="TicketForm.TicketName.$touched || formValidation">
-                          <div ng-message="required">Ticket name is required.</div>
+                        <input class="ticketNameLblTxtboxCls" name="TicketName" ng-model="ticket.T_name"
+                               required ng-maxlength="256" ec-maxlength="256" />
+                        <div class="validation-standard-messages" ng-show="{{'TicketForm_'+$index}}.TicketName.$touched || !{{'TicketForm_'+$index}}.TicketName.$pristine || formValidation || ticket.ticketValidation">
+                          <div ng-show="{{'TicketForm_'+$index}}.TicketName.$error.required">Ticket name is required.</div>
+                          <div ng-show="{{'TicketForm_'+$index}}.TicketName.$error.maxlength">Maximum length of ticket name is 256 characters.</div>
                         </div>
                       </md-input-container>
                     </div>
@@ -523,8 +531,8 @@
                       <md-input-container class="ticketContTxtBox qualityMdCon">
                         <label class="ticketQualityLbl">Quantity</label>
                         <input input type="text" name="quantityAvailable" ng-model="ticket.Qty_Available" class="ticketQualityLblTxtboxCls" ng-blur="onQtyBlur(ticket)" required numbers-only positive-validation />
-                        <div ng-messages="TicketForm.quantityAvailable.$error" ng-show="TicketForm.quantityAvailable.$touched || formValidation">
-                          <div ng-message="positive">Quantity must be greater then zero.</div>
+                        <div class="validation-standard-messages" ng-show="{{'TicketForm_'+$index}}.quantityAvailable.$touched || !{{'TicketForm_'+$index}}.quantityAvailable.$pristine || formValidation || ticket.ticketValidation">
+                          <div ng-show="{{'TicketForm_'+$index}}.quantityAvailable.$error.positive">Quantity must be greater then zero.</div>
                         </div>
                       </md-input-container>
                     </div>
@@ -551,7 +559,7 @@
                   </div>
                   <div layout="row">
                     <div flex>
-                      <a class="showHideOptionCls" href="javascript:void(0)" ng-click="onExpandTicketClick(ticket, TicketForm);" ng-init="ticket.expandedOptions = false">
+                      <a class="showHideOptionCls" href="javascript:void(0)" ng-click="onExpandTicketClick(ticket, 'TicketForm_'+$index);" ng-init="ticket.expandedOptions = false">
                         <span class="moreOptionTxt" style="vertical-align: middle">
                           <span class="arrowDownOptions" style="float: left;">
                             <i class="material-icons moreOptionright" ng-show="!ticket.expandedOptions">keyboard_arrow_right</i>
@@ -599,7 +607,11 @@
                   <div class="ticketDespCon" style="float:left">
                     <md-input-container class="ticketDespTxtBoxCon">
                       <label class="ticketDespTxtBoxLbl">Enter Ticket Description</label>
-                      <input ng-model="ticket.T_Desc" class="ticketDespTxtBoxCls" />
+                      <input ng-model="ticket.T_Desc" name="TicketDescription" class="ticketDespTxtBoxCls" 
+                             ng-maxlength="256" ec-maxlength="256" />
+                      <div class="validation-standard-messages" ng-show="!{{'TicketForm_'+$index}}.TicketDescription.$pristine || formValidation || ticket.ticketValidation">
+                        <div ng-show="{{'TicketForm_'+$index}}.TicketDescription.$error.maxlength">Maximum length of event name is 256 characters.</div>
+                      </div>
                     </md-input-container>
                   </div>
                   <div class="ticketChkBoxCon">
@@ -612,8 +624,9 @@
                       <div class="date-picker-row" flex-gt-sm style="float:left; margin-top: 14px;">
                         <label>Sales start date</label>
                         <md-datepicker name="ticketStartDate" ng-model="ticket.localSaleStartDate" md-min-date="minDate"></md-datepicker>
-                        <div class="validation-datepicker-messages" ng-messages="TicketForm.ticketStartDate.$error">
-                          <div ng-message="mindate">Date is too early.</div>
+                        <div class="validation-datepicker-messages" ng-show="{{'TicketForm_'+$index}}.ticketStartDate.$touched || !{{'TicketForm_'+$index}}.ticketStartDate.$pristine || formValidation || ticket.ticketValidation">
+                          <div ng-show="{{'TicketForm_'+$index}}.ticketStartDate.$error.mindate">Date is too early.</div>
+                          <div ng-show="{{'TicketForm_'+$index}}.ticketStartDate.$error.valid">Please, enter date or leave empty.</div>
                         </div>
                       </div>
                       <md-input-container style="margin-right: 10px; margin-left: 10px; float:left;">
@@ -627,8 +640,9 @@
                       <div class="date-picker-row" flex-gt-sm style="float:left; margin-top: 14px;">
                         <label>Sales end date</label>
                         <md-datepicker name="ticketEndDate" ng-model="ticket.localSaleEndDate" md-min-date="minDate"></md-datepicker>
-                        <div class="validation-datepicker-messages" ng-messages="TicketForm.ticketEndDate.$error">
-                          <div ng-message="mindate">Date is too early.</div>
+                        <div class="validation-datepicker-messages" ng-show="{{'TicketForm_'+$index}}.ticketEndDate.$touched || !{{'TicketForm_'+$index}}.ticketEndDate.$pristine || formValidation || ticket.ticketValidation">
+                          <div ng-show="{{'TicketForm_'+$index}}.ticketEndDate.$error.mindate">Date is too early.</div>
+                          <div ng-show="{{'TicketForm_'+$index}}.ticketEndDate.$error.valid">Please, enter date or leave empty.</div>
                         </div>
                       </div>
                       <md-input-container style="margin-right: 10px; margin-left: 10px; float:left;">
@@ -642,22 +656,22 @@
                   <div class="ticketChkBoxCon clearfix">
                     <md-checkbox class="blue" ng-model="ticket.Hide_Ticket" ng-true-value="'1'" ng-false-value="'0'">Hide this ticket type</md-checkbox>
                   </div>
-                  <div class="ticketChkBoxCon">
+                  <div class="ticketChkBoxCon" ng-show="ticket.Hide_Ticket == 1">
                     <md-radio-group ng-model="ticket.T_AutoSechduleType">
                       <md-radio-button value="0" class="md-primary">When ticket is not on sale</md-radio-button>
                       <md-radio-button value="1" class="md-primary">At custom date and time</md-radio-button>
                     </md-radio-group>
                   </div>
-                  <div class="hideUntilAfterCon" ng-show="ticket.T_AutoSechduleType == 1">
+                  <div class="hideUntilAfterCon" ng-show="(ticket.T_AutoSechduleType == 1) && (ticket.Hide_Ticket == 1)">
                     <div class="date-picker-row" style="margin-left: 0px; float:left; margin-top: 14px;" flex-gt-sm>
                       <label style="margin-left: 40px">Hide until date</label>
-                      <md-checkbox class="blue" ng-model="ticket.useUntilDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useUntilDate = '0'">
-                        <md-datepicker ng-model="ticket.localHideUntilDate" name="ticketHideUntilDate" style="width: 300px !important;" md-min-date="minDate"></md-datepicker>
-                      </md-checkbox>
-                      <div class="validation-datepicker-messages" ng-show="(TicketForm.ticketHideUntilDate.$touched  || formValidation || ticket.ticketValidation)">
+                      <md-checkbox class="blue" ng-model="ticket.useUntilDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useUntilDate = '0'"></md-checkbox>
+                      <md-datepicker ng-model="ticket.localHideUntilDate" name="ticketHideUntilDate" style="width: 300px !important;" md-min-date="minDate"></md-datepicker>
+                      <div class="validation-datepicker-messages" ng-show="({{'TicketForm_'+$index}}.ticketHideUntilDate.$touched  || !{{'TicketForm_'+$index}}.ticketHideUntilDate.$pristine || formValidation || ticket.ticketValidation)">
                         <div ng-show="(ticket.useUntilDate == 1) && (!ticket.localHideUntilDate)">Please, select date.</div>
-                        <div ng-show="(TicketForm.ticketHideUntilDate.$error.mindate)">Date is too early.</div>
+                        <div ng-show="({{'TicketForm_'+$index}}.ticketHideUntilDate.$error.mindate)">Date is too early.</div>
                         <div ng-show="(ticket.useUntilDate != 1) && (ticket.useAfterDate != 1)">Please, select at least one date.</div>
+                        <div ng-show="{{'TicketForm_'+$index}}.ticketHideUntilDate.$error.valid">Please, enter date.</div>
                       </div>
                     </div>
                     <md-input-container style="margin-right: 10px; margin-left: 10px; float:left;">
@@ -672,10 +686,11 @@
                       <md-checkbox class="blue" ng-model="ticket.useAfterDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useAfterDate = '0'">
                         <md-datepicker ng-model="ticket.localHideAfterDate" name="ticketHideAfterDate" md-min-date="minDate"></md-datepicker>
                       </md-checkbox>
-                      <div class="validation-datepicker-messages" ng-show="(TicketForm.ticketHideUntilDate.$touched  || formValidation || ticket.ticketValidation)">
+                      <div class="validation-datepicker-messages" ng-show="({{'TicketForm_'+$index}}.ticketHideUntilDate.$touched  || !{{'TicketForm_'+$index}}.ticketHideUntilDate.$pristine  || formValidation || ticket.ticketValidation)">
                         <div ng-show="(ticket.useAfterDate == 1) && (!ticket.localHideAfterDate)">Please, select date.</div>
-                        <div ng-show="(TicketForm.ticketHideAfterDate.$error.mindate)">Date is too early.</div>
+                        <div ng-show="({{'TicketForm_'+$index}}.ticketHideAfterDate.$error.mindate)">Date is too early.</div>
                         <div ng-show="(ticket.useUntilDate != 1) && (ticket.useAfterDate != 1)">Please, select at least one date.</div>
+                        <div ng-show="{{'TicketForm_'+$index}}.ticketHideAfterDate.$error.valid">Please, enter date.</div>
                       </div>
                     </div>
                     <md-input-container style="margin-right: 10px; margin-left: 10px; float:left;">
@@ -749,33 +764,36 @@
         </md-button>
         <div class="variableOptions">
           <div ng-repeat="varCharge in eventInfo.VariableChargesList">
-            <i class="material-icons" style="float: right;margin-right: 20px; margin-top: 13px; cursor: pointer;" ng-click="deleteVarCharge(varCharge)">clear</i>
-            <div class="variableClass">
-              <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 250px;">
-                <label class="ticketDespTxtBoxLbl">Variable charge description</label>
-                <input class="ticketDespTxtBoxCls" name="variableChargeDescription" ng-model="varCharge.VariableDesc" required />
-                <div ng-messages="MainForm.variableChargeDescription.$error">
-                  <div ng-message="required">Variable charge description is required.</div>
-                </div>
-              </md-input-container>
-              <span style="margin-left: 20px">  $</span>
-            </div>
-            <div class="variableClass">
-              <md-input-container class="ticketDespTxtBoxCon variableType" style="margin-left: 20px; width:150px">
-                <label class="ticketDespTxtBoxLbl">Type</label>
-                <md-select class="ticketDespTxtBoxCls" ng-model="varCharge.Optional">
-                  <md-option ng-repeat="type in vartypes" value="{{type.varId}}">{{type.varName}}</md-option>
-                </md-select>
-              </md-input-container>
-              <span style="margin-left: 20px">  $</span>
-            </div>
-            <div class="variableClass">
-              <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 100px;">
-                <label class="ticketDespTxtBoxLbl variableAmount">Amount</label>
-                <input class="ticketDespTxtBoxCls" type="number" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="1.00" ng-model="varCharge.Price" required />
-              </md-input-container>
-            </div>
-
+            <ng-form name="VarChargeForm_{{$index}}">
+              <i class="material-icons" style="float: right;margin-right: 20px; margin-top: 13px; cursor: pointer;" ng-click="deleteVarCharge(varCharge)">clear</i>
+              <div class="variableClass">
+                <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 250px;">
+                  <label class="ticketDespTxtBoxLbl">Variable charge description</label>
+                  <input class="ticketDespTxtBoxCls" name="variableChargeDescription" ng-model="varCharge.VariableDesc"
+                         required ng-maxlength="256" ec-maxlength="256" />
+                  <div class="validation-standard-messages" ng-show="{{'VarChargeForm_'+$index}}.variableChargeDescription.$touched || !{{'VarChargeForm_'+$index}}.variableChargeDescription.$pristine || formValidation">
+                    <div ng-show="{{'VarChargeForm_'+$index}}.variableChargeDescription.$error.required">Variable charge description is required.</div>
+                    <div ng-show="{{'VarChargeForm_'+$index}}.variableChargeDescription.$error.maxlength">Maximum length of description is 256 characters.</div>
+                  </div>
+                </md-input-container>
+                <span style="margin-left: 20px">  $</span>
+              </div>
+              <div class="variableClass">
+                <md-input-container class="ticketDespTxtBoxCon variableType" style="margin-left: 20px; width:150px">
+                  <label class="ticketDespTxtBoxLbl">Type</label>
+                  <md-select class="ticketDespTxtBoxCls" ng-model="varCharge.Optional">
+                    <md-option ng-repeat="type in vartypes" value="{{type.varId}}">{{type.varName}}</md-option>
+                  </md-select>
+                </md-input-container>
+                <span style="margin-left: 20px">  $</span>
+              </div>
+              <div class="variableClass">
+                <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 100px;">
+                  <label class="ticketDespTxtBoxLbl variableAmount">Amount</label>
+                  <input class="ticketDespTxtBoxCls" type="number" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="1.00" ng-model="varCharge.Price" required />
+                </md-input-container>
+              </div>
+            </ng-form>
           </div>
         </div>
       </div>
@@ -813,7 +831,10 @@
           </md-checkbox>
           <md-input-container class="ticketEndDateTxtBoxCon block" style="width: 200px;" ng-show="eventInfo.isPasswordRequired == 'Y'">
             <label class="ticketEndDateTxtBoxLbl">Enter Password</label>
-            <input type="password" class="ticketEndDateTxtBoxCls" ng-model="eventInfo.Private_Password" />
+            <input type="password" class="ticketEndDateTxtBoxCls" name="privatePassword" ng-model="eventInfo.Private_Password" ng-required="(eventInfo.EventPrivacy == 'Private') && (eventInfo.isPasswordRequired == 'Y')" />
+            <div class="validation-standard-messages" ng-show="MainForm.privatePassword.$touched || !MainForm.privatePassword.$pristine || formValidation">
+              <div ng-show="MainForm.privatePassword.$error.required">Password is required.</div>
+            </div>
           </md-input-container>
         </div>
       </div>
