@@ -233,13 +233,13 @@
                                                     i = i + 1;
                                                     <tr>
                                                         <td>@obj.Sno</td>
-                                                        <td  class="tit-evnt-width"><a target="_blank" href="http://@host/ViewEvent/ViewEvent?strEventDs=@obj.EventTitle.Trim().Replace(" ", "-")&strEventId=@obj.EventID">@obj.EventTitle</a></td>
+                                                        @*<td class="tit-evnt-width"><a target="_blank" href="http://@host/ViewEvent/ViewEvent?strEventDs=@obj.EventTitle.Trim().Replace(" ", "-")&strEventId=@obj.EventID">@obj.EventTitle</a></td>*@
+                                                        <td class="tit-evnt-width"><a target="_blank" href="http://@host/e/@obj.EventTitle.Trim().Replace(" ", "-")-@obj.EventID">@obj.EventTitle</a></td>
                                                         <td>@obj.EventType</td>
                                                         <td>@obj.EventCategory-@obj.EventSubCategory</td>
                                                         <td>@obj.EventTiming</td>
                                                         <td style="table-layout: fixed; word-break: break-all;">
                                                             @obj.Orgnizer_Name  &
-
                                                             <a href="mailto:@obj.Email">@obj.Email</a>
                                                         </td>
                                                         <td>@obj.EventAddress</td>

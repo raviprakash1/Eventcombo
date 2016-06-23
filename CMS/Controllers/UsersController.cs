@@ -380,7 +380,7 @@ namespace CMS.Controllers
 
                 if (!string.IsNullOrEmpty(strsql))
                 {
-                    objEv = db.V_Users.SqlQuery("Select * from V_Users Us where 1=1  " + strsql + " ").ToList<V_Users>();
+                    objEv = db.V_Users.SqlQuery("Select * from V_Users Us where 1=1 " + strsql + " ").ToList<V_Users>();
                 }
                 else
                 {
