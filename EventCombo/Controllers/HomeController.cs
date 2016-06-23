@@ -1270,20 +1270,7 @@ namespace EventCombo.Controllers
         }
         public ActionResult GetBuzz()
         {
-            MyAccount hmc = new MyAccount();
-            if ((Session["AppId"] != null))
-            {
-               
-                string usernme = hmc.getusername();
-                if (string.IsNullOrEmpty(usernme))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            Session["Fromname"] = "GetBuzz";
-            ViewBag.ReturnUrl = "~/Home/GetBuzz";
-            return View();
-
+          return RedirectToAction("Buzz", "Article");
         }
         public ActionResult EventOraganizer()
         {
@@ -1654,7 +1641,7 @@ namespace EventCombo.Controllers
                 }
                 else
                 {
-                    from = ConfigurationManager.AppSettings.Get("UserName");
+                    from = ConfigurationManager.AppSettings.Get("DefaultEmail"); //ConfigurationManager.AppSettings.Get("UserName");
 
                 }
                 if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
@@ -2005,7 +1992,7 @@ namespace EventCombo.Controllers
             //};
             using (MailMessage mailMessage = new MailMessage())
             {
-                mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["UserName"]);
+                mailMessage.From = new MailAddress(ConfigurationManager.AppSettings.Get("DefaultEmail")); //ConfigurationManager.AppSettings["UserName"]);
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
                 mailMessage.IsBodyHtml = true;
@@ -2014,8 +2001,12 @@ namespace EventCombo.Controllers
                 smtp.Host = ConfigurationManager.AppSettings["Host"];
                 smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
                 System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
-                NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"];
-                NetworkCred.Password = ConfigurationManager.AppSettings["Password"];
+                string s = ConfigurationManager.AppSettings["UserName"];
+                if (!String.IsNullOrEmpty(s))
+                {
+                    NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"];
+                    NetworkCred.Password = ConfigurationManager.AppSettings["Password"];
+                }
                 smtp.UseDefaultCredentials = true;
                 smtp.Credentials = NetworkCred;
                 smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]);
@@ -2234,7 +2225,7 @@ namespace EventCombo.Controllers
                         }
                         else
                         {
-                            from = ConfigurationManager.AppSettings.Get("UserName");
+                            from = ConfigurationManager.AppSettings.Get("DefaultEmail"); //ConfigurationManager.AppSettings.Get("UserName");
 
                         }
                         if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
@@ -2495,7 +2486,7 @@ namespace EventCombo.Controllers
             CookieStore.SetCookie("ckHeader", header, TimeSpan.FromDays(1));
             //Session["Header"] = header;
         }
-
+        
     }
 
 

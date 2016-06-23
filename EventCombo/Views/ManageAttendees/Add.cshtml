@@ -1,4 +1,5 @@
-﻿@using EventCombo.Models
+﻿@using System.Collections.Generic
+@using EventCombo.Models
 @model AddAttandeeOrder
 
 @{
@@ -20,6 +21,9 @@
   </div>
 
   <input type="hidden" id="EventId" value="@(Model.EventId.ToString())" />
+  <input type="hidden" id="UEmail" value="@(Model.Email)" />
+  <input type="hidden" id="UFirstName" value="@(Model.FirstName)" />
+  <input type="hidden" id="ULastName" value="@(Model.LastName)" />
 
   <div class="table-responsive attendeesAddTable">
     <table class="table" style="width:100%;">
@@ -36,16 +40,17 @@
         @foreach (var ticket in Model.Tickets)
         {
           <tr data-ticketid="@(ticket.Ticket.T_Id.ToString())" data-ticketprice="@((ticket.Ticket.Price ?? (decimal)0).ToString())"
-              data-ticketmax="@((ticket.Ticket.Qty_Available - (ticket.TicketSold ?? 0)).ToString())">
+              data-ticketmax="@((ticket.Ticket.Qty_Available - (ticket.TicketSold ?? 0)).ToString())"
+              data-ticketname="@(ticket.Ticket.T_name)" data-tickettypeid="@(ticket.Ticket.TicketTypeID)">
             <td class="attendeesAddTableTD">@(ticket.Ticket.T_name)</td>
             <td class="attendeesAddTableTD">@((ticket.TicketSold ?? 0).ToString())/@(ticket.Ticket.Qty_Available.ToString())</td>
-            <td class="attendeesAddTableTD">$@((ticket.Ticket.Price ?? (decimal)0).ToString("N2"))</td>
+            <td class="attendeesAddTableTD">@((ticket.Ticket.TicketTypeID ?? 0) == 3 ? "" : ("$" + (ticket.Ticket.Price ?? (decimal)0).ToString("N2")))</td>
             <td class="attendeesAddTableTD">
               <input type="text" id="quantity@(ticket.Ticket.T_Id.ToString())" class="attenTableQuantityCls" onblur="setPrice(this)"
-                     value="@((ticket.Ticket.TicketTypeID ?? 0) == 3 ? "1" : "0")"
+                     value="@((ticket.Ticket.TicketTypeID ?? 0) == 3 ? "1" : ticket.Quantity.ToString())"
                      style="display:@((ticket.Ticket.TicketTypeID ?? 0) == 3 ? "none" : "block")" />
             </td>
-            <td class="attendeesAddTableTD">$<input type="text" value="0.00" id="totalprice@(ticket.Ticket.T_Id.ToString())" class="attenTableQuantityCls" onblur="updateTotal()" /></td>
+            <td class="attendeesAddTableTD">$<input type="text" value="@(ticket.Paid.ToString("N2"))" id="totalprice@(ticket.Ticket.T_Id.ToString())" class="attenTableQuantityCls" onblur="updateTotal()" /></td>
           </tr>
         }
       </tbody>
@@ -53,7 +58,7 @@
   </div>
   <div class="tableAttendeesTotal">
     <span class="tableAttendeesTotalTxt">TOTAL PAID</span>
-    <input type="text" id="TicketsTotal" class="attenTableTotalCls" value="$0.00" disabled />
+    <input type="text" id="TicketsTotal" class="attenTableTotalCls" value="$@(Model.Tickets.Sum(t => t.Paid).ToString("N2"))" disabled />
   </div>
 
   <div class="addAttendeessStaticTxt">* Eventcombo does not charge any fees for manual orders.</div>
@@ -86,10 +91,21 @@
     <a href="javascript:void(0)" class="btn btn-primary addAttendeessBtn" onclick="sendAttendeeInfo()">Continue</a>
   </div>
 
+  <div id="spinner" class="spinner" style="display:none;">
+    <img id="img-spinner" src="~/Images/ajaxloader1.gif" alt="Loading" />
+  </div>
+
 </div>
 
-
 <script type="text/javascript">
+
+  $(function () {
+    $(document).on({
+      ajaxStart: function () { $("#spinner").show(); },
+      ajaxStop: function () { $("#spinner").hide(); }
+    });
+  });
+
   function setPaymentType(obj, id) {
     $('#paymentTypeMenu .text').html($(obj).html());
     $('#paymentTypeMenu').data('ptid', id)
@@ -101,7 +117,7 @@
     var max = $(obj).closest('tr').data('ticketmax');
     q = isNaN(q) ? 0 : (q > max ? max : (q < 0 ? 0 : q));
     $(obj).val(q);
-    $(obj).closest('tr').find('input[id^="totalprice"]').val(price * q);
+    $(obj).closest('tr').find('input[id^="totalprice"]').val((price * q).toFixed(2));
     updateTotal();
   }
 
@@ -111,10 +127,10 @@
     $('#TicketsTable tr').each(function (idx) {
       price = parseFloat($(this).find('input[id^="totalprice"]').val());
       price = isNaN(price) ? 0 : (price < 0 ? 0 : price);
-      $(this).find('input[id^="totalprice"]').val(price);
+      $(this).find('input[id^="totalprice"]').val(price.toFixed(2));
       total += price;
     });
-    $('#TicketsTotal').val("$" + total);
+    $('#TicketsTotal').val("$" + total.toFixed(2));
   }
 
   function sendAttendeeInfo() {
@@ -124,15 +140,27 @@
         Quantity: $(this).find('input[id^="quantity"]').val(),
         Paid: $(this).find('input[id^="totalprice"]').val(),
         Ticket: {
-          T_Id: $(this).data('ticketid')
+          T_Id: $(this).data('ticketid'),
+          TicketTypeID: $(this).data('tickettypeid'),
+          T_name: $(this).data('ticketname'),
+          Price: $(this).data('ticketprice')
         }
       };
-      collectedTickets.push(ticket);
+      if((ticket.Quantity > 0) && ((ticket.Paid > 0) || (ticket.Ticket.TicketTypeID != 3)))
+        collectedTickets.push(ticket);
     });
+    if (collectedTickets.length == 0) {
+      alert("You need to select some tickets.");
+      return false;
+    }
+      
     var att = {
       EventId: $('#EventId').val(),
-      PaymentType: $('#paymentTypeMenu').data('ptid'),
+      PaymentType: { PaymentTypeId: $('#paymentTypeMenu').data('ptid') },
       Note: $('#Instruction').val(),
+      Email: $('#UEmail').val(),
+      FirstName: $('#UFirstName').val(),
+      LastName: $('#ULastName').val(),
       Tickets: collectedTickets
     }
 

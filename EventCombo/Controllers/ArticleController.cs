@@ -33,14 +33,23 @@ namespace EventCombo.Controllers
     [HttpGet]
     public ActionResult ShowLastArticles()
     {
-      IEnumerable<ArticleShortViewModel> articles = _service.GetLastArticles(Url.Content(_service.ImagePath));
+      IEnumerable<ArticleShortViewModel> articles = _service.GetLastArticles(Url.Content(_service.ImagePath), 8);
       return View(articles);
     }
 
     [HttpGet]
     public ActionResult ShowPopularArticles()
     {
-      IEnumerable<ArticleShortViewModel> articles = _service.GetPopularArticles(Url.Content(_service.ImagePath));
+      IEnumerable<ArticleShortViewModel> articles = _service.GetPopularArticles(Url.Content(_service.ImagePath), 20, false);
+      return View(articles);
+    }
+
+    [HttpGet]
+    public ActionResult Buzz()
+    {
+      TwoListsOfSomething<ArticleShortViewModel> articles = new TwoListsOfSomething<ArticleShortViewModel>(); 
+      articles.FirstList = _service.GetPopularArticles(Url.Content(_service.ImagePath), 9, true).ToList();
+      articles.SecondList = _service.GetLastArticles(Url.Content(_service.ImagePath), 20).ToList();
       return View(articles);
     }
   }

@@ -275,6 +275,7 @@
     <Compile Include="Controllers\CMSController.cs" />
     <Compile Include="Controllers\CreateEventController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
+    <Compile Include="Controllers\DreamTeamController.cs" />
     <Compile Include="Controllers\EditEventController.cs" />
     <Compile Include="Controllers\EventConfirmationController.cs" />
     <Compile Include="Controllers\EventController.cs" />
@@ -284,6 +285,7 @@
     <Compile Include="Controllers\Html2PdfController.cs" />
     <Compile Include="Controllers\ImageFiles.cs" />
     <Compile Include="Controllers\InbetweenController.cs" />
+    <Compile Include="Controllers\ManageAttendeesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageEventController.cs" />
     <Compile Include="Controllers\OrganizerInfoController.cs" />
@@ -504,7 +506,6 @@
     <Compile Include="Models\OrderTemplateTicket.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\OrderTemplateTicketType.cs" />
     <Compile Include="Models\OrderTemplateType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -781,11 +782,22 @@
     <Content Include="Images\dgd.png" />
     <Content Include="Images\downarrow.png" />
     <Content Include="Images\drag.png" />
+    <Content Include="Images\DreamTeam\calendar.png" />
+    <Content Include="Images\DreamTeam\img1.jpg" />
+    <Content Include="Images\DreamTeam\img2.jpg" />
+    <Content Include="Images\DreamTeam\img3.jpg" />
     <Content Include="Images\email_fb.png" />
     <Content Include="Images\email_loc_icn.png" />
     <Content Include="Images\email_tw.png" />
     <Content Include="Images\em_ven_time.png" />
     <Content Include="Images\evnt_lik_1.png" />
+    <Content Include="Images\FabIcon\android-128x128.png" />
+    <Content Include="Images\FabIcon\android-192x192.png" />
+    <Content Include="Images\FabIcon\ios-120x120.png" />
+    <Content Include="Images\FabIcon\ios-152x152.png" />
+    <Content Include="Images\FabIcon\ios-180x180.png" />
+    <Content Include="Images\FabIcon\ios-57x57.png" />
+    <Content Include="Images\FabIcon\ios-76x76.png" />
     <Content Include="Images\facebook.png" />
     <Content Include="Images\free-pinstripe.png" />
     <Content Include="Images\hjsdjd.png" />
@@ -816,6 +828,7 @@
       <DependentUpon>EventComboModel.edmx</DependentUpon>
       <LastGenOutput>EventComboModel.cs</LastGenOutput>
     </Content>
+    <Content Include="favicon.ico" />
     <Content Include="Scripts\custom-scroll.js" />
     <Content Include="Scripts\DateTimePicker.js" />
     <Content Include="Scripts\gmap.js" />
@@ -892,7 +905,6 @@
     <Content Include="Content\style-test.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\summernote.css" />
-    <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="ForgotPassword.html" />
     <Content Include="Global.asax" />
@@ -1104,6 +1116,7 @@
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\abel-regular.woff2" />
     <Content Include="Content\bootstarp.css.map" />
+    <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Properties\PublishProfiles\depoy1.pubxml" />
     <None Include="Properties\PublishProfiles\eventcombo.pubxml" />
     <None Include="Properties\PublishProfiles\IISHostDemo.pubxml" />
@@ -1374,9 +1387,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>DiscoverEvents.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Home\GetBuzz.cshtml">
-      <Generator>RazorGenerator</Generator>
-    </Content>
     <Content Include="Views\Shared\_OrganizerLayout.cshtml">
       <Generator>RazorGenerator</Generator>
     </Content>
@@ -1463,6 +1473,16 @@
     <Content Include="Views\Account\_PurchasedTicketDetail.cshtml" />
     <Content Include="Views\Account\_PurchasedTicketFavoriteList.cshtml" />
     <Content Include="Views\CreateEvent\UserOrgnizerStatus.cshtml" />
+    <Content Include="Views\ManageAttendees\Orders.cshtml" />
+    <Content Include="Views\ManageAttendees\Add.cshtml" />
+    <Content Include="Views\ManageAttendees\Email.cshtml" />
+    <Content Include="Views\ManageAttendees\Guests.cshtml" />
+    <Content Include="Views\ManageAttendees\Checkin.cshtml" />
+    <Content Include="Views\ManageAttendees\_OrderList.cshtml" />
+    <Content Include="Views\ManageAttendees\_OrderDetail.cshtml" />
+    <Content Include="Views\ManageAttendees\ProcessAddAttendee.cshtml" />
+    <Content Include="Views\Article\Buzz.cshtml" />
+    <Content Include="Views\DreamTeam\Index.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

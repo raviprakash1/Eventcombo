@@ -1,105 +1,117 @@
 ﻿@using EventCombo.ViewModels
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns#">
 <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="google-site-verification" content="AVZo78i_QGE67vJiD4QYO1HGWeTACG5zleYqEh-i6KI" />
+  @RenderSection("SeoMeta", false)
+  @if (ViewBag.FBUrl != null)
+    {
+    <meta property="og:url" content="@ViewBag.FBUrl" />
+    <meta property="og:type" content="@ViewBag.FBType" />
+    <meta property="og:title" content="@ViewBag.FBTitle" />
+    <meta property="og:description" content="@ViewBag.FBDescription" />
+    <meta property="og:image" content="@ViewBag.FBImage" />
+    }
+     <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+    <link href="~/Images/FabIcon/ios-57x57.png" rel="apple-touch-icon" />
+    <link href="~/Images/FabIcon/ios-76x76.png" rel="apple-touch-icon" sizes="76x76" />
+    <link href="~/Images/FabIcon/ios-120x120.png" rel="apple-touch-icon" sizes="120x120" />
+    <link href="~/Images/FabIcon/ios-152x152.png" rel="apple-touch-icon" sizes="152x152" />
+    <link href="~/Images/FabIcon/ios-180x180.png" rel="apple-touch-icon" sizes="180x180" />
+    <link href="~/Images/FabIcon/android-192x192.png" rel="icon" sizes="192x192" />
+    <link href="~/Images/FabIcon/android-128x128.png" rel="icon" sizes="128x128" />
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    @*<link rel="icon" href="javascript:void(0)">*@
-    <title>@(ViewBag.Title ?? "Eventcombo")</title>
-    @*Scripts*@
-  
-    <link href="~/Content/font.css" rel="stylesheet" />
-        @Styles.Render("~/Content/bootstrap")
-    @Styles.Render("~/Content/timepicker")
-    @Styles.Render("~/Content/fontawsome")
-    
-    @Scripts.Render("~/bundles/jquery11.2")
-    @Scripts.Render("~/bundles/timezonescripts")
-    @*@Scripts.Render("~/bundles/googleapis")*@
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-    @Scripts.Render("~/bundles/bootstrap")
+  <title>@(ViewBag.Title ?? "Eventcombo")</title>
+  <!-- Bootstrap core CSS -->
+  <link href="~/Content/bootstrap.css" rel="stylesheet" />
 
 
+  <link href="~/Content/jquery.timepicker.css" rel="stylesheet" />
 
 
+  <link href="~/Content/ec-select.css" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="~/Content/eventcombo.css" rel="stylesheet" />
+  <!--  <link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="~/Scripts/bootstrap.min.js"></script>
+  <script src="~/Scripts/main.js"></script>
+  <script src="~/Scripts/jquery.timepicker.js"></script>
 
-    <style type="text/css">
-        html {
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
-    </style>
+  <script src="~/Scripts/jquery.cookie.js"></script>
+
+  <script src="~/Scripts/ec-select.js"></script>
+
+  <style type="text/css">
+    html {
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+  </style>
 </head>
-
 <body>
-
-
-    <div id="fb-root"></div>
-    <!-- Header -->
-    <div class="home_fixed_header" id="divmain">
-        <div class="container-fluid headr_main " id="divsecmain">
-            <div class="row">
-                <div class="col-sm-6">
-                    <a class="logo" href="/Home/Index"><img src="~/Images/EventCombo_Red.jpg" /></a>
-                </div>
-                @if (HttpContext.Current.Session["AppId"] != null)
+  <div id="fb-root"></div>
+  <!-- Header -->
+  <div class="home_fixed_header" id="divmain">
+    <div class="container-fluid headr_main " id="divsecmain">
+      <div class="row">
+        <div class="col-sm-6">
+          <a class="logo" href="/Home/Index"><img src="~/Images/EventCombo_Red.jpg" /></a>
+        </div>
+        @if (HttpContext.Current.Session["AppId"] != null)
                 {
-                    <div class="col-sm-5 head_left_nav">
-                        <ul class="navbar-right frnt-top-header  xs-signup-height">
+          <div class="col-sm-5 head_left_nav">
+            <ul class="navbar-right frnt-top-header  xs-signup-height">
 
-                            <li class="msg_icn"><span>12</span> </li>
+              <li class="msg_icn"><span>12</span> </li>
 
-                            <li><a href="#">Welcome @{Html.RenderAction("UserName", "Home");}!</a> </li>
-                            <li>
-                                @Html.ActionLink("My Account", "MyAccount", "Account", routeValues: null, htmlAttributes: new { title = "Account" })
-                            </li>
-                            <li>
-                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+              <li><a href="#">Welcome @{Html.RenderAction("UserName", "Home");}!</a> </li>
+              <li>
+                @Html.ActionLink("My Account", "MyAccount", "Account", routeValues: null, htmlAttributes: new { title = "Account" })
+              </li>
+              <li>
+                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                                 {
-                                    <a href="javascript:document.getElementById('logoutForm').submit()">Log Out </a>
+                  <a href="javascript:document.getElementById('logoutForm').submit()">Log Out </a>
                                 }
-                            </li>
-
-
-
-
-
-
-                        </ul>
-
-                    </div>
-
+              </li>
+            </ul>
+          </div>
                                 }
                                 else
                                 {
-                                    <div class="col-sm-5 head_left_nav clearfix">
-                                        <ul class="navbar-right frnt-top-header xs-signup-height">
+          <div class="col-sm-5 head_left_nav clearfix">
+            <ul class="navbar-right frnt-top-header xs-signup-height">
 
-                                            <li><a href="javascript:void(0)" data-toggle="modal" data-target="#myModal" id="loginPopup">LogIn | SignUp </a>  </li>
+              <li><a href="javascript:void(0)" data-toggle="modal" data-target="#myModal" id="loginPopup">LogIn | SignUp </a>  </li>
 
-                                        </ul>
+            </ul>
 
-                                    </div>
+          </div>
 
                                 }
 
-                <div class="col-sm-1 text-right">
-                    <div class="social_icn ">
-                        <a href="https://www.facebook.com/Eventcombo" target="_blank"><img src="~/Images/fb.png" /></a>
-                        <a href="https://www.twitter.com/Eventcombo" target="_blank"><img src="~/Images/tw.png" /></a>
-                    </div>
-                </div>
-                <div class="Fix_Head" title="Turn on to fix header">
-                    <label class="switch">
-                       
-        
+        <div class="col-sm-1 text-right">
+          <div class="social_icn ">
+            <a href="https://www.facebook.com/Eventcombo" target="_blank"><img src="~/Images/fb.png" /></a>
+            <a href="https://www.twitter.com/Eventcombo" target="_blank"><img src="~/Images/tw.png" /></a>
+          </div>
+        </div>
+        <div class="Fix_Head" title="Turn on to fix header">
+          <label class="switch">
 
-@{
+
+
+            @{
 
     string header = CookieStore.GetCookie("ckHeader");
 
@@ -108,116 +120,138 @@
     {
         if (header == "on")
         {
-            <input type="checkbox" class="switch-input" id="idchecked" checked onchange="changeheader(this.id);">
+          <input type="checkbox" class="switch-input" id="idchecked" checked onchange="changeheader(this.id);">
         }
         else
         {
-            <input type="checkbox" class="switch-input" id="idchecked" onchange="changeheader(this.id);">
+          <input type="checkbox" class="switch-input" id="idchecked" onchange="changeheader(this.id);">
         }
     }
     else
     {
-        <input type="checkbox" class="switch-input" id="idchecked" onchange="changeheader(this.id);">
+      <input type="checkbox" class="switch-input" id="idchecked" onchange="changeheader(this.id);">
     }
+
 
 }
     
    
                        
 
-                        <span class="switch-label" data-on="On" data-off="Off"></span>
-                        <span class="switch-handle"></span>
-                    </label>
-                </div>
-            </div>
-        </div>
 
-        @if (HttpContext.Current.Session["Fromname"] == null)
+            @*if ()
+              {
+               <input type="checkbox" class="switch-input"  id="idchecked" onchange="changeheader(this.id);">
+
+              }
+              else
+              {
+                  if (Session["Header"].ToString() == " " || Session["Header"].ToString()=="off")
+                  {
+                  }
+                  else
+                  {
+                      <input type="checkbox" class="switch-input" checked id="idchecked" onchange="changeheader(this.id);">
+                  }
+              }*@
+
+
+            <span class="switch-label" data-on="On" data-off="Off"></span>
+            <span class="switch-handle"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    @if (HttpContext.Current.Session["Fromname"] == null)
         {
      <!-- Sub Header -->
-            <div class="container-fluid cont_margin2" id="divcontmain">
-                <div class="row cyan-line-new">
-                    <div class="col-sm-3">
-                        <form>
-                            <div class="input-group stylish-input-group">
-                                <input type="text" class="form-control place_hold" onfocus="javascript:this.value=''" placeholder="Search for Event">
-                                <span class="input-group-addon">
-                                    <button type="submit">
-                                        <span class="glyphicon glyphicon-search"></span>
-                                    </button>
-                                </span>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-sm-2 disc_title_head">
-                        <a href="javascript:void(0)" onclick="setsession(this.id);" id='discover'>Discover Events</a>
-                    </div>
-                    <div class="col-sm-2 disc_title_head"><a href="#" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a>@*@Html.ActionLink("", "GetBuzz", "Home")*@  </div>
-                    <div class="col-sm-5 frnt_cret_evnt">
-                        <div class="psst">
-                            <a href="javascript:void(0)" onclick="checksession();">Create Event</a>
-                        </div>
 
-
-                    </div>
-
-                </div>
+      <div class="container-fluid cont_margin2" id="divcontmain">
+        <div class="row cyan-line-new">
+          <div class="col-sm-3">
+            <form>
+              <div class="input-group stylish-input-group">
+                <input type="text" class="form-control place_hold" onfocus="javascript:this.value=''" placeholder="Search for Event">
+                <span class="input-group-addon">
+                  <button type="submit">
+                    <span class="glyphicon glyphicon-search"></span>
+                  </button>
+                </span>
+              </div>
+            </form>
+          </div>
+          <div class="col-sm-2 disc_title_head">
+            @*@Html.ActionLink("Discover Events", "DiscoverEvents", "Home")*@
+            <a href="javascript:void(0)" onclick="setsession(this.id);" id='discover'>Discover Events</a>
+          </div>
+          <div class="col-sm-2 disc_title_head"><a href="@Url.Action("Buzz", "Article")" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a></div>
+          <div class="col-sm-5 frnt_cret_evnt">
+            <div class="psst">
+              <a href="javascript:void(0)" onclick="checksession();">Create Event</a>
             </div>
-          
+
+
+
+          </div>
+
+        </div>
+      </div>
+
         <!-- Body Section -->
         }
         else
         {
-           
+
             if (HttpContext.Current.Session["Fromname"].ToString() == "events")
             {
 
-                <div class="col-sm-12 filter_sep cont_margin">
-                    <img src="~/Images/desi-events-logo.gif">
-                    <div class="cus_left_kick"><</div>
-                    @if (HttpContext.Current.Session["logo"] != null)
+              <div class="col-sm-12 filter_sep cont_margin">
+                <img src="~/Images/desi-events-logo.gif">
+                <div class="cus_left_kick"><</div>
+                @if (HttpContext.Current.Session["logo"] != null)
                     {
                         if (HttpContext.Current.Session["logo"].ToString() == "Organizer")
                         {
-                            <div class="crt_inn_event"><a href="javascript:void(0)" onclick="checksession();">Create an Event</a></div>
+                          <div class="crt_inn_event"><a href="javascript:void(0)" onclick="checksession();">Create an Event</a></div>
                         }
                     }
-                </div>
+              </div>
 
             }
             else
             {
 
-     <!-- Sub Header -->
-                <div class="container-fluid cont_margin2" id="divcontmain">
-                    <div class="row cyan-line-new">
-                        <div class="col-sm-3">
-                            <form>
-                                <div class="input-group stylish-input-group">
-                                    <input type="text" class="form-control place_hold" id="txtSearch" onfocus="javascript:this.value=''" placeholder="Search for Event">
-                                    <span class="input-group-addon">
-                                        <button type="button" id="btSearchEvent">
-                                            <span class="glyphicon glyphicon-search"></span>
-                                        </button>
-                                    </span>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-sm-2 disc_title_head">
-                       
-                            <a href="javascript:void(0)" onclick="setsession(this.id);" id='discover'>Discover Events</a>
-                        </div>
-                        <div class="col-sm-2 disc_title_head"><a href="javascript:void(0)" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a>@*@Html.ActionLink("", "GetBuzz", "Home")*@  </div>
-                        <div class="col-sm-5 frnt_cret_evnt">
-                            <div class="psst">
-                                <a href="javascript:void(0)" onclick="checksession();">Create Event</a>
-                            </div>
-
-
-                        </div>
+              <div class="container-fluid cont_margin2" id="divcontmain">
+                <div class="row cyan-line-new">
+                  <div class="col-sm-3">
+                    <form>
+                      <div class="input-group stylish-input-group">
+                        <input type="text" class="form-control place_hold" id="txtSearch" onfocus="javascript:this.value=''" placeholder="Search for Event">
+                        <span class="input-group-addon">
+                          <button type="button" id="btSearchEvent">
+                            <span class="glyphicon glyphicon-search"></span>
+                          </button>
+                        </span>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-sm-2 disc_title_head">
+                    @*@Html.ActionLink("Discover Events", "DiscoverEvents", "Home")*@
+                    <a href="javascript:void(0)" onclick="setsession(this.id);" id='discover'>Discover Events</a>
+                  </div>
+                  <div class="col-sm-2 disc_title_head"><a href="javascript:void(0)" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a>@*@Html.ActionLink("", "GetBuzz", "Home")*@  </div>
+                  <div class="col-sm-5 frnt_cret_evnt">
+                    <div class="psst">
+                      <a href="javascript:void(0)" onclick="checksession();">Create Event</a>
 
                     </div>
+
+
+                  </div>
+
                 </div>
+              </div>
         <!-- Body Section -->
 
             }
@@ -226,46 +260,46 @@
 
 
 
-    </div>
-    <div class="wrap">
-        @RenderBody()
-    </div>
-    <div class="clearfix"></div>
-    @if (HttpContext.Current.Session["Fromname"] == null)
+  </div>
+  <div class="wrap">
+    @RenderBody()
+  </div>
+  <div class="clearfix"></div>
+  @if (HttpContext.Current.Session["Fromname"] == null)
     {
 
         <!--Footer Section-->
-        <footer class="footer">
-            <div class="container-fluid foot_bg">
-                <div class="col-sm-12 no-padding">
-                    <div class="col-sm-12 foot_logo">
-                        <a class="" href="javascript:void(0)"><img src="~/Images/logo_small.png" /></a>
-                    </div>
+    <footer class="footer">
+      <div class="container-fluid foot_bg">
+        <div class="col-sm-12 no-padding">
+          <div class="col-sm-12 foot_logo">
+            <a class="" href="javascript:void(0)"><img src="~/Images/logo_small.png" /></a>
+          </div>
 
-                    <div class="row fot_cont">
-                        <div class="col-sm-4">
-                            <a href="javascript:void(0)">About Us</a>
-                            <br>
-                            <a href="javascript:void(0)">Contact Us</a>
-                            <br>
-                            <a href="javascript:void(0)">Terms Of Service</a>
-                        </div>
-                        <div class="col-sm-4">
-                            <a href="javascript:void(0)">Ticket Purchase FAQ </a>
-                            <br>
-                            <a href="javascript:void(0)">Ticket Fulfillment Policy</a>
-                            <br>
-                            <a href="javascript:void(0)">Privacy Policy</a>
-                        </div>
-                        <div class="col-sm-4">
-                            <a href="javascript:void(0)">Facebook</a>
-                            <br>
-                            <a href="javascript:void(0)">Twitter</a>
-                        </div>
-                    </div>
-                </div>
+          <div class="row fot_cont">
+            <div class="col-sm-4">
+              <a href="javascript:void(0)">About Us</a>
+              <br>
+              <a href="javascript:void(0)">Contact Us</a>
+              <br>
+              <a href="javascript:void(0)">Terms Of Service</a>
             </div>
-        </footer>
+            <div class="col-sm-4">
+              <a href="javascript:void(0)">Ticket Purchase FAQ </a>
+              <br>
+              <a href="javascript:void(0)">Ticket Fulfillment Policy</a>
+              <br>
+              <a href="javascript:void(0)">Privacy Policy</a>
+            </div>
+            <div class="col-sm-4">
+              <a href="javascript:void(0)">Facebook</a>
+              <br>
+              <a href="javascript:void(0)">Twitter</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
     }
     else
     {
@@ -274,150 +308,134 @@
         {
         }
 
-        <footer class="footer">
-            <div class="container-fluid foot_bg">
-                <div class="col-sm-12 no-padding">
-                    <div class="col-sm-12 foot_logo">
-                        <a class="" href="javascript:void(0)"><img src="~/Images/logo_small.png" /></a>
-                    </div>
+    <footer class="footer">
+      <div class="container-fluid foot_bg">
+        <div class="col-sm-12 no-padding">
+          <div class="col-sm-12 foot_logo">
+            <a class="" href="javascript:void(0)"><img src="~/Images/logo_small.png" /></a>
+          </div>
 
-                    <div class="row fot_cont">
-                        <div class="col-sm-4">
-                            <a href="javascript:void(0)">About Us</a>
-                            <br>
-                            <a href="javascript:void(0)">Contact Us</a>
-                            <br>
-                            <a href="javascript:void(0)">Terms Of Service</a>
-                        </div>
-                        <div class="col-sm-4">
-                            <a href="javascript:void(0)">Ticket Purchase FAQ </a>
-                            <br>
-                            <a href="javascript:void(0)">Ticket Fulfillment Policy</a>
-                            <br>
-                            <a href="javascript:void(0)">Privacy Policy</a>
-                        </div>
-                        <div class="col-sm-4">
-                            <a href="javascript:void(0)">Facebook</a>
-                            <br>
-                            <a href="javascript:void(0)">Twitter</a>
-                        </div>
-                    </div>
-                </div>
+          <div class="row fot_cont">
+            <div class="col-sm-4">
+              <a href="javascript:void(0)">About Us</a>
+              <br>
+              <a href="javascript:void(0)">Contact Us</a>
+              <br>
+              <a href="javascript:void(0)">Terms Of Service</a>
             </div>
-        </footer>
+            <div class="col-sm-4">
+              <a href="javascript:void(0)">Ticket Purchase FAQ </a>
+              <br>
+              <a href="javascript:void(0)">Ticket Fulfillment Policy</a>
+              <br>
+              <a href="javascript:void(0)">Privacy Policy</a>
+            </div>
+            <div class="col-sm-4">
+              <a href="javascript:void(0)">Facebook</a>
+              <br>
+              <a href="javascript:void(0)">Twitter</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
 
     }
 
-            <!-- Dialouge Box Start -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content login_pop" id="login_up">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h3 class="modal-title " id="myModalLabel">LogIn | SignUp</h3>
-                        </div>
-                        <div class="modal-body">
-                            <div class="col-md-12">
-                                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = Session["ReturnUrl"] }, FormMethod.Post, new { role = "form", id = "formlogin", @class = "form-horizontal acnt_form" }))
+  <!-- Dialouge Box Start -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content login_pop" id="login_up">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h3 class="modal-title " id="myModalLabel">LogIn | SignUp</h3>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = Session["ReturnUrl"] }, FormMethod.Post, new { role = "form", id = "formlogin", @class = "form-horizontal acnt_form" }))
                                 {
-                                    <div class="er_UI_main" id="diverrologin" style="display :none;">
-                                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverrologin">&#215;</button>
-                                        <div class="er_UI_img"></div>
-                                        <div class="er_suc" id="dverrui">  </div>
-                                    </div>
+              <div class="er_UI_main" id="diverrologin" style="display :none;">
+                <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverrologin">&#215;</button>
+                <div class="er_UI_img"></div>
+                <div class="er_suc" id="dverrui">  </div>
+              </div>
+              <div class="er_UI_main" id="diverro1login" style="display :none;">
+                <div class="er_sys_img"></div>
+                <div class="er_suc" id="dverrsys">  </div>
+                <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro1login">&#215;</button>
+              </div>
 
-                                    <div class="er_UI_main" id="diverro1login" style="display :none;">
-                                        <div class="er_sys_img"></div>
-                                        <div class="er_suc" id="dverrsys">  </div>
-                                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro1login">&#215;</button>
-                                    </div>
+              <div class="clearfix"></div>
 
-                                    <div class="clearfix"></div>
-
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <div class="row">
-                                                <div class="col-sm-5 login_form_bot">
-                                                    <input type="text" id="loginemail" name="Email" placeholder="Email" class="form-control login_place" maxlength="256" autocomplete="off" />
-                                                   
-                                                </div>
-                                                <div class="col-sm-5 login_form_bot">
-                                                    <input type="password" id="loginpassword" name="Password" placeholder="Password" class="form-control login_place" maxlength="15" autocomplete="off" />
-
-                                                   
-                                                </div>
-                                                <div class="col-sm-2 login_form_bot">
-                                                    <input type="hidden" id="hderror" />
-                                                    <input type="button" value="LogIn" class="btn btn-primary login_btn_sub" id="btnSavelogin" disabled="disabled" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-
-
-                                }
-
-                               
-                            </div>
-                            <div class="col-md-12">
-                                @*forgt_pass*@
-                                @Html.ActionLink("forgot password?", "ForgetPassword", "Home", null, null)
-
-                            </div>
-                            <div class="col-md-12">
-                                <span class="social_net_log">Use your social network login below or &nbsp;</span> <a href="javascript:void(0)" id="signUpPopup" class="btn btn-primary login_btn_sub">SignUp</a>
-                            </div>
-                            <div class="col-md-12 social-buttons text-center ">
-                                <div class="col-xs-6">
-                                    <button type="button" onclick="return fb_login();" class="btn btn-block btn-social btn-facebook" id="Facebook" name="provider" value="Facebook" title="Log in using your Facebook account"><i class="fa fa-facebook"></i>Facebook</button>
-
-                                </div>
-
-                                <form id="login-launch" action="@Url.Action("ExternalLogin", "Account")" method="POST" target="login-popup" onsubmit="invokeLogin();">
-                                 
-                                    <input type="hidden" id="provider" name="provider" />
-                                    <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
-
-
-
-                                    <div class="col-xs-6">
-                                        <button type="submit" onclick="$('#provider').attr('value', 'Google'); $('#login-launch').submit(); " class="btn btn-block btn-social btn-google-plus" id="Google" name="provider" value="Google" title="Log in using your Google account"><i class="fa fa-google-plus"></i>Google</button>
-                                    </div>
-
-                                    
-                                </form>
-                               
-                            </div>
-                        </div>
+              <div class="form-group">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-sm-5 login_form_bot">
+                      <input type="text" id="loginemail" name="Email" placeholder="Email" class="form-control login_place" maxlength="256" autocomplete="off" />
+                      @*@Html.TextBoxFor(m => m.Email, new { @placeholder = "Email", @class = "form-control login_place", @id = "loginemail", @maxlength = 256 })*@
                     </div>
+                    <div class="col-sm-5 login_form_bot">
+                      <input type="password" id="loginpassword" name="Password" placeholder="Password" class="form-control login_place" maxlength="15" autocomplete="off" />
 
-                    <div id="sign_up" class="modal-content login_pop sign_up" style="display:none;">
-                        <div class="modal-header">
-                            <button type="button" class="close closefrgt" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h3 class="modal-title ">Sign-up</h3>
-                        </div>
-                        <div class="modal-body">
-                            <div class="col-md-12">
+                      @*@Html.PasswordFor(m => m.Password, new { @placeholder = "Password", @class = "form-control login_place", @id = "loginpassword", @maxlength = 15 })*@
+                    </div>
+                    <div class="col-sm-2 login_form_bot">
+                      <input type="hidden" id="hderror" />
+                      <input type="button" value="LogIn" class="btn btn-primary login_btn_sub" id="btnSavelogin" disabled="disabled" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+            @*@RenderPage("~/Views/Shared/_login1partial.cshtml",new { })*@
+          </div>
+          <div class="col-md-12">
+            @*forgt_pass*@
+            @Html.ActionLink("forgot password?", "ForgetPassword", "Home", null, null)
+          </div>
+          <div class="col-md-12">
+            <span class="social_net_log">Use your social network login below or &nbsp;</span> <a href="javascript:void(0)" id="signUpPopup" class="btn btn-primary login_btn_sub">SignUp</a>
+          </div>
+          <div class="col-md-12 social-buttons text-center ">
+            <div class="col-xs-6">
+              <button type="button" onclick="return fb_login();" class="btn btn-block btn-social btn-facebook" id="Facebook" name="provider" value="Facebook" title="Log in using your Facebook account"><i class="fa fa-facebook"></i>Facebook</button>
 
-                                @using (Html.BeginForm("Signup", "Home", FormMethod.Post, new { role = "form", id = "form", @class = "form-horizontal acnt_form" }))
+            </div>
+
+            <form id="login-launch" action="@Url.Action("ExternalLogin", "Account")" method="POST" target="login-popup" onsubmit="invokeLogin();">
+              <input type="hidden" id="provider" name="provider" />
+              <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+              <div class="col-xs-6">
+                <button type="submit" onclick="$('#provider').attr('value', 'Google'); $('#login-launch').submit(); " class="btn btn-block btn-social btn-google-plus" id="Google" name="provider" value="Google" title="Log in using your Google account"><i class="fa fa-google-plus"></i>Google</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div id="sign_up" class="modal-content login_pop sign_up" style="display:none;">
+        <div class="modal-header">
+          <button type="button" class="close closefrgt" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h3 class="modal-title ">Sign-up</h3>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12">
+            @using (Html.BeginForm("Signup", "Home", FormMethod.Post, new { role = "form", id = "form", @class = "form-horizontal acnt_form" }))
                                 {
 
                                     if (ViewData["Message"] != null)
                                     {<div class="err_main">
-                            <div class="er_suc_main">
-                                <div class="er_suc_img"></div>
-                                <div class="er_suc">ViewData["Message"] </div>
-                            </div>
-                        </div>
+                                      <div class="er_suc_main">
+                                        <div class="er_suc_img"></div>
+                                        <div class="er_suc">ViewData["Message"] </div>
+                                      </div>
+                                    </div>
                                     }
                                     <div class="err_main" id="diverro" style="display :none;">
-                                        <div class="er_UI_main alert-danger">
-                                            <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro">&#215;</button>
-                                            <div class="er_UI_img"></div>
-                                            <div class="er_suc" id="dverrsignui">  </div>
-                                        </div>
+                                      <div class="er_UI_main alert-danger">
+                                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro">&#215;</button>
+                                        <div class="er_UI_img"></div>
+                                        <div class="er_suc" id="dverrsignui">  </div>
+                                      </div>
 
 
 
@@ -425,59 +443,54 @@
 
 
                                     <div class="err_main" id="diverro1" style="display :none;">
-                                        <div class="er_UI_main alert-danger">
-                                            <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro1">&#215;</button>
-                                            <div class="er_sys_img"></div>
-                                            <div class="er_suc" id="dverrsignsys">  </div>
-                                        </div>
+                                      <div class="er_UI_main alert-danger">
+                                        <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverro1">&#215;</button>
+                                        <div class="er_sys_img"></div>
+                                        <div class="er_suc" id="dverrsignsys">  </div>
+                                      </div>
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="form-group">
-                                        <div class="col-md-12">
-                                            <div class="row">
-                                                <div class="col-sm-5 login_form_bot">
-                                                    <input type="text" id="SignupEmail" name="Email" placeholder="Email" class="form-control login_place" maxlength="256" autocomplete="off" />
-
-                                                
-                                                </div>
-                                                <div class="col-sm-5 login_form_bot">
-                                                    <input type="password" id="SignupPassword" name="Password" placeholder="Password" class="form-control login_place" maxlength="15" autocomplete="off" />
-
-                                                   
-
-                                                </div>
-                                                <div class="col-sm-2 login_form_bot">
-                                                   
-                                                    <input type="button" value="SignUp" class="btn btn-primary login_btn_sub" id="btnsave" disabled="disabled" />
-                                                </div>
-
-
-                                            </div>
+                                      <div class="col-md-12">
+                                        <div class="row">
+                                          <div class="col-sm-5 login_form_bot">
+                                            <input type="text" id="SignupEmail" name="Email" placeholder="Email" class="form-control login_place" maxlength="256" autocomplete="off" />
+                                          </div>
+                                          <div class="col-sm-5 login_form_bot">
+                                            <input type="password" id="SignupPassword" name="Password" placeholder="Password" class="form-control login_place" maxlength="15" autocomplete="off" />
+                                            @*@Html.PasswordFor(m => m.Password, new { @maxlength = 15, @placeholder = "Password", @class = "form-control login_place", @id = "SignupPassword" })*@
+                                          </div>
+                                          <div class="col-sm-2 login_form_bot">
+                                            @*<button type="button" class="btn btn-primary login_btn_sub" id="btnsave">SignUp</button>*@
+                                            <input type="button" value="SignUp" class="btn btn-primary login_btn_sub" id="btnsave" disabled="disabled" />
+                                          </div>
                                         </div>
+                                      </div>
                                     </div>
                                     <div class="col-md-12" style="display:none" id="divsignupfrgt">
-
-                                        @Html.ActionLink("forgot password?", "ForgetPassword", "Home", null, new { id = "ASignupfrgt" })
-
+                                      @Html.ActionLink("forgot password?", "ForgetPassword", "Home", null, new { id = "ASignupfrgt" })
                                     </div>
-
                                 }
 
+          </div>
+        </div>
+      </div>
+      <input type="hidden" id="url" />
+    </div>
+  </div>
 
-       
-                            </div>
-                        </div>
-                    </div>
-                    <input type="hidden" id="url" />
-                </div>
-            </div>
-
+  @*<script>
+        $(document).ready(function () {
+>>>>>>> 83ea2dcddfaf7950dc65ea3fab59d209ca364c75
 
 
 
    
 </body>
 </html>
+
+
+
 
 
 <script type="text/javascript">

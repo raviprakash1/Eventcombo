@@ -58,6 +58,11 @@ namespace EventCombo
                 new { controller = "Article", action = "ShowArticle", articleId = "", articleTitle = ""}
               );
 
+            routes.MapRoute(
+                "GetNewBuzz",
+                "Home/GetBuzz",
+                new { controller = "Article", action = "Buzz" }
+              );
 
             routes.MapRoute(
                 name: "Default",

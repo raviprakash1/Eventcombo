@@ -72,9 +72,9 @@ namespace EventCombo.Models
       PaymentState = PaymentStates.Total;
       PerPage = 20;
       Page = 0;
-      SortDesc = false;
+      SortDesc = true;
       DateTime now = DateTime.Today;
-      now.AddDays(DayOfWeek.Monday - now.DayOfWeek);
+      now = now.AddDays(DayOfWeek.Monday - now.DayOfWeek);
       DateFrom = now.Month.ToString() + "/" + now.Day.ToString() + "/" + now.Year.ToString();
     }
     public long EventId { get; set; }
@@ -103,7 +103,7 @@ namespace EventCombo.Models
 
   public class PaymentTypeViewModel
   {
-    public short PaymentTypeId { get; set; }
+    public byte PaymentTypeId { get; set; }
     public string PaymentTypeName { get; set; }
     public bool Active { get; set; }
   }
@@ -132,11 +132,21 @@ namespace EventCombo.Models
       private set { _availablePT = value; }
     }
 
+    private List<AttendeeViewModel> _attendees = new List<AttendeeViewModel>();
+    public List<AttendeeViewModel> Attendees
+    {
+      get { return _attendees; }
+      private set { _attendees = value; }
+    }
+
     public PaymentTypeViewModel PaymentType { get; set; }
-
     public string Note { get; set; }
-
     public long EventId { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Email { get; set; }
+    public string Title { get; set; }
+    public string ImageUrl { get; set; }
   }
 
 }

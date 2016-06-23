@@ -16,6 +16,8 @@ namespace EventCombo.Controllers
   {
     private IManageAttendeesService _maservice;
     private IDBAccessService _dbservice;
+    private ITicketsService _tservice;
+
 
     public ManageAttendeesController()
     {
@@ -24,7 +26,8 @@ namespace EventCombo.Controllers
         IUnitOfWorkFactory uowFactory = new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory());
         AutoMapper.IMapper mapper = AutomapperConfig.Config.CreateMapper();
         _dbservice = new DBAccessService(uowFactory, mapper);
-        _maservice = new ManageAttendeesService(uowFactory, mapper, _dbservice);
+        _tservice = new TicketService(uowFactory, mapper, _dbservice);
+        _maservice = new ManageAttendeesService(uowFactory, mapper, _dbservice, _tservice);
       }
 
     }
@@ -68,7 +71,7 @@ namespace EventCombo.Controllers
       Session["Fromname"] = "ManageAttendees";
       Session["ReturnUrl"] = Url.Action("Add", "ManageAttendees");
 
-      var addAttendee = _maservice.PrepareAddAttendeeOrder(eventId);
+      var addAttendee = _maservice.PrepareAddAttendeeOrder(eventId, userId);
 
       return View(addAttendee);
     }
@@ -89,6 +92,46 @@ namespace EventCombo.Controllers
       Session["ReturnUrl"] = Url.Action("Add", "ManageAttendees");
 
       return View(model);
+    }
+
+    [HttpPost]
+    public int SaveManualOrder(AddAttandeeOrder model)
+    {
+      if ((Session["AppId"] == null))
+        return -1;
+
+      string userId = Session["AppId"].ToString();
+
+      if (_dbservice.GetEventAccess(model.EventId, userId) != AccessLevel.EventOwner)
+        return -1;
+
+      Session["logo"] = "events";
+      Session["Fromname"] = "ManageAttendees";
+      Session["ReturnUrl"] = Url.Action("Add", "ManageAttendees");
+
+      string orderId;
+      try
+      {
+        orderId = _maservice.CreateManualOrder(model, userId);
+      }
+      catch (Exception ex)
+      {
+        return -1;
+      }
+
+      try
+      {
+        if (String.IsNullOrWhiteSpace(orderId))
+          return -1;
+        if (_maservice.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath("..")))
+          return 1;
+        else
+          return 0;
+      }
+      catch(Exception ex)
+      {
+        return 0;
+      }
     }
 
     [HttpGet]
@@ -232,7 +275,7 @@ namespace EventCombo.Controllers
       if (_dbservice.GetOrderAccess(orderId, userId) == AccessLevel.Public)
         return -1;
 
-      if (_maservice.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/")))
+      if (_maservice.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath("..")))
         return 1;
       else
         return 0;

@@ -13,5 +13,7 @@ namespace EventCombo.Service
     string GetPaymentInfo(string orderId);
     AccessLevel GetEventAccess(long eventId, string userId);
     AccessLevel GetOrderAccess(string orderId, string userId);
+    Profile GetUserProfileByEmail(string email);
+    Profile GetUserProfileById(string userId);
   }
 }

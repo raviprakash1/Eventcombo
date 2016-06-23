@@ -47,4 +47,22 @@ namespace EventCombo.Models
     public HttpPostedFileBase AuthorImageFile { get; set; }
     public IEnumerable<HttpPostedFileBase> ImageFiles { get; set; }
   }
+
+  public class TwoListsOfSomething<T>
+  {
+    private List<T> _firstList;
+    public List<T> FirstList
+    {
+      get { return _firstList; }
+      set { _firstList = value; }
+    }
+
+    private List<T> _secondList;
+    public List<T> SecondList
+    {
+      get { return _secondList; }
+      set { _secondList = value; }
+    }
+
+  }
 }

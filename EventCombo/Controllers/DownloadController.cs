@@ -23,7 +23,7 @@ namespace EventCombo.Controllers
       AutoMapper.IMapper mapper = AutomapperConfig.Config.CreateMapper();
       _dbservice = new DBAccessService(uowFactory, mapper);
       _tservice = new TicketService(uowFactory, mapper, _dbservice);
-      _maservice = new ManageAttendeesService(uowFactory, mapper, _dbservice);
+      _maservice = new ManageAttendeesService(uowFactory, mapper, _dbservice, _tservice);
     }
 
     [HttpGet]

@@ -1576,7 +1576,7 @@ namespace EventCombo.Controllers
                         }
                         else
                         {
-                            from = ConfigurationManager.AppSettings.Get("UserName");
+                            from = ConfigurationManager.AppSettings.Get("DefaultEmail"); //ConfigurationManager.AppSettings.Get("UserName");
 
                         }
                         if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
@@ -2979,8 +2979,12 @@ namespace EventCombo.Controllers
             smtp.Host = ConfigurationManager.AppSettings["Host"];
             smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableSsl"]);
             System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
-            NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"];
-            NetworkCred.Password = ConfigurationManager.AppSettings["Password"];
+            string s = ConfigurationManager.AppSettings["UserName"];
+            if (!String.IsNullOrEmpty(s))
+            {
+                NetworkCred.UserName = ConfigurationManager.AppSettings["UserName"];
+                NetworkCred.Password = ConfigurationManager.AppSettings["Password"];
+            }
             smtp.UseDefaultCredentials = true;
             smtp.Credentials = NetworkCred;
             smtp.Port = int.Parse(ConfigurationManager.AppSettings["Port"]);
@@ -3117,7 +3121,7 @@ namespace EventCombo.Controllers
                         {
                             objEC = new EmailContent();
                             objEC.To = objEv.L_EmailId.Trim();
-                            objEC.From = ConfigurationManager.AppSettings.Get("UserName");
+                            objEC.From = ConfigurationManager.AppSettings.Get("DefaultEmail"); //ConfigurationManager.AppSettings.Get("UserName");
                             objEC.Body = Model.I_EmailContent;
                             objEC.Subject = Model.I_SubjectLine;
                             objEC.Cc = "";

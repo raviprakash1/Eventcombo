@@ -5,6 +5,8 @@ using System.Web;
 using EventCombo.Models;
 using System.Data.Entity;
 using System.Data;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Core.Objects;
 
 namespace EventCombo.DAL
 {
@@ -14,6 +16,7 @@ namespace EventCombo.DAL
     void Commit();
     void Rollback();
     DbContext Context { get; }
+    void RefreshEntities();
   }
 
   public class EntityFrameworkUnitOfWork : IUnitOfWork
@@ -44,6 +47,20 @@ namespace EventCombo.DAL
     public void Rollback()
     {
       _transaction.Rollback();
+    }
+
+    public void RefreshEntities()
+    {
+      var context = ((IObjectContextAdapter)_context).ObjectContext;
+      var changedEntities = (from item in context.ObjectStateManager.GetObjectStateEntries(
+                                        EntityState.Added
+                                       | EntityState.Deleted
+                                       | EntityState.Modified
+                                       | EntityState.Unchanged)
+                             where item.EntityKey != null
+                             select item.Entity);
+
+      context.Refresh(RefreshMode.StoreWins, changedEntities);
     }
 
     protected virtual void Dispose(bool disposing)

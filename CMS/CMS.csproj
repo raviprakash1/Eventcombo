@@ -1129,6 +1129,7 @@
       <DependentUpon>Cmsdata.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\CMSPublish.pubxml" />
+    <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Properties\PublishProfiles\My local.pubxml" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

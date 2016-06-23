@@ -18,10 +18,12 @@ namespace EventCombo.Service
 
     EventOrderDetailViewModel GetOrderDetails(string orderId);
 
-    bool SendConfirmations(string orderId, string baseUrl);
+    bool SendConfirmations(string orderId, string baseUrl, string filePath );
 
     MemoryStream GetDownloadableOrderList(PaymentStates state, long eventId, string format);
 
-    AddAttandeeOrder PrepareAddAttendeeOrder(long eventId);
+    AddAttandeeOrder PrepareAddAttendeeOrder(long eventId, string userId);
+
+    string CreateManualOrder(AddAttandeeOrder model, string userId);
   }
 }
