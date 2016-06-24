@@ -234,6 +234,7 @@
 
   .firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input, .timeFont {
     font-size: 16px !important;
+    font-family: Roboto;
   }
 
   md-ink-bar {
@@ -282,6 +283,7 @@
 
   .firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input, .timeFont {
     font-size: 16px !important;
+    font-family: Roboto;
   }
 
   .headerCEHeadBtn {
@@ -415,6 +417,10 @@
   }
 }
 
+..firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input
+{
+    font-family: Roboto;
+}
 .timeFont
 {
     font-size: 14px;
