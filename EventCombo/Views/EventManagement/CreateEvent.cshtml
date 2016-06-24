@@ -568,7 +568,7 @@
                       </span>
                     </div>
                   </div>
-                  <div layout="row">
+                  <div layout="row" class="moreOptions">
                     <div flex>
                       <a class="showHideOptionCls" href="javascript:void(0)" ng-click="onExpandTicketClick(ticket, TicketForm);" ng-init="ticket.expandedOptions = false">
                         <span class="moreOptionTxt" style="vertical-align: middle">
@@ -622,7 +622,7 @@
                     </md-input-container>
                   </div>
                   <div class="ticketChkBoxCon">
-                    <md-checkbox class="blue" ng-model="ticket.Show_T_Desc" ng-true-value="'1'" ng-false-value="'0'" style="margin-top: 24px; margin-left: 12px">
+                    <md-checkbox class="blue showEvent" ng-model="ticket.Show_T_Desc" ng-true-value="'1'" ng-false-value="'0'" style="margin-top: 24px; margin-left: 12px">
                       Show on the event page
                     </md-checkbox>
                   </div>
@@ -635,7 +635,7 @@
                           <div ng-message="mindate">Date is too early.</div>
                         </div>
                       </div>
-                      <md-input-container style="margin-right: 10px; margin-left: 10px; float:left;">
+                      <md-input-container style="margin-right: 10px; margin-left: 10px; float:left;" class="salesTime">
                         <label>Sales start time</label>
                         <md-select ng-model="ticket.localSaleStartTime">
                           <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
@@ -650,7 +650,7 @@
                           <div ng-message="mindate">Date is too early.</div>
                         </div>
                       </div>
-                      <md-input-container style="margin-right: 10px; margin-left: 10px; float:left;">
+                      <md-input-container style="margin-right: 10px; margin-left: 10px; float:left;" class="salesTime">
                         <label>Sales end time</label>
                         <md-select ng-model="ticket.localSaleEndTime">
                           <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>

@@ -207,9 +207,6 @@
     padding-left: 26px !important;
   }
 
-
-
-
   .color-picker-panel {
     right: 15px;
   }
@@ -274,10 +271,42 @@
   {
       padding-left: 0px !important;
   }
+    .moreOptions
+    {
+        margin-top: 10px;
+    }
+    @media (max-width: 485px) {
+        .showEvent {
+            margin-top: 0px !important;
+            margin-left: 0px !important;
+        }
+    }
+
+    @media (max-width: 465px) {
+        .salesTime {
+            margin-left: 35px !important;
+            margin-top: 0px !important;
+        }
+    }
+
 
 }
 
 @media (max-width: 399px) {
+    .salesTime
+    {
+        margin-left: 35px !important;
+        margin-top: 0px !important;
+    }
+      .showEvent
+    {
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+    }
+    .moreOptions
+    {
+        margin-top: 10px;
+    }
         .URLDiv{
         margin-right: 10px !important;
         width: 90% !important;
