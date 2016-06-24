@@ -184,9 +184,9 @@
                         </div>
                         <md-input-container style="margin-right: 10px; margin-left: 20px;">
                             <label>Start Time</label>
-                          <md-select ng-model="tempDateInfo.selectedstartTime">
-                            <md-option ng-repeat="startTime in eventInfo.DateInfo.TimeList" ng-value="startTime">{{startTime.TimeString}}</md-option>
-                          </md-select>
+                            <md-select ng-model="tempDateInfo.selectedstartTime" class="timeFont">
+                                <md-option ng-repeat="startTime in eventInfo.DateInfo.TimeList" ng-value="startTime">{{startTime.TimeString}}</md-option>
+                            </md-select>
                         </md-input-container>
                       </div>
                     </div>
@@ -201,7 +201,7 @@
                       </div>
                       <md-input-container style="margin-right: 10px; margin-left: 20px;">
                           <label>End Time</label>
-                        <md-select ng-model="tempDateInfo.selectedendTime">
+                        <md-select ng-model="tempDateInfo.selectedendTime" class="timeFont">
                           <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
                         </md-select>
                       </md-input-container>
@@ -209,9 +209,9 @@
                     <div class="thirddiv" style="float: left;">
                       <md-input-container style="margin-right: 10px;">
                         <label>Time Zone</label>
-                        <md-select ng-model="tempDateInfo.TimeZone">
-                          <md-option ng-repeat="tzone1 in eventInfo.TimeZones" ng-value="tzone1.TimeZoneId">{{tzone1.TimeZoneName}}</md-option>
-                        </md-select>
+                          <md-select ng-model="tempDateInfo.TimeZone" class="timeFont">
+                              <md-option ng-repeat="tzone1 in eventInfo.TimeZones" ng-value="tzone1.TimeZoneId">{{tzone1.TimeZoneName}}</md-option>
+                          </md-select>
                         <div class="validation-standard-messages" ng-show="(dateInfoTouched  || formValidation) && !tempDateInfo.TimeZone">
                           You need to select timezone for event.
                         </div>

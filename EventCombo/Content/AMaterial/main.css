@@ -2,10 +2,18 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700);
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
-@media (max-width: 1100px) {
+@media (min-width: 1100px) {
+        .datediv
+    {
+        min-width: 235px !important;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1100px) {
+    .datediv
+    {
+        min-width: 235px !important;
+    }
   /* Big view stuff goes here. */
   .URLDiv, .eDBitMoreInnerHead, .eDAddTicketInnerHead, .addTicketsButtons, .variabeDetails, .TicketOptions {
     margin-left: 26px !important;
@@ -33,6 +41,10 @@
 }
 
 @media (min-width: 541px) and (max-width: 768px) {
+        .datediv
+    {
+        min-width: 235px !important;
+    }
     .pickupDateContainer
     {
         width: 70% !important;
@@ -101,6 +113,10 @@
 }
 
 @media (max-width: 540px) and (min-width: 400px) {
+        .datediv
+    {
+        min-width: 140px !important;
+    }
       .pickupDateContainer
     {
         width: 70% !important;
@@ -216,7 +232,7 @@
     width: 90px !important;
   }
 
-  .firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input {
+  .firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input, .timeFont {
     font-size: 16px !important;
   }
 
@@ -235,6 +251,10 @@
 }
 
 @media (max-width: 399px) {
+        .datediv
+    {
+        min-width: 140px !important;
+    }
       .pickupDateContainer
     {
         width: 70% !important;
@@ -260,7 +280,7 @@
     width: 90px !important;
   }
 
-  .firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input {
+  .firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input, .timeFont {
     font-size: 16px !important;
   }
 
@@ -395,7 +415,19 @@
   }
 }
 
+.timeFont
+{
+    font-size: 14px;
+    font-family: Roboto;
+}
+.md-datepicker-input
+{
+    font-family: Roboto;
+}
+  md-ink-bar {
+    bottom: 12px !important;
 
+      }
 .ticketChkBoxCon {
   margin-left: 15px;
 }
