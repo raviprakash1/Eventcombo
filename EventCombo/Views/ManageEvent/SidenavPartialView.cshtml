@@ -33,6 +33,13 @@
             </a>
         </div>
         <div class="panel panel-default menu_list">
+            <a class="menu_title" href="@Url.Action("PaymentInfo", "PaymentInfo", new { EventId = ValidationMessageController.GetParentEventId(Model.EventId) })">
+                <div class="panel-heading">
+                    Payment Settings
+                </div>
+            </a>
+        </div>
+        <div class="panel panel-default menu_list">
             <a class="menu_title" href="@Url.Action("Index","ManageEvent",  new { Eventlid = ValidationMessageController.GetParentEventId(Model.EventId) , type = "N"})">
                 <div class="panel-heading">
                     Event Dashboard

@@ -64,6 +64,7 @@ namespace EventCombo.Controllers
 
 
                 ViewBag.CountryID = countryList;
+                TempData["EventId"] = EventId.ToString();
                 return View(objPI);
             }
             else
