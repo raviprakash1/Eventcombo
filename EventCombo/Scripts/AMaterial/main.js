@@ -415,10 +415,15 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         : price - discount;
     }
 
-    $scope.onPriceBlur = function (ticket) {
-      ticket.Price = (ticket.Price < 0) || isNaN(ticket.Price) ? 0 : ticket.Price > 10000000 ? 9999999 : ticket.Price;
-      ticket.T_Discount = isNaN(ticket.T_Discount) || (ticket.T_Discount < 0) ? 0 : ticket.T_Discount > ticket.Price ? ticket.Price : ticket.T_Discount;
+    $scope.onPriceBlur = function (ticket, formname) {
+      ticket.Price = (ticket.Price < 0) || isNaN(ticket.Price) || !ticket.Price ? 0 : ticket.Price > 10000000 ? 9999999 : ticket.Price;
+      ticket.T_Discount = isNaN(ticket.T_Discount) || (ticket.T_Discount < 0 || !ticket.T_Discount) ? 0 : ticket.T_Discount > ticket.Price ? ticket.Price : ticket.T_Discount;
       $scope.onPriceChange(ticket);
+
+      $scope.MainForm[formname].TicketPrice.$setViewValue(ticket.Price);
+      $scope.MainForm[formname].TicketPrice.$render();
+      $scope.MainForm[formname].TicketDiscount.$setViewValue(ticket.T_Discount);
+      $scope.MainForm[formname].TicketDiscount.$render();
     }
 
     $scope.onQtyBlur = function (ticket) {
@@ -431,21 +436,25 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         $scope.eventInfo.TicketList.splice(idx, 1);
     }
 
-    $scope.onExpandTicketClick = function (ticket, form) {
+    $scope.onExpandTicketClick = function (ticket, formname) {
       if (!ticket.expandedOptions) {
         ticket.expandedOptions = true;
         return;
       }
 
+      console.log(formname);
+      var form = $scope.MainForm[formname];
+      if (!form)
+        return;
+      console.log(form);
+      console.log(ticket);
       ticket.ticketValidation = true;
 
-      var hideDatesValid = ((ticket.useUntilDate == 1) && ticket.localHideUntilDate && !form.ticketHideUntilDate.$error.mindate) ||
-        ((ticket.useAfterDate == 1) && ticket.localHideAfterDate && !form.ticketHideAfterDate.$error.mindate);
+      var hideDatesValid = ((ticket.useUntilDate == 1) && ticket.localHideUntilDate && form.ticketHideUntilDate.$valid) ||
+        ((ticket.useAfterDate == 1) && ticket.localHideAfterDate && form.ticketHideAfterDate.$valid);
 
-      ticket.expandedOptions = form.ticketStartDate.$error.mindate ||
-        form.ticketEndDate.$error.mindate ||
-        form.TicketDescription.$error.maxlength ||
-        ((ticket.T_AutoSechduleType == 1) && !hideDatesValid);
+      ticket.expandedOptions = !form.ticketStartDate.$valid || !form.ticketEndDate.$valid ||
+        !form.TicketDescription.$valid || ((ticket.Hide_Ticket == 1) && (ticket.T_AutoSechduleType == 1) && !hideDatesValid);
     }
 
     $scope.addVarCharge = function () {
@@ -546,21 +555,27 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       if ($scope.eventInfo.TicketList.length == 0)
         elem.valid = false;
       $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
-        var hideDatesValid = ((ticket.useUntilDate == 1) && ticket.localHideUntilDate && (ticket.localHideUntilDate >= $scope.minDate)) ||
-            ((ticket.useAfterDate == 1) && ticket.localHideAfterDate && (ticket.localHideAfterDate >= $scope.minDate));
-        if (($scope.MainForm['TicketForm_' + i].TicketName.$error) ||
+        var hideDatesValid = ((ticket.useUntilDate == 1) && ticket.localHideUntilDate && $scope.MainForm['TicketForm_' + i].ticketHideUntilDate.$valid) ||
+            ((ticket.useAfterDate == 1) && ticket.localHideAfterDate && $scope.MainForm['TicketForm_' + i].ticketHideAfterDate.$valid);
+        if (!$scope.MainForm['TicketForm_' + i].TicketName.$valid ||
             (ticket.Qty_Available <= 0) ||
-            (ticket.localSaleStartDate && (ticket.localSaleStartDate < $scope.minDate)) ||
-            (ticket.localSaleEndDate && (ticket.localSaleEndDate < $scope.minDate)) ||
-            ($scope.MainForm['TicketForm_' + i].TicketDescription.$error) ||
-            ((ticket.T_AutoSechduleType == 1) && !hideDatesValid))
+            !$scope.MainForm['TicketForm_' + i].ticketStartDate.$valid ||
+            !$scope.MainForm['TicketForm_' + i].ticketEndDate.$valid ||
+            !$scope.MainForm['TicketForm_' + i].TicketDescription.$valid ||
+            ((ticket.Hide_Ticket == 1) && (ticket.T_AutoSechduleType == 1) && !hideDatesValid))
           elem.valid = false;
+        console.log(hideDatesValid);
+        console.log(elem.valid);
+        console.log($scope.MainForm['TicketForm_' + i]);
+        console.log(ticket);
       });
       if ($scope.eventInfo.Ticket_showvariable == 'Y')
         $scope.eventInfo.VariableChargesList.forEach(function (varcharge, i, arr) {
-          if ($scope.MainForm['VarChargeForm_' + i].variableChargeDescription.$error)
+          if (!$scope.MainForm['VarChargeForm_' + i].variableChargeDescription.$valid)
             elem.valid = false;
         });
+      if (($scope.eventInfo.EventPrivacy == 'Private') && ($scope.eventInfo.isPasswordRequired == 'Y') && !MainForm.privatePassword.$valid)
+        elem.valid = false;
       return elem;
     }
 
@@ -792,6 +807,27 @@ createEventApp.directive('positiveValidation', function () {
       };
     }
   };
+});
+
+createEventApp.directive('makeDecimal', function () {
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function (scope, elem, attrs, ctrl) {
+      ctrl.$parsers.push(function (value) {
+        var val = parseFloat(value) * 1;
+        val = isNaN(val) ? 0 : val;
+        if (val != ctrl.$viewValue) {
+          ctrl.$setViewValue(val);
+          ctrl.$render();
+        }
+        console.log(value);
+        console.log(val);
+        console.log(ctrl.$viewValue);
+        return val;
+      });
+    }
+  }
 });
 
 createEventApp.directive('dragDropElements', function ($compile) {

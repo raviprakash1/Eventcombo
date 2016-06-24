@@ -539,13 +539,13 @@
                     <div flex ng-show="ticket.TicketTypeID == 2">
                       <md-input-container class="ticketContTxtBox qualityMdCon">
                         <label class="ticketPriceLbl">$ Price</label>
-                        <input type="number" class="ticketPriceLblTxtboxCls" required ng-model="ticket.Price" ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket)" input />
+                        <input type="number" class="ticketPriceLblTxtboxCls" name="TicketPrice" ng-model="ticket.Price" ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket, 'TicketForm_'+$index)" input />
                       </md-input-container>
                     </div>
                     <div flex ng-show="ticket.TicketTypeID == 2">
                       <md-input-container class="ticketContTxtBox qualityMdCon">
                         <label class="ticketDiscountLbl">$ Discount</label>
-                        <input input type="number" class="ticketDiscountLblTxtboxCls" required ng-model="ticket.T_Discount" ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket)" />
+                        <input input type="number" class="ticketDiscountLblTxtboxCls" name="TicketDiscount" ng-model="ticket.T_Discount" ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket, 'TicketForm_'+$index)" />
                       </md-input-container>
                     </div>
                     <div flex ng-show="ticket.TicketTypeID != 2">
