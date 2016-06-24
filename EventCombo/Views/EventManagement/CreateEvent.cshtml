@@ -750,35 +750,38 @@
           ADD
         </md-button>
         <div class="variableOptions">
-          <div ng-repeat="varCharge in eventInfo.VariableChargesList">
-            <i class="material-icons" style="float: right;margin-right: 20px; margin-top: 13px; cursor: pointer;" ng-click="deleteVarCharge(varCharge)">clear</i>
-            <div class="variableClass">
-              <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 250px;">
-                <label class="ticketDespTxtBoxLbl">Variable charge description</label>
-                <input class="ticketDespTxtBoxCls" name="variableChargeDescription" ng-model="varCharge.VariableDesc" required />
-                <div ng-messages="MainForm.variableChargeDescription.$error">
-                  <div ng-message="required">Variable charge description is required.</div>
+            <div ng-repeat="varCharge in eventInfo.VariableChargesList" ng-class="{{$index}}" variable-drag-drop-elements>
+                <i class="material-icons" style="float: right;margin-right: 20px; margin-top: 13px; cursor: pointer;" ng-click="deleteVarCharge(varCharge)">clear</i>
+                <span class="iconDragItem" draggable="true" style="margin-left: 15px;">
+                    <i class="material-icons">reorder</i>
+                </span>
+                <div class="variableClass">
+                    <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 250px;">
+                        <label class="ticketDespTxtBoxLbl">Variable charge description</label>
+                        <input class="ticketDespTxtBoxCls" name="variableChargeDescription" ng-model="varCharge.VariableDesc" required />
+                        <div ng-messages="MainForm.variableChargeDescription.$error">
+                            <div ng-message="required">Variable charge description is required.</div>
+                        </div>
+                    </md-input-container>
+                    <span style="margin-left: 20px">  $</span>
                 </div>
-              </md-input-container>
-              <span style="margin-left: 20px">  $</span>
-            </div>
-            <div class="variableClass">
-              <md-input-container class="ticketDespTxtBoxCon variableType" style="margin-left: 20px; width:150px">
-                <label class="ticketDespTxtBoxLbl">Type</label>
-                <md-select class="ticketDespTxtBoxCls" ng-model="varCharge.Optional">
-                  <md-option ng-repeat="type in vartypes" value="{{type.varId}}">{{type.varName}}</md-option>
-                </md-select>
-              </md-input-container>
-              <span style="margin-left: 20px">  $</span>
-            </div>
-            <div class="variableClass">
-              <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 100px;">
-                <label class="ticketDespTxtBoxLbl variableAmount">Amount</label>
-                <input class="ticketDespTxtBoxCls" type="number" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="1.00" ng-model="varCharge.Price" required />
-              </md-input-container>
-            </div>
+                <div class="variableClass">
+                    <md-input-container class="ticketDespTxtBoxCon variableType" style="margin-left: 20px; width:150px">
+                        <label class="ticketDespTxtBoxLbl">Type</label>
+                        <md-select class="ticketDespTxtBoxCls" ng-model="varCharge.Optional">
+                            <md-option ng-repeat="type in vartypes" value="{{type.varId}}">{{type.varName}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <span style="margin-left: 20px">  $</span>
+                </div>
+                <div class="variableClass">
+                    <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 100px;">
+                        <label class="ticketDespTxtBoxLbl variableAmount">Amount</label>
+                        <input class="ticketDespTxtBoxCls" type="number" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="1.00" ng-model="varCharge.Price" required />
+                    </md-input-container>
+                </div>
 
-          </div>
+            </div>
         </div>
       </div>
     </div>
