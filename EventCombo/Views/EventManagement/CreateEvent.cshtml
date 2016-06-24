@@ -183,6 +183,7 @@
                           </div>
                         </div>
                         <md-input-container style="margin-right: 10px; margin-left: 20px;">
+                            <label>Start Time</label>
                           <md-select ng-model="tempDateInfo.selectedstartTime">
                             <md-option ng-repeat="startTime in eventInfo.DateInfo.TimeList" ng-value="startTime">{{startTime.TimeString}}</md-option>
                           </md-select>
@@ -199,6 +200,7 @@
                         </div>
                       </div>
                       <md-input-container style="margin-right: 10px; margin-left: 20px;">
+                          <label>End Time</label>
                         <md-select ng-model="tempDateInfo.selectedendTime">
                           <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
                         </md-select>

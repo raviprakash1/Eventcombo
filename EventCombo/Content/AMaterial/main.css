@@ -33,6 +33,10 @@
 }
 
 @media (min-width: 541px) and (max-width: 768px) {
+    .pickupDateContainer
+    {
+        width: 70% !important;
+    }
   .onlineEventConChkBox {
     margin-left: 0px !important;
   }
@@ -97,6 +101,10 @@
 }
 
 @media (max-width: 540px) and (min-width: 400px) {
+      .pickupDateContainer
+    {
+        width: 70% !important;
+    }
   .headerCEHeadBtn {
     text-align: unset !important;
     margin: unset !important;
@@ -227,6 +235,10 @@
 }
 
 @media (max-width: 399px) {
+      .pickupDateContainer
+    {
+        width: 70% !important;
+    }
   .ticketChkBoxCon {
     display: block !important;
     margin-left: unset !important;
@@ -1063,8 +1075,7 @@ md-dialog {
 
 .pickupDateContainer {
   min-width: 380px;
-  border: 1px solid #c1c1c1;
-  width: 70%;
+  border: 1px solid #c1c1c1;  
   margin: 0px auto;
   position: absolute;
   background: #fff;

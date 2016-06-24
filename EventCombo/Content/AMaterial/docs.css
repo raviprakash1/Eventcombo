@@ -1154,7 +1154,7 @@ md-dialog {
     width: 40%;
 }
 .firstdiv, .seconddiv {
-    width: 50%;
+   
     float: left;
     color: rgba(0, 0, 0, 0.87) !important;
 }
@@ -1165,9 +1165,6 @@ md-dialog {
 }
 .firstdiv.second-tab {
     width: 40%;
-}
-.seconddiv.second-tab {
-    width: 60%;
 }
 .flex-gt-md-30, .time-zone {
     margin-left: 58px;
