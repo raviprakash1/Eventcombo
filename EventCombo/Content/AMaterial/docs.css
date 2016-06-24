@@ -1155,13 +1155,13 @@ md-dialog {
 }
 .firstdiv, .seconddiv {
    
-    float: left;
+  
     color: rgba(0, 0, 0, 0.87) !important;
 }
 .thirddiv {
     clear: both;
     display: inline-block;
-    margin-left: 20px;
+    margin-left: 30px;
 }
 .firstdiv.second-tab {
     width: 40%;

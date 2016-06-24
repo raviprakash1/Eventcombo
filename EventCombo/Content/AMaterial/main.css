@@ -113,6 +113,29 @@
 }
 
 @media (max-width: 540px) and (min-width: 400px) {
+    .URLDiv{
+        margin-right: 10px !important;
+        width: 90% !important;
+    }
+    .URLinputContainer
+    {
+        width: 63% !important;
+
+    }
+    .websiteUrlEnd
+    {
+        font-size: 15px !important;
+    }
+       .mce-tinymce
+    {
+        display: none !important;
+
+    }
+       .textArea
+       {
+           display: block !important;
+           width: 100%;
+       }
         .datediv
     {
         min-width: 140px !important;
@@ -184,9 +207,7 @@
     padding-left: 26px !important;
   }
 
-  .eventDtkBodyCon {
-    margin-left: 18px;
-  }
+
 
 
   .color-picker-panel {
@@ -198,7 +219,7 @@
   }
 
   .color_pick {
-    margin-right: 15%;
+    margin-right: -10px !important;
   }
 
   .bannerPic {
@@ -249,9 +270,38 @@
     display: block !important;
     margin-left: unset !important;
   }
+  .eventDtkHeadCon
+  {
+      padding-left: 0px !important;
+  }
+
 }
 
 @media (max-width: 399px) {
+        .URLDiv{
+        margin-right: 10px !important;
+        width: 90% !important;
+    }
+    .URLinputContainer
+    {
+        width: 63% !important;
+
+    }
+    .websiteUrlEnd
+    {
+        font-size: 12px !important;
+    }
+      .mce-tinymce
+    {
+        display: none !important;
+
+    }
+       .textArea
+       {
+           display: block !important;
+           width: 100%;
+       }
+
         .datediv
     {
         min-width: 140px !important;
@@ -375,9 +425,6 @@
     font-size: 14px;
   }
 
-  .eventDtkBodyCon {
-    margin-left: 18px;
-  }
 
 
   .color-picker-panel {
@@ -393,7 +440,11 @@
   }
 
   .color_pick {
-    margin-right: 15%;
+    margin-right: -10px !important;
+  }
+  .eventDtkHeadCon
+  {
+      padding-left: 0px !important;
   }
 
   .bannerPic {
@@ -417,7 +468,7 @@
   }
 }
 
-..firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input
+.firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input
 {
     font-family: Roboto;
 }
@@ -468,6 +519,10 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700);
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
+
+.time-zone{
+    float: left;
+}
 
 .selectdemoSelectHeader .demo-header-searchbox {
   border: none;
@@ -757,6 +812,10 @@ header {
   color: rgb(48,71,86);
 }
 
+.Organiser
+{
+    font-family: Roboto;
+}
   .EDTxtENTxtBox::-webkit-input-placeholder {
     color: rgb(48,71,86);
   }
@@ -864,7 +923,7 @@ md-checkbox.md-checked.blue .md-icon {
   background-color: #00BCD4;
 }
 
-md-checkbox .md-label {
+.bold .md-label {
   color: #000;
   font-size: 16px;
   font-weight: bold;
