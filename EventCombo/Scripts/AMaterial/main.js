@@ -889,6 +889,70 @@ createEventApp.directive('dragDropElements', function ($compile) {
 });
 
 
+/* Variable drag drop Directive*/
+createEventApp.directive('variableDragDropElements', function ($compile) {
+  return {
+    restrict: 'A',
+    transclude: true,
+    template: '<div class="something" ng-transclude> This is my directive content</div>',
+
+    link: function (scope, element, attrs) {
+
+      scope.handleDragObjReference1;
+      scope.handleDragObjReference2;
+      scope.handleDragObjReference3;
+
+      scope.element = element;
+
+      scope.element.on('dragstart', function (event) {
+
+        console.log("Index: ", scope.$parent.$index);
+        dragSrcEl = element;
+        test = element;
+        console.log(dragSrcEl);
+        console.log($(test).attr("ng-class"));
+        scope.handleDragObjReference1 = false;
+        scope.handleDragObjReference2 = true;
+        scope.handleDragObjReference3 = false;
+
+        event.originalEvent.dataTransfer.effectAllowed = 'move';
+        event.originalEvent.dataTransfer.setData('text/html', element.html());
+      });
+
+      scope.element.on('dragover', function (event) {
+
+
+        if (event.preventDefault) {
+          event.preventDefault();
+        }
+
+        event.originalEvent.dataTransfer.dropEffect = 'move';
+        return false;
+      });
+
+      scope.element.on('drop', function (event) {
+
+        var dragElem = scope.eventInfo.VariableChargesList[$(dragSrcEl).attr("ng-class")];
+        var srcElem = scope.eventInfo.VariableChargesList[$(element).attr("ng-class")];
+
+        scope.eventInfo.VariableChargesList[$(dragSrcEl).attr("ng-class")] = srcElem;
+        scope.eventInfo.VariableChargesList[$(element).attr("ng-class")] = dragElem;
+
+
+        if (event.stopPropagation) {
+          event.stopPropagation();
+        }
+        scope.$apply();
+
+        return false;
+
+      });
+    }
+  };
+});
+
+
+
 function formatAMPM(date) {
   var hours = date.getHours();
   var minutes = date.getMinutes();
