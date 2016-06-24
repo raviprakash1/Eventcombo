@@ -468,6 +468,9 @@
   }
 }
 
+.EDTxtEventDateTime
+    {margin-top: 15px !important;}
+
 .firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input
 {
     font-family: Roboto;
@@ -519,7 +522,11 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700);
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
-
+.organiserLabel
+{
+    white-space: nowrap;
+    padding-left: 0px !important;
+}
 .time-zone{
     float: left;
 }
