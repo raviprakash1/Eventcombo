@@ -636,10 +636,10 @@
                         </div>
                       </div>
                       <md-input-container style="margin-right: 10px; margin-left: 10px; float:left;" class="salesTime">
-                        <label>Sales start time</label>
-                        <md-select ng-model="ticket.localSaleStartTime">
-                          <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
-                        </md-select>
+                        <label style="white-space: nowrap;">Sales start time</label>
+                          <md-select ng-model="ticket.localSaleStartTime" style="font-family:Roboto; font-size: 14px;">
+                              <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
+                          </md-select>
                       </md-input-container>
                     </div>
                     <div style="clear: both;">
@@ -651,8 +651,8 @@
                         </div>
                       </div>
                       <md-input-container style="margin-right: 10px; margin-left: 10px; float:left;" class="salesTime">
-                        <label>Sales end time</label>
-                        <md-select ng-model="ticket.localSaleEndTime">
+                        <label style="white-space: nowrap;">Sales end time</label>
+                        <md-select ng-model="ticket.localSaleEndTime" style="font-family:Roboto; font-size: 14px;">
                           <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
                         </md-select>
                       </md-input-container>
