@@ -3,15 +3,17 @@
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
 @media (min-width: 1100px) {
-  .datediv {
-    min-width: 235px !important;
-  }
+        .datediv
+    {
+        min-width: 235px !important;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1100px) {
-  .datediv {
-    min-width: 235px !important;
-  }
+    .datediv
+    {
+        min-width: 235px !important;
+    }
   /* Big view stuff goes here. */
   .URLDiv, .eDBitMoreInnerHead, .eDAddTicketInnerHead, .addTicketsButtons, .variabeDetails, .TicketOptions {
     margin-left: 26px !important;
@@ -39,14 +41,14 @@
 }
 
 @media (min-width: 541px) and (max-width: 768px) {
-  .datediv {
-    min-width: 235px !important;
-  }
-
-  .pickupDateContainer {
-    width: 70% !important;
-  }
-
+        .datediv
+    {
+        min-width: 235px !important;
+    }
+    .pickupDateContainer
+    {
+        width: 70% !important;
+    }
   .onlineEventConChkBox {
     margin-left: 0px !important;
   }
@@ -108,39 +110,46 @@
   .variableClass {
     display: block !important;
   }
+      @media (max-width: 630px) {
+    .firstdiv .md-datepicker-input-container, .seconddiv .md-datepicker-input-container {
+    width: 90px !important;
+  }
+    }
+
 }
 
 @media (max-width: 540px) and (min-width: 400px) {
-  .URLDiv {
-    margin-right: 10px !important;
-    width: 90% !important;
-  }
+    .URLDiv{
+        margin-right: 10px !important;
+        width: 90% !important;
+    }
+    .URLinputContainer
+    {
+        width: 63% !important;
 
-  .URLinputContainer {
-    width: 63% !important;
-  }
+    }
+    .websiteUrlEnd
+    {
+        font-size: 15px !important;
+    }
+       .mce-tinymce
+    {
+        display: none !important;
 
-  .websiteUrlEnd {
-    font-size: 15px !important;
-  }
-
-  .mce-tinymce {
-    display: none !important;
-  }
-
-  .textArea {
-    display: block !important;
-    width: 100%;
-  }
-
-  .datediv {
-    min-width: 140px !important;
-  }
-
-  .pickupDateContainer {
-    width: 70% !important;
-  }
-
+    }
+       .textArea
+       {
+           display: block !important;
+           width: 100%;
+       }
+        .datediv
+    {
+        min-width: 140px !important;
+    }
+      .pickupDateContainer
+    {
+        width: 70% !important;
+    }
   .headerCEHeadBtn {
     text-align: unset !important;
     margin: unset !important;
@@ -153,7 +162,7 @@
   }
 
   .weeklyEndTime {
-    margin-left: 58px !important;
+    margin-left: 30px !important;
   }
 
   .onlineEventConChkBox {
@@ -264,75 +273,87 @@
     display: block !important;
     margin-left: unset !important;
   }
-
-  .eventDtkHeadCon {
-    padding-left: 0px !important;
+  .eventDtkHeadCon
+  {
+      padding-left: 0px !important;
   }
-
-  .moreOptions {
-    margin-top: 10px;
-  }
-
-  @media (max-width: 485px) {
-    .showEvent {
-      margin-top: 0px !important;
-      margin-left: 0px !important;
+    .moreOptions
+    {
+        margin-top: 10px;
     }
-  }
-
-  @media (max-width: 465px) {
-    .salesTime {
-      margin-left: 35px !important;
-      margin-top: 0px !important;
+    @media (max-width: 485px) {
+        .showEvent {
+            margin-top: 0px !important;
+            margin-left: 0px !important;
+        }
     }
-  }
+
+    @media (max-width: 465px) {
+        .salesTime {
+            margin-left: 35px !important;
+            margin-top: 0px !important;
+        }
+    }
+
+     @media (max-width: 430px) {
+        .textArea {
+           margin-top: 60px !important;
+        }
+    }
+
+
 }
 
 @media (max-width: 399px) {
-  .salesTime {
-    margin-left: 35px !important;
-    margin-top: 0px !important;
-  }
+       .textArea {
+           margin-top: 60px !important;
+        }
+    .salesTime
+    {
+        margin-left: 35px !important;
+        margin-top: 0px !important;
+    }
+      .showEvent
+    {
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+    }
+    .moreOptions
+    {
+        margin-top: 10px;
+    }
+        .URLDiv{
+        margin-right: 10px !important;
+        width: 90% !important;
+    }
+    .URLinputContainer
+    {
+        width: 63% !important;
 
-  .showEvent {
-    margin-top: 0px !important;
-    margin-left: 0px !important;
-  }
+    }
+    .websiteUrlEnd
+    {
+        font-size: 12px !important;
+    }
+      .mce-tinymce
+    {
+        display: none !important;
 
-  .moreOptions {
-    margin-top: 10px;
-  }
+    }
+       .textArea
+       {
+           display: block !important;
+           width: 100%;
+       }
 
-  .URLDiv {
-    margin-right: 10px !important;
-    width: 90% !important;
-  }
-
-  .URLinputContainer {
-    width: 63% !important;
-  }
-
-  .websiteUrlEnd {
-    font-size: 12px !important;
-  }
-
-  .mce-tinymce {
-    display: none !important;
-  }
-
-  .textArea {
-    display: block !important;
-    width: 100%;
-  }
-
-  .datediv {
-    min-width: 140px !important;
-  }
-
-  .pickupDateContainer {
-    width: 70% !important;
-  }
-
+        .datediv
+    {
+        min-width: 140px !important;
+    }
+      .pickupDateContainer
+    {
+        width: 70% !important;
+    }
   .ticketChkBoxCon {
     display: block !important;
     margin-left: unset !important;
@@ -375,7 +396,7 @@
   }
 
   .weeklyEndTime {
-    margin-left: 58px !important;
+    margin-left: 30px !important;
   }
 
   .onlineEventConChkBox {
@@ -465,9 +486,9 @@
   .color_pick {
     margin-right: -10px !important;
   }
-
-  .eventDtkHeadCon {
-    padding-left: 0px !important;
+  .eventDtkHeadCon
+  {
+      padding-left: 0px !important;
   }
 
   .bannerPic {
@@ -491,29 +512,28 @@
   }
 }
 
-.EDTxtEventDateTime {
-  margin-top: 15px !important;
-}
+.EDTxtEventDateTime
+    {margin-top: 15px !important;}
 
-.firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input {
-  font-family: Roboto;
+.firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input
+{
+    font-family: Roboto;
 }
-
-.timeFont {
-  font-size: 14px;
-  font-family: Roboto;
+.timeFont
+{
+    font-size: 14px;
+    font-family: Roboto;
 }
-
-.md-datepicker-input {
-  font-family: Roboto;
+.md-datepicker-input
+{
+    font-family: Roboto;
 }
+  md-ink-bar {
+    bottom: 12px !important;
 
-md-ink-bar {
-  bottom: 12px !important;
-}
-
+      }
 .ticketChkBoxCon {
-  margin-left: 0px;
+  margin-left: 15px;
 }
 
 .TicketOptions {
@@ -523,7 +543,7 @@ md-ink-bar {
 }
 
 .variableClass {
-  width: 26%;
+    width: 26%;
   display: inline-block;
 }
 
@@ -546,14 +566,18 @@ md-ink-bar {
 @import url(https://fonts.googleapis.com/css?family=Roboto:100,200,400,300,300italic,400italic,500,700);
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700);
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
-
-.organiserLabel {
-  white-space: nowrap;
-  padding-left: 0px !important;
+.seconddiv
+{
+    clear: both;
 }
 
-.time-zone {
-  float: left;
+.organiserLabel
+{
+    white-space: nowrap;
+    padding-left: 0px !important;
+}
+.time-zone{
+    float: left;
 }
 
 .selectdemoSelectHeader .demo-header-searchbox {
@@ -844,30 +868,30 @@ header {
   color: rgb(48,71,86);
 }
 
-.Organiser {
-  font-family: Roboto;
+.Organiser
+{
+    font-family: Roboto;
 }
+  .EDTxtENTxtBox::-webkit-input-placeholder {
+    color: rgb(48,71,86);
+  }
 
-.EDTxtENTxtBox::-webkit-input-placeholder {
-  color: rgb(48,71,86);
-}
+  .EDTxtENTxtBox:-moz-placeholder { /* Firefox 18- */
+    color: rgb(48,71,86);
+  }
 
-.EDTxtENTxtBox:-moz-placeholder { /* Firefox 18- */
-  color: rgb(48,71,86);
-}
+  .EDTxtENTxtBox::-moz-placeholder { /* Firefox 19+ */
+    color: rgb(48,71,86);
+  }
 
-.EDTxtENTxtBox::-moz-placeholder { /* Firefox 19+ */
-  color: rgb(48,71,86);
-}
+  .EDTxtENTxtBox:-ms-input-placeholder {
+    color: rgb(48,71,86);
+  }
 
-.EDTxtENTxtBox:-ms-input-placeholder {
-  color: rgb(48,71,86);
-}
-
-.EDTxtENTxtBox:focus {
-  outline: none;
-  border: none;
-}
+  .EDTxtENTxtBox:focus {
+    outline: none;
+    border: none;
+  }
 
 .EDTxtVNTxtBox {
   width: 100%;
@@ -1204,7 +1228,7 @@ md-dialog {
 
 .pickupDateContainer {
   min-width: 380px;
-  border: 1px solid #c1c1c1;
+  border: 1px solid #c1c1c1;  
   margin: 0px auto;
   position: absolute;
   background: #fff;
@@ -1229,9 +1253,9 @@ md-dialog {
   font-weight: bold !important;
   font-size: 16px !important;
 }
-
-.ticketPriceLbl {
-  z-index: 1;
+.ticketPriceLbl
+{
+    z-index: 1;
 }
 
 .buyerInfo {
