@@ -202,7 +202,13 @@
                       </a>
 
                     </li>
+                    <li>
+                        <a href="#" onclick="checkPermission('14');">
+                            <span class="fa fa-server"></span>
+                            <span class="sidebar-title">Business pages</span>
+                        </a>
 
+                    </li>
                     <li class="sidebar-label pt20">Systems</li>
 
                     <li>
@@ -391,7 +397,10 @@
                         else if (vPerm == "12")
                           window.location.href = '@Url.Action("Index", "Article")';
                         else if (vPerm == "13")
-                          window.location.href = '@Url.Action("Index", "Orders")';
+                            window.location.href = '@Url.Action("Index", "Orders")';
+                        else if (vPerm == "14")
+                            window.location.href = '@Url.Action("Index", "BusinessPages")';
+
                     }
                 }
             });

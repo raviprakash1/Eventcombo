@@ -1,0 +1,80 @@
+﻿@model CMS.Models.BusinessPage
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<link href='~/Content/jquery-te-1.4.0.css' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="~/Scripts/jquery-te-1.4.0.js"></script>
+
+<section id="content_wrapper">
+
+    <!-- Start: Topbar -->
+    <header id="topbar" class="alt">
+        <div class="topbar-left">
+            <ol class="breadcrumb">
+
+                <li class="crumb-icon">
+                    <a href="dashboard.html">
+                        <span class="glyphicon glyphicon-home"></span>
+                    </a>
+                </li>
+                <li class="crumb-active">
+                    Dashboard
+                </li>
+            </ol>
+        </div>
+
+    </header>
+    <div class="panel-heading panel_loader">
+        <span class="view_evnt fs26 col-sm-6"> Business page detail</span>
+    </div>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.PageName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PageName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PageNameUrl)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PageNameUrl)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PageContent)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PageContent)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdateDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UpdateDate)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.BusinessPageID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+    </section>

@@ -1,0 +1,109 @@
+﻿@model IEnumerable<CMS.Models.BusinessPage>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<!-- Start: Topbar -->
+<header id="topbar" class="alt">
+    <div class="topbar-left">
+        <ol class="breadcrumb">
+
+            <li class="crumb-icon">
+                <a href="dashboard.html">
+                    <span class="glyphicon glyphicon-home"></span>
+                </a>
+            </li>
+            <li class="crumb-active">
+                Dashboard
+            </li>
+        </ol>
+    </div>
+
+</header>
+<link rel="stylesheet" type="text/css" href="~/plugins/footable/css/footable.core.min.css">
+<section id="content_wrapper">
+    <div class="panel-heading panel_loader">
+        <span class="view_evnt fs26 col-sm-6"> Business pages</span>
+        <label class="field select admin-form col-sm-4 text-right srh-by-no">
+            Display:
+            <select>
+                <option value="0">Select</option>
+                <option value="0">01 - 25</option>
+                <option value="1">26 - 50</option>
+                <option value="2">51 - 75</option>
+            </select>
+            <i class="arrow double"></i>
+        </label>
+    </div>
+   
+    <div class="col-md-12">
+        <table class="table footable" data-page-navigation=".pagination" data-page-size="25">
+            <thead class="bg_white">
+                <tr class="bg_white">
+                    <th>
+                        @Html.DisplayNameFor(model => model.PageName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PageNameUrl)
+                    </th>
+                    @*<th>
+                        @Html.DisplayNameFor(model => model.PageContent)
+                    </th>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreatedDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UpdateDate)
+                    </th>
+                    <th>View</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model) {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PageName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PageNameUrl)
+                        </td>
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.PageContent)
+                        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UpdateDate)
+                        </td>
+                        <td>
+                            @Html.ActionLink("View", "Details", new { id = item.BusinessPageID }) 
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = item.BusinessPageID })" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
+                            <a class="td-btn" type="button" href="@Url.Action("Delete", new { id = item.BusinessPageID })" data-toggle="modal" id="adelete">
+                                <i class="fa fa-remove"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+            <tfoot class="footer-menu">
+                <tr>
+                    <td colspan="8">
+                        <nav class="text-right">
+                            <ul class="pagination" id="ulpage"></ul>
+                        </nav>
+                    </td>
+                </tr>
+            </tfoot>
+
+        </table>
+    </div>
+    <div class="articleItemCon">
+        @Html.ActionLink("Add", "Create",null,new { @class = "btn btn-info articleBtnCls" })
+    </div>
+    </section>
