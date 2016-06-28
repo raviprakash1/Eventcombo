@@ -30,57 +30,51 @@
     <div class="panel-heading panel_loader">
         <span class="view_evnt fs26 col-sm-6">Are you sure you want to delete this?</span>
     </div>
-   <div>
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.PageName)
-            </dt>
+    <div id="content" class="animated fadeIn">
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.PageName)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.PageName)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.PageName)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.PageNameUrl)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.PageNameUrl)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.PageNameUrl)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.PageNameUrl)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.PageContent)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.PageContent)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.CreatedDate)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.UpdateDate)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.CreatedDate)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.UpdateDate)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.UpdateDate)
-            </dt>
+            </dl>
 
-            <dd>
-                @Html.DisplayFor(model => model.UpdateDate)
-            </dd>
+            @using (Html.BeginForm()) {
+                @Html.AntiForgeryToken()
 
-        </dl>
-
-        @using (Html.BeginForm()) {
-            @Html.AntiForgeryToken()
-
-            <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-info articleBtnCls" /> |
-                @Html.ActionLink("Back to List", "Index")
-            </div>
-        }
-    </div>
-    </section>
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-info articleBtnCls" /> |
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            }
+        </div>
+        </div>
+</section>

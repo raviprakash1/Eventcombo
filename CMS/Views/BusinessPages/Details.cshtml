@@ -29,52 +29,55 @@
     <div class="panel-heading panel_loader">
         <span class="view_evnt fs26 col-sm-6"> Business page detail</span>
     </div>
-    <div>
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.PageName)
-            </dt>
+    <div id="content" class="animated fadeIn">
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.PageName)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.PageName)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.PageName)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.PageNameUrl)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.PageNameUrl)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.PageNameUrl)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.PageNameUrl)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.PageContent)
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.PageContent)
-            </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.CreatedDate)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.CreatedDate)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.UpdateDate)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.UpdateDate)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.UpdateDate)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.UpdateDate)
+                </dd>
 
-        </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.BusinessPageID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-    </section>
+            </dl>
+            <div>
+                <b>@Html.DisplayNameFor(model => model.PageContent)</b>
+            </div>
+
+            <div class="container">
+                @Html.Raw(Model.PageContent)
+            </div>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.BusinessPageID }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+        </div>
+</section>
