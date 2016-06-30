@@ -145,6 +145,17 @@
           <Property Name="ExpirationDate" Type="varchar" MaxLength="500" />
           <Property Name="Cvv" Type="varchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="BusinessPage">
+          <Key>
+            <PropertyRef Name="BusinessPageID" />
+          </Key>
+          <Property Name="BusinessPageID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PageNameUrl" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="PageName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="PageContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="CardDetails">
           <Key>
             <PropertyRef Name="CardId" />
@@ -1016,7 +1027,7 @@
           <Property Name="Data" Type="nvarchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EventCombo.dbo.V_EventsList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EC2.dbo.V_EventsList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="V_EventsList">
           <Key>
             <PropertyRef Name="EventID" />
@@ -1053,7 +1064,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_EventsList' does not have a prima
           <Property Name="EventTiming" Type="varchar" MaxLength="49" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EventCombo.dbo.v_OrderList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EC2.dbo.v_OrderList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="v_OrderList">
           <Key>
             <PropertyRef Name="OId" />
@@ -1079,7 +1090,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_OrderList' does not have a primar
           <Property Name="UserId" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EC2.dbo.v_RetrieveEventid' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="v_RetrieveEventid">
           <Key>
             <PropertyRef Name="EventID" />
@@ -1126,7 +1137,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="EventCancel" Type="varchar" MaxLength="2" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="V_Users">
           <Key>
             <PropertyRef Name="Id" />
@@ -1160,7 +1171,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="deals" Type="int" Nullable="false" />
           <Property Name="dealpurchased" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__EventSubC__Event__2942188C">
+        <Association Name="FK__EventSubC__Event__45BE5BA9">
           <End Role="EventCategory" Type="Self.EventCategory" Multiplicity="1" />
           <End Role="EventSubCategory" Type="Self.EventSubCategory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1172,7 +1183,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TicketDel__Deliv__2FEF161B">
+        <Association Name="FK__TicketDel__Deliv__4C6B5938">
           <End Role="DeliveryMethod" Type="Self.DeliveryMethod" Multiplicity="1" />
           <End Role="TicketDeliveryMethod" Type="Self.TicketDeliveryMethod" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1494,6 +1505,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BillingAddress" EntityType="Self.BillingAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BusinessPage" EntityType="Self.BusinessPage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CardDetails" EntityType="Self.CardDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ControlType" EntityType="Self.ControlType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
@@ -1680,11 +1692,11 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
     [V_Users].[dealpurchased] AS [dealpurchased]
     FROM [dbo].[V_Users] AS [V_Users]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__EventSubC__Event__2942188C" Association="Self.FK__EventSubC__Event__2942188C">
+          <AssociationSet Name="FK__EventSubC__Event__45BE5BA9" Association="Self.FK__EventSubC__Event__45BE5BA9">
             <End Role="EventCategory" EntitySet="EventCategory" />
             <End Role="EventSubCategory" EntitySet="EventSubCategory" />
           </AssociationSet>
-          <AssociationSet Name="FK__TicketDel__Deliv__2FEF161B" Association="Self.FK__TicketDel__Deliv__2FEF161B">
+          <AssociationSet Name="FK__TicketDel__Deliv__4C6B5938" Association="Self.FK__TicketDel__Deliv__4C6B5938">
             <End Role="DeliveryMethod" EntitySet="DeliveryMethod" />
             <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethod" />
           </AssociationSet>
@@ -2842,8 +2854,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             <End Role="Order_Detail_T" EntitySet="Order_Detail_T" />
           </AssociationSet>
           <FunctionImport Name="PublishSingleEvent1">
-            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
+          <EntitySet Name="BusinessPages" EntityType="EventComboModel.BusinessPage" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -4084,6 +4097,17 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="BusinessPage">
+          <Key>
+            <PropertyRef Name="BusinessPageID" />
+          </Key>
+          <Property Name="BusinessPageID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PageNameUrl" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PageName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PageContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5376,6 +5400,18 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="PublishSingleEvent1" FunctionName="EventComboModel.Store.PublishSingleEvent" />
+          <EntitySetMapping Name="BusinessPages">
+            <EntityTypeMapping TypeName="EventComboModel.BusinessPage">
+              <MappingFragment StoreEntitySet="BusinessPage">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PageContent" ColumnName="PageContent" />
+                <ScalarProperty Name="PageName" ColumnName="PageName" />
+                <ScalarProperty Name="PageNameUrl" ColumnName="PageNameUrl" />
+                <ScalarProperty Name="BusinessPageID" ColumnName="BusinessPageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
 
         </EntityContainerMapping>
       </Mapping>
