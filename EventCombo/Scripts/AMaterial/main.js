@@ -21,9 +21,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     $scope.minDate.setHours(0, 0, 0, 0);
     $scope.formValidation = false;
     $scope.gPlace;
-    console.log("window width: ", $(window).width());
     if ($(window).width() > 768) {
-      console.log("In iF check");
       $scope.tinymceOptions = {
         selector: "textarea",
         height: 100,
@@ -86,17 +84,14 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     }
 
     $scope.onShowDateTimeDialog = function (showDialog) {
-      console.log($scope.eventInfo.DateInfo.StartDateTime);
       var startDateTime = new Date($scope.eventInfo.DateInfo.StartDateTime);
       if ($scope.eventInfo.DateInfo.StartDateTime.length <= 19)
         startDateTime = new Date(startDateTime.getTime() + startDateTime.getTimezoneOffset() * 60000);
-      console.log(startDateTime);
       var endDateTime = new Date($scope.eventInfo.DateInfo.EndDateTime);
       if ($scope.eventInfo.DateInfo.EndDateTime.length <= 19)
         endDateTime = new Date(endDateTime.getTime() + endDateTime.getTimezoneOffset() * 60000);
       var time = formatAMPM(startDateTime);
       var ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
-      console.debug(ctime);
       if (ctime.length > 0)
         $scope.tempDateInfo.selectedstartTime = ctime[0];
       else
@@ -180,6 +175,14 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         $scope.saveDateTime();
     }
 
+    $scope.cutOff = function (string, length) {
+      if (!string)
+        return string;
+      if (length <= 0)
+        return string;
+      return string.substring(0, length);
+    }
+
     $scope.onCategoryChange = function () {
       $scope.subCategories = [];
       $scope.eventInfo.EventCategoryList.forEach(function (cat, i, arr) {
@@ -189,8 +192,10 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     }
 
     $scope.startDateChange = function () {
+      console.debug($scope.tempDateInfo.startingDate);
+      console.debug($scope.tempDateInfo.endingDate);
       if ($scope.tempDateInfo.endingDate < $scope.tempDateInfo.startingDate)
-        $scope.tempDateInfo.endingDate = new Date($scope.stempDateInfo.tartingDate.getFullYear(),
+        $scope.tempDateInfo.endingDate = new Date($scope.tempDateInfo.startingDate.getFullYear(),
           $scope.tempDateInfo.startingDate.getMonth(), $scope.tempDateInfo.startingDate.getDate());
     }
 
@@ -228,8 +233,6 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     }
 
     $scope.organizerAdd = function () {
-      $scope.OrganizerForm.$setPristine();
-      $scope.OrganizerForm.$setUntouched();
       var i = Math.max.apply(Math, $scope.eventInfo.OrganizerList.map(function (o) { return o.InternalId; }));
       $scope.eventInfo.CurrentOrganizer = {
         Orgnizer_Id: 0,
@@ -246,6 +249,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         IncludeSocialLinks: false,
         ECImageId: null,
         InternalId: i + 1,
+        Validate: false,
         Image: {
           Id: 0,
           ImageType: 0,
@@ -255,6 +259,8 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         }
       };
       $scope.organizerEditState = "Add";
+      $scope.OrganizerForm.$setPristine();
+      $scope.OrganizerForm.$setUntouched();
     }
 
     $scope.editOrganiser = function () {
@@ -272,6 +278,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
           Organizer_FBLink: org[0].Organizer_FBLink,
           Organizer_Twitter: org[0].Organizer_Twitter,
           Organizer_Linkedin: org[0].Organizer_Linkedin,
+          Validate: false,
           Image: {
             Id: org[0].Image.Id,
             ImageType: org[0].Image.ImageType,
@@ -281,12 +288,13 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
           }
         };
         $scope.organizerEditState = "Edit";
+        $scope.OrganizerForm.$setPristine();
         $scope.OrganizerForm.$setUntouched();
       }
     }
 
     $scope.saveNewOrganizer = function () {
-      $scope.OrganizerForm.$setSubmitted();
+      $scope.eventInfo.CurrentOrganizer.Validate = true;
       if (isEmptyOrSpaces($scope.eventInfo.CurrentOrganizer.Orgnizer_Name) || isEmptyOrSpaces($scope.eventInfo.CurrentOrganizer.Organizer_Email))
         return;
       var doubleObj = $scope.eventInfo.OrganizerList.filter(function (obj) {
@@ -311,7 +319,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     }
 
     $scope.saveEditedOrganizer = function () {
-      $scope.OrganizerForm.$setSubmitted();
+      $scope.eventInfo.CurrentOrganizer.Validate = true;
       if (isEmptyOrSpaces($scope.eventInfo.CurrentOrganizer.Orgnizer_Name) || isEmptyOrSpaces($scope.eventInfo.CurrentOrganizer.Organizer_Email)) {
         return;
       }
@@ -407,15 +415,19 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         : price - discount;
     }
 
-    $scope.onPriceBlur = function (ticket) {
-      ticket.Price = (ticket.Price < 0) || isNaN(ticket.Price) ? 0 : ticket.Price > 10000000 ? 9999999 : ticket.Price;
-      ticket.T_Discount = isNaN(ticket.T_Discount) || (ticket.T_Discount < 0) ? 0 : ticket.T_Discount > ticket.Price ? ticket.Price : ticket.T_Discount;
+    $scope.onPriceBlur = function (ticket, formname) {
+      ticket.Price = (ticket.Price < 0) || isNaN(ticket.Price) || !ticket.Price ? 0 : ticket.Price > 10000000 ? 9999999 : ticket.Price;
+      ticket.T_Discount = isNaN(ticket.T_Discount) || (ticket.T_Discount < 0 || !ticket.T_Discount) ? 0 : ticket.T_Discount > ticket.Price ? ticket.Price : ticket.T_Discount;
       $scope.onPriceChange(ticket);
+
+      $scope.MainForm[formname].TicketPrice.$setViewValue(ticket.Price);
+      $scope.MainForm[formname].TicketPrice.$render();
+      $scope.MainForm[formname].TicketDiscount.$setViewValue(ticket.T_Discount);
+      $scope.MainForm[formname].TicketDiscount.$render();
     }
 
     $scope.onQtyBlur = function (ticket) {
       ticket.Qty_Available = isNaN(ticket.Qty_Available) ? 0 : ticket.Qty_Available;
-      console.log(ticket.Qty_Available);
     }
 
     $scope.deleteTicket = function (ticket) {
@@ -424,21 +436,25 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         $scope.eventInfo.TicketList.splice(idx, 1);
     }
 
-    $scope.onExpandTicketClick = function (ticket, form) {
-      console.debug(form);
+    $scope.onExpandTicketClick = function (ticket, formname) {
       if (!ticket.expandedOptions) {
         ticket.expandedOptions = true;
         return;
       }
 
+      console.log(formname);
+      var form = $scope.MainForm[formname];
+      if (!form)
+        return;
+      console.log(form);
+      console.log(ticket);
       ticket.ticketValidation = true;
 
-      var hideDatesValid = ((ticket.useUntilDate == 1) && ticket.localHideUntilDate && !form.ticketHideUntilDate.$error.mindate) ||
-        ((ticket.useAfterDate == 1) && ticket.localHideAfterDate && !form.ticketHideAfterDate.$error.mindate);
+      var hideDatesValid = ((ticket.useUntilDate == 1) && ticket.localHideUntilDate && form.ticketHideUntilDate.$valid) ||
+        ((ticket.useAfterDate == 1) && ticket.localHideAfterDate && form.ticketHideAfterDate.$valid);
 
-      ticket.expandedOptions = form.ticketStartDate.$error.mindate ||
-        form.ticketEndDate.$error.mindate ||
-        ((ticket.T_AutoSechduleType == 1) && !hideDatesValid);
+      ticket.expandedOptions = !form.ticketStartDate.$valid || !form.ticketEndDate.$valid ||
+        !form.TicketDescription.$valid || ((ticket.Hide_Ticket == 1) && (ticket.T_AutoSechduleType == 1) && !hideDatesValid);
     }
 
     $scope.addVarCharge = function () {
@@ -460,18 +476,19 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
 
     $scope.saveEvent = function () {
       $scope.eventInfo.EventStatus = "Save";
-      console.debug($scope.eventInfo);
       $scope.sendEvent();
     }
 
     $scope.previewEvent = function () {
-      console.debug($scope.eventInfo);
-      console.debug($scope.MainForm.eventType);
+      var elem = $scope.validateEvent();
+      if (!elem.valid) {
+        alert("Form contain invalid data. Please, check all fields.");
+        return;
+      }
     }
 
     $scope.publishEvent = function () {
       $scope.eventInfo.EventStatus = "Live";
-      console.debug($scope.eventInfo);
       $scope.sendEvent();
     }
 
@@ -523,47 +540,42 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       };
       if (!$scope.MainForm.eventTitle.$valid)
         elem.valid = false;
-      console.log(elem.valid);
       if (!$scope.MainForm.eventVenueName.$valid && !$scope.eventInfo.OnlineEvent)
         elem.valid = false;
-      console.log(elem.valid);
       if (!$scope.MainForm.eventAddress.$valid && !$scope.eventInfo.OnlineEvent)
         elem.valid = false;
-      console.log(elem.valid);
       if (!$scope.checkDateInfo().valid)
         elem.valid = false;
-      console.log(elem.valid);
       if (!$scope.eventInfo.EventTypeID)
         elem.valid = false;
-      console.log(elem.valid);
       if (!$scope.eventInfo.EventCategoryID)
         elem.valid = false;
-      console.log(elem.valid);
       if (!$scope.eventInfo.InternalOrganizerId)
         elem.valid = false;
-      console.log(elem.valid);
       if ($scope.eventInfo.TicketList.length == 0)
         elem.valid = false;
-      console.log(elem.valid);
-      console.log("Start tickets");
       $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
-        var hideDatesValid = ((ticket.useUntilDate == 1) && ticket.localHideUntilDate && (ticket.localHideUntilDate >= $scope.minDate)) ||
-            ((ticket.useAfterDate == 1) && ticket.localHideAfterDate && (ticket.localHideAfterDate >= $scope.minDate));
-
-        console.log(hideDatesValid);
-        console.log(ticket.localSaleStartDate);
-        console.log($scope.minDate);
-        console.log(ticket.T_name);
-
-        if (!ticket.T_name ||
-            (ticket.T_name.trim().length == 0) ||
+        var hideDatesValid = ((ticket.useUntilDate == 1) && ticket.localHideUntilDate && $scope.MainForm['TicketForm_' + i].ticketHideUntilDate.$valid) ||
+            ((ticket.useAfterDate == 1) && ticket.localHideAfterDate && $scope.MainForm['TicketForm_' + i].ticketHideAfterDate.$valid);
+        if (!$scope.MainForm['TicketForm_' + i].TicketName.$valid ||
             (ticket.Qty_Available <= 0) ||
-            (ticket.localSaleStartDate && (ticket.localSaleStartDate < $scope.minDate)) ||
-            (ticket.localSaleEndDate && (ticket.localSaleEndDate < $scope.minDate)) ||
-            ((ticket.T_AutoSechduleType == 1) && !hideDatesValid))
+            !$scope.MainForm['TicketForm_' + i].ticketStartDate.$valid ||
+            !$scope.MainForm['TicketForm_' + i].ticketEndDate.$valid ||
+            !$scope.MainForm['TicketForm_' + i].TicketDescription.$valid ||
+            ((ticket.Hide_Ticket == 1) && (ticket.T_AutoSechduleType == 1) && !hideDatesValid))
           elem.valid = false;
+        console.log(hideDatesValid);
         console.log(elem.valid);
+        console.log($scope.MainForm['TicketForm_' + i]);
+        console.log(ticket);
       });
+      if ($scope.eventInfo.Ticket_showvariable == 'Y')
+        $scope.eventInfo.VariableChargesList.forEach(function (varcharge, i, arr) {
+          if (!$scope.MainForm['VarChargeForm_' + i].variableChargeDescription.$valid)
+            elem.valid = false;
+        });
+      if (($scope.eventInfo.EventPrivacy == 'Private') && ($scope.eventInfo.isPasswordRequired == 'Y') && !MainForm.privatePassword.$valid)
+        elem.valid = false;
       return elem;
     }
 
@@ -579,6 +591,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     }
 
     $scope.checkTempDateInfo = function () {
+      console.debug($scope.MainForm.singleStartDate);
       var result = {
         valid: true,
         notselected: $scope.tempDateInfo.IsNewDate,
@@ -746,6 +759,25 @@ createEventApp.directive('customOnChange', function () {
   };
 });
 
+createEventApp.directive('ecMaxlength', ['$compile', function ($compile) {
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function (scope, elem, attrs, ctrl) {
+      attrs.$set("ngTrim", "false");
+      var maxlength = parseInt(attrs.ecMaxlength, 10);
+      ctrl.$parsers.push(function (value) {
+        if (value.length > maxlength) {
+          value = value.substr(0, maxlength);
+          ctrl.$setViewValue(value);
+          ctrl.$render();
+        }
+        return value;
+      });
+    }
+  };
+}]);
+
 createEventApp.controller('CreateEventHeaderController', ['$scope', function ($scope, $http) {
   $scope.showAccountDiv = function () {
 
@@ -777,7 +809,88 @@ createEventApp.directive('positiveValidation', function () {
   };
 });
 
+createEventApp.directive('makeDecimal', function () {
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function (scope, elem, attrs, ctrl) {
+      ctrl.$parsers.push(function (value) {
+        var val = parseFloat(value) * 1;
+        val = isNaN(val) ? 0 : val;
+        if (val != ctrl.$viewValue) {
+          ctrl.$setViewValue(val);
+          ctrl.$render();
+        }
+        console.log(value);
+        console.log(val);
+        console.log(ctrl.$viewValue);
+        return val;
+      });
+    }
+  }
+});
+
 createEventApp.directive('dragDropElements', function ($compile) {
+  return {
+    restrict: 'A',
+    transclude: true,
+    template: '<div class="something" ng-transclude> This is my directive content</div>',
+
+    link: function (scope, element, attrs) {
+
+      scope.handleDragObjReference1;
+      scope.handleDragObjReference2;
+      scope.handleDragObjReference3;
+
+      scope.element = element;
+
+      scope.element.on('dragstart', function (event) {
+
+        dragSrcEl = element;
+        test = element;
+        scope.handleDragObjReference1 = false;
+        scope.handleDragObjReference2 = true;
+        scope.handleDragObjReference3 = false;
+
+        event.originalEvent.dataTransfer.effectAllowed = 'move';
+        event.originalEvent.dataTransfer.setData('text/html', element.html());
+      });
+
+      scope.element.on('dragover', function (event) {
+
+
+        if (event.preventDefault) {
+          event.preventDefault();
+        }
+
+        event.originalEvent.dataTransfer.dropEffect = 'move';
+        return false;
+      });
+
+      scope.element.on('drop', function (event) {
+
+        var dragElem = scope.eventInfo.TicketList[$(dragSrcEl).attr("ng-class")];
+        var srcElem = scope.eventInfo.TicketList[$(element).attr("ng-class")];
+
+        scope.eventInfo.TicketList[$(dragSrcEl).attr("ng-class")] = srcElem;
+        scope.eventInfo.TicketList[$(element).attr("ng-class")] = dragElem;
+
+
+        if (event.stopPropagation) {
+          event.stopPropagation();
+        }
+        scope.$apply();
+
+        return false;
+
+      });
+    }
+  };
+});
+
+
+/* Variable drag drop Directive*/
+createEventApp.directive('variableDragDropElements', function ($compile) {
   return {
     restrict: 'A',
     transclude: true,
@@ -819,11 +932,11 @@ createEventApp.directive('dragDropElements', function ($compile) {
 
       scope.element.on('drop', function (event) {
 
-        var dragElem = scope.eventInfo.TicketList[$(dragSrcEl).attr("ng-class")];
-        var srcElem = scope.eventInfo.TicketList[$(element).attr("ng-class")];
+        var dragElem = scope.eventInfo.VariableChargesList[$(dragSrcEl).attr("ng-class")];
+        var srcElem = scope.eventInfo.VariableChargesList[$(element).attr("ng-class")];
 
-        scope.eventInfo.TicketList[$(dragSrcEl).attr("ng-class")] = srcElem;
-        scope.eventInfo.TicketList[$(element).attr("ng-class")] = dragElem;
+        scope.eventInfo.VariableChargesList[$(dragSrcEl).attr("ng-class")] = srcElem;
+        scope.eventInfo.VariableChargesList[$(element).attr("ng-class")] = dragElem;
 
 
         if (event.stopPropagation) {
@@ -837,6 +950,7 @@ createEventApp.directive('dragDropElements', function ($compile) {
     }
   };
 });
+
 
 
 function formatAMPM(date) {
