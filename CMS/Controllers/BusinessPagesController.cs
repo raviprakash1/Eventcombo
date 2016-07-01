@@ -17,34 +17,42 @@ namespace CMS.Controllers
 
         public ActionResult Index()
         {
-            if ((Session["UserID"] != null)) {
+            if ((Session["UserID"] != null))
+            {
                 return View(db.BusinessPages.ToList());
-            } else {
+            }
+            else {
                 return RedirectToAction("Login", "Home");
             }
         }
 
         public ActionResult Details(long? id)
         {
-            if ((Session["UserID"] != null)) {
-                if (id == null) {
+            if ((Session["UserID"] != null))
+            {
+                if (id == null)
+                {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 BusinessPage businessPage = db.BusinessPages.Find(id);
-                if (businessPage == null) {
+                if (businessPage == null)
+                {
                     return HttpNotFound();
                 }
                 return View(businessPage);
-            } else {
+            }
+            else {
                 return RedirectToAction("Login", "Home");
-            }            
+            }
         }
 
         public ActionResult Create()
         {
-            if ((Session["UserID"] != null)) {
+            if ((Session["UserID"] != null))
+            {
                 return View();
-            } else {
+            }
+            else {
                 return RedirectToAction("Login", "Home");
             }
         }
@@ -53,89 +61,110 @@ namespace CMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "PageName,PageNameUrl,PageContent")] BusinessPage businessPage)
         {
-            if ((Session["UserID"] != null)) {
-                if (ModelState.IsValid) {
-                    if (!db.BusinessPages.Any(x => x.PageNameUrl == businessPage.PageNameUrl)) {
+            if ((Session["UserID"] != null))
+            {
+                if (ModelState.IsValid)
+                {
+                    if (!db.BusinessPages.Any(x => x.PageNameUrl == businessPage.PageNameUrl))
+                    {
                         businessPage.CreatedDate = DateTime.Now;
                         businessPage.UpdateDate = DateTime.Now;
                         db.BusinessPages.Add(businessPage);
                         db.SaveChanges();
                         return RedirectToAction("Index");
-                    } else {
+                    }
+                    else {
                         ModelState.AddModelError("PageNameUrl", "PageNameUrl Already Exist.");
                         return View(businessPage);
                     }
                 }
 
                 return View(businessPage);
-            } else {
+            }
+            else {
                 return RedirectToAction("Login", "Home");
-            }           
+            }
         }
 
         public ActionResult Edit(long? id)
         {
-            if ((Session["UserID"] != null)) {
-                if (id == null) {
+            if ((Session["UserID"] != null))
+            {
+                if (id == null)
+                {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 BusinessPage businessPage = db.BusinessPages.Find(id);
-                if (businessPage == null) {
+                if (businessPage == null)
+                {
                     return HttpNotFound();
                 }
                 return View(businessPage);
-            } else {
+            }
+            else {
                 return RedirectToAction("Login", "Home");
-            }           
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "BusinessPageID,PageName,PageNameUrl,PageContent,CreatedDate,UpdateDate")] BusinessPage businessPage)
         {
-            if ((Session["UserID"] != null)) {
-                if (ModelState.IsValid) {
-                    if (!db.BusinessPages.Any(x => x.PageNameUrl == businessPage.PageNameUrl && x.BusinessPageID != businessPage.BusinessPageID)) {
+            if ((Session["UserID"] != null))
+            {
+                if (ModelState.IsValid)
+                {
+                    if (!db.BusinessPages.Any(x => x.PageNameUrl == businessPage.PageNameUrl && x.BusinessPageID != businessPage.BusinessPageID))
+                    {
                         businessPage.UpdateDate = DateTime.Now;
                         db.Entry(businessPage).State = EntityState.Modified;
                         db.SaveChanges();
                         return RedirectToAction("Index");
-                    } else {
+                    }
+                    else {
                         ModelState.AddModelError("PageNameUrl", "PageNameUrl Already Exist.");
                         return View(businessPage);
                     }
                 }
                 return View(businessPage);
-            } else {
+            }
+            else {
                 return RedirectToAction("Login", "Home");
-            }            
+            }
         }
 
         public ActionResult Delete(long? id)
         {
-            if ((Session["UserID"] != null)) {
-                if (id == null) {
+            if ((Session["UserID"] != null))
+            {
+                if (id == null)
+                {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 BusinessPage businessPage = db.BusinessPages.Find(id);
-                if (businessPage == null) {
+                if (businessPage == null)
+                {
                     return HttpNotFound();
                 }
                 return View(businessPage);
-            } else {
+            }
+            else {
                 return RedirectToAction("Login", "Home");
-            }            
+            }
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(long id) {
-            if ((Session["UserID"] != null)) {
+        public ActionResult DeleteConfirmed(long id)
+        {
+            if ((Session["UserID"] != null))
+            {
                 BusinessPage businessPage = db.BusinessPages.Find(id);
                 db.BusinessPages.Remove(businessPage);
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            } else {
+            }
+            else {
                 return RedirectToAction("Login", "Home");
             }
         }
