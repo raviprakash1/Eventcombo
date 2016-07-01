@@ -9,7 +9,14 @@
   ViewBag.FBType = "article";
   ViewBag.FBTitle = Model.Title;
   ViewBag.FBDescription = HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Model.Body), 200, 250, ".");
-  ViewBag.FBImage = Model.ArticleImageUrl;
+
+  var urlBuilder =
+    new System.UriBuilder(Request.Url.AbsoluteUri)
+    {
+      Path = Url.Content("~" + Model.ArticleImageUrl),
+      Query = null,
+    };
+  ViewBag.FBImage = urlBuilder.ToString();
 }
 
 <style type="text/css">
@@ -194,9 +201,9 @@
         <div class="entrmentNameTime">@Model.CreateDate.ToLongTimeString() @Model.CreateDate.ToString("MMMM dd, yyyy")</div>
         <div class="entrmentFollowTwitter">follow me on <a href="@(String.IsNullOrWhiteSpace(Model.AuthorTwitterUrl) ? "javascript:void(0)" : Model.AuthorTwitterUrl)" class="followOnTwitterAnchor">Twitter</a></div>
         <div class="entrmntSocialIcon">
-          <a href="javascript:void(0)" class="entrmSocialDiv" onclick="FacebookShare('@Model.Title','@(Request.Url.AbsoluteUri)')"><img src="~/Images/facebook.png" /></a>
-          <a href="javascript:void(0)" class="entrmSocialDiv" onclick="TwitterShare('@Model.Title','@(Request.Url.AbsoluteUri)')"><img src="~/Images/twitter.png" /></a>
-          <a href="javascript:void(0)" class="entrmSocialDiv" onclick="LinkedInShare('@Model.Title','@(Request.Url.AbsoluteUri)', '@(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Model.Body), 200, 250, "."))')"><img src="~/Images/linkedIn.png" /></a>
+          <a href="javascript:void(0)" class="entrmSocialDiv" onclick="FacebookShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img src="~/Images/facebook.png" /></a>
+          <a href="javascript:void(0)" class="entrmSocialDiv" onclick="TwitterShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img src="~/Images/twitter.png" /></a>
+          <a href="javascript:void(0)" class="entrmSocialDiv" onclick="LinkedInShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)', '@(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Model.Body), 200, 250, ".").Replace("'", @"\'"))')"><img src="~/Images/linkedIn.png" /></a>
         </div>
       </div>
       <div class="col-md-12 col-sm-12 col-xs-12 entrmentHeaderQuestionContainer">
