@@ -182,7 +182,7 @@ namespace CMS.Service
       var newName = "";
       while (newName == "")
       {
-        newName = Guid.NewGuid().ToString() + Path.GetFileName(file.FileName);
+        newName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
         if (File.Exists(basePath + newName))
           newName = "";
       }
