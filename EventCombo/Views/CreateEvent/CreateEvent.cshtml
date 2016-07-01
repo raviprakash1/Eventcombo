@@ -3,15 +3,22 @@
     ViewBag.Title = "CreateEvent";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
-<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />
-<script src="~/Scripts/jquery.masked.js"></script>
-<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
-<script src="~/Scripts/filer/jquery.filer.js"></script>
-<link href="~/Content/jquery-ui.css" rel="stylesheet" />
-<link href="~/Content/summernote.css" rel="stylesheet" />
-    
-<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
-<link href="~/Content/MapPlaces.css" rel="stylesheet" />
+@*<link href="~/Content/Filer/jquery.filer.css" rel="stylesheet" />*@
+@*<script src="~/Scripts/jquery.masked.js"></script>*@
+@*<link href="~/Content/Filer/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />*@
+
+@Scripts.Render("~/bundles/jqueryfiller")
+@Scripts.Render("~/bundles/masked")
+@*<script src="~/Scripts/filer/jquery.filer.js"></script>*@
+@*<link href="~/Content/jquery-ui.css" rel="stylesheet" />*@
+@*<link href="~/Content/summernote.css" rel="stylesheet" />*@
+@Styles.Render("~/Content/jquery_ui")
+    @Styles.Render("~/Content/eventcombonew")
+@Styles.Render("~/Content/mapplaces")
+@Styles.Render("~/Content/jqueryfiller")
+
+@*<link href="~/Content/eventcombo-new.css" rel="stylesheet" />*@
+@*<link href="~/Content/MapPlaces.css" rel="stylesheet" />*@
 
 <script>
     $(document).ready(function () {

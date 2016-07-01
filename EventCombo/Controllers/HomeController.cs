@@ -184,6 +184,7 @@ namespace EventCombo.Controllers
                                 prof.IpState = state;
                                 prof.Ipcity = city;
                                 prof.UserStatus = "Y";
+                                prof.Organiser = "Y";
 
                                 objEntity.Profiles.Add(prof);
 
@@ -1142,7 +1143,7 @@ namespace EventCombo.Controllers
                         if (vAddress != null)
                         {
                             objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble((strLat != "" ? strLat:"0")), Convert.ToDouble((strLong != "" ? strLong : "0")), Convert.ToDouble((vAddress.Latitude != "" ? vAddress.Latitude : "0")), Convert.ToDouble((vAddress.Longitude != "" ? vAddress.Longitude : "0")));
-                            if (vAddress.ConsolidateAddress.Trim() != string.Empty)
+                            if (!String.IsNullOrWhiteSpace(vAddress.ConsolidateAddress))
                             {
                                 objDisEv.EventAddress = vAddress.ConsolidateAddress;
                             }
@@ -1304,7 +1305,7 @@ namespace EventCombo.Controllers
             SignInManager = signInManager;
         }
 
-        public ActionResult Index(string lat, string lng, int? page)
+        public ActionResult Index(string lat, string lng, int? page,string strParm ="")
         {
             //EventCombo.Services.EventStatus obj = new EventCombo.Services.EventStatus();
             //obj.Update();
@@ -1315,11 +1316,8 @@ namespace EventCombo.Controllers
                 using (EventComboEntities db = new EventComboEntities())
                 {
                     AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user);
-                 
                     aspuser.LastLoginTime = System.DateTime.UtcNow;
                     db.SaveChanges();
-
-
                 }
                 string var = getusername();
                 if (string.IsNullOrEmpty(var))
@@ -1395,8 +1393,9 @@ namespace EventCombo.Controllers
             ViewBag.DisEvnt = objDiscEvt.ToPagedList(pageNumber, pageSize);
             ViewBag.lat = lat;
             ViewBag.lng = lng;
+            ViewBag.UserOrg = strParm;
 
-        
+
 
 
 
@@ -1407,7 +1406,29 @@ namespace EventCombo.Controllers
 
         }
 
-
+        public string UserOrgStatus()
+        {
+            using (EventComboEntities objEnt = new EventComboEntities())
+            {
+                string strUserId = "";
+                if (Session["AppId"] != null && strUserId == "")
+                    strUserId = Session["AppId"].ToString();
+                if (strUserId != "")
+                {
+                    var vUserOrgStatus = (from myUser in objEnt.Profiles where myUser.UserID == strUserId select myUser.Organiser).FirstOrDefault();
+                    if (vUserOrgStatus == null) return "N";
+                    if (vUserOrgStatus == "Y")
+                    {
+                        return "Y";
+                    }
+                    else { return "N"; }
+                }
+                else
+                {
+                    return "N";
+                }
+            }
+        }
         public ActionResult HomeEventList(string strPageIndex, string strLat, string strLong)
         {
 
@@ -2027,18 +2048,22 @@ namespace EventCombo.Controllers
         }
         public string checkid()
         {
-            Session["ReturnUrl"] = "CreateEvent~" + Url.Action("CreateEvent", "CreateEvent");
+            Session["ReturnUrl"] = "CreateEvent~" + Url.Action("CreateEvent", "EventManagement");
 
 
             if (Session["AppId"] == null)
             {
-
-                return "Y";
-
+                
+                 return "Y";
+                
             }
             else
             {
                 return "N";
+                //if (CommanClasses.UserOrganizerStatus(Session["AppId"].ToString()) == true)
+                //{ return "N"; }
+                //else
+                //{ return "YN"; }
 
             }
         }
@@ -2147,6 +2172,7 @@ namespace EventCombo.Controllers
                         prof.Ipcountry = country;
                         prof.IpState = state;
                         prof.Ipcity = city;
+                        prof.Organiser = "Y";
                         objEntity.Profiles.Add(prof);
 
 

@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<CMS.Models.V_EventsList>
+﻿@model PagedList.IPagedList<CMS.Models.EventList>
 @using PagedList.Mvc;
 @using CMS.Models;
 @{
@@ -490,14 +490,14 @@
         var Features = $("#Features").val();
         var Events = $("#Events").val();
         var Tickets = $("#Tickets").val();
-        var PageF = value;
+        var PageF = parseInt(value) + 1;
         var sortorder = "@TempData["sortorder"]";
         //console.log($(this).val());
         //$("#ulpage li").removeClass('active');
         //$('#ulpage li a[data-page=' + value + ']').click();
         //console.log($('#ulpage li a[data-page=' + value + ']').parent().addClass('active'));
         //console.log($("#ulpage li").find("a", "[data-page=" + value + "]"));
-        window.location.href = '@Url.Action("ExpiredticketList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Features=' + Features + '&Tickets=' + Tickets + '&sortorder=' + sortorder + '&PageF=' + PageF + '';
+        window.location.href = '@Url.Action("ExpiredticketList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Events=' + Events + '&Features=' + Features + '&Tickets=' + Tickets + '&sortorder=' + sortorder + '&PageF=' + PageF + '';
 
     });
     function ConfirmDelete(userId) {
@@ -572,6 +572,11 @@
                     // debugger;
                     //                   alert(data.length);
                     $("#ddlEventSubCategory").html(data);
+                    if (vSubcatID != '') {
+
+                        //alert(vSubcatID);
+                        $("#ddlEventSubCategory").val(vSubcatID);
+                    }
                     // items.push("<option value=" + this.Value + ">" + this.Text + "</option>");
                     //});
                 },
@@ -579,12 +584,12 @@
                     //alert("Sorry there is some problem.");
                 }
             });
-            if(vSubcatID!='')
-            {
+            //if(vSubcatID!='')
+            //{
 
 
-                $("#ddlEventSubCategory").val(vSubcatID);
-            }
+            //    $("#ddlEventSubCategory").val(vSubcatID);
+            //}
         }
         $("#btnYes").click(function () {
             $.ajax({
@@ -602,7 +607,7 @@
                     var Tickets = $("#Tickets").val();
                     var sortorder = "@TempData["sortorder"]";
                     //window.location.href = window.location.href;
-                    window.location.href = '@Url.Action("ExpiredticketList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Features=' + Features + '&Tickets=' + Tickets + '&sortorder=' + sortorder + '';
+                    window.location.href = '@Url.Action("ExpiredticketList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Features=' + Features + '&Events=' + Events + '&Tickets=' + Tickets + '&sortorder=' + sortorder + '';
 
 
                     //$.post("Users\Users");
@@ -655,6 +660,14 @@
 
             //   alert(Feature + " " + EventId);
         });
+
+        var pagef = parseInt('@TempData["PageNo"]') - 1;
+        $('#ddlPageF').val(pagef);
+        var Events='@TempData["Events"]' ;
+        var Tickets = '@TempData["Tickets"]';
+        //alert(Tickets);
+        $("#Events").val(Events);
+        $("#Tickets").val(Tickets);
     });
 
 </script>

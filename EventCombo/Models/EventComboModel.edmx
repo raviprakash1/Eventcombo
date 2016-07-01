@@ -145,6 +145,17 @@
           <Property Name="ExpirationDate" Type="varchar" MaxLength="500" />
           <Property Name="Cvv" Type="varchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="BusinessPage">
+          <Key>
+            <PropertyRef Name="BusinessPageID" />
+          </Key>
+          <Property Name="BusinessPageID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PageNameUrl" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="PageName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="PageContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="CardDetails">
           <Key>
             <PropertyRef Name="CardId" />
@@ -260,6 +271,8 @@
           <Property Name="Parent_EventID" Type="bigint" />
           <Property Name="EventCancel" Type="varchar" MaxLength="2" />
           <Property Name="FeatureUpdateDate" Type="datetime" />
+          <Property Name="ECBackgroundId" Type="bigint" />
+          <Property Name="BackgroundColor" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Event_Email_Invitation">
           <Key>
@@ -600,6 +613,7 @@
           <Property Name="Organizer_Status" Type="varchar" MaxLength="2" />
           <Property Name="contenttype" Type="varchar" MaxLength="50" />
           <Property Name="Imagepath" Type="varchar" MaxLength="500" />
+          <Property Name="ECImageId" Type="bigint" />
         </EntityType>
         <EntityType Name="Payment_Info">
           <Key>
@@ -1473,6 +1487,9 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Parameter Name="EventId" Type="bigint" Mode="In" />
           <Parameter Name="UserId" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="PublishSingleEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EventId" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="ReturnDayOfWeek" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
           <Parameter Name="dtDate" Type="datetime" Mode="In" />
         </Function>
@@ -1488,6 +1505,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BillingAddress" EntityType="Self.BillingAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BusinessPage" EntityType="Self.BusinessPage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CardDetails" EntityType="Self.CardDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ControlType" EntityType="Self.ControlType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
@@ -1978,6 +1996,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <NavigationProperty Name="Event_OrganizerMessages" Relationship="EventComboModel.EventEvent_OrganizerMessages" FromRole="Event" ToRole="Event_OrganizerMessages" />
           <NavigationProperty Name="Ticket_Purchased_Detail" Relationship="EventComboModel.EventTicket_Purchased_Detail" FromRole="Event" ToRole="Ticket_Purchased_Detail" />
           <NavigationProperty Name="EventFavourites" Relationship="EventComboModel.EventEventFavourite" FromRole="Event" ToRole="EventFavourite" />
+          <Property Name="ECBackgroundId" Type="Int64" />
 
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
@@ -2834,6 +2853,10 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
             <End Role="PaymentType" EntitySet="PaymentTypes" />
             <End Role="Order_Detail_T" EntitySet="Order_Detail_T" />
           </AssociationSet>
+          <FunctionImport Name="PublishSingleEvent1">
+          <Parameter Name="EventId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <EntitySet Name="BusinessPages" EntityType="EventComboModel.BusinessPage" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -2902,6 +2925,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <NavigationProperty Name="Event_Orgnizer_Detail" Relationship="EventComboModel.FK_Event_Orgnizer_Detail_Organizer_Master" FromRole="Organizer_Master" ToRole="Event_Orgnizer_Detail" />
           <NavigationProperty Name="Event_OrganizerMessages" Relationship="EventComboModel.Organizer_MasterEvent_OrganizerMessages" FromRole="Organizer_Master" ToRole="Event_OrganizerMessages" />
           <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.AspNetUserOrganizer_Master" FromRole="Organizer_Master" ToRole="AspNetUser" />
+          <Property Name="ECImageId" Type="Int64" />
         </EntityType>
         <EntityType Name="Event_Orgnizer_Detail">
           <Key>
@@ -4073,6 +4097,17 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="BusinessPage">
+          <Key>
+            <PropertyRef Name="BusinessPageID" />
+          </Key>
+          <Property Name="BusinessPageID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PageNameUrl" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PageName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PageContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4238,6 +4273,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="EventComboModel.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="ECBackgroundId" ColumnName="ECBackgroundId" />
                 <ScalarProperty Name="FeatureUpdateDate" ColumnName="FeatureUpdateDate" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
@@ -4724,6 +4760,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySetMapping Name="Organizer_Master">
             <EntityTypeMapping TypeName="EventComboModel.Organizer_Master">
               <MappingFragment StoreEntitySet="Organizer_Master">
+                <ScalarProperty Name="ECImageId" ColumnName="ECImageId" />
                 <ScalarProperty Name="Imagepath" ColumnName="Imagepath" />
                 <ScalarProperty Name="contenttype" ColumnName="contenttype" />
                 <ScalarProperty Name="Organizer_Status" ColumnName="Organizer_Status" />
@@ -5359,6 +5396,19 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="OId" ColumnName="OId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PublishSingleEvent1" FunctionName="EventComboModel.Store.PublishSingleEvent" />
+          <EntitySetMapping Name="BusinessPages">
+            <EntityTypeMapping TypeName="EventComboModel.BusinessPage">
+              <MappingFragment StoreEntitySet="BusinessPage">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PageContent" ColumnName="PageContent" />
+                <ScalarProperty Name="PageName" ColumnName="PageName" />
+                <ScalarProperty Name="PageNameUrl" ColumnName="PageNameUrl" />
+                <ScalarProperty Name="BusinessPageID" ColumnName="BusinessPageID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

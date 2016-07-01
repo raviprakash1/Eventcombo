@@ -53,39 +53,36 @@ namespace ASP
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n\r\n<script");
+WriteLiteral("\r\n");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 164), Tuple.Create("\"", 205)
-, Tuple.Create(Tuple.Create("", 170), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.maskedinput.min.js")
-, 170), false)
-);
+            
+            #line 7 "..\..\Views\Account\OrganizerProfile.cshtml"
+Write(Scripts.Render("~/bundles/masked_input"));
 
-WriteLiteral("></script>\r\n<link");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 223), Tuple.Create("\"", 262)
-, Tuple.Create(Tuple.Create("", 230), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer.css")
-, 230), false)
-);
+            
+            #line 8 "..\..\Views\Account\OrganizerProfile.cshtml"
+Write(Styles.Render("~/Content/jqueryfiller"));
 
-WriteLiteral(" rel=\"stylesheet\"");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
-WriteLiteral(" />\r\n\r\n<link");
+            
+            #line 9 "..\..\Views\Account\OrganizerProfile.cshtml"
+Write(Scripts.Render("~/bundles/jqueryfiller"));
 
-WriteAttribute("href", Tuple.Create(" href=\"", 292), Tuple.Create("\"", 349)
-, Tuple.Create(Tuple.Create("", 299), Tuple.Create<System.Object, System.Int32>(Href("~/Content/Filer/jquery.filer-dragdropbox-theme.css")
-, 299), false)
-);
+            
+            #line default
+            #line hidden
+WriteLiteral(@"
 
-WriteLiteral(" rel=\"stylesheet\"");
 
-WriteLiteral(" />\r\n<script");
-
-WriteAttribute("src", Tuple.Create(" src=\"", 379), Tuple.Create("\"", 416)
-, Tuple.Create(Tuple.Create("", 385), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/filer/jquery.filer.js")
-, 385), false)
-);
-
-WriteLiteral(@"></script>
 
 <style>
 .jFiler-input-dragDrop{width:200px; height:200px; padding:0px; max-width: 100%; }
@@ -97,7 +94,7 @@ WriteLiteral(@"></script>
 .jFiler-input-dragDrop .jFiler-input-icon{ margin-top:0px; height: 137px;}
 .jFiler-item .jFiler-item-container{ margin:0px; padding:0px;  }
 .jFiler-item .jFiler-item-container .jFiler-item-assets{ margin-top:0px;}
-/*.jFiler-item .jFiler-item-assets.jFiler-row{ display:none; }*/ 
+
 
 .jFiler-item .jFiler-item-container .jFiler-item-assets .jFiler-jProgressBar{ width:auto;  margin-left:0px; }
 .can_btn i{ font-size:25px;}
@@ -127,9 +124,9 @@ WriteLiteral(" id=\"loader\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1928), Tuple.Create("\"", 1958)
-, Tuple.Create(Tuple.Create("", 1934), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajax-loader.gif")
-, 1934), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 1719), Tuple.Create("\"", 1749)
+, Tuple.Create(Tuple.Create("", 1725), Tuple.Create<System.Object, System.Int32>(Href("~/Images/ajax-loader.gif")
+, 1725), false)
 );
 
 WriteLiteral(" /></div>\r\n\r\n        <div");
@@ -220,13 +217,13 @@ WriteLiteral(" value=\"A\"");
 WriteLiteral("> Add Organizer </option>\r\n");
 
             
-            #line 72 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 70 "..\..\Views\Account\OrganizerProfile.cshtml"
                        
             
             #line default
             #line hidden
             
-            #line 72 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 70 "..\..\Views\Account\OrganizerProfile.cshtml"
                         foreach (var item in Model.Organizerdetail)
                        {
 
@@ -235,20 +232,20 @@ WriteLiteral("> Add Organizer </option>\r\n");
             #line hidden
 WriteLiteral("                        <option");
 
-WriteAttribute("value", Tuple.Create(" value=", 3270), Tuple.Create("", 3294)
+WriteAttribute("value", Tuple.Create(" value=", 3061), Tuple.Create("", 3085)
             
-            #line 74 "..\..\Views\Account\OrganizerProfile.cshtml"
-, Tuple.Create(Tuple.Create("", 3277), Tuple.Create<System.Object, System.Int32>(item.Orgnizer_Id
+            #line 72 "..\..\Views\Account\OrganizerProfile.cshtml"
+, Tuple.Create(Tuple.Create("", 3068), Tuple.Create<System.Object, System.Int32>(item.Orgnizer_Id
             
             #line default
             #line hidden
-, 3277), false)
+, 3068), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 74 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 72 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                    Write(item.Orgnizer_Name);
 
             
@@ -257,7 +254,7 @@ WriteLiteral(">");
 WriteLiteral("</option>\r\n");
 
             
-            #line 75 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 73 "..\..\Views\Account\OrganizerProfile.cshtml"
                        }
 
             
@@ -398,7 +395,7 @@ WriteLiteral(">\r\n\r\n    $(document).click(function () {\r\n        $(\'#diver
 "();\r\n        $(\'#divorgprofile\').show();\r\n        $(\'#divorgprofile\').load(\'");
 
             
-            #line 134 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 132 "..\..\Views\Account\OrganizerProfile.cshtml"
                              Write(Url.Action("OrganiserEdit", "Account", new { }));
 
             
@@ -409,7 +406,7 @@ WriteLiteral("?id=\' + id + \'\');\r\n    }\r\n    function LoadOrganiserAddAsyn
 "ofile\').load(\'");
 
             
-            #line 140 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 138 "..\..\Views\Account\OrganizerProfile.cshtml"
                              Write(Url.Action("AddOrganiser", "Account"));
 
             
@@ -444,7 +441,7 @@ WriteLiteral("\');\r\n    }\r\n    $(document).ready(function () {\r\n        $(
 "                url: \'");
 
             
-            #line 206 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 204 "..\..\Views\Account\OrganizerProfile.cshtml"
                      Write(Url.Action("chkOrganizerName", "Account"));
 
             
@@ -501,24 +498,23 @@ WriteLiteral("\',\r\n                    data: { Name: name, id: orgid },\r\n   
 "removeClass(\"er_suc_img\");\r\n                $(\'#erraccmsg\').html(msg);\r\n        " +
 "        $(\'#diverroacc\').show();\r\n                $(\'html,body\').animate({ scrol" +
 "lTop: 0 });\r\n\r\n                return false;\r\n            }\r\n            \r\n     " +
-"       var code = $(\"#txt_desc\").code();\r\n            //var text = code.replace(" +
-"/<p>/gi, \" \");\r\n            //var plainText = $(\"<div />\").html(text).text();\r\n " +
-"           var model = {\r\n                \'Orgnizer_Name\': $(\"#txt_name\").val()," +
-"\r\n                \'Organizer_Desc\': code,\r\n                \'Organizer_FBLink\': $" +
-"(\"#txt_fburl\").val(),\r\n                \'Organizer_Twitter\': $(\"#txt_twitterurl\")" +
-".val(),\r\n                \'Organizer_Linkedin\': $(\"#txt_linkedinurl\").val(),\r\n   " +
-"             \'UserId\': \'\',\r\n                \'Organizer_Image\': $(\"#userimage\").v" +
-"al(),\r\n                \'Organizer_Address1\': $(\"#txt_streetadd1\").val(),\r\n      " +
-"          \'Organizer_Address2\': $(\"#txt_streetaddr2\").val(),\r\n                \'O" +
-"rganizer_City\': $(\"#txt_city\").val(),\r\n                \'Organizer_State\': $(\"#tx" +
-"t_state\").val(),\r\n                \'Organizer_CountryId\': $(\"#Country\").val(),\r\n " +
-"               \'Organizer_Zipcode\': $(\"#txt_zip\").val(),\r\n                \'Organ" +
-"izer_Email\': $(\"#txt_email\").val(),\r\n                \'Organizer_Phoneno\': $(\"#tx" +
-"t_phnno\").val(),\r\n                \'Organizer_Websiteurl\': $(\"#txt_websiteurl\").v" +
-"al(),\r\n\r\n            };\r\n            $.ajax({\r\n                url: \'");
+"       var code = $(\"#txt_desc\").code();\r\n           \r\n            var model = {" +
+"\r\n                \'Orgnizer_Name\': $(\"#txt_name\").val(),\r\n                \'Organ" +
+"izer_Desc\': code,\r\n                \'Organizer_FBLink\': $(\"#txt_fburl\").val(),\r\n " +
+"               \'Organizer_Twitter\': $(\"#txt_twitterurl\").val(),\r\n               " +
+" \'Organizer_Linkedin\': $(\"#txt_linkedinurl\").val(),\r\n                \'UserId\': \'" +
+"\',\r\n                \'Organizer_Image\': $(\"#userimage\").val(),\r\n                \'" +
+"Organizer_Address1\': $(\"#txt_streetadd1\").val(),\r\n                \'Organizer_Add" +
+"ress2\': $(\"#txt_streetaddr2\").val(),\r\n                \'Organizer_City\': $(\"#txt_" +
+"city\").val(),\r\n                \'Organizer_State\': $(\"#txt_state\").val(),\r\n      " +
+"          \'Organizer_CountryId\': $(\"#Country\").val(),\r\n                \'Organize" +
+"r_Zipcode\': $(\"#txt_zip\").val(),\r\n                \'Organizer_Email\': $(\"#txt_ema" +
+"il\").val(),\r\n                \'Organizer_Phoneno\': $(\"#txt_phnno\").val(),\r\n      " +
+"          \'Organizer_Websiteurl\': $(\"#txt_websiteurl\").val(),\r\n\r\n            };\r" +
+"\n            $.ajax({\r\n                url: \'");
 
             
-            #line 336 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 333 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("saveOrganizer", "Account"));
 
             
@@ -544,7 +540,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 353 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 350 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                Write(Url.Action("Index", "Home"));
 
             
@@ -572,7 +568,7 @@ WriteLiteral("\';\r\n\r\n                        }\r\n\r\n\r\n                  
 "x({\r\n                    url: \'");
 
             
-            #line 407 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 404 "..\..\Views\Account\OrganizerProfile.cshtml"
                      Write(Url.Action("DeleteOrganizer", "Account"));
 
             
@@ -598,7 +594,7 @@ WriteLiteral(@"',
                                 window.location.href = '");
 
             
-            #line 424 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 421 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                    Write(Url.Action("Index", "Home"));
 
             
@@ -638,7 +634,7 @@ WriteLiteral("\';\r\n\r\n                            }\r\n\r\n\r\n              
 " };\r\n            $.ajax({\r\n                url: \'");
 
             
-            #line 487 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 484 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("EditOrganizer", "Account"));
 
             
@@ -664,7 +660,7 @@ WriteLiteral(@"',
                             window.location.href = '");
 
             
-            #line 504 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 501 "..\..\Views\Account\OrganizerProfile.cshtml"
                                                Write(Url.Action("Index", "Home"));
 
             
@@ -700,7 +696,7 @@ WriteLiteral("\';\r\n\r\n                        }\r\n\r\n\r\n                  
 "        var request = $.ajax({\r\n                url: \'");
 
             
-            #line 581 "..\..\Views\Account\OrganizerProfile.cshtml"
+            #line 578 "..\..\Views\Account\OrganizerProfile.cshtml"
                  Write(Url.Action("Index", "ValidationMessage"));
 
             

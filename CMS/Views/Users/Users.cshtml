@@ -757,19 +757,17 @@
 
             if (role == 1)
             {
-               //console.log( $("#HdRole-" + i).parent().parent().parent());
                 $("#HdRole-" + i).parent().parent().parent().addClass('info');
-                    //('background-color', 'blue');
                 $('#aRoles-' + i).attr("disabled", "disabled");
                 $('#aRoles-' + i).children().attr("disabled", "disabled");
-                $('#aRoles-' + i).removeAttr("href");
+                //$('#aRoles-' + i).removeAttr("href");
                 $('#adelete-' + i).attr("disabled", "disabled");
                 $('#adelete-' + i).removeAttr("href");
                 $("#dvorganiser-" + i).children().children().prop('disabled', true);
                 $("#dvstatus-" + i).children().children().prop('disabled', true);
                 $("#dvmerchant-" + i).children().children().prop('disabled', true);
 
-                    }
+             }
 
         }
         //$("#tblMain tr").each(function () {
@@ -1187,8 +1185,14 @@
 
 </script>
 <script>
+
+    $("document").ready(function () {
+
+        var pagef= parseInt('@TempData["PageNo"]')-1;
+        $('#ddlPageF').val(pagef);
+    });
     @*function OpenEventDialog(UserID) {
-       
+
         $('#dvEventListDialog').dialog({
             autoOpen: true,
             width: 900,
@@ -1197,7 +1201,7 @@
             title: 'Dialog Box',
             modal: true,
             open: function (event, ui) {
-               
+
                 $(this).load('@ViewData["EventComboClientDomain"]/EventList/EventList');
             },
             buttons: {

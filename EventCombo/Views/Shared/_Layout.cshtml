@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en" prefix="og: http://ogp.me/ns#">
 <head>
-
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -59,10 +58,7 @@
     }
   </style>
 </head>
-
 <body>
-
-
   <div id="fb-root"></div>
   <!-- Header -->
   <div class="home_fixed_header" id="divmain">
@@ -88,16 +84,8 @@
                   <a href="javascript:document.getElementById('logoutForm').submit()">Log Out </a>
                                 }
               </li>
-
-
-
-
-
-
             </ul>
-
           </div>
-
                                 }
                                 else
                                 {
@@ -144,7 +132,12 @@
       <input type="checkbox" class="switch-input" id="idchecked" onchange="changeheader(this.id);">
     }
 
-            }
+
+}
+    
+   
+                       
+
 
             @*if ()
               {
@@ -155,8 +148,6 @@
               {
                   if (Session["Header"].ToString() == " " || Session["Header"].ToString()=="off")
                   {
-
-
                   }
                   else
                   {
@@ -175,6 +166,7 @@
     @if (HttpContext.Current.Session["Fromname"] == null)
         {
      <!-- Sub Header -->
+
       <div class="container-fluid cont_margin2" id="divcontmain">
         <div class="row cyan-line-new">
           <div class="col-sm-3">
@@ -193,11 +185,12 @@
             @*@Html.ActionLink("Discover Events", "DiscoverEvents", "Home")*@
             <a href="javascript:void(0)" onclick="setsession(this.id);" id='discover'>Discover Events</a>
           </div>
-          <div class="col-sm-2 disc_title_head"><a href="@Url.Action("Buzz", "Article")" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a></div>
+          <div class="col-sm-2 disc_title_head"><a href="@Url.Action("Buzz", "Article")" onclick="return setsession(this.id);" id='GetBuzz'>Get the Buzz</a></div>
           <div class="col-sm-5 frnt_cret_evnt">
             <div class="psst">
-              <a href="javascript:void(0)" onclick="checksession();">Create Event</a>
+              <a href="@Url.Action("CreateEvent", "EventManagement")" onclick="return checksession();">Create Event</a>
             </div>
+
 
 
           </div>
@@ -229,7 +222,6 @@
             else
             {
 
-     <!-- Sub Header -->
               <div class="container-fluid cont_margin2" id="divcontmain">
                 <div class="row cyan-line-new">
                   <div class="col-sm-3">
@@ -248,13 +240,11 @@
                     @*@Html.ActionLink("Discover Events", "DiscoverEvents", "Home")*@
                     <a href="javascript:void(0)" onclick="setsession(this.id);" id='discover'>Discover Events</a>
                   </div>
-                  <div class="col-sm-2 disc_title_head"><a href="javascript:void(0)" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a>@*@Html.ActionLink("", "GetBuzz", "Home")*@  </div>
+                  <div class="col-sm-2 disc_title_head"><a href="@Url.Action("Buzz", "Article")" onclick="return setsession(this.id);" id='GetBuzz'>Get the Buzz</a></div>
                   <div class="col-sm-5 frnt_cret_evnt">
                     <div class="psst">
-                      <a href="javascript:void(0)" onclick="checksession();">Create Event</a>
+                      <a href="@Url.Action("CreateEvent", "EventManagement")" onclick="return checksession();">Create Event</a>
                     </div>
-
-
                   </div>
 
                 </div>
@@ -285,18 +275,18 @@
 
           <div class="row fot_cont">
             <div class="col-sm-4">
-              <a href="javascript:void(0)">About Us</a>
+              <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="about-us"})">About Us</a>
               <br>
-              <a href="javascript:void(0)">Contact Us</a>
+              <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="contact-us"})">Contact Us</a>
               <br>
-              <a href="javascript:void(0)">Terms Of Service</a>
+              <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="terms-and-conditions"})">Terms Of Service</a>
             </div>
             <div class="col-sm-4">
-              <a href="javascript:void(0)">Ticket Purchase FAQ </a>
+              <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="ticket-purchase-faq"})">Ticket Purchase FAQ </a>
               <br>
-              <a href="javascript:void(0)">Ticket Fulfillment Policy</a>
+              <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="ticket-fulfillment-policy"})">Ticket Fulfillment Policy</a>
               <br>
-              <a href="javascript:void(0)">Privacy Policy</a>
+              <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="privacy-policy"})">Privacy Policy</a>
             </div>
             <div class="col-sm-4">
               <a href="javascript:void(0)">Facebook</a>
@@ -324,18 +314,17 @@
 
           <div class="row fot_cont">
             <div class="col-sm-4">
-              <a href="javascript:void(0)">About Us</a>
+              <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="about-us"})">About Us</a>
               <br>
-              <a href="javascript:void(0)">Contact Us</a>
-              <br>
-              <a href="javascript:void(0)">Terms Of Service</a>
-            </div>
+                <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="contact-us"})">Contact Us</a>
+                <br>
+                <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="terms-and-conditions"})">Terms Of Service</a>            </div>
             <div class="col-sm-4">
-              <a href="javascript:void(0)">Ticket Purchase FAQ </a>
-              <br>
-              <a href="javascript:void(0)">Ticket Fulfillment Policy</a>
-              <br>
-              <a href="javascript:void(0)">Privacy Policy</a>
+                <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="ticket-purchase-faq"})">Ticket Purchase FAQ </a>
+                <br>
+                <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="ticket-fulfillment-policy"})">Ticket Fulfillment Policy</a>
+                <br>
+                <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="privacy-policy"})">Privacy Policy</a>
             </div>
             <div class="col-sm-4">
               <a href="javascript:void(0)">Facebook</a>
@@ -361,16 +350,11 @@
           <div class="col-md-12">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = Session["ReturnUrl"] }, FormMethod.Post, new { role = "form", id = "formlogin", @class = "form-horizontal acnt_form" }))
                                 {
-
-
-
-
               <div class="er_UI_main" id="diverrologin" style="display :none;">
                 <button class="close closebtn" aria-hidden="true" data-dismiss="alert" type="button" id="btndiverrologin">&#215;</button>
                 <div class="er_UI_img"></div>
                 <div class="er_suc" id="dverrui">  </div>
               </div>
-
               <div class="er_UI_main" id="diverro1login" style="display :none;">
                 <div class="er_sys_img"></div>
                 <div class="er_suc" id="dverrsys">  </div>
@@ -398,18 +382,12 @@
                   </div>
                 </div>
               </div>
-
-
-
-
-                                }
-
+            }
             @*@RenderPage("~/Views/Shared/_login1partial.cshtml",new { })*@
           </div>
           <div class="col-md-12">
             @*forgt_pass*@
             @Html.ActionLink("forgot password?", "ForgetPassword", "Home", null, null)
-
           </div>
           <div class="col-md-12">
             <span class="social_net_log">Use your social network login below or &nbsp;</span> <a href="javascript:void(0)" id="signUpPopup" class="btn btn-primary login_btn_sub">SignUp</a>
@@ -421,24 +399,15 @@
             </div>
 
             <form id="login-launch" action="@Url.Action("ExternalLogin", "Account")" method="POST" target="login-popup" onsubmit="invokeLogin();">
-              @*@using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
-                {*@
               <input type="hidden" id="provider" name="provider" />
               <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
-
-
-
               <div class="col-xs-6">
                 <button type="submit" onclick="$('#provider').attr('value', 'Google'); $('#login-launch').submit(); " class="btn btn-block btn-social btn-google-plus" id="Google" name="provider" value="Google" title="Log in using your Google account"><i class="fa fa-google-plus"></i>Google</button>
               </div>
-
-              @*}*@
             </form>
-            @*@RenderPage("~/Views/Shared/_ExternalLoginsListPartial.cshtml")*@
           </div>
         </div>
       </div>
-
       <div id="sign_up" class="modal-content login_pop sign_up" style="display:none;">
         <div class="modal-header">
           <button type="button" class="close closefrgt" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -446,7 +415,6 @@
         </div>
         <div class="modal-body">
           <div class="col-md-12">
-
             @using (Html.BeginForm("Signup", "Home", FormMethod.Post, new { role = "form", id = "form", @class = "form-horizontal acnt_form" }))
                                 {
 
@@ -483,34 +451,23 @@
                                         <div class="row">
                                           <div class="col-sm-5 login_form_bot">
                                             <input type="text" id="SignupEmail" name="Email" placeholder="Email" class="form-control login_place" maxlength="256" autocomplete="off" />
-
-                                            @*@Html.TextBoxFor(m => m.Email, new { @maxlength = 256, @placeholder = "Email", @class = "form-control login_place", @id = "SignupEmail" })*@
                                           </div>
                                           <div class="col-sm-5 login_form_bot">
                                             <input type="password" id="SignupPassword" name="Password" placeholder="Password" class="form-control login_place" maxlength="15" autocomplete="off" />
-
                                             @*@Html.PasswordFor(m => m.Password, new { @maxlength = 15, @placeholder = "Password", @class = "form-control login_place", @id = "SignupPassword" })*@
-
                                           </div>
                                           <div class="col-sm-2 login_form_bot">
                                             @*<button type="button" class="btn btn-primary login_btn_sub" id="btnsave">SignUp</button>*@
                                             <input type="button" value="SignUp" class="btn btn-primary login_btn_sub" id="btnsave" disabled="disabled" />
                                           </div>
-
-
                                         </div>
                                       </div>
                                     </div>
                                     <div class="col-md-12" style="display:none" id="divsignupfrgt">
-
                                       @Html.ActionLink("forgot password?", "ForgetPassword", "Home", null, new { id = "ASignupfrgt" })
-
                                     </div>
-
                                 }
 
-
-            @*@RenderPage("~/Views/Shared/_signuppartial.cshtml")*@
           </div>
         </div>
       </div>
@@ -520,20 +477,11 @@
 
   @*<script>
         $(document).ready(function () {
+>>>>>>> 83ea2dcddfaf7950dc65ea3fab59d209ca364c75
 
-            var docHeight = $(window).height();
-            var footerHeight = $('footer').height();
-            var midcontainerHeight = $('.wrap').height();
-            var midConTop = $('.wrap').position().top;
-            if (midcontainerHeight > docHeight) {
-                var footerTop = ($('footer').position().top + midcontainerHeight + midConTop) - footerHeight;
-                $('footer').css('top', footerTop + 'px');
-            } else {
-                var footerTop = (midcontainerHeight + midConTop);
-                $('footer').css('top', footerTop + 'px');
-            }
-        });
-    </script>*@
+
+
+   
 </body>
 </html>
 
@@ -542,30 +490,7 @@
 
 
 <script type="text/javascript">
-   /* $(document).ready(function () {
-
-        var docHeight = $(window).height();
-        var footerHeight = $('footer').height();
-        var midcontainerHeight = $('.wrap').height();
-        var midConTop = $('.wrap').position().top;
-        var footerTop = $('footer').position().top + footerHeight + midcontainerHeight;
-        //var footerTop = midcontainerHeight + footerHeight;
-
-        if (footerTop < docHeight) {
-            $('footer').css('margin-top', 10 + (docHeight - footerTop) + 'px');
-        }
-    });*/
-
-
-    
-     
-
    
-
-    //function SearchEvents() {
-
-        
-    //}
     $('body').on('keyup keypress', function (e) {
 
         var keyCode = e.keyCode || e.which;
@@ -646,7 +571,7 @@
                             }
                         },
                         error: function (data) {
-                            //alert("Sorry there is some problem.");
+                           
                             return false;
                         }
                     });
@@ -683,12 +608,7 @@
         if (returnUrl) {
             window.location.href = returnUrl;
         } else {
-            @*$.ajax({
-                url: '@Url.Action("LoginPartial", "Account")',
-                success: function (result) {
-                    $('#login').html(result);
-                }
-            });*@
+         
         }
     }
 
@@ -704,13 +624,12 @@
 
                 },
                 error: function (data) {
-                    //alert("Sorry there is some problem.");
+                  
                     return false
                 }
             });
 
-           // $.cookie("header", "on", { expire: 1,path:'/' });
-            //$.cookie("header") = "on";
+        
             $('#divmain').addClass('home_fixed_header');
             $('#eventtopscoll').addClass('event_top');
             $('#scrollhome').addClass('con_scr0l_home');
@@ -730,12 +649,11 @@
 
                 },
                 error: function (data) {
-                    //alert("Sorry there is some problem.");
+                   
                     return false
                 }
             });
-            //$.cookie("header", "off", { expire: 1, path: '/' });
-            //$.cookie("header", "off", { expire: 1 });
+            
             $('#eventtopscoll').removeClass('event_top');
             $('#scrollhome').removeClass('con_scr0l_home');
             $('#divmain').removeClass('home_fixed_header');
@@ -751,12 +669,16 @@
             url: '@Url.Action("setsessid", "Home")',
             data: { id: e },
             type: "Post",
+            async: false,
             success: function (data) {
 
+<<<<<<< HEAD
             },
             error: function (data) {
-                //alert("Sorry there is some problem.");
+             
                 return false
+=======
+>>>>>>> 39f0b45af2649f9ee8f4f1aeb66ed30d0420a06b
             }
         });
 
@@ -793,14 +715,14 @@
                         vUrl = vUrl.replace("long", vLong);
                         window.location.href = vUrl;
                     }, function (p) {
-                        //alert("error");
+                        
                         var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none" })';
                         window.location.href = vUrl;
 
                     });
 
                 } else {
-                    //alert('Geo Location feature is not supported in this browser.');
+                   
                     var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = "lat", strLong = "long", strSort="rel", strDateFilter="none" })';
                     window.location.href = vUrl;
 
@@ -810,21 +732,14 @@
             function onPositionUpdate(position) {
                 var lat = position.coords.latitude;
                 var lng = position.coords.longitude;
-                //alert("Current position: " + lat + " " + lng);
+               
             }
-            @*window.location.href = '@Url.Action("DiscoverEvents", "Home")';*@
+           
 
 
 
         }
-
-        if (e == "GetBuzz") {
-            window.location.href = '@Url.Action("GetBuzz", "Home")';
-
-
-
-
-        }
+      return true;
     }
     $("#signUpPopup").on('click', function () {
         $('#SignupEmail').css("border", "black solid 1px");
@@ -855,26 +770,38 @@
 
 
     function checksession() {
+        var result = false;
         $.ajax({
-            url: '@Url.Action("checkid", "Home")',
-            type: "Post",
-            success: function (data) {
+          url: '@Url.Action("checkid", "Home")',
+          type: "Post",
+          async: false,
+          success: function (data) {
 
+<<<<<<< HEAD
                 if (data == "Y") {
                     $("#loginPopup").click();
                     // url.val('@Url.Action("CreateEvent", "CreateEvent")');
                     return false;
-                } else {
+                }
+                else {
+                    
                     window.location.href = '@Url.Action("CreateEvent", "CreateEvent")';
                     return true;
                 }
             },
             error: function (data) {
-                //alert("Sorry there is some problem.");
+              
                 return false
+=======
+            if (data == "Y") {
+              $("#loginPopup").click();
+            } else {
+              result = true;
+>>>>>>> 39f0b45af2649f9ee8f4f1aeb66ed30d0420a06b
             }
+          }
         });
-
+        return result;
     }
 </script>
 
@@ -885,11 +812,8 @@
 
     $(document).click(function () {
 
-
-
         $('#diverrologin').css('display', 'none');
         $('#diverro1login').css('display', 'none');
-
 
         $("input").removeClass('err-bor');
     });
@@ -922,30 +846,7 @@
 
         }
 
-        @*var sessionheader = "@Session["Header"]";
-
-        if (sessionheader == "" || sessionheader=="on")
-        {
-            $('#divmain').addClass('home_fixed_header');
-            $('#eventtopscoll').addClass('event_top');
-            $('#scrollhome').addClass('con_scr0l_home');
-            $('#divcontmain').addClass('mt15');
-            $('#eventtopscoll').addClass('viewevent_container');
-            $('#forgotcheck').addClass('forgot_top');
-
-
-        }
-        if ( sessionheader == "off") {
-            $('#eventtopscoll').removeClass('event_top');
-            $('#scrollhome').removeClass('con_scr0l_home');
-            $('#divmain').removeClass('home_fixed_header');
-
-            $('#divcontmain').removeClass('mt15');
-
-            $('#eventtopscoll').removeClass('viewevent_container');
-            $('#forgotcheck').removeClass('forgot_top');
-
-        }*@
+       
 
     });
 
@@ -968,13 +869,7 @@
                 $('#divcontmain').addClass('mt15');
                 $('#eventtopscoll').addClass('viewevent_container');
                 $('#forgotcheck').addClass('forgot_top');
-                //if ($('#idchecked').attr('checked')) {
-
-                //} else {
-
-                //    $("#idchecked").attr('checked', true);
-                //}
-                //$("#idchecked").attr('checked', true);
+               
 
 
             }
@@ -990,13 +885,7 @@
 
                 $('#eventtopscoll').removeClass('viewevent_container');
                 $('#forgotcheck').removeClass('forgot_top');
-                //if ($('#idchecked').attr('checked')) {
-
-                //} else {
-                //    $("#idchecked").attr('checked', false);
-                //}
-
-                //$("#idchecked").attr('checked', false);
+              
 
             }
         } else {
@@ -1008,16 +897,9 @@
 
             $('#eventtopscoll').removeClass('viewevent_container');
             $('#forgotcheck').removeClass('forgot_top');
-            //if ($('#idchecked').attr('checked')) {
-
-            //} else {
-            //    $("#idchecked").attr('checked', false);
-            //}
-            //$("#idchecked").attr('checked', false);
+           
         }
-        //$("#btSearchEvent").on('click', function () {
-        //    GetEvent();
-        //});
+     
         $("#btSearchEvent").click(function () {
 
             var Lat = @CookieStore.GetCookie("Lat");
@@ -1076,8 +958,7 @@
            
             var keyCode = (event.keyCode ? event.keyCode : event.which);
             if (keyCode == 13) {
-               // alert("in serach");
-                //event.keyCode =0;
+              
                 
                 event.preventDefault();
 
@@ -1092,7 +973,7 @@
                     var vTextSrh = $("#txtSearch").val();
                     var vUrl = '@Url.RouteUrl("EvType",new { strEt = "evt", strEc = "evc", strPrice = "all", strPageIndex = "page", strLat = CookieStore.GetCookie("Lat"), strLong = CookieStore.GetCookie("Long"), strSort="rel", strDateFilter="none", strTextSearch="search"})';
                     vUrl = vUrl.replace("search", vTextSrh);
-                  //  alert(vUrl);
+               
                     window.location.href = vUrl;
                     window.location.replace(vUrl);
                     return false;
@@ -1283,22 +1164,7 @@
 
         return msgnew;
 
-        @*var msgnew = "";
-
-                    var request = $.ajax({
-                        url: '@Url.Action("Index", "ValidationMessage")',
-                        async: false,
-                        data: { strFormName: strname, strFormTag: strFormTag },
-                        type: 'Post'
-                    });
-                    request.done(function (msg) {
-                        msgnew += msg;
-                    });
-
-                    request.fail(function (jqXHR, textStatus) {
-                        msgnew += "Some Error occur!!";
-                    });
-                    return msgnew;*@
+      
     }
     function validateEmail(sEmail) {
         var filter = /^[\w\-\.\+]+\@@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
@@ -1377,7 +1243,7 @@
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     this.disabled = false;
-                    //alert("Req " + xhr + " status " + textStatus + "  Error " + errorThrown);
+                  
                 }
             });
 
@@ -1418,9 +1284,7 @@
             if (e.which == 32)
                 return false;
         });
-        //$('#SignupEmail').bind("cut copy paste", function (e) {
-        //    e.preventDefault();
-        //});
+      
         $("#SignupPassword").on("keypress", function (e) {
 
             if (e.which == 32)
@@ -1434,9 +1298,7 @@
             if (e.which == 32)
                 return false;
         });
-        //$('#loginemail').bind("cut copy paste", function (e) {
-        //    e.preventDefault();
-        //});
+    
         $("#loginpassword").on("keypress", function (e) {
 
             if (e.which == 32)
@@ -1498,7 +1360,7 @@
             $('#SignupEmail').focus();
             $('#SignupEmail').removeClass('err-bor');
         }
-        //console.log(Passowrdw.length);
+       
         if (Passowrdw.length < 4) {
             $('#SignupPassword').focus();
             $('#SignupPassword').addClass('err-bor');

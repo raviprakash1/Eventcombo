@@ -3326,6 +3326,9 @@ Copyright (c) 2014 Daniel Eden
 .fa-medium:before {
   content: "\f23a";
 }
+
+
+
 @font-face {
   font-family: 'StateFaceRegular';
   src: url('../../../fonts/stateface/stateface-regular-webfont.eot');

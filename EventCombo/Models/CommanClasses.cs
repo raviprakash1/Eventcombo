@@ -72,10 +72,26 @@ namespace EventCombo.Models
                 return true;
             }
         }
+        public static bool UserOrganizerStatus(string strUserId)
+        {
+            using (EventComboEntities objEnt = new EventComboEntities())
+            {
+                if (HttpContext.Current.Session["AppId"] != null && strUserId == "")
+                    strUserId = HttpContext.Current.Session["AppId"].ToString();
+
+                var vUserOrgStatus = (from myUser in objEnt.Profiles where myUser.UserID == strUserId select myUser.Organiser).FirstOrDefault();
+                if (vUserOrgStatus == null) return false;
+                if (vUserOrgStatus == "Y")
+                {
+                    return true;
+                }
+                else { return false; }
+            }
+        }
 
 
-
-}
+       
+    }
 
 
 public partial class Ticket_Locked_Detail

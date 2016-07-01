@@ -13,6 +13,13 @@
     }
 </style>
 
+@section sidenav{
+    <div id="sidebar" class="nav nav-stacked">
+        @Html.Action("Sidenav", "ManageEvent", new { eventid = TempData["EventId"], CurrentItem = "" })
+    </div>
+}
+
+
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 <div class="event_container">
     <div class="event_detail_container">

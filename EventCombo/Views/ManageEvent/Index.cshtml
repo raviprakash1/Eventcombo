@@ -1352,7 +1352,6 @@
 
         $("#cbtview").click(function () {
 
-
             window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.Eventtitle.Replace(" ","-") , strEventId = ValidationMessageController.GetParentEventId(Model.Eventid).ToString()})';
 
         });

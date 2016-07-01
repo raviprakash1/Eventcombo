@@ -339,7 +339,7 @@ textarea {resize: none;}
     background-color: #ebebeb;
 }
 .evnt_tkt_list_tbl > tfoot > tr > td{ font-size: 1.2em; } 
-.evnt_tkt_list_tbl > tbody > tr > td.35per{ width: 230px; } 
+/*.evnt_tkt_list_tbl > tbody > tr > td.35-per{ width: 230px; }*/ 
 
 .ev_payment_lebel {font-size: 1.2em; font-weight: normal; color: #00cfff;}
 .ev_payment_lebel span.ev_pay_span{font-size: 1em;}
@@ -630,7 +630,7 @@ textarea {resize: none;}
 .link_share{ background: #fff; border: 1px solid #d4d4d4; padding-top: 10px; padding-bottom: 10px;  }
 .link_share p{ margin-bottom: 0px; font-size: 15px; color: #000; }
 .link_share p a{ color: #3cf;}
-.prom_event p{ margin-bottom: 0px; color: #000; font-weight: normal; font-weight: 16px; }
+.prom_event p{ margin-bottom: 0px; color: #000; font-weight: normal; font-size: 16px; }
 .recent_view_ord{  margin-top: 10px; padding-left: 15px; font-size: 18px; }
 
 .grp_strip{ background: #c9c9c9; }

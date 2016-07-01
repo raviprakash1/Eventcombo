@@ -1,0 +1,67 @@
+﻿@using EventCombo.Models
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" prefix="og: http://ogp.me/ns#">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  @if (Model is IOpenGraphProtocol)
+  {
+    IOpenGraphProtocol ogp = Model as IOpenGraphProtocol;
+    <meta property="og:url" content="@ogp.OGPUrl" />
+    <meta property="og:type" content="@ogp.OGPType" />
+    <meta property="og:title" content="@ogp.OGPTitle" />
+    <meta property="og:description" content="@ogp.OGPDescription" />
+    <meta property="og:image" content="@ogp.OGPImage" />
+  }
+  <link rel="icon" href="javascript:void(0)">
+  @{
+    IBaseViewModel bModel = Model as IBaseViewModel;
+    if (bModel == null)
+    {
+      bModel = new BaseViewModel() { BaseTitle = "Eventcombo", BaseUserName = "Unknown" };
+    }
+  }
+  <title>@bModel.BaseTitle</title>
+
+  <link rel="stylesheet" href="~/Content/AMaterial/angular-material.css">
+  <link rel="stylesheet" href="~/Content/AMaterial/docs.css">
+  <link rel="stylesheet" href="~/Content/AMaterial/angularjs-color-picker.min.css">
+  <link rel="stylesheet" href="~/Content/AMaterial/material-datetimepicker.css">
+  <link rel="stylesheet" href="~/Content/AMaterial/main.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="~/Content/AMaterial/animations.css">
+  <link rel="stylesheet" href="~/Content/AMaterial/ngGallery.css">
+  <script src="~/Scripts/AMaterial/jquery-1.12.3.min.js"></script>
+  <script src="~/Scripts/bootstrap.min.js"></script>
+  <script src="~/Scripts/AMaterial/angular.js"></script>
+  <script src="~/Scripts/AMaterial/angular-animate.min.js"></script>
+  <script src="~/Scripts/AMaterial/angular-route.min.js"></script>
+  <script src="~/Scripts/AMaterial/angular-aria.min.js"></script>
+  <script src="~/Scripts/AMaterial/angular-messages.min.js"></script>
+  <script src="~/Scripts/AMaterial/svg-assets-cache.js"></script>
+  <script src="~/Scripts/AMaterial/angular-material.js"></script>
+  <script src="~/Scripts/AMaterial/tinymce.min.js"></script>
+  <script src="~/Scripts/AMaterial/tinycolor-min.js"></script>
+  <script src="~/Scripts/AMaterial/angular-tinymce/tinymce.min.js"></script>
+  <script src="~/Scripts/AMaterial/angularjs-color-picker.min.js"></script>
+  <script src="~/Scripts/AMaterial/controller.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-animate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-aria.min.js"></script>
+  <script src="~/Scripts/AMaterial/moment.js"></script>
+  <script src="~/Scripts/AMaterial/angular-material-datetimepicker.js"></script>
+  <script src="~/Scripts/AMaterial/demo.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+  <script src="~/Scripts/AMaterial/ngGallery.js"></script>
+</head>
+<body ng-app="@ViewBag.ngApp">
+  @{ Html.RenderPartial("_AngularHeader", bModel); }
+  @RenderBody()
+  @{ Html.RenderPartial("_AngularFooter"); }
+  @RenderSection("ScriptSection")
+</body>
+</html>

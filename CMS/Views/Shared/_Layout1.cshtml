@@ -159,7 +159,7 @@
                     </li>
                     <li>
                         <a href="#" onclick="checkPermission('4A');">
-                            <span class="fa fa-cubes"></span>
+                            <span class="fa fa-recycle"></span>
                             <span class="sidebar-title">Expired Events</span>
                         </a>
 
@@ -189,7 +189,7 @@
                     </li>
                     <li>
                       <a href="#" onclick="checkPermission('12');">
-                        <span class="fa fa-ticket"></span>
+                        <span class="fa fa-server"></span>
                         <span class="sidebar-title">Articles</span>
                       </a>
 
@@ -197,12 +197,18 @@
 
                     <li>
                       <a href="#" onclick="checkPermission('13');">
-                        <span class="fa fa-ticket"></span>
+                        <span class="fa fa-pie-chart"></span>
                         <span class="sidebar-title">Ticket Orders</span>
                       </a>
 
                     </li>
+                    <li>
+                        <a href="#" onclick="checkPermission('14');">
+                            <span class="fa fa-server"></span>
+                            <span class="sidebar-title">Business pages</span>
+                        </a>
 
+                    </li>
                     <li class="sidebar-label pt20">Systems</li>
 
                     <li>
@@ -391,7 +397,10 @@
                         else if (vPerm == "12")
                           window.location.href = '@Url.Action("Index", "Article")';
                         else if (vPerm == "13")
-                          window.location.href = '@Url.Action("Index", "Orders")';
+                            window.location.href = '@Url.Action("Index", "Orders")';
+                        else if (vPerm == "14")
+                            window.location.href = '@Url.Action("Index", "BusinessPages")';
+
                     }
                 }
             });
@@ -413,7 +422,7 @@
             Core.init();
 
             // Init Demo JS
-            Demo.init();
+            //Demo.init();
 
 
 
@@ -427,6 +436,9 @@
             };
 
             // Form Skin Switcher
+
+
+
             $('.animation-switcher button').on('click', function () {
                 $('.animation-switcher').find('button').removeClass('active-animation');
                 $(this).addClass('active-animation item-checked');
@@ -449,6 +461,8 @@
                 });
 
             });
+
+
 
             $('.admin-panels').adminpanel({
                 onFinish: function () {

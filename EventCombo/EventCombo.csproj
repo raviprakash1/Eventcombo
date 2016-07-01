@@ -271,6 +271,8 @@
     <Compile Include="App_Start\AutomapperConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BusinessPagesController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CMSController.cs" />
     <Compile Include="Controllers\CreateEventController.cs" />
@@ -280,11 +282,14 @@
     <Compile Include="Controllers\EventConfirmationController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventListController.cs" />
+    <Compile Include="Controllers\EventManagementController.cs" />
     <Compile Include="Controllers\EventViewCustomController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Html2PdfController.cs" />
+    <Compile Include="Controllers\ImageAPIController.cs" />
     <Compile Include="Controllers\ImageFiles.cs" />
     <Compile Include="Controllers\InbetweenController.cs" />
+    <Compile Include="Controllers\JsonNetResult.cs" />
     <Compile Include="Controllers\ManageAttendeesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageEventController.cs" />
@@ -334,6 +339,10 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Authenticationclass.cs" />
+    <Compile Include="Models\BusinessPage.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IBaseViewModel.cs" />
     <Compile Include="Models\BillingAddress.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -410,6 +419,7 @@
     <Compile Include="Models\EventVenue.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\EventVote.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -457,6 +467,7 @@
     </Compile>
     <Compile Include="Models\Html2Pdf.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IOpenGraphProtocol.cs" />
     <Compile Include="Models\Job.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -617,10 +628,14 @@
     <Compile Include="Services\LastLoginStatus.cs" />
     <Compile Include="Services\TicketEmailer.cs" />
     <Compile Include="Service\ArticleService.cs" />
+    <Compile Include="Service\EventService.cs" />
     <Compile Include="Service\HtmlProcessing.cs" />
     <Compile Include="Service\IArticleService.cs" />
     <Compile Include="Service\DBAccessService.cs" />
     <Compile Include="Service\IDBAccessService.cs" />
+    <Compile Include="Service\IEventService.cs" />
+    <Compile Include="Service\IImageService.cs" />
+    <Compile Include="Service\ImageService.cs" />
     <Compile Include="Service\IManageAttendeesService.cs" />
     <Compile Include="Service\IManageEventService.cs" />
     <Compile Include="Service\Notification\INotificationSender.cs" />
@@ -681,11 +696,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventCreation.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Home\DiscoverEvents.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DiscoverEvents.cshtml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Home\ForgetPassword.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -701,10 +711,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PasswordReset.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Shared\_AccountLayout.generated.cs">
+    <Compile Include="Views\Shared\_AuthenticateLayout.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>_AccountLayout.cshtml</DependentUpon>
+      <DependentUpon>_AuthenticateLayout.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shared\_Layout.generated.cs">
       <AutoGen>True</AutoGen>
@@ -748,6 +758,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AMaterial\angular-material.css" />
+    <Content Include="Content\AMaterial\angularjs-color-picker.min.css" />
+    <Content Include="Content\AMaterial\animations.css" />
+    <Content Include="Content\AMaterial\docs.css" />
+    <Content Include="Content\AMaterial\main.css" />
+    <Content Include="Content\AMaterial\material-datetimepicker.css" />
+    <Content Include="Content\AMaterial\ngGallery.css" />
     <Content Include="Content\bootstrap-multiselect.css" />
     <Content Include="Content\custom-scroll.css" />
     <Content Include="Content\DateTimePicker.css" />
@@ -756,6 +773,8 @@
     <Content Include="Content\eventcombo.css" />
     <Content Include="Content\filter-dropdown.css" />
     <Content Include="Content\flipclock.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\font.css" />
     <Content Include="Content\jquery-te-1.4.0.css" />
     <Content Include="Content\jquery-te.png" />
     <Content Include="Content\manageattendees.css" />
@@ -764,12 +783,21 @@
     <Content Include="Content\OrderFormDesign.css" />
     <Content Include="Content\PurchasedTicket.css" />
     <Content Include="email-content-pdf%281%29.html" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="html\error.html" />
     <Content Include="Images\ajax-loader.gif" />
     <Content Include="Images\ajax-loaderMini.gif" />
     <Content Include="Images\align_center.gif" />
     <Content Include="Images\align_left.gif" />
     <Content Include="Images\align_right.gif" />
+    <Content Include="Images\AMaterial\ColorWheel.png" />
+    <Content Include="Images\AMaterial\EventComboLogo.svg" />
+    <Content Include="Images\AMaterial\EventComboLogoWholePx.svg" />
+    <Content Include="Images\AMaterial\facebook.svg" />
+    <Content Include="Images\AMaterial\linkedin.svg" />
+    <Content Include="Images\AMaterial\plusIcon.png" />
+    <Content Include="Images\AMaterial\stripes.png" />
+    <Content Include="Images\AMaterial\twitter.svg" />
     <Content Include="Images\amr-exp.png" />
     <Content Include="Images\Bar_Image.Png" />
     <Content Include="Images\checked.png" />
@@ -825,7 +853,101 @@
       <DependentUpon>EventComboModel.edmx</DependentUpon>
       <LastGenOutput>EventComboModel.cs</LastGenOutput>
     </Content>
-    <Content Include="favicon.ico" />
+    <Content Include="Scripts\AMaterial\angular-animate.min.js" />
+    <Content Include="Scripts\AMaterial\angular-aria.min.js" />
+    <Content Include="Scripts\AMaterial\angular-material-datetimepicker.js" />
+    <Content Include="Scripts\AMaterial\angular-material.js" />
+    <Content Include="Scripts\AMaterial\angular-messages.min.js" />
+    <Content Include="Scripts\AMaterial\angular-route.min.js" />
+    <Content Include="Scripts\AMaterial\angular-tinymce\tinymce.min.js" />
+    <Content Include="Scripts\AMaterial\angular.js" />
+    <Content Include="Scripts\AMaterial\angularjs-color-picker.min.js" />
+    <Content Include="Scripts\AMaterial\controller.js" />
+    <Content Include="Scripts\AMaterial\demo.js" />
+    <Content Include="Scripts\AMaterial\jquery-1.12.3.min.js" />
+    <Content Include="Scripts\AMaterial\main.js" />
+    <Content Include="Scripts\AMaterial\moment.js" />
+    <Content Include="Scripts\AMaterial\ngDraggable.js" />
+    <Content Include="Scripts\AMaterial\ngGallery.js" />
+    <Content Include="Scripts\AMaterial\plugins\advlist\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\anchor\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\autolink\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\autoresize\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\autosave\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\bbcode\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\charmap\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\codesample\css\prism.css" />
+    <Content Include="Scripts\AMaterial\plugins\codesample\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\code\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\colorpicker\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\contextmenu\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\directionality\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-cool.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-cry.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-embarassed.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-frown.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-innocent.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-kiss.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-laughing.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-money-mouth.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-sealed.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-smile.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-surprised.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-tongue-out.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-undecided.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-wink.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-yell.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\example\dialog.html" />
+    <Content Include="Scripts\AMaterial\plugins\example\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\example_dependency\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\fullpage\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\fullscreen\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\hr\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\imagetools\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\image\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\importcss\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\insertdatetime\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\layer\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\legacyoutput\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\link\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\lists\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\media\moxieplayer.swf" />
+    <Content Include="Scripts\AMaterial\plugins\media\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\nonbreaking\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\noneditable\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\pagebreak\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\paste\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\preview\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\print\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\save\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\searchreplace\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\spellchecker\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\tabfocus\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\table\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\template\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\textcolor\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\textpattern\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\visualblocks\css\visualblocks.css" />
+    <Content Include="Scripts\AMaterial\plugins\visualblocks\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\visualchars\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\wordcount\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\content.inline.min.css" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\content.min.css" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce-small.svg" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce.svg" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\img\anchor.gif" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\img\loader.gif" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\img\object.gif" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\img\trans.gif" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\skin.ie7.min.css" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\skin.min.css" />
+    <Content Include="Scripts\AMaterial\sortable.js" />
+    <Content Include="Scripts\AMaterial\svg-assets-cache.js" />
+    <Content Include="Scripts\AMaterial\themes\modern\theme.min.js" />
+    <Content Include="Scripts\AMaterial\tinycolor-min.js" />
+    <Content Include="Scripts\AMaterial\tinymce.min.js" />
     <Content Include="Scripts\custom-scroll.js" />
     <Content Include="Scripts\DateTimePicker.js" />
     <Content Include="Scripts\gmap.js" />
@@ -902,6 +1024,7 @@
     <Content Include="Content\style-test.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\summernote.css" />
+    <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="ForgotPassword.html" />
     <Content Include="Global.asax" />
@@ -1106,11 +1229,24 @@
     <Content Include="Models\EventComboModel.edmx.diagram">
       <DependentUpon>EventComboModel.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\abel-regular.woff2" />
+    <Content Include="Content\bootstarp.css.map" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Properties\PublishProfiles\depoy1.pubxml" />
     <None Include="Properties\PublishProfiles\eventcombo.pubxml" />
     <None Include="Properties\PublishProfiles\IISHostDemo.pubxml" />
     <None Include="Properties\PublishProfiles\temp.pubxml" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce-small.eot" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce-small.ttf" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce-small.woff" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce.eot" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce.ttf" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Commonfunction.js" />
@@ -1123,6 +1259,7 @@
     <Content Include="Scripts\image-upload.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-1.11.2.min.js" />
     <Content Include="Scripts\jquery-te-1.4.0.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\external\jquery\jquery.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -1147,6 +1284,7 @@
     <Content Include="Scripts\jquery-ui-1.11.4.custom\jquery-ui.structure.min.css" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\jquery-ui.theme.css" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\jquery-ui.theme.min.css" />
+    <Content Include="Scripts\jquery.1.11.2.js" />
     <Content Include="Scripts\jquery.appendGrid\appendGrid.jquery.json" />
     <Content Include="Scripts\jquery.appendGrid\CHANGELOG.md" />
     <Content Include="Scripts\jquery.appendGrid\LGPL-LICENSE.md" />
@@ -1173,6 +1311,7 @@
     <Content Include="Scripts\jquery.creditCardValidator.js" />
     <Content Include="Scripts\jquery.geocomplete.js" />
     <Content Include="Scripts\jquery.geocomplete.min.js" />
+    <Content Include="Scripts\jquery.googleapis-places.js" />
     <Content Include="Scripts\jquery.icalendar.pack.js" />
     <Content Include="Scripts\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\jquery.isotope.min.js" />
@@ -1189,6 +1328,7 @@
     <Content Include="Scripts\jquery.slides.js" />
     <Content Include="Scripts\jquery.slides.min.js" />
     <Content Include="Scripts\jquery.timepicker.js" />
+    <Content Include="Scripts\jquery.timepicker.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1210,6 +1350,7 @@
     <Content Include="Scripts\nyromodal\nyroModal.css" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\sharefuncs.js" />
     <Content Include="Scripts\summernote.min.js" />
     <Content Include="Scripts\Validation.js" />
     <Content Include="Scripts\_references.js" />
@@ -1289,6 +1430,7 @@
     </Content>
     <Content Include="Views\Shared\_AuthenticateLayout.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_AuthenticateLayout.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Shared\_Logout.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1458,6 +1600,7 @@
     <Content Include="Views\Account\_PurchasedTicketList.cshtml" />
     <Content Include="Views\Account\_PurchasedTicketDetail.cshtml" />
     <Content Include="Views\Account\_PurchasedTicketFavoriteList.cshtml" />
+    <Content Include="Views\CreateEvent\UserOrgnizerStatus.cshtml" />
     <Content Include="Views\ManageAttendees\Orders.cshtml" />
     <Content Include="Views\ManageAttendees\Add.cshtml" />
     <Content Include="Views\ManageAttendees\Email.cshtml" />
@@ -1468,6 +1611,12 @@
     <Content Include="Views\ManageAttendees\ProcessAddAttendee.cshtml" />
     <Content Include="Views\Article\Buzz.cshtml" />
     <Content Include="Views\DreamTeam\Index.cshtml" />
+    <Content Include="Views\EventManagement\CreateEvent.cshtml" />
+    <Content Include="Views\Shared\_AngularLayout.cshtml" />
+    <Content Include="Views\Shared\_AngularHeader.cshtml" />
+    <Content Include="Views\Shared\_AngularFooter.cshtml" />
+    <Content Include="Views\EventManagement\CreateEventTicket.cshtml" />
+    <Content Include="Views\BusinessPages\BusinessPage.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -1479,7 +1628,9 @@
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
     <Folder Include="Properties\assets\" />
+    <Folder Include="Views\Base\" />
     <Folder Include="Views\Html2Pdf\" />
+    <Folder Include="Views\ImageAPI\" />
     <Folder Include="Views\Permission\" />
     <Folder Include="Views\Validate\" />
     <Folder Include="Views\ValidationMessage\" />
