@@ -15,7 +15,6 @@ namespace CMS.Controllers
     {
         private EmsEntities db = new EmsEntities();
 
-        // GET: BusinessPages
         public ActionResult Index()
         {
             if ((Session["UserID"] != null)) {
@@ -25,7 +24,6 @@ namespace CMS.Controllers
             }
         }
 
-        // GET: BusinessPages/Details/5
         public ActionResult Details(long? id)
         {
             if ((Session["UserID"] != null)) {
@@ -42,7 +40,6 @@ namespace CMS.Controllers
             }            
         }
 
-        // GET: BusinessPages/Create
         public ActionResult Create()
         {
             if ((Session["UserID"] != null)) {
@@ -52,9 +49,6 @@ namespace CMS.Controllers
             }
         }
 
-        // POST: BusinessPages/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "PageName,PageNameUrl,PageContent")] BusinessPage businessPage)
@@ -79,7 +73,6 @@ namespace CMS.Controllers
             }           
         }
 
-        // GET: BusinessPages/Edit/5
         public ActionResult Edit(long? id)
         {
             if ((Session["UserID"] != null)) {
@@ -96,9 +89,6 @@ namespace CMS.Controllers
             }           
         }
 
-        // POST: BusinessPages/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "BusinessPageID,PageName,PageNameUrl,PageContent,CreatedDate,UpdateDate")] BusinessPage businessPage)
@@ -121,7 +111,6 @@ namespace CMS.Controllers
             }            
         }
 
-        // GET: BusinessPages/Delete/5
         public ActionResult Delete(long? id)
         {
             if ((Session["UserID"] != null)) {
@@ -138,7 +127,6 @@ namespace CMS.Controllers
             }            
         }
 
-        // POST: BusinessPages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id) {
@@ -151,10 +139,6 @@ namespace CMS.Controllers
                 return RedirectToAction("Login", "Home");
             }
         }
-
-        //public JsonResult IsPageNameUrlUnique(string PageNameUrl) {
-        //    return Json(!db.BusinessPages.Any(x => x.PageNameUrl == PageNameUrl), JsonRequestBehavior.AllowGet);
-        //}
 
         protected override void Dispose(bool disposing)
         {

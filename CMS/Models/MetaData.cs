@@ -12,7 +12,6 @@ namespace CMS.Models {
         [Display(Name ="Page Name")]
         public string PageName { get; set; }
         [Required]
-        //[Remote("IsPageNameUrlUnique", "BusinessPages", ErrorMessage = "PageNameUrl Already Exist.")]
         [Display(Name = "Page Name Url")]
         [RegularExpression("^[a-z0-9-_]+$",ErrorMessage ="Use [a-z,0-9] or '-' or '_'")]
         public string PageNameUrl { get; set; }
