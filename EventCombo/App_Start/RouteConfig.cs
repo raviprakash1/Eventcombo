@@ -27,7 +27,15 @@ namespace EventCombo
             // }
             //);
 
-  
+            routes.MapRoute(
+                         name: "BusinessPages",
+                         url: "{PageNameUrl}",
+                         defaults: new
+                         {
+                             controller = "BusinessPages",
+                             action = "BusinessPage"
+                         }
+                     );
 
             routes.MapRoute(
                 name: "ViewEvent",

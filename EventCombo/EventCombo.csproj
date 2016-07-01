@@ -272,6 +272,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BusinessPagesController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CMSController.cs" />
     <Compile Include="Controllers\CreateEventController.cs" />
@@ -338,6 +339,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Authenticationclass.cs" />
+    <Compile Include="Models\BusinessPage.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IBaseViewModel.cs" />
     <Compile Include="Models\BillingAddress.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
@@ -1612,6 +1616,7 @@
     <Content Include="Views\Shared\_AngularHeader.cshtml" />
     <Content Include="Views\Shared\_AngularFooter.cshtml" />
     <Content Include="Views\EventManagement\CreateEventTicket.cshtml" />
+    <Content Include="Views\BusinessPages\BusinessPage.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
