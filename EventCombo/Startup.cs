@@ -16,8 +16,6 @@ namespace EventCombo
         {
             ConfigureAuth(app);
 
-            
-
             var options = new SqlServerStorageOptions
             {
                 QueuePollInterval = TimeSpan.FromSeconds(300) // Default value
@@ -39,10 +37,10 @@ namespace EventCombo
             LastLoginStatus loginStatus = new LastLoginStatus();
             RecurringJob.AddOrUpdate(() => loginStatus.changeloginstatus(), "*/5 * * * *");
 
-
-
             app.UseHangfireDashboard();
             app.UseHangfireServer();
+
+            NLogConfig.Configure();            
         }
     }
 }
