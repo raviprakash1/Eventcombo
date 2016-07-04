@@ -447,7 +447,6 @@
     <Compile Include="Models\Event_VariableDesc.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ExceptionLogging .cs" />
     <Compile Include="Models\ExternalLogin.cs" />
     <Compile Include="Models\Fee_Structure.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>

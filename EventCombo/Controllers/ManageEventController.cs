@@ -15,6 +15,7 @@ using System.Net.Mail;
 using System.Configuration;
 using EventCombo.Utils;
 using System.Web.UI;
+using NLog;
 
 
 namespace EventCombo.Controllers
@@ -23,6 +24,8 @@ namespace EventCombo.Controllers
     [OutputCache(NoStore = true, Location = OutputCacheLocation.None)]
     public class ManageEventController : Controller
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+      
         // GET: ManageEvent
         EventComboEntities db = new EventComboEntities();
 
@@ -2132,8 +2135,8 @@ namespace EventCombo.Controllers
                             }
                             catch (Exception ex)
                             {
-                                ExceptionLogging.SendErrorToText(ex);
-                                msg = "N";
+                              logger.Error("Exception during request processing", ex);
+                              msg = "N";
                             }
                         }
                         else
@@ -2236,8 +2239,8 @@ namespace EventCombo.Controllers
                                         }
                                         catch (Exception ex)
                                         {
-                                            ExceptionLogging.SendErrorToText(ex);
-                                            msg = "N";
+                                          logger.Error("Exception during request processing", ex);
+                                          msg = "N";
                                         }
                                     }
                                 }
@@ -2611,7 +2614,7 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
+              logger.Error("Exception during request processing", ex);
             }
 
             if (!string.IsNullOrWhiteSpace(Invalidrepeatcode))

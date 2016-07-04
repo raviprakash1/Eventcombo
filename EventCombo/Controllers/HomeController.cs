@@ -27,6 +27,7 @@ using Microsoft.Owin.Security.OAuth;
 using PagedList;
 using EventCombo.Utils;
 using EventCombo.ViewModels;
+using NLog;
 
 namespace EventCombo.Controllers
 {
@@ -34,6 +35,7 @@ namespace EventCombo.Controllers
     public class HomeController : Controller
     {
 
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -1559,7 +1561,7 @@ namespace EventCombo.Controllers
                 }
             }catch(Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
+              logger.Error("Exception during request processing", ex);
 
             }
            

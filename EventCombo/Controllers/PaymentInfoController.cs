@@ -4,11 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EventCombo.Models;
+using NLog;
 namespace EventCombo.Controllers
 {
     
     public class PaymentInfoController : Controller
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         // GET: PaymentInfo
         public ActionResult PaymentInfo(long EventId)
         {
@@ -156,7 +158,7 @@ namespace EventCombo.Controllers
                     db.SaveChanges();
                 }catch(Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
             }
             else
