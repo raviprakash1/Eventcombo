@@ -29,7 +29,7 @@ namespace EventCombo
 
             routes.MapRoute(
                          name: "BusinessPages",
-                         url: "{PageNameUrl}",
+                         url: "ec/{PageNameUrl}",
                          defaults: new
                          {
                              controller = "BusinessPages",
