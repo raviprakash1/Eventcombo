@@ -9,7 +9,7 @@ function FacebookShare(title, myhref) {
 }
 
 function TwitterShare(title, href) {
-  window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(href) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+  window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(href) + '&via=Eventcombo&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
   return false;
 }
 

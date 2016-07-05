@@ -4,7 +4,6 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout1.cshtml";
 }
-<!-- Start: Topbar -->
 <header id="topbar" class="alt">
     <div class="topbar-left">
         <ol class="breadcrumb">
@@ -25,16 +24,6 @@
 <section id="content_wrapper">
     <div class="panel-heading panel_loader">
         <span class="view_evnt fs26 col-sm-6"> Business pages</span>
-        <label class="field select admin-form col-sm-4 text-right srh-by-no">
-            Display:
-            <select>
-                <option value="0">Select</option>
-                <option value="0">01 - 25</option>
-                <option value="1">26 - 50</option>
-                <option value="2">51 - 75</option>
-            </select>
-            <i class="arrow double"></i>
-        </label>
     </div>
     <div id="content" class="animated fadeIn">
         <div class="col-md-12">
@@ -47,9 +36,6 @@
                         <th>
                             @Html.DisplayNameFor(model => model.PageNameUrl)
                         </th>
-                        @*<th>
-                                @Html.DisplayNameFor(model => model.PageContent)
-                            </th>*@
                         <th>
                             @Html.DisplayNameFor(model => model.CreatedDate)
                         </th>
@@ -69,9 +55,6 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.PageNameUrl)
                             </td>
-                            @*<td>
-                                    @Html.DisplayFor(modelItem => item.PageContent)
-                                </td>*@
                             <td>
                                 @Html.DisplayFor(modelItem => item.CreatedDate)
                             </td>
@@ -106,5 +89,5 @@
         <div class="articleItemCon">
             @Html.ActionLink("Add", "Create", null, new { @class = "btn btn-info articleBtnCls" })
         </div>
-        </div>
+    </div>
 </section>
