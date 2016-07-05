@@ -135,7 +135,7 @@
                 <i class="material-icons" style="position:absolute;">query_builder</i>
                 <span class="pickuptimeTxt noOutline" ng-click="onShowDateTimeDialog(true)">{{selectedDateTimeText}}</span>
                 <div class="validation-standard-messages" ng-show="(dateInfoTouched  || formValidation) && (checkDateInfo().notselected) && !showDateTimeDialog">
-                  The Event needs a date and time, it's required
+                  The event needs a date and time, it's required
                 </div>
                 <div class="validation-standard-messages" ng-show="(dateInfoTouched  || formValidation) && (checkDateInfo().timezone) && !showDateTimeDialog">
                   Please select event's time zone, it's required
@@ -618,7 +618,7 @@
                     <md-input-container>
                       <label class="ticketDespTxtBoxLbl">Fees</label>
                       <md-select style="width: 204px;" ng-model="ticket.Fees_Type" ng-change="onPriceChange(ticket)">
-                        <md-option value="0">Customer pays the fees</md-option>
+                        <md-option value="0">Customer pays fees</md-option>
                         <md-option value="1">I'll absorb the fees</md-option>
                       </md-select>
                     </md-input-container>
@@ -799,7 +799,6 @@
                     <div ng-show="{{'VarChargeForm_'+$index}}.variableChargeDescription.$error.maxlength">maximum length is 256 characters</div>
                   </div>
                 </md-input-container>
-                <span style="margin-left: 20px">  $</span>
               </div>
               <div class="variableClass">
                 <md-input-container class="ticketDespTxtBoxCon variableType" style="margin-top: -6px;margin-left: 20px; width:150px">
