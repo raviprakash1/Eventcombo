@@ -893,11 +893,16 @@
         $("#rdMemberLimit").click(function () {
             $("#dvMemLimited").show();
             $("#dvAdmin").hide();
+            $("#chk_1").prop("checked", false);
+            $("#chk_2").prop("checked", false);
+
         })
 
         $("#rdMember").click(function () {
             $("#dvMemLimited").show();
             $("#dvAdmin").hide();
+            $("#chk_1").prop("checked", true);
+            $("#chk_2").prop("checked", true);
         })
 
 
