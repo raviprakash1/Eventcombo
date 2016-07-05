@@ -1016,7 +1016,7 @@
           <Property Name="Data" Type="nvarchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EventCombo.dbo.V_EventsList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EC2.dbo.V_EventsList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="V_EventsList">
           <Key>
             <PropertyRef Name="EventID" />
@@ -1053,7 +1053,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_EventsList' does not have a prima
           <Property Name="EventTiming" Type="varchar" MaxLength="49" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EventCombo.dbo.v_OrderList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EC2.dbo.v_OrderList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="v_OrderList">
           <Key>
             <PropertyRef Name="OId" />
@@ -1079,7 +1079,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_OrderList' does not have a primar
           <Property Name="UserId" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EC2.dbo.v_RetrieveEventid' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="v_RetrieveEventid">
           <Key>
             <PropertyRef Name="EventID" />
@@ -1126,7 +1126,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a 
           <Property Name="EventCancel" Type="varchar" MaxLength="2" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="V_Users">
           <Key>
             <PropertyRef Name="Id" />
@@ -1160,7 +1160,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="deals" Type="int" Nullable="false" />
           <Property Name="dealpurchased" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__EventSubC__Event__2942188C">
+        <Association Name="FK__EventSubC__Event__45BE5BA9">
           <End Role="EventCategory" Type="Self.EventCategory" Multiplicity="1" />
           <End Role="EventSubCategory" Type="Self.EventSubCategory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1172,7 +1172,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TicketDel__Deliv__2FEF161B">
+        <Association Name="FK__TicketDel__Deliv__4C6B5938">
           <End Role="DeliveryMethod" Type="Self.DeliveryMethod" Multiplicity="1" />
           <End Role="TicketDeliveryMethod" Type="Self.TicketDeliveryMethod" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1680,11 +1680,11 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
     [V_Users].[dealpurchased] AS [dealpurchased]
     FROM [dbo].[V_Users] AS [V_Users]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__EventSubC__Event__2942188C" Association="Self.FK__EventSubC__Event__2942188C">
+          <AssociationSet Name="FK__EventSubC__Event__45BE5BA9" Association="Self.FK__EventSubC__Event__45BE5BA9">
             <End Role="EventCategory" EntitySet="EventCategory" />
             <End Role="EventSubCategory" EntitySet="EventSubCategory" />
           </AssociationSet>
-          <AssociationSet Name="FK__TicketDel__Deliv__2FEF161B" Association="Self.FK__TicketDel__Deliv__2FEF161B">
+          <AssociationSet Name="FK__TicketDel__Deliv__4C6B5938" Association="Self.FK__TicketDel__Deliv__4C6B5938">
             <End Role="DeliveryMethod" EntitySet="DeliveryMethod" />
             <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethod" />
           </AssociationSet>
@@ -2842,7 +2842,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             <End Role="Order_Detail_T" EntitySet="Order_Detail_T" />
           </AssociationSet>
           <FunctionImport Name="PublishSingleEvent1">
-            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
