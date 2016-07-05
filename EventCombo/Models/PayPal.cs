@@ -117,6 +117,7 @@ namespace EventCombo.Models
             values["PAYMENTREQUEST_0_AMT"] = finalPaymentAmount;
             values["PAYMENTREQUEST_0_CURRENCYCODE"] = "USD";
             values["PAYMENTREQUEST_0_PAYMENTACTION"] = "Sale";
+          //  values["PAYMENTREQUEST_0_NUMBER"] = "OT0001111";
             values["USER"] = PayPalSettings.Username;
             values["PWD"] = PayPalSettings.Password;
             values["SIGNATURE"] = PayPalSettings.Signature;

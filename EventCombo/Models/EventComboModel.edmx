@@ -2838,7 +2838,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
             <End Role="Order_Detail_T" EntitySet="Order_Detail_T" />
           </AssociationSet>
           <FunctionImport Name="PublishSingleEvent1">
-            <Parameter Name="EventId" Mode="In" Type="Int64" />
+          <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">

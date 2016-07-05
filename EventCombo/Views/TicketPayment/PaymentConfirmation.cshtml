@@ -39,14 +39,14 @@
                                          
                                             <div class="form-group mb5 cal_scrol ">
                                         
-@foreach (var item in (List<EventCombo.Models.paymentdate>)ViewBag.Timecal)
-{
-    <div class="col-sm-12 no_pad date_time_list ">
-        <a href="#" data-target="#schcalender" data-toggle="modal" id="@item.id" onclick="showevent(this.id)">@item.Datetime </a>
-        <br />@item.Address
-        @*<span class="loc_mini_icn"><img src="images/loc_icon_mini.png"></span>*@
-    </div>
-}
+                                @foreach (var item in (List<EventCombo.Models.paymentdate>)ViewBag.Timecal)
+                                {
+                                    <div class="col-sm-12 no_pad date_time_list ">
+                                        <a href="#" data-target="#schcalender" data-toggle="modal" id="@item.id" onclick="showevent(this.id)">@item.Datetime </a>
+                                        <br />@item.Address
+                                        @*<span class="loc_mini_icn"><img src="images/loc_icon_mini.png"></span>*@
+                                    </div>
+                                }
                                              
                                                 @*<label class="col-sm-12 no_pad label-control date_time_list ">
                                                     <a href="#" data-target="#schcalender" data-toggle="modal">Sunday Aug 18th 2011, 4:30pm </a>
