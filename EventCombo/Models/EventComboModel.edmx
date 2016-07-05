@@ -145,6 +145,17 @@
           <Property Name="ExpirationDate" Type="varchar" MaxLength="500" />
           <Property Name="Cvv" Type="varchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="BusinessPage">
+          <Key>
+            <PropertyRef Name="BusinessPageID" />
+          </Key>
+          <Property Name="BusinessPageID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PageNameUrl" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="PageName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="PageContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="CardDetails">
           <Key>
             <PropertyRef Name="CardId" />
@@ -1494,6 +1505,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BillingAddress" EntityType="Self.BillingAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BusinessPage" EntityType="Self.BusinessPage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CardDetails" EntityType="Self.CardDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ControlType" EntityType="Self.ControlType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
@@ -2844,6 +2856,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <FunctionImport Name="PublishSingleEvent1">
           <Parameter Name="EventId" Mode="In" Type="Int64" />
           </FunctionImport>
+          <EntitySet Name="BusinessPages" EntityType="EventComboModel.BusinessPage" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -4084,6 +4097,17 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="BusinessPage">
+          <Key>
+            <PropertyRef Name="BusinessPageID" />
+          </Key>
+          <Property Name="BusinessPageID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PageNameUrl" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PageName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PageContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5376,6 +5400,18 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="PublishSingleEvent1" FunctionName="EventComboModel.Store.PublishSingleEvent" />
+          <EntitySetMapping Name="BusinessPages">
+            <EntityTypeMapping TypeName="EventComboModel.BusinessPage">
+              <MappingFragment StoreEntitySet="BusinessPage">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PageContent" ColumnName="PageContent" />
+                <ScalarProperty Name="PageName" ColumnName="PageName" />
+                <ScalarProperty Name="PageNameUrl" ColumnName="PageNameUrl" />
+                <ScalarProperty Name="BusinessPageID" ColumnName="BusinessPageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
 
         </EntityContainerMapping>
       </Mapping>

@@ -213,6 +213,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\BusinessPagesController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\EventCategoryController.cs" />
     <Compile Include="Controllers\EventListController.cs" />
@@ -261,6 +262,9 @@
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BillingAddress.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusinessPage.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CardDetail.cs">
@@ -364,6 +368,7 @@
     <Compile Include="Models\Message.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MetaData.cs" />
     <Compile Include="Models\MultipleEvent.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
@@ -1215,6 +1220,11 @@
     <Content Include="Views\Orders\_PurchasedTicketFavoriteList.cshtml" />
     <Content Include="Views\Orders\_PurchasedTicketList.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\BusinessPages\Create.cshtml" />
+    <Content Include="Views\BusinessPages\Delete.cshtml" />
+    <Content Include="Views\BusinessPages\Details.cshtml" />
+    <Content Include="Views\BusinessPages\Edit.cshtml" />
+    <Content Include="Views\BusinessPages\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1224,6 +1234,7 @@
     <Folder Include="Ckeditor\skins\" />
     <Folder Include="jquery-ui-1.11.4.custom\" />
     <Folder Include="Views\Permission\" />
+    <Folder Include="Views\test\" />
     <Folder Include="Views\ValidationMessage\" />
   </ItemGroup>
   <ItemGroup>

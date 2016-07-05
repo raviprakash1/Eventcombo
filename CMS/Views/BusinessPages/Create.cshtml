@@ -1,0 +1,82 @@
+﻿@model CMS.Models.BusinessPage
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<link href='~/Content/jquery-te-1.4.0.css' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="~/Scripts/jquery-te-1.4.0.js"></script>
+
+<section id="content_wrapper">
+
+    <!-- Start: Topbar -->
+    <header id="topbar" class="alt">
+        <div class="topbar-left">
+            <ol class="breadcrumb">
+
+                <li class="crumb-icon">
+                    <a href="dashboard.html">
+                        <span class="glyphicon glyphicon-home"></span>
+                    </a>
+                </li>
+                <li class="crumb-active">
+                    Dashboard
+                </li>
+            </ol>
+        </div>
+
+    </header>
+    <div class="panel-heading panel_loader">
+        <span class="view_evnt fs26 col-sm-6">Add Business page</span>
+    </div>
+    <div id="content" class="animated fadeIn">
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PageName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PageName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PageName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PageNameUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PageNameUrl, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PageNameUrl, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PageContent, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PageContent, new { htmlAttributes = new { @class = "editor jqte-test", @id = "PageContent" } })
+                        @Html.ValidationMessageFor(model => model.PageContent, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-info articleBtnCls" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+        </div>
+</section>
+<script type="text/javascript">
+
+  $(function () {
+      $("#PageContent").jqte();
+
+  });
+</script>
+

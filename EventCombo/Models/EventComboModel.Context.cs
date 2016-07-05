@@ -110,6 +110,7 @@ namespace EventCombo.Models
         public virtual DbSet<OrderState> OrderStates { get; set; }
         public virtual DbSet<PaymentType> PaymentTypes { get; set; }
         public virtual DbSet<v_OrderList> v_OrderList { get; set; }
+        public virtual DbSet<BusinessPage> BusinessPages { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)
