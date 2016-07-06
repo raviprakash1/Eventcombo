@@ -94,6 +94,11 @@ namespace EventCombo
         .ForMember(d => d.TimeZoneName, m => m.MapFrom(s => s.TimeZone_Name))
         .ForMember(d => d.TimeZoneOrder, m => m.MapFrom(s => s.Timezone_order));
       CreateMap<Fee_Structure, FeeStructureViewModel>();
+      CreateMap<ECImage, ECImageViewModel>()
+        .ForMember(d => d.ImagePath, m => m.Ignore())
+        .ForMember(d => d.Filename, m => m.MapFrom(s => s.ImagePath))
+        .ForMember(d => d.TypeName, m => m.MapFrom(s => s.ECImageType.TypeName));
+
 
       //backward maps
       CreateMap<OrderTemplateViewModel, OrderTemplate>();
@@ -125,6 +130,8 @@ namespace EventCombo
       CreateMap<VariableChargesViewModel, Event_VariableDesc>()
         .ForMember(d => d.Variable_Id, m => m.Ignore())
         .ForMember(d => d.Event_Id, m => m.MapFrom(s => s.EventId));
+      CreateMap<ECImageViewModel, ECImage>()
+        .ForMember(d => d.ImagePath, m => m.MapFrom(s => s.Filename));
     }
   }
 }
