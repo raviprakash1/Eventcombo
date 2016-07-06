@@ -398,7 +398,7 @@
 
             </div>
 
-            <form id="login-launch" action="@Url.Action("@*ExternalLogin*@", "Account")" method="POST" target="login-popup" onsubmit="invokeLogin();">
+            <form id="login-launch" action="@Url.Action("ExternalLogin", "Account")" method="POST" target="login-popup" onsubmit="invokeLogin();">
               <input type="hidden" id="provider" name="provider" />
               <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
               <div class="col-xs-6">
