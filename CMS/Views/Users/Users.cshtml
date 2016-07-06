@@ -7,9 +7,9 @@
 }
 
 <style type="text/css">
-   iframe {
-    border: none;
-}
+    iframe {
+        border: none;
+    }
 </style>
 <!-- Meta, title, CSS, favicons, etc. -->
 
@@ -95,7 +95,7 @@
 
                                         <div class="col-md-3 mb5">
 
-                                            <input class="btn btn-info br2 col-md-12 fs15" type="submit" value="Search" />                                            
+                                            <input class="btn btn-info br2 col-md-12 fs15" type="submit" value="Search" />
 
                                         </div>
 
@@ -113,60 +113,63 @@
                                                 <th>
                                                     @{
                                                         string url = Request.Url.GetLeftPart(UriPartial.Authority);
-                                                        string sno = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] +"&sortorder=sno";
-                                                        string snodesc = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=snodesc";
-                                                        string name = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=name";
-                                                        string namedesc = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=namedesc";
-                                                        string role = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=role";
-                                                        string roledesc = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=roledesc";
-                                                        string email = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=email";
-                                                        string emaildesc = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=emaildesc";
-                                                        string event1 = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=event";
-                                                        string eventdesc= url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=eventdesc";
-                                                        string deals = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=deals";
-                                                        string dealsdesc = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=dealsdesc";
-                                                        string location = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=location";
-                                                        string locationdesc = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=location_desc";
-                                                        string ticketpurchased = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=ticketpurchased";
-                                                        string ticketpurchaseddesc = url+"/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=ticketpurchased_desc";
-                                                        string dealpurchased = url+"/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=dealpurchased";
-                                                        string dealpurchaseddesc = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=dealpurchased_desc";
-                                                        string Orgaizer = url+"/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Organiser";
-                                                        string Orgaizerdesc = url+"/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Orgaizerdesc";
-                                                        string Merchant = url+"/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Merchant";
-                                                        string Merchantdesc = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Merchantdesc";
-                                                        string status = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=status";
-                                                        string statusdesc = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=statusdesc";
-                                                        string Online = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Online";
-                                                        string Onlinedesc = url+ "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Onlinedesc";
+                                                        string sno = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=sno";
+                                                        string snodesc = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=snodesc";
+                                                        string name = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=name";
+                                                        string namedesc = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=namedesc";
+                                                        string role = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=role";
+                                                        string roledesc = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=roledesc";
+                                                        string email = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=email";
+                                                        string emaildesc = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=emaildesc";
+                                                        string event1 = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=event";
+                                                        string eventdesc = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=eventdesc";
+                                                        string deals = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=deals";
+                                                        string dealsdesc = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=dealsdesc";
+                                                        string location = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=location";
+                                                        string locationdesc = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=location_desc";
+                                                        string ticketpurchased = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=ticketpurchased";
+                                                        string ticketpurchaseddesc = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=ticketpurchased_desc";
+                                                        string dealpurchased = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=dealpurchased";
+                                                        string dealpurchaseddesc = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=dealpurchased_desc";
+                                                        string Orgaizer = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Organiser";
+                                                        string Orgaizerdesc = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Orgaizerdesc";
+                                                        string Merchant = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Merchant";
+                                                        string Merchantdesc = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Merchantdesc";
+                                                        string status = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=status";
+                                                        string statusdesc = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=statusdesc";
+                                                        string Online = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Online";
+                                                        string Onlinedesc = url + "/util_admin_bolt/Users/Users?SearchStringFirstName=" + @TempData["SearchStringFirstName"] + "&SearchStringLastName=" + @TempData["SearchStringLastName"] + "&SearchStringEmail=" + @TempData["SearchStringEmail"] + "&sortorder=Onlinedesc";
                                                     }
-                                                Sno.
+                                                    Sno.
                                                     <div class="sor-evnt-cls">
                                                         <span class="crt_evnt_drop_up"> <a href="@sno"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                     </div>
                                                     <div class="sor-evnt-cls2">
                                                         <span class="crt_evnt_drop_down"> <a href="@snodesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
-                                                    
+
                                                 </th>
-                                                <th>Name
+                                                <th>
+                                                    Name
                                                     <div class="sor-evnt-cls">
                                                         <span class="crt_evnt_drop_up"> <a href="@name"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                     </div>
                                                     <div class="sor-evnt-cls2">
                                                         <span class="crt_evnt_drop_down"> <a href="@namedesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
-</th>
-                                                 
-                                                <th>Role
-                                                   <div class="sor-evnt-cls">
-                                                    <span class="crt_evnt_drop_up"> <a href="@role"><img src="~/assets/img/arw-up.png" /></a> </span>
-                                                   </div>
+                                                </th>
+
+                                                <th>
+                                                    Role
+                                                    <div class="sor-evnt-cls">
+                                                        <span class="crt_evnt_drop_up"> <a href="@role"><img src="~/assets/img/arw-up.png" /></a> </span>
+                                                    </div>
                                                     <div class="sor-evnt-cls2">
                                                         <span class="crt_evnt_drop_down"> <a href="@roledesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
-                                                <th>Email
+                                                <th>
+                                                    Email
                                                     <div class="sor-evnt-cls">
                                                         <span class="crt_evnt_drop_up"> <a href="@email"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                     </div>
@@ -174,7 +177,8 @@
                                                         <span class="crt_evnt_drop_down"> <a href="@emaildesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
-                                                <th>Event
+                                                <th>
+                                                    Event
                                                     <div class="sor-evnt-cls">
                                                         <span class="crt_evnt_drop_up"> <a href="@event1"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                     </div>
@@ -182,7 +186,8 @@
                                                         <span class="crt_evnt_drop_down"> <a href="@eventdesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
-                                                <th>Deals
+                                                <th>
+                                                    Deals
                                                     <div class="sor-evnt-cls">
                                                         <span class="crt_evnt_drop_up"> <a href="@deals"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                     </div>
@@ -190,23 +195,26 @@
                                                         <span class="crt_evnt_drop_down"> <a href="@dealsdesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
-                                                <th>Location
+                                                <th>
+                                                    Location
                                                     <div class="sor-evnt-cls">
                                                         <span class="crt_evnt_drop_up"> <a href="@location"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                     </div>
                                                     <div class="sor-evnt-cls2">
                                                         <span class="crt_evnt_drop_down"> <a href="@locationdesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
-                                                 </th>
-                                                <th>Tickets Purchased
+                                                </th>
+                                                <th>
+                                                    Tickets Purchased
                                                     <div class="sor-evnt-cls">
                                                         <span class="crt_evnt_drop_up"> <a href="@ticketpurchased"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                     </div>
                                                     <div class="sor-evnt-cls2">
                                                         <span class="crt_evnt_drop_down"> <a href="@ticketpurchaseddesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
-                                                 </th>  
-                                                <th>Deals purchased
+                                                </th>
+                                                <th>
+                                                    Deals purchased
                                                     <div class="sor-evnt-cls">
                                                         <span class="crt_evnt_drop_up"> <a href="@dealpurchased"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                     </div>
@@ -214,8 +222,9 @@
                                                         <span class="crt_evnt_drop_down"> <a href="@dealpurchaseddesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
 
                                                     </div>
-                                                 </th>
-                                                <th>Organizer
+                                                </th>
+                                                <th>
+                                                    Organizer
                                                     <div class="sor-evnt-cls">
                                                         <span class="crt_evnt_drop_up"> <a href="@Orgaizer"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                     </div>
@@ -223,15 +232,17 @@
                                                         <span class="crt_evnt_drop_down"> <a href="@Orgaizerdesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
-                                                <th>Merchant
+                                                <th>
+                                                    Merchant
                                                     <div class="sor-evnt-cls">
                                                         <span class="crt_evnt_drop_up"> <a href="@Merchant"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                     </div>
                                                     <div class="sor-evnt-cls2">
                                                         <span class="crt_evnt_drop_down"> <a href="@Merchantdesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
-                                                 </th>
-                                                <th data-column-id="status" data-order="desc" data-identifier="true">Status
+                                                </th>
+                                                <th data-column-id="status" data-order="desc" data-identifier="true">
+                                                    Status
                                                     <div class="sor-evnt-cls">
                                                         <span class="crt_evnt_drop_up"> <a href="@status"><img src="~/assets/img/arw-up.png" /></a> </span>
                                                     </div>
@@ -240,33 +251,34 @@
                                                     </div>
                                                 </th>
                                                 <th class="sornone">Action</th>
-                                                <th>Online
+                                                <th>
+                                                    Online
                                                     <div class="sor-evnt-cls">
                                                         <span class="crt_evnt_drop_up"> <a href="@Online"><img src="~/assets/img/arw-up.png" /></a> </span>
-                                                        </div>
+                                                    </div>
                                                     <div class="sor-evnt-cls2">
                                                         <span class="crt_evnt_drop_down"> <a href="@Onlinedesc"><img src="~/assets/img/arw-dwn1.png" /></a> </span>
                                                     </div>
                                                 </th>
-                                                    
+
                                             </tr>
                                         </thead>
                                         <tbody class="bg_white">
 
                                             @{
                                                 int i = 0;
-                                                int pagenumber =Convert.ToInt32(TempData["PageNo"]);
-                                                int pagesize= Convert.ToInt32(TempData["Pagesize"]);
-                                                if (pagenumber==1)
+                                                int pagenumber = Convert.ToInt32(TempData["PageNo"]);
+                                                int pagesize = Convert.ToInt32(TempData["Pagesize"]);
+                                                if (pagenumber == 1)
                                                 {
                                                     i = 0;
                                                 }
                                                 else
                                                 {
-                                                    i = pagesize*(pagenumber-1);
+                                                    i = pagesize * (pagenumber - 1);
                                                 }
 
-                                                foreach (var obj in  Model   )
+                                                foreach (var obj in Model)
                                                 {
 
 
@@ -297,9 +309,9 @@
                                                             <a href="javascript:;" class="btn btn-success br2 btn-xs fs12" id="Event-@i" onclick="return checkeventcount(this.id, '@obj.Id')">@obj.EventCount</a>
 
                                                             @*<button type="button" class="btn btn-info br2 btn-xs fs12" onclick="AssignSession('@(obj.Id)',@i)" id="btnevents-@i">
-                                                              
-                                                            </button>*@
-                                                            
+
+                                                                </button>*@
+
                                                         </td>
                                                         <td>0</td>
                                                         <td>@obj.Ipcountry</td>
@@ -308,9 +320,9 @@
                                                         <td>
                                                             <div class="section" id="dvorganiser-@i">
                                                                 <label class="field select">
-                                                                  
+
                                                                     @if (obj.Organiser == "Y")
-                                                                    { 
+                                                                    {
                                                                         <select id="dlOrgnizer-@i" onchange="SaveFields('@obj.Id','dlOrgnizer',this.value,this.id)">
                                                                             @*<option  value="0">Select</option>*@
                                                                             <option selected="selected" value="1">Yes</option>
@@ -347,7 +359,7 @@
                                                         <td>
                                                             <div class="section" id="dvmerchant-@i">
                                                                 <label class="field select">
-                                                                   
+
                                                                     @if (obj.Merchant == "Y")
                                                                     {
                                                                         <select id="dlMerchant-@i" onchange="SaveFields('@obj.Id','dlMerchant',this.value,this.id)">
@@ -358,7 +370,7 @@
                                                                     }
                                                                     else if (obj.Merchant == "N")
                                                                     {
-                                                                        
+
                                                                         <select id="dlMerchant-@i" onchange="SaveFields('@obj.Id','dlMerchant',this.value,this.id)">
                                                                             @*<option value="0">Select</option>*@
                                                                             <option value="1">Yes</option>
@@ -382,7 +394,7 @@
                                                         <td>
                                                             <div class="section" id="dvstatus-@i">
                                                                 <label class="field select">
-                                                                 
+
                                                                     @if (obj.UserStatus == "Y")
                                                                     {
                                                                         <select id="dlStatus-@i" onchange="SaveFields('@obj.Id','dlStatus',this.value,this.id)">
@@ -432,11 +444,11 @@
 
                                                         </td>
                                                         <td>
-                                                           
+
                                                             @if (obj.Online == "Y")
                                                             {
                                                                 <span class="fa fa-circle text-success fs14" title="online"></span>
-                                                                
+
                                                             }
                                                             else
                                                             {
@@ -447,27 +459,27 @@
                                                     </tr>
                                                 }
                                             }
-                                        </tbody>                                        
+                                        </tbody>
                                         @*<tfoot class="footer-menu">
-                                            <tr>
-                                                <td colspan="15">
-                                                    <nav class="text-right">
-                                                        <ul class="pagination hide-if-no-paging" id="ulpage"></ul>
-                                                    </nav>
-                                                </td>
-                                            </tr>
-                                        </tfoot>*@
+                                                <tr>
+                                                    <td colspan="15">
+                                                        <nav class="text-right">
+                                                            <ul class="pagination hide-if-no-paging" id="ulpage"></ul>
+                                                        </nav>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>*@
 
                                     </table>
-                                   
+
                                     <div class="col-xs-12 no_pad" style="text-align:right">
-                                        @Html.PagedListPager(Model, pageF => Url.Action("Users", new { pageF, SearchStringFirstName = TempData["SearchStringFirstName"], SearchStringLastName = TempData["SearchStringLastName"], SearchStringEmail = TempData["SearchStringEmail"], sortorder= TempData["sortorder"]}))
+                                        @Html.PagedListPager(Model, pageF => Url.Action("Users", new { pageF, SearchStringFirstName = TempData["SearchStringFirstName"], SearchStringLastName = TempData["SearchStringLastName"], SearchStringEmail = TempData["SearchStringEmail"], sortorder = TempData["sortorder"] }))
                                     </div>
-                                          @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"]!=null)
+                                    @if (Convert.ToInt32(ViewData["SearchedUser"]) == 0 && ViewData["SearchedUser"] != null)
                                     {
-                                       <div class="col-xs-12 no_pad text-center">No Result Found.</div> 
+                                        <div class="col-xs-12 no_pad text-center">No Result Found.</div>
                                     }
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -567,13 +579,13 @@
                                         </div>
 
                                         <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
-                                          <input type="checkbox" checked="" id="chk_12">
-                                          <label for="chk_12">Article Management</label>
+                                            <input type="checkbox" checked="" id="chk_12">
+                                            <label for="chk_12">Article Management</label>
                                         </div>
 
                                         <div class="checkbox-custom  checkbox-primary mb5 fl-lft mr10">
-                                          <input type="checkbox" checked="" id="chk_13">
-                                          <label for="chk_13">Ticket Orders</label>
+                                            <input type="checkbox" checked="" id="chk_13">
+                                            <label for="chk_13">Ticket Orders</label>
                                         </div>
                                     </div>
 
@@ -623,7 +635,7 @@
                 <div class="modal-content">
 
                     <div class="modal-body">
-                        <iframe name="Embedded Frame"   height="400px" width="100%" align="left" frameborder="0"  scrolling="auto" id="mainframe"></iframe>
+                        <iframe name="Embedded Frame" height="400px" width="100%" align="left" frameborder="0" scrolling="auto" id="mainframe"></iframe>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -676,8 +688,7 @@
 
 <script type="text/javascript">
 
-    function checkeventcount(id, UserID)
-    {
+    function checkeventcount(id, UserID) {
 
 
         var value = $('#' + id).text();
@@ -720,7 +731,7 @@
         value = parseInt(value) + 1;
         var sortorder = "@TempData["sortorder"]";
         window.location.href = '@Url.Action("Users", "Users", new { })?SearchStringFirstName=' + firstname + '&SearchStringLastName=' + lastnmae + '&SearchStringEmail=' + email + '&sortorder=' + sortorder + '&PageF=' + value + '';
-       
+
         //$("#ulpage li").removeClass('active');
         //$('#ulpage li a[data-page=' + value + ']').click();
         //console.log($('#ulpage li a[data-page=' + value + ']').parent().addClass('active'));
@@ -729,11 +740,10 @@
 
     });
 
-    function GetEvents(vUserId)
-    {
+    function GetEvents(vUserId) {
 
 
-       window.location= '';
+        window.location = '';
         @*$.ajax({
             url: '@Url.Action("GetUserEvents", "Users")',
             data:{strUserId:vUserId},
@@ -751,12 +761,10 @@
         //var i = 1;
         var rowCount = $('#tblMain tr').length;
 
-        for (var i = 1; i < rowCount; i++)
-        {
-            var role = parseInt( $("#HdRole-" + i).val());
+        for (var i = 1; i < rowCount; i++) {
+            var role = parseInt($("#HdRole-" + i).val());
 
-            if (role == 1)
-            {
+            if (role == 1) {
                 $("#HdRole-" + i).parent().parent().parent().addClass('info');
                 $('#aRoles-' + i).attr("disabled", "disabled");
                 $('#aRoles-' + i).children().attr("disabled", "disabled");
@@ -767,7 +775,7 @@
                 $("#dvstatus-" + i).children().children().prop('disabled', true);
                 $("#dvmerchant-" + i).children().children().prop('disabled', true);
 
-             }
+            }
 
         }
         //$("#tblMain tr").each(function () {
@@ -810,14 +818,14 @@
             datatype: "Text",
             type: "Get",
             success: function (response) {
-               // if ($.trim(response) != 1) {
-                    //alert(response);
-                    $("#hdCurrentUserRole").val($.trim(response));
+                // if ($.trim(response) != 1) {
+                //alert(response);
+                $("#hdCurrentUserRole").val($.trim(response));
 
 
-                    //$("#rdAdmin").prop("disabled", true);
-                    //$("#dvAdmin").prop("disabled", true);
-              //  }
+                //$("#rdAdmin").prop("disabled", true);
+                //$("#dvAdmin").prop("disabled", true);
+                //  }
                 //
             }
         });
@@ -893,24 +901,28 @@
         $("#rdMemberLimit").click(function () {
             $("#dvMemLimited").show();
             $("#dvAdmin").hide();
+            $("#chk_1").prop("checked", false);
+            $("#chk_2").prop("checked", false);
+
         })
 
         $("#rdMember").click(function () {
             $("#dvMemLimited").show();
             $("#dvAdmin").hide();
+            $("#chk_1").prop("checked", true);
+            $("#chk_2").prop("checked", true);
         })
 
 
 
         $("#btSave").click(function () {
 
-           var UserId = $("#hdUName").val();
-           var id = $("#HdId").val();
-           var roletype = "";
+            var UserId = $("#hdUName").val();
+            var id = $("#HdId").val();
+            var roletype = "";
             var Permisions = ""; var URole;
             for (i = 1; i <= 13; i++) {
-                if ($("#chk_" + i).is(":checked") == true)
-                {
+                if ($("#chk_" + i).is(":checked") == true) {
                     if (Permisions == "")
                         Permisions = i;
                     else
@@ -925,8 +937,7 @@
             else
                 URole = 3;
 
-            if ($("#rdMemberLimit").is(":checked") == true)
-            {
+            if ($("#rdMemberLimit").is(":checked") == true) {
                 roletype = "Member-Limited";
             }
             if ($("#rdMember").is(":checked") == true) {
@@ -975,9 +986,9 @@
             success: function (response) {
                 $("#formuser").submit();
                 //$.post("Users\Users");
-               // if (response == "Deleted")
-                   // alert("Record Deleted Successfully.");
-                    //$("#hId").text(GetMess("CMSUsers", "UsersDeleteSuccUI"));
+                // if (response == "Deleted")
+                // alert("Record Deleted Successfully.");
+                //$("#hId").text(GetMess("CMSUsers", "UsersDeleteSuccUI"));
 
                 //else
                 //    alert("Some error occur while Deleting");
@@ -992,7 +1003,7 @@
         $("#btnNo").show();
         $("#btMesOk").hide();
 
-       // $("#btOk").click();
+        // $("#btOk").click();
 
         $("#hId").text(GetMess("CMSUsers", "UsersDeleteUI"));
 
@@ -1004,7 +1015,7 @@
         //    return true;
         //}
         //else
-          return false;
+        return false;
 
     }
     function GetMess(strname, strFormTag) {
@@ -1053,27 +1064,27 @@
 
         if (sFields == "UserStatus" && vvalue == 'Y') {
 
-            $("#lblstatus-"+el).html("Enable");
+            $("#lblstatus-" + el).html("Enable");
 
-        }else if (sFields == "UserStatus" && vvalue == 'N') {
+        } else if (sFields == "UserStatus" && vvalue == 'N') {
 
-            $("#lblstatus-"+el).html("Disable");
+            $("#lblstatus-" + el).html("Disable");
 
-        }else if (sFields == "Merchant" && vvalue == 'Y') {
+        } else if (sFields == "Merchant" && vvalue == 'Y') {
 
-            $("#lblMer-"+el).html("Yes");
+            $("#lblMer-" + el).html("Yes");
 
-        }else if (sFields == "Merchant" && vvalue == 'N') {
+        } else if (sFields == "Merchant" && vvalue == 'N') {
 
-            $("#lblMer-"+el).html("No");
+            $("#lblMer-" + el).html("No");
 
-        }else if (sFields == "Organiser" && vvalue == 'Y') {
+        } else if (sFields == "Organiser" && vvalue == 'Y') {
 
-            $("#lblorg-"+el).html("Yes");
+            $("#lblorg-" + el).html("Yes");
 
-        }else if (sFields == "Organiser" && vvalue == 'N') {
+        } else if (sFields == "Organiser" && vvalue == 'N') {
 
-            $("#lblorg-"+el).html("No");
+            $("#lblorg-" + el).html("No");
 
         }
 
@@ -1097,7 +1108,7 @@
                     //$(this).prop(href,"#dvEvents");
                     //$(this).prop(data-toggle, "modal");
                     //$("#confirm-delete-ok").show();
-                   // alert("Record Updated.");
+                    // alert("Record Updated.");
                     //  $('#spanid').html("Record Updated.");
                     // $('#divError').css('display', 'block');
                     ///  setTimeout(function () { $('#divError').css('display', 'none'); $('input[type=text]').removeClass('err-bor') }, 3000);
@@ -1112,8 +1123,7 @@
         });
     }
 
-    function AssignSession(userId,id)
-    {
+    function AssignSession(userId, id) {
         $.ajax({
             url: '@Url.Action("SetUserId","Users")',
             data: { strUserId: userId },
@@ -1127,11 +1137,11 @@
 
 
         $('#mainframe').prop('src', 'http://localhost:10159/EventList/EventList')
-        $("#btnevents-"+id).attr("data-toggle","modal");
-        $("#btnevents-"+id).attr("data-target","#modaliframe");
+        $("#btnevents-" + id).attr("data-toggle", "modal");
+        $("#btnevents-" + id).attr("data-target", "#modaliframe");
 
     }
-    function AssignUserId(userId,id) {
+    function AssignUserId(userId, id) {
         document.getElementById("hdUName").value = userId;
         document.getElementById("HdId").value = id;
 
@@ -1150,7 +1160,7 @@
             success: function (response) {
                 debugger;
                 var AryResult = response.split("^");
-                for (i = 0; i < AryResult.length-1 ; i++) {
+                for (i = 0; i < AryResult.length - 1 ; i++) {
                     $("#chk_" + AryResult[i]).prop("checked", true);
                 }
                 //alert(AryResult[AryResult.length - 1].toString());
@@ -1188,7 +1198,7 @@
 
     $("document").ready(function () {
 
-        var pagef= parseInt('@TempData["PageNo"]')-1;
+        var pagef = parseInt('@TempData["PageNo"]') - 1;
         $('#ddlPageF').val(pagef);
     });
     @*function OpenEventDialog(UserID) {
