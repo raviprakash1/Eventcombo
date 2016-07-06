@@ -234,6 +234,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
 
     $scope.organizerAdd = function () {
       var i = Math.max.apply(Math, $scope.eventInfo.OrganizerList.map(function (o) { return o.InternalId; }));
+      i = i == Number.NEGATIVE_INFINITY ? 0 : isNaN(i) ? 0 : i;
       $scope.eventInfo.CurrentOrganizer = {
         Orgnizer_Id: 0,
         Orgnizer_Name: "",
@@ -480,6 +481,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     }
 
     $scope.previewEvent = function () {
+      console.debug($scope.eventInfo)
       var elem = $scope.validateEvent();
       if (!elem.valid) {
         alert("Form contain invalid data. Please, check all fields.");
@@ -564,10 +566,6 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
             !$scope.MainForm['TicketForm_' + i].TicketDescription.$valid ||
             ((ticket.Hide_Ticket == 1) && (ticket.T_AutoSechduleType == 1) && !hideDatesValid))
           elem.valid = false;
-        console.log(hideDatesValid);
-        console.log(elem.valid);
-        console.log($scope.MainForm['TicketForm_' + i]);
-        console.log(ticket);
       });
       if ($scope.eventInfo.Ticket_showvariable == 'Y')
         $scope.eventInfo.VariableChargesList.forEach(function (varcharge, i, arr) {
