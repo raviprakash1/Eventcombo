@@ -15,9 +15,6 @@ namespace EventCombo.Models
         public static PayPalRedirect ExpressCheckout(PayPalOrder order)
         {
             NameValueCollection values = new NameValueCollection();
-            //   string strGUID = (Session["TicketLockedId"] != null ? Session["TicketLockedId"].ToString() : "");
-            //values["CANCELURL"] = PayPalSettings.CancelUrl;
-
             values["METHOD"] = "SetExpressCheckout";
             values["RETURNURL"] = PayPalSettings.ReturnUrl;
             values["CANCELURL"] = order.CancelUrl;
@@ -31,10 +28,7 @@ namespace EventCombo.Models
             values["VERSION"] = "93";
             values["BRANDNAME"] = "Eventcombo.com";
             values["AMT"] = order.Amount.ToString();
-            
             values = Submit(values);
-
-
             string ack = values["ACK"].ToLower();
 
             if (ack == "success" || ack == "successwithwarning")
@@ -117,7 +111,6 @@ namespace EventCombo.Models
             values["PAYMENTREQUEST_0_AMT"] = finalPaymentAmount;
             values["PAYMENTREQUEST_0_CURRENCYCODE"] = "USD";
             values["PAYMENTREQUEST_0_PAYMENTACTION"] = "Sale";
-          //  values["PAYMENTREQUEST_0_NUMBER"] = "OT0001111";
             values["USER"] = PayPalSettings.Username;
             values["PWD"] = PayPalSettings.Password;
             values["SIGNATURE"] = PayPalSettings.Signature;
