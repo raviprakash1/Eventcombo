@@ -71,7 +71,7 @@
           <span>{{message}}</span>
         </div>
       </div>
-      <div class="eventDetailContainer" ng-style="background-image: url({{eventInfo.BGImage.ImageUrl}}); background-size: 100% 100%; background-color: {{eventInfo.BackgroundColor}};">
+      <div class="eventDetailContainer" ng-style="{'background-image': 'url(' + eventInfo.BGImage.ImageUrl +')', 'background-size': '100% 100%', 'background-color': eventInfo.BackgroundColor}">
         <div class="EDConInner">
           <div class="col-md-12 EDWebsiteUrlHead">
 
