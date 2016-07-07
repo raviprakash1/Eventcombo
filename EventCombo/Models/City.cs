@@ -12,11 +12,14 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EventType
+    public partial class City
     {
-        public long EventTypeID { get; set; }
-        public string EventType1 { get; set; }
-        public string EventHide { get; set; }
+        public long CityID { get; set; }
+        public string CityName { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
         public bool IsOnFooter { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public System.DateTime UpdateDate { get; set; }
     }
 }
