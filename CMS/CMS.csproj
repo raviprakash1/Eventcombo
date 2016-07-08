@@ -362,6 +362,7 @@
     <Compile Include="Models\Fee_Structure.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Footer.cs" />
     <Compile Include="Models\func_Split_Result.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
