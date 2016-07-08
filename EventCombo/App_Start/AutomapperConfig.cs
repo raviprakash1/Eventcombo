@@ -98,6 +98,7 @@ namespace EventCombo
         .ForMember(d => d.ImagePath, m => m.Ignore())
         .ForMember(d => d.Filename, m => m.MapFrom(s => s.ImagePath))
         .ForMember(d => d.TypeName, m => m.MapFrom(s => s.ECImageType.TypeName));
+      CreateMap<ECImageViewModel, ECImageViewModel>();
 
 
       //backward maps

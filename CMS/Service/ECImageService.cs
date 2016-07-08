@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using EventCombo.Models;
-using EventCombo.DAL;
+using CMS.Models;
+using CMS.DAL;
 using System.IO;
 using AutoMapper;
 
-namespace EventCombo.Service
+namespace CMS.Service
 {
   public class ECImageService : IECImageService
   {

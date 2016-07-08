@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EventCombo.Models;
+using CMS.Models;
 using System.Web;
-using EventCombo.DAL;
+using CMS.DAL;
 
-namespace EventCombo.Service
+namespace CMS.Service
 {
   interface IECImageService
   {

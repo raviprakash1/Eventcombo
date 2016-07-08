@@ -637,12 +637,14 @@
     <Compile Include="Services\LastLoginStatus.cs" />
     <Compile Include="Services\TicketEmailer.cs" />
     <Compile Include="Service\ArticleService.cs" />
+    <Compile Include="Service\ECImageStorage.cs" />
     <Compile Include="Service\ECImageService.cs" />
     <Compile Include="Service\EventService.cs" />
     <Compile Include="Service\HtmlProcessing.cs" />
     <Compile Include="Service\IArticleService.cs" />
     <Compile Include="Service\DBAccessService.cs" />
     <Compile Include="Service\IDBAccessService.cs" />
+    <Compile Include="Service\IECImageStorage.cs" />
     <Compile Include="Service\IECImageService.cs" />
     <Compile Include="Service\IEventService.cs" />
     <Compile Include="Service\IImageService.cs" />

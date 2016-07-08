@@ -309,6 +309,7 @@
     <Compile Include="Models\ECImageType.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ECImageViewModel.cs" />
     <Compile Include="Models\Email_Tag.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
@@ -474,8 +475,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ArticleService.cs" />
     <Compile Include="Service\DBAccessService.cs" />
+    <Compile Include="Service\ECImageService.cs" />
+    <Compile Include="Service\ECImageStorage.cs" />
     <Compile Include="Service\IArticleService.cs" />
     <Compile Include="Service\IDBAccessService.cs" />
+    <Compile Include="Service\IECImageService.cs" />
+    <Compile Include="Service\IECImageStorage.cs" />
     <Compile Include="Service\ITicketsService.cs" />
     <Compile Include="Service\Notification\INotification.cs" />
     <Compile Include="Service\Notification\INotificationSender.cs" />
