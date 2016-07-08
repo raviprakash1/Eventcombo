@@ -12,15 +12,14 @@ namespace CMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BusinessPage
+    public partial class City
     {
-        public long BusinessPageID { get; set; }
-        public string PageName { get; set; }
-        public string PageNameUrl { get; set; }
-        public string PageContent { get; set; }
+        public long CityID { get; set; }
+        public string CityName { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
+        public bool IsOnFooter { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public System.DateTime UpdateDate { get; set; }
-        public int PageOrder { get; set; }
-        public bool IsOnFooter { get; set; }
     }
 }

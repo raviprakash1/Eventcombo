@@ -228,6 +228,7 @@
     <Compile Include="Controllers\EventListController.cs" />
     <Compile Include="Controllers\EventTypeController.cs" />
     <Compile Include="Controllers\FeeSettingController.cs" />
+    <Compile Include="Controllers\FooterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageEventController.cs" />
@@ -277,6 +278,9 @@
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CardDetail.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\City.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Cmsdata.Context.cs">
@@ -1241,6 +1245,7 @@
     <Content Include="Views\BusinessPages\Details.cshtml" />
     <Content Include="Views\BusinessPages\Edit.cshtml" />
     <Content Include="Views\BusinessPages\Index.cshtml" />
+    <Content Include="Views\Footer\Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

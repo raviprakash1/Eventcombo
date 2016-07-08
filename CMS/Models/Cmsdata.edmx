@@ -153,6 +153,8 @@
           <Property Name="PageNameUrl" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="PageName" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="PageContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PageOrder" Type="int" Nullable="false" />
+          <Property Name="IsOnFooter" Type="bit" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
         </EntityType>
@@ -168,6 +170,18 @@
           <Property Name="ExpirationDate" Type="varchar" MaxLength="500" />
           <Property Name="Cvv" Type="varchar" MaxLength="500" />
           <Property Name="card_type" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="CityID" />
+          </Key>
+          <Property Name="CityID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Latitude" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Longitude" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsOnFooter" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -343,6 +357,7 @@
           </Key>
           <Property Name="EventTypeID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventType" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IsOnFooter" Type="bit" Nullable="false" />
           <Property Name="EventHide" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="EventVenue">
@@ -1266,6 +1281,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySet Name="BillingAddress" EntityType="Self.BillingAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BusinessPage" EntityType="Self.BusinessPage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CardDetails" EntityType="Self.CardDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeliveryMethod" EntityType="Self.DeliveryMethod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ECImage" EntityType="Self.ECImage" Schema="dbo" store:Type="Tables" />
@@ -1845,6 +1861,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Property Name="EventType1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Events" Relationship="Self.FK_Event_EventType" FromRole="EventType" ToRole="Event" />
           <Property Name="EventHide" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IsOnFooter" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="EventVenue">
           <Key>
@@ -2566,6 +2583,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySet Name="v_OrderList" EntityType="Cmsdata.v_OrderList" />
           <EntitySet Name="V_EventsexpiredList" EntityType="Cmsdata.V_EventsexpiredList" />
           <EntitySet Name="BusinessPages" EntityType="Cmsdata.BusinessPage" />
+          <EntitySet Name="Cities" EntityType="Cmsdata.City" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -3281,6 +3299,20 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Property Name="PageContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PageOrder" Type="Int32" Nullable="false" />
+          <Property Name="IsOnFooter" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="CityID" />
+          </Key>
+          <Property Name="CityID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Longitude" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsOnFooter" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3544,6 +3576,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySetMapping Name="EventTypes">
             <EntityTypeMapping TypeName="Cmsdata.EventType">
               <MappingFragment StoreEntitySet="EventType">
+                <ScalarProperty Name="IsOnFooter" ColumnName="IsOnFooter" />
                 <ScalarProperty Name="EventHide" ColumnName="EventHide" />
                 <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
                 <ScalarProperty Name="EventType1" ColumnName="EventType" />
@@ -4321,12 +4354,27 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySetMapping Name="BusinessPages">
             <EntityTypeMapping TypeName="Cmsdata.BusinessPage">
               <MappingFragment StoreEntitySet="BusinessPage">
+                <ScalarProperty Name="IsOnFooter" ColumnName="IsOnFooter" />
+                <ScalarProperty Name="PageOrder" ColumnName="PageOrder" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="PageContent" ColumnName="PageContent" />
                 <ScalarProperty Name="PageNameUrl" ColumnName="PageNameUrl" />
                 <ScalarProperty Name="PageName" ColumnName="PageName" />
                 <ScalarProperty Name="BusinessPageID" ColumnName="BusinessPageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="Cmsdata.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsOnFooter" ColumnName="IsOnFooter" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
