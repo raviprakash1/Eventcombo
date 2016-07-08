@@ -62,10 +62,10 @@ WriteAttribute("href", Tuple.Create(" href=\"", 161), Tuple.Create("\"", 196)
 
 WriteLiteral(" rel=\"stylesheet\"");
 
-WriteLiteral(" />\r\n\r\n");
+WriteLiteral(" />\r\n<style>\r\n\r\n</style>\r\n\r\n");
 
             
-            #line 11 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 14 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
 Write(Html.HiddenFor(m => m.Eventid, new { @id = "hdEventid" }));
 
             
@@ -74,7 +74,7 @@ Write(Html.HiddenFor(m => m.Eventid, new { @id = "hdEventid" }));
 WriteLiteral("\r\n");
 
             
-            #line 12 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 15 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
 Write(Html.HiddenFor(m => m.Organiserid, new { @id = "hdorganiserid" }));
 
             
@@ -111,17 +111,17 @@ WriteLiteral(">\r\n                        <img");
 
 WriteLiteral(" class=\"ev1 img-responsive\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 778), Tuple.Create("\"", 813)
+WriteAttribute("src", Tuple.Create(" src=\"", 799), Tuple.Create("\"", 834)
             
-            #line 19 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-, Tuple.Create(Tuple.Create("", 784), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.imgurl)
+            #line 22 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+, Tuple.Create(Tuple.Create("", 805), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.imgurl)
             
             #line default
             #line hidden
-, 784), false)
+, 805), false)
 );
 
-WriteLiteral(" >\r\n                    </div>\r\n                    <div");
+WriteLiteral(">\r\n                    </div>\r\n                    <div");
 
 WriteLiteral(" class=\"col-sm-9 pl0\"");
 
@@ -134,15 +134,13 @@ WriteLiteral(" id=\"title\"");
 WriteLiteral(">");
 
             
-            #line 22 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                                                   Write(Html.DisplayFor(m=>m.Tilte));
+            #line 25 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                                                   Write(Html.DisplayFor(m => m.Tilte));
 
             
             #line default
             #line hidden
-WriteLiteral("</h2>\r\n                        ");
-
-WriteLiteral("\r\n                        <p");
+WriteLiteral("</h2>\r\n                        <p");
 
 WriteLiteral(" class=\"th_day_time chk_add_sch_cal\"");
 
@@ -194,26 +192,31 @@ WriteLiteral(">\r\n                                        <div");
 
 WriteLiteral(" class=\"col-sm-12 no_pad\"");
 
-WriteLiteral(">\r\n                                         \r\n                                   " +
-"         <div");
+WriteLiteral(">\r\n                                            <div");
 
 WriteLiteral(" class=\"form-group mb5 cal_scrol \"");
 
-WriteLiteral(">\r\n                                        \r\n");
+WriteLiteral(">\r\n");
 
             
             #line 39 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
- foreach (var item in (List<EventCombo.Models.paymentdate>)ViewBag.Timecal)
-{
+                                                
+            
+            #line default
+            #line hidden
+            
+            #line 39 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                                                 foreach (var item in (List<EventCombo.Models.paymentdate>)ViewBag.Timecal)
+                                                {
 
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+WriteLiteral("                                                    <div");
 
 WriteLiteral(" class=\"col-sm-12 no_pad date_time_list \"");
 
-WriteLiteral(">\r\n        <a");
+WriteLiteral(">\r\n                                                        <a");
 
 WriteLiteral(" href=\"#\"");
 
@@ -221,14 +224,14 @@ WriteLiteral(" data-target=\"#schcalender\"");
 
 WriteLiteral(" data-toggle=\"modal\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 2473), Tuple.Create("\"", 2486)
+WriteAttribute("id", Tuple.Create(" id=\"", 2515), Tuple.Create("\"", 2528)
             
             #line 42 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-, Tuple.Create(Tuple.Create("", 2478), Tuple.Create<System.Object, System.Int32>(item.id
+                                       , Tuple.Create(Tuple.Create("", 2520), Tuple.Create<System.Object, System.Int32>(item.id
             
             #line default
             #line hidden
-, 2478), false)
+, 2520), false)
 );
 
 WriteLiteral(" onclick=\"showevent(this.id)\"");
@@ -237,37 +240,32 @@ WriteLiteral(">");
 
             
             #line 42 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                                                                                                         Write(item.Datetime);
+                                                                                                                                                         Write(item.Datetime);
 
             
             #line default
             #line hidden
-WriteLiteral(" </a>\r\n        <br />");
+WriteLiteral(" </a>\r\n                                                        <br />");
 
             
             #line 43 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-         Write(item.Address);
+                                                         Write(item.Address);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        ");
-
-WriteLiteral("\r\n    </div>\r\n");
+WriteLiteral("\r\n                                                    </div>\r\n");
 
             
-            #line 46 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-}
+            #line 45 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                                                }
 
             
             #line default
             #line hidden
-WriteLiteral("                                             \r\n                                  " +
-"              ");
-
-WriteLiteral("\r\n                                            </div>\r\n                           " +
-"             </div>\r\n\r\n                                    </div>\r\n             " +
-"                       <div");
+WriteLiteral("                                            </div>\r\n                             " +
+"           </div>\r\n                                    </div>\r\n                 " +
+"                   <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
@@ -275,37 +273,43 @@ WriteLiteral("></div>\r\n                                </div>\r\n             
 "v>\r\n                        </div>\r\n");
 
             
-            #line 64 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
- foreach (var item in (List<EventCombo.Models.paymentdate>)ViewBag.Timecal)
-{
+            #line 53 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                        
+            
+            #line default
+            #line hidden
+            
+            #line 53 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                         foreach (var item in (List<EventCombo.Models.paymentdate>)ViewBag.Timecal)
+                        {
 
             
             #line default
             #line hidden
-WriteLiteral("                        <p");
+WriteLiteral("                            <p");
 
 WriteLiteral(" class=\"th_day_time\"");
 
 WriteLiteral(">");
 
             
-            #line 66 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                                          Write(item.Address);
+            #line 55 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                                              Write(item.Address);
 
             
             #line default
             #line hidden
 WriteLiteral("</p>\r\n");
 
-WriteLiteral("                        <p");
+WriteLiteral("                            <p");
 
 WriteLiteral(" class=\"th_day_time\"");
 
 WriteLiteral(">");
 
             
-            #line 67 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                                          Write(item.Datetime);
+            #line 56 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                                              Write(item.Datetime);
 
             
             #line default
@@ -313,8 +317,8 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 68 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-}
+            #line 57 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                        }
 
             
             #line default
@@ -347,18 +351,24 @@ WriteLiteral(" class=\"fb_dis_head pt5\"");
 WriteLiteral(">THANK YOU FOR YOUR ORDER</h2>\r\n            </div>\r\n");
 
             
-            #line 85 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
- if (Model.EventPrivacy == "Public" || (Model.Shareonfb == "Y" || Model.Shareonfb == "y"))
-{
+            #line 74 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 74 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+             if (Model.EventPrivacy == "Public" || (Model.Shareonfb == "Y" || Model.Shareonfb == "y"))
+            {
 
             
             #line default
             #line hidden
-WriteLiteral("            <div");
+WriteLiteral("                <div");
 
 WriteLiteral(" class=\"col-sm-6 col-xs-6 text-right pl0 ev_social_share_btn\"");
 
-WriteLiteral(">\r\n                <a");
+WriteLiteral(">\r\n                    <a");
 
 WriteLiteral(" href=\"#\"");
 
@@ -366,7 +376,7 @@ WriteLiteral("><img");
 
 WriteLiteral(" src=\"/Images/mail.png\"");
 
-WriteLiteral("></a>\r\n                <a");
+WriteLiteral("></a>\r\n                    <a");
 
 WriteLiteral(" href=\"#\"");
 
@@ -376,7 +386,7 @@ WriteLiteral("><img");
 
 WriteLiteral(" src=\"/Images/twi.png\"");
 
-WriteLiteral("></a>\r\n                <a");
+WriteLiteral("></a>\r\n                    <a");
 
 WriteLiteral(" href=\"#\"");
 
@@ -388,7 +398,7 @@ WriteLiteral("><img");
 
 WriteLiteral(" src=\"/Images/fac.png\"");
 
-WriteLiteral("></a>\r\n\r\n                <a");
+WriteLiteral("></a>\r\n\r\n                    <a");
 
 WriteLiteral(" href=\"#\"");
 
@@ -398,11 +408,11 @@ WriteLiteral("><img");
 
 WriteLiteral(" src=\"/Images/lin.png\"");
 
-WriteLiteral("></a>\r\n            </div>\r\n");
+WriteLiteral("></a>\r\n                </div>\r\n");
 
             
-            #line 94 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-}
+            #line 83 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            }
 
             
             #line default
@@ -434,7 +444,7 @@ WriteLiteral(" id=\"spOrderNo\"");
 WriteLiteral(">");
 
             
-            #line 104 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 93 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                                        Write(Model.Orderdetail);
 
             
@@ -443,8 +453,8 @@ WriteLiteral(">");
 WriteLiteral("</span></p>\r\n                    <p>Your tickets have been sent to ");
 
             
-            #line 105 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                                                 Write(Html.DisplayFor(x=>x.Email));
+            #line 94 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                                                 Write(Html.DisplayFor(x => x.Email));
 
             
             #line default
@@ -452,7 +462,7 @@ WriteLiteral("</span></p>\r\n                    <p>Your tickets have been sent 
 WriteLiteral(" </p>\r\n                    <p>");
 
             
-            #line 106 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 95 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                   Write(Model.Guestlist);
 
             
@@ -463,28 +473,29 @@ WriteLiteral("</p>\r\n                    <p>\r\n                        <label>
 
 WriteLiteral(" type=\"checkbox\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 5746), Tuple.Create("\"", 5794)
+WriteAttribute("value", Tuple.Create(" value=\"", 5058), Tuple.Create("\"", 5106)
             
-            #line 109 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-, Tuple.Create(Tuple.Create("", 5754), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.sendlatestdetails)
+            #line 98 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+, Tuple.Create(Tuple.Create("", 5066), Tuple.Create<System.Object, System.Int32>(Html.DisplayFor(m=>m.sendlatestdetails)
             
             #line default
             #line hidden
-, 5754), false)
+, 5066), false)
 );
 
 WriteLiteral(" ");
 
             
-            #line 109 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                                                                                                Write(Html.DisplayFor(m=>m.sendlatestdetails).ToString()=="Y" ? "checked=\"checked\"" : "");
+            #line 98 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                                                                                                Write(Html.DisplayFor(m => m.sendlatestdetails).ToString() == "Y" ? "checked=\"checked\"" : "");
 
             
             #line default
             #line hidden
-WriteLiteral("  onchange=\"changesetting(this.id);\" id=\"chkgetlatest\"/>\r\n                       " +
-" Keep me locked to the latest, Yes, send me curated events every few weeks </lab" +
-"el>\r\n                    </p>\r\n                    <div");
+WriteLiteral(" onchange=\"changesetting(this.id);\" id=\"chkgetlatest\" />\r\n                       " +
+"     Keep me locked to the latest, Yes, send me curated events every few weeks\r\n" +
+"                        </label>\r\n                    </p>\r\n                    " +
+"<div");
 
 WriteLiteral(" class=\"clearfix\"");
 
@@ -507,59 +518,65 @@ WriteLiteral("></div>\r\n                </div>\r\n\r\n            </div>\r\n\r\
 "v>\r\n");
 
             
-            #line 125 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
- if (Model.EventPrivacy == "Public" || (Model.Shareonfb == "Y" || Model.Shareonfb == "y"))
-{
+            #line 115 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+    
+            
+            #line default
+            #line hidden
+            
+            #line 115 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+     if (Model.EventPrivacy == "Public" || (Model.Shareonfb == "Y" || Model.Shareonfb == "y"))
+    {
 
             
             #line default
             #line hidden
-WriteLiteral("    <div");
+WriteLiteral("        <div");
 
 WriteLiteral(" class=\"event_detail_container\"");
 
-WriteLiteral(">\r\n        <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"evnt_tile_head\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"evnt_tile_bg_l\"");
 
-WriteLiteral("></div>\r\n            <div");
+WriteLiteral("></div>\r\n                <div");
 
 WriteLiteral(" class=\"col-sm-12 col-xs-12 text-left no_pad\"");
 
-WriteLiteral(">\r\n                <h2");
+WriteLiteral(">\r\n                    <h2");
 
 WriteLiteral(" class=\"fb_dis_head pt5\"");
 
-WriteLiteral(">LET YOUR FIRENDS KNOW!</h2>\r\n            </div>\r\n\r\n            <div");
+WriteLiteral(">LET YOUR FIRENDS KNOW!</h2>\r\n                </div>\r\n\r\n                <div");
 
 WriteLiteral(" class=\"evnt_tile_bg_r evnt_tile_bg_r_call\"");
 
-WriteLiteral("></div>\r\n        </div>\r\n        <div");
+WriteLiteral("></div>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"evnt_details_body2\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"col-sm-12 ev_white_bg pb10 pt10 mt20\"");
 
-WriteLiteral(">\r\n\r\n                <div");
+WriteLiteral(">\r\n\r\n                    <div");
 
 WriteLiteral(" class=\"col-sm-12 no_pad chek_out_desc\"");
 
-WriteLiteral(">\r\n                    <p>Events are better when your friends are there too. So, " +
-"who\'s coming with you?</p>\r\n                    <div");
+WriteLiteral(">\r\n                        <p>Events are better when your friends are there too. " +
+"So, who\'s coming with you?</p>\r\n                        <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
-WriteLiteral("></div>\r\n                    <div");
+WriteLiteral("></div>\r\n                        <div");
 
 WriteLiteral(" class=\"col-sm-12 col-xs-12 no_pad\"");
 
-WriteLiteral(">\r\n                        <button");
+WriteLiteral(">\r\n                            <button");
 
 WriteLiteral(" class=\"btn ev_live_btn fs18 sharefb\"");
 
@@ -567,16 +584,17 @@ WriteLiteral(" type=\"button\"");
 
 WriteLiteral(" id=\"shareonfb\"");
 
-WriteLiteral(">\r\n                            SHARE ON FACEBOOK\r\n                        </butto" +
-"n>\r\n                    </div>\r\n                </div>\r\n                <div");
+WriteLiteral(">\r\n                                SHARE ON FACEBOOK\r\n                           " +
+" </button>\r\n                        </div>\r\n                    </div>\r\n        " +
+"            <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
-WriteLiteral("></div>\r\n            </div>\r\n\r\n        </div>\r\n    </div>\r\n");
+WriteLiteral("></div>\r\n                </div>\r\n\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 153 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-}
+            #line 143 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+    }
 
             
             #line default
@@ -626,22 +644,22 @@ WriteLiteral("></div>\r\n                    <div");
 
 WriteLiteral(" class=\"col-sm-12 col-xs-12 no_pad\"");
 
-WriteLiteral(">\r\n                       \r\n                            <a");
+WriteLiteral(">\r\n\r\n                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 8481), Tuple.Create("\'", 8528)
+WriteAttribute("href", Tuple.Create(" href=\'", 7903), Tuple.Create("\'", 7951)
             
-            #line 171 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-, Tuple.Create(Tuple.Create("", 8488), Tuple.Create<System.Object, System.Int32>(Url.Action("CreateEvent","CreateEvent")
+            #line 161 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+, Tuple.Create(Tuple.Create("", 7910), Tuple.Create<System.Object, System.Int32>(Url.Action("CreateEvent", "CreateEvent")
             
             #line default
             #line hidden
-, 8488), false)
+, 7910), false)
 );
 
-WriteLiteral("  class=\"btn ev_live_btn cap_l fs18\"");
+WriteLiteral(" class=\"btn ev_live_btn cap_l fs18\"");
 
-WriteLiteral("> Go for it!</a>\r\n                               \r\n\r\n                    </div>\r\n" +
-"                </div>\r\n                <div");
+WriteLiteral("> Go for it!</a>\r\n\r\n\r\n                    </div>\r\n                </div>\r\n       " +
+"         <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
@@ -684,8 +702,8 @@ WriteLiteral(" class=\"col-sm-12 no_pad chek_out_desc\"");
 WriteLiteral(">\r\n                    <p>Hi ");
 
             
-            #line 194 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                     Write(Html.DisplayFor(m=>m.Username ));
+            #line 184 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                     Write(Html.DisplayFor(m => m.Username));
 
             
             #line default
@@ -833,10 +851,10 @@ WriteLiteral(" href=\"#\"");
 
 WriteLiteral(" id=\"googlecal\"");
 
-WriteLiteral("  target=\"_blank\"");
+WriteLiteral(" target=\"_blank\"");
 
-WriteLiteral(" >Google Calendar </a>\r\n                        </div>\r\n                        <" +
-"div");
+WriteLiteral(">Google Calendar </a>\r\n                        </div>\r\n                        <d" +
+"iv");
 
 WriteLiteral(" class=\"col-md-6 text-center ev_calend_lebel\"");
 
@@ -850,10 +868,10 @@ WriteLiteral(" href=\"#\"");
 
 WriteLiteral(" id=\"yahoocal\"");
 
-WriteLiteral("  target=\"_blank\"");
+WriteLiteral(" target=\"_blank\"");
 
-WriteLiteral(" >Yahoo Calendar </a>\r\n                        </div>\r\n                    </div>" +
-"\r\n                    <div");
+WriteLiteral(">Yahoo Calendar </a>\r\n                        </div>\r\n                    </div>\r" +
+"\n                    <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
@@ -1009,39 +1027,39 @@ WriteLiteral(" class=\"btn btn-primary btn-lg ev_add_sub_btn \"");
 WriteLiteral(" id=\"saveorgaizermsg\"");
 
 WriteLiteral(">SAVE</button>\r\n                </div>\r\n\r\n            </div>\r\n        </div>\r\n   " +
-" </div>\r\n</div>\r\n\r\n\r\n<script>\r\n   \r\n    $(document).ready(function () {\r\n       " +
-" history.pushState(null, null, \'PaymentConfirmation\');\r\n        window.addEventL" +
-"istener(\'popstate\', function (event) {\r\n            history.pushState(null, null" +
-", \'PaymentConfirmation\');\r\n        });\r\n        $(document).click(function () {\r" +
-"\n            $(\'#orgerror\').css(\'display\', \'none\');\r\n\r\n            if( $(\'#orger" +
-"ror\').css(\'display\')==\'block\')\r\n            {\r\n                $(\'input\').remove" +
-"Class(\'err-bor\');\r\n                $(\'#id_orgtext\').removeClass(\'err-bor\');\r\n   " +
-"         }\r\n            $(\'#id_orgtext\').removeClass(\'err-bor\');\r\n        });\r\n " +
-"       $(\'#saveorgaizermsg\').click(function () {\r\n\r\n\r\n            var errormsg =" +
-" \"\", erroremail = \"\";\r\n            var name = $(\'#id_orgname\').val();\r\n         " +
-"   var mail = $(\'#id_orgemail\').val();\r\n            var txt = $(\'#id_orgtext\').v" +
-"al();\r\n            var count = 0;\r\n\r\n\r\n            if (name != \'\') {\r\n          " +
-"      $(\'#id_orgname\').removeClass(\'err-bor\');\r\n\r\n            } else {\r\n\r\n      " +
-"          count++;\r\n                $(\'#id_orgname\').addClass(\'err-bor\');\r\n     " +
-"        \r\n            }\r\n\r\n\r\n\r\n            if (!validateEmail(mail)) {\r\n        " +
-"        $(\'#id_orgemail\').addClass(\'err-bor\');\r\n                errormsg += \"Inv" +
-"alid Email</br>\";\r\n            }\r\n\r\n\r\n\r\n            if (txt != \'\') {\r\n          " +
-"      $(\'#id_orgtext\').removeClass(\'err-bor\');\r\n\r\n            } else {\r\n        " +
-"        count++;\r\n                $(\'#id_orgtext\').addClass(\'err-bor\');\r\n       " +
-"         \r\n            }\r\n            if (erroremail != \"\") {\r\n                e" +
-"rrormsg += erroremail;\r\n\r\n            }\r\n            if (count > 0)\r\n           " +
-" {\r\n                errormsg += \"Fill the details</br>\";\r\n            }\r\n       " +
-"     if (errormsg != \"\") {\r\n\r\n                $(\'#orgerror\').css(\'display\', \'blo" +
-"ck\');\r\n                $(\'#orgerror\').html(errormsg);\r\n                return fa" +
-"lse;\r\n            }\r\n            else {\r\n                var organiserid = $(\'#h" +
-"dorganiserid\').val();\r\n                var eventid = $(\'#hdEventid\').val();\r\n   " +
-"             var model = {\r\n                    \'email\': mail,\r\n                " +
-"    \'name\': name,\r\n                    \'mesasges\': txt,\r\n                    \'or" +
-"ganiserid\': organiserid,\r\n                    \'EventId\': eventid\r\n\r\n            " +
-"    }\r\n                $.ajax({\r\n                    url: \'");
+" </div>\r\n</div>\r\n\r\n\r\n<script>\r\n\r\n    $(document).ready(function () {\r\n        hi" +
+"story.pushState(null, null, \'PaymentConfirmation\');\r\n        window.addEventList" +
+"ener(\'popstate\', function (event) {\r\n            history.pushState(null, null, \'" +
+"PaymentConfirmation\');\r\n        });\r\n        $(document).click(function () {\r\n  " +
+"          $(\'#orgerror\').css(\'display\', \'none\');\r\n\r\n            if ($(\'#orgerror" +
+"\').css(\'display\') == \'block\') {\r\n                $(\'input\').removeClass(\'err-bor" +
+"\');\r\n                $(\'#id_orgtext\').removeClass(\'err-bor\');\r\n            }\r\n  " +
+"          $(\'#id_orgtext\').removeClass(\'err-bor\');\r\n        });\r\n        $(\'#sav" +
+"eorgaizermsg\').click(function () {\r\n\r\n\r\n            var errormsg = \"\", erroremai" +
+"l = \"\";\r\n            var name = $(\'#id_orgname\').val();\r\n            var mail = " +
+"$(\'#id_orgemail\').val();\r\n            var txt = $(\'#id_orgtext\').val();\r\n       " +
+"     var count = 0;\r\n\r\n\r\n            if (name != \'\') {\r\n                $(\'#id_o" +
+"rgname\').removeClass(\'err-bor\');\r\n\r\n            } else {\r\n\r\n                coun" +
+"t++;\r\n                $(\'#id_orgname\').addClass(\'err-bor\');\r\n\r\n            }\r\n\r\n" +
+"\r\n\r\n            if (!validateEmail(mail)) {\r\n                $(\'#id_orgemail\').a" +
+"ddClass(\'err-bor\');\r\n                errormsg += \"Invalid Email</br>\";\r\n        " +
+"    }\r\n\r\n\r\n\r\n            if (txt != \'\') {\r\n                $(\'#id_orgtext\').remo" +
+"veClass(\'err-bor\');\r\n\r\n            } else {\r\n                count++;\r\n         " +
+"       $(\'#id_orgtext\').addClass(\'err-bor\');\r\n\r\n            }\r\n            if (e" +
+"rroremail != \"\") {\r\n                errormsg += erroremail;\r\n\r\n            }\r\n  " +
+"          if (count > 0) {\r\n                errormsg += \"Fill the details</br>\";" +
+"\r\n            }\r\n            if (errormsg != \"\") {\r\n\r\n                $(\'#orgerr" +
+"or\').css(\'display\', \'block\');\r\n                $(\'#orgerror\').html(errormsg);\r\n " +
+"               return false;\r\n            }\r\n            else {\r\n               " +
+" var organiserid = $(\'#hdorganiserid\').val();\r\n                var eventid = $(\'" +
+"#hdEventid\').val();\r\n                var model = {\r\n                    \'email\':" +
+" mail,\r\n                    \'name\': name,\r\n                    \'mesasges\': txt,\r" +
+"\n                    \'organiserid\': organiserid,\r\n                    \'EventId\':" +
+" eventid\r\n\r\n                }\r\n                $.ajax({\r\n                    url" +
+": \'");
 
             
-            #line 372 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 360 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                      Write(Url.Action("saveorganizermsg", "CreateEvent"));
 
             
@@ -1064,7 +1082,7 @@ WriteLiteral(@"',
 
 
         });
-  
+
         ");
 
 WriteLiteral(@"
@@ -1103,6 +1121,43 @@ WriteLiteral("\r\n        ");
 WriteLiteral("\r\n\r\n        $(\'#twittershare\').click(function () {\r\n            var title = \'");
 
             
+            #line 433 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                    Write(Html.DisplayFor(m => m.Tilte).ToString().Trim());
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n            var description = \'");
+
+            
+            #line 434 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                          Write(Html.DisplayFor(m => m.description).ToString().Trim());
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n            var url = \'");
+
+            
+            #line 435 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                  Write(Html.DisplayFor(m => m.url).ToString().Trim());
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@"';
+
+
+            window.open('https://twitter.com/share?url=' + encodeURIComponent(url) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+            return false;
+
+        });
+
+        $('#linkshare').click(function () {
+
+            var title = '");
+
+            
             #line 445 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                     Write(Html.DisplayFor(m => m.Tilte).ToString().Trim());
 
@@ -1129,43 +1184,6 @@ WriteLiteral("\';\r\n            var url = \'");
             #line hidden
 WriteLiteral(@"';
 
-
-            window.open('https://twitter.com/share?url=' + encodeURIComponent(url) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-
-        });
-
-        $('#linkshare').click(function () {
-
-            var title = '");
-
-            
-            #line 457 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                    Write(Html.DisplayFor(m => m.Tilte).ToString().Trim());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\';\r\n            var description = \'");
-
-            
-            #line 458 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                          Write(Html.DisplayFor(m => m.description).ToString().Trim());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\';\r\n            var url = \'");
-
-            
-            #line 459 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                  Write(Html.DisplayFor(m => m.url).ToString().Trim());
-
-            
-            #line default
-            #line hidden
-WriteLiteral(@"';
-
             window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(url) + '&title=' + title + '&summary= ' + description + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
             //window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', '_self', resizable = yes, width = 626, height = 436);
             return false;
@@ -1173,14 +1191,12 @@ WriteLiteral(@"';
 
     });
 
-    function changesetting(id)
-    {
+    function changesetting(id) {
         var check = """";
 
         if ($('#' + id).is("":checked"") == true) {
             check = 'Y';
-        }else
-        {
+        } else {
             check = 'N';
 
 
@@ -1190,7 +1206,7 @@ WriteLiteral(@"';
             url: '");
 
             
-            #line 482 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 468 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
              Write(Url.Action("getlatestsetting", "TicketPayment"));
 
             
@@ -1232,7 +1248,7 @@ WriteLiteral("\',\r\n            data: { get: check },\r\n            type: \"Po
 "       var variable = fullDateReal;\r\n        $(\"#ioutlook\").attr(\"href\", \'");
 
             
-            #line 564 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 550 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                                 Write(Url.Action("Calendar", "CreateEvent",new {}));
 
             
@@ -1243,7 +1259,7 @@ WriteLiteral("\' + \'?beginDate=\' + isodatestart + \'&endDate=\' + isodateend +
 "(\"href\", \'");
 
             
-            #line 565 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 551 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                                  Write(Url.Action("Calendar", "CreateEvent",new {}));
 
             
@@ -1260,7 +1276,7 @@ WriteLiteral(@"' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&l
     $(document).prop('title', '");
 
             
-            #line 573 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 559 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                           Write(Model.Tilte);
 
             
@@ -1269,7 +1285,7 @@ WriteLiteral(@"' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&l
 WriteLiteral(",");
 
             
-            #line 573 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 559 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                                        Write(TempData["address"]);
 
             
@@ -1282,7 +1298,7 @@ WriteLiteral(" type=\"text/javascript\"");
 WriteLiteral(">\r\n\r\n\r\n    var fbappid = \'");
 
             
-            #line 580 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 566 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
               Write(System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]);
 
             
@@ -1291,13 +1307,13 @@ WriteLiteral(">\r\n\r\n\r\n    var fbappid = \'");
 WriteLiteral("\'\r\n");
 
             
-            #line 581 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 567 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 581 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 567 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
        string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
             
             #line default
@@ -1305,7 +1321,7 @@ WriteLiteral("\'\r\n");
 WriteLiteral("\r\n    var urlprefix = \'");
 
             
-            #line 582 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 568 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                 Write(strpr);
 
             
@@ -1340,20 +1356,20 @@ WriteLiteral(@"'
     $(document).ready(function () {
         $('.sharefb').click(function (e) {
             debugger;
-            globalFacebookShareObject.link ='");
+            globalFacebookShareObject.link = '");
 
             
-            #line 611 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                                        Write(Model.url);
+            #line 597 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                                         Write(Model.url);
 
             
             #line default
             #line hidden
-WriteLiteral("\';\r\n            globalFacebookShareObject.name =\'");
+WriteLiteral("\';\r\n            globalFacebookShareObject.name = \'");
 
             
-            #line 612 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                                        Write(Model.Tilte);
+            #line 598 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                                         Write(Model.Tilte);
 
             
             #line default
@@ -1373,7 +1389,8 @@ WriteLiteral(@"';
         });
     });
 
-</script>");
+</script>
+");
 
         }
     }
