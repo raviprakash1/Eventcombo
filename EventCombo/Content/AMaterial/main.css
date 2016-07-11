@@ -1311,3 +1311,25 @@ md-dialog {
 .clearfix {
   clear: both;
 }
+@media handheld, only screen and (max-width: 768px), only screen and (max-device-width: 768px) and (max-aspect-ratio: 13/9) {
+    .footer-left {
+        display: none;
+    }
+
+    .footer-right {
+        font-size: 3.2vw;
+        font-weight: 500;
+        width: 100vw;
+        text-align: center;
+        right: 0px !important;
+        bottom: 27px !important;
+    }
+}
+#site-content {
+    margin-left: 20px;
+}
+.grid {
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%;
+}
