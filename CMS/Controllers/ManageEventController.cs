@@ -122,10 +122,9 @@ namespace CMS.Controllers
                 ddlEventSubCategory = ddlEventSubCategory != null ? ddlEventSubCategory : "0";
                 ddlEventCategory = ddlEventCategory != null ? ddlEventCategory : "0";
                 Features = Features != null ? Features : "0";
-                Events = Events != null ? Events : "0";
+                Events = Events != null ? Events : "1";
                 Tickets = Tickets != null ? Tickets : "0";
                 var objlst = GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features, Events, Tickets,"M");
-
                 switch (sortorder)
                 {
                     case "sno":
@@ -563,20 +562,18 @@ namespace CMS.Controllers
                     TagEvents.Add(new SelectListItem()
                     {
                         Text = "Select",
-                        Value = "0",
-                        Selected = true
+                        Value = "0"
+                        
                     });
                     TagEvents.Add(new SelectListItem()
                     {
                         Text = "Upcoming Events",
-                        Value = "1",
-                        Selected = true
+                        Value = "1"
                     });
                     TagEvents.Add(new SelectListItem()
                     {
                         Text = "Expired Events",
-                        Value = "2",
-                        Selected = true
+                        Value = "2"
                     });
 
                     List<SelectListItem> Tickets = new List<SelectListItem>();
@@ -818,7 +815,8 @@ namespace CMS.Controllers
                         TagEvents.Add(new SelectListItem()
                         {
                             Text = "Upcoming Events",
-                            Value = "1"
+                            Value = "1",
+                            Selected = true
 
                         });
                     }
@@ -827,8 +825,7 @@ namespace CMS.Controllers
                         TagEvents.Add(new SelectListItem()
                         {
                             Text = "Upcoming Events",
-                            Value = "1",
-                            Selected = true
+                            Value = "1"
                         });
                     }
                     if (type == "E")

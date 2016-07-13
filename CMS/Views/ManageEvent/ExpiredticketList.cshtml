@@ -657,15 +657,12 @@
                 vValue = 3;
             else if (Feature == "Bronze")
                 vValue = 4;
-
-            //   alert(Feature + " " + EventId);
         });
 
         var pagef = parseInt('@TempData["PageNo"]') - 1;
         $('#ddlPageF').val(pagef);
         var Events='@TempData["Events"]' ;
         var Tickets = '@TempData["Tickets"]';
-        //alert(Tickets);
         $("#Events").val(Events);
         $("#Tickets").val(Tickets);
     });
