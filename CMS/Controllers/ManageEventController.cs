@@ -961,16 +961,30 @@ namespace CMS.Controllers
                        
                     if (type == "M")
                     {
-                        if (!string.IsNullOrEmpty(strsql))
+                        if (Convert.ToInt32(Events) > 0)
                         {
-                            objEv = db.V_EventsList.SqlQuery("Select * from V_EventsList EV where 1=1  " + strsql + " ").ToList<V_EventsList>();
+                            if (!string.IsNullOrEmpty(strsql))
+                            {
+                                objEv = db.V_EventsList.SqlQuery("Select * from V_EventsListUpcoming EV where 1=1  " + strsql + " ").ToList<V_EventsList>();
+                            }
+                            else
+                            {
+                                objEv = db.V_EventsList.SqlQuery("Select * from V_EventsListUpcoming ev").ToList<V_EventsList>();
+                            }
                         }
                         else
                         {
-                            objEv = db.V_EventsList.SqlQuery("Select *  from V_EventsList ev").ToList<V_EventsList>();
+                            if (!string.IsNullOrEmpty(strsql))
+                            {
+                                objEv = db.V_EventsList.SqlQuery("Select * from V_EventsList EV where 1=1  " + strsql + " ").ToList<V_EventsList>();
+                            }
+                            else
+                            {
+                                objEv = db.V_EventsList.SqlQuery("Select *  from V_EventsList ev").ToList<V_EventsList>();
+                            }
                         }
                     }
-                    else
+                    else 
                     {
                         if (!string.IsNullOrEmpty(strsql))
                         {
@@ -978,7 +992,7 @@ namespace CMS.Controllers
                         }
                         else
                         {
-                            objEv2 = db.V_EventsexpiredList.SqlQuery("Select * from [V_EventsexpiredList]  ").ToList<V_EventsexpiredList>();
+                            objEv2 = db.V_EventsexpiredList.SqlQuery("Select * from [V_EventsexpiredList]").ToList<V_EventsexpiredList>();
                         }
                     }
 
