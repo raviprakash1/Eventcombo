@@ -936,12 +936,9 @@ namespace CMS.Controllers
                         if (Convert.ToInt32(Events) == 1)
                         {
                             type = "M";
-
-                            //strsql += " And EV.E_Enddate > GETUTCDATE()";
                         }
                         if (Convert.ToInt32(Events) == 2)
                         {
-                            //strsql += " And EV.E_Enddate < GETUTCDATE()";
                             type = "E";
                         }
                     }
