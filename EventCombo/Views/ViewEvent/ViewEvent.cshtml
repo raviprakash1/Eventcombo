@@ -1,15 +1,27 @@
 ﻿@using EventCombo.Models
+@using EventCombo.Service
+@using System.Configuration
 @model ViewEvent
 @{
     ViewBag.Title = "ViewEvent";
+
+    ViewBag.Title = Model.Title + " | Eventcombo";
+    ViewBag.FBUrl = Request.Url.AbsoluteUri;
+    ViewBag.FBType = "article";
+    ViewBag.FBTitle = Model.Title;
+    ViewBag.FBDescription = HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Model.TopAddress), 200, 250, ".");
+
+    var allImages = (List<string>)ViewBag.Images;
+    var urlBuilder =
+      new System.UriBuilder(Request.Url.AbsoluteUri)
+      {
+        Path = Url.Content(allImages.Count > 0 ? "~" + allImages[0] : "~/Images/default_event_image.jpg"),
+        Query = null,
+      };
+    ViewBag.FBImage = urlBuilder.ToString();
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@*<script src="https://maps.googleapis.com/maps/api/js">
-</script>*@
 
-<meta property="og:type" content="article" />
-<meta property="og:title" content="@Html.Raw(Model.Title)" />
-@*<meta property="og:description" content="@Html.Raw(@Model.EventDescription)" />*@
 <style type="text/css">
     .ui-tooltip, .arrow:after {
         background: #fff;
@@ -26,25 +38,18 @@
     }
 </style>
 
+<meta property="fb:app_id" content="@(ConfigurationManager.AppSettings["FacebookAppId"])" />
 
 <div id="fb-root"></div>
 <script>
-
-
-    (function () {
-        var e = document.createElement('script');
-        e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
-        e.async = true;
-        document.getElementById('fb-root').appendChild(e);
-    }());
-
-(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1568511006716154";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=@(ConfigurationManager.AppSettings["FacebookAppId"])";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
 
 
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
@@ -321,10 +326,9 @@
                 {
                     <div class="col-sm-6 col-xs-6 text-right pl0 ev_social_share_btn  m480-h-titl-rit">
                         <a href="javascript:void(0)"><img src="/Images/mail.png"></a>
-                        <a href="javascript:void(0)" id="twittershare"><img src="/Images/twi.png"></a>
-                        <a href="javascript:void(0)" id="fbshare"><img src="/Images/fac.png"></a>
-
-                        <a href="javascript:void(0)" id="linkshare"><img src="/Images/lin.png"></a>
+                      <a href="javascript:void(0)" id="twittershare" onclick="TwitterShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img src="/Images/twi.png"></a>
+                      <a href="javascript:void(0)" id="fbshare" onclick="FacebookShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img src="/Images/fac.png"></a>
+                      <a href="javascript:void(0)" id="linkshare" onclick="LinkedInShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)', '@(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Html.Raw(Model.EventDescription).ToString()), 200, 250, ".").Replace("'", @"\'"))')"><img src="/Images/lin.png"></a>
                     </div>
 
                 }
@@ -1452,40 +1456,12 @@
             }
         });
 
-        //$('#fbshare').click(function () {
-        //    var title = $('#evtitle').html();
-        //    window.open('https://www.facebook.com/sharer.php?s=100&p[title]='+encodeURIComponent(title.trim())+'&p[url]=' + encodeURIComponent(location.href) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-        //    return false;
-        //});
 
-        $('#twittershare').click(function () {
-            var title = $('#evtitle').html();
-            window.open('https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-        });
-
-        $('#linkshare').click(function () {
-
-            var title = $('#evtitle').html();
-           
-            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            //window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', '_self', resizable = yes, width = 626, height = 436);
-            return false;
-        });
         $('#btndiverrsuc').click(function () {
             $('#diverroacc').css('display', 'none');
 
         });
         $("#spGTotal").text('');
-        //$(".TktdescDetl").css("display", "none");
-        //$(".TktmoreDesc").click(function () {
-        //    alert("chal bhai");
-        //    $(".TktdescDetl").slideToggle("fast");
-        //});
-        //$(".numericOnly").keypress(function (e) {
-        //    alert("test");
-        //    //if (String.fromCharCode(e.keyCode).match(/[^0-9]/g)) return false;
-        //});
 
         $("#btMesOk").click(function () {
             $("#dvTicketInfo").empty();
@@ -1692,52 +1668,22 @@
 
 <script type="text/javascript">
 
+  function FacebookShare(title, myhref) {
+    FB.ui({
+      method: 'share',
+      href: myhref,
+    }, function (response) { });
+    return false;
+  }
 
-    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
-    @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
-    var urlprefix = '@strpr'
+  function TwitterShare(title, href) {
+    window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(href) + '&via=Eventcombo&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+    return false;
+  }
 
-    window.fbAsyncInit = function () {
-        // init the FB JS SDK
-        FB.init({
-            appId: fbappid,                        // App ID from the app dashboard
-            status: true,                                 // Check Facebook Login status
-            xfbml: true                                  // Look for social plugins on the page
-        });
-
-    };
-
-    // Load the SDK asynchronously
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) { return; }
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/all.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-
-    var globalFacebookShareObject = { name: 'EventCombo', link: '' };
-
-
-
-    $(document).ready(function () {
-        $('#fbshare').click(function (e) {
-            debugger;
-            globalFacebookShareObject.link =location.href;
-            globalFacebookShareObject.name ='@Model.Title';
-            console.log(globalFacebookShareObject.link);
-            console.log(globalFacebookShareObject.name);
-
-            FB.ui({
-                method: 'feed',
-                name: globalFacebookShareObject.name,
-                link: globalFacebookShareObject.link
-            }, function (response) {
-                if (response && response.post_id) { }
-                else { }
-            });
-        });
-    });
+  function LinkedInShare(title, href, summary) {
+    window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(href) + '&title=' + title + '&summary=' + summary + '&source=EventCombo', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
+    return false;
+  }
 
 </script>
