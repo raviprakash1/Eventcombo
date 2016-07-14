@@ -5,44 +5,25 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-
-
-
-
 CREATE VIEW [dbo].[V_EventsListUpcoming]
 AS
-SELECT    ROW_NUMBER() Over (Order by EventVenue.E_Startdate) As Sno,  Event.EventTitle, Event.UserID,  Event.EventID,EventCategory.EventCategoryID, EventCategory.EventCategory,EventType.EventTypeID, EventType.EventType,(select EventSubCategory.EventSubCategoryID from EventSubCategory where EventSubCategory.EventSubCategoryID=Event.EventSubCategoryID and EventSubCategory.EventCategoryID=EventCategory.EventCategoryID) as EventSubCategoryID,(select EventSubCategory.EventSubCategory from EventSubCategory where EventSubCategory.EventSubCategoryID=Event.EventSubCategoryID and EventSubCategory.EventCategoryID=EventCategory.EventCategoryID) as EventSubCategory,
-EventVenue.EventStartDate as StartingFrom,EventVenue.EventStartTime,EventVenue.EventEndDate,EventVenue.EventEndTime,
-EventVenue.E_Enddate,EventVenue.E_Startdate,ISNULL(Organizer_Master.Orgnizer_Name,Profile.FirstName) AS Orgnizer_Name,
-ISNULL(Organizer_Master.Organizer_Email,Profile.Email) as Email,isnull(Event.Feature,0) as Feature,
-Address.ConsolidateAddress as EventAddress,Address.VenueName,
-(SELECT   convert(varchar,isnull( sum(TQD_Remaining_Quantity),0)) 
-   
-FROM Ticket_Quantity_Detail
-where TQD_Event_Id=Event.EventID ) as TicketDetail,
-
-isnull((Select convert(varchar,isnull(sum(TPD_Purchased_Qty),0)) from Ticket_Purchased_Detail  where TPD_Event_Id=Event.EventID),0) as Purchasedqty,
-convert(varchar(24),cast(EventVenue.EventStartDate as datetime) + cast(EventVenue.EventStartTime as datetime),	100) + '-' +
-		convert(varchar(24),cast(EventVenue.EventEndDate as datetime) + cast(EventVenue.EventEndTime as datetime),	100) as EventTiming
-
-
-
-FROM dbo.Event INNER JOIN
-                         dbo.EventCategory ON dbo.Event.EventCategoryID = dbo.EventCategory.EventCategoryID INNER JOIN
-                         dbo.EventType ON dbo.Event.EventTypeID = dbo.EventType.EventTypeID 
-						 LEFT JOIN EventVenue ON Event.EventID=EventVenue.EventID left join Profile on Event.UserID=Profile.UserID
-						 left join Event_Orgnizer_Detail on Event.EventID=Event_Orgnizer_Detail.Orgnizer_Event_Id inner join Organizer_Master on 
-						 Event_Orgnizer_Detail.OrganizerMaster_Id=Organizer_Master.Orgnizer_Id left join Address on Event.EventID=Address.EventId
-						
-						where EventVenue.E_Enddate>=GETUTCDATE() 
-
-
-
-
-
-
-
-
+	SELECT ROW_NUMBER() OVER (ORDER BY EventVenue.E_Startdate) AS Sno,[Event].EventTitle, [Event].UserID,[Event].EventID,EventCategory.EventCategoryID, EventCategory.EventCategory,EventType.EventTypeID, EventType.EventType,
+		(SELECT EventSubCategory.EventSubCategoryID FROM EventSubCategory WHERE EventSubCategory.EventSubCategoryID=[Event].EventSubCategoryID AND EventSubCategory.EventCategoryID=EventCategory.EventCategoryID) AS EventSubCategoryID,
+		(SELECT EventSubCategory.EventSubCategory FROM EventSubCategory WHERE EventSubCategory.EventSubCategoryID=[Event].EventSubCategoryID AND EventSubCategory.EventCategoryID=EventCategory.EventCategoryID) AS EventSubCategory,
+		EventVenue.EventStartDate AS StartingFrom,EventVenue.EventStartTime,EventVenue.EventEndDate,EventVenue.EventEndTime,
+		EventVenue.E_Enddate,EventVenue.E_Startdate,ISNULL(Organizer_Master.Orgnizer_Name,[Profile].FirstName) AS Orgnizer_Name,
+		ISNULL(Organizer_Master.Organizer_Email,[Profile].Email) AS Email,ISNULL([Event].Feature,0) AS Feature,
+		[Address].ConsolidateAddress AS EventAddress,[Address].VenueName,
+		(SELECT CONVERT(VARCHAR,ISNULL(SUM(TQD_Remaining_Quantity),0)) FROM Ticket_Quantity_Detail WHERE TQD_Event_Id=[Event].EventID) AS TicketDetail,
+		ISNULL((SELECT CONVERT(VARCHAR,ISNULL(SUM(TPD_Purchased_Qty),0)) FROM Ticket_Purchased_Detail WHERE TPD_Event_Id=[Event].EventID),0) AS Purchasedqty,
+		CONVERT(VARCHAR(24),CAST(EventVenue.EventStartDate AS DATETIME) + CAST(EventVenue.EventStartTime AS DATETIME),	100) + '-' +
+		CONVERT(VARCHAR(24),CAST(EventVenue.EventEndDate AS DATETIME) + CAST(EventVenue.EventEndTime AS DATETIME),100) AS EventTiming
+	FROM dbo.[Event] INNER JOIN dbo.EventCategory ON dbo.[Event].EventCategoryID = dbo.EventCategory.EventCategoryID INNER JOIN
+		dbo.EventType ON dbo.[Event].EventTypeID = dbo.EventType.EventTypeID LEFT JOIN EventVenue ON [Event].EventID=EventVenue.EventID 
+		LEFT JOIN [Profile] ON [Event].UserID=[Profile].UserID
+		LEFT JOIN Event_Orgnizer_Detail ON [Event].EventID=Event_Orgnizer_Detail.Orgnizer_Event_Id INNER JOIN Organizer_Master ON 
+		Event_Orgnizer_Detail.OrganizerMaster_Id=Organizer_Master.Orgnizer_Id LEFT JOIN [Address] ON [Event].EventID=[Address].EventId
+	WHERE EventVenue.E_Enddate>=GETUTCDATE() 
 
 GO
 
