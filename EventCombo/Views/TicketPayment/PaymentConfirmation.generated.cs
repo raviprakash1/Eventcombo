@@ -1113,82 +1113,6 @@ WriteLiteral(@"
             $("".TmezoneSet"").hide();
 
         });
-
-        ");
-
-WriteLiteral("\r\n        ");
-
-WriteLiteral("\r\n\r\n        $(\'#twittershare\').click(function () {\r\n            var title = \'");
-
-            
-            #line 433 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                    Write(Html.DisplayFor(m => m.Tilte).ToString().Trim());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\';\r\n            var description = \'");
-
-            
-            #line 434 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                          Write(Html.DisplayFor(m => m.description).ToString().Trim());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\';\r\n            var url = \'");
-
-            
-            #line 435 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                  Write(Html.DisplayFor(m => m.url).ToString().Trim());
-
-            
-            #line default
-            #line hidden
-WriteLiteral(@"';
-
-
-            window.open('https://twitter.com/share?url=' + encodeURIComponent(url) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-
-        });
-
-        $('#linkshare').click(function () {
-
-            var title = '");
-
-            
-            #line 445 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                    Write(Html.DisplayFor(m => m.Tilte).ToString().Trim());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\';\r\n            var description = \'");
-
-            
-            #line 446 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                          Write(Html.DisplayFor(m => m.description).ToString().Trim());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\';\r\n            var url = \'");
-
-            
-            #line 447 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                  Write(Html.DisplayFor(m => m.url).ToString().Trim());
-
-            
-            #line default
-            #line hidden
-WriteLiteral(@"';
-
-            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(url) + '&title=' + title + '&summary= ' + description + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            //window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', '_self', resizable = yes, width = 626, height = 436);
-            return false;
-        });
-
     });
 
     function changesetting(id) {
@@ -1206,7 +1130,7 @@ WriteLiteral(@"';
             url: '");
 
             
-            #line 468 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 430 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
              Write(Url.Action("getlatestsetting", "TicketPayment"));
 
             
@@ -1248,7 +1172,7 @@ WriteLiteral("\',\r\n            data: { get: check },\r\n            type: \"Po
 "       var variable = fullDateReal;\r\n        $(\"#ioutlook\").attr(\"href\", \'");
 
             
-            #line 550 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 512 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                                 Write(Url.Action("Calendar", "CreateEvent",new {}));
 
             
@@ -1259,7 +1183,7 @@ WriteLiteral("\' + \'?beginDate=\' + isodatestart + \'&endDate=\' + isodateend +
 "(\"href\", \'");
 
             
-            #line 551 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 513 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                                  Write(Url.Action("Calendar", "CreateEvent",new {}));
 
             
@@ -1276,7 +1200,7 @@ WriteLiteral(@"' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&l
     $(document).prop('title', '");
 
             
-            #line 559 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 521 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                           Write(Model.Tilte);
 
             
@@ -1285,7 +1209,7 @@ WriteLiteral(@"' + '?beginDate=' + isodatestart + '&endDate=' + isodateend + '&l
 WriteLiteral(",");
 
             
-            #line 559 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            #line 521 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
                                        Write(TempData["address"]);
 
             
@@ -1295,11 +1219,11 @@ WriteLiteral("  | Eventcombo\');\r\n</script>\r\n\r\n\r\n<script");
 
 WriteLiteral(" type=\"text/javascript\"");
 
-WriteLiteral(">\r\n\r\n\r\n    var fbappid = \'");
+WriteLiteral(">\r\n  var fbappid = \'");
 
             
-            #line 566 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-              Write(System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]);
+            #line 526 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            Write(System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]);
 
             
             #line default
@@ -1307,90 +1231,117 @@ WriteLiteral(">\r\n\r\n\r\n    var fbappid = \'");
 WriteLiteral("\'\r\n");
 
             
-            #line 567 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-    
+            #line 527 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+  
             
             #line default
             #line hidden
             
-            #line 567 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-       string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+            #line 527 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+     string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
             
             #line default
             #line hidden
-WriteLiteral("\r\n    var urlprefix = \'");
+WriteLiteral("\r\n  var urlprefix = \'");
 
             
-            #line 568 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                Write(strpr);
+            #line 528 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+              Write(strpr);
 
             
             #line default
             #line hidden
 WriteLiteral(@"'
 
-    window.fbAsyncInit = function () {
-        // init the FB JS SDK
-        FB.init({
-            appId: fbappid,                        // App ID from the app dashboard
-            status: true,                                 // Check Facebook Login status
-            xfbml: true                                  // Look for social plugins on the page
-        });
-
-    };
-
-    // Load the SDK asynchronously
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) { return; }
-        js = d.createElement(s); js.id = id;
-        js.src = ""//connect.facebook.net/en_US/all.js"";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-
-    var globalFacebookShareObject = { name: 'EventCombo', link: '' };
-
-
-
-    $(document).ready(function () {
-        $('.sharefb').click(function (e) {
-            debugger;
-            globalFacebookShareObject.link = '");
-
-            
-            #line 597 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                                         Write(Model.url);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\';\r\n            globalFacebookShareObject.name = \'");
-
-            
-            #line 598 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
-                                         Write(Model.Tilte);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(@"';
-            console.log(globalFacebookShareObject.link);
-            console.log(globalFacebookShareObject.name);
-
-            FB.ui({
-                method: 'feed',
-                name: globalFacebookShareObject.name,
-                link: globalFacebookShareObject.link
-            }, function (response) {
-                if (response && response.post_id) { }
-                else { }
-            });
-        });
+  window.fbAsyncInit = function () {
+    // init the FB JS SDK
+    FB.init({
+      appId: fbappid,                        // App ID from the app dashboard
+      status: true,                          // Check Facebook Login status
+      xfbml: true,                           // Look for social plugins on the page
+      version: '2.7'
     });
 
-</script>
-");
+  };
+
+  // Load the SDK asynchronously
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = ""//connect.facebook.net/en_US/all.js"";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <script");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 23095), Tuple.Create("\"", 23125)
+, Tuple.Create(Tuple.Create("", 23101), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/socialshare.js")
+, 23101), false)
+);
+
+WriteLiteral("></script>\r\n  <script");
+
+WriteLiteral(" type=\"text/javascript\"");
+
+WriteLiteral(">\r\n\r\n  $(document).ready(function () {\r\n    $(\'#twittershare\').click(function () " +
+"{\r\n      var title = \'");
+
+            
+            #line 555 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+              Write(Html.DisplayFor(m => m.Tilte).ToString().Trim());
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n      var url = \'");
+
+            
+            #line 556 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            Write(Html.DisplayFor(m => m.url).ToString().Trim());
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n      return TwitterShare(title, urlprefix + url);\r\n    });\r\n\r\n    $(\'#linksh" +
+"are\').click(function () {\r\n      var title = \'");
+
+            
+            #line 561 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+              Write(Html.DisplayFor(m => m.Tilte).ToString().Trim());
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n      var description = \'");
+
+            
+            #line 562 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+                    Write(Html.DisplayFor(m => m.description).ToString().Trim());
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n      var url = \'");
+
+            
+            #line 563 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            Write(Html.DisplayFor(m => m.url).ToString().Trim());
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n      return LinkedInShare(title, urlprefix + url, description);\r\n    });\r\n\r\n" +
+"    $(\'.sharefb\').click(function (e) {\r\n      var url = \'");
+
+            
+            #line 568 "..\..\Views\TicketPayment\PaymentConfirmation.cshtml"
+            Write(Html.DisplayFor(m => m.url).ToString().Trim());
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n      return FacebookShare(urlprefix + url)\r\n    });\r\n  });\r\n</script>\r\n");
 
         }
     }

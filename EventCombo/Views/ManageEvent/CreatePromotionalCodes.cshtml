@@ -470,42 +470,49 @@ else
     });
 </script> 
 
-<script>
+<script type="text/javascript">
+  var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
+  @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
+  var urlprefix = '@strpr'
 
-    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
-  window.fbAsyncInit = function() {
+  window.fbAsyncInit = function () {
     // init the FB JS SDK
     FB.init({
-        appId: fbappid,                        // App ID from the app dashboard
-      status     : true,                                 // Check Facebook Login status
-      xfbml      : true                                  // Look for social plugins on the page
+      appId: fbappid,                        // App ID from the app dashboard
+      status: true,                          // Check Facebook Login status
+      xfbml: true,                           // Look for social plugins on the page
+      version: '2.7'
     });
-  
+
   };
 
   // Load the SDK asynchronously
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/all.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-  var globalFacebookShareObject = { name: 'share', link :'@Model.PC_URL'};
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+<script src="~/Scripts/socialshare.js"></script>
 
+
+<script type="text/javascript">
+
+  $(document).ready(function () {
+    $('#twitshare').click(function () {
+      return TwitterShare("", "@Model.PC_URL");
+    });
 
     function shareOnFacebook() {
-       
-      FB.ui({
-          method: 'feed',
-          name: globalFacebookShareObject.name,
-          link: globalFacebookShareObject.link
-          
-      }, function (response) {
-          if (response && response.post_id) { }
-          else { }
-      });
-  }
+      return FacebookShare('@Model.PC_URL')
+    }
+  });
+</script>
+
+<script>
+
 
 </script>
 
@@ -559,14 +566,6 @@ else
                 $('#btnokpop').click(function () {
 
                     window.location.href = '@Url.Action("PromotionalCodes", "ManageEvent", new {Eventlid = ValidationMessageController.GetParentEventId(@Model.PC_Eventid) })';
-
-                });
-                $('#twitshare').click(function () {
-
-                    var url = "@Model.PC_URL";
-
-                    window.open('https://twitter.com/share?url=' + encodeURIComponent(url) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-                    return false;
 
                 });
                 $(document).ready(function () {

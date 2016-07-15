@@ -1258,60 +1258,43 @@
 </script>
 
 <script type="text/javascript">
+  var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
+  @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
+  var urlprefix = '@strpr'
 
-    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
-    @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
-    var urlprefix = '@strpr'
-
-    window.fbAsyncInit = function () {
-        // init the FB JS SDK
-        FB.init({
-            appId: fbappid,                        // App ID from the app dashboard
-            status: true,                                 // Check Facebook Login status
-            xfbml: true                                  // Look for social plugins on the page
-        });
-
-    };
-
-    // Load the SDK asynchronously
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) { return; }
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/all.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-
-    var globalFacebookShareObject = { name: 'EventCombo', link: '' };
-
-
-
-    $(document).ready(function () {
-        $('#twittershare').click(function () {
-
-            var urlprefix = '@strpr'
-            var vUrl = urlprefix + $("#txtEventUrl").val();
-            window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(vUrl) + '&via=Eventcombo&related=twitterapi%2Ctwitter&text=' + $("#txtEventTitle").val(), 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-        });
-
-        $('#linkshare').click(function () {
-            var urlprefix = '@strpr'
-            var vUrl = urlprefix + $("#txtEventUrl").val();
-            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(vUrl) + '&title=' + $("#txtEventTitle").val() + '&summary=' + $("#txtEventInfo").val() + '&source=EventCombo', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-        });
-
-        $('#fbshare').click(function (e) {
-
-            globalFacebookShareObject.link = urlprefix + $("#txtEventUrl").val();
-            globalFacebookShareObject.name = $("#txtEventTitle").val();
-
-            FB.ui({
-                method: 'feed',
-                link: globalFacebookShareObject.link
-            }, function (response) {});
-        });
+  window.fbAsyncInit = function () {
+    // init the FB JS SDK
+    FB.init({
+      appId: fbappid,                        // App ID from the app dashboard
+      status: true,                          // Check Facebook Login status
+      xfbml: true,                           // Look for social plugins on the page
+      version: '2.7'
     });
+
+  };
+
+  // Load the SDK asynchronously
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+<script src="~/Scripts/socialshare.js"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#twittershare').click(function () {
+      return TwitterShare($("#txtEventTitle").val(), urlprefix + $("#txtEventUrl").val());
+    });
+
+    $('#linkshare').click(function () {
+      return LinkedInShare($("#txtEventTitle").val(), urlprefix + $("#txtEventUrl").val(), $("#txtEventInfo").val());
+    });
+
+    $('#fbshare').click(function (e) {
+      return FacebookShare(urlprefix + $("#txtEventUrl").val())
+    });
+  });
 </script>

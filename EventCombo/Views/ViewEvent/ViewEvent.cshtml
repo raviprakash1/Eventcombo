@@ -41,12 +41,28 @@
 <meta property="fb:app_id" content="@(ConfigurationManager.AppSettings["FacebookAppId"])" />
 
 <div id="fb-root"></div>
-<script>
+<script type="text/javascript">
+  var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
+  @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
+  var urlprefix = '@strpr'
+
+  window.fbAsyncInit = function () {
+    // init the FB JS SDK
+    FB.init({
+      appId: fbappid,                        // App ID from the app dashboard
+      status: true,                          // Check Facebook Login status
+      xfbml: true,                           // Look for social plugins on the page
+      version: '2.7'
+    });
+
+  };
+
+  // Load the SDK asynchronously
   (function (d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
+    if (d.getElementById(id)) { return; }
     js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=@(ConfigurationManager.AppSettings["FacebookAppId"])";
+    js.src = "//connect.facebook.net/en_US/all.js";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
 </script>
@@ -327,7 +343,7 @@
                     <div class="col-sm-6 col-xs-6 text-right pl0 ev_social_share_btn  m480-h-titl-rit">
                         <a href="javascript:void(0)"><img src="/Images/mail.png"></a>
                       <a href="javascript:void(0)" id="twittershare" onclick="TwitterShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img src="/Images/twi.png"></a>
-                      <a href="javascript:void(0)" id="fbshare" onclick="FacebookShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img src="/Images/fac.png"></a>
+                      <a href="javascript:void(0)" id="fbshare" onclick="FacebookShare('@(Request.Url.AbsoluteUri)')"><img src="/Images/fac.png"></a>
                       <a href="javascript:void(0)" id="linkshare" onclick="LinkedInShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)', '@(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Html.Raw(Model.EventDescription).ToString()), 200, 250, ".").Replace("'", @"\'"))')"><img src="/Images/lin.png"></a>
                     </div>
 
@@ -1666,24 +1682,5 @@
     $(document).prop('title', '@Model.Title, @Model.TopAddress | Eventcombo');
 </script>
 
-<script type="text/javascript">
+<script src="~/Scripts/socialshare.js"></script>
 
-  function FacebookShare(title, myhref) {
-    FB.ui({
-      method: 'share',
-      href: myhref,
-    }, function (response) { });
-    return false;
-  }
-
-  function TwitterShare(title, href) {
-    window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(href) + '&via=Eventcombo&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-    return false;
-  }
-
-  function LinkedInShare(title, href, summary) {
-    window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(href) + '&title=' + title + '&summary=' + summary + '&source=EventCombo', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-    return false;
-  }
-
-</script>

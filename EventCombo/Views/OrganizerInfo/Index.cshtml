@@ -4,8 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <meta property="og:type" content="article" />
-<meta property="og:title" content='' />
-<meta property="og:description" content='' />
+<meta property="og:title" content='@Model.Orgnizer_Name' />
+<meta property="og:description" content='@Html.Raw(Model.Organizer_Desc)' />
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 
 <div class="event_container ">
@@ -459,37 +459,48 @@ else
 
         });
 
-        $('#fbshare').click(function () {
-
-
-
-            window.open('https://www.facebook.com/sharer.php?s=100&&p[url]=' + encodeURIComponent(location.href) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-
-
-
-        });
-
-        $('#twittershare').click(function () {
-
-
-
-            window.open('https://twitter.com/share?url=' + encodeURIComponent(location.href) + '&via=twitterdev&related=twitterapi%2Ctwitter', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-
-        });
-
-        $('#linkshare').click(function () {
-
-
-
-            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            //window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', '_self', resizable = yes, width = 626, height = 436);
-            return false;
-        });
-
-
     });
 
+</script>
+<script type="text/javascript">
+  var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
+  @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
+  var urlprefix = '@strpr'
+
+  window.fbAsyncInit = function () {
+    // init the FB JS SDK
+    FB.init({
+      appId: fbappid,                        // App ID from the app dashboard
+      status: true,                          // Check Facebook Login status
+      xfbml: true,                           // Look for social plugins on the page
+      version: '2.7'
+    });
+
+  };
+
+  // Load the SDK asynchronously
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+<script src="~/Scripts/socialshare.js"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#twittershare').click(function () {
+      return TwitterShare('', location.href);
+    });
+
+    $('#linkshare').click(function () {
+      return LinkedInShare('', location.href, '');
+    });
+
+    $('#fbshare').click(function (e) {
+      return FacebookShare(location.href)
+    });
+  });
 </script>
 

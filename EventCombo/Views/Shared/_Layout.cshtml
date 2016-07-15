@@ -9,13 +9,19 @@
   <meta name="google-site-verification" content="AVZo78i_QGE67vJiD4QYO1HGWeTACG5zleYqEh-i6KI" />
   @RenderSection("SeoMeta", false)
   @if (ViewBag.FBUrl != null)
-    {
+  {
     <meta property="og:url" content="@ViewBag.FBUrl" />
     <meta property="og:type" content="@ViewBag.FBType" />
     <meta property="og:title" content="@ViewBag.FBTitle" />
     <meta property="og:description" content="@ViewBag.FBDescription" />
     <meta property="og:image" content="@ViewBag.FBImage" />
-    }
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@("@Eventcombo")">
+    <meta name="twitter:title" content="@ViewBag.FBTitle">
+    <meta name="twitter:description" content="@ViewBag.FBDescription">
+    <meta name="twitter:image" content="@ViewBag.FBImage">
+  }
      <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
     <link href="~/Images/FabIcon/ios-57x57.png" rel="apple-touch-icon" />
     <link href="~/Images/FabIcon/ios-76x76.png" rel="apple-touch-icon" sizes="76x76" />

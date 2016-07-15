@@ -3275,11 +3275,11 @@ WriteLiteral("\';\r\n            var vLat = place.geometry.location.lat();\r\n  
 
 WriteLiteral(" type=\"text/javascript\"");
 
-WriteLiteral(">\r\n\r\n    var fbappid = \'");
+WriteLiteral(">\r\n  var fbappid = \'");
 
             
-            #line 1262 "..\..\Views\Home\DiscoverEvents.cshtml"
-              Write(System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]);
+            #line 1261 "..\..\Views\Home\DiscoverEvents.cshtml"
+            Write(System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]);
 
             
             #line default
@@ -3287,97 +3287,73 @@ WriteLiteral(">\r\n\r\n    var fbappid = \'");
 WriteLiteral("\'\r\n");
 
             
+            #line 1262 "..\..\Views\Home\DiscoverEvents.cshtml"
+  
+            
+            #line default
+            #line hidden
+            
+            #line 1262 "..\..\Views\Home\DiscoverEvents.cshtml"
+     string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n  var urlprefix = \'");
+
+            
             #line 1263 "..\..\Views\Home\DiscoverEvents.cshtml"
-    
-            
-            #line default
-            #line hidden
-            
-            #line 1263 "..\..\Views\Home\DiscoverEvents.cshtml"
-       string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n    var urlprefix = \'");
-
-            
-            #line 1264 "..\..\Views\Home\DiscoverEvents.cshtml"
-                Write(strpr);
+              Write(strpr);
 
             
             #line default
             #line hidden
 WriteLiteral(@"'
 
-    window.fbAsyncInit = function () {
-        // init the FB JS SDK
-        FB.init({
-            appId: fbappid,                        // App ID from the app dashboard
-            status: true,                                 // Check Facebook Login status
-            xfbml: true                                  // Look for social plugins on the page
-        });
-
-    };
-
-    // Load the SDK asynchronously
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) { return; }
-        js = d.createElement(s); js.id = id;
-        js.src = ""//connect.facebook.net/en_US/all.js"";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-
-    var globalFacebookShareObject = { name: 'EventCombo', link: '' };
-
-
-
-    $(document).ready(function () {
-        $('#twittershare').click(function () {
-
-            var urlprefix = '");
-
-            
-            #line 1293 "..\..\Views\Home\DiscoverEvents.cshtml"
-                        Write(strpr);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(@"'
-            var vUrl = urlprefix + $(""#txtEventUrl"").val();
-            window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(vUrl) + '&via=Eventcombo&related=twitterapi%2Ctwitter&text=' + $(""#txtEventTitle"").val(), 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-        });
-
-        $('#linkshare').click(function () {
-            var urlprefix = '");
-
-            
-            #line 1300 "..\..\Views\Home\DiscoverEvents.cshtml"
-                        Write(strpr);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(@"'
-            var vUrl = urlprefix + $(""#txtEventUrl"").val();
-            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(vUrl) + '&title=' + $(""#txtEventTitle"").val() + '&summary=' + $(""#txtEventInfo"").val() + '&source=EventCombo', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-        });
-
-        $('#fbshare').click(function (e) {
-
-            globalFacebookShareObject.link = urlprefix + $(""#txtEventUrl"").val();
-            globalFacebookShareObject.name = $(""#txtEventTitle"").val();
-
-            FB.ui({
-                method: 'feed',
-                link: globalFacebookShareObject.link
-            }, function (response) {});
-        });
+  window.fbAsyncInit = function () {
+    // init the FB JS SDK
+    FB.init({
+      appId: fbappid,                        // App ID from the app dashboard
+      status: true,                          // Check Facebook Login status
+      xfbml: true,                           // Look for social plugins on the page
+      version: '2.7'
     });
+
+  };
+
+  // Load the SDK asynchronously
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = ""//connect.facebook.net/en_US/all.js"";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+<script");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 63769), Tuple.Create("\"", 63799)
+, Tuple.Create(Tuple.Create("", 63775), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/socialshare.js")
+, 63775), false)
+);
+
+WriteLiteral("></script>\r\n<script");
+
+WriteLiteral(" type=\"text/javascript\"");
+
+WriteLiteral(@">
+  $(document).ready(function () {
+    $('#twittershare').click(function () {
+      return TwitterShare($(""#txtEventTitle"").val(), urlprefix + $(""#txtEventUrl"").val());
+    });
+
+    $('#linkshare').click(function () {
+      return LinkedInShare($(""#txtEventTitle"").val(), urlprefix + $(""#txtEventUrl"").val(), $(""#txtEventInfo"").val());
+    });
+
+    $('#fbshare').click(function (e) {
+      return FacebookShare(urlprefix + $(""#txtEventUrl"").val())
+    });
+  });
 </script>");
 
         }
