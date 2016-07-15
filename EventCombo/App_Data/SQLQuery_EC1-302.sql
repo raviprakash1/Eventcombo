@@ -1,6 +1,6 @@
 UPDATE BusinessPage 
 SET PageContent='<div class="servererrorcode">500</div>
-  <div class="servererrormessage">Oops! Looks like we rocked a too hard and broke somehitng...<br>
+  <div class="servererrormessage">Oops! Looks like we rocked a too hard and broke something...<br>
     <p>Please try the <a href="/">homepage</a></p>
   </div>
 <style>
