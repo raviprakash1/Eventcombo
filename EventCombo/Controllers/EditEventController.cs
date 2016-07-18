@@ -2318,7 +2318,14 @@ namespace EventCombo.Controllers
                                             bodyn = bodyn.Replace("¶¶EventOrganiserNumber¶¶", Organiserphn);
 
                                         }
+                                        if (EmailTag[i].Tag_Name == "DiscoverEventurl")
+                                        {
+                                            var url = Request.Url;
+                                            var baseurl = url.GetLeftPart(UriPartial.Authority);
+                                            string strUrl = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(model.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(lEventId).ToString() });
+                                            bodyn = bodyn.Replace("¶¶DiscoverEventurl¶¶", strUrl);
 
+                                        }
                                     }
 
                                 }
