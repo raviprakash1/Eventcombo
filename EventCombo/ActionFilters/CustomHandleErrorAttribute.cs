@@ -25,7 +25,7 @@ namespace EventCombo.ActionFilters
                 return;
             }
 
-            logger.Trace(filterContext.Exception, "Exception occured.");
+            logger.Error(filterContext.Exception, "Exception occured.");
         }
     }
 }
