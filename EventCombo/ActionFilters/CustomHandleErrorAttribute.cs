@@ -11,6 +11,8 @@ namespace EventCombo.ActionFilters
 { 
     public class CustomHandleErrorAttribute : IExceptionFilter
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         public void OnException(ExceptionContext filterContext)
         {
             if (filterContext == null)
@@ -22,11 +24,8 @@ namespace EventCombo.ActionFilters
             {
                 return;
             }
-            Email.SendErrorReport(
-                "email_error",
-                filterContext.HttpContext.Request.UrlReferrer == null ? "" : filterContext.HttpContext.Request.UrlReferrer.AbsoluteUri,
-                filterContext.HttpContext.Request.Url.AbsoluteUri,
-                filterContext.Exception.Message);
+
+            logger.Trace(filterContext.Exception, "Exception occured.");
         }
     }
 }
