@@ -264,6 +264,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\HangfirePreload.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -617,6 +618,7 @@
     <Compile Include="Services\LastLoginStatus.cs" />
     <Compile Include="Services\TicketEmailer.cs" />
     <Compile Include="Service\ArticleService.cs" />
+    <Compile Include="Service\HangfireBootstrapper.cs" />
     <Compile Include="Service\HtmlProcessing.cs" />
     <Compile Include="Service\IArticleService.cs" />
     <Compile Include="Service\DBAccessService.cs" />
