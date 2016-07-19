@@ -12,7 +12,9 @@ namespace EventCombo.Service
 
     public static string StripTagsRegex(string source)
     {
-      return _htmlRegex.Replace(source, string.Empty);
+        
+        return _htmlRegex.Replace(source, string.Empty);
+        
     }
 
     public static string GetShortString(string source, int minLength, int maxLength, string delimiter)

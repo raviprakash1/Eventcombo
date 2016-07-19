@@ -1,0 +1,72 @@
+-----------Exception Details on  7/19/2016 12:26:56 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 7/19/2016 12:26:56 PM
+
+Error Line No : ne 3740
+
+Error Message: EntityCommandCompilationException
+
+Exception Type: System.Data.Entity.Core.EntityCommandCompilationException
+
+Error Location : An error occurred while preparing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  7/19/2016 12:27:03 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 7/19/2016 12:27:03 PM
+
+Error Line No : ne 3740
+
+Error Message: EntityCommandCompilationException
+
+Exception Type: System.Data.Entity.Core.EntityCommandCompilationException
+
+Error Location : An error occurred while preparing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  7/19/2016 12:42:29 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 7/19/2016 12:42:29 PM
+
+Error Line No : ne 3740
+
+Error Message: EntityCommandCompilationException
+
+Exception Type: System.Data.Entity.Core.EntityCommandCompilationException
+
+Error Location : An error occurred while preparing the command definition. See the inner exception for details.
+
+ Error Page Url: http://localhost:10159/editevent/draftmodemodification
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
