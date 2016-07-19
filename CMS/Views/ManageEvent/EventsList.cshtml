@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<CMS.Models.V_EventsList>
+﻿@model PagedList.IPagedList<CMS.Models.EventList>
 @using PagedList.Mvc;
 @using CMS.Models;
 @{
@@ -233,13 +233,13 @@
                                                     i = i + 1;
                                                     <tr>
                                                         <td>@obj.Sno</td>
-                                                        <td  class="tit-evnt-width"><a target="_blank" href="http://@host/ViewEvent/ViewEvent?strEventDs=@obj.EventTitle.Trim().Replace(" ", "-")&strEventId=@obj.EventID">@obj.EventTitle</a></td>
+                                                        @*<td class="tit-evnt-width"><a target="_blank" href="http://@host/ViewEvent/ViewEvent?strEventDs=@obj.EventTitle.Trim().Replace(" ", "-")&strEventId=@obj.EventID">@obj.EventTitle</a></td>*@
+                                                        <td class="tit-evnt-width"><a target="_blank" href="http://@host/e/@obj.EventTitle.Trim().Replace(" ", "-")-@obj.EventID">@obj.EventTitle</a></td>
                                                         <td>@obj.EventType</td>
                                                         <td>@obj.EventCategory-@obj.EventSubCategory</td>
                                                         <td>@obj.EventTiming</td>
                                                         <td style="table-layout: fixed; word-break: break-all;">
                                                             @obj.Orgnizer_Name  &
-
                                                             <a href="mailto:@obj.Email">@obj.Email</a>
                                                         </td>
                                                         <td>@obj.EventAddress</td>
@@ -464,14 +464,15 @@
         var Features = $("#Features").val();
         var Events = $("#Events").val();
         var Tickets = $("#Tickets").val();
-        var PageF = value;
+      
+         var PageF = parseInt(value) + 1;
         var sortorder = "@TempData["sortorder"]";
         //console.log($(this).val());
         //$("#ulpage li").removeClass('active');
         //$('#ulpage li a[data-page=' + value + ']').click();
         //console.log($('#ulpage li a[data-page=' + value + ']').parent().addClass('active'));
         //console.log($("#ulpage li").find("a", "[data-page=" + value + "]"));
-        window.location.href = '@Url.Action("EventsList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Features=' + Features + '&Tickets=' + Tickets + '&sortorder=' + sortorder + '&PageF=' + PageF + '';
+        window.location.href = '@Url.Action("EventsList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Features=' + Features + '&Events=' + Events + '&Tickets=' + Tickets + '&sortorder=' + sortorder + '&PageF=' + PageF + '';
 
     });
     function ConfirmDelete(userId) {
@@ -546,6 +547,12 @@
                     // debugger;
                     //                   alert(data.length);
                     $("#ddlEventSubCategory").html(data);
+
+                    if (vSubcatID != '') {
+
+                        //alert(vSubcatID);
+                        $("#ddlEventSubCategory").val(vSubcatID);
+                    }
                     // items.push("<option value=" + this.Value + ">" + this.Text + "</option>");
                     //});
                 },
@@ -553,14 +560,15 @@
                     //alert("Sorry there is some problem.");
                 }
             });
-            if(vSubcatID!='')
-            {
+            //if(vSubcatID!='')
+            //{
 
-
-                $("#ddlEventSubCategory").val(vSubcatID);
-            }
+            //    alert(vSubcatID);
+            //    $("#ddlEventSubCategory").val(vSubcatID);
+            //}
         }
         $("#btnYes").click(function () {
+           
             $.ajax({
                 url: '@Url.Action("Deleteevent","ManageEvent")',
                 data: { Eventid: $("#hdUserId").val() },
@@ -576,8 +584,10 @@
                     var Events = $("#Events").val();
                     var Tickets = $("#Tickets").val();
                     var sortorder = "@TempData["sortorder"]";
+                    var pageF = parseInt(pagef) + 1;
+                    //alert(pageF);
                     //window.location.href = window.location.href;
-                    window.location.href = '@Url.Action("EventsList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Features=' + Features + '&Tickets=' + Tickets + '&sortorder=' + sortorder + '';
+                    window.location.href = '@Url.Action("EventsList", "ManageEvent", new { })?SearchStringEventTitle=' + SearchStringEventTitle + '&EventType=' + EventType + '&ddlEventCategory=' + ddlEventCategory + '&ddlEventSubCategory=' + ddlEventSubCategory + '&Features=' + Features + '&Events=' + Events + '&Tickets=' + Tickets + '&sortorder=' + sortorder + '&pageF=' + pageF;
                     //$.post("Users\Users");
                     // if (response == "Deleted")
                     // alert("Record Deleted Successfully.");
@@ -628,6 +638,18 @@
 
             //   alert(Feature + " " + EventId);
         });
+
+
+        @*alert('@TempData["PageNo"]')*@
+
+            var pagef = parseInt('@TempData["PageNo"]') - 1;
+        $('#ddlPageF').val(pagef);
+
+        var Events = '@TempData["Events"]';
+        $("#Events").val(Events);
+
+        //$("#Events").val("1");
+      
     });
 
 </script>

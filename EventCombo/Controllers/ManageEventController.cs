@@ -1677,9 +1677,14 @@ namespace EventCombo.Controllers
                                         bodyn = bodyn.Replace("¶¶EventOrganiserNumber¶¶", Organiserphn);
 
                                     }
-
+                                    if (EmailTag[i].Tag_Name == "DiscoverEventurl")
+                                    {
+                                        var url = Request.Url;
+                                        var baseurl = url.GetLeftPart(UriPartial.Authority);
+                                        string strUrl = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(strEventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(Eventid).ToString() });
+                                        bodyn = bodyn.Replace("¶¶DiscoverEventurl¶¶", strUrl);
+                                    }
                                 }
-
                             }
                         }
 
@@ -2797,15 +2802,13 @@ namespace EventCombo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+
             string LgUser = Session["AppId"].ToString();
             using (EventComboEntities db = new EventComboEntities())
             {
                 AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == LgUser);
-
                 aspuser.LastLoginTime = System.DateTime.UtcNow;
                 db.SaveChanges();
-
-
             }
             if (CommanClasses.CompareCurrentUser(lEvtId, Session["AppId"].ToString().Trim()) == false) return RedirectToAction("Index", "Home");
 
@@ -2909,7 +2912,10 @@ namespace EventCombo.Controllers
 
 
                         strviewEvent = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(vEvent.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(lEvtId).ToString() });
-                        strOrgnizerUrl = baseurl + Url.Action("Index", "OrganizerInfo", new { id = vOrgnizer.Orgnizer_Id, eventid = lEvtId });
+                        strOrgnizerUrl = "";
+                        if (vOrgnizer != null)
+                            strOrgnizerUrl = baseurl + Url.Action("Index", "OrganizerInfo", new { id = vOrgnizer.Orgnizer_Id, eventid = lEvtId });
+
                     }
 
 

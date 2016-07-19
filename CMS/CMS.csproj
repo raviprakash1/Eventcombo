@@ -317,6 +317,7 @@
     <Compile Include="Models\EventImage.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventList.cs" />
     <Compile Include="Models\EventSubCategory.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
@@ -439,6 +440,9 @@
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Venue.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\V_EventsexpiredList.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\V_EventsList.cs">

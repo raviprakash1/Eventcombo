@@ -150,7 +150,7 @@
                                                 i = i + 1;
                                                 <tr>
                                                     <td>@i.ToString()</td>
-                                                    <td><a target="_blank" href="http://@host/CreateEvent/ViewEvent?strUrlData=@obj.EventTitle.Trim()౼@obj.EventID౼N">@obj.EventTitle</a></td>
+                                                    <td><a target="_blank" href="http://@host/@obj.EventTitle.Trim().Replace(" ","-")-@obj.EventID">@obj.EventTitle</a></td>
                                                     <td>@obj.EventType</td>
                                                     <td>@obj.EventCategory-@obj.EventSubCategory</td>
                                                     <td>@obj.EventTiming</td>

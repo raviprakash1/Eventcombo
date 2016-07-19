@@ -177,18 +177,27 @@
 
 </script>
 
-<script>
+<script type="text/javascript">
+  window.fbAsyncInit = function () {
+    // init the FB JS SDK
+    FB.init({
+      appId: fbappid,                        // App ID from the app dashboard
+      status: true,                          // Check Facebook Login status
+      xfbml: true,                           // Look for social plugins on the page
+      version: '2.7'
+    });
+
+  };
+
+  // Load the SDK asynchronously
   (function (d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
+    if (d.getElementById(id)) { return; }
     js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=@(ConfigurationManager.AppSettings["FacebookAppId"])";
+    js.src = "//connect.facebook.net/en_US/all.js";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
 </script>
-
-
-
 
 <div class="container-fluid cont_margin no-padding con_scr0l_home" id="entertainmentContainer">
   <div class="col-md-8 col-sm-8 col-xs-12 entrmentDetailContent">
@@ -201,7 +210,7 @@
         <div class="entrmentNameTime">@Model.CreateDate.ToLongTimeString() @Model.CreateDate.ToString("MMMM dd, yyyy")</div>
         <div class="entrmentFollowTwitter">follow me on <a href="@(String.IsNullOrWhiteSpace(Model.AuthorTwitterUrl) ? "javascript:void(0)" : Model.AuthorTwitterUrl)" class="followOnTwitterAnchor">Twitter</a></div>
         <div class="entrmntSocialIcon">
-          <a href="javascript:void(0)" class="entrmSocialDiv" onclick="FacebookShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img src="~/Images/facebook.png" /></a>
+          <a href="javascript:void(0)" class="entrmSocialDiv" onclick="FacebookShare('@(Request.Url.AbsoluteUri)')"><img src="~/Images/facebook.png" /></a>
           <a href="javascript:void(0)" class="entrmSocialDiv" onclick="TwitterShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img src="~/Images/twitter.png" /></a>
           <a href="javascript:void(0)" class="entrmSocialDiv" onclick="LinkedInShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)', '@(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Model.Body), 200, 250, ".").Replace("'", @"\'"))')"><img src="~/Images/linkedIn.png" /></a>
         </div>
@@ -270,24 +279,4 @@
   </div>
 </div>
 
-<script type="text/javascript">
-
-  function FacebookShare(title, myhref) {
-    FB.ui({
-      method: 'share',
-      href: myhref,
-    }, function (response) { });
-    return false;
-  }
-
-  function TwitterShare(title, href) {
-    window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(href) + '&via=Eventcombo&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-    return false;
-  }
-
-  function LinkedInShare(title, href, summary) {
-    window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(href) + '&title=' + title + '&summary=' + summary + '&source=EventCombo', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-    return false;
-  }
-
-</script>
+<script src="~/Scripts/socialshare.js"></script>

@@ -159,7 +159,7 @@
                     </li>
                     <li>
                         <a href="#" onclick="checkPermission('4A');">
-                            <span class="fa fa-cubes"></span>
+                            <span class="fa fa-recycle"></span>
                             <span class="sidebar-title">Expired Events</span>
                         </a>
 
@@ -189,7 +189,7 @@
                     </li>
                     <li>
                       <a href="#" onclick="checkPermission('12');">
-                        <span class="fa fa-ticket"></span>
+                        <span class="fa fa-server"></span>
                         <span class="sidebar-title">Articles</span>
                       </a>
 
@@ -197,7 +197,7 @@
 
                     <li>
                       <a href="#" onclick="checkPermission('13');">
-                        <span class="fa fa-ticket"></span>
+                        <span class="fa fa-pie-chart"></span>
                         <span class="sidebar-title">Ticket Orders</span>
                       </a>
 
@@ -413,7 +413,7 @@
             Core.init();
 
             // Init Demo JS
-            Demo.init();
+            //Demo.init();
 
 
 
@@ -427,6 +427,9 @@
             };
 
             // Form Skin Switcher
+
+
+
             $('.animation-switcher button').on('click', function () {
                 $('.animation-switcher').find('button').removeClass('active-animation');
                 $(this).addClass('active-animation item-checked');
@@ -449,6 +452,8 @@
                 });
 
             });
+
+
 
             $('.admin-panels').adminpanel({
                 onFinish: function () {

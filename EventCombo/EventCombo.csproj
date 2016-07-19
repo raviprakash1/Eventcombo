@@ -264,6 +264,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\HangfirePreload.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -617,6 +618,7 @@
     <Compile Include="Services\LastLoginStatus.cs" />
     <Compile Include="Services\TicketEmailer.cs" />
     <Compile Include="Service\ArticleService.cs" />
+    <Compile Include="Service\HangfireBootstrapper.cs" />
     <Compile Include="Service\HtmlProcessing.cs" />
     <Compile Include="Service\IArticleService.cs" />
     <Compile Include="Service\DBAccessService.cs" />
@@ -655,6 +657,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>OrganizerProfile.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Account\PurchasedTicket.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PurchasedTicket.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateEvent\ViewCreateEvent.generated.cs">
       <AutoGen>True</AutoGen>
@@ -756,6 +763,8 @@
     <Content Include="Content\eventcombo.css" />
     <Content Include="Content\filter-dropdown.css" />
     <Content Include="Content\flipclock.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\font.css" />
     <Content Include="Content\jquery-te-1.4.0.css" />
     <Content Include="Content\jquery-te.png" />
     <Content Include="Content\manageattendees.css" />
@@ -764,6 +773,7 @@
     <Content Include="Content\OrderFormDesign.css" />
     <Content Include="Content\PurchasedTicket.css" />
     <Content Include="email-content-pdf%281%29.html" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="html\error.html" />
     <Content Include="Images\ajax-loader.gif" />
     <Content Include="Images\ajax-loaderMini.gif" />
@@ -1106,6 +1116,13 @@
     <Content Include="Models\EventComboModel.edmx.diagram">
       <DependentUpon>EventComboModel.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\abel-regular.woff2" />
+    <Content Include="Content\bootstarp.css.map" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Properties\PublishProfiles\depoy1.pubxml" />
     <None Include="Properties\PublishProfiles\eventcombo.pubxml" />
@@ -1123,6 +1140,7 @@
     <Content Include="Scripts\image-upload.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-1.11.2.min.js" />
     <Content Include="Scripts\jquery-te-1.4.0.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\external\jquery\jquery.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -1147,6 +1165,7 @@
     <Content Include="Scripts\jquery-ui-1.11.4.custom\jquery-ui.structure.min.css" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\jquery-ui.theme.css" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\jquery-ui.theme.min.css" />
+    <Content Include="Scripts\jquery.1.11.2.js" />
     <Content Include="Scripts\jquery.appendGrid\appendGrid.jquery.json" />
     <Content Include="Scripts\jquery.appendGrid\CHANGELOG.md" />
     <Content Include="Scripts\jquery.appendGrid\LGPL-LICENSE.md" />
@@ -1173,6 +1192,7 @@
     <Content Include="Scripts\jquery.creditCardValidator.js" />
     <Content Include="Scripts\jquery.geocomplete.js" />
     <Content Include="Scripts\jquery.geocomplete.min.js" />
+    <Content Include="Scripts\jquery.googleapis-places.js" />
     <Content Include="Scripts\jquery.icalendar.pack.js" />
     <Content Include="Scripts\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\jquery.isotope.min.js" />
@@ -1189,6 +1209,7 @@
     <Content Include="Scripts\jquery.slides.js" />
     <Content Include="Scripts\jquery.slides.min.js" />
     <Content Include="Scripts\jquery.timepicker.js" />
+    <Content Include="Scripts\jquery.timepicker.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1210,6 +1231,7 @@
     <Content Include="Scripts\nyromodal\nyroModal.css" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\socialshare.js" />
     <Content Include="Scripts\summernote.min.js" />
     <Content Include="Scripts\Validation.js" />
     <Content Include="Scripts\_references.js" />
@@ -1319,6 +1341,7 @@
     </Content>
     <Content Include="Views\Account\PurchasedTicket.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>PurchasedTicket.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Account\PurchasedDeals.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1458,6 +1481,7 @@
     <Content Include="Views\Account\_PurchasedTicketList.cshtml" />
     <Content Include="Views\Account\_PurchasedTicketDetail.cshtml" />
     <Content Include="Views\Account\_PurchasedTicketFavoriteList.cshtml" />
+    <Content Include="Views\CreateEvent\UserOrgnizerStatus.cshtml" />
     <Content Include="Views\ManageAttendees\Orders.cshtml" />
     <Content Include="Views\ManageAttendees\Add.cshtml" />
     <Content Include="Views\ManageAttendees\Email.cshtml" />

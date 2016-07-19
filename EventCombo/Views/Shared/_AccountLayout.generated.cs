@@ -85,157 +85,159 @@ WriteLiteral(" href=\"../../favicon.ico\"");
 
 WriteLiteral(">\r\n    <title>eventcombo</title>\r\n    <!-- Bootstrap core CSS -->\r\n    <link");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 553), Tuple.Create("\"", 583)
-, Tuple.Create(Tuple.Create("", 560), Tuple.Create<System.Object, System.Int32>(Href("~/Content/bootstrap.css")
+WriteAttribute("href", Tuple.Create(" href=\"", 553), Tuple.Create("\"", 578)
+, Tuple.Create(Tuple.Create("", 560), Tuple.Create<System.Object, System.Int32>(Href("~/Content/font.css")
 , 560), false)
 );
 
 WriteLiteral(" rel=\"stylesheet\"");
 
-WriteLiteral(" />\r\n\r\n    <!-- Custom styles for this template -->\r\n   \r\n    <link");
+WriteLiteral(" />\r\n");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 668), Tuple.Create("\"", 699)
-, Tuple.Create(Tuple.Create("", 675), Tuple.Create<System.Object, System.Int32>(Href("~/Content/eventcombo.css")
-, 675), false)
-);
+WriteLiteral("    ");
 
-WriteLiteral(" rel=\"stylesheet\"");
+            
+            #line 15 "..\..\Views\Shared\_AccountLayout.cshtml"
+Write(Styles.Render("~/Content/bootstrap"));
 
-WriteLiteral(" />\r\n    <link");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 731), Tuple.Create("\"", 773)
-, Tuple.Create(Tuple.Create("", 738), Tuple.Create<System.Object, System.Int32>(Href("~/Content/bootstrap-multiselect.css")
-, 738), false)
-);
+WriteLiteral("    ");
 
-WriteLiteral(" rel=\"stylesheet\"");
+            
+            #line 16 "..\..\Views\Shared\_AccountLayout.cshtml"
+Write(Styles.Render("~/Content/timepicker"));
 
-WriteLiteral(" />\r\n    <link");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 805), Tuple.Create("\"", 835)
-, Tuple.Create(Tuple.Create("", 812), Tuple.Create<System.Object, System.Int32>(Href("~/Content/ec-select.css")
-, 812), false)
-);
+WriteLiteral("    ");
 
-WriteLiteral(" rel=\"stylesheet\"");
+            
+            #line 17 "..\..\Views\Shared\_AccountLayout.cshtml"
+Write(Styles.Render("~/Content/summernote"));
 
-WriteLiteral(" />\r\n    <link");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 867), Tuple.Create("\"", 898)
-, Tuple.Create(Tuple.Create("", 874), Tuple.Create<System.Object, System.Int32>(Href("~/Content/summernote.css")
-, 874), false)
-);
+WriteLiteral("    ");
 
-WriteLiteral(" rel=\"stylesheet\"");
+            
+            #line 18 "..\..\Views\Shared\_AccountLayout.cshtml"
+Write(Styles.Render("~/Content/multiselect"));
 
-WriteLiteral(" />\r\n   \r\n    <link");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 935), Tuple.Create("\"", 966)
-, Tuple.Create(Tuple.Create("", 942), Tuple.Create<System.Object, System.Int32>(Href("~/Content/datepicker.css")
-, 942), false)
-);
+WriteLiteral("    ");
 
-WriteLiteral(" rel=\"stylesheet\"");
+            
+            #line 19 "..\..\Views\Shared\_AccountLayout.cshtml"
+Write(Styles.Render("~/Content/datetimepicker"));
 
-WriteLiteral(" />\r\n    <link");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 998), Tuple.Create("\"", 1036)
-, Tuple.Create(Tuple.Create("", 1005), Tuple.Create<System.Object, System.Int32>(Href("~/Content/jquery.timepicker.css")
-, 1005), false)
-);
+WriteLiteral("    ");
 
-WriteLiteral(" rel=\"stylesheet\"");
+            
+            #line 20 "..\..\Views\Shared\_AccountLayout.cshtml"
+Write(Styles.Render("~/Content/fontawsome"));
 
-WriteLiteral(@" />
-    <!--  <link href=""https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"" rel=""stylesheet""> -->
+            
+            #line default
+            #line hidden
+WriteLiteral(@"
+   
+
+    <!-- Custom styles for this template -->
+   
+   
     <!--[if lt IE 9]>
       <script src=""https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js""></script>
       <script src=""https://oss.maxcdn.com/respond/1.4.2/respond.min.js""></script>
     <![endif]-->
-    <script");
+ 
+");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1403), Tuple.Create("\"", 1432)
-, Tuple.Create(Tuple.Create("", 1409), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/Validation.js")
-, 1409), false)
-);
+WriteLiteral("    ");
 
-WriteLiteral("></script>\r\n    ");
+            
+            #line 31 "..\..\Views\Shared\_AccountLayout.cshtml"
+Write(Scripts.Render("~/bundles/jquery11.2"));
 
-WriteLiteral("\r\n    <script");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n   \r\n");
 
-WriteLiteral(" src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js\"");
+WriteLiteral("    ");
 
-WriteLiteral("></script>\r\n    <script");
+            
+            #line 33 "..\..\Views\Shared\_AccountLayout.cshtml"
+Write(Scripts.Render("~/bundles/bootstrap"));
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1611), Tuple.Create("\"", 1643)
-, Tuple.Create(Tuple.Create("", 1617), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/bootstrap.min.js")
-, 1617), false)
-);
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
-WriteLiteral("></script>\r\n    <script");
+WriteLiteral("    ");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1667), Tuple.Create("\"", 1690)
-, Tuple.Create(Tuple.Create("", 1673), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/main.js")
-, 1673), false)
-);
+            
+            #line 34 "..\..\Views\Shared\_AccountLayout.cshtml"
+Write(Scripts.Render("~/bundles/timezonescripts"));
 
-WriteLiteral("></script>\r\n    <script");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1714), Tuple.Create("\"", 1747)
-, Tuple.Create(Tuple.Create("", 1720), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/summernote.min.js")
-, 1720), false)
-);
+WriteLiteral("    ");
 
-WriteLiteral("></script>\r\n    <script");
+            
+            #line 35 "..\..\Views\Shared\_AccountLayout.cshtml"
+Write(Scripts.Render("~/bundles/summernote"));
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1771), Tuple.Create("\"", 1810)
-, Tuple.Create(Tuple.Create("", 1777), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/bootstrap-datepicker.js")
-, 1777), false)
-);
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
-WriteLiteral("></script>\r\n    <script");
+WriteLiteral("    ");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1834), Tuple.Create("\"", 1870)
-, Tuple.Create(Tuple.Create("", 1840), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.timepicker.js")
-, 1840), false)
-);
+            
+            #line 36 "..\..\Views\Shared\_AccountLayout.cshtml"
+Write(Scripts.Render("~/bundles/boostrapmulti"));
 
-WriteLiteral("></script>\r\n    <script");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
-WriteAttribute("src", Tuple.Create("  src=\"", 1894), Tuple.Create("\"", 1928)
-, Tuple.Create(Tuple.Create("", 1901), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/DateTimePicker.js")
-, 1901), false)
-);
+WriteLiteral("    ");
 
-WriteLiteral("></script>\r\n\r\n    <script");
+            
+            #line 37 "..\..\Views\Shared\_AccountLayout.cshtml"
+Write(Scripts.Render("~/bundles/validation"));
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1954), Tuple.Create("\"", 1994)
-, Tuple.Create(Tuple.Create("", 1960), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/bootstrap-multiselect.js")
-, 1960), false)
-);
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n   \r\n    ");
 
-WriteLiteral("></script>\r\n    <script");
-
-WriteAttribute("src", Tuple.Create(" src=\"", 2018), Tuple.Create("\"", 2046)
-, Tuple.Create(Tuple.Create("", 2024), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery-ui.js")
-, 2024), false)
-);
-
-WriteLiteral("></script>\r\n    <script");
-
-WriteAttribute("src", Tuple.Create(" src=\"", 2070), Tuple.Create("\"", 2098)
-, Tuple.Create(Tuple.Create("", 2076), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/ec-select.js")
-, 2076), false)
-);
-
-WriteLiteral("></script>\r\n    <script");
-
-WriteAttribute("src", Tuple.Create(" src=\"", 2122), Tuple.Create("\"", 2154)
-, Tuple.Create(Tuple.Create("", 2128), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/jquery.cookie.js")
-, 2128), false)
-);
-
-WriteLiteral("></script>\r\n\r\n</head>\r\n<body>\r\n    ");
+WriteLiteral("\r\n   \r\n\r\n</head>\r\n<body>\r\n    ");
 
 WriteLiteral("\r\n    <div");
 
@@ -259,15 +261,15 @@ WriteLiteral(" href=\"/Home/Index\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 2397), Tuple.Create("\"", 2420)
-, Tuple.Create(Tuple.Create("", 2403), Tuple.Create<System.Object, System.Int32>(Href("~/Images/logo.png")
-, 2403), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 1769), Tuple.Create("\"", 1792)
+, Tuple.Create(Tuple.Create("", 1775), Tuple.Create<System.Object, System.Int32>(Href("~/Images/logo.png")
+, 1775), false)
 );
 
 WriteLiteral(" /></a>\r\n            </div>\r\n");
 
             
-            #line 53 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 51 "..\..\Views\Shared\_AccountLayout.cshtml"
  if (HttpContext.Current.Session["AppId"] != null)
 {
 
@@ -293,17 +295,21 @@ WriteLiteral(" href=\"#\"");
 WriteLiteral(">Welcome ");
 
             
-            #line 58 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 56 "..\..\Views\Shared\_AccountLayout.cshtml"
                                               Html.RenderAction("UserName", "Home");
             
             #line default
             #line hidden
-WriteLiteral("!</a> </li>\r\n                    <li>\r\n");
+WriteLiteral("!</a> </li>\r\n                    <li");
+
+WriteLiteral(" onclick=\"CheckUserOrgStatus();\"");
+
+WriteLiteral(">\r\n");
 
 WriteLiteral("                        ");
 
             
-            #line 60 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 58 "..\..\Views\Shared\_AccountLayout.cshtml"
                    Write(Html.ActionLink("My Account", "MyAccount", "Account", routeValues: null, htmlAttributes: new { title = "Account" }));
 
             
@@ -312,13 +318,13 @@ WriteLiteral("                        ");
 WriteLiteral("\r\n                    </li>\r\n                    <li>\r\n");
 
             
-            #line 63 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 61 "..\..\Views\Shared\_AccountLayout.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 63 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 61 "..\..\Views\Shared\_AccountLayout.cshtml"
                          using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                         {
 
@@ -332,7 +338,7 @@ WriteLiteral(" href=\"javascript:document.getElementById(\'logoutForm\').submit(
 WriteLiteral(">Log Out </a>\r\n");
 
             
-            #line 66 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 64 "..\..\Views\Shared\_AccountLayout.cshtml"
                         }
 
             
@@ -341,7 +347,7 @@ WriteLiteral(">Log Out </a>\r\n");
 WriteLiteral("                    </li>\r\n                </ul>\r\n            </div>\r\n");
 
             
-            #line 70 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 68 "..\..\Views\Shared\_AccountLayout.cshtml"
                         }
                         else
                         {
@@ -372,7 +378,7 @@ WriteLiteral(">LogIn | SignUp </a>  </li>\r\n\r\n                               
 "                   </div>\r\n");
 
             
-            #line 82 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 80 "..\..\Views\Shared\_AccountLayout.cshtml"
                         }
 
             
@@ -394,9 +400,9 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 4056), Tuple.Create("\"", 4077)
-, Tuple.Create(Tuple.Create("", 4062), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
-, 4062), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 3460), Tuple.Create("\"", 3481)
+, Tuple.Create(Tuple.Create("", 3466), Tuple.Create<System.Object, System.Int32>(Href("~/Images/fb.png")
+, 3466), false)
 );
 
 WriteLiteral(" /></a>\r\n                    <a");
@@ -407,16 +413,13 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral("><img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 4172), Tuple.Create("\"", 4193)
-, Tuple.Create(Tuple.Create("", 4178), Tuple.Create<System.Object, System.Int32>(Href("~/Images/tw.png")
-, 4178), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 3576), Tuple.Create("\"", 3597)
+, Tuple.Create(Tuple.Create("", 3582), Tuple.Create<System.Object, System.Int32>(Href("~/Images/tw.png")
+, 3582), false)
 );
 
-WriteLiteral(" /></a>\r\n                    ");
-
-WriteLiteral("\r\n                    ");
-
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n            <div");
+WriteLiteral(" /></a>\r\n                 \r\n                </div>\r\n            </div>\r\n         " +
+"   <div");
 
 WriteLiteral(" class=\"Fix_Head mt10\"");
 
@@ -429,13 +432,13 @@ WriteLiteral(" class=\"switch\"");
 WriteLiteral(">\r\n");
 
             
-            #line 95 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 91 "..\..\Views\Shared\_AccountLayout.cshtml"
                   
             
             #line default
             #line hidden
             
-            #line 95 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 91 "..\..\Views\Shared\_AccountLayout.cshtml"
                     
 
                       string header = CookieStore.GetCookie("ckHeader");
@@ -448,14 +451,14 @@ WriteLiteral("                    <input");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=", 4708), Tuple.Create("", 4749)
+WriteAttribute("value", Tuple.Create(" value=", 3921), Tuple.Create("", 3962)
             
-            #line 99 "..\..\Views\Shared\_AccountLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 4715), Tuple.Create<System.Object, System.Int32>(CookieStore.GetCookie("ckHeader")
+            #line 95 "..\..\Views\Shared\_AccountLayout.cshtml"
+, Tuple.Create(Tuple.Create("", 3928), Tuple.Create<System.Object, System.Int32>(CookieStore.GetCookie("ckHeader")
             
             #line default
             #line hidden
-, 4715), false)
+, 3928), false)
 );
 
 WriteLiteral(" id=\"hdheader\"");
@@ -463,7 +466,7 @@ WriteLiteral(" id=\"hdheader\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 100 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 96 "..\..\Views\Shared\_AccountLayout.cshtml"
                       if ((header != null) && (header != ""))
                       {
                           if (header == "on")
@@ -487,7 +490,7 @@ WriteLiteral(" onchange=\"changeheader(this.id);\"");
 WriteLiteral(">\r\n");
 
             
-            #line 105 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 101 "..\..\Views\Shared\_AccountLayout.cshtml"
                           }
                           else
                           {
@@ -508,7 +511,7 @@ WriteLiteral(" onchange=\"changeheader(this.id);\"");
 WriteLiteral(">\r\n");
 
             
-            #line 109 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 105 "..\..\Views\Shared\_AccountLayout.cshtml"
                           }
                       }
                       else
@@ -530,7 +533,7 @@ WriteLiteral(" onchange=\"changeheader(this.id);\"");
 WriteLiteral(">\r\n");
 
             
-            #line 114 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 110 "..\..\Views\Shared\_AccountLayout.cshtml"
                       }
 
                 
@@ -556,17 +559,17 @@ WriteLiteral(" class=\"col-sm-12 filter_sep cont_margin\"");
 
 WriteLiteral(">\r\n            <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 5826), Tuple.Create("\"", 5909)
-, Tuple.Create(Tuple.Create("", 5832), Tuple.Create<System.Object, System.Int32>(Href("~/Images/desi-")
-, 5832), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 5039), Tuple.Create("\"", 5122)
+, Tuple.Create(Tuple.Create("", 5045), Tuple.Create<System.Object, System.Int32>(Href("~/Images/desi-")
+, 5045), false)
             
-            #line 124 "..\..\Views\Shared\_AccountLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 5846), Tuple.Create<System.Object, System.Int32>(HttpContext.Current.Session["logo"].ToString().Trim()
+            #line 120 "..\..\Views\Shared\_AccountLayout.cshtml"
+, Tuple.Create(Tuple.Create("", 5059), Tuple.Create<System.Object, System.Int32>(HttpContext.Current.Session["logo"].ToString().Trim()
             
             #line default
             #line hidden
-, 5846), false)
-, Tuple.Create(Tuple.Create("", 5900), Tuple.Create("-logo.gif", 5900), true)
+, 5059), false)
+, Tuple.Create(Tuple.Create("", 5113), Tuple.Create("-logo.gif", 5113), true)
 );
 
 WriteLiteral(">\r\n            <div");
@@ -582,13 +585,13 @@ WriteLiteral(" id=\"bodysec\"");
 WriteLiteral(">\r\n");
 
             
-            #line 132 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 128 "..\..\Views\Shared\_AccountLayout.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 132 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 128 "..\..\Views\Shared\_AccountLayout.cshtml"
          if (HttpContext.Current.Session["Fromname"].ToString() == "events" || HttpContext.Current.Session["Fromname"].ToString() == "deals")
         {
             
@@ -596,14 +599,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 134 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 130 "..\..\Views\Shared\_AccountLayout.cshtml"
        Write(RenderBody());
 
             
             #line default
             #line hidden
             
-            #line 134 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 130 "..\..\Views\Shared\_AccountLayout.cshtml"
                          
          
 
@@ -678,13 +681,13 @@ WriteLiteral(" class=\"navbar-collapse collapse nav_cus\"");
 WriteLiteral(">\r\n");
 
             
-            #line 156 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 152 "..\..\Views\Shared\_AccountLayout.cshtml"
                             
             
             #line default
             #line hidden
             
-            #line 156 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 152 "..\..\Views\Shared\_AccountLayout.cshtml"
                              if (IsSectionDefined("sidenav"))
                             {
                                 
@@ -692,14 +695,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 158 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 154 "..\..\Views\Shared\_AccountLayout.cshtml"
                            Write(RenderSection("sidenav", false));
 
             
             #line default
             #line hidden
             
-            #line 158 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 154 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                                 
                             }
                             else
@@ -740,15 +743,15 @@ WriteLiteral(">\r\n                                              <div");
 
 WriteLiteral(" id=\"dvacmang\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 7877), Tuple.Create("\"", 7950)
-, Tuple.Create(Tuple.Create("", 7885), Tuple.Create("panel-heading", 7885), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 7090), Tuple.Create("\"", 7163)
+, Tuple.Create(Tuple.Create("", 7098), Tuple.Create("panel-heading", 7098), true)
             
-            #line 167 "..\..\Views\Shared\_AccountLayout.cshtml"
-      , Tuple.Create(Tuple.Create("", 7898), Tuple.Create<System.Object, System.Int32>(ViewBag.CurrentItem == "account" ? " active" : ""
+            #line 163 "..\..\Views\Shared\_AccountLayout.cshtml"
+      , Tuple.Create(Tuple.Create("", 7111), Tuple.Create<System.Object, System.Int32>(ViewBag.CurrentItem == "account" ? " active" : ""
             
             #line default
             #line hidden
-, 7898), false)
+, 7111), false)
 );
 
 WriteLiteral(">\r\n                                                Account <b");
@@ -760,16 +763,16 @@ WriteLiteral("></b>\r\n                                              </div>\r\n 
 
 WriteLiteral(" id=\"collapse1\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 8201), Tuple.Create("\"", 8280)
-, Tuple.Create(Tuple.Create("", 8209), Tuple.Create("panel-collapse", 8209), true)
-, Tuple.Create(Tuple.Create(" ", 8223), Tuple.Create("collapse", 8224), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 7414), Tuple.Create("\"", 7493)
+, Tuple.Create(Tuple.Create("", 7422), Tuple.Create("panel-collapse", 7422), true)
+, Tuple.Create(Tuple.Create(" ", 7436), Tuple.Create("collapse", 7437), true)
             
-            #line 172 "..\..\Views\Shared\_AccountLayout.cshtml"
-             , Tuple.Create(Tuple.Create("", 8232), Tuple.Create<System.Object, System.Int32>(ViewBag.CurrentItem == "account" ? " in" : ""
+            #line 168 "..\..\Views\Shared\_AccountLayout.cshtml"
+             , Tuple.Create(Tuple.Create("", 7445), Tuple.Create<System.Object, System.Int32>(ViewBag.CurrentItem == "account" ? " in" : ""
             
             #line default
             #line hidden
-, 8232), false)
+, 7445), false)
 );
 
 WriteLiteral(">\r\n                                            <div");
@@ -779,16 +782,16 @@ WriteLiteral(" class=\"panel-body no-padding\"");
 WriteLiteral(">\r\n                                              <p>");
 
             
-            #line 174 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 170 "..\..\Views\Shared\_AccountLayout.cshtml"
                                             Write(Html.ActionLink("Personal Information", "MyAccount", "Account"));
 
             
             #line default
             #line hidden
-WriteLiteral(" </p>\r\n                                              <p>");
+WriteLiteral("</p>\r\n                                              <p>");
 
             
-            #line 175 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 171 "..\..\Views\Shared\_AccountLayout.cshtml"
                                             Write(Html.ActionLink("My Purchased Ticket", "PurchasedTicket", "Account"));
 
             
@@ -797,7 +800,7 @@ WriteLiteral(" </p>\r\n                                              <p>");
 WriteLiteral("</p>\r\n                                              <p>");
 
             
-            #line 176 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 172 "..\..\Views\Shared\_AccountLayout.cshtml"
                                             Write(Html.ActionLink("My Purchased Deals", "PurchasedDeals", "Account"));
 
             
@@ -806,7 +809,7 @@ WriteLiteral("</p>\r\n                                              <p>");
 WriteLiteral("</p>\r\n                                              <p>");
 
             
-            #line 177 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 173 "..\..\Views\Shared\_AccountLayout.cshtml"
                                             Write(Html.ActionLink("Manage Organizer", "OrganizerProfile", "Account"));
 
             
@@ -852,48 +855,39 @@ WriteLiteral(">\r\n                                                <div");
 
 WriteLiteral(" class=\"panel-body no-padding\"");
 
-WriteLiteral(">\r\n                                                    <p>");
+WriteLiteral(">\r\n                                                    \r\n                        " +
+"                            <p><a");
+
+WriteLiteral(" href=\"#\"");
+
+WriteLiteral(" id=\"pAcc\"");
+
+WriteLiteral(">Create Event</a></p>\r\n                                                    <p>");
 
             
-            #line 191 "..\..\Views\Shared\_AccountLayout.cshtml"
-                                                  Write(Html.ActionLink("Create Event", "CreateEvent", "CreateEvent"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n                                                    <p>");
-
-            
-            #line 192 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 189 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("My Events", "EventList", "EventList"));
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n                                                    ");
-
-WriteLiteral("\r\n                                                    ");
-
-WriteLiteral("\r\n                                                    <p>");
+WriteLiteral("</p>\r\n                                                  \r\n                       " +
+"                             <p>");
 
             
-            #line 195 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 191 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Events Help", "EventHelp", "Account"));
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n\r\n                                                    ");
+WriteLiteral(@"</p>
 
-WriteLiteral("\r\n                                                    ");
-
-WriteLiteral("\r\n                                                    ");
-
-WriteLiteral("\r\n                                                    ");
-
-WriteLiteral("\r\n                                                </div>\r\n                       " +
-"                     </div>\r\n                                        </div>\r\n   " +
-"                                     <div");
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div");
 
 WriteLiteral(" class=\"panel panel-default menu_list\"");
 
@@ -935,7 +929,7 @@ WriteLiteral(">\r\n                                                    <p>Create
 "                                              <p>");
 
             
-            #line 215 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 208 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Deals Dashboard", "DealsDashboard", "Account"));
 
             
@@ -944,7 +938,7 @@ WriteLiteral(">\r\n                                                    <p>Create
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 216 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 209 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Current Deals", "CurrentDeals", "Account"));
 
             
@@ -953,7 +947,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 217 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 210 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Past Deals", "PastDeals", "Account"));
 
             
@@ -962,7 +956,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 218 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 211 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Feedback", "Feedback", "Account"));
 
             
@@ -971,7 +965,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 219 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 212 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Overview", "Overview", "Account"));
 
             
@@ -980,7 +974,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 220 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 213 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Impact Report", "ImpactReport", "Account"));
 
             
@@ -989,7 +983,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 221 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 214 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Invoice History", "InvoiceHistory", "Account"));
 
             
@@ -998,7 +992,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 222 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 215 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Customers", "Customers", "Account"));
 
             
@@ -1007,7 +1001,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 223 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 216 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Deals Help", "DealsHelp", "Account"));
 
             
@@ -1016,7 +1010,7 @@ WriteLiteral("</p>\r\n                                                    <p>");
 WriteLiteral("</p>\r\n                                                    <p>");
 
             
-            #line 224 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 217 "..\..\Views\Shared\_AccountLayout.cshtml"
                                                   Write(Html.ActionLink("Merchant Profile", "MerchantProfile", "Account"));
 
             
@@ -1028,7 +1022,7 @@ WriteLiteral("</p>\r\n                                                </div>\r\n
 "iv>\r\n");
 
             
-            #line 230 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 223 "..\..\Views\Shared\_AccountLayout.cshtml"
                             }
 
             
@@ -1051,7 +1045,7 @@ WriteLiteral(">\r\n                    \r\n");
 WriteLiteral("                    ");
 
             
-            #line 240 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 233 "..\..\Views\Shared\_AccountLayout.cshtml"
                Write(RenderBody());
 
             
@@ -1060,7 +1054,7 @@ WriteLiteral("                    ");
 WriteLiteral("\r\n\r\n                    </div>\r\n                </div>\r\n            </div>\r\n");
 
             
-            #line 245 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 238 "..\..\Views\Shared\_AccountLayout.cshtml"
         }
 
             
@@ -1070,51 +1064,162 @@ WriteLiteral("\r\n    </div>\r\n    <div");
 
 WriteLiteral(" id=\"dtBox\"");
 
-WriteLiteral("></div>\r\n\r\n\r\n    <script");
+WriteLiteral("></div>\r\n    <div");
+
+WriteLiteral(" class=\"modal fade\"");
+
+WriteLiteral(" id=\"UserOrgnizer\"");
+
+WriteLiteral(" tabindex=\"-1\"");
+
+WriteLiteral(" role=\"dialog\"");
+
+WriteLiteral(" aria-labelledby=\"myModalLabel\"");
+
+WriteLiteral(" aria-hidden=\"true\"");
+
+WriteLiteral(" data-backdrop=\"static\"");
+
+WriteLiteral(" data-keyboard=\"false\"");
+
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" class=\"modal-dialog modal-sm confirm-msg ok-msg custom\"");
+
+WriteLiteral(">\r\n            <div");
+
+WriteLiteral(" class=\"modal-content\"");
+
+WriteLiteral(">\r\n                <form");
+
+WriteLiteral(" id=\"contactForm\"");
+
+WriteLiteral(" class=\"fullw1 add\"");
+
+WriteLiteral(">\r\n                    <div");
+
+WriteLiteral(" class=\"modal-body text-center pv50 txt-msg\"");
+
+WriteLiteral(">\r\n                        <h4");
+
+WriteLiteral(" class=\"msg\"");
+
+WriteLiteral(" id=\"hId\"");
+
+WriteLiteral(">You are not authorized to create event, please contact admin</h4>\r\n             " +
+"       </div>\r\n                    <div");
+
+WriteLiteral(" class=\"modal-footer msg-action-btn ok\"");
+
+WriteLiteral(">\r\n                        <button");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" class=\"btn btn-primary yes ok\"");
+
+WriteLiteral(" id=\"btMessOk\"");
+
+WriteLiteral(" data-dismiss=\"modal\"");
+
+WriteLiteral(">OK</button>\r\n                    </div>\r\n                </form>\r\n            </" +
+"div>\r\n        </div><!-- confirm-msg -->\r\n    </div>\r\n\r\n    <div>\r\n        <a");
+
+WriteLiteral(" class=\"td-btn\"");
+
+WriteLiteral(" id=\"btOkMes\"");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" data-backdrop=\"static\"");
+
+WriteLiteral(" data-keyboard=\"false\"");
+
+WriteLiteral(" href=\"#UserOrgnizer\"");
+
+WriteLiteral(" data-toggle=\"modal\"");
+
+WriteLiteral(" style=\"display:none\"");
+
+WriteLiteral(">\r\n        </a>\r\n    </div>\r\n\r\n    <script");
 
 WriteLiteral(" type=\"text/javascript\"");
 
 WriteLiteral(">\r\n        $(window).load(function () {\r\n\r\n            var headervale = $(\"#hdhea" +
-"der\").val();;\r\n            //alert(headervale);\r\n            if (headervale != u" +
-"ndefined && headervale != null && headervale != \'\') {\r\n\r\n                if (hea" +
-"dervale == \"on\") {\r\n                    $(\'#mainhead\').addClass(\'fix_head\');\r\n  " +
-"                  $(\'#bodysec\').addClass(\'cont_margin\');\r\n                    $(" +
-"\'#navtop\').addClass(\'affix-top\');\r\n                    $(\'#midsection\').addClass" +
-"(\'midd_cont\');\r\n                    $(\'#eventtop\').addClass(\'event_top\');\r\n     " +
-"               $(\'#eventtopscoll\').addClass(\'event_top\');\r\n\r\n                   " +
-" $(\'#divsuccerr\').addClass(\'aler_container\');\r\n                    $(\'#eventtops" +
-"coll\').addClass(\'viewevent_container\');\r\n                    //if ($(\'#idchecked" +
-"\').attr(\'checked\')) {\r\n\r\n                    //} else {\r\n                    // " +
-"   $(\"#idchecked\").attr(\'checked\', true);\r\n                    //}\r\n            " +
-"        //$(\"#idchecked\").attr(\'checked\', true);\r\n                }\r\n           " +
-"     else {\r\n                    $(\'#mainhead\').removeClass(\'fix_head\');\r\n      " +
-"              $(\'#bodysec\').removeClass(\'cont_margin\');\r\n                    $(\'" +
-"#navtop\').removeClass(\'affix-top\');\r\n                    $(\'#midsection\').remove" +
-"Class(\'midd_cont\');\r\n                    $(\'#eventtopscoll\').removeClass(\'event_" +
-"top\');\r\n                    $(\'#eventtop\').removeClass(\'event_top\');\r\n          " +
-"          $(\'#divsuccerr\').removeClass(\'aler_container\');\r\n\r\n                   " +
-" $(\'#eventtopscoll\').removeClass(\'viewevent_container\');\r\n                    //" +
-"$(\"#idchecked\").attr(\'checked\', false);\r\n                    //if ($(\'#idchecked" +
-"\').attr(\'checked\')) {\r\n\r\n                    //} else {\r\n                    // " +
-"   $(\"#idchecked\").attr(\'checked\', false);\r\n                    //}\r\n\r\n         " +
-"       }\r\n            } else {\r\n                $(\'#mainhead\').removeClass(\'fix_" +
-"head\');\r\n                $(\'#bodysec\').removeClass(\'cont_margin\');\r\n            " +
-"    $(\'#navtop\').removeClass(\'affix-top\');\r\n                $(\'#midsection\').rem" +
-"oveClass(\'midd_cont\');\r\n                $(\'#eventtopscoll\').removeClass(\'event_t" +
-"op\');\r\n                $(\'#eventtop\').removeClass(\'event_top\');\r\n               " +
-" $(\'#divsuccerr\').removeClass(\'aler_container\');\r\n\r\n                $(\'#eventtop" +
-"scoll\').removeClass(\'viewevent_container\');;\r\n                //if ($(\'#idchecke" +
-"d\').attr(\'checked\')) {\r\n\r\n                //} else {\r\n                //    $(\"#" +
-"idchecked\").attr(\'checked\', false);\r\n                //}\r\n                //$(\"#" +
-"idchecked\").attr(\'checked\', false);\r\n            }\r\n\r\n\r\n\r\n\r\n        \r\n\r\n        " +
-"});\r\n\r\n        function checkPermission(PermisionId) {\r\n            ");
-
-WriteLiteral("\r\n\r\n\r\n\r\n        }\r\n\r\n\r\n\r\n\r\n    function changeheader(e)\r\n    {\r\n        if ($(\'#i" +
-"dchecked\').is(\":checked\") == true) {\r\n            $.ajax({\r\n                url:" +
-" \'");
+"der\").val();;\r\n         \r\n            if (headervale != undefined && headervale " +
+"!= null && headervale != \'\') {\r\n\r\n                if (headervale == \"on\") {\r\n   " +
+"                 $(\'#mainhead\').addClass(\'fix_head\');\r\n                    $(\'#b" +
+"odysec\').addClass(\'cont_margin\');\r\n                    $(\'#navtop\').addClass(\'af" +
+"fix-top\');\r\n                    $(\'#midsection\').addClass(\'midd_cont\');\r\n       " +
+"             $(\'#eventtop\').addClass(\'event_top\');\r\n                    $(\'#even" +
+"ttopscoll\').addClass(\'event_top\');\r\n\r\n                    $(\'#divsuccerr\').addCl" +
+"ass(\'aler_container\');\r\n                    $(\'#eventtopscoll\').addClass(\'viewev" +
+"ent_container\');\r\n                  \r\n                }\r\n                else {\r" +
+"\n                    $(\'#mainhead\').removeClass(\'fix_head\');\r\n                  " +
+"  $(\'#bodysec\').removeClass(\'cont_margin\');\r\n                    $(\'#navtop\').re" +
+"moveClass(\'affix-top\');\r\n                    $(\'#midsection\').removeClass(\'midd_" +
+"cont\');\r\n                    $(\'#eventtopscoll\').removeClass(\'event_top\');\r\n    " +
+"                $(\'#eventtop\').removeClass(\'event_top\');\r\n                    $(" +
+"\'#divsuccerr\').removeClass(\'aler_container\');\r\n\r\n                    $(\'#eventto" +
+"pscoll\').removeClass(\'viewevent_container\');\r\n                  \r\n\r\n            " +
+"    }\r\n            } else {\r\n                $(\'#mainhead\').removeClass(\'fix_hea" +
+"d\');\r\n                $(\'#bodysec\').removeClass(\'cont_margin\');\r\n               " +
+" $(\'#navtop\').removeClass(\'affix-top\');\r\n                $(\'#midsection\').remove" +
+"Class(\'midd_cont\');\r\n                $(\'#eventtopscoll\').removeClass(\'event_top\'" +
+");\r\n                $(\'#eventtop\').removeClass(\'event_top\');\r\n                $(" +
+"\'#divsuccerr\').removeClass(\'aler_container\');\r\n\r\n                $(\'#eventtopsco" +
+"ll\').removeClass(\'viewevent_container\');;\r\n              \r\n            }\r\n\r\n\r\n\r\n" +
+"\r\n\r\n\r\n        });\r\n\r\n        $(\"#pAcc\").click(function () {\r\n            $.ajax(" +
+"{\r\n                url: \'");
 
             
-            #line 352 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 316 "..\..\Views\Shared\_AccountLayout.cshtml"
+                 Write(Url.Action("UserOrgStatus", "Home"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@"',
+                type: ""GET"",
+                datatype: ""Text"",
+                success: function (data) {
+                    if (data==""N"")
+                    {
+                        $(""#btOkMes"").click();
+                    }
+                    else {
+                        window.location.href = '");
+
+            
+            #line 325 "..\..\Views\Shared\_AccountLayout.cshtml"
+                                           Write(Url.Action("CreateEvent", "CreateEvent"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@"';
+                    
+                    }
+                },
+                error: function (data) {
+                    return false
+                }
+            });
+
+        });
+
+   
+
+
+
+
+    function changeheader(e)
+    {
+        if ($('#idchecked').is("":checked"") == true) {
+            $.ajax({
+                url: '");
+
+            
+            #line 345 "..\..\Views\Shared\_AccountLayout.cshtml"
                  Write(Url.Action("Setheader", "Home"));
 
             
@@ -1128,19 +1233,19 @@ WriteLiteral(@"',
 
                 },
                 error: function (data) {
-                    //alert(""Sorry there is some problem."");
+                   
                     return false
                 }
             });
-       
-            //$.cookie(""header"", ""on"", { expire: 1 });
+
+           
             $('#mainhead').addClass('fix_head');
             $('#bodysec').addClass('cont_margin');
             $('#navtop').addClass('affix-top');
             $('#midsection').addClass('midd_cont');
             $('#eventtop').addClass('event_top');
             $('#eventtopscoll').addClass('event_top');
-            
+
             $('#divsuccerr').addClass('aler_container');
             $('#eventtopscoll').addClass('viewevent_container');
         } else
@@ -1149,7 +1254,7 @@ WriteLiteral(@"',
                 url: '");
 
             
-            #line 378 "..\..\Views\Shared\_AccountLayout.cshtml"
+            #line 371 "..\..\Views\Shared\_AccountLayout.cshtml"
                  Write(Url.Action("Setheader", "Home"));
 
             
@@ -1163,11 +1268,11 @@ WriteLiteral(@"',
 
                 },
                 error: function (data) {
-                    //alert(""Sorry there is some problem."");
+                   
                     return false
                 }
             });
-            //$.cookie(""header"", ""off"", { expire: 1 });
+           
             $('#mainhead').removeClass('fix_head');
             $('#bodysec').removeClass('cont_margin');
             $('#navtop').removeClass('affix-top');
@@ -1175,7 +1280,7 @@ WriteLiteral(@"',
             $('#eventtopscoll').removeClass('event_top');
             $('#eventtop').removeClass('event_top');
             $('#divsuccerr').removeClass('aler_container');
-            
+
             $('#eventtopscoll').removeClass('viewevent_container');
         }
     }

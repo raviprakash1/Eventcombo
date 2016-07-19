@@ -15,6 +15,26 @@
 </div>
 
 
+<div class="modal fade" id="UserOrgnizer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
+        <div class="modal-content">
+            <form id="contactForm" class="fullw1 add">
+                <div class="modal-body text-center pv50 txt-msg">
+                    <h4 class="msg" id="hId">You are not authorized to create an event. Please contact admin@eventcombo.com</h4>
+                </div>
+                <div class="modal-footer msg-action-btn ok">
+                    <button type="button" class="btn btn-primary yes ok" id="btMessOk" data-dismiss="modal">OK</button>
+                </div>
+            </form>
+        </div>
+    </div><!-- confirm-msg -->
+</div>
+
+<div>
+    <a class="td-btn" id="btOkMes" type="button" data-backdrop="static" data-keyboard="false" href="#UserOrgnizer" data-toggle="modal" style="display:none">
+    </a>
+</div>
+
 
 <script>
     $(document).prop('title', 'Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free');
@@ -35,8 +55,11 @@
 
     $(document).ready(function () {
         //url = url.replace("-parameter", vEventId);
+        
+       
 
-
+      
+        
         var pg = getUrlParameter('page');
         if (!pg) {
             var Lat = @CookieStore.GetCookie("Lat");
@@ -47,7 +70,7 @@
             if (isNaN(Lng) == true) Lng = 0;
          //   alert(Lat);
             if (Lat > 0)
-            { 
+            {
                 var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = CookieStore.GetCookie("Lat"), lng = CookieStore.GetCookie("Long"), page = "1"}))';
                 window.location.replace(vUrl);
             }
@@ -55,7 +78,7 @@
             {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function (p) {
-                        var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+                        var LatLng = new google.maps.LatLng(p.coords.latitude,p.coords.longitude);
                         var geocoder = new google.maps.Geocoder;
                         var infowindow = new google.maps.InfoWindow;
 
@@ -88,6 +111,10 @@
 
         }
 
+        if ('@ViewBag.UserOrg' == "Y")
+        {
+            $("#btOkMes").click();
+        }
 
 
 
