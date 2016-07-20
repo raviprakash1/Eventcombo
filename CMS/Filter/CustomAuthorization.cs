@@ -20,7 +20,7 @@ public class CustomAuthorization : AuthorizeAttribute
 
         foreach (var role in allowedroles)
         {
-            var vRole = context.Database.SqlQuery<string>("Select RoleId from AspNetUserRoles where UserId='" + UserId + "'").Single();
+            var vRole = context.Database.SqlQuery<string>("Select RoleId from AspNetUserRoles where UserId='" + UserId + "'").SingleOrDefault();
             if (vRole != null && Convert.ToInt16(vRole) == 1)
             {
                 authorize = true;
@@ -28,8 +28,8 @@ public class CustomAuthorization : AuthorizeAttribute
             else
             {
                 var vPer = (from c in context.User_Permission_Detail
-                            where c.UP_User_Id.Equals(UserId) && c.UP_Permission_Id.Equals(role)
-                            select new { c.UP_Id }).SingleOrDefault();
+                            where c.UP_User_Id == UserId && c.UP_Permission_Id.ToString() == role
+                            select c).SingleOrDefault();
                 if (vPer != null && Convert.ToInt16(vPer.UP_Id) > 0)
                     authorize = true;
             }
