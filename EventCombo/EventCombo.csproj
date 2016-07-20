@@ -270,6 +270,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\CustomHandleErrorAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -351,6 +352,10 @@
     <Compile Include="Models\BusinessPage.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\City.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Footer.cs" />
     <Compile Include="Models\IBaseViewModel.cs" />
     <Compile Include="Models\BillingAddress.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
@@ -804,6 +809,9 @@
     <Content Include="Images\AMaterial\facebook.svg" />
     <Content Include="Images\AMaterial\linkedin.svg" />
     <Content Include="Images\AMaterial\plusIcon.png" />
+    <Content Include="Images\AMaterial\square-facebook.svg" />
+    <Content Include="Images\AMaterial\square-linkedin.svg" />
+    <Content Include="Images\AMaterial\square-twitter.svg" />
     <Content Include="Images\AMaterial\stripes.png" />
     <Content Include="Images\AMaterial\twitter.svg" />
     <Content Include="Images\amr-exp.png" />

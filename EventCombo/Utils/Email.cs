@@ -66,6 +66,5 @@ namespace EventCombo.Utils
             }
             return sendStatus;
         }
-
     }
 }

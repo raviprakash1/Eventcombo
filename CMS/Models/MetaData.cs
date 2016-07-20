@@ -30,6 +30,6 @@ namespace CMS.Models
     [MetadataType(typeof(BusinessPageMetaData))]
     public partial class BusinessPage
     {
-
+        public int RowNumber { get; set; }
     }
 }

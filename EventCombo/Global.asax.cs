@@ -24,7 +24,16 @@ namespace EventCombo
     {
       var raisedException = Server.GetLastError();
       if (raisedException != null)
+      {
         logger.Error(raisedException, "Exception occured.");
+        if (raisedException is HttpException)
+        {
+          var httpException = (HttpException)raisedException;
+          Response.StatusCode = httpException.GetHttpCode();
+        }
+        else
+          Response.StatusCode = 500;
+      }
     }
   }
 }

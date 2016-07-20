@@ -100,6 +100,7 @@
         <EntityTypeShape EntityType="Cmsdata.v_OrderList" Width="1.5" PointX="12.375" PointY="23.75" />
         <EntityTypeShape EntityType="Cmsdata.V_EventsexpiredList" Width="1.5" PointX="24.375" PointY="22.75" />
         <EntityTypeShape EntityType="Cmsdata.BusinessPage" Width="1.5" PointX="7.375" PointY="22.75" />
+        <EntityTypeShape EntityType="Cmsdata.City" Width="1.5" PointX="25.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
