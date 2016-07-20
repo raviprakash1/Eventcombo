@@ -10,7 +10,7 @@ using CMS.Models;
 
 namespace CMS.Controllers
 {
-    [Authorize]
+    [CustomAuthorization("14")]
     public class BusinessPagesController : Controller
     {
         private EmsEntities db = new EmsEntities();

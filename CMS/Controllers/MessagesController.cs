@@ -8,6 +8,7 @@ using CMS.Models;
 
 namespace CMS.Controllers
 {
+    [CustomAuthorization("7")]
     public class MessagesController : Controller
     {
         // GET: Messages

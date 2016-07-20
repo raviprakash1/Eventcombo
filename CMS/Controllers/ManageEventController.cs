@@ -11,6 +11,7 @@ using PagedList;
 
 namespace CMS.Controllers
 {
+    [CustomAuthorization("4")]
     public class ManageEventController : Controller
     {
         EmsEntities db = new EmsEntities();
