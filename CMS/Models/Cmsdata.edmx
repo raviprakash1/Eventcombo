@@ -157,6 +157,7 @@
           <Property Name="IsOnFooter" Type="bit" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="ResponseCode" Type="int" />
         </EntityType>
         <EntityType Name="CardDetails">
           <Key>
@@ -3301,6 +3302,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="PageOrder" Type="Int32" Nullable="false" />
           <Property Name="IsOnFooter" Type="Boolean" Nullable="false" />
+          <Property Name="ResponseCode" Type="Int32" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -4354,6 +4356,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySetMapping Name="BusinessPages">
             <EntityTypeMapping TypeName="Cmsdata.BusinessPage">
               <MappingFragment StoreEntitySet="BusinessPage">
+                <ScalarProperty Name="ResponseCode" ColumnName="ResponseCode" />
                 <ScalarProperty Name="IsOnFooter" ColumnName="IsOnFooter" />
                 <ScalarProperty Name="PageOrder" ColumnName="PageOrder" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
