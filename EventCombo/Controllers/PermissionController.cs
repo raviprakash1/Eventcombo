@@ -34,15 +34,11 @@ namespace EventCombo.Controllers
                 }
 
 
-                //int iGet = 
                 var vPer = (from c in objEms.User_Permission_Detail
                             where c.UP_User_Id.Equals(strUserId) && c.UP_Permission_Id.Equals(iPermissionId)
                             select new { c.UP_Id }).SingleOrDefault();
 
-                // vPer = objEms.Database.SqlQuery("SELECT UP_Id FROM User_Permission_Detail WHERE UP_User_Id = '" + strUserId + "' AND UP_Permission_Id = " + iPermissionId)
-
-                if (vPer != null && Convert.ToInt16(vPer.UP_Id) > 0) strPer = "Y";
-
+                if (vPer != null && vPer.UP_Id > 0) strPer = "Y";
             }
             catch (Exception ex)
             {
