@@ -242,7 +242,44 @@ namespace CMS.Controllers
             }
         }
 
+        public ActionResult LeftMenu()
+        {
+            LeftMenu Menu;
+            List<LeftMenu> MenuList = new List<LeftMenu>();
 
-      
+            string UserId = (Session["UserID"] != null ? Session["UserID"].ToString() : string.Empty);
+            var UserRole = db.Database.SqlQuery<string>("Select RoleId from AspNetUserRoles where UserId='" + UserId + "'").SingleOrDefault();
+            if (UserRole != null)
+            {
+                if (Convert.ToInt16(UserRole) == 1)
+                {
+                    var Permission = (from c in db.Permission_Detail
+                                      select c);
+                    foreach (var item in Permission)
+                    {
+                        Menu = new LeftMenu();
+                        Menu.MenuName = item.Permission_Desc;
+                        Menu.MenuPermissionCode = item.Permission_Id.ToString();
+                        MenuList.Add(Menu);
+                    }
+                }
+                else
+                {
+                    var Permission = (from c in db.User_Permission_Detail
+                                      join p in db.Permission_Detail on c.UP_Permission_Id equals p.Permission_Id
+                                      where c.UP_User_Id == UserId && c.UP_Permission_Id.ToString() == UserRole
+                                      select new { c, p });
+                    foreach (var item in Permission)
+                    {
+                        Menu = new LeftMenu();
+                        Menu.MenuName = item.p.Permission_Desc;
+                        Menu.MenuPermissionCode = item.p.Permission_Id.ToString();
+                        MenuList.Add(Menu);
+                    }
+                }
+            }
+            return PartialView("LeftMenu", MenuList);
+        }
+
     }
 }
