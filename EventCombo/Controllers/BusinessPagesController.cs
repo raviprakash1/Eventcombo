@@ -16,6 +16,7 @@ namespace EventCombo.Controllers
             var businessPage = db.BusinessPages.FirstOrDefault(x => x.PageNameUrl == PageNameUrl);
             if (businessPage == null)
                 throw new HttpException(404, "Page not found");
+            Response.StatusCode = businessPage.ResponseCode ?? Response.StatusCode;
             return View(businessPage);
         }
     }
