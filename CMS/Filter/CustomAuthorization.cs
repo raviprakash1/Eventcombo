@@ -38,6 +38,13 @@ public class CustomAuthorization : AuthorizeAttribute
     }
     protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
     {
-        filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new { controller = "Permission", action = "AccessDenied" }));
+        if (filterContext.HttpContext.Session["UserID"] == null || filterContext.HttpContext.Session["UserID"].ToString() == string.Empty)
+        {
+            filterContext.Result = new HttpUnauthorizedResult();
+        }
+        else
+        {
+            filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new { controller = "Permission", action = "AccessDenied" }));
+        }
     }
 }
