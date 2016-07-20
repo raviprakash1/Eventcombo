@@ -1,3 +1,39 @@
+DELETE
+FROM Order_Detail_T
+WHERE O_Id in 
+(
+select o.order_id
+from  amsuj786n3x.dbo.[Order] o
+inner join aspnetusers u on o.member_id=u.olduserid 
+inner join [profile] p on u.Id=p.userid
+inner join amsuj786n3x.dbo.CreditCardInfo cc on o.order_id=cc.order_id where cc.responsecode=1
+)
+GO
+
+SET IDENTITY_INSERT Order_Detail_T ON;
+with cte  (order_id, a, id, order_amount, sub_order_amount, b,c,d,orderDate,firstname,lastname,Email,authorizationCode,transaction_id,rw ) 
+as 
+(select o.order_id, '' as a,  u.Id,order_amount, sub_order_amount,null as b,null as c,null as d,orderDate,p.firstname, p.lastname, u.Email, cc.authorizationCode, cc.transaction_id
+,ROW_NUMBER() OVER
+     (
+         PARTITION BY o.order_id
+         ORDER BY cc.transaction_id DESC
+     ) AS rw
+   from  amsuj786n3x.dbo.[Order] o
+inner join aspnetusers u on o.member_id=u.olduserid 
+inner join [profile] p on u.Id=p.userid
+inner join amsuj786n3x.dbo.CreditCardInfo cc on o.order_id=cc.order_id where cc.responsecode=1
+)
+INSERT INTO Order_Detail_T (O_Id, O_Order_Id, O_User_ID, O_TotalAmount, O_OrderAmount, O_VariableID, O_VariableAmount,
+O_PromoCodeId, O_OrderDateTime, O_First_Name, O_Last_Name, O_Email, O_Card_TransHash, O_Card_TransID)
+select order_id, a, id, order_amount, sub_order_amount, b,c,d,orderDate,firstname,lastname,Email,authorizationCode,transaction_id from cte where rw=1;
+SET IDENTITY_INSERT Order_Detail_T OFF;
+GO
+
+UPDATE Order_Detail_T set O_Order_Id='T' + RIGHT('00000000' + convert(varchar,O_Id), 9)
+WHERE O_Order_Id='';
+GO
+
 delete from User_Permission_Detail  where UP_Permission_Id in (1,2)
 
 insert into User_Permission_Detail 
@@ -13,11 +49,6 @@ Update Profile set Organiser ='Y'
 GO
 
 Alter table Ticket add eventTicketPriceID int null;
-GO
-
-
-UPDATE Order_Detail_T set O_Order_Id='T' + RIGHT('00000000' + convert(varchar,O_Id), 9)
-WHERE O_Order_Id='';
 GO
 
 DELETE FROM Publish_Event_Detail
@@ -55,8 +86,6 @@ INNER JOIN
 	AND et.Price = at.ticketPrice AND et.ord = at.ord
 WHERE et.T_Id = Ticket.T_Id
 
-
-drop table #guidTemp;
 GO
 
 
