@@ -27,42 +27,43 @@
     </div>
     <div id="content" class="animated fadeIn">
         <div class="col-md-12">
-            <table class="table footable" data-page-navigation=".pagination" data-page-size="25">
+            <table class="table footable intercept" data-page-navigation=".pagination" data-page-size="25">
                 <thead class="bg_white">
                     <tr class="bg_white">
+                        <th data-sorted="true" data-sort-ignore="true" data-sort="false"  data-hide="phone">#</th>
                         <th>
                             @Html.DisplayNameFor(model => model.PageName)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.PageNameUrl)
                         </th>
-                        <th>
+                        <th data-hide="phone">
                             @Html.DisplayNameFor(model => model.CreatedDate)
                         </th>
-                        <th>
+                        <th data-hide="phone">
                             @Html.DisplayNameFor(model => model.UpdateDate)
                         </th>
-                        <th>View</th>
-                        <th>Action</th>
+                        <th data-hide="phone" data-sort-ignore="true">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model) {
+                    @foreach (var item in Model)
+                    {
                         <tr>
+                            <td data-sorted="true" data-sort="false">
+                                @item.RowNumber
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.PageName)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.PageNameUrl)
+                                <a href="@ViewData["EventComboClientDomain"]/@item.PageNameUrl" target="_blank">@item.PageNameUrl</a>
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.CreatedDate)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.UpdateDate)
-                            </td>
-                            <td>
-                                @Html.ActionLink("View", "Details", new { id = item.BusinessPageID })
                             </td>
                             <td>
                                 <a href="@Url.Action("Edit", new { id = item.BusinessPageID })" class="btn btn-success br2 btn-xs fs12"><i class="fa fa-edit"></i> </a>
@@ -90,4 +91,37 @@
             @Html.ActionLink("Add", "Create", null, new { @class = "btn btn-info articleBtnCls" })
         </div>
     </div>
+    <script type="text/javascript">
+        var PageNumber = 0;
+
+        $(function () {
+            $('.footable').footable()
+            $('.footable').bind({
+                'footable_sorted': function (e) {
+                    addRowCount('.footable');
+                },
+                'footable_filtering': function (e) {
+                    if (e.clear) {
+                        return confirm('Do you want to clear the filter?');
+                    } else {
+                        return confirm('Do you want to filter by ' + e.filter);
+                    }
+                },
+                'footable_paging': function (e) {
+                    PageNumber = e.page;
+                    addRowCount('.footable');
+                }
+            });
+        });
+        function addRowCount(tableAttr) {
+            $(tableAttr).each(function () {
+                var RowCount = $('td:first-child', this).size();
+                $('td:first-child', this).each(function (i) {
+                    if (i < RowCount - 1) {
+                        $(this).html((PageNumber + i + 1));
+                    }
+                });
+            });
+        }
+    </script>
 </section>

@@ -17,5 +17,6 @@ namespace EventCombo.Models
         public long EventTypeID { get; set; }
         public string EventType1 { get; set; }
         public string EventHide { get; set; }
+        public bool IsOnFooter { get; set; }
     }
 }

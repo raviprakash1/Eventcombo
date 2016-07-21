@@ -23,6 +23,7 @@ namespace EventCombo
         mc.SmtpPassword = ConfigurationManager.AppSettings["Password"];
         mc.SmtpAuthentication = NLog.Targets.SmtpAuthenticationMode.Basic;
         mc.From = ConfigurationManager.AppSettings["DefaultEmail"];
+        mc.To = ConfigurationManager.AppSettings["ErrorReportEmail"];
       }
       LogManager.ReconfigExistingLoggers();
     }

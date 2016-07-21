@@ -57,11 +57,18 @@
   <script src="~/Scripts/AMaterial/demo.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
   <script src="~/Scripts/AMaterial/ngGallery.js"></script>
+    <script>
+        function moveImage() {
+            // var randNum = 110;
+            var randNum = Math.round(Math.random() * (300) - 600);
+            document.getElementById('footerlogo').style.backgroundPosition = randNum + 'vh 0px';
+        }
+    </script>
 </head>
-<body ng-app="@ViewBag.ngApp">
+<body ng-app="@ViewBag.ngApp" onload="moveImage()">
   @{ Html.RenderPartial("_AngularHeader", bModel); }
   @RenderBody()
-  @{ Html.RenderPartial("_AngularFooter"); }
+  @{ Html.RenderAction("Footer", "Home"); }
   @RenderSection("ScriptSection")
 </body>
 </html>

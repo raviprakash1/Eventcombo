@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CMS.Models;
+using System.Configuration;
 
 namespace CMS.Controllers
 {
@@ -19,7 +20,18 @@ namespace CMS.Controllers
         {
             if ((Session["UserID"] != null))
             {
-                return View(db.BusinessPages.ToList());
+                ViewData["EventComboClientDomain"] = ConfigurationManager.AppSettings["EventComboClientDomain"]+ "/ec";
+                var model = db.BusinessPages.AsEnumerable().Select((element, index) => new BusinessPage
+                {
+                    RowNumber = index + 1,
+                    BusinessPageID=element.BusinessPageID,
+                    PageName=element.PageName,
+                    PageNameUrl=element.PageNameUrl,
+                    PageContent=element.PageContent,
+                    CreatedDate=element.CreatedDate,
+                    UpdateDate=element.UpdateDate
+                }).ToList();
+                return View(model);
             }
             else {
                 return RedirectToAction("Login", "Home");

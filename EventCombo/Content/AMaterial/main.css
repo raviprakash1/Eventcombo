@@ -708,41 +708,52 @@
 /*FOOTER CSS*/
 
 footer {
-  position: relative;
-  bottom: -400px;
-  right: 0px;
-  font-weight: 200;
-  line-height: 1.4em;
+	position: relative;
+	bottom: -20vh;
+	right: 0px;
+	font-weight: 400;
+	line-height: 1.4em;
 }
-
+footer a {
+	text-decoration: none;
+	color: #0067A9;
+}
 .footer-right {
-  float: right;
-  bottom: 100px;
-  right: 50px;
-  position: absolute;
+	float: right;
+	bottom: 100px;
+	right: 50px;
+	position: absolute;
 }
-
 .footer-left {
-  float: left;
-  bottom: 100px;
-  left: 50px;
-  position: absolute;
+	float: left;
+	bottom: 100px;
+	left: 50px;
+	position: absolute;
 }
-
-.footerlogo {
-  text-align: center;
-  width: 100%;
-  height: 40vh;
-  background: url(../../Images/AMaterial/EventComboLogo.svg) center no-repeat;
-  background-size: 700vw;
-  overflow: hidden;
-  background-position: top;
+.footer-left div {
+	float: left;
+	margin-left: 5vw;
 }
-
+#footerlogo {
+	text-align: center;
+	width: 100%;
+	height: 50vh;
+	background: url(../../Images/AMaterial/EventComboLogo.svg) center no-repeat;
+	background-size: 700vh;
+	overflow: hidden;
+	background-position: 40vh 0;
+}
 .footerwhite {
-  background: rgba(255, 255, 255, 0.5);
-  width: 100%;
-  height: 77%;
+	background: rgba(255, 255, 255, 0.5);
+	width: 100%;
+	height: 84%;
+}
+footer img {
+	display: inline;
+	margin-right: 10px;
+}
+footer .social {
+	margin-left: 0px;
 }
 
 /*HEADER CSS*/
@@ -1299,4 +1310,26 @@ md-dialog {
 
 .clearfix {
   clear: both;
+}
+@media handheld, only screen and (max-width: 768px), only screen and (max-device-width: 768px) and (max-aspect-ratio: 13/9) {
+    .footer-left {
+        display: none;
+    }
+
+    .footer-right {
+        font-size: 3.2vw;
+        font-weight: 500;
+        width: 100vw;
+        text-align: center;
+        right: 0px !important;
+        bottom: 27px !important;
+    }
+}
+#site-content {
+    margin-left: 20px;
+}
+.grid {
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%;
 }
