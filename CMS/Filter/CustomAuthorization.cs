@@ -8,29 +8,29 @@ using System.Web.Mvc;
 public class CustomAuthorization : AuthorizeAttribute
 {
     EmsEntities context = new EmsEntities();
-    private readonly string[] allowedroles;
-    public CustomAuthorization(params string[] roles)
+    private readonly string[] AllowedPermissionIds;
+    public CustomAuthorization(params string[] PermissionIds)
     {
-        this.allowedroles = roles;
+        this.AllowedPermissionIds = PermissionIds;
     }
     protected override bool AuthorizeCore(HttpContextBase httpContext)
     {
         bool authorize = false;
         string UserId = (httpContext.Session["UserID"] != null ? httpContext.Session["UserID"].ToString() : string.Empty);
 
-        foreach (var role in allowedroles)
+        foreach (var PermissionId in AllowedPermissionIds)
         {
             var vRole = context.Database.SqlQuery<string>("Select RoleId from AspNetUserRoles where UserId='" + UserId + "'").SingleOrDefault();
-            if (vRole != null && Convert.ToInt16(vRole) == 1)
+            if (vRole != null && Convert.ToInt32(vRole) == 1)
             {
                 authorize = true;
             }
             else
             {
                 var vPer = (from c in context.User_Permission_Detail
-                            where c.UP_User_Id == UserId && c.UP_Permission_Id.ToString() == role
+                            where c.UP_User_Id == UserId && c.UP_Permission_Id.ToString() == PermissionId
                             select c).SingleOrDefault();
-                if (vPer != null && Convert.ToInt16(vPer.UP_Id) > 0)
+                if (vPer != null && vPer.UP_Id > 0)
                     authorize = true;
             }
         }
