@@ -258,8 +258,8 @@ namespace CMS.Controllers
                     foreach (var item in Permission)
                     {
                         Menu = new LeftMenu();
-                        Menu.MenuName = item.Permission_Desc;
-                        Menu.MenuPermissionCode = item.Permission_Id.ToString();
+                        Menu.PermissionDescription = item.Permission_Desc;
+                        Menu.PermissionId = item.Permission_Id;
                         MenuList.Add(Menu);
                     }
                 }
@@ -272,8 +272,8 @@ namespace CMS.Controllers
                     foreach (var item in Permission)
                     {
                         Menu = new LeftMenu();
-                        Menu.MenuName = item.p.Permission_Desc;
-                        Menu.MenuPermissionCode = item.p.Permission_Id.ToString();
+                        Menu.PermissionDescription = item.p.Permission_Desc;
+                        Menu.PermissionId = item.p.Permission_Id;
                         MenuList.Add(Menu);
                     }
                 }
