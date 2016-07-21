@@ -371,6 +371,7 @@
     <Compile Include="Models\GetOrganizerEventid_Result.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LeftMenu.cs" />
     <Compile Include="Models\ManageEvent.cs" />
     <Compile Include="Models\EmailTemplate.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -1242,6 +1243,8 @@
     <Content Include="Views\BusinessPages\Details.cshtml" />
     <Content Include="Views\BusinessPages\Edit.cshtml" />
     <Content Include="Views\BusinessPages\Index.cshtml" />
+    <Content Include="Views\Shared\LeftMenu.cshtml" />
+    <Content Include="Views\Permission\AccessDenied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1250,7 +1253,6 @@
     <Folder Include="Ckeditor\plugins\" />
     <Folder Include="Ckeditor\skins\" />
     <Folder Include="jquery-ui-1.11.4.custom\" />
-    <Folder Include="Views\Permission\" />
     <Folder Include="Views\test\" />
     <Folder Include="Views\ValidationMessage\" />
   </ItemGroup>
