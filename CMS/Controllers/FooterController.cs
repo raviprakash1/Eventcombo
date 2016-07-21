@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace CMS.Controllers
 {
+    [CustomAuthorization("15")]
     public class FooterController : Controller
     {
         private EmsEntities db = new EmsEntities();

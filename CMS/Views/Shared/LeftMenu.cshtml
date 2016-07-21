@@ -113,6 +113,15 @@
                         </a>
                     </li>
                 }
+                if (Permission.PermissionId == 15)
+                {
+                    <li>
+                        <a href="@Url.Action("Footer", "Footer")">
+                            <span class="fa fa-server"></span>
+                            <span class="sidebar-title">Footer</span>
+                        </a>
+                    </li>
+                }
             }
             <li class="sidebar-label pt20">Systems</li>
             @foreach (var Permission in Model)
