@@ -267,7 +267,7 @@ namespace CMS.Controllers
                 {
                     var Permission = (from c in db.User_Permission_Detail
                                       join p in db.Permission_Detail on c.UP_Permission_Id equals p.Permission_Id
-                                      where c.UP_User_Id == UserId && c.UP_Permission_Id.ToString() == UserRole
+                                      where c.UP_User_Id == UserId
                                       select new { c, p });
                     foreach (var item in Permission)
                     {
