@@ -10,7 +10,7 @@ using AutoMapper;
 
 namespace CMS.Controllers
 {
-  [Authorize]
+  [CustomAuthorization("12")]
   public class ArticleController : Controller
   {
     private IArticleService _service;

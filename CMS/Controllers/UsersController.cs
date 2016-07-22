@@ -13,6 +13,7 @@ using System.Data.SqlClient;
 
 namespace CMS.Controllers
 {
+    [CustomAuthorization("10")]
     public class UsersController : Controller
     {
         // GET: Users

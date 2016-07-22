@@ -14,7 +14,10 @@ namespace CMS.Controllers
         {
             return View();
         }
-
+        public ActionResult AccessDenied()
+        {
+            return View();
+        }
         public string GetPermission(int iPermissionId)
         {
             if ((Session["UserID"] == null))
