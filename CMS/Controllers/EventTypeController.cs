@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using CMS.Models;
 namespace CMS.Controllers
 {
+    [CustomAuthorization("8")]
     public class EventTypeController : Controller
     {
         // GET: EventType

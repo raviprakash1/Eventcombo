@@ -8,6 +8,7 @@ using CMS.Models;
 
 namespace CMS.Controllers
 {
+    [CustomAuthorization("6")]
     public class EmailController : Controller
     {
         EmsEntities db = new EmsEntities();

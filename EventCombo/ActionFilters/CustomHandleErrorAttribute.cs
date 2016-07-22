@@ -20,7 +20,7 @@ namespace EventCombo.ActionFilters
                 throw new ArgumentNullException("filterContext");
             }
 
-            if (filterContext.ExceptionHandled || !filterContext.HttpContext.IsCustomErrorEnabled)
+            if (filterContext.ExceptionHandled)
             {
                 return;
             }
