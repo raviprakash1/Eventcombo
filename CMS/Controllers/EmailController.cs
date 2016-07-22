@@ -20,7 +20,7 @@ namespace CMS.Controllers
                 {
                     templatename = "Welcome";
                 }
-                ViewBag.EmailTags = db.Email_Tag.Select(x => x.Tag_Name).ToList();
+                ViewBag.EmailTags = db.Email_Tag.OrderBy(x=>x.Tag_Name).Select(x => x.Tag_Name).ToList();
                 EmailTemplate obj = new EmailTemplate();
                 obj = EmailData(templatetag);
                 if (obj != null)

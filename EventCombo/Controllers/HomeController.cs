@@ -2488,8 +2488,90 @@ namespace EventCombo.Controllers
             CookieStore.SetCookie("ckHeader", header, TimeSpan.FromDays(1));
             //Session["Header"] = header;
         }
-        
+
+
+        public void SendEmailToFriend(string strFriendEmail, string strEventTitle , string strEventUrl,long lEvent=0)
+        {
+            if (lEvent >0)
+            {
+                EventCreation objCE = new EventCreation();
+                var EventDetail = objCE.GetEventdetail(lEvent);
+                strEventTitle = EventDetail.EventTitle;
+                var url = Request.Url;
+                var baseurl = url.GetLeftPart(UriPartial.Authority);
+                strEventUrl = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(strEventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = lEvent.ToString() });
+            }
+            List<Email_Tag> EmailTag = new List<Email_Tag>();
+            MyAccount ac = new MyAccount();
+            EmailTag = ac.getTag();
+            var Emailtemplate = ac.getEmail("email_friend");
+            string to = strFriendEmail, from = "", cc = "", bcc = "", emailname = "", subjectn = "", bodyn = "";
+            if (Emailtemplate != null)
+            {
+                if (!(string.IsNullOrEmpty(Emailtemplate.From)))
+                {
+                    from = Emailtemplate.From;
+                }
+                else
+                {
+                    from = ConfigurationManager.AppSettings.Get("UserName");
+                }
+
+                if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
+                {
+                    cc = Emailtemplate.CC;
+                }
+                if (!(string.IsNullOrEmpty(Emailtemplate.Bcc)))
+                {
+                    bcc = Emailtemplate.Bcc;
+                }
+                if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
+                {
+                    emailname = Emailtemplate.From_Name;
+                }
+                else
+                {
+                    emailname = from;
+                }
+
+                if (!string.IsNullOrEmpty(Emailtemplate.Subject))
+                {
+                    subjectn = Emailtemplate.Subject;
+                    for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                    {
+                        if (subjectn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                        {
+                            if (EmailTag[i].Tag_Name == "EventTitleId")
+                            {
+                                subjectn = subjectn.Replace("¶¶EventTitleId¶¶", strEventTitle);
+                            }
+
+                          
+                        }
+                    }
+                }
+
+
+
+
+                if (!string.IsNullOrEmpty(Emailtemplate.TemplateHtml))
+                {
+                    bodyn = new MvcHtmlString(HttpUtility.HtmlDecode(Emailtemplate.TemplateHtml)).ToHtmlString();
+                    for (int i = 0; i < EmailTag.Count; i++) // Loop with for.
+                    {
+                        if (bodyn.Contains("¶¶" + EmailTag[i].Tag_Name.Trim() + "¶¶"))
+                        {
+                            if (EmailTag[i].Tag_Name == "DiscoverEventurl")
+                            {
+                                bodyn = bodyn.Replace("¶¶DiscoverEventurl¶¶", strEventUrl);
+                            }
+                        }
+                    }
+                }
+
+
+                ac.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, "", emailname);
+            }
+        }
     }
-
-
 }

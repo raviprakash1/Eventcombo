@@ -827,7 +827,7 @@ namespace EventCombo.Controllers
                             }
                             else
                             {
-                                from = ConfigurationManager.AppSettings.Get("DefaultEmail"); //ConfigurationManager.AppSettings.Get("UserName");
+                                from = ConfigurationManager.AppSettings.Get("UserName"); //ConfigurationManager.AppSettings.Get("DefaultEmail"); 
 
                         }
                             if (!(string.IsNullOrEmpty(Emailtemplate.CC)))

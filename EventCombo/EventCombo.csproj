@@ -665,6 +665,7 @@
     <Compile Include="Utils\Email.cs" />
     <Compile Include="Utils\Ip2Geo.cs" />
     <Compile Include="Utils\ClientIPAddress.cs" />
+    <Compile Include="Utils\TenantRouteConstraint.cs" />
     <Compile Include="ViewModels\CookieStore.cs" />
     <Compile Include="ViewModels\EmailInvitation.cs" />
     <Compile Include="Utils\EncryptDecrypt.cs" />
@@ -1643,6 +1644,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Properties\assets\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\EmailServices\" />
     <Folder Include="Views\Html2Pdf\" />
     <Folder Include="Views\ImageAPI\" />
     <Folder Include="Views\Permission\" />
