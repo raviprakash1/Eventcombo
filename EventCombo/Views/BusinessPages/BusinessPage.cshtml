@@ -1,0 +1,17 @@
+﻿@model EventCombo.Models.BusinessPage
+
+@{
+    ViewBag.Title = Model.PageName;
+    Layout = "~/Views/Shared/_AngularLayout.cshtml";
+}
+
+<div id="site-container" class="grid">
+    <div id="site-content" role="main">
+        @Html.Raw(Model.PageContent)
+    </div>
+</div>
+@section ScriptSection
+{
+    <script src="@Url.Content("~/Scripts/AMaterial/main.js")"></script>
+}
+

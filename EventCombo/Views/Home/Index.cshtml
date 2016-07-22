@@ -56,7 +56,10 @@
     $(document).ready(function () {
         //url = url.replace("-parameter", vEventId);
         
-       
+        if ('@ViewBag.UserOrg' == "Y")
+        {
+            $("#btOkMes").click();
+        }
 
       
         
@@ -111,10 +114,7 @@
 
         }
 
-        if ('@ViewBag.UserOrg' == "Y")
-        {
-            $("#btOkMes").click();
-        }
+        
 
 
 

@@ -65,6 +65,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.3.5\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog.Web, Version=0.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.Web.4.2.1\lib\net35\NLog.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NReco.PdfGenerator, Version=1.1.11.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
       <HintPath>..\packages\NReco.PdfGenerator.1.1.11.0\lib\net20\NReco.PdfGenerator.dll</HintPath>
       <Private>True</Private>
@@ -209,15 +217,18 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\NLogConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\BusinessPagesController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\EventCategoryController.cs" />
     <Compile Include="Controllers\EventListController.cs" />
     <Compile Include="Controllers\EventTypeController.cs" />
     <Compile Include="Controllers\FeeSettingController.cs" />
+    <Compile Include="Controllers\FooterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageEventController.cs" />
@@ -231,6 +242,7 @@
     <Compile Include="DAL\Repository.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="DAL\UnitOfWorkFactory.cs" />
+    <Compile Include="Filter\CustomAuthorization.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -263,7 +275,13 @@
     <Compile Include="Models\BillingAddress.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BusinessPage.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CardDetail.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\City.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Cmsdata.Context.cs">
@@ -345,6 +363,7 @@
     <Compile Include="Models\Fee_Structure.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Footer.cs" />
     <Compile Include="Models\func_Split_Result.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
@@ -357,6 +376,7 @@
     <Compile Include="Models\GetOrganizerEventid_Result.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LeftMenu.cs" />
     <Compile Include="Models\ManageEvent.cs" />
     <Compile Include="Models\EmailTemplate.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -364,6 +384,7 @@
     <Compile Include="Models\Message.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MetaData.cs" />
     <Compile Include="Models\MultipleEvent.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
@@ -659,6 +680,77 @@
     <Content Include="plugins\ckeditor\ckeditor.js" />
     <Content Include="plugins\ckeditor\config.js" />
     <Content Include="plugins\ckeditor\contents.css" />
+    <Content Include="plugins\ckeditor\div\dialogs\div.js" />
+    <Content Include="plugins\ckeditor\div\icons\creatediv.png" />
+    <Content Include="plugins\ckeditor\div\icons\hidpi\creatediv.png" />
+    <Content Include="plugins\ckeditor\div\lang\af.js" />
+    <Content Include="plugins\ckeditor\div\lang\ar.js" />
+    <Content Include="plugins\ckeditor\div\lang\bg.js" />
+    <Content Include="plugins\ckeditor\div\lang\bn.js" />
+    <Content Include="plugins\ckeditor\div\lang\bs.js" />
+    <Content Include="plugins\ckeditor\div\lang\ca.js" />
+    <Content Include="plugins\ckeditor\div\lang\cs.js" />
+    <Content Include="plugins\ckeditor\div\lang\cy.js" />
+    <Content Include="plugins\ckeditor\div\lang\da.js" />
+    <Content Include="plugins\ckeditor\div\lang\de-ch.js" />
+    <Content Include="plugins\ckeditor\div\lang\de.js" />
+    <Content Include="plugins\ckeditor\div\lang\el.js" />
+    <Content Include="plugins\ckeditor\div\lang\en-au.js" />
+    <Content Include="plugins\ckeditor\div\lang\en-ca.js" />
+    <Content Include="plugins\ckeditor\div\lang\en-gb.js" />
+    <Content Include="plugins\ckeditor\div\lang\en.js" />
+    <Content Include="plugins\ckeditor\div\lang\eo.js" />
+    <Content Include="plugins\ckeditor\div\lang\es.js" />
+    <Content Include="plugins\ckeditor\div\lang\et.js" />
+    <Content Include="plugins\ckeditor\div\lang\eu.js" />
+    <Content Include="plugins\ckeditor\div\lang\fa.js" />
+    <Content Include="plugins\ckeditor\div\lang\fi.js" />
+    <Content Include="plugins\ckeditor\div\lang\fo.js" />
+    <Content Include="plugins\ckeditor\div\lang\fr-ca.js" />
+    <Content Include="plugins\ckeditor\div\lang\fr.js" />
+    <Content Include="plugins\ckeditor\div\lang\gl.js" />
+    <Content Include="plugins\ckeditor\div\lang\gu.js" />
+    <Content Include="plugins\ckeditor\div\lang\he.js" />
+    <Content Include="plugins\ckeditor\div\lang\hi.js" />
+    <Content Include="plugins\ckeditor\div\lang\hr.js" />
+    <Content Include="plugins\ckeditor\div\lang\hu.js" />
+    <Content Include="plugins\ckeditor\div\lang\id.js" />
+    <Content Include="plugins\ckeditor\div\lang\is.js" />
+    <Content Include="plugins\ckeditor\div\lang\it.js" />
+    <Content Include="plugins\ckeditor\div\lang\ja.js" />
+    <Content Include="plugins\ckeditor\div\lang\ka.js" />
+    <Content Include="plugins\ckeditor\div\lang\km.js" />
+    <Content Include="plugins\ckeditor\div\lang\ko.js" />
+    <Content Include="plugins\ckeditor\div\lang\ku.js" />
+    <Content Include="plugins\ckeditor\div\lang\lt.js" />
+    <Content Include="plugins\ckeditor\div\lang\lv.js" />
+    <Content Include="plugins\ckeditor\div\lang\mk.js" />
+    <Content Include="plugins\ckeditor\div\lang\mn.js" />
+    <Content Include="plugins\ckeditor\div\lang\ms.js" />
+    <Content Include="plugins\ckeditor\div\lang\nb.js" />
+    <Content Include="plugins\ckeditor\div\lang\nl.js" />
+    <Content Include="plugins\ckeditor\div\lang\no.js" />
+    <Content Include="plugins\ckeditor\div\lang\pl.js" />
+    <Content Include="plugins\ckeditor\div\lang\pt-br.js" />
+    <Content Include="plugins\ckeditor\div\lang\pt.js" />
+    <Content Include="plugins\ckeditor\div\lang\ro.js" />
+    <Content Include="plugins\ckeditor\div\lang\ru.js" />
+    <Content Include="plugins\ckeditor\div\lang\si.js" />
+    <Content Include="plugins\ckeditor\div\lang\sk.js" />
+    <Content Include="plugins\ckeditor\div\lang\sl.js" />
+    <Content Include="plugins\ckeditor\div\lang\sq.js" />
+    <Content Include="plugins\ckeditor\div\lang\sr-latn.js" />
+    <Content Include="plugins\ckeditor\div\lang\sr.js" />
+    <Content Include="plugins\ckeditor\div\lang\sv.js" />
+    <Content Include="plugins\ckeditor\div\lang\th.js" />
+    <Content Include="plugins\ckeditor\div\lang\tr.js" />
+    <Content Include="plugins\ckeditor\div\lang\tt.js" />
+    <Content Include="plugins\ckeditor\div\lang\ug.js" />
+    <Content Include="plugins\ckeditor\div\lang\uk.js" />
+    <Content Include="plugins\ckeditor\div\lang\vi.js" />
+    <Content Include="plugins\ckeditor\div\lang\zh-cn.js" />
+    <Content Include="plugins\ckeditor\div\lang\zh.js" />
+    <Content Include="plugins\ckeditor\div\plugin.js" />
     <Content Include="plugins\ckeditor\lang\en.js" />
     <Content Include="plugins\ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
     <Content Include="plugins\ckeditor\plugins\a11yhelp\dialogs\lang\af.js" />
@@ -1128,9 +1220,18 @@
     <Content Include="Models\Cmsdata.edmx.diagram">
       <DependentUpon>Cmsdata.edmx</DependentUpon>
     </Content>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="plugins\ckeditor\div\icons\hidpi\Thumbs.db" />
+    <Content Include="plugins\ckeditor\div\icons\Thumbs.db" />
     <None Include="Properties\PublishProfiles\CMSPublish.pubxml" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Properties\PublishProfiles\My local.pubxml" />
+    <None Include="Properties\PublishProfiles\MyLocal.pubxml" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\filer\jquery.filer.js" />
@@ -1215,6 +1316,14 @@
     <Content Include="Views\Orders\_PurchasedTicketFavoriteList.cshtml" />
     <Content Include="Views\Orders\_PurchasedTicketList.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\BusinessPages\Create.cshtml" />
+    <Content Include="Views\BusinessPages\Delete.cshtml" />
+    <Content Include="Views\BusinessPages\Details.cshtml" />
+    <Content Include="Views\BusinessPages\Edit.cshtml" />
+    <Content Include="Views\BusinessPages\Index.cshtml" />
+    <Content Include="Views\Shared\LeftMenu.cshtml" />
+    <Content Include="Views\Permission\AccessDenied.cshtml" />
+    <Content Include="Views\Footer\Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1223,7 +1332,7 @@
     <Folder Include="Ckeditor\plugins\" />
     <Folder Include="Ckeditor\skins\" />
     <Folder Include="jquery-ui-1.11.4.custom\" />
-    <Folder Include="Views\Permission\" />
+    <Folder Include="Views\test\" />
     <Folder Include="Views\ValidationMessage\" />
   </ItemGroup>
   <ItemGroup>

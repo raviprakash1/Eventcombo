@@ -117,9 +117,11 @@
             </div>
         </div>
         <div class="col-sm-12 filter_sep cont_margin">
+          @if (HttpContext.Current.Session["logo"] != null)
+          { 
             <img src="~/Images/desi-@HttpContext.Current.Session["logo"].ToString().Trim()-logo.gif">
             <div class="cus_left_kick"><</div>
-          
+          }
         </div>
 
     </div>
@@ -184,13 +186,11 @@
 
                                             <div id="collapse2" class="panel-collapse collapse">
                                                 <div class="panel-body no-padding">
-                                                    
-                                                    <p><a href="#" id="pAcc">Create Event</a></p>
+
+                                                    <p>@Html.ActionLink("Create Event", "CreateEvent", "EventManagement")</p>
                                                     <p>@Html.ActionLink("My Events", "EventList", "EventList")</p>
-                                                  
                                                     <p>@Html.ActionLink("Events Help", "EventHelp", "Account")</p>
 
-                                                   
                                                 </div>
                                             </div>
                                         </div>

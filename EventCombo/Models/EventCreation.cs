@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,6 +14,8 @@ namespace EventCombo.Models
     
     public class EventCreation
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         EventComboEntities db = new EventComboEntities();
         public long EventID { get; set; }
         public long EventTypeID { get; set; }
@@ -146,7 +149,7 @@ namespace EventCombo.Models
                         }
                         catch (Exception ex)
                         {
-                            ExceptionLogging.SendErrorToText(ex);
+                          logger.Error("Exception during request processing", ex);
                         }
                     }
                     strResult = "Y";

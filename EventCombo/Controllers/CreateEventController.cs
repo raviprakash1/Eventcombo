@@ -23,12 +23,15 @@ using System.Data.Entity.SqlServer;
 using System.Web.UI;
 using System.Configuration;
 using EventCombo.ViewModels;
+using NLog;
 
 namespace EventCombo.Controllers
 {
     [OutputCache(NoStore = true, Location = OutputCacheLocation.None)]
     public class CreateEventController : Controller
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         string facebook_urlAuthorize_base = "https://graph.facebook.com/oauth/authorize";
         string facebook_urlGetToken_base = "https://graph.facebook.com/oauth/access_token";
         string facebook_AppID = "963347903739086";
@@ -225,7 +228,7 @@ namespace EventCombo.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
 
                 //EventCreation ObjEV = new EventCreation();
@@ -269,8 +272,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return strHtml.ToString();
+              logger.Error("Exception during request processing", ex);
+              return strHtml.ToString();
 
             }
 
@@ -312,8 +315,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return strHtml.ToString();
+              logger.Error("Exception during request processing", ex);
+              return strHtml.ToString();
 
             }
 
@@ -342,8 +345,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return strHtml.ToString();
+              logger.Error("Exception during request processing", ex);
+              return strHtml.ToString();
 
             }
 
@@ -369,8 +372,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return "Y";
+              logger.Error("Exception during request processing", ex);
+              return "Y";
 
             }
         }
@@ -953,8 +956,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return lEventId;
+              logger.Error("Exception during request processing", ex);
+              return lEventId;
             }
             return lEventId;
         }
@@ -1480,7 +1483,7 @@ namespace EventCombo.Controllers
                     }
                 }catch(Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
             }
 
@@ -1509,8 +1512,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                strForView = "N";
+              logger.Error("Exception during request processing", ex);
+              strForView = "N";
             }
             //Session["Fromname"] = "events";
             TempData["ForViewOnly"] = strForView;
@@ -1834,7 +1837,7 @@ namespace EventCombo.Controllers
                 viewEvent.Orderdetail = tickettype;
             }catch(Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
+              logger.Error("Exception during request processing", ex);
             }
             return View(viewEvent);
         }
@@ -2052,7 +2055,7 @@ namespace EventCombo.Controllers
                     int i = db.SaveChanges();
                 }catch(Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
                 return "saved";
 
@@ -2081,7 +2084,7 @@ namespace EventCombo.Controllers
                             objEnt.SaveChanges();
                         }catch (Exception ex)
                         {
-                            ExceptionLogging.SendErrorToText(ex);
+                          logger.Error("Exception during request processing", ex);
                         }
                     }
                     strResult = "Y";
@@ -2157,7 +2160,7 @@ namespace EventCombo.Controllers
                         context.SaveChanges();
                     }catch(Exception ex)
                     {
-                        ExceptionLogging.SendErrorToText(ex);
+                      logger.Error("Exception during request processing", ex);
                     }
                 }
                 
@@ -2266,8 +2269,8 @@ public string Checkpassword(string password ,long id)
             }
             catch (Exception exc)
             {
-                ExceptionLogging.SendErrorToText(exc);
-                Response.Write("<br /><br />ERROR : " + exc.Message);
+              logger.Error("Exception during request processing", exc);
+              Response.Write("<br /><br />ERROR : " + exc.Message);
             }
             finally
             {
@@ -2296,8 +2299,8 @@ public string Checkpassword(string password ,long id)
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                strResult = "There is some Problem.";
+              logger.Error("Exception during request processing", ex);
+              strResult = "There is some Problem.";
             }
             return strResult;
         }
@@ -2323,8 +2326,8 @@ public string Checkpassword(string password ,long id)
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return strHtml.ToString();
+              logger.Error("Exception during request processing", ex);
+              return strHtml.ToString();
 
             }
 

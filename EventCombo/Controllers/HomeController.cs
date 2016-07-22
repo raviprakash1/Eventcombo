@@ -27,6 +27,7 @@ using Microsoft.Owin.Security.OAuth;
 using PagedList;
 using EventCombo.Utils;
 using EventCombo.ViewModels;
+using NLog;
 
 namespace EventCombo.Controllers
 {
@@ -34,6 +35,7 @@ namespace EventCombo.Controllers
     public class HomeController : Controller
     {
 
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -1143,7 +1145,7 @@ namespace EventCombo.Controllers
                         if (vAddress != null)
                         {
                             objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble((strLat != "" ? strLat:"0")), Convert.ToDouble((strLong != "" ? strLong : "0")), Convert.ToDouble((vAddress.Latitude != "" ? vAddress.Latitude : "0")), Convert.ToDouble((vAddress.Longitude != "" ? vAddress.Longitude : "0")));
-                            if (vAddress.ConsolidateAddress.Trim() != string.Empty)
+                            if (!String.IsNullOrWhiteSpace(vAddress.ConsolidateAddress))
                             {
                                 objDisEv.EventAddress = vAddress.ConsolidateAddress;
                             }
@@ -1559,7 +1561,7 @@ namespace EventCombo.Controllers
                 }
             }catch(Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
+              logger.Error("Exception during request processing", ex);
 
             }
            
@@ -2048,7 +2050,7 @@ namespace EventCombo.Controllers
         }
         public string checkid()
         {
-            Session["ReturnUrl"] = "CreateEvent~" + Url.Action("CreateEvent", "CreateEvent");
+            Session["ReturnUrl"] = "CreateEvent~" + Url.Action("CreateEvent", "EventManagement");
 
 
             if (Session["AppId"] == null)
@@ -2485,6 +2487,48 @@ namespace EventCombo.Controllers
 
             CookieStore.SetCookie("ckHeader", header, TimeSpan.FromDays(1));
             //Session["Header"] = header;
+        }
+
+        public ActionResult Footer()
+        {
+            Footer footer = new Footer();
+            string User = "";
+            string UserLatitude = "";
+            string UserLongitude = "";
+
+            if (Session["AppId"] != null)
+            {
+                User = Session["AppId"].ToString();
+            }
+            var aspuser = db.Profiles.FirstOrDefault(i => i.UserID == User);
+            if (aspuser != null)
+            {
+                var city = db.Cities.FirstOrDefault(c => c.CityName == aspuser.City);
+                if (city != null)
+                {
+                    UserLatitude = city.Latitude;
+                    UserLongitude = city.Longitude;
+                }
+            }
+            ViewData["UserLatitude"] = UserLatitude;
+            ViewData["UserLongitude"] = UserLongitude;
+
+            var businessPages = db.BusinessPages.Where(x => x.IsOnFooter == true).OrderBy(x => x.PageOrder).ToList();
+            if (businessPages != null)
+            {
+                footer.BusinessPages = businessPages;
+            }
+            var eventTypes = db.EventTypes.Where(x => x.IsOnFooter == true).OrderBy(x => x.EventType1).ToList();
+            if (eventTypes != null)
+            {
+                footer.EventTypes = eventTypes;
+            }
+            var cities = db.Cities.Where(x => x.IsOnFooter == true).OrderBy(x => x.CityName).ToList();
+            if (cities != null)
+            {
+                footer.Cities = cities;
+            }
+            return PartialView("_AngularFooter", footer);
         }
         
     }

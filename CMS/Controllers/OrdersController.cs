@@ -9,6 +9,7 @@ using CMS.Models;
 
 namespace CMS.Controllers
 {
+    [CustomAuthorization("13")]
   public class OrdersController : Controller
   {
     TicketService _tservice;

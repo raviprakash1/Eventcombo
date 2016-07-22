@@ -17,13 +17,15 @@ using System.Net;
 using EventCombo.Utils;
 using System.Web.UI;
 using System.Configuration;
+using NLog;
 
 namespace EventCombo.Controllers
 {
     [OutputCache(NoStore = true, Location = OutputCacheLocation.None)]
     public class EditEventController : Controller
     {
-        // GET: EditEvent
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+      // GET: EditEvent
         EventComboEntities db = new EventComboEntities();
         public ActionResult EditEvent()
         {
@@ -139,7 +141,7 @@ namespace EventCombo.Controllers
                     ObjEV.EventTitle = "Form Editing";
                 }catch(Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
 
 
@@ -365,7 +367,7 @@ namespace EventCombo.Controllers
                     objCr.Isadmin = Isadmin;
                 }catch(Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
 
                 return View(objCr);
@@ -410,8 +412,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return strHtml.ToString();
+              logger.Error("Exception during request processing", ex);
+              return strHtml.ToString();
 
             }
 
@@ -444,8 +446,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return strHtml.ToString();
+              logger.Error("Exception during request processing", ex);
+              return strHtml.ToString();
 
             }
 
@@ -473,8 +475,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return "Y";
+              logger.Error("Exception during request processing", ex);
+              return "Y";
 
             }
         }
@@ -858,8 +860,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return 0;
+              logger.Error("Exception during request processing", ex);
+              return 0;
             }
             return lEventId;
         }
@@ -1636,7 +1638,7 @@ namespace EventCombo.Controllers
                     objJson.Variabledesc = strvariableHtml.ToString();
                 }catch(Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
 
               
@@ -2142,8 +2144,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return 0;
+              logger.Error("Exception during request processing", ex);
+              return 0;
             }
             return lEventId;
         }
@@ -2272,6 +2274,7 @@ namespace EventCombo.Controllers
                                             subjectn = subjectn.Replace("¶¶EventAddressID¶¶", address);
 
                                         }
+
 
                                         // All tags
 
@@ -3134,8 +3137,8 @@ namespace EventCombo.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
-                    return 0;
+                  logger.Error("Exception during request processing", ex);
+                  return 0;
                 }
                 return Parent_EventID;
             }
@@ -3720,8 +3723,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                strResult = "N";
+              logger.Error("Exception during request processing", ex);
+              strResult = "N";
             }
             return strResult;
         }
@@ -3744,8 +3747,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                strResult = "N";
+              logger.Error("Exception during request processing", ex);
+              strResult = "N";
             }
             return strResult;
         }
@@ -3824,7 +3827,7 @@ namespace EventCombo.Controllers
                     }
                 }catch(Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
             }
 
@@ -3853,8 +3856,8 @@ namespace EventCombo.Controllers
                     }
                     catch (Exception ex)
                     {
-                        ExceptionLogging.SendErrorToText(ex);
-                        msg = "N";
+                      logger.Error("Exception during request processing", ex);
+                      msg = "N";
                     }
 
                 }
@@ -4246,7 +4249,7 @@ namespace EventCombo.Controllers
                     int i = db.SaveChanges();
                 }catch(Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
 
                  return "saved";

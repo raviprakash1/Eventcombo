@@ -188,10 +188,10 @@
             @*@Html.ActionLink("Discover Events", "DiscoverEvents", "Home")*@
             <a href="javascript:void(0)" onclick="setsession(this.id);" id='discover'>Discover Events</a>
           </div>
-          <div class="col-sm-2 disc_title_head"><a href="@Url.Action("Buzz", "Article")" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a></div>
+          <div class="col-sm-2 disc_title_head"><a href="@Url.Action("Buzz", "Article")" onclick="return setsession(this.id);" id='GetBuzz'>Get the Buzz</a></div>
           <div class="col-sm-5 frnt_cret_evnt">
             <div class="psst">
-              <a href="javascript:void(0)" onclick="checksession();">Create Event</a>
+              <a href="@Url.Action("CreateEvent", "EventManagement")" onclick="return checksession();">Create Event</a>
             </div>
 
 
@@ -243,14 +243,11 @@
                     @*@Html.ActionLink("Discover Events", "DiscoverEvents", "Home")*@
                     <a href="javascript:void(0)" onclick="setsession(this.id);" id='discover'>Discover Events</a>
                   </div>
-                  <div class="col-sm-2 disc_title_head"><a href="javascript:void(0)" onclick="setsession(this.id);" id='GetBuzz'>Get the Buzz</a>@*@Html.ActionLink("", "GetBuzz", "Home")*@  </div>
+                  <div class="col-sm-2 disc_title_head"><a href="@Url.Action("Buzz", "Article")" onclick="return setsession(this.id);" id='GetBuzz'>Get the Buzz</a></div>
                   <div class="col-sm-5 frnt_cret_evnt">
                     <div class="psst">
-                      <a href="javascript:void(0)" onclick="checksession();">Create Event</a>
-
+                      <a href="@Url.Action("CreateEvent", "EventManagement")" onclick="return checksession();">Create Event</a>
                     </div>
-
-
                   </div>
 
                 </div>
@@ -281,18 +278,18 @@
 
           <div class="row fot_cont">
             <div class="col-sm-4">
-              <a href="javascript:void(0)">About Us</a>
+              <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="about-us"})">About Us</a>
               <br>
-              <a href="javascript:void(0)">Contact Us</a>
+              <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="contact-us"})">Contact Us</a>
               <br>
-              <a href="javascript:void(0)">Terms Of Service</a>
+              <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="terms-and-conditions"})">Terms Of Service</a>
             </div>
             <div class="col-sm-4">
-              <a href="javascript:void(0)">Ticket Purchase FAQ </a>
+              <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="ticket-purchase-faq"})">Ticket Purchase FAQ </a>
               <br>
-              <a href="javascript:void(0)">Ticket Fulfillment Policy</a>
+              <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="ticket-fulfillment-policy"})">Ticket Fulfillment Policy</a>
               <br>
-              <a href="javascript:void(0)">Privacy Policy</a>
+              <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="privacy-policy"})">Privacy Policy</a>
             </div>
             <div class="col-sm-4">
               <a href="javascript:void(0)">Facebook</a>
@@ -320,18 +317,17 @@
 
           <div class="row fot_cont">
             <div class="col-sm-4">
-              <a href="javascript:void(0)">About Us</a>
+              <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="about-us"})">About Us</a>
               <br>
-              <a href="javascript:void(0)">Contact Us</a>
-              <br>
-              <a href="javascript:void(0)">Terms Of Service</a>
-            </div>
+                <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="contact-us"})">Contact Us</a>
+                <br>
+                <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="terms-and-conditions"})">Terms Of Service</a>            </div>
             <div class="col-sm-4">
-              <a href="javascript:void(0)">Ticket Purchase FAQ </a>
-              <br>
-              <a href="javascript:void(0)">Ticket Fulfillment Policy</a>
-              <br>
-              <a href="javascript:void(0)">Privacy Policy</a>
+                <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="ticket-purchase-faq"})">Ticket Purchase FAQ </a>
+                <br>
+                <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="ticket-fulfillment-policy"})">Ticket Fulfillment Policy</a>
+                <br>
+                <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="privacy-policy"})">Privacy Policy</a>
             </div>
             <div class="col-sm-4">
               <a href="javascript:void(0)">Facebook</a>
@@ -483,9 +479,6 @@
   </div>
 </body>
 </html>
-
-
-
 
 
 <script type="text/javascript">
@@ -668,12 +661,8 @@
             url: '@Url.Action("setsessid", "Home")',
             data: { id: e },
             type: "Post",
+            async: false,
             success: function (data) {
-
-            },
-            error: function (data) {
-             
-                return false
             }
         });
 
@@ -734,14 +723,7 @@
 
 
         }
-
-        if (e == "GetBuzz") {
-            window.location.href = '@Url.Action("GetBuzz", "Home")';
-
-
-
-
-        }
+      return true;
     }
     $("#signUpPopup").on('click', function () {
         $('#SignupEmail').css("border", "black solid 1px");
@@ -772,28 +754,21 @@
 
 
     function checksession() {
+        var result = false;
         $.ajax({
-            url: '@Url.Action("checkid", "Home")',
-            type: "Post",
-            success: function (data) {
+          url: '@Url.Action("checkid", "Home")',
+          type: "Post",
+          async: false,
+          success: function (data) {
 
-                if (data == "Y") {
-                    $("#loginPopup").click();
-                    // url.val('@Url.Action("CreateEvent", "CreateEvent")');
-                    return false;
-                }
-                else {
-                    
-                    window.location.href = '@Url.Action("CreateEvent", "CreateEvent")';
-                    return true;
-                }
-            },
-            error: function (data) {
-              
-                return false
+            if (data == "Y") {
+              $("#loginPopup").click();
+            } else {
+              result = true;
             }
+          }
         });
-
+        return result;
     }
 </script>
 

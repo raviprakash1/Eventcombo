@@ -21,6 +21,7 @@ using System.Text.RegularExpressions;
 using EventCombo.ViewModels;
 using System.Globalization;
 using System.Configuration;
+using NLog;
 
 namespace EventCombo.Controllers
 {
@@ -29,6 +30,7 @@ namespace EventCombo.Controllers
 
     public class TicketPaymentController : Controller
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         EventComboEntities db = new EventComboEntities();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -247,7 +249,7 @@ namespace EventCombo.Controllers
             catch (Exception ex)
             {
                 strResult = "There is some Problem.";
-                ExceptionLogging.SendErrorToText(ex);
+                logger.Error("Exception during request processing", ex);
             }
             return strResult;
         }
@@ -449,7 +451,7 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
+              logger.Error("Exception during request processing", ex);
             }
             return strResult;
         }
@@ -479,7 +481,7 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
+              logger.Error("Exception during request processing", ex);
             }
             return strResult;
         }
@@ -528,8 +530,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return "N";
+              logger.Error("Exception during request processing", ex);
+              return "N";
             }
         }
         public string UnLockPromoCode()
@@ -548,8 +550,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return "N";
+              logger.Error("Exception during request processing", ex);
+              return "N";
             }
         }
         public void setsession(string id, long Eventid)
@@ -630,8 +632,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                strResult = "N";
+              logger.Error("Exception during request processing", ex);
+              strResult = "N";
             }
             return strResult;
         }
@@ -640,7 +642,6 @@ namespace EventCombo.Controllers
         {
             try
             {
-
                 string strOrderNo = "";
                 string ApiLoginID; string ApiTransactionKey; string strCardNo; string strExpDate; string strCvvCode; decimal dAmount;
                 ApiLoginID = ""; ApiTransactionKey = ""; strCardNo = ""; strExpDate = ""; strCvvCode = ""; dAmount = 0;
@@ -903,7 +904,7 @@ namespace EventCombo.Controllers
                             {
                                 transaction.Rollback();
 
-                                ExceptionLogging.SendErrorToText(ex);
+                                logger.Error("Exception during request processing", ex);
                             }
 
                             //else if (strPaymentType == "P")
@@ -937,8 +938,7 @@ namespace EventCombo.Controllers
             catch (Exception ex)
             {
                 Console.Write("Exp");
-                ExceptionLogging.SendErrorToText(ex);
-                ExceptionLogging.SendErrorToText(ex.InnerException);
+                logger.Error("Exception during request processing", ex);
                 return Json(new { Message = ex.Message, Order = "" }); ;
 
             }
@@ -966,7 +966,7 @@ namespace EventCombo.Controllers
             catch (Exception ex)
             {
                 dResult = 0;
-                ExceptionLogging.SendErrorToText(ex);
+                logger.Error("Exception during request processing", ex);
             }
 
 
@@ -1747,7 +1747,7 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
+              logger.Error("Exception during request processing", ex);
             }
         }
         public MemoryStream generateTicketPDF(string guid, long eventid, List<Email_Tag> emailtag, string fname, string htmlPath)
@@ -2436,7 +2436,7 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
+              logger.Error("Exception during request processing", ex);
             }
             return mms;
 
@@ -2461,7 +2461,7 @@ namespace EventCombo.Controllers
                     }
                     catch (Exception ex)
                     {
-                        ExceptionLogging.SendErrorToText(ex);
+                      logger.Error("Exception during request processing", ex);
                     }
 
 
@@ -2502,8 +2502,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                throw;
+              logger.Error("Exception during request processing", ex);
+              throw;
             }
 
 
@@ -3028,7 +3028,7 @@ namespace EventCombo.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
                 Session["TicketLockedId"] = strGUID;
                 return View(ps);
@@ -3750,7 +3750,7 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
+              logger.Error("Exception during request processing", ex);
             }
             return strResult;
 
@@ -3775,7 +3775,7 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
+              logger.Error("Exception during request processing", ex);
             }
 
 
@@ -3818,7 +3818,7 @@ namespace EventCombo.Controllers
 
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
+              logger.Error("Exception during request processing", ex);
             }
 
             return URL;

@@ -7,6 +7,7 @@ using CMS.Models;
 
 namespace CMS.Controllers
 {
+    [CustomAuthorization("9")]
     public class EventCategoryController : Controller
     {
         // GET: EventCategory

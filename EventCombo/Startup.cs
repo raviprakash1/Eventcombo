@@ -17,8 +17,6 @@ namespace EventCombo
         {
             ConfigureAuth(app);
 
-            
-
             var options = new SqlServerStorageOptions
             {
                 QueuePollInterval = TimeSpan.FromSeconds(300) // Default value
@@ -49,6 +47,7 @@ namespace EventCombo
             };
 
             app.UseHangfireDashboard("/hangfire", hfOptions);
+            NLogConfig.Configure();            
         }
     }
 }
