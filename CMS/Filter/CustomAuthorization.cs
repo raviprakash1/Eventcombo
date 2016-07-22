@@ -20,7 +20,7 @@ public class CustomAuthorization : AuthorizeAttribute
 
         foreach (var PermissionId in AllowedPermissionIds)
         {
-            var vRole = context.Database.SqlQuery<string>("Select RoleId from AspNetUserRoles where UserId='" + UserId + "'").SingleOrDefault();
+            var vRole = context.Database.SqlQuery<string>("Select RoleId from AspNetUserRoles where UserId=@UserId", new System.Data.SqlClient.SqlParameter("@UserId", UserId)).SingleOrDefault();
             if (vRole != null && Convert.ToInt32(vRole) == 1)
             {
                 authorize = true;

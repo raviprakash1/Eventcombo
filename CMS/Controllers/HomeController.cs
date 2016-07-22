@@ -248,7 +248,7 @@ namespace CMS.Controllers
             List<LeftMenu> MenuList = new List<LeftMenu>();
 
             string UserId = (Session["UserID"] != null ? Session["UserID"].ToString() : string.Empty);
-            var UserRole = db.Database.SqlQuery<string>("Select RoleId from AspNetUserRoles where UserId='" + UserId + "'").SingleOrDefault();
+            var UserRole = db.Database.SqlQuery<string>("Select RoleId from AspNetUserRoles where UserId=@UserId", new System.Data.SqlClient.SqlParameter("@UserId", UserId)).SingleOrDefault();
             if (UserRole != null)
             {
                 if (Convert.ToInt16(UserRole) == 1)
