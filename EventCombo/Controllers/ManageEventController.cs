@@ -1686,11 +1686,8 @@ namespace EventCombo.Controllers
                                         var baseurl = url.GetLeftPart(UriPartial.Authority);
                                         string strUrl = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(strEventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(Eventid).ToString() });
                                         bodyn = bodyn.Replace("¶¶DiscoverEventurl¶¶", strUrl);
-
                                     }
-
                                 }
-
                             }
                         }
 

@@ -5435,6 +5435,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="PublishSingleEvent1" FunctionName="EventComboModel.Store.PublishSingleEvent" />
+          <FunctionImportMapping FunctionImportName="PublishSingleEvent" FunctionName="EventComboModel.Store.PublishSingleEvent" />
           <EntitySetMapping Name="BusinessPages">
             <EntityTypeMapping TypeName="EventComboModel.BusinessPage">
               <MappingFragment StoreEntitySet="BusinessPage">

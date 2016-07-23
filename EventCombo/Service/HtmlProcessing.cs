@@ -12,11 +12,16 @@ namespace EventCombo.Service
 
     public static string StripTagsRegex(string source)
     {
+      if (String.IsNullOrEmpty(source))
+        return source;
       return _htmlRegex.Replace(source, string.Empty);
     }
 
     public static string GetShortString(string source, int minLength, int maxLength, string delimiter)
     {
+      if (String.IsNullOrEmpty(source))
+        return source;
+      delimiter = String.IsNullOrEmpty(delimiter) ? "" : delimiter;
       if (minLength > maxLength)
         throw new ArgumentException("Wrong minimum and maximum lengths.");
       if (source.Length <= maxLength)

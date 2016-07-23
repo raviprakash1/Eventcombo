@@ -39,8 +39,8 @@
         long pastCount = Model.OrderTypeInfo.Where(m => m.OrderType == OrderTypes.Past).First().TotalCount;
       }
       <ul class="nav nav-tabs purchaseTicketHeaderTabs">
-        <li class="active"><a data-toggle="tab" href="#UpcomingEvents">Upcoming Events (@upcomingCount)</a></li>
-        <li><a data-toggle="tab" href="#PastEvents">Past Events (@pastCount)</a></li>
+        <li class="active"><a data-toggle="tab" href="#UpcomingEvents">Present Orders (@upcomingCount)</a></li>
+        <li><a data-toggle="tab" href="#PastEvents">Past Orders (@pastCount)</a></li>
       </ul>
 
       <div class="tab-content">

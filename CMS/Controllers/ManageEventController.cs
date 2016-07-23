@@ -123,10 +123,9 @@ namespace CMS.Controllers
                 ddlEventSubCategory = ddlEventSubCategory != null ? ddlEventSubCategory : "0";
                 ddlEventCategory = ddlEventCategory != null ? ddlEventCategory : "0";
                 Features = Features != null ? Features : "0";
-                Events = Events != null ? Events : "0";
+                Events = Events != null ? Events : "1";
                 Tickets = Tickets != null ? Tickets : "0";
                 var objlst = GetAllEvents(SearchStringEventTitle, EventType, ddlEventCategory, ddlEventSubCategory, Features, Events, Tickets,"M");
-
                 switch (sortorder)
                 {
                     case "sno":
@@ -564,20 +563,18 @@ namespace CMS.Controllers
                     TagEvents.Add(new SelectListItem()
                     {
                         Text = "Select",
-                        Value = "0",
-                        Selected = true
+                        Value = "0"
+                        
                     });
                     TagEvents.Add(new SelectListItem()
                     {
                         Text = "Upcoming Events",
-                        Value = "1",
-                        Selected = true
+                        Value = "1"
                     });
                     TagEvents.Add(new SelectListItem()
                     {
                         Text = "Expired Events",
-                        Value = "2",
-                        Selected = true
+                        Value = "2"
                     });
 
                     List<SelectListItem> Tickets = new List<SelectListItem>();
@@ -819,7 +816,8 @@ namespace CMS.Controllers
                         TagEvents.Add(new SelectListItem()
                         {
                             Text = "Upcoming Events",
-                            Value = "1"
+                            Value = "1",
+                            Selected = true
 
                         });
                     }
@@ -828,8 +826,7 @@ namespace CMS.Controllers
                         TagEvents.Add(new SelectListItem()
                         {
                             Text = "Upcoming Events",
-                            Value = "1",
-                            Selected = true
+                            Value = "1"
                         });
                     }
                     if (type == "E")
@@ -940,12 +937,9 @@ namespace CMS.Controllers
                         if (Convert.ToInt32(Events) == 1)
                         {
                             type = "M";
-
-                            //strsql += " And EV.E_Enddate > GETUTCDATE()";
                         }
                         if (Convert.ToInt32(Events) == 2)
                         {
-                            //strsql += " And EV.E_Enddate < GETUTCDATE()";
                             type = "E";
                         }
                     }
@@ -965,16 +959,30 @@ namespace CMS.Controllers
                        
                     if (type == "M")
                     {
-                        if (!string.IsNullOrEmpty(strsql))
+                        if (Convert.ToInt32(Events) > 0)
                         {
-                            objEv = db.V_EventsList.SqlQuery("Select * from V_EventsList EV where 1=1  " + strsql + " ").ToList<V_EventsList>();
+                            if (!string.IsNullOrEmpty(strsql))
+                            {
+                                objEv = db.V_EventsList.SqlQuery("Select * from V_EventsListUpcoming EV where 1=1  " + strsql + " ").ToList<V_EventsList>();
+                            }
+                            else
+                            {
+                                objEv = db.V_EventsList.SqlQuery("Select * from V_EventsListUpcoming ev").ToList<V_EventsList>();
+                            }
                         }
                         else
                         {
-                            objEv = db.V_EventsList.SqlQuery("Select *  from V_EventsList ev").ToList<V_EventsList>();
+                            if (!string.IsNullOrEmpty(strsql))
+                            {
+                                objEv = db.V_EventsList.SqlQuery("Select * from V_EventsList EV where 1=1  " + strsql + " ").ToList<V_EventsList>();
+                            }
+                            else
+                            {
+                                objEv = db.V_EventsList.SqlQuery("Select *  from V_EventsList ev").ToList<V_EventsList>();
+                            }
                         }
                     }
-                    else
+                    else 
                     {
                         if (!string.IsNullOrEmpty(strsql))
                         {
@@ -982,7 +990,7 @@ namespace CMS.Controllers
                         }
                         else
                         {
-                            objEv2 = db.V_EventsexpiredList.SqlQuery("Select * from [V_EventsexpiredList]  ").ToList<V_EventsexpiredList>();
+                            objEv2 = db.V_EventsexpiredList.SqlQuery("Select * from [V_EventsexpiredList]").ToList<V_EventsexpiredList>();
                         }
                     }
 

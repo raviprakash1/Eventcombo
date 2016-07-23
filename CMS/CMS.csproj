@@ -1226,8 +1226,6 @@
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="plugins\ckeditor\div\icons\hidpi\Thumbs.db" />
-    <Content Include="plugins\ckeditor\div\icons\Thumbs.db" />
     <None Include="Properties\PublishProfiles\CMSPublish.pubxml" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Properties\PublishProfiles\My local.pubxml" />

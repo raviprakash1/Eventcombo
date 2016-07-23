@@ -273,6 +273,7 @@
     <Compile Include="ActionFilters\CustomHandleErrorAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\HangfirePreload.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\NLogConfig.cs" />
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
@@ -641,6 +642,7 @@
     <Compile Include="Services\LastLoginStatus.cs" />
     <Compile Include="Services\TicketEmailer.cs" />
     <Compile Include="Service\ArticleService.cs" />
+    <Compile Include="Service\HangfireBootstrapper.cs" />
     <Compile Include="Service\EventService.cs" />
     <Compile Include="Service\HtmlProcessing.cs" />
     <Compile Include="Service\IArticleService.cs" />
@@ -683,6 +685,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>OrganizerProfile.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Account\PurchasedTicket.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PurchasedTicket.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateEvent\ViewCreateEvent.generated.cs">
       <AutoGen>True</AutoGen>
@@ -1372,6 +1379,7 @@
     <Content Include="Scripts\nyromodal\nyroModal.css" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\socialshare.js" />
     <Content Include="Scripts\sharefuncs.js" />
     <Content Include="Scripts\summernote.min.js" />
     <Content Include="Scripts\Validation.js" />
@@ -1483,6 +1491,7 @@
     </Content>
     <Content Include="Views\Account\PurchasedTicket.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>PurchasedTicket.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Account\PurchasedDeals.cshtml">
       <Generator>RazorGenerator</Generator>

@@ -380,7 +380,7 @@ namespace EventCombo.Controllers
 
         public long SaveEvent(EventCreation model)
         {
-            long lEventId = 0; string strEventTitle="";
+            long lEventId = 0; string strEventTitle = "";
             string lat="", lon="";
             ViewEvent vc = new ViewEvent();
             EventCreation obj = new EventCreation();
@@ -821,14 +821,11 @@ namespace EventCombo.Controllers
                                 if (from.Contains("¶¶UserEmailID¶¶"))
                                 {
                                     from = from.Replace("¶¶UserEmailID¶¶", userdetail.Email);
-
                                 }
-
                             }
                             else
                             {
-                                from = ConfigurationManager.AppSettings.Get("DefaultEmail"); //ConfigurationManager.AppSettings.Get("UserName");
-
+                                from = ConfigurationManager.AppSettings.Get("DefaultEmail"); 
                         }
                             if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
                             {
@@ -875,12 +872,10 @@ namespace EventCombo.Controllers
                                         if (EmailTag[i].Tag_Name == "EventTitleId")
                                         {
                                             subjectn = subjectn.Replace("¶¶EventTitleId¶¶", model.EventTitle);
-
                                         }
                                         if (EmailTag[i].Tag_Name == "EventAddressID")
                                         {
                                             subjectn = subjectn.Replace("¶¶EventAddressID¶¶", address);
-
                                         }
 
                                         // All tags
@@ -928,15 +923,14 @@ namespace EventCombo.Controllers
                                             bodyn = bodyn.Replace("¶¶EventOrganiserNumber¶¶", Organiserphn);
 
                                         }
-                                    if (EmailTag[i].Tag_Name == "DiscoverEventurl")
-                                    {
-                                        var url = Request.Url;
-                                        var baseurl = url.GetLeftPart(UriPartial.Authority);
-                                        string strUrl = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(strEventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(lEventId).ToString() });
-                                        bodyn = bodyn.Replace("¶¶DiscoverEventurl¶¶", strUrl);
+                                        if (EmailTag[i].Tag_Name == "DiscoverEventurl")
+                                        {
+                                            var url = Request.Url;
+                                            var baseurl = url.GetLeftPart(UriPartial.Authority);
+                                            string strUrl = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(strEventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(lEventId).ToString() });
+                                            bodyn = bodyn.Replace("¶¶DiscoverEventurl¶¶", strUrl);
+                                        }
                                     }
-                                }
-
                                 }
                             }
 

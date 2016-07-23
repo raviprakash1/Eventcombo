@@ -54,11 +54,11 @@
                     <div class="form-group">
                         @if (Model.orderrow)
                         {
-                        <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code" value="@Model.PC_Code" maxlength="15" disabled>
+                            <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code" value="@Model.PC_Code" maxlength="15" disabled />
                         }
                         else
                         {
-                            <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code" value="@Model.PC_Code" maxlength="15">
+                            <input class="form-control evnt_inp_cont" type="text" placeholder="Enter Single Promo Code" id="txt_Promocode" name="PC_Code" value="@Model.PC_Code" maxlength="15" />
                         }
                     </div>
                 </div>
@@ -80,9 +80,8 @@
                     <div class="tip">
                         <img class="help_icon_hov" src="/Images/icon-question.gif" />
                         <span class="xs-upload-tooltip upload_help_icn_inner">
-                            Spaces apostrophes and non alphanumeric characters
-                            (except '-','_',@@ and',' are not allowed. File must be in plain text
-                            ( CSV or TXT)
+                            Alphanumeric characters only (spaces, commas, periods, quotes, dashes, underlines, etc not allowed). File must be in plain text
+                            (CSV or TXT) file type.
                         </span>
                     </div>
                 </div>
@@ -397,7 +396,7 @@ else
                 <div class="col-sm-12 no_pad mt10">
                     <div class="col-md-6 col-sm-12 no_pad">
                         <div class="col-sm-12 apply_code_head">
-                            <div class="col-sm-11 col-xs-6 no_pad">Discout URL </div>
+                            <div class="col-sm-11 col-xs-6 no_pad">Discount URL </div>
                             <div class="col-sm-1 col-xs-6 no_pad text-right">
                                 <img src="/Images/icon-question.gif" />
                             </div>
@@ -470,42 +469,49 @@ else
     });
 </script> 
 
-<script>
+<script type="text/javascript">
+  var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
+  @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
+  var urlprefix = '@strpr'
 
-    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
-  window.fbAsyncInit = function() {
+  window.fbAsyncInit = function () {
     // init the FB JS SDK
     FB.init({
-        appId: fbappid,                        // App ID from the app dashboard
-      status     : true,                                 // Check Facebook Login status
-      xfbml      : true                                  // Look for social plugins on the page
+      appId: fbappid,                        // App ID from the app dashboard
+      status: true,                          // Check Facebook Login status
+      xfbml: true,                           // Look for social plugins on the page
+      version: '2.7'
     });
-  
+
   };
 
   // Load the SDK asynchronously
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/all.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-  var globalFacebookShareObject = { name: 'share', link :'@Model.PC_URL'};
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+<script src="~/Scripts/socialshare.js"></script>
 
+
+<script type="text/javascript">
+
+  $(document).ready(function () {
+    $('#twitshare').click(function () {
+      return TwitterShare("", "@Model.PC_URL");
+    });
 
     function shareOnFacebook() {
-       
-      FB.ui({
-          method: 'feed',
-          name: globalFacebookShareObject.name,
-          link: globalFacebookShareObject.link
-          
-      }, function (response) {
-          if (response && response.post_id) { }
-          else { }
-      });
-  }
+      return FacebookShare('@Model.PC_URL')
+    }
+  });
+</script>
+
+<script>
+
 
 </script>
 
@@ -559,14 +565,6 @@ else
                 $('#btnokpop').click(function () {
 
                     window.location.href = '@Url.Action("PromotionalCodes", "ManageEvent", new {Eventlid = ValidationMessageController.GetParentEventId(@Model.PC_Eventid) })';
-
-                });
-                $('#twitshare').click(function () {
-
-                    var url = "@Model.PC_URL";
-
-                    window.open('https://twitter.com/share?url=' + encodeURIComponent(url) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-                    return false;
 
                 });
                 $(document).ready(function () {
@@ -880,23 +878,11 @@ else
 
 
                     });
-                    $('#txt_Promocode').keypress(function (e) {
-                        var regex = new RegExp("^[a-zA-Z0-9@@_,-]+$");
-                        var charCode = e.charCode ? e.which : e.charCode;
-
-                        if (charCode == 8 || charCode == 0) {
-                            return;
+                    $("#txt_Promocode").on("input", function () {
+                        var regexp = /[^a-zA-Z0-9]/g;
+                        if ($(this).val().match(regexp)) {
+                            $(this).val($(this).val().replace(regexp, ''));
                         }
-                        else {
-                            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-                            if (regex.test(str)) {
-                                return true;
-                            }
-                        }
-
-
-                        e.preventDefault();
-                        return false;
                     });
                     $('#txt_discountmnt').keypress(function (e) {
                         debugger;

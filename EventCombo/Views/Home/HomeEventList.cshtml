@@ -54,8 +54,7 @@
                             <div class="col-sm-3 col-xs-3 no_pad text-right ">
                                 @if (@item.EventPrivacy == "Y")
                                 {
-
-                                  <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Share @item.EventTitle" onclick="ShowUrl('@item.EventTitle', '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId =ValidationMessageController.GetParentEventId(@item.EventId).ToString() })');" type="button" data-toggle="modal" data-target="#sharemodal">
+                                  <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Share @item.EventTitle" onclick="ShowUrl('@item.EventTitle.Replace("'",@"\'")', '@item.EventAddress.Replace("'", @"\'")', '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId =ValidationMessageController.GetParentEventId(@item.EventId).ToString() })');" type="button" data-toggle="modal" data-target="#sharemodal">
                                     <img src="~/Images/share_icon.png" alt="share event">
                                   </button>
                                 }
@@ -126,6 +125,7 @@
                             <div class="form-group">
                                 <input class="form-control sharesocilform" id="txtEventUrl" readonly="readonly" placeholder="" type="text">
                                 <input class="form-control sharesocilform" id="txtEventTitle" placeholder="" type="hidden">
+                                <input class="form-control sharesocilform" id="txtEventInfo" readonly="readonly" placeholder="" type="hidden">
                             </div>
                         </div>
 
@@ -142,28 +142,6 @@
     <div id="fb-root"></div>
 </div>
 
-<script type="text/javascript">
-  window.fbAsyncInit = function () {
-    // init the FB JS SDK
-    FB.init({
-      appId: '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]',                        // App ID from the app dashboard
-      status: true,                                 // Check Facebook Login status
-      xfbml: true,                                  // Look for social plugins on the page
-      version: 'v2.6'
-    });
-
-  };
-
-  // Load the SDK asynchronously
-  (function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-</script>
-<script type="text/javascript" src="~/Scripts/sharefuncs.js"></script>
 <script>
     $('.home-pagination').find('.pagination').addClass('desc_pagination');
 
@@ -234,21 +212,55 @@
         });
     }
 
-    function ShowUrl(vtitle, vurl) {
-      @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
-      $("#txtEventTitle").val(vtitle);
-      $("#txtEventUrl").val('@strpr' + vurl);
+    function ShowUrl(vtitle, vinfo, vurl) {
+        $("#txtEventTitle").val(vtitle);
+        $("#txtEventInfo").val(vinfo);
+        $("#txtEventUrl").val(vurl);
     }
+</script>
 
-    $('#fbshare').click(function () {
-        return FacebookShare($('#txtEventTitle').val(), $("#txtEventUrl").val());
+
+
+<script type="text/javascript">
+  var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
+  @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
+  var urlprefix = '@strpr'
+
+  window.fbAsyncInit = function () {
+    // init the FB JS SDK
+    FB.init({
+      appId: fbappid,                        // App ID from the app dashboard
+      status: true,                          // Check Facebook Login status
+      xfbml: true,                           // Look for social plugins on the page
+      version: '2.7'
     });
 
-    $('#twittershare').click(function () {
-      return TwitterShare($('#txtEventTitle').val(), $("#txtEventUrl").val());
-    });
+  };
 
-    $('#linkshare').click(function () {
-        return LinkedInShare($('#txtEventTitle').val(), $("#txtEventUrl").val(), "");
+  // Load the SDK asynchronously
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+<script src="~/Scripts/socialshare.js"></script>
+
+
+<script type="text/javascript">  
+    $(document).ready(function () {
+      $('#twittershare').click(function () {
+        return TwitterShare($("#txtEventTitle").val(), urlprefix + $("#txtEventUrl").val());
+      });
+
+      $('#linkshare').click(function () {
+        return LinkedInShare($("#txtEventTitle").val(), urlprefix + $("#txtEventUrl").val(), $("#txtEventInfo").val());
+      });
+
+      $('#fbshare').click(function (e) {
+        return FacebookShare(urlprefix + $("#txtEventUrl").val())
+      });
     });
 </script>
