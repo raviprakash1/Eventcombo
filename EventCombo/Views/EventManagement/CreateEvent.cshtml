@@ -388,7 +388,7 @@
               Tell us about the event
             </textarea>
           </div>
-          <div style="height: 150px;">
+          <div style="width:100%; display:table;">
             <div style="margin-top: 10px; float: right;">
               <span style="text-transform:uppercase; cursor: pointer;display: none;" ng-click="callImageClick('tellusImage'); $event.stopPropagation();" class="noOutline responsiveFilter">
                 <span style="display: inline-block;float: left;padding-right: 15px;text-transform:uppercase; font-size:14px">Have a flyer? Upload it here</span>
@@ -401,7 +401,7 @@
               </span>
             </div>
             <div class="imageGallery" style="clear: both; padding-top: 5px;">
-              <div style="float: right;">
+              <div style="float:right; text-align:right;">
                 <div class="tellus_pics" ng-repeat="img in eventInfo.EventImages">
                   <i class="material-icons closeIconImage" ng-click="deleteEventImage(img)" style="cursor:pointer;">clear</i>
                   <img ng-src="{{img.ImageUrl}}" style="height:100px; width: 100px" />
@@ -649,7 +649,7 @@
                       </div>
                       <md-input-container style="margin-right: 10px; margin-left: 10px; float:left; width:167px;" class="salesTime">
                         <label style="white-space: nowrap;">Sales Start Time</label>
-                        <md-select ng-model="ticket.localSaleStartTime" style="font-family:Roboto; font-size: 14px;">
+                        <md-select ng-model="ticket.localSaleStartTime" style="font:15px 'Roboto', Arial, Helvetica, sans-serif;">
                           <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
                         </md-select>
                       </md-input-container>
@@ -665,7 +665,7 @@
                       </div>
                       <md-input-container style="margin-right: 10px; margin-left: 10px; float:left; width:167px;" class="salesTime">
                         <label style="white-space: nowrap;">Sales End Time</label>
-                        <md-select ng-model="ticket.localSaleEndTime" style="font-size:16px; font-family:Roboto', Helvetica Neue, sans-serif;">
+                        <md-select ng-model="ticket.localSaleEndTime" style="font-size:16px; font-family:'Roboto', Helvetica Neue, sans-serif;">
                           <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
                         </md-select>
                       </md-input-container>
@@ -682,9 +682,9 @@
                   </div>
                   <div class="hideUntilAfterCon" ng-show="(ticket.T_AutoSechduleType == 1) && (ticket.Hide_Ticket == 1)">
                     <div class="date-picker-row" style="margin-left: 0px; float:left; margin-top: 21px;" flex-gt-sm>
-                      <label style="margin-left: 40px">Hide Until Date</label>
+                      <label style="margin-left: 35px">Hide Until Date</label>
                       <md-checkbox class="blue" ng-model="ticket.useUntilDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useUntilDate = '0'"></md-checkbox>
-                      <md-datepicker ng-model="ticket.localHideUntilDate" name="ticketHideUntilDate" style="width: 300px !important;" md-min-date="minDate"></md-datepicker>
+                      <md-datepicker ng-model="ticket.localHideUntilDate" md-placeholder="Enter date" name="ticketHideUntilDate" style="width: 300px !important;" md-min-date="minDate"></md-datepicker>
                       <div class="validation-datepicker-messages" ng-show="({{'TicketForm_'+$index}}.ticketHideUntilDate.$touched  || !{{'TicketForm_'+$index}}.ticketHideUntilDate.$pristine || formValidation || ticket.ticketValidation)">
                         <div ng-show="(ticket.useUntilDate == 1) && (!ticket.localHideUntilDate)">Select date</div>
                         <div ng-show="({{'TicketForm_'+$index}}.ticketHideUntilDate.$error.mindate)">This date has passed</div>
@@ -692,7 +692,7 @@
                         <div ng-show="{{'TicketForm_'+$index}}.ticketHideUntilDate.$error.valid">Enter date</div>
                       </div>
                     </div>
-                    <md-input-container style="margin-right: 10px; margin-left: 10px; float:left; width:167px;">
+                    <md-input-container style="margin-right: 10px; margin-left:30px; float:left; width:167px;">
                       <label style="white-space: nowrap;">Hide Until Time</label>
                       <md-select ng-model="ticket.localHideUntilTime">
                         <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
@@ -700,10 +700,9 @@
                     </md-input-container>
                     <div class="clearfix"></div>
                     <div class="date-picker-row" style="margin-left: 0px; float:left; margin-top: 21px;" flex-gt-sm>
-                      <label style="margin-left: 40px">Hide after date</label>
-                      <md-checkbox class="blue" ng-model="ticket.useAfterDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useAfterDate = '0'">
-                        <md-datepicker ng-model="ticket.localHideAfterDate" name="ticketHideAfterDate" md-min-date="minDate"></md-datepicker>
-                      </md-checkbox>
+                      <label style="margin-left: 35px">Hide After Date</label>
+                        <md-checkbox class="blue" ng-model="ticket.useAfterDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useAfterDate = '0'"></md-checkbox>
+                        <md-datepicker ng-model="ticket.localHideAfterDate" md-placeholder="Enter date" name="ticketHideAfterDate" style="width: 300px !important;" md-min-date="minDate"></md-datepicker>
                       <div class="validation-datepicker-messages" ng-show="({{'TicketForm_'+$index}}.ticketHideUntilDate.$touched  || !{{'TicketForm_'+$index}}.ticketHideUntilDate.$pristine  || formValidation || ticket.ticketValidation)">
                         <div ng-show="(ticket.useAfterDate == 1) && (!ticket.localHideAfterDate)">Select date</div>
                         <div ng-show="({{'TicketForm_'+$index}}.ticketHideAfterDate.$error.mindate)">This date has passed</div>
@@ -711,7 +710,7 @@
                         <div ng-show="{{'TicketForm_'+$index}}.ticketHideAfterDate.$error.valid">Enter date</div>
                       </div>
                     </div>
-                    <md-input-container style="margin-right: 10px; margin-left: 10px; float:left; width:167px;">
+                    <md-input-container style="margin-right: 10px; margin-left:30px; float:left; width:167px;">
                       <label style="white-space: nowrap;">Hide After Time</label>
                       <md-select ng-model="ticket.localHideAfterTime">
                         <md-option ng-repeat="endTime in eventInfo.DateInfo.TimeList" ng-value="endTime">{{endTime.TimeString}}</md-option>
