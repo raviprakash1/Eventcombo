@@ -69,15 +69,16 @@ namespace EventCombo.Utils
             using (EventComboEntities db = new EventComboEntities())
             {
                 var vOrgMes = (from Org in db.Event_OrganizerMessages where Org.MessageId == lMessId select Org).FirstOrDefault();
-                var vOrgDetail = (from Org in db.Event_Orgnizer_Detail where Org.Orgnizer_Event_Id == vOrgMes.OrganizerId select Org).FirstOrDefault();
+                var vOrgDetail = (from Org in db.Event_Orgnizer_Detail where Org.Orgnizer_Event_Id == vOrgMes.EventId where Org.DefaultOrg =="Y" select Org).FirstOrDefault();
+                var vEvent = (from Evt in db.Events where Evt.EventID == vOrgMes.EventId select Evt).FirstOrDefault();
                 var vOrgMailId = (from UserEmail in db.Profiles where UserEmail.UserID == vOrgDetail.UserId select UserEmail.Email).SingleOrDefault();
-                
+                var vEvtUserEmailId = (from UserEmail in db.Profiles where UserEmail.UserID == vEvent.UserID select UserEmail.Email).SingleOrDefault();
 
                 List<Email_Tag> EmailTag = new List<Email_Tag>();
                 MyAccount ac = new MyAccount();
                 EmailTag = ac.getTag();
                 var Emailtemplate = ac.getEmail("Contact_Event_Organizer");
-                string to = "", from = "", cc = "", bcc = "", emailname = "", subjectn = "", bodyn = "";
+                string to = vOrgMailId, from = "", cc = vEvtUserEmailId, bcc = "", emailname = "", subjectn = "", bodyn = "";
                 if (Emailtemplate != null)
                 {
                     if (!(string.IsNullOrEmpty(Emailtemplate.From)))
@@ -115,13 +116,20 @@ namespace EventCombo.Utils
                             {
                                 if (EmailTag[i].Tag_Name == "EventTitleId")
                                 {
-                                    subjectn = subjectn.Replace("¶¶EventTitleId¶¶", strEventTitle);
+                                    subjectn = subjectn.Replace("¶¶EventTitleId¶¶", vEvent.EventTitle);
                                 }
 
 
                             }
                         }
                     }
+
+                    if (subjectn != "")
+                        subjectn = subjectn + ", Message Id : " + vOrgMes.MessageId.ToString() + ", Sender Name : " + vOrgMes.Name + ", Sender EmailId : " + vOrgMes.Email;
+                    else
+                        subjectn = " Message Id : " + vOrgMes.MessageId.ToString() + ", Sender Name : " + vOrgMes.Name + ", Sender EmailId : " + vOrgMes.Email;
+
+                    bodyn = vOrgMes.Message;
 
                     ac.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, "", emailname);
                 }

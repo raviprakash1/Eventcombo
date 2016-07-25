@@ -576,8 +576,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
             <div class="clearfix"></div>
         </div>
@@ -593,16 +591,23 @@
                         <form class="form-horizontal">
                             <div id="orgerror" class="alert-danger" style="display:none;">Please fill out the missing information</div>
                             <div class="col-xs-12 form-group mb10">
-                                <label class="col-sm-2 control-label ev_tickt_lebel ">Name</label>
+                                <label class="col-sm-2 control-label ev_tickt_lebel">Name</label>
                                 <div class="col-sm-8">
                                     <input class="form-control evnt_inp_cont" type="text" id="id_orgname">
                                 </div>
                             </div>
                             <div class="clearfix"></div>
                             <div class="col-xs-12 form-group mb10">
-                                <label class="col-sm-2 control-label ev_tickt_lebel ">Email</label>
+                                <label class="col-sm-2 control-label ev_tickt_lebel">Email</label>
                                 <div class="col-sm-8">
                                     <input class="form-control evnt_inp_cont" type="text" id="id_orgemail">
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-xs-12 form-group mb10">
+                                <label class="col-sm-2 control-label ev_tickt_lebel">Phone</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control evnt_inp_cont" type="text" id="OrgPhoneId" />
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -610,17 +615,17 @@
                                 <label class="col-sm-2 control-label ev_tickt_lebel ">Message</label>
                                 <div class="col-sm-8">
                                     <textarea class="form-control" rows="4" id="id_orgtext"></textarea>
-
                                 </div>
                             </div>
                             <div class="clearfix"></div>
                         </form>
-
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-lg ev_add_sub_btn " id="saveorgaizermsg">SAVE</button>
+                        <div class="invitation-loader" id="dvAjxLoaderOrg" style="width:auto;float:right;margin-top:7px;">
+                            <img src="~/Images/ajax-loaderMini.gif" /> Please wait ...
+                        </div>
+                        <button type="button" class="btn btn-primary btn-lg ev_add_sub_btn " id="saveorgaizermsg">SEND</button>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -789,17 +794,12 @@
 
 @*<script src="~/Scripts/jquery.icalendar.pack.js"></script>*@
 @*<script src="~/Scripts/jquery.cookie.js"></script>*@
-
+<script src="~/Scripts/jquery.maskedinput.min.js"></script>
 <script>
-
-    $(document).ready(function () {
-        //window.location.hash = "ticketinfo";
-        //$('.divTable').click();
-        //alert(Chal);
-
-        //input.removeAttr("title");
+    jQuery(function ($) {
+        $("#OrgPhoneId").mask("999-999-9999");
     });
-
+   
     @*window.fbAsyncInit = function () {
         FB.init({
             appId: '1956731254551382',
@@ -1023,17 +1023,13 @@
             var name = $('#id_orgname').val();
             var mail = $('#id_orgemail').val();
             var txt = $('#id_orgtext').val();
-
+            var Phn = $('#OrgPhoneId').val();
             var count = 0;
-
             if (name != '') {
                 $('#id_orgname').removeClass('err-bor');
-
             } else {
-
                 count++;
                 $('#id_orgname').addClass('err-bor');
-
             }
 
 
@@ -1074,12 +1070,15 @@
                     'name': name,
                     'mesasges': txt,
                     'organiserid': organiserid,
-                    'EventId': eventid
+                    'EventId': eventid,
+                    'PhoneNo': Phn
 
                 }
                 $.ajax({
                     url: '@Url.Action("saveorganizermsg", "CreateEvent")',
                     data: model,
+                    beforeSend: function () { $('#dvAjxLoaderOrg').show(); },
+                    complete: function () { $('#dvAjxLoaderOrg').hide(); },
                     type: "Post",
                     success: function (response) {
                         $('#orgerror').css('display', 'block');
@@ -1089,6 +1088,7 @@
                         $('#id_orgname').val('');
                         $('#id_orgemail').val('');
                         $('#id_orgtext').val('');
+                        $('#OrgPhoneId').val('');
                     }
                 });
             }

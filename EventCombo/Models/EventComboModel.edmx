@@ -153,6 +153,9 @@
           <Property Name="PageNameUrl" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="PageName" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="PageContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PageOrder" Type="int" Nullable="false" />
+          <Property Name="ResponseCode" Type="int" />
+          <Property Name="IsOnFooter" Type="bit" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
         </EntityType>
@@ -308,6 +311,7 @@
           <Property Name="Email" Type="varchar" MaxLength="256" />
           <Property Name="Message" Type="nvarchar(max)" />
           <Property Name="MessageId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="Event_Orgnizer_Detail">
           <Key>
@@ -375,6 +379,7 @@
           </Key>
           <Property Name="EventTypeID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventType" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IsOnFooter" Type="bit" Nullable="false" />
           <Property Name="EventHide" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="EventVenue">
@@ -2012,6 +2017,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Property Name="MessageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Event" Relationship="EventComboModel.EventEvent_OrganizerMessages" FromRole="Event_OrganizerMessages" ToRole="Event" />
           <NavigationProperty Name="Organizer_Master" Relationship="EventComboModel.Organizer_MasterEvent_OrganizerMessages" FromRole="Event_OrganizerMessages" ToRole="Organizer_Master" />
+          <Property Name="PhoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event_VariableDesc">
           <Key>
@@ -2075,6 +2081,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Property Name="EventTypeID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventType1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EventHide" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IsOnFooter" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="EventVote">
           <Key>
@@ -4107,6 +4114,9 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Property Name="PageContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PageOrder" Type="Int32" Nullable="false" />
+          <Property Name="ResponseCode" Type="Int32" />
+          <Property Name="IsOnFooter" Type="Boolean" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4318,6 +4328,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySetMapping Name="Event_OrganizerMessages">
             <EntityTypeMapping TypeName="EventComboModel.Event_OrganizerMessages">
               <MappingFragment StoreEntitySet="Event_OrganizerMessages">
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
                 <ScalarProperty Name="EventId" ColumnName="EventId" />
                 <ScalarProperty Name="OrganizerId" ColumnName="OrganizerId" />
                 <ScalarProperty Name="Userid" ColumnName="Userid" />
@@ -4387,6 +4398,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySetMapping Name="EventTypes">
             <EntityTypeMapping TypeName="EventComboModel.EventType">
               <MappingFragment StoreEntitySet="EventType">
+                <ScalarProperty Name="IsOnFooter" ColumnName="IsOnFooter" />
                 <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
                 <ScalarProperty Name="EventType1" ColumnName="EventType" />
                 <ScalarProperty Name="EventHide" ColumnName="EventHide" />
@@ -5403,6 +5415,9 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySetMapping Name="BusinessPages">
             <EntityTypeMapping TypeName="EventComboModel.BusinessPage">
               <MappingFragment StoreEntitySet="BusinessPage">
+                <ScalarProperty Name="IsOnFooter" ColumnName="IsOnFooter" />
+                <ScalarProperty Name="ResponseCode" ColumnName="ResponseCode" />
+                <ScalarProperty Name="PageOrder" ColumnName="PageOrder" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="PageContent" ColumnName="PageContent" />

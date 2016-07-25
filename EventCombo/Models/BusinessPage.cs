@@ -20,5 +20,8 @@ namespace EventCombo.Models
         public string PageContent { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public System.DateTime UpdateDate { get; set; }
+        public int PageOrder { get; set; }
+        public Nullable<int> ResponseCode { get; set; }
+        public bool IsOnFooter { get; set; }
     }
 }
