@@ -48,7 +48,7 @@ namespace CMS.Controllers
       OrderListMainViewModel olist = new OrderListMainViewModel();
       olist.OrderType = model.OrderType;
 
-      var orders = _tservice.GetOrdersList(model.OrderType, String.Empty, model.Search, model.OrderSearch);
+      var orders = _tservice.GetOrdersList(model.OrderType, String.Empty, model.Search);
       switch (model.SortBy)
       {
         case OrderSortBy.Date:

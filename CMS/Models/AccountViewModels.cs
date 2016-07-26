@@ -123,7 +123,7 @@ namespace CMS.Models
 
     public enum OrderSortBy { Name, Order, Date, Qty, Total, FullName, Email, Address, Status, OrderDate, EventId, DateDiff };
     public enum OrderTypes { Upcoming, Past };
-    [Serializable]
+   
     public class OrderSearch
     {
         public DateTime? OrderDate { get; set; }
@@ -143,7 +143,6 @@ namespace CMS.Models
         Page = 0;
         SortDesc = true;
         Search = "";
-        OrderSearch = null;
       }
       public OrderSortBy SortBy { get; set; }
       public OrderTypes OrderType { get; set; }
@@ -151,7 +150,6 @@ namespace CMS.Models
       public int Page { get; set; }
       public bool SortDesc { get; set; }
       public string Search { get; set; }
-      public OrderSearch OrderSearch { get; set; }
     }
 
     public class OrderMainViewModel
