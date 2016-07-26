@@ -1,0 +1,1 @@
+alter table Event_OrganizerMessages  Add PhoneNo varchar(20)
