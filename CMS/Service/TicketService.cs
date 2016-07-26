@@ -17,6 +17,7 @@ using CMS.Utils;
 using System.Net;
 using System.Drawing;
 using System.Drawing.Imaging;
+using Newtonsoft.Json;
 
 namespace CMS.Service
 {
@@ -42,65 +43,101 @@ namespace CMS.Service
       _dbservice = dbService;
     }
 
-    private IEnumerable<OrderMainViewModel> GetOrdersForUser(string userId, string searchStr, OrderSearch orderSearch)
+    private IEnumerable<OrderMainViewModel> GetOrdersForUser(string userId, string searchStr)
     {
-      IRepository<v_OrderList> orderRepo = new GenericRepository<v_OrderList>(_factory.ContextFactory);
+        IRepository<v_OrderList> orderRepo = new GenericRepository<v_OrderList>(_factory.ContextFactory);
 
-      List<OrderMainViewModel> ordersVM = new List<OrderMainViewModel>();
-      OrderMainViewModel oVM = null;
-      IEnumerable<v_OrderList> orders = null;
+        List<OrderMainViewModel> ordersVM = new List<OrderMainViewModel>();
+        OrderMainViewModel oVM = null;
+        IEnumerable<v_OrderList> orders = null;
 
-      string srch = String.IsNullOrEmpty(searchStr) ? "" : searchStr.Trim();
+        string srch = String.IsNullOrEmpty(searchStr) ? "" : searchStr.Trim();
 
-      if (String.IsNullOrEmpty(userId))
-      {
-        if (String.IsNullOrEmpty(srch))
-          orders = orderRepo.Get();
+        if (String.IsNullOrEmpty(userId))
+        {
+            if (String.IsNullOrEmpty(srch))
+                orders = orderRepo.Get();
+            else
+            {
+                var orderSearch = JsonConvert.DeserializeObject<OrderSearch>(srch);
+                if (orderSearch != null)
+                {
+                    orders = orderRepo.Get();
+                    if (!string.IsNullOrEmpty(orderSearch.Order))
+                        orders = orders.Where(o => o.OrderId.Contains(orderSearch.Order));
+                    if (!string.IsNullOrEmpty(orderSearch.CustomerName))
+                        orders = orders.Where(o => (o.FirstName + " " + o.LastName).Contains(orderSearch.CustomerName));
+                    if (!string.IsNullOrEmpty(orderSearch.Email))
+                        orders = orders.Where(o => o.Email.Contains(orderSearch.Email));
+                    if (!string.IsNullOrEmpty(orderSearch.Event))
+                        orders = orders.Where(o => o.EventID.ToString().Contains(orderSearch.Event) || o.Name.Contains(orderSearch.Event));
+                    if (orderSearch.OrderDate != null)
+                        orders = orders.Where(o => o.OrderDateTime.Value.Date == orderSearch.OrderDate);
+                }
+                else
+                    orders = orderRepo.Get(filter: (o => o.OrderId.Contains(srch) || o.Email.Contains(srch) || o.FirstName.Contains(srch)
+                        || o.LastName.Contains(srch) || o.Name.Contains(srch) || (o.EventID.ToString() == srch)));
+            }
+        }
         else
-          orders = orderRepo.Get(filter: (o => o.OrderId.Contains(srch) || o.Email.Contains(srch) || o.FirstName.Contains(srch)
-            || o.LastName.Contains(srch) || o.Name.Contains(srch) || (o.EventID.ToString() == srch)));
-      }
-      else
-      {
-        if (String.IsNullOrEmpty(srch))
-          orders = orderRepo.Get(filter: (o => o.UserId == userId));
-        else
-          orders = orderRepo.Get(filter: (o => (o.UserId == userId) &&
-            (o.OrderId.Contains(srch) || o.Email.Contains(srch) || o.FirstName.Contains(srch)
-            || o.LastName.Contains(srch) || o.Name.Contains(srch) || (o.EventID.ToString() == srch))));
-      }
-      foreach (var order in orders)
-      {
-        oVM = _mapper.Map<OrderMainViewModel>(order);
-        ordersVM.Add(oVM);
-      }
-      return ordersVM;
+        {
+            if (String.IsNullOrEmpty(srch))
+                orders = orderRepo.Get(filter: (o => o.UserId == userId));
+            else
+            {
+                var orderSearch = JsonConvert.DeserializeObject<OrderSearch>(srch);
+                if (orderSearch != null)
+                {
+                    orders = orderRepo.Get();
+                    if (!string.IsNullOrEmpty(orderSearch.Order))
+                        orders = orders.Where(o => o.OrderId.Contains(orderSearch.Order));
+                    if (!string.IsNullOrEmpty(orderSearch.CustomerName))
+                        orders = orders.Where(o => (o.FirstName + " " + o.LastName).Contains(orderSearch.CustomerName));
+                    if (!string.IsNullOrEmpty(orderSearch.Email))
+                        orders = orders.Where(o => o.Email.Contains(orderSearch.Email));
+                    if (!string.IsNullOrEmpty(orderSearch.Event))
+                        orders = orders.Where(o => o.EventID.ToString().Contains(orderSearch.Event) || o.Name.Contains(orderSearch.Event));
+                    if (orderSearch.OrderDate != null)
+                        orders = orders.Where(o => o.OrderDateTime.Value.Date == orderSearch.OrderDate);
+                }
+                else
+                    orders = orderRepo.Get(filter: (o => (o.UserId == userId) &&
+                        (o.OrderId.Contains(srch) || o.Email.Contains(srch) || o.FirstName.Contains(srch)
+                        || o.LastName.Contains(srch) || o.Name.Contains(srch) || (o.EventID.ToString() == srch))));
+            }
+        }
+        foreach (var order in orders)
+        {
+            oVM = _mapper.Map<OrderMainViewModel>(order);
+            ordersVM.Add(oVM);
+        }
+        return ordersVM;
     }
 
-    private IEnumerable<OrderMainViewModel> GetUpcomingOrdersForUser(string userId, string searchStr, OrderSearch orderSearch)
+    private IEnumerable<OrderMainViewModel> GetUpcomingOrdersForUser(string userId, string searchStr)
     {
-      IEnumerable<OrderMainViewModel> orders = GetOrdersForUser(userId, searchStr, orderSearch)
+      IEnumerable<OrderMainViewModel> orders = GetOrdersForUser(userId, searchStr)
         .Where(t => ((!t.EventCancelled) && (t.EventEndDate >= DateTime.Today))).ToList();
       return orders;
     }
 
-    private IEnumerable<OrderMainViewModel> GetPastOrdersForUser(string userId, string searchStr, OrderSearch orderSearch)
+    private IEnumerable<OrderMainViewModel> GetPastOrdersForUser(string userId, string searchStr)
     {
-      IEnumerable<OrderMainViewModel> orders = GetOrdersForUser(userId, searchStr, orderSearch)
+      IEnumerable<OrderMainViewModel> orders = GetOrdersForUser(userId, searchStr)
         .Where(t => ((t.EventCancelled) || (t.EventEndDate < DateTime.Today))).ToList();
       return orders;
     }
 
-    public IEnumerable<OrderMainViewModel> GetOrdersList(OrderTypes type, string userId, string searchStr, OrderSearch orderSearch)
+    public IEnumerable<OrderMainViewModel> GetOrdersList(OrderTypes type, string userId, string searchStr)
     {
       IEnumerable<OrderMainViewModel> orders = null;
       switch (type)
       {
         case OrderTypes.Upcoming:
-          orders = GetUpcomingOrdersForUser(userId, searchStr, orderSearch);
+          orders = GetUpcomingOrdersForUser(userId, searchStr);
           break;
         case OrderTypes.Past:
-          orders = GetPastOrdersForUser(userId, searchStr, orderSearch);
+          orders = GetPastOrdersForUser(userId, searchStr);
           break;
         default:
           break;
