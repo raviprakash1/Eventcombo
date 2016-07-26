@@ -87,7 +87,7 @@ namespace EventCombo.Utils
                     }
                     else
                     {
-                        from = ConfigurationManager.AppSettings.Get("UserName");
+                        from = ConfigurationManager.AppSettings.Get("DefaultEmail");
                     }
 
                     if (!(string.IsNullOrEmpty(Emailtemplate.CC)))

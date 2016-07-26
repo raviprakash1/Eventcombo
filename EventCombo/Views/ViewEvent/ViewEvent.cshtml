@@ -621,7 +621,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <div class="invitation-loader" id="dvAjxLoaderOrg" style="width:auto;float:right;margin-top:7px;">
+                        <div class="invitation-loader" id="dvAjxLoaderOrg" style="width:auto;float:left;margin-top:7px;">
                             <img src="~/Images/ajax-loaderMini.gif" /> Please wait ...
                         </div>
                         <button type="button" class="btn btn-primary btn-lg ev_add_sub_btn " id="saveorgaizermsg">SEND</button>
@@ -750,8 +750,9 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
+                    <div class="clearfix"></div>
                     <div class="modal-body">
-                        <div class="col-md-12 mt10" id="dvEmailFrnd">
+                        <div class="col-md-12" id="dvEmailFrnd">
                             <form class="form-horizontal">
                                 <div class="col-xs-5">
                                     <div class="form-group">
@@ -1072,7 +1073,6 @@
                     'organiserid': organiserid,
                     'EventId': eventid,
                     'PhoneNo': Phn
-
                 }
                 $.ajax({
                     url: '@Url.Action("saveorganizermsg", "CreateEvent")',
@@ -1084,7 +1084,7 @@
                         $('#orgerror').css('display', 'block');
                         $('#orgerror').addClass('alert-success');
                         $('#orgerror').removeClass('alert-danger ');
-                        $('#orgerror').html("Message has been successfully send!!");
+                        $('#orgerror').html("Message has been successfully sent !!!");
                         $('#id_orgname').val('');
                         $('#id_orgemail').val('');
                         $('#id_orgtext').val('');
