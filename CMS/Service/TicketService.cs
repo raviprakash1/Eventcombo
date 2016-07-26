@@ -18,6 +18,7 @@ using System.Net;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Newtonsoft.Json;
+using System.Data.Entity;
 
 namespace CMS.Service
 {
@@ -62,17 +63,14 @@ namespace CMS.Service
                 var orderSearch = JsonConvert.DeserializeObject<OrderSearch>(srch);
                 if (orderSearch != null)
                 {
-                    orders = orderRepo.Get();
-                    if (!string.IsNullOrEmpty(orderSearch.Order))
-                        orders = orders.Where(o => o.OrderId.Contains(orderSearch.Order));
-                    if (!string.IsNullOrEmpty(orderSearch.CustomerName))
-                        orders = orders.Where(o => (o.FirstName + " " + o.LastName).Contains(orderSearch.CustomerName));
-                    if (!string.IsNullOrEmpty(orderSearch.Email))
-                        orders = orders.Where(o => o.Email.Contains(orderSearch.Email));
-                    if (!string.IsNullOrEmpty(orderSearch.Event))
-                        orders = orders.Where(o => o.EventID.ToString().Contains(orderSearch.Event) || o.Name.Contains(orderSearch.Event));
-                    if (orderSearch.OrderDate != null)
-                        orders = orders.Where(o => o.OrderDateTime.Value.Date == orderSearch.OrderDate);
+                        orders = orderRepo.Get(filter:
+                            (o => (!string.IsNullOrEmpty(orderSearch.Order) ? o.OrderId.Contains(orderSearch.Order) : true)
+                                && (!string.IsNullOrEmpty(orderSearch.CustomerName) ? (o.FirstName + " " + o.LastName).Contains(orderSearch.CustomerName) : true)
+                                && (!string.IsNullOrEmpty(orderSearch.Email) ? o.Email.Contains(orderSearch.Email) : true)
+                                && (!string.IsNullOrEmpty(orderSearch.Event) ? o.EventID.ToString().Contains(orderSearch.Event) || o.Name.Contains(orderSearch.Event) : true)
+                                && (orderSearch.OrderDate != null ? DbFunctions.TruncateTime(o.OrderDateTime) == orderSearch.OrderDate : true)
+                            )
+                         );
                 }
                 else
                     orders = orderRepo.Get(filter: (o => o.OrderId.Contains(srch) || o.Email.Contains(srch) || o.FirstName.Contains(srch)
@@ -88,17 +86,14 @@ namespace CMS.Service
                 var orderSearch = JsonConvert.DeserializeObject<OrderSearch>(srch);
                 if (orderSearch != null)
                 {
-                    orders = orderRepo.Get();
-                    if (!string.IsNullOrEmpty(orderSearch.Order))
-                        orders = orders.Where(o => o.OrderId.Contains(orderSearch.Order));
-                    if (!string.IsNullOrEmpty(orderSearch.CustomerName))
-                        orders = orders.Where(o => (o.FirstName + " " + o.LastName).Contains(orderSearch.CustomerName));
-                    if (!string.IsNullOrEmpty(orderSearch.Email))
-                        orders = orders.Where(o => o.Email.Contains(orderSearch.Email));
-                    if (!string.IsNullOrEmpty(orderSearch.Event))
-                        orders = orders.Where(o => o.EventID.ToString().Contains(orderSearch.Event) || o.Name.Contains(orderSearch.Event));
-                    if (orderSearch.OrderDate != null)
-                        orders = orders.Where(o => o.OrderDateTime.Value.Date == orderSearch.OrderDate);
+                        orders = orderRepo.Get(filter:
+                              (o => (!string.IsNullOrEmpty(orderSearch.Order) ? o.OrderId.Contains(orderSearch.Order) : true)
+                                  && (!string.IsNullOrEmpty(orderSearch.CustomerName) ? (o.FirstName + " " + o.LastName).Contains(orderSearch.CustomerName) : true)
+                                  && (!string.IsNullOrEmpty(orderSearch.Email) ? o.Email.Contains(orderSearch.Email) : true)
+                                  && (!string.IsNullOrEmpty(orderSearch.Event) ? o.EventID.ToString().Contains(orderSearch.Event) || o.Name.Contains(orderSearch.Event) : true)
+                                  && (orderSearch.OrderDate != null ? DbFunctions.TruncateTime(o.OrderDateTime) == orderSearch.OrderDate : true)
+                              )
+                           );
                 }
                 else
                     orders = orderRepo.Get(filter: (o => (o.UserId == userId) &&
