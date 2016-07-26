@@ -42,7 +42,7 @@ namespace CMS.Service
       _dbservice = dbService;
     }
 
-    private IEnumerable<OrderMainViewModel> GetOrdersForUser(string userId, string searchStr)
+    private IEnumerable<OrderMainViewModel> GetOrdersForUser(string userId, string searchStr, OrderSearch orderSearch)
     {
       IRepository<v_OrderList> orderRepo = new GenericRepository<v_OrderList>(_factory.ContextFactory);
 
@@ -77,30 +77,30 @@ namespace CMS.Service
       return ordersVM;
     }
 
-    private IEnumerable<OrderMainViewModel> GetUpcomingOrdersForUser(string userId, string searchStr)
+    private IEnumerable<OrderMainViewModel> GetUpcomingOrdersForUser(string userId, string searchStr, OrderSearch orderSearch)
     {
-      IEnumerable<OrderMainViewModel> orders = GetOrdersForUser(userId, searchStr)
+      IEnumerable<OrderMainViewModel> orders = GetOrdersForUser(userId, searchStr, orderSearch)
         .Where(t => ((!t.EventCancelled) && (t.EventEndDate >= DateTime.Today))).ToList();
       return orders;
     }
 
-    private IEnumerable<OrderMainViewModel> GetPastOrdersForUser(string userId, string searchStr)
+    private IEnumerable<OrderMainViewModel> GetPastOrdersForUser(string userId, string searchStr, OrderSearch orderSearch)
     {
-      IEnumerable<OrderMainViewModel> orders = GetOrdersForUser(userId, searchStr)
+      IEnumerable<OrderMainViewModel> orders = GetOrdersForUser(userId, searchStr, orderSearch)
         .Where(t => ((t.EventCancelled) || (t.EventEndDate < DateTime.Today))).ToList();
       return orders;
     }
 
-    public IEnumerable<OrderMainViewModel> GetOrdersList(OrderTypes type, string userId, string searchStr)
+    public IEnumerable<OrderMainViewModel> GetOrdersList(OrderTypes type, string userId, string searchStr, OrderSearch orderSearch)
     {
       IEnumerable<OrderMainViewModel> orders = null;
       switch (type)
       {
         case OrderTypes.Upcoming:
-          orders = GetUpcomingOrdersForUser(userId, searchStr);
+          orders = GetUpcomingOrdersForUser(userId, searchStr, orderSearch);
           break;
         case OrderTypes.Past:
-          orders = GetPastOrdersForUser(userId, searchStr);
+          orders = GetPastOrdersForUser(userId, searchStr, orderSearch);
           break;
         default:
           break;

@@ -10,7 +10,7 @@ namespace CMS.Service
 {
   public interface ITicketsService
   {
-    IEnumerable<OrderMainViewModel> GetOrdersList(OrderTypes type, string userId, string searchStr);
+    IEnumerable<OrderMainViewModel> GetOrdersList(OrderTypes type, string userId, string searchStr, OrderSearch orderSearch);
 
     long GetOrdersCount(OrderTypes type, string userId);
 
