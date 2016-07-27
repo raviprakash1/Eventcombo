@@ -9,6 +9,7 @@ using CMS.Models;
 
 namespace CMS.Controllers
 {
+    [CustomAuthorization("13")]
   public class OrdersController : Controller
   {
     TicketService _tservice;
@@ -100,6 +101,17 @@ namespace CMS.Controllers
         olist.Orders.AddRange(orders);
 
       return PartialView("_PurchasedTicketList", olist);
+    }
+
+    [HttpGet]
+    public ActionResult PurchasedTicketTotalCount(OrderListRequestViewModel model)
+    {
+      if ((Session["UserID"] == null))
+        return RedirectToAction("Login", "Home");
+
+      var orders = _tservice.GetOrdersList(model.OrderType, String.Empty, model.Search);
+
+      return Json(orders.Count(), JsonRequestBehavior.AllowGet);
     }
 
     [HttpGet]

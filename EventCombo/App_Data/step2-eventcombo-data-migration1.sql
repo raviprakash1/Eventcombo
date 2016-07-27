@@ -160,9 +160,9 @@ where S.EventID  in
 
 GO
 
---select * from EC2.dbo.Ticket
+--select * from EC2.dbo.Ticket where eventTicketPriceID is null
 --select * from EventCombo.dbo.Ticket
---select * from amsuj786n3x.dbo.EventTicketPrice; -- Yes
+select * from amsuj786n3x.dbo.EventTicketPrice; -- Yes
 
 
 INSERT INTO EC2.dbo.Ticket (E_Id, T_name, Qty_Available, Price, TicketTypeID, T_Sold, Registration_Recorded,
@@ -181,7 +181,19 @@ and e.Discount_Amount<9999999
 GO
 
 
+-------------------------------
+select * from EC2.dbo.Ticket t inner join amsuj786n3x.dbo.EventTicketPrice o 
+on t.E_Id=o.eventID and t.TicketTypeID=o.ticketTypeID
 
+select * from amsuj786n3x.dbo.EventTicketPrice o inner join amsuj786n3x.dbo.TicketTypes y on o.ticketTypeID=y.ticketTypeID
+inner join EC2.dbo.Ticket t on o.eventID=t.E_Id and t.T_name=left(y.ticketType,255)
+
+Alter table EC2.dbo.Ticket add eventTicketPriceID int null;
+
+update t set eventTicketPriceID=o.eventTicketPriceID
+ from amsuj786n3x.dbo.EventTicketPrice o inner join amsuj786n3x.dbo.TicketTypes y on o.ticketTypeID=y.ticketTypeID
+inner join EC2.dbo.Ticket t on o.eventID=t.E_Id and t.T_name=left(y.ticketType,255)
+-------------------------------
 
 
 --Fees_Type ?
@@ -227,6 +239,10 @@ O_PromoCodeId, O_OrderDateTime, O_First_Name, O_Last_Name, O_Email, O_Card_Trans
 select * from amsuj786n3x.dbo.[Order]
 */
 
+-- Orders start
+
+
+
 SET IDENTITY_INSERT EC2.dbo.Order_Detail_T ON;
 ;with cte  (order_id, a, id, order_amount, sub_order_amount, b,c,d,orderDate,firstname,lastname,Email,authorizationCode,transaction_id,rw ) 
 as 
@@ -248,6 +264,66 @@ GO
 SET IDENTITY_INSERT EC2.dbo.Order_Detail_T OFF;
 GO
 
+UPDATE EC2.dbo.Order_Detail_T set O_Order_Id='T' + RIGHT('00000000' + convert(varchar,O_Id), 9)
+WHERE O_Order_Id='';
+GO
+
+SELECT distinct TQD_ID, t.eventTicketPriceID into #tmp2 from EC2.dbo.Ticket_Quantity_Detail tqd inner join EC2.dbo.Ticket t on tqd.TQD_Ticket_ID=t.t_ID
+ inner join amsuj786n3x.dbo.TicketOrderInfo a on t.eventTicketPriceID=a.eventTicketPriceID
+
+
+INSERT INTO EC2.dbo.Ticket_Purchased_Detail (TPD_User_Id, TPD_Order_Id, TPD_Purchased_Qty, TPD_TQD_Id, TPD_Amount, TPD_Donate,
+TPD_GUID, TPD_EC_Fee, TPD_PromoCodeID, TPD_PromoCodeAmount)
+SELECT u.Id, order_id, 1, tqd.TQD_ID, priceWithChargesAndDiscounts, 0, '',0,0,0 from amsuj786n3x.dbo.TicketOrderInfo t inner join #tmp2 tqd on t.eventTicketPriceID=tqd.eventTicketPriceID 
+inner join EC2.dbo.AspNetUsers u on u.OldUserID=t.user_id
+
+--SELECT * from amsuj786n3x.dbo.TicketOrderInfo t inner join #tmp2 tqd on t.eventTicketPriceID=tqd.eventTicketPriceID 
+
+
+SELECT * from EC2.dbo.AspNetUsers
+
+/*
+SELECT * from EC2.dbo.Ticket;
+
+SELECT * from EC2.dbo.Ticket_Purchased_Detail;
+
+SELECT * from EC2.dbo.Ticket_Quantity_Detail;
+
+SELECT * from amsuj786n3x.dbo.TicketOrderInfo  where order_id=413 ;
+
+SELECT * from amsuj786n3x.dbo.OrderInfo where order_id=413 ;
+SELECT * from amsuj786n3x.dbo.[Order] where order_id=413 ;
+
+SELECT * from EC2.dbo.Order_Detail_T
+
+SELECT * from amsuj786n3x.dbo.OrderInfo where category_id=0 ;
+
+SELECT category_id, count(*) cn from amsuj786n3x.dbo.OrderInfo 
+group by category_id
+order by cn desc
+
+
+where category_id=0 ;
+
+select * from amsuj786n3x.dbo.Products where product_id=12630 ;
+
+SELECT product_id, count(*) cn from amsuj786n3x.dbo.OrderInfo 
+group by product_id
+order by cn desc
+
+where category_id=0 ;
+
+*/
+
+
+
+
+
+
+
+
+
+
 drop table #tmp;
 GO
 select E_Id, a.AddressID,v.EventVenueID,0 as PE_SingleVenue_Id, t.T_ID, convert(varchar, convert(datetime,v.EventStartDate), 107) as PE_Scheduled_Date, v.EventStartTime, v.EventEndTime  
@@ -267,9 +343,9 @@ select T_ID=left(STUFF((SELECT ',' + convert(varchar,T_ID)
 group by E_Id, AddressID, EventVenueID, PE_SingleVenue_Id, PE_Scheduled_Date, EventStartTime, EventEndTime
 GO
 
---select * from dbo.Ticket where E_Id=5833
+--select * from EC2.dbo.Ticket where E_Id=5833
 
---select * from [dbo].[Publish_Event_Detail] --where pe_event_id=7578
+--select * from EC2.[dbo].[Publish_Event_Detail] --where pe_event_id=7578
 
 --select * from [dbo].[Ticket_Quantity_Detail] where TQD_Event_Id=5833
 
@@ -294,4 +370,17 @@ select distinct E_ID from EC2.dbo.Ticket
 
 
 GO
+
+/*
+SELECT * from EC2.dbo.Ticket;
+
+SELECT * from EC2.dbo.Ticket_Purchased_Detail;
+
+
+SELECT * from amsuj786n3x.dbo.TicketOrderInfo 
+
+SELECT * from EC2.dbo.Order_Detail_T
+
+*/
+
 

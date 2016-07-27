@@ -1688,7 +1688,6 @@ namespace EventCombo.Controllers
                                         bodyn = bodyn.Replace("¶¶DiscoverEventurl¶¶", strUrl);
                                     }
                                 }
-
                             }
                         }
 

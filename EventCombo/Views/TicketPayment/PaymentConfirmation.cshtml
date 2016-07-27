@@ -413,44 +413,6 @@
             $(".TmezoneSet").hide();
 
         });
-
-        @*$('#shareonfb').click(function () {
-            var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
-            var description = '@Html.DisplayFor(m => m.description).ToString().Trim()';
-            var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
-            window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[summary]=' + encodeURIComponent(description) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-        });*@
-        @*$('#fbshare').click(function () {
-            var title='@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
-            var description='@Html.DisplayFor(m => m.description).ToString().Trim()';
-            var url='@Html.DisplayFor(m => m.url).ToString().Trim()';
-            window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[summary]=' + encodeURIComponent(description) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-        });*@
-
-        $('#twittershare').click(function () {
-            var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
-            var description = '@Html.DisplayFor(m => m.description).ToString().Trim()';
-            var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
-
-
-            window.open('https://twitter.com/share?url=' + encodeURIComponent(url) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-
-        });
-
-        $('#linkshare').click(function () {
-
-            var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
-            var description = '@Html.DisplayFor(m => m.description).ToString().Trim()';
-            var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
-
-            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(url) + '&title=' + title + '&summary= ' + description + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            //window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', '_self', resizable = yes, width = 626, height = 436);
-            return false;
-        });
-
     });
 
     function changesetting(id) {
@@ -561,53 +523,50 @@
 
 
 <script type="text/javascript">
+  var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
+  @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
+  var urlprefix = '@strpr'
 
-
-    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
-    @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
-    var urlprefix = '@strpr'
-
-    window.fbAsyncInit = function () {
-        // init the FB JS SDK
-        FB.init({
-            appId: fbappid,                        // App ID from the app dashboard
-            status: true,                                 // Check Facebook Login status
-            xfbml: true                                  // Look for social plugins on the page
-        });
-
-    };
-
-    // Load the SDK asynchronously
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) { return; }
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/all.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-
-    var globalFacebookShareObject = { name: 'EventCombo', link: '' };
-
-
-
-    $(document).ready(function () {
-        $('.sharefb').click(function (e) {
-            debugger;
-            globalFacebookShareObject.link = '@Model.url';
-            globalFacebookShareObject.name = '@Model.Tilte';
-            console.log(globalFacebookShareObject.link);
-            console.log(globalFacebookShareObject.name);
-
-            FB.ui({
-                method: 'feed',
-                name: globalFacebookShareObject.name,
-                link: globalFacebookShareObject.link
-            }, function (response) {
-                if (response && response.post_id) { }
-                else { }
-            });
-        });
+  window.fbAsyncInit = function () {
+    // init the FB JS SDK
+    FB.init({
+      appId: fbappid,                        // App ID from the app dashboard
+      status: true,                          // Check Facebook Login status
+      xfbml: true,                           // Look for social plugins on the page
+      version: '2.7'
     });
 
+  };
+
+  // Load the SDK asynchronously
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <script src="~/Scripts/socialshare.js"></script>
+  <script type="text/javascript">
+
+  $(document).ready(function () {
+    $('#twittershare').click(function () {
+      var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
+      var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
+      return TwitterShare(title, urlprefix + url);
+    });
+
+    $('#linkshare').click(function () {
+      var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
+      var description = '@Html.DisplayFor(m => m.description).ToString().Trim()';
+      var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
+      return LinkedInShare(title, urlprefix + url, description);
+    });
+
+    $('.sharefb').click(function (e) {
+      var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
+      return FacebookShare(urlprefix + url)
+    });
+  });
 </script>

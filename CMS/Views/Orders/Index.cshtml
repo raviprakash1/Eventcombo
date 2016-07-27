@@ -39,18 +39,23 @@
         long pastCount = Model.OrderTypeInfo.Where(m => m.OrderType == OrderTypes.Past).First().TotalCount;
       }
       <ul class="nav nav-tabs purchaseTicketHeaderTabs">
-        <li class="active"><a data-toggle="tab" href="#UpcomingEvents">Upcoming Events (@upcomingCount)</a></li>
-        <li><a data-toggle="tab" href="#PastEvents">Past Events (@pastCount)</a></li>
+        <li class="active"><a data-toggle="tab" href="#UpcomingEvents">Present Orders (<span>@upcomingCount</span>)</a></li>
+        <li><a data-toggle="tab" href="#PastEvents">Past Orders (<span>@pastCount</span>)</a></li>
       </ul>
 
       <div class="tab-content">
         <div id="UpcomingEvents" data-ttype="@OrderTypes.Upcoming" class="tab-pane fade in active">
-          <div class="col-sm-6 col-xs-6 searchTxtOrderContainerCls">
-            <input id="SearchTextUpcoming" type="text" placeholder="Search orders" class="searchTxtOrderCls" onkeypress="return OnKeyPress(event, this, '@(OrderTypes.Upcoming.ToString())')" />
+          <div class="searchTxtOrderContainerCls">
+            <input id="SearchTextUpcoming_OrderDate" type="date" style="line-height: 24px;" class="searchTxtOrderCls" onkeypress="return OnKeyPress(event, this, '@(OrderTypes.Upcoming.ToString())')" />
+            <input id="SearchTextUpcoming_OrderNumber" type="text" placeholder="Order Number" class="searchTxtOrderCls" onkeypress="return OnKeyPress(event, this, '@(OrderTypes.Upcoming.ToString())')" />
+            <input id="SearchTextUpcoming_CustomerName" type="text" placeholder="Customer Name" class="searchTxtOrderCls" onkeypress="return OnKeyPress(event, this, '@(OrderTypes.Upcoming.ToString())')" />
+            <input id="SearchTextUpcoming_Email" type="text" placeholder="Email" class="searchTxtOrderCls" onkeypress="return OnKeyPress(event, this, '@(OrderTypes.Upcoming.ToString())')" />
+            <input id="SearchTextUpcoming_Event" type="text" placeholder="Event ID / Event Name" class="searchTxtOrderCls" onkeypress="return OnKeyPress(event, this, '@(OrderTypes.Upcoming.ToString())')" />
+            <input type="button" class="btn btn-info" value="Search" onclick="return OnSearchClick('@(OrderTypes.Upcoming.ToString())')"/>
           </div>
 
           <div id="tableplace@(OrderTypes.Upcoming.ToString())">
-            @{ Html.RenderAction("PurchasedTicketList", new { OrderType = OrderTypes.Upcoming, SortBy = Model.State.SortBy, Page = Model.State.Page, PerPage = Model.State.PerPage }); }
+            
           </div>
           <div id="orderPaginationMainContainer@(OrderTypes.Upcoming.ToString())" class="orderListPagination">
             <div class="col-sm-8 col-xs-12 orderPagination">
@@ -73,11 +78,16 @@
 
         </div>
         <div id="PastEvents" data-ttype="@OrderTypes.Past" class="tab-pane fade">
-          <div class="col-sm-6 col-xs-6 searchTxtOrderContainerCls">
-            <input id="SearchTextUpcoming" type="text" placeholder="Search orders" class="searchTxtOrderCls" onkeypress="return OnKeyPress(event, this, '@(OrderTypes.Past.ToString())')" />
+          <div class="searchTxtOrderContainerCls">
+            <input id="SearchTextPast_OrderDate" type="date"  style="line-height: 24px;" class="searchTxtOrderCls" onkeypress="return OnKeyPress(event, this, '@(OrderTypes.Upcoming.ToString())')" />
+            <input id="SearchTextPast_OrderNumber" type="text" placeholder="Order Number" class="searchTxtOrderCls" onkeypress="return OnKeyPress(event, this, '@(OrderTypes.Past.ToString())')" />
+            <input id="SearchTextPast_CustomerName" type="text" placeholder="Customer Name" class="searchTxtOrderCls" onkeypress="return OnKeyPress(event, this, '@(OrderTypes.Past.ToString())')" />
+            <input id="SearchTextPast_Email" type="text" placeholder="Email" class="searchTxtOrderCls" onkeypress="return OnKeyPress(event, this, '@(OrderTypes.Past.ToString())')" />
+            <input id="SearchTextPast_Event" type="text" placeholder="Event ID / Event Name" class="searchTxtOrderCls" onkeypress="return OnKeyPress(event, this, '@(OrderTypes.Past.ToString())')" />
+            <input type="button" class="btn btn-info" value="Search" onclick="return OnSearchClick('@(OrderTypes.Past.ToString())')"/>
           </div>
           <div id="tableplace@(OrderTypes.Past.ToString())">
-            @{ Html.RenderAction("PurchasedTicketList", new { OrderType = OrderTypes.Past, SortBy = Model.State.SortBy, Page = Model.State.Page, PerPage = Model.State.PerPage }); }
+            
           </div>
           <div id="orderPaginationMainContainer@(OrderTypes.Past.ToString())" class="orderListPagination">
             <div class="col-sm-8 col-xs-12 orderPagination">
@@ -101,7 +111,7 @@
 
       </div>
       <div id="spinner" class="spinner" style="display:none;">
-        <img id="img-spinner" src="~/Images/ajaxloader1.gif" alt="Loading" />
+        <img id="img-spinner" src="~/assets/img/ajaxloader1.gif" alt="Loading" />
       </div>
     </div>
 
@@ -353,13 +363,43 @@
   }
 
   function SearchOrders(obj, page) {
-    var searchStr = $(obj).val();
     var cState = getCurrentState(page);
     if (cState != null) {
-      cState.Search = searchStr;
-      setPagination(page, cState.Total, 0);
+      cState.Search = JSON.stringify(GetOrderSearchObj(page));
+      getPurchasedTicketTotalCount(page, cState);
     }
   }
 
+  function OnSearchClick(page) {
+      SearchOrders(null, page);
+  }
+
+  function GetOrderSearchObj(page) {
+      var OrderSearch = {
+          OrderDate: $("#SearchText" + page + "_OrderDate").val(),
+          Order: $("#SearchText" + page + "_OrderNumber").val(),
+          CustomerName: $("#SearchText" + page + "_CustomerName").val(),
+          Email: $("#SearchText" + page + "_Email").val(),
+          Event: $("#SearchText" + page + "_Event").val()
+      };
+      return OrderSearch;
+  }
+
+  function getPurchasedTicketTotalCount(page, cState) {
+      $.ajax({
+          type: "GET",
+          url: "@Url.Action("PurchasedTicketTotalCount", "Orders")",
+          data: cState,
+          datatype: "json",
+          success: function (data) {
+              var cState = getCurrentState(page);
+              if (cState != null) {
+                  cState.Total = data;
+                  setPagination(page, cState.Total, 0);
+                  $(".purchaseTicketHeaderTabs li.active span").html(cState.Total);
+              }
+          }
+      });
+  }
 
 </script>

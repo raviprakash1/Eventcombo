@@ -7,6 +7,7 @@ using CMS.Models;
 
 namespace CMS.Controllers
 {
+    [CustomAuthorization("11")]
     public class FeeSettingController : Controller
     {
         // GET: FeeSetting

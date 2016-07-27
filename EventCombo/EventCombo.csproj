@@ -270,8 +270,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\CustomHandleErrorAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\HangfirePreload.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\NLogConfig.cs" />
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
@@ -351,6 +353,10 @@
     <Compile Include="Models\BusinessPage.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\City.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Footer.cs" />
     <Compile Include="Models\IBaseViewModel.cs" />
     <Compile Include="Models\BillingAddress.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
@@ -636,6 +642,7 @@
     <Compile Include="Services\LastLoginStatus.cs" />
     <Compile Include="Services\TicketEmailer.cs" />
     <Compile Include="Service\ArticleService.cs" />
+    <Compile Include="Service\HangfireBootstrapper.cs" />
     <Compile Include="Service\EventService.cs" />
     <Compile Include="Service\HtmlProcessing.cs" />
     <Compile Include="Service\IArticleService.cs" />
@@ -679,6 +686,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>OrganizerProfile.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Account\PurchasedTicket.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PurchasedTicket.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateEvent\ViewCreateEvent.generated.cs">
       <AutoGen>True</AutoGen>
@@ -771,6 +783,7 @@
     <Content Include="Content\AMaterial\angularjs-color-picker.min.css" />
     <Content Include="Content\AMaterial\animations.css" />
     <Content Include="Content\AMaterial\docs.css" />
+    <Content Include="Content\AMaterial\header-footer.css" />
     <Content Include="Content\AMaterial\main.css" />
     <Content Include="Content\AMaterial\material-datetimepicker.css" />
     <Content Include="Content\AMaterial\ngGallery.css" />
@@ -799,12 +812,31 @@
     <Content Include="Images\align_center.gif" />
     <Content Include="Images\align_left.gif" />
     <Content Include="Images\align_right.gif" />
+    <Content Include="Images\AMaterial\banner.jpg" />
     <Content Include="Images\AMaterial\ColorWheel.png" />
+    <Content Include="Images\AMaterial\deal1.jpg" />
+    <Content Include="Images\AMaterial\deal2.jpg" />
+    <Content Include="Images\AMaterial\dream-team.jpg" />
     <Content Include="Images\AMaterial\EventComboLogo.svg" />
     <Content Include="Images\AMaterial\EventComboLogoWholePx.svg" />
     <Content Include="Images\AMaterial\facebook.svg" />
+    <Content Include="Images\AMaterial\fb_messenger.svg" />
+    <Content Include="Images\AMaterial\footer.png" />
+    <Content Include="Images\AMaterial\ftbg.png" />
+    <Content Include="Images\AMaterial\infobox-bg.png" />
     <Content Include="Images\AMaterial\linkedin.svg" />
+    <Content Include="Images\AMaterial\logo.png" />
+    <Content Include="Images\AMaterial\mail-square.svg" />
+    <Content Include="Images\AMaterial\marker-green.png" />
+    <Content Include="Images\AMaterial\marker-green2.png" />
+    <Content Include="Images\AMaterial\marker-green_old.png" />
+    <Content Include="Images\AMaterial\marker-pink.png" />
     <Content Include="Images\AMaterial\plusIcon.png" />
+    <Content Include="Images\AMaterial\popimg.jpg" />
+    <Content Include="Images\AMaterial\saroosh.jpg" />
+    <Content Include="Images\AMaterial\square-facebook.svg" />
+    <Content Include="Images\AMaterial\square-linkedin.svg" />
+    <Content Include="Images\AMaterial\square-twitter.svg" />
     <Content Include="Images\AMaterial\stripes.png" />
     <Content Include="Images\AMaterial\twitter.svg" />
     <Content Include="Images\amr-exp.png" />
@@ -871,6 +903,7 @@
     <Content Include="Scripts\AMaterial\angular-tinymce\tinymce.min.js" />
     <Content Include="Scripts\AMaterial\angular.js" />
     <Content Include="Scripts\AMaterial\angularjs-color-picker.min.js" />
+    <Content Include="Scripts\AMaterial\classie.js" />
     <Content Include="Scripts\AMaterial\controller.js" />
     <Content Include="Scripts\AMaterial\demo.js" />
     <Content Include="Scripts\AMaterial\jquery-1.12.3.min.js" />
@@ -1365,6 +1398,7 @@
     <Content Include="Scripts\nyromodal\nyroModal.css" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\socialshare.js" />
     <Content Include="Scripts\sharefuncs.js" />
     <Content Include="Scripts\summernote.min.js" />
     <Content Include="Scripts\Validation.js" />
@@ -1476,6 +1510,7 @@
     </Content>
     <Content Include="Views\Account\PurchasedTicket.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>PurchasedTicket.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Account\PurchasedDeals.cshtml">
       <Generator>RazorGenerator</Generator>

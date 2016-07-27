@@ -11,7 +11,7 @@ namespace CMS.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    
     public partial class BusinessPage
     {
         public long BusinessPageID { get; set; }
@@ -20,5 +20,8 @@ namespace CMS.Models
         public string PageContent { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public System.DateTime UpdateDate { get; set; }
+        public int PageOrder { get; set; }
+        public bool IsOnFooter { get; set; }
+        public Nullable<int> ResponseCode { get; set; }
     }
 }
