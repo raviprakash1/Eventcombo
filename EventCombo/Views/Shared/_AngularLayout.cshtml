@@ -36,6 +36,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="~/Content/AMaterial/animations.css">
   <link rel="stylesheet" href="~/Content/AMaterial/ngGallery.css">
+  <link type="text/css" rel="stylesheet" href="~/Content/AMaterial/header-footer.css">
   <script src="~/Scripts/AMaterial/jquery-1.12.3.min.js"></script>
   <script src="~/Scripts/bootstrap.min.js"></script>
   <script src="~/Scripts/AMaterial/angular.js"></script>
@@ -55,17 +56,18 @@
   <script src="~/Scripts/AMaterial/moment.js"></script>
   <script src="~/Scripts/AMaterial/angular-material-datetimepicker.js"></script>
   <script src="~/Scripts/AMaterial/demo.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=@(System.Configuration.ConfigurationManager.AppSettings.Get("GoogleSecret"))&v=3.exp&sensor=true&libraries=places"></script>
   <script src="~/Scripts/AMaterial/ngGallery.js"></script>
-    <script>
-        function moveImage() {
-            // var randNum = 110;
-            var randNum = Math.round(Math.random() * (300) - 600);
-            document.getElementById('footerlogo').style.backgroundPosition = randNum + 'vh 0px';
-        }
-    </script>
+  <script src="~/Scripts/AMaterial/classie.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      var randNum = Math.round(Math.random() * (600) - 500);
+      document.getElementById('footerlogo').style.backgroundPosition = randNum + 'vh 0px';
+    });
+  </script>
+
 </head>
-<body ng-app="@ViewBag.ngApp" onload="moveImage()">
+<body ng-app="@ViewBag.ngApp">
   @{ Html.RenderPartial("_AngularHeader", bModel); }
   @RenderBody()
   @{ Html.RenderAction("Footer", "Home"); }
