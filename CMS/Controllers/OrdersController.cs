@@ -104,6 +104,17 @@ namespace CMS.Controllers
     }
 
     [HttpGet]
+    public ActionResult PurchasedTicketTotalCount(OrderListRequestViewModel model)
+    {
+      if ((Session["UserID"] == null))
+        return RedirectToAction("Login", "Home");
+
+      var orders = _tservice.GetOrdersList(model.OrderType, String.Empty, model.Search);
+
+      return Json(orders.Count(), JsonRequestBehavior.AllowGet);
+    }
+
+    [HttpGet]
     public ActionResult PurchasedTicketDetail(string OrderId)
     {
       if ((Session["UserID"] == null))

@@ -39,8 +39,8 @@
         long pastCount = Model.OrderTypeInfo.Where(m => m.OrderType == OrderTypes.Past).First().TotalCount;
       }
       <ul class="nav nav-tabs purchaseTicketHeaderTabs">
-        <li class="active"><a data-toggle="tab" href="#UpcomingEvents">Present Orders (@upcomingCount)</a></li>
-        <li><a data-toggle="tab" href="#PastEvents">Past Orders (@pastCount)</a></li>
+        <li class="active"><a data-toggle="tab" href="#UpcomingEvents">Present Orders (<span>@upcomingCount</span>)</a></li>
+        <li><a data-toggle="tab" href="#PastEvents">Past Orders (<span>@pastCount</span>)</a></li>
       </ul>
 
       <div class="tab-content">
@@ -66,7 +66,7 @@
                 setPagination("@(OrderTypes.Upcoming.ToString())", "@upcomingCount", 0);
               });
             </script>
-            <div class="col-sm-4 col-xs-12 orderViewCount" style="display:@(upcomingCount>25 ? "block" : "none");">
+            <div class="col-sm-4 col-xs-12 orderViewCount" style="display:@(upcomingCount>2 ? "block" : "none");">
               <ul class="pagination">
                 <li id="recordShow20" onclick="SetPerPage(this, '@(OrderTypes.Upcoming.ToString())', 25)" class="active recordLiItem"><a href="javascript:void(0)">25</a></li>
                 <li id="recordShow50" onclick="SetPerPage(this, '@(OrderTypes.Upcoming.ToString())', 50)" class="recordLiItem"><a href="javascript:void(0)">50</a></li>
@@ -363,11 +363,10 @@
   }
 
   function SearchOrders(obj, page) {
-    var searchStr = $(obj).val();
     var cState = getCurrentState(page);
     if (cState != null) {
       cState.Search = JSON.stringify(GetOrderSearchObj(page));
-      setPagination(page, cState.Total, 0);
+      getPurchasedTicketTotalCount(page, cState);
     }
   }
 
@@ -384,6 +383,23 @@
           Event: $("#SearchText" + page + "_Event").val()
       };
       return OrderSearch;
+  }
+
+  function getPurchasedTicketTotalCount(page, cState) {
+      $.ajax({
+          type: "GET",
+          url: "@Url.Action("PurchasedTicketTotalCount", "Orders")",
+          data: cState,
+          datatype: "json",
+          success: function (data) {
+              var cState = getCurrentState(page);
+              if (cState != null) {
+                  cState.Total = data;
+                  setPagination(page, cState.Total, 0);
+                  $(".purchaseTicketHeaderTabs li.active span").html(cState.Total);
+              }
+          }
+      });
   }
 
 </script>
