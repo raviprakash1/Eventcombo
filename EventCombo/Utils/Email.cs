@@ -135,5 +135,30 @@ namespace EventCombo.Utils
                 }
             }
         }
+
+
+        public static void SendToEventCombo(long lEventComboId)
+        {
+            using (EventComboEntities db = new EventComboEntities())
+            {
+                var vEventMes = (from EvMes in db.ContactEventComboes where EvMes.Id == lEventComboId select EvMes).FirstOrDefault();
+
+                List<Email_Tag> EmailTag = new List<Email_Tag>();
+                MyAccount ac = new MyAccount();
+                EmailTag = ac.getTag();
+                var Emailtemplate = ac.getEmail("Contact_Event_Organizer");
+                string to = "Navrit.Singh@kiwitech.com", from = "", cc = "", bcc = "", emailname = "", subjectn = "", bodyn = "";
+                from = ConfigurationManager.AppSettings.Get("UserName");
+
+                if (vEventMes != null)
+                {
+                    subjectn = " Message Id : " + vEventMes.Id.ToString() + ", Sender Name : " + vEventMes.Name + ", Sender EmailId : " + vEventMes.Email;
+                    bodyn = vEventMes.Question;
+                    ac.SendHtmlFormattedEmail(to, from, subjectn, bodyn, cc, bcc, "", emailname);
+                }
+            }
+        }
+
+
     }
 }

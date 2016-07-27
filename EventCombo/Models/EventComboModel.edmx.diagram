@@ -148,6 +148,7 @@
         <EntityTypeShape EntityType="EventComboModel.v_OrderList" Width="1.5" PointX="21.375" PointY="23.75" />
         <AssociationConnector Association="EventComboModel.PaymentTypeOrder_Detail_T" />
         <EntityTypeShape EntityType="EventComboModel.BusinessPage" Width="1.5" PointX="23.375" PointY="23.75" />
+        <EntityTypeShape EntityType="EventComboModel.ContactEventCombo" Width="1.5" PointX="24.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
