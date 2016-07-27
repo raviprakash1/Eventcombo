@@ -1,47 +1,47 @@
 ﻿@model EventCombo.Models.Footer
 <footer>
-    <div class="footer-left">
-        <div>
-            <strong>Cities</strong><br>
-            <p>
-                @foreach (var city in Model.Cities)
-                {
-                    <a href="/et/evt/evc/all/page/@city.Latitude/@city.Longitude/rel/none">@city.CityName</a><br>
-                }
-            </p>
-            <div class="social">
-                <a href="https://www.facebook.com/eventcombo" target="_blank"><img src="/Images/AMaterial/square-facebook.svg" width="20px" alt="Facebook"></a>
-                <a href="https://www.twitter.com/eventcombo" target="_blank"><img src="/Images/AMaterial/square-twitter.svg" width="20px" alt="Twitter"></a>
-                <a href="https://www.linkedin.com/company/eventcombo" target="_blank"> <img src="/Images/AMaterial/square-linkedin.svg" width="20px" alt="LinkedIn"></a>
-            </div>
-        </div>
-        <div>
-            <div>
-                <strong>Events</strong><br>
-                <p>
-                    @foreach (var eventType in Model.EventTypes)
-                    {
-                        if (ViewData["UserLatitude"].ToString() != "")
-                        {
-                            <a href="/et/evt/evc/all/page/@ViewData["UserLatitude"]/@ViewData["UserLongitude"]/rel/none">@eventType.EventType1</a><br>
-                        }
-                        else
-                        {
-                            <a href="javascript:;">@eventType.EventType1</a><br>
-                        }
-                    }
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="footer-right">
-        @foreach (var page in Model.BusinessPages)
+  <div class="footer-left footertext">
+    <div>
+      <strong>Cities</strong><br>
+      <ul>
+        @foreach (var city in Model.Cities)
         {
-            <a href="@Url.Action("BusinessPage", "BusinessPages", new { PageNameUrl = page.PageNameUrl })">@page.PageName</a> <span>|</span>
+          <li><a href="~/et/evt/evc/all/page/@city.Latitude/@city.Longitude/rel/none">@city.CityName</a></li>
         }
-        <a href="@Url.Action("CreateEvent", "EventManagement")">Create an Event</a>
+      </ul>
+      <div class="social">
+        <a href="https://www.facebook.com/eventcombo" target="_blank"><img src="~/Images/AMaterial/square-facebook.svg" width="20px" alt="Facebook"></a>
+        <a href="https://www.twitter.com/eventcombo" target="_blank"><img src="~/Images/AMaterial/square-twitter.svg" width="20px" alt="Twitter"></a>
+        <a href="https://www.linkedin.com/company/eventcombo" target="_blank"> <img src="~/Images/AMaterial/square-linkedin.svg" width="20px" alt="LinkedIn"></a>
+      </div>
     </div>
-    <div id="footerlogo" style="background-position: -414vh 0px;">
-        <div class="footerwhite"></div>
+    <div>
+      <strong>Events</strong><br>
+      <ul>
+        @foreach (var eventType in Model.EventTypes)
+        {
+          if (ViewData["UserLatitude"].ToString() != "")
+          {
+            <li><a href="~/et/@(eventType.EventTypeID.ToString())/evt/evc/all/page/@ViewData["UserLatitude"]/@ViewData["UserLongitude"]/rel/none">@eventType.EventType1</a></li>
+          }
+          else
+          {
+            <li><a href="~/et/@(eventType.EventTypeID.ToString())/evc/ALL/page/lat/long/rel/none">@eventType.EventType1</a></li>
+          }
+        }
+      </ul>
     </div>
+  </div>
+
+  <div class="footer-right">
+    @foreach (var page in Model.BusinessPages)
+    {
+      <a href="@Url.Action("BusinessPage", "BusinessPages", new { PageNameUrl = page.PageNameUrl })">@page.PageName</a> <span>|</span>
+    }
+    <a href="@Url.Action("CreateEvent", "EventManagement")">Create an Event</a>
+  </div>
+  <div id="footerlogo" style="background-position: -414vh 0px;">
+    <div class="footerwhite"></div>
+  </div>
 </footer>
+

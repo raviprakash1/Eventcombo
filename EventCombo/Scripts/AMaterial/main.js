@@ -776,24 +776,6 @@ createEventApp.directive('ecMaxlength', ['$compile', function ($compile) {
   };
 }]);
 
-createEventApp.controller('CreateEventHeaderController', ['$scope', function ($scope, $http) {
-  $scope.showAccountDiv = function () {
-
-    if ($('.myAccountDiv').is(':visible')) {
-      $('.down').text("keyboard_arrow_down");
-      $(' .myAccountDiv').hide();
-      $(".accountMainDiv").css("background-color", "unset");
-      $(".accountMainDiv").css("box-shadow", "unset");
-    }
-    else {
-      $(".accountMainDiv").css("background-color", "white");
-      $(".accountMainDiv").css("box-shadow", "0 2px 5px 0 rgba(0, 0, 0, 0.26)");
-      $('.down').text("keyboard_arrow_up")
-      $(' .myAccountDiv').show();
-    }
-  }
-}]);
-
 createEventApp.directive('positiveValidation', function () {
   return {
     restrict: 'A',
@@ -949,6 +931,44 @@ createEventApp.directive('variableDragDropElements', function ($compile) {
   };
 });
 
+
+createEventApp.controller('SearchEventController', ['$scope', '$window', function ($scope, $window) {
+  $scope.searchString = '';
+  $scope.geocoords = {
+    latitude: '40.705565',
+    longitude: '-74.118429'
+  }
+
+  $scope.GetCurrentPosition = function () {
+    if ($window.navigator.geolocation) {
+      $window.navigator.geolocation.getCurrentPosition(function (pos) {
+        $scope.geocoords = pos.coords;
+      });
+    }
+  }
+
+  $scope.discoverEvent = function () {
+    if ($scope.searchString) {
+      $window.location = '/et/evt/evc/all/page/' + $scope.geocoords.latitude + '/' + $scope.geocoords.longitude + '/rel/none/' + $scope.searchString;
+    }
+  }
+}]);
+
+createEventApp.directive('searchEvent', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attrs) {
+      element.bind("keydown keypress", function (event) {
+        if (event.which === 13) {
+          scope.$apply(function () {
+            scope.$eval(attrs.searchEvent);
+          });
+          event.preventDefault();
+        }
+      });
+    }
+  }
+});
 
 
 function formatAMPM(date) {
