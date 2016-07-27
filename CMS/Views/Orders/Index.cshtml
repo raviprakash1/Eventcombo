@@ -66,7 +66,7 @@
                 setPagination("@(OrderTypes.Upcoming.ToString())", "@upcomingCount", 0);
               });
             </script>
-            <div class="col-sm-4 col-xs-12 orderViewCount" style="display:@(upcomingCount>2 ? "block" : "none");">
+            <div class="col-sm-4 col-xs-12 orderViewCount" style="display:@(upcomingCount>25 ? "block" : "none");">
               <ul class="pagination">
                 <li id="recordShow20" onclick="SetPerPage(this, '@(OrderTypes.Upcoming.ToString())', 25)" class="active recordLiItem"><a href="javascript:void(0)">25</a></li>
                 <li id="recordShow50" onclick="SetPerPage(this, '@(OrderTypes.Upcoming.ToString())', 50)" class="recordLiItem"><a href="javascript:void(0)">50</a></li>
