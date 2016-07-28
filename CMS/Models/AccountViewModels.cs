@@ -173,6 +173,7 @@ namespace CMS.Models
       public DateTime? OrderDateTime { get; set; }
       public string OrderStateName { get; set; }
       public string UserId { get; set; }
+      public int RowNumber { get; set; }
     }
 
     public class OrderListMainViewModel
