@@ -162,7 +162,7 @@ namespace EventCombo.Utils
                     }
                     else
                     {
-                        to = "editor@eventcombo.com";
+                        to = ConfigurationManager.AppSettings.Get("DefaultEventcomboContactEmail");
                     }
                     if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
                     {
