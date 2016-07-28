@@ -115,10 +115,30 @@
                     <div class="col-sm-12  text-center">
                         <button class="btn soc_btn_fb fb_color" id="fbshare"><i class="fa fa-facebook"></i></button>
                         <button class="btn soc_btn_fb " id="twittershare"><i class="fa fa-twitter"></i></button>
-                      <button class="btn soc_btn_fb linkd_color" id="linkshare"><i class="fa fa-linkedin"></i></button>
-                        <button class="btn soc_btn_fb msg_color"><i class="fa fa-envelope"></i></button>
+                        <button class="btn soc_btn_fb linkd_color" id="linkshare"><i class="fa fa-linkedin"></i></button>
+                        <button class="btn soc_btn_fb msg_color" id="emailFrnd"><i class="fa fa-envelope"></i></button>
                     </div>
                 </div>
+                <div class="col-md-12 mt10" id="dvEmailFrnd" style="display:none;" >
+                    <form class="form-horizontal">
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <input type="text" class="form-control sharesocilform" id="txtEmailFrnd" placeholder="" />
+                               
+                            </div>
+                        </div>
+                        <div class="col-xs-7">
+                            <button class="btn def_btn acnt_btn send_test_btn" style="display:none" type="button" data-toggle="modal" id="btPopUp" data-target="#test_inv_email"></button>
+                            <button class="btn theme-btn def_btn acnt_btn send_test_btn" type="button" id="btSend">Send</button>
+                            <button class="btn theme-btn def_btn acnt_btn send_test_btn" type="button" id="btCancel">Cancel</button>
+                            <div class="invitation-loader" id="dvAjxLoader" style="width:auto;float:right;margin-top:7px;" >
+                                <img src="~/Images/ajax-loaderMini.gif" /> Please wait ...
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
                 <div class="col-md-12 mt10">
                     <form class="form-horizontal">
                         <div class="col-sm-12 ">
@@ -135,6 +155,9 @@
         </div>
 
     </div>
+
+
+
     <input type="hidden" id="hdcity" />
     
 
@@ -142,6 +165,21 @@
     <div id="fb-root"></div>
 </div>
 
+
+<div class="modal fade" id="test_inv_email" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body clearfix">
+                <div class="col-sm-12 text-center">
+                    <h3 id="htext">Success</h3>
+                    <p class="email_send_desc" id="ptext">Email has been sent.</p>
+                    <button type="button" id="btCloseEMailPup" class="btn theme-btn def_btn acnt_btn send_test_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Ok</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/Commonfunction.js"></script>
 <script>
     $('.home-pagination').find('.pagination').addClass('desc_pagination');
 
@@ -216,6 +254,8 @@
         $("#txtEventTitle").val(vtitle);
         $("#txtEventInfo").val(vinfo);
         $("#txtEventUrl").val(vurl);
+        $("#txtEmailFrnd").val("");
+        $("#dvEmailFrnd").hide();
     }
 </script>
 
@@ -263,4 +303,47 @@
         return FacebookShare(urlprefix + $("#txtEventUrl").val())
       });
     });
+
+    $("#emailFrnd").click(function () {
+       // $(".sharmodal_pop").animate({ minheight: '+=100' }, 100);
+        $("#dvEmailFrnd").show(100);
+    });
+
+
+    $("#btSend").click(function () {
+        var vTo = $("#txtEmailFrnd").val().trim();
+            var vEventTitle =  $("#txtEventTitle").val();
+            var vEventUrl =  $("#txtEventUrl").val();
+
+            if (validateEmail(vTo) == true && vTo != "") {
+                $.ajax({
+                    url: '@Url.Action("SendEmailToFriend", "Home")',
+                    data: { strFriendEmail: vTo, strEventTitle: vEventTitle, strEventUrl: vEventUrl },
+                    beforeSend: function () { $('#dvAjxLoader').show(); },
+                    complete: function () { $('#dvAjxLoader').hide(); },
+                    type: "Post",
+                    success: function (response) {
+                        $("#htext").text("Success");
+                        $("#ptext").text("Email has been sent.");
+                        $("#btPopUp").click();
+                    }
+                });
+            }
+            else {
+                $("#htext").text("Failed");
+                $("#ptext").text("Invalid Email Address.");
+                $("#btPopUp").click();
+                
+            }
+    });
+
+    $("#btCloseEMailPup").click(function () {
+        $("#txtEmailFrnd").focus();
+    });
+
+    $("#btCancel").click(function () {
+        $("#dvEmailFrnd").hide();
+    });
+
+
 </script>

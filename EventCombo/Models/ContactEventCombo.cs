@@ -12,16 +12,14 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BusinessPage
+    public partial class ContactEventCombo
     {
-        public long BusinessPageID { get; set; }
-        public string PageNameUrl { get; set; }
-        public string PageName { get; set; }
-        public string PageContent { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public System.DateTime UpdateDate { get; set; }
-        public int PageOrder { get; set; }
-        public Nullable<int> ResponseCode { get; set; }
-        public bool IsOnFooter { get; set; }
+        public int ContactEventComboId { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string PhoneNo { get; set; }
+        public Nullable<int> Category { get; set; }
+        public Nullable<int> SubCategory { get; set; }
+        public string Question { get; set; }
     }
 }

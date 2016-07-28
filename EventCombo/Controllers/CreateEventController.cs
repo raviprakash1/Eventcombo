@@ -826,6 +826,7 @@ namespace EventCombo.Controllers
                             else
                             {
                                 from = ConfigurationManager.AppSettings.Get("DefaultEmail"); 
+
                         }
                             if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
                             {
@@ -2040,6 +2041,7 @@ namespace EventCombo.Controllers
                 msg.EventId = long.Parse(model.EventId);
                 msg.OrganizerId = long.Parse(model.organiserid);
                 msg.Message = model.mesasges;
+                msg.PhoneNo = model.PhoneNo;
                 if (Session["AppId"] != null)
                 {
                     msg.Userid = Session["AppId"].ToString();
@@ -2047,23 +2049,18 @@ namespace EventCombo.Controllers
                 else
                 {
                     msg.Userid = "";
-
                 }
 
                 db.Event_OrganizerMessages.Add(msg);
                 try {
                     int i = db.SaveChanges();
+                    Email.SendToOrganizer(msg.MessageId);
                 }catch(Exception ex)
                 {
                   logger.Error("Exception during request processing", ex);
                 }
                 return "saved";
-
             }
-          
-          
-           
-
         }
 
      

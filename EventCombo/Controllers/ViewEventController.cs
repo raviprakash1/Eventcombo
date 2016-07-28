@@ -34,6 +34,7 @@ namespace EventCombo.Controllers
         public ActionResult ViewEvent(string strEventDs, string strEventId)
         {
             MyAccount hmc = new MyAccount();
+            var tenantId = this.RouteData.Values["tenant"];
             if ((Session["AppId"] != null))
             {
                 string LgUser = Session["AppId"].ToString();

@@ -84,250 +84,249 @@
 
     <div class="event_container event_container_480">
         <div class="event_inner_container event_top view_evnt_top viewevent_container" id="eventtopscoll">
-            
+
             <div class="event-slide-container xs-viewevent-inner mob-sld-480">
                 <div class="col-sm-12 no_pad bggrey clearfix" id="buttonscroll">
-                @if (TempData["EventCancel"] != null)
+                    @if (TempData["EventCancel"] != null)
                 {
-                    <div class="Moderor mb10" id="diverroacc" tabindex="-1">
+                        <div class="Moderor mb10" id="diverroacc" tabindex="-1">
+                            <div class="er_UI_main">
+                                <div class="er_warnui_img"></div>
+                                <div class="er_suc" id="erraccmsg">@TempData["EventCancel"]</div>
+                                @*<button class="close" aria-hidden="true" type="button" id="btndiverrsuc">&#215;</button>*@
+
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        if (TempData["ExpiredEvent"] != null)
+                        {
+                            <div class="Moderor mb10" id="diverroacc" tabindex="-1">
+                                <div class="er_war_main">
+                                    <div class="er_war_img"></div>
+                                    <div class="er_war" id="erraccmsg">@TempData["ExpiredEvent"]</div>
+                                    @*<button class="close" aria-hidden="true" type="button" id="btndiverrsuc">&#215;</button>*@
+
+                                </div>
+                            </div>
+                        }
+                    }
+                    <div class="Moderor mb10" id="diverroacc" tabindex="-1" style="display:none;">
                         <div class="er_UI_main">
-                            <div class="er_warnui_img"></div>
-                            <div class="er_suc" id="erraccmsg">@TempData["EventCancel"]</div>
-                            @*<button class="close" aria-hidden="true" type="button" id="btndiverrsuc">&#215;</button>*@
+                            <div class="er_UI_img"></div>
+                            <div class="er_suc" id="erraccmsg"></div>
+                            <button class="close" type="button" id="btndiverrsuc">&#215;</button>
 
                         </div>
                     </div>
-                }
-                else
-                {
-                if (TempData["ExpiredEvent"] != null)
-                {
-                    <div class="Moderor mb10" id="diverroacc" tabindex="-1">
-                        <div class="er_war_main">
-                            <div class="er_war_img"></div>
-                            <div class="er_war" id="erraccmsg">@TempData["ExpiredEvent"]</div>
-                            @*<button class="close" aria-hidden="true" type="button" id="btndiverrsuc">&#215;</button>*@
+                    <div class="col-sm-3 col-xs-6 text-left no_pad">
+                        @*<label class="btn ev_live_sub_btn  grn_live_btn"> LIVE </label>*@
 
+
+                    </div>
+                    <div class="col-sm-9 col-xs-6 text-right no_pad">
+
+                        @*<button class="btn ev_live_sub_btn mb5" type="button">
+                                SAVE &#10;
+                                <span> > </span>
+                            </button>
+                            <button class="btn ev_live_sub_btn mb5" type="button">
+                                PREVIEW &#10;
+                                <span> > </span>
+                            </button>*@
+
+                        <div class="clearfix"></div>
+                        <div class="col-sm-12 ">
+                            @*( Last saved at MM/DD/YYYY 00:00pm )*@
                         </div>
                     </div>
-                }
-                }
-                <div class="Moderor mb10" id="diverroacc" tabindex="-1" style="display:none;">
-                    <div class="er_UI_main">
-                        <div class="er_UI_img"></div>
-                        <div class="er_suc" id="erraccmsg"></div>
-                        <button class="close" type="button" id="btndiverrsuc">&#215;</button>
-
-                    </div>
                 </div>
-                <div class="col-sm-3 col-xs-6 text-left no_pad">
-                    @*<label class="btn ev_live_sub_btn  grn_live_btn"> LIVE </label>*@
-
-
-                </div>
-                <div class="col-sm-9 col-xs-6 text-right no_pad">
-
-                    @*<button class="btn ev_live_sub_btn mb5" type="button">
-                            SAVE &#10;
-                            <span> > </span>
-                        </button>
-                        <button class="btn ev_live_sub_btn mb5" type="button">
-                            PREVIEW &#10;
-                            <span> > </span>
-                        </button>*@
-
-                    <div class="clearfix"></div>
-                    <div class="col-sm-12 ">
-                        @*( Last saved at MM/DD/YYYY 00:00pm )*@
-                    </div>
-                </div>
-            </div>
                 <div class="clearfix"></div>
                 <div class="evnt-slider-innr-cont">
                     <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                    
-                    <div class="carousel-inner" role="listbox" id="lstcarousel">
 
-                        @if ((int)TempData["ImageCount"] > 0)
-                        {
+                        <div class="carousel-inner" role="listbox" id="lstcarousel">
 
-
-                            foreach (var item in (List<string>)ViewBag.Images)
+                            @if ((int)TempData["ImageCount"] > 0)
                             {
-                                <div class="item ">
-                                    <img class="img-responsive" src="@item" alt="First slide">
+
+
+                                foreach (var item in (List<string>)ViewBag.Images)
+                                {
+                                    <div class="item ">
+                                        <img class="img-responsive" src="@item" alt="First slide">
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="item active">
+                                    <img class="img-responsive" src="~/Images/default_event_image.jpg" alt="First slide">
 
                                 </div>
                             }
-                        }
-                        else
-                        {
-                            <div class="item active">
-                                <img class="img-responsive" src="~/Images/default_event_image.jpg" alt="First slide">
+                            @*<div class="item active">
+                                    <img class="img-responsive" src="~/Images/slider4.png" alt="First slide">
 
-                            </div>
-                        }
-                        @*<div class="item active">
-                                <img class="img-responsive" src="~/Images/slider4.png" alt="First slide">
+                                </div>
+                                <div class="item">
+                                    <img class="img-responsive" src="~/Images/slider2.png" alt="Second slide">
 
-                            </div>
-                            <div class="item">
-                                <img class="img-responsive" src="~/Images/slider2.png" alt="Second slide">
+                                </div>
+                                <div class="item">
+                                    <img class="img-responsive" src="~/Images/slider3.png" alt="Third slide">
 
-                            </div>
-                            <div class="item">
-                                <img class="img-responsive" src="~/Images/slider3.png" alt="Third slide">
+                                </div>
+                                <div class="item">
+                                    <img class="img-responsive" src="~/Images/slider4.png" alt="Fouth slide">
 
-                            </div>
-                            <div class="item">
-                                <img class="img-responsive" src="~/Images/slider4.png" alt="Fouth slide">
+                                </div>
+                                <div class="item">
+                                    <img class="img-responsive" src="~/Images/slider2.png" alt="Fifth slide">
 
-                            </div>
-                            <div class="item">
-                                <img class="img-responsive" src="~/Images/slider2.png" alt="Fifth slide">
+                                </div>*@
+                        </div>
+                        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
 
-                            </div>*@
+                        </a>
                     </div>
-                    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-
-                    </a>
-                </div>
                     <div class="navbar-wrapper mob-navbar-wrapper">
-                    <div class="col-sm-12">
-                        <div class="col-sm-3 no_pads">
-                            <div class="col-sm-6 col-xs-6 no_pad vot_count mob-btn">
-                                <button type="button" class="btn_bg_none" title="Add this event to your favourites" id="btnfavourite"><i class="fa fa-heart"></i></button>
-                                <span class="ev_fav_count" title="count of people who saved this event" id="spanfav">@Html.DisplayFor(m => m.Favourite)</span>
-                            </div>
-                            <div class="col-sm-6 col-xs-6 no_pad vot_count mob-btn">
-                                <button type="button" class="btn_bg_none" title="Vote this event" id="btnvote">
-                                    <i class="fa fa-thumbs-up"></i>
-                                </button>
-                                <span class="ev_fav_count" title="Total votes" id="spanvotes">@Html.DisplayFor(m => m.Vote)</span>
-                            </div>
-                        </div>
-                        <div class="col-sm-9 col-xs-12 text-right m480p5">
-                            <div class="form-group mb5">
-                                <!--  <input class="form-control evnt_title_control evnt_placehold" placeholder="Avicii"> -->
-                                <label class="label-control evnt_title_control evnt_title_xs m480-evnt-titl word-brk-tilt" id="evtitle">
-                                    @Html.DisplayFor(m => m.Title)
-                                </label>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="col-sm-12 col-xs-12 text-right m480p5">
-                            <div class="form-group mb0 pull-right m480-date">
-                                <div class="dropdown text-left m480-time-drop">
-                                    <img class="evnt_clock evnt_cursor" data-toggle="dropdown" src="/Images/icon-date.png" />
-                                    <span class="evnt_title_date evnt_title_date2 evnt_title_xs m480-date" title="see what happening on this date">@Html.DisplayFor(m => m.DisplaydateRange)</span>
-                                    <ul class="dropdown-menu cus-drop-list mt10">
-                                        <span class="caret caret_cus"></span>
-                                        <li class="dropdown-header drop_cus_header">Schedule Date List</li>
-                                        <span class="cus-drop-list_high">
-
-                                            @foreach (var item in (List<listevent>)ViewBag.DateList)
-                                            {
-                                                <li>
-
-                                                    <a href="javascript:void(0)" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom-@item.Time" data-toggle="modal">@item.Dayofweek @item.Datefrom @item.Time.ToUpper()</a>
-
-                                                    @*@if((Html.DisplayFor(m=>m.showstarttime).ToString() == "Y"|| Html.DisplayFor(m=>m.showstarttime).ToString() == "y") && (Html.DisplayFor(m=>m.showendtime).ToString() == "Y"|| Html.DisplayFor(m=>m.showendtime).ToString() == "y"))
-                                                                                                   {
-
-
-                                                                                                     }
-                                            @if ((Html.DisplayFor(m => m.showstarttime).ToString() == "n" || Html.DisplayFor(m => m.showstarttime).ToString() == "N") && (Html.DisplayFor(m => m.showendtime).ToString() == "N" || Html.DisplayFor(m => m.showendtime).ToString() == "n"))
-                                            {
-                                                <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek @item.Datefrom</a>
-
-                                            }@if ((Html.DisplayFor(m => m.showstarttime).ToString() == "n" || Html.DisplayFor(m => m.showstarttime).ToString() == "N") && (Html.DisplayFor(m => m.showendtime).ToString() == "y" || Html.DisplayFor(m => m.showendtime).ToString() == "Y"))
-                                            {
-                                                <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek @item.Datefrom</a>
-
-                                            }*@
-                                                </li>
-
-
-
-                                            }
-                                        </span>
-
-
-                                        @if (Html.DisplayFor(m => m.showTimezone).ToString() == "Y" || Html.DisplayFor(m => m.showTimezone).ToString() == "y")
-                                        {
-                                            <li class="drop_time_zon"> Time Zone:@Html.DisplayFor(m => m.Timezone)</li>
-                                        }
-
-
-                                    </ul>
+                        <div class="col-sm-12">
+                            <div class="col-sm-3 no_pads">
+                                <div class="col-sm-6 col-xs-6 no_pad vot_count mob-btn">
+                                    <button type="button" class="btn_bg_none" title="Add this event to your favourites" id="btnfavourite"><i class="fa fa-heart"></i></button>
+                                    <span class="ev_fav_count" title="count of people who saved this event" id="spanfav">@Html.DisplayFor(m => m.Favourite)</span>
+                                </div>
+                                <div class="col-sm-6 col-xs-6 no_pad vot_count mob-btn">
+                                    <button type="button" class="btn_bg_none" title="Vote this event" id="btnvote">
+                                        <i class="fa fa-thumbs-up"></i>
+                                    </button>
+                                    <span class="ev_fav_count" title="Total votes" id="spanvotes">@Html.DisplayFor(m => m.Vote)</span>
                                 </div>
                             </div>
-
-
-                        </div>
-                        <div class="clearfix"></div>
-                        @*<div class="col-sm-12 text-right">
-                    <label class="label-control evnt_title_date ev_white evnt_title_xs">
-                        @Html.DisplayFor(m => m.TopVenue)
-                    </label>
-                </div>*@
-                        @*<div class="clearfix"></div>*@
-                        <div class="col-sm-12 no_pad clearfix ">
-                            <div class="col-sm-4 col-xs-6 pb10 m480-ord-now">
-                                @if (Html.DisplayFor(m => m.Orderdetail).ToString() == "Sold Out")
-                                {
-                                    <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" id="btnorder">@Html.DisplayFor(m => m.Orderdetail)</a>
-
-                                }
-                                else
-                                {
-                                    <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" id="btnorder" href="#Ticketinfo">@Html.DisplayFor(m => m.Orderdetail)</a>
-
-                                }
-                                <a href="#DealInfo" class="xs-icondeal"><img src="/Images/icondeal.png" /></a>
+                            <div class="col-sm-9 col-xs-12 text-right m480p5">
+                                <div class="form-group mb5">
+                                    <!--  <input class="form-control evnt_title_control evnt_placehold" placeholder="Avicii"> -->
+                                    <label class="label-control evnt_title_control evnt_title_xs m480-evnt-titl word-brk-tilt" id="evtitle">
+                                        @Html.DisplayFor(m => m.Title)
+                                    </label>
+                                </div>
                             </div>
-                            @if (Html.DisplayFor(m => m.typeofEvent).ToString().Trim().ToLower() != "online")
-                            {
-                                <div class="col-sm-8 col-xs-6 text-right m480-loc-add m480p5">
-                                    <div class="form-group mb0">
-                                        @*<a href="#" data-geo=""></a>*@
+                            <div class="clearfix"></div>
+                            <div class="col-sm-12 col-xs-12 text-right m480p5">
+                                <div class="form-group mb0 pull-right m480-date">
+                                    <div class="dropdown text-left m480-time-drop">
+                                        <img class="evnt_clock evnt_cursor" data-toggle="dropdown" src="/Images/icon-date.png" />
+                                        <span class="evnt_title_date evnt_title_date2 evnt_title_xs m480-date" title="see what happening on this date">@Html.DisplayFor(m => m.DisplaydateRange)</span>
+                                        <ul class="dropdown-menu cus-drop-list mt10">
+                                            <span class="caret caret_cus"></span>
+                                            <li class="dropdown-header drop_cus_header">Schedule Date List</li>
+                                            <span class="cus-drop-list_high">
+
+                                                @foreach (var item in (List<listevent>)ViewBag.DateList)
+                                                {
+                                                    <li>
+
+                                                        <a href="javascript:void(0)" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom-@item.Time" data-toggle="modal">@item.Dayofweek @item.Datefrom @item.Time.ToUpper()</a>
+
+                                                        @*@if((Html.DisplayFor(m=>m.showstarttime).ToString() == "Y"|| Html.DisplayFor(m=>m.showstarttime).ToString() == "y") && (Html.DisplayFor(m=>m.showendtime).ToString() == "Y"|| Html.DisplayFor(m=>m.showendtime).ToString() == "y"))
+                                                                                                                   {
 
 
-                                        <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips">
-                                            @if (Html.DisplayFor(m => m.showmaponevent).ToString() == "y" || Html.DisplayFor(m => m.showmaponevent).ToString() == "Y")
+                                                                                                                     }
+                                                            @if ((Html.DisplayFor(m => m.showstarttime).ToString() == "n" || Html.DisplayFor(m => m.showstarttime).ToString() == "N") && (Html.DisplayFor(m => m.showendtime).ToString() == "N" || Html.DisplayFor(m => m.showendtime).ToString() == "n"))
+                                                            {
+                                                                <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek @item.Datefrom</a>
+
+                                                            }@if ((Html.DisplayFor(m => m.showstarttime).ToString() == "n" || Html.DisplayFor(m => m.showstarttime).ToString() == "N") && (Html.DisplayFor(m => m.showendtime).ToString() == "y" || Html.DisplayFor(m => m.showendtime).ToString() == "Y"))
+                                                            {
+                                                                <a href="#" onclick="showevent(this.id)" data-target="#schcalender" id="@item.Dayofweek-@item.Datefrom" data-toggle="modal">@item.Dayofweek @item.Datefrom</a>
+
+                                                            }*@
+                                                    </li>
+
+
+
+                                                }
+                                            </span>
+
+
+                                            @if (Html.DisplayFor(m => m.showTimezone).ToString() == "Y" || Html.DisplayFor(m => m.showTimezone).ToString() == "y")
                                             {
-
-                                                <img class="evnt_clock evnt_cursor" data-toggle="dropdown" onclick="return FindLocaiton()" src="~/Images/icon-location.png">
+                                                <li class="drop_time_zon"> Time Zone:@Html.DisplayFor(m => m.Timezone)</li>
                                             }
-                                            <span title="@Html.DisplayFor(m => m.TopAddress)" id="lbltopaddress">@Html.DisplayFor(m => m.TopAddress)</span>
-                                            <ul class="dropdown-menu dropdown-map cus-drop-list mt10">
-                                                <span class="caret caret_cus"></span>
-                                                <li>
-                                                    <div id="googleMap" style="width:200px;height:300px;">
-
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </label>
 
 
-
-                                        @*<div class="ev_loc_icn ev_loc_icn2 evnt_icn_xs" ></div>*@
-
-
+                                        </ul>
                                     </div>
                                 </div>
-                            }
+
+
+                            </div>
+                            <div class="clearfix"></div>
+                            @*<div class="col-sm-12 text-right">
+                                    <label class="label-control evnt_title_date ev_white evnt_title_xs">
+                                        @Html.DisplayFor(m => m.TopVenue)
+                                    </label>
+                                </div>*@
+                            @*<div class="clearfix"></div>*@
+                            <div class="col-sm-12 no_pad clearfix ">
+                                <div class="col-sm-4 col-xs-6 pb10 m480-ord-now">
+                                    @if (Html.DisplayFor(m => m.Orderdetail).ToString() == "Sold Out")
+                                    {
+                                        <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" id="btnorder">@Html.DisplayFor(m => m.Orderdetail)</a>
+
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-primary btn-lg ev_add_sub_btn ev_get_tick_btn" id="btnorder" href="#Ticketinfo">@Html.DisplayFor(m => m.Orderdetail)</a>
+
+                                    }
+                                    <a href="#DealInfo" class="xs-icondeal"><img src="/Images/icondeal.png" /></a>
+                                </div>
+                                @if (Html.DisplayFor(m => m.typeofEvent).ToString().Trim().ToLower() != "online")
+                                {
+                                    <div class="col-sm-8 col-xs-6 text-right m480-loc-add m480p5">
+                                        <div class="form-group mb0">
+                                            @*<a href="#" data-geo=""></a>*@
+
+
+                                            <label class="label-control evnt_title_date evnt_title_date2 ev_white evnt_title_xs ev_elips">
+                                                @if (Html.DisplayFor(m => m.showmaponevent).ToString() == "y" || Html.DisplayFor(m => m.showmaponevent).ToString() == "Y")
+                                                {
+
+                                                    <img class="evnt_clock evnt_cursor" data-toggle="dropdown" onclick="return FindLocaiton()" src="~/Images/icon-location.png">
+                                                }
+                                                <span title="@Html.DisplayFor(m => m.TopAddress)" id="lbltopaddress">@Html.DisplayFor(m => m.TopAddress)</span>
+                                                <ul class="dropdown-menu dropdown-map cus-drop-list mt10">
+                                                    <span class="caret caret_cus"></span>
+                                                    <li>
+                                                        <div id="googleMap" style="width:200px;height:300px;">
+
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </label>
+
+
+
+                                            @*<div class="ev_loc_icn ev_loc_icn2 evnt_icn_xs" ></div>*@
+
+
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="clearfix"></div>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
@@ -341,20 +340,18 @@
                 @if (Model.EventPrivacy == "Public" || (Model.Shareonfb == "Y" || Model.Shareonfb == "y"))
                 {
                     <div class="col-sm-6 col-xs-6 text-right pl0 ev_social_share_btn  m480-h-titl-rit">
-                        <a href="javascript:void(0)"><img src="/Images/mail.png"></a>
+                      <a href="javascript:void(0)" data-toggle="modal" data-target="#sharemodal" id="aMailId"><img src="/Images/mail.png"></a>
                       <a href="javascript:void(0)" id="twittershare" onclick="TwitterShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img src="/Images/twi.png"></a>
                       <a href="javascript:void(0)" id="fbshare" onclick="FacebookShare('@(Request.Url.AbsoluteUri)')"><img src="/Images/fac.png"></a>
                       <a href="javascript:void(0)" id="linkshare" onclick="LinkedInShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)', '@(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Html.Raw(Model.EventDescription).ToString()), 200, 250, ".").Replace("'", @"\'"))')"><img src="/Images/lin.png"></a>
                     </div>
 
                 }
-              
-
-                    <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
-                </div>
+                <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+            </div>
             <div class="evnt_details_body2 m480-body2">
                 <div class="col-sm-12 ev_white_bg pb10 m480-inn-pad">
-                    <div class="col-sm-8 view_sec_text mt10" id="eventdesc" >
+                    <div class="col-sm-8 view_sec_text mt10" id="eventdesc">
                         <label id="eventdesc" class="eventdescfont">
                             @Html.Raw(Model.EventDescription)
                             @*@Html.DisplayFor(m => m.EventDescription)*@
@@ -383,7 +380,7 @@
                                 <p><a href="@Html.DisplayFor(m => m.Linkedinlin)" target="_blank"><img src="~/Images/linkid.png" />&nbsp; @Html.DisplayFor(m => m.Linkedinlin)</a></p>
                             }
 
-                            <p><span class="badge">@Model.Orgevents</span> <a  href="@Url.Action("Index","OrganizerInfo", new {id=Model.organizerid,eventid=Model.eventId })">&nbsp;Upcoming Event(s)</a> </p>
+                            <p><span class="badge">@Model.Orgevents</span> <a href="@Url.Action("Index","OrganizerInfo", new {id=Model.organizerid,eventid=Model.eventId })">&nbsp;Upcoming Event(s)</a> </p>
 
                         </div>
                     </div>
@@ -457,24 +454,25 @@
                 </div>
                 <div class="evnt_details_body2 m480-body2">
                     <div id="dvTicketInfo" class="col-sm-12 mt10 no_pad ">
-                       
-                            <div id="dvAjxLoader">
-                                <img src="~/Images/ajaxloader1.gif" />
-                            </div>
-                       
 
-                       
+                        <div id="dvAjxLoader">
+                            <img src="~/Images/ajaxloader1.gif" />
+                        </div>
+
+
+
 
                     </div>
                     <div class="clearfix"></div>
-                       
-                    <div id="dvOrderTotal" class="col-sm-12 col-xs-12 text-right  div_ord_total_new"><strong><span id="spGTotal"></span> </strong>
+
+                    <div id="dvOrderTotal" class="col-sm-12 col-xs-12 text-right  div_ord_total_new">
+                        <strong><span id="spGTotal"></span> </strong>
                         <input id="hdGTotal" type="hidden" value="0" />
                     </div>
-                   
-                          
-                        
-                
+
+
+
+
                 </div>
             </div>
 
@@ -511,96 +509,94 @@
             <div class="event_detail_container" id="DealInfo">
 
                 @*<div class=" evnt_tile_deal_head">
-                    <div class="evnt_tile_deal_bg_l"></div>
-                    <div class="col-sm-12 col-xs-12 text-left no_pad">
-                        <h2 class="fb_dis_head pt5">AVAILABLE DEAL</h2>
-                    </div>
-                    <div class="evnt_tile_deal_bg_r evnt_tile_bg_r_call"></div>
-                </div>*@
+                        <div class="evnt_tile_deal_bg_l"></div>
+                        <div class="col-sm-12 col-xs-12 text-left no_pad">
+                            <h2 class="fb_dis_head pt5">AVAILABLE DEAL</h2>
+                        </div>
+                        <div class="evnt_tile_deal_bg_r evnt_tile_bg_r_call"></div>
+                    </div>*@
                 <div class="evnt_details_body2">
                     @*<div class="col-sm-12 ev_white_bg pt10 pb10 mt20">
-                        <div class="col-sm-4 no_pad ">
-                            <img class="img-responsive" src="/Images/deal_img1.jpg" />
-                            <div class="clearfix"></div>
-                            <div class="col-sm-8 no_pad mt10">
-                                <div class="col-sm-2 pl0"><img src="/Images/icon-location.png"></div>
-                                <div class="col-sm-10 dl_loc_desc">
-                                    West Village <br>
-                                    314 Bleecker Street<br>
-                                    New York, New York 10014<br>
-                                    www.bigburger.com
+                            <div class="col-sm-4 no_pad ">
+                                <img class="img-responsive" src="/Images/deal_img1.jpg" />
+                                <div class="clearfix"></div>
+                                <div class="col-sm-8 no_pad mt10">
+                                    <div class="col-sm-2 pl0"><img src="/Images/icon-location.png"></div>
+                                    <div class="col-sm-10 dl_loc_desc">
+                                        West Village <br>
+                                        314 Bleecker Street<br>
+                                        New York, New York 10014<br>
+                                        www.bigburger.com
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 no_pad mt10">
+                                    <img title="stars" src="/Images/rating-stars.gif"><br>
+                                    <span class="dl_str_name">yelp.com</span>
                                 </div>
                             </div>
-                            <div class="col-sm-4 no_pad mt10">
-                                <img title="stars" src="/Images/rating-stars.gif"><br>
-                                <span class="dl_str_name">yelp.com</span>
-                            </div>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="col-sm-12 no_pad dl_title">A.O.C. L'aile ou la Cuisse – West Village</div>
-                            <div class="col-sm-12 no_pad">
-                                <div class="col-sm-3 no_pad dl_off ">50% off </div>
-                                <div class="col-sm-3 no_pad mt20 dl_val text-center">Value $50 </div>
-                                <div class="col-sm-3 no_pad mt20 dl_save text-center"> You Save $25 </div>
-                                <div class="col-sm-3 no_pad mt20 dl_price text-center">PRICE: $25</div>
-                            </div>
-                            <div class="col-sm-12 no_pad">
-                                <div class="col-sm-6 no_pad dl_title">Upscale French Dinner</div>
-                                <div class="col-sm-2 mb5 dropheight">
-                                    <select class="form-control selectpicker">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                    </select>
+                            <div class="col-sm-8">
+                                <div class="col-sm-12 no_pad dl_title">A.O.C. L'aile ou la Cuisse – West Village</div>
+                                <div class="col-sm-12 no_pad">
+                                    <div class="col-sm-3 no_pad dl_off ">50% off </div>
+                                    <div class="col-sm-3 no_pad mt20 dl_val text-center">Value $50 </div>
+                                    <div class="col-sm-3 no_pad mt20 dl_save text-center"> You Save $25 </div>
+                                    <div class="col-sm-3 no_pad mt20 dl_price text-center">PRICE: $25</div>
                                 </div>
-                                <div class="col-sm-4 mb5">
-                                    <button class="btn ev_live_btn" type="button">
-                                        ADD TO PURCHASE
-                                    </button>
+                                <div class="col-sm-12 no_pad">
+                                    <div class="col-sm-6 no_pad dl_title">Upscale French Dinner</div>
+                                    <div class="col-sm-2 mb5 dropheight">
+                                        <select class="form-control selectpicker">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4 mb5">
+                                        <button class="btn ev_live_btn" type="button">
+                                            ADD TO PURCHASE
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 no_pad dl_desc">
+                                    Head chef Romain Bonnans brings his family's recipes to A.O.C. L'aile ou la Cuisse, his own slice of France in the West Village. Bonnans lends his authentic touch to recipes both classic and contemporary, from niçoise salad with fresh tuna and string beans to coq au vin, a red-wine chicken stew. Guests dine amid exposed brick, wrought-iron accents, and French-inspired artwork in the main dining room. There, a surrounding wall that effectively cuts diners off from the outside world and gives them free, unabashed rein to try holding their fork in their other hand.
                                 </div>
                             </div>
-                            <div class="col-sm-12 no_pad dl_desc">
-                                Head chef Romain Bonnans brings his family's recipes to A.O.C. L'aile ou la Cuisse, his own slice of France in the West Village. Bonnans lends his authentic touch to recipes both classic and contemporary, from niçoise salad with fresh tuna and string beans to coq au vin, a red-wine chicken stew. Guests dine amid exposed brick, wrought-iron accents, and French-inspired artwork in the main dining room. There, a surrounding wall that effectively cuts diners off from the outside world and gives them free, unabashed rein to try holding their fork in their other hand.
+                            <div class="col-sm-12 no_pad mt20 del_tc">
+                                Expires 90 days after purchase. <br>
+                                Limit 1 per person, may buy 2 additional as gifts. Limit 1 per table. Valid only for option purchased. Reservation required. Dine-in only. Alcohol is not discounted more than 50%. Merchant is solely responsible for all sales and delivery of alcohol. Must provide 21+ ID to receive alcoholic beverages. Not valid on Thanksgiving or other major holidays. Not valid with other offers. See the rules that apply to all deals.
                             </div>
-                        </div>
-                        <div class="col-sm-12 no_pad mt20 del_tc">
-                            Expires 90 days after purchase. <br>
-                            Limit 1 per person, may buy 2 additional as gifts. Limit 1 per table. Valid only for option purchased. Reservation required. Dine-in only. Alcohol is not discounted more than 50%. Merchant is solely responsible for all sales and delivery of alcohol. Must provide 21+ ID to receive alcoholic beverages. Not valid on Thanksgiving or other major holidays. Not valid with other offers. See the rules that apply to all deals.
-                        </div>
-                    </div>*@
+                        </div>*@
                     <div class="col-sm-12 mt10 ">
                         <div class="col-sm-12 text-right no_pad">
                             @if (Model.EventCancel == "Y")
                             {
-                                <button type="button" id="btPayment"  disabled="disabled" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
+                                <button type="button" id="btPayment" disabled="disabled" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
 
                             }
                             else
                             {
                                 if (Html.DisplayFor(m => m.Orderdetail).ToString() == "Sold Out")
                                 {
-                                <button type="button" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn" style="display:none;">PROCEED TO PAYMENT  > </button>
-                            }
-                            else
-                            {
-                                if (TempData["ForViewOnly"].ToString() == "Y")
-                                {
-                                    <button type="button" id="btPayment" style="display:none;" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
+                                    <button type="button" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn" style="display:none;">PROCEED TO PAYMENT  > </button>
                                 }
                                 else
                                 {
-                                    <button type="button" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
+                                    if (TempData["ForViewOnly"].ToString() == "Y")
+                                    {
+                                        <button type="button" id="btPayment" style="display:none;" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" id="btPayment" class="btn btn-lg ev_live_btn ev_live_sub_btn">PROCEED TO PAYMENT  > </button>
 
+                                    }
                                 }
-                            }
                             }
 
                         </div>
                     </div>
                 </div>
-
-
             </div>
             <div class="clearfix"></div>
         </div>
@@ -616,16 +612,23 @@
                         <form class="form-horizontal">
                             <div id="orgerror" class="alert-danger" style="display:none;">Please fill out the missing information</div>
                             <div class="col-xs-12 form-group mb10">
-                                <label class="col-sm-2 control-label ev_tickt_lebel ">Name</label>
+                                <label class="col-sm-2 control-label ev_tickt_lebel">Name</label>
                                 <div class="col-sm-8">
                                     <input class="form-control evnt_inp_cont" type="text" id="id_orgname">
                                 </div>
                             </div>
                             <div class="clearfix"></div>
                             <div class="col-xs-12 form-group mb10">
-                                <label class="col-sm-2 control-label ev_tickt_lebel ">Email</label>
+                                <label class="col-sm-2 control-label ev_tickt_lebel">Email</label>
                                 <div class="col-sm-8">
                                     <input class="form-control evnt_inp_cont" type="text" id="id_orgemail">
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-xs-12 form-group mb10">
+                                <label class="col-sm-2 control-label ev_tickt_lebel">Phone</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control evnt_inp_cont" type="text" id="OrgPhoneId" />
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -633,17 +636,17 @@
                                 <label class="col-sm-2 control-label ev_tickt_lebel ">Message</label>
                                 <div class="col-sm-8">
                                     <textarea class="form-control" rows="4" id="id_orgtext"></textarea>
-
                                 </div>
                             </div>
                             <div class="clearfix"></div>
                         </form>
-
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-lg ev_add_sub_btn " id="saveorgaizermsg">SAVE</button>
+                        <div class="invitation-loader" id="dvAjxLoaderOrg" style="width:auto;float:left;margin-top:7px;">
+                            <img src="~/Images/ajax-loaderMini.gif" /> Please wait ...
+                        </div>
+                        <button type="button" class="btn btn-primary btn-lg ev_add_sub_btn " id="saveorgaizermsg">SEND</button>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -720,8 +723,8 @@
                                                 @*<label class="alert-danger" id="lblwrongpwd" style="display:none;">You have entered incorrect password</label>*@
                                             </div>
                                             @*<div class="col-sm-12 no_pad ev_ven_mod_lebel mb10">
-                                                Enter Password to View the Event
-                                            </div>*@
+                                                    Enter Password to View the Event
+                                                </div>*@
 
                                             <div class="col-sm-12 no_pad text-center">
                                                 <div class="form-group mb10">
@@ -758,22 +761,67 @@
 
             </a>
         </div>
-        @*<input type="hidden" id="hdremaningqty" value="0" />*@
+
+
+
+
+        <div class="modal fade" id="sharemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content sharmodal_popEmail">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="modal-body">
+                        <div class="col-md-12" id="dvEmailFrnd">
+                            <form class="form-horizontal">
+                                <div class="col-xs-5">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control sharesocilform" id="txtEmailFrnd" placeholder="" />
+                                    </div>
+                                </div>
+                                <div class="col-xs-7">
+                                    <button class="btn def_btn acnt_btn send_test_btn" style="display:none" type="button" data-toggle="modal" id="btPopUp" data-target="#test_inv_email"></button>
+                                    <button class="btn theme-btn def_btn acnt_btn send_test_btn" type="button" id="btSend">Send</button>
+                                    <div class="invitation-loader" id="dvAjxLoaderEmail" style="width:auto;float:right;margin-top:7px;">
+                                        <img src="~/Images/ajax-loaderMini.gif" /> Please wait ...
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="test_inv_email" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body clearfix">
+                        <div class="col-sm-12 text-center">
+                            <h3 id="htext">Success</h3>
+                            <p class="email_send_desc" id="ptext">Email has been sent.</p>
+                            <button type="button" id="btCloseEMailPup" class="btn theme-btn def_btn acnt_btn send_test_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Ok</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+            @*<input type="hidden" id="hdremaningqty" value="0" />*@
 }
 
 @*<script src="~/Scripts/jquery.icalendar.pack.js"></script>*@
 @*<script src="~/Scripts/jquery.cookie.js"></script>*@
-
+<script src="~/Scripts/jquery.maskedinput.min.js"></script>
 <script>
-
-    $(document).ready(function () {
-        //window.location.hash = "ticketinfo";
-        //$('.divTable').click();
-        //alert(Chal);
-    
-        //input.removeAttr("title");
+    jQuery(function ($) {
+        $("#OrgPhoneId").mask("999-999-9999");
     });
-
+   
     @*window.fbAsyncInit = function () {
         FB.init({
             appId: '1956731254551382',
@@ -894,6 +942,9 @@
         //})
 
         //$('#lblwrongpwd').css('display', 'none');
+
+
+
         $('#divpwderroacc').hide();
         var eventype = "@Model.PrivatePassword";
         if (eventype != "") {
@@ -947,7 +998,7 @@
         $('#txtpwdlive').bind("cut copy paste", function (e) {
             e.preventDefault();
         });
-        
+
         $('ul.dropdown-menu.dropdown-map').on('click', function (event) {
             event.stopPropagation();
         });
@@ -961,12 +1012,12 @@
             if (keyCode === 13) {
                 if ($("#viewticketpassword").css('display') == 'block') {
                     $("#btnsubmitpwd").click();
-                   
+
                 } else {
                     $("#btPayment").click();
                 }
 
-              
+
             }
         });
         $(document).click(function () {
@@ -994,17 +1045,13 @@
             var name = $('#id_orgname').val();
             var mail = $('#id_orgemail').val();
             var txt = $('#id_orgtext').val();
-
+            var Phn = $('#OrgPhoneId').val();
             var count = 0;
-
             if (name != '') {
                 $('#id_orgname').removeClass('err-bor');
-
             } else {
-
                 count++;
                 $('#id_orgname').addClass('err-bor');
-
             }
 
 
@@ -1045,21 +1092,24 @@
                     'name': name,
                     'mesasges': txt,
                     'organiserid': organiserid,
-                    'EventId': eventid
-
+                    'EventId': eventid,
+                    'PhoneNo': Phn
                 }
                 $.ajax({
                     url: '@Url.Action("saveorganizermsg", "CreateEvent")',
                     data: model,
+                    beforeSend: function () { $('#dvAjxLoaderOrg').show(); },
+                    complete: function () { $('#dvAjxLoaderOrg').hide(); },
                     type: "Post",
                     success: function (response) {
                         $('#orgerror').css('display', 'block');
                         $('#orgerror').addClass('alert-success');
                         $('#orgerror').removeClass('alert-danger ');
-                        $('#orgerror').html("Message has been successfully send!!");
+                        $('#orgerror').html("Message has been successfully sent !!!");
                         $('#id_orgname').val('');
                         $('#id_orgemail').val('');
                         $('#id_orgtext').val('');
+                        $('#OrgPhoneId').val('');
                     }
                 });
             }
@@ -1439,7 +1489,7 @@
     }
     $(document).ready(function () {
 
-        
+
 
 
         $(".Evenfaccomment").css("display", "none");
@@ -1449,7 +1499,7 @@
             //facebook comments
 
 
-            if ($('.fb-comments').length >0) {
+            if ($('.fb-comments').length > 0) {
                 var scriptText = 'FB.XFBML.parse();';
                 var scriptNode = document.createElement('script');
                 scriptNode.appendChild(document.createTextNode(scriptText));
@@ -1490,11 +1540,10 @@
                     data: { Eventid: veventId },
                     type: "Post",
                     success: function (data) {
-                      
+
                         $("#dvTicketInfo").append(data);
                         var remainingqty = parseInt($("#hdremaningqty").val());
-                        if (remainingqty <= 0)
-                        {
+                        if (remainingqty <= 0) {
                             $("#btnorder").html("Sold Out");
                             $("#btPayment").hide();
                         }
@@ -1515,13 +1564,12 @@
                 data: { Eventid: veventId },
                 type: "Post",
                 success: function (data) {
-                   
+
                     $("#dvTicketInfo").append(data);
-                   
+
                     var hdid = $("#hdIds").val();
-                 
-                    if(hdid=="")
-                    {
+
+                    if (hdid == "") {
                         $("#btPayment").hide();
 
                         $("#dvTicketInfo").append("<p class='eventdescfont'>" + ajaxsetup("ViewEvent", "VETicketnotpresent") + "</p>")
@@ -1538,7 +1586,7 @@
                     //    for (i = 0; i <= vRow.length - 1; i++) {
                     //        var vColm = vRow[i].split('~');
                     //        vId = vColm[0].toString();
-                            
+
                     //        var vCol1 = vColm[1].toString();
                     //        var vCol2 = parseInt(vColm[2]);
 
@@ -1546,7 +1594,7 @@
 
                     //        $("#d_" + vId.toString()).val(vCol1);
                     //        if (vCol2 > 0) { $("#txtd_" + vId.toString()).val(vColm[2].toString()); }
-                            
+
                     //    }
                     //    $.removeCookie("Selection");
                     //    calculateTickTotal();
@@ -1585,7 +1633,7 @@
                 if (vTType == 3 && vDonate > 0) vLockQty = 1;
                 //alert(vTType);
                 if (vLockQty > 0) {
-                    if (vTType == 3 && vDonate <=0) {
+                    if (vTType == 3 && vDonate <= 0) {
                         vLockQty = 0;
                     }
                     else {
@@ -1626,8 +1674,7 @@
                             $("#spanokid").html(ajaxsetup("ViewEvent", "OverSelling"));
                             $.removeCookie("Selection");
                         }
-                        else if (response == "NOTLIVE")
-                        {
+                        else if (response == "NOTLIVE") {
                             $("#btOk").click();
                             $("#spanokid").html(ajaxsetup("ViewEvent", "EventNotLive"));
                             $.removeCookie("Selection");
@@ -1637,7 +1684,7 @@
                             var vUrl = '@Url.Action("TicketPayment", "TicketPayment")';
                             @*var vUrl = '@Url.RouteUrl("Payment")';*@
                             //alert(vUrl);
-                            window.location.href =vUrl;
+                            window.location.href = vUrl;
                             @*window.location.href = '@Url.Action("TicketPayment", "TicketPayment", new { })' + '?Eventid=' + Eventid;*@
                         }
                     }
@@ -1646,8 +1693,7 @@
 
 
 
-            } else
-            {
+            } else {
                 $('#diverroacc').css('display', 'block');
                 $('#diverroacc').focus();
                 $('#erraccmsg').html(ajaxsetup('ViewEvent', 'ViewEventNoQtyUI'));
@@ -1684,3 +1730,35 @@
 
 <script src="~/Scripts/socialshare.js"></script>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btSend").click(function () {
+            var vTo = $("#txtEmailFrnd").val().trim();
+            var vEventId = $('#hdEventid').val();
+            if (validateEmail(vTo) == true && vTo != "") {
+                $.ajax({
+                    url: '@Url.Action("SendEmailToFriend", "Home")',
+                    data: { strFriendEmail: vTo, strEventTitle: "", strEventUrl: "", lEvent: vEventId },
+                    beforeSend: function () { $('#dvAjxLoaderEmail').show(); },
+                    complete: function () { $('#dvAjxLoaderEmail').hide(); },
+                    type: "Post",
+                    success: function (response) {
+                        $("#htext").text("Success");
+                        $("#ptext").text("Email has been sent.");
+                        $("#btPopUp").click();
+                    }
+                });
+            }
+            else {
+                $("#htext").text("Failed");
+                $("#ptext").text("Invalid Email Address.");
+                $("#btPopUp").click();
+
+            }
+        });
+
+
+
+    });
+
+</script>

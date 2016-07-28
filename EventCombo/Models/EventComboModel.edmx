@@ -184,6 +184,18 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="ContactEventCombo">
+          <Key>
+            <PropertyRef Name="ContactEventComboId" />
+          </Key>
+          <Property Name="ContactEventComboId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="256" />
+          <Property Name="Email" Type="varchar" MaxLength="256" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="20" />
+          <Property Name="Category" Type="int" />
+          <Property Name="SubCategory" Type="int" />
+          <Property Name="Question" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="ControlType">
           <Key>
             <PropertyRef Name="ControlTypeId" />
@@ -323,6 +335,7 @@
           <Property Name="Email" Type="varchar" MaxLength="256" />
           <Property Name="Message" Type="nvarchar(max)" />
           <Property Name="MessageId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="Event_Orgnizer_Detail">
           <Key>
@@ -1104,9 +1117,10 @@ warning 6002: The table/view 'EC2.dbo.v_OrderList' does not have a primary key d
           <Property Name="OrderStateName" Type="varchar" MaxLength="50" />
           <Property Name="EventID" Type="bigint" />
           <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="Favorite" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EC2.dbo.v_RetrieveEventid' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="v_RetrieveEventid">
           <Key>
             <PropertyRef Name="EventID" />
@@ -1524,6 +1538,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySet Name="BusinessPage" EntityType="Self.BusinessPage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CardDetails" EntityType="Self.CardDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContactEventCombo" EntityType="Self.ContactEventCombo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ControlType" EntityType="Self.ControlType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeliveryMethod" EntityType="Self.DeliveryMethod" Schema="dbo" store:Type="Tables" />
@@ -1639,7 +1654,8 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
     [v_OrderList].[OrderStateId] AS [OrderStateId], 
     [v_OrderList].[OrderStateName] AS [OrderStateName], 
     [v_OrderList].[EventID] AS [EventID], 
-    [v_OrderList].[UserId] AS [UserId]
+    [v_OrderList].[UserId] AS [UserId], 
+    [v_OrderList].[Favorite] AS [Favorite]
     FROM [dbo].[v_OrderList] AS [v_OrderList]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="v_RetrieveEventid" EntityType="Self.v_RetrieveEventid" store:Type="Views" store:Schema="dbo">
@@ -2029,6 +2045,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Property Name="MessageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Event" Relationship="EventComboModel.EventEvent_OrganizerMessages" FromRole="Event_OrganizerMessages" ToRole="Event" />
           <NavigationProperty Name="Organizer_Master" Relationship="EventComboModel.Organizer_MasterEvent_OrganizerMessages" FromRole="Event_OrganizerMessages" ToRole="Organizer_Master" />
+          <Property Name="PhoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event_VariableDesc">
           <Key>
@@ -2876,6 +2893,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           </FunctionImport>
           <EntitySet Name="BusinessPages" EntityType="EventComboModel.BusinessPage" />
           <EntitySet Name="Cities" EntityType="EventComboModel.City" />
+          <EntitySet Name="ContactEventComboes" EntityType="EventComboModel.ContactEventCombo" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -4084,6 +4102,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Key>
             <PropertyRef Name="OId" />
             <PropertyRef Name="OrderStateId" />
+            <PropertyRef Name="Favorite" />
           </Key>
           <Property Name="OId" Type="Int64" Nullable="false" />
           <Property Name="OrderId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -4103,6 +4122,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Property Name="OrderStateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EventID" Type="Int64" />
           <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Favorite" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="PaymentTypeOrder_Detail_T">
           <End Type="EventComboModel.PaymentType" Role="PaymentType" Multiplicity="0..1" />
@@ -4141,6 +4161,18 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Property Name="IsOnFooter" Type="Boolean" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ContactEventCombo">
+          <Key>
+            <PropertyRef Name="ContactEventComboId" />
+          </Key>
+          <Property Name="ContactEventComboId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Category" Type="Int32" />
+          <Property Name="SubCategory" Type="Int32" />
+          <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4352,6 +4384,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySetMapping Name="Event_OrganizerMessages">
             <EntityTypeMapping TypeName="EventComboModel.Event_OrganizerMessages">
               <MappingFragment StoreEntitySet="Event_OrganizerMessages">
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
                 <ScalarProperty Name="EventId" ColumnName="EventId" />
                 <ScalarProperty Name="OrganizerId" ColumnName="OrganizerId" />
                 <ScalarProperty Name="Userid" ColumnName="Userid" />
@@ -5413,6 +5446,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySetMapping Name="v_OrderList">
             <EntityTypeMapping TypeName="EventComboModel.v_OrderList">
               <MappingFragment StoreEntitySet="v_OrderList">
+                <ScalarProperty Name="Favorite" ColumnName="Favorite" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="OrderStateName" ColumnName="OrderStateName" />
@@ -5464,7 +5498,19 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-
+          <EntitySetMapping Name="ContactEventComboes">
+            <EntityTypeMapping TypeName="EventComboModel.ContactEventCombo">
+              <MappingFragment StoreEntitySet="ContactEventCombo">
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="SubCategory" ColumnName="SubCategory" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ContactEventComboId" ColumnName="ContactEventComboId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
