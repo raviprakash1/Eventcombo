@@ -54,7 +54,6 @@ namespace EventCombo.Controllers
                                     orderby myRow.EventSubCategory1
                                     select myRow).ToList();
 
-                    //strHtml.Append("< option value =0 selected=true>Select</ option > ");
                     strHtml.Append("<option value=0>Select</option>");
                     foreach (var item in EventCat)
                         strHtml.Append("<option value=" + item.EventSubCategoryID.ToString() + ">" + item.EventSubCategory1 + "</option>");
@@ -64,6 +63,7 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
+                logger.Error(ex, "Exception during request processing", null);
                 return strHtml.ToString();
             }
         }
@@ -83,11 +83,11 @@ namespace EventCombo.Controllers
                 try
                 {
                     int i = db.SaveChanges();
-                    Email.SendToEventCombo(msg.Id);
+                    Email.SendToEventCombo(msg.ContactEventComboId);
                 }
                 catch (Exception ex)
                 {
-                    logger.Error("Exception during request processing", ex);
+                    logger.Error(ex, "Exception during request processing", null);
                 }
                 return "saved";
             }
