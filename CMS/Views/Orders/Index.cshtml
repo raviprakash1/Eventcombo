@@ -32,15 +32,26 @@
 
 
     <div id="purchasedTicketContainer">
-      <h2 class="purchasedTitleHead">TICKET ORDERS</h2>
-
+        <div class="panel-heading panel_loader search-mng-pnl">
+            <span class="view_evnt fs26 col-sm-3"> TICKET ORDERS</span>
+            <label class="field select admin-form col-sm-7 text-right srh-by-no">
+                Display:
+                <select class="pagination" onchange="return pageDisplay_Change('@(OrderTypes.Upcoming.ToString())', this);" id="ddlPageDisplay_@(OrderTypes.Upcoming.ToString())" name="ddlPageDisplay_@(OrderTypes.Upcoming.ToString())">
+                    <option value="0">Select</option>
+                </select>
+                <select class="pagination" onchange="return pageDisplay_Change('@(OrderTypes.Past.ToString())', this);" id="ddlPageDisplay_@(OrderTypes.Past.ToString())" name="ddlPageDisplay_@(OrderTypes.Past.ToString())" style="display:none;">
+                    <option value="0">Select</option>
+                </select>
+                <i class="arrow double"></i>
+            </label>
+        </div>
       @{
         long upcomingCount = Model.OrderTypeInfo.Where(m => m.OrderType == OrderTypes.Upcoming).First().TotalCount;
         long pastCount = Model.OrderTypeInfo.Where(m => m.OrderType == OrderTypes.Past).First().TotalCount;
       }
       <ul class="nav nav-tabs purchaseTicketHeaderTabs">
-        <li class="active"><a data-toggle="tab" href="#UpcomingEvents">Present Orders (<span>@upcomingCount</span>)</a></li>
-        <li><a data-toggle="tab" href="#PastEvents">Past Orders (<span>@pastCount</span>)</a></li>
+        <li class="active" onclick="showNavigationHeader('@(OrderTypes.Upcoming.ToString())');"><a data-toggle="tab" href="#UpcomingEvents">Present Orders (<span>@upcomingCount</span>)</a></li>
+        <li onclick="showNavigationHeader('@(OrderTypes.Past.ToString())');"><a data-toggle="tab" href="#PastEvents">Past Orders (<span>@pastCount</span>)</a></li>
       </ul>
 
       <div class="tab-content">
@@ -64,6 +75,7 @@
             <script type="text/javascript">
               $(function () {
                 setPagination("@(OrderTypes.Upcoming.ToString())", "@upcomingCount", 0);
+                setNavigationHeader("@(OrderTypes.Upcoming.ToString())");
               });
             </script>
             <div class="col-sm-4 col-xs-12 orderViewCount" style="display:@(upcomingCount>25 ? "block" : "none");">
@@ -96,6 +108,7 @@
             <script type="text/javascript">
               $(function () {
                 setPagination("@(OrderTypes.Past.ToString())", "@pastCount", 0);
+                setNavigationHeader("@(OrderTypes.Past.ToString())");
               });
             </script>
             <div class="col-sm-4 col-xs-12 orderViewCount" style="display:@(pastCount>25 ? "block" : "none");">
@@ -351,6 +364,7 @@
       var curRec = cState.Page * cState.PerPage;
       cState.PerPage = num;
       setPagination(page, cState.Total, Math.floor(curRec / num));
+      setNavigationHeader(page);
     }
   }
 
@@ -400,6 +414,40 @@
               }
           }
       });
+  }
+
+  function setNavigationHeader(page) {
+      var cState = getCurrentState(page);
+      if (cState != null) {
+          var cur = cState.Page * cState.PerPage;
+          var total = cState.Total;
+
+          $("#ddlPageDisplay_" + page).html('');
+          $("#ddlPageDisplay_" + page).append('<option value="0">Select</option>');
+
+          if ((parseInt(total, 10) > parseInt(cState.PerPage, 10)) && (parseInt(cState.PerPage, 10) > 0)) {
+              var totalPages = Math.ceil(total / cState.PerPage);
+              cur = cur >= totalPages ? totalPages - 1 : cur;
+              var startVal = ((cur + 2) >= totalPages) ? (totalPages - 5) : (cur - 2);
+              startVal = (startVal >= 0) ? startVal : 0;
+              var endVal = ((startVal + 4) >= totalPages) ? totalPages - 1 : (startVal + 4);
+              for (i = startVal; i <= endVal; i++) {
+                  $("#ddlPageDisplay_" + page).append('<option value="' + i + '">' + (cState.PerPage * i + 1) + ' - ' + (cState.PerPage * i + (i == endVal ? cState.Total - cState.PerPage * i : parseInt(cState.PerPage, 10))) + '</option>');
+              }
+          }
+      }
+  }
+
+  function pageDisplay_Change(page, selectObj) {
+      var cState = getCurrentState(page);
+      if (cState != null) {
+          var value = $(selectObj).val();
+          setPagination(page, cState.Total, value);
+      }
+  }
+  function showNavigationHeader(page) {
+      $("select[name^='ddlPageDisplay_']").hide();
+      $("#ddlPageDisplay_" + page).show();
   }
 
 </script>
