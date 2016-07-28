@@ -1636,10 +1636,6 @@
     <Content Include="Views\Shared\_AngularFooter.cshtml" />
     <Content Include="Views\EventManagement\CreateEventTicket.cshtml" />
     <Content Include="Views\BusinessPages\BusinessPage.cshtml" />
-    <Content Include="Views\ContactEventComboes\Create.cshtml" />
-    <Content Include="Views\ContactEventComboes\Delete.cshtml" />
-    <Content Include="Views\ContactEventComboes\Details.cshtml" />
-    <Content Include="Views\ContactEventComboes\Edit.cshtml" />
     <Content Include="Views\ContactEventComboes\Index.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>

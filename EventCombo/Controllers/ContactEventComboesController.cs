@@ -16,7 +16,6 @@ namespace EventCombo.Controllers
     {
         private EventComboEntities db = new EventComboEntities();
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        // GET: ContactEventComboes
         public ActionResult Index()
         {
 
@@ -45,7 +44,6 @@ namespace EventCombo.Controllers
 
         public string GetSubCat(long lECatId)
         {
-
             StringBuilder strHtml = new StringBuilder();
             try
             {
@@ -69,10 +67,7 @@ namespace EventCombo.Controllers
                 return strHtml.ToString();
             }
         }
-        public string Temp()
-        {
-            return "Test";
-        }
+  
         public string SaveAndSend(ContactEventCombo model)
         {
             using (EventComboEntities db = new EventComboEntities())
@@ -96,109 +91,6 @@ namespace EventCombo.Controllers
                 }
                 return "saved";
             }
-        }
-        // GET: ContactEventComboes/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ContactEventCombo contactEventCombo = db.ContactEventComboes.Find(id);
-            if (contactEventCombo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(contactEventCombo);
-        }
-
-        // GET: ContactEventComboes/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ContactEventComboes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Email,PhoneNo,Category,SubCategory")] ContactEventCombo contactEventCombo)
-        {
-            if (ModelState.IsValid)
-            {
-                db.ContactEventComboes.Add(contactEventCombo);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(contactEventCombo);
-        }
-
-        // GET: ContactEventComboes/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ContactEventCombo contactEventCombo = db.ContactEventComboes.Find(id);
-            if (contactEventCombo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(contactEventCombo);
-        }
-
-        // POST: ContactEventComboes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Email,PhoneNo,Category,SubCategory")] ContactEventCombo contactEventCombo)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(contactEventCombo).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(contactEventCombo);
-        }
-
-        // GET: ContactEventComboes/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ContactEventCombo contactEventCombo = db.ContactEventComboes.Find(id);
-            if (contactEventCombo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(contactEventCombo);
-        }
-
-        // POST: ContactEventComboes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            ContactEventCombo contactEventCombo = db.ContactEventComboes.Find(id);
-            db.ContactEventComboes.Remove(contactEventCombo);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
