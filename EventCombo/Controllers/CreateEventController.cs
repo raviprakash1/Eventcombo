@@ -2054,7 +2054,6 @@ namespace EventCombo.Controllers
                 db.Event_OrganizerMessages.Add(msg);
                 try {
                     int i = db.SaveChanges();
-                    
                     Email.SendToOrganizer(msg.MessageId);
                 }catch(Exception ex)
                 {

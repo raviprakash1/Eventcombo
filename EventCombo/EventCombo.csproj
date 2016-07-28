@@ -286,6 +286,7 @@
     <Compile Include="Controllers\BusinessPagesController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CMSController.cs" />
+    <Compile Include="Controllers\ContactEventComboesController.cs" />
     <Compile Include="Controllers\CreateEventController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\DreamTeamController.cs" />
@@ -357,6 +358,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Footer.cs" />
+    <Compile Include="Models\ContactEventCombo.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IBaseViewModel.cs" />
     <Compile Include="Models\BillingAddress.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
@@ -1667,6 +1671,7 @@
     <Content Include="Views\Shared\_AngularFooter.cshtml" />
     <Content Include="Views\EventManagement\CreateEventTicket.cshtml" />
     <Content Include="Views\BusinessPages\BusinessPage.cshtml" />
+    <Content Include="Views\ContactEventComboes\Index.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
