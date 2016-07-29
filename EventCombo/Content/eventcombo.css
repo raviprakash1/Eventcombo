@@ -2074,7 +2074,7 @@ transform: rotate(45deg);
 .sharmodal_pop .modal-header{ border:0px; padding-bottom:0px;}
 
 
-.sharmodal_popEmail{ min-height: 130px;  border-radius:4px; }
+.sharmodal_popEmail{ min-height: 250px;  border-radius:4px; }
 .sharmodal_popEmail h3{ font-size: 1.5em; font-weight: bold; padding-left:10px;}
 .sharmodal_popEmail .modal-header{ border:0px; padding-bottom:0px;}
 
