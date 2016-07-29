@@ -449,6 +449,9 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content sharmodal_pop">
             <div class="modal-header">
+                <div class="invitation-loader" id="dvAjxLoader" style="width:auto;float:left;margin-top:7px;">
+                    <img src="~/Images/ajax-loaderMini.gif" /> Please wait ...
+                </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h3 class="modal-title text-center"> Share with friends </h3>
             </div>
@@ -465,19 +468,22 @@
                 </div>
                 <div class="col-md-12 mt10" id="dvEmailFrnd" style="display:none;">
                     <form class="form-horizontal">
-                        <div class="col-xs-5">
+                        <div class="col-xs-4">
                             <div class="form-group">
-                                <input type="text" class="form-control sharesocilform" id="txtEmailFrnd" placeholder="" />
-
+                                From Name :<input type="text" class="form-control sharesocilform" id="txtFromName" placeholder="" />
                             </div>
                         </div>
-                        <div class="col-xs-7">
-                            <button class="btn def_btn acnt_btn send_test_btn" style="display:none" type="button" data-toggle="modal" id="btPopUp" data-target="#test_inv_email"></button>
-                            <button class="btn theme-btn def_btn acnt_btn send_test_btn" type="button" id="btSend">Send</button>
-                            <button class="btn theme-btn def_btn acnt_btn send_test_btn" type="button" id="btCancel">Cancel</button>
-                            <div class="invitation-loader" id="dvAjxLoader" style="width:auto;float:right;margin-top:7px;">
-                                <img src="~/Images/ajax-loaderMini.gif" /> Please wait ...
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                Email Id :<input type="text" class="form-control sharesocilform" id="txtEmailFrnd" placeholder="" />
                             </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <button class="btn def_btn acnt_btn send_test_btn" style="display:none" type="button" data-toggle="modal" id="btPopUp" data-target="#test_inv_email"></button>
+                            <br /><button class="btn theme-btn def_btn acnt_btn send_test_btn" type="button" id="btSend">Send</button>
+                        </div>
+                        <div class="col-xs-2">
+                            <br /><button class="btn theme-btn def_btn acnt_btn send_test_btn" type="button" id="btCancel">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -577,6 +583,7 @@
         $("#txtEventInfo").val(vinfo);
         $("#txtEventUrl").val(vurl);
         $("#txtEmailFrnd").val("");
+        $("#txtFromName").val("");
         $("#dvEmailFrnd").hide();
     }
     function checkDate(field) {
@@ -1336,6 +1343,7 @@
             $("#dvEmailFrnd").show(100);
         });
         $("#btSend").click(function () {
+            var vFromName = $("#txtFromName").val().trim();
             var vTo = $("#txtEmailFrnd").val().trim();
             var vEventTitle = $("#txtEventTitle").val();
             var urlprefix = '@strpr'
@@ -1343,7 +1351,7 @@
             if (validateEmail(vTo) == true && vTo != "") {
                 $.ajax({
                     url: '@Url.Action("SendEmailToFriend", "Home")',
-                    data: { strFriendEmail: vTo, strEventTitle: vEventTitle, strEventUrl: vEventUrl },
+                    data: { strFriendEmail: vTo, strFromname: vFromName, strEventTitle: vEventTitle, strEventUrl: vEventUrl },
                     beforeSend: function () { $('#dvAjxLoader').show(); },
                     complete: function () { $('#dvAjxLoader').hide(); },
                     type: "Post",

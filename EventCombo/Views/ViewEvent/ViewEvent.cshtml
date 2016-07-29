@@ -15,8 +15,8 @@
     var urlBuilder =
       new System.UriBuilder(Request.Url.AbsoluteUri)
       {
-        Path = Url.Content(allImages.Count > 0 ? "~" + allImages[0] : "~/Images/default_event_image.jpg"),
-        Query = null,
+          Path = Url.Content(allImages.Count > 0 ? "~" + allImages[0] : "~/Images/default_event_image.jpg"),
+          Query = null,
       };
     ViewBag.FBImage = urlBuilder.ToString();
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -42,29 +42,29 @@
 
 <div id="fb-root"></div>
 <script type="text/javascript">
-  var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
-  @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
-  var urlprefix = '@strpr'
+    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
+    @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
+    var urlprefix = '@strpr'
 
-  window.fbAsyncInit = function () {
-    // init the FB JS SDK
-    FB.init({
-      appId: fbappid,                        // App ID from the app dashboard
-      status: true,                          // Check Facebook Login status
-      xfbml: true,                           // Look for social plugins on the page
-      version: '2.7'
-    });
+    window.fbAsyncInit = function () {
+        // init the FB JS SDK
+        FB.init({
+            appId: fbappid,                        // App ID from the app dashboard
+            status: true,                          // Check Facebook Login status
+            xfbml: true,                           // Look for social plugins on the page
+            version: '2.7'
+        });
 
-  };
+    };
 
-  // Load the SDK asynchronously
-  (function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) { return; }
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 </script>
 
 
@@ -340,10 +340,10 @@
                 @if (Model.EventPrivacy == "Public" || (Model.Shareonfb == "Y" || Model.Shareonfb == "y"))
                 {
                     <div class="col-sm-6 col-xs-6 text-right pl0 ev_social_share_btn  m480-h-titl-rit">
-                      <a href="javascript:void(0)" data-toggle="modal" data-target="#sharemodal" id="aMailId"><img src="/Images/mail.png"></a>
-                      <a href="javascript:void(0)" id="twittershare" onclick="TwitterShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img src="/Images/twi.png"></a>
-                      <a href="javascript:void(0)" id="fbshare" onclick="FacebookShare('@(Request.Url.AbsoluteUri)')"><img src="/Images/fac.png"></a>
-                      <a href="javascript:void(0)" id="linkshare" onclick="LinkedInShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)', '@(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Html.Raw(Model.EventDescription).ToString()), 200, 250, ".").Replace("'", @"\'"))')"><img src="/Images/lin.png"></a>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#sharemodal" id="aMailId"><img src="/Images/mail.png"></a>
+                        <a href="javascript:void(0)" id="twittershare" onclick="TwitterShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img src="/Images/twi.png"></a>
+                        <a href="javascript:void(0)" id="fbshare" onclick="FacebookShare('@(Request.Url.AbsoluteUri)')"><img src="/Images/fac.png"></a>
+                        <a href="javascript:void(0)" id="linkshare" onclick="LinkedInShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)', '@(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Html.Raw(Model.EventDescription!=null ?Model.EventDescription : "").ToString()), 200, 250, ".").Replace("'", @"\'"))')"><img src="/Images/lin.png"></a>
                     </div>
 
                 }
@@ -775,19 +775,24 @@
                     <div class="modal-body">
                         <div class="col-md-12" id="dvEmailFrnd">
                             <form class="form-horizontal">
-                                <div class="col-xs-5">
+                                <div class="col-xs-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control sharesocilform" id="txtEmailFrnd" placeholder="" />
+                                        From Name :<input type="text" class="form-control sharesocilform" id="txtFromName" placeholder="" />
                                     </div>
                                 </div>
-                                <div class="col-xs-7">
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        Email Id :<input type="text" class="form-control sharesocilform" id="txtEmailFrnd" placeholder="" />
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
                                     <button class="btn def_btn acnt_btn send_test_btn" style="display:none" type="button" data-toggle="modal" id="btPopUp" data-target="#test_inv_email"></button>
                                     <button class="btn theme-btn def_btn acnt_btn send_test_btn" type="button" id="btSend">Send</button>
                                     <div class="invitation-loader" id="dvAjxLoaderEmail" style="width:auto;float:right;margin-top:7px;">
                                         <img src="~/Images/ajax-loaderMini.gif" /> Please wait ...
                                     </div>
                                 </div>
-                            </form>
+</form>
                         </div>
 
                     </div>
@@ -811,7 +816,7 @@
         </div>
 
 
-            @*<input type="hidden" id="hdremaningqty" value="0" />*@
+        @*<input type="hidden" id="hdremaningqty" value="0" />*@
 }
 
 @*<script src="~/Scripts/jquery.icalendar.pack.js"></script>*@
@@ -821,7 +826,7 @@
     jQuery(function ($) {
         $("#OrgPhoneId").mask("999-999-9999");
     });
-   
+
     @*window.fbAsyncInit = function () {
         FB.init({
             appId: '1956731254551382',
@@ -1734,11 +1739,12 @@
     $(document).ready(function () {
         $("#btSend").click(function () {
             var vTo = $("#txtEmailFrnd").val().trim();
+            var vFromName = $("#txtFromName").val().trim();
             var vEventId = $('#hdEventid').val();
             if (validateEmail(vTo) == true && vTo != "") {
                 $.ajax({
                     url: '@Url.Action("SendEmailToFriend", "Home")',
-                    data: { strFriendEmail: vTo, strEventTitle: "", strEventUrl: "", lEvent: vEventId },
+                    data: { strFriendEmail: vTo, strFromname: vFromName, strEventTitle: "", strEventUrl: "", lEvent: vEventId },
                     beforeSend: function () { $('#dvAjxLoaderEmail').show(); },
                     complete: function () { $('#dvAjxLoaderEmail').hide(); },
                     type: "Post",
