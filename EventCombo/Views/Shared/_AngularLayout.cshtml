@@ -56,7 +56,9 @@
   <script src="~/Scripts/AMaterial/moment.js"></script>
   <script src="~/Scripts/AMaterial/angular-material-datetimepicker.js"></script>
   <script src="~/Scripts/AMaterial/demo.js"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=@(System.Configuration.ConfigurationManager.AppSettings.Get("GoogleSecret"))&v=3.exp&sensor=true&libraries=places"></script>
+  <script src="~/Scripts/AMaterial/EventComboApp.js"></script>
+  <script src="~/Scripts/AMaterial/header.js"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=@(System.Configuration.ConfigurationManager.AppSettings.Get("GoogleAPIKey"))&v=3.exp&sensor=true&libraries=places"></script>
   <script src="~/Scripts/AMaterial/ngGallery.js"></script>
   <script src="~/Scripts/AMaterial/classie.js"></script>
   <script type="text/javascript">
@@ -67,7 +69,7 @@
   </script>
 
 </head>
-<body ng-app="@ViewBag.ngApp">
+<body ng-app="EventComboApp" ng-cloak>
   @{ Html.RenderPartial("_AngularHeader", bModel); }
   @RenderBody()
   @{ Html.RenderAction("Footer", "Home"); }

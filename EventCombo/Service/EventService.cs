@@ -520,6 +520,20 @@ namespace EventCombo.Service
       var res = _factory.ContextFactory.GetContext().Database.ExecuteSqlCommand("EXEC PublishEvent @EventId, @UserId", param1, param2);
     }
 
+    public IEnumerable<EventTitleSearchViewModel> Search(string searchStr)
+    {
+      DateTime now = DateTime.UtcNow;
+      IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
+      return eRepo.Get(filter: (e => e.EventVenues.Any(ev => (ev.E_Enddate ?? now) >= now) && e.EventTitle.Contains(searchStr)))
+        .Select(e => new EventTitleSearchViewModel ()
+        { 
+          EventId = e.EventID, 
+          EventTitle = e.EventTitle,
+          Latitude = e.Addresses.Count > 0 ? e.Addresses.FirstOrDefault().Latitude : null,
+          Longitude = e.Addresses.Count > 0 ? e.Addresses.FirstOrDefault().Longitude : null
+        }).ToList();
+    }
+
 
     public EventViewModel GetEventById(int id)
     {

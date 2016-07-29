@@ -347,4 +347,12 @@ namespace EventCombo.Models
       set { _eventImages = value; }
     }
   }
+
+  public class EventTitleSearchViewModel
+  {
+    public long EventId { get; set; }
+    public string EventTitle { get; set; }
+    public string Latitude { get; set; }
+    public string Longitude { get; set; }
+  }
 }

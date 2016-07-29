@@ -14,5 +14,6 @@ namespace EventCombo.Service
     EventViewModel GetEventById(int id);
     bool ValidateEvent(EventViewModel ev);
     void PublishEvent(long id, string userId);
+    IEnumerable<EventTitleSearchViewModel> Search(string searchStr);
   }
 }

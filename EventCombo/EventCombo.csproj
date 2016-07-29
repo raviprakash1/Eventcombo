@@ -286,6 +286,7 @@
     <Compile Include="Controllers\BusinessPagesController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CMSController.cs" />
+    <Compile Include="Controllers\CommonAPIController.cs" />
     <Compile Include="Controllers\ContactEventComboesController.cs" />
     <Compile Include="Controllers\CreateEventController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
@@ -827,6 +828,7 @@
     <Content Include="Images\AMaterial\fb_messenger.svg" />
     <Content Include="Images\AMaterial\footer.png" />
     <Content Include="Images\AMaterial\ftbg.png" />
+    <Content Include="Images\AMaterial\ic_close_24px.svg" />
     <Content Include="Images\AMaterial\infobox-bg.png" />
     <Content Include="Images\AMaterial\linkedin.svg" />
     <Content Include="Images\AMaterial\logo.png" />
@@ -910,6 +912,8 @@
     <Content Include="Scripts\AMaterial\classie.js" />
     <Content Include="Scripts\AMaterial\controller.js" />
     <Content Include="Scripts\AMaterial\demo.js" />
+    <Content Include="Scripts\AMaterial\EventComboApp.js" />
+    <Content Include="Scripts\AMaterial\header.js" />
     <Content Include="Scripts\AMaterial\jquery-1.12.3.min.js" />
     <Content Include="Scripts\AMaterial\main.js" />
     <Content Include="Scripts\AMaterial\moment.js" />

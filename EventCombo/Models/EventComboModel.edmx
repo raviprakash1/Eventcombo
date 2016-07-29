@@ -1093,11 +1093,12 @@ warning 6002: The table/view 'EC2.dbo.V_EventsList' does not have a primary key 
           <Property Name="EventTiming" Type="varchar" MaxLength="49" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EC2.dbo.v_OrderList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EventCombo.dbo.v_OrderList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="v_OrderList">
           <Key>
             <PropertyRef Name="OId" />
             <PropertyRef Name="OrderStateId" />
+            <PropertyRef Name="Favorite" />
           </Key>
           <Property Name="OId" Type="bigint" Nullable="false" />
           <Property Name="OrderId" Type="varchar" MaxLength="100" />
