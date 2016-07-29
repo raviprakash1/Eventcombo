@@ -1,183 +1,288 @@
-﻿
+﻿@model List<CMS.Models.LeftMenu>
 @{
     ViewBag.Title = "Dashboard";
-    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <section id="content_wrapper">
-
-    <!-- Start: Topbar-Dropdown -->
-
-    @*<header id="topbar" class="alt">
-        <div class="topbar-left">
-            <ol class="breadcrumb">
-
-                <li class="crumb-icon">
-                    <a href="dashboard.html">
-                        <span class="glyphicon glyphicon-home"></span>
-                    </a>
-                </li>
-                <li class="crumb-active">
-                    Dashboard
-                </li>
-            </ol>
-        </div>
-
-    </header>*@
-
     <section id="content" class="table-layout animated fadeIn">
-
-        <!-- begin: .tray-center -->
         <div class="tray tray-center">
-
-            <!-- dashboard tiles -->
             <div class="row">
-                @*<div class="col-sm-3 col-xl-3">
-                    <div class="panel panel-tile text-center br-a br-grey">
-                        <div class="panel-body bg-primary light">
-                            <i class="fa fa-tachometer text-muted fs70 mt10"></i>
-
-                        </div>
-                        <div class="panel-footer br-t p12">
-                            <span class="fs15">
-                                <b><a href="#">Dashboard</a></b>
-                            </span>
-                        </div>
-                    </div>
-                </div>*@
-                <div class="col-sm-3 col-xl-3">
-                    <div class="panel panel-tile text-center br-a br-grey">
-                        <div class="panel-body bg-system light">
-                            <i class="fa fa-users text-muted fs70 mt10"></i>
-                        </div>
-                        <div class="panel-footer br-t p12">
-                            <span class="fs15">
-                                <b><a href="#" onclick="checkPermission('10');">Member Management</a></b>
-                            </span>
+                @if (Model.Exists(x => x.PermissionId == 10))
+                {
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-system light">
+                                <i class="fa fa-users text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("Users", "Users")">Member Management</a></b>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-3 col-xl-3">
-                    <div class="panel panel-tile text-center br-a br-grey">
-                        <div class="panel-body bg-danger light">
-                            <i class="fa fa-cubes text-muted fs70 mt10"></i>
-                        </div>
-                        <div class="panel-footer br-t p12">
-                            <span class="fs15">
-                                <b><a href="#" onclick="checkPermission('4');">Manage Events</a></b>
-                            </span>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="col-sm-3 col-xl-3">
-                    <div class="panel panel-tile text-center br-a br-grey">
-                        <div class="panel-body bg-alert light">
-                            <i class="fa fa-recycle text-muted fs70 mt10"></i>
-                        </div>
-                        <div class="panel-footer br-t p12">
-                            <span class="fs15">
-                                <b><a href="#">Expired Events</a></b>
-                            </span>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="col-sm-3 col-xl-3">
-                    <div class="panel panel-tile text-center br-a br-grey">
-                        <div class="panel-body bg-warning light">
-                            <i class="fa fa-usd text-muted fs70 mt10"></i>
-                        </div>
-                        <div class="panel-footer br-t p12">
-                            <span class="fs15">
-                                <b><a href="#">Fee Settings</a></b>
-                            </span>
+                }
+                @if (Model.Exists(x => x.PermissionId == 4))
+                {
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-danger light">
+                                <i class="fa fa-cubes text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("EventsList", "ManageEvent")">Manage Events</a></b>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-3 col-xl-3">
-                    <div class="panel panel-tile text-center br-a br-grey">
-                        <div class="panel-body bg-dark">
-                            <i class="fa fa-chain-broken text-muted fs70 mt10"></i>
-                        </div>
-                        <div class="panel-footer br-t p12">
-                            <span class="fs15">
-                                <b><a href="#" onclick="checkPermission('8');">Event Type</a></b>
 
-                              
-                            </span>
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-alert light">
+                                <i class="fa fa-recycle text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("ExpiredticketList", "ManageEvent")">Expired Events</a></b>
+                                </span>
+                            </div>
+
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-3 col-xl-3">
-                    <div class="panel panel-tile text-center br-a br-grey">
-                        <div class="panel-body bg-info light">
-                            <i class="fa fa-life-ring text-muted fs70 mt10"></i>
-                        </div>
-                        <div class="panel-footer br-t p12">
-                            <span class="fs15">
-                                <b><a href="#" onclick="checkPermission('9');">Event Category</a></b>
-                              
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-3 col-xl-3">
-                    <div class="panel panel-tile text-center br-a br-grey">
-                        <div class="panel-body bg-success light">
-                            <i class="fa fa-server text-muted fs70 mt10"></i>
-                        </div>
-                        <div class="panel-footer br-t p12">
-                            <span class="fs15">
-                                <b><a href="#">Articles</a></b>
-
-                            </span>
+                }
+                @if (Model.Exists(x => x.PermissionId == 11))
+                {
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-warning light">
+                                <i class="fa fa-usd text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("Index", "FeeSetting")">Fee Settings</a></b>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-sm-3 col-xl-3">
-                    <div class="panel panel-tile text-center br-a br-grey">
-                        <div class="panel-body bg-system light">
-                            <i class="fa fa-pie-chart text-muted fs70 mt10"></i>
-                        </div>
-                        <div class="panel-footer br-t p12">
-                            <span class="fs15">
-                                <b><a href="#">Ticket Orders</a></b>
-
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3 col-xl-3">
-                    <div class="panel panel-tile text-center br-a br-grey">
-                        <div class="panel-body bg-success light">
-                            <i class="fa fa-server text-muted fs70 mt10"></i>
-                        </div>
-                        <div class="panel-footer br-t p12">
-                            <span class="fs15">
-                                <b><a href="@Url.Action("Index", "BusinessPages")">Business Pages</a></b>
-
-                            </span>
+                }
+                @if (Model.Exists(x => x.PermissionId == 8))
+                {
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-dark">
+                                <i class="fa fa-chain-broken text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("EventType", "EventType", new { Type = "N" })">Event Type</a></b>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-3 col-xl-3">
-                    <div class="panel panel-tile text-center br-a br-grey">
-                        <div class="panel-body bg-success light">
-                            <i class="fa fa-server text-muted fs70 mt10"></i>
-                        </div>
-                        <div class="panel-footer br-t p12">
-                            <span class="fs15">
-                                <b><a href="@Url.Action("Footer", "Footer")">Footer</a></b>
-
-                            </span>
+                }
+                @if (Model.Exists(x => x.PermissionId == 9))
+                {
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-info light">
+                                <i class="fa fa-life-ring text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("EventCategory", "EventCategory", new { msg = "N" })">Event Category</a></b>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
+                @if (Model.Exists(x => x.PermissionId == 12))
+                {
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-success light">
+                                <i class="fa fa-server text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("Index", "Article")">Articles</a></b>
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (Model.Exists(x => x.PermissionId == 13))
+                {
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-system light">
+                                <i class="fa fa-pie-chart text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("Index", "Orders")">Ticket Orders</a></b>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (Model.Exists(x => x.PermissionId == 14))
+                {
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-success light">
+                                <i class="fa fa-server text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("Index", "BusinessPages")">Business Pages</a></b>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (Model.Exists(x => x.PermissionId == 15))
+                {
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-success light">
+                                <i class="fa fa-server text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("Footer", "Footer")">Footer</a></b>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (Model.Exists(x => x.PermissionId == 6))
+                {
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-success light">
+                                <i class="fa fa-server text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("Index", "Email", new { templatetag = "email_welcome", templatename = "Welcome" })">Email Content Management</a></b>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (Model.Exists(x => x.PermissionId == 7))
+                {
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-success light">
+                                <i class="fa fa-server text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("Index", "Messages", new { Form = "MyAccount" })">My Account Form</a></b>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-success light">
+                                <i class="fa fa-server text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("Index", "Messages", new { Form = "Login" })">Login Form</a></b>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-success light">
+                                <i class="fa fa-server text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("Index", "Messages", new { Form = "Signup" })">Sign Up Form</a></b>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-success light">
+                                <i class="fa fa-server text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("Index", "Messages", new { Form = "ForgotPassword" })">Forgot Password Form</a></b>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-success light">
+                                <i class="fa fa-server text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("Index", "Messages", new { Form = "ResetPassword" })">Reset Password Form</a></b>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-success light">
+                                <i class="fa fa-server text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("Index", "Messages", new { Form = "CreateEvent" })">Create Event Form</a></b>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-success light">
+                                <i class="fa fa-server text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("Index", "Messages", new { Form = "CMSUsers" })">CMSUsers Form</a></b>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-success light">
+                                <i class="fa fa-server text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("Index", "Messages", new { Form = "Messages" })">Messages Form</a></b>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xl-3">
+                        <div class="panel panel-tile text-center br-a br-grey">
+                            <div class="panel-body bg-success light">
+                                <i class="fa fa-server text-muted fs70 mt10"></i>
+                            </div>
+                            <div class="panel-footer br-t p12">
+                                <span class="fs15">
+                                    <b><a href="@Url.Action("Index", "Messages", new { Form = "OrganizerMaster" })">Organizer Master Form</a></b>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </section>
@@ -198,82 +303,3 @@
     <!-- End: Page Footer -->
     <!-- End: Content-Wrapper -->
 </section>
-
-<script type="text/javascript">
-    function checkPermission(PermisionId) {
-        var vPerm = PermisionId;
-        //  alert(vPerm);
-        if (PermisionId == "7A" || PermisionId == "7B" || PermisionId == "7C" || PermisionId == "7D" || PermisionId == "7E" || PermisionId == "7F" || PermisionId == "7G") {
-            PermisionId = "7";
-        }
-        if (PermisionId == "4A") {
-            PermisionId = "4";
-        }
-
-        $.ajax({
-            url: '@Url.Action("GetPermission", "Permission")',
-            data: { iPermissionId: PermisionId },
-            async: false,
-            datatype: "Text",
-            type: "Post",
-            success: function (response) {
-                //alert(response);
-                if (response == "SE")
-                {
-                    window.location.href = '@Url.Action("Login", "Home")';
-                    return false;
-                }
-                else if (response != "Y") {
-                    alert("Access Denied !!!");
-                    return false;
-                }
-
-                else {
-                    //  alert(vPerm);
-                    if (vPerm == "10")
-                        window.location.href = '@Url.Action("Users", "Users")';
-                    else if (vPerm == "6")
-                        window.location.href = '@Url.Action("Index", "Email", new { templatetag = "email_welcome", templatename = "Welcome" })';
-
-                    else if (vPerm == "7") {
-
-                        window.location.href = '@Url.Action("Index", "Messages", new { Form = "MyAccount" })';
-
-                    }
-                    else if (vPerm == "7A") {
-                        window.location.href = '@Url.Action("Index", "Messages", new { Form = "Login" })';
-
-                    }
-                    else if (vPerm == "7B") {
-                        window.location.href = '@Url.Action("Index", "Messages", new { Form = "Signup" })';
-
-                    }
-                    else if (vPerm == "7C") {
-                        window.location.href = '@Url.Action("Index", "Messages", new { Form = "ForgotPassword" })';
-                    }
-                    else if (vPerm == "7D")
-                        window.location.href = '@Url.Action("Index", "Messages", new { Form = "ResetPassword" })';
-                    else if (vPerm == "7E")
-                        window.location.href = '@Url.Action("Index", "Messages", new { Form = "CreateEvent" })';
-                    else if (vPerm == "7F")
-                        window.location.href = '@Url.Action("Index", "Messages", new { Form = "CMSUsers" })';
-                    else if (vPerm == "7G")
-                        window.location.href = '@Url.Action("Index", "Messages", new { Form = "Messages" })';
-                    else if (vPerm == "4")
-                        window.location.href = '@Url.Action("EventsList", "ManageEvent")';
-                    else if (vPerm == "4A")
-                        window.location.href = '@Url.Action("ExpiredticketList", "ManageEvent")';
-                    else if (vPerm == "8")
-                        window.location.href = '@Url.Action("EventType", "EventType", new {Type="N"})';
-                    else if (vPerm == "9")
-                        window.location.href = '@Url.Action("EventCategory", "EventCategory", new { msg = "N"})';
-
-                }
-            }
-        });
-
-
-
-    }
-
-</script>
