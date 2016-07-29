@@ -419,7 +419,6 @@
   function setNavigationHeader(page) {
       var cState = getCurrentState(page);
       if (cState != null) {
-          var cur = cState.Page * cState.PerPage;
           var total = cState.Total;
 
           $("#ddlPageDisplay_" + page).html('');
@@ -427,10 +426,8 @@
 
           if ((parseInt(total, 10) > parseInt(cState.PerPage, 10)) && (parseInt(cState.PerPage, 10) > 0)) {
               var totalPages = Math.ceil(total / cState.PerPage);
-              cur = cur >= totalPages ? totalPages - 1 : cur;
-              var startVal = ((cur + 2) >= totalPages) ? (totalPages - 5) : (cur - 2);
-              startVal = (startVal >= 0) ? startVal : 0;
-              var endVal = ((startVal + 4) >= totalPages) ? totalPages - 1 : (startVal + 4);
+              var startVal = 0;
+              var endVal = totalPages - 1;
               for (i = startVal; i <= endVal; i++) {
                   $("#ddlPageDisplay_" + page).append('<option value="' + i + '">' + (cState.PerPage * i + 1) + ' - ' + (cState.PerPage * i + (i == endVal ? cState.Total - cState.PerPage * i : parseInt(cState.PerPage, 10))) + '</option>');
               }
