@@ -555,6 +555,7 @@
     <Content Include="assets\img\avatars\license.txt" />
     <Content Include="assets\img\avatars\placeholder.png" />
     <Content Include="assets\img\avatars\profile_avatar.jpg" />
+    <Content Include="assets\img\draghandle.jpg" />
     <Content Include="assets\img\favicon.ico" />
     <Content Include="assets\img\logos\admin-form-logo.png" />
     <Content Include="assets\img\logos\logo-icon.png" />
