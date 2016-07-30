@@ -32,6 +32,5 @@ namespace EventCombo.Models
         public string OrderStateName { get; set; }
         public Nullable<long> EventID { get; set; }
         public string UserId { get; set; }
-        public bool Favorite { get; set; }
     }
 }

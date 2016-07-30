@@ -85,14 +85,14 @@ namespace EventCombo.Controllers
             MyAccount acc = new MyAccount();
             try
             {
-               
-                    Ip2Geo ip2Geo = new Ip2Geo();
-                    GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
-                    city = geoAddress.cityName;
-                    country = geoAddress.countryName;
-                    zipcode = geoAddress.zipCode;
-                    state = geoAddress.regionName;
-             }
+
+                Ip2Geo ip2Geo = new Ip2Geo();
+                GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+                city = geoAddress.cityName;
+                country = geoAddress.countryName;
+                zipcode = geoAddress.zipCode;
+                state = geoAddress.regionName;
+            }
             catch (Exception ex)
             {
                 city = "";
@@ -323,9 +323,9 @@ namespace EventCombo.Controllers
 
 
         }
-        public string Discoversavefavourite(long Eventid, string strUrl,string strType="")
+        public string Discoversavefavourite(long Eventid, string strUrl, string strType = "")
         {
-           
+
             if (Session["AppId"] != null)
             {
                 using (EventComboEntities objEnt = new EventComboEntities())
@@ -341,8 +341,8 @@ namespace EventCombo.Controllers
                             objEnt.Database.ExecuteSqlCommand("Delete from EventFavourite where UserID='" + userid + "' AND eventId=" + Eventid + "");
                             objEnt.SaveChanges();
                         }
-                            return "D";
-                        
+                        return "D";
+
                     }
                     else
                     {
@@ -369,7 +369,7 @@ namespace EventCombo.Controllers
             }
         }
 
-        public ActionResult DiscoverEvents(string strEt, string strEc, string strPrice, string strPageIndex, string strLat, string strLong, string strSort, string strDateFilter,string strTextSearch)
+        public ActionResult DiscoverEvents(string strEt, string strEc, string strPrice, string strPageIndex, string strLat, string strLong, string strSort, string strDateFilter, string strTextSearch)
         {
             if (strLat == "lat")
             {
@@ -422,7 +422,7 @@ namespace EventCombo.Controllers
                     long lEventId = Convert.ToInt32(str[0].ToString());
                     if (lEventId > 0)
                     {
-                        Discoversavefavourite(lEventId,strUrl,"FromLogin");
+                        Discoversavefavourite(lEventId, strUrl, "FromLogin");
                     }
                 }
                 else
@@ -433,11 +433,11 @@ namespace EventCombo.Controllers
             catch (Exception)
             {
                 Session["ReturnUrl"] = "0~" + strUrl;
-                
+
             }
 
 
-            
+
 
             if (strPageIndex == null) strPageIndex = "page";
             if (strDateFilter == null) strDateFilter = "none";
@@ -454,7 +454,7 @@ namespace EventCombo.Controllers
             string strNearLat = "";
             string strNearLong = "";
 
-            List<DiscoverEvent> objDiscEvt = GetDiscoverEventListing(strEt, strEc, strPrice, strLat, strLong, strSort, strDateFilter, ref strNearLat, ref strNearLong,strTextSearch);
+            List<DiscoverEvent> objDiscEvt = GetDiscoverEventListing(strEt, strEc, strPrice, strLat, strLong, strSort, strDateFilter, ref strNearLat, ref strNearLong, strTextSearch);
             double dPageCount = objDiscEvt.Count;
             double dTotalPages = dPageCount / pageSize;
             int lTotalPages = (objDiscEvt.Count / pageSize);
@@ -474,7 +474,7 @@ namespace EventCombo.Controllers
             else
                 ViewBag.ECatSelected = null;
 
-           
+
 
 
             TempData["SearchText"] = strTextSearch;
@@ -678,7 +678,7 @@ namespace EventCombo.Controllers
             }
             return strResult;
         }
-        public List<DiscoverEvent> GetDiscoverEventListing(string strEventTypeId, string strEventCatId, string strPrice, string strLat, string strLong, string strSort, string strDateFilter, ref string strNearLat, ref string strNearLong,string strTextSearch)
+        public List<DiscoverEvent> GetDiscoverEventListing(string strEventTypeId, string strEventCatId, string strPrice, string strLat, string strLong, string strSort, string strDateFilter, ref string strNearLat, ref string strNearLong, string strTextSearch)
         {
 
             List<DiscoverEvent> lsDisEvt = new List<DiscoverEvent>();
@@ -690,7 +690,7 @@ namespace EventCombo.Controllers
                 if (strEventTypeId == null || strEventTypeId == "~") strEventTypeId = string.Empty;
                 if (strEventCatId == null || strEventCatId == "~") strEventCatId = string.Empty;
                 if (strPrice == null || strPrice == "~") strPrice = "ALL";
-                if (strTextSearch == null) strTextSearch="";
+                if (strTextSearch == null) strTextSearch = "";
                 //var vValue = db.Addresses.SqlQuery("select dbo.distance(28.6139, 77.2090, Latitude, Longitude) discoverdistance,* from Address").Where(m=> (m.discoverdistance!= null ? Convert.ToInt64(m.discoverdistance) : 21)<=20).ToList();
                 //var vValue = db.Addresses.SqlQuery("select dbo.distance(28.6139, 77.2090, Latitude, Longitude) discoverdistance,* from Address").ToList();
                 //select dbo.distance(28.6139, 77.2090, Latitude, Longitude) dis from Address
@@ -746,10 +746,10 @@ namespace EventCombo.Controllers
                     }
 
                     var vEventList = db.Events.SqlQuery(sbQuery.ToString()).ToList();
-                  
+
 
                     string strImageUrl = "";
-                  
+
                     string strUserId = "";
                     if (Session["AppId"] != null && Session["AppId"].ToString() != string.Empty) strUserId = Session["AppId"].ToString();
                     bool bflag = true;
@@ -812,7 +812,7 @@ namespace EventCombo.Controllers
                         var vAddress = objEv.Addresses.FirstOrDefault();
                         if (vAddress != null)
                         {
-                            objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble((strLat != "" ? strLat:"0")), Convert.ToDouble((strLong != "" ? strLong : "0")), Convert.ToDouble((vAddress.Latitude != "" ? vAddress.Latitude : "0")), Convert.ToDouble((vAddress.Longitude != "" ? vAddress.Longitude : "0")));
+                            objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble((strLat != "" ? strLat : "0")), Convert.ToDouble((strLong != "" ? strLong : "0")), Convert.ToDouble((vAddress.Latitude != "" ? vAddress.Latitude : "0")), Convert.ToDouble((vAddress.Longitude != "" ? vAddress.Longitude : "0")));
                             if (vAddress.ConsolidateAddress.Trim() != string.Empty)
                             {
                                 objDisEv.EventAddress = vAddress.ConsolidateAddress;
@@ -1082,7 +1082,7 @@ namespace EventCombo.Controllers
                     sbQuery.Append(" and EventID in (" + strEventIds + ")");
 
                     var vEventList = db.Events.SqlQuery(sbQuery.ToString()).ToList();
-                  
+
                     string strImageUrl = "";
                     string strUserId = "";
                     if (Session["AppId"] != null && Session["AppId"].ToString() != string.Empty) strUserId = Session["AppId"].ToString();
@@ -1128,7 +1128,7 @@ namespace EventCombo.Controllers
                         objDisEv.AddressStatus = 0;
                         if (objEv.AddressStatus != null)
                             objDisEv.AddressStatus = (objEv.AddressStatus.ToLower().Trim() == "online" ? 1 : 0);
-                        
+
 
                         objDisEv.EventCatId = objEv.EventCategoryID;
                         objDisEv.EventTypeId = objEv.EventTypeID;
@@ -1137,14 +1137,14 @@ namespace EventCombo.Controllers
                         objDisEv.EventFeature = int.MaxValue;
                         if (objEv.Feature != null)
                             objDisEv.EventFeature = (objEv.Feature == 0 ? int.MaxValue : Convert.ToInt16(objEv.Feature)); // 10 - becz if feature is null then that event have to show at last according to feature sorting 
-                        
+
 
 
                         objDisEv.FeatureDateTime = (objEv.FeatureUpdateDate != null ? Convert.ToDateTime(objEv.FeatureUpdateDate) : DateTime.Now);
                         var vAddress = objEv.Addresses.FirstOrDefault();
                         if (vAddress != null)
                         {
-                            objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble((strLat != "" ? strLat:"0")), Convert.ToDouble((strLong != "" ? strLong : "0")), Convert.ToDouble((vAddress.Latitude != "" ? vAddress.Latitude : "0")), Convert.ToDouble((vAddress.Longitude != "" ? vAddress.Longitude : "0")));
+                            objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble((strLat != "" ? strLat : "0")), Convert.ToDouble((strLong != "" ? strLong : "0")), Convert.ToDouble((vAddress.Latitude != "" ? vAddress.Latitude : "0")), Convert.ToDouble((vAddress.Longitude != "" ? vAddress.Longitude : "0")));
                             if (!String.IsNullOrWhiteSpace(vAddress.ConsolidateAddress))
                             {
                                 objDisEv.EventAddress = vAddress.ConsolidateAddress;
@@ -1164,7 +1164,7 @@ namespace EventCombo.Controllers
                             objDisEv.EventDistance = double.MaxValue;
                             objDisEv.EventAddress = "Online";
                         }
-                        
+
 
                         if (bflag == true)
                         {
@@ -1246,7 +1246,7 @@ namespace EventCombo.Controllers
                     //lsDisEvt = lsDisEvt.OrderBy(m => m.EventFeature).ToList().OrderBy(m => m.EventDate).ToList().OrderBy(m => m.FeatureDateTime).ToList().OrderBy(m => m.EventDistance).ToList();
                     //lsDisEvt = lsDisEvt.OrderBy(m => m.AddressStatus).ToList();
                     lsDisEvt = lsDisEvt.OrderBy(m => m.EventFeature).ThenBy(m => m.EventDate).ThenBy(m => m.FeatureDateTime).ThenBy(m => m.EventDistance).ToList();
-                    
+
 
 
                 }
@@ -1259,7 +1259,7 @@ namespace EventCombo.Controllers
             MyAccount hmc = new MyAccount();
             if ((Session["AppId"] != null))
             {
-               
+
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -1272,14 +1272,14 @@ namespace EventCombo.Controllers
         }
         public ActionResult GetBuzz()
         {
-          return RedirectToAction("Buzz", "Article");
+            return RedirectToAction("Buzz", "Article");
         }
         public ActionResult EventOraganizer()
         {
             MyAccount hmc = new MyAccount();
             if ((Session["AppId"] != null))
             {
-               
+
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
                 {
@@ -1307,7 +1307,7 @@ namespace EventCombo.Controllers
             SignInManager = signInManager;
         }
 
-        public ActionResult Index(string lat, string lng, int? page,string strParm ="")
+        public ActionResult Index(string lat, string lng, int? page, string strParm = "")
         {
             //EventCombo.Services.EventStatus obj = new EventCombo.Services.EventStatus();
             //obj.Update();
@@ -1378,12 +1378,12 @@ namespace EventCombo.Controllers
 
             CookieStore.SetCookie("Lat", lat, TimeSpan.FromDays(365));
             CookieStore.SetCookie("Long", lng, TimeSpan.FromDays(365));
-            
+
 
 
             int pageSize = 15;
             int pageNumber = (page ?? 1);
-            
+
             string strNearLat = "";
             string strNearLong = "";
             List<DiscoverEvent> objDiscEvt = GetHomePageEventListing("", "", "all", lat, lng, "rel", "none", ref strNearLat, ref strNearLong);
@@ -1434,7 +1434,7 @@ namespace EventCombo.Controllers
         public ActionResult HomeEventList(string strPageIndex, string strLat, string strLong)
         {
 
-            
+
             return PartialView();
 
 
@@ -1478,10 +1478,11 @@ namespace EventCombo.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-      
+
         public async Task<ActionResult> PasswordReset(ResetPasswordViewModel model)
         {
-            try {
+            try
+            {
                 string code = "";
                 var error = "";
                 var success = "";
@@ -1559,12 +1560,13 @@ namespace EventCombo.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
-              logger.Error("Exception during request processing", ex);
+                logger.Error("Exception during request processing", ex);
 
             }
-           
+
             return View(model);
 
         }
@@ -1960,18 +1962,18 @@ namespace EventCombo.Controllers
                         join pfd in db.AspNetUsers on Org.UserID equals pfd.Id
                         where pfd.Email == Email
                         select Org).FirstOrDefault();
-            if (user!=null)
+            if (user != null)
             {
                 message = "F";
-                return Json(new { Message = message,Fname= user.FirstName,Lname=user.LastName });
+                return Json(new { Message = message, Fname = user.FirstName, Lname = user.LastName });
             }
             else
             {
                 message = "N";
 
-                return Json(new { Message = message, Fname = "", Lname = ""});
+                return Json(new { Message = message, Fname = "", Lname = "" });
             }
-           
+
 
         }
         public void SendMail(string toaddress, string messagebody, string messageSubject)
@@ -2055,9 +2057,9 @@ namespace EventCombo.Controllers
 
             if (Session["AppId"] == null)
             {
-                
-                 return "Y";
-                
+
+                return "Y";
+
             }
             else
             {
@@ -2070,8 +2072,8 @@ namespace EventCombo.Controllers
             }
         }
 
-    
-      
+
+
 
         public string getusername()
         {
@@ -2466,7 +2468,7 @@ namespace EventCombo.Controllers
         //    smtp.Send(mailMessage);
 
         //}
-       private ActionResult RedirectToLocal(string returnUrl)
+        private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
             {
@@ -2530,10 +2532,10 @@ namespace EventCombo.Controllers
             }
             return PartialView("_AngularFooter", footer);
         }
-        
-        public void SendEmailToFriend(string strFriendEmail, string strEventTitle , string strEventUrl,long lEvent=0)
+
+        public void SendEmailToFriend(string strFriendEmail, string strFromname, string strEventTitle, string strEventUrl, long lEvent = 0)
         {
-            if (lEvent >0)
+            if (lEvent > 0)
             {
                 EventCreation objCE = new EventCreation();
                 var EventDetail = objCE.GetEventdetail(lEvent);
@@ -2565,13 +2567,20 @@ namespace EventCombo.Controllers
                 {
                     bcc = Emailtemplate.Bcc;
                 }
-                if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
+                if (strFromname.Trim() != "")
                 {
-                    emailname = Emailtemplate.From_Name;
+                    emailname = strFromname;
                 }
                 else
                 {
-                    emailname = from;
+                    if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
+                    {
+                        emailname = Emailtemplate.From_Name;
+                    }
+                    else
+                    {
+                        emailname = from;
+                    }
                 }
 
                 if (!string.IsNullOrEmpty(Emailtemplate.Subject))
@@ -2586,7 +2595,7 @@ namespace EventCombo.Controllers
                                 subjectn = subjectn.Replace("¶¶EventTitleId¶¶", strEventTitle);
                             }
 
-                          
+
                         }
                     }
                 }
@@ -2604,6 +2613,10 @@ namespace EventCombo.Controllers
                             if (EmailTag[i].Tag_Name == "DiscoverEventurl")
                             {
                                 bodyn = bodyn.Replace("¶¶DiscoverEventurl¶¶", strEventUrl);
+                            }
+                            if (EmailTag[i].Tag_Name == "EventTitleId")
+                            {
+                                bodyn = bodyn.Replace("¶¶EventTitleId¶¶", strEventTitle);
                             }
                         }
                     }

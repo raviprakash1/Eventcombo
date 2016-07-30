@@ -145,11 +145,13 @@
         <EntityTypeShape EntityType="EventComboModel.V_EventsList" Width="1.5" PointX="11.820360911926423" PointY="14.493559307648596" />
         <EntityTypeShape EntityType="EventComboModel.V_Users" Width="1.5" PointX="9.2190072262748188" PointY="13.72924321039079" />
         <EntityTypeShape EntityType="EventComboModel.PaymentType" Width="1.5" PointX="5.375" PointY="11.75" />
-        <EntityTypeShape EntityType="EventComboModel.v_OrderList" Width="1.5" PointX="21.375" PointY="23.75" />
         <AssociationConnector Association="EventComboModel.PaymentTypeOrder_Detail_T" />
         <EntityTypeShape EntityType="EventComboModel.BusinessPage" Width="1.5" PointX="23.375" PointY="23.75" />
         <EntityTypeShape EntityType="EventComboModel.City" Width="1.5" PointX="25.375" PointY="0.75" />
-        <EntityTypeShape EntityType="EventComboModel.ContactEventCombo" Width="1.5" PointX="24.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EventComboModel.V_EventsexpiredList" Width="1.5" PointX="25.375" PointY="4.75" />
+        <EntityTypeShape EntityType="EventComboModel.V_EventsListUpcoming" Width="1.5" PointX="20.375" PointY="25.75" />
+        <EntityTypeShape EntityType="EventComboModel.v_OrderList" Width="1.5" PointX="25.375" PointY="23.75" />
+        <EntityTypeShape EntityType="EventComboModel.ContactEventCombo" Width="1.5" PointX="25.375" PointY="11.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
