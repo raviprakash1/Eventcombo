@@ -154,10 +154,10 @@
           <Property Name="PageName" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="PageContent" Type="nvarchar(max)" Nullable="false" />
           <Property Name="PageOrder" Type="int" Nullable="false" />
-          <Property Name="ResponseCode" Type="int" />
           <Property Name="IsOnFooter" Type="bit" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="ResponseCode" Type="int" />
         </EntityType>
         <EntityType Name="CardDetails">
           <Key>
@@ -1056,7 +1056,7 @@
           <Property Name="Data" Type="nvarchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EC2.dbo.V_EventsexpiredList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EventCombo.dbo.V_EventsexpiredList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="V_EventsexpiredList">
           <Key>
             <PropertyRef Name="EventID" />
@@ -1093,8 +1093,45 @@ warning 6002: The table/view 'EC2.dbo.V_EventsexpiredList' does not have a prima
           <Property Name="EventTiming" Type="varchar" MaxLength="49" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EC2.dbo.V_EventsList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EventCombo.dbo.V_EventsList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="V_EventsList">
+          <Key>
+            <PropertyRef Name="EventID" />
+            <PropertyRef Name="EventCategoryID" />
+            <PropertyRef Name="EventCategory" />
+            <PropertyRef Name="EventTypeID" />
+            <PropertyRef Name="EventType" />
+            <PropertyRef Name="Feature" />
+            <PropertyRef Name="Purchasedqty" />
+          </Key>
+          <Property Name="Sno" Type="bigint" />
+          <Property Name="EventTitle" Type="nvarchar" MaxLength="600" />
+          <Property Name="UserID" Type="nvarchar" MaxLength="256" />
+          <Property Name="EventID" Type="bigint" Nullable="false" />
+          <Property Name="EventCategoryID" Type="bigint" Nullable="false" />
+          <Property Name="EventCategory" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="EventTypeID" Type="bigint" Nullable="false" />
+          <Property Name="EventType" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="EventSubCategoryID" Type="bigint" />
+          <Property Name="EventSubCategory" Type="varchar" MaxLength="200" />
+          <Property Name="StartingFrom" Type="varchar" MaxLength="50" />
+          <Property Name="EventStartTime" Type="varchar" MaxLength="50" />
+          <Property Name="EventEndDate" Type="varchar" MaxLength="50" />
+          <Property Name="EventEndTime" Type="varchar" MaxLength="50" />
+          <Property Name="E_Enddate" Type="datetime" />
+          <Property Name="E_Startdate" Type="datetime" />
+          <Property Name="Orgnizer_Name" Type="varchar" MaxLength="300" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Feature" Type="int" Nullable="false" />
+          <Property Name="EventAddress" Type="nvarchar(max)" />
+          <Property Name="VenueName" Type="varchar" MaxLength="500" />
+          <Property Name="TicketDetail" Type="varchar" MaxLength="30" />
+          <Property Name="Purchasedqty" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="EventTiming" Type="varchar" MaxLength="49" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EventCombo.dbo.V_EventsListUpcoming' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="V_EventsListUpcoming">
           <Key>
             <PropertyRef Name="EventID" />
             <PropertyRef Name="EventCategoryID" />
@@ -1156,7 +1193,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_OrderList' does not have a primar
           <Property Name="UserId" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EC2.dbo.v_RetrieveEventid' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EventCombo.dbo.v_RetrieveEventid' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="v_RetrieveEventid">
           <Key>
             <PropertyRef Name="EventID" />
@@ -1203,7 +1240,7 @@ warning 6002: The table/view 'EC2.dbo.v_RetrieveEventid' does not have a primary
           <Property Name="EventCancel" Type="varchar" MaxLength="2" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="V_Users">
           <Key>
             <PropertyRef Name="Id" />
@@ -1237,7 +1274,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Property Name="deals" Type="int" Nullable="false" />
           <Property Name="dealpurchased" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__EventSubC__Event__45BE5BA9">
+        <Association Name="FK__EventSubC__Event__2942188C">
           <End Role="EventCategory" Type="Self.EventCategory" Multiplicity="1" />
           <End Role="EventSubCategory" Type="Self.EventSubCategory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1249,7 +1286,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TicketDel__Deliv__4C6B5938">
+        <Association Name="FK__TicketDel__Deliv__2FEF161B">
           <End Role="DeliveryMethod" Type="Self.DeliveryMethod" Multiplicity="1" />
           <End Role="TicketDeliveryMethod" Type="Self.TicketDeliveryMethod" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1699,6 +1736,34 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
     [V_EventsList].[EventTiming] AS [EventTiming]
     FROM [dbo].[V_EventsList] AS [V_EventsList]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="V_EventsListUpcoming" EntityType="Self.V_EventsListUpcoming" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_EventsListUpcoming].[Sno] AS [Sno], 
+    [V_EventsListUpcoming].[EventTitle] AS [EventTitle], 
+    [V_EventsListUpcoming].[UserID] AS [UserID], 
+    [V_EventsListUpcoming].[EventID] AS [EventID], 
+    [V_EventsListUpcoming].[EventCategoryID] AS [EventCategoryID], 
+    [V_EventsListUpcoming].[EventCategory] AS [EventCategory], 
+    [V_EventsListUpcoming].[EventTypeID] AS [EventTypeID], 
+    [V_EventsListUpcoming].[EventType] AS [EventType], 
+    [V_EventsListUpcoming].[EventSubCategoryID] AS [EventSubCategoryID], 
+    [V_EventsListUpcoming].[EventSubCategory] AS [EventSubCategory], 
+    [V_EventsListUpcoming].[StartingFrom] AS [StartingFrom], 
+    [V_EventsListUpcoming].[EventStartTime] AS [EventStartTime], 
+    [V_EventsListUpcoming].[EventEndDate] AS [EventEndDate], 
+    [V_EventsListUpcoming].[EventEndTime] AS [EventEndTime], 
+    [V_EventsListUpcoming].[E_Enddate] AS [E_Enddate], 
+    [V_EventsListUpcoming].[E_Startdate] AS [E_Startdate], 
+    [V_EventsListUpcoming].[Orgnizer_Name] AS [Orgnizer_Name], 
+    [V_EventsListUpcoming].[Email] AS [Email], 
+    [V_EventsListUpcoming].[Feature] AS [Feature], 
+    [V_EventsListUpcoming].[EventAddress] AS [EventAddress], 
+    [V_EventsListUpcoming].[VenueName] AS [VenueName], 
+    [V_EventsListUpcoming].[TicketDetail] AS [TicketDetail], 
+    [V_EventsListUpcoming].[Purchasedqty] AS [Purchasedqty], 
+    [V_EventsListUpcoming].[EventTiming] AS [EventTiming]
+    FROM [dbo].[V_EventsListUpcoming] AS [V_EventsListUpcoming]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="v_OrderList" EntityType="Self.v_OrderList" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [v_OrderList].[OId] AS [OId], 
@@ -1788,11 +1853,11 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
     [V_Users].[dealpurchased] AS [dealpurchased]
     FROM [dbo].[V_Users] AS [V_Users]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__EventSubC__Event__45BE5BA9" Association="Self.FK__EventSubC__Event__45BE5BA9">
+          <AssociationSet Name="FK__EventSubC__Event__2942188C" Association="Self.FK__EventSubC__Event__2942188C">
             <End Role="EventCategory" EntitySet="EventCategory" />
             <End Role="EventSubCategory" EntitySet="EventSubCategory" />
           </AssociationSet>
-          <AssociationSet Name="FK__TicketDel__Deliv__4C6B5938" Association="Self.FK__TicketDel__Deliv__4C6B5938">
+          <AssociationSet Name="FK__TicketDel__Deliv__2FEF161B" Association="Self.FK__TicketDel__Deliv__2FEF161B">
             <End Role="DeliveryMethod" EntitySet="DeliveryMethod" />
             <End Role="TicketDeliveryMethod" EntitySet="TicketDeliveryMethod" />
           </AssociationSet>
@@ -2958,6 +3023,7 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <EntitySet Name="V_EventsexpiredList" EntityType="EventComboModel.V_EventsexpiredList" />
           <EntitySet Name="v_OrderList" EntityType="EventComboModel.v_OrderList" />
           <EntitySet Name="ContactEventComboes" EntityType="EventComboModel.ContactEventCombo" />
+          <EntitySet Name="V_EventsListUpcoming" EntityType="EventComboModel.V_EventsListUpcoming" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -4270,6 +4336,41 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Property Name="Category" Type="Int32" />
           <Property Name="SubCategory" Type="Int32" />
           <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="V_EventsListUpcoming">
+          <Key>
+            <PropertyRef Name="EventID" />
+            <PropertyRef Name="EventCategoryID" />
+            <PropertyRef Name="EventCategory" />
+            <PropertyRef Name="EventTypeID" />
+            <PropertyRef Name="EventType" />
+            <PropertyRef Name="Feature" />
+            <PropertyRef Name="Purchasedqty" />
+          </Key>
+          <Property Name="Sno" Type="Int64" />
+          <Property Name="EventTitle" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EventID" Type="Int64" Nullable="false" />
+          <Property Name="EventCategoryID" Type="Int64" Nullable="false" />
+          <Property Name="EventCategory" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="EventTypeID" Type="Int64" Nullable="false" />
+          <Property Name="EventType" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="EventSubCategoryID" Type="Int64" />
+          <Property Name="EventSubCategory" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="StartingFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventStartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventEndDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventEndTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="E_Enddate" Type="DateTime" Precision="3" />
+          <Property Name="E_Startdate" Type="DateTime" Precision="3" />
+          <Property Name="Orgnizer_Name" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Feature" Type="Int32" Nullable="false" />
+          <Property Name="EventAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="VenueName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TicketDetail" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Purchasedqty" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="EventTiming" Type="String" MaxLength="49" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -5634,6 +5735,36 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ContactEventComboId" ColumnName="ContactEventComboId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_EventsListUpcoming">
+            <EntityTypeMapping TypeName="EventComboModel.V_EventsListUpcoming">
+              <MappingFragment StoreEntitySet="V_EventsListUpcoming">
+                <ScalarProperty Name="EventTiming" ColumnName="EventTiming" />
+                <ScalarProperty Name="Purchasedqty" ColumnName="Purchasedqty" />
+                <ScalarProperty Name="TicketDetail" ColumnName="TicketDetail" />
+                <ScalarProperty Name="VenueName" ColumnName="VenueName" />
+                <ScalarProperty Name="EventAddress" ColumnName="EventAddress" />
+                <ScalarProperty Name="Feature" ColumnName="Feature" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Orgnizer_Name" ColumnName="Orgnizer_Name" />
+                <ScalarProperty Name="E_Startdate" ColumnName="E_Startdate" />
+                <ScalarProperty Name="E_Enddate" ColumnName="E_Enddate" />
+                <ScalarProperty Name="EventEndTime" ColumnName="EventEndTime" />
+                <ScalarProperty Name="EventEndDate" ColumnName="EventEndDate" />
+                <ScalarProperty Name="EventStartTime" ColumnName="EventStartTime" />
+                <ScalarProperty Name="StartingFrom" ColumnName="StartingFrom" />
+                <ScalarProperty Name="EventSubCategory" ColumnName="EventSubCategory" />
+                <ScalarProperty Name="EventSubCategoryID" ColumnName="EventSubCategoryID" />
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
+                <ScalarProperty Name="EventCategory" ColumnName="EventCategory" />
+                <ScalarProperty Name="EventCategoryID" ColumnName="EventCategoryID" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
+                <ScalarProperty Name="Sno" ColumnName="Sno" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

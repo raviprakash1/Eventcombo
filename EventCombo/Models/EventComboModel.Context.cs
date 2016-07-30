@@ -112,9 +112,9 @@ namespace EventCombo.Models
         public virtual DbSet<BusinessPage> BusinessPages { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<V_EventsexpiredList> V_EventsexpiredList { get; set; }
-        public virtual DbSet<V_EventsListUpcoming> V_EventsListUpcoming { get; set; }
         public virtual DbSet<v_OrderList> v_OrderList { get; set; }
         public virtual DbSet<ContactEventCombo> ContactEventComboes { get; set; }
+        public virtual DbSet<V_EventsListUpcoming> V_EventsListUpcoming { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)
