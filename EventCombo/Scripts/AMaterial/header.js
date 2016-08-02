@@ -1,16 +1,16 @@
 ﻿eventComboApp.factory('MenuService', function () {
   return {
     navigation: [
-                { id: 1, text: 'Discover Events', href: '#', class: '' },
-                { id: 2, text: 'Get the Buzz', href: '#', class: '' },
-                { id: 3, text: 'Create Event', href: '#', class: 'createevent' }
+                { id: 1, text: 'Discover Events', link: '/home/discoverevents', class: '' },
+                { id: 2, text: 'Get the Buzz', link: '/article/buzz', class: '' },
+                { id: 3, text: 'Create Event', link: '/eventmanagement/createevent', class: 'createevent' }
     ],
-    selctedMenu: 0
+    selectedMenu: 0
   };
 });
 
-eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http', '$q', 'MenuService', '$mdDialog', '$mdMenu',
-  function ($scope, $window, $http, $q, MenuService, $mdDialog, $mdMenu) {
+eventComboApp.controller('HamburgerController', ['$scope', '$window', 'MenuService', '$mdDialog', '$mdMenu',
+  function ($scope, $window, MenuService, $mdDialog, $mdMenu) {
 
     $scope.navigation = MenuService.navigation;
     var originatorEv;
@@ -39,8 +39,11 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
       }
     });
 
+  }]);
 
 
+eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http', '$q',
+  function ($scope, $window, $http, $q) {
 
     $scope.eventString = '';
     $scope.selectedEvent = null;
@@ -65,7 +68,7 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
     $scope.foundCities = null;
 
     $scope.gmapsService = new google.maps.places.AutocompleteService();
-    $scope.placeService = new google.maps.places.PlacesService(document.getElementById('SearchContainer').appendChild(document.createElement('div')));
+    $scope.placeService = new google.maps.places.PlacesService(document.getElementById('search').appendChild(document.createElement('div')));
 
 
     $scope.DiscoverByEvent = function () {

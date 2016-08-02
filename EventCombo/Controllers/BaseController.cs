@@ -44,6 +44,12 @@ namespace EventCombo.Controllers
             model.BaseUserEmail = profile.Email;
           }
         }
+        else 
+        {
+          model.BaseUserId = null;
+          model.BaseUserName = "Unknown";
+          model.BaseUserEmail = null;
+        }
       }
     }
 }

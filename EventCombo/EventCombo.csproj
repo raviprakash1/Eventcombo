@@ -355,6 +355,7 @@
     <Compile Include="Models\BusinessPage.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BusinessPageViewModel.cs" />
     <Compile Include="Models\City.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -794,6 +795,7 @@
     <Content Include="Content\AMaterial\angularjs-color-picker.min.css" />
     <Content Include="Content\AMaterial\animations.css" />
     <Content Include="Content\AMaterial\docs.css" />
+    <Content Include="Content\AMaterial\gridiculous.css" />
     <Content Include="Content\AMaterial\header-footer.css" />
     <Content Include="Content\AMaterial\main.css" />
     <Content Include="Content\AMaterial\material-datetimepicker.css" />
@@ -906,14 +908,19 @@
       <DependentUpon>EventComboModel.edmx</DependentUpon>
       <LastGenOutput>EventComboModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\AMaterial\angular-animate.js" />
     <Content Include="Scripts\AMaterial\angular-animate.min.js" />
+    <Content Include="Scripts\AMaterial\angular-aria.js" />
     <Content Include="Scripts\AMaterial\angular-aria.min.js" />
     <Content Include="Scripts\AMaterial\angular-material-datetimepicker.js" />
     <Content Include="Scripts\AMaterial\angular-material.js" />
+    <Content Include="Scripts\AMaterial\angular-messages.js" />
     <Content Include="Scripts\AMaterial\angular-messages.min.js" />
+    <Content Include="Scripts\AMaterial\angular-route.js" />
     <Content Include="Scripts\AMaterial\angular-route.min.js" />
     <Content Include="Scripts\AMaterial\angular-tinymce\tinymce.min.js" />
     <Content Include="Scripts\AMaterial\angular.js" />
+    <Content Include="Scripts\AMaterial\angular.min.js" />
     <Content Include="Scripts\AMaterial\angularjs-color-picker.min.js" />
     <Content Include="Scripts\AMaterial\classie.js" />
     <Content Include="Scripts\AMaterial\controller.js" />
