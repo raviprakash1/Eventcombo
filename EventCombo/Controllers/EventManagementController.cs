@@ -13,24 +13,25 @@ using Newtonsoft.Json.Converters;
 using EventCombo.ViewModels;
 namespace EventCombo.Controllers
 {
-  public class EventManagementController : BaseController
-  {
-    private IEventService _eService;
-    public EventManagementController(): base()
+    public class EventManagementController : BaseController
     {
-      _eService = new EventService(_factory, _mapper);
-    }
-    
-    private ActionResult DefaultAction(string returnUrl = "")
-    {
-      if (!String.IsNullOrWhiteSpace(returnUrl))
-        Session["ReturnUrl"] = returnUrl;
-      return RedirectToAction("Index", "Home");
-    }
+        private IEventService _eService;
+        public EventManagementController()
+            : base()
+        {
+            _eService = new EventService(_factory, _mapper);
+        }
 
-    [HttpGet]
-    public ActionResult CreateEvent()
-    {
+        private ActionResult DefaultAction(string returnUrl = "")
+        {
+            if (!String.IsNullOrWhiteSpace(returnUrl))
+                Session["ReturnUrl"] = returnUrl;
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public ActionResult CreateEvent()
+        {
 
             if (Session["AppId"] == null)
             {
@@ -46,48 +47,48 @@ namespace EventCombo.Controllers
             }
             string userId = Session["AppId"].ToString();
 
-      EventViewModel ev = _eService.CreateEvent(userId);
-      PopulateBaseViewModel(ev, "Create Event | Eventcombo");
-        
+            EventViewModel ev = _eService.CreateEvent(userId);
+            PopulateBaseViewModel(ev, "Create Event | Eventcombo");
+
             return View(ev);
+        }
+
+        [HttpGet]
+        public ActionResult GetEvent(int eventId)
+        {
+            if (Session["AppId"] == null)
+                return null;
+
+            string userId = Session["AppId"].ToString();
+
+            EventViewModel ev = _eService.CreateEvent(userId);
+            PopulateBaseViewModel(ev, "Create Event | Eventcombo");
+
+            JsonNetResult res = new JsonNetResult();
+            res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
+            res.Data = ev;
+
+            return res;
+        }
+
+        [HttpPost]
+        public ActionResult SaveEvent(string json)
+        {
+            if (Session["AppId"] == null)
+                return null;
+
+            EventViewModel ev = JsonConvert.DeserializeObject<EventViewModel>(json);
+
+            if (_eService.ValidateEvent(ev))
+            {
+                _eService.SaveEvent(ev, Server.MapPath);
+            }
+
+            JsonNetResult res = new JsonNetResult();
+            res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
+            res.Data = ev;
+
+            return res;
+        }
     }
-
-    [HttpGet]
-    public ActionResult GetEvent(int eventId)
-    {
-      if (Session["AppId"] == null)
-        return null;
-
-      string userId = Session["AppId"].ToString();
-
-      EventViewModel ev = _eService.CreateEvent(userId);
-      PopulateBaseViewModel(ev, "Create Event | Eventcombo");
-
-      JsonNetResult res = new JsonNetResult();
-      res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
-      res.Data = ev;
-
-      return res;
-    }
-
-    [HttpPost]
-    public ActionResult SaveEvent(string json)
-    {
-      if (Session["AppId"] == null)
-        return null;
-
-      EventViewModel ev = JsonConvert.DeserializeObject<EventViewModel>(json);
-
-      if (_eService.ValidateEvent(ev))
-      {
-        _eService.SaveEvent(ev, Server.MapPath);
-      }
-
-      JsonNetResult res = new JsonNetResult();
-      res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
-      res.Data = ev;
-
-      return res;
-    }
-  }
 }

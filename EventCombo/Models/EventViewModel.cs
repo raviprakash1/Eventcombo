@@ -348,9 +348,10 @@ namespace EventCombo.Models
     }
   }
 
-  public class EventTitleSearchViewModel
+  public class EventSearchViewModel
   {
     public long EventId { get; set; }
+    public byte RecordTypeId { get; set; } // 0 - Title, 1 - Type, 2 - Category, 3 - SubCategory
     public string EventTitle { get; set; }
     public string Latitude { get; set; }
     public string Longitude { get; set; }

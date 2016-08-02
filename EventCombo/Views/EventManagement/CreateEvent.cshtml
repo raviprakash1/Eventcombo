@@ -6,6 +6,23 @@
   Layout = "~/Views/Shared/_AngularLayout.cshtml";
 }
 
+@section CSSSection
+{
+  @Styles.Render("~/Content/angularMain-CE")
+}
+
+@section ScriptSection
+{
+  <script src="@Url.Content("~/Scripts/AMaterial/main.js")"></script>
+  <script type="text/javascript">
+
+    function changeBackgroundImage() {
+      $('.eventDetailContainer').css({ 'background-image': 'url(~/Images/AMaterial/pic1.jpg)' });
+    }
+  </script>
+}
+
+
 <style type="text/css">
   md-input-container:not(.md-input-invalid).md-input-has-value label {
     color: rgb(0, 202, 253) !important;
@@ -874,13 +891,3 @@
   </form>
 </div>
 
-@section ScriptSection
-{
-  <script src="@Url.Content("~/Scripts/AMaterial/main.js")"></script>
-  <script type="text/javascript">
-
-    function changeBackgroundImage() {
-      $('.eventDetailContainer').css({ 'background-image': 'url(~/Images/AMaterial/pic1.jpg)' });
-    }
-  </script>
-}

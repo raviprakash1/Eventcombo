@@ -27,7 +27,7 @@ namespace EventCombo.Controllers
 
     public ActionResult FilterEventsByTitle(string title)
     {
-      IEnumerable<EventTitleSearchViewModel> ev = _eService.Search(title);
+      IEnumerable<EventSearchViewModel> ev = _eService.Search(title);
 
       JsonNetResult res = new JsonNetResult();
       res.Data = ev;
