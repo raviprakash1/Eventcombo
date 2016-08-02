@@ -247,7 +247,6 @@ demo-include {
 
 
 html {
-  font-size: 62.5%;
   line-height: 1.4;
 }
 
@@ -341,7 +340,6 @@ h4 {
 }
 
 p {
-  font-size: 1.6rem;
   font-weight: 400;
   letter-spacing: 0.010em;
   line-height: 1.6em;

@@ -4,44 +4,103 @@
 <script type="text/javascript">
   function init() {
     window.addEventListener('scroll', function (e) {
+      var search2 = document.getElementById("search");
       var distanceY = window.pageYOffset || document.documentElement.scrollTop,
-      shrinkOn = 100,
-      header = document.querySelector("header");
+          shrinkOn = 30,
+          header = document.querySelector("header");
       if (distanceY > shrinkOn) {
         classie.add(header, "smaller");
-      }
-      else {
+        classie.add(search2, "search2");
+      } else {
         if (classie.has(header, "smaller")) {
           classie.remove(header, "smaller");
+        }
+        if (classie.has(search2, "search2")) {
+          classie.remove(search2, "search2");
         }
       }
     });
   }
   window.onload = init();
 </script>
-<header>
+<header ng-controller="HamburgerController">
+  <div class="topnav2">
+    <md-menu md-position-mode="target-right target">
+      <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+        <i md-menu-origin="" class="material-icons">menu</i>
+      </md-button>
+      <md-menu-content width="5">
+        <md-menu-item ng-repeat="menu in navigation">
+          <md-button ng-click="announceClick($index)">
+            <div layout="row" flex="">
+              <p flex=""><a href="{{ menu.link }}" class="{{ menu.class }}">{{ menu.text }}</a></p>
+              <i md-menu-align-target="" style="margin:auto 3px auto 0;" class="material-icons">portable_wifi_off</i>
+            </div>
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+  </div>
+
   <nav>
     <ul class="nav">
       <li class="drop">
         <i class="material-icons orange600">account_circle</i> @Model.BaseUserName
-        <ul>
-          <li><a href="@Url.Action("MyAccount", "Account")"><i class="material-icons">account_balance_wallet</i> Account</a></li>
-          <li><a href="@Url.Action("EventList", "EventList")"><i class="material-icons">event</i> My Events</a></li>
-          <li><a href="@Url.Action("DealsDashboard", "Account")"><i class="material-icons">shop</i> My Deals</a></li>
-          <li><a href="@Url.Action("PurchasedTicket", "Account")"><i class="material-icons">local_play</i> My Tickets</a></li>
-          <li><a href="@Url.Action("OrganizerProfile", "Account")"><i class="material-icons">group</i> Organizers</a></li>
-          <li><a href="#"><i class="material-icons">exit_to_app</i> Log Out</a></li>
-        </ul>
+        @if (!String.IsNullOrEmpty(Model.BaseUserId))
+        {
+          <ul>
+            <li><a href="@Url.Action("MyAccount", "Account")"><i class="material-icons">account_balance_wallet</i> Account</a></li>
+            <li><a href="@Url.Action("EventList", "EventList")"><i class="material-icons">event</i> My Events</a></li>
+            <li><a href="@Url.Action("DealsDashboard", "Account")"><i class="material-icons">shop</i> My Deals</a></li>
+            <li><a href="@Url.Action("PurchasedTicket", "Account")"><i class="material-icons">local_play</i> My Tickets</a></li>
+            <li><a href="@Url.Action("OrganizerProfile", "Account")"><i class="material-icons">group</i> Organizers</a></li>
+            <li><a href="#"><i class="material-icons">exit_to_app</i> Log Out</a></li>
+          </ul>
+        }
+        else
+        {
+          <ul>
+            <li><a href="#"><i class="material-icons">lock_outline</i> Log In</a></li>
+          </ul>
+        }
       </li>
     </ul>
   </nav>
+
+  <div class="topnav">
+    <a ng-repeat="menu in navigation" href="{{ menu.link }}" class="{{ menu.class }}">{{ menu.text }}</a>
+  </div>
+
   <div>
     <a href="~/">
       <h1 id="logo"></h1>
     </a>
   </div>
 </header>
-<div style="margin-left: 5vw;" ng-controller="SearchEventController">
-  <div id="search"><i class="material-icons">search</i><input type="search" search-event="discoverEvent();" ng-model="searchString" placeholder="Search"></div>
+<div id="search" ng-controller="SearchEventController">
+  <i class="material-icons">search</i>
+  <md-content class="md-padding">
+    <div style="width: 40%; float: left">
+      <md-autocomplete md-no-cache="false" md-selected-item="selectedEvent" md-search-text="eventString" md-delay="500"
+                       md-items="item in eventSearch(eventString)" md-item-text="item.EventTitle" md-min-length="1"
+                       placeholder="Search" md-selected-item-change="DiscoverByEvent()" md-select-on-focus
+                       press-enter="DiscoverByEvent()">
+        <md-item-template>
+          <span md-highlight-text="eventString" md-highlight-flags="i">{{item.EventTitle}}</span>
+        </md-item-template>
+        <md-not-found> No matching were found. </md-not-found>
+      </md-autocomplete>
+    </div>
+    <div style="width: 40%; float:left; margin-left: 5%">
+      <md-autocomplete md-no-cache="false" md-selected-item="selectedCity" md-search-text="cityString" md-delay="500"
+                       md-items="item in citySearch(cityString)" md-selected-item-change="DiscoverByCity()" md-select-on-focus
+                       md-item-text="item.description" md-min-length="2" placeholder="City" press-enter="DiscoverByCity()">
+        <md-item-template>
+          <span md-highlight-text="cityString" md-highlight-flags="i">{{item.description}}</span>
+        </md-item-template>
+        <md-not-found> No matching were found. </md-not-found>
+      </md-autocomplete>
+    </div>
+  </md-content>
 </div>
 

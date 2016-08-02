@@ -1,3 +1,3 @@
-﻿angular.module('CreateEventApp', ['color.picker']).controller('CreateEventController', function ($scope) {
+﻿angular.module('EventComboApp', ['color.picker']).controller('CreateEventController', function ($scope) {
    
 });

@@ -520,6 +520,39 @@ namespace EventCombo.Service
       var res = _factory.ContextFactory.GetContext().Database.ExecuteSqlCommand("EXEC PublishEvent @EventId, @UserId", param1, param2);
     }
 
+    public IEnumerable<EventSearchViewModel> Search(string searchStr)
+    {
+      DateTime now = DateTime.UtcNow;
+      IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
+      IRepository<EventType> etRepo = new GenericRepository<EventType>(_factory.ContextFactory);
+      IRepository<EventCategory> ecRepo = new GenericRepository<EventCategory>(_factory.ContextFactory);
+      List<EventSearchViewModel> evList = eRepo.Get(filter: (e => e.EventVenues.Any(ev => (ev.E_Enddate ?? now) >= now) && e.EventTitle.Contains(searchStr)))
+        .Select(e => new EventSearchViewModel()
+        { 
+          EventId = e.EventID, 
+          RecordTypeId = 0,
+          EventTitle = e.EventTitle,
+          Latitude = e.Addresses.Count > 0 ? e.Addresses.FirstOrDefault().Latitude : null,
+          Longitude = e.Addresses.Count > 0 ? e.Addresses.FirstOrDefault().Longitude : null
+        }).ToList();
+
+      evList.AddRange(etRepo.Get(filter: (et => et.EventType1.Contains(searchStr))).Select(et => new EventSearchViewModel()
+        {
+          EventId = 0,
+          RecordTypeId = 1,
+          EventTitle = et.EventType1
+        }));
+
+      evList.AddRange(ecRepo.Get(filter: (ec => ec.EventCategory1.Contains(searchStr))).Select(ec => new EventSearchViewModel()
+      {
+        EventId = 0,
+        RecordTypeId = 2,
+        EventTitle = ec.EventCategory1
+      }));
+
+      return evList.OrderBy(e => e.EventTitle);
+    }
+
 
     public EventViewModel GetEventById(int id)
     {
