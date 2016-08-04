@@ -57,7 +57,7 @@ namespace EventCombo.Service
             OId = order.O_Id,
             Name = firstticket.Event.EventTitle,
             Quantity = ptickets.Sum(pt => pt.TPD_Purchased_Qty),
-            TotalPaid = ptickets.Sum(pt => pt.TPD_Amount),
+            TotalPaid = ptickets.Sum(pt => pt.TPD_Amount) + order.O_VariableAmount,
             EventStartDate = DateTime.Parse(firstticket.Ticket_Quantity_Detail.Publish_Event_Detail.PE_Scheduled_Date),
             EventEndDate = DateTime.Parse(firstticket.Ticket_Quantity_Detail.Publish_Event_Detail.PE_MultipleVenue_id > 0 ?
               firstticket.Ticket_Quantity_Detail.Publish_Event_Detail.PE_Scheduled_Date :
