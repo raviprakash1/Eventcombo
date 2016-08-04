@@ -50,14 +50,16 @@ namespace EventCombo.Service
 
       IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
       IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
+      IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
       var tickets = tpdRepo.Get(filter: (t => t.TPD_Event_Id == eventId));
       var ev = eRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();
+      var order = orderRepo.Get();
 
       EventOrdersSummuryViewModel ordersTotal = new EventOrdersSummuryViewModel()
       {
         PaymentState = PaymentStates.Total,
         TicketsSold = tickets.Sum(t => t.TPD_Purchased_Qty) ?? 0,
-        Amount = tickets.Sum(t => t.TPD_Amount) ?? 0,
+        Amount = (tickets.Sum(t=>t.TPD_Amount) ?? 0) + (order.Where(o=>(tickets.Select(t=>t.TPD_Order_Id).Contains(o.O_Order_Id))).Sum(os=>os.O_VariableAmount) ?? 0),
         TicketsTotal = ev.Tickets.Sum(tt => tt.Ticket_Quantity_Detail.Sum(q => q.TQD_Quantity)) ?? 0,
         Count = tickets.Select(t => t.TPD_Order_Id).Distinct().Count()
       };
@@ -86,6 +88,11 @@ namespace EventCombo.Service
 
       IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
       IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
+      IRepository<BillingAddress> billRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
+      IRepository<Ticket> ticketRepo = new GenericRepository<Ticket>(_factory.ContextFactory);
+      IRepository<Country> countryRepo = new GenericRepository<Country>(_factory.ContextFactory);
+
+      var tickets = ticketRepo.Get(filter: (t => t.E_Id == eventId));
 
       IEnumerable<EventOrderInfoViewModel> res = tpdRepo.Get(filter: (t => t.TPD_Event_Id == eventId))
         .GroupBy(tt => tt.TPD_Order_Id)
@@ -93,16 +100,36 @@ namespace EventCombo.Service
         {
           OrderId = ticket.Key,
           PaymentState = PaymentStates.Completed,
-          Price = ticket.Sum(t => t.TPD_Amount) ?? 0,
-          BuyerName = ticket.FirstOrDefault().AspNetUser.Profiles.Select(p => p.FirstName + p.LastName).FirstOrDefault(),
+          TicketName = tickets.Where(t => t.T_Id == (ticket.FirstOrDefault().Ticket_Quantity_Detail.TQD_Ticket_Id ?? 0)).Select(t => t.T_name).FirstOrDefault(),
+          Fee = ticket.Sum(t => t.TPD_EC_Fee) ?? 0,
+          PricePaid = ticket.Sum(t=>t.TPD_Amount) ?? 0,
+          BuyerName = ticket.FirstOrDefault().AspNetUser.Profiles.Select(p => p.FirstName + " " + p.LastName).FirstOrDefault(),
           BuyerEmail = ticket.FirstOrDefault().AspNetUser.Profiles.Select(p => p.Email).FirstOrDefault(),
           Quantity = ticket.Sum(t => t.TPD_Purchased_Qty) ?? 0
         }).ToList();
       foreach (var order in res)
       {
         var orderDB = orderRepo.Get(filter: (o => o.O_Order_Id == order.OrderId)).FirstOrDefault();
+        var billingAddressDB = billRepo.Get(filter: (b => b.OrderId == order.OrderId)).FirstOrDefault();
+        var countryDB = countryRepo.Get(filter: (c => c.CountryID.ToString() == billingAddressDB.Country));
+
         if (orderDB != null)
-          order.Date = orderDB.O_OrderDateTime ?? DateTime.Today;
+        {
+            order.Date = orderDB.O_OrderDateTime ?? DateTime.Today;
+            order.Price = orderDB.O_TotalAmount ?? 0;
+            order.PricePaid = order.PricePaid + (orderDB.O_VariableAmount ?? 0);
+            order.PriceNet = order.PricePaid - order.Fee;
+            order.CustomerEmail = orderDB.O_Email;
+            if (billingAddressDB != null)
+            {
+                order.Address = billingAddressDB.Address1 +
+                    " " + billingAddressDB.Address2 +
+                    ", " + billingAddressDB.City +
+                    "-" + billingAddressDB.Zip +
+                    " " + billingAddressDB.State +
+                    " (" + (countryDB.FirstOrDefault().Country1) + ")";
+            }
+        }
       }
 
       return res;
@@ -234,20 +261,30 @@ namespace EventCombo.Service
       IRow row = sheet.CreateRow(0);
       AddStyledCell(row, 0, hstyle).SetCellValue("ORDER #");
       AddStyledCell(row, 1, hstyle).SetCellValue("TICKET BUYER");
-      AddStyledCell(row, 2, hstyle).SetCellValue("QUANTITY");
-      AddStyledCell(row, 3, hstyle).SetCellValue("PRICE");
-      AddStyledCell(row, 4, hstyle).SetCellValue("DATE");
-      AddStyledCell(row, 5, hstyle).SetCellValue("PAYMENT");
+      AddStyledCell(row, 2, hstyle).SetCellValue("TICKET NAME");
+      AddStyledCell(row, 3, hstyle).SetCellValue("QUANTITY");
+      AddStyledCell(row, 4, hstyle).SetCellValue("PRICE");
+      AddStyledCell(row, 5, hstyle).SetCellValue("PRICE PAID");
+      AddStyledCell(row, 6, hstyle).SetCellValue("NET PRICE");
+      AddStyledCell(row, 7, hstyle).SetCellValue("CUSTOMER EMAIL");
+      AddStyledCell(row, 8, hstyle).SetCellValue("ADDRESS");
+      AddStyledCell(row, 9, hstyle).SetCellValue("DATE");
+      AddStyledCell(row, 10, hstyle).SetCellValue("PAYMENT");
       var i = 1;
       foreach (var order in orders)
       {
         row = sheet.CreateRow(i++);
         AddStyledCell(row, 0, style).SetCellValue(order.OrderId);
         AddStyledCell(row, 1, style).SetCellValue(order.BuyerName);
-        AddStyledCell(row, 2, style).SetCellValue(order.Quantity);
-        AddStyledCell(row, 3, style).SetCellValue((double)order.Price);
-        AddStyledCell(row, 4, datestyle).SetCellValue(order.Date);
-        AddStyledCell(row, 5, style).SetCellValue(order.PaymentState.ToString());
+        AddStyledCell(row, 2, style).SetCellValue(order.TicketName);
+        AddStyledCell(row, 3, style).SetCellValue(order.Quantity);
+        AddStyledCell(row, 4, style).SetCellValue((double)order.Price);
+        AddStyledCell(row, 5, style).SetCellValue((double)order.PricePaid);
+        AddStyledCell(row, 6, style).SetCellValue((double)order.PriceNet);
+        AddStyledCell(row, 7, datestyle).SetCellValue(order.CustomerEmail);
+        AddStyledCell(row, 8, datestyle).SetCellValue(order.Address);
+        AddStyledCell(row, 9, datestyle).SetCellValue(order.Date);
+        AddStyledCell(row, 10, style).SetCellValue(order.PaymentState.ToString());
       }
       for (i = 0; i <= 5; i++)
       {
@@ -264,7 +301,7 @@ namespace EventCombo.Service
       MemoryStream res = new MemoryStream();
       StreamWriter rw = new StreamWriter(res);
 
-      rw.Write("  ORDER #  |        TICKET BUYER        | QUANTITY |  PRICE  |   DATE   |  PAYMENT  ");
+      rw.Write("  ORDER #  |        TICKET BUYER        |        TICKET NAME         | QUANTITY |  PRICE  |PRICE PAID|NET PRICE|       CUSTOMER EMAIL       |        ADDRESS             |   DATE   |  PAYMENT  ");
       rw.WriteLine();
       string str = "";
       foreach (var order in orders)
@@ -273,16 +310,47 @@ namespace EventCombo.Service
         str = order.BuyerName;
         while (str.Length > 28)
         {
-          rw.Write(str.Substring(0, 28) + "|          |         |          |           ");
+          rw.Write(str.Substring(0, 28) + "|                            |          |         |          |         |                            |                            |          |           ");
           rw.WriteLine();
           rw.Write("           |");
           str = str.Substring(28, str.Length - 28);
+        }
+        rw.Write(str + new String(' ', 28 - str.Length) + "|");
+        str = order.TicketName;
+        while (str.Length > 28)
+        {
+            rw.Write(str.Substring(0, 28) + "|          |         |          |         |                            |                            |          |           ");
+            rw.WriteLine();
+            rw.Write("           |                            |");
+            str = str.Substring(28, str.Length - 28);
         }
         rw.Write(str + new String(' ', 28 - str.Length) + "|");
         str = order.Quantity.ToString();
         rw.Write(str + new String(' ', 10 - str.Length) + "|");
         str = order.Price.ToString("N2");
         rw.Write(str + new String(' ', 9 - str.Length) + "|");
+        str = order.PricePaid.ToString("N2");
+        rw.Write(str + new String(' ', 10 - str.Length) + "|");
+        str = order.PriceNet.ToString("N2");
+        rw.Write(str + new String(' ', 9 - str.Length) + "|");
+        str = order.CustomerEmail;
+        while (str.Length > 28)
+        {
+            rw.Write(str.Substring(0, 28) + "|                            |          |           ");
+            rw.WriteLine();
+            rw.Write("           |                            |                            |          |         |          |         |");
+            str = str.Substring(28, str.Length - 28);
+        }
+        rw.Write(str + new String(' ', 28 - str.Length) + "|");
+        str = order.Address;
+        while (str.Length > 28)
+        {
+            rw.Write(str.Substring(0, 28) + "|          |           ");
+            rw.WriteLine();
+            rw.Write("           |                            |                            |          |         |          |         |                            |");
+            str = str.Substring(28, str.Length - 28);
+        }
+        rw.Write(str + new String(' ', 28 - str.Length) + "|");
         str = order.Date.ToShortDateString();
         rw.Write(str + new String(' ', 10 - str.Length) + "|");
         str = order.PaymentState.ToString();
@@ -303,8 +371,13 @@ namespace EventCombo.Service
 
       rw.Write("ORDER #" + delimiter);
       rw.Write("TICKET BUYER" + delimiter);
+      rw.Write("TICKET NAME" + delimiter);
       rw.Write("QUANTITY" + delimiter);
       rw.Write("PRICE" + delimiter);
+      rw.Write("PRICE PAID" + delimiter);
+      rw.Write("NET PRICE" + delimiter);
+      rw.Write("CUSTOMER EMAIL" + delimiter);
+      rw.Write("ADDRESS" + delimiter);
       rw.Write("DATE" + delimiter);
       rw.Write("PAYMENT");
       rw.WriteLine();
@@ -313,8 +386,13 @@ namespace EventCombo.Service
       {
         rw.Write(order.OrderId + delimiter);
         rw.Write(order.BuyerName + delimiter);
+        rw.Write(order.TicketName + delimiter);
         rw.Write(order.Quantity.ToString() + delimiter);
         rw.Write("$" + order.Price.ToString("N2") + delimiter);
+        rw.Write("$" + order.PricePaid.ToString("N2") + delimiter);
+        rw.Write("$" + order.PriceNet.ToString("N2") + delimiter);
+        rw.Write(order.CustomerEmail + delimiter);
+        rw.Write( order.Address + delimiter);
         rw.Write(order.Date.ToShortDateString() + delimiter);
         rw.Write(order.PaymentState.ToString());
         rw.WriteLine();
