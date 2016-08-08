@@ -100,7 +100,7 @@ namespace EventCombo.Service
         {
           OrderId = ticket.Key,
           PaymentState = PaymentStates.Completed,
-          TicketName = tickets.Where(t => t.T_Id == (ticket.FirstOrDefault().Ticket_Quantity_Detail.TQD_Ticket_Id ?? 0)).Select(t => t.T_name).FirstOrDefault(),
+          TicketName = String.Join(", ", tickets.Where(t => t.T_Id == (ticket.FirstOrDefault().Ticket_Quantity_Detail.TQD_Ticket_Id ?? 0)).Select(t => t.T_name).ToArray()),
           Fee = ticket.Sum(t => t.TPD_EC_Fee) ?? 0,
           PricePaid = ticket.Sum(t=>t.TPD_Amount) ?? 0,
           BuyerName = ticket.FirstOrDefault().AspNetUser.Profiles.Select(p => p.FirstName + " " + p.LastName).FirstOrDefault(),
@@ -111,7 +111,6 @@ namespace EventCombo.Service
       {
         var orderDB = orderRepo.Get(filter: (o => o.O_Order_Id == order.OrderId)).FirstOrDefault();
         var billingAddressDB = billRepo.Get(filter: (b => b.OrderId == order.OrderId)).FirstOrDefault();
-        var countryDB = countryRepo.Get(filter: (c => c.CountryID.ToString() == billingAddressDB.Country));
 
         if (orderDB != null)
         {
@@ -122,6 +121,8 @@ namespace EventCombo.Service
             order.CustomerEmail = orderDB.O_Email;
             if (billingAddressDB != null)
             {
+                var countryDB = countryRepo.Get(filter: (c => c.CountryID.ToString() == billingAddressDB.Country));
+
                 order.Address = billingAddressDB.Address1 +
                     " " + billingAddressDB.Address2 +
                     ", " + billingAddressDB.City +
