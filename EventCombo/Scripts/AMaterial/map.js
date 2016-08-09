@@ -300,7 +300,7 @@ function addEventMarker(eventInfo, map) {
                           '</div>' +
                           '<div class="clearfix"></div>' +
                           '<div class="infoButtons">' +
-                              '<a href="/EventManagement/ViewEvent?EventId=' + eventInfo.EventId + '" class="viewInfo">Details</a>' +
+                              '<a href="' + eventInfo.EventUrl + '" class="viewInfo">Details</a>' +
                           '</div>' +
                        '</div>';
   google.maps.event.addListener(marker, 'click', (function (marker) {

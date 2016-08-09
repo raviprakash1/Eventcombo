@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace EventCombo.Models
 {
@@ -390,13 +391,19 @@ namespace EventCombo.Models
     public decimal TotalPrice { get; set; }
   }
 
-  public class EventInfoViewModel: IBaseViewModel
+  public class EventInfoViewModel : IBaseViewModel, IOpenGraphProtocol
   {
     // IBaseViewModel interface implementation
     public string BaseTitle { get; set; }
     public string BaseUserId { get; set; }
     public string BaseUserName { get; set; }
     public string BaseUserEmail { get; set; }
+    // IOpenGraphProtocol interface implementation
+    public string OGPTitle { get; set; }
+    public string OGPType { get; set; }
+    public string OGPUrl { get; set; }
+    public string OGPImage { get; set; }
+    public string OGPDescription { get; set; }
 
     public long EventId { get; set; }
     public String EventTitle { get; set; }
@@ -419,9 +426,6 @@ namespace EventCombo.Models
     public bool UserVote { get; set; }
     public byte SingleTicketType { get; set; }
     public byte EventStatus { get; set; }
-    public bool ShowMinMax { get; set; }
-    public decimal MinTicketPrice { get; set; }
-    public decimal MaxTicketPrice { get; set; }
     public string BackgroundUrl { get; set; }
     public string BackgroundColor { get; set; }
     public string ImageUrl { get; set; }
@@ -434,6 +438,9 @@ namespace EventCombo.Models
     public string EnableFBDiscussion { get; set; }
     public bool DisplayStartTime { get; set; }
     public bool DisplayEndTime { get; set; }
+    public string EventUrl { get; set; }
+    public string ButtonText { get; set; }
+    public string PriceRange { get; set; }
 
 
     public OrganizerInfoViewModel Organizer { get; set; }

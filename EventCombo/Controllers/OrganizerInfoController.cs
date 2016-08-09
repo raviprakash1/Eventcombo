@@ -176,7 +176,7 @@ namespace EventCombo.Controllers
                 }
                 orgev.Eventtitle = EventDetail.EventTitle;
                 orgev.Dateofeventsort = SDATEN;
-                orgev.eventpath = Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Regex.Replace(EventDetail.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = EventDetail.EventID.ToString() });
+                orgev.eventpath = Url.Action("ViewEvent", "EventManagement", new { strEventDs = Regex.Replace(EventDetail.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = EventDetail.EventID.ToString() });
                 if (!string.IsNullOrEmpty(eDate_new))
                 {
                   
@@ -364,7 +364,7 @@ namespace EventCombo.Controllers
                 }
                 orgev.Eventtitle = EventDetail.EventTitle;
                 orgev.Dateofeventsort = SDATEN;
-                orgev.eventpath = Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Regex.Replace(EventDetail.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = EventDetail.EventID.ToString() });
+                orgev.eventpath = Url.Action("ViewEvent", "EventManagement", new { strEventDs = Regex.Replace(EventDetail.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = EventDetail.EventID.ToString() });
 
                 if (!string.IsNullOrEmpty(eDate_new))
                 {

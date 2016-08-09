@@ -9,6 +9,7 @@
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <meta name="description" content="">
   <meta name="author" content="">
+  <meta property="fb:app_id" content="@(System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"])" />
   @if (Model is IOpenGraphProtocol)
   {
     IOpenGraphProtocol ogp = Model as IOpenGraphProtocol;
@@ -18,7 +19,15 @@
     <meta property="og:description" content="@ogp.OGPDescription" />
     <meta property="og:image" content="@ogp.OGPImage" />
   }
-  <link rel="icon" href="javascript:void(0)">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link href="/Images/FabIcon/ios-57x57.png" rel="apple-touch-icon" />
+  <link href="/Images/FabIcon/ios-76x76.png" rel="apple-touch-icon" sizes="76x76" />
+  <link href="/Images/FabIcon/ios-120x120.png" rel="apple-touch-icon" sizes="120x120" />
+  <link href="/Images/FabIcon/ios-152x152.png" rel="apple-touch-icon" sizes="152x152" />
+  <link href="/Images/FabIcon/ios-180x180.png" rel="apple-touch-icon" sizes="180x180" />
+  <link href="/Images/FabIcon/android-192x192.png" rel="icon" sizes="192x192" />
+  <link href="/Images/FabIcon/android-128x128.png" rel="icon" sizes="128x128" />
+
   @{
     IBaseViewModel bModel = Model as IBaseViewModel;
     if (bModel == null)

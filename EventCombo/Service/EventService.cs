@@ -7,6 +7,7 @@ using EventCombo.DAL;
 using AutoMapper;
 using System.Data.SqlClient;
 using EventCombo.Utils;
+using System.Web.Mvc;
 
 
 namespace EventCombo.Service
@@ -565,17 +566,17 @@ namespace EventCombo.Service
     }
 
 
-    public EventInfoViewModel GetEventInfo(long eventId, Func<string, string> UrlFunc)
+    public EventInfoViewModel GetEventInfo(long eventId, string userId, UrlHelper url)
     {
       EventInfoViewModel evi = new EventInfoViewModel();
       evi.EventId = eventId;
 
-      UpdateEventInfo(evi, UrlFunc);
+      UpdateEventInfo(evi, userId, url);
 
       return evi;
     }
 
-    private string GetECImageUrl(long ImageId, Func<string, string> UrlFunc)
+    private string GetECImageUrl(long ImageId, UrlHelper url)
     {
       IRepository<ECImage> iRepo = new GenericRepository<ECImage>(_factory.ContextFactory);
       var dbImage = iRepo.GetByID(ImageId);
@@ -586,7 +587,7 @@ namespace EventCombo.Service
           Id = dbImage.ECImageId,
           ImageType = 1,
           Filename = dbImage.ImagePath,
-          UrlPath = UrlFunc
+          UrlPath = url.Content
         };
         return ecImage.ImageUrl;
       }
@@ -594,16 +595,16 @@ namespace EventCombo.Service
         return "";
     }
 
-    private string GetEventImageUrl(EventImage dbImage, Func<string, string> UrlFunc)
+    private string GetEventImageUrl(EventImage dbImage, UrlHelper url)
     {
       if (dbImage != null)
       {
         ImageViewModel ecImage = new ImageViewModel()
         {
           Id = dbImage.EventImageID,
-          ImageType = 1,
+          ImageType = 2,
           Filename = dbImage.EventImageUrl,
-          UrlPath = UrlFunc
+          UrlPath = url.Content
         };
         return ecImage.ImageUrl;
       }
@@ -611,13 +612,15 @@ namespace EventCombo.Service
         return "";
     }
 
-    public void UpdateEventInfo(EventInfoViewModel evi, Func<string, string> UrlFunc)
+    public void UpdateEventInfo(EventInfoViewModel evi, string userId, UrlHelper url)
     {
       IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
       IRepository<EventSubCategory> escRepo = new GenericRepository<EventSubCategory>(_factory.ContextFactory);
       IRepository<TimeZoneDetail> tzRepo = new GenericRepository<TimeZoneDetail>(_factory.ContextFactory);
       IRepository<EventImage> iRepo = new GenericRepository<EventImage>(_factory.ContextFactory);
       IRepository<Ticket_Quantity_Detail> tqdRepo = new GenericRepository<Ticket_Quantity_Detail>(_factory.ContextFactory);
+      IRepository<EventFavourite> favRepo = new GenericRepository<EventFavourite>(_factory.ContextFactory);
+      IRepository<EventVote> voteRepo = new GenericRepository<EventVote>(_factory.ContextFactory);
 
       Event ev = eRepo.Get(filter: (e => e.EventID == evi.EventId)).SingleOrDefault();
       if (ev == null)
@@ -635,6 +638,7 @@ namespace EventCombo.Service
       evi.DisplayStartTime = ev.DisplayStartTime == "Y";
       evi.DisplayEndTime = ev.DisplayEndTime == "Y";
       evi.BackgroundColor = ev.BackgroundColor;
+      evi.EventUrl = GetEventUrl(evi.EventId, evi.EventTitle, url);
       evi.EventSubCategoryId = ev.EventSubCategoryID;
       var esc = escRepo.Get(filter: (esub => esub.EventSubCategoryID == ev.EventSubCategoryID)).SingleOrDefault();
       if (esc != null)
@@ -648,6 +652,18 @@ namespace EventCombo.Service
         evi.Latitude = address.Latitude;
       }
       evi.ShowRemainingTickets = ev.Ticket_showremain == "1";
+
+      evi.FavoriteCount = favRepo.Get(filter: (fav => fav.eventId == evi.EventId)).Count();
+      if (String.IsNullOrWhiteSpace(userId))
+        evi.UserFavorite = false;
+      else
+        evi.UserFavorite = favRepo.Get(filter: (fav => (fav.eventId == evi.EventId) && (fav.UserID == userId))).Any();
+
+      evi.VoteCount = voteRepo.Get(filter: (v => v.eventId == evi.EventId)).Count();
+      if (String.IsNullOrWhiteSpace(userId))
+        evi.UserVote = false;
+      else
+        evi.UserVote = voteRepo.Get(filter: (v => (v.eventId == evi.EventId) && (v.UserID == userId))).Any();
 
       TimeZoneInfo tz = null;
       long tzId;
@@ -667,7 +683,7 @@ namespace EventCombo.Service
         Frequency = multiDate == null ? ScheduleFrequency.Single : (ScheduleFrequency)Enum.Parse(typeof(ScheduleFrequency), multiDate.Frequency, true),
         IsNewDate = false,
         StartDateTime = (multiDate == null ? singleDate.E_Startdate : multiDate.M_Startfrom) ?? DateTime.MinValue,
-        EndDateTime = (multiDate == null ? singleDate.E_Startdate : multiDate.M_Startfrom) ?? DateTime.MinValue,
+        EndDateTime = (multiDate == null ? singleDate.E_Enddate : multiDate.M_StartTo) ?? DateTime.MinValue,
       };
       if (evi.DateInfo.Frequency == ScheduleFrequency.Weekly)
         evi.DateInfo.Weekdays.AddRange(multiDate.WeeklyDay.Split(',').Select(s => s.Trim()).ToList());
@@ -677,15 +693,15 @@ namespace EventCombo.Service
         evi.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeFromUtc(evi.DateInfo.EndDateTime, tz);
 
       if ((ev.ECBackgroundId ?? 0) > 0)
-        evi.BackgroundUrl = GetECImageUrl(ev.ECBackgroundId ?? 0, UrlFunc);
+        evi.BackgroundUrl = GetECImageUrl(ev.ECBackgroundId ?? 0, url);
 
       var dbImages = iRepo.Get(filter: (im => im.EventID == evi.EventId), orderBy: (query => query.OrderBy(im => im.EventImageID)));
       var images = new List<string>();
       if (dbImages.Count() > 0)
       {
-        evi.ImageUrl = GetEventImageUrl(dbImages.First(), UrlFunc);
+        evi.ImageUrl = GetEventImageUrl(dbImages.First(), url);
         foreach (var eventImage in dbImages.Skip(1))
-          images.Add(GetEventImageUrl(eventImage, UrlFunc));
+          images.Add(GetEventImageUrl(eventImage, url));
       }
       evi.ImagesUrl = images;
 
@@ -699,19 +715,28 @@ namespace EventCombo.Service
         evi.Organizer.LinkdeInLink = org.Organizer_Master.Organizer_Linkedin;
         evi.Organizer.TwitterLink = org.Organizer_Master.Organizer_Twitter;
         evi.Organizer.WebsiteUrl = org.Organizer_Master.Organizer_Websiteurl;
-        evi.Organizer.ImageUrl = GetECImageUrl(org.Organizer_Master.ECImageId ?? 0, UrlFunc);
+        evi.Organizer.ImageUrl = GetECImageUrl(org.Organizer_Master.ECImageId ?? 0, url);
       }
 
       var tickets = new List<TicketInfoViewModel>();
       var tqDB = tqdRepo.Get(filter: (tqd => (tqd.TQD_Event_Id == evi.EventId)));
-      evi.ShowMinMax = false;
+      bool allSoldOut = true;
+      bool allUnavailable = true;
+      decimal minTicketPrice = decimal.MaxValue;
+      decimal maxTicketPrice = decimal.MinValue;
+      int allType = 0;
       evi.RemainingTickets = 0;
       foreach (var tq in tqDB)
       {
         DateTime ticketDate;
+        DateTime saleStartDate;
+        DateTime saleEndDate;
         DateTime.TryParse(tq.TQD_StartDate + " " + tq.TQD_StartTime, out ticketDate);
-        if (ticketDate != null)
+        if (ticketDate != default(DateTime))
           ticketDate = TimeZoneInfo.ConvertTimeFromUtc(ticketDate, tz);
+        DateTime.TryParse((tq.Ticket.Sale_Start_Date ?? default(DateTime)).ToShortDateString() + " " + tq.Ticket.Sale_Start_Time, out saleStartDate);
+        DateTime.TryParse((tq.Ticket.Sale_End_Date ?? default(DateTime)).ToShortDateString() + " " + tq.Ticket.Sale_End_Time, out saleEndDate);
+
         DateTime utcNow = DateTime.UtcNow;
         bool hideTicket = ticketDate == null;
         if ((tq.Ticket.Hide_Ticket == "1") && !hideTicket)
@@ -720,15 +745,15 @@ namespace EventCombo.Service
           DateTime hideEnd;
           if (tq.Ticket.T_AutoSechduleType == "1")
           {
-            DateTime.TryParse((tq.Ticket.Hide_Untill_Date ?? DateTime.UtcNow).ToShortDateString() + " " + tq.Ticket.Hide_Untill_Time, out hideStart);
-            DateTime.TryParse((tq.Ticket.Hide_After_Date ?? DateTime.UtcNow).ToShortDateString() + " " + tq.Ticket.Hide_After_Time, out hideEnd);
+            DateTime.TryParse((tq.Ticket.Hide_Untill_Date ?? default(DateTime)).ToShortDateString() + " " + tq.Ticket.Hide_Untill_Time, out hideStart);
+            DateTime.TryParse((tq.Ticket.Hide_After_Date ?? default(DateTime)).ToShortDateString() + " " + tq.Ticket.Hide_After_Time, out hideEnd);
           }
           else
           {
-            DateTime.TryParse((tq.Ticket.Sale_Start_Date ?? DateTime.UtcNow).ToShortDateString() + " " + tq.Ticket.Sale_Start_Time, out hideStart);
-            DateTime.TryParse((tq.Ticket.Sale_End_Date ?? DateTime.UtcNow).ToShortDateString() + " " + tq.Ticket.Sale_End_Time, out hideEnd);
+            hideStart = saleStartDate;
+            hideEnd = saleEndDate;
           }
-          hideTicket = ((hideStart != null) && (hideStart >= utcNow)) || ((hideEnd != null) && (hideEnd < utcNow));
+          hideTicket = (hideStart >= utcNow) || ((hideEnd != default(DateTime)) && (hideEnd < utcNow));
         }
         if (!hideTicket)
         {
@@ -748,33 +773,94 @@ namespace EventCombo.Service
             ShowFee = tq.Ticket.Fees_Type != "1",
             Fee = tq.Ticket.Fees_Type != "1" ? (tq.Ticket.TotalPrice ?? 0) - (tq.Ticket.Price ?? 0) + (tq.Ticket.T_Discount ?? 0) : 0,
             ShowRemaining = tq.Ticket.T_Displayremaining == "1",
-            RemainingQuantity = tq.Ticket.T_Displayremaining == "1" ? tq.TQD_Remaining_Quantity ?? 0 : 0
+            RemainingQuantity = tq.Ticket.T_Displayremaining == "1" ? tq.TQD_Remaining_Quantity ?? 0 : 0,
+            SoldOut = (tq.Ticket.T_Mark_SoldOut == "1") || ((tq.TQD_Remaining_Quantity ?? 0) <= 0)
           };
+          if (tiVM.Maximum > (tq.TQD_Remaining_Quantity ?? 0))
+            tiVM.Maximum = (tq.TQD_Remaining_Quantity ?? 0);
+
+          allSoldOut = allSoldOut && tiVM.SoldOut;
+          allUnavailable = allUnavailable &&
+                            ((saleStartDate >= utcNow) ||
+                            ((saleEndDate != default(DateTime)) && (saleEndDate < utcNow)) ||
+                            tiVM.SoldOut);
           if (tiVM.TicketTypeId != 3)
           {
-            if (!evi.ShowMinMax)
-            {
-              evi.ShowMinMax = true;
-              evi.MinTicketPrice = tiVM.TotalPrice;
-              evi.MaxTicketPrice = tiVM.TotalPrice;
-            }
-            else
-            {
-              evi.MinTicketPrice = evi.MinTicketPrice > tiVM.TotalPrice ? tiVM.TotalPrice : evi.MinTicketPrice;
-              evi.MaxTicketPrice = evi.MaxTicketPrice < tiVM.TotalPrice ? tiVM.TotalPrice : evi.MaxTicketPrice;
-            }
+            minTicketPrice = minTicketPrice > tiVM.TotalPrice ? tiVM.TotalPrice : minTicketPrice;
+            maxTicketPrice = maxTicketPrice < tiVM.TotalPrice ? tiVM.TotalPrice : maxTicketPrice;
           }
+          switch (tiVM.TicketTypeId)
+          {
+            case 1: 
+              allType = allType == 0 ? 1 : allType == 3 ? 4 : allType;
+              break;
+            case 3:
+              allType = allType == 0 ? 3 : allType == 1 ? 4 : allType;
+              break;
+            default:
+              allType = 2;
+              break;
+          };
           if (evi.ShowRemainingTickets)
-            evi.RemainingTickets += tq.TQD_Remaining_Quantity ?? 0;
+            evi.RemainingTickets += tiVM.SoldOut ? 0 : tq.TQD_Remaining_Quantity ?? 0;
           tickets.Add(tiVM);
         }
       }
       evi.Tickets = tickets;
+      if (allSoldOut)
+      {
+        evi.ButtonText = "Sold Out";
+        evi.PriceRange = "Sold Out";
+      } else if (allUnavailable)
+      {
+        evi.ButtonText = "Registration Closed";
+        evi.PriceRange = "Registration Closed";
+      }
+      else if (allType == 1)
+      {
+        evi.ButtonText = "Register";
+        evi.PriceRange = "Free";
+      }
+      else if (allType == 3)
+      {
+        evi.ButtonText = "Donate";
+        evi.PriceRange = "Donate";
+      }
+      else if (allType == 4)
+      {
+        evi.ButtonText = "Get Tickets";
+        evi.PriceRange = "Free, Donate";
+      }
+      else
+      {
+        evi.ButtonText = "Get Tickets";
+        evi.PriceRange = String.Format("${0:N2} - ${1:N2}", minTicketPrice, maxTicketPrice);
+      }
+
+      PopulateOGPData(evi);
+    }
+
+    private void PopulateOGPData(EventInfoViewModel evi)
+    {
+      evi.OGPDescription = evi.EventDescription;
+      evi.OGPImage = evi.ImageUrl;
+      evi.OGPTitle = evi.EventTitle + " | Eventcombo";
+      evi.OGPType = "article";
+      evi.OGPUrl = evi.EventUrl;
     }
 
     public void ValidateEventInfo(EventInfoViewModel ev)
     {
       throw new NotImplementedException();
+    }
+
+    public string GetEventUrl(long eventId, string eventTitle, UrlHelper url)
+    {
+      return url.Action("ViewEvent", "EventManagement", new
+      {
+        strEventDs = System.Text.RegularExpressions.Regex.Replace(eventTitle.Trim().ToLower().Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""),
+        strEventId = eventId.ToString()
+      });
     }
   }
 }

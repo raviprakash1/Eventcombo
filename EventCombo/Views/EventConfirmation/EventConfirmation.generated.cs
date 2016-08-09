@@ -320,10 +320,10 @@ WriteLiteral(" class=\"btn ev_live_sub_btn mb5 mr0\"");
 
 WriteLiteral(" id=\"btPreview\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3584), Tuple.Create("\"", 3721)
+WriteAttribute("href", Tuple.Create(" href=\"", 3584), Tuple.Create("\"", 3727)
             
             #line 90 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
-, Tuple.Create(Tuple.Create("", 3591), Tuple.Create<System.Object, System.Int32>(Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.urlTitle.Replace(" ","") , strEventId = Model.EventId.ToString()})
+, Tuple.Create(Tuple.Create("", 3591), Tuple.Create<System.Object, System.Int32>(Url.Action("ViewEvent", "EventManagement", new { strEventDs = Model.urlTitle.Replace(" ", ""), strEventId = Model.EventId.ToString() })
             
             #line default
             #line hidden
@@ -383,7 +383,7 @@ WriteLiteral(@"',
 
             
             #line 130 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
-                               Write(Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.urlTitle.Replace(" ","") , strEventId = Model.EventId.ToString()}));
+                               Write(Url.Action("ViewEvent", "EventManagement", new { strEventDs = Model.urlTitle.Replace(" ", ""), strEventId = Model.EventId.ToString() }));
 
             
             #line default
@@ -448,9 +448,9 @@ WriteLiteral(@"'
 </script>
 <script");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 5883), Tuple.Create("\"", 5913)
-, Tuple.Create(Tuple.Create("", 5889), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/socialshare.js")
-, 5889), false)
+WriteAttribute("src", Tuple.Create(" src=\"", 5895), Tuple.Create("\"", 5925)
+, Tuple.Create(Tuple.Create("", 5901), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/socialshare.js")
+, 5901), false)
 );
 
 WriteLiteral("></script>\r\n<script");

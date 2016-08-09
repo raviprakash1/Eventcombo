@@ -928,7 +928,7 @@ namespace EventCombo.Controllers
                                         {
                                             var url = Request.Url;
                                             var baseurl = url.GetLeftPart(UriPartial.Authority);
-                                            string strUrl = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(strEventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(lEventId).ToString() });
+                                            string strUrl = baseurl + Url.Action("ViewEvent", "EventManagement", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(strEventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(lEventId).ToString() });
                                             bodyn = bodyn.Replace("¶¶DiscoverEventurl¶¶", strUrl);
                                         }
                                     }
@@ -2316,7 +2316,7 @@ public string Checkpassword(string password ,long id)
                     foreach (var item in EvList)
                     {
                         if (item.EventTitle != null && item.EventTitle.Trim() != "")
-                            strHtml.Append("<option>" + @Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Regex.Replace(item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", "") , strEventId = item.EventID.ToString() }) + "</option>");
+                          strHtml.Append("<option>" + @Url.Action("ViewEvent", "EventManagement", new { strEventDs = Regex.Replace(item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = item.EventID.ToString() }) + "</option>");
                     }
                     return strHtml.ToString();
                 }

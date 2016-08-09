@@ -139,7 +139,8 @@ namespace EventCombo
             bundles.Add(new ScriptBundle("~/Scripts/AMaterial/viewEventFooter")
               .Include( "~/Scripts/AMaterial/infobox.js",
                         "~/Scripts/AMaterial/map.js",
-                        "~/Scripts/AMaterial/ViewEvent.js"));
+                        "~/Scripts/AMaterial/ViewEvent.js",
+                        "~/Scripts/socialshare.js"));
         }
     }
 }

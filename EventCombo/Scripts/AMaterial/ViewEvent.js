@@ -8,7 +8,6 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
     deleteMarkers();
 
     $scope.$on('ECEventInfoLoaded', function (val) {
-      console.log('updated ViewEventController');
       $scope.eventInfo = eventInfoService.getEventInfo();
       deleteMarkers();
       if ($scope.eventInfo.Latitude) {
@@ -20,6 +19,11 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
 
     $scope.onPriceChange = function () {
       eventInfoService.recalcTotal();
+    }
+
+    $scope.onPriceBlur = function (ticket) {
+      if (isNaN(ticket.Amount) || (ticket.Amount == null))
+        ticket.Amount = 0;
     }
 
   }]);
@@ -63,6 +67,31 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope',
     var eventInfo = {};
     var selectedImage = 0;
 
+    function getEventDateTimeInfoString(dateInfo) {
+      var result = "";
+      if (dateInfo.Frequency.toLowerCase() == "single") {
+        result = FormatDateTimeWithWeekday(dateInfo.StartDateTime);
+        if (dateInfo.EndDateTime > dateInfo.StartDateTime)
+          result = result + ' to ' + FormatDateTimeWithWeekday(dateInfo.EndDateTime);
+      }
+      else if (dateInfo.Frequency.toLowerCase() == "monthly") {
+        result = "Monthly, " + FormatDateTime(dateInfo.StartDateTime);
+        if (dateInfo.EndDateTime > dateInfo.StartDateTime)
+          result = result + ' to ' + FormatDateTime(dateInfo.EndDateTime);
+      }
+      else if (dateInfo.Frequency.toLowerCase() == "daily") {
+        result = "Daily, " + FormatTime(dateInfo.StartDateTime);
+        if (dateInfo.EndDateTime > dateInfo.StartDateTime)
+          result = result + ' to ' + FormatTime(dateInfo.EndDateTime);
+      }
+      else {
+        result = dateInfo.Weekdays.join(', ') + ' ' + FormatTime(dateInfo.StartDateTime);
+        if (dateInfo.EndDateTime > dateInfo.StartDateTime)
+          result = result + ' to ' + FormatTime(dateInfo.EndDateTime);
+      }
+      return result;
+    }
+
     var loadInfo = function (eventId) {
       $http.get('/eventmanagement/geteventinfo', { params: { eventId: eventId } }).then(function (response) {
         eventInfo = response.data;
@@ -76,8 +105,10 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope',
           ticket.Quants = [0];
           for (i = ticket.Minimum; i <= ticket.Maximum; i++)
             ticket.Quants.push(i);
-          ticket.StartDateFormatted = FormatDateTime(ticket.StartDate);
+          ticket.StartDateFormatted = FormatDateTimeWithWeekday(ticket.StartDate);
         });
+
+        eventInfo.EventDateTimeInfoString = getEventDateTimeInfoString(eventInfo.DateInfo);
         recalcTotal();
         console.log(eventInfo);
         $rootScope.$broadcast('ECEventInfoLoaded', '1');
@@ -90,11 +121,10 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope',
         if (ticket.TicketTypeId == 2)
           total = total + ticket.Quantity * ticket.TotalPrice;
         else if (ticket.TicketTypeId == 3) {
-          ticket.Amout = ticket.Amount >= 0 ? ticket.Amount : 0;
-          total = total + ticket.Amount;
+          ticket.Amount = isNaN(ticket.Amount) || ticket.Amount >= 0 ? ticket.Amount : 0;
+          total = total + (isNaN(ticket.Amount) ? 0 : (ticket.Amount == null ? 0 : ticket.Amount));
         }
       });
-      console.log(total);
       eventInfo.TotalPrice = total;
     }
 
@@ -230,6 +260,18 @@ function DialogController($scope, $mdDialog, eventInfoService, $filter) {
 
 function FormatDateTime(date) {
   var myDate = new Date(date);
+  var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+  return myDate.toLocaleDateString('en-US', options);
+}
+
+function FormatDateTimeWithWeekday(date) {
+  var myDate = new Date(date);
   var options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
   return myDate.toLocaleDateString('en-US', options);
+}
+
+function FormatTime(date) {
+  var myDate = new Date(date);
+  var options = { hour: 'numeric', minute: 'numeric' };
+  return myDate.toLocaleTimeString('en-US', options);
 }

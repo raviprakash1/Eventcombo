@@ -729,6 +729,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventCreation.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Home\DiscoverEvents.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DiscoverEvents.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Home\ForgetPassword.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

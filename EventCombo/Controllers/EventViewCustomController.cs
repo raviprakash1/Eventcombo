@@ -27,7 +27,7 @@ namespace EventCombo.Controllers
             {
                 TempData["EventName"] = Regex.Replace(objEv.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", "");
                 TempData["EventId"] = objEv.EventID.ToString();
-                return RedirectToAction("ViewEvent", "ViewEvent", new { strEventDs = Regex.Replace(objEv.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = objEv.EventID.ToString() });
+                return RedirectToAction("ViewEvent", "EventManagement", new { strEventDs = Regex.Replace(objEv.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = objEv.EventID.ToString() });
                 //return View();
             }
             else {
