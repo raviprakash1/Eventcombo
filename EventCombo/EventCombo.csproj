@@ -360,6 +360,9 @@
     <Compile Include="Models\ContactEventCombo.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventTicket_View.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Footer.cs" />
     <Compile Include="Models\IBaseViewModel.cs" />
     <Compile Include="Models\BillingAddress.cs">
@@ -1678,6 +1681,7 @@
     <Content Include="Views\EventManagement\CreateEventTicket.cshtml" />
     <Content Include="Views\BusinessPages\BusinessPage.cshtml" />
     <Content Include="Views\ContactEventComboes\Index.cshtml" />
+    <Content Include="Views\ManageAttendees\_SaleReport.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

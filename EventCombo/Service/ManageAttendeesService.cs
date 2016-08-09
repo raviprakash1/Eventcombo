@@ -105,7 +105,8 @@ namespace EventCombo.Service
           PricePaid = ticket.Sum(t=>t.TPD_Amount) ?? 0,
           BuyerName = ticket.FirstOrDefault().AspNetUser.Profiles.Select(p => p.FirstName + " " + p.LastName).FirstOrDefault(),
           BuyerEmail = ticket.FirstOrDefault().AspNetUser.Profiles.Select(p => p.Email).FirstOrDefault(),
-          Quantity = ticket.Sum(t => t.TPD_Purchased_Qty) ?? 0
+          Quantity = ticket.Sum(t => t.TPD_Purchased_Qty) ?? 0,
+          Address = ""
         }).ToList();
       foreach (var order in res)
       {
@@ -136,6 +137,70 @@ namespace EventCombo.Service
       return res;
     }
 
+    public IEnumerable<EventOrderInfoViewModel> GetOrdersForSaleReport(PaymentStates state, long eventId)
+    {
+        if (state == PaymentStates.Pending)
+            return new List<EventOrderInfoViewModel>();
+
+        IRepository<EventTicket_View> EventTicketRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+        IRepository<BillingAddress> billRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
+        IRepository<ShippingAddress> shipRepo = new GenericRepository<ShippingAddress>(_factory.ContextFactory);
+        IRepository<Country> countryRepo = new GenericRepository<Country>(_factory.ContextFactory);
+        IRepository<TicketBearer> tbRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+
+        var attendees = tbRepo.Get();
+
+        IEnumerable<EventOrderInfoViewModel> res = EventTicketRepo.Get(filter: (t => t.EventID == eventId))
+        .Select(ticket => new EventOrderInfoViewModel()
+        {
+            OrderId = ticket.OrderId,
+            PaymentState = PaymentStates.Completed,
+            TicketName = ticket.TicketName,
+            BuyerName = ticket.FirstName + " " + ticket.LastName + "," + string.Join(",", attendees.Where(a => a.OrderId == ticket.OrderId).Select(a => a.Name.Trim()).ToArray()),
+            BuyerEmail = ticket.Email + "," + string.Join(",", attendees.Where(a => a.OrderId == ticket.OrderId).Select(a => a.Email.Trim()).ToArray()),
+            Quantity = ticket.PurchasedQuantity ?? 0,
+            Price = ticket.OrderAmount ?? 0,
+            PricePaid = ticket.PaidAmount ?? 0,
+            PriceNet = (ticket.PaidAmount ?? 0) - ((ticket.ECFeePerTicket ?? 0) * (ticket.PurchasedQuantity ?? 0)),
+            Fee = (ticket.ECFeePerTicket ?? 0) * (ticket.PurchasedQuantity ?? 0),
+            MerchantFee = (ticket.MerchantFeePerTicket ?? 0) * (ticket.PurchasedQuantity ?? 0),
+            Refunded = ((ticket.OrderStateId ?? 0) == 3 ? (-ticket.PaidAmount ?? 0) : 0),
+            Cancelled = ((ticket.OrderStateId ?? 0) == 2 ? (-ticket.PaidAmount ?? 0) : 0),
+            Date = ticket.O_OrderDateTime ?? DateTime.Today,
+            PromoCode = ticket.PromoCode ?? "",
+            Address = "",
+            MailTickets = "N"
+        }).ToList();
+        foreach (var order in res)
+        {
+            var billingAddressDB = billRepo.Get(filter: (b => b.OrderId == order.OrderId)).FirstOrDefault();
+            var shippingAddressDB = shipRepo.Get(filter: (b => b.OrderId == order.OrderId)).FirstOrDefault();
+            if (shippingAddressDB != null)
+            {
+                var countryDB = countryRepo.Get(filter: (c => c.CountryID.ToString() == shippingAddressDB.Country));
+
+                order.MailTickets = shippingAddressDB.Address1 +
+                    " " + shippingAddressDB.Address2 +
+                    ", " + shippingAddressDB.City +
+                    "-" + shippingAddressDB.Zip +
+                    " " + shippingAddressDB.State +
+                    " (" + (countryDB.FirstOrDefault().Country1) + ")";
+            }
+            if (billingAddressDB != null)
+            {
+                var countryDB = countryRepo.Get(filter: (c => c.CountryID.ToString() == billingAddressDB.Country));
+
+                order.Address = billingAddressDB.Address1 +
+                    " " + billingAddressDB.Address2 +
+                    ", " + billingAddressDB.City +
+                    "-" + billingAddressDB.Zip +
+                    " " + billingAddressDB.State +
+                    " (" + (countryDB.FirstOrDefault().Country1) + ")";
+            }
+        }
+
+        return res;
+    }
 
     public EventOrderDetailViewModel GetEventOrderDetail(string orderId)
     {
@@ -224,6 +289,23 @@ namespace EventCombo.Service
       if (format == "xls")
         return OrderListToXLS(orders);
       return OrderListToTXT(orders);
+    }
+
+    public MemoryStream GetDownloadableSaleReport(PaymentStates state, long eventId, string format)
+    {
+        format = format.Trim().ToLower();
+        if ((format != "csv") && (format != "txt") && (format != "xls"))
+            return null;
+        IEnumerable<EventOrderInfoViewModel> orders = GetOrdersForSaleReport(state, eventId);
+        IRepository<Event> EventRepo = new GenericRepository<Event>(_factory.ContextFactory);
+
+        var eventTitle = EventRepo.Get(filter: (e => e.EventID == eventId)).Select(x => new { x.EventTitle }).FirstOrDefault();
+        var SaleReportTitle = (eventTitle == null ? "" : "Ticket Sales for " + eventTitle.EventTitle);
+        if (format == "csv")
+            return SaleReportToCSV(orders, ",", SaleReportTitle);
+        if (format == "xls")
+            return SaleReportToXLS(orders, SaleReportTitle);
+        return SaleReportToTXT(orders, SaleReportTitle);
     }
 
     private ICell AddStyledCell(IRow row, int cellnum, ICellStyle style, CellType ctype = CellType.String)
@@ -526,6 +608,213 @@ namespace EventCombo.Service
         throw new Exception("Error during CreateManualOrder", ex);
       }
       return newOrderId;
+    }
+    private MemoryStream SaleReportToXLS(IEnumerable<EventOrderInfoViewModel> orders, string ReportTitle)
+    {
+        MemoryStream res = new MemoryStream();
+        IWorkbook wb = new HSSFWorkbook();
+        ICellStyle style = wb.CreateCellStyle();
+        style.BorderBottom = BorderStyle.Thin;
+        style.BorderTop = BorderStyle.Thin;
+        style.BorderLeft = BorderStyle.Thin;
+        style.BorderRight = BorderStyle.Thin;
+        ICellStyle hstyle = wb.CreateCellStyle();
+        hstyle.BorderBottom = BorderStyle.Thin;
+        hstyle.BorderTop = BorderStyle.Thin;
+        hstyle.BorderLeft = BorderStyle.Thin;
+        hstyle.BorderRight = BorderStyle.Thin;
+        hstyle.Alignment = HorizontalAlignment.Center;
+        IFont bfont = wb.CreateFont();
+        bfont.Boldweight = (short)FontBoldWeight.Bold;
+        hstyle.SetFont(bfont);
+        ICellStyle datestyle = wb.CreateCellStyle();
+        datestyle.BorderBottom = BorderStyle.Thin;
+        datestyle.BorderTop = BorderStyle.Thin;
+        datestyle.BorderLeft = BorderStyle.Thin;
+        datestyle.BorderRight = BorderStyle.Thin;
+        datestyle.DataFormat = wb.CreateDataFormat().GetFormat("MMMM dd, yyyy");
+
+        ISheet sheet = wb.CreateSheet("Orders");
+        IRow row = sheet.CreateRow(0);
+        AddStyledCell(row, 0, hstyle).SetCellValue(ReportTitle);
+        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 14));
+
+        row = sheet.CreateRow(1);
+        AddStyledCell(row, 0, hstyle).SetCellValue("ORDER #");
+        AddStyledCell(row, 1, hstyle).SetCellValue("DATE");
+        AddStyledCell(row, 2, hstyle).SetCellValue("ATTENDEE");
+        AddStyledCell(row, 3, hstyle).SetCellValue("TICKET NAME");
+        AddStyledCell(row, 4, hstyle).SetCellValue("QUANTITY");
+        AddStyledCell(row, 5, hstyle).SetCellValue("GROSS PAID");
+        AddStyledCell(row, 6, hstyle).SetCellValue("NET EVENT REVENUE");
+        AddStyledCell(row, 7, hstyle).SetCellValue("EVENTCOMBO FEE");
+        AddStyledCell(row, 8, hstyle).SetCellValue("PROMO CODE");
+        AddStyledCell(row, 9, hstyle).SetCellValue("REFUNDED");
+        AddStyledCell(row, 10, hstyle).SetCellValue("CANCELLED");
+        AddStyledCell(row, 11, hstyle).SetCellValue("ATTENDEE NUMBER");
+        AddStyledCell(row, 12, hstyle).SetCellValue("ATTENDEE EMAIL");
+        AddStyledCell(row, 13, hstyle).SetCellValue("BILLING ADDRESS");
+        AddStyledCell(row, 14, hstyle).SetCellValue("MAIL TICKETS");
+        var i = 2;
+        foreach (var order in orders)
+        {
+            row = sheet.CreateRow(i++);
+            AddStyledCell(row, 0, style).SetCellValue(order.OrderId);
+            AddStyledCell(row, 1, style).SetCellValue(order.Date.ToShortDateString());
+            AddStyledCell(row, 2, style).SetCellValue(order.BuyerName);
+            AddStyledCell(row, 3, style).SetCellValue(order.TicketName);
+            AddStyledCell(row, 4, style).SetCellValue((double)order.PricePaid);
+            AddStyledCell(row, 5, style).SetCellValue((double)order.PriceNet);
+            AddStyledCell(row, 6, style).SetCellValue((double)order.Fee);
+            AddStyledCell(row, 7, style).SetCellValue((double)order.MerchantFee);
+            AddStyledCell(row, 8, style).SetCellValue(order.PromoCode);
+            AddStyledCell(row, 9, style).SetCellValue((double)order.Refunded);
+            AddStyledCell(row, 10, style).SetCellValue((double)order.Cancelled);
+            AddStyledCell(row, 11, datestyle).SetCellValue("");
+            AddStyledCell(row, 12, datestyle).SetCellValue(order.CustomerEmail);
+            AddStyledCell(row, 13, datestyle).SetCellValue(order.Address);
+            AddStyledCell(row, 14, style).SetCellValue(order.MailTickets.ToString());
+        }
+        for (i = 0; i <= 14; i++)
+        {
+            sheet.AutoSizeColumn(i);
+            sheet.SetColumnWidth(i, sheet.GetColumnWidth(i) + 1024);
+        }
+        wb.Write(res);
+        res.Position = 0;
+        return res;
+    }
+
+    private MemoryStream SaleReportToTXT(IEnumerable<EventOrderInfoViewModel> orders, string ReportTitle)
+    {
+        MemoryStream res = new MemoryStream();
+        StreamWriter rw = new StreamWriter(res);
+
+        rw.Write(ReportTitle);
+        rw.WriteLine();
+        rw.Write("  ORDER #  |   DATE   |          ATTENDEE          |        TICKET NAME         | QUANTITY |  GROSS PAID  |NET EVENT REVENUE|EVENTCOMBO FEE|EVENTCOMBO MERCHANT FEE|PROMO CODE|REFUNDED|CANCELLED|ATTENDEE NUMBER|       ATTENDEE EMAIL       |          ADDRESS           |          MAIL TICKETS      ");
+        rw.WriteLine();
+        string str = "";
+        foreach (var order in orders)
+        {
+            rw.Write(order.OrderId + new String(' ', 11 - order.OrderId.Length) + "|");
+                str = order.Date.ToShortDateString();
+                rw.Write(str + new String(' ', 10 - str.Length) + "|");
+                str = order.BuyerName;
+            while (str.Length > 28)
+            {
+                rw.Write(str.Substring(0, 28) + "|                            |          |              |                 |              |                     |         |        |        |               |                            |                            |                           ");
+                rw.WriteLine();
+                rw.Write("           |          |");
+                str = str.Substring(28, str.Length - 28);
+            }
+            rw.Write(str + new String(' ', 28 - str.Length) + "|");
+            str = order.TicketName;
+            while (str.Length > 28)
+            {
+                rw.Write(str.Substring(0, 28) + "|          |              |                 |              |                     |         |        |        |               |                            |                            |                           ");
+                rw.WriteLine();
+                rw.Write("           |          |                            |");
+                str = str.Substring(28, str.Length - 28);
+            }
+            rw.Write(str + new String(' ', 28 - str.Length) + "|");
+            str = order.Quantity.ToString();
+            rw.Write(str + new String(' ', 10 - str.Length) + "|");
+            str = order.PricePaid.ToString("N2");
+            rw.Write(str + new String(' ', 14 - str.Length) + "|");
+            str = order.PriceNet.ToString("N2");
+            rw.Write(str + new String(' ', 16 - str.Length) + "|");
+            str = order.Fee.ToString("N2");
+            rw.Write(str + new String(' ', 14 - str.Length) + "|");
+                str = order.MerchantFee.ToString("N2");
+                rw.Write(str + new String(' ', 23 - str.Length) + "|");
+                str = order.PromoCode.ToString();
+                rw.Write(str + new String(' ', 10 - str.Length) + "|");
+                str = order.Refunded.ToString("N2");
+                rw.Write(str + new String(' ', 8 - str.Length) + "|");
+                str = order.Cancelled.ToString("N2");
+                rw.Write(str + new String(' ', 9 - str.Length) + "|");
+                str = "";
+                rw.Write(str + new String(' ', 15 - str.Length) + "|");
+                str = order.BuyerEmail.ToString();
+                rw.Write(str + new String(' ', 28 - str.Length) + "|");
+                str = order.Address;
+            while (str.Length > 28)
+            {
+                rw.Write(str.Substring(0, 28) + "|                            ");
+                rw.WriteLine();
+                rw.Write("           |          |                            |                            |          |              |                 |              |                     |         |        |        |               |                            |");
+                str = str.Substring(28, str.Length - 28);
+            }
+            rw.Write(str + new String(' ', 28 - str.Length) + "|");
+            str = order.MailTickets;
+            while (str.Length > 28)
+            {
+                rw.Write(str.Substring(0, 28) + "|");
+                rw.WriteLine();
+                rw.Write("           |          |                            |                            |          |              |                 |              |                     |         |        |        |               |                            |                            |");
+                str = str.Substring(28, str.Length - 28);
+            }
+            rw.Write(str + new String(' ', 28 - str.Length) + "");
+            rw.WriteLine();
+        }
+
+        rw.Flush();
+
+        res.Position = 0;
+        return res;
+    }
+
+    private MemoryStream SaleReportToCSV(IEnumerable<EventOrderInfoViewModel> orders, string delimiter, string ReportTitle)
+    {
+        MemoryStream res = new MemoryStream();
+        StreamWriter rw = new StreamWriter(res);
+
+        rw.Write(ReportTitle);
+        rw.WriteLine();
+        rw.Write("ORDER #" + delimiter);
+        rw.Write("DATE" + delimiter);
+        rw.Write("ATTENDEE" + delimiter);
+        rw.Write("TICKET NAME" + delimiter);
+        rw.Write("QUANTITY" + delimiter);
+        rw.Write("GROSS PAID" + delimiter);
+        rw.Write("NET EVENT REVENUE" + delimiter);
+        rw.Write("EVENTCOMBO FEE" + delimiter);
+        rw.Write("EVENTCOMBO MERCHANT FEE" + delimiter);
+        rw.Write("PROMO CODE" + delimiter);
+        rw.Write("REFUNDED" + delimiter);
+        rw.Write("CANCELLED" + delimiter);
+        rw.Write("ATTENDEE NUMBER" + delimiter);
+        rw.Write("ATTENDEE EMAIL" + delimiter);
+        rw.Write("BILLING ADDRESS" + delimiter);
+        rw.Write("MAIL TICKETS");
+        rw.WriteLine();
+
+        foreach (var order in orders)
+        {
+            rw.Write(order.OrderId + delimiter);
+            rw.Write(order.Date.ToShortDateString() + delimiter);
+            rw.Write(order.BuyerName + delimiter);
+            rw.Write(order.TicketName + delimiter);
+            rw.Write(order.Quantity.ToString() + delimiter);
+            rw.Write("$" + order.PricePaid.ToString("N2") + delimiter);
+            rw.Write("$" + order.PriceNet.ToString("N2") + delimiter);
+            rw.Write("$" + order.Fee.ToString("N2") + delimiter);
+            rw.Write("$" + order.MerchantFee.ToString("N2") + delimiter);
+            rw.Write(order.PromoCode + delimiter);
+            rw.Write((order.Refunded == 0 ? "" : "$" + order.Refunded.ToString("N2")) + delimiter);
+            rw.Write((order.Cancelled == 0 ? "" : "$" + order.Cancelled.ToString("N2")) + delimiter);
+            rw.Write("" + delimiter);
+            rw.Write(order.CustomerEmail + delimiter);
+            rw.Write(order.Address + delimiter);
+            rw.Write(order.MailTickets.ToString());
+            rw.WriteLine();
+        }
+
+        rw.Flush();
+
+        res.Position = 0;
+        return res;
     }
   }
 }

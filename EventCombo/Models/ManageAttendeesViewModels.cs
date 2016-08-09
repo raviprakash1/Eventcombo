@@ -49,9 +49,14 @@ namespace EventCombo.Models
     public decimal PricePaid { get; set; }
     public decimal PriceNet { get; set; }
     public decimal Fee { get; set; }
+    public decimal MerchantFee { get; set; }
+    public decimal Refunded { get; set; }
+    public decimal Cancelled { get; set; }
     public DateTime Date { get; set; }
     public PaymentStates PaymentState { get; set; }
     public string Address { get; set; }
+    public string PromoCode { get; set; }
+    public string MailTickets { get; set; }        
   }
 
   public class EventOrderDetailViewModel
