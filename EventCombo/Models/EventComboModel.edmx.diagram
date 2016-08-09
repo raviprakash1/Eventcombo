@@ -152,6 +152,8 @@
         <EntityTypeShape EntityType="EventComboModel.V_EventsListUpcoming" Width="1.5" PointX="20.375" PointY="25.75" />
         <EntityTypeShape EntityType="EventComboModel.v_OrderList" Width="1.5" PointX="25.375" PointY="23.75" />
         <EntityTypeShape EntityType="EventComboModel.ContactEventCombo" Width="1.5" PointX="25.375" PointY="11.75" />
+        <AssociationConnector Association="EventComboModel.EventTypeEvent" />
+        <AssociationConnector Association="EventComboModel.EventCategoryEvent" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -15,5 +15,9 @@ namespace EventCombo.Service
     bool ValidateEvent(EventViewModel ev);
     void PublishEvent(long id, string userId);
     IEnumerable<EventSearchViewModel> Search(string searchStr);
+    EventInfoViewModel GetEventInfo(long eventId, Func<string, string> UrlFunc);
+    void UpdateEventInfo(EventInfoViewModel ev, Func<string, string> UrlFunc);
+    void ValidateEventInfo(EventInfoViewModel evi);
+
   }
 }

@@ -53,5 +53,6 @@
   @{ Html.RenderPartial("_AngularHeader", bModel); }
   @RenderBody()
   @{ Html.RenderAction("Footer", "Home"); }
+  @RenderSection("ScriptFooterSection")
 </body>
 </html>

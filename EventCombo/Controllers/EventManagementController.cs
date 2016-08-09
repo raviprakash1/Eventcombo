@@ -90,5 +90,39 @@ namespace EventCombo.Controllers
 
             return res;
         }
+
+        [HttpGet]
+        public ActionResult ViewEvent(long eventId)
+        {
+          EventInfoViewModel ev = _eService.GetEventInfo(eventId, Url.Content);
+          PopulateBaseViewModel(ev, String.Format("{0} | Eventcombo", ev.EventTitle));
+
+          return View(ev);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryTokenAttribute]
+        public ActionResult StartPurchase(EventInfoViewModel ev)
+        {
+          _eService.UpdateEventInfo(ev, Url.Content);
+          _eService.ValidateEventInfo(ev);
+          if (ev.ErrorEvent)
+            return View("ViewEvent", ev);
+
+          return null;
+        }
+
+        [HttpGet]
+        public ActionResult GetEventInfo(long eventId)
+        {
+          EventInfoViewModel ev = _eService.GetEventInfo(eventId, Url.Content);
+
+          JsonNetResult res = new JsonNetResult();
+          res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
+          res.Data = ev;
+
+          return res;
+        }
+
     }
 }

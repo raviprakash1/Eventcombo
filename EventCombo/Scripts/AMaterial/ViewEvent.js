@@ -1,0 +1,235 @@
+eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '$attrs', 'eventInfoService',
+  function ($scope, $http, $window, $attrs, eventInfoService) {
+
+    $scope.eventInfo = {};
+    if (!$attrs.eventid) throw new Error("No event ID defined");
+
+    $scope.map = createMap(40.6984237, -73.9890044);
+    deleteMarkers();
+
+    $scope.$on('ECEventInfoLoaded', function (val) {
+      console.log('updated ViewEventController');
+      $scope.eventInfo = eventInfoService.getEventInfo();
+      deleteMarkers();
+      if ($scope.eventInfo.Latitude) {
+        $scope.map.panTo(new google.maps.LatLng($scope.eventInfo.Latitude, $scope.eventInfo.Longitude));
+        addEventMarker($scope.eventInfo, $scope.map);
+      }
+    });
+    eventInfoService.loadInfo($attrs.eventid);
+
+    $scope.onPriceChange = function () {
+      eventInfoService.recalcTotal();
+    }
+
+  }]);
+
+eventComboApp.controller('tickets', ["$scope", "$filter", "$attrs", function ($scope, $filter) {
+  $scope.dealBox = false;
+  $scope.$watch('dealBox', function () {
+    $scope.toggleText = $scope.dealBox ? 'Hide' : 'Show';
+  });
+
+  $scope.dealsArray = props;
+
+  $scope.cartDeals = [];
+  $scope.cartDealsMap = [];
+  $scope.id = [];
+
+  $scope.addToCart = function (id) {
+    $scope.result = $filter('filter')($scope.dealsArray, { dealid: id })[0];
+    $scope.cartDeals.push($scope.result);
+  }
+  $scope.removeFormCart = function (id) {
+    $scope.result = $filter('filter')($scope.cartDeals, { dealid: id })[0];
+    $scope.dealsArray.push($scope.result);
+  }
+  $scope.addToCartMap = function (id) {
+    if ($scope.id.indexOf(id) != -1) {
+      alert("This item is already in Cart!");
+    }
+    else {
+      $scope.result = $filter('filter')($scope.dealsArray, { dealid: id })[0];
+      $scope.cartDealsMap.push($scope.result);
+      $scope.id.push($scope.result.dealid);
+      $scope.$apply();
+    }
+  }
+}]);
+/****************************************************************************/
+eventComboApp.service('eventInfoService', ['$http', '$rootScope',
+  function ($http, $rootScope) {
+
+    var eventInfo = {};
+    var selectedImage = 0;
+
+    var loadInfo = function (eventId) {
+      $http.get('/eventmanagement/geteventinfo', { params: { eventId: eventId } }).then(function (response) {
+        eventInfo = response.data;
+        angular.forEach(eventInfo.Tickets, function (ticket, key) {
+          if (ticket.TicketTypeId == 1)
+            ticket.TypeName = 'FREE'
+          else if (ticket.TicketTypeId == 3)
+            ticket.TypeName = 'DONATE'
+          else
+            ticket.TypeName = '$' + ticket.Price.toFixed(2);
+          ticket.Quants = [0];
+          for (i = ticket.Minimum; i <= ticket.Maximum; i++)
+            ticket.Quants.push(i);
+          ticket.StartDateFormatted = FormatDateTime(ticket.StartDate);
+        });
+        recalcTotal();
+        console.log(eventInfo);
+        $rootScope.$broadcast('ECEventInfoLoaded', '1');
+      });
+    }
+
+    var recalcTotal = function () {
+      var total = 0.0;
+      angular.forEach(eventInfo.Tickets, function (ticket, key) {
+        if (ticket.TicketTypeId == 2)
+          total = total + ticket.Quantity * ticket.TotalPrice;
+        else if (ticket.TicketTypeId == 3) {
+          ticket.Amout = ticket.Amount >= 0 ? ticket.Amount : 0;
+          total = total + ticket.Amount;
+        }
+      });
+      console.log(total);
+      eventInfo.TotalPrice = total;
+    }
+
+    var getEventInfo = function () {
+      return eventInfo;
+    }
+
+    var setSelectedImage = function (id) {
+      selectedImage = id;
+    }
+
+    var getSelectedImage = function () {
+      return selectedImage;
+    }
+
+    return {
+      loadInfo: loadInfo,
+      getEventInfo: getEventInfo,
+      getSelectedImage: getSelectedImage,
+      setSelectedImage: setSelectedImage,
+      recalcTotal: recalcTotal
+    }
+  }]);
+/****************************************************************************/
+eventComboApp.controller('gallery', function ($scope, eventInfoService, $mdDialog, $mdMedia) {
+
+  $scope.images = GetImageList(eventInfoService.getEventInfo());
+  $scope.$on('ECEventInfoLoaded', function (val) {
+    console.log('updated gallery');
+    $scope.images = GetImageList(eventInfoService.getEventInfo());
+    console.log($scope.images);
+  });
+
+
+  $scope.carouselInitializer = function () {
+    $('#owlCarousel').owlCarousel({
+      dots: false,
+      nav: false,
+      responsive: {
+        0: {
+          items: 2
+        },
+        479: {
+          items: 3
+        },
+        767: {
+          items: 4
+        },
+        991: {
+          items: 5
+        },
+        1170: {
+          items: 6
+        }
+      }
+    });
+  };
+
+  $scope.status = '  ';
+  $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
+
+  $scope.showAdvanced = function (ev, id) {
+    eventInfoService.setSelectedImage(id);
+    var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+
+    $mdDialog.show({
+      controller: DialogController,
+      templateUrl: 'dialog1.tmpl.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose: true,
+      fullscreen: useFullScreen
+    })
+    .then(function (answer) {
+      $scope.status = 'You said the information was "' + answer + '".';
+    }, function () {
+      $scope.status = 'You cancelled the dialog.';
+    });
+
+    $scope.$watch(function () {
+      return $mdMedia('xs') || $mdMedia('sm');
+    }, function (wantsFullScreen) {
+      $scope.customFullscreen = (wantsFullScreen === true);
+    });
+
+  };
+
+});
+/****************************************************************************/
+function GetImageList(eventInfo) {
+  var images = [];
+  console.log(eventInfo);
+  if (!eventInfo || !eventInfo.ImagesUrl || !Array.isArray(eventInfo.ImagesUrl))
+    return images;
+  for (var i = 0; i < eventInfo.ImagesUrl.length; i++) {
+    var image = { id: i + 1, thumb: eventInfo.ImagesUrl[i], img: eventInfo.ImagesUrl[i], title: eventInfo.EventTitle }
+    images.push(image);
+  };
+  return images;
+}
+
+function DialogController($scope, $mdDialog, eventInfoService, $filter) {
+  $scope.images = GetImageList(eventInfoService.getEventInfo());
+  $scope.image = $filter('filter')($scope.images,
+	{
+	  id: eventInfoService.getSelectedImage()
+	})[0];
+  $scope.hide = function () {
+    $mdDialog.hide();
+  };
+
+  $scope.cancel = function () {
+    $mdDialog.cancel();
+  };
+
+  $scope.answer = function (answer) {
+    $mdDialog.hide(answer);
+  };
+
+  $scope.onkeydown = function (evt) {
+    evt = evt || window.event;
+    switch (evt.keyCode) {
+      case 38:
+        $scope.activeElement.previousElementSibling.focus();
+        break;
+      case 40:
+        $scope.activeElement.nextElementSibling.focus();
+        break;
+    }
+  };
+}
+/****************************************************************************/
+
+function FormatDateTime(date) {
+  var myDate = new Date(date);
+  var options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+  return myDate.toLocaleDateString('en-US', options);
+}
