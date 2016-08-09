@@ -46,11 +46,10 @@
   </script>
 }
 
-<div class="c6 buttons padding-1em-top padding-1em-bottom text-right hide768">
-  <a href="#ticketSection" class="makeLive">@Model.ButtonText</a>
-</div>
-
-<div ng-controller="ViewEventController" eventid="@Model.EventId.ToString()">
+<div ng-controller="ViewEventController" eventid="@Model.EventId.ToString()" style="padding-top: 40px;">
+  <div class="buttons padding-1em-top padding-1em-bottom padding-2em-right text-right hide768">
+    <a href="#ticketSection" class="makeLive">@Model.ButtonText</a>
+  </div>
   <section class="eventBanner" style="@((!String.IsNullOrEmpty(Model.BackgroundUrl) ? "background-image:url(" + Model.BackgroundUrl + ");" : "") +
 (!String.IsNullOrEmpty(Model.BackgroundColor) ? "background-color:" + Model.BackgroundColor : ""))">
     <div class="grid w960">
@@ -236,7 +235,7 @@
           <span class="tot text-right">Total: ${{eventInfo.TotalPrice.toFixed(2)}}</span>
         </div>
         <div class="c12 buttons text-right">
-          <a href="#" class="makeLive">Checkout</a>
+          <a href="javascript:void(0)" class="makeLive" ng-click="OrderCheckout();">Checkout</a>
         </div>
       </div>
     </section>

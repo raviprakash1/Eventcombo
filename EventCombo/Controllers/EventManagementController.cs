@@ -109,19 +109,12 @@ namespace EventCombo.Controllers
     }
 
     [HttpPost]
-    [ValidateAntiForgeryTokenAttribute]
-    public ActionResult StartPurchase(EventInfoViewModel ev)
+    public ActionResult StartPurchase(string ev)
     {
-      string userId = "";
-      if (Session["AppId"] != null)
-        userId = Session["AppId"].ToString();
-
-      _eService.UpdateEventInfo(ev, userId, Url);
-      _eService.ValidateEventInfo(ev);
-      if (ev.ErrorEvent)
-        return View("ViewEvent", ev);
-
-      return null;
+      Ticket_Locked_Detail td = JsonConvert.DeserializeObject<Ticket_Locked_Detail>(ev);
+      var ceController = new CreateEventController();
+      ceController.ControllerContext = new ControllerContext(this.Request.RequestContext, ceController);
+      return Content(ceController.LockTickets(td));
     }
 
     [HttpGet]

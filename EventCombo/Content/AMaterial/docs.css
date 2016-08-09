@@ -252,7 +252,7 @@ html {
 
 body {
   font-size: 1.6rem;
-  padding-top: 80px !important;
+  padding-top: 130px !important;
 }
 
   /* This styling should be not applied to codepen demos, so we need to add a unique identifier. */
@@ -394,9 +394,7 @@ ul {
 }
 
   ul li {
-    margin-left: 16px;
     padding: 0;
-    margin-top: 3px;
     list-style-position: inside;
   }
 
