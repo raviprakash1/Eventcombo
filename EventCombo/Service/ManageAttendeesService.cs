@@ -637,7 +637,7 @@ namespace EventCombo.Service
         ISheet sheet = wb.CreateSheet("Orders");
         IRow row = sheet.CreateRow(0);
         AddStyledCell(row, 0, hstyle).SetCellValue(ReportTitle);
-        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 14));
+        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 15));
 
         row = sheet.CreateRow(1);
         AddStyledCell(row, 0, hstyle).SetCellValue("ORDER #");
@@ -648,13 +648,14 @@ namespace EventCombo.Service
         AddStyledCell(row, 5, hstyle).SetCellValue("GROSS PAID");
         AddStyledCell(row, 6, hstyle).SetCellValue("NET EVENT REVENUE");
         AddStyledCell(row, 7, hstyle).SetCellValue("EVENTCOMBO FEE");
-        AddStyledCell(row, 8, hstyle).SetCellValue("PROMO CODE");
-        AddStyledCell(row, 9, hstyle).SetCellValue("REFUNDED");
-        AddStyledCell(row, 10, hstyle).SetCellValue("CANCELLED");
-        AddStyledCell(row, 11, hstyle).SetCellValue("ATTENDEE NUMBER");
-        AddStyledCell(row, 12, hstyle).SetCellValue("ATTENDEE EMAIL");
-        AddStyledCell(row, 13, hstyle).SetCellValue("BILLING ADDRESS");
-        AddStyledCell(row, 14, hstyle).SetCellValue("MAIL TICKETS");
+        AddStyledCell(row, 8, hstyle).SetCellValue("EVENTCOMBO MERCHANT FEE");
+        AddStyledCell(row, 9, hstyle).SetCellValue("PROMO CODE");
+        AddStyledCell(row, 10, hstyle).SetCellValue("REFUNDED");
+        AddStyledCell(row, 11, hstyle).SetCellValue("CANCELLED");
+        AddStyledCell(row, 12, hstyle).SetCellValue("ATTENDEE NUMBER");
+        AddStyledCell(row, 13, hstyle).SetCellValue("ATTENDEE EMAIL");
+        AddStyledCell(row, 14, hstyle).SetCellValue("BILLING ADDRESS");
+        AddStyledCell(row, 15, hstyle).SetCellValue("MAIL TICKETS");
         var i = 2;
         foreach (var order in orders)
         {
@@ -663,17 +664,18 @@ namespace EventCombo.Service
             AddStyledCell(row, 1, style).SetCellValue(order.Date.ToShortDateString());
             AddStyledCell(row, 2, style).SetCellValue(order.BuyerName);
             AddStyledCell(row, 3, style).SetCellValue(order.TicketName);
-            AddStyledCell(row, 4, style).SetCellValue((double)order.PricePaid);
-            AddStyledCell(row, 5, style).SetCellValue((double)order.PriceNet);
-            AddStyledCell(row, 6, style).SetCellValue((double)order.Fee);
-            AddStyledCell(row, 7, style).SetCellValue((double)order.MerchantFee);
-            AddStyledCell(row, 8, style).SetCellValue(order.PromoCode);
-            AddStyledCell(row, 9, style).SetCellValue((double)order.Refunded);
-            AddStyledCell(row, 10, style).SetCellValue((double)order.Cancelled);
-            AddStyledCell(row, 11, datestyle).SetCellValue("");
-            AddStyledCell(row, 12, datestyle).SetCellValue(order.CustomerEmail);
-            AddStyledCell(row, 13, datestyle).SetCellValue(order.Address);
-            AddStyledCell(row, 14, style).SetCellValue(order.MailTickets.ToString());
+            AddStyledCell(row, 4, style).SetCellValue(order.Quantity);
+            AddStyledCell(row, 5, style).SetCellValue((double)order.PricePaid);
+            AddStyledCell(row, 6, style).SetCellValue((double)order.PriceNet);
+            AddStyledCell(row, 7, style).SetCellValue((double)order.Fee);
+            AddStyledCell(row, 8, style).SetCellValue((double)order.MerchantFee);
+            AddStyledCell(row, 9, style).SetCellValue(order.PromoCode);
+            AddStyledCell(row, 10, style).SetCellValue((double)order.Refunded);
+            AddStyledCell(row, 11, style).SetCellValue((double)order.Cancelled);
+            AddStyledCell(row, 12, datestyle).SetCellValue("");
+            AddStyledCell(row, 13, datestyle).SetCellValue(order.CustomerEmail);
+            AddStyledCell(row, 14, datestyle).SetCellValue(order.Address);
+            AddStyledCell(row, 15, style).SetCellValue(order.MailTickets.ToString());
         }
         for (i = 0; i <= 14; i++)
         {
