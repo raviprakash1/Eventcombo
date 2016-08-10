@@ -189,8 +189,6 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     }
 
     $scope.startDateChange = function () {
-      console.debug($scope.tempDateInfo.startingDate);
-      console.debug($scope.tempDateInfo.endingDate);
       if ($scope.tempDateInfo.endingDate < $scope.tempDateInfo.startingDate)
         $scope.tempDateInfo.endingDate = new Date($scope.tempDateInfo.startingDate.getFullYear(),
           $scope.tempDateInfo.startingDate.getMonth(), $scope.tempDateInfo.startingDate.getDate());
@@ -440,12 +438,9 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         return;
       }
 
-      console.log(formname);
       var form = $scope.MainForm[formname];
       if (!form)
         return;
-      console.log(form);
-      console.log(ticket);
       ticket.ticketValidation = true;
 
       var hideDatesValid = ((ticket.useUntilDate == 1) && ticket.localHideUntilDate && form.ticketHideUntilDate.$valid) ||
@@ -478,7 +473,6 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     }
 
     $scope.previewEvent = function () {
-      console.debug($scope.eventInfo)
       var elem = $scope.validateEvent();
       if (!elem.valid) {
         alert("Form contain invalid data. Please, check all fields.");
@@ -586,7 +580,6 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     }
 
     $scope.checkTempDateInfo = function () {
-      console.debug($scope.MainForm.singleStartDate);
       var result = {
         valid: true,
         notselected: $scope.tempDateInfo.IsNewDate,
@@ -880,11 +873,8 @@ eventComboApp.directive('variableDragDropElements', function ($compile) {
 
       scope.element.on('dragstart', function (event) {
 
-        console.log("Index: ", scope.$parent.$index);
         dragSrcEl = element;
         test = element;
-        console.log(dragSrcEl);
-        console.log($(test).attr("ng-class"));
         scope.handleDragObjReference1 = false;
         scope.handleDragObjReference2 = true;
         scope.handleDragObjReference3 = false;
