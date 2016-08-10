@@ -32,7 +32,7 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
 
   }]);
 
-eventComboApp.controller('tickets', ["$scope", "$filter", "$attrs", function ($scope, $filter) {
+eventComboApp.controller('tickets', ["$scope", "$filter", "$attrs", function ($scope, $filter, $attrs) {
   $scope.dealBox = false;
   $scope.$watch('dealBox', function () {
     $scope.toggleText = $scope.dealBox ? 'Hide' : 'Show';
@@ -114,7 +114,6 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
 
         eventInfo.EventDateTimeInfoString = getEventDateTimeInfoString(eventInfo.DateInfo);
         recalcTotal();
-        console.log(eventInfo);
         $rootScope.$broadcast('ECEventInfoLoaded', '1');
       });
     }
@@ -165,8 +164,7 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
             TLD_Donate: 0,
             TicketAmount: ticket.TotalPrice * ticket.Quantity
           }
-        if (t != null)
-        {
+        if (t != null) {
           selection = (selection == '' ? '' : (selection + '¶')) + t.TLD_TQD_Id + '~' + t.TLD_Locked_Qty + '~' + t.TLD_Donate;
           tickets.push(t);
         }
@@ -180,7 +178,6 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
           })
         }
         $http.post('/eventmanagement/StartPurchase', model).then(function (response) {
-          console.log(response);
           if (response.data == 'N') {
             $cookies.remove("Selection");
           }
@@ -207,74 +204,71 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
     }
   }]);
 /****************************************************************************/
-eventComboApp.controller('gallery', function ($scope, eventInfoService, $mdDialog, $mdMedia) {
-
-  $scope.images = GetImageList(eventInfoService.getEventInfo());
-  $scope.$on('ECEventInfoLoaded', function (val) {
-    console.log('updated gallery');
+eventComboApp.controller('gallery', ['$scope', 'eventInfoService', '$mdDialog', '$mdMedia',
+  function ($scope, eventInfoService, $mdDialog, $mdMedia) {
     $scope.images = GetImageList(eventInfoService.getEventInfo());
-    console.log($scope.images);
-  });
+    $scope.$on('ECEventInfoLoaded', function (val) {
+      $scope.images = GetImageList(eventInfoService.getEventInfo());
+    });
 
 
-  $scope.carouselInitializer = function () {
-    $('#owlCarousel').owlCarousel({
-      dots: false,
-      nav: false,
-      responsive: {
-        0: {
-          items: 2
-        },
-        479: {
-          items: 3
-        },
-        767: {
-          items: 4
-        },
-        991: {
-          items: 5
-        },
-        1170: {
-          items: 6
+    $scope.carouselInitializer = function () {
+      $('#owlCarousel').owlCarousel({
+        dots: false,
+        nav: false,
+        responsive: {
+          0: {
+            items: 2
+          },
+          479: {
+            items: 3
+          },
+          767: {
+            items: 4
+          },
+          991: {
+            items: 5
+          },
+          1170: {
+            items: 6
+          }
         }
-      }
-    });
-  };
+      });
+    };
 
-  $scope.status = '  ';
-  $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
+    $scope.status = '  ';
+    $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
 
-  $scope.showAdvanced = function (ev, id) {
-    eventInfoService.setSelectedImage(id);
-    var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+    $scope.showAdvanced = function (ev, id) {
+      eventInfoService.setSelectedImage(id);
+      var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
 
-    $mdDialog.show({
-      controller: DialogController,
-      templateUrl: 'dialog1.tmpl.html',
-      parent: angular.element(document.body),
-      targetEvent: ev,
-      clickOutsideToClose: true,
-      fullscreen: useFullScreen
-    })
-    .then(function (answer) {
-      $scope.status = 'You said the information was "' + answer + '".';
-    }, function () {
-      $scope.status = 'You cancelled the dialog.';
-    });
+      $mdDialog.show({
+        controller: DialogController,
+        templateUrl: 'dialog1.tmpl.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose: true,
+        fullscreen: useFullScreen
+      })
+      .then(function (answer) {
+        $scope.status = 'You said the information was "' + answer + '".';
+      }, function () {
+        $scope.status = 'You cancelled the dialog.';
+      });
 
-    $scope.$watch(function () {
-      return $mdMedia('xs') || $mdMedia('sm');
-    }, function (wantsFullScreen) {
-      $scope.customFullscreen = (wantsFullScreen === true);
-    });
+      $scope.$watch(function () {
+        return $mdMedia('xs') || $mdMedia('sm');
+      }, function (wantsFullScreen) {
+        $scope.customFullscreen = (wantsFullScreen === true);
+      });
 
-  };
+    };
 
-});
+  }]);
 /****************************************************************************/
 function GetImageList(eventInfo) {
   var images = [];
-  console.log(eventInfo);
   if (!eventInfo || !eventInfo.ImagesUrl || !Array.isArray(eventInfo.ImagesUrl))
     return images;
   for (var i = 0; i < eventInfo.ImagesUrl.length; i++) {

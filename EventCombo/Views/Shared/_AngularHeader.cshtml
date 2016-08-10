@@ -5,7 +5,8 @@
   function init() {
     window.addEventListener('scroll', function (e) {
       var search2 = document.getElementById("search");
-      var distanceY = window.pageYOffset || document.documentElement.scrollTop,
+      var stylePos = parseFloat(document.getElementById("mainBody").style.top);
+      var distanceY = (window.pageYOffset || document.documentElement.scrollTop) - (isNaN(stylePos) ? 0 : stylePos),
           shrinkOn = 30,
           header = document.querySelector("header");
       if (distanceY > shrinkOn) {

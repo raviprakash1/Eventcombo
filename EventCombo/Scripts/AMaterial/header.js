@@ -59,13 +59,10 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
       $window.navigator.geolocation.getCurrentPosition(function (pos) {
         $scope.geocoords.latitude = pos.coords.latitude;
         $scope.geocoords.longitude = pos.coords.longitude;
-        console.log($scope.geocoords);
       });
     }
 
-    console.log($scope.geocoords);
-
-    $scope.foundCities = null;
+    $scope.foundCities = [];
 
     $scope.gmapsService = new google.maps.places.AutocompleteService();
     $scope.placeService = new google.maps.places.PlacesService(document.getElementById('search').appendChild(document.createElement('div')));
@@ -87,7 +84,6 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
 
     $scope.eventSearch = function (str) {
       return $http.get("/commonAPI/FilterEventsByTitle", { params: { title: $scope.eventString } }).then(function (response) {
-        console.log(response);
         return response.data;
       });
     }
@@ -96,8 +92,8 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
       var deferred = $q.defer();
       $scope.getCitySearchResults(str).then(
         function (predictions) {
-          $scope.foundCities = predictions;
-          deferred.resolve(predictions);
+          $scope.foundCities = predictions ? predictions : [];
+          deferred.resolve($scope.foundCities);
         }
       );
       return deferred.promise;
