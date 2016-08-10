@@ -967,7 +967,7 @@
                 type: "Post",
                 success: function (response) {
 
-                    window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.URLTitle.Replace(" ","-") , strEventId = Model.EventId.ToString()})';
+                    window.location.href = '@Url.Action("ViewEvent", "EventManagement", new { strEventDs = Model.URLTitle.Replace(" ", "-"), strEventId = Model.EventId.ToString() })';
                 }
             });
         });
@@ -1437,7 +1437,7 @@
 
         //--------------Fire when User Click on Continue in Previous Page ------------------------------------
         $("#btMessOk").click(function () {
-            window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.URLTitle.Replace(" ","-") , strEventId = Model.EventId.ToString()})';
+            window.location.href = '@Url.Action("ViewEvent", "EventManagement", new { strEventDs = Model.URLTitle.Replace(" ", "-"), strEventId = Model.EventId.ToString() })';
         });
 
         //
@@ -1499,7 +1499,7 @@
                             $("#btOkMes").click();
                         },
                         error: function () {
-                            window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.Title.Replace(" ","") , strEventId = Model.EventId.ToString()})';
+                            window.location.href = '@Url.Action("ViewEvent", "EventManagement", new { strEventDs = Model.Title.Replace(" ", ""), strEventId = Model.EventId.ToString() })';
                         }
                     });
                 }

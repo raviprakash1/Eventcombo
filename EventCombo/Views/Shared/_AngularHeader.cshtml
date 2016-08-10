@@ -42,10 +42,16 @@
     </md-menu>
   </div>
 
+  <div style="float:left;">
+    <a href="~/">
+      <h1 id="logo"></h1>
+    </a>
+  </div>
+
   <nav>
     <ul class="nav">
       <li class="drop">
-        <i class="material-icons orange600">account_circle</i> @Model.BaseUserName
+        <span><i class="material-icons orange600">account_circle</i> @Model.BaseUserName </span>
         @if (!String.IsNullOrEmpty(Model.BaseUserId))
         {
           <ul>
@@ -70,17 +76,12 @@
   <div class="topnav">
     <a ng-repeat="menu in navigation" href="{{ menu.link }}" class="{{ menu.class }}">{{ menu.text }}</a>
   </div>
-
-  <div>
-    <a href="~/">
-      <h1 id="logo"></h1>
-    </a>
-  </div>
 </header>
+
 <div id="search" ng-controller="SearchEventController">
-  <i class="material-icons">search</i>
-  <md-content class="md-padding">
-    <div style="width: 40%; float: left">
+  <md-content>
+    <i class="material-icons">search</i>
+    <div style="width: 40%; float: left;">
       <md-autocomplete md-no-cache="false" md-selected-item="selectedEvent" md-search-text="eventString" md-delay="500"
                        md-items="item in eventSearch(eventString)" md-item-text="item.EventTitle" md-min-length="1"
                        placeholder="Search" md-selected-item-change="DiscoverByEvent()" md-select-on-focus

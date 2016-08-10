@@ -729,6 +729,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EventCreation.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Home\DiscoverEvents.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DiscoverEvents.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Home\ForgetPassword.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -800,6 +805,8 @@
     <Content Include="Content\AMaterial\main.css" />
     <Content Include="Content\AMaterial\material-datetimepicker.css" />
     <Content Include="Content\AMaterial\ngGallery.css" />
+    <Content Include="Content\AMaterial\owl.carousel.css" />
+    <Content Include="Content\AMaterial\ViewEvent.css" />
     <Content Include="Content\bootstrap-multiselect.css" />
     <Content Include="Content\custom-scroll.css" />
     <Content Include="Content\DateTimePicker.css" />
@@ -912,6 +919,8 @@
     <Content Include="Scripts\AMaterial\angular-animate.min.js" />
     <Content Include="Scripts\AMaterial\angular-aria.js" />
     <Content Include="Scripts\AMaterial\angular-aria.min.js" />
+    <Content Include="Scripts\AMaterial\angular-cookies.js" />
+    <Content Include="Scripts\AMaterial\angular-cookies.min.js" />
     <Content Include="Scripts\AMaterial\angular-material-datetimepicker.js" />
     <Content Include="Scripts\AMaterial\angular-material.js" />
     <Content Include="Scripts\AMaterial\angular-messages.js" />
@@ -927,11 +936,16 @@
     <Content Include="Scripts\AMaterial\demo.js" />
     <Content Include="Scripts\AMaterial\EventComboApp.js" />
     <Content Include="Scripts\AMaterial\header.js" />
+    <Content Include="Scripts\AMaterial\infobox.js" />
     <Content Include="Scripts\AMaterial\jquery-1.12.3.min.js" />
     <Content Include="Scripts\AMaterial\main.js" />
+    <Content Include="Scripts\AMaterial\map.js" />
     <Content Include="Scripts\AMaterial\moment.js" />
+    <Content Include="Scripts\AMaterial\ng-map.min.js" />
     <Content Include="Scripts\AMaterial\ngDraggable.js" />
     <Content Include="Scripts\AMaterial\ngGallery.js" />
+    <Content Include="Scripts\AMaterial\ngRepeatOwlCarousel.js" />
+    <Content Include="Scripts\AMaterial\owl.carousel.min.js" />
     <Content Include="Scripts\AMaterial\plugins\advlist\plugin.min.js" />
     <Content Include="Scripts\AMaterial\plugins\anchor\plugin.min.js" />
     <Content Include="Scripts\AMaterial\plugins\autolink\plugin.min.js" />
@@ -1011,6 +1025,7 @@
     <Content Include="Scripts\AMaterial\themes\modern\theme.min.js" />
     <Content Include="Scripts\AMaterial\tinycolor-min.js" />
     <Content Include="Scripts\AMaterial\tinymce.min.js" />
+    <Content Include="Scripts\AMaterial\ViewEvent.js" />
     <Content Include="Scripts\custom-scroll.js" />
     <Content Include="Scripts\DateTimePicker.js" />
     <Content Include="Scripts\gmap.js" />
@@ -1689,6 +1704,7 @@
     <Content Include="Views\EventManagement\CreateEventTicket.cshtml" />
     <Content Include="Views\BusinessPages\BusinessPage.cshtml" />
     <Content Include="Views\ContactEventComboes\Index.cshtml" />
+    <Content Include="Views\EventManagement\ViewEvent.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

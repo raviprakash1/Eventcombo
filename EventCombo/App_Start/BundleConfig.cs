@@ -109,6 +109,10 @@ namespace EventCombo
                         "~/Content/AMaterial/animations.css",
                         "~/Content/AMaterial/ngGallery.css",
                         "~/Content/AMaterial/main.css"));
+            bundles.Add(new StyleBundle("~/Content/AngularViewEvent")
+              .Include( "~/Content/font-awesome.min.css",
+                        "~/Content/AMaterial/owl.carousel.css",
+                        "~/Content/AMaterial/ViewEvent.css"));
 
             bundles.Add(new ScriptBundle("~/Scripts/AMaterial/angularHeader")
               .Include( "~/Scripts/AMaterial/angular.js",
@@ -117,6 +121,7 @@ namespace EventCombo
                         "~/Scripts/AMaterial/angular-aria.js",
                         "~/Scripts/AMaterial/angular-material.js",
                         "~/Scripts/AMaterial/angular-messages.js",
+                        "~/Scripts/AMaterial/angular-cookies.js",
                         "~/Scripts/AMaterial/tinymce.min.js",
                         "~/Scripts/AMaterial/tinycolor-min.js",
                         "~/Scripts/AMaterial/angular-tinymce/tinymce.min.js",
@@ -126,9 +131,17 @@ namespace EventCombo
                         "~/Scripts/AMaterial/angular-material-datetimepicker.js",
                         "~/Scripts/AMaterial/ngGallery.js",
                         "~/Scripts/AMaterial/demo.js",
+                        "~/Scripts/AMaterial/ngRepeatOwlCarousel.js",
                         "~/Scripts/AMaterial/classie.js",
                         "~/Scripts/AMaterial/EventComboApp.js",
                         "~/Scripts/AMaterial/header.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/AMaterial/viewEvent")
+              .Include("~/Scripts/AMaterial/owl.carousel.min.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/AMaterial/viewEventFooter")
+              .Include( "~/Scripts/AMaterial/infobox.js",
+                        "~/Scripts/AMaterial/map.js",
+                        "~/Scripts/AMaterial/ViewEvent.js",
+                        "~/Scripts/socialshare.js"));
         }
     }
 }

@@ -388,8 +388,8 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         },
         TotalPrice: 0,
         T_Customize: 0,
-        T_Ecpercent: 0,
-        T_EcAmount: 0,
+        T_Ecpercent: $scope.eventInfo.FeeStruct.FS_Percentage,
+        T_EcAmount: $scope.eventInfo.FeeStruct.FS_Amount,
         localSaleStartDate: null,
         localSaleEndDate: null,
         localHideUntilDate: null,
@@ -798,9 +798,6 @@ eventComboApp.directive('makeDecimal', function () {
           ctrl.$setViewValue(val);
           ctrl.$render();
         }
-        console.log(value);
-        console.log(val);
-        console.log(ctrl.$viewValue);
         return val;
       });
     }
