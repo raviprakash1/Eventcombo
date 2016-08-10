@@ -327,5 +327,14 @@
       setPagination(page, cState.Total, Math.floor(curRec / num));
     }
   }
+
+  function editAttendees(obj) {
+      if ($(obj).parent().parent().find(".EditAttendee").attr("disabled") == undefined || $(obj).parent().parent().find(".EditAttendee").attr("disabled") == null || $(obj).parent().parent().find(".EditAttendee").attr("disabled") == "false") {
+          $(obj).parent().parent().find(".EditAttendee").attr("disabled", "true")
+      } else {
+          $(obj).parent().parent().find(".EditAttendee").removeAttr("disabled")
+      }
+  }
+
 </script>
 <script src="~/Scripts/socialshare.js"></script>
