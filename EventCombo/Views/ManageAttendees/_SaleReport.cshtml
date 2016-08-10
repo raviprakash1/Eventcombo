@@ -27,7 +27,7 @@
                 {
                     <tr>
                         <td class="UETableTD"> @order.OrderId </td>
-                        <td class="UETableTD">@(order.Date.ToLongDateString())</td>
+                        <td class="UETableTD">@(order.Date.Date.ToString("MMM, dd, yyyy"))</td>
                         <td class="UETableTD">@order.BuyerName</td>
                         <td class="UETableTD">@order.TicketName</td>
                         <td class="UETableTD">@order.Quantity</td>

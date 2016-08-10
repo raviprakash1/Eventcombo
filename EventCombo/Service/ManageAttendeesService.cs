@@ -661,7 +661,7 @@ namespace EventCombo.Service
         {
             row = sheet.CreateRow(i++);
             AddStyledCell(row, 0, style).SetCellValue(order.OrderId);
-            AddStyledCell(row, 1, style).SetCellValue(order.Date.ToShortDateString());
+            AddStyledCell(row, 1, datestyle).SetCellValue(order.Date.ToString("MMM, dd, yyyy"));
             AddStyledCell(row, 2, style).SetCellValue(order.BuyerName);
             AddStyledCell(row, 3, style).SetCellValue(order.TicketName);
             AddStyledCell(row, 4, style).SetCellValue(order.Quantity);
@@ -672,9 +672,9 @@ namespace EventCombo.Service
             AddStyledCell(row, 9, style).SetCellValue(order.PromoCode);
             AddStyledCell(row, 10, style).SetCellValue((double)order.Refunded);
             AddStyledCell(row, 11, style).SetCellValue((double)order.Cancelled);
-            AddStyledCell(row, 12, datestyle).SetCellValue("");
-            AddStyledCell(row, 13, datestyle).SetCellValue(order.CustomerEmail);
-            AddStyledCell(row, 14, datestyle).SetCellValue(order.Address);
+            AddStyledCell(row, 12, style).SetCellValue("");
+            AddStyledCell(row, 13, style).SetCellValue(order.CustomerEmail);
+            AddStyledCell(row, 14, style).SetCellValue(order.Address);
             AddStyledCell(row, 15, style).SetCellValue(order.MailTickets.ToString());
         }
         for (i = 0; i <= 14; i++)
@@ -694,20 +694,20 @@ namespace EventCombo.Service
 
         rw.Write(ReportTitle);
         rw.WriteLine();
-        rw.Write("  ORDER #  |   DATE   |          ATTENDEE          |        TICKET NAME         | QUANTITY |  GROSS PAID  |NET EVENT REVENUE|EVENTCOMBO FEE|EVENTCOMBO MERCHANT FEE|PROMO CODE|REFUNDED|CANCELLED|ATTENDEE NUMBER|       ATTENDEE EMAIL       |          ADDRESS           |          MAIL TICKETS      ");
+        rw.Write("  ORDER #  |    DATE     |          ATTENDEE          |        TICKET NAME         | QUANTITY |  GROSS PAID  |NET EVENT REVENUE|EVENTCOMBO FEE|EVENTCOMBO MERCHANT FEE|PROMO CODE|REFUNDED|CANCELLED|ATTENDEE NUMBER|       ATTENDEE EMAIL       |          ADDRESS           |          MAIL TICKETS      ");
         rw.WriteLine();
         string str = "";
         foreach (var order in orders)
         {
             rw.Write(order.OrderId + new String(' ', 11 - order.OrderId.Length) + "|");
-                str = order.Date.ToShortDateString();
-                rw.Write(str + new String(' ', 10 - str.Length) + "|");
-                str = order.BuyerName;
+            str = order.Date.ToString("MMM, dd, yyyy");
+            rw.Write(str + new String(' ', 13 - str.Length) + "|");
+            str = order.BuyerName;
             while (str.Length > 28)
             {
                 rw.Write(str.Substring(0, 28) + "|                            |          |              |                 |              |                     |         |        |        |               |                            |                            |                           ");
                 rw.WriteLine();
-                rw.Write("           |          |");
+                rw.Write("           |             |");
                 str = str.Substring(28, str.Length - 28);
             }
             rw.Write(str + new String(' ', 28 - str.Length) + "|");
@@ -716,7 +716,7 @@ namespace EventCombo.Service
             {
                 rw.Write(str.Substring(0, 28) + "|          |              |                 |              |                     |         |        |        |               |                            |                            |                           ");
                 rw.WriteLine();
-                rw.Write("           |          |                            |");
+                rw.Write("           |             |                            |");
                 str = str.Substring(28, str.Length - 28);
             }
             rw.Write(str + new String(' ', 28 - str.Length) + "|");
@@ -728,24 +728,24 @@ namespace EventCombo.Service
             rw.Write(str + new String(' ', 16 - str.Length) + "|");
             str = order.Fee.ToString("N2");
             rw.Write(str + new String(' ', 14 - str.Length) + "|");
-                str = order.MerchantFee.ToString("N2");
-                rw.Write(str + new String(' ', 23 - str.Length) + "|");
-                str = order.PromoCode.ToString();
-                rw.Write(str + new String(' ', 10 - str.Length) + "|");
-                str = order.Refunded.ToString("N2");
-                rw.Write(str + new String(' ', 8 - str.Length) + "|");
-                str = order.Cancelled.ToString("N2");
-                rw.Write(str + new String(' ', 9 - str.Length) + "|");
-                str = "";
-                rw.Write(str + new String(' ', 15 - str.Length) + "|");
-                str = order.BuyerEmail.ToString();
-                rw.Write(str + new String(' ', 28 - str.Length) + "|");
-                str = order.Address;
+            str = order.MerchantFee.ToString("N2");
+            rw.Write(str + new String(' ', 23 - str.Length) + "|");
+            str = order.PromoCode.ToString();
+            rw.Write(str + new String(' ', 10 - str.Length) + "|");
+            str = order.Refunded.ToString("N2");
+            rw.Write(str + new String(' ', 8 - str.Length) + "|");
+            str = order.Cancelled.ToString("N2");
+            rw.Write(str + new String(' ', 9 - str.Length) + "|");
+            str = "";
+            rw.Write(str + new String(' ', 15 - str.Length) + "|");
+            str = order.BuyerEmail.ToString();
+            rw.Write(str + new String(' ', 28 - str.Length) + "|");
+            str = order.Address;
             while (str.Length > 28)
             {
                 rw.Write(str.Substring(0, 28) + "|                            ");
                 rw.WriteLine();
-                rw.Write("           |          |                            |                            |          |              |                 |              |                     |         |        |        |               |                            |");
+                rw.Write("           |             |                            |                            |          |              |                 |              |                     |         |        |        |               |                            |");
                 str = str.Substring(28, str.Length - 28);
             }
             rw.Write(str + new String(' ', 28 - str.Length) + "|");
@@ -754,7 +754,7 @@ namespace EventCombo.Service
             {
                 rw.Write(str.Substring(0, 28) + "|");
                 rw.WriteLine();
-                rw.Write("           |          |                            |                            |          |              |                 |              |                     |         |        |        |               |                            |                            |");
+                rw.Write("           |             |                            |                            |          |              |                 |              |                     |         |        |        |               |                            |                            |");
                 str = str.Substring(28, str.Length - 28);
             }
             rw.Write(str + new String(' ', 28 - str.Length) + "");
@@ -795,7 +795,7 @@ namespace EventCombo.Service
         foreach (var order in orders)
         {
             rw.Write(order.OrderId + delimiter);
-            rw.Write(order.Date.ToShortDateString() + delimiter);
+            rw.Write(order.Date.ToString("MMM, dd, yyyy") + delimiter);
             rw.Write(order.BuyerName + delimiter);
             rw.Write(order.TicketName + delimiter);
             rw.Write(order.Quantity.ToString() + delimiter);
