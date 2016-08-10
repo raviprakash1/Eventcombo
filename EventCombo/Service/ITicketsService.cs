@@ -14,7 +14,7 @@ namespace EventCombo.Service
 
     long GetOrdersCount(OrderTypes type, string userId);
 
-    OrderDetailsViewModel GetOrderDetails(string orderId, string userId);
+    OrderDetailsViewModel GetOrderDetails(string orderId, string userId, long EventId);
 
     bool SaveOrderDetails(OrderDetailsViewModel model, string userId, string baseUrl, string filePath);
 

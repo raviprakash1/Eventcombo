@@ -122,10 +122,12 @@ namespace EventCombo.Service
     }
 
 
-    public OrderDetailsViewModel GetOrderDetails(string orderId, string userId)
+    public OrderDetailsViewModel GetOrderDetails(string orderId, string userId, long eventId)
     {
       IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
+      IRepository<EventTicket_View> EventTicketRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
 
+      var TicketNames = EventTicketRepo.Get(filter: (t => t.EventID == eventId && t.OrderId == orderId)).Select(t => t.TicketName);
       var order = orderRepo.Get(filter: (o => ((o.O_Order_Id == orderId) && (o.O_User_Id == userId)))).FirstOrDefault();
       if (order == null)
         return null;
@@ -147,6 +149,8 @@ namespace EventCombo.Service
       IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
       foreach (var att in attRepo.Get(filter: (tb => ((tb.OrderId == orderId) && (tb.UserId == userId)))))
         details.Attendees.Add(_mapper.Map<AttendeeViewModel>(att));
+
+      details.TicketNames = (TicketNames == null ? "" : string.Join(", ", TicketNames.ToArray()));
 
       return details;
     }
