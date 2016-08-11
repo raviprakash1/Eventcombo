@@ -1860,7 +1860,6 @@ warning 6002: The table/view 'EC2.dbo.V_Users' does not have a primary key defin
           <Property Name="MessageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Event" Relationship="Cmsdata.EventEvent_OrganizerMessages" FromRole="Event_OrganizerMessages" ToRole="Event" />
           <NavigationProperty Name="Organizer_Master" Relationship="Cmsdata.Organizer_MasterEvent_OrganizerMessages" FromRole="Event_OrganizerMessages" ToRole="Organizer_Master" />
-          <Property Name="PhoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event_VariableDesc">
           <Key>
