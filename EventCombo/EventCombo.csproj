@@ -653,10 +653,12 @@
     <Compile Include="Services\EventStatusUpdate.cs" />
     <Compile Include="Services\LastLoginStatus.cs" />
     <Compile Include="Services\TicketEmailer.cs" />
+    <Compile Include="Service\AccountService.cs" />
     <Compile Include="Service\ArticleService.cs" />
     <Compile Include="Service\HangfireBootstrapper.cs" />
     <Compile Include="Service\EventService.cs" />
     <Compile Include="Service\HtmlProcessing.cs" />
+    <Compile Include="Service\IAccountService.cs" />
     <Compile Include="Service\IArticleService.cs" />
     <Compile Include="Service\DBAccessService.cs" />
     <Compile Include="Service\IDBAccessService.cs" />
@@ -667,6 +669,7 @@
     <Compile Include="Service\IManageEventService.cs" />
     <Compile Include="Service\Notification\INotificationSender.cs" />
     <Compile Include="Service\ManageAttendeesService.cs" />
+    <Compile Include="Service\Notification\NewUserWelcomeMessage.cs" />
     <Compile Include="Service\Notification\NotificationSender.cs" />
     <Compile Include="Service\Notification\INotification.cs" />
     <Compile Include="Service\IOrderOptionsService.cs" />
@@ -839,12 +842,15 @@
     <Content Include="Images\AMaterial\dream-team.jpg" />
     <Content Include="Images\AMaterial\EventComboLogo.svg" />
     <Content Include="Images\AMaterial\EventComboLogoWholePx.svg" />
+    <Content Include="Images\AMaterial\facebook-logo.svg" />
     <Content Include="Images\AMaterial\facebook.svg" />
     <Content Include="Images\AMaterial\fb_messenger.svg" />
     <Content Include="Images\AMaterial\footer.png" />
     <Content Include="Images\AMaterial\ftbg.png" />
+    <Content Include="Images\AMaterial\google-plus-symbol.svg" />
     <Content Include="Images\AMaterial\ic_close_24px.svg" />
     <Content Include="Images\AMaterial\infobox-bg.png" />
+    <Content Include="Images\AMaterial\linkedin-logo.svg" />
     <Content Include="Images\AMaterial\linkedin.svg" />
     <Content Include="Images\AMaterial\logo.png" />
     <Content Include="Images\AMaterial\mail-square.svg" />
@@ -915,6 +921,7 @@
       <DependentUpon>EventComboModel.edmx</DependentUpon>
       <LastGenOutput>EventComboModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\AMaterial\AccountController.js" />
     <Content Include="Scripts\AMaterial\angular-animate.js" />
     <Content Include="Scripts\AMaterial\angular-animate.min.js" />
     <Content Include="Scripts\AMaterial\angular-aria.js" />
