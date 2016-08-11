@@ -14,7 +14,7 @@ namespace CMS.Service
 
     long GetOrdersCount(OrderTypes type, string userId);
 
-    OrderDetailsViewModel GetOrderDetails(string orderId);
+    OrderDetailsViewModel GetOrderDetails(string orderId, long eventId);
 
     bool SaveOrderDetails(OrderDetailsViewModel model, string baseUrl, string filePath);
 
