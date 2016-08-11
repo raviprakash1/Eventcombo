@@ -48,32 +48,211 @@
       <h1 id="logo"></h1>
     </a>
   </div>
-
-  <nav>
-    <ul class="nav">
-      <li class="drop">
-        <span><i class="material-icons orange600">account_circle</i> @Model.BaseUserName </span>
-        @if (!String.IsNullOrEmpty(Model.BaseUserId))
-        {
-          <ul>
-            <li><a href="@Url.Action("MyAccount", "Account")"><i class="material-icons">account_balance_wallet</i> Account</a></li>
-            <li><a href="@Url.Action("EventList", "EventList")"><i class="material-icons">event</i> My Events</a></li>
+  <div ng-controller="AccountController as acContr">
+    <nav>
+      <ul class="nav">
+        <li class="drop">
+          <span><i class="material-icons orange600">account_circle</i> @Model.BaseUserName </span>
+          @if (!String.IsNullOrEmpty(Model.BaseUserId))
+          {
+            <ul>
+              <li><a href="@Url.Action("MyAccount", "Account")"><i class="material-icons">account_balance_wallet</i> Account</a></li>
+              <li><a href="@Url.Action("EventList", "EventList")"><i class="material-icons">event</i> My Events</a></li>
             @*<li><a href="@Url.Action("DealsDashboard", "Account")"><i class="material-icons">shop</i> My Deals</a></li>*@
-            <li><a href="@Url.Action("PurchasedTicket", "Account")"><i class="material-icons">local_play</i> My Tickets</a></li>
-            <li><a href="@Url.Action("OrganizerProfile", "Account")"><i class="material-icons">group</i> Organizers</a></li>
-            <li><a href="#"><i class="material-icons">exit_to_app</i> Log Out</a></li>
-          </ul>
-        }
-        else
-        {
-          <ul>
-            <li><a href="#"><i class="material-icons">lock_outline</i> Log In</a></li>
-          </ul>
-        }
-      </li>
-    </ul>
-  </nav>
+              <li><a href="@Url.Action("PurchasedTicket", "Account")"><i class="material-icons">local_play</i> My Tickets</a></li>
+              <li><a href="@Url.Action("OrganizerProfile", "Account")"><i class="material-icons">group</i> Organizers</a></li>
+              <li><a href="javascript:void(0)" ng-click="logout()"><i class="material-icons">exit_to_app</i> Log Out</a></li>
+            </ul>
+          }
+          else
+          {
+            <ul>
+              <li><a href="javascript:void(0)" ng-click="showLoginForm('myForm')"><i class="material-icons">lock_outline</i> Log In</a></li>
+            </ul>
+          }
+        </li>
+      </ul>
+    </nav>
 
+    @if (String.IsNullOrEmpty(Model.BaseUserId))
+    {
+      <div style="display:none;" ng-style="{'display': displayPopups}">
+        <div class="popOverlay" id="popLogin" ng-show="popLogin">
+          <div class="popBox">
+            <form name="myForm" novalidate>
+              <a class="popClose" ng-click="closeLightBoxWithEsc(); email=''"><i class="material-icons">clear</i></a>
+              <h3 class="blue-heading">Please log in or sign up with</h3>
+              <div class="text-center">
+                <a href="#" class="socLogin fb"><img width="16" src="~/Images/AMaterial/facebook-logo.svg"></a>
+                <a href="#" class="socLogin in"><img width="16" src="~/Images/AMaterial/linkedin-logo.svg"></a>
+                <a href="#" class="socLogin gp"><img width="16" src="~/Images/AMaterial/google-plus-symbol.svg"></a>
+              </div>
+              <div class="text-center"><span class="popLink">or</span></div>
+              <md-input-container class="md-block">
+                <label>Email</label>
+                <input type="email" ng-maxlength="255" required name="email" ng-model="email" ng-pattern="/^.+@("@").+\..+$/" ng-keypress="submitted=false" />
+                <div ng-messages="myForm.email.$error" role="alert">
+                  <div ng-message="required">Please enter your email!</div>
+                  <div ng-message="pattern">Please use valid email format!</div>
+                  <div ng-message="maxlength">Your email is too long.</div>
+                </div>
+              </md-input-container>
+              <div class="text-center"><button class="popLink margin-2em-top" ng-click="signInNext('myForm')">NEXT</button></div>
+            </form>
+          </div>
+        </div>
+        <!--****************************************************************************************************************************-->
+        <div class="popOverlay" ng-show="popRegister">
+          <div class="popBox">
+            <form name="registerForm" novalidate>
+              <a class="popClose" ng-click="closeLightBoxWithEsc()"><i class="material-icons">clear</i></a>
+              <h3 class="red-heading">That email not on file. <br> Would you like to sign up?</h3>
+              <p class="infoText margin-1em-top margin-1em-bottom">{{ email }}</p>
+              <md-input-container class="md-block">
+                <label>First Name</label>
+                <input ng-maxlength="40" required md-no-asterisk name="firstName" ng-model="firstName" ng-pattern="/^[a-zA-Z0-9 ]*$/" ng-keypress="firstNameRequired=false">
+                <div ng-messages="registerForm.firstName.$error">
+                  <div ng-message="required">Please enter your First Name!</div>
+                  <div ng-message="maxlength">Your First Name is too long.</div>
+                  <div ng-message="pattern">No special Characters allowed!</div>
+                </div>
+              </md-input-container>
+              <md-input-container class="md-block">
+                <label>Last Name</label>
+                <input ng-maxlength="40" required md-no-asterisk name="lastName" ng-model="lastName" ng-pattern="/^[a-zA-Z0-9 ]*$/" ng-keypress="lastNameRequired=false">
+                <div ng-messages="registerForm.lastName.$error">
+                  <div ng-message="required">Please enter your Last Name!</div>
+                  <div ng-message="maxlength">Your Last Name is too long.</div>
+                  <div ng-message="pattern">No special Characters allowed!</div>
+                </div>
+              </md-input-container>
+              <md-input-container class="md-block">
+                <label>Create password, 8 characters minimum</label>
+                <input type="password" ng-minlength="8" ng-maxlength="32" required md-no-asterisk name="password" ng-model="password" ng-keypress="passwordRequired=false">
+                <div ng-messages="registerForm.password.$error">
+                  <div ng-message="required">Please create a password!</div>
+                  <div ng-message="minlength">Password has to be at least 8 characters</div>
+                  <div ng-message="maxlength">Your Password is too long.</div>
+                </div>
+              </md-input-container>
+              <div class="text-center">{{signupError}}</div>
+              <div class="clear">
+                <button type="reset" class="popLink margin-1em-top gray lFloat" ng-click="popRegister=false">CANCEL</button>
+                <button class="popLink margin-1em-top rFloat" ng-click="registerNext('registerForm')">SIGN UP</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!--****************************************************************************************************************************-->
+        <div class="popOverlay" ng-show="popLoginPassword">
+          <div class="popBox">
+            <form name="loginPasswordForm" novalidate>
+              <a class="popClose" ng-click="closeLightBoxWithEsc()"><i class="material-icons">clear</i></a>
+              <h3 class="blue-heading">Please enter the password for</h3>
+              <p class="infoText margin-2em-top margin-1em-bottom">{{ email }}</p>
+              <md-input-container class="md-block">
+                <label>Password</label>
+                <input type="password" required md-no-asterisk name="loginPassword" ng-model="loginPassword" ng-keypress="loginPasswordRequired=false;IncorrectPassword=false">
+                <div ng-messages="loginPasswordForm.loginPassword.$error">
+                  <div ng-message="required">Please enter password!</div>
+                  <div ng-show="IncorrectPassword">{{loginError}}</div>
+                </div>
+              </md-input-container>
+              <div class="clear">
+                <button type="reset" class="popLink margin-1em-top gray lFloat" ng-click="closeLightBoxWithEsc();popForgetPassword=true">FORGET PASSWORD</button>
+                <button class="popLink margin-1em-top rFloat" ng-click="loginPasswordNext('loginPasswordForm')">LOG IN</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!--****************************************************************************************************************************-->
+        <div class="popOverlay" ng-show="popForgetPassword">
+          <div class="popBox">
+            <form name="otpPasswordForm" novalidate>
+              <a class="popClose" ng-click="closeLightBoxWithEsc()"><i class="material-icons">clear</i></a>
+              <h3 class="red-heading">We sent an email to reset your password to</h3>
+              <p class="infoText margin-2em-top margin-2em-bottom">{{ email }}</p>
+              <md-input-container class="md-block">
+                <label>Password</label>
+                <input type="password" required md-no-asterisk name="otpPassword" ng-model="otpPassword" ng-keypress="otpPasswordRequired=false;IncorrectotpPassword=false;">
+                <div ng-messages="otpPasswordForm.otpPassword.$error">
+                  <div ng-message="required">Please enter password!</div>
+                  <div ng-show="IncorrectotpPassword">Password did not match.</div>
+                </div>
+              </md-input-container>
+              <div class="text-center"><button class="popLink margin-1em-top" ng-click="otpPasswordNext('otpPasswordForm')">LOG IN</button></div>
+            </form>
+          </div>
+        </div>
+        <!--****************************************************************************************************************************-->
+        <div class="popOverlay" ng-show="popCreatePassword">
+          <div class="popBox">
+            <form name="newPasswordForm" novalidate>
+              <a class="popClose" ng-click="closeLightBoxWithEsc()"><i class="material-icons">clear</i></a>
+              <h3 class="red-heading">Please create a new password for</h3>
+              <p class="infoText margin-1em-top margin-1em-bottom">{{ email }}</p>
+              <md-input-container class="md-block">
+                <label>Create password, 8 characters minimum</label>
+                <input type="password" ng-minlength="8" ng-maxlength="32" required md-no-asterisk name="newPassword" ng-model="newPassword" ng-keypress="newPasswordRequired=false">
+                <div ng-messages="newPasswordForm.newPassword.$error">
+                  <div ng-message="required">Please create a password!</div>
+                  <div ng-message="minlength">Password has to be at least 8 characters</div>
+                  <div ng-message="maxlength">Your Password is too long.</div>
+                </div>
+              </md-input-container>
+              <md-input-container class="md-block">
+                <label>Repeat password</label>
+                <input type="password" ng-minlength="8" ng-maxlength="32" required md-no-asterisk name="repeatPassword" ng-model="repeatPassword" ng-keypress="repeatPasswordRequired=false;passwordNotMatch=false">
+                <div ng-messages="newPasswordForm.repeatPassword.$error">
+                  <div ng-message="required">Please create a password!</div>
+                  <div ng-message="minlength">Password has to be at least 8 characters</div>
+                  <div ng-message="maxlength">Your Password is too long.</div>
+                  <div ng-show="passwordNotMatch">Passwords did not match, please retype</div>
+                </div>
+              </md-input-container>
+              <div class="text-center"><button class="popLink margin-1em-top" ng-click="newPasswordNext('newPasswordForm')">LOG IN</button></div>
+            </form>
+          </div>
+        </div>
+        <!--****************************************************************************************************************************-->
+        <div class="popOverlay" ng-show="popCreatePasswordCongrats">
+          <div class="popBox">
+            <a class="popClose" ng-click="closeLightBoxWithEsc()"><i class="material-icons">clear</i></a>
+            <h3 class="red-heading">Congrats, you have a shiny new password!</h3>
+            <div class="text-center margin-2em-top"><a class="popLink" ng-click="closeLightBoxWithEsc()">CONTINUE TO SITE</a></div>
+          </div>
+        </div>
+        <div class="popOverlay" ng-show="popRegisterCongrats">
+          <div class="popBox">
+            <a class="popClose" ng-click="reloadPage()"><i class="material-icons">clear</i></a>
+            <h3 class="red-heading">Congrats, you have successfully Registered!</h3>
+            <div class="text-center margin-2em-top"><a class="popLink" ng-click="reloadPage()">CONTINUE TO SITE</a></div>
+          </div>
+        </div>
+        <div class="popOverlay" ng-show="popLoginCongrats">
+          <div class="popBox">
+            <a class="popClose" ng-click="reloadPage()"><i class="material-icons">clear</i></a>
+            <h3 class="red-heading">Congrats, you have successfully Login!</h3>
+            <div class="text-center margin-2em-top"><a class="popLink" ng-click="reloadPage()">CONTINUE TO SITE</a></div>
+          </div>
+        </div>
+        <div class="popOverlay" ng-show="popLoading">
+          <div class="popBox">
+            <h3 class="blue-heading text-center">{{LoadingMessage}}</h3>
+            <img src="~/Images/ajaxloader1.gif" />
+          </div>
+        </div>
+        <div class="popOverlay" ng-show="popServerError">
+          <div class="popBox">
+            <a class="popClose" ng-click="closeLightBoxWithEsc()"><i class="material-icons">clear</i></a>
+            <h3 class="red-heading">Error</h3>
+            <div class="text-center">Something went wrong. Please try again later</div>
+            <div class="text-center margin-2em-top"><a class="popLink" ng-click="closeLightBoxWithEsc()">OK</a></div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
   <div class="topnav">
     <a ng-repeat="menu in navigation" href="{{ menu.link }}" class="{{ menu.class }}">{{ menu.text }}</a>
   </div>
