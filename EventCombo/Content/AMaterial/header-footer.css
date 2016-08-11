@@ -1186,19 +1186,96 @@ header .topnav2 .md-button.md-icon-button {
   margin-top: 0;
 }
 
-.infoText { color:#000; font:15px 'Roboto', Arial, Helvetica, sans-serif; text-align:center;}
-.inputbox { width:100%; height:40px; display:inline-block; padding:5px 0; margin-top:10px; color:#7f7f7f; font:500 16px/16px 'Roboto', Arial, Helvetica, sans-serif; border:none; border-bottom:2px solid #3f51b5; outline:none; -webkit-appearance:none; -moz-appearance:none; appearance:none;}
-.errorMessage { color:#e30076;}
-md-input-container { margin-bottom:0 !important;}
-md-input-container .md-errors-spacer { min-height:inherit !important;}
+.infoText {
+  color: #000;
+  font: 15px 'Roboto', Arial, Helvetica, sans-serif;
+  text-align: center;
+}
 
-.socLogin { display:inline-block; padding:10px 30px; margin:2px; border-radius:5px; color:#fff; text-decoration:none;}
-.socLogin.fb { background:#3a589a;}
-.socLogin.in { background:#2b77a6;}
-.socLogin.gp { background:#e9544f;}
-.socLogin:hover { color:#fff; opacity:.9;}
+.inputbox {
+  width: 100%;
+  height: 40px;
+  display: inline-block;
+  padding: 5px 0;
+  margin-top: 10px;
+  color: #7f7f7f;
+  font: 500 16px/16px 'Roboto', Arial, Helvetica, sans-serif;
+  border: none;
+  border-bottom: 2px solid #3f51b5;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
 
-.popLink { color:#0077c8; font:500 15px 'Roboto', Arial, Helvetica, sans-serif; padding:5px; display:inline-block; background:none; border:none;}
-a.popLink:hover, button.popLink:hover  { color:#000; cursor:pointer;}
-.popLink.gray { color:#888;}
-md-input-container label:not(._md-container-ignore).md-required:after { content:'' !important;}
+.errorMessage {
+  color: #e30076;
+}
+
+md-input-container {
+  margin-bottom: 0 !important;
+}
+
+  md-input-container .md-errors-spacer {
+    min-height: inherit !important;
+  }
+
+.socLogin {
+  display: inline-block;
+  padding: 10px 30px;
+  margin: 2px;
+  border-radius: 5px;
+  color: #fff;
+  text-decoration: none;
+}
+
+  .socLogin.fb {
+    background: #3a589a;
+  }
+
+  .socLogin.in {
+    background: #2b77a6;
+  }
+
+  .socLogin.gp {
+    background: #e9544f;
+  }
+
+  .socLogin:hover {
+    color: #fff;
+    opacity: .9;
+  }
+
+.popLink {
+  color: #0077c8;
+  font: 500 15px 'Roboto', Arial, Helvetica, sans-serif;
+  padding: 5px;
+  display: inline-block;
+  background: none;
+  border: none;
+}
+
+a.popLink:hover, button.popLink:hover {
+  color: #000;
+  cursor: pointer;
+}
+
+.popLink.gray {
+  color: #888;
+}
+
+md-input-container label:not(._md-container-ignore).md-required:after {
+  content: '' !important;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}

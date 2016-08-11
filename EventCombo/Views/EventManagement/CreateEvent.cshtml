@@ -77,6 +77,15 @@
 </script>
 
 <div id="createEventContainer" ng-controller="CreateEventController" ng-cloak>
+  <div style="display:none;" ng-style="{'display': displayPopups}">
+    <div class="popOverlay" ng-show="popLoading">
+      <div class="popBox">
+        <h3 class="blue-heading text-center">{{LoadingMessage}}</h3>
+        <img src="~/Images/ajaxloader1.gif" />
+      </div>
+    </div>
+  </div>
+
   <form name="MainForm" novalidate>
     <div>
       <div class="headerCEHead createEvent">Create Event</div>

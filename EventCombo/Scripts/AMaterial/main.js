@@ -10,6 +10,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       });
     });
 
+    $scope.displayPopups = 'block';
     $scope.organiserInfo = [];
     $scope.tempDateInfo = {};
     $scope.isPrivateEvent = false;
@@ -516,12 +517,16 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       var data = {
         json: angular.toJson($scope.eventInfo)
       };
+      $scope.showLoadingMessage(true, 'Save Event');
       $http.post('/eventmanagement/saveevent', data).then(function (response) {
+        $scope.showLoadingMessage(false, '');
         $scope.eventInfo = response.data;
         if ($scope.eventInfo.ErrorEvent)
           $scope.prepareEventInfo();
         else
           $window.location.href = link_publish + "?EventId=" + $scope.eventInfo.EventID;
+      }, function (error) {
+        $scope.showLoadingMessage(false, '');
       });
     }
 
@@ -597,12 +602,16 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       for (var i = 0; i < files.length; i++) {
         fd.append('files', files[i]);
       }
+      $scope.showLoadingMessage(true, 'Upload Images');
       $http.post('/imageAPI/UploadImages', fd, {
         transformRequest: angular.identity,
         headers: { 'Content-Type': undefined }
       }).then(function (response) {
+        $scope.showLoadingMessage(false, '');
         var images = response.data;
         callback(images);
+      }, function (error) {
+        $scope.showLoadingMessage(false, '');
       });
     }
 
@@ -679,6 +688,12 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         image.ContentType = "";
       }
     }
+
+    $scope.showLoadingMessage = function (show, message) {
+      $scope.popLoading = show;
+      $scope.LoadingMessage = message;
+    }
+
 
   }]);
 
