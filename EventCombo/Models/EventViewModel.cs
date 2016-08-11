@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace EventCombo.Models
 {
@@ -345,6 +346,114 @@ namespace EventCombo.Models
     {
       get { return _eventImages; }
       set { _eventImages = value; }
+    }
+  }
+
+  public class EventSearchViewModel
+  {
+    public long EventId { get; set; }
+    public byte RecordTypeId { get; set; } // 0 - Title, 1 - Type, 2 - Category, 3 - SubCategory
+    public string EventTitle { get; set; }
+    public string Latitude { get; set; }
+    public string Longitude { get; set; }
+  }
+
+  public class OrganizerInfoViewModel
+  {
+    public long OrganizerId { get; set; }
+    public string OrganizerName { get; set; }
+    public string ImageUrl { get; set; }
+    public string WebsiteUrl { get; set; }
+    public string FBLink { get; set; }
+    public string LinkdeInLink { get; set; }
+    public string TwitterLink { get; set; }
+  }
+
+  public class TicketInfoViewModel
+  {
+    public long TicketId { get; set; }
+    public long TQDId { get; set; }
+    public string TicketName { get; set; }
+    public string VenueName { get; set; }
+    public string TicketDescription { get; set; }
+    public DateTime StartDate { get; set; }
+    public long TicketTypeId { get; set; }
+    public decimal Price { get; set; }
+    public decimal Quantity { get; set; }
+    public long Minimum { get; set; }
+    public long Maximum { get; set; }
+    public decimal Fee { get; set; }
+    public bool ShowFee { get; set; }
+    public decimal Amount { get; set; }
+    public bool SoldOut { get; set; }
+    public bool ShowRemaining { get; set; }
+    public long RemainingQuantity { get; set; }
+    public decimal TotalPrice { get; set; }
+  }
+
+  public class EventInfoViewModel : IBaseViewModel, IOpenGraphProtocol
+  {
+    // IBaseViewModel interface implementation
+    public string BaseTitle { get; set; }
+    public string BaseUserId { get; set; }
+    public string BaseUserName { get; set; }
+    public string BaseUserEmail { get; set; }
+    // IOpenGraphProtocol interface implementation
+    public string OGPTitle { get; set; }
+    public string OGPType { get; set; }
+    public string OGPUrl { get; set; }
+    public string OGPImage { get; set; }
+    public string OGPDescription { get; set; }
+
+    public long EventId { get; set; }
+    public String EventTitle { get; set; }
+    public string EventDescription { get; set; }
+    public string VenueName { get; set; }
+    public string Address { get; set; }
+    public string Latitude { get; set; }
+    public string Longitude { get; set; }
+    public bool OnlineEvent { get; set; }
+    public string TimeZone { get; set; }
+    public long EventTypeId { get; set; }
+    public string EventType { get; set; }
+    public long EventCategoryId { get; set; }
+    public string EventCategory { get; set; }
+    public long EventSubCategoryId { get; set; }
+    public string EventSubCategory { get; set; }
+    public long FavoriteCount { get; set; }
+    public bool UserFavorite { get; set; }
+    public long VoteCount { get; set; }
+    public bool UserVote { get; set; }
+    public byte SingleTicketType { get; set; }
+    public byte EventStatus { get; set; }
+    public string BackgroundUrl { get; set; }
+    public string BackgroundColor { get; set; }
+    public string ImageUrl { get; set; }
+    public string ImageAlt { get; set; }
+    public bool ShowRemainingTickets { get; set; }
+    public long RemainingTickets { get; set; }
+    public string ShowVariables { get; set; }
+    public string EventPrivacy { get; set; }
+    public bool UsePrivatePassword { get; set; }
+    public string EnableFBDiscussion { get; set; }
+    public bool DisplayStartTime { get; set; }
+    public bool DisplayEndTime { get; set; }
+    public string EventUrl { get; set; }
+    public string ButtonText { get; set; }
+    public string PriceRange { get; set; }
+
+
+    public OrganizerInfoViewModel Organizer { get; set; }
+    public IEnumerable<string> ImagesUrl { get; set; }
+    public IEnumerable<TicketInfoViewModel> Tickets { get; set; }
+    public EventDateViewModel DateInfo {get; set; }
+
+    public bool ErrorEvent { get; set; }
+    private List<string> _errorMessages;
+    public List<string> ErrorMessages
+    {
+      get { return _errorMessages; }
+      set { _errorMessages = value; }
     }
   }
 }

@@ -247,13 +247,12 @@ demo-include {
 
 
 html {
-  font-size: 62.5%;
   line-height: 1.4;
 }
 
 body {
   font-size: 1.6rem;
-  padding-top: 80px !important;
+  padding-top: 130px !important;
 }
 
   /* This styling should be not applied to codepen demos, so we need to add a unique identifier. */
@@ -341,7 +340,6 @@ h4 {
 }
 
 p {
-  font-size: 1.6rem;
   font-weight: 400;
   letter-spacing: 0.010em;
   line-height: 1.6em;
@@ -396,9 +394,7 @@ ul {
 }
 
   ul li {
-    margin-left: 16px;
     padding: 0;
-    margin-top: 3px;
     list-style-position: inside;
   }
 

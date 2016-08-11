@@ -42,7 +42,7 @@ namespace EventCombo
                 url: "e/{strEventDs}-{strEventId}",
                 defaults: new
                 {
-                    controller = "ViewEvent",
+                    controller = "EventManagement",
                     action = "ViewEvent"
                 }
             );

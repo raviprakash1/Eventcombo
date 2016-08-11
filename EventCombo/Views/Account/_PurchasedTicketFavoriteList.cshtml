@@ -32,7 +32,7 @@
                     <h1 class="modal-title cancelOrderTitleHead">Share this Event</h1>
                   </div>
                   @{
-                    string chref = Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(order.Name.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = order.EventId.ToString() }, Request.Url.Scheme);
+        string chref = Url.Action("ViewEvent", "EventManagement", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(order.Name.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = order.EventId.ToString() }, Request.Url.Scheme);
                   }
                   <div class="modal-body" style="width:100%;overflow: hidden;">
                     <div class="col-md-4 col-xs-12" style="text-align:center;">

@@ -2494,7 +2494,7 @@ WriteLiteral("\',\r\n                type: \"Post\",\r\n                success:
 
             
             #line 970 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                       Write(Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.URLTitle.Replace(" ","-") , strEventId = Model.EventId.ToString()}));
+                                       Write(Url.Action("ViewEvent", "EventManagement", new { strEventDs = Model.URLTitle.Replace(" ", "-"), strEventId = Model.EventId.ToString() }));
 
             
             #line default
@@ -2739,7 +2739,7 @@ WriteLiteral(@"',
 
             
             #line 1440 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                               Write(Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.URLTitle.Replace(" ","-") , strEventId = Model.EventId.ToString()}));
+                               Write(Url.Action("ViewEvent", "EventManagement", new { strEventDs = Model.URLTitle.Replace(" ", "-"), strEventId = Model.EventId.ToString() }));
 
             
             #line default
@@ -2783,7 +2783,7 @@ WriteLiteral(@"',
 
             
             #line 1502 "..\..\Views\TicketPayment\TicketPayment.cshtml"
-                                               Write(Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.Title.Replace(" ","") , strEventId = Model.EventId.ToString()}));
+                                               Write(Url.Action("ViewEvent", "EventManagement", new { strEventDs = Model.Title.Replace(" ", ""), strEventId = Model.EventId.ToString() }));
 
             
             #line default

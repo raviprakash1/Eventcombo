@@ -2542,7 +2542,7 @@ namespace EventCombo.Controllers
                 strEventTitle = EventDetail.EventTitle;
                 var url = Request.Url;
                 var baseurl = url.GetLeftPart(UriPartial.Authority);
-                strEventUrl = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(strEventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = lEvent.ToString() });
+                strEventUrl = baseurl + Url.Action("ViewEvent", "EventManagement", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(strEventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = lEvent.ToString() });
             }
             List<Email_Tag> EmailTag = new List<Email_Tag>();
             MyAccount ac = new MyAccount();

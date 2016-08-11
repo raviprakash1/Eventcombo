@@ -33,3 +33,40 @@ INSERT [dbo].[City] ([CityID], [CityName], [Latitude], [Longitude], [IsOnFooter]
 GO
 SET IDENTITY_INSERT [dbo].[City] OFF
 GO
+
+TRUNCATE TABLE Permission_Detail
+GO
+SET IDENTITY_INSERT [dbo].[Permission_Detail] ON 
+GO
+INSERT [dbo].[Permission_Detail] ([Permission_Id], [Permission_Desc], [Permission_Category]) VALUES (1, N'Event', N'APP')
+GO
+INSERT [dbo].[Permission_Detail] ([Permission_Id], [Permission_Desc], [Permission_Category]) VALUES (2, N'Deal', N'APP')
+GO
+INSERT [dbo].[Permission_Detail] ([Permission_Id], [Permission_Desc], [Permission_Category]) VALUES (3, N'Users', N'CMS')
+GO
+INSERT [dbo].[Permission_Detail] ([Permission_Id], [Permission_Desc], [Permission_Category]) VALUES (4, N'Events', N'CMS')
+GO
+INSERT [dbo].[Permission_Detail] ([Permission_Id], [Permission_Desc], [Permission_Category]) VALUES (5, N'Tickets', N'CMS')
+GO
+INSERT [dbo].[Permission_Detail] ([Permission_Id], [Permission_Desc], [Permission_Category]) VALUES (6, N'EMails', N'CMS')
+GO
+INSERT [dbo].[Permission_Detail] ([Permission_Id], [Permission_Desc], [Permission_Category]) VALUES (7, N'Messages', N'CMS')
+GO
+INSERT [dbo].[Permission_Detail] ([Permission_Id], [Permission_Desc], [Permission_Category]) VALUES (8, N'EventType', N'CMS')
+GO
+INSERT [dbo].[Permission_Detail] ([Permission_Id], [Permission_Desc], [Permission_Category]) VALUES (9, N'EventCategory', N'CMS')
+GO
+INSERT [dbo].[Permission_Detail] ([Permission_Id], [Permission_Desc], [Permission_Category]) VALUES (10, N'Users', N'CMS')
+GO
+INSERT [dbo].[Permission_Detail] ([Permission_Id], [Permission_Desc], [Permission_Category]) VALUES (11, N'Fee Settings', N'CMS')
+GO
+INSERT [dbo].[Permission_Detail] ([Permission_Id], [Permission_Desc], [Permission_Category]) VALUES (12, N'Article Management', N'CMS')
+GO
+INSERT [dbo].[Permission_Detail] ([Permission_Id], [Permission_Desc], [Permission_Category]) VALUES (13, N'Ticket Orders', N'CMS')
+GO
+INSERT [dbo].[Permission_Detail] ([Permission_Id], [Permission_Desc], [Permission_Category]) VALUES (14, N'Business Pages', N'CMS')
+GO
+INSERT [dbo].[Permission_Detail] ([Permission_Id], [Permission_Desc], [Permission_Category]) VALUES (15, N'Footer', N'CMS')
+GO
+SET IDENTITY_INSERT [dbo].[Permission_Detail] OFF
+GO

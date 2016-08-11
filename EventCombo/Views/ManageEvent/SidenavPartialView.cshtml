@@ -12,7 +12,7 @@
             </a>
         </div>
         <div class="panel panel-default menu_list">
-            <a class="menu_title" href="@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(Model.Eventtitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = Model.EventId.ToString() })" title="@Model.Eventtitle">
+            <a class="menu_title" href="@Url.Action("ViewEvent", "EventManagement", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(Model.Eventtitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = Model.EventId.ToString() })" title="@Model.Eventtitle">
                 <div class="panel-heading activeyellow act_ellipses">
                     @Model.Eventtitle
                 </div>
