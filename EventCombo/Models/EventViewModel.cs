@@ -440,6 +440,7 @@ namespace EventCombo.Models
     public bool DisplayEndTime { get; set; }
     public string EventUrl { get; set; }
     public string ButtonText { get; set; }
+    public string CheckoutText { get; set; }
     public string PriceRange { get; set; }
 
 

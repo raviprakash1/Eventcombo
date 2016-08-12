@@ -725,7 +725,7 @@ footer .social {
 
 header {
   width: 100%;
-  height: 150px;
+  height: 80px;
   position: fixed;
   top: 0;
   left: 0;
@@ -853,6 +853,10 @@ header.smaller {
     #search md-autocomplete md-autocomplete-wrap {
       box-shadow: none;
     }
+    
+  #search md-content {
+    background:none;
+  }
 
   #search md-content i {
     color: #999;
@@ -884,7 +888,7 @@ header.smaller {
   z-index: 99 !important;
 }
 
-  .search2:hover {
+  .search2.srhFocus,.search2:hover {
     top: 52px !important;
     left: calc(1vw - 5px) !important;
     color: #999999;

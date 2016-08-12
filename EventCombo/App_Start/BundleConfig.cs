@@ -101,6 +101,7 @@ namespace EventCombo
               .Include( "~/Content/AMaterial/angular-material.css",
                         "~/Content/AMaterial/gridiculous.css",
                         "~/Content/AMaterial/docs.css",
+                        "~/Content/AMaterial/themeOm.css",
                         "~/Content/AMaterial/header-footer.css"));
 
             bundles.Add(new StyleBundle("~/Content/angularMain-CE")
