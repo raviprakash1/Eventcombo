@@ -23,6 +23,15 @@
     });
   }
   window.onload = init();
+
+  $(document).ready(function () {
+    $('#search input').focus(function () {
+      $('#search').addClass('srhFocus');
+    });
+    $('#search input').blur(function () {
+      $('#search').removeClass('srhFocus');
+    });
+  });
 </script>
 <header ng-controller="HamburgerController">
   <div class="topnav2">

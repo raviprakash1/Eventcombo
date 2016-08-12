@@ -348,6 +348,9 @@
     <Compile Include="Models\AspNetUserClaim.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AspNetUserCode.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AspNetUserLogin.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -667,6 +670,7 @@
     <Compile Include="Service\ImageService.cs" />
     <Compile Include="Service\IManageAttendeesService.cs" />
     <Compile Include="Service\IManageEventService.cs" />
+    <Compile Include="Service\Notification\ForgetPasswordNotification.cs" />
     <Compile Include="Service\Notification\INotificationSender.cs" />
     <Compile Include="Service\ManageAttendeesService.cs" />
     <Compile Include="Service\Notification\NewUserWelcomeMessage.cs" />
@@ -809,6 +813,7 @@
     <Content Include="Content\AMaterial\material-datetimepicker.css" />
     <Content Include="Content\AMaterial\ngGallery.css" />
     <Content Include="Content\AMaterial\owl.carousel.css" />
+    <Content Include="Content\AMaterial\themeOm.css" />
     <Content Include="Content\AMaterial\ViewEvent.css" />
     <Content Include="Content\bootstrap-multiselect.css" />
     <Content Include="Content\custom-scroll.css" />

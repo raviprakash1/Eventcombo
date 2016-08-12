@@ -815,31 +815,37 @@ namespace EventCombo.Service
       if (allSoldOut)
       {
         evi.ButtonText = "Sold Out";
-        evi.PriceRange = "Sold Out";
+        evi.PriceRange = evi.ButtonText;
+        evi.CheckoutText = evi.ButtonText;
       } else if (allUnavailable)
       {
         evi.ButtonText = "Registration Closed";
-        evi.PriceRange = "Registration Closed";
+        evi.PriceRange = evi.ButtonText;
+        evi.CheckoutText = evi.ButtonText;
       }
       else if (allType == 1)
       {
         evi.ButtonText = "Register";
         evi.PriceRange = "Free";
+        evi.CheckoutText = "Checkout";
       }
       else if (allType == 3)
       {
         evi.ButtonText = "Donate";
         evi.PriceRange = "Donate";
+        evi.CheckoutText = "Checkout";
       }
       else if (allType == 4)
       {
         evi.ButtonText = "Get Tickets";
         evi.PriceRange = "Free, Donate";
+        evi.CheckoutText = "Checkout";
       }
       else
       {
         evi.ButtonText = "Get Tickets";
         evi.PriceRange = String.Format("${0:N2} - ${1:N2}", minTicketPrice, maxTicketPrice);
+        evi.CheckoutText = "Checkout";
       }
 
       PopulateOGPData(evi);
