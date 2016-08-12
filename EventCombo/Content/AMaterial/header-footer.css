@@ -1133,3 +1133,149 @@ header .topnav2 .md-button.md-icon-button {
 ._md-open-menu-container {
   z-index: 999 !important;
 }
+
+/****************************************************************************************************/
+.popOverlay {
+  background: rgba(0,0,0,.5);
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999; /*display:none;*/
+}
+
+.popBox {
+  background: #fff;
+  border-radius: 5px;
+  position: relative;
+  width: 400px;
+  max-width: 90%;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+}
+
+.popClose {
+  display: inline-block;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
+  .popClose i {
+    margin: 0;
+  }
+
+  .popClose:hover {
+    color: #0077c8;
+  }
+
+.blue-heading {
+  color: #0077c8;
+  font: 500 18px 'Roboto', Arial, Helvetica, sans-serif;
+  margin-top: 0;
+}
+
+.red-heading {
+  color: #e30076;
+  font: 500 18px 'Roboto', Arial, Helvetica, sans-serif;
+  margin-top: 0;
+}
+
+.infoText {
+  color: #000;
+  font: 15px 'Roboto', Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+.inputbox {
+  width: 100%;
+  height: 40px;
+  display: inline-block;
+  padding: 5px 0;
+  margin-top: 10px;
+  color: #7f7f7f;
+  font: 500 16px/16px 'Roboto', Arial, Helvetica, sans-serif;
+  border: none;
+  border-bottom: 2px solid #3f51b5;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.errorMessage {
+  color: #e30076;
+}
+
+md-input-container {
+  margin-bottom: 0 !important;
+}
+
+  md-input-container .md-errors-spacer {
+    min-height: inherit !important;
+  }
+
+.socLogin {
+  display: inline-block;
+  padding: 10px 30px;
+  margin: 2px;
+  border-radius: 5px;
+  color: #fff;
+  text-decoration: none;
+}
+
+  .socLogin.fb {
+    background: #3a589a;
+  }
+
+  .socLogin.in {
+    background: #2b77a6;
+  }
+
+  .socLogin.gp {
+    background: #e9544f;
+  }
+
+  .socLogin:hover {
+    color: #fff;
+    opacity: .9;
+  }
+
+.popLink {
+  color: #0077c8;
+  font: 500 15px 'Roboto', Arial, Helvetica, sans-serif;
+  padding: 5px;
+  display: inline-block;
+  background: none;
+  border: none;
+}
+
+a.popLink:hover, button.popLink:hover {
+  color: #000;
+  cursor: pointer;
+}
+
+.popLink.gray {
+  color: #888;
+}
+
+md-input-container label:not(._md-container-ignore).md-required:after {
+  content: '' !important;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
