@@ -364,4 +364,23 @@ namespace EventCombo.Models
     public string Password { get; set; }
   }
 
+  public class PasswordUpdateRequestViewModel
+  {
+    [Required]
+    [EmailAddress]
+    [StringLength(255, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 5)]
+    public string Email { get; set; }
+
+    [Required]
+    [StringLength(32, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 8)]
+    public string Password { get; set; }
+
+    [Required]
+    [StringLength(32, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 8)]
+    public string ConfirmPassword { get; set; }
+    
+    [Required]
+    [StringLength(32, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 8)]
+    public string Code { get; set; }
+  }
 }

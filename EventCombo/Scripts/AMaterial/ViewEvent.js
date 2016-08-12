@@ -214,27 +214,30 @@ eventComboApp.controller('gallery', ['$scope', 'eventInfoService', '$mdDialog', 
 
 
     $scope.carouselInitializer = function () {
-      $('#owlCarousel').owlCarousel({
-        dots: false,
-        nav: false,
-        responsive: {
-          0: {
-            items: 2
-          },
-          479: {
-            items: 3
-          },
-          767: {
-            items: 4
-          },
-          991: {
-            items: 5
-          },
-          1170: {
-            items: 6
+      setTimeout(function () {
+        $scope.owl = $('#owlCarousel');
+        $scope.owl.owlCarousel({
+          dots: false,
+          nav: false,
+          responsive: {
+            0: {
+              items: 2
+            },
+            479: {
+              items: 3
+            },
+            767: {
+              items: 4
+            },
+            991: {
+              items: 5
+            },
+            1170: {
+              items: 6
+            }
           }
-        }
-      });
+        });
+      }, 100);
     };
 
     $scope.status = '  ';

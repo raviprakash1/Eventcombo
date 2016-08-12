@@ -181,7 +181,7 @@
                   <md-option ng-value="tq" ng-repeat="tq in ticket.Quants" ng-selected="tq == 0">{{ tq }}</md-option>
                 </md-select>
               </md-input-container>
-              <input type="number" class="inputbox wdt100 margin-1em-right" ng-model="ticket.Amount"
+              <input type="number" class="inputbox" style="width:68px;" ng-model="ticket.Amount"
                      ng-change="onPriceChange()" ng-show="((ticket.TicketTypeId == 3) && !ticket.SoldOut)" ng-blur="onPriceBlur(ticket)">
               <div class="c3 text24 upp" ng-show="(ticket.SoldOut)">
                 Sold OUT

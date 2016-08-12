@@ -19,6 +19,8 @@ namespace EventCombo.Service
     private IUnitOfWorkFactory _factory;
     private IMapper _mapper;
     private Logger _logger;
+    private Random _random;
+    private const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
     public AccountService(IUnitOfWorkFactory factory, IMapper mapper)
     {
@@ -30,6 +32,7 @@ namespace EventCombo.Service
       _factory = factory;
       _mapper = mapper;
       _logger = LogManager.GetCurrentClassLogger();
+      _random = new Random();
     }
 
     public bool CheckUserName(string userName)
@@ -165,6 +168,47 @@ namespace EventCombo.Service
       }
 
       return result;
+    }
+
+    public string GetNewCode(int length)
+    {
+      return new string(Enumerable.Repeat(chars, length)
+        .Select(s => s[_random.Next(s.Length)]).ToArray());
+    }
+
+    public void ProcessNewCode(string userId, string userEmail, string code)
+    {
+      IRepository<AspNetUserCode> codeRepo = new GenericRepository<AspNetUserCode>(_factory.ContextFactory);
+      IRepository<EventCombo.Models.Profile> proRepo = new GenericRepository<EventCombo.Models.Profile>(_factory.ContextFactory);
+
+      var profile = proRepo.Get(filter: (p => p.UserID == userId)).FirstOrDefault();
+      string firsName = profile == null ? "" : profile.FirstName;
+      string lastName = profile == null ? "" : profile.LastName;
+
+      AspNetUserCode aspCode = new AspNetUserCode()
+      {
+        UserId = userId,
+        Code = code,
+        CreateDate = DateTime.UtcNow
+      };
+      codeRepo.Insert(aspCode);
+      _factory.ContextFactory.GetContext().SaveChanges();
+
+      var notification = new ForgotPasswordNotification(_factory, userEmail, firsName, lastName, ConfigurationManager.AppSettings.Get("DefaultEmail"), code);
+      notification.SendNotification(new SendMailService());
+    }
+
+    public bool TryUseCode(string userId, string code)
+    {
+      IRepository<AspNetUserCode> codeRepo = new GenericRepository<AspNetUserCode>(_factory.ContextFactory);
+      var aspCode = codeRepo.Get(filter: (c => (c.UserId == userId) && (c.Code == code) && (c.UseDate == null))).FirstOrDefault();
+      if (aspCode == null)
+        return false;
+
+      aspCode.UseDate = DateTime.UtcNow;
+      _factory.ContextFactory.GetContext().SaveChanges();
+
+      return true;
     }
   }
 }
