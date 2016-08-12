@@ -1845,6 +1845,79 @@ namespace EventCombo.Controllers
 
     [HttpGet]
     [AllowAnonymous]
+    public async Task<ActionResult> ForgotPasswordAPI(string json)
+    {
+      ActionResultViewModel result = new ActionResultViewModel()
+      {
+        Success = false,
+        ErrorCode = 1,
+        ErrorMessage = "Error in email."
+      };
+
+      ForgotPasswordViewModel model = JsonConvert.DeserializeObject<ForgotPasswordViewModel>(json);
+      if (TryValidateModel(model))
+      {
+        var user = await UserManager.FindByEmailAsync(model.Email);
+        if (user != null)
+          _accService.ProcessNewCode(user.Id, model.Email, _accService.GetNewCode(8));
+        result.Success = true;
+        result.ErrorCode = 0;
+        result.ErrorMessage = "";
+      }
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = result;
+      return res;
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<ActionResult> ResetPasswordAPI(string json)
+    {
+      ActionResultViewModel result = new ActionResultViewModel()
+      {
+        Success = false,
+        ErrorCode = 1,
+        ErrorMessage = "Error password or code."
+      };
+
+      PasswordUpdateRequestViewModel model = JsonConvert.DeserializeObject<PasswordUpdateRequestViewModel>(json);
+      if (TryValidateModel(model))
+      {
+        var user = await UserManager.FindByEmailAsync(model.Email);
+        if (user != null)
+        {
+          if (_accService.TryUseCode(user.Id, model.Code))
+          {
+
+            result.Success = true;
+            result.ErrorCode = 0;
+            result.ErrorMessage = "";
+
+          }
+          else
+          {
+            result.Success = false;
+            result.ErrorCode = 1;
+            result.ErrorMessage = "";
+          }
+
+        }
+        else
+        {
+          result.Success = false;
+          result.ErrorCode = 2;
+          result.ErrorMessage = "";
+        }
+      }
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = result;
+      return res;
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
     public ActionResult CheckUserName(string userName)
     {
       ActionResultViewModel result = new ActionResultViewModel { Success = false };
