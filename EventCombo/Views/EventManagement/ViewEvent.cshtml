@@ -64,11 +64,11 @@
             <span><a href="#" title="Add EventTitle to your favorites"><i class="material-icons">favorite</i></a> @(Model.FavoriteCount.ToString())</span>
             <span><a href="#" title="Vote for EventTitle"><i class="material-icons">thumb_up</i></a> @(Model.VoteCount.ToString())</span>
             <span class="social" social="SHARE THIS">
-              <a href="javascript:void(0)" title="Email" ng-show="false"><img width="20px" alt="Email" src="~/Images/AMaterial/mail-square.svg"></a>
-              <a href="javascript:void(0)" title="Facebook" onclick="FacebookShare('@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Facebook" src="~/Images/AMaterial/square-facebook.svg"></a>
-              <a href="javascript:void(0)" title="Twitter" onclick="TwitterShare('@Model.EventTitle.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Twitter" src="~/Images/AMaterial/square-twitter.svg"></a>
-              <a href="javascript:void(0)" title="LinkedIn" onclick="LinkedInShare('@Model.EventTitle.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)', '@(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Html.Raw(Model.EventDescription!=null ?Model.EventDescription : "").ToString()), 200, 250, ".").Replace("'", @"\'"))')"><img width="20px" alt="LinkedIn" src="~/Images/AMaterial/square-linkedin.svg"></a>
-              <a href="javascript:void(0)" title="FB Messenger" ng-show="false"><img width="20px" alt="FB Messenger" src="~/Images/AMaterial/fb_messenger.svg"></a>
+              <a href="javascript:void(0)" title="Email" ng-show="false"><img width="20px" alt="Share @Model.EventTitle via Email" src="~/Images/AMaterial/mail-square.svg"></a>
+              <a href="javascript:void(0)" title="Facebook" onclick="FacebookShare('@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Facebook" src="~/Images/AMaterial/square-facebook.svg"></a>
+              <a href="javascript:void(0)" title="Twitter" onclick="TwitterShare('@Model.EventTitle.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Twitter" src="~/Images/AMaterial/square-twitter.svg"></a>
+              <a href="javascript:void(0)" title="LinkedIn" onclick="LinkedInShare('@Model.EventTitle.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)', '@(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Html.Raw(Model.EventDescription!=null ?Model.EventDescription : "").ToString()), 200, 250, ".").Replace("'", @"\'"))')"><img width="20px" alt="Share @Model.EventTitle on LinkedIn" src="~/Images/AMaterial/square-linkedin.svg"></a>
+              <a href="javascript:void(0)" title="FB Messenger" ng-show="false"><img width="20px" alt="Share @Model.EventTitle on Facebook Messenger" src="~/Images/AMaterial/fb_messenger.svg"></a>
             </span>
           </div>
         </div>
@@ -103,16 +103,16 @@
             <span class="social">
               @if (!String.IsNullOrEmpty(Model.Organizer.FBLink))
               {
-                <a href="@Model.Organizer.FBLink"><img width="20px" alt="Facebook" src="images/square-facebook.svg"></a>
+                <a href="@Model.Organizer.FBLink"><img width="20px" alt="Facebook" src="~/Images/AMaterial/square-facebook.svg"></a>
 
               }
               @if (!String.IsNullOrEmpty(Model.Organizer.TwitterLink))
               {
-                <a href="@Model.Organizer.TwitterLink"><img width="20px" alt="Twitter" src="images/square-twitter.svg"></a>
+                <a href="@Model.Organizer.TwitterLink"><img width="20px" alt="Twitter" src="~/Images/AMaterial/square-twitter.svg"></a>
               }
               @if (!String.IsNullOrEmpty(Model.Organizer.LinkdeInLink))
               {
-                <a href="@Model.Organizer.LinkdeInLink"><img width="20px" alt="LinkedIn" src="images/square-linkedin.svg"></a>
+                <a href="@Model.Organizer.LinkdeInLink"><img width="20px" alt="LinkedIn" src="~/Images/AMaterial/square-linkedin.svg"></a>
               }
             </span>
           </div>
@@ -181,7 +181,7 @@
                   <md-option ng-value="tq" ng-repeat="tq in ticket.Quants" ng-selected="tq == 0">{{ tq }}</md-option>
                 </md-select>
               </md-input-container>
-              <input type="number" class="inputbox wdt100 margin-1em-right" ng-model="ticket.Amount"
+              <input type="number" class="inputbox" style="width:68px;" ng-model="ticket.Amount"
                      ng-change="onPriceChange()" ng-show="((ticket.TicketTypeId == 3) && !ticket.SoldOut)" ng-blur="onPriceBlur(ticket)">
               <div class="c3 text24 upp" ng-show="(ticket.SoldOut)">
                 Sold OUT
@@ -235,7 +235,7 @@
           <span class="tot text-right">Total: ${{eventInfo.TotalPrice.toFixed(2)}}</span>
         </div>
         <div class="c12 buttons text-right">
-          <a href="javascript:void(0)" class="makeLive" ng-click="OrderCheckout();">Checkout</a>
+          <a href="javascript:void(0)" class="makeLive" ng-click="OrderCheckout();">@Model.CheckoutText</a>
         </div>
       </div>
     </section>

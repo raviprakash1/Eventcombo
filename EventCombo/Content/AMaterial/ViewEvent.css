@@ -1,86 +1,6 @@
-﻿@charset "utf-8";
-/*
-Designer		: Om Prakash Choudhary
-Designer's ID	: omtonk@gmail.com
-Company			: The Catalyst
-Company Website	: www.thecatalystindia.in
-
-********* THEME-OM SETTINGS *************************************************************************/
-body	{ background:#fff; color:#000; font:14px 'Roboto', Arial, Helvetica, sans-serif; text-align:justify; cursor:default; margin:0; padding:0; padding-top:80px !important;}
-*		{ box-sizing:border-box; outline:none;}
-a img	{ border:none; outline:none; display:block;}
-a,img	{ outline:none; color:inherit;}
-a:focus	{ outline:none; text-decoration:none;}
-a:hover { color:inherit; text-decoration:none;}
-img		{ max-width:100%;}
-hr		{ border:none; border-bottom:1px solid #ccc;}
-h1,h2,h3,h4,h5,h6 { text-align:initial;}
-
-.relv		{ position:relative;}
-.text-left	{ text-align:left;}
-.text-center{ text-align:center;}
-.text-right	{ text-align:right;}
-.lFloat		{ float:left;}
-.rFloat		{ float:right;}
-.max		{ max-width:100%;}
-.padded,.Padded { padding-left:0; padding-right:0;}
-.clear		{ display:table; width:100%; clear:both;}
-
-.Image	{ background:#fff; padding:4px; border:1px solid #ddd;}
-.lImage { float:left; margin-right:15px; max-width:100%;}
-.rImage { float:right; margin-left:15px; max-width:100%;}
-.cImage { text-align:center;}
-.cImage img { max-width:100%;}
-.fImage { width:100%; margin:10px 0;}
-.white	{ color:#fff;}
-
-.margin-1em-all		{ margin:15px;}
-.margin-1em-top		{ margin-top:15px;}
-.margin-1em-right	{ margin-right:15px;}
-.margin-1em-bottom	{ margin-bottom:15px;}
-.margin-1em-left	{ margin-left:15px;}
-.margin-2em-all		{ margin:30px;}
-.margin-2em-top		{ margin-top:30px;}
-.margin-2em-right	{ margin-right:30px;}
-.margin-2em-bottom	{ margin-bottom:30px;}
-.margin-2em-left	{ margin-left:30px;}
-.margin-top-20		{ margin-top:20px;}
-.margin-top-60 		{ margin-top:60px;}
-.padding-1em-all	{ padding:15px;}
-.padding-1em-top	{ padding-top:15px;}
-.padding-1em-right	{ padding-right:15px;}
-.padding-1em-bottom	{ padding-bottom:15px;}
-.padding-1em-left	{ padding-left:15px;}
-.padding-2em-all	{ padding:30px;}
-.padding-2em-top	{ padding-top:30px;}
-.padding-2em-right	{ padding-right:30px;}
-.padding-2em-bottom	{ padding-bottom:30px;}
-.padding-2em-left	{ padding-left:30px;}
-.paddleft50			{ padding-left:50px;}
-.paddtop70			{ padding-top:70px;}
-.paddbottom70		{ padding-bottom:70px;}
-
-.parallax		{ background-repeat:no-repeat; background-position:center center; background-size:cover; background-attachment:fixed; position:relative;}
-.pattern		{ position:relative;}
-.pattern:after	{ content:""; background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABhJREFUeNpiYGBgePz//38GRhABAgABBgBFTAbfCBNE2AAAAABJRU5ErkJggg==); width:100%; height:100%; position:absolute; top:0; left:0; z-index:0;}
-.pattern > div	{ position:relative; z-index:1;}
-
-.scroll { overflow-y:auto; scrollbar-face-color:rgba(220,225,225,.6); scrollbar-track-color:rgba(220,225,225,.8); scrollbar-arrow-color:rgba(220,225,225,.6); max-height:150px;}
-.scroll::-webkit-scrollbar		{ width:12px; background:rgba(220,225,225,.3);}
-.scroll::-webkit-scrollbar-thumb{ background:rgba(220,225,225,.6);}
-.scroll:hover::-webkit-scrollbar{ background:rgba(220,225,225,.4);}
-
-.container { width:100%; max-width:1170px; margin-left:auto; margin-right:auto;}
-.container2 { width:100%; max-width:992px; margin-left:auto; margin-right:auto;}
-.myrow { width:100%; display:table;}
-.col-full { display:inline-block; width:100%; float:left; padding-left:15px; padding-right:15px;}
-.col-half { display:inline-block; width:50%; float:left; padding-left:15px; padding-right:15px;}
-.col-oneThird { display:inline-block; width:33.3333%; float:left; padding-left:15px; padding-right:15px;}
-.col-oneFourth { display:inline-block; width:25%; float:left; padding-left:15px; padding-right:15px;}
-/****************************************************************************************************/
-.eventBanner { background-color:#00cafd; background-repeat:no-repeat; background-position:center center; background-attachment:fixed; background-size:cover;}
+﻿.eventBanner { background-color:#00cafd; background-repeat:no-repeat; background-position:center center; background-attachment:fixed; background-size:cover;}
 .eventVanue { background:rgba(255,255,255,.8); padding:15px 30px; margin-top:70px; position:relative;}
-.event-name { color:#304756; font:500 36px 'Roboto', Arial, Helvetica, sans-serif; margin:0;}
+.event-name { color:#304756; font:500 36px 'Roboto', Arial, Helvetica, sans-serif; margin:0; text-align:left;}
 .vanue-name { color:#585858; font:500 24px 'Roboto', Arial, Helvetica, sans-serif; margin-top:10px; margin-bottom:15px;}
 .donation { color:#000; text-transform:uppercase; font:bold 24px Arial, Helvetica, sans-serif;}
 .adiv { color:#304756; font:500 18px 'Roboto', Arial, Helvetica, sans-serif; margin-bottom:10px;}
@@ -123,7 +43,7 @@ h1,h2,h3,h4,h5,h6 { text-align:initial;}
 .smallFee { font-size:14px; color:#666;}
 .ticdes { color:#8c8b8b; font-size:12px;}
 .ticdetail { color:#304756; font-size:12px;}
-.inputbox { width:auto; height:40px; display:inline-block; padding:5px 15px; color:#7f7f7f; font:500 24px/24px "Roboto",Arial,Helvetica,sans-serif; background:none; border:none; border-bottom:1px solid #e0e0e0; outline:none; -webkit-appearance:none; -moz-appearance:none; appearance:none;}
+.inputbox { width:auto; height:40px; display:inline-block; padding:5px 2px; color:#000; font:16px/16px "Roboto",Arial,Helvetica,sans-serif; background:none; border:none; border-bottom:1px solid rgba(0,0,0,.12); outline:none; -webkit-appearance:none; -moz-appearance:none; appearance:none; text-align:center;}
 .option { width:auto; height:40px; display:inline-block; padding:5px 15px; color:#7f7f7f; font:500 24px/24px "Roboto",Arial,Helvetica,sans-serif; border:none; border-bottom:1px solid #e0e0e0; outline:none; -webkit-appearance:none; -moz-appearance:none; appearance:none; background:
 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAoCAYAAADdaosOAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MTY1NjVEQkEzMkQ5MTFFNkI3OEFDMEMyMzUyRjM0NjciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MTY1NjVEQkIzMkQ5MTFFNkI3OEFDMEMyMzUyRjM0NjciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoxNjU2NURCODMyRDkxMUU2Qjc4QUMwQzIzNTJGMzQ2NyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoxNjU2NURCOTMyRDkxMUU2Qjc4QUMwQzIzNTJGMzQ2NyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PjZT9mAAAABTSURBVHjaYvz//z8DNsDEgAOMSgyIBMv8+fP/P3z4EEVQXl6egcnR0RFDNUiMSUFBAawCWTVIjAmmAlk12A4QgawLxIZLoOsCAcbR5DM0JAACDACwfxKRywS66QAAAABJRU5ErkJggg==') no-repeat right center;}
 .wdt100 { width:100px;}
@@ -149,7 +69,7 @@ img.ng-thumb { height:100px;}
 .ng-gallery-content > .ng-thumbnails-wrapper { overflow:hidden;}
 #mapView { height:430px; margin-bottom:100px;}
 #owlCarousel, #owlCarousel img, .owl-carousel, .owl-carousel img { padding:2px;}
-#owlCarousel img, .owl-carousel img { cursor:pointer;}
+#owlCarousel img, .owl-carousel img { cursor:pointer; max-width:300px;}
 .md-dialog-container { z-index:999 !important;}
 .md-dialog-container img { display:block; width:100%; margin-bottom:10px;}
 /*******************************************************************/
@@ -191,7 +111,6 @@ footer .social img { margin-right:3px;}
 }
 @media screen and (min-width:0) and (max-width:767px)
 {
-	.col-half, .col-oneThird, .col-oneFourth { width:100%; margin-bottom:10px;}
 	.eventVanue { padding-bottom:40px;}
 	.event-name { font-size:24px;}
 	.vanue-name, .red-heading { font-size:18px;}
@@ -199,5 +118,4 @@ footer .social img { margin-right:3px;}
 	.addInfo, .viewInfo { font-size:12px;}
 	.deal { padding-left:15px; padding-top:120px;}
 	#mapView { height:300px;}
-	.hide768 { display:none;}
 }

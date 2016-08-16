@@ -155,6 +155,8 @@
         <EntityTypeShape EntityType="EventComboModel.EventTicket_View" Width="1.5" PointX="27.375" PointY="0.75" />
         <AssociationConnector Association="EventComboModel.EventTypeEvent" />
         <AssociationConnector Association="EventComboModel.EventCategoryEvent" />
+        <EntityTypeShape EntityType="EventComboModel.AspNetUserCode" Width="1.5" PointX="17" PointY="3.75" />
+        <AssociationConnector Association="EventComboModel.AspNetUserAspNetUserCode" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

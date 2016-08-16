@@ -84,6 +84,17 @@
           <Property Name="ClaimType" Type="nvarchar(max)" />
           <Property Name="ClaimValue" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="AspNetUserCode">
+          <Key>
+            <PropertyRef Name="AspNetUserCodeId" />
+          </Key>
+          <Property Name="AspNetUserCodeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="SendDate" Type="datetime" />
+          <Property Name="UseDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="AspNetUserLogins">
           <Key>
             <PropertyRef Name="LoginProvider" />
@@ -1634,6 +1645,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="ArticleImage" EntityType="Self.ArticleImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserCode" EntityType="Self.AspNetUserCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
@@ -2084,6 +2096,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <NavigationProperty Name="Order_Detail_T" Relationship="EventComboModel.AspNetUserOrder_Detail_T" FromRole="AspNetUser" ToRole="Order_Detail_T" />
           <Property Name="OldUserID" Type="Int32" />
           <Property Name="LastLoginTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AspNetUserCodes" Relationship="EventComboModel.AspNetUserAspNetUserCode" FromRole="AspNetUser" ToRole="AspNetUserCode" />
         </EntityType>
         <EntityType Name="BillingAddress">
           <Key>
@@ -3093,6 +3106,11 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <AssociationSet Name="EventCategoryEvent" Association="EventComboModel.EventCategoryEvent">
             <End Role="EventCategory" EntitySet="EventCategories" />
             <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <EntitySet Name="AspNetUserCodes" EntityType="EventComboModel.AspNetUserCode" />
+          <AssociationSet Name="AspNetUserAspNetUserCode" Association="EventComboModel.AspNetUserAspNetUserCode">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserCode" EntitySet="AspNetUserCodes" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
@@ -4491,6 +4509,30 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Principal>
             <Dependent Role="Event">
               <PropertyRef Name="EventCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AspNetUserCode">
+          <Key>
+            <PropertyRef Name="AspNetUserCodeId" />
+          </Key>
+          <Property Name="AspNetUserCodeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SendDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.AspNetUserAspNetUserCode" FromRole="AspNetUserCode" ToRole="AspNetUser" />
+          <Property Name="UseDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="AspNetUserAspNetUserCode">
+          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="EventComboModel.AspNetUserCode" Role="AspNetUserCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserCode">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5916,6 +5958,18 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="EventTitle" ColumnName="EventTitle" />
                 <ScalarProperty Name="Sno" ColumnName="Sno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserCodes">
+            <EntityTypeMapping TypeName="EventComboModel.AspNetUserCode">
+              <MappingFragment StoreEntitySet="AspNetUserCode">
+                <ScalarProperty Name="UseDate" ColumnName="UseDate" />
+                <ScalarProperty Name="SendDate" ColumnName="SendDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AspNetUserCodeId" ColumnName="AspNetUserCodeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

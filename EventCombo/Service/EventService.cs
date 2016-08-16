@@ -228,6 +228,7 @@ namespace EventCombo.Service
       me.EventID = ev.EventID;
       me.Frequency = ev.DateInfo.Frequency.ToString();
 
+      /*
       int tzId;
       Int32.TryParse(ev.TimeZone, out tzId);
       TimeZoneDetail tz = tzRepo.GetByID(tzId);
@@ -236,7 +237,7 @@ namespace EventCombo.Service
         TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(tz.TimeZone);
         ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.StartDateTime, userTimeZone);
         ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.EndDateTime, userTimeZone); ;
-      }
+      }*/
       me.M_Startfrom = ev.DateInfo.StartDateTime;
       me.M_StartTo = ev.DateInfo.EndDateTime;
       if (ev.DateInfo.Frequency == ScheduleFrequency.Weekly)
@@ -265,7 +266,7 @@ namespace EventCombo.Service
         se = new EventVenue();
       se.EventID = ev.EventID;
 
-
+      /*
       int tzId;
       Int32.TryParse(ev.TimeZone, out tzId);
       TimeZoneDetail tz = tzRepo.GetByID(tzId);
@@ -274,7 +275,7 @@ namespace EventCombo.Service
         TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(tz.TimeZone);
         ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.StartDateTime, userTimeZone);
         ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.EndDateTime, userTimeZone); ;
-      }
+      }*/
       se.E_Startdate = ev.DateInfo.StartDateTime;
       se.E_Enddate = ev.DateInfo.EndDateTime;
       se.EventStartDate = ev.DateInfo.StartDateTime.ToString("MM/dd/yyyy");
@@ -651,6 +652,9 @@ namespace EventCombo.Service
         evi.Longitude = address.Longitude;
         evi.Latitude = address.Latitude;
       }
+      else if (evi.OnlineEvent)
+        evi.Address = "Online";
+
       evi.ShowRemainingTickets = ev.Ticket_showremain == "1";
 
       evi.FavoriteCount = favRepo.Get(filter: (fav => fav.eventId == evi.EventId)).Count();
@@ -732,8 +736,8 @@ namespace EventCombo.Service
         DateTime saleStartDate;
         DateTime saleEndDate;
         DateTime.TryParse(tq.TQD_StartDate + " " + tq.TQD_StartTime, out ticketDate);
-        if (ticketDate != default(DateTime))
-          ticketDate = TimeZoneInfo.ConvertTimeFromUtc(ticketDate, tz);
+        //if (ticketDate != default(DateTime))
+        //  ticketDate = TimeZoneInfo.ConvertTimeFromUtc(ticketDate, tz);
         DateTime.TryParse((tq.Ticket.Sale_Start_Date ?? default(DateTime)).ToShortDateString() + " " + tq.Ticket.Sale_Start_Time, out saleStartDate);
         DateTime.TryParse((tq.Ticket.Sale_End_Date ?? default(DateTime)).ToShortDateString() + " " + tq.Ticket.Sale_End_Time, out saleEndDate);
 
@@ -769,7 +773,7 @@ namespace EventCombo.Service
             Price = (tq.Ticket.Price ?? 0) - (tq.Ticket.T_Discount ?? 0),
             TotalPrice = tq.Ticket.TicketTypeID == 2 ? tq.Ticket.TotalPrice ?? 0 : 0,
             StartDate = ticketDate,
-            VenueName = tq.Address.VenueName,
+            VenueName = evi.OnlineEvent ? "Online" : tq.Address.VenueName,
             ShowFee = tq.Ticket.Fees_Type != "1",
             Fee = tq.Ticket.Fees_Type != "1" ? (tq.Ticket.TotalPrice ?? 0) - (tq.Ticket.Price ?? 0) + (tq.Ticket.T_Discount ?? 0) : 0,
             ShowRemaining = tq.Ticket.T_Displayremaining == "1",
@@ -807,34 +811,41 @@ namespace EventCombo.Service
         }
       }
       evi.Tickets = tickets;
+      allSoldOut = allSoldOut && (tickets.Count() > 0);
       if (allSoldOut)
       {
         evi.ButtonText = "Sold Out";
-        evi.PriceRange = "Sold Out";
+        evi.PriceRange = evi.ButtonText;
+        evi.CheckoutText = evi.ButtonText;
       } else if (allUnavailable)
       {
         evi.ButtonText = "Registration Closed";
-        evi.PriceRange = "Registration Closed";
+        evi.PriceRange = evi.ButtonText;
+        evi.CheckoutText = evi.ButtonText;
       }
       else if (allType == 1)
       {
         evi.ButtonText = "Register";
         evi.PriceRange = "Free";
+        evi.CheckoutText = "Checkout";
       }
       else if (allType == 3)
       {
         evi.ButtonText = "Donate";
         evi.PriceRange = "Donate";
+        evi.CheckoutText = "Checkout";
       }
       else if (allType == 4)
       {
         evi.ButtonText = "Get Tickets";
         evi.PriceRange = "Free, Donate";
+        evi.CheckoutText = "Checkout";
       }
       else
       {
         evi.ButtonText = "Get Tickets";
         evi.PriceRange = String.Format("${0:N2} - ${1:N2}", minTicketPrice, maxTicketPrice);
+        evi.CheckoutText = "Checkout";
       }
 
       PopulateOGPData(evi);

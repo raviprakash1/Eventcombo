@@ -11,6 +11,7 @@ using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using EventCombo.ViewModels;
+using System.Text.RegularExpressions;
 namespace EventCombo.Controllers
 {
   public class EventManagementController : BaseController
@@ -46,6 +47,11 @@ namespace EventCombo.Controllers
 
       }
       string userId = Session["AppId"].ToString();
+
+      Session["logo"] = "events";
+      Session["Fromname"] = "events";
+      var url = Url.Action("CreateEvent", "EventManagement");
+      Session["ReturnUrl"] = "CreateEvent~" + url;
 
       EventViewModel ev = _eService.CreateEvent(userId);
       PopulateBaseViewModel(ev, "Create Event | Eventcombo");
@@ -104,6 +110,11 @@ namespace EventCombo.Controllers
 
       EventInfoViewModel ev = _eService.GetEventInfo(eventId, userId, Url);
       PopulateBaseViewModel(ev, String.Format("{0} | Eventcombo", ev.EventTitle));
+
+      Session["Fromname"] = "events";
+      Session["logo"] = "events";
+      var url = Url.RouteUrl("ViewEvent", new { strEventDs = Regex.Replace(ev.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ev.EventId.ToString() });
+      Session["ReturnUrl"] = "ViewEvent~" + url;
 
       return View(ev);
     }

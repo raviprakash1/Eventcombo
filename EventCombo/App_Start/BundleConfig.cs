@@ -101,6 +101,7 @@ namespace EventCombo
               .Include( "~/Content/AMaterial/angular-material.css",
                         "~/Content/AMaterial/gridiculous.css",
                         "~/Content/AMaterial/docs.css",
+                        "~/Content/AMaterial/themeOm.css",
                         "~/Content/AMaterial/header-footer.css"));
 
             bundles.Add(new StyleBundle("~/Content/angularMain-CE")
@@ -134,7 +135,8 @@ namespace EventCombo
                         "~/Scripts/AMaterial/ngRepeatOwlCarousel.js",
                         "~/Scripts/AMaterial/classie.js",
                         "~/Scripts/AMaterial/EventComboApp.js",
-                        "~/Scripts/AMaterial/header.js"));
+                        "~/Scripts/AMaterial/header.js",
+                        "~/Scripts/AMaterial/AccountController.js"));
             bundles.Add(new ScriptBundle("~/Scripts/AMaterial/viewEvent")
               .Include("~/Scripts/AMaterial/owl.carousel.min.js"));
             bundles.Add(new ScriptBundle("~/Scripts/AMaterial/viewEventFooter")

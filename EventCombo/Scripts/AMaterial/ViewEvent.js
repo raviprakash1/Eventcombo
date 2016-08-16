@@ -99,6 +99,7 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
     var loadInfo = function (eventId) {
       $http.get('/eventmanagement/geteventinfo', { params: { eventId: eventId } }).then(function (response) {
         eventInfo = response.data;
+        console.log(eventInfo);
         angular.forEach(eventInfo.Tickets, function (ticket, key) {
           if (ticket.TicketTypeId == 1)
             ticket.TypeName = 'FREE'
@@ -213,27 +214,30 @@ eventComboApp.controller('gallery', ['$scope', 'eventInfoService', '$mdDialog', 
 
 
     $scope.carouselInitializer = function () {
-      $('#owlCarousel').owlCarousel({
-        dots: false,
-        nav: false,
-        responsive: {
-          0: {
-            items: 2
-          },
-          479: {
-            items: 3
-          },
-          767: {
-            items: 4
-          },
-          991: {
-            items: 5
-          },
-          1170: {
-            items: 6
+      setTimeout(function () {
+        $scope.owl = $('#owlCarousel');
+        $scope.owl.owlCarousel({
+          dots: false,
+          nav: false,
+          responsive: {
+            0: {
+              items: 2
+            },
+            479: {
+              items: 3
+            },
+            767: {
+              items: 4
+            },
+            991: {
+              items: 5
+            },
+            1170: {
+              items: 6
+            }
           }
-        }
-      });
+        });
+      }, 100);
     };
 
     $scope.status = '  ';
@@ -312,18 +316,21 @@ function DialogController($scope, $mdDialog, eventInfoService, $filter) {
 
 function FormatDateTime(date) {
   var myDate = new Date(date);
+  myDate = new Date(myDate.getTime() + myDate.getTimezoneOffset() * 60000);
   var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
   return myDate.toLocaleDateString('en-US', options);
 }
 
 function FormatDateTimeWithWeekday(date) {
   var myDate = new Date(date);
+  myDate = new Date(myDate.getTime() + myDate.getTimezoneOffset() * 60000);
   var options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
   return myDate.toLocaleDateString('en-US', options);
 }
 
 function FormatTime(date) {
   var myDate = new Date(date);
+  myDate = new Date(myDate.getTime() + myDate.getTimezoneOffset() * 60000);
   var options = { hour: 'numeric', minute: 'numeric' };
   return myDate.toLocaleTimeString('en-US', options);
 }
