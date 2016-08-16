@@ -178,22 +178,37 @@ namespace EventCombo.Service
 
     public void ProcessNewCode(string userId, string userEmail, string code)
     {
-      IRepository<AspNetUserCode> codeRepo = new GenericRepository<AspNetUserCode>(_factory.ContextFactory);
-      IRepository<EventCombo.Models.Profile> proRepo = new GenericRepository<EventCombo.Models.Profile>(_factory.ContextFactory);
+      string firsName;
+      string lastName;
+      using (var uow = _factory.GetUnitOfWork())
+        try
+        {
+          IRepository<AspNetUserCode> codeRepo = new GenericRepository<AspNetUserCode>(_factory.ContextFactory);
+          IRepository<EventCombo.Models.Profile> proRepo = new GenericRepository<EventCombo.Models.Profile>(_factory.ContextFactory);
 
-      var profile = proRepo.Get(filter: (p => p.UserID == userId)).FirstOrDefault();
-      string firsName = profile == null ? "" : profile.FirstName;
-      string lastName = profile == null ? "" : profile.LastName;
+          var profile = proRepo.Get(filter: (p => p.UserID == userId)).FirstOrDefault();
+          firsName = profile == null ? "" : profile.FirstName;
+          lastName = profile == null ? "" : profile.LastName;
 
-      AspNetUserCode aspCode = new AspNetUserCode()
-      {
-        UserId = userId,
-        Code = code,
-        CreateDate = DateTime.UtcNow
-      };
-      codeRepo.Insert(aspCode);
-      _factory.ContextFactory.GetContext().SaveChanges();
+          var codes = codeRepo.Get(filter: (c => (c.UserId == userId) && (c.UseDate == null)));
+          foreach (var codeDB in codes)
+            codeDB.UseDate = DateTime.UtcNow;
 
+          AspNetUserCode aspCode = new AspNetUserCode()
+          {
+            UserId = userId,
+            Code = code,
+            CreateDate = DateTime.UtcNow
+          };
+          codeRepo.Insert(aspCode);
+          uow.Context.SaveChanges();
+          uow.Commit();
+        }
+        catch (Exception ex)
+        {
+          uow.Rollback();
+          throw new Exception("Exception during ProcessNewCode. See inner exception.", ex);
+        }
       var notification = new ForgotPasswordNotification(_factory, userEmail, firsName, lastName, ConfigurationManager.AppSettings.Get("DefaultEmail"), code);
       notification.SendNotification(new SendMailService());
     }
@@ -210,5 +225,32 @@ namespace EventCombo.Service
 
       return true;
     }
+
+    public bool CheckCodePassword(string userId, string Code)
+    {
+      bool result;
+      DateTime checkTime = DateTime.UtcNow.AddMinutes(-30);
+      IRepository<AspNetUserCode> codeRepo = new GenericRepository<AspNetUserCode>(_factory.ContextFactory);
+      var userCode = codeRepo.Get(filter: (c => (c.UserId == userId) && (c.Code == Code)
+        && (c.UseDate == null) && (c.CreateDate >= checkTime))).FirstOrDefault();
+      result = userCode != null;
+      return result;
+    }
+
+    public void SendNewPasswordNotification(string userId, string userEmail)
+    {
+      string firsName;
+      string lastName;
+      IRepository<EventCombo.Models.Profile> proRepo = new GenericRepository<EventCombo.Models.Profile>(_factory.ContextFactory);
+
+      var profile = proRepo.Get(filter: (p => p.UserID == userId)).FirstOrDefault();
+      firsName = profile == null ? "" : profile.FirstName;
+      lastName = profile == null ? "" : profile.LastName;
+
+      var notification = new NewPasswordNotification(_factory, userEmail, firsName, lastName, ConfigurationManager.AppSettings.Get("DefaultEmail"));
+      notification.SendNotification(new SendMailService());
+    }
+
+
   }
 }

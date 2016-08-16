@@ -59,9 +59,9 @@ namespace EventCombo.Service
     public void SendNotification(ISendMailService _service)
     {
       IRepository<Email_Template> etRepo = new GenericRepository<Email_Template>(_factory.ContextFactory);
-      var eTemplate = etRepo.Get(filter: (et => et.Template_Name == "email_lost_pwd2")).SingleOrDefault();
+      var eTemplate = etRepo.Get(filter: (et => et.Template_Tag == "email_lost_pwd2")).SingleOrDefault();
       if (eTemplate == null)
-        throw new Exception("Email template 'email_welcome' not found.");
+        throw new Exception("Email template 'email_lost_pwd2' not found.");
 
       List<KeyValuePair<string, string>> tagList = new List<KeyValuePair<string, string>>();
       tagList.Add(new KeyValuePair<string, string>("UserEmailID", _userEmail));
@@ -80,7 +80,8 @@ namespace EventCombo.Service
       if (!String.IsNullOrEmpty(eTemplate.Bcc))
         _service.Message.Bcc.Add(new MailAddress(ReplaceTags(eTemplate.Bcc, tagList)));
       _service.Message.Subject = eTemplate.Subject;
-      _service.Message.Body = new MvcHtmlString(HttpUtility.HtmlDecode(eTemplate.TemplateHtml)).ToHtmlString();
+      _service.Message.IsBodyHtml = true;
+      _service.Message.Body = ReplaceTags(new MvcHtmlString(HttpUtility.HtmlDecode(eTemplate.TemplateHtml)).ToHtmlString(), tagList);
       _service.SendMail();
     }
   }

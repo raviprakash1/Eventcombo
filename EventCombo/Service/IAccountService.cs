@@ -18,5 +18,7 @@ namespace EventCombo.Service
     string GetNewCode(int length);
     void ProcessNewCode(string userId, string userEmail, string code);
     bool TryUseCode(string userId, string code);
+    bool CheckCodePassword(string userId, string Code);
+    void SendNewPasswordNotification(string userId, string userEmail);
   }
 }

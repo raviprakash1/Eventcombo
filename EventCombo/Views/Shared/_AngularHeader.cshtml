@@ -115,7 +115,7 @@
           <div class="popBox">
             <form name="registerForm" novalidate>
               <a class="popClose" ng-click="closeLightBoxWithEsc()"><i class="material-icons">clear</i></a>
-              <h3 class="red-heading">That email not on file. <br> Would you like to sign up?</h3>
+              <h3 class="red-heading">Some things are a mystery. <br> Would you like to sign up?</h3>
               <p class="infoText margin-1em-top margin-1em-bottom">{{ email }}</p>
               <md-input-container class="md-block">
                 <label>First Name</label>
@@ -168,7 +168,7 @@
                 </div>
               </md-input-container>
               <div class="clear">
-                <button type="reset" class="popLink margin-1em-top gray lFloat" ng-click="closeLightBoxWithEsc();popForgetPassword=true">FORGET PASSWORD</button>
+                <button type="reset" class="popLink margin-1em-top gray lFloat" ng-click="showForgetPasswordForm()">FORGET PASSWORD</button>
                 <button class="popLink margin-1em-top rFloat" ng-click="loginPasswordNext('loginPasswordForm')">LOG IN</button>
               </div>
             </form>
@@ -201,20 +201,20 @@
               <h3 class="red-heading">Please create a new password for</h3>
               <p class="infoText margin-1em-top margin-1em-bottom">{{ email }}</p>
               <md-input-container class="md-block">
-                <label>Create password, 8 characters minimum</label>
-                <input type="password" ng-minlength="8" ng-maxlength="32" required md-no-asterisk name="newPassword" ng-model="newPassword" ng-keypress="newPasswordRequired=false">
+                <label>Create password, 4 characters minimum</label>
+                <input type="password" ng-minlength="4" ng-maxlength="32" required md-no-asterisk name="newPassword" ng-model="newPassword" ng-keypress="newPasswordRequired=false">
                 <div ng-messages="newPasswordForm.newPassword.$error">
                   <div ng-message="required">Please create a password!</div>
-                  <div ng-message="minlength">Password has to be at least 8 characters</div>
+                  <div ng-message="minlength">Password has to be at least 4 characters</div>
                   <div ng-message="maxlength">Your Password is too long.</div>
                 </div>
               </md-input-container>
               <md-input-container class="md-block">
                 <label>Repeat password</label>
-                <input type="password" ng-minlength="8" ng-maxlength="32" required md-no-asterisk name="repeatPassword" ng-model="repeatPassword" ng-keypress="repeatPasswordRequired=false;passwordNotMatch=false">
+                <input type="password" ng-minlength="4" ng-maxlength="32" required md-no-asterisk name="repeatPassword" ng-model="repeatPassword" ng-keypress="repeatPasswordRequired=false;passwordNotMatch=false">
                 <div ng-messages="newPasswordForm.repeatPassword.$error">
                   <div ng-message="required">Please create a password!</div>
-                  <div ng-message="minlength">Password has to be at least 8 characters</div>
+                  <div ng-message="minlength">Password has to be at least 4 characters</div>
                   <div ng-message="maxlength">Your Password is too long.</div>
                   <div ng-show="passwordNotMatch">Passwords did not match, please retype</div>
                 </div>
@@ -228,7 +228,7 @@
           <div class="popBox">
             <a class="popClose" ng-click="closeLightBoxWithEsc()"><i class="material-icons">clear</i></a>
             <h3 class="red-heading">Congrats, you have a shiny new password!</h3>
-            <div class="text-center margin-2em-top"><a class="popLink" ng-click="closeLightBoxWithEsc()">CONTINUE TO SITE</a></div>
+            <div class="text-center margin-2em-top"><a class="popLink" ng-click="reloadPage()">CONTINUE TO SITE</a></div>
           </div>
         </div>
         <div class="popOverlay" ng-show="popRegisterCongrats">
@@ -251,12 +251,19 @@
             <img src="~/Images/ajaxloader1.gif" />
           </div>
         </div>
+        <div class="popOverlay" ng-show="popInfoMessage">
+          <div class="popBox">
+            <a class="popClose" ng-click="closeLightBoxWithEsc()"><i class="material-icons">clear</i></a>
+            <div class="blue-heading text-center">{{InfoMessage}}</div>
+            <div class="text-center margin-2em-top"><a class="popLink" ng-click="closeLightBoxWithEsc()">CONTINUE TO SITE</a></div>
+          </div>
+        </div>
         <div class="popOverlay" ng-show="popServerError">
           <div class="popBox">
             <a class="popClose" ng-click="closeLightBoxWithEsc()"><i class="material-icons">clear</i></a>
             <h3 class="red-heading">Error</h3>
             <div class="text-center">Something went wrong. Please try again later</div>
-            <div class="text-center margin-2em-top"><a class="popLink" ng-click="closeLightBoxWithEsc()">OK</a></div>
+            <div class="text-center margin-2em-top"><a class="popLink" ng-click="closeLightBoxWithEsc()">CONTINUE TO SITE</a></div>
           </div>
         </div>
       </div>
