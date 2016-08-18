@@ -223,7 +223,7 @@ WriteLiteral("><img");
 
 WriteLiteral(" src=\"/Images/fac.png\"");
 
-WriteLiteral("></a>\r\n\r\n                <a");
+WriteLiteral("></a>\r\n                <a");
 
 WriteLiteral(" href=\"#\"");
 
@@ -233,7 +233,7 @@ WriteLiteral("><img");
 
 WriteLiteral(" src=\"/Images/lin.png\"");
 
-WriteLiteral("></a>\r\n            </div>\r\n\r\n\r\n            <div");
+WriteLiteral("></a>\r\n\r\n            </div>\r\n\r\n\r\n            <div");
 
 WriteLiteral(" class=\"evnt_tile_bg_r evnt_tile_bg_r_call\"");
 
@@ -320,10 +320,10 @@ WriteLiteral(" class=\"btn ev_live_sub_btn mb5 mr0\"");
 
 WriteLiteral(" id=\"btPreview\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3584), Tuple.Create("\"", 3721)
+WriteAttribute("href", Tuple.Create(" href=\"", 3584), Tuple.Create("\"", 3727)
             
             #line 90 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
-, Tuple.Create(Tuple.Create("", 3591), Tuple.Create<System.Object, System.Int32>(Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.urlTitle.Replace(" ","") , strEventId = Model.EventId.ToString()})
+, Tuple.Create(Tuple.Create("", 3591), Tuple.Create<System.Object, System.Int32>(Url.Action("ViewEvent", "EventManagement", new { strEventDs = Model.urlTitle.Replace(" ", ""), strEventId = Model.EventId.ToString() })
             
             #line default
             #line hidden
@@ -379,131 +379,142 @@ WriteLiteral(@"',
     }
     $(document).ready(function () {
         $(""#btPreview"").click(function () {
-           
-            ");
-
-WriteLiteral("\r\n            //var title =\'");
+            window.location.href = '");
 
             
-            #line 132 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
-                     Write(Model.urlTitle.Replace(" ", "-"));
+            #line 130 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+                               Write(Url.Action("ViewEvent", "EventManagement", new { strEventDs = Model.urlTitle.Replace(" ", ""), strEventId = Model.EventId.ToString() }));
 
             
             #line default
             #line hidden
-WriteLiteral("\';\r\n            window.location.href = \'");
+WriteLiteral("\';\r\n        });\r\n    });\r\n\r\n</script>\r\n\r\n<script");
+
+WriteLiteral(" type=\"text/javascript\"");
+
+WriteLiteral(">\r\n  var fbappid = \'");
 
             
-            #line 133 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
-                               Write(Url.Action("ViewEvent", "ViewEvent", new { strEventDs =  Model.urlTitle.Replace(" ","") , strEventId = Model.EventId.ToString()}));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\';\r\n\r\n            //window.location.href = \'");
-
-            
-            #line 135 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
-                                 Write(Url.Action("ViewEvent", "ViewEvent", new { }));
+            #line 137 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+            Write(System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]);
 
             
             #line default
             #line hidden
-WriteLiteral("\' + \'?strEventDs=\' + title + \'&strEventId = \' +");
-
-            
-            #line 135 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
-                                                                                                                              Write(Model.EventId.ToString());
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" +\'\';\r\n        });\r\n        $(\'.fbshare\').click(function () {\r\n            var ti" +
-"tle = \'");
+WriteLiteral("\'\r\n");
 
             
             #line 138 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
-                    Write(Html.DisplayFor(m => m.Title));
+  
+            
+            #line default
+            #line hidden
+            
+            #line 138 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+     string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n  var urlprefix = \'");
+
+            
+            #line 139 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+              Write(strpr);
 
             
             #line default
             #line hidden
-WriteLiteral("\';\r\n          \r\n            var url = \'");
+WriteLiteral(@"'
+
+  window.fbAsyncInit = function () {
+    // init the FB JS SDK
+    FB.init({
+      appId: fbappid,                        // App ID from the app dashboard
+      status: true,                          // Check Facebook Login status
+      xfbml: true,                           // Look for social plugins on the page
+      version: '2.7'
+    });
+
+  };
+
+  // Load the SDK asynchronously
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = ""//connect.facebook.net/en_US/all.js"";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+<script");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 5895), Tuple.Create("\"", 5925)
+, Tuple.Create(Tuple.Create("", 5901), Tuple.Create<System.Object, System.Int32>(Href("~/Scripts/socialshare.js")
+, 5901), false)
+);
+
+WriteLiteral("></script>\r\n<script");
+
+WriteLiteral(" type=\"text/javascript\"");
+
+WriteLiteral(">\r\n  $(document).ready(function () {\r\n    $(\'#twittershare\').click(function () {\r" +
+"\n      var title = \'");
 
             
-            #line 140 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
-                  Write(Html.DisplayFor(m => m.url));
-
-            
-            #line default
-            #line hidden
-WriteLiteral(@"';
-
-            window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-
-
-
-        });
-
-
-
-
-        $('#twittershare').click(function () {
-
-            var title = '");
-
-            
-            #line 154 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
-                    Write(Html.DisplayFor(m => m.Title));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\';\r\n           \r\n            var url = \'");
-
-            
-            #line 156 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
-                  Write(Html.DisplayFor(m => m.url));
-
-            
-            #line default
-            #line hidden
-WriteLiteral(@"';
-            window.open('https://twitter.com/share?url=' + encodeURIComponent(url) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-
-        });
-
-        $('#linkshare').click(function () {
-
-            var title = '");
-
-            
-            #line 164 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
-                    Write(Html.DisplayFor(m => m.Title));
+            #line 165 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+              Write(Html.DisplayFor(m => m.Title));
 
             
             #line default
             #line hidden
-WriteLiteral("\';\r\n            \r\n            var url = \'");
+WriteLiteral("\';\r\n      var url = \'");
 
             
             #line 166 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
-                  Write(Html.DisplayFor(m => m.url));
+            Write(Html.DisplayFor(m => m.url));
 
             
             #line default
             #line hidden
-WriteLiteral(@"';
-            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(url) + '&title=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            //window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', '_self', resizable = yes, width = 626, height = 436);
-            return false;
-        });
+WriteLiteral("\';\r\n      return TwitterShare(title, urlprefix + url);\r\n    });\r\n\r\n    $(\'#linksh" +
+"are\').click(function () {\r\n      var title = \'");
 
-    });
+            
+            #line 171 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+              Write(Html.DisplayFor(m => m.Title));
 
-</script>");
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n      var url = \'");
+
+            
+            #line 172 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+            Write(Html.DisplayFor(m => m.url));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n      var description = \'");
+
+            
+            #line 173 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+                    Write(Html.DisplayFor(m => m.Descritption));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n      return LinkedInShare(title, urlprefix + url, description);\r\n    });\r\n\r\n" +
+"    $(\'.fbshare\').click(function (e) {\r\n      var url = \'");
+
+            
+            #line 178 "..\..\Views\EventConfirmation\EventConfirmation.cshtml"
+            Write(Html.DisplayFor(m => m.url));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\';\r\n      return FacebookShare(urlprefix + url)\r\n    });\r\n  });\r\n</script>");
 
         }
     }

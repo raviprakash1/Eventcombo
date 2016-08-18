@@ -1,9 +1,6 @@
 ﻿var test;
-var createEventApp = angular.module("CreateEventApp", ['ngMaterial', 'ngMessages', 'color.picker', 'mdDatetimePickerDemo',
-  'ngGallery', 'ui.tinymce']);
-createEventApp.controller('CreateEventController', ['$scope', '$http', '$window', '$timeout', 'ngGallery',
+eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window', '$timeout', 'ngGallery',
   function ($scope, $http, $window, $timeout, ngGallery) {
-
 
     angular.element(document).ready(function () {
 
@@ -13,6 +10,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       });
     });
 
+    $scope.displayPopups = 'block';
     $scope.organiserInfo = [];
     $scope.tempDateInfo = {};
     $scope.isPrivateEvent = false;
@@ -192,8 +190,6 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     }
 
     $scope.startDateChange = function () {
-      console.debug($scope.tempDateInfo.startingDate);
-      console.debug($scope.tempDateInfo.endingDate);
       if ($scope.tempDateInfo.endingDate < $scope.tempDateInfo.startingDate)
         $scope.tempDateInfo.endingDate = new Date($scope.tempDateInfo.startingDate.getFullYear(),
           $scope.tempDateInfo.startingDate.getMonth(), $scope.tempDateInfo.startingDate.getDate());
@@ -234,6 +230,7 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
 
     $scope.organizerAdd = function () {
       var i = Math.max.apply(Math, $scope.eventInfo.OrganizerList.map(function (o) { return o.InternalId; }));
+      i = i == Number.NEGATIVE_INFINITY ? 0 : isNaN(i) ? 0 : i;
       $scope.eventInfo.CurrentOrganizer = {
         Orgnizer_Id: 0,
         Orgnizer_Name: "",
@@ -390,8 +387,8 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         },
         TotalPrice: 0,
         T_Customize: 0,
-        T_Ecpercent: 0,
-        T_EcAmount: 0,
+        T_Ecpercent: $scope.eventInfo.FeeStruct.FS_Percentage,
+        T_EcAmount: $scope.eventInfo.FeeStruct.FS_Amount,
         localSaleStartDate: null,
         localSaleEndDate: null,
         localHideUntilDate: null,
@@ -442,12 +439,9 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
         return;
       }
 
-      console.log(formname);
       var form = $scope.MainForm[formname];
       if (!form)
         return;
-      console.log(form);
-      console.log(ticket);
       ticket.ticketValidation = true;
 
       var hideDatesValid = ((ticket.useUntilDate == 1) && ticket.localHideUntilDate && form.ticketHideUntilDate.$valid) ||
@@ -523,12 +517,16 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       var data = {
         json: angular.toJson($scope.eventInfo)
       };
+      $scope.showLoadingMessage(true, 'Save Event');
       $http.post('/eventmanagement/saveevent', data).then(function (response) {
+        $scope.showLoadingMessage(false, '');
         $scope.eventInfo = response.data;
         if ($scope.eventInfo.ErrorEvent)
           $scope.prepareEventInfo();
         else
           $window.location.href = link_publish + "?EventId=" + $scope.eventInfo.EventID;
+      }, function (error) {
+        $scope.showLoadingMessage(false, '');
       });
     }
 
@@ -564,10 +562,6 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
             !$scope.MainForm['TicketForm_' + i].TicketDescription.$valid ||
             ((ticket.Hide_Ticket == 1) && (ticket.T_AutoSechduleType == 1) && !hideDatesValid))
           elem.valid = false;
-        console.log(hideDatesValid);
-        console.log(elem.valid);
-        console.log($scope.MainForm['TicketForm_' + i]);
-        console.log(ticket);
       });
       if ($scope.eventInfo.Ticket_showvariable == 'Y')
         $scope.eventInfo.VariableChargesList.forEach(function (varcharge, i, arr) {
@@ -591,7 +585,6 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
     }
 
     $scope.checkTempDateInfo = function () {
-      console.debug($scope.MainForm.singleStartDate);
       var result = {
         valid: true,
         notselected: $scope.tempDateInfo.IsNewDate,
@@ -609,12 +602,16 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       for (var i = 0; i < files.length; i++) {
         fd.append('files', files[i]);
       }
+      $scope.showLoadingMessage(true, 'Upload Images');
       $http.post('/imageAPI/UploadImages', fd, {
         transformRequest: angular.identity,
         headers: { 'Content-Type': undefined }
       }).then(function (response) {
+        $scope.showLoadingMessage(false, '');
         var images = response.data;
         callback(images);
+      }, function (error) {
+        $scope.showLoadingMessage(false, '');
       });
     }
 
@@ -692,9 +689,15 @@ createEventApp.controller('CreateEventController', ['$scope', '$http', '$window'
       }
     }
 
+    $scope.showLoadingMessage = function (show, message) {
+      $scope.popLoading = show;
+      $scope.LoadingMessage = message;
+    }
+
+
   }]);
 
-createEventApp.directive('ngInitial', function () {
+eventComboApp.directive('ngInitial', function () {
   return {
     restrict: 'A',
     controller: [
@@ -709,7 +712,7 @@ createEventApp.directive('ngInitial', function () {
   };
 });
 
-createEventApp.directive('numbersOnly', function () {
+eventComboApp.directive('numbersOnly', function () {
   return {
     require: 'ngModel',
     link: function (scope, element, attr, ngModelCtrl) {
@@ -730,7 +733,7 @@ createEventApp.directive('numbersOnly', function () {
   };
 });
 
-createEventApp.directive('googleplace', function () {
+eventComboApp.directive('googleplace', function () {
   return {
     require: 'ngModel',
     link: function (scope, element, attrs, model) {
@@ -749,7 +752,7 @@ createEventApp.directive('googleplace', function () {
   };
 });
 
-createEventApp.directive('customOnChange', function () {
+eventComboApp.directive('customOnChange', function () {
   return {
     restrict: 'A',
     link: function (scope, element, attrs) {
@@ -759,7 +762,7 @@ createEventApp.directive('customOnChange', function () {
   };
 });
 
-createEventApp.directive('ecMaxlength', ['$compile', function ($compile) {
+eventComboApp.directive('ecMaxlength', ['$compile', function ($compile) {
   return {
     restrict: 'A',
     require: 'ngModel',
@@ -778,25 +781,7 @@ createEventApp.directive('ecMaxlength', ['$compile', function ($compile) {
   };
 }]);
 
-createEventApp.controller('CreateEventHeaderController', ['$scope', function ($scope, $http) {
-  $scope.showAccountDiv = function () {
-
-    if ($('.myAccountDiv').is(':visible')) {
-      $('.down').text("keyboard_arrow_down");
-      $(' .myAccountDiv').hide();
-      $(".accountMainDiv").css("background-color", "unset");
-      $(".accountMainDiv").css("box-shadow", "unset");
-    }
-    else {
-      $(".accountMainDiv").css("background-color", "white");
-      $(".accountMainDiv").css("box-shadow", "0 2px 5px 0 rgba(0, 0, 0, 0.26)");
-      $('.down').text("keyboard_arrow_up")
-      $(' .myAccountDiv').show();
-    }
-  }
-}]);
-
-createEventApp.directive('positiveValidation', function () {
+eventComboApp.directive('positiveValidation', function () {
   return {
     restrict: 'A',
     require: 'ngModel',
@@ -809,7 +794,7 @@ createEventApp.directive('positiveValidation', function () {
   };
 });
 
-createEventApp.directive('makeDecimal', function () {
+eventComboApp.directive('makeDecimal', function () {
   return {
     restrict: 'A',
     require: 'ngModel',
@@ -821,16 +806,13 @@ createEventApp.directive('makeDecimal', function () {
           ctrl.$setViewValue(val);
           ctrl.$render();
         }
-        console.log(value);
-        console.log(val);
-        console.log(ctrl.$viewValue);
         return val;
       });
     }
   }
 });
 
-createEventApp.directive('dragDropElements', function ($compile) {
+eventComboApp.directive('dragDropElements', function ($compile) {
   return {
     restrict: 'A',
     transclude: true,
@@ -890,7 +872,7 @@ createEventApp.directive('dragDropElements', function ($compile) {
 
 
 /* Variable drag drop Directive*/
-createEventApp.directive('variableDragDropElements', function ($compile) {
+eventComboApp.directive('variableDragDropElements', function ($compile) {
   return {
     restrict: 'A',
     transclude: true,
@@ -906,11 +888,8 @@ createEventApp.directive('variableDragDropElements', function ($compile) {
 
       scope.element.on('dragstart', function (event) {
 
-        console.log("Index: ", scope.$parent.$index);
         dragSrcEl = element;
         test = element;
-        console.log(dragSrcEl);
-        console.log($(test).attr("ng-class"));
         scope.handleDragObjReference1 = false;
         scope.handleDragObjReference2 = true;
         scope.handleDragObjReference3 = false;
@@ -950,8 +929,6 @@ createEventApp.directive('variableDragDropElements', function ($compile) {
     }
   };
 });
-
-
 
 function formatAMPM(date) {
   var hours = date.getHours();

@@ -8,7 +8,7 @@
 
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
 <style>
-    
+
 </style>
 
 @Html.HiddenFor(m => m.Eventid, new { @id = "hdEventid" })
@@ -19,11 +19,10 @@
             <div class="evnt_details_body2">
                 <div class="col-sm-12 no_pad mt10 pt10">
                     <div class="col-sm-3 pl0">
-                        <img class="ev1 img-responsive" src="@Html.DisplayFor(m=>m.imgurl)" >
+                        <img class="ev1 img-responsive" src="@Html.DisplayFor(m=>m.imgurl)">
                     </div>
                     <div class="col-sm-9 pl0">
-                        <h2 class="th_tilte" id="title">@Html.DisplayFor(m=>m.Tilte)</h2>
-                        @*<p class="th_day_time">Saturday Aug 17th 2011,8:30pm </p>*@
+                        <h2 class="th_tilte" id="title">@Html.DisplayFor(m => m.Tilte)</h2>
                         <p class="th_day_time chk_add_sch_cal"><span class="Timezone"><img class="evnt_clock evnt_cursor" src="/Images/icon-date.png" /> Add schedule to calender</span></p>
                         <div class="TmezoneSet col-sm-12 no_pad ev_time_zone_model_main date_time_set_modal chk_add_sch_cal_modal">
                             <div class="ev_time_zone_model date_time_modal">
@@ -36,39 +35,26 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="col-sm-12 no_pad">
-                                         
                                             <div class="form-group mb5 cal_scrol ">
-                                        
-@foreach (var item in (List<EventCombo.Models.paymentdate>)ViewBag.Timecal)
-{
-    <div class="col-sm-12 no_pad date_time_list ">
-        <a href="#" data-target="#schcalender" data-toggle="modal" id="@item.id" onclick="showevent(this.id)">@item.Datetime </a>
-        <br />@item.Address
-        @*<span class="loc_mini_icn"><img src="images/loc_icon_mini.png"></span>*@
-    </div>
-}
-                                             
-                                                @*<label class="col-sm-12 no_pad label-control date_time_list ">
-                                                    <a href="#" data-target="#schcalender" data-toggle="modal">Sunday Aug 18th 2011, 4:30pm </a>
-                                                    <span class="loc_mini_icn"><img src="images/loc_icon_mini.png"></span>
-                                                </label>
-                                                <label class="col-sm-12 no_pad label-control date_time_list">
-                                                    <a href="#" data-target="#schcalender" data-toggle="modal">Sunday Aug 18th 2011, 4:30pm </a>
-                                                    <span class="loc_mini_icn"><img src="images/loc_icon_mini.png"></span>
-                                                </label>*@
+                                                @foreach (var item in (List<EventCombo.Models.paymentdate>)ViewBag.Timecal)
+                                                {
+                                                    <div class="col-sm-12 no_pad date_time_list ">
+                                                        <a href="#" data-target="#schcalender" data-toggle="modal" id="@item.id" onclick="showevent(this.id)">@item.Datetime </a>
+                                                        <br />@item.Address
+                                                    </div>
+                                                }
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
                         </div>
-@foreach (var item in (List<EventCombo.Models.paymentdate>)ViewBag.Timecal)
-{
-                        <p class="th_day_time">@item.Address</p>
-                        <p class="th_day_time">@item.Datetime</p>
-}
+                        @foreach (var item in (List<EventCombo.Models.paymentdate>)ViewBag.Timecal)
+                        {
+                            <p class="th_day_time">@item.Address</p>
+                            <p class="th_day_time">@item.Datetime</p>
+                        }
                         <div class="clearfix"></div>
 
                     </div>
@@ -85,16 +71,16 @@
             <div class="col-sm-6 col-xs-6 text-left no_pad">
                 <h2 class="fb_dis_head pt5">THANK YOU FOR YOUR ORDER</h2>
             </div>
-@if (Model.EventPrivacy == "Public" || (Model.Shareonfb == "Y" || Model.Shareonfb == "y"))
-{
-            <div class="col-sm-6 col-xs-6 text-right pl0 ev_social_share_btn">
-                <a href="#"><img src="/Images/mail.png"></a>
-                <a href="#" id="twittershare"><img src="/Images/twi.png"></a>
-                <a href="#" class="sharefb" id="fbshare"><img src="/Images/fac.png"></a>
+            @if (Model.EventPrivacy == "Public" || (Model.Shareonfb == "Y" || Model.Shareonfb == "y"))
+            {
+                <div class="col-sm-6 col-xs-6 text-right pl0 ev_social_share_btn">
+                    <a href="#"><img src="/Images/mail.png"></a>
+                    <a href="#" id="twittershare"><img src="/Images/twi.png"></a>
+                    <a href="#" class="sharefb" id="fbshare"><img src="/Images/fac.png"></a>
 
-                <a href="#" id="linkshare"><img src="/Images/lin.png"></a>
-            </div>
-}
+                    <a href="#" id="linkshare"><img src="/Images/lin.png"></a>
+                </div>
+            }
 
 
             <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
@@ -105,12 +91,13 @@
                 <div class="col-sm-12 no_pad chek_out_desc">
                     <p id="ordertag">Your order has been saved to My E-Tickets </p>
                     <p><span id="spOrderNo">@Model.Orderdetail</span></p>
-                    <p>Your tickets have been sent to @Html.DisplayFor(x=>x.Email) </p>
+                    <p>Your tickets have been sent to @Html.DisplayFor(x => x.Email) </p>
                     <p>@Model.Guestlist</p>
                     <p>
                         <label>
-                            <input type="checkbox" value="@Html.DisplayFor(m=>m.sendlatestdetails)" @(Html.DisplayFor(m=>m.sendlatestdetails).ToString()=="Y" ? "checked=\"checked\"" : "")  onchange="changesetting(this.id);" id="chkgetlatest"/>
-                        Keep me locked to the latest, Yes, send me curated events every few weeks </label>
+                            <input type="checkbox" value="@Html.DisplayFor(m=>m.sendlatestdetails)" @(Html.DisplayFor(m => m.sendlatestdetails).ToString() == "Y" ? "checked=\"checked\"" : "") onchange="changesetting(this.id);" id="chkgetlatest" />
+                            Keep me locked to the latest, Yes, send me curated events every few weeks
+                        </label>
                     </p>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 col-xs-12 no_pad ">
@@ -125,35 +112,35 @@
 
         </div>
     </div>
-@if (Model.EventPrivacy == "Public" || (Model.Shareonfb == "Y" || Model.Shareonfb == "y"))
-{
-    <div class="event_detail_container">
-        <div class="evnt_tile_head">
-            <div class="evnt_tile_bg_l"></div>
-            <div class="col-sm-12 col-xs-12 text-left no_pad">
-                <h2 class="fb_dis_head pt5">LET YOUR FIRENDS KNOW!</h2>
-            </div>
-
-            <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
-        </div>
-        <div class="evnt_details_body2">
-            <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
-
-                <div class="col-sm-12 no_pad chek_out_desc">
-                    <p>Events are better when your friends are there too. So, who's coming with you?</p>
-                    <div class="clearfix"></div>
-                    <div class="col-sm-12 col-xs-12 no_pad">
-                        <button class="btn ev_live_btn fs18 sharefb" type="button" id="shareonfb">
-                            SHARE ON FACEBOOK
-                        </button>
-                    </div>
+    @if (Model.EventPrivacy == "Public" || (Model.Shareonfb == "Y" || Model.Shareonfb == "y"))
+    {
+        <div class="event_detail_container">
+            <div class="evnt_tile_head">
+                <div class="evnt_tile_bg_l"></div>
+                <div class="col-sm-12 col-xs-12 text-left no_pad">
+                    <h2 class="fb_dis_head pt5">LET YOUR FIRENDS KNOW!</h2>
                 </div>
-                <div class="clearfix"></div>
-            </div>
 
+                <div class="evnt_tile_bg_r evnt_tile_bg_r_call"></div>
+            </div>
+            <div class="evnt_details_body2">
+                <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
+
+                    <div class="col-sm-12 no_pad chek_out_desc">
+                        <p>Events are better when your friends are there too. So, who's coming with you?</p>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-12 col-xs-12 no_pad">
+                            <button class="btn ev_live_btn fs18 sharefb" type="button" id="shareonfb">
+                                SHARE ON FACEBOOK
+                            </button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+            </div>
         </div>
-    </div>
-}
+    }
     <div class="event_detail_container">
         <div class="evnt_tile_head">
             <div class="evnt_tile_bg_l"></div>
@@ -170,9 +157,9 @@
                     <p>Showcase your event to Millions of people on Eventcombo.</p>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 col-xs-12 no_pad">
-                       
-                            <a href='@Url.Action("CreateEvent", "EventManagement")'  class="btn ev_live_btn cap_l fs18"> Go for it!</a>
-                               
+
+                        <a href='@Url.Action("CreateEvent", "EventManagement")' class="btn ev_live_btn cap_l fs18"> Go for it!</a>
+
 
                     </div>
                 </div>
@@ -194,15 +181,15 @@
             <div class="col-sm-12 ev_white_bg pb10 pt10 mt20">
 
                 <div class="col-sm-12 no_pad chek_out_desc">
-                    <p>Hi @Html.DisplayFor(m=>m.Username ), See you at the Event &#9786;</p>
+                    <p>Hi @Html.DisplayFor(m => m.Username), See you at the Event &#9786;</p>
                     <p>Questions about this event?</p>
                     <div class="clearfix"></div>
                     <div class="col-sm-12 col-xs-12 no_pad">
                         <div class="col-sm-2 col-xs-5 no_pad xs-100-f-l">
                             <a data-target="#contorganizer" data-toggle="modal" href="#" class="btn ev_live_btn cap_l fs18 col-sm-12 col-xs-12">Contact Us</a>
                             @*<button class="btn ev_live_btn cap_l fs18 col-sm-12 col-xs-12" type="button">
-                                Contact Us
-                            </button>*@
+                                    Contact Us
+                                </button>*@
                         </div>
                         <div class="col-sm-1 col-xs-2 text-center mt5 fs18 xs-100-f-l">Or</div>
                         <div class="col-sm-9 col-xs-5 no_pad xs-100-f-l">
@@ -234,10 +221,10 @@
                             <i class="fa fa-apple"></i> <a href="#" id="icalender">Apple Ical </a>
                         </div>
                         <div class="col-md-6 text-center ev_calend_lebel">
-                            <i class="fa fa-google"></i> <a href="#" id="googlecal"  target="_blank" >Google Calendar </a>
+                            <i class="fa fa-google"></i> <a href="#" id="googlecal" target="_blank">Google Calendar </a>
                         </div>
                         <div class="col-md-6 text-center ev_calend_lebel">
-                            <i class="fa fa-yahoo"></i> <a href="#" id="yahoocal"  target="_blank" >Yahoo Calendar </a>
+                            <i class="fa fa-yahoo"></i> <a href="#" id="yahoocal" target="_blank">Yahoo Calendar </a>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -293,7 +280,7 @@
 
 
 <script>
-   
+
     $(document).ready(function () {
         history.pushState(null, null, 'PaymentConfirmation');
         window.addEventListener('popstate', function (event) {
@@ -302,8 +289,7 @@
         $(document).click(function () {
             $('#orgerror').css('display', 'none');
 
-            if( $('#orgerror').css('display')=='block')
-            {
+            if ($('#orgerror').css('display') == 'block') {
                 $('input').removeClass('err-bor');
                 $('#id_orgtext').removeClass('err-bor');
             }
@@ -326,7 +312,7 @@
 
                 count++;
                 $('#id_orgname').addClass('err-bor');
-             
+
             }
 
 
@@ -344,14 +330,13 @@
             } else {
                 count++;
                 $('#id_orgtext').addClass('err-bor');
-                
+
             }
             if (erroremail != "") {
                 errormsg += erroremail;
 
             }
-            if (count > 0)
-            {
+            if (count > 0) {
                 errormsg += "Fill the details</br>";
             }
             if (errormsg != "") {
@@ -389,7 +374,7 @@
 
 
         });
-  
+
         @*$.ajax({
             url: '@Url.Action("GetOrderDetailForConfirmation", "TicketPayment")',
             type: "Post",
@@ -428,54 +413,14 @@
             $(".TmezoneSet").hide();
 
         });
-
-        @*$('#shareonfb').click(function () {
-            var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
-            var description = '@Html.DisplayFor(m => m.description).ToString().Trim()';
-            var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
-            window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[summary]=' + encodeURIComponent(description) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-        });*@
-        @*$('#fbshare').click(function () {
-            var title='@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
-            var description='@Html.DisplayFor(m => m.description).ToString().Trim()';
-            var url='@Html.DisplayFor(m => m.url).ToString().Trim()';
-            window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title) + '&p[summary]=' + encodeURIComponent(description) + '&p[url]=' + encodeURIComponent(url) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-        });*@
-
-        $('#twittershare').click(function () {
-            var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
-            var description = '@Html.DisplayFor(m => m.description).ToString().Trim()';
-            var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
-
-
-            window.open('https://twitter.com/share?url=' + encodeURIComponent(url) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            return false;
-
-        });
-
-        $('#linkshare').click(function () {
-
-            var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
-            var description = '@Html.DisplayFor(m => m.description).ToString().Trim()';
-            var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
-
-            window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(url) + '&title=' + title + '&summary= ' + description + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-            //window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(location.href) + '&title=' + title + '&summary= ' + desc + '', '_self', resizable = yes, width = 626, height = 436);
-            return false;
-        });
-
     });
 
-    function changesetting(id)
-    {
+    function changesetting(id) {
         var check = "";
 
         if ($('#' + id).is(":checked") == true) {
             check = 'Y';
-        }else
-        {
+        } else {
             check = 'N';
 
 
@@ -578,53 +523,50 @@
 
 
 <script type="text/javascript">
+  var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
+  @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
+  var urlprefix = '@strpr'
 
-
-    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
-    @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
-    var urlprefix = '@strpr'
-
-    window.fbAsyncInit = function () {
-        // init the FB JS SDK
-        FB.init({
-            appId: fbappid,                        // App ID from the app dashboard
-            status: true,                                 // Check Facebook Login status
-            xfbml: true                                  // Look for social plugins on the page
-        });
-
-    };
-
-    // Load the SDK asynchronously
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) { return; }
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/all.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-
-    var globalFacebookShareObject = { name: 'EventCombo', link: '' };
-
-
-
-    $(document).ready(function () {
-        $('.sharefb').click(function (e) {
-            debugger;
-            globalFacebookShareObject.link ='@Model.url';
-            globalFacebookShareObject.name ='@Model.Tilte';
-            console.log(globalFacebookShareObject.link);
-            console.log(globalFacebookShareObject.name);
-
-            FB.ui({
-                method: 'feed',
-                name: globalFacebookShareObject.name,
-                link: globalFacebookShareObject.link
-            }, function (response) {
-                if (response && response.post_id) { }
-                else { }
-            });
-        });
+  window.fbAsyncInit = function () {
+    // init the FB JS SDK
+    FB.init({
+      appId: fbappid,                        // App ID from the app dashboard
+      status: true,                          // Check Facebook Login status
+      xfbml: true,                           // Look for social plugins on the page
+      version: '2.7'
     });
 
+  };
+
+  // Load the SDK asynchronously
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <script src="~/Scripts/socialshare.js"></script>
+  <script type="text/javascript">
+
+  $(document).ready(function () {
+    $('#twittershare').click(function () {
+      var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
+      var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
+      return TwitterShare(title, urlprefix + url);
+    });
+
+    $('#linkshare').click(function () {
+      var title = '@Html.DisplayFor(m => m.Tilte).ToString().Trim()';
+      var description = '@Html.DisplayFor(m => m.description).ToString().Trim()';
+      var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
+      return LinkedInShare(title, urlprefix + url, description);
+    });
+
+    $('.sharefb').click(function (e) {
+      var url = '@Html.DisplayFor(m => m.url).ToString().Trim()';
+      return FacebookShare(urlprefix + url)
+    });
+  });
 </script>

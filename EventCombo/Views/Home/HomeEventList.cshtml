@@ -9,7 +9,7 @@
             foreach (var item in Model)
             {
                 iCnt = 1;
-                string eventLink = Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(@item.EventId).ToString()});
+                string eventLink = Url.Action("ViewEvent", "EventManagement", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(@item.EventId).ToString()});
                 <div class="col-md-4 col-xs-12 col-sm-6 ot_pad ">
                     <div class="col-sm-12 col-xs-12 in_shadw no_pad">
                         <div class="col-sm-12 col-xs-12 in_pad">
@@ -54,8 +54,7 @@
                             <div class="col-sm-3 col-xs-3 no_pad text-right ">
                                 @if (@item.EventPrivacy == "Y")
                                 {
-
-                                  <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Share @item.EventTitle" onclick="ShowUrl('@item.EventTitle', '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId =ValidationMessageController.GetParentEventId(@item.EventId).ToString() })');" type="button" data-toggle="modal" data-target="#sharemodal">
+                                  <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Share @item.EventTitle" onclick="ShowUrl('@item.EventTitle.Replace("'",@"\'")', '@item.EventAddress.Replace("'", @"\'")', '@Url.Action("ViewEvent", "EventManagement", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId =ValidationMessageController.GetParentEventId(@item.EventId).ToString() })');" type="button" data-toggle="modal" data-target="#sharemodal">
                                     <img src="~/Images/share_icon.png" alt="share event">
                                   </button>
                                 }
@@ -106,35 +105,62 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content sharmodal_pop">
             <div class="modal-header">
+                <div class="invitation-loader" id="dvAjxLoader" style="width:auto;float:left;margin-top:7px;">
+                    <img src="~/Images/ajax-loaderMini.gif" /> Please wait ...
+                </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h3 class="modal-title text-center"> Share with friends </h3>
             </div>
             <div class="modal-body">
-
-
                 <div class="col-md-12 social-buttons text-center mt20">
                     <div class="col-sm-12  text-center">
                         <button class="btn soc_btn_fb fb_color" id="fbshare"><i class="fa fa-facebook"></i></button>
                         <button class="btn soc_btn_fb " id="twittershare"><i class="fa fa-twitter"></i></button>
-                      <button class="btn soc_btn_fb linkd_color" id="linkshare"><i class="fa fa-linkedin"></i></button>
-                        <button class="btn soc_btn_fb msg_color"><i class="fa fa-envelope"></i></button>
+                        <button class="btn soc_btn_fb linkd_color" id="linkshare"><i class="fa fa-linkedin"></i></button>
+                        <button class="btn soc_btn_fb msg_color" id="emailFrnd"><i class="fa fa-envelope"></i></button>
                     </div>
                 </div>
+                <div class="col-md-12 mt10" id="dvEmailFrnd" style="display:none;" >
+                    <form class="form-horizontal">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                From Name :<input type="text" class="form-control sharesocilform" id="txtFromName" placeholder="" /> 
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                Email Id :<input type="text" class="form-control sharesocilform" id="txtEmailFrnd" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="col-xs-2" >
+                            <button class="btn def_btn acnt_btn send_test_btn" style="display:none" type="button" data-toggle="modal" id="btPopUp" data-target="#test_inv_email"></button>
+                            <br><button class="btn theme-btn def_btn acnt_btn send_test_btn" type="button" id="btSend">Send</button>
+                        </div>
+                        <div class="col-xs-2" >
+                            <br><button class="btn theme-btn def_btn acnt_btn send_test_btn" type="button" id="btCancel">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+
                 <div class="col-md-12 mt10">
                     <form class="form-horizontal">
                         <div class="col-sm-12 ">
                             <div class="form-group">
                                 <input class="form-control sharesocilform" id="txtEventUrl" readonly="readonly" placeholder="" type="text">
                                 <input class="form-control sharesocilform" id="txtEventTitle" placeholder="" type="hidden">
+                                <input class="form-control sharesocilform" id="txtEventInfo" readonly="readonly" placeholder="" type="hidden">
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>
         </div>
 
     </div>
+
+
+
     <input type="hidden" id="hdcity" />
     
 
@@ -142,28 +168,21 @@
     <div id="fb-root"></div>
 </div>
 
-<script type="text/javascript">
-  window.fbAsyncInit = function () {
-    // init the FB JS SDK
-    FB.init({
-      appId: '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]',                        // App ID from the app dashboard
-      status: true,                                 // Check Facebook Login status
-      xfbml: true,                                  // Look for social plugins on the page
-      version: 'v2.6'
-    });
 
-  };
-
-  // Load the SDK asynchronously
-  (function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-</script>
-<script type="text/javascript" src="~/Scripts/sharefuncs.js"></script>
+<div class="modal fade" id="test_inv_email" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body clearfix">
+                <div class="col-sm-12 text-center">
+                    <h3 id="htext">Success</h3>
+                    <p class="email_send_desc" id="ptext">Email has been sent.</p>
+                    <button type="button" id="btCloseEMailPup" class="btn theme-btn def_btn acnt_btn send_test_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Ok</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/Commonfunction.js"></script>
 <script>
     $('.home-pagination').find('.pagination').addClass('desc_pagination');
 
@@ -234,21 +253,102 @@
         });
     }
 
-    function ShowUrl(vtitle, vurl) {
-      @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
-      $("#txtEventTitle").val(vtitle);
-      $("#txtEventUrl").val('@strpr' + vurl);
+    function ShowUrl(vtitle, vinfo, vurl) {
+        $("#txtEventTitle").val(vtitle);
+        $("#txtEventInfo").val(vinfo);
+        $("#txtEventUrl").val(vurl);
+        $("#txtEmailFrnd").val("");
+        $("#txtFromName").val("");
+        $("#dvEmailFrnd").hide();
     }
+</script>
 
-    $('#fbshare').click(function () {
-        return FacebookShare($('#txtEventTitle').val(), $("#txtEventUrl").val());
+
+
+<script type="text/javascript">
+  var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
+  @{ string strpr = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);}
+  var urlprefix = '@strpr'
+
+  window.fbAsyncInit = function () {
+    // init the FB JS SDK
+    FB.init({
+      appId: fbappid,                        // App ID from the app dashboard
+      status: true,                          // Check Facebook Login status
+      xfbml: true,                           // Look for social plugins on the page
+      version: '2.7'
     });
 
-    $('#twittershare').click(function () {
-      return TwitterShare($('#txtEventTitle').val(), $("#txtEventUrl").val());
+  };
+
+  // Load the SDK asynchronously
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+<script src="~/Scripts/socialshare.js"></script>
+
+
+<script type="text/javascript">  
+    $(document).ready(function () {
+      $('#twittershare').click(function () {
+        return TwitterShare($("#txtEventTitle").val(), urlprefix + $("#txtEventUrl").val());
+      });
+
+      $('#linkshare').click(function () {
+        return LinkedInShare($("#txtEventTitle").val(), urlprefix + $("#txtEventUrl").val(), $("#txtEventInfo").val());
+      });
+
+      $('#fbshare').click(function (e) {
+        return FacebookShare(urlprefix + $("#txtEventUrl").val())
+      });
     });
 
-    $('#linkshare').click(function () {
-        return LinkedInShare($('#txtEventTitle').val(), $("#txtEventUrl").val(), "");
+    $("#emailFrnd").click(function () {
+       // $(".sharmodal_pop").animate({ minheight: '+=100' }, 100);
+        $("#dvEmailFrnd").show(100);
     });
+
+
+    $("#btSend").click(function () {
+        var vFromName = $("#txtFromName").val().trim();
+        var vTo = $("#txtEmailFrnd").val().trim();
+            var vEventTitle =  $("#txtEventTitle").val();
+            var vEventUrl = urlprefix + $("#txtEventUrl").val();
+            
+            if (validateEmail(vTo) == true && vTo != "") {
+                $.ajax({
+                    url: '@Url.Action("SendEmailToFriend", "Home")',
+                    data: { strFriendEmail: vTo,strFromname: vFromName, strEventTitle: vEventTitle, strEventUrl: vEventUrl },
+                    beforeSend: function () { $('#dvAjxLoader').show(); },
+                    complete: function () { $('#dvAjxLoader').hide(); },
+                    type: "Post",
+                    success: function (response) {
+                        $("#htext").text("Success");
+                        $("#ptext").text("Email has been sent.");
+                        $("#btPopUp").click();
+                    }
+                });
+            }
+            else {
+                $("#htext").text("Failed");
+                $("#ptext").text("Invalid Email Address.");
+                $("#btPopUp").click();
+                
+            }
+    });
+
+    $("#btCloseEMailPup").click(function () {
+        $("#txtEmailFrnd").focus();
+    });
+
+    $("#btCancel").click(function () {
+        $("#dvEmailFrnd").hide();
+    });
+
+
 </script>

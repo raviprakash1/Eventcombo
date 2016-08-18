@@ -9,6 +9,7 @@ using CMS.Models;
 
 namespace CMS.Controllers
 {
+    [CustomAuthorization("13")]
   public class OrdersController : Controller
   {
     TicketService _tservice;
@@ -91,6 +92,30 @@ namespace CMS.Controllers
           break;
       }
 
+        orders = orders.Select((element, index) => new OrderMainViewModel
+        {
+            RowNumber = index + 1,
+            OId = element.OId,
+            Name = element.Name,
+            EventStartDate = element.EventStartDate,
+            EventEndDate = element.EventEndDate,
+            Quantity = element.Quantity,
+            TotalPaid = element.TotalPaid,
+            OrderId = element.OrderId,
+            EventCancelled = element.EventCancelled,
+            Favorite = element.Favorite,
+            OrderStateId = element.OrderStateId,
+            EventId = element.EventId,
+            FirstName = element.FirstName,
+            LastName = element.LastName,
+            Email = element.Email,
+            City = element.City,
+            State = element.State,
+            OrderDateTime = element.OrderDateTime,
+            OrderStateName = element.OrderStateName,
+            UserId = element.UserId
+        }).ToList();
+
       if (model.PerPage > 0)
       {
         model.Page = (model.PerPage * model.Page) > orders.Count() ? orders.Count() / model.PerPage : model.Page;
@@ -100,6 +125,17 @@ namespace CMS.Controllers
         olist.Orders.AddRange(orders);
 
       return PartialView("_PurchasedTicketList", olist);
+    }
+
+    [HttpGet]
+    public ActionResult PurchasedTicketTotalCount(OrderListRequestViewModel model)
+    {
+      if ((Session["UserID"] == null))
+        return RedirectToAction("Login", "Home");
+
+      var orders = _tservice.GetOrdersList(model.OrderType, String.Empty, model.Search);
+
+      return Json(orders.Count(), JsonRequestBehavior.AllowGet);
     }
 
     [HttpGet]

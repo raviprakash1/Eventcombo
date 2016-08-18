@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using EventCombo.ActionFilters;
+using System.Web;
 using System.Web.Mvc;
 
 namespace EventCombo
@@ -7,7 +8,7 @@ namespace EventCombo
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new CustomHandleErrorAttribute());
         }
     }
 }

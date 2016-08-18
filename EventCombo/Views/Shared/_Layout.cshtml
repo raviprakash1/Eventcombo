@@ -6,16 +6,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <meta name="google-site-verification" content="AVZo78i_QGE67vJiD4QYO1HGWeTACG5zleYqEh-i6KI" />
+  <meta name="google-site-verification" content="@(System.Configuration.ConfigurationManager.AppSettings.Get("GoogleAPIKey"))" />
   @RenderSection("SeoMeta", false)
   @if (ViewBag.FBUrl != null)
-    {
+  {
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@("@Eventcombo")" />
     <meta property="og:url" content="@ViewBag.FBUrl" />
     <meta property="og:type" content="@ViewBag.FBType" />
     <meta property="og:title" content="@ViewBag.FBTitle" />
     <meta property="og:description" content="@ViewBag.FBDescription" />
     <meta property="og:image" content="@ViewBag.FBImage" />
-    }
+  }
      <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
     <link href="~/Images/FabIcon/ios-57x57.png" rel="apple-touch-icon" />
     <link href="~/Images/FabIcon/ios-76x76.png" rel="apple-touch-icon" sizes="76x76" />
@@ -28,6 +30,7 @@
   <title>@(ViewBag.Title ?? "Eventcombo")</title>
   <!-- Bootstrap core CSS -->
   <link href="~/Content/bootstrap.css" rel="stylesheet" />
+  <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
 
 
   <link href="~/Content/jquery.timepicker.css" rel="stylesheet" />
@@ -41,7 +44,7 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=@(System.Configuration.ConfigurationManager.AppSettings.Get("GoogleAPIKey"))&v=3.exp&sensor=true&libraries=places"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="~/Scripts/bootstrap.min.js"></script>
   <script src="~/Scripts/main.js"></script>
@@ -287,11 +290,15 @@
               <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="ticket-fulfillment-policy"})">Ticket Fulfillment Policy</a>
               <br>
               <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="privacy-policy"})">Privacy Policy</a>
+           
             </div>
+
             <div class="col-sm-4">
               <a href="javascript:void(0)">Facebook</a>
               <br>
               <a href="javascript:void(0)">Twitter</a>
+                <br>
+                <a href="@Url.Action("Index","ContactEventCombo")">Contact Event Combo</a>
             </div>
           </div>
         </div>
@@ -325,11 +332,14 @@
                 <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="ticket-fulfillment-policy"})">Ticket Fulfillment Policy</a>
                 <br>
                 <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="privacy-policy"})">Privacy Policy</a>
+                
             </div>
             <div class="col-sm-4">
               <a href="javascript:void(0)">Facebook</a>
               <br>
               <a href="javascript:void(0)">Twitter</a>
+              <br>
+                <a href="@Url.Action("Index","ContactEventComboes")">Contact Event Combo</a> 
             </div>
           </div>
         </div>
@@ -474,19 +484,8 @@
       <input type="hidden" id="url" />
     </div>
   </div>
-
-  @*<script>
-        $(document).ready(function () {
->>>>>>> 83ea2dcddfaf7950dc65ea3fab59d209ca364c75
-
-
-
-   
 </body>
 </html>
-
-
-
 
 
 <script type="text/javascript">
@@ -671,14 +670,6 @@
             type: "Post",
             async: false,
             success: function (data) {
-
-<<<<<<< HEAD
-            },
-            error: function (data) {
-             
-                return false
-=======
->>>>>>> 39f0b45af2649f9ee8f4f1aeb66ed30d0420a06b
             }
         });
 
@@ -777,27 +768,10 @@
           async: false,
           success: function (data) {
 
-<<<<<<< HEAD
-                if (data == "Y") {
-                    $("#loginPopup").click();
-                    // url.val('@Url.Action("CreateEvent", "CreateEvent")');
-                    return false;
-                }
-                else {
-                    
-                    window.location.href = '@Url.Action("CreateEvent", "CreateEvent")';
-                    return true;
-                }
-            },
-            error: function (data) {
-              
-                return false
-=======
             if (data == "Y") {
               $("#loginPopup").click();
             } else {
               result = true;
->>>>>>> 39f0b45af2649f9ee8f4f1aeb66ed30d0420a06b
             }
           }
         });

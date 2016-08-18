@@ -2069,9 +2069,15 @@ transform: rotate(45deg);
 }
 
 /*Share modal css start*/
-.sharmodal_pop{ min-height: 260px;  border-radius:4px; }
+.sharmodal_pop{ min-height: 300px;  border-radius:4px; }
 .sharmodal_pop h3{ font-size: 1.5em; font-weight: bold; padding-left:10px;}
 .sharmodal_pop .modal-header{ border:0px; padding-bottom:0px;}
+
+
+.sharmodal_popEmail{ min-height: 250px;  border-radius:4px; }
+.sharmodal_popEmail h3{ font-size: 1.5em; font-weight: bold; padding-left:10px;}
+.sharmodal_popEmail .modal-header{ border:0px; padding-bottom:0px;}
+
 
 .soc_btn_fb{ background-color: #55acee; padding: 0px; margin-left: 5px; height: 40px; width: 40px; font-size: 20px; border-radius: 50%; color: #fff; }
 .soc_btn_fb:hover,.soc_btn_fb:focus,.soc_btn_fb.focus{ background-color: #55acee; color: #fff; } 
@@ -2257,6 +2263,7 @@ div.dis_file_upld{ background:#ccc !important;}
 }
 
 .invitation-loader{ margin-top:7px;display:none }
+
 .help_icon_hov.help_ml{ margin-left:5px;}
 .modal-backdrop.fade.in{ z-index:1111; }
  .ipad_min_height{ min-height:470px;}

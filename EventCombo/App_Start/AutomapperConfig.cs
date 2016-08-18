@@ -94,6 +94,7 @@ namespace EventCombo
         .ForMember(d => d.TimeZoneName, m => m.MapFrom(s => s.TimeZone_Name))
         .ForMember(d => d.TimeZoneOrder, m => m.MapFrom(s => s.Timezone_order));
       CreateMap<Fee_Structure, FeeStructureViewModel>();
+      CreateMap<BusinessPage, BusinessPageViewModel>();
       CreateMap<ECImage, ECImageViewModel>()
         .ForMember(d => d.ImagePath, m => m.Ignore())
         .ForMember(d => d.Filename, m => m.MapFrom(s => s.ImagePath))

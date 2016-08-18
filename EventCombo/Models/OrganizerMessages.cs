@@ -14,6 +14,8 @@ namespace EventCombo.Models
         public string email { get; set; }
         public string mesasges { get; set; }
         public string organiserid { get; set; }
+        public string PhoneNo { get; set; }
+
     }
 
     public class OrganizerProfile

@@ -327,20 +327,5 @@
       setPagination(page, cState.Total, Math.floor(curRec / num));
     }
   }
-
-  function FacebookShare(title, href) {
-    window.open('https://www.facebook.com/sharer.php?s=100&p[title]=' + encodeURIComponent(title.trim()) + '&p[url]=' + encodeURIComponent(href) + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-    return false;
-  }
-
-  function TwitterShare(title, href) {
-    window.open('https://twitter.com/share?url=' + encodeURIComponent(href) + '&via=twitterdev&related=twitterapi%2Ctwitter&text=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-    return false;
-  }
-
-  function LinkedInShare(title, href) {
-    window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(href) + '&title=' + title + '', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=626,height=436');
-    return false;
-  }
-
 </script>
+<script src="~/Scripts/socialshare.js"></script>

@@ -1,5 +1,6 @@
 ﻿using EventCombo.Services;
 using Hangfire;
+using Hangfire.Dashboard;
 using Hangfire.SqlServer;
 using Microsoft.Owin;
 using Owin;
@@ -37,9 +38,15 @@ namespace EventCombo
             LastLoginStatus loginStatus = new LastLoginStatus();
             RecurringJob.AddOrUpdate(() => loginStatus.changeloginstatus(), "*/5 * * * *");
 
-            app.UseHangfireDashboard();
-            app.UseHangfireServer();
+            var hfOptions = new DashboardOptions
+            {
+              AuthorizationFilters = new[]
+              {
+                new LocalRequestsOnlyAuthorizationFilter()
+              }
+            };
 
+            app.UseHangfireDashboard("/hangfire", hfOptions);
             NLogConfig.Configure();            
         }
     }

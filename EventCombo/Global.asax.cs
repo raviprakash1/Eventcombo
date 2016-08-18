@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using EventCombo.Service;
 
 namespace EventCombo
 {
@@ -19,12 +20,28 @@ namespace EventCombo
       FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
       RouteConfig.RegisterRoutes(RouteTable.Routes);
       BundleConfig.RegisterBundles(BundleTable.Bundles);
+      HangfireBootstrapper.Instance.Start();
     }
+
+    protected void Application_End(object sender, EventArgs e)
+    {
+      HangfireBootstrapper.Instance.Stop();
+    }
+
     protected void Application_Error(Object sender, EventArgs e)
     {
       var raisedException = Server.GetLastError();
       if (raisedException != null)
+      {
         logger.Error(raisedException, "Exception occured.");
+        if (raisedException is HttpException)
+        {
+          var httpException = (HttpException)raisedException;
+          Response.StatusCode = httpException.GetHttpCode();
+        }
+        else
+          Response.StatusCode = 500;
+      }
     }
   }
 }
