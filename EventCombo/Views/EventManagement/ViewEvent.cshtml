@@ -61,8 +61,16 @@
           <div class="adiv"><i class="material-icons">schedule</i> {{eventInfo.EventDateTimeInfoString}}</div>
           <div class="adiv"><i class="material-icons invisible">attach_money</i>@Model.PriceRange</div>
           <div class="wgts">
-            <span><a href="#" title="Add EventTitle to your favorites"><i class="material-icons">favorite</i></a> @(Model.FavoriteCount.ToString())</span>
-            <span><a href="#" title="Vote for EventTitle"><i class="material-icons">thumb_up</i></a> @(Model.VoteCount.ToString())</span>
+            @if (!String.IsNullOrEmpty(Model.BaseUserId))
+            {
+              <span><a href="javascript:void(0)" title="Add EventTitle to your favorites"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
+              <span><a href="javascript:void(0)" title="Vote for EventTitle"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
+            }
+            else
+            {
+              <span><a href="javascript:void(0)" title="Add EventTitle to your favorites"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
+              <span><a href="javascript:void(0)" title="Vote for EventTitle"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
+            }
             <span class="social" social="SHARE THIS">
               <a href="javascript:void(0)" title="Email" ng-show="false"><img width="20px" alt="Share @Model.EventTitle via Email" src="~/Images/AMaterial/mail-square.svg"></a>
               <a href="javascript:void(0)" title="Facebook" onclick="FacebookShare('@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Facebook" src="~/Images/AMaterial/square-facebook.svg"></a>

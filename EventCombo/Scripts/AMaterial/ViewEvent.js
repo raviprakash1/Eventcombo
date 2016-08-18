@@ -1,6 +1,7 @@
 eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '$attrs', 'eventInfoService',
   function ($scope, $http, $window, $attrs, eventInfoService) {
-
+    $scope.favStyle = { "color": "white" };
+    $scope.voteStyle = { "color": "white" };
     $scope.eventInfo = {};
     if (!$attrs.eventid) throw new Error("No event ID defined");
 
@@ -14,6 +15,9 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
         $scope.map.panTo(new google.maps.LatLng($scope.eventInfo.Latitude, $scope.eventInfo.Longitude));
         addEventMarker($scope.eventInfo, $scope.map);
       }
+      $scope.favStyle = !$scope.eventInfo.UserFavorite ? {} : { "color": "white" };
+      $scope.voteStyle = $scope.eventInfo.UserVote ? {} : { "color": "white" };
+      console.log($scope.favStyle);
     });
     eventInfoService.loadInfo($attrs.eventid);
 
