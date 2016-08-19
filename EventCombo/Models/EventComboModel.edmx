@@ -856,6 +856,7 @@
           <Property Name="T_Customize" Type="varchar" MaxLength="1" />
           <Property Name="T_Ecpercent" Type="decimal" Precision="9" Scale="2" />
           <Property Name="T_EcAmount" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="eventTicketPriceID" Type="int" />
         </EntityType>
         <EntityType Name="Ticket_Locked_Detail">
           <Key>
@@ -1067,11 +1068,15 @@
           <Property Name="Data" Type="nvarchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EC2.dbo.EventTicket_View' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EventCombo.dbo.EventTicket_View' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="EventTicket_View">
           <Key>
+            <PropertyRef Name="TPD_Id" />
             <PropertyRef Name="OId" />
+            <PropertyRef Name="TicketTypeID" />
+            <PropertyRef Name="TicketTypeName" />
           </Key>
+          <Property Name="TPD_Id" Type="bigint" Nullable="false" />
           <Property Name="EventID" Type="bigint" />
           <Property Name="TicketName" Type="nvarchar" MaxLength="256" />
           <Property Name="OId" Type="bigint" Nullable="false" />
@@ -1087,6 +1092,8 @@ warning 6002: The table/view 'EC2.dbo.EventTicket_View' does not have a primary 
           <Property Name="ECFeePerTicket" Type="decimal" Precision="10" Scale="2" />
           <Property Name="MerchantFeePerTicket" Type="decimal" Precision="9" Scale="2" />
           <Property Name="Customer_Fee" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="TicketTypeID" Type="bigint" Nullable="false" />
+          <Property Name="TicketTypeName" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="PromoCodeID" Type="int" />
           <Property Name="PromoCode" Type="nvarchar(max)" />
           <Property Name="PromoCodeAmount" Type="numeric" Precision="18" Scale="2" />
@@ -1095,7 +1102,7 @@ warning 6002: The table/view 'EC2.dbo.EventTicket_View' does not have a primary 
           <Property Name="OrderStateName" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EC2.dbo.V_EventsexpiredList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'EventCombo.dbo.V_EventsexpiredList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="V_EventsexpiredList">
           <Key>
             <PropertyRef Name="EventID" />
@@ -1724,6 +1731,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="State" EntityType="Self.State" Schema="HangFire" store:Type="Tables" />
           <EntitySet Name="EventTicket_View" EntityType="Self.EventTicket_View" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
+    [EventTicket_View].[TPD_Id] AS [TPD_Id], 
     [EventTicket_View].[EventID] AS [EventID], 
     [EventTicket_View].[TicketName] AS [TicketName], 
     [EventTicket_View].[OId] AS [OId], 
@@ -1739,6 +1747,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
     [EventTicket_View].[ECFeePerTicket] AS [ECFeePerTicket], 
     [EventTicket_View].[MerchantFeePerTicket] AS [MerchantFeePerTicket], 
     [EventTicket_View].[Customer_Fee] AS [Customer_Fee], 
+    [EventTicket_View].[TicketTypeID] AS [TicketTypeID], 
+    [EventTicket_View].[TicketTypeName] AS [TicketTypeName], 
     [EventTicket_View].[PromoCodeID] AS [PromoCodeID], 
     [EventTicket_View].[PromoCode] AS [PromoCode], 
     [EventTicket_View].[PromoCodeAmount] AS [PromoCodeAmount], 
@@ -2517,6 +2527,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <NavigationProperty Name="OrderTemplateTickets" Relationship="EventComboModel.TicketOrderTemplateTicket" FromRole="Ticket" ToRole="OrderTemplateTicket" />
           <NavigationProperty Name="OrderTemplateQuestionTickets" Relationship="EventComboModel.TicketOrderTemplateQuestionTicket" FromRole="Ticket" ToRole="OrderTemplateQuestionTicket" />
           <NavigationProperty Name="OrderTemplates" Relationship="EventComboModel.TicketOrderTemplate" FromRole="Ticket" ToRole="OrderTemplate" />
+          <Property Name="eventTicketPriceID" Type="Int32" />
         </EntityType>
         <EntityType Name="Ticket_Locked_Detail">
           <Key>
@@ -4430,6 +4441,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
         <EntityType Name="EventTicket_View">
           <Key>
             <PropertyRef Name="OId" />
+            <PropertyRef Name="TPD_Id" />
+            <PropertyRef Name="TicketTypeID" />
+            <PropertyRef Name="TicketTypeName" />
           </Key>
           <Property Name="EventID" Type="Int64" />
           <Property Name="TicketName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
@@ -4452,6 +4466,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="O_OrderDateTime" Type="DateTime" Precision="3" />
           <Property Name="OrderStateId" Type="Byte" />
           <Property Name="OrderStateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TPD_Id" Type="Int64" Nullable="false" />
+          <Property Name="TicketTypeID" Type="Int64" Nullable="false" />
+          <Property Name="TicketTypeName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="V_EventsListUpcoming">
           <Key>
@@ -4987,6 +5004,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="Tickets">
             <EntityTypeMapping TypeName="EventComboModel.Ticket">
               <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="eventTicketPriceID" ColumnName="eventTicketPriceID" />
                 <ScalarProperty Name="T_EcAmount" ColumnName="T_EcAmount" />
                 <ScalarProperty Name="T_Ecpercent" ColumnName="T_Ecpercent" />
                 <ScalarProperty Name="T_Customize" ColumnName="T_Customize" />
@@ -5907,6 +5925,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="EventTicket_View">
             <EntityTypeMapping TypeName="EventComboModel.EventTicket_View">
               <MappingFragment StoreEntitySet="EventTicket_View">
+                <ScalarProperty Name="TicketTypeName" ColumnName="TicketTypeName" />
+                <ScalarProperty Name="TicketTypeID" ColumnName="TicketTypeID" />
+                <ScalarProperty Name="TPD_Id" ColumnName="TPD_Id" />
                 <ScalarProperty Name="OrderStateName" ColumnName="OrderStateName" />
                 <ScalarProperty Name="OrderStateId" ColumnName="OrderStateId" />
                 <ScalarProperty Name="O_OrderDateTime" ColumnName="O_OrderDateTime" />
