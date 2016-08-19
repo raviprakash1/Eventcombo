@@ -1718,13 +1718,23 @@ namespace EventCombo.Controllers
     [AllowAnonymous]
     public async Task<ActionResult> LoginAPI(string json)
     {
+      LoginViewModel model = JsonConvert.DeserializeObject<LoginViewModel>(json);
+
+      ActionResultViewModel result = await privateLoginAPI(model);
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = result;
+      return res;
+    }
+
+    private async Task<ActionResultViewModel> privateLoginAPI(LoginViewModel model)
+    {
       ActionResultViewModel result = new ActionResultViewModel()
       {
         Success = false,
         ErrorCode = 3,
         ErrorMessage = "Incorrect password, retry or use Forgot Password."
       };
-      LoginViewModel model = JsonConvert.DeserializeObject<LoginViewModel>(json);
 
       if (TryValidateModel(model))
       {
@@ -1756,10 +1766,7 @@ namespace EventCombo.Controllers
             break;
         }
       }
-
-      JsonNetResult res = new JsonNetResult();
-      res.Data = result;
-      return res;
+      return result;
     }
 
     [HttpPost]
@@ -1845,7 +1852,7 @@ namespace EventCombo.Controllers
 
     [HttpGet]
     [AllowAnonymous]
-    public async Task<ActionResult> ForgotPasswordAPI(string json)
+    public async Task<ActionResult> ForgotPasswordAPI(string email)
     {
       ActionResultViewModel result = new ActionResultViewModel()
       {
@@ -1854,7 +1861,7 @@ namespace EventCombo.Controllers
         ErrorMessage = "Error in email."
       };
 
-      ForgotPasswordViewModel model = JsonConvert.DeserializeObject<ForgotPasswordViewModel>(json);
+      ForgotPasswordViewModel model = new ForgotPasswordViewModel() { Email = email };
       if (TryValidateModel(model))
       {
         var user = await UserManager.FindByEmailAsync(model.Email);
@@ -1872,42 +1879,102 @@ namespace EventCombo.Controllers
 
     [HttpPost]
     [AllowAnonymous]
-    public async Task<ActionResult> ResetPasswordAPI(string json)
+    public async Task<ActionResult> CheckCodePasswordAPI(string json)
     {
       ActionResultViewModel result = new ActionResultViewModel()
       {
         Success = false,
         ErrorCode = 1,
+        ErrorMessage = "Password not found."
+      };
+
+      LoginViewModel model = JsonConvert.DeserializeObject<LoginViewModel>(json);
+      if (TryValidateModel(model))
+      {
+        var user = await UserManager.FindByEmailAsync(model.Email);
+
+        Random rand = new Random();
+        Thread.Sleep(rand.Next(500, 1500));
+
+        if ((user != null) && _accService.CheckCodePassword(user.Id, model.Password))
+        {
+          result.Success = true;
+          result.ErrorCode = 0;
+          result.ErrorMessage = "";
+        }
+      }
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = result;
+      return res;
+    }
+
+
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<ActionResult> ResetPasswordAPI(string json)
+    {
+      ActionResultViewModel result = new ActionResultViewModel()
+      {
+        Success = false,
+        ErrorCode = 4,
         ErrorMessage = "Error password or code."
       };
 
       PasswordUpdateRequestViewModel model = JsonConvert.DeserializeObject<PasswordUpdateRequestViewModel>(json);
       if (TryValidateModel(model))
       {
-        var user = await UserManager.FindByEmailAsync(model.Email);
-        if (user != null)
+        if (model.Password == model.ConfirmPassword)
         {
-          if (_accService.TryUseCode(user.Id, model.Code))
+          var user = await UserManager.FindByEmailAsync(model.Email);
+          if (user != null)
           {
+            Random rand = new Random();
+            Thread.Sleep(rand.Next(500, 1500));
+            if (_accService.TryUseCode(user.Id, model.Code))
+            {
 
-            result.Success = true;
-            result.ErrorCode = 0;
-            result.ErrorMessage = "";
+              var token = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+              var resetResult = await UserManager.ResetPasswordAsync(user.Id, token, model.Password);
+
+              result.Success = resetResult.Succeeded;
+              if (result.Success)
+              {
+                _accService.SendNewPasswordNotification(user.Id, model.Email);
+
+                result = await privateLoginAPI(new LoginViewModel()
+                {
+                  Email = model.Email,
+                  Password = model.Password,
+                  RememberMe = false
+                });
+              }
+              else
+              {
+                result.ErrorCode = 7;
+                result.ErrorMessage = resetResult.Errors.ToString(); ;
+              }
+            }
+            else
+            {
+              result.Success = false;
+              result.ErrorCode = 5;
+              result.ErrorMessage = "Wrong password.";
+            }
 
           }
           else
           {
             result.Success = false;
-            result.ErrorCode = 1;
-            result.ErrorMessage = "";
+            result.ErrorCode = 6;
+            result.ErrorMessage = "Email not found.";
           }
-
         }
         else
         {
           result.Success = false;
-          result.ErrorCode = 2;
-          result.ErrorMessage = "";
+          result.ErrorCode = 8;
+          result.ErrorMessage = "Passwords did not match, please retype.";
         }
       }
 

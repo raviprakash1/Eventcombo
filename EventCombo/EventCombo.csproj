@@ -676,6 +676,7 @@
     <Compile Include="Service\Notification\ForgotPasswordNotification.cs" />
     <Compile Include="Service\Notification\INotificationSender.cs" />
     <Compile Include="Service\ManageAttendeesService.cs" />
+    <Compile Include="Service\Notification\NewPasswordNotification.cs" />
     <Compile Include="Service\Notification\NewUserWelcomeMessage.cs" />
     <Compile Include="Service\Notification\NotificationSender.cs" />
     <Compile Include="Service\Notification\INotification.cs" />

@@ -10,19 +10,17 @@ using System.Web.Mvc;
 
 namespace EventCombo.Service
 {
-  public class NewUserWelcomeMessage : INotification
+  public class NewPasswordNotification : INotification
   {
     private IUnitOfWorkFactory _factory;
     private string _userEmail;
     private string _defaultEmail;
     private string _receiver;
-    public string ReceiverName
-    {
-      get { return _receiver; }
-      set { _receiver = value; }
-    }
+    private string _firstName;
+    private string _lastName;
 
-    public NewUserWelcomeMessage(IUnitOfWorkFactory factory, string userEmail, string defaultEmail)
+    public NewPasswordNotification(IUnitOfWorkFactory factory, string userEmail, string firstName, string lastName, 
+      string defaultEmail)
     {
       if (factory == null)
         throw new ArgumentNullException("factory");
@@ -34,6 +32,14 @@ namespace EventCombo.Service
       _factory = factory;
       _userEmail = userEmail;
       _defaultEmail = defaultEmail;
+      _firstName = firstName;
+      _lastName = lastName;
+    }
+
+    public string ReceiverName
+    {
+      get { return _receiver; }
+      set { _receiver = value; }
     }
 
     private string ReplaceTags(string src, List<KeyValuePair<string, string>> tagList)
@@ -50,12 +56,14 @@ namespace EventCombo.Service
     public void SendNotification(ISendMailService _service)
     {
       IRepository<Email_Template> etRepo = new GenericRepository<Email_Template>(_factory.ContextFactory);
-      var eTemplate = etRepo.Get(filter: (et => et.Template_Tag == "email_welcome")).SingleOrDefault();
+      var eTemplate = etRepo.Get(filter: (et => et.Template_Tag == "acc_pwd_set")).SingleOrDefault();
       if (eTemplate == null)
-        throw new Exception("Email template 'email_welcome' not found.");
+        throw new Exception("Email template 'acc_pwd_set' not found.");
 
       List<KeyValuePair<string, string>> tagList = new List<KeyValuePair<string, string>>();
       tagList.Add(new KeyValuePair<string, string>("UserEmailID", _userEmail));
+      tagList.Add(new KeyValuePair<string, string>("UserFirstNameID", _firstName));
+      tagList.Add(new KeyValuePair<string, string>("UserLastNameID", _lastName));
 
       _service.Message.To.Clear();
       _service.Message.To.Add(new MailAddress(String.IsNullOrEmpty(eTemplate.To) ? _userEmail : ReplaceTags(eTemplate.To, tagList)));
@@ -72,5 +80,6 @@ namespace EventCombo.Service
       _service.Message.Body = ReplaceTags(new MvcHtmlString(HttpUtility.HtmlDecode(eTemplate.TemplateHtml)).ToHtmlString(), tagList);
       _service.SendMail();
     }
+
   }
 }

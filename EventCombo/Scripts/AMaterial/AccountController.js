@@ -5,15 +5,14 @@
     $scope.loginPassword = '';
     $scope.loginError = 'Incorrect password, retry or use Forgot Password.';
 
-    $scope.users = [
-      { id: 1, email: 'joeeventer@hotmail.com', password: '12345678' },
-      { id: 2, email: 'ayon@thecatalystindia.in', password: '12345678' },
-      { id: 3, email: 'om@thecatalystindia.in', password: '12345678' },
-    ];
-
     $scope.showLoadingMessage = function (show, message) {
       $scope.popLoading = show;
       $scope.LoadingMessage = message;
+    }
+
+    $scope.showInfoMessage = function (show, message) {
+      $scope.popInfoMessage = show;
+      $scope.InfoMessage = message;
     }
 
     $scope.resetForm = function (form) {
@@ -26,8 +25,8 @@
     }
 
     $scope.showLoginForm = function () {
-      $scope.email = '';
-      $scope.resetForm($scope.myForm);
+//      $scope.email = '';
+//      $scope.resetForm($scope.myForm);
       $scope.popLogin = true;
     }
 
@@ -38,11 +37,33 @@
     }
 
     $scope.showRegisterForm = function () {
-      $scope.firstName = '';
-      $scope.lastName = '';
       $scope.password = '';
       $scope.resetForm($scope.registerForm);
       $scope.popRegister = true;
+    }
+
+    $scope.showForgetPasswordForm = function () {
+      $scope.popLoginPassword = false;
+      otpPassword = "";
+      $scope.resetForm($scope.otpPasswordForm);
+      $scope.showLoadingMessage(true, 'Sending code');
+      $http.get('/account/forgotPasswordAPI', { params: { email: $scope.email } }).then(
+        function (response) {
+          $scope.showLoadingMessage(false, '');
+          $scope.popForgetPassword = response.data.Success;
+          if (!response.data.Success)
+            $scope.showInfoMessage(true, response.data.ErrorMessage);
+        }, function (error) {
+          $scope.showLoadingMessage(false, '');
+          $scope.popServerError = true;
+        });
+    }
+
+    $scope.showCreatePasswordForm = function () {
+      $scope.newPassword = "";
+      $scope.repeatPassword = "";
+      $scope.resetForm($scope.newPasswordForm);
+      $scope.popCreatePassword = true;
     }
 
     // logout submit
@@ -133,12 +154,6 @@
           $scope.showLoadingMessage(false, '');
           $scope.popServerError = true;
         });
-
-
-
-
-        $scope.popRegisterCongrats = true;
-        console.log('Email: ' + $scope.email + ' First name: ' + $scope.firstName + ' Last name: ' + $scope.lastName + ' Password: ' + $scope.password);
       }
       else {
         if ($scope[form].firstName.$error.required) { $scope.firstNameRequired = true; }
@@ -150,13 +165,27 @@
     // OTP Password submit
     $scope.otpPasswordNext = function (form) {
       if ($scope[form].$valid) {
-        if ($scope.otpPassword == '123456') {
-          $scope.popForgetPassword = false;
-          $scope.popCreatePassword = true;
-        }
-        else {
-          $scope.IncorrectotpPassword = true;
-        }
+        $scope.popForgetPassword = false;
+        $scope.showLoadingMessage(true, 'Checking password');
+        $http.post('/account/CheckCodePasswordAPI', {
+          json: angular.toJson({
+            Email: $scope.email,
+            Password: $scope.otpPassword
+          })
+        }).then(function (response) {
+          $scope.showLoadingMessage(false, '');
+          var result = response.data.Success;
+          if (result) {
+            $scope.showCreatePasswordForm();
+          }
+          else {
+            $scope.popForgetPassword = true;
+            $scope.IncorrectotpPassword = true;
+          }
+        }, function (error) {
+          $scope.showLoadingMessage(false, '');
+          $scope.popServerError = true;
+        });
       }
       else {
         if ($scope[form].otpPassword.$error.required) { $scope.otpPasswordRequired = true; }
@@ -168,7 +197,27 @@
       if ($scope[form].$valid) {
         if ($scope.newPassword == $scope.repeatPassword) {
           $scope.popCreatePassword = false;
-          $scope.popCreatePasswordCongrats = true;
+          $scope.showLoadingMessage(true, 'Creating password');
+          $http.post('/account/ResetPasswordAPI', {
+            json: angular.toJson({
+              Email: $scope.email,
+              Password: $scope.newPassword,
+              ConfirmPassword: $scope.repeatPassword,
+              Code: $scope.otpPassword
+            })
+          }).then(function (response) {
+            $scope.showLoadingMessage(false, '');
+            var result = response.data.Success;
+            if (result) {
+              $scope.popCreatePasswordCongrats = true;
+            }
+            else {
+              $scope.showInfoMessage(true, result.ErrorMessage);
+            }
+          }, function (error) {
+            $scope.showLoadingMessage(false, '');
+            $scope.popServerError = true;
+          });
         }
         else {
           $scope.passwordNotMatch = true;
@@ -192,6 +241,7 @@
       $scope.popLoginCongrats = false;
       $scope.popLoading = false;
       $scope.popServerError = false;
+      $scope.popInfoMessage = false;
     };
   }]);
 

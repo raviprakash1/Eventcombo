@@ -42,24 +42,36 @@ eventComboApp.controller('HamburgerController', ['$scope', '$window', 'MenuServi
   }]);
 
 
-eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http', '$q',
-  function ($scope, $window, $http, $q) {
+eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http', '$q', '$cookies',
+  function ($scope, $window, $http, $q, $cookies) {
 
     $scope.eventString = '';
     $scope.selectedEvent = null;
     $scope.cityString = '';
     $scope.selectedCity = null;
 
-    $scope.geocoords = {
-      latitude: '40.712784',
-      longitude: '-74.0059413'
-    }
-
-    if ($window.navigator.geolocation) {
-      $window.navigator.geolocation.getCurrentPosition(function (pos) {
-        $scope.geocoords.latitude = pos.coords.latitude;
-        $scope.geocoords.longitude = pos.coords.longitude;
-      });
+    $scope.geocoords = $cookies.getObject('ECGeoCoordinates');
+    var cdate = new Date();
+    cdate.setDate(cdate.getDate() + 365);
+    if (!$scope.geocoords) {
+      $scope.geocoords = {
+        latitude: '40.712784',
+        longitude: '-74.0059413'
+      }
+      if ($window.navigator.geolocation) {
+        $window.navigator.geolocation.getCurrentPosition(function (pos) {
+          $scope.geocoords = {
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude
+          };
+          $cookies.putObject('ECGeoCoordinates', $scope.geocoords, { path: "/", expires: cdate });
+        }, function (err) {
+          $cookies.putObject('ECGeoCoordinates', $scope.geocoords, { path: "/", expires: cdate });
+        });
+      }
+      else {
+        $cookies.putObject('ECGeoCoordinates', $scope.geocoords, { path: "/", expires: cdate });
+      }
     }
 
     $scope.foundCities = [];
@@ -74,9 +86,9 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
         var lng = $scope.geocoords.longitude;
         var srchStr = $scope.eventString;
         if ($scope.selectedEvent) {
-            lat = $scope.selectedEvent.Latitude ? $scope.selectedEvent.Latitude : lat;
-            lng = $scope.selectedEvent.Longitude ? $scope.selectedEvent.Longitude : lng;
-            srchStr = $scope.selectedEvent.RecordTypeId == 0 ? srchStr.substring(0, 53) : srchStr.substring(0, 16);
+          lat = $scope.selectedEvent.Latitude ? $scope.selectedEvent.Latitude : lat;
+          lng = $scope.selectedEvent.Longitude ? $scope.selectedEvent.Longitude : lng;
+          srchStr = $scope.selectedEvent.RecordTypeId == 0 ? srchStr.substring(0, 53) : srchStr.substring(0, 16);
         }
         $window.location = '/et/evt/evc/all/page/' + lat + '/' + lng + '/rel/none/' + encodeURIComponent(srchStr);
       }
