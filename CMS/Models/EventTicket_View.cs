@@ -35,5 +35,8 @@ namespace CMS.Models
         public Nullable<System.DateTime> O_OrderDateTime { get; set; }
         public Nullable<byte> OrderStateId { get; set; }
         public string OrderStateName { get; set; }
+        public long TPD_Id { get; set; }
+        public long TicketTypeID { get; set; }
+        public string TicketTypeName { get; set; }
     }
 }
