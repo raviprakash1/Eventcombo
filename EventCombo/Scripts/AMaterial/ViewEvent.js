@@ -15,7 +15,7 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
         $scope.map.panTo(new google.maps.LatLng($scope.eventInfo.Latitude, $scope.eventInfo.Longitude));
         addEventMarker($scope.eventInfo, $scope.map);
       }
-      $scope.favStyle = !$scope.eventInfo.UserFavorite ? {} : { "color": "white" };
+      $scope.favStyle = $scope.eventInfo.UserFavorite ? {} : { "color": "white" };
       $scope.voteStyle = $scope.eventInfo.UserVote ? {} : { "color": "white" };
       console.log($scope.favStyle);
     });
