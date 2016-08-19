@@ -152,6 +152,7 @@
         <EntityTypeShape EntityType="EventComboModel.V_EventsListUpcoming" Width="1.5" PointX="20.375" PointY="25.75" />
         <EntityTypeShape EntityType="EventComboModel.v_OrderList" Width="1.5" PointX="25.375" PointY="23.75" />
         <EntityTypeShape EntityType="EventComboModel.ContactEventCombo" Width="1.5" PointX="25.375" PointY="11.75" />
+        <EntityTypeShape EntityType="EventComboModel.EventTicket_View" Width="1.5" PointX="27.375" PointY="0.75" />
         <AssociationConnector Association="EventComboModel.EventTypeEvent" />
         <AssociationConnector Association="EventComboModel.EventCategoryEvent" />
         <EntityTypeShape EntityType="EventComboModel.AspNetUserCode" Width="1.5" PointX="17" PointY="3.75" />

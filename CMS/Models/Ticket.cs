@@ -57,6 +57,7 @@ namespace CMS.Models
         public string T_Customize { get; set; }
         public Nullable<decimal> T_Ecpercent { get; set; }
         public Nullable<decimal> T_EcAmount { get; set; }
+        public Nullable<int> eventTicketPriceID { get; set; }
     
         public virtual Event Event { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

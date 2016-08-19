@@ -280,5 +280,21 @@ namespace EventCombo.Controllers
       else
         return 0;
     }
+
+    [HttpGet]
+    public ActionResult SaleReport(int EventId)
+    {
+        if ((Session["AppId"] == null))
+            return DefaultAction();
+
+        string userId = Session["AppId"].ToString();
+
+        if (_dbservice.GetEventAccess(EventId, userId) != AccessLevel.EventOwner)
+            return DefaultAction();
+
+        ViewData["EventID"] = EventId;
+        IEnumerable<EventOrderInfoViewModel> orders = _maservice.GetOrdersForSaleReport(PaymentStates.Completed, EventId);
+        return PartialView("_SaleReport", orders);
+    }
   }
 }

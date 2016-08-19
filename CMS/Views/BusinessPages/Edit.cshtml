@@ -38,6 +38,9 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.BusinessPageID)
                 @Html.HiddenFor(model => model.CreatedDate)
+                @Html.HiddenFor(model => model.IsOnFooter)
+                @Html.HiddenFor(model => model.PageOrder)
+                @Html.HiddenFor(model => model.ResponseCode)                
                 <div class="form-group">
                     @Html.LabelFor(model => model.PageName, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">

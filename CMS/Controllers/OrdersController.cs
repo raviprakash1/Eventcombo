@@ -139,12 +139,12 @@ namespace CMS.Controllers
     }
 
     [HttpGet]
-    public ActionResult PurchasedTicketDetail(string OrderId)
+    public ActionResult PurchasedTicketDetail(string OrderId, long eventId)
     {
       if ((Session["UserID"] == null))
         return RedirectToAction("Login", "Home");
 
-      OrderDetailsViewModel orderInfo = _tservice.GetOrderDetails(OrderId);
+      OrderDetailsViewModel orderInfo = _tservice.GetOrderDetails(OrderId, eventId);
       return PartialView("_PurchasedTicketDetail", orderInfo);
     }
 
