@@ -99,7 +99,7 @@
           <span>{{message}}</span>
         </div>
       </div>
-      <div class="eventDetailContainer" ng-style="{'background-image': 'url(' + eventInfo.BGImage.ImageUrl +')', 'background-size': '100% 100%', 'background-color': eventInfo.BackgroundColor}">
+      <div class="eventDetailContainer" ng-style="{'background-image': 'url(' + eventInfo.BGImage.ImagePath +')', 'background-size': '100% 100%', 'background-color': eventInfo.BackgroundColor}">
         <div class="EDConInner">
           <div class="col-md-12 EDWebsiteUrlHead">
 
@@ -376,8 +376,14 @@
           <span style="cursor:pointer; display:block; margin-top:24px;" ng-click="callImageClick('tellusImage'); $event.stopPropagation();" class="noOutline defaultFilter icBox">
             <span style="display: inline-block;float: left;padding-right: 15px; font-size:14px;">Have a flyer? Upload it here</span>
             <i class="material-icons" style="color: #858585;display: inline-block; float:right;">add_a_photo</i>
-            <input type="file" name="tellusimage" id="tellusImage" accept="image/*" style="display: none;" custom-on-change="uploadEventImage" />
+            <input type="file" name="tellusimage" id="tellusImage" accept="image/*" style="display: none;" custom-on-change="uploadFlyerImage" />
           </span>
+          <div class="imageGallery" style="clear: both; padding-top: 5px;" ng-show="eventInfo.ECImage">
+            <div style="float:right; text-align:right;" class="tellus_pics">
+              <i class="material-icons closeIconImage" ng-click="deleteFlyerImage()" style="cursor:pointer;">clear</i>
+              <img ng-src="{{eventInfo.ECImage.ImagePath}}" style="height:100px; width: 100px" />
+            </div>
+          </div>
 
           <div class="organiserDiv">
 
@@ -416,21 +422,20 @@
           </div>
           <div style="width:100%; width:calc(100% - 20px); display:table;">
             <div style="margin-top: 10px; float: right;">
-              <span style="text-transform:uppercase; cursor: pointer;display: none;" ng-click="callImageClick('tellusImage'); $event.stopPropagation();" class="noOutline responsiveFilter">
-                <span style="display: inline-block;float: left;padding-right: 15px;text-transform:uppercase; font-size:14px">Have a flyer? Upload it here</span>
-                <i class="material-icons" style="margin-left: -10px;color: #858585;float:right;">add_a_photo</i>
-                <input type="file" name="tellusimage" id="tellusImage" accept="image/*" style="display: none;" custom-on-change="uploadEventImage" />
+              <span class="wholegallery icBox" style="margin-right:0; float: right;" ">
+                <span style=" display inline-block;float left;padding-right 15px; font-size:14px;">A Whole Gallery? Sure!</span>
+              <i data-ng-click='openGallery()' class="material-icons" style="cursor:pointer;color: #858585;display: inline-block;float:right;">collections</i>
               </span>
-              <span class="wholegallery icBox" style="margin-right:0;">
-                <span style="display: inline-block;float: left;padding-right: 15px; font-size:14px;">A Whole Gallery? Sure!</span>
-                <i data-ng-click='openGallery()' class="material-icons" style="cursor:pointer;color: #858585;display: inline-block;float:right;">collections</i>
+              <span style="text-transform:uppercase; cursor: pointer; float: right;" ng-click="callImageClick('galleryImage'); $event.stopPropagation();" class="noOutline responsiveFilter">
+                <i class="material-icons" style="margin-left: -10px;color: #858585; float:right;">add_a_photo</i>
+                <input type="file" name="galleryImage" id="galleryImage" accept="image/*" style="display: none;" custom-on-change="uploadEventImage" />
               </span>
             </div>
             <div class="imageGallery" style="clear: both; padding-top: 5px;">
               <div style="float:right; text-align:right;">
                 <div class="tellus_pics" ng-repeat="img in eventInfo.EventImages">
                   <i class="material-icons closeIconImage" ng-click="deleteEventImage(img)" style="cursor:pointer;">clear</i>
-                  <img ng-src="{{img.ImageUrl}}" style="height:100px; width: 100px" />
+                  <img ng-src="{{img.ImagePath}}" style="height:100px; width: 100px" />
                 </div>
               </div>
             </div>
@@ -487,9 +492,9 @@
                   </div>
                 </md-input-container>
 
-                <div class="tellus_pics" style="float: right;" ng-show="eventInfo.CurrentOrganizer.Image.ImageUrl">
+                <div class="tellus_pics" style="float: right;" ng-show="eventInfo.CurrentOrganizer.Image">
                   <i class="material-icons closeIconImage" ng-click="deleteOrganizerImage()" style="cursor:pointer;">clear</i>
-                  <img ng-src="{{eventInfo.CurrentOrganizer.Image.ImageUrl}}" style="height:100px; width: 100px" />
+                  <img ng-src="{{eventInfo.CurrentOrganizer.Image.ImagePath}}" style="height:100px; width: 100px" />
                 </div>
               </div>
               <div class="More">

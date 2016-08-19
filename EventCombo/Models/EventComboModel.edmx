@@ -311,6 +311,7 @@
           <Property Name="FeatureUpdateDate" Type="datetime" />
           <Property Name="ECBackgroundId" Type="bigint" />
           <Property Name="BackgroundColor" Type="varchar" MaxLength="10" />
+          <Property Name="ECImageId" Type="bigint" />
         </EntityType>
         <EntityType Name="Event_Email_Invitation">
           <Key>
@@ -373,6 +374,14 @@
           </Key>
           <Property Name="EventCategoryID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventCategory" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventECImage">
+          <Key>
+            <PropertyRef Name="EventECImageId" />
+          </Key>
+          <Property Name="EventECImageId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventId" Type="bigint" Nullable="false" />
+          <Property Name="ECImageId" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="EventFavourite">
           <Key>
@@ -1194,7 +1203,7 @@ warning 6002: The table/view 'EventCombo.dbo.v_OrderList' does not have a primar
           <Property Name="State" Type="varchar" MaxLength="256" />
           <Property Name="OrderDateTime" Type="datetime" />
           <Property Name="Name" Type="nvarchar" MaxLength="600" />
-          <Property Name="TotalPaid" Type="numeric" Precision="38" Scale="2" />
+          <Property Name="TotalPaid" Type="numeric" Precision="18" Scale="2" />
           <Property Name="Quantity" Type="bigint" />
           <Property Name="EventStartDate" Type="datetime" />
           <Property Name="EventEndDate" Type="datetime" />
@@ -1640,6 +1649,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="Event_Orgnizer_Detail" EntityType="Self.Event_Orgnizer_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_VariableDesc" EntityType="Self.Event_VariableDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventCategory" EntityType="Self.EventCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventECImage" EntityType="Self.EventECImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventFavourite" EntityType="Self.EventFavourite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventImage" EntityType="Self.EventImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Events_Hit" EntityType="Self.Events_Hit" Schema="dbo" store:Type="Tables" />
@@ -2177,6 +2187,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="BackgroundColor" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="EventType" Relationship="EventComboModel.EventTypeEvent" FromRole="Event" ToRole="EventType" />
           <NavigationProperty Name="EventCategory" Relationship="EventComboModel.EventCategoryEvent" FromRole="Event" ToRole="EventCategory" />
+          <Property Name="ECImageId" Type="Int64" />
+          <NavigationProperty Name="EventECImages" Relationship="EventComboModel.EventEventECImage" FromRole="Event" ToRole="EventECImage" />
 
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
@@ -3057,6 +3069,15 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <AssociationSet Name="AspNetUserAspNetUserCode" Association="EventComboModel.AspNetUserAspNetUserCode">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserCode" EntitySet="AspNetUserCodes" />
+          </AssociationSet>
+          <EntitySet Name="EventECImages" EntityType="EventComboModel.EventECImage" />
+          <AssociationSet Name="ECImageEventECImage" Association="EventComboModel.ECImageEventECImage">
+            <End Role="ECImage" EntitySet="ECImages" />
+            <End Role="EventECImage" EntitySet="EventECImages" />
+          </AssociationSet>
+          <AssociationSet Name="EventEventECImage" Association="EventComboModel.EventEventECImage">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="EventECImage" EntitySet="EventECImages" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
@@ -4008,6 +4029,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <NavigationProperty Name="ArticleAuthors" Relationship="EventComboModel.ECImageArticleAuthor" FromRole="ECImage" ToRole="ArticleAuthor" />
           <NavigationProperty Name="Articles" Relationship="EventComboModel.ECImageArticle" FromRole="ECImage" ToRole="Article" />
           <NavigationProperty Name="ArticleImages" Relationship="EventComboModel.ECImageArticleImage" FromRole="ECImage" ToRole="ArticleImage" />
+          <NavigationProperty Name="EventECImages" Relationship="EventComboModel.ECImageEventECImage" FromRole="ECImage" ToRole="EventECImage" />
         </EntityType>
         <EntityType Name="ECImageType">
           <Key>
@@ -4350,7 +4372,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="State" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="OrderDateTime" Type="DateTime" Precision="3" />
           <Property Name="Name" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
-          <Property Name="TotalPaid" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="TotalPaid" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Quantity" Type="Int64" />
           <Property Name="EventStartDate" Type="DateTime" Precision="3" />
           <Property Name="EventEndDate" Type="DateTime" Precision="3" />
@@ -4453,6 +4475,40 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Principal>
             <Dependent Role="AspNetUserCode">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EventECImage">
+          <Key>
+            <PropertyRef Name="EventECImageId" />
+          </Key>
+          <Property Name="EventECImageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventId" Type="Int64" Nullable="false" />
+          <Property Name="ECImageId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="ECImage" Relationship="EventComboModel.ECImageEventECImage" FromRole="EventECImage" ToRole="ECImage" />
+          <NavigationProperty Name="Event" Relationship="EventComboModel.EventEventECImage" FromRole="EventECImage" ToRole="Event" />
+        </EntityType>
+        <Association Name="ECImageEventECImage">
+          <End Type="EventComboModel.ECImage" Role="ECImage" Multiplicity="1" />
+          <End Type="EventComboModel.EventECImage" Role="EventECImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ECImage">
+              <PropertyRef Name="ECImageId" />
+            </Principal>
+            <Dependent Role="EventECImage">
+              <PropertyRef Name="ECImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventEventECImage">
+          <End Type="EventComboModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="EventComboModel.EventECImage" Role="EventECImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="EventECImage">
+              <PropertyRef Name="EventId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4621,6 +4677,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="EventComboModel.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="ECImageId" ColumnName="ECImageId" />
                 <ScalarProperty Name="ECBackgroundId" ColumnName="ECBackgroundId" />
                 <ScalarProperty Name="BackgroundColor" ColumnName="BackgroundColor" />
                 <ScalarProperty Name="FeatureUpdateDate" ColumnName="FeatureUpdateDate" />
@@ -5863,6 +5920,15 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="AspNetUserCodeId" ColumnName="AspNetUserCodeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventECImages">
+            <EntityTypeMapping TypeName="EventComboModel.EventECImage">
+              <MappingFragment StoreEntitySet="EventECImage">
+                <ScalarProperty Name="ECImageId" ColumnName="ECImageId" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="EventECImageId" ColumnName="EventECImageId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

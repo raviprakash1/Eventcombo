@@ -6,6 +6,8 @@ using System.Web;
 using EventCombo.Models;
 using System.IO;
 using NLog;
+using System.Web.Mvc;
+using System.Web.Hosting;
 
 namespace EventCombo.Service
 {
@@ -14,31 +16,49 @@ namespace EventCombo.Service
     private const string TempPath = "/Images/Temp/";
     private const string PermanentPath = "/Images/ECImages/";
 
-    private Func<string, string> _processFilePathFunc { get; set; }
-    private Func<string, string> _processUrlPathFunc { get; set; }
     private IMapper _mapper;
-
+    private UrlHelper _urlHelper;
     private ILogger logger;
 
-    public ECImageStorage(IMapper mapper, Func<string, string> filePathFunc = null, Func<string, string> urlPathFunc = null)
+    public ECImageStorage(IMapper mapper)
     {
       if (mapper == null)
         throw new ArgumentNullException("mapper");
 
       _mapper = mapper;
-      _processFilePathFunc = filePathFunc;
-      _processUrlPathFunc = urlPathFunc;
       logger = LogManager.GetCurrentClassLogger();
+      try
+      {
+        _urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+      }
+      catch (Exception ex)
+      {
+        _urlHelper = null;
+        logger.Error(ex, "Error during creation of UrlHelper(HttpContext.Current.Request.RequestContext).", null);
+      }
     }
 
     private string internalProcessFilePath(string p)
     {
-      return _processFilePathFunc == null ? p : _processFilePathFunc(p);
+      string res;
+      try
+      {
+        res = HostingEnvironment.MapPath(p);
+      }
+      catch (Exception ex)
+      {
+        logger.Error(ex, "Error during call of HostingEnvironment.MapPath(srcPath).", null);
+        res = p;
+      }
+      return res;
     }
 
     private string internalProcessUrlPath(string p)
     {
-      return _processUrlPathFunc == null ? p : _processUrlPathFunc(p);
+      if (_urlHelper != null)
+        return _urlHelper.Content(p);
+      else
+        return p;
     }
 
     private ECImageViewModel SaveFile(HttpPostedFileBase file, string path)
@@ -78,9 +98,19 @@ namespace EventCombo.Service
     {
       if (src == null)
         throw new ArgumentNullException("src");
-      if (src.ECImageId != 0)
-        throw new ArgumentException("Image is not temporary.");
-      if (!File.Exists(src.FilePath))
+
+      string srcPath;
+      if (String.IsNullOrEmpty(src.FilePath))
+      {
+        if (src.ECImageId == 0)
+          srcPath = internalProcessFilePath(TempPath + src.Filename);
+        else
+          srcPath = internalProcessFilePath(PermanentPath + src.Filename);
+      }
+      else
+        srcPath = src.FilePath;
+
+      if (!File.Exists(srcPath))
         throw new ArgumentException("Image file not found.");
 
       ECImageViewModel image = _mapper.Map<ECImageViewModel>(src);
@@ -90,9 +120,7 @@ namespace EventCombo.Service
         image.Filename = Guid.NewGuid().ToString() + Path.GetExtension(src.Filename);
         image.FilePath = internalProcessFilePath(PermanentPath + image.Filename);
       }
-      image.ImagePath = internalProcessUrlPath(PermanentPath + image.Filename);
-
-      File.Move(src.FilePath, image.FilePath);
+      File.Copy(srcPath, image.FilePath);
 
       return image;
     }

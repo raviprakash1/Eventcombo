@@ -366,6 +366,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ECImageViewModel.cs" />
+    <Compile Include="Models\EventECImage.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Footer.cs" />
     <Compile Include="Models\IBaseViewModel.cs" />
     <Compile Include="Models\BillingAddress.cs">
@@ -671,8 +674,6 @@
     <Compile Include="Service\IECImageStorage.cs" />
     <Compile Include="Service\IECImageService.cs" />
     <Compile Include="Service\IEventService.cs" />
-    <Compile Include="Service\IImageService.cs" />
-    <Compile Include="Service\ImageService.cs" />
     <Compile Include="Service\IManageAttendeesService.cs" />
     <Compile Include="Service\IManageEventService.cs" />
     <Compile Include="Service\Notification\ForgotPasswordNotification.cs" />

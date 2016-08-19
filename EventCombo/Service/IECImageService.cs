@@ -20,5 +20,6 @@ namespace EventCombo.Service
     ECImageViewModel SaveToDB(HttpPostedFileBase file, string userId, IUnitOfWork uow);
     ECImageViewModel SaveToDB(ECImageViewModel image, string userId);
     ECImageViewModel SaveToDB(ECImageViewModel image, string userId, IUnitOfWork uow);
+    ECImageViewModel GetImageById(long id);
   }
 }

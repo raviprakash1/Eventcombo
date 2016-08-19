@@ -142,8 +142,22 @@ namespace EventCombo.Service
       if (file == null)
         throw new ArgumentNullException("file");
 
-      ECImageViewModel image = _storage.SavePermanent(file);
-      return SaveToDB(image, userId);
+      if (!ValidateFile(file))
+        throw new ArgumentException("file");
+
+      ECImageViewModel newImage;
+      using (var uow = _factory.GetUnitOfWork())
+        try
+        {
+          newImage = SaveToDB(file, userId, uow);
+          uow.Commit();
+        }
+        catch (Exception ex)
+        {
+          uow.Rollback();
+          throw new Exception("Exception during SaveToDB.", ex);
+        }
+      return newImage;
     }
 
     public ECImageViewModel SaveToDB(HttpPostedFileBase file, string userId, IUnitOfWork uow)
@@ -153,8 +167,11 @@ namespace EventCombo.Service
       if (uow == null)
         throw new ArgumentNullException("uow");
 
+      if (!ValidateFile(file))
+        throw new ArgumentException("file");
+
       ECImageViewModel image = _storage.SavePermanent(file);
-      return SaveToDB(image, userId, uow);
+      return SaveImage(image, userId, uow);
     }
 
     public ECImageViewModel SaveToDB(ECImageViewModel image, string userId)
@@ -166,7 +183,7 @@ namespace EventCombo.Service
       using (var uow = _factory.GetUnitOfWork())
         try
         {
-          newImage= SaveToDB(image, userId, uow);
+          newImage = SaveToDB(image, userId, uow);
           uow.Commit();
         }
         catch (Exception ex)
@@ -185,20 +202,36 @@ namespace EventCombo.Service
         throw new ArgumentNullException("uow");
 
       CheckAccess(image, userId);
+      if (image.ECImageId == 0)
+        image = _storage.SavePermanent(image);
+      return SaveImage(image, userId, uow);
+    }
+
+    public ECImageViewModel GetImageById(long id)
+    {
+      IRepository<ECImage> ecRepo = new GenericRepository<ECImage>(_factory.ContextFactory);
+      var ecImage = ecRepo.GetByID(id);
+      if (ecImage == null)
+        return null;
+      else
+        return _storage.GetExisting(ecImage);
+    }
+
+    private ECImageViewModel SaveImage(ECImageViewModel image, string userId, IUnitOfWork uow)
+    {
       IRepository<ECImage> ecRepo = new GenericRepository<ECImage>(uow.Context);
       ECImage imgDB = ecRepo.GetByID(image.ECImageId);
-      if (imgDB != null)
-      {
-        if (image.ECImageId == 0)
-          _storage.SavePermanent(image);
+      if (imgDB == null)
         imgDB = _mapper.Map<ECImage>(image);
-      }
       else
         _mapper.Map(image, imgDB);
       if (imgDB.ECImageTypeId == 0)
         imgDB.ECImageTypeId = GetImageTypeId(image.TypeName, uow);
+      if (imgDB.ECImageId == 0)
+        ecRepo.Insert(imgDB);
       uow.Context.SaveChanges();
-      return _mapper.Map<ECImageViewModel>(imgDB);
+      return _storage.GetExisting(imgDB);
+
     }
   }
 }

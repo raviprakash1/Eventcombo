@@ -14,10 +14,12 @@ namespace EventCombo.Controllers
 {
   public class ImageAPIController : Controller
   {
-    IImageService _iservice;
+    IECImageService _iservice;
     public ImageAPIController()
     {
-      _iservice = new ImageService();
+      var factory = new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory(new EventComboEntities()));
+      var mapper = AutomapperConfig.Config.CreateMapper();
+      _iservice = new ECImageService(factory, mapper, new ECImageStorage(mapper));
     }
 
     public ActionResult UploadImages(List<HttpPostedFileBase> files)
@@ -28,10 +30,10 @@ namespace EventCombo.Controllers
       if (files == null)
         return null;
 
-      List<ImageViewModel> images = new List<ImageViewModel>();
+      List<ECImageViewModel> images = new List<ECImageViewModel>();
       foreach (HttpPostedFileBase file in files)
       {
-        ImageViewModel image = _iservice.SaveImage(file, Server.MapPath, Url.Content);
+        ECImageViewModel image = _iservice.SaveTempImage(file);
         if (image != null)
           images.Add(image);
       }
@@ -46,15 +48,15 @@ namespace EventCombo.Controllers
       if (Session["AppId"] == null)
         return null;
 
-      ImageViewModel image = JsonConvert.DeserializeObject<ImageViewModel>(json);
+      string userId = Session["AppId"].ToString();
+      ECImageViewModel image = JsonConvert.DeserializeObject<ECImageViewModel>(json);
 
-      if (image.ImageType > 0) // not temporary image
+      if (image.ECImageId != 0) // not temporary image
         return null;
 
-      image.MapPath = Server.MapPath;
-      _iservice.DeleteImage(image);
+      _iservice.DeleteImage(image, userId);
+
       JsonNetResult res = new JsonNetResult();
-      res.Data = image;
       return res;
     }
   }
