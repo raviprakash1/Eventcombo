@@ -562,8 +562,10 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
           if (!$scope.MainForm['VarChargeForm_' + i].variableChargeDescription.$valid)
             elem.valid = false;
         });
-      if (($scope.eventInfo.EventPrivacy == 'Private') && ($scope.eventInfo.isPasswordRequired == 'Y') && !MainForm.privatePassword.$valid)
+      if (($scope.eventInfo.EventPrivacy == 'Private') && ($scope.eventInfo.isPasswordRequired == 'Y') && (!$scope.eventInfo.Private_Password || !$scope.eventInfo.Private_Password.trim())) {
+        $scope.eventInfo.Private_Password = $scope.eventInfo.Private_Password.trim();
         elem.valid = false;
+      }
       return elem;
     }
 
@@ -656,7 +658,12 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       var idx = $scope.eventInfo.EventImages.indexOf(image);
       if (idx >= 0)
         $scope.eventInfo.EventImages.splice(idx, 1);
-      $scope.DeleteFile(image);
+      $scope.clearImage(image);
+    }
+
+    $scope.deleteFlyerImage = function () {
+      $scope.clearImage($scope.eventInfo.ECImage);
+      $scope.eventInfo.ECImage = null;
     }
 
     $scope.uploadEventImage = function (event) {
