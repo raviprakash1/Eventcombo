@@ -30,7 +30,7 @@
           <td class="UETableTD">@order.Email</td>
           <td class="UETableTD">@(order.City), @order.State</td>
           <td class="UETableTD">
-            <a href="javascript:void(0)" onclick="expandEditMenu(this, 'UETableTD@(Model.OrderType)_', '@(order.OrderId)')">
+            <a href="javascript:void(0)" onclick="expandEditMenu(this, 'UETableTD@(Model.OrderType)_', '@(order.OrderId)', @(order.EventId))">
               @((order.OrderId ?? "") == "" ? "Not assigned" : order.OrderId)
             </a>
           </td>

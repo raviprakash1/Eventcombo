@@ -89,6 +89,7 @@ namespace CMS.Models
         public virtual DbSet<V_EventsexpiredList> V_EventsexpiredList { get; set; }
         public virtual DbSet<BusinessPage> BusinessPages { get; set; }
         public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<EventTicket_View> EventTicket_View { get; set; }
     
         [DbFunction("EmsEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)

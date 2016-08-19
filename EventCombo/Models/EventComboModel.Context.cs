@@ -114,6 +114,7 @@ namespace EventCombo.Models
         public virtual DbSet<V_EventsexpiredList> V_EventsexpiredList { get; set; }
         public virtual DbSet<v_OrderList> v_OrderList { get; set; }
         public virtual DbSet<ContactEventCombo> ContactEventComboes { get; set; }
+        public virtual DbSet<EventTicket_View> EventTicket_View { get; set; }
         public virtual DbSet<V_EventsListUpcoming> V_EventsListUpcoming { get; set; }
         public virtual DbSet<AspNetUserCode> AspNetUserCodes { get; set; }
         public virtual DbSet<EventECImage> EventECImages { get; set; }

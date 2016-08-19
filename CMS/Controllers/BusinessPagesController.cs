@@ -120,7 +120,7 @@ namespace CMS.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BusinessPageID,PageName,PageNameUrl,PageContent,CreatedDate,UpdateDate")] BusinessPage businessPage)
+        public ActionResult Edit([Bind(Include = "BusinessPageID,PageName,PageNameUrl,PageContent,CreatedDate,UpdateDate,IsOnFooter,PageOrder,ResponseCode")] BusinessPage businessPage)
         {
             if ((Session["UserID"] != null))
             {

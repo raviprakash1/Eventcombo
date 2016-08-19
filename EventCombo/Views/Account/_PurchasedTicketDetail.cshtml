@@ -30,10 +30,10 @@
           @if (Model.Attendees.Count > 0)
           {
             <td class="subTableInnerTD">
-              <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Name" />
+              <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Name" />
             </td>
             <td class="subTableInnerTD">
-              <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Email" />
+              <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Email" />
             </td>
           }
           else
@@ -54,10 +54,10 @@
           @if (Model.Attendees.Count > 1)
           {
             <td class="subTableInnerTD">
-              <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Name" />
+              <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Name" />
             </td>
             <td class="subTableInnerTD">
-              <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Email" />
+              <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Email" />
             </td>
           }
           else
@@ -73,15 +73,22 @@
         <tr class="UETableTDSUbDivBackColor" style="height: 85px;">
           <td class="subTableInnerTD" colspan="2"></td>
           <td class="subTableInnerTD">
-            <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Name" />
+            <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Name" />
           </td>
           <td class="subTableInnerTD">
-            <input type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls" value="@Model.Attendees[i].Email" />
+            <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Email" />
           </td>
           <td class="subTableInnerTD"></td>
         </tr>
       }
     }
+      <tr class="UETableTDSUbDivBackColor" style="height: 55px;">
+          <td class="subTableInnerTD"><b>Ticket Names:</b></td>
+          <td class="subTableInnerTD" colspan="3">
+              @Model.TicketNames 
+          </td>
+          <td class="subTableInnerTD"></td>
+      </tr>
     @if (Model.Attendees.Count > 0)
     {
       <tr class="UETableTDSUbDivBackColor" style="height: 85px;">
@@ -99,6 +106,7 @@
       <td class="subTableInnerTD"></td>
     </tr>
     <tr class="UETableTDSUbDivBackColorFooter">
+      <td class="UETableTDSUbDivFooterLinks" @(Model.Attendees.Count > 0 ? "onclick=editAttendees(this);" : "")>@(Model.Attendees.Count > 0 ? "EDIT" : "")</td>
       <td class="UETableTDSUbDivFooterLinks">@(Html.ActionLink("PRINT TICKETS", "Ticket", "Download", new { OrderId = Model.OrderId, format = "pdf" }, new { target = "_blank" }))</td>
       <td class="UETableTDSUbDivFooterLinks">
         <a data-toggle="modal" data-target="#cancelModal@(Model.OrderId)">CANCEL ORDER</a>
@@ -118,7 +126,7 @@
           </div>
         </div>
       </td>
-      <td class="UETableTDSUbDivFooterLinks" colspan="2">
+      <td class="UETableTDSUbDivFooterLinks">
         <a data-toggle="modal" data-target="#contactModal@(Model.OrderId)">CONTACT ORGANIZER</a>
         <div class="modal fade" id="contactModal@(Model.OrderId)" role="dialog">
           <div class="modal-dialog modal-lg">

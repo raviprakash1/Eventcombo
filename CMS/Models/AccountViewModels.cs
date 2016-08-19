@@ -228,6 +228,7 @@ namespace CMS.Models
       public string Email { get; set; }
       public string EventDate { get; set; }
       public string EventLocation { get; set; }
+      public string TicketNames { get; set; }
       public bool SendEmail { get; set; }
 
       private List<AttendeeViewModel> _attendees = new List<AttendeeViewModel>();

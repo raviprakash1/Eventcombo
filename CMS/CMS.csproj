@@ -343,6 +343,9 @@
     <Compile Include="Models\Events_Hit.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventTicket_View.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EventType.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
