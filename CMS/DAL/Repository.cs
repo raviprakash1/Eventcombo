@@ -31,6 +31,14 @@ namespace CMS.DAL
       this._dbSet = _context.Set<TEntity>();
     }
 
+    public GenericRepository(DbContext context)
+    {
+      if (context == null)
+        throw new ArgumentNullException("context");
+      this._context = context;
+      this._dbSet = _context.Set<TEntity>();
+    }
+
     public virtual IEnumerable<TEntity> Get(
         Expression<Func<TEntity, bool>> filter = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,

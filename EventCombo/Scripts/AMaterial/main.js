@@ -204,7 +204,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     $scope.openGallery = function () {
       var iList = [];
       $scope.eventInfo.EventImages.forEach(function (img, i, arr) {
-        iList.push(img.ImageUrl)
+        iList.push(img.ImagePath)
       });
       ngGallery.open({
         template: '<p>Hello</p>',
@@ -247,13 +247,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         ECImageId: null,
         InternalId: i + 1,
         Validate: false,
-        Image: {
-          Id: 0,
-          ImageType: 0,
-          Filename: "",
-          ImageUrl: "",
-          ContentType: ""
-        }
+        Image: null
       };
       $scope.organizerEditState = "Add";
       $scope.OrganizerForm.$setPristine();
@@ -277,11 +271,11 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
           Organizer_Linkedin: org[0].Organizer_Linkedin,
           Validate: false,
           Image: {
-            Id: org[0].Image.Id,
-            ImageType: org[0].Image.ImageType,
+            ECImageId: org[0].Image.ECImageId,
             Filename: org[0].Image.Filename,
-            ImageUrl: org[0].Image.ImageUrl,
-            ContentType: org[0].Image.ContentType
+            ImagePath: org[0].Image.ImagePath,
+            TypeName: org[0].Image.TypeName,
+            ECImageTypeId: org[0].Image.ECImageTypeId
           }
         };
         $scope.organizerEditState = "Edit";
@@ -331,11 +325,11 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         org[0].Organizer_FBLink = org[0].IncludeSocialLinks ? $scope.eventInfo.CurrentOrganizer.Organizer_FBLink : null;
         org[0].Organizer_Twitter = org[0].IncludeSocialLinks ? $scope.eventInfo.CurrentOrganizer.Organizer_Twitter : null;
         org[0].Organizer_Linkedin = org[0].IncludeSocialLinks ? $scope.eventInfo.CurrentOrganizer.Organizer_Linkedin : null;
-        org[0].Image.Id = $scope.eventInfo.CurrentOrganizer.Image.Id;
-        org[0].Image.ImageType = $scope.eventInfo.CurrentOrganizer.Image.ImageType;
+        org[0].Image.ECImageId = $scope.eventInfo.CurrentOrganizer.Image.ECImageId;
+        org[0].Image.TypeName = $scope.eventInfo.CurrentOrganizer.Image.TypeName;
         org[0].Image.Filename = $scope.eventInfo.CurrentOrganizer.Image.Filename;
-        org[0].Image.ImageUrl = $scope.eventInfo.CurrentOrganizer.Image.ImageUrl;
-        org[0].Image.ContentType = $scope.eventInfo.CurrentOrganizer.Image.ContentType;
+        org[0].Image.ImagePath = $scope.eventInfo.CurrentOrganizer.Image.ImagePath;
+        org[0].Image.ECImageTypeId = $scope.eventInfo.CurrentOrganizer.Image.ECImageTypeId;
       };
       $scope.organizerEditState = "Saved";
     }
@@ -629,7 +623,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       $scope.UploadFiles(files, function (images) {
         if (images && (images.length > 0)) {
           var oldimage = null;
-          if ($scope.eventInfo.BGImage.ImageUrl)
+          if ($scope.eventInfo.BGImage && $scope.eventInfo.BGImage.ImagePath)
             oldimage = $scope.eventInfo.BGImage;
           $scope.eventInfo.BGImage = images[0];
           if (oldimage)
@@ -638,8 +632,24 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       });
     };
 
+    $scope.uploadFlyerImage = function (event) {
+      var files = event.target.files;
+
+      $scope.UploadFiles(files, function (images) {
+        if (images && (images.length > 0)) {
+          var oldimage = null;
+          if ($scope.eventInfo.ECImage && $scope.eventInfo.ECImage.ImagePath)
+            oldimage = $scope.eventInfo.ECImage;
+          $scope.eventInfo.ECImage = images[0];
+          if (oldimage)
+            $scope.DeleteFile(oldimage);
+        }
+      });
+    };
+
     $scope.onBGColorChange = function () {
       $scope.clearImage($scope.eventInfo.BGImage);
+      $scope.eventInfo.BGImage = null;
     }
 
     $scope.deleteEventImage = function (image) {
@@ -665,7 +675,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       $scope.UploadFiles(files, function (images) {
         if (images && (images.length > 0)) {
           var oldimage = null;
-          if ($scope.eventInfo.CurrentOrganizer.Image && ($scope.eventInfo.CurrentOrganizer.Image.ImageUrl))
+          if ($scope.eventInfo.CurrentOrganizer.Image && ($scope.eventInfo.CurrentOrganizer.Image.ImagePath))
             oldimage = $scope.eventInfo.CurrentOrganizer.Image;
           $scope.eventInfo.CurrentOrganizer.Image = images[0];
           if (oldimage)
@@ -676,16 +686,13 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
 
     $scope.deleteOrganizerImage = function () {
       $scope.clearImage($scope.eventInfo.CurrentOrganizer.Image);
+      $scope.eventInfo.CurrentOrganizer.Image = null;
     }
 
     $scope.clearImage = function (image) {
       if (image) {
-        if (image.ImageUrl)
+        if (image.ImagePath)
           $scope.DeleteFile(image);
-        image.Filename = "";
-        image.ImageUrl = "";
-        image.ImageType = 0;
-        image.ContentType = "";
       }
     }
 

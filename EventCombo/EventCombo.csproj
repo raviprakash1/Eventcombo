@@ -365,6 +365,10 @@
     <Compile Include="Models\ContactEventCombo.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ECImageViewModel.cs" />
+    <Compile Include="Models\EventECImage.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EventTicket_View.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -661,16 +665,18 @@
     <Compile Include="Services\TicketEmailer.cs" />
     <Compile Include="Service\AccountService.cs" />
     <Compile Include="Service\ArticleService.cs" />
-    <Compile Include="Service\HangfireBootstrapper.cs" />
+    <Compile Include="Service\ECImageStorage.cs" />
+    <Compile Include="Service\ECImageService.cs" />
     <Compile Include="Service\EventService.cs" />
+    <Compile Include="Service\HangfireBootstrapper.cs" />
     <Compile Include="Service\HtmlProcessing.cs" />
     <Compile Include="Service\IAccountService.cs" />
     <Compile Include="Service\IArticleService.cs" />
     <Compile Include="Service\DBAccessService.cs" />
     <Compile Include="Service\IDBAccessService.cs" />
+    <Compile Include="Service\IECImageStorage.cs" />
+    <Compile Include="Service\IECImageService.cs" />
     <Compile Include="Service\IEventService.cs" />
-    <Compile Include="Service\IImageService.cs" />
-    <Compile Include="Service\ImageService.cs" />
     <Compile Include="Service\IManageAttendeesService.cs" />
     <Compile Include="Service\IManageEventService.cs" />
     <Compile Include="Service\Notification\ForgotPasswordNotification.cs" />

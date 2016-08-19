@@ -28,6 +28,7 @@ namespace EventCombo.Models
             this.Event_OrganizerMessages = new HashSet<Event_OrganizerMessages>();
             this.Ticket_Purchased_Detail = new HashSet<Ticket_Purchased_Detail>();
             this.EventFavourites = new HashSet<EventFavourite>();
+            this.EventECImages = new HashSet<EventECImage>();
         }
     
         public long EventID { get; set; }
@@ -70,6 +71,7 @@ namespace EventCombo.Models
         public Nullable<System.DateTime> FeatureUpdateDate { get; set; }
         public Nullable<long> ECBackgroundId { get; set; }
         public string BackgroundColor { get; set; }
+        public Nullable<long> ECImageId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Addresses { get; set; }
@@ -95,5 +97,7 @@ namespace EventCombo.Models
         public virtual ICollection<EventFavourite> EventFavourites { get; set; }
         public virtual EventType EventType { get; set; }
         public virtual EventCategory EventCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventECImage> EventECImages { get; set; }
     }
 }

@@ -8,6 +8,9 @@ using AutoMapper;
 using System.Data.SqlClient;
 using EventCombo.Utils;
 using System.Web.Mvc;
+using NLog;
+using System.IO;
+using System.Web.Hosting;
 
 
 namespace EventCombo.Service
@@ -16,7 +19,9 @@ namespace EventCombo.Service
   {
     private IUnitOfWorkFactory _factory;
     private IMapper _mapper;
-    private IImageService _iservice;
+    private IECImageService _iservice;
+    private ILogger _logger;
+    private UrlHelper _urlHelper;
 
     public EventService(IUnitOfWorkFactory factory, IMapper mapper)
     {
@@ -27,7 +32,18 @@ namespace EventCombo.Service
 
       _factory = factory;
       _mapper = mapper;
-      _iservice = new ImageService();
+      _iservice = new ECImageService(factory, mapper, new ECImageStorage(mapper));
+      _logger = LogManager.GetCurrentClassLogger();
+      try
+      {
+        _urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+      }
+      catch (Exception ex)
+      {
+        _urlHelper = null;
+        _logger.Error(ex, "Error during creation of UrlHelper(HttpContext.Current.Request.RequestContext).", null);
+      }
+
     }
 
     private void LoadEventDictionaries(EventViewModel ev)
@@ -37,7 +53,6 @@ namespace EventCombo.Service
       IRepository<Organizer_Master> orgRepo = new GenericRepository<Organizer_Master>(_factory.ContextFactory);
       IRepository<TimeZoneDetail> tzRepo = new GenericRepository<TimeZoneDetail>(_factory.ContextFactory);
       IRepository<Fee_Structure> feeRepo = new GenericRepository<Fee_Structure>(_factory.ContextFactory);
-      IRepository<ECImage> iRepo = new GenericRepository<ECImage>(_factory.ContextFactory);
 
       ev.EventTypeList.Clear();
       foreach (var etype in etRepo.Get(orderBy: (query => query.OrderBy(et => et.EventType1))))
@@ -65,11 +80,7 @@ namespace EventCombo.Service
             || !String.IsNullOrWhiteSpace(orgVM.Organizer_Linkedin)
             || !String.IsNullOrWhiteSpace(orgVM.Organizer_Twitter);
           if ((org.ECImageId ?? 0) > 0)
-          {
-            var iDb = iRepo.GetByID((org.ECImageId ?? 0));
-            if (iDb != null)
-              _mapper.Map(iDb, orgVM.Image);
-          }
+            orgVM.Image = _iservice.GetImageById((org.ECImageId ?? 0));
           ev.OrganizerList.Add(orgVM);
         }
       }
@@ -228,16 +239,6 @@ namespace EventCombo.Service
       me.EventID = ev.EventID;
       me.Frequency = ev.DateInfo.Frequency.ToString();
 
-      /*
-      int tzId;
-      Int32.TryParse(ev.TimeZone, out tzId);
-      TimeZoneDetail tz = tzRepo.GetByID(tzId);
-      if (tz != null)
-      {
-        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(tz.TimeZone);
-        ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.StartDateTime, userTimeZone);
-        ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.EndDateTime, userTimeZone); ;
-      }*/
       me.M_Startfrom = ev.DateInfo.StartDateTime;
       me.M_StartTo = ev.DateInfo.EndDateTime;
       if (ev.DateInfo.Frequency == ScheduleFrequency.Weekly)
@@ -266,16 +267,6 @@ namespace EventCombo.Service
         se = new EventVenue();
       se.EventID = ev.EventID;
 
-      /*
-      int tzId;
-      Int32.TryParse(ev.TimeZone, out tzId);
-      TimeZoneDetail tz = tzRepo.GetByID(tzId);
-      if (tz != null)
-      {
-        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(tz.TimeZone);
-        ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.StartDateTime, userTimeZone);
-        ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.EndDateTime, userTimeZone); ;
-      }*/
       se.E_Startdate = ev.DateInfo.StartDateTime;
       se.E_Enddate = ev.DateInfo.EndDateTime;
       se.EventStartDate = ev.DateInfo.StartDateTime.ToString("MM/dd/yyyy");
@@ -374,21 +365,20 @@ namespace EventCombo.Service
 
         _mapper.Map(org, oDB);
 
-        org.Image.MapPath = mapPath;
-        if ((org.Image != null) && (org.Image.ImageType == 0) && (!String.IsNullOrWhiteSpace(org.Image.Filename)))
+        if ((org.Image != null) && (org.Image.ECImageId != 0))
         {
-          ImageViewModel tempImage = _iservice.CopyImage(org.Image, 3);
-          org.Organizer_Image = tempImage.Filename;
-          org.Imagepath = tempImage.Filename;
-        }
-        if ((org.Image != null) && (org.Image.ImageType == 0) && (!String.IsNullOrWhiteSpace(org.Image.Filename)))
-          oDB.ECImageId = _iservice.UpdateECImage(oDB.ECImageId ?? 0, org.Image, uow);
-        if (((oDB.ECImageId ?? 0) != 0) && (org.Image != null) && (String.IsNullOrWhiteSpace(org.Image.Filename)))
-        {
-          _iservice.DeleteECImage(oDB.ECImageId ?? 0, uow, mapPath);
-          oDB.ECImageId = 0;
+          org.Image = _iservice.SaveToDB(org.Image, ev.UserID, uow);
+          oDB.ECImageId = org.Image.ECImageId;
+          org.ECImageId = org.Image.ECImageId;
+          org.Organizer_Image = org.Image.ImagePath;
+          org.Imagepath = org.Image.ImagePath;
         }
 
+        if (((oDB.ECImageId ?? 0) != 0) && (org.Image != null))
+        {
+          _iservice.DeleteImage(org.Image, ev.UserID, uow);
+          oDB.ECImageId = 0;
+        }
 
         if (oDB.Orgnizer_Id == 0)
           orgRepo.Insert(oDB);
@@ -415,41 +405,34 @@ namespace EventCombo.Service
     private void SaveImages(EventViewModel ev, IUnitOfWork uow, Func<string, string> mapPath)
     {
       IRepository<EventImage> eiRepo = new GenericRepository<EventImage>(_factory.ContextFactory);
+      IRepository<EventECImage> ecRepo = new GenericRepository<EventECImage>(_factory.ContextFactory);
 
-      var dbImages = eiRepo.Get(filter: (img => img.EventID == ev.EventID)).ToList();
-      foreach (var image in dbImages)
+      var dbECImages = ecRepo.Get(filter: (ei => ei.EventId == ev.EventID));
+      foreach (var ecDBLink in dbECImages)
       {
-        ImageViewModel cVM = ev.EventImages.Where(img => img.Id == image.EventImageID).FirstOrDefault();
-        if (cVM == null)
-          eiRepo.Delete(image);
-        else
+        var ecLink = ev.EventImages.Where(ei => ei.ECImageId == ecDBLink.ECImageId).FirstOrDefault();
+        if (ecLink == null)
         {
-          if (cVM.ImageType == 0)
-          {
-            _iservice.DeleteImage(new ImageViewModel() { ImageType = 2, Filename = image.EventImageUrl, MapPath = mapPath });
-            cVM.MapPath = mapPath;
-            var newVM = _iservice.CopyImage(cVM, 2, true);
-            image.EventImageUrl = newVM.Filename;
-            image.ImageType = newVM.ContentType;
-            cVM.Filename = newVM.Filename;
-            cVM.ImageType = 2;
-          }
+          _iservice.DeleteImage(ecDBLink.ECImageId, ev.UserID, uow);
+          ecRepo.Delete(ecLink);
         }
       }
-
-      uow.Context.SaveChanges();
-      foreach (var cVM in ev.EventImages.Where(i => ((i.Id == 0) && (i.ImageType == 0) && (!String.IsNullOrWhiteSpace(i.Filename)))))
+      foreach (var ecImage in ev.EventImages)
       {
-        cVM.MapPath = mapPath;
-        var newVM = _iservice.CopyImage(cVM, 2, true);
-        EventImage image = new EventImage() { EventID = ev.EventID, EventImageUrl = newVM.Filename, ImageType = newVM.ContentType };
-        eiRepo.Insert(image);
-        uow.Context.SaveChanges();
-        cVM.Id = image.EventImageID;
-        cVM.Filename = newVM.Filename;
-        cVM.ImageType = 2;
+        ECImageViewModel newImage;
+        if (ecImage.ECImageId == 0)
+          newImage = _iservice.SaveToDB(ecImage, ev.UserID, uow);
+        else
+          newImage = ecImage;
+        var ecDBLink = ecRepo.Get(filter: (el => (el.ECImageId == newImage.ECImageId) && (el.EventId == ev.EventID))).FirstOrDefault();
+        if (ecDBLink == null)
+          ecRepo.Insert(new EventECImage()
+          {
+            ECImageId = newImage.ECImageId,
+            EventId = ev.EventID
+          });
       }
-
+      uow.Context.SaveChanges();
     }
 
 
@@ -482,15 +465,33 @@ namespace EventCombo.Service
           uow.Context.SaveChanges();
           ev.EventID = evDB.EventID;
 
-          ev.BGImage.MapPath = mapPath;
-          if ((ev.BGImage != null) && (ev.BGImage.ImageType == 0) && (!String.IsNullOrWhiteSpace(ev.BGImage.Filename)))
-            evDB.ECBackgroundId = _iservice.UpdateECImage(evDB.ECBackgroundId ?? 0, ev.BGImage, uow);
-          if (((evDB.ECBackgroundId ?? 0) != 0) && (ev.BGImage != null) && (String.IsNullOrWhiteSpace(ev.BGImage.Filename)))
+          if ((ev.BGImage != null) && (ev.BGImage.ECImageId == 0))
           {
-            _iservice.DeleteECImage(evDB.ECBackgroundId ?? 0, uow, mapPath);
+            if ((evDB.ECBackgroundId ?? 0) != 0)
+              _iservice.DeleteImage((evDB.ECBackgroundId ?? 0), ev.UserID, uow);
+            var ecImage = _iservice.SaveToDB(ev.BGImage, ev.UserID, uow);
+            evDB.ECBackgroundId = ecImage.ECImageId;
+          }
+          if (((evDB.ECBackgroundId ?? 0) != 0) && (ev.BGImage == null))
+          {
+            _iservice.DeleteImage(evDB.ECBackgroundId ?? 0, ev.UserID, uow);
             evDB.ECBackgroundId = 0;
           }
           ev.ECBackgroundId = evDB.ECBackgroundId;
+
+          if ((ev.ECImage != null) && (ev.ECImage.ECImageId == 0))
+          {
+            if ((evDB.ECImageId ?? 0) != 0)
+              _iservice.DeleteImage(evDB.ECImageId ?? 0, ev.UserID, uow);
+            var ecImage = _iservice.SaveToDB(ev.ECImage, ev.UserID, uow);
+            evDB.ECImageId = ecImage.ECImageId;
+          }
+          if ((ev.ECImage == null) && ((evDB.ECImageId ?? 0) != 0))
+          {
+            _iservice.DeleteImage(evDB.ECImageId ?? 0, ev.UserID, uow);
+            evDB.ECImageId = 0;
+          }
+          ev.ECImageId = evDB.ECImageId;
 
           SaveImages(ev, uow, mapPath);
 
@@ -566,6 +567,28 @@ namespace EventCombo.Service
       throw new NotImplementedException();
     }
 
+    private ECImageViewModel ProcessOldEventImage(EventImage image, string userId, IUnitOfWork uow)
+    {
+      try
+      {
+        string filePath = HostingEnvironment.MapPath("/Images/events/event_flyers/imagepath/" + image.EventImageUrl);
+        ECImageViewModel ecImage = new ECImageViewModel()
+        {
+          ECImageId = 0,
+          ECImageTypeId = 0,
+          Filename = image.EventImageUrl,
+          FilePath = filePath,
+          TypeName = image.ImageType
+        };
+        return _iservice.SaveToDB(ecImage, userId, uow);
+      }
+      catch (Exception ex)
+      {
+        _logger.Error(ex, String.Format("Error while move image '{0}'to ECImage (EventImageId = {1}). ", image.EventImageUrl, image.EventImageID));
+        return null;
+      }
+
+    }
 
     public EventInfoViewModel GetEventInfo(long eventId, string userId, UrlHelper url)
     {
@@ -577,38 +600,11 @@ namespace EventCombo.Service
       return evi;
     }
 
-    private string GetECImageUrl(long ImageId, UrlHelper url)
+    private string GetECImageUrl(long ImageId)
     {
-      IRepository<ECImage> iRepo = new GenericRepository<ECImage>(_factory.ContextFactory);
-      var dbImage = iRepo.GetByID(ImageId);
-      if (dbImage != null)
-      {
-        ImageViewModel ecImage = new ImageViewModel()
-        {
-          Id = dbImage.ECImageId,
-          ImageType = 1,
-          Filename = dbImage.ImagePath,
-          UrlPath = url.Content
-        };
-        return ecImage.ImageUrl;
-      }
-      else
-        return "";
-    }
-
-    private string GetEventImageUrl(EventImage dbImage, UrlHelper url)
-    {
-      if (dbImage != null)
-      {
-        ImageViewModel ecImage = new ImageViewModel()
-        {
-          Id = dbImage.EventImageID,
-          ImageType = 2,
-          Filename = dbImage.EventImageUrl,
-          UrlPath = url.Content
-        };
-        return ecImage.ImageUrl;
-      }
+      var ecImage = _iservice.GetImageById(ImageId);
+      if (ecImage != null)
+        return ecImage.ImagePath;
       else
         return "";
     }
@@ -619,6 +615,7 @@ namespace EventCombo.Service
       IRepository<EventSubCategory> escRepo = new GenericRepository<EventSubCategory>(_factory.ContextFactory);
       IRepository<TimeZoneDetail> tzRepo = new GenericRepository<TimeZoneDetail>(_factory.ContextFactory);
       IRepository<EventImage> iRepo = new GenericRepository<EventImage>(_factory.ContextFactory);
+      IRepository<EventECImage> eciRepo = new GenericRepository<EventECImage>(_factory.ContextFactory);
       IRepository<Ticket_Quantity_Detail> tqdRepo = new GenericRepository<Ticket_Quantity_Detail>(_factory.ContextFactory);
       IRepository<EventFavourite> favRepo = new GenericRepository<EventFavourite>(_factory.ContextFactory);
       IRepository<EventVote> voteRepo = new GenericRepository<EventVote>(_factory.ContextFactory);
@@ -697,16 +694,50 @@ namespace EventCombo.Service
         evi.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeFromUtc(evi.DateInfo.EndDateTime, tz);
 
       if ((ev.ECBackgroundId ?? 0) > 0)
-        evi.BackgroundUrl = GetECImageUrl(ev.ECBackgroundId ?? 0, url);
+        evi.BackgroundUrl = GetECImageUrl(ev.ECBackgroundId ?? 0);
 
-      var dbImages = iRepo.Get(filter: (im => im.EventID == evi.EventId), orderBy: (query => query.OrderBy(im => im.EventImageID)));
+      if ((ev.ECImageId ?? 0) > 0)
+        evi.ImageUrl = GetECImageUrl(ev.ECImageId ?? 0);
+
+      var dbImages = iRepo.Get(filter: (im => im.EventID == evi.EventId));
+      var ecImages = eciRepo.Get(filter: (eci => eci.EventId == evi.EventId), orderBy: (query => query.OrderBy(im => im.ECImageId)));
       var images = new List<string>();
-      if (dbImages.Count() > 0)
-      {
-        evi.ImageUrl = GetEventImageUrl(dbImages.First(), url);
-        foreach (var eventImage in dbImages.Skip(1))
-          images.Add(GetEventImageUrl(eventImage, url));
-      }
+      if ((dbImages.Count() > 0) && (ecImages.Count() == 0))
+        using (var uow = _factory.GetUnitOfWork())
+          try
+          {
+            foreach (var eventImage in dbImages)
+            {
+              var ecImage = ProcessOldEventImage(eventImage, ev.UserID, uow);
+              if (ecImage != null)
+              {
+                if ((ev.ECImageId ?? 0) == 0)
+                {
+                  ev.ECImageId = ecImage.ECImageId;
+                  evi.ImageUrl = ecImage.ImagePath;
+                }
+                else
+                {
+                  images.Add(ecImage.ImagePath);
+                  eciRepo.Insert(new EventECImage()
+                    {
+                      ECImageId = ecImage.ECImageId,
+                      EventId = ev.EventID
+                    });
+                }
+              }
+            }
+            uow.Context.SaveChanges();
+            uow.Commit();
+          }
+          catch (Exception ex)
+          {
+            uow.Rollback();
+            _logger.Error(ex, "Error during transfer images to EventECImage.", null);
+          }
+      else
+        foreach (var ecImage in ecImages)
+          images.Add(GetECImageUrl(ecImage.ECImageId));
       evi.ImagesUrl = images;
 
       evi.Organizer = new OrganizerInfoViewModel();
@@ -719,7 +750,7 @@ namespace EventCombo.Service
         evi.Organizer.LinkdeInLink = org.Organizer_Master.Organizer_Linkedin;
         evi.Organizer.TwitterLink = org.Organizer_Master.Organizer_Twitter;
         evi.Organizer.WebsiteUrl = org.Organizer_Master.Organizer_Websiteurl;
-        evi.Organizer.ImageUrl = GetECImageUrl(org.Organizer_Master.ECImageId ?? 0, url);
+        evi.Organizer.ImageUrl = GetECImageUrl(org.Organizer_Master.ECImageId ?? 0);
       }
 
       var tickets = new List<TicketInfoViewModel>();
@@ -795,7 +826,7 @@ namespace EventCombo.Service
           }
           switch (tiVM.TicketTypeId)
           {
-            case 1: 
+            case 1:
               allType = allType == 0 ? 1 : allType == 3 ? 4 : allType;
               break;
             case 3:
@@ -817,7 +848,8 @@ namespace EventCombo.Service
         evi.ButtonText = "Sold Out";
         evi.PriceRange = evi.ButtonText;
         evi.CheckoutText = evi.ButtonText;
-      } else if (allUnavailable)
+      }
+      else if (allUnavailable)
       {
         evi.ButtonText = "Registration Closed";
         evi.PriceRange = evi.ButtonText;

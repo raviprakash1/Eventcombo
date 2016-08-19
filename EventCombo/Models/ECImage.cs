@@ -20,6 +20,7 @@ namespace EventCombo.Models
             this.ArticleAuthors = new HashSet<ArticleAuthor>();
             this.Articles = new HashSet<Article>();
             this.ArticleImages = new HashSet<ArticleImage>();
+            this.EventECImages = new HashSet<EventECImage>();
         }
     
         public long ECImageId { get; set; }
@@ -33,5 +34,7 @@ namespace EventCombo.Models
         public virtual ICollection<Article> Articles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArticleImage> ArticleImages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventECImage> EventECImages { get; set; }
     }
 }
