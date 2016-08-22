@@ -53,6 +53,8 @@ namespace EventCombo.Controllers
 
       ManageAttendeesOrdersViewModel commonInfo = _maservice.GetEventOrdersSummary(eventId);
 
+      ViewBag.Title = "Manage Attendees for Event-" + commonInfo.EventTitle + " | Eventcombo";
+
       return View(commonInfo);
     }
 
