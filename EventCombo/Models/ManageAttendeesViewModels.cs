@@ -12,6 +12,7 @@ namespace EventCombo.Models
   public class ManageAttendeesOrdersViewModel
   {
     public long EventId { get; set; }
+    public string EventTitle { get; set; }
 
     private List<EventOrdersSummuryViewModel> _ordersSummary = new List<EventOrdersSummuryViewModel>();
     public List<EventOrdersSummuryViewModel> OrdersSummary
