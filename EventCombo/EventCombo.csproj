@@ -1735,6 +1735,7 @@
     <Content Include="Views\ContactEventComboes\Index.cshtml" />
     <Content Include="Views\ManageAttendees\_SaleReport.cshtml" />
     <Content Include="Views\EventManagement\ViewEvent.cshtml" />
+    <Content Include="Views\EventManagement\EmptyTemplate.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

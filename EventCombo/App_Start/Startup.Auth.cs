@@ -156,9 +156,6 @@ namespace EventCombo
         };
         app.UseLinkedInAuthentication(linkedInOptions);
       }
-
-
-
     }
   }
 

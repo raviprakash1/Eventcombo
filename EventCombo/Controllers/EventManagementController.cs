@@ -144,5 +144,20 @@ namespace EventCombo.Controllers
       return res;
     }
 
+    [HttpGet]
+    public ActionResult EmptyTemplate()
+    {
+      string userId = "";
+      if (Session["AppId"] != null)
+        userId = Session["AppId"].ToString();
+
+      BaseViewModel ev = new BaseViewModel();
+      PopulateBaseViewModel(ev, "Empty Template | Eventcombo");
+
+      Session["ReturnUrl"] = Url.Action("EmptyTemplate");
+
+      return View(ev);
+    }
+
   }
 }
