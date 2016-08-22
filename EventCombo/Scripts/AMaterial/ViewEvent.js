@@ -17,7 +17,6 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
       }
       $scope.favStyle = $scope.eventInfo.UserFavorite ? {} : { "color": "white" };
       $scope.voteStyle = $scope.eventInfo.UserVote ? {} : { "color": "white" };
-      console.log($scope.favStyle);
     });
     eventInfoService.loadInfo($attrs.eventid);
 
@@ -103,7 +102,6 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
     var loadInfo = function (eventId) {
       $http.get('/eventmanagement/geteventinfo', { params: { eventId: eventId } }).then(function (response) {
         eventInfo = response.data;
-        console.log(eventInfo);
         angular.forEach(eventInfo.Tickets, function (ticket, key) {
           if (ticket.TicketTypeId == 1)
             ticket.TypeName = 'FREE'

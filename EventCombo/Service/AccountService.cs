@@ -251,6 +251,11 @@ namespace EventCombo.Service
       notification.SendNotification(new SendMailService());
     }
 
-
+    public bool CheckUserLogin(string userId)
+    {
+      IRepository<EventCombo.Models.Profile> proRepo = new GenericRepository<EventCombo.Models.Profile>(_factory.ContextFactory);
+      var profile = proRepo.Get(filter: (p => p.UserID == userId)).FirstOrDefault();
+      return ((profile != null) && (!String.IsNullOrEmpty(profile.UserStatus)) && (profile.UserStatus.ToUpper() == "Y"));
+    }
   }
 }

@@ -20,5 +20,6 @@ namespace EventCombo.Service
     bool TryUseCode(string userId, string code);
     bool CheckCodePassword(string userId, string Code);
     void SendNewPasswordNotification(string userId, string userEmail);
+    bool CheckUserLogin(string userId);
   }
 }
