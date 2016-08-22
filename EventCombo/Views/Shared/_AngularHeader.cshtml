@@ -57,7 +57,7 @@
       <h1 id="logo"></h1>
     </a>
   </div>
-  <div ng-controller="AccountController as acContr">
+  <div ng-controller="AccountController as acContr" id="accountControllerDiv">
     <nav>
       <ul class="nav">
         <li class="drop">
@@ -92,9 +92,9 @@
               <a class="popClose" ng-click="closeLightBoxWithEsc(); email=''"><i class="material-icons">clear</i></a>
               <h3 class="blue-heading">Please log in or sign up with</h3>
               <div class="text-center">
-                <a href="#" class="socLogin fb"><img width="16" src="~/Images/AMaterial/facebook-logo.svg"></a>
-                <a href="#" class="socLogin in"><img width="16" src="~/Images/AMaterial/linkedin-logo.svg"></a>
-                <a href="#" class="socLogin gp"><img width="16" src="~/Images/AMaterial/google-plus-symbol.svg"></a>
+                <a href=@Url.Action("ExternalLoginAPI", "Account", new { provider = "Facebook", returnUrl = Request.Url.AbsoluteUri }) class="socLogin fb" target="_blank"><img width="16" src="~/Images/AMaterial/facebook-logo.svg"></a>
+                <a href=@Url.Action("ExternalLoginAPI", "Account", new { provider = "LinkedIn", returnUrl = Request.Url.AbsoluteUri }) class="socLogin in" target="_blank"><img width="16" src="~/Images/AMaterial/linkedin-logo.svg"></a>
+                <a href=@Url.Action("ExternalLoginAPI", "Account", new { provider = "Google", returnUrl = Request.Url.AbsoluteUri }) class="socLogin gp" target="_blank"><img width="16" src="~/Images/AMaterial/google-plus-symbol.svg"></a>
               </div>
               <div class="text-center"><span class="popLink">or</span></div>
               <md-input-container class="md-block">

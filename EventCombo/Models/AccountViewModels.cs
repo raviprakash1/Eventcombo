@@ -384,4 +384,10 @@ namespace EventCombo.Models
     [StringLength(32, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 8)]
     public string Code { get; set; }
   }
+
+  public class ExternalLoginRequestViewModel
+  {
+    public string Provider { get; set; }
+    public string ReturnUrl { get; set; }
+  }
 }

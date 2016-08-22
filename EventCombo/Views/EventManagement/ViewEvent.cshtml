@@ -46,7 +46,7 @@
   </script>
 }
 
-<div ng-controller="ViewEventController" eventid="@Model.EventId.ToString()" style="padding-top: 40px;">
+<div ng-controller="ViewEventController" eventid="@Model.EventId.ToString()">
   <div class="buttons padding-1em-top padding-1em-bottom padding-2em-right text-right hide768">
     <a href="#ticketSection" class="makeLive">@Model.ButtonText</a>
   </div>
@@ -59,7 +59,7 @@
           <h3 class="vanue-name">@Model.VenueName</h3>
           <div class="adiv"><i class="material-icons black">location_on</i>@Model.Address</div>
           <div class="adiv"><i class="material-icons">schedule</i> {{eventInfo.EventDateTimeInfoString}}</div>
-          <div class="adiv"><i class="material-icons invisible">attach_money</i>@Model.PriceRange</div>
+          <div class="adiv">@Model.PriceRange</div>
           <div class="wgts">
             @if (!String.IsNullOrEmpty(Model.BaseUserId))
             {
@@ -72,11 +72,11 @@
               <span><a href="javascript:void(0)" title="Vote for EventTitle"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
             }
             <span class="social" social="SHARE THIS">
-              <a href="javascript:void(0)" title="Email" ng-show="false"><img width="20px" alt="Share @Model.EventTitle via Email" src="~/Images/AMaterial/mail-square.svg"></a>
-              <a href="javascript:void(0)" title="Facebook" onclick="FacebookShare('@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Facebook" src="~/Images/AMaterial/square-facebook.svg"></a>
-              <a href="javascript:void(0)" title="Twitter" onclick="TwitterShare('@Model.EventTitle.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Twitter" src="~/Images/AMaterial/square-twitter.svg"></a>
-              <a href="javascript:void(0)" title="LinkedIn" onclick="LinkedInShare('@Model.EventTitle.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)', '@(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Html.Raw(Model.EventDescription!=null ?Model.EventDescription : "").ToString()), 200, 250, ".").Replace("'", @"\'"))')"><img width="20px" alt="Share @Model.EventTitle on LinkedIn" src="~/Images/AMaterial/square-linkedin.svg"></a>
-              <a href="javascript:void(0)" title="FB Messenger" ng-show="false"><img width="20px" alt="Share @Model.EventTitle on Facebook Messenger" src="~/Images/AMaterial/fb_messenger.svg"></a>
+              <a href="javascript:void(0)" title="Share @Model.EventTitle via Email" ng-show="false"><img width="20px" alt="Share @Model.EventTitle via Email" src="~/Images/AMaterial/mail-square.svg"></a>
+              <a href="javascript:void(0)" title="Share @Model.EventTitle on Facebook" onclick="FacebookShare('@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Facebook" src="~/Images/AMaterial/square-facebook.svg"></a>
+              <a href="javascript:void(0)" title="Share @Model.EventTitle on Twitter" onclick="TwitterShare('@Model.EventTitle.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Twitter" src="~/Images/AMaterial/square-twitter.svg"></a>
+              <a href="javascript:void(0)" title="Share @Model.EventTitle on LinkedIn" onclick="LinkedInShare('@Model.EventTitle.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)', '@(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Html.Raw(Model.EventDescription!=null ?Model.EventDescription : "").ToString()), 200, 250, ".").Replace("'", @"\'"))')"><img width="20px" alt="Share @Model.EventTitle on LinkedIn" src="~/Images/AMaterial/square-linkedin.svg"></a>
+              <a href="javascript:void(0)" title="Share @Model.EventTitle on Facebook Messenger" ng-show="false"><img width="20px" alt="Share @Model.EventTitle on Facebook Messenger" src="~/Images/AMaterial/fb_messenger.svg"></a>
             </span>
           </div>
         </div>
@@ -87,11 +87,13 @@
   <article class="grid w960">
     <div class="row">
       <div class="c10 s1">
-        <ul class="text-links">
-          <li><a href="~/et/@(Model.EventTypeId.ToString())/evc/ALL/page/lat/long/rel/none">#@Model.EventType</a></li>
-          <li><a href="~/et/evt/@(Model.EventCategoryId.ToString())/ALL/page/lat/long/rel/none">#@Model.EventCategory</a></li>
-          <li>#@Model.EventSubCategory</li>
-        </ul>
+        <div class="alignText">
+          <ul class="text-links">
+            <li><a href="~/et/@(Model.EventTypeId.ToString())/evc/ALL/page/lat/long/rel/none">#@Model.EventType</a></li>
+            <li><a href="~/et/evt/@(Model.EventCategoryId.ToString())/ALL/page/lat/long/rel/none">#@Model.EventCategory</a></li>
+            <li>#@Model.EventSubCategory</li>
+          </ul>
+        </div>
         <a href="#" class="eventFlyer" title="@Model.ImageAlt"><img src="@Model.ImageUrl" alt="@Model.ImageAlt"></a>
         <p class="eventFlyerDes">@Html.Raw(HttpUtility.HtmlDecode(Model.EventDescription))</p>
         <div class="saroosh">
