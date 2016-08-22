@@ -76,6 +76,7 @@ namespace EventCombo.Service
       res.OrdersSummary.Add(ordersTotal);
       res.OrdersSummary.Add(ordersCompleted);
       res.OrdersSummary.Add(ordersPending);
+      res.EventTitle = ev.EventTitle;
 
       return res;
     }
@@ -795,9 +796,9 @@ namespace EventCombo.Service
         foreach (var order in orders)
         {
             rw.Write(order.OrderId + delimiter);
-            rw.Write(order.Date.ToString("MMM, dd, yyyy") + delimiter);
-            rw.Write(order.BuyerName + delimiter);
-            rw.Write(order.TicketName + delimiter);
+            rw.Write("\"" + order.Date.ToString("MMM, dd, yyyy") + "\"" + delimiter);
+            rw.Write("\"" + order.BuyerName + "\"" + delimiter);
+            rw.Write("\"" + order.TicketName + "\"" + delimiter);
             rw.Write(order.Quantity.ToString() + delimiter);
             rw.Write("$" + order.PricePaid.ToString("N2") + delimiter);
             rw.Write("$" + order.PriceNet.ToString("N2") + delimiter);
@@ -808,8 +809,8 @@ namespace EventCombo.Service
             rw.Write((order.Cancelled == 0 ? "" : "$" + order.Cancelled.ToString("N2")) + delimiter);
             rw.Write("" + delimiter);
             rw.Write(order.CustomerEmail + delimiter);
-            rw.Write(order.Address + delimiter);
-            rw.Write(order.MailTickets.ToString());
+            rw.Write("\"" + order.Address + "\"" + delimiter);
+            rw.Write("\"" + order.MailTickets.ToString() + "\"");
             rw.WriteLine();
         }
 
