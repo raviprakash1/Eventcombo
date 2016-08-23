@@ -61,7 +61,7 @@
     <nav>
       <ul class="nav">
         <li class="drop">
-          <span><i class="material-icons orange600">account_circle</i> @Model.BaseUserName </span>
+          <span><i class="material-icons orange600">account_circle</i> @(String.IsNullOrEmpty(Model.BaseUserName) ? "Log In / Sign Up" : Model.BaseUserName) </span>
           @if (!String.IsNullOrEmpty(Model.BaseUserId))
           {
             <ul>
