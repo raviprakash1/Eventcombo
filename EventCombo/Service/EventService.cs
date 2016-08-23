@@ -905,5 +905,70 @@ namespace EventCombo.Service
         strEventId = eventId.ToString()
       });
     }
+
+
+    public IncrementResultViewModel AddFavorite(long eventId, string userId)
+    {
+      IRepository<EventFavourite> fRepo = new GenericRepository<EventFavourite>(_factory.ContextFactory);
+      long cnt = fRepo.Get(filter: (f => f.eventId == eventId)).Count();
+
+      IncrementResultViewModel res = new IncrementResultViewModel()
+      {
+        Count = cnt,
+        Processed = false
+      };
+      IRepository<AspNetUser> uRepo = new GenericRepository<AspNetUser>(_factory.ContextFactory);
+      var user = uRepo.GetByID(userId);
+      if (user != null)
+      {
+        var fav = fRepo.Get(filter: (f => (f.eventId == eventId) && (f.UserID == userId))).FirstOrDefault();
+        if (fav == null)
+        {
+          fav = new EventFavourite()
+          {
+            eventId = eventId,
+            UserID = userId,
+            FavId = 0
+          };
+          fRepo.Insert(fav);
+          _factory.ContextFactory.GetContext().SaveChanges();
+          res.Processed = true;
+          res.Count = fRepo.Get(filter: (f => f.eventId == eventId)).Count();
+        }
+      }
+      return res;
+    }
+
+    public IncrementResultViewModel VoteEvent(long eventId, string userId)
+    {
+      IRepository<EventVote> vRepo = new GenericRepository<EventVote>(_factory.ContextFactory);
+      long cnt = vRepo.Get(filter: (f => f.eventId == eventId)).Count();
+
+      IncrementResultViewModel res = new IncrementResultViewModel()
+      {
+        Count = cnt,
+        Processed = false
+      };
+      IRepository<AspNetUser> uRepo = new GenericRepository<AspNetUser>(_factory.ContextFactory);
+      var user = uRepo.GetByID(userId);
+      if (user != null)
+      {
+        var fav = vRepo.Get(filter: (f => (f.eventId == eventId) && (f.UserID == userId))).FirstOrDefault();
+        if (fav == null)
+        {
+          fav = new EventVote()
+          {
+            eventId = eventId,
+            UserID = userId,
+            VoteId = 0
+          };
+          vRepo.Insert(fav);
+          _factory.ContextFactory.GetContext().SaveChanges();
+          res.Processed = true;
+          res.Count = vRepo.Get(filter: (f => f.eventId == eventId)).Count();
+        }
+      }
+      return res;
+    }
   }
 }

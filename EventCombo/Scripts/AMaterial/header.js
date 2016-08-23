@@ -1,16 +1,16 @@
 ﻿eventComboApp.factory('MenuService', function () {
   return {
     navigation: [
-                { id: 1, text: 'Discover Events', link: '/home/discoverevents', class: '' },
-                { id: 2, text: 'Get the Buzz', link: '/article/buzz', class: '' },
-                { id: 3, text: 'Create Event', link: '/eventmanagement/createevent', class: 'createevent' }
+                { id: 1, text: 'Discover Events', link: '/home/discoverevents', class: '', loginlink: '' },
+                { id: 2, text: 'Get the Buzz', link: '/article/buzz', class: '', loginlink: '' },
+                { id: 3, text: 'Create Event', link: '/eventmanagement/createevent', class: 'createevent', loginlink: '/eventmanagement/createevent' }
     ],
     selectedMenu: 0
   };
 });
 
-eventComboApp.controller('HamburgerController', ['$scope', '$window', 'MenuService', '$mdDialog', '$mdMenu',
-  function ($scope, $window, MenuService, $mdDialog, $mdMenu) {
+eventComboApp.controller('HamburgerController', ['$scope', '$window', 'MenuService', '$mdDialog', '$mdMenu', 'broadcastService',
+  function ($scope, $window, MenuService, $mdDialog, $mdMenu, broadcastService) {
 
     $scope.navigation = MenuService.navigation;
     var originatorEv;
@@ -38,6 +38,13 @@ eventComboApp.controller('HamburgerController', ['$scope', '$window', 'MenuServi
         $mdMenu.hide();
       }
     });
+
+    $scope.clickLink = function (link, e) {
+      if (!link || $scope.userRegistered)
+        return;
+      broadcastService.CallLogin(link);
+      e.preventDefault();
+    }
 
   }]);
 

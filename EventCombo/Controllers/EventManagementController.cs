@@ -159,5 +159,36 @@ namespace EventCombo.Controllers
       return View(ev);
     }
 
+    [HttpPost]
+    [Authorize]
+    public ActionResult AddFavorite(long eventId)
+    {
+      string userId = "";
+      if (Session["AppId"] != null)
+        userId = Session["AppId"].ToString();
+
+      IncrementResultViewModel actionResult = _eService.AddFavorite(eventId, userId);
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = actionResult;
+
+      return res;
+    }
+
+    [HttpPost]
+    [Authorize]
+    public ActionResult VoteEvent(long eventId)
+    {
+      string userId = "";
+      if (Session["AppId"] != null)
+        userId = Session["AppId"].ToString();
+
+      IncrementResultViewModel actionResult = _eService.VoteEvent(eventId, userId);
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = actionResult;
+
+      return res;
+    }
   }
 }

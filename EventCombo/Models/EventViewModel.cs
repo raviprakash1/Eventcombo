@@ -410,4 +410,10 @@ namespace EventCombo.Models
       set { _errorMessages = value; }
     }
   }
+
+  public class IncrementResultViewModel
+  {
+    public bool Processed { get; set; }
+    public long Count { get; set; }
+  }
 }

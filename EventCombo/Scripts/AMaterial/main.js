@@ -222,7 +222,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       });
     };
 
-    $scope.callImageClick = function (imgctrl) {
+    $scope.callImageClick = function (imgctrl, e) {
       $timeout(function () {
         document.getElementById(imgctrl).click();
       }, 100);
