@@ -102,7 +102,10 @@
         <EntityTypeShape EntityType="Cmsdata.BusinessPage" Width="1.5" PointX="7.375" PointY="22.75" />
         <EntityTypeShape EntityType="Cmsdata.City" Width="1.5" PointX="25.375" PointY="0.75" />
         <EntityTypeShape EntityType="Cmsdata.EventTicket_View" Width="1.5" PointX="20.375" PointY="25.75" />
-      </Diagram>
+        <EntityTypeShape EntityType="Cmsdata.BusinessPageECImage" Width="1.5" PointX="9.625" PointY="30.375" />
+        <AssociationConnector Association="Cmsdata.FK_BusinessPageECImage_BusinessPage" />
+        <AssociationConnector Association="Cmsdata.FK_BusinessPageECImage_ECImage" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
