@@ -395,44 +395,6 @@ CREATE TABLE [dbo].[ContactEventCombo](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 END
 GO
-SET ANSI_PADDING OFF
-GO
-
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-
-
-
-ALTER VIEW [dbo].[v_OrderList]
-AS
-
-SELECT ISNULL(od.O_Id, 0) OId, od.O_Order_Id OrderId, od.O_First_Name FirstName, od.O_Last_Name LastName, od.O_Email Email,
-  pr.City, pr.State, od.O_OrderDateTime OrderDateTime, e.EventTitle Name, tpdsum.Amount TotalPaid, tpdsum.Quantity, 
-  CAST(ped.PE_Scheduled_Date AS DateTime) EventStartDate,
-  CAST(CASE WHEN ISNULL(ped.PE_MultipleVenue_id, 0) > 0 THEN ped.PE_Scheduled_Date ELSE ev.EventEndDate END AS DateTime) EventEndDate,
-  CAST(CASE WHEN UPPER(e.EventCancel) = 'Y' THEN 1 ELSE 0 END as bit) EventCancelled,
-  ISNULL(od.OrderStateId, 1) OrderStateId, os.OrderStateName, e.EventID, od.O_User_Id UserId,
-  ISNULL(CAST(CASE WHEN ef.FavId is null THEN 0 ELSE 1 END as bit), 0) Favorite
-FROM Order_Detail_T od
-LEFT JOIN 
-  (
-    SELECT t.TPD_Order_Id, SUM(t.TPD_Amount) Amount, SUM(t.TPD_Purchased_Qty) Quantity, MIN(t.TPD_Id) TPD_Id
-    FROM Ticket_Purchased_Detail t
-    GROUP BY TPD_Order_Id) tpdsum ON tpdsum.TPD_Order_Id = od.O_Order_Id
-LEFT JOIN  Ticket_Purchased_Detail tpd ON tpd.TPD_Id = tpdsum.TPD_Id
-LEFT JOIN [Event] e ON e.EventID = tpd.TPD_Event_Id
-LEFT JOIN Ticket_Quantity_Detail tqd ON tqd.TQD_Id = tpd.TPD_TQD_Id
-LEFT JOIN Publish_Event_Detail ped ON ped.PE_Id = tqd.TQD_PE_Id
-LEFT JOIN [Profile] pr ON pr.UserID = od.O_User_Id
-LEFT JOIN EventVenue  ev ON ev.EventVenueID = ped.PE_SingleVenue_Id
-LEFT JOIN OrderState os ON ISNULL(od.OrderStateId, 1) = os.OrderStateId
-LEFT JOIN EventFavourite ef ON ef.eventId = e.EventID AND ef.UserID = od.O_User_Id
-
-GO
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[AspNetUserCode]') AND type in (N'U'))
 DROP TABLE [dbo].[AspNetUserCode]
@@ -470,7 +432,181 @@ GO
 DELETE FROM Email_Tag
 WHERE Tag_Name = 'ResetPwdCode'
 
-INSERT INTO Email_Tag (Tag_Name)
-VALUES ('ResetPwdCode')
+SET IDENTITY_INSERT Email_Tag ON
+INSERT INTO Email_Tag (Tag_Id, Tag_Name)
+VALUES (43, 'ResetPwdCode')
+SET IDENTITY_INSERT Email_Tag OFF
 
 GO
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+GO
+IF NOT EXISTS(
+  SELECT *
+  FROM sys.columns 
+  WHERE Name      = N'ECImageId'
+    AND Object_ID = Object_ID(N'Event'))
+BEGIN
+  ALTER TABLE dbo.Event ADD
+	  ECImageId bigint NULL
+  CREATE NONCLUSTERED INDEX FK_ECImageId ON dbo.Event
+	  (
+	  ECImageId
+	  ) WITH( STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+  ALTER TABLE dbo.Event SET (LOCK_ESCALATION = TABLE)
+END
+GO
+COMMIT
+
+GO
+
+IF  EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[EventECImage]') AND name = N'FK_EventId')
+DROP INDEX [FK_EventId] ON [dbo].[EventECImage]
+GO
+
+IF  EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[EventECImage]') AND name = N'FK_ECImageId')
+DROP INDEX [FK_ECImageId] ON [dbo].[EventECImage]
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[EventECImage]') AND type in (N'U'))
+DROP TABLE [dbo].[EventECImage]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[EventECImage]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[EventECImage](
+	[EventECImageId] [bigint] IDENTITY(1,1) NOT NULL,
+	[EventId] [bigint] NOT NULL,
+	[ECImageId] [bigint] NOT NULL,
+ CONSTRAINT [PK_EventECImage] PRIMARY KEY CLUSTERED 
+(
+	[EventECImageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[EventECImage]') AND name = N'FK_ECImageId')
+CREATE NONCLUSTERED INDEX [FK_ECImageId] ON [dbo].[EventECImage]
+(
+	[ECImageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[EventECImage]') AND name = N'FK_EventId')
+CREATE NONCLUSTERED INDEX [FK_EventId] ON [dbo].[EventECImage]
+(
+	[EventId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[v_OrderList]'))
+DROP VIEW [dbo].[v_OrderList]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[v_OrderList]'))
+EXEC dbo.sp_executesql @statement = N'
+CREATE VIEW [dbo].[v_OrderList]
+AS
+
+SELECT ISNULL(od.O_Id, 0) OId, od.O_Order_Id OrderId, od.O_First_Name FirstName, od.O_Last_Name LastName, od.O_Email Email,
+  pr.City, pr.State, od.O_OrderDateTime OrderDateTime, e.EventTitle Name, od.O_TotalAmount TotalPaid, tpdsum.Quantity, 
+  CAST(ped.PE_Scheduled_Date AS DateTime) EventStartDate,
+  CAST(CASE WHEN ISNULL(ped.PE_MultipleVenue_id, 0) > 0 THEN ped.PE_Scheduled_Date ELSE ev.EventEndDate END AS DateTime) EventEndDate,
+  CAST(CASE WHEN UPPER(e.EventCancel) = ''Y'' THEN 1 ELSE 0 END as bit) EventCancelled,
+  ISNULL(od.OrderStateId, 1) OrderStateId, os.OrderStateName, e.EventID, od.O_User_Id UserId,
+  ISNULL(CAST(CASE WHEN ef.FavId is null THEN 0 ELSE 1 END as bit), 0) Favorite
+FROM Order_Detail_T od
+LEFT JOIN 
+  (
+    SELECT t.TPD_Order_Id, SUM(t.TPD_Amount) Amount, SUM(t.TPD_Purchased_Qty) Quantity, MIN(t.TPD_Id) TPD_Id
+    FROM Ticket_Purchased_Detail t
+    GROUP BY TPD_Order_Id) tpdsum ON tpdsum.TPD_Order_Id = od.O_Order_Id
+LEFT JOIN  Ticket_Purchased_Detail tpd ON tpd.TPD_Id = tpdsum.TPD_Id
+LEFT JOIN [Event] e ON e.EventID = tpd.TPD_Event_Id
+LEFT JOIN Ticket_Quantity_Detail tqd ON tqd.TQD_Id = tpd.TPD_TQD_Id
+LEFT JOIN Publish_Event_Detail ped ON ped.PE_Id = tqd.TQD_PE_Id
+LEFT JOIN [Profile] pr ON pr.UserID = od.O_User_Id
+LEFT JOIN EventVenue  ev ON ev.EventVenueID = ped.PE_SingleVenue_Id
+LEFT JOIN OrderState os ON ISNULL(od.OrderStateId, 1) = os.OrderStateId
+LEFT JOIN EventFavourite ef ON ef.eventId = e.EventID AND ef.UserID = od.O_User_Id
+
+
+' 
+GO
+
+IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[EventTicket_View]'))
+DROP VIEW [dbo].[EventTicket_View]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[EventTicket_View]'))
+EXEC dbo.sp_executesql @statement = N'
+
+CREATE VIEW [dbo].[EventTicket_View]
+AS
+SELECT 
+	Ticket_Purchased_Detail.TPD_Id,
+	Ticket_Purchased_Detail.TPD_Event_Id AS EventID,
+	Ticket.T_name AS TicketName,
+	Order_Detail_T.O_Id OId, 
+	Order_Detail_T.O_Order_Id OrderId, 
+	Order_Detail_T.O_First_Name FirstName, 
+	Order_Detail_T.O_Last_Name LastName, 
+	Order_Detail_T.O_Email Email,     
+	Order_Detail_T.O_OrderAmount AS OrderAmount,
+	Order_Detail_T.O_VariableAmount AS VariableAmount,  
+	Ticket_Quantity_Detail.TQD_Quantity AS TotalQuantity,
+	Ticket_Purchased_Detail.TPD_Purchased_Qty AS PurchasedQuantity, 
+	Ticket_Purchased_Detail.TPD_Amount AS PaidAmount, 
+	CASE WHEN Ticket.TicketTypeID = 2 THEN ISNULL(Ticket.EC_Fee, 0) - ISNULL(Ticket.T_EcAmount, 0) ELSE 0 END AS ECFeePerTicket,
+	CASE WHEN Ticket.TicketTypeID = 2 OR Ticket.TicketTypeID = 3 THEN Ticket.T_EcAmount ELSE 0 END AS MerchantFeePerTicket,
+	Ticket.Customer_Fee AS Customer_Fee, 
+	TicketType.TicketTypeID, 
+	TicketType.TicketType AS TicketTypeName, 
+	Ticket_Purchased_Detail.TPD_PromoCodeID AS PromoCodeID, 
+	Promo_Code.PC_Code AS PromoCode,
+	Ticket_Purchased_Detail.TPD_PromoCodeAmount AS PromoCodeAmount,
+	Order_Detail_T.O_OrderDateTime,
+	Order_Detail_T.OrderStateId,
+	OrderState.OrderStateName
+
+FROM Ticket_Purchased_Detail
+INNER JOIN Order_Detail_T ON Order_Detail_T.O_Order_Id=Ticket_Purchased_Detail.TPD_Order_Id
+INNER JOIN Ticket_Quantity_Detail ON Ticket_Quantity_Detail.TQD_Id=Ticket_Purchased_Detail.TPD_TQD_Id
+INNER JOIN Ticket ON Ticket.T_Id=Ticket_Quantity_Detail.TQD_Ticket_Id
+INNER JOIN TicketType ON TicketType.TicketTypeID=Ticket.TicketTypeID
+INNER JOIN Profile ON Profile.UserID = Ticket_Purchased_Detail.TPD_User_Id
+INNER JOIN OrderState ON ISNULL(Order_Detail_T.OrderStateId, 1) = OrderState.OrderStateId
+LEFT OUTER JOIN Promo_Code ON Promo_Code.PC_id=Ticket_Purchased_Detail.TPD_PromoCodeID
+
+' 
+GO
+
+
