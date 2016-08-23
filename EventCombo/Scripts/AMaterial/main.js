@@ -149,7 +149,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     $scope.showMultipleDates = function (save) {
       $scope.dateInfoTouched = true;
       var check = $scope.checkTempDateInfo();
-      if (check.weekdays || check.timezone || check.multiDates)
+      if (check.weekdays || check.timezone || check.multiDates || check.occurence)
         return;
       $scope.showDateTimeDialog = false;
 
@@ -222,7 +222,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       });
     };
 
-    $scope.callImageClick = function (imgctrl, e) {
+    $scope.callImageClick = function (imgctrl) {
       $timeout(function () {
         document.getElementById(imgctrl).click();
       }, 100);
@@ -588,8 +588,9 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         timezone: !$scope.tempDateInfo.TimeZone,
         singleDates: ($scope.tempDateInfo.occurence == 'Single') && (!$scope.MainForm.singleStartDate.$valid || !$scope.MainForm.singleEndDate.$valid),
         multiDates: ($scope.tempDateInfo.occurence == 'Monthly') && (!$scope.MainForm.multiStartDate.$valid || !$scope.MainForm.multiEndDate.$valid),
+        occurence: ($scope.dateTab == 1) && ($scope.tempDateInfo.occurence == 'Single')
       };
-      result.valid = !result.notselected && !result.weekdays && !result.timezone && !result.singleDates && !result.multiDates;
+      result.valid = !result.notselected && !result.weekdays && !result.timezone && !result.singleDates && !result.multiDates && !result.occurence;
       return result;
     }
 

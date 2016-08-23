@@ -117,7 +117,7 @@
                             color-picker-inline="false"
                             color-picker-on-change="onBGColorChange()"></color-picker>
             </div>
-            <span style="float: right; margin-right:10px; margin-top:10px; cursor: pointer; height:30px; font-size:15px; line-height:30px;" ng-click="callImageClick('bannerImage', $event); $event.stopPropagation();" class="noOutline designBanner desMyBanner">Design your Banner<i class="material-icons bannerPic" style="margin-left: 10px;color:rgba(0,0,0,.5); float:right;">add_a_photo</i><input type="file" name="bannerimage" id="bannerImage" accept="image/*" style="display: none;" ng-click="$event.stopPropagation();" custom-on-change="uploadBGImage" /></span>
+            <span style="float: right; margin-right:10px; margin-top:10px; cursor: pointer; height:30px; font-size:15px; line-height:30px;" ng-click="callImageClick('bannerImage'); $event.stopPropagation();" class="noOutline designBanner desMyBanner">Design your Banner<i class="material-icons bannerPic" style="margin-left: 10px;color:rgba(0,0,0,.5); float:right;">add_a_photo</i><input type="file" name="bannerimage" id="bannerImage" accept="image/*" style="display: none;" ng-click="$event.stopPropagation();" custom-on-change="uploadBGImage" /></span>
 
             <div class="URLDiv" style="display:inline-block; float: left; margin-top:10px;">
               <md-input-container class="URLinputContainer">
@@ -168,6 +168,9 @@
                 </div>
                 <div class="validation-standard-messages" ng-show="(dateInfoTouched  || formValidation) && (checkDateInfo().weekdays) && !showDateTimeDialog">
                   Please select which weekdays, it's required
+                </div>
+                <div class="validation-standard-messages" ng-show="(dateInfoTouched  || formValidation) && (checkDateInfo().occurence) && !showDateTimeDialog">
+                  Please select occurence for multiply event
                 </div>
               </div>
             </div>
@@ -269,6 +272,9 @@
                         <md-select ng-model="tempDateInfo.occurence">
                           <md-option ng-repeat="occ in occurences" ng-value="occ">{{occ}}</md-option>
                         </md-select>
+                        <div class="validation-datepicker-messages" ng-show="MainForm.multiStartDate.$touched || !MainForm.multiStartDate.$pristine || formValidation || dateInfoTouched">
+                          <div ng-show="tempDateInfo.occurence == 'Single'">Please select occurence</div>
+                        </div>
                       </md-input-container>
 
                     </div>
@@ -317,7 +323,7 @@
                           </div>
                         </md-input-container>
                       </div>
-                      <div class="time-div" ng-show="tempDateInfo.occurence != 'Monthly'">
+                      <div class="time-div" ng-show="(tempDateInfo.occurence == 'Weekly') || (tempDateInfo.occurence == 'Daily')">
                         <md-input-container style="margin-left:20px; width:120px;">
                           <label>Start Time</label>
                           <md-select ng-model="tempDateInfo.selectedstartTime">
