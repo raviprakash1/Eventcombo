@@ -4,6 +4,7 @@
     $scope.email = '';
     $scope.loginPassword = '';
     $scope.loginError = 'Incorrect password, retry or use Forgot Password.';
+    $scope.loginInfo = null;
 
     $window.loginCallback = function (success, returnUrl) {
       if (success) {
@@ -25,17 +26,24 @@
     });
 
     $scope.$on('CompleteExternalLogin', function (event, param) {
-      $scope.reloadPage();
+      $scope.finishLogin();
     });
 
     $scope.$on('CallLogin', function (event, param) {
       $scope.showLoginForm(param);
     });
 
-    $scope.$on('SetLocation', function (event, param) {
-      $scope.afterLoginUrl = param;
+    $scope.$on('LoginProcessed', function (event, param) {
       $scope.reloadPage();
     });
+
+    $scope.finishLogin = function () {
+      $scope.closeLightBoxWithEsc();
+      if ($scope.loginInfo && $scope.loginInfo.callerId)
+        broadcastService.LoggedIn($scope.loginInfo.callerId);
+      else
+        $scope.reloadPage();
+    }
 
     $scope.showLoadingMessage = function (show, message) {
       $scope.popLoading = show;
@@ -53,18 +61,18 @@
     }
 
     $scope.reloadPage = function () {
-      if ($scope.afterLoginUrl)
-        window.location.href = $scope.afterLoginUrl;
+      if ($scope.loginInfo && $scope.loginInfo.RedirectUrl)
+        window.location.href = $scope.loginInfo.RedirectUrl;
       else
         $window.location.reload();
-      $scope.afterLoginUrl = undefined;
+      $scope.loginInfo = null;
     }
 
-    $scope.showLoginForm = function (url) {
-      if (url)
-        $scope.afterLoginUrl = url;
+    $scope.showLoginForm = function (info) {
+      if (info)
+        $scope.loginInfo = info;
       else
-        $scope.afterLoginUrl = "";
+        $scope.loginInfo = null;
       $scope.popLogin = true;
     }
 
@@ -109,9 +117,11 @@
       $scope.showLoadingMessage(true, 'Logging out');
       $http.post('/account/logoutAPI', {}).then(function (response) {
         $scope.showLoadingMessage(false, '');
+        $scope.loginInfo = null;
         $scope.reloadPage();
       }, function (response) {
         $scope.showLoadingMessage(false, '');
+        $scope.loginInfo = null;
         $scope.reloadPage();
       });
     }

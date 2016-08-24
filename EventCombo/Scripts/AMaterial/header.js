@@ -42,7 +42,7 @@ eventComboApp.controller('HamburgerController', ['$scope', '$window', 'MenuServi
     $scope.clickLink = function (link, e) {
       if (!link || $scope.userRegistered)
         return;
-      broadcastService.CallLogin(link);
+      broadcastService.CallLogin({ RedirectUrl: link });
       e.preventDefault();
     }
 

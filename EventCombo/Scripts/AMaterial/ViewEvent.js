@@ -8,7 +8,7 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
     $scope.map = createMap(40.6984237, -73.9890044);
     deleteMarkers();
 
-    $scope.$on('ECEventInfoLoaded', function (val) {
+    $scope.$on('EventInfoLoaded', function (val) {
       $scope.eventInfo = eventInfoService.getEventInfo();
       deleteMarkers();
       if ($scope.eventInfo.Latitude) {
@@ -17,7 +17,19 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
       }
       $scope.UpdateStyles();
     });
+
     eventInfoService.loadInfo($attrs.eventid);
+
+    $scope.$on('LoggedIn', function (event, param) {
+      if (param === 'VEFav' + $scope.eventInfo.EventId) {
+        eventInfoService.addFavorite($scope.UpdateStyles);
+        broadcastService.LoginProcessed();
+      }
+      else if (param === 'VEVote' + $scope.eventInfo.EventId) {
+        eventInfoService.voteEvent($scope.UpdateStyles);
+        broadcastService.LoginProcessed();
+      }
+    });
 
     $scope.onPriceChange = function () {
       eventInfoService.recalcTotal();
@@ -32,21 +44,23 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
       eventInfoService.postTickets();
     }
 
-    $scope.StartLogin = function(){
-      broadcastService.CallLogin("");
+    $scope.StartLogin = function(loginInfo){
+      broadcastService.CallLogin(loginInfo);
     }
 
     $scope.AddToFavorite = function () {
-      if (!$scope.userRegistered)
-        $scope.StartLogin();
+      if (!$scope.userRegistered) {
+        $scope.StartLogin({ callerId: 'VEFav' + $scope.eventInfo.EventId });
+      }
       if ((!$scope.eventInfo) || ($scope.eventInfo.UserFavorite == true))
         return;
       eventInfoService.addFavorite($scope.UpdateStyles);
     }
 
     $scope.VoteEvent = function () {
-      if (!$scope.userRegistered)
-        $scope.StartLogin();
+      if (!$scope.userRegistered) {
+        $scope.StartLogin({ callerId: 'VEVote' + $scope.eventInfo.EventId });
+      }
       if ((!$scope.eventInfo) || ($scope.eventInfo.UserVote == true))
         return;
       eventInfoService.voteEvent($scope.UpdateStyles);
@@ -92,8 +106,8 @@ eventComboApp.controller('tickets', ["$scope", "$filter", "$attrs", function ($s
   }
 }]);
 /****************************************************************************/
-eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$window',
-  function ($http, $rootScope, $cookies, $window) {
+eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$window', 'broadcastService',
+  function ($http, $rootScope, $cookies, $window, broadcastService) {
 
     var eventInfo = {};
     var selectedImage = 0;
@@ -141,7 +155,7 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
 
         eventInfo.EventDateTimeInfoString = getEventDateTimeInfoString(eventInfo.DateInfo);
         recalcTotal();
-        $rootScope.$broadcast('ECEventInfoLoaded', '1');
+        broadcastService.EventInfoLoaded();
       });
     }
 

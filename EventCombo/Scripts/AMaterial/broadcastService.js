@@ -4,6 +4,10 @@
       $rootScope.$broadcast(message, param);
     }
 
+    var eventInfoLoaded = function (param) {
+      broadcastMessage('EventInfoLoaded', param);
+    }
+
     var errorExternalLogin = function (param) {
       broadcastMessage('ErrorExternalLogin', param);
     }
@@ -16,14 +20,20 @@
       broadcastMessage('CompleteExternalLogin', param);
     }
 
-    var setLocation = function (param) {
-      broadcastMessage('SetLocation', param);
+    var loggedIn = function (param) {
+      broadcastMessage('LoggedIn', param);
+    }
+
+    var loginProcessed = function (param) {
+      broadcastMessage('LoginProcessed', param);
     }
 
     return {
+      EventInfoLoaded: eventInfoLoaded,
       ErrorExternalLogin: errorExternalLogin,
       CallLogin: callLogin,
       CompleteExternalLogin: completeExternalLogin,
-      SetLocation: setLocation
+      LoggedIn: loggedIn,
+      LoginProcessed: loginProcessed
     }
   }]);
