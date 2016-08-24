@@ -78,6 +78,9 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         ticket.localSaleEndDate = !ticket.Sale_End_Date ? null : new Date(ticket.Sale_End_Date);
         ticket.localHideUntilDate = !ticket.Hide_Untill_Date ? null : new Date(ticket.Hide_Untill_Date);
         ticket.localHideAfterDate = ticket.Hide_After_Date ? null : new Date(ticket.Hide_After_Date);
+        ticket.QtyText = ticket.Qty_Available ? ticket.Qty_Available : "";
+        ticket.PriceText = ticket.Price ? ticket.Price : "";
+        ticket.DiscountText = ticket.T_Discount ? ticket.T_Discount : "";
       });
     }
 
@@ -390,35 +393,46 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         localSaleStartTime: null,
         localSaleEndTime: null,
         localHideUntilTime: null,
-        localHideAfterTime: null
+        localHideAfterTime: null,
+        QtyText: "",
+        PriceText: "",
+        DiscountText: ""
       }
       $scope.onPriceChange(newticket);
       $scope.eventInfo.TicketList.push(newticket);
     }
 
     $scope.onPriceChange = function (ticket) {
-      var price = isNaN(ticket.Price) ? 0 : ticket.Price;
-      var discount = isNaN(ticket.T_Discount) ? 0 : ticket.T_Discount;
-      ticket.EC_Fee = price == 0 ? 0 : price * $scope.eventInfo.FeeStruct.FS_Percentage / 100 + $scope.eventInfo.FeeStruct.FS_Amount;
+      ticket.Price = parseFloat(ticket.PriceText);
+      ticket.T_Discount = parseFloat(ticket.DiscountText);
+      ticket.Price = isNaN(ticket.Price) ? 0 : ticket.Price;
+      ticket.T_Discount = isNaN(ticket.T_Discount) ? 0 : ticket.T_Discount;
+      ticket.EC_Fee = ticket.Price == 0 ? 0 : ticket.Price * $scope.eventInfo.FeeStruct.FS_Percentage / 100 + $scope.eventInfo.FeeStruct.FS_Amount;
       ticket.Customer_Fee = ticket.EC_Fee;
-      ticket.TotalPrice = price == 0 ? 0 : ticket.Fees_Type == 0
-        ? price + ticket.EC_Fee - discount
-        : price - discount;
+      ticket.TotalPrice = ticket.Price == 0 ? 0 : ticket.Price - ticket.T_Discount;
+      if (ticket.Fees_Type == 0)
+        ticket.TotalPrice += ticket.EC_Fee;
     }
 
     $scope.onPriceBlur = function (ticket, formname) {
       ticket.Price = (ticket.Price < 0) || isNaN(ticket.Price) || !ticket.Price ? 0 : ticket.Price > 10000000 ? 9999999 : ticket.Price;
       ticket.T_Discount = isNaN(ticket.T_Discount) || (ticket.T_Discount < 0 || !ticket.T_Discount) ? 0 : ticket.T_Discount > ticket.Price ? ticket.Price : ticket.T_Discount;
+      ticket.PriceText = ticket.Price > 0 ? ticket.Price.toFixed(2) : "";
+      ticket.DiscountText = ticket.T_Discount > 0 ? ticket.T_Discount.toFixed(2) : "";
       $scope.onPriceChange(ticket);
-
-      $scope.MainForm[formname].TicketPrice.$setViewValue(ticket.Price);
-      $scope.MainForm[formname].TicketPrice.$render();
-      $scope.MainForm[formname].TicketDiscount.$setViewValue(ticket.T_Discount);
-      $scope.MainForm[formname].TicketDiscount.$render();
     }
 
     $scope.onQtyBlur = function (ticket) {
+      ticket.Qty_Available = parseInt(ticket.QtyText);
       ticket.Qty_Available = isNaN(ticket.Qty_Available) ? 0 : ticket.Qty_Available;
+      ticket.QtyText = ticket.Qty_Available > 0 ? ticket.Qty_Available : "";
+    }
+
+    $scope.onVarChargeBlur = function (varCharge) {
+      varCharge.Price = parseFloat(varCharge.PriceText);
+      varCharge.Price = isNaN(varCharge.Price) ? 0 : varCharge.Price;
+      varCharge.PriceText = varCharge.Price > 0 ? varCharge.Price.toFixed(2) : "";
+      varCharge.Price = varCharge.Price > 0 ? parseFloat(varCharge.Price.toFixed(2)) : 0;
     }
 
     $scope.deleteTicket = function (ticket) {
@@ -451,6 +465,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         EventId: 0,
         VariableDesc: null,
         Price: 0.0,
+        PriceText: "",
         Optional: false
       }
       $scope.eventInfo.VariableChargesList.push(vcharge);
@@ -735,6 +750,31 @@ eventComboApp.directive('numbersOnly', function () {
         if (number) {
           var transformedInput = number.replace(/[^0-9]/g, '');
 
+          if (transformedInput !== number) {
+            ngModelCtrl.$setViewValue(transformedInput);
+            ngModelCtrl.$render();
+          }
+          return transformedInput;
+        }
+        return number;
+      }
+      ngModelCtrl.$parsers.push(fromUser);
+    }
+  };
+});
+
+eventComboApp.directive('decimalOnly', function () {
+  return {
+    require: 'ngModel',
+    link: function (scope, element, attr, ngModelCtrl) {
+      function fromUser(number) {
+        if (number) {
+          var transformedInput = number.replace(/[^0-9\.]/g, '');
+          var nth = 0;
+          transformedInput = transformedInput.replace(/\./g, function (match, i, original) {
+            nth++;
+            return (nth > 1) ? "" : match;
+          });
           if (transformedInput !== number) {
             ngModelCtrl.$setViewValue(transformedInput);
             ngModelCtrl.$render();
