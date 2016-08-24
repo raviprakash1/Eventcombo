@@ -56,7 +56,7 @@
                         <span class="caret" style="float: right;margin-top: 8px;"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="exportSaleReport">
-                        <li><a href="@Url.Action("SaleReport", "ManageAttendees", new {eventId = Model.EventId})" onclick="window.open('@Url.Action("SaleReport", "ManageAttendees", new {eventId = Model.EventId})','','width=500, height=250');return false;" class="linkReportHead">HTML</a></li>
+                        <li><a href="javascript:window.open('@Url.Action("SaleReport", "ManageAttendees", new {eventId = Model.EventId})','');" class="linkReportHead">HTML</a></li>
                         <li><a href="@Url.Action("SaleReport", "Download", new { state = order.PaymentState, eventId = Model.EventId, format = "csv"})" class="linkReportHead">CSV</a></li>
                         <li><a href="@Url.Action("SaleReport", "Download", new { state = order.PaymentState, eventId = Model.EventId, format = "txt"})" class="linkReportHead">TXT</a></li>
                         <li><a href="@Url.Action("SaleReport", "Download", new { state = order.PaymentState, eventId = Model.EventId, format = "xls"})" class="linkReportHead">EXL</a></li>

@@ -13,6 +13,8 @@ using NPOI.HSSF.UserModel;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Core.Objects;
 using System.Net.Mime;
+using NPOI.HSSF.Util;
+using NPOI.XSSF.UserModel;
 
 namespace EventCombo.Service
 {
@@ -619,6 +621,7 @@ namespace EventCombo.Service
         style.BorderTop = BorderStyle.Thin;
         style.BorderLeft = BorderStyle.Thin;
         style.BorderRight = BorderStyle.Thin;
+
         ICellStyle hstyle = wb.CreateCellStyle();
         hstyle.BorderBottom = BorderStyle.Thin;
         hstyle.BorderTop = BorderStyle.Thin;
@@ -628,6 +631,7 @@ namespace EventCombo.Service
         IFont bfont = wb.CreateFont();
         bfont.Boldweight = (short)FontBoldWeight.Bold;
         hstyle.SetFont(bfont);
+
         ICellStyle datestyle = wb.CreateCellStyle();
         datestyle.BorderBottom = BorderStyle.Thin;
         datestyle.BorderTop = BorderStyle.Thin;
@@ -635,9 +639,17 @@ namespace EventCombo.Service
         datestyle.BorderRight = BorderStyle.Thin;
         datestyle.DataFormat = wb.CreateDataFormat().GetFormat("MMMM dd, yyyy");
 
+        ICellStyle Titlestyle = wb.CreateCellStyle();
+        Titlestyle.BorderBottom = BorderStyle.Thin;
+        Titlestyle.BorderTop = BorderStyle.Thin;
+        Titlestyle.BorderLeft = BorderStyle.Thin;
+        Titlestyle.BorderRight = BorderStyle.Thin;
+        Titlestyle.Alignment = HorizontalAlignment.Center;
+        Titlestyle.SetFont(bfont);
+
         ISheet sheet = wb.CreateSheet("Orders");
         IRow row = sheet.CreateRow(0);
-        AddStyledCell(row, 0, hstyle).SetCellValue(ReportTitle);
+        AddStyledCell(row, 0, Titlestyle).SetCellValue(ReportTitle);
         sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 15));
 
         row = sheet.CreateRow(1);
