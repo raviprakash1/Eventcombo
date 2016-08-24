@@ -1,8 +1,8 @@
 ﻿@charset "utf-8";
 /*
-Designer		: Om Prakash Choudhary
-Designer's ID	: omtonk@gmail.com
-Company			: The Catalyst
+Designer		    : Om Prakash Choudhary
+Designer's ID	  : om@thecatalystindia.in
+Company			    : The Catalyst
 Company Website	: www.thecatalystindia.in
 
 ********* THEME-OM SETTINGS *************************************************************************/
@@ -85,12 +85,13 @@ h1,h2,h3,h4,h5,h6 { text-align:initial;}
 }
 @media screen and (min-width:768px) and (max-width:991px)
 {
-
 }
 @media screen and (min-width:0) and (max-width:767px)
 {
 	.col-half, .col-oneThird, .col-twoThird, .col-oneFourth { width:100%; margin-bottom:10px;}
 	.hide768 { display:none;}
+  body	{ padding-top:100px !important;}
+
 }
 @media screen and (max-width:600px)
 {

@@ -47,7 +47,7 @@ namespace EventCombo.Controllers
         else 
         {
           model.BaseUserId = null;
-          model.BaseUserName = "Unknown";
+          model.BaseUserName = null;
           model.BaseUserEmail = null;
         }
       }

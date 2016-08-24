@@ -47,7 +47,8 @@
 }
 
 <div ng-controller="ViewEventController" eventid="@Model.EventId.ToString()">
-  <div class="buttons padding-1em-top padding-1em-bottom padding-2em-right text-right hide768">
+  <div class="buttons padding-1em-top padding-1em-bottom padding-2em-right text-right hide768" 
+       ng-init="userRegistered = @(String.IsNullOrEmpty(Model.BaseUserId) ? "false" : "true")">
     <a href="#ticketSection" class="makeLive">@Model.ButtonText</a>
   </div>
   <section class="eventBanner" style="@((!String.IsNullOrEmpty(Model.BackgroundUrl) ? "background-image:url(" + Model.BackgroundUrl + ");" : "") +
@@ -57,19 +58,19 @@
         <div class="c12 eventVanue">
           <h2 class="event-name">@Model.EventTitle</h2>
           <h3 class="vanue-name">@Model.VenueName</h3>
-          <div class="adiv"><i class="material-icons black">location_on</i>@Model.Address</div>
+          <div class="adiv"><i class="material-icons black">location_on</i> @Model.Address</div>
           <div class="adiv"><i class="material-icons">schedule</i> {{eventInfo.EventDateTimeInfoString}}</div>
           <div class="adiv">@Model.PriceRange</div>
           <div class="wgts">
             @if (!String.IsNullOrEmpty(Model.BaseUserId))
             {
-              <span><a href="javascript:void(0)" title="Add EventTitle to your favorites"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
-              <span><a href="javascript:void(0)" title="Vote for EventTitle"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
+              <span><a href="javascript:void(0)" title="Add EventTitle to your favorites" ng-click="AddToFavorite();"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
+              <span><a href="javascript:void(0)" title="Vote for EventTitle" ng-click="VoteEvent();"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
             }
             else
             {
-              <span><a href="javascript:void(0)" title="Add EventTitle to your favorites"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
-              <span><a href="javascript:void(0)" title="Vote for EventTitle"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
+              <span><a href="javascript:void(0)" title="Add EventTitle to your favorites" ng-click="AddToFavorite();"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
+              <span><a href="javascript:void(0)" title="Vote for EventTitle" ng-click="VoteEvent();"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
             }
             <span class="social" social="SHARE THIS">
               <a href="javascript:void(0)" title="Share @Model.EventTitle via Email" ng-show="false"><img width="20px" alt="Share @Model.EventTitle via Email" src="~/Images/AMaterial/mail-square.svg"></a>

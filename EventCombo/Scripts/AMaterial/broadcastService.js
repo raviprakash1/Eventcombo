@@ -8,7 +8,22 @@
       broadcastMessage('ErrorExternalLogin', param);
     }
 
+    var callLogin = function (param) {
+      broadcastMessage('CallLogin', param);
+    }
+
+    var completeExternalLogin = function (param) {
+      broadcastMessage('CompleteExternalLogin', param);
+    }
+
+    var setLocation = function (param) {
+      broadcastMessage('SetLocation', param);
+    }
+
     return {
-      ErrorExternalLogin: errorExternalLogin
+      ErrorExternalLogin: errorExternalLogin,
+      CallLogin: callLogin,
+      CompleteExternalLogin: completeExternalLogin,
+      SetLocation: setLocation
     }
   }]);

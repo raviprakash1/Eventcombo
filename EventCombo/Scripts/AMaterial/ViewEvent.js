@@ -1,5 +1,5 @@
-eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '$attrs', 'eventInfoService',
-  function ($scope, $http, $window, $attrs, eventInfoService) {
+eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '$attrs', 'eventInfoService', 'broadcastService',
+  function ($scope, $http, $window, $attrs, eventInfoService, broadcastService) {
     $scope.favStyle = { "color": "white" };
     $scope.voteStyle = { "color": "white" };
     $scope.eventInfo = {};
@@ -15,8 +15,7 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
         $scope.map.panTo(new google.maps.LatLng($scope.eventInfo.Latitude, $scope.eventInfo.Longitude));
         addEventMarker($scope.eventInfo, $scope.map);
       }
-      $scope.favStyle = $scope.eventInfo.UserFavorite ? {} : { "color": "white" };
-      $scope.voteStyle = $scope.eventInfo.UserVote ? {} : { "color": "white" };
+      $scope.UpdateStyles();
     });
     eventInfoService.loadInfo($attrs.eventid);
 
@@ -31,6 +30,31 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
 
     $scope.OrderCheckout = function () {
       eventInfoService.postTickets();
+    }
+
+    $scope.StartLogin = function(){
+      broadcastService.CallLogin("");
+    }
+
+    $scope.AddToFavorite = function () {
+      if (!$scope.userRegistered)
+        $scope.StartLogin();
+      if ((!$scope.eventInfo) || ($scope.eventInfo.UserFavorite == true))
+        return;
+      eventInfoService.addFavorite($scope.UpdateStyles);
+    }
+
+    $scope.VoteEvent = function () {
+      if (!$scope.userRegistered)
+        $scope.StartLogin();
+      if ((!$scope.eventInfo) || ($scope.eventInfo.UserVote == true))
+        return;
+      eventInfoService.voteEvent($scope.UpdateStyles);
+    }
+
+    $scope.UpdateStyles = function () {
+      $scope.favStyle = $scope.eventInfo.UserFavorite ? {} : { "color": "white" };
+      $scope.voteStyle = $scope.eventInfo.UserVote ? {} : { "color": "white" };
     }
 
   }]);
@@ -146,6 +170,34 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
       return selectedImage;
     }
 
+    var addFavorite = function (func) {
+      if ((!eventInfo) || (eventInfo.UserFavorite == true))
+        return;
+      var model = {
+        eventId: eventInfo.EventId
+      }
+      $http.post('/eventmanagement/AddFavorite', model).then(function (response) {
+        eventInfo.FavoriteCount = response.data.Count;
+        eventInfo.UserFavorite = response.data.Processed;
+        if (func)
+          func();
+      });
+    }
+
+    var voteEvent = function (func) {
+      if ((!eventInfo) || (eventInfo.UserVote == true))
+        return;
+      var model = {
+        eventId: eventInfo.EventId
+      }
+      $http.post('/eventmanagement/VoteEvent', model).then(function (response) {
+        eventInfo.VoteCount = response.data.Count;
+        eventInfo.UserVote = response.data.Processed;
+        if (func)
+          func();
+      });
+    }
+
     var postTickets = function () {
       var tickets = [];
       var selection = '';
@@ -203,7 +255,9 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
       getSelectedImage: getSelectedImage,
       setSelectedImage: setSelectedImage,
       recalcTotal: recalcTotal,
-      postTickets: postTickets
+      postTickets: postTickets,
+      addFavorite: addFavorite,
+      voteEvent: voteEvent
     }
   }]);
 /****************************************************************************/

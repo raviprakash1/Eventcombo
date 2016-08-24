@@ -6,8 +6,11 @@
     $scope.loginError = 'Incorrect password, retry or use Forgot Password.';
 
     $window.loginCallback = function (success, returnUrl) {
-      if (success)
-        window.location.href = returnUrl;
+      if (success) {
+        var ctrl = document.getElementById('accountControllerDiv');
+        var service = angular.element(ctrl).injector().get('broadcastService');
+        service.CompleteExternalLogin(returnUrl);
+      }
       else {
         var ctrl = document.getElementById('accountControllerDiv');
         var service = angular.element(ctrl).injector().get('broadcastService');
@@ -19,6 +22,19 @@
       $scope.closeLightBoxWithEsc();
       $scope.showInfoMessage(true, mess);
       $scope.$apply();
+    });
+
+    $scope.$on('CompleteExternalLogin', function (event, param) {
+      $scope.reloadPage();
+    });
+
+    $scope.$on('CallLogin', function (event, param) {
+      $scope.showLoginForm(param);
+    });
+
+    $scope.$on('SetLocation', function (event, param) {
+      $scope.afterLoginUrl = param;
+      $scope.reloadPage();
     });
 
     $scope.showLoadingMessage = function (show, message) {
@@ -37,12 +53,18 @@
     }
 
     $scope.reloadPage = function () {
-      $window.location.reload();
+      if ($scope.afterLoginUrl)
+        window.location.href = $scope.afterLoginUrl;
+      else
+        $window.location.reload();
+      $scope.afterLoginUrl = undefined;
     }
 
-    $scope.showLoginForm = function () {
-      //      $scope.email = '';
-      //      $scope.resetForm($scope.myForm);
+    $scope.showLoginForm = function (url) {
+      if (url)
+        $scope.afterLoginUrl = url;
+      else
+        $scope.afterLoginUrl = "";
       $scope.popLogin = true;
     }
 
@@ -87,10 +109,10 @@
       $scope.showLoadingMessage(true, 'Logging out');
       $http.post('/account/logoutAPI', {}).then(function (response) {
         $scope.showLoadingMessage(false, '');
-        $window.location.reload();
+        $scope.reloadPage();
       }, function (response) {
         $scope.showLoadingMessage(false, '');
-        $window.location.reload();
+        $scope.reloadPage();
       });
     }
 
