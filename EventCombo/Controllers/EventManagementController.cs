@@ -144,5 +144,51 @@ namespace EventCombo.Controllers
       return res;
     }
 
+    [HttpGet]
+    public ActionResult EmptyTemplate()
+    {
+      string userId = "";
+      if (Session["AppId"] != null)
+        userId = Session["AppId"].ToString();
+
+      BaseViewModel ev = new BaseViewModel();
+      PopulateBaseViewModel(ev, "Empty Template | Eventcombo");
+
+      Session["ReturnUrl"] = Url.Action("EmptyTemplate");
+
+      return View(ev);
+    }
+
+    [HttpPost]
+    [Authorize]
+    public ActionResult AddFavorite(long eventId)
+    {
+      string userId = "";
+      if (Session["AppId"] != null)
+        userId = Session["AppId"].ToString();
+
+      IncrementResultViewModel actionResult = _eService.AddFavorite(eventId, userId);
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = actionResult;
+
+      return res;
+    }
+
+    [HttpPost]
+    [Authorize]
+    public ActionResult VoteEvent(long eventId)
+    {
+      string userId = "";
+      if (Session["AppId"] != null)
+        userId = Session["AppId"].ToString();
+
+      IncrementResultViewModel actionResult = _eService.VoteEvent(eventId, userId);
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = actionResult;
+
+      return res;
+    }
   }
 }

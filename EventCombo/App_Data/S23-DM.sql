@@ -41,8 +41,10 @@ GO
 DELETE FROM Email_Tag
 WHERE Tag_Name = 'ResetPwdCode'
 
-INSERT INTO Email_Tag (Tag_Name)
-VALUES ('ResetPwdCode')
+SET IDENTITY_INSERT Email_Tag ON
+INSERT INTO Email_Tag (Tag_Id, Tag_Name)
+VALUES (43, 'ResetPwdCode')
+SET IDENTITY_INSERT Email_Tag OFF
 
 GO
 

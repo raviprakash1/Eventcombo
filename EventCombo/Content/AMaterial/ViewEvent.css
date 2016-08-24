@@ -3,9 +3,9 @@
 .event-name { color:#304756; font:500 36px 'Roboto', Arial, Helvetica, sans-serif; margin:0; text-align:left;}
 .vanue-name { color:#585858; font:500 24px 'Roboto', Arial, Helvetica, sans-serif; margin-top:10px; margin-bottom:15px;}
 .donation { color:#000; text-transform:uppercase; font:bold 24px Arial, Helvetica, sans-serif;}
-.adiv { color:#304756; font:500 18px 'Roboto', Arial, Helvetica, sans-serif; margin-bottom:10px;}
+.adiv { color:#304756; font:500 18px 'Roboto', Arial, Helvetica, sans-serif; margin-bottom:10px; padding-left:30px; text-align:left; position:relative;}
+.adiv i { position:absolute; left:0; top:0;}
 .adiv .black { color:#000;}
-.adiv .invisible { opacity:0;}
 
 .wgts { position:absolute; right:15px; bottom:15px; line-height:32px;}
 .wgts span { display:inline-block; line-height:20px; margin-right:20px; float:left;}
@@ -14,9 +14,10 @@
 .wgts .social a { display:inline-block;}
 .wgts .social:before { content:attr(social); color:rgb(116,116,116); font:500 11px 'Roboto', Arial, Helvetica, sans-serif; position:absolute; left:0; bottom:100%; margin-bottom:3px;}
 /****************************************************************/
-.text-links { margin:0; padding:0; text-align:right;}
-.text-links li { margin:0; padding:0; list-style:none; display:inline-block;}
-.text-links li a { display:inline-block; padding:10px; color:#000; font:16px 'Roboto', Arial, Helvetica, sans-serif; text-decoration:none;}
+.alignText { text-align:right;}
+.text-links { margin:10px -10px; padding:0; text-align:left; display:inline-block;}
+.text-links li { margin:0; padding:0 10px; list-style:none; display:inline-block;}
+.text-links li a { display:inline-block; padding:0; color:#000; font:16px 'Roboto', Arial, Helvetica, sans-serif; text-decoration:none;}
 .text-links li a:hover { color:#00baff;}
 .eventFlyer { width:100%; display:inline-block;}
 .eventFlyer img { width:100%;}
@@ -111,7 +112,9 @@ footer .social img { margin-right:3px;}
 }
 @media screen and (min-width:0) and (max-width:767px)
 {
-	.eventVanue { padding-bottom:40px;}
+	.wgts { right:auto; left:60px;}
+	.alignText { text-align:left;}
+	.eventVanue { padding-bottom:50px;}
 	.event-name { font-size:24px;}
 	.vanue-name, .red-heading { font-size:18px;}
 	.adiv, .saroosh span a, .connectFacebook { font-size:14px;}

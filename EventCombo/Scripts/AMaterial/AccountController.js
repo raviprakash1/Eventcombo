@@ -1,9 +1,41 @@
-﻿eventComboApp.controller('AccountController', ['$scope', '$http', '$window', '$attrs', '$filter',
-  function ($scope, $http, $window, $attrs, $filter) {
+﻿eventComboApp.controller('AccountController', ['$scope', '$http', '$window', '$attrs', '$filter', 'broadcastService',
+  function ($scope, $http, $window, $attrs, $filter, broadcastService) {
     $scope.displayPopups = 'block';
     $scope.email = '';
     $scope.loginPassword = '';
     $scope.loginError = 'Incorrect password, retry or use Forgot Password.';
+
+    $window.loginCallback = function (success, returnUrl) {
+      if (success) {
+        var ctrl = document.getElementById('accountControllerDiv');
+        var service = angular.element(ctrl).injector().get('broadcastService');
+        service.CompleteExternalLogin(returnUrl);
+      }
+      else {
+        var ctrl = document.getElementById('accountControllerDiv');
+        var service = angular.element(ctrl).injector().get('broadcastService');
+        service.ErrorExternalLogin('Login Unsucessfull');
+      }
+    }
+
+    $scope.$on('ErrorExternalLogin', function (event, mess) {
+      $scope.closeLightBoxWithEsc();
+      $scope.showInfoMessage(true, mess);
+      $scope.$apply();
+    });
+
+    $scope.$on('CompleteExternalLogin', function (event, param) {
+      $scope.reloadPage();
+    });
+
+    $scope.$on('CallLogin', function (event, param) {
+      $scope.showLoginForm(param);
+    });
+
+    $scope.$on('SetLocation', function (event, param) {
+      $scope.afterLoginUrl = param;
+      $scope.reloadPage();
+    });
 
     $scope.showLoadingMessage = function (show, message) {
       $scope.popLoading = show;
@@ -21,12 +53,18 @@
     }
 
     $scope.reloadPage = function () {
-      $window.location.reload();
+      if ($scope.afterLoginUrl)
+        window.location.href = $scope.afterLoginUrl;
+      else
+        $window.location.reload();
+      $scope.afterLoginUrl = undefined;
     }
 
-    $scope.showLoginForm = function () {
-//      $scope.email = '';
-//      $scope.resetForm($scope.myForm);
+    $scope.showLoginForm = function (url) {
+      if (url)
+        $scope.afterLoginUrl = url;
+      else
+        $scope.afterLoginUrl = "";
       $scope.popLogin = true;
     }
 
@@ -71,10 +109,10 @@
       $scope.showLoadingMessage(true, 'Logging out');
       $http.post('/account/logoutAPI', {}).then(function (response) {
         $scope.showLoadingMessage(false, '');
-        $window.location.reload();
+        $scope.reloadPage();
       }, function (response) {
         $scope.showLoadingMessage(false, '');
-        $window.location.reload();
+        $scope.reloadPage();
       });
     }
 
@@ -102,11 +140,11 @@
         $scope.popLoginPassword = false;
         $scope.showLoadingMessage(true, 'Logging in');
         $http.post('/account/loginAPI', {
-            json: angular.toJson({
-              Email: $scope.email,
-              Password: $scope.loginPassword,
-              RememberMe: false
-            })
+          json: angular.toJson({
+            Email: $scope.email,
+            Password: $scope.loginPassword,
+            RememberMe: false
+          })
         }).then(function (response) {
           $scope.showLoadingMessage(false, '');
           var result = response.data.Success;
@@ -243,6 +281,36 @@
       $scope.popServerError = false;
       $scope.popInfoMessage = false;
     };
+
+    $scope.externalLogin = function (site) {
+      $scope.popLogin = false;
+      // Delete the Requested With Header
+      delete $http.defaults.headers.common['X-Requested-With'];
+      $scope.showLoadingMessage(true, 'Creating password');
+      $http({
+        method: 'GET',
+        url: '/account/ExternalLoginAPI',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Access-Control-Allow-Origin': '*'
+        },
+        //        data: $.param({
+        //          json: angular.toJson({
+        //            Provider: site,
+        //            ReturnUrl: $window.location.href
+        //          })
+        params: {
+          provider: site,
+          returnUrl: $window.location.href
+        }
+      }).then(function (response) {
+        $scope.showLoadingMessage(false, '');
+        console.log(response);
+      }, function (error) {
+        $scope.showLoadingMessage(false, '');
+        console.log(error);
+      });
+    }
   }]);
 
 eventComboApp.directive('ngEsc', function () {

@@ -27,6 +27,7 @@ using EventCombo.Service;
 using EventCombo.Utils;
 using System.Configuration;
 using System.Threading;
+using EventCombo.ActionFilters;
 
 namespace EventCombo.Controllers
 {
@@ -1738,32 +1739,42 @@ namespace EventCombo.Controllers
 
       if (TryValidateModel(model))
       {
-        var loginResult = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
+        var User = await UserManager.FindByEmailAsync(model.Email.ToString());
 
-        switch (loginResult)
+        if (_accService.CheckUserLogin(User.Id))
         {
-          case SignInStatus.Success:
-            var User = UserManager.FindByEmail(model.Email.ToString());
-            if (_accService.RegisterLoginAttempt(User.Id, ClientIPAddress.GetLanIPAddress(Request)))
-            {
-              Session["AppId"] = User.Id;
-              result.Success = true;
-              result.ErrorCode = 0;
-            }
-            break;
-          case SignInStatus.LockedOut:
-            result.Success = false;
-            result.ErrorCode = 1;
-            result.ErrorMessage = "Account locked out. You need to wait at least " + UserManager.DefaultAccountLockoutTimeSpan.TotalMinutes.ToString() + " minutes.";
-            break;
-          case SignInStatus.RequiresVerification:
-            result.Success = false;
-            result.ErrorCode = 2;
-            result.ErrorMessage = "Need to verify account. Proceed to Forgot Password procedure.";
-            break;
-          case SignInStatus.Failure:
-          default:
-            break;
+          var loginResult = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
+
+          switch (loginResult)
+          {
+            case SignInStatus.Success:
+              if (_accService.RegisterLoginAttempt(User.Id, ClientIPAddress.GetLanIPAddress(Request)))
+              {
+                Session["AppId"] = User.Id;
+                result.Success = true;
+                result.ErrorCode = 0;
+              }
+              break;
+            case SignInStatus.LockedOut:
+              result.Success = false;
+              result.ErrorCode = 1;
+              result.ErrorMessage = "Account locked out. You need to wait at least " + UserManager.DefaultAccountLockoutTimeSpan.TotalMinutes.ToString() + " minutes.";
+              break;
+            case SignInStatus.RequiresVerification:
+              result.Success = false;
+              result.ErrorCode = 2;
+              result.ErrorMessage = "Need to verify account. Proceed to Forgot Password procedure.";
+              break;
+            case SignInStatus.Failure:
+            default:
+              break;
+          }
+        }
+        else
+        {
+          result.Success = false;
+          result.ErrorCode = 3;
+          result.ErrorMessage = "Access Forbidden.";
         }
       }
       return result;
@@ -1982,6 +1993,108 @@ namespace EventCombo.Controllers
       res.Data = result;
       return res;
     }
+
+    [HttpGet]
+    [AllowAnonymous]
+    //    public ActionResult ExternalLoginAPI(string json)
+    public ActionResult ExternalLoginAPI(string provider, string returnUrl)
+    {
+      var res = new ChallengeResult(provider, Url.Action("ExternalLoginCallbackAPI", "Account", new { ReturnUrl = returnUrl }));
+      return res;
+    }
+
+    private void GetExternalLoginInfo(RegisterUserRequestViewModel model, string provider)
+    {
+      Claim emailClaim = null;
+      Claim lastNameClaim = null;
+      Claim givenNameClaim = null;
+      var externalIdentity = HttpContext.GetOwinContext().Authentication.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+      if (provider == "Facebook")
+      {
+        emailClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:email");
+        lastNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:last_name");
+        givenNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:first_name");
+      }
+      else if (provider == "Google")
+      {
+        emailClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+        lastNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname);
+        givenNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName);
+      }
+      else if (provider == "LinkedIn")
+      {
+        emailClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:linkedin:email");
+        lastNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:linkedin:lastname");
+        givenNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:linkedin:firstname");
+      }
+
+      model.Email = (emailClaim == null || emailClaim.Value == null) ? model.Email : emailClaim.Value;
+      model.FirstName = (givenNameClaim == null || givenNameClaim.Value == null) ? "" : givenNameClaim.Value;
+      model.LastName = (lastNameClaim == null || lastNameClaim.Value == null) ? "" : lastNameClaim.Value;
+
+    }
+
+    [AllowAnonymous]
+    public async Task<ActionResult> ExternalLoginCallbackAPI(string returnUrl)
+    {
+      RegisterUserRequestViewModel model = new RegisterUserRequestViewModel();
+      var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+      if (loginInfo == null)
+      {
+        return View("LoginResult", new LoginResultViewModel(false, returnUrl));
+      }
+
+      var user = await UserManager.FindByEmailAsync(loginInfo.Email);
+      if (user == null)
+      {
+        model.Email = loginInfo.Email;
+
+        var aUser = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email };
+        var resultCreate = await UserManager.CreateAsync(aUser);
+        user = await UserManager.FindByEmailAsync(loginInfo.Email);
+        if (resultCreate.Succeeded)
+        {
+          var resultAdd = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
+          if (resultAdd.Succeeded)
+          {
+            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+            await UserManager.AddToRoleAsync(user.Id, "Member");
+
+            GetExternalLoginInfo(model, loginInfo.Login.LoginProvider);
+
+            if (_accService.RegisterNewUser(user.Id, model, ClientIPAddress.GetLanIPAddress(Request)))
+            {
+              Session["AppId"] = user.Id;
+              return View("LoginResult", new LoginResultViewModel(true, returnUrl));
+            }
+          }
+        }
+      }
+      else
+        if (_accService.CheckUserLogin(user.Id))
+        {
+          var resultLogins = await UserManager.GetLoginsAsync(user.Id);
+          var loginFound = resultLogins.Any(l => l.LoginProvider == loginInfo.Login.LoginProvider);
+          if (!loginFound)
+          {
+            var resultAdd = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
+            loginFound = resultAdd.Succeeded;
+          }
+
+          if (loginFound)
+          {
+            GetExternalLoginInfo(model, loginInfo.Login.LoginProvider);
+            var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+            if ((result == SignInStatus.Success) && (_accService.RegisterLoginAttempt(user.Id, ClientIPAddress.GetLanIPAddress(Request))))
+            {
+              Session["AppId"] = user.Id;
+              return View("LoginResult", new LoginResultViewModel(true, returnUrl));
+            }
+          }
+        }
+      return View("LoginResult", new LoginResultViewModel(false, returnUrl));
+    }
+
 
     [HttpGet]
     [AllowAnonymous]
@@ -2584,10 +2697,6 @@ namespace EventCombo.Controllers
 
       }
     }
-
-
-
-
 
 
     [AllowAnonymous]

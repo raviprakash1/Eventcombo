@@ -34,7 +34,7 @@
   });
 </script>
 <header ng-controller="HamburgerController">
-  <div class="topnav2">
+  <div class="topnav2" ng-init="userRegistered = @(String.IsNullOrEmpty(Model.BaseUserId) ? "false" : "true")">
     <md-menu md-position-mode="target-right target">
       <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
         <i md-menu-origin="" class="material-icons">menu</i>
@@ -43,7 +43,7 @@
         <md-menu-item ng-repeat="menu in navigation">
           <md-button ng-click="announceClick($index)">
             <div layout="row" flex="">
-              <p flex=""><a href="{{ menu.link }}" class="{{ menu.class }}">{{ menu.text }}</a></p>
+              <p flex=""><a href="{{ menu.link }}" class="{{ menu.class }}" ng-click="clickLink(menu.loginlink, $event);">{{ menu.text }}</a></p>
               <i md-menu-align-target="" style="margin:auto 3px auto 0;" class="material-icons">portable_wifi_off</i>
             </div>
           </md-button>
@@ -57,11 +57,11 @@
       <h1 id="logo"></h1>
     </a>
   </div>
-  <div ng-controller="AccountController as acContr">
+  <div ng-controller="AccountController as acContr" id="accountControllerDiv">
     <nav>
       <ul class="nav">
         <li class="drop">
-          <span><i class="material-icons orange600">account_circle</i> @Model.BaseUserName </span>
+          <span><i class="material-icons orange600">account_circle</i> @(String.IsNullOrEmpty(Model.BaseUserName) ? "Log In / Sign Up" : Model.BaseUserName) </span>
           @if (!String.IsNullOrEmpty(Model.BaseUserId))
           {
             <ul>
@@ -76,7 +76,7 @@
           else
           {
             <ul>
-              <li><a href="javascript:void(0)" ng-click="showLoginForm('myForm')"><i class="material-icons">lock_outline</i> Log In</a></li>
+              <li><a href="javascript:void(0)" ng-click="showLoginForm()"><i class="material-icons">lock_outline</i> Log In</a></li>
             </ul>
           }
         </li>
@@ -92,9 +92,9 @@
               <a class="popClose" ng-click="closeLightBoxWithEsc(); email=''"><i class="material-icons">clear</i></a>
               <h3 class="blue-heading">Please log in or sign up with</h3>
               <div class="text-center">
-                <a href="#" class="socLogin fb"><img width="16" src="~/Images/AMaterial/facebook-logo.svg"></a>
-                <a href="#" class="socLogin in"><img width="16" src="~/Images/AMaterial/linkedin-logo.svg"></a>
-                <a href="#" class="socLogin gp"><img width="16" src="~/Images/AMaterial/google-plus-symbol.svg"></a>
+                <a href=@Url.Action("ExternalLoginAPI", "Account", new { provider = "Facebook", returnUrl = Request.Url.AbsoluteUri }) class="socLogin fb" target="_blank"><img width="16" src="~/Images/AMaterial/facebook-logo.svg"></a>
+                <a href=@Url.Action("ExternalLoginAPI", "Account", new { provider = "LinkedIn", returnUrl = Request.Url.AbsoluteUri }) class="socLogin in" target="_blank"><img width="16" src="~/Images/AMaterial/linkedin-logo.svg"></a>
+                <a href=@Url.Action("ExternalLoginAPI", "Account", new { provider = "Google", returnUrl = Request.Url.AbsoluteUri }) class="socLogin gp" target="_blank"><img width="16" src="~/Images/AMaterial/google-plus-symbol.svg"></a>
               </div>
               <div class="text-center"><span class="popLink">or</span></div>
               <md-input-container class="md-block">
@@ -270,7 +270,7 @@
     }
   </div>
   <div class="topnav">
-    <a ng-repeat="menu in navigation" href="{{ menu.link }}" class="{{ menu.class }}">{{ menu.text }}</a>
+    <a ng-repeat="menu in navigation" href="{{ menu.link }}" class="{{ menu.class }}" ng-click="clickLink(menu.loginlink, $event);">{{ menu.text }}</a>
   </div>
 </header>
 

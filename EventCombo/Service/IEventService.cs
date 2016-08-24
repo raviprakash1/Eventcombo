@@ -20,5 +20,7 @@ namespace EventCombo.Service
     void UpdateEventInfo(EventInfoViewModel ev, string userId, UrlHelper url);
     void ValidateEventInfo(EventInfoViewModel evi);
     string GetEventUrl(long eventId, string eventTitle, UrlHelper url);
+    IncrementResultViewModel AddFavorite(long eventId, string userId);
+    IncrementResultViewModel VoteEvent(long eventId, string userId);
   }
 }

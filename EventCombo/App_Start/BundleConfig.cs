@@ -135,6 +135,7 @@ namespace EventCombo
                         "~/Scripts/AMaterial/ngRepeatOwlCarousel.js",
                         "~/Scripts/AMaterial/classie.js",
                         "~/Scripts/AMaterial/EventComboApp.js",
+                        "~/Scripts/AMaterial/broadcastService.js",
                         "~/Scripts/AMaterial/header.js",
                         "~/Scripts/AMaterial/AccountController.js"));
             bundles.Add(new ScriptBundle("~/Scripts/AMaterial/viewEvent")
