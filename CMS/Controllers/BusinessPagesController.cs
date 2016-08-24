@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using CMS.Models;
 using System.Configuration;
+using CMS.Service;
+using CMS.DAL;
 
 namespace CMS.Controllers
 {
@@ -15,6 +17,13 @@ namespace CMS.Controllers
     public class BusinessPagesController : Controller
     {
         private EmsEntities db = new EmsEntities();
+        IECImageService _iservice;
+        public BusinessPagesController()
+        {
+            var factory = new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory(new EmsEntities()));
+            var mapper = AutomapperConfig.Config.CreateMapper();
+            _iservice = new ECImageService(factory, mapper, new ECImageStorage(mapper));
+        }
 
         public ActionResult Index()
         {
@@ -82,6 +91,18 @@ namespace CMS.Controllers
                         businessPage.CreatedDate = DateTime.Now;
                         businessPage.UpdateDate = DateTime.Now;
                         db.BusinessPages.Add(businessPage);
+                        foreach (var file in Request.Files)
+                        {
+                            HttpPostedFileBase fileBase = Request.Files[file.ToString()];
+                            if (fileBase.ContentLength != 0)
+                            {
+                                ECImageViewModel eCImageViewModel = _iservice.SaveToDB(fileBase, Session["UserID"].ToString());
+                                BusinessPageECImage businessPageECImage = new BusinessPageECImage();
+                                businessPageECImage.ECImageId = eCImageViewModel.ECImageId;
+                                businessPageECImage.BusinessPageId = businessPage.BusinessPageID;
+                                db.BusinessPageECImages.Add(businessPageECImage);
+                            }
+                        }
                         db.SaveChanges();
                         return RedirectToAction("Index");
                     }
@@ -107,6 +128,10 @@ namespace CMS.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 BusinessPage businessPage = db.BusinessPages.Find(id);
+                foreach (var item in businessPage.BusinessPageECImages)
+                {
+                    item.ECImage = new ECImage { ImagePath = GetECImageUrl(item.ECImageId) };
+                }
                 if (businessPage == null)
                 {
                     return HttpNotFound();
@@ -130,6 +155,18 @@ namespace CMS.Controllers
                     {
                         businessPage.UpdateDate = DateTime.Now;
                         db.Entry(businessPage).State = EntityState.Modified;
+                        foreach (var file in Request.Files)
+                        {
+                            HttpPostedFileBase fileBase = Request.Files[file.ToString()];
+                            if (fileBase.ContentLength != 0)
+                            {
+                                ECImageViewModel eCImageViewModel = _iservice.SaveToDB(fileBase, Session["UserID"].ToString());
+                                BusinessPageECImage businessPageECImage = new BusinessPageECImage();
+                                businessPageECImage.ECImageId = eCImageViewModel.ECImageId;
+                                businessPageECImage.BusinessPageId = businessPage.BusinessPageID;
+                                db.BusinessPageECImages.Add(businessPageECImage);
+                            }
+                        }
                         db.SaveChanges();
                         return RedirectToAction("Index");
                     }
@@ -172,12 +209,43 @@ namespace CMS.Controllers
             if ((Session["UserID"] != null))
             {
                 BusinessPage businessPage = db.BusinessPages.Find(id);
+                db.BusinessPageECImages.RemoveRange(businessPage.BusinessPageECImages);
                 db.BusinessPages.Remove(businessPage);
                 db.SaveChanges();
+                foreach (var item in businessPage.BusinessPageECImages)
+                {
+                    _iservice.DeleteImage(item.ECImageId, Session["UserID"].ToString());
+                }
                 return RedirectToAction("Index");
             }
             else {
                 return RedirectToAction("Login", "Home");
+            }
+        }
+
+        private string GetECImageUrl(long ImageId)
+        {
+            var ecImage = _iservice.GetImageById(ImageId);
+            if (ecImage != null)
+                return ecImage.ImagePath;
+            else
+                return "";
+        }
+
+        public ActionResult DeleteImage(long businessPageECImageId)
+        {
+            if ((Session["UserID"] != null))
+            {
+                string userId = Session["UserID"].ToString();
+                BusinessPageECImage businessPageECImage = db.BusinessPageECImages.Find(businessPageECImageId);
+                db.BusinessPageECImages.Remove(businessPageECImage);
+                db.SaveChanges();
+                _iservice.DeleteImage(businessPageECImage.ECImageId, userId);
+                return Json("true", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("false", JsonRequestBehavior.AllowGet);
             }
         }
 
