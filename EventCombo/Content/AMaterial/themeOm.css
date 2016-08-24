@@ -4,7 +4,6 @@ Designer		    : Om Prakash Choudhary
 Designer's ID	  : om@thecatalystindia.in
 Company			    : The Catalyst
 Company Website	: www.thecatalystindia.in
-
 ********* THEME-OM SETTINGS *************************************************************************/
 body,html{ background:#fff;}
 body	{ background:#fff; color:#000; font:14px 'Roboto', Arial, Helvetica, sans-serif; text-align:justify; cursor:default; margin:0; padding:0; padding-top:130px !important;}
@@ -90,7 +89,7 @@ h1,h2,h3,h4,h5,h6 { text-align:initial;}
 {
 	.col-half, .col-oneThird, .col-twoThird, .col-oneFourth { width:100%; margin-bottom:10px;}
 	.hide768 { display:none;}
-  body	{ padding-top:100px !important;}
+  body	{ padding-top:60px !important;}
 
 }
 @media screen and (max-width:600px)
