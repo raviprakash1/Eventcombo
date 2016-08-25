@@ -12,22 +12,19 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TicketBearer
+    public partial class EmailType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TicketBearer()
+        public EmailType()
         {
-            this.AttendeeEmails = new HashSet<AttendeeEmail>();
+            this.ScheduledEmails = new HashSet<ScheduledEmail>();
         }
     
-        public long TicketbearerId { get; set; }
-        public string UserId { get; set; }
-        public string OrderId { get; set; }
-        public string Guid { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
+        public byte EmailTypeId { get; set; }
+        public string EmailType1 { get; set; }
+        public string EmailTypeDesc { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AttendeeEmail> AttendeeEmails { get; set; }
+        public virtual ICollection<ScheduledEmail> ScheduledEmails { get; set; }
     }
 }

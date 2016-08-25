@@ -133,6 +133,14 @@
           <Property Name="OldUserID" Type="int" />
           <Property Name="LastLoginTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="AttendeeEmail">
+          <Key>
+            <PropertyRef Name="AttendeeEmailId" />
+          </Key>
+          <Property Name="AttendeeEmailId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ScheduledEmailId" Type="bigint" Nullable="false" />
+          <Property Name="TicketbearerId" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="BillingAddress">
           <Key>
             <PropertyRef Name="BillingId" />
@@ -266,6 +274,14 @@
           <Property Name="From" Type="varchar" MaxLength="300" />
           <Property Name="Template_Tag" Type="varchar" MaxLength="300" />
           <Property Name="From_Name" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="EmailType">
+          <Key>
+            <PropertyRef Name="EmailTypeId" />
+          </Key>
+          <Property Name="EmailTypeId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmailType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmailTypeDesc" Type="nvarchar" MaxLength="250" Nullable="false" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -798,6 +814,25 @@
           <Property Name="QuestionTypeGroupId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GroupName" Type="nvarchar" MaxLength="600" Nullable="false" />
           <Property Name="SortNum" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ScheduledEmail">
+          <Key>
+            <PropertyRef Name="ScheduledEmailId" />
+          </Key>
+          <Property Name="ScheduledEmailId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="EmailTypeId" Type="tinyint" Nullable="false" />
+          <Property Name="SendFrom" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="SendTo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ReplyTo" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="CC" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="BCC" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ScheduledDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="SendDate" Type="datetime" />
+          <Property Name="IsEmailSend" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ShippingAddress">
           <Key>
@@ -1367,6 +1402,30 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AttendeeEmail_ScheduledEmail">
+          <End Role="ScheduledEmail" Type="Self.ScheduledEmail" Multiplicity="1" />
+          <End Role="AttendeeEmail" Type="Self.AttendeeEmail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ScheduledEmail">
+              <PropertyRef Name="ScheduledEmailId" />
+            </Principal>
+            <Dependent Role="AttendeeEmail">
+              <PropertyRef Name="ScheduledEmailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendeeEmail_TicketBearer">
+          <End Role="TicketBearer" Type="Self.TicketBearer" Multiplicity="1" />
+          <End Role="AttendeeEmail" Type="Self.AttendeeEmail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketBearer">
+              <PropertyRef Name="TicketbearerId" />
+            </Principal>
+            <Dependent Role="AttendeeEmail">
+              <PropertyRef Name="TicketbearerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1559,6 +1618,30 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ScheduledEmail_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ScheduledEmail" Type="Self.ScheduledEmail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ScheduledEmail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScheduledEmail_EmailType">
+          <End Role="EmailType" Type="Self.EmailType" Multiplicity="1" />
+          <End Role="ScheduledEmail" Type="Self.ScheduledEmail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmailType">
+              <PropertyRef Name="EmailTypeId" />
+            </Principal>
+            <Dependent Role="ScheduledEmail">
+              <PropertyRef Name="EmailTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Ticket_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
           <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
@@ -1665,6 +1748,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AttendeeEmail" EntityType="Self.AttendeeEmail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BillingAddress" EntityType="Self.BillingAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BusinessPage" EntityType="Self.BusinessPage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CardDetails" EntityType="Self.CardDetails" Schema="dbo" store:Type="Tables" />
@@ -1677,6 +1761,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="ECImageType" EntityType="Self.ECImageType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Email_Tag" EntityType="Self.Email_Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Email_Template" EntityType="Self.Email_Template" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailType" EntityType="Self.EmailType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_Email_Invitation" EntityType="Self.Event_Email_Invitation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event_Email_List" EntityType="Self.Event_Email_List" Schema="dbo" store:Type="Tables" />
@@ -1715,6 +1800,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="Publish_Event_Detail" EntityType="Self.Publish_Event_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuestionType" EntityType="Self.QuestionType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuestionTypeGroup" EntityType="Self.QuestionTypeGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ScheduledEmail" EntityType="Self.ScheduledEmail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShippingAddress" EntityType="Self.ShippingAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
@@ -1953,6 +2039,14 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             <End Role="Event" EntitySet="Event" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
+          <AssociationSet Name="FK_AttendeeEmail_ScheduledEmail" Association="Self.FK_AttendeeEmail_ScheduledEmail">
+            <End Role="ScheduledEmail" EntitySet="ScheduledEmail" />
+            <End Role="AttendeeEmail" EntitySet="AttendeeEmail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendeeEmail_TicketBearer" Association="Self.FK_AttendeeEmail_TicketBearer">
+            <End Role="TicketBearer" EntitySet="TicketBearer" />
+            <End Role="AttendeeEmail" EntitySet="AttendeeEmail" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -2012,6 +2106,14 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <AssociationSet Name="FK_Profile_Profile" Association="Self.FK_Profile_Profile">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Profile" EntitySet="Profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScheduledEmail_AspNetUsers" Association="Self.FK_ScheduledEmail_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ScheduledEmail" EntitySet="ScheduledEmail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScheduledEmail_EmailType" Association="Self.FK_ScheduledEmail_EmailType">
+            <End Role="EmailType" EntitySet="EmailType" />
+            <End Role="ScheduledEmail" EntitySet="ScheduledEmail" />
           </AssociationSet>
           <AssociationSet Name="FK_Ticket_Event" Association="Self.FK_Ticket_Event">
             <End Role="Event" EntitySet="Event" />
@@ -2117,6 +2219,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="OldUserID" Type="Int32" />
           <Property Name="LastLoginTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="AspNetUserCodes" Relationship="EventComboModel.AspNetUserAspNetUserCode" FromRole="AspNetUser" ToRole="AspNetUserCode" />
+          <NavigationProperty Name="ScheduledEmails" Relationship="EventComboModel.FK_ScheduledEmail_AspNetUsers" FromRole="AspNetUser" ToRole="ScheduledEmail" />
         </EntityType>
         <EntityType Name="BillingAddress">
           <Key>
@@ -2587,6 +2690,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="AttendeeEmails" Relationship="EventComboModel.FK_AttendeeEmail_TicketBearer" FromRole="TicketBearer" ToRole="AttendeeEmail" />
         </EntityType>
         <EntityType Name="TicketDeliveryMethod">
           <Key>
@@ -3143,6 +3247,25 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <AssociationSet Name="EventEventECImage" Association="EventComboModel.EventEventECImage">
             <End Role="Event" EntitySet="Events" />
             <End Role="EventECImage" EntitySet="EventECImages" />
+          </AssociationSet>
+          <EntitySet Name="AttendeeEmails" EntityType="EventComboModel.AttendeeEmail" />
+          <EntitySet Name="EmailTypes" EntityType="EventComboModel.EmailType" />
+          <EntitySet Name="ScheduledEmails" EntityType="EventComboModel.ScheduledEmail" />
+          <AssociationSet Name="FK_ScheduledEmail_AspNetUsers" Association="EventComboModel.FK_ScheduledEmail_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ScheduledEmail" EntitySet="ScheduledEmails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendeeEmail_ScheduledEmail" Association="EventComboModel.FK_AttendeeEmail_ScheduledEmail">
+            <End Role="ScheduledEmail" EntitySet="ScheduledEmails" />
+            <End Role="AttendeeEmail" EntitySet="AttendeeEmails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendeeEmail_TicketBearer" Association="EventComboModel.FK_AttendeeEmail_TicketBearer">
+            <End Role="TicketBearer" EntitySet="TicketBearers" />
+            <End Role="AttendeeEmail" EntitySet="AttendeeEmails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScheduledEmail_EmailType" Association="EventComboModel.FK_ScheduledEmail_EmailType">
+            <End Role="EmailType" EntitySet="EmailTypes" />
+            <End Role="ScheduledEmail" EntitySet="ScheduledEmails" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
@@ -4609,6 +4732,95 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AttendeeEmail">
+          <Key>
+            <PropertyRef Name="AttendeeEmailId" />
+          </Key>
+          <Property Name="AttendeeEmailId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ScheduledEmailId" Type="Int64" Nullable="false" />
+          <Property Name="TicketbearerId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="ScheduledEmail" Relationship="EventComboModel.FK_AttendeeEmail_ScheduledEmail" FromRole="AttendeeEmail" ToRole="ScheduledEmail" />
+          <NavigationProperty Name="TicketBearer" Relationship="EventComboModel.FK_AttendeeEmail_TicketBearer" FromRole="AttendeeEmail" ToRole="TicketBearer" />
+        </EntityType>
+        <EntityType Name="EmailType">
+          <Key>
+            <PropertyRef Name="EmailTypeId" />
+          </Key>
+          <Property Name="EmailTypeId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmailType1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmailTypeDesc" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ScheduledEmails" Relationship="EventComboModel.FK_ScheduledEmail_EmailType" FromRole="EmailType" ToRole="ScheduledEmail" />
+        </EntityType>
+        <EntityType Name="ScheduledEmail">
+          <Key>
+            <PropertyRef Name="ScheduledEmailId" />
+          </Key>
+          <Property Name="ScheduledEmailId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EmailTypeId" Type="Byte" Nullable="false" />
+          <Property Name="SendFrom" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="SendTo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReplyTo" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CC" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="BCC" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Subject" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ScheduledDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SendDate" Type="DateTime" Precision="3" />
+          <Property Name="IsEmailSend" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="EventComboModel.FK_ScheduledEmail_AspNetUsers" FromRole="ScheduledEmail" ToRole="AspNetUser" />
+          <NavigationProperty Name="AttendeeEmails" Relationship="EventComboModel.FK_AttendeeEmail_ScheduledEmail" FromRole="ScheduledEmail" ToRole="AttendeeEmail" />
+          <NavigationProperty Name="EmailType" Relationship="EventComboModel.FK_ScheduledEmail_EmailType" FromRole="ScheduledEmail" ToRole="EmailType" />
+        </EntityType>
+        <Association Name="FK_ScheduledEmail_AspNetUsers">
+          <End Type="EventComboModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="EventComboModel.ScheduledEmail" Role="ScheduledEmail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ScheduledEmail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendeeEmail_ScheduledEmail">
+          <End Type="EventComboModel.ScheduledEmail" Role="ScheduledEmail" Multiplicity="1" />
+          <End Type="EventComboModel.AttendeeEmail" Role="AttendeeEmail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ScheduledEmail">
+              <PropertyRef Name="ScheduledEmailId" />
+            </Principal>
+            <Dependent Role="AttendeeEmail">
+              <PropertyRef Name="ScheduledEmailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendeeEmail_TicketBearer">
+          <End Type="EventComboModel.TicketBearer" Role="TicketBearer" Multiplicity="1" />
+          <End Type="EventComboModel.AttendeeEmail" Role="AttendeeEmail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketBearer">
+              <PropertyRef Name="TicketbearerId" />
+            </Principal>
+            <Dependent Role="AttendeeEmail">
+              <PropertyRef Name="TicketbearerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScheduledEmail_EmailType">
+          <End Type="EventComboModel.EmailType" Role="EmailType" Multiplicity="1" />
+          <End Type="EventComboModel.ScheduledEmail" Role="ScheduledEmail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmailType">
+              <PropertyRef Name="EmailTypeId" />
+            </Principal>
+            <Dependent Role="ScheduledEmail">
+              <PropertyRef Name="EmailTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6057,6 +6269,44 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
                 <ScalarProperty Name="ECImageId" ColumnName="ECImageId" />
                 <ScalarProperty Name="EventId" ColumnName="EventId" />
                 <ScalarProperty Name="EventECImageId" ColumnName="EventECImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AttendeeEmails">
+            <EntityTypeMapping TypeName="EventComboModel.AttendeeEmail">
+              <MappingFragment StoreEntitySet="AttendeeEmail">
+                <ScalarProperty Name="TicketbearerId" ColumnName="TicketbearerId" />
+                <ScalarProperty Name="ScheduledEmailId" ColumnName="ScheduledEmailId" />
+                <ScalarProperty Name="AttendeeEmailId" ColumnName="AttendeeEmailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailTypes">
+            <EntityTypeMapping TypeName="EventComboModel.EmailType">
+              <MappingFragment StoreEntitySet="EmailType">
+                <ScalarProperty Name="EmailTypeDesc" ColumnName="EmailTypeDesc" />
+                <ScalarProperty Name="EmailType1" ColumnName="EmailType" />
+                <ScalarProperty Name="EmailTypeId" ColumnName="EmailTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ScheduledEmails">
+            <EntityTypeMapping TypeName="EventComboModel.ScheduledEmail">
+              <MappingFragment StoreEntitySet="ScheduledEmail">
+                <ScalarProperty Name="IsEmailSend" ColumnName="IsEmailSend" />
+                <ScalarProperty Name="SendDate" ColumnName="SendDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ScheduledDate" ColumnName="ScheduledDate" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="BCC" ColumnName="BCC" />
+                <ScalarProperty Name="CC" ColumnName="CC" />
+                <ScalarProperty Name="ReplyTo" ColumnName="ReplyTo" />
+                <ScalarProperty Name="SendTo" ColumnName="SendTo" />
+                <ScalarProperty Name="SendFrom" ColumnName="SendFrom" />
+                <ScalarProperty Name="EmailTypeId" ColumnName="EmailTypeId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ScheduledEmailId" ColumnName="ScheduledEmailId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

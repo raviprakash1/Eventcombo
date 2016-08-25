@@ -118,6 +118,9 @@ namespace EventCombo.Models
         public virtual DbSet<V_EventsListUpcoming> V_EventsListUpcoming { get; set; }
         public virtual DbSet<AspNetUserCode> AspNetUserCodes { get; set; }
         public virtual DbSet<EventECImage> EventECImages { get; set; }
+        public virtual DbSet<AttendeeEmail> AttendeeEmails { get; set; }
+        public virtual DbSet<EmailType> EmailTypes { get; set; }
+        public virtual DbSet<ScheduledEmail> ScheduledEmails { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)
