@@ -955,6 +955,8 @@
     <Content Include="Scripts\AMaterial\angular-messages.min.js" />
     <Content Include="Scripts\AMaterial\angular-route.js" />
     <Content Include="Scripts\AMaterial\angular-route.min.js" />
+    <Content Include="Scripts\AMaterial\angular-sanitize.js" />
+    <Content Include="Scripts\AMaterial\angular-sanitize.min.js" />
     <Content Include="Scripts\AMaterial\angular-tinymce\tinymce.min.js" />
     <Content Include="Scripts\AMaterial\angular.js" />
     <Content Include="Scripts\AMaterial\angular.min.js" />
@@ -1464,7 +1466,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\socialshare.js" />
-    <Content Include="Scripts\sharefuncs.js" />
     <Content Include="Scripts\summernote.min.js" />
     <Content Include="Scripts\Validation.js" />
     <Content Include="Scripts\_references.js" />

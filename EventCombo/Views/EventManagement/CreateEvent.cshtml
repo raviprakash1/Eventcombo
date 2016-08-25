@@ -85,6 +85,15 @@
         <img src="~/Images/ajaxloader1.gif" />
       </div>
     </div>
+    <div class="popOverlay" ng-show="popErrorMessage">
+      <div class="popBox">
+        <a class="popClose" ng-click="popErrorMessage=false"><i class="material-icons">clear</i></a>
+        <h3 class="red-heading">{{ErrorHeading}}</h3>
+        <div class="blue-heading text-center" ng-bind-html="ErrorMessage"></div>
+        <div class="text-center margin-2em-top"><a class="popLink" ng-click="popErrorMessage=false">CONTINUE TO SITE</a></div>
+      </div>
+    </div>
+
   </div>
 
   <form name="MainForm" novalidate>

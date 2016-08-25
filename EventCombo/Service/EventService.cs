@@ -883,13 +883,26 @@ namespace EventCombo.Service
       PopulateOGPData(evi);
     }
 
+    private string ResolveServerUrl(string serverUrl, bool forceHttps)
+    {
+      if (serverUrl.IndexOf("://") > -1)
+        return serverUrl;
+
+      string newUrl = serverUrl;
+      Uri originalUri = System.Web.HttpContext.Current.Request.Url;
+      newUrl = (forceHttps ? "https" : originalUri.Scheme) +
+          "://" + originalUri.Authority + newUrl;
+      return newUrl;
+    } 
+
     private void PopulateOGPData(EventInfoViewModel evi)
     {
+
       evi.OGPDescription = evi.EventDescription;
-      evi.OGPImage = evi.ImageUrl;
+      evi.OGPImage = ResolveServerUrl(VirtualPathUtility.ToAbsolute(evi.ImageUrl),false);
       evi.OGPTitle = evi.EventTitle + " | Eventcombo";
       evi.OGPType = "article";
-      evi.OGPUrl = evi.EventUrl;
+      evi.OGPUrl = ResolveServerUrl(VirtualPathUtility.ToAbsolute(evi.EventUrl), false);
     }
 
     public void ValidateEventInfo(EventInfoViewModel ev)

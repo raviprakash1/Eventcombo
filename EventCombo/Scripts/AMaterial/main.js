@@ -1,6 +1,6 @@
 ﻿var test;
-eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window', '$timeout', 'ngGallery',
-  function ($scope, $http, $window, $timeout, ngGallery) {
+eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window', '$timeout', '$sanitize', 'ngGallery',
+  function ($scope, $http, $window, $timeout, $sanitize, ngGallery) {
 
     angular.element(document).ready(function () {
 
@@ -380,7 +380,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         T_Discount: 0,
         TicketType: {
           TicketTypeId: ttype,
-          TicketType: (ttype == 1 ? "Free ticket" : ttype == 2 ? "Paid ticket" : ttype == 3 ? "Donation" : "Unkonwn")
+          TicketType: (ttype == 1 ? "Free" : ttype == 2 ? "Paid" : ttype == 3 ? "Donation" : "Unkonwn")
         },
         TotalPrice: 0,
         T_Customize: 0,
@@ -500,11 +500,16 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       return formatDateTime(new Date(cDate));
     }
 
+    $scope.ShowErrorMessage = function(header, message) {
+      $scope.ErrorHeading = header;
+      $scope.ErrorMessage = message;
+      $scope.popErrorMessage = true;
+    }
 
     $scope.sendEvent = function () {
       var elem = $scope.validateEvent();
       if (!elem.valid) {
-        alert("Form contain invalid data. Please, check all fields.");
+        $scope.ShowErrorMessage("Form contain invalid data", elem.messages.join('<br>'));
         return;
       }
       $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
@@ -545,22 +550,38 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         valid: true,
         messages: []
       };
-      if (!$scope.MainForm.eventTitle.$valid)
+      if (!$scope.MainForm.eventTitle.$valid) {
         elem.valid = false;
-      if (!$scope.MainForm.eventVenueName.$valid && !$scope.eventInfo.OnlineEvent)
+        elem.messages.push('Error in the Event Title.');
+      }
+      if (!$scope.MainForm.eventVenueName.$valid && !$scope.eventInfo.OnlineEvent) {
         elem.valid = false;
-      if (!$scope.MainForm.eventAddress.$valid && !$scope.eventInfo.OnlineEvent)
+        elem.messages.push('Error in the Venue Name.');
+      }
+      if (!$scope.MainForm.eventAddress.$valid && !$scope.eventInfo.OnlineEvent) {
         elem.valid = false;
-      if (!$scope.checkDateInfo().valid)
+        elem.messages.push('Error in the Event Address.');
+      }
+      if (!$scope.checkDateInfo().valid) {
         elem.valid = false;
-      if (!$scope.eventInfo.EventTypeID)
+        elem.messages.push('Error in the Event Date.');
+      }
+      if (!$scope.eventInfo.EventTypeID) {
         elem.valid = false;
-      if (!$scope.eventInfo.EventCategoryID)
+        elem.messages.push('Need to select Event Type');
+      }
+      if (!$scope.eventInfo.EventCategoryID) {
         elem.valid = false;
-      if (!$scope.eventInfo.InternalOrganizerId)
+        elem.messages.push('Need to select Event Category.');
+      }
+      if (!$scope.eventInfo.InternalOrganizerId) {
         elem.valid = false;
-      if ($scope.eventInfo.TicketList.length == 0)
+        elem.messages.push('Need to select Organizer');
+      }
+      if ($scope.eventInfo.TicketList.length == 0) {
         elem.valid = false;
+        elem.messages.push('Need to add at least one ticket.');
+      }
       $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
         var hideDatesValid = ((ticket.useUntilDate == 1) && ticket.localHideUntilDate && $scope.MainForm['TicketForm_' + i].ticketHideUntilDate.$valid) ||
             ((ticket.useAfterDate == 1) && ticket.localHideAfterDate && $scope.MainForm['TicketForm_' + i].ticketHideAfterDate.$valid);
@@ -569,17 +590,22 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
             !$scope.MainForm['TicketForm_' + i].ticketStartDate.$valid ||
             !$scope.MainForm['TicketForm_' + i].ticketEndDate.$valid ||
             !$scope.MainForm['TicketForm_' + i].TicketDescription.$valid ||
-            ((ticket.Hide_Ticket == 1) && (ticket.T_AutoSechduleType == 1) && !hideDatesValid))
+            ((ticket.Hide_Ticket == 1) && (ticket.T_AutoSechduleType == 1) && !hideDatesValid)) {
           elem.valid = false;
+          elem.messages.push('Error in the ' + ticket.TicketType.TicketType + ' ticket "' + ticket.T_name + '"');
+        }
       });
       if ($scope.eventInfo.Ticket_showvariable == 'Y')
         $scope.eventInfo.VariableChargesList.forEach(function (varcharge, i, arr) {
-          if (!$scope.MainForm['VarChargeForm_' + i].variableChargeDescription.$valid)
+          if (!$scope.MainForm['VarChargeForm_' + i].variableChargeDescription.$valid) {
             elem.valid = false;
+            elem.messages.push('Error in the variable charge ' + varcharge.VariableDesc);
+          }
         });
       if (($scope.eventInfo.EventPrivacy == 'Private') && ($scope.eventInfo.isPasswordRequired == 'Y') && (!$scope.eventInfo.Private_Password || !$scope.eventInfo.Private_Password.trim())) {
         $scope.eventInfo.Private_Password = $scope.eventInfo.Private_Password.trim();
         elem.valid = false;
+        elem.messages.push('Need to set password for private Event');
       }
       return elem;
     }
