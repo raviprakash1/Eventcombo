@@ -84,16 +84,6 @@ img.ng-thumb { height:100px;}
 .infoButtons { margin-top:15px; text-align:center;}
 .infoContent { display:inline-block;}
 /*******************************************************************/
-.footer-right  { padding-left:120px; }
-#footerlogo { height:70vh;}
-footer .social { margin-top:80px; float:none;}
-footer .social img { margin-right:3px;}
-
-.footertext ul { margin: 0; padding:0;}
-.footertext ul li { list-style:none;}
-.footertext ul li a { text-decoration:none; color:#000; font:14px/20px 'Roboto', Arial, Helvetica, sans-serif; cursor:pointer;}
-.footertext ul li a:hover { color:#00cafd;}
-
 .menu ul { margin: 0; padding:0;}
 .menu ul li { list-style:none;display:inline-block;}
 .menu ul li a { text-decoration:none; color:#000; font:17px 'Roboto', Arial, Helvetica, sans-serif; padding:0 15px; cursor:pointer;}
