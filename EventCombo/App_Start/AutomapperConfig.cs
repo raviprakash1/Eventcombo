@@ -100,6 +100,8 @@ namespace EventCombo
         .ForMember(d => d.Filename, m => m.MapFrom(s => s.ImagePath))
         .ForMember(d => d.TypeName, m => m.MapFrom(s => s.ECImageType.TypeName));
       CreateMap<ECImageViewModel, ECImageViewModel>();
+      CreateMap<EventNotificationViewModel, OrganizerMessageViewModel>()
+        .ForMember(d => d.PhoneNo, m => m.MapFrom(s => s.Phone));
 
 
       //backward maps

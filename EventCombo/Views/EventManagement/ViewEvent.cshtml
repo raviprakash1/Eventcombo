@@ -64,58 +64,94 @@
           <div class="wgts">
             @if (!String.IsNullOrEmpty(Model.BaseUserId))
             {
-            <span><a href="javascript:void(0)" title="Add EventTitle to your favorites" ng-click="AddToFavorite();"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
-            <span><a href="javascript:void(0)" title="Vote for EventTitle" ng-click="VoteEvent();"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
+              <span><a href="javascript:void(0)" title="Add EventTitle to your favorites" ng-click="AddToFavorite();"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
+              <span><a href="javascript:void(0)" title="Vote for EventTitle" ng-click="VoteEvent();"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
             }
             else
             {
-            <span><a href="javascript:void(0)" title="Add EventTitle to your favorites" ng-click="AddToFavorite();"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
-            <span><a href="javascript:void(0)" title="Vote for EventTitle" ng-click="VoteEvent();"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
+              <span><a href="javascript:void(0)" title="Add EventTitle to your favorites" ng-click="AddToFavorite();"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
+              <span><a href="javascript:void(0)" title="Vote for EventTitle" ng-click="VoteEvent();"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
             }
             <span class="social" social="SHARE THIS">
-              <a href="javascript:void(0)" title="Share @Model.EventTitle via Email" ng-show="false"><img width="20px" alt="Share @Model.EventTitle via Email" src="~/Images/AMaterial/mail-square.svg"></a>
+              <a href="javascript:void(0)" title="Share @Model.EventTitle via Email" ng-click="SendMessageTo(1)"><img width="20px" alt="Share @Model.EventTitle via Email" src="~/Images/AMaterial/mail-square.svg"></a>
               <a href="javascript:void(0)" title="Share @Model.EventTitle on Facebook" onclick="FacebookShare('@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Facebook" src="~/Images/AMaterial/square-facebook.svg"></a>
               <a href="javascript:void(0)" title="Share @Model.EventTitle on Twitter" onclick="TwitterShare('@Model.EventTitle.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Twitter" src="~/Images/AMaterial/square-twitter.svg"></a>
               <a href="javascript:void(0)" title="Share @Model.EventTitle on LinkedIn" onclick="LinkedInShare('@Model.EventTitle.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)', '@(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Html.Raw(Model.EventDescription!=null ?Model.EventDescription : "").ToString()), 200, 250, ".").Replace("'", @"\'"))')"><img width="20px" alt="Share @Model.EventTitle on LinkedIn" src="~/Images/AMaterial/square-linkedin.svg"></a>
               <a href="javascript:void(0)" title="Share @Model.EventTitle on Facebook Messenger" ng-show="false" onclick="FacebookSend('@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Facebook Messenger" src="~/Images/AMaterial/fb_messenger.svg"></a>
             </span>
-            <div class="fb-send"
-                 data-href="@(Request.Url.AbsoluteUri)"
-                 data-layout="button_count">
-            </div>
+            @*<div class="fb-send"
+                   data-href="@(Request.Url.AbsoluteUri)"
+                   data-layout="button_count">
+              </div>*@
           </div>
         </div>
       </div>
     </div>
   </section>
   <!--****************************************************************************************************************************-->
-  <section style ="display:none;" ng-style="{'display': displayVEPopups}">
-    <div class="popOverlay" ng-show="popVEMessage">
+  <section style="display:none;" ng-style="{'display': displayVEPopups}">
+    <div class="popOverlay" ng-show="popVEShareWithFriends">
       <div class="popBox">
-        <form name="VEMessageForm" novalidate>
-          <a class="popClose" ng-click="popVEMessage=false"><i class="material-icons">clear</i></a>
-          <h3 class="red-heading">{{VEMessageTitle}}</h3>
-          <p class="infoText margin-1em-top margin-1em-bottom">{{ email }}</p>
+        <form name="VEShareWithFriendsForm" novalidate>
+          <a class="popClose" ng-click="popVEShareWithFriends=false"><i class="material-icons">clear</i></a>
+          <h3 class="red-heading" style="text-align: center">Share event with friends</h3>
           <md-input-container class="md-block">
-            <label>{{VEMessageToName}}</label>
+            <label>Friend's email</label>
             <input type="email" ng-maxlength="255" required name="email" ng-model="VEMessage.Email" ng-pattern="/^.+@("@").+\..+$/" ng-keypress="submitted=false" />
-            <div ng-messages="VEMessageForm.email.$error" role="alert">
-              <div ng-message="required">Please enter your email!</div>
-              <div ng-message="pattern">Please use valid email format!</div>
+            <div ng-messages="VEShareWithFriendsForm.email.$error" role="alert">
+              <div ng-message="required">Please enter friend's email.</div>
+              <div ng-message="pattern">Please use valid email format.</div>
               <div ng-message="maxlength">Your email is too long.</div>
             </div>
           </md-input-container>
           <md-input-container class="md-block">
             <label>Message</label>
             <textarea ng-maxlength="255" required name="message" ng-model="VEMessage.Message" style="min-height:50px"></textarea>
-            <div ng-messages="VEMessageForm.message.$error">
+            <div ng-messages="VEShareWithFriendsForm.message.$error">
               <div ng-message="required">Please enter your message.</div>
               <div ng-message="maxlength">Your message is too long. Only 255 characters allowed.</div>
             </div>
           </md-input-container>
           <div class="clear">
-            <button type="reset" class="popLink margin-1em-top gray lFloat" ng-click="popVEMessage=false">CANCEL</button>
-            <button class="popLink margin-1em-top rFloat" ng-click="TrySendMessage(VEMessageForm)">SEND</button>
+            <button type="reset" class="popLink margin-1em-top gray lFloat" ng-click="popVEShareWithFriends=false">CANCEL</button>
+            <button class="popLink margin-1em-top rFloat" ng-click="TrySendShareWithFriendsMessage(VEShareWithFriendsForm)">SEND</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="popOverlay" ng-show="popVEOrganizerMessage">
+      <div class="popBox">
+        <form name="VEOrganizerMessageForm" novalidate>
+          <a class="popClose" ng-click="popVEOrganizerMessage=false"><i class="material-icons">clear</i></a>
+          <h3 class="red-heading">Send message to organizer</h3>
+          <md-input-container class="md-block">
+            <label>Your email</label>
+            <input type="email" ng-maxlength="255" required name="email" ng-model="VEMessage.Email" ng-pattern="/^.+@("@").+\..+$/" ng-keypress="submitted=false" />
+            <div ng-messages="VEOrganizerMessageForm.email.$error" role="alert">
+              <div ng-message="required">Please enter your email.</div>
+              <div ng-message="pattern">Please use valid email format.</div>
+              <div ng-message="maxlength">Your email is too long.</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Your Name</label>
+            <input type="text" ng-maxlength="255" required name="userName" ng-model="VEMessage.Name" ng-keypress="submitted=false" />
+            <div ng-messages="VEOrganizerMessageForm.email.$error" role="alert">
+              <div ng-message="required">Please enter your name.</div>
+              <div ng-message="maxlength">Your Name is too long.</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Message</label>
+            <textarea ng-maxlength="255" required name="message" ng-model="VEMessage.Message" style="min-height:50px"></textarea>
+            <div ng-messages="VEOrganizerMessageForm.message.$error">
+              <div ng-message="required">Please enter your message.</div>
+              <div ng-message="maxlength">Your message is too long. Only 255 characters allowed.</div>
+            </div>
+          </md-input-container>
+          <div class="clear">
+            <button type="reset" class="popLink margin-1em-top gray lFloat" ng-click="popVEOrganizerMessage=false">CANCEL</button>
+            <button class="popLink margin-1em-top rFloat" ng-click="TrySendOrganizerMessage(VEOrganizerMessageForm)">SEND</button>
           </div>
         </form>
       </div>
@@ -159,7 +195,7 @@
             </p>
           </div>
           <div>
-            <span><a href="#">Contact</a></span>
+            <span><a href="javascript:void(0)" ng-click="SendMessageTo(2)">Contact</a></span>
             <span><a href="@Url.Action("Index", "OrganizerInfo", new { id = Model.Organizer.OrganizerId, eventId = Model.EventId })">Profile</a></span>
             <span class="social">
               @if (!String.IsNullOrEmpty(Model.Organizer.FBLink))

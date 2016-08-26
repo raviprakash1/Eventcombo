@@ -899,7 +899,7 @@ namespace EventCombo.Service
     {
 
       evi.OGPDescription = evi.EventDescription;
-      evi.OGPImage = ResolveServerUrl(VirtualPathUtility.ToAbsolute(evi.ImageUrl),false);
+      evi.OGPImage = String.IsNullOrEmpty(evi.ImageUrl) ? "" : ResolveServerUrl(VirtualPathUtility.ToAbsolute(evi.ImageUrl), false);
       evi.OGPTitle = evi.EventTitle + " | Eventcombo";
       evi.OGPType = "article";
       evi.OGPUrl = ResolveServerUrl(VirtualPathUtility.ToAbsolute(evi.EventUrl), false);

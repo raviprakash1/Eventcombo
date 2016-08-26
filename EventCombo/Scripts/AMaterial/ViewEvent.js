@@ -3,6 +3,18 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
     $scope.favStyle = { "color": "white" };
     $scope.voteStyle = { "color": "white" };
     $scope.eventInfo = {};
+
+    $scope.displayVEPopups = 'block';
+    $scope.popVEShareWithFriends = false;
+    $scope.popVEOrganizerMessage = false;
+    $scope.VEMessage = {
+      Email: '',
+      Name: '',
+      Phone: '',
+      Message: '',
+      EventId: 0
+  }
+
     if (!$attrs.eventid) throw new Error("No event ID defined");
 
     $scope.map = createMap(40.6984237, -73.9890044);
@@ -71,6 +83,64 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
       $scope.voteStyle = $scope.eventInfo.UserVote ? {} : { "color": "white" };
     }
 
+    $scope.showLoadingMessage = function (show, message) {
+      $scope.popLoading = show;
+      $scope.LoadingMessage = message;
+    }
+
+    $scope.showInfoMessage = function (show, message) {
+      $scope.popInfoMessage = show;
+      $scope.InfoMessage = message;
+    }
+
+    $scope.SendMessageTo = function (mtype) {
+      $scope.VEMessage.Email = '';
+      $scope.VEMessage.Name = '';
+      $scope.VEMessage.Message = '';
+      if (mtype == 1) {
+        $scope.VEShareWithFriendsForm.$setPristine();
+        $scope.VEShareWithFriendsForm.$setUntouched();
+        $scope.popVEShareWithFriends = true;
+      } else {
+        $scope.VEOrganizerMessageForm.$setPristine();
+        $scope.VEOrganizerMessageForm.$setUntouched();
+        $scope.popVEOrganizerMessage = true;;
+      }
+    }
+
+    $scope.TrySendMessage = function (form, url) {
+      if (form.$valid) {
+        $scope.VEMessage.EventId = $scope.eventInfo.EventId;
+        var data = {
+          json: angular.toJson($scope.VEMessage)
+        };
+
+        $scope.showLoadingMessage(true, 'Sending message');
+
+        $http.post(url, data).then(function (response) {
+          $scope.showLoadingMessage(false, '');
+          if (response.data && response.data.Success)
+            $scope.showInfoMessage(true, "Message send succesfully");
+          else
+            $scope.showInfoMessage(true, response.data.ErrorMessage);
+        }, function (error) {
+          $scope.showLoadingMessage(false, '');
+          $scope.showInfoMessage(true, "Error while sending message. Try again later.");
+        });
+      } else {
+        $scope.submitted = true; 
+      }
+    }
+
+    $scope.TrySendShareWithFriendsMessage = function (form) {
+      $scope.popVEShareWithFriends = false;
+      $scope.TrySendMessage(form, '/notificationAPI/shareFriends');
+    }
+
+    $scope.TrySendOrganizerMessage = function (form) {
+      $scope.popVEOrganizerMessage = false;
+      $scope.TrySendMessage(form, '/notificationAPI/sendOrganizer');
+    }
   }]);
 
 eventComboApp.controller('tickets', ["$scope", "$filter", "$attrs", function ($scope, $filter, $attrs) {
