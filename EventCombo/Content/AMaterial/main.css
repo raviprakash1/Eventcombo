@@ -241,7 +241,7 @@ md-checkbox.md-checked.blue .md-icon { background-color:#00BCD4;}
 .onlineEventConChkBox { margin-left:30px;}
 .eventDtlBody { margin:20px 0px;}
 .eDAddTicketHead { background:#EDFBFF; padding:0 20px;}
-.eDAddTicketInnerHead { color:rgb(255, 0, 138); font-weight:bold; font-family:'Roboto', Arial, Helvetica, sans-serif; max-width:1100px; font-size:24px; margin:0 auto; padding:5px 0;}
+.eDAddTicketInnerHead, .eDBitMoreInnerHead { color:rgb(255, 0, 138); font-weight:bold; font-family:'Roboto', Arial, Helvetica, sans-serif; max-width:1100px; font-size:24px; margin:0 auto; padding:0; text-align:left;}
 .addTicketsButtons { max-width:1100px; margin:0px auto; padding:5px 0px;}
 .ticketSubDivContainer { max-width:1100px; margin:0px auto; padding:5px 0px;}
 .eDAddTicketBody { margin:20px 10px 0px 20px;}
@@ -266,12 +266,11 @@ md-checkbox.md-checked.blue .md-icon { background-color:#00BCD4;}
 .showHideOptionCls { color:#000 !important; text-decoration:none !important; border-bottom:none !important; transition:none !important;}
 .showHideOptionCls:hover { color:#000 !important; text-decoration:none !important; border-bottom:none !important; transition:none !important;}
 .totalCapacity { margin:0px 10px 20px auto; max-width:1100px; text-align:right; font-weight:bold; font-family:'Roboto', Arial, Helvetica, sans-serif; color:#00cafd; font-size:24px;}
-.donationTxtCls { font-weight:bold; margin-top:20px;}
+.donationTxtCls { font-weight:500; margin-top:20px; color:rgba(0, 0, 0, 0.87);}
 .OrganizerBody { max-width:1100px; margin:0px auto; padding:5px 0px;}
 .btn-text { color:blue;}
 .btn-topmargin { margin-top:20px;}
 .eDBitMoreHead { background:#EDFBFF; margin-bottom:20px; padding:0 20px;}
-.eDBitMoreInnerHead { color:rgb(255, 0, 138); font-weight:bold; max-width:1100px; font-size:24px; margin:0px auto; padding:5px 0px; font-family:'Roboto', Arial, Helvetica, sans-serif; text-align:left;}
 .textArea { height:100px;}
 .TellUs { margin-top:20px;}
 .tellus_pics { display:inline-block; position:relative; margin-left:5px;}
@@ -291,7 +290,7 @@ md-dialog { width:800px;}
 .clearfix { clear:both;}
 /* CATALYST CSS*/
 .gallery-item { height:auto !important;}
-.dateP167 .md-datepicker-input { width:167px !important;}
+.dateP167 .md-datepicker-input { width:167px !important; font-weight:500;}
 .desMyBanner { text-transform:uppercase;}
 .variableOptions:empty { opacity:0;}
 .icBox { float:right; text-transform:uppercase; line-height:28px; margin-right:20px;}
@@ -300,7 +299,7 @@ md-dialog { width:800px;}
 .OrganizerBody .addTicketBtnCls span, .variabeDetails span { float:none !important;}
 .md-datepicker-button { display:none;}
 .md-datepicker-triangle-button { transform:translateY(-10%) translateX(45%);}
-.md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle, .md-datepicker-triangle-button .md-datepicker-expand-triangle { border-width:6px; border-top-width:7px; border-top-color:rgba(0, 0, 0, 0.5);}
+.md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle, .md-datepicker-triangle-button .md-datepicker-expand-triangle { border-width:5px; border-top-width:6px; border-top-color:rgba(0, 0, 0, 0.5);}
 .md-default-theme .md-datepicker-input, .md-datepicker-input { color:rgba(0, 0, 0, 0.9);}
 md-select.md-default-theme .md-select-value.md-select-placeholder, md-select .md-select-value.md-select-placeholder, md-input-container.md-default-theme label, md-input-container label, md-input-container.md-default-theme .md-placeholder, md-input-container .md-placeholder { color:rgba(0, 0, 0, 0.5);}
 .mce-container, .mce-container *, .mce-widget, .mce-widget *, .mce-reset { white-space:normal;}
@@ -316,6 +315,10 @@ md-radio-group.md-default-theme:not([disabled]) .md-primary ._md-on, md-radio-gr
 md-select.md-default-theme:focus:not([disabled]) ._md-select-value, md-select:focus:not([disabled]) ._md-select-value { border-bottom-color:rgb(0, 202, 253);}
 md-select.md-default-theme ._md-select-value._md-select-placeholder, md-select ._md-select-value._md-select-placeholder, md-select.md-default-theme .md-select-value.md-select-placeholder, md-select .md-select-value.md-select-placeholder, md-input-container.md-default-theme label, md-input-container label, md-input-container.md-default-theme .md-placeholder, md-input-container .md-placeholder { color:rgba(0, 0, 0, 0.46); font-size:16px; font-weight:500;}
 ._md-select-value ._md-select-icon { color:rgba(0, 0, 0, 0.5);}
+.md-default-theme .md-datepicker-input::-moz-placeholder, .md-datepicker-input::-moz-placeholder { opacity:1; color:rgba(0,0,0,.46);}
+.md-default-theme .md-datepicker-input:-moz-placeholder, .md-datepicker-input:-moz-placeholder { opacity:1; color:rgba(0,0,0,.46);}
+.md-default-theme .md-datepicker-input::-webkit-input-placeholder, .md-datepicker-input::-webkit-input-placeholder { opacity:1; color:rgba(0,0,0,.46);}
+.md-default-theme .md-datepicker-input:-ms-input-placeholder, .md-datepicker-input:-ms-input-placeholder { opacity:1; color:rgba(0,0,0,.46);}
 @media (min-width:0) and (max-width:767px)
 {
 	.addTicketsButtons { text-align:center;}

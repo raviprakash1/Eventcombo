@@ -830,8 +830,7 @@
         <md-button class="md-raised addTicketBtnCls" ng-click="addVarCharge()" style="margin-bottom:15px !important; margin-left:15px;">
           ADD
         </md-button>
-        <div class="variableOptions">
-          <!-- Please don't put anything here, don't even give a space --><div ng-repeat="varCharge in eventInfo.VariableChargesList" ng-class="{{$index}}" variable-drag-drop-elements>
+        <div class="variableOptions"><!-- Please don't put anything here, don't even give a space or line break --><div ng-repeat="varCharge in eventInfo.VariableChargesList" ng-class="{{$index}}" variable-drag-drop-elements>
             <ng-form name="VarChargeForm_{{$index}}">
               <i class="material-icons" style="float: right;margin-right: 20px; margin-top: 13px; cursor: pointer;" ng-click="deleteVarCharge(varCharge)">clear</i>
               <span class="iconDragItem" draggable="true" style="margin-left: 15px;">
@@ -864,8 +863,7 @@
                 </md-input-container>
               </div>
             </ng-form>
-          </div><!-- Please don't put anything here, don't even give a space -->
-        </div>
+          </div><!-- Please don't put anything here, don't even give a space or line break --></div>
       </div>
     </div>
 

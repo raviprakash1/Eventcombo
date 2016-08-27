@@ -33,18 +33,18 @@
 .saroosh .social { line-height:20px; margin-right:5px;}
 .saroosh .social a { display:inline-block;}
 /****************************************************************/
-.red-heading { color:#ff2693; font:bold 24px 'Roboto', Arial, Helvetica, sans-serif; margin-bottom:10px;}
+.red-heading { color:#ff2693; font:bold 24px 'Roboto', Arial, Helvetica, sans-serif; margin-top:20px; margin-bottom:10px;}
 .connectFacebook { color:#00baff; cursor:pointer; text-decoration:none; font:16px 'Roboto', Arial, Helvetica, sans-serif; text-transform:uppercase;}
 .connectFacebook img { float:left; margin-right:10px;}
 /****************************************************************/
-.ticket { width:100%; display:inline-block; margin-bottom:15px; box-shadow:0 1px 2px rgba(0,0,0,.5);}
+.ticket { width:100%; display:inline-block; margin-bottom:15px; background:#fafafa; box-shadow:0 1px 2px rgba(0,0,0,.5);}
 .text24 { color:#535252; font:24px 'Roboto', Arial, Helvetica, sans-serif; text-align:left;}
 .upp { text-transform:uppercase;}
 .remain { color:#000; font:bold 18px 'Roboto', Arial, Helvetica, sans-serif;}
 .smallFee { font-size:14px; color:#666;}
 .ticdes { color:#8c8b8b; font-size:12px;}
 .ticdetail { color:#304756; font-size:12px;}
-.inputbox { width:auto; height:40px; display:inline-block; padding:5px 2px; color:#000; font:16px/16px "Roboto",Arial,Helvetica,sans-serif; background:none; border:none; border-bottom:1px solid rgba(0,0,0,.12); outline:none; -webkit-appearance:none; -moz-appearance:none; appearance:none; text-align:center;}
+.inputbox { width:auto; height:40px; display:inline-block; padding:5px 2px; color:#7f7f7f; font:500 24px/24px "Roboto",Arial,Helvetica,sans-serif; background:none; border:none; border-bottom:1px solid rgba(0,0,0,.12); outline:none; -webkit-appearance:none; -moz-appearance:none; appearance:none; text-align:center;}
 .option { width:auto; height:40px; display:inline-block; padding:5px 15px; color:#7f7f7f; font:500 24px/24px "Roboto",Arial,Helvetica,sans-serif; border:none; border-bottom:1px solid #e0e0e0; outline:none; -webkit-appearance:none; -moz-appearance:none; appearance:none; background:
 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAoCAYAAADdaosOAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MTY1NjVEQkEzMkQ5MTFFNkI3OEFDMEMyMzUyRjM0NjciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MTY1NjVEQkIzMkQ5MTFFNkI3OEFDMEMyMzUyRjM0NjciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoxNjU2NURCODMyRDkxMUU2Qjc4QUMwQzIzNTJGMzQ2NyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoxNjU2NURCOTMyRDkxMUU2Qjc4QUMwQzIzNTJGMzQ2NyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PjZT9mAAAABTSURBVHjaYvz//z8DNsDEgAOMSgyIBMv8+fP/P3z4EEVQXl6egcnR0RFDNUiMSUFBAawCWTVIjAmmAlk12A4QgawLxIZLoOsCAcbR5DM0JAACDACwfxKRywS66QAAAABJRU5ErkJggg==') no-repeat right center;}
 .wdt100 { width:100px;}

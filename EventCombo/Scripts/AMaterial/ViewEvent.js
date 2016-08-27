@@ -22,6 +22,9 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
 
     $scope.$on('EventInfoLoaded', function (val) {
       $scope.eventInfo = eventInfoService.getEventInfo();
+      $scope.eventInfo.Tickets.forEach(function (ticket, i, arr) {
+        ticket.PriceText = "";
+      });
       deleteMarkers();
       if ($scope.eventInfo.Latitude) {
         $scope.map.panTo(new google.maps.LatLng($scope.eventInfo.Latitude, $scope.eventInfo.Longitude));
@@ -43,13 +46,19 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
       }
     });
 
-    $scope.onPriceChange = function () {
+    $scope.onPriceChange = function (ticket) {
+      if (ticket) {
+        console.log(ticket.PriceText);
+        ticket.Amount = parseFloat(ticket.PriceText);
+        ticket.Amount = isNaN(ticket.Amount) ? 0 : ticket.Amount;
+      }
       eventInfoService.recalcTotal();
     }
 
     $scope.onPriceBlur = function (ticket) {
-      if (isNaN(ticket.Amount) || (ticket.Amount == null))
-        ticket.Amount = 0;
+      ticket.Amount = (ticket.Amount < 0) || isNaN(ticket.Amount) || !ticket.Amount ? 0 : ticket.Amount;
+      ticket.PriceText = ticket.Amount > 0 ? ticket.Amount.toFixed(2) : "";
+      $scope.onPriceChange(ticket);
     }
 
     $scope.OrderCheckout = function () {
@@ -235,8 +244,8 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
         if (ticket.TicketTypeId == 2)
           total = total + ticket.Quantity * ticket.TotalPrice;
         else if (ticket.TicketTypeId == 3) {
-          ticket.Amount = isNaN(ticket.Amount) || ticket.Amount >= 0 ? ticket.Amount : 0;
-          total = total + (isNaN(ticket.Amount) ? 0 : (ticket.Amount == null ? 0 : ticket.Amount));
+          ticket.Amount = isNaN(ticket.Amount) || ticket.Amount < 0 ? 0 : ticket.Amount;
+          total = total + (isNaN(ticket.Amount) || (ticket.Amount == null ? 0 : ticket.Amount));
         }
       });
       eventInfo.TotalPrice = total;
@@ -452,6 +461,32 @@ function DialogController($scope, $mdDialog, eventInfoService, $filter) {
     }
   };
 }
+
+eventComboApp.directive('decimalOnly', function () {
+  return {
+    require: 'ngModel',
+    link: function (scope, element, attr, ngModelCtrl) {
+      function fromUser(number) {
+        if (number) {
+          var transformedInput = number.replace(/[^0-9\.]/g, '');
+          var nth = 0;
+          transformedInput = transformedInput.replace(/\./g, function (match, i, original) {
+            nth++;
+            return (nth > 1) ? "" : match;
+          });
+          if (transformedInput !== number) {
+            ngModelCtrl.$setViewValue(transformedInput);
+            ngModelCtrl.$render();
+          }
+          return transformedInput;
+        }
+        return number;
+      }
+      ngModelCtrl.$parsers.push(fromUser);
+    }
+  };
+});
+
 /****************************************************************************/
 
 function FormatDateTime(date) {

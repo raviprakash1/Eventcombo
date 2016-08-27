@@ -32,7 +32,7 @@ h1,h2,h3,h4,h5,h6 { text-align:initial;}
 .lFloat		{ float:left;}
 .rFloat		{ float:right;}
 .max		{ max-width:100%;}
-.padded,.Padded { padding-left:0; padding-right:0;}
+.padded,.Padded { padding-left:0 !important; padding-right:0 !important;}
 .clear		{ display:table; width:100%; clear:both;}
 
 .Image	{ background:#fff; padding:4px; border:1px solid #ddd;}
