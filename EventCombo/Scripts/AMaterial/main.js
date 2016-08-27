@@ -73,15 +73,84 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       $scope.onShowDateTimeDialog(false);
       if ($scope.eventInfo.VariableChargesList.length <= 0)
         $scope.addVarCharge();
+      $scope.eventInfo.VariableChargesList.forEach(function (varcharge, i, arr) {
+        varcharge.PriceText = varcharge.Price;
+        $scope.onVarChargeBlur(varcharge);
+      });
       $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
-        ticket.localSaleStartDate = !ticket.Sale_Start_Date ? null : new Date(ticket.Sale_Start_Date);
-        ticket.localSaleEndDate = !ticket.Sale_End_Date ? null : new Date(ticket.Sale_End_Date);
-        ticket.localHideUntilDate = !ticket.Hide_Untill_Date ? null : new Date(ticket.Hide_Untill_Date);
-        ticket.localHideAfterDate = ticket.Hide_After_Date ? null : new Date(ticket.Hide_After_Date);
+        if (ticket.Sale_Start_Date) {
+          var localDateTime = new Date(ticket.Sale_Start_Date);
+          if (ticket.Sale_Start_Date.length <= 19)
+            localDateTime = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
+          var time = formatAMPM(localDateTime);
+          var ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
+          if (ctime.length > 0)
+            ticket.localSaleStartTime = ctime[0];
+          else
+            ticket.localSaleStartTime = null;
+          ticket.localSaleStartDate = new Date(localDateTime.getFullYear(), localDateTime.getMonth(), localDateTime.getDate());
+        }
+        else
+          ticket.localSaleStartDate = null;
+
+        if (ticket.Sale_End_Date) {
+          var localDateTime = new Date(ticket.Sale_End_Date);
+          if (ticket.Sale_End_Date.length <= 19)
+            localDateTime = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
+          var time = formatAMPM(localDateTime);
+          var ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
+          if (ctime.length > 0)
+            ticket.localSaleEndTime = ctime[0];
+          else
+            ticket.localSaleEndTime = null;
+          ticket.localSaleEndDate = new Date(localDateTime.getFullYear(), localDateTime.getMonth(), localDateTime.getDate());
+        }
+        else
+          ticket.localSaleEndDate = null;
+
+        if (ticket.Hide_Untill_Date) {
+          ticket.useUntilDate = '1';
+          var localDateTime = new Date(ticket.Hide_Untill_Date);
+          if (ticket.Hide_Untill_Date.length <= 19)
+            localDateTime = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
+          var time = formatAMPM(localDateTime);
+          var ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
+          if (ctime.length > 0)
+            ticket.localHideUntilTime = ctime[0];
+          else
+            ticket.localHideUntilTime = null;
+          ticket.localHideUntilDate = new Date(localDateTime.getFullYear(), localDateTime.getMonth(), localDateTime.getDate());
+        }
+        else {
+          ticket.localHideUntilDate = null;
+          ticket.useUntilDate = '0';
+        }
+
+        if (ticket.Hide_After_Date) {
+          ticket.useAfterDate = '1';
+          var localDateTime = new Date(ticket.Hide_After_Date);
+          if (ticket.Hide_After_Date.length <= 19)
+            localDateTime = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
+          var time = formatAMPM(localDateTime);
+          var ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
+          if (ctime.length > 0)
+            ticket.localHideAfterTime = ctime[0];
+          else
+            ticket.localHideAfterTime = null;
+          ticket.localHideAfterDate = new Date(localDateTime.getFullYear(), localDateTime.getMonth(), localDateTime.getDate());
+        }
+        else {
+          ticket.localHideAfterDate = null;
+          ticket.useAfterDate = '0';
+        }
+
         ticket.QtyText = ticket.Qty_Available ? ticket.Qty_Available : "";
         ticket.PriceText = ticket.Price ? ticket.Price : "";
         ticket.DiscountText = ticket.T_Discount ? ticket.T_Discount : "";
+        $scope.onPriceChange(ticket);
       });
+
+      $scope.eventInfo.isPasswordRequired = $scope.eventInfo.Private_Password ? 'Y' : 'N';
     }
 
     $scope.onShowDateTimeDialog = function (showDialog) {
@@ -500,7 +569,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       return formatDateTime(new Date(cDate));
     }
 
-    $scope.ShowErrorMessage = function(header, message) {
+    $scope.ShowErrorMessage = function (header, message) {
       $scope.ErrorHeading = header;
       $scope.ErrorMessage = message;
       $scope.popErrorMessage = true;
@@ -533,12 +602,28 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       };
       $scope.showLoadingMessage(true, 'Save Event');
       $http.post('/eventmanagement/saveevent', data).then(function (response) {
-        $scope.showLoadingMessage(false, '');
         $scope.eventInfo = response.data;
-        if ($scope.eventInfo.ErrorEvent)
+        if ($scope.eventInfo.ErrorEvent) {
+          $scope.showLoadingMessage(false, '');
           $scope.prepareEventInfo();
-        else
+        }
+        else if ($scope.eventInfo.EventStatus == "Save") {
+          $scope.eventInfo = response.data;
+          console.log($scope.eventInfo);
+          $http.get('/eventmanagement/getevent', { params: { eventId: $scope.eventInfo.EventID } }).then(function (response) {
+            $scope.eventInfo = response.data;
+            console.log($scope.eventInfo);
+            $scope.prepareEventInfo();
+            console.log($scope.eventInfo);
+          });
+          $scope.showLoadingMessage(false, '');
+          $scope.ShowErrorMessage("", "Event saved");
+        }
+        else {
+          $scope.showLoadingMessage(false, '');
+          $scope.eventInfo = response.data;
           $window.location.href = link_publish + "?EventId=" + $scope.eventInfo.EventID;
+        }
       }, function (error) {
         $scope.showLoadingMessage(false, '');
       });

@@ -186,11 +186,8 @@
               </div>
             </div>
 
-            <div class="eventDtkBodyCon">
+            <div class="eventDtkHeadCon">
               <div class="EDTxtEventChkBxCon">
-                <md-checkbox ng-model="eventInfo.ShowMap" ng-true-value="'Y'" ng-false-value="'N'" class="blue bold">
-                  Show map on event page
-                </md-checkbox>
                 <md-checkbox ng-model="eventInfo.OnlineEvent" class="blue onlineEventConChkBox bold">
                   Online Event
                 </md-checkbox>
@@ -736,7 +733,7 @@
                   <div class="hideUntilAfterCon" ng-show="(ticket.T_AutoSechduleType == 1) && (ticket.Hide_Ticket == 1)">
                     <div class="date-picker-row" style="margin-left: 0px; float:left; margin-top: 21px;" flex-gt-sm>
                       <label style="margin-left: 35px">Hide Until Date</label>
-                      <md-checkbox class="blue" ng-model="ticket.useUntilDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useUntilDate = '0'"></md-checkbox>
+                      <md-checkbox class="blue" ng-model="ticket.useUntilDate" ng-true-value="'1'" ng-false-value="'0'"></md-checkbox>
                       <md-datepicker ng-model="ticket.localHideUntilDate" md-placeholder="MM/DD/YYYY" name="ticketHideUntilDate" style="width: 300px !important;" md-min-date="minDate"></md-datepicker>
                       <div class="validation-datepicker-messages" ng-show="({{'TicketForm_'+$index}}.ticketHideUntilDate.$touched  || !{{'TicketForm_'+$index}}.ticketHideUntilDate.$pristine || formValidation || ticket.ticketValidation)">
                         <div ng-show="(ticket.useUntilDate == 1) && (!ticket.localHideUntilDate)">Select date</div>
@@ -754,7 +751,7 @@
                     <div class="clearfix"></div>
                     <div class="date-picker-row" style="margin-left: 0px; float:left; margin-top: 21px;" flex-gt-sm>
                       <label style="margin-left: 35px">Hide After Date</label>
-                      <md-checkbox class="blue" ng-model="ticket.useAfterDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useAfterDate = '0'"></md-checkbox>
+                      <md-checkbox class="blue" ng-model="ticket.useAfterDate" ng-true-value="'1'" ng-false-value="'0'"></md-checkbox>
                       <md-datepicker ng-model="ticket.localHideAfterDate" md-placeholder="MM/DD/YYYY" name="ticketHideAfterDate" style="width: 300px !important;" md-min-date="minDate"></md-datepicker>
                       <div class="validation-datepicker-messages" ng-show="({{'TicketForm_'+$index}}.ticketHideUntilDate.$touched  || !{{'TicketForm_'+$index}}.ticketHideUntilDate.$pristine  || formValidation || ticket.ticketValidation)">
                         <div ng-show="(ticket.useAfterDate == 1) && (!ticket.localHideAfterDate)">Select date</div>

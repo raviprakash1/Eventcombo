@@ -239,14 +239,25 @@ namespace EventCombo.Service
       me.EventID = ev.EventID;
       me.Frequency = ev.DateInfo.Frequency.ToString();
 
-      me.M_Startfrom = ev.DateInfo.StartDateTime;
-      me.M_StartTo = ev.DateInfo.EndDateTime;
-      if (ev.DateInfo.Frequency == ScheduleFrequency.Weekly)
-        me.WeeklyDay = String.Join(",", ev.DateInfo.Weekdays);
       me.StartingFrom = ev.DateInfo.StartDateTime.ToString("MM/dd/yyyy"); ;
       me.StartTime = ev.DateInfo.StartDateTime.ToString("hh:mm tt");
       me.StartingTo = ev.DateInfo.EndDateTime.ToString("MM/dd/yyyy");
       me.EndTime = ev.DateInfo.EndDateTime.ToString("hh:mm tt");
+
+      int tzId;
+      Int32.TryParse(ev.TimeZone, out tzId);
+      TimeZoneDetail tz = tzRepo.GetByID(tzId);
+      if (tz != null)
+      {
+        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(tz.TimeZone);
+        ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.StartDateTime, userTimeZone);
+        ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.EndDateTime, userTimeZone); ;
+      }
+
+      me.M_Startfrom = ev.DateInfo.StartDateTime;
+      me.M_StartTo = ev.DateInfo.EndDateTime;
+      if (ev.DateInfo.Frequency == ScheduleFrequency.Weekly)
+        me.WeeklyDay = String.Join(",", ev.DateInfo.Weekdays);
       if (me.MultipleEventID == 0)
         multiRepo.Insert(me);
       uow.Context.SaveChanges();
@@ -267,12 +278,23 @@ namespace EventCombo.Service
         se = new EventVenue();
       se.EventID = ev.EventID;
 
-      se.E_Startdate = ev.DateInfo.StartDateTime;
-      se.E_Enddate = ev.DateInfo.EndDateTime;
       se.EventStartDate = ev.DateInfo.StartDateTime.ToString("MM/dd/yyyy");
       se.EventStartTime = ev.DateInfo.StartDateTime.ToString("hh:mm tt");
       se.EventEndDate = ev.DateInfo.EndDateTime.ToString("MM/dd/yyyy");
       se.EventEndTime = ev.DateInfo.EndDateTime.ToString("hh:mm tt");
+
+      int tzId;
+      Int32.TryParse(ev.TimeZone, out tzId);
+      TimeZoneDetail tz = tzRepo.GetByID(tzId);
+      if (tz != null)
+      {
+        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(tz.TimeZone);
+        ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.StartDateTime, userTimeZone);
+        ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.EndDateTime, userTimeZone); ;
+      }
+
+      se.E_Startdate = ev.DateInfo.StartDateTime;
+      se.E_Enddate = ev.DateInfo.EndDateTime;
       se.AddressId = addressId;
       if (se.EventVenueID == 0)
         vRepo.Insert(se);
@@ -282,7 +304,11 @@ namespace EventCombo.Service
     private void SaveTickets(EventViewModel ev, IUnitOfWork uow)
     {
       IRepository<Ticket> tRepo = new GenericRepository<Ticket>(_factory.ContextFactory);
-      IRepository<TimeZoneDetail> tzRepo = new GenericRepository<TimeZoneDetail>(_factory.ContextFactory);
+
+      foreach (var tDB in tRepo.Get(filter: (t => t.E_Id == ev.EventID)))
+        if (!ev.TicketList.Any(tvm => tvm.T_Id == tDB.T_Id))
+          tRepo.Delete(tDB);
+
       foreach (var ticket in ev.TicketList)
       {
         Ticket tDB = null;
@@ -294,21 +320,10 @@ namespace EventCombo.Service
         ticket.E_Id = ev.EventID;
         _mapper.Map(ticket, tDB);
 
-        int tzId;
-        Int32.TryParse(ev.TimeZone, out tzId);
-        TimeZoneDetail tz = tzRepo.GetByID(tzId);
         DateTime? saleStart = ticket.Sale_Start_Date;
         DateTime? saleEnd = ticket.Sale_End_Date;
         DateTime? hideUntil = ticket.Hide_Untill_Date;
         DateTime? hideAfter = ticket.Hide_After_Date;
-        if (tz != null)
-        {
-          TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(tz.TimeZone);
-          saleStart = saleStart == null ? null : (DateTime?)TimeZoneInfo.ConvertTimeToUtc(saleStart.Value, userTimeZone);
-          saleEnd = saleEnd == null ? null : (DateTime?)TimeZoneInfo.ConvertTimeToUtc(saleEnd.Value, userTimeZone);
-          hideUntil = hideUntil == null ? null : (DateTime?)TimeZoneInfo.ConvertTimeToUtc(hideUntil.Value, userTimeZone);
-          hideAfter = hideAfter == null ? null : (DateTime?)TimeZoneInfo.ConvertTimeToUtc(hideAfter.Value, userTimeZone);
-        }
 
         tDB.Sale_Start_Date = saleStart == null ? null : (DateTime?)saleStart.Value.Date;
         tDB.Sale_Start_Time = saleStart == null ? null : saleStart.Value.ToString("hh:mm tt");
@@ -329,6 +344,10 @@ namespace EventCombo.Service
     private void SaveVarCharges(EventViewModel ev, IUnitOfWork uow)
     {
       IRepository<Event_VariableDesc> vcRepo = new GenericRepository<Event_VariableDesc>(_factory.ContextFactory);
+
+      foreach (var vcDB in vcRepo.Get(filter: (vc => vc.Event_Id == ev.EventID)))
+        if (!ev.VariableChargesList.Any(vcVM => vcVM.VariableId == vcDB.Variable_Id))
+          vcRepo.Delete(vcDB);
 
       foreach (var varCharge in ev.VariableChargesList)
       {
@@ -413,8 +432,9 @@ namespace EventCombo.Service
         var ecLink = ev.EventImages.Where(ei => ei.ECImageId == ecDBLink.ECImageId).FirstOrDefault();
         if (ecLink == null)
         {
-          _iservice.DeleteImage(ecDBLink.ECImageId, ev.UserID, uow);
-          ecRepo.Delete(ecLink);
+          var imageId = ecDBLink.ECImageId;
+          ecRepo.Delete(ecDBLink);
+          _iservice.DeleteImage(imageId, ev.UserID, uow);
         }
       }
       foreach (var ecImage in ev.EventImages)
@@ -506,9 +526,14 @@ namespace EventCombo.Service
           SaveTickets(ev, uow);
           SaveVarCharges(ev, uow);
 
-          var param1 = new SqlParameter("@EventId", ev.EventID);
-          var param2 = new SqlParameter("@UserId", ev.UserID);
-          var res = uow.Context.Database.ExecuteSqlCommand("EXEC PublishEvent @EventId, @UserId", param1, param2);
+
+          if (ev.EventStatus == "Live")
+          {
+            var param1 = new SqlParameter("@EventId", ev.EventID);
+            var param2 = new SqlParameter("@UserId", ev.UserID);
+            var res = uow.Context.Database.ExecuteSqlCommand("EXEC PublishEvent @EventId, @UserId", param1, param2);
+          }
+
           uow.Context.SaveChanges();
 
           uow.Commit();
@@ -564,7 +589,147 @@ namespace EventCombo.Service
 
     public EventViewModel GetEventById(int id)
     {
-      throw new NotImplementedException();
+      EventViewModel ev = new EventViewModel() { EventID = id };
+      IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
+      IRepository<TimeZoneDetail> tzRepo = new GenericRepository<TimeZoneDetail>(_factory.ContextFactory);
+      IRepository<EventImage> iRepo = new GenericRepository<EventImage>(_factory.ContextFactory);
+      IRepository<EventECImage> eciRepo = new GenericRepository<EventECImage>(_factory.ContextFactory);
+      IRepository<Ticket_Quantity_Detail> tqdRepo = new GenericRepository<Ticket_Quantity_Detail>(_factory.ContextFactory);
+
+      Event evDB = eRepo.Get(filter: (e => e.EventID == ev.EventID)).SingleOrDefault();
+      if (ev == null)
+        throw new ArgumentException(String.Format("Event {0} not found.", ev.EventID));
+
+      _mapper.Map(evDB, ev);
+      LoadEventDictionaries(ev);
+
+      ev.OnlineEvent = ev.AddressStatus == "Online";
+      var orgn = evDB.Event_Orgnizer_Detail.Where(od => od.DefaultOrg == "Y").FirstOrDefault();
+      ev.OrganizerId = orgn == null ? 0 : orgn.OrganizerMaster_Id;
+      ev.InternalOrganizerId = ev.OrganizerId == 0 ? 0 : ev.CurrentOrganizer.InternalId;
+
+      if (evDB.ECBackgroundId != null)
+        ev.BGImage = _iservice.GetImageById(evDB.ECBackgroundId ?? 0);
+      if (evDB.ECImageId != null)
+        ev.ECImage = _iservice.GetImageById(evDB.ECImageId ?? 0);
+
+      var dbImages = iRepo.Get(filter: (im => im.EventID == ev.EventID));
+      var ecImages = eciRepo.Get(filter: (eci => eci.EventId == ev.EventID), orderBy: (query => query.OrderBy(im => im.ECImageId)));
+      var images = new List<string>();
+      if ((dbImages.Count() > 0) && (ecImages.Count() == 0))
+        using (var uow = _factory.GetUnitOfWork())
+          try
+          {
+            foreach (var eventImage in dbImages)
+            {
+              var ecImage = ProcessOldEventImage(eventImage, ev.UserID, uow);
+              if (ecImage != null)
+              {
+                if ((evDB.ECImageId ?? 0) == 0)
+                {
+                  evDB.ECImageId = ecImage.ECImageId;
+                  ev.ECImage = _iservice.GetImageById(evDB.ECImageId ?? 0);
+                }
+                else
+                {
+                  ev.EventImages.Add(_iservice.GetImageById(ecImage.ECImageId));
+                  eciRepo.Insert(new EventECImage()
+                    {
+                      ECImageId = ecImage.ECImageId,
+                      EventId = ev.EventID
+                    });
+                }
+              }
+            }
+            uow.Context.SaveChanges();
+            uow.Commit();
+          }
+          catch (Exception ex)
+          {
+            uow.Rollback();
+            _logger.Error(ex, "Error during transfer images to EventECImage.", null);
+          }
+      else
+        foreach (var ecImage in ecImages)
+          ev.EventImages.Add(_iservice.GetImageById(ecImage.ECImageId));
+
+      IRepository<Address> aRepo = new GenericRepository<Address>(_factory.ContextFactory);
+      var address = aRepo.Get(filter: (a => a.EventId == ev.EventID)).FirstOrDefault();
+      if (address == null)
+      {
+        ev.Address = "";
+        ev.VenueName = "";
+      }
+      else
+      {
+        ev.Address = address.ConsolidateAddress;
+        ev.VenueName = address.VenueName;
+      }
+
+      TimeZoneInfo tz = null;
+      long tzId;
+      Int64.TryParse(ev.TimeZone, out tzId);
+      TimeZoneDetail tzDet = tzRepo.GetByID(tzId);
+      if (tzDet != null)
+        tz = TimeZoneInfo.FindSystemTimeZoneById(tzDet.TimeZone);
+      else
+        tz = TimeZoneInfo.Utc;
+
+      var multiDate = evDB.MultipleEvents.FirstOrDefault();
+      var singleDate = evDB.EventVenues.SingleOrDefault();
+      ev.DateInfo.Frequency = multiDate == null ? ScheduleFrequency.Single : (ScheduleFrequency)Enum.Parse(typeof(ScheduleFrequency), multiDate.Frequency, true);
+      ev.DateInfo.IsNewDate = false;
+      ev.DateInfo.StartDateTime = (multiDate == null ? singleDate.E_Startdate : multiDate.M_Startfrom) ?? DateTime.MinValue;
+      ev.DateInfo.EndDateTime = (multiDate == null ? singleDate.E_Enddate : multiDate.M_StartTo) ?? DateTime.MinValue;
+      if (ev.DateInfo.Frequency == ScheduleFrequency.Weekly)
+        ev.DateInfo.Weekdays.AddRange(multiDate.WeeklyDay.Split(',').Select(s => s.Trim()).ToList());
+      if ((ev.DateInfo.StartDateTime > DateTime.MinValue) && (tz != null))
+        ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeFromUtc(ev.DateInfo.StartDateTime, tz);
+      if ((ev.DateInfo.EndDateTime > DateTime.MinValue) && (tz != null))
+        ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeFromUtc(ev.DateInfo.EndDateTime, tz);
+
+      foreach (var t in evDB.Tickets)
+      {
+        TicketViewModel tvm = _mapper.Map<TicketViewModel>(t);
+
+        DateTime saleStartDate;
+        DateTime saleEndDate;
+        DateTime hideStart;
+        DateTime hideEnd;
+
+        if (tvm.Sale_Start_Date != null)
+        {
+          DateTime.TryParse((tvm.Sale_Start_Date ?? default(DateTime)).ToShortDateString() + " " + tvm.Sale_Start_Time, out saleStartDate);
+          tvm.Sale_Start_Date = saleStartDate;
+        }
+        if (tvm.Sale_End_Date != null)
+        {
+          DateTime.TryParse((tvm.Sale_End_Date ?? default(DateTime)).ToShortDateString() + " " + tvm.Sale_End_Time, out saleEndDate);
+          tvm.Sale_End_Date = saleEndDate;
+        }
+        if (tvm.Hide_Untill_Date !=null)
+        {
+          DateTime.TryParse((tvm.Hide_Untill_Date ?? default(DateTime)).ToShortDateString() + " " + tvm.Hide_Untill_Time, out hideStart);
+          tvm.Hide_Untill_Date = hideStart;
+        }
+        if (tvm.Hide_After_Date != null)
+        {
+          DateTime.TryParse((tvm.Hide_After_Date ?? default(DateTime)).ToShortDateString() + " " + tvm.Hide_After_Time, out hideEnd);
+          tvm.Hide_After_Date = hideEnd;
+        }
+
+        tvm.TicketType.TicketTypeId = Convert.ToByte(t.TicketTypeID ?? 1);
+        tvm.TicketType.TicketType = tvm.TicketType.TicketTypeId == 1 ? "Free" : tvm.TicketType.TicketTypeId == 2 ? "Paid" : "Donation";
+        ev.TicketList.Add(tvm);
+      }
+
+      foreach (var vc in evDB.Event_VariableDesc)
+      {
+        VariableChargesViewModel vcvm = _mapper.Map<VariableChargesViewModel>(vc);
+        ev.VariableChargesList.Add(vcvm);
+      }
+
+      return ev;
     }
 
     private ECImageViewModel ProcessOldEventImage(EventImage image, string userId, IUnitOfWork uow)
@@ -804,7 +969,7 @@ namespace EventCombo.Service
             Price = (tq.Ticket.Price ?? 0) - (tq.Ticket.T_Discount ?? 0),
             TotalPrice = tq.Ticket.TicketTypeID == 2 ? tq.Ticket.TotalPrice ?? 0 : 0,
             StartDate = ticketDate,
-            VenueName = evi.OnlineEvent ? "Online" : tq.Address.VenueName,
+            VenueName = evi.OnlineEvent ? "Online" : tq.Address == null ? "Unknown" : tq.Address.VenueName,
             ShowFee = tq.Ticket.Fees_Type != "1",
             Fee = tq.Ticket.Fees_Type != "1" ? (tq.Ticket.TotalPrice ?? 0) - (tq.Ticket.Price ?? 0) + (tq.Ticket.T_Discount ?? 0) : 0,
             ShowRemaining = tq.Ticket.T_Displayremaining == "1",
@@ -893,7 +1058,7 @@ namespace EventCombo.Service
       newUrl = (forceHttps ? "https" : originalUri.Scheme) +
           "://" + originalUri.Authority + newUrl;
       return newUrl;
-    } 
+    }
 
     private void PopulateOGPData(EventInfoViewModel evi)
     {
