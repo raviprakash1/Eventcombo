@@ -22,6 +22,7 @@ namespace EventCombo.Service
     private IUnitOfWorkFactory _factory;
     private IMapper _mapper;
     private IDBAccessService _dbservice;
+    private INotificationService _nService;
 
     public TicketService(IUnitOfWorkFactory factory, IMapper mapper, IDBAccessService dbService)
     {
@@ -37,6 +38,7 @@ namespace EventCombo.Service
       _factory = factory;
       _mapper = mapper;
       _dbservice = dbService;
+      _nService = new NotificationService(_factory, _mapper);
     }
 
     private IEnumerable<OrderMainViewModel> GetOrdersForUser(string userId)
@@ -274,35 +276,8 @@ namespace EventCombo.Service
       var org = ticket.Event.Event_Orgnizer_Detail.Where(od => od.DefaultOrg == "Y").FirstOrDefault();
       model.EventId = ticket.Event.EventID;
       model.OrganizerId = org == null ? null : (long?)org.OrganizerMaster_Id;
-      using (var uow = _factory.GetUnitOfWork())
-      {
-        try
-        {
-          IRepository<Event_OrganizerMessages> messRepo = new GenericRepository<Event_OrganizerMessages>(_factory.ContextFactory);
-          Event_OrganizerMessages mess = _mapper.Map<Event_OrganizerMessages>(model);
-          messRepo.Insert(mess);
-          uow.Context.SaveChanges();
 
-          string email = org.Organizer_Master.Organizer_Email ?? org.Organizer_Master.AspNetUser.Profiles.FirstOrDefault().Email;
-          string name = org.Organizer_Master.Orgnizer_Name ?? org.Organizer_Master.AspNetUser.Profiles.FirstOrDefault().FirstName;
-
-          if ((org != null) && (email != null))
-          {
-            ISendMailService sendService = CreateSendMailService();
-            sendService.Message.To.Add(new MailAddress(email, name));
-            INotification notification = new OrganizerMessageNotification(_factory, mess);
-            notification.SendNotification(sendService);
-          }
-
-          uow.Commit();
-        }
-        catch (Exception ex)
-        {
-          uow.Rollback();
-          throw new Exception("Exception in the SaveMessage. Transaction rolled back.", ex);
-        }
-      }
-
+      _nService.SendContactOrganizerMessage(model);
       return true;
     }
 

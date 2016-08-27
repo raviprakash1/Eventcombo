@@ -39,11 +39,17 @@ SET ANSI_PADDING OFF
 GO
 
 DELETE FROM Email_Tag
-WHERE Tag_Name = 'ResetPwdCode'
+WHERE Tag_Name in ('ResetPwdCode', 'UserPhone', 'MessageBody', 'FriendsEmail')
 
 SET IDENTITY_INSERT Email_Tag ON
 INSERT INTO Email_Tag (Tag_Id, Tag_Name)
 VALUES (43, 'ResetPwdCode')
+INSERT INTO Email_Tag (Tag_Id, Tag_Name)
+VALUES (44, 'UserPhone')
+INSERT INTO Email_Tag (Tag_Id, Tag_Name)
+VALUES (45, 'MessageBody')
+INSERT INTO Email_Tag (Tag_Id, Tag_Name)
+VALUES (46, 'FriendsEmail')
 SET IDENTITY_INSERT Email_Tag OFF
 
 GO

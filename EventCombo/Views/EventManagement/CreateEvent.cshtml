@@ -85,6 +85,15 @@
         <img src="~/Images/ajaxloader1.gif" />
       </div>
     </div>
+    <div class="popOverlay" ng-show="popErrorMessage">
+      <div class="popBox">
+        <a class="popClose" ng-click="popErrorMessage=false"><i class="material-icons">clear</i></a>
+        <h3 class="red-heading">{{ErrorHeading}}</h3>
+        <div class="blue-heading text-center" ng-bind-html="ErrorMessage"></div>
+        <div class="text-center margin-2em-top"><a class="popLink" ng-click="popErrorMessage=false">CONTINUE TO SITE</a></div>
+      </div>
+    </div>
+
   </div>
 
   <form name="MainForm" novalidate>
@@ -177,11 +186,8 @@
               </div>
             </div>
 
-            <div class="eventDtkBodyCon">
+            <div class="eventDtkHeadCon">
               <div class="EDTxtEventChkBxCon">
-                <md-checkbox ng-model="eventInfo.ShowMap" ng-true-value="'Y'" ng-false-value="'N'" class="blue bold">
-                  Show map on event page
-                </md-checkbox>
                 <md-checkbox ng-model="eventInfo.OnlineEvent" class="blue onlineEventConChkBox bold">
                   Online Event
                 </md-checkbox>
@@ -727,7 +733,7 @@
                   <div class="hideUntilAfterCon" ng-show="(ticket.T_AutoSechduleType == 1) && (ticket.Hide_Ticket == 1)">
                     <div class="date-picker-row" style="margin-left: 0px; float:left; margin-top: 21px;" flex-gt-sm>
                       <label style="margin-left: 35px">Hide Until Date</label>
-                      <md-checkbox class="blue" ng-model="ticket.useUntilDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useUntilDate = '0'"></md-checkbox>
+                      <md-checkbox class="blue" ng-model="ticket.useUntilDate" ng-true-value="'1'" ng-false-value="'0'"></md-checkbox>
                       <md-datepicker ng-model="ticket.localHideUntilDate" md-placeholder="MM/DD/YYYY" name="ticketHideUntilDate" style="width: 300px !important;" md-min-date="minDate"></md-datepicker>
                       <div class="validation-datepicker-messages" ng-show="({{'TicketForm_'+$index}}.ticketHideUntilDate.$touched  || !{{'TicketForm_'+$index}}.ticketHideUntilDate.$pristine || formValidation || ticket.ticketValidation)">
                         <div ng-show="(ticket.useUntilDate == 1) && (!ticket.localHideUntilDate)">Select date</div>
@@ -745,7 +751,7 @@
                     <div class="clearfix"></div>
                     <div class="date-picker-row" style="margin-left: 0px; float:left; margin-top: 21px;" flex-gt-sm>
                       <label style="margin-left: 35px">Hide After Date</label>
-                      <md-checkbox class="blue" ng-model="ticket.useAfterDate" ng-true-value="'1'" ng-false-value="'0'" ng-init="ticket.useAfterDate = '0'"></md-checkbox>
+                      <md-checkbox class="blue" ng-model="ticket.useAfterDate" ng-true-value="'1'" ng-false-value="'0'"></md-checkbox>
                       <md-datepicker ng-model="ticket.localHideAfterDate" md-placeholder="MM/DD/YYYY" name="ticketHideAfterDate" style="width: 300px !important;" md-min-date="minDate"></md-datepicker>
                       <div class="validation-datepicker-messages" ng-show="({{'TicketForm_'+$index}}.ticketHideUntilDate.$touched  || !{{'TicketForm_'+$index}}.ticketHideUntilDate.$pristine  || formValidation || ticket.ticketValidation)">
                         <div ng-show="(ticket.useAfterDate == 1) && (!ticket.localHideAfterDate)">Select date</div>
@@ -824,8 +830,7 @@
         <md-button class="md-raised addTicketBtnCls" ng-click="addVarCharge()" style="margin-bottom:15px !important; margin-left:15px;">
           ADD
         </md-button>
-        <div class="variableOptions">
-          <!-- Please don't put anything here, don't even give a space --><div ng-repeat="varCharge in eventInfo.VariableChargesList" ng-class="{{$index}}" variable-drag-drop-elements>
+        <div class="variableOptions"><!-- Please don't put anything here, don't even give a space or line break --><div ng-repeat="varCharge in eventInfo.VariableChargesList" ng-class="{{$index}}" variable-drag-drop-elements>
             <ng-form name="VarChargeForm_{{$index}}">
               <i class="material-icons" style="float: right;margin-right: 20px; margin-top: 13px; cursor: pointer;" ng-click="deleteVarCharge(varCharge)">clear</i>
               <span class="iconDragItem" draggable="true" style="margin-left: 15px;">
@@ -858,8 +863,7 @@
                 </md-input-container>
               </div>
             </ng-form>
-          </div><!-- Please don't put anything here, don't even give a space -->
-        </div>
+          </div><!-- Please don't put anything here, don't even give a space or line break --></div>
       </div>
     </div>
 
