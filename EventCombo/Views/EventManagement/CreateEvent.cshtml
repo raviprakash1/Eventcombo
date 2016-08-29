@@ -391,7 +391,7 @@
 
               <md-input-container class="lFloat" style="margin-right: 10px;">
                 <label>Type of event</label>
-                <md-select ng-model="eventInfo.EventTypeID" name="eventType" ng-required="true">
+                <md-select ng-model="eventInfo.EventTypeID" name="eventType" ng-required="true" style="min-width:130px;">
                   <md-option ng-repeat="etype in eventInfo.EventTypeList" value="{{etype.EventTypeId}}">{{etype.EventType}}</md-option>
                 </md-select>
                 <div class="validation-standard-messages" ng-show="(MainForm.eventType.$touched  || formValidation) && (eventInfo.EventTypeID == 0)">
@@ -401,7 +401,7 @@
 
               <md-input-container class="lFloat" style="margin-right: 10px;">
                 <label>Category</label>
-                <md-select ng-model="eventInfo.EventCategoryID" class="paras" name="eventCategory" ng-change="onCategoryChange();" required>
+                <md-select ng-model="eventInfo.EventCategoryID" class="paras" name="eventCategory" ng-change="onCategoryChange();" style="min-width:100px;" required>
                   <md-option ng-repeat="category in eventInfo.EventCategoryList" value="{{category.EventCategoryId}}">{{category.EventCategory}}</md-option>
                 </md-select>
                 <div class="validation-standard-messages" ng-show="(MainForm.eventCategory.$touched  || formValidation) && (eventInfo.EventCategoryID == 0)">
@@ -410,8 +410,8 @@
               </md-input-container>
 
               <md-input-container class="lFloat" style="margin-right: 10px;" ng-show="(subCategories!=null) && (subCategories.length>0)">
-                <label>Subcategory</label>
-                <md-select ng-model="eventInfo.EventSubCategoryID" class="paras">
+                <label>Sub Category</label>
+                <md-select ng-model="eventInfo.EventSubCategoryID" class="paras" style="min-width:130px;">
                   <md-option ng-repeat="subcat in subCategories" value="{{subcat.EventSubCategoryId}}">{{subcat.EventSubCategory}}</md-option>
                 </md-select>
               </md-input-container>
@@ -480,7 +480,7 @@
           <div class="organiserDiv" style="padding-top:15px;">
             <md-input-container style="width:150px; margin-right: 10px;">
               <label class="organiserLabel" style="white-space: nowrap;">Select Organizer</label>
-              <md-select ng-model="eventInfo.InternalOrganizerId" name="selectOrganizer" ng-change="cancelEditOrganizer()">
+              <md-select ng-model="eventInfo.InternalOrganizerId" name="selectOrganizer" style="min-width:130px;" ng-change="cancelEditOrganizer()">
                 <md-option ng-repeat="org in eventInfo.OrganizerList" value="{{org.InternalId}}">{{org.Orgnizer_Name}}</md-option>
               </md-select>
               <div class="validation-standard-messages" ng-show="(MainForm.selectOrganizer.$touched || formValidation) && (!eventInfo.InternalOrganizerId)">
@@ -492,7 +492,7 @@
 
           <div class="newOrganizer" ng-show="(organizerEditState == 'Edit') || (organizerEditState == 'Add')">
             <ng-form name="OrganizerForm">
-              <div style="margin-right: 20px;">
+              <div style="margin-right: 20px; width:100%; display:inline-block;">
                 <md-input-container>
                   <label class="organizerText">Organizer Name</label>
                   <input class="websiteURLTxtboxCls1" name="organizerName" ng-model="eventInfo.CurrentOrganizer.Orgnizer_Name" required />
@@ -510,9 +510,9 @@
                   </div>
                 </md-input-container>
 
-                <div class="tellus_pics" style="float: right;" ng-show="eventInfo.CurrentOrganizer.Image">
+                <div class="tellus_pics" style="float:right; margin-right:20px; margin-bottom:20px;" ng-show="eventInfo.CurrentOrganizer.Image">
                   <i class="material-icons closeIconImage" ng-click="deleteOrganizerImage()" style="cursor:pointer;">clear</i>
-                  <img ng-src="{{eventInfo.CurrentOrganizer.Image.ImagePath}}" style="height:100px; width: 100px" />
+                  <img ng-src="{{eventInfo.CurrentOrganizer.Image.ImagePath}}" style="height:80px; width: 80px" />
                 </div>
               </div>
               <div class="More">
@@ -894,7 +894,7 @@
 
         <div class="privateEvents" ng-show="eventInfo.EventPrivacy == 'Private'">
           <md-checkbox class="blue block" style="font-weight: unset !important" ng-model="eventInfo.Private_ShareOnFB" ng-true-value="'Y'" ng-false-value="'N'">
-            Attendees can share this on Facebook, FB Messenger, Linkedin, Twitter and email
+            Attendees can share this on Facebook, FB Messenger, Linkedin, Twitter and Email
           </md-checkbox>
           <md-checkbox class="blue block" style="font-weight: unset !important" ng-model="eventInfo.Private_GuestOnly" ng-true-value="'Y'" ng-false-value="'N'">
             This event is invite only

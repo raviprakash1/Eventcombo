@@ -283,7 +283,7 @@ md-dialog { width:800px;}
 .color-picker-wrapper.color-picker-swatch-only .input-group .input-group-addon { background-size:25px !important; height:30px !important; background-repeat:no-repeat !important; background-position:right top;}
 .closeIconImage { position:absolute; top:5px; right:5px; color:#fff; background-color:#888; font-weight:bold !important; font-size:16px !important;}
 .ticketPriceLbl { z-index:1;}
-.buyerInfo { position:absolute !important; border:1px solid #888; width:150px; max-width:100%; text-align:right; position:relative; background-color:#888; color:white; top:-110px; z-index:100; padding:5px 10px;}
+.buyerInfo { position:absolute !important; border:1px solid #888; width:150px; max-width:100%; text-align:right; position:relative; background-color:#888; color:white; top:-160px; z-index:100; padding:5px 10px;}
 .buyerInfo:before { position:absolute; content:''; width:0px; height:0px; border-left:15px solid transparent; border-right:15px solid transparent; border-top:15px solid#888; border-bottom:15px solid transparent; bottom:-31px; left:60px;}
 .validation-datepicker-messages { font-size:12px; font-weight:normal; color:#dd2c00; margin:10px 0;}
 .validation-standard-messages { font-size:12px; font-weight:normal; color:#dd2c00; margin:6px 0 6px 0; text-align:left;}
