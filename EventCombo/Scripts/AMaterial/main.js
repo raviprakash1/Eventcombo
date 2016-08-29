@@ -295,9 +295,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     };
 
     $scope.callImageClick = function (imgctrl) {
-      $timeout(function () {
-        document.getElementById(imgctrl).click();
-      }, 100);
+      document.getElementById(imgctrl).click();
     }
 
     $scope.organizerAdd = function () {
@@ -354,6 +352,12 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         $scope.OrganizerForm.$setPristine();
         $scope.OrganizerForm.$setUntouched();
       }
+    }
+
+    $scope.cancelEditOrganizer = function () {
+      $scope.organizerEditState = 'Cancelled';
+      $scope.OrganizerForm.$setPristine();
+      $scope.OrganizerForm.$setUntouched();
     }
 
     $scope.saveNewOrganizer = function () {

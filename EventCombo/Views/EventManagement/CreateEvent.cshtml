@@ -480,10 +480,10 @@
           <div class="organiserDiv" style="padding-top:15px;">
             <md-input-container style="width:150px; margin-right: 10px;">
               <label class="organiserLabel" style="white-space: nowrap;">Select Organizer</label>
-              <md-select ng-model="eventInfo.InternalOrganizerId" name="selectOrganizer" required>
+              <md-select ng-model="eventInfo.InternalOrganizerId" name="selectOrganizer" ng-change="cancelEditOrganizer()">
                 <md-option ng-repeat="org in eventInfo.OrganizerList" value="{{org.InternalId}}">{{org.Orgnizer_Name}}</md-option>
               </md-select>
-              <div class="validation-standard-messages" ng-show="(MainForm.selectOrganizer.$touched || formValidation) && (parseInt(eventInfo.InternalOrganizerId) > 0)">
+              <div class="validation-standard-messages" ng-show="(MainForm.selectOrganizer.$touched || formValidation) && (!eventInfo.InternalOrganizerId)">
                 Add at least one organizer
               </div>
             </md-input-container>
@@ -556,6 +556,9 @@
               </div>
 
               <div class="ticketButtonDiv" style="margin-bottom: 10px;">
+                <md-button class="md-raised addTicketBtnCls" style="float:unset !important;" ng-show="(organizerEditState == 'Add') || (organizerEditState == 'Edit')" ng-click="cancelEditOrganizer()">
+                  Cancel
+                </md-button>
                 <md-button class="md-raised addTicketBtnCls" style="float:unset !important;" ng-show="organizerEditState == 'Add'" ng-click="saveNewOrganizer()">
                   Save Organizer
                 </md-button>
