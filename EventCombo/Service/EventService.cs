@@ -793,7 +793,7 @@ namespace EventCombo.Service
       evi.ErrorMessages = new List<string>();
       evi.EventTitle = ev.EventTitle;
       evi.EventDescription = ev.EventDescription;
-      evi.EventShortDesc = HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(evi.EventDescription), 90, 150, ".");
+      evi.EventShortDesc = HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(String.IsNullOrEmpty(evi.EventDescription) ? "" : evi.EventDescription), 90, 150, ".");
       evi.OnlineEvent = ev.AddressStatus == "Online";
       evi.EventTypeId = ev.EventTypeID;
       evi.EventType = ev.EventType.EventType1;
