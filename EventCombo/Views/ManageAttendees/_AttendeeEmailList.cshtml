@@ -1,0 +1,30 @@
+﻿@using System.Collections.Generic;
+@using System.Linq;
+@using EventCombo.Models;
+@model List<ScheduledEmail>
+<table id="AttendeeEmailListTable" data-totalrecords="@(Model.Count())" class="table">
+    <thead>
+        <tr>
+            <th class="UETableHead"><a href="javascript:void(0);">Subject of EMail</a></th>
+            <th class="UETableHead"><a href="javascript:void(0);">Recipients</a></th>
+            <th class="UETableHead"><a href="javascript:void(0);">Date</a></th>
+            <th class="UETableHead"><a href="javascript:void(0);">Quick Links</a></th>
+        </tr>
+    </thead>
+    <tbody class="tableRecorsTBody">
+        @foreach (var sEmail in Model)
+        {
+            <tr>
+                <td class="UETableTD">
+                    <a href="javascript:void(0)" onclick="showPreview(this,'@(sEmail.IsEmailSend ? "Sent" : "Scheduled")', @sEmail.ScheduledEmailId);">
+                        @sEmail.Subject
+                    </a>
+                </td>
+                <td class="UETableTD">@sEmail.AttendeeEmails.Count()</td>
+                <td class="UETableTD">@sEmail.ScheduledDate</td>
+                <td class="UETableTD"></td>
+            </tr>
+            <tr id="AttendeeEmail_@((sEmail.IsEmailSend ? "Sent" : "Scheduled") + "_" + sEmail.ScheduledEmailId)" style="display:none;" data-popped="0"></tr>
+    }
+    </tbody>
+</table>

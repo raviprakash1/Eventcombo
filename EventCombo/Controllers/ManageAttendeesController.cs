@@ -298,5 +298,130 @@ namespace EventCombo.Controllers
         IEnumerable<EventOrderInfoViewModel> orders = _maservice.GetOrdersForSaleReport(PaymentStates.Completed, EventId);
         return PartialView("_SaleReport", orders);
     }
+
+    [HttpGet]
+    public ActionResult AttendeeEmail(long eventId)
+    {
+        if ((Session["AppId"] == null))
+            return DefaultAction();
+
+        string userId = Session["AppId"].ToString();
+
+        if (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner)
+            return DefaultAction();
+
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Orders", "ManageAttendees");
+        ViewBag.EventId = eventId;
+        ViewBag.Title = "Email to Attendees | Eventcombo";
+
+        return View();
+    }
+    [HttpGet]
+    public ActionResult AttendeeEmailList(long eventId, bool isEmailSend)
+    {
+        if ((Session["AppId"] == null))
+            return new EmptyResult();
+
+        string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner)
+            return new EmptyResult();
+
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Orders", "ManageAttendees");
+
+        var attendeeEmails = _maservice.GetScheduledEmailList(isEmailSend);
+
+        return PartialView("_AttendeeEmailList", attendeeEmails);
+    }
+
+    [HttpGet]
+    public ActionResult AttendeeEmailDetail(long eventId, long scheduledEmailId)
+    {
+        if ((Session["AppId"] == null))
+            return new EmptyResult();
+
+        string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(eventId, userId) == AccessLevel.Public)
+            return new EmptyResult();
+
+        var attendeeEmail = _maservice.GetScheduledEmailDetail(scheduledEmailId);
+        return PartialView("_AttendeeEmailDetail", attendeeEmail);
+     }
+
+    public ActionResult SendEmail(long eventId)
+    {
+        if ((Session["AppId"] == null))
+            return DefaultAction();
+
+        string userId = Session["AppId"].ToString();
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Email", "ManageAttendees");
+        ViewBag.EventId = eventId;
+        ViewBag.From = System.Configuration.ConfigurationManager.AppSettings.Get("UserName") + " (" + System.Configuration.ConfigurationManager.AppSettings.Get("DefaultEmail") + ")";
+        ScheduledEmail scheduledEmail = _maservice.PrepareSendAttendeeMail(eventId);
+        return View(scheduledEmail);
+    }
+
+    [HttpPost]
+    public ActionResult SendEmail(long eventId, [Bind(Include = "SendFrom, SendTo, ReplyTo, CC, BCC, Subject, Body, ScheduledDate")] ScheduledEmail scheduledEmail, string TicketbearerIds, string SendEmail, string txtOnDateTime, string txtBeforeEventTime)
+    {
+        if ((Session["AppId"] == null))
+            return DefaultAction();
+
+        string userId = Session["AppId"].ToString();
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Email", "ManageAttendees");
+        ViewBag.EventId = eventId;
+        
+        if (string.IsNullOrEmpty(scheduledEmail.ReplyTo))
+        {
+            ModelState.AddModelError("ReplyTo", "ReplyTo can not be blank");
+            return View(scheduledEmail);
+        }
+        if (string.IsNullOrEmpty(scheduledEmail.SendTo))
+        {
+            ModelState.AddModelError("SendTo", "To can not be blank");
+            return View(scheduledEmail);
+        }
+        if (string.IsNullOrEmpty(scheduledEmail.Subject))
+        {
+            ModelState.AddModelError("Subject", "Subject can not be blank");
+            return View(scheduledEmail);
+        }
+        if (SendEmail == "Now")
+            scheduledEmail.ScheduledDate = DateTime.UtcNow;
+        if (SendEmail == "OnDate")
+        {
+            if (txtOnDateTime != "")
+            {                   
+                scheduledEmail.ScheduledDate = DateTime.Parse(txtOnDateTime);
+            }else
+            {
+                ModelState.AddModelError("txtOnDateTime", "Please enter valid Date Time.");
+                return View(scheduledEmail);
+            }
+        }
+        if (SendEmail == "BeforeEvent")
+        {
+            if (txtBeforeEventTime != "")
+            {
+                TimeSpan timeBeforeTimeSpan = TimeSpan.Parse(txtBeforeEventTime);
+                scheduledEmail.ScheduledDate = scheduledEmail.ScheduledDate.Add(-timeBeforeTimeSpan);
+            }
+            else
+            {
+                ModelState.AddModelError("txtBeforeEventTime", "Please enter valid Time.");
+                return View(scheduledEmail);
+            }
+        }
+        _maservice.SendAttendeeMail(scheduledEmail, userId, TicketbearerIds, scheduledEmail.ScheduledDate);
+
+        return RedirectToAction("AttendeeEmail", new { eventId = eventId });
+    }
   }
 }
