@@ -1,0 +1,109 @@
+﻿@model EventCombo.Models.ScheduledEmail
+
+@{
+    ViewBag.Title = "SendEmail";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/manageattendees.css" rel="stylesheet" />
+<script src="https://cdn.ckeditor.com/4.5.2/standard-all/ckeditor.js"></script>
+<link href='~/Content/jquery-te-1.4.0.css' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="~/Scripts/jquery-te-1.4.0.js"></script>
+@section sidenav{
+    <div id="sidebar" class="nav nav-stacked">
+        @Html.Action("Sidenav", "ManageEvent", new { eventid = ViewBag.EventId, CurrentItem = "manageattendees" })
+    </div>
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Schedule Email</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.Hidden("TicketbearerIds", "1,2")
+        @Html.HiddenFor(model => model.SendFrom)
+        @Html.HiddenFor(model => model.CC)
+        @Html.HiddenFor(model => model.BCC)
+        @Html.HiddenFor(model => model.ScheduledDate)
+        @Html.Hidden("TimeBeforeEventStart", "00:00:00")
+
+
+        <div class="form-group">
+            @Html.Label("From", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @ViewBag.From
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Reply To", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ReplyTo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ReplyTo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("To", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SendTo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SendTo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Message", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "editor jqte-test", @id = "Body" } })
+                @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Send Email", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <ul class="list-unstyled">
+                    <li><input type="radio" name="SendEmail" checked="checked" value="Now" /> Now</li>
+                    <li>
+                        <div>
+                            <input type="radio" name="SendEmail" value="OnDate" /> At
+                            <input id="txtOnDateTime" name="txtOnDateTime" type="datetime-local" />
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <input type="radio" name="SendEmail" value="BeforeEvent" /> Before The Event Start
+                            <input id="txtBeforeEventTime" name="txtBeforeEventTime" type="time" />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-info articleBtnCls" />
+            </div>
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Back to List", "AttendeeEmail", new { eventid = ViewBag.EventId })
+</div>
+<script>
+    $(function () {
+        $("#Body").jqte();
+
+    });
+    CKEDITOR.disableAutoInline = true;
+</script>
