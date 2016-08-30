@@ -361,6 +361,7 @@ namespace EventCombo.Models
     public long EventId { get; set; }
     public String EventTitle { get; set; }
     public string EventDescription { get; set; }
+    public string EventShortDesc { get; set; }
     public string VenueName { get; set; }
     public string Address { get; set; }
     public string Latitude { get; set; }
