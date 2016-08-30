@@ -340,14 +340,17 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
           Organizer_Twitter: org[0].Organizer_Twitter,
           Organizer_Linkedin: org[0].Organizer_Linkedin,
           Validate: false,
-          Image: {
+          Image: null
+        };
+        if (org[0].Image) {
+          $scope.eventInfo.CurrentOrganizer.Image = {
             ECImageId: org[0].Image.ECImageId,
             Filename: org[0].Image.Filename,
             ImagePath: org[0].Image.ImagePath,
             TypeName: org[0].Image.TypeName,
             ECImageTypeId: org[0].Image.ECImageTypeId
           }
-        };
+        }
         $scope.organizerEditState = "Edit";
         $scope.OrganizerForm.$setPristine();
         $scope.OrganizerForm.$setUntouched();
