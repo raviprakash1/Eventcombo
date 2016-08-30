@@ -29,5 +29,13 @@ namespace EventCombo.Service
     AddAttandeeOrder PrepareAddAttendeeOrder(long eventId, string userId);
 
     string CreateManualOrder(AddAttandeeOrder model, string userId);
+
+    IEnumerable<ScheduledEmail> GetScheduledEmailList(bool IsEmailSend);
+
+    ScheduledEmail GetScheduledEmailDetail(long scheduledEmailId);
+
+    ScheduledEmail PrepareSendAttendeeMail(long eventId);
+
+    bool SendAttendeeMail(ScheduledEmail scheduledEmail, string userId, string ticketbearerIds, DateTime scheduledDate);
   }
 }

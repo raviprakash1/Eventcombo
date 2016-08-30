@@ -831,5 +831,36 @@ namespace EventCombo.Service
         res.Position = 0;
         return res;
     }
+    public ScheduledEmail PrepareSendAttendeeMail(long eventId)
+    {
+        IRepository<EventVenue> eRepo = new GenericRepository<EventVenue>(_factory.ContextFactory);
+        var ev = eRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();
+        ScheduledEmail scheduledEmail = new ScheduledEmail();
+        scheduledEmail.ScheduledDate = ev.E_Startdate ?? DateTime.UtcNow;
+        return scheduledEmail;
+    }
+    public IEnumerable<ScheduledEmail> GetScheduledEmailList(bool IsEmailSend)
+    {
+        IRepository<ScheduledEmail> sERepo = new GenericRepository<ScheduledEmail>(_factory.ContextFactory);
+        var ScheduledEmails = sERepo.Get(filter: s => s.EmailTypeId == 1 && s.IsEmailSend == IsEmailSend);
+        return ScheduledEmails;
+    }
+    public ScheduledEmail GetScheduledEmailDetail(long scheduledEmailId)
+    {
+        IRepository<ScheduledEmail> sERepo = new GenericRepository<ScheduledEmail>(_factory.ContextFactory);
+        var ScheduledEmail = sERepo.Get(filter: s => s.ScheduledEmailId == scheduledEmailId).FirstOrDefault();
+        return ScheduledEmail;
+    }
+    public bool SendAttendeeMail(ScheduledEmail scheduledEmail, string userId, string ticketbearerIds, DateTime scheduledDate)
+    {
+        string defaultEmail;
+        defaultEmail = System.Configuration.ConfigurationManager.AppSettings.Get("DefaultEmail");
+        var ticketbearerId = ticketbearerIds.Split(',').Select(Int64.Parse).ToList();
+        IRepository<TicketBearer> etBRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+        var ticketBearers = etBRepo.Get(filter: r => ticketbearerId.Contains(r.TicketbearerId)).ToList();
+        AttendeeMailNotification attendeeMailNotification = new AttendeeMailNotification(_factory, defaultEmail, scheduledEmail, ticketBearers);
+        attendeeMailNotification.SendNotification(new SendAttendeeMailService(_factory, userId, ticketBearers, scheduledDate));
+        return true;
+    }
   }
 }
