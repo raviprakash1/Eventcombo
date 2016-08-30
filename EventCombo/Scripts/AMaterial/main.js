@@ -888,11 +888,11 @@ eventComboApp.directive('decimalOnly', function () {
       function fromUser(number) {
         if (number) {
           var transformedInput = number.replace(/[^0-9\.]/g, '');
-          var nth = 0;
-          transformedInput = transformedInput.replace(/\./g, function (match, i, original) {
-            nth++;
-            return (nth > 1) ? "" : match;
-          });
+          if (transformedInput) {
+            var parts = transformedInput.split('.');
+            if (parts.length > 1)
+              transformedInput = parts.shift() + '.' + parts.join('');
+          }
           if (transformedInput !== number) {
             ngModelCtrl.$setViewValue(transformedInput);
             ngModelCtrl.$render();
