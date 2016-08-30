@@ -187,10 +187,10 @@
           <img src="@(Url.Content(String.IsNullOrEmpty(Model.Organizer.ImageUrl) ? "~/Images/default_org_image.jpg" : Model.Organizer.ImageUrl))" alt="@Model.Organizer.OrganizerName">
           <div>
             <p>
-              @Model.Organizer.OrganizerName<br>
+              @Model.Organizer.OrganizerName
               @if (!String.IsNullOrEmpty(Model.Organizer.WebsiteUrl))
               {
-                <a title="@Model.Organizer.WebsiteUrl" href="@Model.Organizer.WebsiteUrl" target="_blank">@Model.Organizer.WebsiteUrl</a>
+                <br><a title="@Model.Organizer.WebsiteUrl" href="@Model.Organizer.WebsiteUrl" target="_blank">@Model.Organizer.WebsiteUrl</a>
               }
             </p>
           </div>
@@ -285,7 +285,7 @@
               <span class="c3 padded ticdetail">{{ticket.VenueName}}</span>
               <span class="c3 padded ticdetail">{{ticket.StartDateFormatted}}</span>
             </div>
-            <div class="c12 ticdes"><p>{{ticket.TicketDescription}}</p></div>
+            <div class="c12 ticdes" ng-hide="!ticket.TicketDescription"><p>{{ticket.TicketDescription}}</p></div>
           </div>
 
           <div id="cartDeals">
