@@ -340,14 +340,17 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
           Organizer_Twitter: org[0].Organizer_Twitter,
           Organizer_Linkedin: org[0].Organizer_Linkedin,
           Validate: false,
-          Image: {
+          Image: null
+        };
+        if (org[0].Image) {
+          $scope.eventInfo.CurrentOrganizer.Image = {
             ECImageId: org[0].Image.ECImageId,
             Filename: org[0].Image.Filename,
             ImagePath: org[0].Image.ImagePath,
             TypeName: org[0].Image.TypeName,
             ECImageTypeId: org[0].Image.ECImageTypeId
           }
-        };
+        }
         $scope.organizerEditState = "Edit";
         $scope.OrganizerForm.$setPristine();
         $scope.OrganizerForm.$setUntouched();
@@ -885,11 +888,11 @@ eventComboApp.directive('decimalOnly', function () {
       function fromUser(number) {
         if (number) {
           var transformedInput = number.replace(/[^0-9\.]/g, '');
-          var nth = 0;
-          transformedInput = transformedInput.replace(/\./g, function (match, i, original) {
-            nth++;
-            return (nth > 1) ? "" : match;
-          });
+          if (transformedInput) {
+            var parts = transformedInput.split('.');
+            if (parts.length > 1)
+              transformedInput = parts.shift() + '.' + parts.join('');
+          }
           if (transformedInput !== number) {
             ngModelCtrl.$setViewValue(transformedInput);
             ngModelCtrl.$render();
