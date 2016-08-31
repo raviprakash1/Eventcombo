@@ -64,7 +64,7 @@ namespace EventCombo.Service
             if (eTemplate == null)
             {
                 List<KeyValuePair<string, string>> tagList = new List<KeyValuePair<string, string>>();
-
+                //todo:tag
                 _service.Message.To.Clear();
                 foreach (var email in _ticketBearers.Select(a => a.Email))
                 {
@@ -105,30 +105,6 @@ namespace EventCombo.Service
                 _service.Message.Body = ReplaceTags(new MvcHtmlString(HttpUtility.HtmlDecode(eTemplate.TemplateHtml)).ToHtmlString(), tagList);
                 _service.SendMail();
             }
-        }
-
-        public void DeleteScheduledMail(long scheduledEmailId)
-        {
-            using (var uow = _factory.GetUnitOfWork())
-                try
-                {
-                    IRepository<ScheduledEmail> sERepo = new GenericRepository<ScheduledEmail>(_factory.ContextFactory);
-                    IRepository<AttendeeEmail> aERepo = new GenericRepository<AttendeeEmail>(_factory.ContextFactory);
-                    var ScheduledEmail = sERepo.GetByID(scheduledEmailId);
-                    var AttendeeEmails = aERepo.Get(filter: a => a.ScheduledEmailId == ScheduledEmail.ScheduledEmailId);
-                    foreach (var item in AttendeeEmails)
-                    {
-                        aERepo.Delete(item.AttendeeEmailId);
-                    }
-                    sERepo.Delete(ScheduledEmail);
-                    uow.Context.SaveChanges();
-                    uow.Commit();
-                }
-                catch (Exception ex)
-                {
-                    uow.Rollback();
-                    throw new Exception("Error during DeleteMail", ex);
-                }
         }
 
         public void Send()
