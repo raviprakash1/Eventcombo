@@ -160,5 +160,16 @@ namespace EventCombo.Models
     public string Title { get; set; }
     public string ImageUrl { get; set; }
   }
-
+    public class AttendeeSearchRequestViewModel
+    {
+        public AttendeeSearchRequestViewModel()
+        {
+            EventId = 0;
+            Name = "";
+            Email = "";
+        }
+        public long EventId { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+    }
 }

@@ -383,7 +383,7 @@ namespace EventCombo.Controllers
             ModelState.AddModelError("ReplyTo", "ReplyTo can not be blank");
             return View(scheduledEmail);
         }
-        if (string.IsNullOrEmpty(scheduledEmail.SendTo))
+        if (string.IsNullOrEmpty(TicketbearerIds))
         {
             ModelState.AddModelError("SendTo", "To can not be blank");
             return View(scheduledEmail);
@@ -422,6 +422,26 @@ namespace EventCombo.Controllers
         _maservice.SendAttendeeMail(scheduledEmail, userId, TicketbearerIds, scheduledEmail.ScheduledDate);
 
         return RedirectToAction("AttendeeEmail", new { eventId = eventId });
+    }
+
+    [HttpPost]
+    public ActionResult DeleteEmail(long scheduledEmailId)
+    {
+        var IsDeleted = _maservice.DeleteAttendeeMail(scheduledEmailId);
+        return Json(IsDeleted, JsonRequestBehavior.AllowGet);
+    }
+
+    [HttpGet]
+    public ActionResult GetAttendeeList(AttendeeSearchRequestViewModel conllection)
+    {
+        AttendeeSearchRequestViewModel request = new AttendeeSearchRequestViewModel()
+        {
+            Email =Request["txtAttendeeEmail"],
+            Name = Request["txtAttendeeName"],
+            EventId = Convert.ToInt64(Request["hdnEventId"])
+        };
+        var attendees = _maservice.GetAttendeeList(request);
+        return PartialView("_AttendeeSearchList", attendees);
     }
   }
 }

@@ -19,7 +19,9 @@
         <div class="col-sm-6 col-xs-6">
             <h2 class="purchasedTitleHead">Email to Attendees</h2>
         </div>
-       
+        <div class="col-sm-6 col-xs-6 searchTxtOrderContainerCls">
+            <label id="PageMessage"></label>
+        </div>
     </div>
     <ul class="nav nav-tabs purchaseTicketHeaderTabs">
         <li class="active"><a data-toggle="tab" href="#EmailScheduled">Email Scheduled</a></li>
@@ -44,6 +46,8 @@
         @Html.ActionLink("Create New Attendee Email", "SendEmail", "ManageAttendees", new { eventId = ViewBag.EventId }, new { @class = "btn btn-info articleBtnCls" })
     </div>
 </div>
+<link href="~/fancybox/jquery.fancybox.css" rel="stylesheet" />
+<script src="~/fancybox/jquery.fancybox.js"></script>
 <script type="text/javascript">
 
     $(function () {
@@ -66,8 +70,20 @@
                     $(detail).html(data);
                     $(detail).css('background-color', '#f1f1f1');
                     $(detail).css('border-top', 'none');
-                    $(detail).data('popped', '1');
+                    //$(detail).data('popped', '1');
                     $(detail).slideDown();
+                    $('#AttendeeEmail_' + page +'_'+ id).fancybox({
+                        maxWidth: 800,
+                        maxHeight: 600,
+                        fitToView: false,
+                        width: '50%',
+                        height: '50%',
+                        autoSize: false,
+                        closeClick: false,
+                        openEffect: 'none',
+                        closeEffect: 'none'
+                    });
+                    $('#AttendeeEmail_' + page +'_'+ id).click();
                 }
             });
         }
@@ -88,4 +104,23 @@
         return res;
     }
 
+    function deleteAttendeeEmail(obj, page, id) {
+        $.ajax({
+            type: "post",
+            url: "@Url.Action("DeleteEmail", "ManageAttendees")",
+            data: { scheduledEmailId: id },
+            datatype: "html",
+            success: function (data) {
+                if(data){
+                    $(obj).parent().parent().remove();
+                    $("#PageMessage").html("Successfully deleted.");
+                    $("#PageMessage").css("color","green");
+                }else{
+                    $(obj).parent().parent().css("color","red");
+                    $("#PageMessage").html("Unable to delete! Please try again.");
+                    $("#PageMessage").css("color","red");
+                }
+            }
+        });
+    }
 </script>

@@ -694,6 +694,7 @@
     <Compile Include="Service\IEventService.cs" />
     <Compile Include="Service\IManageAttendeesService.cs" />
     <Compile Include="Service\IManageEventService.cs" />
+    <Compile Include="Service\Notification\AttendeeMailNotification.cs" />
     <Compile Include="Service\Notification\ForgotPasswordNotification.cs" />
     <Compile Include="Service\Notification\INotificationSender.cs" />
     <Compile Include="Service\ManageAttendeesService.cs" />
@@ -707,6 +708,7 @@
     <Compile Include="Service\ManageEventService.cs" />
     <Compile Include="Service\Notification\OrderNotification.cs" />
     <Compile Include="Service\Notification\OrderCancelNotification.cs" />
+    <Compile Include="Service\Notification\SendAttendeeMailService.cs" />
     <Compile Include="Service\OrderOptionsService.cs" />
     <Compile Include="Service\Notification\SendMailService.cs" />
     <Compile Include="Service\Notification\OrganizerMessageNotification.cs" />
@@ -858,6 +860,8 @@
     <Content Include="Content\OrderFormDesign.css" />
     <Content Include="Content\PurchasedTicket.css" />
     <Content Include="email-content-pdf%281%29.html" />
+    <Content Include="fancybox\jquery.fancybox.css" />
+    <Content Include="fancybox\jquery.fancybox.js" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="html\error.html" />
     <Content Include="Images\ajax-loader.gif" />
@@ -1451,6 +1455,7 @@
     <Content Include="Scripts\jquery.slides.min.js" />
     <Content Include="Scripts\jquery.timepicker.js" />
     <Content Include="Scripts\jquery.timepicker.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1745,6 +1750,11 @@
     <Content Include="Views\ManageAttendees\_SaleReport.cshtml" />
     <Content Include="Views\EventManagement\ViewEvent.cshtml" />
     <Content Include="Views\EventManagement\EmptyTemplate.cshtml" />
+    <Content Include="Views\ManageAttendees\AttendeeEmail.cshtml" />
+    <Content Include="Views\ManageAttendees\_AttendeeEmailList.cshtml" />
+    <Content Include="Views\ManageAttendees\_AttendeeEmailDetail.cshtml" />
+    <Content Include="Views\ManageAttendees\SendEmail.cshtml" />
+    <Content Include="Views\ManageAttendees\_AttendeeSearchList.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

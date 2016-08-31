@@ -10,6 +10,8 @@
 <script src="https://cdn.ckeditor.com/4.5.2/standard-all/ckeditor.js"></script>
 <link href='~/Content/jquery-te-1.4.0.css' rel='stylesheet' type='text/css'>
 <script type="text/javascript" src="~/Scripts/jquery-te-1.4.0.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
 @section sidenav{
     <div id="sidebar" class="nav nav-stacked">
         @Html.Action("Sidenav", "ManageEvent", new { eventid = ViewBag.EventId, CurrentItem = "manageattendees" })
@@ -23,7 +25,7 @@
         <h4>Schedule Email</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.Hidden("TicketbearerIds", "1,2")
+        @Html.Hidden("TicketbearerIds", "")
         @Html.HiddenFor(model => model.SendFrom)
         @Html.HiddenFor(model => model.CC)
         @Html.HiddenFor(model => model.BCC)
@@ -49,7 +51,8 @@
         <div class="form-group">
             @Html.Label("To", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SendTo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.SendTo, new { htmlAttributes = new { @class = "form-control", @style="display:none;" } })
+                <a id="anchorAttendeeSearchBox" href="#AttendeeSearchContainer">Select Attendees</a>
                 @Html.ValidationMessageFor(model => model.SendTo, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -74,17 +77,17 @@
             @Html.Label("Send Email", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <ul class="list-unstyled">
-                    <li><input type="radio" name="SendEmail" checked="checked" value="Now" /> Now</li>
-                    <li>
+                    <li style="padding: 4px 4px 10px 4px;"><input type="radio" name="SendEmail" checked="checked" value="Now" /> <b>Now</b></li>
+                    <li style="padding: 4px 4px 10px 4px;">
                         <div>
-                            <input type="radio" name="SendEmail" value="OnDate" /> At
-                            <input id="txtOnDateTime" name="txtOnDateTime" type="datetime-local" />
+                            <input type="radio" name="SendEmail" value="OnDate" /> <b>At</b>
+                            <input id="txtOnDateTime" name="txtOnDateTime" type="datetime-local" class="form-control text-box single-line" style="width: 250px;display:initial;"/>
                         </div>
                     </li>
-                    <li>
+                    <li style="padding: 4px 4px 10px 4px;">
                         <div>
-                            <input type="radio" name="SendEmail" value="BeforeEvent" /> Before The Event Start
-                            <input id="txtBeforeEventTime" name="txtBeforeEventTime" type="time" />
+                            <input type="radio" name="SendEmail" value="BeforeEvent" /> <b>Before The Event Start</b>
+                            <input id="txtBeforeEventTime" name="txtBeforeEventTime" type="time" class="form-control text-box single-line" style="width: 100px;display:initial;" />
                         </div>
                     </li>
                 </ul>
@@ -92,18 +95,77 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-info articleBtnCls" />
+                <input type="submit" value="Create"  onclick="return ValidateEmail();" class="btn btn-info articleBtnCls" />
             </div>
         </div>
     </div>
 }
 <div>
-    @Html.ActionLink("Back to List", "AttendeeEmail", new { eventid = ViewBag.EventId })
+    @Html.ActionLink("Back to List", "AttendeeEmail", new { eventid = ViewBag.EventId },new { @class = "btn btn-info articleBtnCls" })
 </div>
+<br />
+<div id="AttendeeSearchContainer" class="AttendeeSearchContainer" style="display:none;">
+    <p>Attendee List</p>
+    @using (Ajax.BeginForm("GetAttendeeList", "ManageAttendees", null, new AjaxOptions() { HttpMethod = "get", UpdateTargetId = "dvUpdatedAttendeeContainer" }))
+    {
+
+    <div>
+        <input id="hdnEventId" name="hdnEventId" value="@ViewBag.EventId" type="hidden" />
+        <input id="txtAttendeeName" name="txtAttendeeName" type="text" placeholder="Attendee Name" />
+        <input id="txtAttendeeEmail" name="txtAttendeeEmail" type="text" placeholder="Attendee Email" />
+        <button name="btnSearchAttendee" type="submit" class="btn btn-info articleBtnCls">Search</button>
+    </div>
+
+    }
+    <div id="dvUpdatedAttendeeContainer">
+
+    </div>   
+</div>
+<link href="~/fancybox/jquery.fancybox.css" rel="stylesheet" />
+<script src="~/fancybox/jquery.fancybox.js"></script>
 <script>
     $(function () {
         $("#Body").jqte();
 
     });
     CKEDITOR.disableAutoInline = true;
+    $('#anchorAttendeeSearchBox').fancybox({
+        maxWidth: 800,
+        maxHeight: 600,
+        fitToView: false,
+        width: '50%',
+        height: '50%',
+        autoSize: false,
+        closeClick: false,
+        openEffect: 'none',
+        closeEffect: 'none'
+    });
+
+    function ValidateEmail() {
+        var IsValidated = false;
+        if ($("#TicketbearerIds").val() != "") {
+            IsValidated = true;
+        } else {
+            alert('Please select atleast one attendee');
+        }
+        return IsValidated;
+    }
+    
+    function ValidateAttendee() {
+        if ($('.chkTicketbearerIds:checked').size() > 0) {
+            $("#TicketbearerIds").val($('.chkTicketbearerIds:checked').map(function () { return this.value; }).get().join(','));
+            $.fancybox.close();
+        } else {
+            alert('Please select atleast one attendee');
+        }
+    }
+
+    function CheckAll(chk) {
+        if (chk.checked) {
+            $('.chkTicketbearerIds').prop('checked', true);
+        } else {
+            $('.chkTicketbearerIds').attr('checked', false);
+        }
+    }
 </script>
+

@@ -862,5 +862,43 @@ namespace EventCombo.Service
         attendeeMailNotification.SendNotification(new SendAttendeeMailService(_factory, userId, ticketBearers, scheduledDate));
         return true;
     }
+    public bool DeleteAttendeeMail(long scheduledEmailId)
+    {
+        using (var uow = _factory.GetUnitOfWork())
+            try
+            {
+                IRepository<ScheduledEmail> sERepo = new GenericRepository<ScheduledEmail>(_factory.ContextFactory);
+                IRepository<AttendeeEmail> aERepo = new GenericRepository<AttendeeEmail>(_factory.ContextFactory);
+                var ScheduledEmail = sERepo.GetByID(scheduledEmailId);
+                var AttendeeEmails = aERepo.Get(filter: a => a.ScheduledEmailId == ScheduledEmail.ScheduledEmailId);
+                foreach (var item in AttendeeEmails)
+                {
+                    aERepo.Delete(item.AttendeeEmailId);
+                }
+                sERepo.Delete(ScheduledEmail);
+                uow.Context.SaveChanges();
+                uow.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                uow.Rollback();
+                return false;
+            }
+    }
+    public List<AttendeeViewModel> GetAttendeeList(AttendeeSearchRequestViewModel request)
+    {
+        IRepository<TicketBearer> sERepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+        var attendees = sERepo.Get(filter: a => (string.IsNullOrEmpty(request.Name) ? true : a.Name.Contains(request.Name))
+        && (string.IsNullOrEmpty(request.Email) ? true : a.Email.Contains(request.Email)))
+                .Select((element) => new AttendeeViewModel
+                {
+                    Email = element.Email,
+                    Name = element.Name,
+                    TicketbearerId = element.TicketbearerId
+                }).ToList();
+        return attendees;
+    }
+
   }
 }

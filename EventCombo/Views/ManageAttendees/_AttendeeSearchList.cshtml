@@ -1,0 +1,26 @@
+﻿@using System.Collections.Generic;
+@using System.Linq;
+@using EventCombo.Models;
+@model List<AttendeeViewModel>
+<table id="AttendeeSearchListTable" data-totalrecords="@(Model.Count())" class="table">
+    <thead>
+        <tr>
+            <th class="UETableHead"><input type="checkbox" onchange="CheckAll(this);" /></th>
+            <th class="UETableHead"><a href="javascript:void(0);">Name</a></th>
+            <th class="UETableHead"><a href="javascript:void(0);">Email</a></th>
+        </tr>
+    </thead>
+    <tbody class="tableRecorsTBody">
+        @foreach (var attendee in Model)
+        {
+            <tr>
+                <td class="UETableTD">
+                    <input name="TicketbearerIds" class="chkTicketbearerIds" checked="checked" type="checkbox" value="@attendee.TicketbearerId" />
+                </td>
+                <td class="UETableTD">@attendee.Name</td>
+                <td class="UETableTD">@attendee.Email</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<button name="btnSearchAttendeeSave" onclick="return ValidateAttendee();" type="button" class="btn btn-info articleBtnCls">Select</button>
