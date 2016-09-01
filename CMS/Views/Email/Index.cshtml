@@ -454,9 +454,7 @@
                 var toReplace = tomail.replace('¶¶', '');
                 toReplace = toReplace.replace('¶¶', '');
                 console.log(toReplace)
-                if ((toReplace.trim() != "UserEmailID" ) )
-                {
-                    if((toReplace.trimLeft().trimRight() != "EventOrganiserEmail"))
+                if ((toReplace.trim() != "UserEmailID" ) && (toReplace.trimLeft().trimRight() != "EventOrganiserEmail") && (toReplace.trimLeft().trimRight() != "FriendsEmail"))
                     {
                         emailmsg += "Wrong Tag Inserted in to" + "\n";
                         $('#To').addClass('err-bor');
@@ -464,10 +462,6 @@
                     }
                    
 
-                }
-               
-                   
-                
             } else {
                 if (!validateEmail(tomail)) {
 

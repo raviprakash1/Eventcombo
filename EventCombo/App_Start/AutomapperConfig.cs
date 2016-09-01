@@ -101,6 +101,12 @@ namespace EventCombo
         .ForMember(d => d.TypeName, m => m.MapFrom(s => s.ECImageType.TypeName));
       CreateMap<ECImageViewModel, ECImageViewModel>();
       CreateMap<ScheduledEmail, ScheduledEmailViewModel>();
+      CreateMap<EventNotificationViewModel, OrganizerMessageViewModel>()
+        .ForMember(d => d.PhoneNo, m => m.MapFrom(s => s.Phone));
+      CreateMap<Event, EventViewModel>();
+      CreateMap<Event_VariableDesc, VariableChargesViewModel>()
+        .ForMember(d => d.VariableId, m => m.MapFrom(s => s.Variable_Id))
+        .ForMember(d => d.EventId, m => m.MapFrom(s => s.Event_Id));
 
 
       //backward maps

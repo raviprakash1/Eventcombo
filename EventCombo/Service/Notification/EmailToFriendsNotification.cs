@@ -10,17 +10,17 @@ using System.Web.Mvc;
 
 namespace EventCombo.Service
 {
-  class OrganizerMessageNotification : INotification
+  public class EmailToFriendsNotification : INotification
   {
     private IUnitOfWorkFactory _factory;
-    private Event_OrganizerMessages _message;
+    private EventNotificationViewModel _message;
     private string _defaultEmail;
 
-    public OrganizerMessageNotification(IUnitOfWorkFactory factory, Event_OrganizerMessages message, string defaultEmail)
+    public EmailToFriendsNotification(IUnitOfWorkFactory factory, EventNotificationViewModel message, string defaultEmail)
     {
       if (factory == null)
         throw new ArgumentNullException("factory");
-      if(message == null)
+      if (message == null)
         throw new ArgumentNullException("message");
       if (String.IsNullOrEmpty(defaultEmail))
         throw new ArgumentNullException("defaultEmail");
@@ -49,38 +49,27 @@ namespace EventCombo.Service
 
     public void SendNotification(ISendMailService _service)
     {
-
       IRepository<Email_Template> etRepo = new GenericRepository<Email_Template>(_factory.ContextFactory);
-      IRepository<Organizer_Master> omRepo = new GenericRepository<Organizer_Master>(_factory.ContextFactory);
       IRepository<Event> evRepo = new GenericRepository<Event>(_factory.ContextFactory);
-      var eTemplate = etRepo.Get(filter: (et => et.Template_Tag == "Contact_Event_Organizer")).SingleOrDefault();
+      var eTemplate = etRepo.Get(filter: (et => et.Template_Tag == "email_friend")).SingleOrDefault();
       if (eTemplate == null)
-        throw new Exception("Email template 'Contact_Event_Organizer' not found.");
+        throw new Exception("Email template 'email_friend' not found.");
 
-      var om = omRepo.GetByID(_message.OrganizerId);
-      if (om == null)
-        throw new Exception("Organizer_Master nof found for ID = " + (_message.OrganizerId ?? 0).ToString());
       var ev = evRepo.GetByID(_message.EventId);
       if (ev == null)
-        throw new Exception("Event nof found for ID = " + (_message.EventId ?? 0).ToString());
+        throw new Exception("Event nof found for ID = " + _message.EventId.ToString());
 
-      string userEmail = om.Organizer_Email ?? om.AspNetUser.Profiles.FirstOrDefault().Email;
-      string userName = om.Orgnizer_Name ?? om.AspNetUser.Profiles.FirstOrDefault().FirstName;
 
       var tagList = LoadTagList();
-      tagList["EventOrganiserEmail"] = userEmail;
-      tagList["EventOrganiserName"] = userName;
-      tagList["UserEmailID"] = _message.Email;
-      tagList["UserFirstNameID"] = _message.Name;
-      tagList["UserPhone"] = _message.PhoneNo;
+      tagList["FriendsEmail"] = _message.Email;
       tagList["EventTitleId"] = ev.EventTitle;
       tagList["MessageBody"] = _message.Message;
 
       _service.Message.To.Clear();
       if (String.IsNullOrEmpty(eTemplate.To))
-        _service.Message.To.Add(new MailAddress(userEmail, userName));
+        _service.Message.To.Add(_message.Email);
       else
-       _service.Message.To.Add(ReplaceTags(eTemplate.To, tagList));
+        _service.Message.To.Add(ReplaceTags(eTemplate.To, tagList));
 
       string fromAddress = String.IsNullOrEmpty(eTemplate.From) ? _defaultEmail : ReplaceTags(eTemplate.From, tagList);
       _service.Message.From = new MailAddress(fromAddress, String.IsNullOrEmpty(eTemplate.From_Name) ? fromAddress : ReplaceTags(eTemplate.From_Name, tagList));

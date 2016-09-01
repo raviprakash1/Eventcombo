@@ -67,7 +67,12 @@ namespace EventCombo.Controllers
 
       string userId = Session["AppId"].ToString();
 
-      EventViewModel ev = _eService.CreateEvent(userId);
+      EventViewModel ev;
+      if (eventId == 0)
+        ev = _eService.CreateEvent(userId);
+      else
+        ev = _eService.GetEventById(eventId);
+
       PopulateBaseViewModel(ev, "Create Event | Eventcombo");
 
       JsonNetResult res = new JsonNetResult();

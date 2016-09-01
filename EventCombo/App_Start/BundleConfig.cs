@@ -123,6 +123,7 @@ namespace EventCombo
                         "~/Scripts/AMaterial/angular-material.js",
                         "~/Scripts/AMaterial/angular-messages.js",
                         "~/Scripts/AMaterial/angular-cookies.js",
+                        "~/Scripts/AMaterial/angular-sanitize.js",
                         "~/Scripts/AMaterial/tinymce.min.js",
                         "~/Scripts/AMaterial/tinycolor-min.js",
                         "~/Scripts/AMaterial/angular-tinymce/tinymce.min.js",

@@ -312,6 +312,7 @@
     <Compile Include="Controllers\ManageAttendeesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageEventController.cs" />
+    <Compile Include="Controllers\NotificationAPIController.cs" />
     <Compile Include="Controllers\OrganizerInfoController.cs" />
     <Compile Include="Controllers\OrderOptionsController.cs" />
     <Compile Include="Controllers\PaymentInfoController.cs" />
@@ -535,6 +536,7 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MyAccount.cs" />
+    <Compile Include="Models\NotificationViewModel.cs" />
     <Compile Include="Models\OrderState.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -682,6 +684,7 @@
     <Compile Include="Service\ArticleService.cs" />
     <Compile Include="Service\ECImageStorage.cs" />
     <Compile Include="Service\ECImageService.cs" />
+    <Compile Include="Service\Notification\EmailToFriendsNotification.cs" />
     <Compile Include="Service\EventService.cs" />
     <Compile Include="Service\HangfireBootstrapper.cs" />
     <Compile Include="Service\HtmlProcessing.cs" />
@@ -695,6 +698,8 @@
     <Compile Include="Service\IManageAttendeesService.cs" />
     <Compile Include="Service\IManageEventService.cs" />
     <Compile Include="Service\Notification\AttendeeMailNotification.cs" />
+    <Compile Include="Service\INotificationService.cs" />
+    <Compile Include="Service\NotificationService.cs" />
     <Compile Include="Service\Notification\ForgotPasswordNotification.cs" />
     <Compile Include="Service\Notification\INotificationSender.cs" />
     <Compile Include="Service\ManageAttendeesService.cs" />
@@ -968,6 +973,8 @@
     <Content Include="Scripts\AMaterial\angular-messages.min.js" />
     <Content Include="Scripts\AMaterial\angular-route.js" />
     <Content Include="Scripts\AMaterial\angular-route.min.js" />
+    <Content Include="Scripts\AMaterial\angular-sanitize.js" />
+    <Content Include="Scripts\AMaterial\angular-sanitize.min.js" />
     <Content Include="Scripts\AMaterial\angular-tinymce\tinymce.min.js" />
     <Content Include="Scripts\AMaterial\angular.js" />
     <Content Include="Scripts\AMaterial\angular.min.js" />
@@ -1478,7 +1485,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\socialshare.js" />
-    <Content Include="Scripts\sharefuncs.js" />
     <Content Include="Scripts\summernote.min.js" />
     <Content Include="Scripts\Validation.js" />
     <Content Include="Scripts\_references.js" />
@@ -1771,6 +1777,7 @@
     <Folder Include="Views\EmailServices\" />
     <Folder Include="Views\Html2Pdf\" />
     <Folder Include="Views\ImageAPI\" />
+    <Folder Include="Views\NotificationAPI\" />
     <Folder Include="Views\Permission\" />
     <Folder Include="Views\Validate\" />
     <Folder Include="Views\ValidationMessage\" />

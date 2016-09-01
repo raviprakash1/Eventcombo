@@ -296,7 +296,7 @@ function addEventMarker(eventInfo, map) {
         '<div class="infoContent">' +
                               '<img class="propImg" src="' + eventInfo.ImageUrl + '">' +
                               '<div class="propTitle">' + eventInfo.Address + '</div>' +
-                              '<div class="propAddress">' + eventInfo.EventDescription + '</div>' +
+                              '<div class="propAddress">' + eventInfo.EventShortDesc + '</div>' +
                           '</div>' +
                           '<div class="clearfix"></div>' +
                           '<div class="infoButtons">' +

@@ -3,13 +3,28 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
     $scope.favStyle = { "color": "white" };
     $scope.voteStyle = { "color": "white" };
     $scope.eventInfo = {};
+
+    $scope.displayVEPopups = 'block';
+    $scope.popVEShareWithFriends = false;
+    $scope.popVEOrganizerMessage = false;
+    $scope.VEMessage = {
+      Email: '',
+      Name: '',
+      Phone: '',
+      Message: '',
+      EventId: 0
+  }
+
     if (!$attrs.eventid) throw new Error("No event ID defined");
 
     $scope.map = createMap(40.6984237, -73.9890044);
     deleteMarkers();
 
-    $scope.$on('ECEventInfoLoaded', function (val) {
+    $scope.$on('EventInfoLoaded', function (val) {
       $scope.eventInfo = eventInfoService.getEventInfo();
+      $scope.eventInfo.Tickets.forEach(function (ticket, i, arr) {
+        ticket.PriceText = "";
+      });
       deleteMarkers();
       if ($scope.eventInfo.Latitude) {
         $scope.map.panTo(new google.maps.LatLng($scope.eventInfo.Latitude, $scope.eventInfo.Longitude));
@@ -17,36 +32,56 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
       }
       $scope.UpdateStyles();
     });
+
     eventInfoService.loadInfo($attrs.eventid);
 
-    $scope.onPriceChange = function () {
+    $scope.$on('LoggedIn', function (event, param) {
+      if (param === 'VEFav' + $scope.eventInfo.EventId) {
+        eventInfoService.addFavorite($scope.UpdateStyles);
+        broadcastService.LoginProcessed();
+      }
+      else if (param === 'VEVote' + $scope.eventInfo.EventId) {
+        eventInfoService.voteEvent($scope.UpdateStyles);
+        broadcastService.LoginProcessed();
+      }
+    });
+
+    $scope.onPriceChange = function (ticket) {
+      if (ticket) {
+        console.log(ticket.PriceText);
+        ticket.Amount = parseFloat(ticket.PriceText);
+        ticket.Amount = isNaN(ticket.Amount) ? 0 : ticket.Amount;
+      }
       eventInfoService.recalcTotal();
     }
 
     $scope.onPriceBlur = function (ticket) {
-      if (isNaN(ticket.Amount) || (ticket.Amount == null))
-        ticket.Amount = 0;
+      ticket.Amount = (ticket.Amount < 0) || isNaN(ticket.Amount) || !ticket.Amount ? 0 : ticket.Amount;
+      ticket.PriceText = ticket.Amount > 0 ? ticket.Amount.toFixed(2) : "";
+      $scope.onPriceChange(ticket);
     }
 
     $scope.OrderCheckout = function () {
       eventInfoService.postTickets();
     }
 
-    $scope.StartLogin = function(){
-      broadcastService.CallLogin("");
+    $scope.StartLogin = function(loginInfo){
+      broadcastService.CallLogin(loginInfo);
     }
 
     $scope.AddToFavorite = function () {
-      if (!$scope.userRegistered)
-        $scope.StartLogin();
+      if (!$scope.userRegistered) {
+        $scope.StartLogin({ callerId: 'VEFav' + $scope.eventInfo.EventId });
+      }
       if ((!$scope.eventInfo) || ($scope.eventInfo.UserFavorite == true))
         return;
       eventInfoService.addFavorite($scope.UpdateStyles);
     }
 
     $scope.VoteEvent = function () {
-      if (!$scope.userRegistered)
-        $scope.StartLogin();
+      if (!$scope.userRegistered) {
+        $scope.StartLogin({ callerId: 'VEVote' + $scope.eventInfo.EventId });
+      }
       if ((!$scope.eventInfo) || ($scope.eventInfo.UserVote == true))
         return;
       eventInfoService.voteEvent($scope.UpdateStyles);
@@ -57,6 +92,64 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
       $scope.voteStyle = $scope.eventInfo.UserVote ? {} : { "color": "white" };
     }
 
+    $scope.showLoadingMessage = function (show, message) {
+      $scope.popLoading = show;
+      $scope.LoadingMessage = message;
+    }
+
+    $scope.showInfoMessage = function (show, message) {
+      $scope.popInfoMessage = show;
+      $scope.InfoMessage = message;
+    }
+
+    $scope.SendMessageTo = function (mtype) {
+      $scope.VEMessage.Email = '';
+      $scope.VEMessage.Name = '';
+      $scope.VEMessage.Message = '';
+      if (mtype == 1) {
+        $scope.VEShareWithFriendsForm.$setPristine();
+        $scope.VEShareWithFriendsForm.$setUntouched();
+        $scope.popVEShareWithFriends = true;
+      } else {
+        $scope.VEOrganizerMessageForm.$setPristine();
+        $scope.VEOrganizerMessageForm.$setUntouched();
+        $scope.popVEOrganizerMessage = true;;
+      }
+    }
+
+    $scope.TrySendMessage = function (form, url) {
+      if (form.$valid) {
+        $scope.VEMessage.EventId = $scope.eventInfo.EventId;
+        var data = {
+          json: angular.toJson($scope.VEMessage)
+        };
+
+        $scope.showLoadingMessage(true, 'Sending message');
+
+        $http.post(url, data).then(function (response) {
+          $scope.showLoadingMessage(false, '');
+          if (response.data && response.data.Success)
+            $scope.showInfoMessage(true, "Message send succesfully");
+          else
+            $scope.showInfoMessage(true, response.data.ErrorMessage);
+        }, function (error) {
+          $scope.showLoadingMessage(false, '');
+          $scope.showInfoMessage(true, "Error while sending message. Try again later.");
+        });
+      } else {
+        $scope.submitted = true; 
+      }
+    }
+
+    $scope.TrySendShareWithFriendsMessage = function (form) {
+      $scope.popVEShareWithFriends = false;
+      $scope.TrySendMessage(form, '/notificationAPI/shareFriends');
+    }
+
+    $scope.TrySendOrganizerMessage = function (form) {
+      $scope.popVEOrganizerMessage = false;
+      $scope.TrySendMessage(form, '/notificationAPI/sendOrganizer');
+    }
   }]);
 
 eventComboApp.controller('tickets', ["$scope", "$filter", "$attrs", function ($scope, $filter, $attrs) {
@@ -92,8 +185,8 @@ eventComboApp.controller('tickets', ["$scope", "$filter", "$attrs", function ($s
   }
 }]);
 /****************************************************************************/
-eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$window',
-  function ($http, $rootScope, $cookies, $window) {
+eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$window', 'broadcastService',
+  function ($http, $rootScope, $cookies, $window, broadcastService) {
 
     var eventInfo = {};
     var selectedImage = 0;
@@ -141,7 +234,7 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
 
         eventInfo.EventDateTimeInfoString = getEventDateTimeInfoString(eventInfo.DateInfo);
         recalcTotal();
-        $rootScope.$broadcast('ECEventInfoLoaded', '1');
+        broadcastService.EventInfoLoaded();
       });
     }
 
@@ -151,8 +244,8 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
         if (ticket.TicketTypeId == 2)
           total = total + ticket.Quantity * ticket.TotalPrice;
         else if (ticket.TicketTypeId == 3) {
-          ticket.Amount = isNaN(ticket.Amount) || ticket.Amount >= 0 ? ticket.Amount : 0;
-          total = total + (isNaN(ticket.Amount) ? 0 : (ticket.Amount == null ? 0 : ticket.Amount));
+          ticket.Amount = isNaN(ticket.Amount) || ticket.Amount < 0 ? 0 : ticket.Amount;
+          total = total + (isNaN(ticket.Amount) || (ticket.Amount == null ? 0 : ticket.Amount));
         }
       });
       eventInfo.TotalPrice = total;
@@ -368,6 +461,32 @@ function DialogController($scope, $mdDialog, eventInfoService, $filter) {
     }
   };
 }
+
+eventComboApp.directive('decimalOnly', function () {
+  return {
+    require: 'ngModel',
+    link: function (scope, element, attr, ngModelCtrl) {
+      function fromUser(number) {
+        if (number) {
+          var transformedInput = number.replace(/[^0-9\.]/g, '');
+          var nth = 0;
+          transformedInput = transformedInput.replace(/\./g, function (match, i, original) {
+            nth++;
+            return (nth > 1) ? "" : match;
+          });
+          if (transformedInput !== number) {
+            ngModelCtrl.$setViewValue(transformedInput);
+            ngModelCtrl.$render();
+          }
+          return transformedInput;
+        }
+        return number;
+      }
+      ngModelCtrl.$parsers.push(fromUser);
+    }
+  };
+});
+
 /****************************************************************************/
 
 function FormatDateTime(date) {
