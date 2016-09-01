@@ -153,5 +153,31 @@ namespace EventCombo.Service
             }
 
         }
+
+        public void SendTestEmail(string to, string replyTo, string subject, string body)
+        {
+            try
+            {
+                SendMailService _service = new SendMailService();
+                _service.Message.To.Clear();
+                foreach (var email in to.Split(';').ToList())
+                {
+                    _service.Message.To.Add(new MailAddress(email));
+                }
+                _service.Message.From = new MailAddress(_defaultEmail, "");
+                _service.Message.CC.Clear();
+                _service.Message.ReplyToList.Clear();
+                if (!String.IsNullOrEmpty(replyTo))
+                    _service.Message.ReplyToList.Add(new MailAddress(replyTo));
+                _service.Message.Subject = subject;
+                _service.Message.IsBodyHtml = true;
+                _service.Message.Body = body;
+                _service.SendMail();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
     }
 }

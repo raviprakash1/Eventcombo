@@ -413,7 +413,6 @@ namespace EventCombo.Controllers
 
             return RedirectToAction("AttendeeEmail", new { eventId = eventId });
         }
-        //scheduledEmail = _maservice.PrepareSendAttendeeMail(eventId);
         return View(scheduledEmail);
     }
 
@@ -436,5 +435,44 @@ namespace EventCombo.Controllers
         var attendees = _maservice.GetAttendeeList(request);
         return PartialView("_AttendeeSearchList", attendees);
     }
+
+    [HttpPost]
+    public ActionResult SendTestEmail(ScheduledEmailViewModel emailViewModel)
+    {
+        AttendeeMailNotification AttendeeMailNotification = new AttendeeMailNotification();
+        AttendeeMailNotification.SendTestEmail(emailViewModel.SendTo, emailViewModel.ReplyTo, emailViewModel.Subject, emailViewModel.Body);
+        return Json("true", JsonRequestBehavior.AllowGet);
+    }
+
+    public ActionResult EditEmail(long eventId, long scheduledEmailId)
+    {
+        if ((Session["AppId"] == null))
+            return DefaultAction();
+
+        string userId = Session["AppId"].ToString();
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Email", "ManageAttendees");
+        ViewBag.EventId = eventId;
+        ScheduledEmailViewModel scheduledEmail = _maservice.GetScheduledEmailDetail(scheduledEmailId);
+        return View(scheduledEmail);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult EditEmail(long eventId, [Bind(Include = "ScheduledEmailId,Body")] ScheduledEmailViewModel scheduledEmail)
+    {
+        if ((Session["AppId"] == null))
+            return DefaultAction();
+
+        string userId = Session["AppId"].ToString();
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Email", "ManageAttendees");
+        ViewBag.EventId = eventId;
+        _maservice.UpdateAttendeeMail(scheduledEmail);
+        return Content("");
+    }
+
   }
 }

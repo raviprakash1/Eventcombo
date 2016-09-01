@@ -1755,6 +1755,7 @@
     <Content Include="Views\ManageAttendees\_AttendeeEmailDetail.cshtml" />
     <Content Include="Views\ManageAttendees\SendEmail.cshtml" />
     <Content Include="Views\ManageAttendees\_AttendeeSearchList.cshtml" />
+    <Content Include="Views\ManageAttendees\EditEmail.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

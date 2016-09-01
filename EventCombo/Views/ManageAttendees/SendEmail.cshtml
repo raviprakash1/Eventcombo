@@ -75,6 +75,15 @@
         </div>
 
         <div class="form-group">
+            @Html.Label("Send Test Message To", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input id="txtAttendeeTestMessage" name="txtAttendeeTestMessage" type="text" class="form-control text-box single-line" placeholder="Test Email Id" style="width: 250px;display:initial;" />
+                <input type="button" onclick="sendTestMessage();" value="Send Test" class="btn btn-info articleBtnCls" />
+                <label id="lblTestEmailMessage" style="color:green;"></label>
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.Label("Send Email", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <ul class="list-unstyled">
@@ -100,6 +109,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-info articleBtnCls" />
+                @Html.ActionLink("Cancel", "AttendeeEmail", new { eventid = ViewBag.EventId }, new { @class = "btn btn-info articleBtnCls" })
             </div>
         </div>
     </div>
@@ -154,7 +164,7 @@
         }
         return IsValidated;
     }
-    
+
     function ValidateAttendee() {
         if ($('.chkTicketbearerIds:checked').size() > 0) {
             $("#TicketbearerIds").val($('.chkTicketbearerIds:checked').map(function () { return this.value; }).get().join(','));
@@ -173,5 +183,35 @@
             $('.chkTicketbearerIds').attr('checked', false);
         }
     }
+
+    function sendTestMessage() {
+        var htmlBody = $("#Body").val();
+        var emailViewModel = {
+            SendTo: $("#txtAttendeeTestMessage").val(),
+            ReplyTo: $("#ReplyTo").val(),
+            Subject: $("#Subject").val(),
+            Body: htmlBody
+        };
+        if ($("#txtAttendeeTestMessage").val() == "") {
+            alert('Please enter test email');
+        } else if ($("#ReplyTo").val() == "") {
+            alert('Please enter Reply To');
+        } else if ($("#Subject").val() == "") {
+            alert('Please enter Subject');
+        } else if ($("#Body").val() == "") {
+            alert('Please enter Message');
+        } else {
+            $.ajax({
+                type: "post",
+                url: "@Url.Action("SendTestEmail", "ManageAttendees")",
+                data: emailViewModel,
+                datatype: "html",
+                success: function (data) {
+                    $("#lblTestEmailMessage").html("Test Message sent successfully...")
+                }
+            });
+        }
+    }
+
 </script>
 

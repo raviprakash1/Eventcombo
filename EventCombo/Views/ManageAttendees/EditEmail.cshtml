@@ -1,0 +1,34 @@
+﻿@model EventCombo.Models.ScheduledEmailViewModel
+@{
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("EditEmail", "ManageAttendees", null, new AjaxOptions() { OnSuccess="onEditSuccess",OnFailure= "onEditSuccess", HttpMethod = "post",UpdateTargetId="asdf" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Edit Email</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ScheduledEmailId)
+        <input id="eventId" name="eventId" value="@ViewBag.EventId" type="hidden" />
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "editor jqte-test", @id = "Body" } })
+                @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+            </div>
+        </div> 
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Update Message" class="btn btn-info articleBtnCls" />
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(function () {
+        $("#Body").jqte();
+    });
+    CKEDITOR.disableAutoInline = true;
+</script>

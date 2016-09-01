@@ -32,11 +32,13 @@ namespace EventCombo.Service
 
     IEnumerable<ScheduledEmail> GetScheduledEmailList(bool IsEmailSend);
 
-    ScheduledEmail GetScheduledEmailDetail(long scheduledEmailId);
+    ScheduledEmailViewModel GetScheduledEmailDetail(long scheduledEmailId);
 
     ScheduledEmailViewModel PrepareSendAttendeeMail(long eventId);
 
     bool SendAttendeeMail(ScheduledEmailViewModel scheduledEmail, string userId, string ticketbearerIds, DateTime scheduledDate);
+
+    bool UpdateAttendeeMail(ScheduledEmailViewModel scheduledEmail);
 
     bool DeleteAttendeeMail(long scheduledEmailId);
 

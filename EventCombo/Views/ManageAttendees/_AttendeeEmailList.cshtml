@@ -23,6 +23,12 @@
                 <td class="UETableTD">@sEmail.AttendeeEmails.Count()</td>
                 <td class="UETableTD">@sEmail.ScheduledDate</td>
                 <td class="UETableTD">
+                    @if (!sEmail.IsEmailSend)
+                    {
+                        <a href="javascript:void(0)" onclick="EditEmailMessage(@sEmail.ScheduledEmailId);">
+                            Edit Message
+                        </a> <label>|</label>
+                    }
                     <a href="javascript:void(0)" onclick="deleteAttendeeEmail(this,'@(sEmail.IsEmailSend ? "Sent" : "Scheduled")', @sEmail.ScheduledEmailId);">
                         Delete
                     </a>

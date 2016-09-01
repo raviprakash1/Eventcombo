@@ -846,11 +846,11 @@ namespace EventCombo.Service
         var ScheduledEmails = sERepo.Get(filter: s => s.EmailTypeId == 1 && s.IsEmailSend == IsEmailSend);
         return ScheduledEmails;
     }
-    public ScheduledEmail GetScheduledEmailDetail(long scheduledEmailId)
+    public ScheduledEmailViewModel GetScheduledEmailDetail(long scheduledEmailId)
     {
         IRepository<ScheduledEmail> sERepo = new GenericRepository<ScheduledEmail>(_factory.ContextFactory);
-        var ScheduledEmail = sERepo.Get(filter: s => s.ScheduledEmailId == scheduledEmailId).FirstOrDefault();
-        return ScheduledEmail;
+        var ScheduledEmail = sERepo.Get(filter: s => s.ScheduledEmailId == scheduledEmailId).ToList().FirstOrDefault();
+        return _mapper.Map<ScheduledEmailViewModel>(ScheduledEmail);
     }
     public bool SendAttendeeMail(ScheduledEmailViewModel scheduledEmail, string userId, string ticketbearerIds, DateTime scheduledDate)
     {
@@ -862,6 +862,25 @@ namespace EventCombo.Service
         AttendeeMailNotification attendeeMailNotification = new AttendeeMailNotification(_factory, defaultEmail, scheduledEmail, ticketBearers);
         attendeeMailNotification.SendNotification(new SendAttendeeMailService(_factory, userId, ticketBearers, scheduledDate));
         return true;
+    }
+    public bool UpdateAttendeeMail(ScheduledEmailViewModel scheduledEmail)
+    {
+        using (var uow = _factory.GetUnitOfWork())
+            try
+            {
+                IRepository<ScheduledEmail> etBRepo = new GenericRepository<ScheduledEmail>(_factory.ContextFactory);
+                var scheduledEmaile = etBRepo.Get(filter: s => s.ScheduledEmailId == scheduledEmail.ScheduledEmailId).FirstOrDefault();
+                scheduledEmaile.Body = scheduledEmail.Body;
+                etBRepo.Update(scheduledEmaile);
+                uow.Context.SaveChanges();
+                uow.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                uow.Rollback();
+                return false;
+            }
     }
     public bool DeleteAttendeeMail(long scheduledEmailId)
     {
