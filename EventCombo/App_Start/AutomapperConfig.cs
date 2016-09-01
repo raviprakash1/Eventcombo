@@ -100,6 +100,7 @@ namespace EventCombo
         .ForMember(d => d.Filename, m => m.MapFrom(s => s.ImagePath))
         .ForMember(d => d.TypeName, m => m.MapFrom(s => s.ECImageType.TypeName));
       CreateMap<ECImageViewModel, ECImageViewModel>();
+      CreateMap<ScheduledEmail, ScheduledEmailViewModel>();
 
 
       //backward maps
@@ -134,6 +135,7 @@ namespace EventCombo
         .ForMember(d => d.Event_Id, m => m.MapFrom(s => s.EventId));
       CreateMap<ECImageViewModel, ECImage>()
         .ForMember(d => d.ImagePath, m => m.MapFrom(s => s.Filename));
+      CreateMap<ScheduledEmailViewModel, ScheduledEmail>();
     }
   }
 }

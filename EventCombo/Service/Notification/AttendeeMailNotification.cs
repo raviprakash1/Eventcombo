@@ -15,7 +15,7 @@ namespace EventCombo.Service
         private IUnitOfWorkFactory _factory;
         private string _receiver;
         private string _defaultEmail;
-        private ScheduledEmail _scheduledEmail;
+        private ScheduledEmailViewModel _scheduledEmail;
         private List<TicketBearer> _ticketBearers;
 
         public string ReceiverName
@@ -33,7 +33,7 @@ namespace EventCombo.Service
 
         }
 
-        public AttendeeMailNotification(IUnitOfWorkFactory factory, string defaultEmail, ScheduledEmail scheduledEmail, List<TicketBearer> ticketBearers)
+        public AttendeeMailNotification(IUnitOfWorkFactory factory, string defaultEmail, ScheduledEmailViewModel scheduledEmail, List<TicketBearer> ticketBearers)
         {
             if (factory == null)
                 throw new ArgumentNullException("factory");

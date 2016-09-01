@@ -831,12 +831,13 @@ namespace EventCombo.Service
         res.Position = 0;
         return res;
     }
-    public ScheduledEmail PrepareSendAttendeeMail(long eventId)
+    public ScheduledEmailViewModel PrepareSendAttendeeMail(long eventId)
     {
         IRepository<EventVenue> eRepo = new GenericRepository<EventVenue>(_factory.ContextFactory);
         var ev = eRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();
-        ScheduledEmail scheduledEmail = new ScheduledEmail();
+        ScheduledEmailViewModel scheduledEmail = new ScheduledEmailViewModel();
         scheduledEmail.ScheduledDate = ev.E_Startdate ?? DateTime.UtcNow;
+        scheduledEmail.SendFrom= System.Configuration.ConfigurationManager.AppSettings.Get("UserName");
         return scheduledEmail;
     }
     public IEnumerable<ScheduledEmail> GetScheduledEmailList(bool IsEmailSend)
@@ -851,7 +852,7 @@ namespace EventCombo.Service
         var ScheduledEmail = sERepo.Get(filter: s => s.ScheduledEmailId == scheduledEmailId).FirstOrDefault();
         return ScheduledEmail;
     }
-    public bool SendAttendeeMail(ScheduledEmail scheduledEmail, string userId, string ticketbearerIds, DateTime scheduledDate)
+    public bool SendAttendeeMail(ScheduledEmailViewModel scheduledEmail, string userId, string ticketbearerIds, DateTime scheduledDate)
     {
         string defaultEmail;
         defaultEmail = System.Configuration.ConfigurationManager.AppSettings.Get("DefaultEmail");

@@ -361,13 +361,13 @@ namespace EventCombo.Controllers
         Session["Fromname"] = "ManageAttendees";
         Session["ReturnUrl"] = Url.Action("Email", "ManageAttendees");
         ViewBag.EventId = eventId;
-        ViewBag.From = System.Configuration.ConfigurationManager.AppSettings.Get("UserName") + " (" + System.Configuration.ConfigurationManager.AppSettings.Get("DefaultEmail") + ")";
-        ScheduledEmail scheduledEmail = _maservice.PrepareSendAttendeeMail(eventId);
+        ScheduledEmailViewModel scheduledEmail = _maservice.PrepareSendAttendeeMail(eventId);
         return View(scheduledEmail);
     }
 
     [HttpPost]
-    public ActionResult SendEmail(long eventId, [Bind(Include = "SendFrom, SendTo, ReplyTo, CC, BCC, Subject, Body, ScheduledDate")] ScheduledEmail scheduledEmail, string TicketbearerIds, string SendEmail, string txtOnDateTime, string txtBeforeEventTime)
+    [ValidateAntiForgeryToken]
+    public ActionResult SendEmail(long eventId, [Bind(Include = "SendFrom, SendTo, ReplyTo, CC, BCC, Subject, Body, ScheduledDate")] ScheduledEmailViewModel scheduledEmail, string TicketbearerIds, string SendEmail, string txtOnDateTime, string txtBeforeEventTime)
     {
         if ((Session["AppId"] == null))
             return DefaultAction();
@@ -377,51 +377,44 @@ namespace EventCombo.Controllers
         Session["Fromname"] = "ManageAttendees";
         Session["ReturnUrl"] = Url.Action("Email", "ManageAttendees");
         ViewBag.EventId = eventId;
-        
-        if (string.IsNullOrEmpty(scheduledEmail.ReplyTo))
-        {
-            ModelState.AddModelError("ReplyTo", "ReplyTo can not be blank");
-            return View(scheduledEmail);
-        }
-        if (string.IsNullOrEmpty(TicketbearerIds))
-        {
-            ModelState.AddModelError("SendTo", "To can not be blank");
-            return View(scheduledEmail);
-        }
-        if (string.IsNullOrEmpty(scheduledEmail.Subject))
-        {
-            ModelState.AddModelError("Subject", "Subject can not be blank");
-            return View(scheduledEmail);
-        }
-        if (SendEmail == "Now")
-            scheduledEmail.ScheduledDate = DateTime.UtcNow;
-        if (SendEmail == "OnDate")
-        {
-            if (txtOnDateTime != "")
-            {                   
-                scheduledEmail.ScheduledDate = DateTime.Parse(txtOnDateTime);
-            }else
-            {
-                ModelState.AddModelError("txtOnDateTime", "Please enter valid Date Time.");
-                return View(scheduledEmail);
-            }
-        }
-        if (SendEmail == "BeforeEvent")
-        {
-            if (txtBeforeEventTime != "")
-            {
-                TimeSpan timeBeforeTimeSpan = TimeSpan.Parse(txtBeforeEventTime);
-                scheduledEmail.ScheduledDate = scheduledEmail.ScheduledDate.Add(-timeBeforeTimeSpan);
-            }
-            else
-            {
-                ModelState.AddModelError("txtBeforeEventTime", "Please enter valid Time.");
-                return View(scheduledEmail);
-            }
-        }
-        _maservice.SendAttendeeMail(scheduledEmail, userId, TicketbearerIds, scheduledEmail.ScheduledDate);
 
-        return RedirectToAction("AttendeeEmail", new { eventId = eventId });
+        if (ModelState.IsValid)
+        {
+            if (SendEmail == "Now")
+                scheduledEmail.ScheduledDate = DateTime.UtcNow;
+            if (SendEmail == "OnDate")
+            {
+                if (txtOnDateTime != "")
+                {
+                    scheduledEmail.ScheduledDate = DateTime.Parse(txtOnDateTime);
+                }
+                else
+                {
+                    ModelState.AddModelError("SendDate", "Date or Time can not be blank.");
+                    scheduledEmail = _maservice.PrepareSendAttendeeMail(eventId);
+                    return View(scheduledEmail);
+                }
+            }
+            if (SendEmail == "BeforeEvent")
+            {
+                if (txtBeforeEventTime != "")
+                {
+                    TimeSpan timeBeforeTimeSpan = TimeSpan.Parse(txtBeforeEventTime);
+                    scheduledEmail.ScheduledDate = scheduledEmail.ScheduledDate.Add(-timeBeforeTimeSpan);
+                }
+                else
+                {
+                    ModelState.AddModelError("SendDate", "Date or Time can not be blank.");
+                    scheduledEmail = _maservice.PrepareSendAttendeeMail(eventId);
+                    return View(scheduledEmail);
+                }
+            }
+            _maservice.SendAttendeeMail(scheduledEmail, userId, TicketbearerIds, scheduledEmail.ScheduledDate);
+
+            return RedirectToAction("AttendeeEmail", new { eventId = eventId });
+        }
+        //scheduledEmail = _maservice.PrepareSendAttendeeMail(eventId);
+        return View(scheduledEmail);
     }
 
     [HttpPost]

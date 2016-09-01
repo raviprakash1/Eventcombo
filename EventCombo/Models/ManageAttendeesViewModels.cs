@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -171,5 +172,43 @@ namespace EventCombo.Models
         public long EventId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+    }
+    public partial class ScheduledEmailViewModel
+    {
+        public ScheduledEmailViewModel()
+        {
+            this.AttendeeEmails = new HashSet<AttendeeEmail>();
+        }
+
+        public long ScheduledEmailId { get; set; }
+        public string UserId { get; set; }
+        public byte EmailTypeId { get; set; }
+        public string SendFrom { get; set; }
+        [Required(ErrorMessage ="Select atleast one attendee")]
+        [Display(Name = "To")]
+        public string SendTo { get; set; }
+        [Required(ErrorMessage = "Reply To can not be blank")]
+        [RegularExpression(@"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$", ErrorMessage = "Please enter valid email")]
+        [Display(Name = "Reply To")]
+        public string ReplyTo { get; set; }
+        public string CC { get; set; }
+        public string BCC { get; set; }
+        [Required(ErrorMessage ="Subject can not be blank")]
+        [Display(Name = "Subject")]
+        public string Subject { get; set; }
+        [Required(ErrorMessage ="Message can not be blank")]
+        [DataType(DataType.MultilineText)]
+        [System.Web.Mvc.AllowHtml]
+        [Display(Name = "Message")]
+        public string Body { get; set; }
+        [Required(ErrorMessage = "Scheduled Date can not be blank")]
+        public System.DateTime ScheduledDate { get; set; }
+        public System.DateTime CreateDate { get; set; }
+        public Nullable<System.DateTime> SendDate { get; set; }
+        public bool IsEmailSend { get; set; }
+
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual ICollection<AttendeeEmail> AttendeeEmails { get; set; }
+        public virtual EmailType EmailType { get; set; }
     }
 }

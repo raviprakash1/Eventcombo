@@ -34,9 +34,9 @@ namespace EventCombo.Service
 
     ScheduledEmail GetScheduledEmailDetail(long scheduledEmailId);
 
-    ScheduledEmail PrepareSendAttendeeMail(long eventId);
+    ScheduledEmailViewModel PrepareSendAttendeeMail(long eventId);
 
-    bool SendAttendeeMail(ScheduledEmail scheduledEmail, string userId, string ticketbearerIds, DateTime scheduledDate);
+    bool SendAttendeeMail(ScheduledEmailViewModel scheduledEmail, string userId, string ticketbearerIds, DateTime scheduledDate);
 
     bool DeleteAttendeeMail(long scheduledEmailId);
 
