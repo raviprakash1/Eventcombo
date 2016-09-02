@@ -173,7 +173,7 @@ namespace EventCombo.Models
         public string Name { get; set; }
         public string Email { get; set; }
     }
-    public partial class ScheduledEmailViewModel
+    public class ScheduledEmailViewModel
     {
         public ScheduledEmailViewModel()
         {
@@ -183,10 +183,12 @@ namespace EventCombo.Models
         public long ScheduledEmailId { get; set; }
         public string UserId { get; set; }
         public byte EmailTypeId { get; set; }
+        [Display(Name = "From")]
         public string SendFrom { get; set; }
         [Required(ErrorMessage ="Select atleast one attendee")]
         [Display(Name = "To")]
         public string SendTo { get; set; }
+        public IEnumerable<SelectItemModel> SendTos { get; set; }
         [Required(ErrorMessage = "Reply To can not be blank")]
         [RegularExpression(@"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$", ErrorMessage = "Please enter valid email")]
         [Display(Name = "Reply To")]
@@ -206,9 +208,16 @@ namespace EventCombo.Models
         public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> SendDate { get; set; }
         public bool IsEmailSend { get; set; }
+        public string TicketbearerIds { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<AttendeeEmail> AttendeeEmails { get; set; }
         public virtual EmailType EmailType { get; set; }
+    }
+
+    public class SelectItemModel
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }

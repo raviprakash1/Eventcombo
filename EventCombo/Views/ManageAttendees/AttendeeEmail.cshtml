@@ -28,7 +28,7 @@
         </div>
     </div>
     <ul class="nav nav-tabs purchaseTicketHeaderTabs">
-        <li class="active"><a data-toggle="tab" href="#EmailScheduled">Email Scheduled</a></li>
+        <li class="active"><a data-toggle="tab" href="#EmailScheduled">Email Scheduled (<label id="lblScheduledCount">0</label>) </a></li>
         <li><a data-toggle="tab" href="#EmailSent">Email Sent</a></li>
     </ul>
     <div class="tab-content">
@@ -157,4 +157,7 @@
     function onEditSuccess() {
         $.fancybox.close();
     }
+    $(document).ready(function(){
+        $("#lblScheduledCount").html($("#AttendeeEmailListTable_Scheduled tbody tr").size()/2);
+    });
 </script>

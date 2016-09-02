@@ -2,10 +2,13 @@
 @using System.Linq;
 @using EventCombo.Models;
 @model List<AttendeeViewModel>
-<table id="AttendeeSearchListTable" data-totalrecords="@(Model.Count())" class="table">
+<link href="~/footable/css/footable.core.min.css" rel="stylesheet" />
+<script src="~/footable/js/footable.all.min.js"></script>
+<script src="~/footable/js/footable.filter.min.js"></script>
+<table id="AttendeeSearchListTable" data-totalrecords="@(Model.Count())" class="table footable" data-page-navigation=".pagination" data-page-size="10">
     <thead>
         <tr>
-            <th class="UETableHead"><input type="checkbox" onchange="CheckAll(this);" /></th>
+            <th class="UETableHead" data-sorted="true" data-sort-ignore="true" data-sort="false"><input type="checkbox" onchange="CheckAll(this);" /></th>
             <th class="UETableHead"><a href="javascript:void(0);">Name</a></th>
             <th class="UETableHead"><a href="javascript:void(0);">Email</a></th>
         </tr>
@@ -22,5 +25,18 @@
             </tr>
         }
     </tbody>
+    <tfoot class="footer-menu">
+        <tr>
+            <td colspan="8">
+                <nav class="text-right">
+                    <ul class="pagination" id="ulpage"></ul>
+                </nav>
+            </td>
+        </tr>
+    </tfoot>
 </table>
-<button name="btnSearchAttendeeSave" onclick="return ValidateAttendee();" type="button" class="btn btn-info articleBtnCls">Select</button>
+<script type="text/javascript">
+        $(function () {
+            $('.footable').footable();
+        });
+</script>

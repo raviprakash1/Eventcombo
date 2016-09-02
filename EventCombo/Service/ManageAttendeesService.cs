@@ -837,8 +837,47 @@ namespace EventCombo.Service
         var ev = eRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();
         ScheduledEmailViewModel scheduledEmail = new ScheduledEmailViewModel();
         scheduledEmail.ScheduledDate = ev.E_Startdate ?? DateTime.UtcNow;
-        scheduledEmail.SendFrom= System.Configuration.ConfigurationManager.AppSettings.Get("UserName");
+        scheduledEmail.SendFrom= System.Configuration.ConfigurationManager.AppSettings.Get("UserName");       
+        scheduledEmail.SendTos = GetSendToDropdownList(eventId);
         return scheduledEmail;
+    }
+    public IEnumerable<SelectItemModel> GetSendToDropdownList(long eventId)
+    {
+        IRepository<TicketBearer> etBRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+        var ticketBearers = etBRepo.Get().ToList();
+        List<SelectItemModel> selectItems = new List<SelectItemModel>();
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "All Attendees (" + ticketBearers.Count() + ")",
+            Value = "CONFIRMED_ATTENDEES"
+        });
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "All Attendees Registered after Date",
+            Value = "ALL_ATTENDEES_DATE"
+        });
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "Specific Attendees",
+            Value = "ATTENDEES"
+        });
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "Attendees by Ticket Type",
+            Value = "TICKET_ATTENDEES"
+        });
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "Offline Payment Not Received (0)",
+            Value = "PAYMENT_NOT_RECEIVED"
+        });
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "Offline Payment Received (0)",
+            Value = "PAYMENT_RECEIVED"
+        });
+
+        return selectItems;
     }
     public IEnumerable<ScheduledEmail> GetScheduledEmailList(bool IsEmailSend)
     {
@@ -856,9 +895,16 @@ namespace EventCombo.Service
     {
         string defaultEmail;
         defaultEmail = System.Configuration.ConfigurationManager.AppSettings.Get("DefaultEmail");
-        var ticketbearerId = ticketbearerIds.Split(',').Select(Int64.Parse).ToList();
+        var ticketbearerId = (string.IsNullOrEmpty(ticketbearerIds) ? new List<long>() : ticketbearerIds.Split(',').Select(Int64.Parse).ToList());
         IRepository<TicketBearer> etBRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
-        var ticketBearers = etBRepo.Get(filter: r => ticketbearerId.Contains(r.TicketbearerId)).ToList();
+        List<TicketBearer> ticketBearers;
+        if (scheduledEmail.SendTo == "CONFIRMED_ATTENDEES")
+            ticketBearers = etBRepo.Get().ToList();
+        else if (scheduledEmail.SendTo == "ATTENDEES")
+            ticketBearers = etBRepo.Get(filter: r => ticketbearerId.Contains(r.TicketbearerId)).ToList();
+        else
+            ticketBearers = etBRepo.Get().ToList();
+
         AttendeeMailNotification attendeeMailNotification = new AttendeeMailNotification(_factory, defaultEmail, scheduledEmail, ticketBearers);
         attendeeMailNotification.SendNotification(new SendAttendeeMailService(_factory, userId, ticketBearers, scheduledDate));
         return true;

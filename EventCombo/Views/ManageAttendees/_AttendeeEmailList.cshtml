@@ -2,7 +2,7 @@
 @using System.Linq;
 @using EventCombo.Models;
 @model List<ScheduledEmail>
-<table id="AttendeeEmailListTable" data-totalrecords="@(Model.Count())" class="table">
+<table id="AttendeeEmailListTable_@(Model.FirstOrDefault().IsEmailSend ? "Sent" : "Scheduled")" data-totalrecords="@(Model.Count())" class="table">
     <thead>
         <tr>
             <th class="UETableHead"><a href="javascript:void(0);">Subject of EMail</a></th>

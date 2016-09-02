@@ -43,5 +43,7 @@ namespace EventCombo.Service
     bool DeleteAttendeeMail(long scheduledEmailId);
 
     List<AttendeeViewModel> GetAttendeeList(AttendeeSearchRequestViewModel request);
+
+    IEnumerable<SelectItemModel> GetSendToDropdownList(long eventId);
   }
 }

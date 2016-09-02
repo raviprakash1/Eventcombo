@@ -10,7 +10,6 @@
 <script src="https://cdn.ckeditor.com/4.5.2/standard-all/ckeditor.js"></script>
 <link href='~/Content/jquery-te-1.4.0.css' rel='stylesheet' type='text/css'>
 <script type="text/javascript" src="~/Scripts/jquery-te-1.4.0.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 @section sidenav{
     <div id="sidebar" class="nav nav-stacked">
@@ -25,12 +24,11 @@
         <h4>Schedule Email</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.Hidden("TicketbearerIds", "")
         @Html.HiddenFor(model => model.CC)
         @Html.HiddenFor(model => model.BCC)
         @Html.HiddenFor(model => model.ScheduledDate)
         @Html.Hidden("TimeBeforeEventStart", "00:00:00")
-
+       
 
         <div class="form-group">
             @Html.LabelFor(model=>model.SendFrom, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -51,9 +49,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SendTo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SendTo, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @style = "width: 200px;display:initial;" } })
-                <a id="anchorAttendeeSearchBox" href="#AttendeeSearchContainer" class = "btn btn-info articleBtnCls">Select Attendees</a>
-                <br />
+                @Html.DropDownListFor(model=>model.SendTo, new SelectList(Model.SendTos, "Value", "Name"),new { @onChange= "GetAttendeeList(this);", @class= "form-control text-box single-line" })
+                <div id="AttendeeSearchContainer" class="AttendeeSearchContainer">
+                    
+                </div>
                 @Html.ValidationMessageFor(model => model.SendTo, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -108,7 +107,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-info articleBtnCls" />
+                <button type="submit" name="btnCreate" value="Create" class="btn btn-info articleBtnCls" >Create</button>
                 @Html.ActionLink("Cancel", "AttendeeEmail", new { eventid = ViewBag.EventId }, new { @class = "btn btn-info articleBtnCls" })
             </div>
         </div>
@@ -117,24 +116,7 @@
 <div>
     @Html.ActionLink("Back to List", "AttendeeEmail", new { eventid = ViewBag.EventId },new { @class = "btn btn-info articleBtnCls" })
 </div>
-<br />
-<div id="AttendeeSearchContainer" class="AttendeeSearchContainer" style="display:none;">
-    <h3>Attendee List</h3>
-    @using (Ajax.BeginForm("GetAttendeeList", "ManageAttendees", null, new AjaxOptions() { HttpMethod = "get", UpdateTargetId = "dvUpdatedAttendeeContainer" }))
-    {
 
-    <div>
-        <input id="hdnEventId" name="hdnEventId" value="@ViewBag.EventId" type="hidden" />
-        <input id="txtAttendeeName" name="txtAttendeeName" type="text" placeholder="Attendee Name" class="form-control text-box single-line" style="width: 150px;display:initial;"/>
-        <input id="txtAttendeeEmail" name="txtAttendeeEmail" type="text" placeholder="Attendee Email" class="form-control text-box single-line" style="width: 150px;display:initial;"/>
-        <button name="btnSearchAttendee" type="submit" class="btn btn-info articleBtnCls">Search</button>
-    </div>
-
-    }
-    <div id="dvUpdatedAttendeeContainer">
-
-    </div>   
-</div>
 <link href="~/fancybox/jquery.fancybox.css" rel="stylesheet" />
 <script src="~/fancybox/jquery.fancybox.js"></script>
 <script>
@@ -208,6 +190,26 @@
                 datatype: "html",
                 success: function (data) {
                     $("#lblTestEmailMessage").html("Test Message sent successfully...")
+                }
+            });
+        }
+    }
+
+    function GetAttendeeList(Obj) {
+        $("#AttendeeSearchContainer").html("");
+        if($(Obj).val()=="ATTENDEES"){
+            var emailViewModel = {
+                Name: "",
+                Email: "",
+                eventid: @ViewBag.EventId
+            };
+            $.ajax({
+                type: "get",
+                url: "@Url.Action("GetAttendeeList", "ManageAttendees")",
+                data: emailViewModel,
+                datatype: "html",
+                success: function (data) {
+                    $("#AttendeeSearchContainer").html(data);
                 }
             });
         }

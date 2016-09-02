@@ -367,7 +367,7 @@ namespace EventCombo.Controllers
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult SendEmail(long eventId, [Bind(Include = "SendFrom, SendTo, ReplyTo, CC, BCC, Subject, Body, ScheduledDate")] ScheduledEmailViewModel scheduledEmail, string TicketbearerIds, string SendEmail, string txtOnDateTime, string txtBeforeEventTime)
+    public ActionResult SendEmail(long eventId, [Bind(Include = "SendFrom, SendTo, ReplyTo, CC, BCC, Subject, Body, ScheduledDate, TicketbearerIds, SendTo")] ScheduledEmailViewModel scheduledEmail, string SendEmail, string txtOnDateTime, string txtBeforeEventTime)
     {
         if ((Session["AppId"] == null))
             return DefaultAction();
@@ -377,6 +377,7 @@ namespace EventCombo.Controllers
         Session["Fromname"] = "ManageAttendees";
         Session["ReturnUrl"] = Url.Action("Email", "ManageAttendees");
         ViewBag.EventId = eventId;
+        scheduledEmail.SendTos = _maservice.GetSendToDropdownList(eventId);
 
         if (ModelState.IsValid)
         {
@@ -409,7 +410,7 @@ namespace EventCombo.Controllers
                     return View(scheduledEmail);
                 }
             }
-            _maservice.SendAttendeeMail(scheduledEmail, userId, TicketbearerIds, scheduledEmail.ScheduledDate);
+            _maservice.SendAttendeeMail(scheduledEmail, userId, scheduledEmail.TicketbearerIds, scheduledEmail.ScheduledDate);
 
             return RedirectToAction("AttendeeEmail", new { eventId = eventId });
         }
