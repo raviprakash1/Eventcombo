@@ -868,6 +868,21 @@
     <Content Include="fancybox\jquery.fancybox.css" />
     <Content Include="fancybox\jquery.fancybox.js" />
     <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="footable\css\fonts\footable.svg" />
+    <Content Include="footable\css\footable.core.css" />
+    <Content Include="footable\css\footable.core.min.css" />
+    <Content Include="footable\css\footable.metro.css" />
+    <Content Include="footable\css\footable.metro.min.css" />
+    <Content Include="footable\css\footable.standalone.css" />
+    <Content Include="footable\css\footable.standalone.min.css" />
+    <Content Include="footable\js\footable.all.min.js" />
+    <Content Include="footable\js\footable.bookmarkable.min.js" />
+    <Content Include="footable\js\footable.filter.min.js" />
+    <Content Include="footable\js\footable.grid.min.js" />
+    <Content Include="footable\js\footable.min.js" />
+    <Content Include="footable\js\footable.paginate.min.js" />
+    <Content Include="footable\js\footable.sort.min.js" />
+    <Content Include="footable\js\footable.striping.min.js" />
     <Content Include="html\error.html" />
     <Content Include="Images\ajax-loader.gif" />
     <Content Include="Images\ajax-loaderMini.gif" />
@@ -1366,6 +1381,9 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="footable\css\fonts\footable.eot" />
+    <Content Include="footable\css\fonts\footable.ttf" />
+    <Content Include="footable\css\fonts\footable.woff" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
