@@ -320,16 +320,17 @@
                 foreach (var item in (PagedList.IPagedList<EventCombo.Models.DiscoverEvent>)ViewBag.DisEvnt)
                 {
                     iCnt = 1;
+                    string eventLink = Url.Action("ViewEvent", "EventManagement", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(@item.EventId).ToString() });
                     <div class="col-md-4 col-xs-12 col-sm-6 ot_pad ">
                         <div class="col-sm-12 col-xs-12 in_shadw no_pad">
                             <div class="col-sm-12 col-xs-12 in_pad">
                                 <div class="col-sm-4 no_pad">
-                                    <div class="dis_evnt_img"><img src="@item.EventImage" alt=""></div>
+                                    <div class="dis_evnt_img"><a href='@eventLink'><img src="@item.EventImage" alt="@item.EventTitle"></a></div>
                                     @*<div class="col-sm-12 no_pad text-center desc_list_event_type desc_list_event_type_dollar">@item.PriceLable</div>*@
 
                                 </div>
                                 <div class="col-sm-8 no_pad">
-                                    <h1 class="list_event_desc_title xs-title-height d_xs_pad_l0 desc_pl_0"><a href='@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(@item.EventId).ToString() })'>@item.EventTitle</a></h1>
+                                    <h1 class="list_event_desc_title xs-title-height d_xs_pad_l0 desc_pl_0"><a href='@eventLink'>@item.EventTitle</a></h1>
                                     <p class="list_event_desc xs-address-height d_xs_pad_l0 desc_pl_0">
                                         @item.EventAddress
 
@@ -366,7 +367,7 @@
                                 <div class="col-sm-3 col-xs-3 no_pad text-right ">
                                     @if (@item.EventPrivacy == "Y")
                                     {
-                                      <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Share @item.EventTitle" onclick="ShowUrl('@item.EventTitle.Replace("'",@"\'")', '@item.EventAddress.Replace("'", @"\'")', '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(@item.EventId).ToString() })');" type="button" data-toggle="modal" data-target="#sharemodal">
+                                      <button class="desc_btn_bg_none desc_share_btn share_like_btn" title="Share @item.EventTitle" onclick="ShowUrl('@item.EventTitle.Replace("'",@"\'")', '@item.EventAddress.Replace("'", @"\'")', '@Url.Action("ViewEvent", "EventManagement", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(@item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(@item.EventId).ToString() })');" type="button" data-toggle="modal" data-target="#sharemodal">
                                         <img src="~/Images/share_icon.png" alt="share event">
                                       </button>
                                     }
@@ -448,6 +449,9 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content sharmodal_pop">
             <div class="modal-header">
+                <div class="invitation-loader" id="dvAjxLoader" style="width:auto;float:left;margin-top:7px;">
+                    <img src="~/Images/ajax-loaderMini.gif" /> Please wait ...
+                </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h3 class="modal-title text-center"> Share with friends </h3>
             </div>
@@ -459,9 +463,31 @@
                         <button class="btn soc_btn_fb fb_color" id="fbshare"><i class="fa fa-facebook"></i></button>
                         <button class="btn soc_btn_fb " id="twittershare"><i class="fa fa-twitter"></i></button>
                         <button class="btn soc_btn_fb linkd_color" id="linkshare"><i class="fa fa-linkedin"></i></button>
-                        <button class="btn soc_btn_fb msg_color"><i class="fa fa-envelope"></i></button>
+                        <button class="btn soc_btn_fb msg_color" id="emailFrnd"><i class="fa fa-envelope"></i></button>
                     </div>
                 </div>
+                <div class="col-md-12 mt10" id="dvEmailFrnd" style="display:none;">
+                    <form class="form-horizontal">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                From Name :<input type="text" class="form-control sharesocilform" id="txtFromName" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                Email Id :<input type="text" class="form-control sharesocilform" id="txtEmailFrnd" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <button class="btn def_btn acnt_btn send_test_btn" style="display:none" type="button" data-toggle="modal" id="btPopUp" data-target="#test_inv_email"></button>
+                            <br /><button class="btn theme-btn def_btn acnt_btn send_test_btn" type="button" id="btSend">Send</button>
+                        </div>
+                        <div class="col-xs-2">
+                            <br /><button class="btn theme-btn def_btn acnt_btn send_test_btn" type="button" id="btCancel">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="col-md-12 mt10">
                     <form class="form-horizontal">
                         <div class="col-sm-12 ">
@@ -481,6 +507,19 @@
     <input type="hidden" id="hdcity" />
 </div>
 
+<div class="modal fade" id="test_inv_email" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body clearfix">
+                <div class="col-sm-12 text-center">
+                    <h3 id="htext">Success</h3>
+                    <p class="email_send_desc" id="ptext">Email has been sent.</p>
+                    <button type="button" id="btCloseEMailPup" class="btn theme-btn def_btn acnt_btn send_test_btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Ok</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="~/Scripts/bootstrap-datepicker.js"></script>
 <script src="~/Scripts/jquery-ui.js"></script>
 <script src="~/Scripts/custom-scroll.js"></script>
@@ -543,6 +582,9 @@
         $("#txtEventTitle").val(vtitle);
         $("#txtEventInfo").val(vinfo);
         $("#txtEventUrl").val(vurl);
+        $("#txtEmailFrnd").val("");
+        $("#txtFromName").val("");
+        $("#dvEmailFrnd").hide();
     }
     function checkDate(field) {
         var allowBlank = true;
@@ -1296,5 +1338,43 @@
     $('#fbshare').click(function (e) {
       return FacebookShare(urlprefix + $("#txtEventUrl").val())
     });
+        $("#emailFrnd").click(function () {
+            // $(".sharmodal_pop").animate({ minheight: '+=100' }, 100);
+            $("#dvEmailFrnd").show(100);
+        });
+        $("#btSend").click(function () {
+            var vFromName = $("#txtFromName").val().trim();
+            var vTo = $("#txtEmailFrnd").val().trim();
+            var vEventTitle = $("#txtEventTitle").val();
+            var urlprefix = '@strpr'
+            var vEventUrl = urlprefix + $("#txtEventUrl").val();
+            if (validateEmail(vTo) == true && vTo != "") {
+                $.ajax({
+                    url: '@Url.Action("SendEmailToFriend", "Home")',
+                    data: { strFriendEmail: vTo, strFromname: vFromName, strEventTitle: vEventTitle, strEventUrl: vEventUrl },
+                    beforeSend: function () { $('#dvAjxLoader').show(); },
+                    complete: function () { $('#dvAjxLoader').hide(); },
+                    type: "Post",
+                    success: function (response) {
+                        $("#htext").text("Success");
+                        $("#ptext").text("Email has been sent.");
+                        $("#btPopUp").click();
+                    }
+                });
+            }
+            else {
+                $("#htext").text("Failed");
+                $("#ptext").text("Invalid Email Address.");
+                $("#btPopUp").click();
+
+            }
+        });
+        $("#btCloseEMailPup").click(function () {
+            $("#txtEmailFrnd").focus();
+        });
+
+        $("#btCancel").click(function () {
+            $("#dvEmailFrnd").hide();
+        });
   });
 </script>

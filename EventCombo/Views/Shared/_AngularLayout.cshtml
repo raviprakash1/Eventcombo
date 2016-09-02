@@ -1,0 +1,80 @@
+﻿@using EventCombo.Models
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" prefix="og: http://ogp.me/ns#">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta property="fb:app_id" content="@(System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"])" />
+  @if (Model is IOpenGraphProtocol)
+  {
+    IOpenGraphProtocol ogp = Model as IOpenGraphProtocol;
+    <meta property="og:url" content="@ogp.OGPUrl" />
+    <meta property="og:type" content="@ogp.OGPType" />
+    <meta property="og:title" content="@ogp.OGPTitle" />
+    <meta property="og:description" content="@ogp.OGPDescription" />
+    <meta property="og:image" content="@ogp.OGPImage" />
+  }
+  
+
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-50065120-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link href="/Images/FabIcon/ios-57x57.png" rel="apple-touch-icon" />
+  <link href="/Images/FabIcon/ios-76x76.png" rel="apple-touch-icon" sizes="76x76" />
+  <link href="/Images/FabIcon/ios-120x120.png" rel="apple-touch-icon" sizes="120x120" />
+  <link href="/Images/FabIcon/ios-152x152.png" rel="apple-touch-icon" sizes="152x152" />
+  <link href="/Images/FabIcon/ios-180x180.png" rel="apple-touch-icon" sizes="180x180" />
+  <link href="/Images/FabIcon/android-192x192.png" rel="icon" sizes="192x192" />
+  <link href="/Images/FabIcon/android-128x128.png" rel="icon" sizes="128x128" />
+
+  @{
+    IBaseViewModel bModel = Model as IBaseViewModel;
+    if (bModel == null)
+    {
+      bModel = new BaseViewModel() { BaseTitle = "Eventcombo", BaseUserName = "Unknown" };
+    }
+  }
+  <title>@bModel.BaseTitle</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,200,400,300,300italic,400italic,500,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  @Styles.Render("~/Content/angularHeader")
+  @RenderSection("CSSSection")
+
+  <script src="~/Scripts/AMaterial/jquery-1.12.3.min.js"></script>
+  <script src="~/Scripts/bootstrap.min.js"></script>
+
+  @Scripts.Render("~/Scripts/AMaterial/angularHeader")
+  @RenderSection("ScriptSection")
+  <script src="https://maps.googleapis.com/maps/api/js?key=@(System.Configuration.ConfigurationManager.AppSettings.Get("GoogleAPIKey"))&v=3.exp&sensor=true&libraries=places"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      var randNum = Math.round(Math.random() * (600) - 500);
+      document.getElementById('footerlogo').style.backgroundPosition = randNum + 'vh 0px';
+    });
+  </script>
+
+</head>
+<body ng-app="EventComboApp" ng-cloak id="mainBody">
+  @{ Html.RenderPartial("_AngularHeader", bModel); }
+  @RenderBody()
+  @{ Html.RenderAction("Footer", "Home"); }
+  @RenderSection("ScriptFooterSection")
+</body>
+</html>

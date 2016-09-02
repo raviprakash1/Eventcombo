@@ -1,0 +1,334 @@
+@media (min-width:1100px)
+{
+	.datediv { min-width:235px !important; display:inline-block; margin-bottom:10px;}
+}
+@media (min-width:768px) and (max-width:1100px)
+{
+	.datediv { min-width:235px !important; display:inline-block; margin-bottom:10px;}
+	/* Big view stuff goes here. */
+	.EDWebsiteUrlHead { padding:0 20px;}
+	.OrganizerBody, .TicketOptions, .addTicketsButtons { padding-left:26px !important;}
+	.responsiveFilter { display:none !important; margin-top:10px; margin-right:30px; margin-bottom:10px;}
+	.defaultFilter { display:block !important;}
+	.wholegallery { margin-right:30px; margin-top:15px;}
+}
+@media (min-width:541px) and (max-width:768px)
+{
+	.datediv { min-width:235px !important; display:inline-block; margin-bottom:10px;}
+	.pickupDateContainer { width:70% !important;}
+	.onlineEventConChkBox { margin-left:0px !important;}
+	.EDTxtEventName .textAreaHeight { height:42px !important;}
+	.totalCapacity { margin-right:10px !important;}
+	.wholegallery { margin-right:30px; margin-top:15px;}
+	.responsiveFilter { display:none !important; margin-top:10px; margin-right:30px; margin-bottom:10px;}
+	.defaultFilter { display:block !important;}
+	.OrganizerBody, .TicketOptions, .addTicketsButtons { padding-left:26px !important;}
+	.EDTxtENTxtBox { font-size:32px !important;}
+	/*.URLDiv, .eDBitMoreInnerHead, .eDAddTicketInnerHead, .addTicketsButtons, .variabeDetails, .TicketOptions { margin-left:26px !important;}*/
+	/*Create Event always in center*/
+	.createEvent { text-align:center; margin-bottom:19px;}
+	/*Color Picker adjust left margin for different screens*/
+	.color-picker-panel { right:15px;}
+	/*Top Butttons save,preview,live will be hide for smaller screens*/
+	.topButtons { display:none;}
+	.EDTxtVNTxtBox { font-size:20px;}
+	.EDTxtVATxtBox { font-size:14px;}
+	.variableClass { display:block !important;}
+}
+@media (max-width:540px) and (min-width:400px) {
+	.URLDiv { margin-right:10px !important; width:90% !important;}
+	.URLinputContainer { width:59% !important;}
+	.websiteUrlEnd { font-size:16px !important;}
+	/*.mce-tinymce { display:none !important;}
+	.textArea { display:block !important;width:100%;}*/
+	.datediv { min-width:140px !important;}
+	.pickupDateContainer { width:70% !important;}
+	.headerCEHeadBtn { text-align:unset !important; margin:unset !important; padding-left:10px !important;}
+	.btnMakeLiveHeadCE { padding-left:20px !important; padding-right:20px !important;}
+	/*.weeklyEndTime { margin-left:30px !important;}*/
+	.onlineEventConChkBox { margin-left:0px !important;}
+	.EDTxtEventName .textAreaHeight { height:85px !important;}
+	.totalCapacity { margin-right:10px !important;}
+	.wholegallery { margin-right:30px; margin-top:15px;}
+	.responsiveFilter { display:none !important; margin-top:10px; margin-right:30px; margin-bottom:10px;}
+	.defaultFilter { display:block !important;}
+	.btnSaveHeadCE { font-size:11px !important;}
+	.btnPreviewHeadCE { font-size:11px !important;}
+	.btnMakeLiveHeadCE { font-size:11px !important;}
+	.variableClass { display:block !important;}
+	.OrganizerBody { padding-left:26px !important;}
+	.color-picker-panel { right:15px;}
+	.URLDiv, .TicketOptions { margin-left:26px !important;}
+	.color_pick { margin-right:-10px !important;}
+	.bannerPic { margin-left:30px !important;}
+	/*Create Event always in center*/
+	.createEvent { text-align:center; margin-bottom:19px;}
+	/*Color Picker adjust left margin for different screens*/
+	color-picker-wrapper .color-picker-panel.color-picker-panel-left { left:-158px !important;}
+	/*Top Butttons save,preview,live will be hide for smaller screens*/
+	.topButtons { display:none;}
+	.EDTxtVNTxtBox { font-size:20px;}
+	.EDTxtVATxtBox { font-size:14px;}
+	/*.firstdiv .md-datepicker-input-container, .seconddiv .md-datepicker-input-container { width:90px !important;}*/
+	.firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input, .timeFont { font-size:16px !important; font-family:Roboto;}
+	md-ink-bar { bottom:10px !important;}
+	.infoOptionIcon { float:right !important;}
+	.ticketChkBoxCon { display:block !important; margin-left:unset !important;}
+	.eventDtkHeadCon { padding-left:0px !important;}
+	.moreOptions { margin-top:10px;}
+}
+@media (max-width:485px)
+{
+	.showEvent { margin-top:0px !important; margin-left:0px !important;}
+}
+@media (max-width:465px)
+{
+	.salesTime { margin-left:35px !important; margin-top:0px !important;}
+}
+@media (max-width:430px)
+{
+ .textArea { margin-top:60px !important;}
+}
+@media (max-width:399px)
+{
+	.textArea { margin-top:60px !important;}
+	.salesTime { margin-left:0 !important; margin-top:0px !important;}
+	.showEvent { margin-top:0px !important; margin-left:0px !important;}
+	/*.moreOptions { margin-top:10px;}*/
+	.URLDiv { /*margin-right:10px !important;*/ width:100% !important;}
+	.URLinputContainer { width:52% !important;}
+	.websiteUrlEnd { font-size:16px !important;}
+	/*.mce-tinymce { display:none !important;}
+	.textArea { display:block !important; width:100%;}*/
+	.datediv { min-width:140px !important; display:inline-block; margin-bottom:10px;}
+	.pickupDateContainer { width:70% !important;}
+	.ticketChkBoxCon { display:block !important; margin-left:unset !important;}
+	.infoOptionIcon { float:right !important;}
+	.moreOptionTxt, .buyerTotalTxt { font-size:12px !important;}
+	md-ink-bar { bottom:10px !important;}
+	/*.firstdiv .md-datepicker-input-container, .seconddiv .md-datepicker-input-container { width:90px !important;}*/
+	.firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input, .timeFont { font-size:16px !important; font-family:Roboto;}
+	.headerCEHeadBtn { text-align:unset !important; margin:unset !important; padding-left:10px !important;}
+	.btnMakeLiveHeadCE { padding-left:20px !important; padding-right:20px !important;}
+	.pickupDateContainer { min-width:300px !important;}
+	/*.weeklyEndTime { margin-left:30px !important;}*/
+	.onlineEventConChkBox { margin-left:0px !important;}
+	.EDTxtEventName .textAreaHeight { font-size:24px !important; height:60px !important;}
+	.EDTxtVenueName .textAreaHeight { font-size:18px !important;}
+	.EDTxtVATxtBox { font-size:14px !important;}
+	/*Setting font size of pickupdate*/
+	.pickuptimeTxt { font-size:13px !important;}
+	.totalCapacity { margin-right:10px !important;}
+	.wholegallery { margin-right:30px; margin-top:15px;}
+	.responsiveFilter { display:none !important; margin-top:10px; margin-right:30px; margin-bottom:10px;}
+	.defaultFilter { display:block !important;}
+	.btnSaveHeadCE { font-size:9px !important;}
+	.btnPreviewHeadCE { font-size:9px !important;}
+	.btnMakeLiveHeadCE { font-size:9px !important;}
+	.variableClass { display:block !important;}
+	.OrganizerBody, .TicketOptions { padding-left:26px !important;}
+	.EDTxtVNTxtBox { font-size:20px;}
+	.EDTxtVATxtBox { font-size:14px;}
+	.color-picker-panel { right:15px;}
+	/*.URLDiv, .eDBitMoreInnerHead, .eDAddTicketInnerHead, .addTicketsButtons, .variabeDetails, .TicketOptions { margin-left:20px !important;}*/
+	.OrganizerBody { padding-left:20px;}
+	.color_pick { margin-right:-10px !important;}
+	.eventDtkHeadCon { padding-left:0px !important;}
+	.bannerPic { margin-left:15px !important;}
+	/* Stuff for really small views goes here. */
+	/*Create Event always in center*/
+	.createEvent { text-align:center; margin-bottom:19px;}
+	/*Color Picker adjust left margin for different screens*/
+	color-picker-wrapper .color-picker-panel.color-picker-panel-left { left:-158px !important;}
+	/*Top Butttons save,preview,live will be hide for smaller screens*/
+	.topButtons { display:none;}
+}
+.EDTxtEventDateTime { margin-top:15px !important;}
+.firstdiv .md-datepicker-input, .seconddiv .md-datepicker-input { font-family:Roboto;}
+.timeFont { font-size:16px; font-family:"Roboto", Helvetica Neue, sans-serif;}
+.md-datepicker-input { font-size:16px; font-family:"Roboto", Helvetica Neue, sans-serif;}
+md-ink-bar { bottom:12px !important;}
+/*.ticketChkBoxCon { margin-left:15px;}*/
+.TicketOptions { max-width:1100px; margin:0px auto; padding:5px 0;}
+.variableClass { /*width:26%;*/ display:inline-block;}
+.variableOptions { padding:10px 0px; box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26); margin-bottom:20px; margin-left:15px; margin-right:15px;}
+.ticketButtonDiv { display:inline-block;}
+.textAreaHeight { height:43px; overflow:hidden; -webkit-appearance:none; -moz-appearance:none; appearance:none; resize:none;}
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,200,400,300,300italic,400italic,500,700);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700);
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+.seconddiv { clear:both;}
+.organiserLabel { white-space:nowrap; padding-left:0px !important;}
+.time-zone { float:left; margin-left:20px;}
+.selectdemoSelectHeader .demo-header-searchbox { border:none; outline:none; height:100%; width:100%; padding:0;}
+.selectdemoSelectHeader .demo-select-header { box-shadow:0 1px 0 0 rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12); padding-left:10.667px; height:48px; cursor:pointer; position:relative; display:flex; align-items:center; width:auto;}
+.selectdemoSelectHeader md-content._md { max-height:240px;}
+.imgdetails { vertical-align:middle; display:table-cell;}
+.fontStyles { font-size:18px; font-family:'Roboto', Arial, Helvetica, sans-serif; color:rgb(48, 71, 86); margin-left:41px;}
+.More { margin-right:20px;}
+/*Create event header styles*/
+.createEvent { font-size:24px; font-family:'Roboto', Arial, Helvetica, sans-serif; color:rgb(255, 0, 138); font-weight:bold; text-transform:uppercase; margin-top:20px; padding:0 20px;}
+.md-datepicker-input { width:120px !important;}
+.tooltiptext { visibility:hidden; width:120px; background-color:#555; color:#fff; text-align:center; border-radius:6px; padding:5px 0; position:absolute; z-index:1; bottom:125%; left:50%; margin-left:-60px; opacity:0; transition:opacity 1s;}
+.tooltiptext::after { content:"Testing"; top:100%; left:50%; margin-left:-5px; border-width:5px; border-style:solid; border-color:#555 transparent transparent transparent;}
+.infoOptionIcon:hover .tooltiptext { visibility:visible !important; opacity:1 !important;}
+.block { display:block;}
+/* In angular ng-click or events there is outline so we need to remove that outline*/
+.noOutline:focus { outline:none !important;}
+/*Datepicker floating text */
+.date-picker-row { /*margin-left:-15px;*/ position:relative; min-height:60px;}
+.date-picker-row label { position:absolute; top:-23px; /*left:50px;*/ left:0; color:rgb(0, 202, 253) !important; font-size:12px;}
+.date-picker-row .md-datepicker-input-container { margin-left:0; padding-bottom:0;}
+/*end date picker floating text*/
+.ticketStartEndDate { margin-bottom:15px;}
+.myAccountDiv { padding-left:15px; box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26);}
+/*FOOTER CSS*/
+footer { position:relative; bottom:-400px; right:0px; font-weight:200; line-height:1.4em;}
+.footer-right { float:right; bottom:100px; right:50px; position:absolute;}
+.footer-left { float:left; bottom:100px; left:50px; position:absolute;}
+.footerlogo { text-align:center; width:100%; height:40vh; background:url(../../Images/AMaterial/EventComboLogo.svg) center no-repeat; background-size:700vw; overflow:hidden; background-position:top;}
+.footerwhite { background:rgba(255, 255, 255, 0.5); width:100%; height:77%;}
+/*HEADER CSS*/
+.headerlogo { margin:34px 10px 50px 34px; width:30vw; max-width:360px; min-width:100px;}
+header { background:url(../../Images/AMaterial/stripes.png) repeat-x;}
+.headerCEHeadBtn { text-align:right; margin:10px 70px 19px 0px;}
+.btnSaveHeadCE { color:#fff; border:0px; background-color:rgb(0, 202, 253); padding:10px 40px; font-size:14px; border-radius:5px; display:inline-block; font-family:'Roboto', Arial, Helvetica, sans-serif; margin:4px 0;}
+.btnPreviewHeadCE { color:#fff; border:0px; background-color:rgb(0, 202, 253); padding:10px 40px; font-size:14px; font-family:'Roboto'; border-radius:5px; display:inline-block; margin:5px;}
+.btnMakeLiveHeadCE { color:#fff; border:0px; background:#1AFF1A; padding:10px 40px; font-size:14px; font-family:'Roboto', Arial, Helvetica, sans-serif; border-radius:5px; display:inline-block;}
+.headerCEHeadBtn a:hover { color:#fff; border:none; text-decoration:none;}
+.have_a_filter { font-family:'Roboto', Arial, Helvetica, sans-serif; font-size:11px; color:rgb(0, 0, 0); margin-right:45px;}
+.eventDetailContainer { background:#00CAFD; margin:0px auto; overflow:hidden; padding:20px 0px 0px 0px;}
+.eventDetailContainer .color-picker-wrapper .color-picker-panel { right:0;}
+.EDConInner { max-width:1100px; margin:0px auto;}
+.EDWebsiteUrlHead { color:#fff; margin-bottom:5px; width:100%; display:inline-block; box-sizing:border-box;}
+.EDWebsiteUrlHead md-input-container { margin:0px; height:30px;}
+.websiteURLTxtboxCls { color:#fff !important; border-color:#fff !important; font-size:18px !important; font-weight:500;}
+.websiteURLTxtLblCls { color:#fff !important; font-size:18px !important; font-weight:500;}
+.eventcombo_com { color:rgba(255, 255, 255, .6); font-family:'Roboto', Arial, Helvetica, sans-serif; font-size:18px; font-weight:500;}
+.eventDetailTxtFields { background:#FFFFFF; padding:20px 10px 10px 20px; display:block; clear:both; opacity:0.8;}
+.EDTxtENTxtBox { width:100%; border:none; font-size:36px; font-family:'Roboto', Arial, Helvetica, sans-serif; font-weight:500; background:none; color:#304756; margin-bottom:10px;}
+.EDTxtENTxtBox::-moz-placeholder { opacity:1; color:#304756;}
+.EDTxtENTxtBox:-moz-placeholder { opacity:1; color:#304756;}
+.EDTxtENTxtBox::-webkit-input-placeholder { opacity:1; color:#304756;}
+.EDTxtENTxtBox:-ms-input-placeholder { opacity:1; color:#304756;}
+.Organiser { font-family:Roboto;}
+.EDTxtENTxtBox::-webkit-input-placeholder { color:rgb(48,71,86);}
+.EDTxtENTxtBox:-moz-placeholder { /* Firefox 18- */ color:rgb(48,71,86);}
+.EDTxtENTxtBox::-moz-placeholder { /* Firefox 19+ */ color:rgb(48,71,86);}
+.EDTxtENTxtBox:-ms-input-placeholder { color:rgb(48,71,86);}
+.EDTxtENTxtBox:focus { outline:none; border:none;}
+.EDTxtVNTxtBox { width:100%; border:none; font:500 24px "Roboto", Arial, Helvetica, sans-serif; background:none; color:#747474;}
+.EDTxtVNTxtBox::-moz-placeholder { opacity:1; color:#747474;}
+.EDTxtVNTxtBox:-moz-placeholder { opacity:1; color:#747474;}
+.EDTxtVNTxtBox::-webkit-input-placeholder { opacity:1; color:#747474;}
+.EDTxtVNTxtBox:-ms-input-placeholder { opacity:1; color:#747474;}
+.EDTxtVNTxtBox:focus { outline:none; border:none;}
+.EDTxtVATxtBox { width:90%; border:none; background:none; color:#000; padding-left:10px; font:500 18px "Roboto", Arial, Helvetica, sans-serif; margin-left:20px;}
+.EDTxtVATxtBox::-moz-placeholder { opacity:1; color:#000;}
+.EDTxtVATxtBox:-moz-placeholder { opacity:1; color:#000;}
+.EDTxtVATxtBox::-webkit-input-placeholder { opacity:1; color:#000;}
+.EDTxtVATxtBox:-ms-input-placeholder { opacity:1; color:#000;}
+.EDTxtVATxtBox:focus { outline:none; border:none;}
+.EDTxtVenueAddress { margin-top:15px;}
+.EDTxtEventDateTime { color:#304756; font:500 18px/26px "Roboto", Arial, Helvetica, sans-serif; cursor:pointer;}
+.pickuptimeTxt { padding-left:12px; margin-left:20px;}
+.pickuptimeIcon { font-size:16px;}
+md-checkbox.md-checked.blue .md-icon { background-color:#00BCD4;}
+.bold .md-label { color:#000; font-size:15px; margin-left:35px;}
+.EDTxtEventChkBxCon { font:15px/24px "Roboto", Arial, Helvetica, sans-serif; color:rgb(0, 0, 0); margin-top:20px;}
+.eventDtkHeadCon { padding-left:15px;}
+.EDTxtEventOnlineChkBxCon { margin-top:20px;}
+.onlineEventConChkBox { margin-left:30px;}
+.eventDtlBody { margin:20px 0px;}
+.eDAddTicketHead { background:#EDFBFF; padding:0 20px;}
+.eDAddTicketInnerHead, .eDBitMoreInnerHead { color:rgb(255, 0, 138); font-weight:bold; font-family:'Roboto', Arial, Helvetica, sans-serif; max-width:1100px; font-size:24px; margin:0 auto; padding:0; text-align:left;}
+.addTicketsButtons { max-width:1100px; margin:0px auto; padding:5px 0px;}
+.ticketSubDivContainer { max-width:1100px; margin:0px auto; padding:5px 0px;}
+.eDAddTicketBody { margin:20px 10px 0px 20px;}
+.addTicketBtnCls { color:#00CAFD !important; font-weight:bold; padding:3px 10px; display:inline-block; margin-right:25px; margin-left:0px;}
+.addTicketBtnCls i { margin-right:5px;}
+.addTicketBtnCls i, .addTicketBtnCls span { float:left; line-height:36px;}
+.addTicketBtnCls img { width:20px; height:20px; margin:0px 5px;}
+.paidTicketContentCo { padding:10px 0px; box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26); margin-bottom:20px;}
+.paidTicketContentCoHeader { padding:0px 10px;}
+.qualityMdCon { max-width:180px;}
+.ticketContTxtBox { margin:14px 0px 0px 0px !important;}
+.arrowDownOptions { color:#00CAFD; font-weight:bold; padding:0 10px 0 0; font-size:15px;}
+.moreOptionTxt { text-transform:uppercase; font-weight:bold;}
+.buyerTotalTxt { position:relative; font-weight:bold; font-size:15px; padding-right:6px;}
+.infoOptionIcon { color:#888;}
+.trashIconConCls { width:20px; max-width:20px; height:20px; max-height:20px; color:#00CAFD; margin-top:19px;}
+.paidTicketContentCoBody { margin:10px 0px; border-top:1px dotted #000; padding:25px 20px; padding-left:42px !important;}
+.pTCBTxt { font-weight:bold;}
+.ticketMinTxtBoxCon { max-width:150px; margin-right:30px;}
+.ticketMaxTxtBoxCon { max-width:150px;}
+.iconDragItem { margin-top:18px; display:inline-block; margin-right:10px; cursor:move;}
+.showHideOptionCls { color:#000 !important; text-decoration:none !important; border-bottom:none !important; transition:none !important;}
+.showHideOptionCls:hover { color:#000 !important; text-decoration:none !important; border-bottom:none !important; transition:none !important;}
+.totalCapacity { margin:0px 10px 20px auto; max-width:1100px; text-align:right; font-weight:bold; font-family:'Roboto', Arial, Helvetica, sans-serif; color:#00cafd; font-size:24px;}
+.donationTxtCls { font-weight:500; margin-top:20px; color:rgba(0, 0, 0, 0.87);}
+.OrganizerBody { max-width:1100px; margin:0px auto; padding:5px 0px;}
+.btn-text { color:blue;}
+.btn-topmargin { margin-top:20px;}
+.eDBitMoreHead { background:#EDFBFF; margin-bottom:20px; padding:0 20px;}
+.textArea { height:100px;}
+.TellUs { margin-top:20px;}
+.tellus_pics { display:inline-block; position:relative; margin-left:5px;}
+md-tabs-canvas { margin-left:30px;}
+md-tabs-wrapper { border:none !important;}
+md-dialog { width:800px;}
+.md-tab { color:#888 !important;}
+.md-tab.md-active { color:rgb(0, 202, 253) !important;}
+.pickupDateContainer { min-width:380px; border:1px solid #c1c1c1; margin:0px auto; position:absolute; background:#fff; z-index:2; box-shadow:2px 2px 5px 0px #c1c1c1; margin-top:-65px; margin-left:15px; font-family:'Roboto', Arial, Helvetica, sans-serif;}
+.color-picker-wrapper.color-picker-swatch-only .input-group .input-group-addon { background-size:25px !important; height:30px !important; background-repeat:no-repeat !important; background-position:right top;}
+.closeIconImage { position:absolute; top:5px; right:5px; color:#fff; background-color:#888; font-weight:bold !important; font-size:16px !important;}
+.ticketPriceLbl { z-index:1;}
+.buyerInfo { position:absolute !important; border:1px solid #888; width:160px; max-width:100%; text-align:right; position:relative; background-color:#888; color:white; top:-130px; left:62px; z-index:100; padding:5px 10px;}
+.buyerInfo:before { position:absolute; content:''; width:0px; height:0px; border-left:15px solid transparent; border-right:15px solid transparent; border-top:15px solid#888; border-bottom:15px solid transparent; bottom:-30px; left:65px;}
+.validation-datepicker-messages { font-size:12px; font-weight:normal; color:#dd2c00; margin:10px 0;}
+.validation-standard-messages { font-size:12px; font-weight:normal; color:#dd2c00; margin:6px 0 6px 0; text-align:left;}
+.clearfix { clear:both;}
+/* CATALYST CSS*/
+.gallery-item { height:auto !important;}
+.dateP167 .md-datepicker-input { width:167px !important; font-weight:500;}
+.desMyBanner { text-transform:uppercase;}
+.variableOptions:empty { opacity:0;}
+.icBox { float:right; text-transform:uppercase; line-height:28px; margin-right:20px;}
+.thirddiv { margin-left:0;}
+.firstdiv.second-tab md-input-container { padding:0;}
+.OrganizerBody .addTicketBtnCls span, .variabeDetails span { float:none !important;}
+.md-datepicker-button { display:none;}
+.md-datepicker-triangle-button { transform:translateY(-10%) translateX(45%);}
+.md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle, .md-datepicker-triangle-button .md-datepicker-expand-triangle { border-width:5px; border-top-width:6px; border-top-color:rgba(0, 0, 0, 0.5);}
+.md-default-theme .md-datepicker-input, .md-datepicker-input { color:rgba(0, 0, 0, 0.9);}
+md-select.md-default-theme .md-select-value.md-select-placeholder, md-select .md-select-value.md-select-placeholder, md-input-container.md-default-theme label, md-input-container label, md-input-container.md-default-theme .md-placeholder, md-input-container .md-placeholder { color:rgba(0, 0, 0, 0.5);}
+.mce-container, .mce-container *, .mce-widget, .mce-widget *, .mce-reset { white-space:normal;}
+md-checkbox .md-container { top:2px; transform:none;}
+ input:-webkit-autofill { -webkit-box-shadow:0 0 0px 1000px white inset;}
+ md-input-container.md-default-theme.md-input-focused:not(.md-input-invalid) label, md-input-container.md-input-focused:not(.md-input-invalid) label, md-select-menu.md-default-theme md-option[selected], md-select-menu md-option[selected], md-select-menu.md-default-theme md-option[selected]:focus, md-select-menu md-option[selected]:focus, md-tabs.md-default-theme .md-tab.md-active, md-tabs .md-tab.md-active, md-tabs.md-default-theme .md-tab.md-active md-icon, md-tabs .md-tab.md-active md-icon, md-tabs.md-default-theme .md-tab.md-focused, md-tabs .md-tab.md-focused, md-tabs.md-default-theme .md-tab.md-focused md-icon, md-tabs .md-tab.md-focused md-icon { color:rgb(0,202,253);}
+ md-input-container.md-default-theme.md-input-focused:not(.md-input-invalid) .md-input, md-input-container.md-input-focused:not(.md-input-invalid) .md-input, md-radio-group.md-default-theme:not([disabled]) .md-primary .md-checked .md-off, md-radio-group:not([disabled]) .md-primary .md-checked .md-off, md-radio-group.md-default-theme:not([disabled]) .md-primary.md-checked .md-off, md-radio-group:not([disabled]) .md-primary.md-checked .md-off, md-radio-group.md-default-theme.md-primary:not([disabled]) .md-checked .md-off, md-radio-group.md-primary:not([disabled]) .md-checked .md-off, md-radio-group.md-default-theme.md-primary.md-checked:not([disabled]) .md-off, md-radio-group.md-primary.md-checked:not([disabled]) .md-off, md-radio-button.md-default-theme:not([disabled]) .md-primary .md-checked .md-off, md-radio-button:not([disabled]) .md-primary .md-checked .md-off, md-radio-button.md-default-theme:not([disabled]) .md-primary.md-checked .md-off, md-radio-button:not([disabled]) .md-primary.md-checked .md-off, md-radio-button.md-default-theme.md-primary:not([disabled]) .md-checked .md-off, md-radio-button.md-primary:not([disabled]) .md-checked .md-off, md-radio-button.md-default-theme.md-primary.md-checked:not([disabled]) .md-off, md-radio-button.md-primary.md-checked:not([disabled]) .md-off { border-color:rgb(0, 202, 253);}
+ md-select.md-default-theme:focus:not([disabled]) .md-select-value, md-select:focus:not([disabled]) .md-select-value, .md-default-theme .md-datepicker-input-container.md-datepicker-focused, .md-datepicker-input-container.md-datepicker-focused { border-bottom-color:rgb(0,202,253);}
+ md-radio-group.md-default-theme:not([disabled]) .md-primary .md-on, md-radio-group:not([disabled]) .md-primary .md-on, md-radio-group.md-default-theme.md-primary:not([disabled]) .md-on, md-radio-group.md-primary:not([disabled]) .md-on, md-radio-button.md-default-theme:not([disabled]) .md-primary .md-on, md-radio-button:not([disabled]) .md-primary .md-on, md-radio-button.md-default-theme.md-primary:not([disabled]) .md-on, md-radio-button.md-primary:not([disabled]) .md-on, .md-checkbox-enabled.md-default-theme[selected] .md-icon, .md-checkbox-enabled[selected] .md-icon, ._md-checkbox-enabled.md-default-theme[selected] ._md-icon, ._md-checkbox-enabled[selected] ._md-icon { background-color:rgb(0, 202, 253);}
+md-select-menu.md-default-theme md-content md-option[selected], md-select-menu md-content md-option[selected], md-select-menu.md-default-theme md-content md-option[selected]:focus, md-select-menu md-content md-option[selected]:focus { color:rgb(0, 202, 253);}
+md-radio-group.md-default-theme:not([disabled]) .md-primary .md-checked ._md-off, md-radio-group:not([disabled]) .md-primary .md-checked ._md-off, md-radio-group.md-default-theme:not([disabled]) .md-primary.md-checked ._md-off, md-radio-group:not([disabled]) .md-primary.md-checked ._md-off, md-radio-group.md-default-theme.md-primary:not([disabled]) .md-checked ._md-off, md-radio-group.md-primary:not([disabled]) .md-checked ._md-off, md-radio-group.md-default-theme.md-primary.md-checked:not([disabled]) ._md-off, md-radio-group.md-primary.md-checked:not([disabled]) ._md-off, md-radio-button.md-default-theme:not([disabled]) .md-primary .md-checked ._md-off, md-radio-button:not([disabled]) .md-primary .md-checked ._md-off, md-radio-button.md-default-theme:not([disabled]) .md-primary.md-checked ._md-off, md-radio-button:not([disabled]) .md-primary.md-checked ._md-off, md-radio-button.md-default-theme.md-primary:not([disabled]) .md-checked ._md-off, md-radio-button.md-primary:not([disabled]) .md-checked ._md-off, md-radio-button.md-default-theme.md-primary.md-checked:not([disabled]) ._md-off, md-radio-button.md-primary.md-checked:not([disabled]) ._md-off { border-color:rgba(0, 202, 253, 0.87);}
+md-radio-group.md-default-theme:not([disabled]) .md-primary ._md-on, md-radio-group:not([disabled]) .md-primary ._md-on, md-radio-group.md-default-theme.md-primary:not([disabled]) ._md-on, md-radio-group.md-primary:not([disabled]) ._md-on, md-radio-button.md-default-theme:not([disabled]) .md-primary ._md-on, md-radio-button:not([disabled]) .md-primary ._md-on, md-radio-button.md-default-theme.md-primary:not([disabled]) ._md-on, md-radio-button.md-primary:not([disabled]) ._md-on { background-color:rgba(0, 202, 253, 0.87);}
+md-select.md-default-theme:focus:not([disabled]) ._md-select-value, md-select:focus:not([disabled]) ._md-select-value { border-bottom-color:rgb(0, 202, 253);}
+md-select.md-default-theme ._md-select-value._md-select-placeholder, md-select ._md-select-value._md-select-placeholder, md-select.md-default-theme .md-select-value.md-select-placeholder, md-select .md-select-value.md-select-placeholder, md-input-container.md-default-theme label, md-input-container label, md-input-container.md-default-theme .md-placeholder, md-input-container .md-placeholder { color:rgba(0, 0, 0, 0.46); font-size:16px; font-weight:500;}
+._md-select-value ._md-select-icon { color:rgba(0, 0, 0, 0.5);}
+.md-default-theme .md-datepicker-input::-moz-placeholder, .md-datepicker-input::-moz-placeholder { opacity:1; color:rgba(0,0,0,.46);}
+.md-default-theme .md-datepicker-input:-moz-placeholder, .md-datepicker-input:-moz-placeholder { opacity:1; color:rgba(0,0,0,.46);}
+.md-default-theme .md-datepicker-input::-webkit-input-placeholder, .md-datepicker-input::-webkit-input-placeholder { opacity:1; color:rgba(0,0,0,.46);}
+.md-default-theme .md-datepicker-input:-ms-input-placeholder, .md-datepicker-input:-ms-input-placeholder { opacity:1; color:rgba(0,0,0,.46);}
+@media (min-width:0) and (max-width:767px)
+{
+	.addTicketsButtons { text-align:center;}
+	.addTicketBtnCls { margin-bottom:10px;}
+	.EDWebsiteUrlHead { padding:0 20px;}
+	.fixSpacing { margin-top:-6px !important;}
+  .buyerInfo { left:0;}
+  .buyerInfo:before { display:none;}
+}
+@media screen and (min-width:768px) and (max-width:991px)
+{
+	.havFlyer { font-size:13px !important;}
+}

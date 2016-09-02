@@ -573,3 +573,9 @@
     z-index:2;
     overflow: auto;
 }
+
+.ticketSoldPercent.tickt-overflw {
+    width: 100%;
+    float: left;
+    overflow: inherit;
+}

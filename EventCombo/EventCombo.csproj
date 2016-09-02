@@ -94,6 +94,18 @@
       <HintPath>..\packages\Microsoft.Owin.Cors.3.0.1\lib\net45\Microsoft.Owin.Cors.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.3.5\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog.Web, Version=0.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.Web.4.2.1\lib\net35\NLog.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NPOI, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.dll</HintPath>
       <Private>True</Private>
@@ -112,6 +124,10 @@
     </Reference>
     <Reference Include="NReco.PdfGenerator, Version=1.1.11.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
       <HintPath>..\packages\NReco.PdfGenerator.1.1.11.0\lib\net20\NReco.PdfGenerator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin.Security.Providers.LinkedIn, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.LinkedIn.2.7.0\lib\net45\Owin.Security.Providers.LinkedIn.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
@@ -212,9 +228,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -262,18 +275,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\AllowCrossSiteAttribute.cs" />
+    <Compile Include="ActionFilters\CustomHandleErrorAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\HangfirePreload.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\NLogConfig.cs" />
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\AutomapperConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BusinessPagesController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CMSController.cs" />
+    <Compile Include="Controllers\CommonAPIController.cs" />
+    <Compile Include="Controllers\ContactEventComboesController.cs" />
     <Compile Include="Controllers\CreateEventController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\DreamTeamController.cs" />
@@ -281,14 +301,18 @@
     <Compile Include="Controllers\EventConfirmationController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventListController.cs" />
+    <Compile Include="Controllers\EventManagementController.cs" />
     <Compile Include="Controllers\EventViewCustomController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Html2PdfController.cs" />
+    <Compile Include="Controllers\ImageAPIController.cs" />
     <Compile Include="Controllers\ImageFiles.cs" />
     <Compile Include="Controllers\InbetweenController.cs" />
+    <Compile Include="Controllers\JsonNetResult.cs" />
     <Compile Include="Controllers\ManageAttendeesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageEventController.cs" />
+    <Compile Include="Controllers\NotificationAPIController.cs" />
     <Compile Include="Controllers\OrganizerInfoController.cs" />
     <Compile Include="Controllers\OrderOptionsController.cs" />
     <Compile Include="Controllers\PaymentInfoController.cs" />
@@ -331,10 +355,32 @@
     <Compile Include="Models\AspNetUserClaim.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AspNetUserCode.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AspNetUserLogin.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Authenticationclass.cs" />
+    <Compile Include="Models\BusinessPage.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusinessPageViewModel.cs" />
+    <Compile Include="Models\City.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ContactEventCombo.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ECImageViewModel.cs" />
+    <Compile Include="Models\EventECImage.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventTicket_View.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Footer.cs" />
+    <Compile Include="Models\IBaseViewModel.cs" />
     <Compile Include="Models\BillingAddress.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -411,6 +457,7 @@
     <Compile Include="Models\EventVenue.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\EventVote.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -429,7 +476,6 @@
     <Compile Include="Models\Event_VariableDesc.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ExceptionLogging .cs" />
     <Compile Include="Models\ExternalLogin.cs" />
     <Compile Include="Models\Fee_Structure.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
@@ -458,6 +504,7 @@
     </Compile>
     <Compile Include="Models\Html2Pdf.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IOpenGraphProtocol.cs" />
     <Compile Include="Models\Job.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -483,6 +530,7 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MyAccount.cs" />
+    <Compile Include="Models\NotificationViewModel.cs" />
     <Compile Include="Models\OrderState.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -600,7 +648,13 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewEvent.cs" />
+    <Compile Include="Models\V_EventsexpiredList.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\V_EventsList.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\V_EventsListUpcoming.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\v_OrderList.cs">
@@ -617,16 +671,30 @@
     <Compile Include="Services\EventStatusUpdate.cs" />
     <Compile Include="Services\LastLoginStatus.cs" />
     <Compile Include="Services\TicketEmailer.cs" />
+    <Compile Include="Service\AccountService.cs" />
     <Compile Include="Service\ArticleService.cs" />
+    <Compile Include="Service\ECImageStorage.cs" />
+    <Compile Include="Service\ECImageService.cs" />
+    <Compile Include="Service\Notification\EmailToFriendsNotification.cs" />
+    <Compile Include="Service\EventService.cs" />
     <Compile Include="Service\HangfireBootstrapper.cs" />
     <Compile Include="Service\HtmlProcessing.cs" />
+    <Compile Include="Service\IAccountService.cs" />
     <Compile Include="Service\IArticleService.cs" />
     <Compile Include="Service\DBAccessService.cs" />
     <Compile Include="Service\IDBAccessService.cs" />
+    <Compile Include="Service\IECImageStorage.cs" />
+    <Compile Include="Service\IECImageService.cs" />
+    <Compile Include="Service\IEventService.cs" />
     <Compile Include="Service\IManageAttendeesService.cs" />
     <Compile Include="Service\IManageEventService.cs" />
+    <Compile Include="Service\INotificationService.cs" />
+    <Compile Include="Service\NotificationService.cs" />
+    <Compile Include="Service\Notification\ForgotPasswordNotification.cs" />
     <Compile Include="Service\Notification\INotificationSender.cs" />
     <Compile Include="Service\ManageAttendeesService.cs" />
+    <Compile Include="Service\Notification\NewPasswordNotification.cs" />
+    <Compile Include="Service\Notification\NewUserWelcomeMessage.cs" />
     <Compile Include="Service\Notification\NotificationSender.cs" />
     <Compile Include="Service\Notification\INotification.cs" />
     <Compile Include="Service\IOrderOptionsService.cs" />
@@ -644,6 +712,7 @@
     <Compile Include="Utils\Email.cs" />
     <Compile Include="Utils\Ip2Geo.cs" />
     <Compile Include="Utils\ClientIPAddress.cs" />
+    <Compile Include="Utils\TenantRouteConstraint.cs" />
     <Compile Include="ViewModels\CookieStore.cs" />
     <Compile Include="ViewModels\EmailInvitation.cs" />
     <Compile Include="Utils\EncryptDecrypt.cs" />
@@ -708,10 +777,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PasswordReset.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Shared\_AccountLayout.generated.cs">
+    <Compile Include="Views\Shared\_AuthenticateLayout.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>_AccountLayout.cshtml</DependentUpon>
+      <DependentUpon>_AuthenticateLayout.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shared\_Layout.generated.cs">
       <AutoGen>True</AutoGen>
@@ -755,6 +824,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AMaterial\angular-material.css" />
+    <Content Include="Content\AMaterial\angularjs-color-picker.min.css" />
+    <Content Include="Content\AMaterial\animations.css" />
+    <Content Include="Content\AMaterial\docs.css" />
+    <Content Include="Content\AMaterial\gridiculous.css" />
+    <Content Include="Content\AMaterial\header-footer.css" />
+    <Content Include="Content\AMaterial\main.css" />
+    <Content Include="Content\AMaterial\material-datetimepicker.css" />
+    <Content Include="Content\AMaterial\ngGallery.css" />
+    <Content Include="Content\AMaterial\owl.carousel.css" />
+    <Content Include="Content\AMaterial\themeOm.css" />
+    <Content Include="Content\AMaterial\ViewEvent.css" />
     <Content Include="Content\bootstrap-multiselect.css" />
     <Content Include="Content\custom-scroll.css" />
     <Content Include="Content\DateTimePicker.css" />
@@ -780,6 +861,37 @@
     <Content Include="Images\align_center.gif" />
     <Content Include="Images\align_left.gif" />
     <Content Include="Images\align_right.gif" />
+    <Content Include="Images\AMaterial\banner.jpg" />
+    <Content Include="Images\AMaterial\ColorWheel.png" />
+    <Content Include="Images\AMaterial\deal1.jpg" />
+    <Content Include="Images\AMaterial\deal2.jpg" />
+    <Content Include="Images\AMaterial\dream-team.jpg" />
+    <Content Include="Images\AMaterial\EventComboLogo.svg" />
+    <Content Include="Images\AMaterial\EventComboLogoWholePx.svg" />
+    <Content Include="Images\AMaterial\facebook-logo.svg" />
+    <Content Include="Images\AMaterial\facebook.svg" />
+    <Content Include="Images\AMaterial\fb_messenger.svg" />
+    <Content Include="Images\AMaterial\footer.png" />
+    <Content Include="Images\AMaterial\ftbg.png" />
+    <Content Include="Images\AMaterial\google-plus-symbol.svg" />
+    <Content Include="Images\AMaterial\ic_close_24px.svg" />
+    <Content Include="Images\AMaterial\infobox-bg.png" />
+    <Content Include="Images\AMaterial\linkedin-logo.svg" />
+    <Content Include="Images\AMaterial\linkedin.svg" />
+    <Content Include="Images\AMaterial\logo.png" />
+    <Content Include="Images\AMaterial\mail-square.svg" />
+    <Content Include="Images\AMaterial\marker-green.png" />
+    <Content Include="Images\AMaterial\marker-green2.png" />
+    <Content Include="Images\AMaterial\marker-green_old.png" />
+    <Content Include="Images\AMaterial\marker-pink.png" />
+    <Content Include="Images\AMaterial\plusIcon.png" />
+    <Content Include="Images\AMaterial\popimg.jpg" />
+    <Content Include="Images\AMaterial\saroosh.jpg" />
+    <Content Include="Images\AMaterial\square-facebook.svg" />
+    <Content Include="Images\AMaterial\square-linkedin.svg" />
+    <Content Include="Images\AMaterial\square-twitter.svg" />
+    <Content Include="Images\AMaterial\stripes.png" />
+    <Content Include="Images\AMaterial\twitter.svg" />
     <Content Include="Images\amr-exp.png" />
     <Content Include="Images\Bar_Image.Png" />
     <Content Include="Images\checked.png" />
@@ -835,7 +947,121 @@
       <DependentUpon>EventComboModel.edmx</DependentUpon>
       <LastGenOutput>EventComboModel.cs</LastGenOutput>
     </Content>
-    <Content Include="favicon.ico" />
+    <Content Include="Scripts\AMaterial\AccountController.js" />
+    <Content Include="Scripts\AMaterial\angular-animate.js" />
+    <Content Include="Scripts\AMaterial\angular-animate.min.js" />
+    <Content Include="Scripts\AMaterial\angular-aria.js" />
+    <Content Include="Scripts\AMaterial\angular-aria.min.js" />
+    <Content Include="Scripts\AMaterial\angular-cookies.js" />
+    <Content Include="Scripts\AMaterial\angular-cookies.min.js" />
+    <Content Include="Scripts\AMaterial\angular-material-datetimepicker.js" />
+    <Content Include="Scripts\AMaterial\angular-material.js" />
+    <Content Include="Scripts\AMaterial\angular-messages.js" />
+    <Content Include="Scripts\AMaterial\angular-messages.min.js" />
+    <Content Include="Scripts\AMaterial\angular-route.js" />
+    <Content Include="Scripts\AMaterial\angular-route.min.js" />
+    <Content Include="Scripts\AMaterial\angular-sanitize.js" />
+    <Content Include="Scripts\AMaterial\angular-sanitize.min.js" />
+    <Content Include="Scripts\AMaterial\angular-tinymce\tinymce.min.js" />
+    <Content Include="Scripts\AMaterial\angular.js" />
+    <Content Include="Scripts\AMaterial\angular.min.js" />
+    <Content Include="Scripts\AMaterial\angularjs-color-picker.min.js" />
+    <Content Include="Scripts\AMaterial\classie.js" />
+    <Content Include="Scripts\AMaterial\controller.js" />
+    <Content Include="Scripts\AMaterial\demo.js" />
+    <Content Include="Scripts\AMaterial\EventComboApp.js" />
+    <Content Include="Scripts\AMaterial\header.js" />
+    <Content Include="Scripts\AMaterial\infobox.js" />
+    <Content Include="Scripts\AMaterial\broadcastService.js" />
+    <Content Include="Scripts\AMaterial\jquery-1.12.3.min.js" />
+    <Content Include="Scripts\AMaterial\main.js" />
+    <Content Include="Scripts\AMaterial\map.js" />
+    <Content Include="Scripts\AMaterial\moment.js" />
+    <Content Include="Scripts\AMaterial\ng-map.min.js" />
+    <Content Include="Scripts\AMaterial\ngDraggable.js" />
+    <Content Include="Scripts\AMaterial\ngGallery.js" />
+    <Content Include="Scripts\AMaterial\ngRepeatOwlCarousel.js" />
+    <Content Include="Scripts\AMaterial\owl.carousel.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\advlist\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\anchor\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\autolink\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\autoresize\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\autosave\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\bbcode\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\charmap\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\codesample\css\prism.css" />
+    <Content Include="Scripts\AMaterial\plugins\codesample\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\code\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\colorpicker\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\contextmenu\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\directionality\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-cool.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-cry.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-embarassed.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-frown.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-innocent.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-kiss.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-laughing.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-money-mouth.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-sealed.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-smile.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-surprised.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-tongue-out.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-undecided.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-wink.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\img\smiley-yell.gif" />
+    <Content Include="Scripts\AMaterial\plugins\emoticons\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\example\dialog.html" />
+    <Content Include="Scripts\AMaterial\plugins\example\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\example_dependency\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\fullpage\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\fullscreen\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\hr\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\imagetools\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\image\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\importcss\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\insertdatetime\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\layer\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\legacyoutput\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\link\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\lists\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\media\moxieplayer.swf" />
+    <Content Include="Scripts\AMaterial\plugins\media\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\nonbreaking\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\noneditable\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\pagebreak\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\paste\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\preview\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\print\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\save\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\searchreplace\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\spellchecker\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\tabfocus\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\table\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\template\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\textcolor\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\textpattern\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\visualblocks\css\visualblocks.css" />
+    <Content Include="Scripts\AMaterial\plugins\visualblocks\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\visualchars\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\plugins\wordcount\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\content.inline.min.css" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\content.min.css" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce-small.svg" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce.svg" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\img\anchor.gif" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\img\loader.gif" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\img\object.gif" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\img\trans.gif" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\skin.ie7.min.css" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\skin.min.css" />
+    <Content Include="Scripts\AMaterial\sortable.js" />
+    <Content Include="Scripts\AMaterial\svg-assets-cache.js" />
+    <Content Include="Scripts\AMaterial\themes\modern\theme.min.js" />
+    <Content Include="Scripts\AMaterial\tinycolor-min.js" />
+    <Content Include="Scripts\AMaterial\tinymce.min.js" />
+    <Content Include="Scripts\AMaterial\ViewEvent.js" />
     <Content Include="Scripts\custom-scroll.js" />
     <Content Include="Scripts\DateTimePicker.js" />
     <Content Include="Scripts\gmap.js" />
@@ -912,6 +1138,7 @@
     <Content Include="Content\style-test.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\summernote.css" />
+    <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="ForgotPassword.html" />
     <Content Include="Global.asax" />
@@ -1123,11 +1350,23 @@
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\abel-regular.woff2" />
     <Content Include="Content\bootstarp.css.map" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Properties\PublishProfiles\depoy1.pubxml" />
     <None Include="Properties\PublishProfiles\eventcombo.pubxml" />
     <None Include="Properties\PublishProfiles\IISHostDemo.pubxml" />
     <None Include="Properties\PublishProfiles\temp.pubxml" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce-small.eot" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce-small.ttf" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce-small.woff" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce.eot" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce.ttf" />
+    <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Commonfunction.js" />
@@ -1311,6 +1550,7 @@
     </Content>
     <Content Include="Views\Shared\_AuthenticateLayout.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_AuthenticateLayout.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Shared\_Logout.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1492,6 +1732,16 @@
     <Content Include="Views\ManageAttendees\ProcessAddAttendee.cshtml" />
     <Content Include="Views\Article\Buzz.cshtml" />
     <Content Include="Views\DreamTeam\Index.cshtml" />
+    <Content Include="Views\EventManagement\CreateEvent.cshtml" />
+    <Content Include="Views\Shared\_AngularLayout.cshtml" />
+    <Content Include="Views\Shared\_AngularHeader.cshtml" />
+    <Content Include="Views\Shared\_AngularFooter.cshtml" />
+    <Content Include="Views\EventManagement\CreateEventTicket.cshtml" />
+    <Content Include="Views\BusinessPages\BusinessPage.cshtml" />
+    <Content Include="Views\ContactEventComboes\Index.cshtml" />
+    <Content Include="Views\ManageAttendees\_SaleReport.cshtml" />
+    <Content Include="Views\EventManagement\ViewEvent.cshtml" />
+    <Content Include="Views\EventManagement\EmptyTemplate.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -1503,7 +1753,11 @@
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
     <Folder Include="Properties\assets\" />
+    <Folder Include="Views\Base\" />
+    <Folder Include="Views\EmailServices\" />
     <Folder Include="Views\Html2Pdf\" />
+    <Folder Include="Views\ImageAPI\" />
+    <Folder Include="Views\NotificationAPI\" />
     <Folder Include="Views\Permission\" />
     <Folder Include="Views\Validate\" />
     <Folder Include="Views\ValidationMessage\" />
@@ -1542,7 +1796,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>10159</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:10159/</IISUrl>
+          <IISUrl>http://localhost:10259/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

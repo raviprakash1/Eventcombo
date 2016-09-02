@@ -17,6 +17,8 @@ using CMS.Utils;
 using System.Net;
 using System.Drawing;
 using System.Drawing.Imaging;
+using Newtonsoft.Json;
+using System.Data.Entity;
 
 namespace CMS.Service
 {
@@ -44,37 +46,67 @@ namespace CMS.Service
 
     private IEnumerable<OrderMainViewModel> GetOrdersForUser(string userId, string searchStr)
     {
-      IRepository<v_OrderList> orderRepo = new GenericRepository<v_OrderList>(_factory.ContextFactory);
+        IRepository<v_OrderList> orderRepo = new GenericRepository<v_OrderList>(_factory.ContextFactory);
 
-      List<OrderMainViewModel> ordersVM = new List<OrderMainViewModel>();
-      OrderMainViewModel oVM = null;
-      IEnumerable<v_OrderList> orders = null;
+        List<OrderMainViewModel> ordersVM = new List<OrderMainViewModel>();
+        OrderMainViewModel oVM = null;
+        IEnumerable<v_OrderList> orders = null;
 
-      string srch = String.IsNullOrEmpty(searchStr) ? "" : searchStr.Trim();
+        string srch = String.IsNullOrEmpty(searchStr) ? "" : searchStr.Trim();
 
-      if (String.IsNullOrEmpty(userId))
-      {
-        if (String.IsNullOrEmpty(srch))
-          orders = orderRepo.Get();
+        if (String.IsNullOrEmpty(userId))
+        {
+            if (String.IsNullOrEmpty(srch))
+                orders = orderRepo.Get();
+            else
+            {
+                var orderSearch = JsonConvert.DeserializeObject<OrderSearch>(srch);
+                if (orderSearch != null)
+                {
+                        orders = orderRepo.Get(filter:
+                            (o => (!string.IsNullOrEmpty(orderSearch.Order) ? o.OrderId.Contains(orderSearch.Order) : true)
+                                && (!string.IsNullOrEmpty(orderSearch.CustomerName) ? (o.FirstName + " " + o.LastName).Contains(orderSearch.CustomerName) : true)
+                                && (!string.IsNullOrEmpty(orderSearch.Email) ? o.Email.Contains(orderSearch.Email) : true)
+                                && (!string.IsNullOrEmpty(orderSearch.Event) ? o.EventID.ToString().Contains(orderSearch.Event) || o.Name.Contains(orderSearch.Event) : true)
+                                && (orderSearch.OrderDate != null ? DbFunctions.TruncateTime(o.OrderDateTime) == orderSearch.OrderDate : true)
+                            )
+                         );
+                }
+                else
+                    orders = orderRepo.Get(filter: (o => o.OrderId.Contains(srch) || o.Email.Contains(srch) || o.FirstName.Contains(srch)
+                        || o.LastName.Contains(srch) || o.Name.Contains(srch) || (o.EventID.ToString() == srch)));
+            }
+        }
         else
-          orders = orderRepo.Get(filter: (o => o.OrderId.Contains(srch) || o.Email.Contains(srch) || o.FirstName.Contains(srch)
-            || o.LastName.Contains(srch) || o.Name.Contains(srch) || (o.EventID.ToString() == srch)));
-      }
-      else
-      {
-        if (String.IsNullOrEmpty(srch))
-          orders = orderRepo.Get(filter: (o => o.UserId == userId));
-        else
-          orders = orderRepo.Get(filter: (o => (o.UserId == userId) &&
-            (o.OrderId.Contains(srch) || o.Email.Contains(srch) || o.FirstName.Contains(srch)
-            || o.LastName.Contains(srch) || o.Name.Contains(srch) || (o.EventID.ToString() == srch))));
-      }
-      foreach (var order in orders)
-      {
-        oVM = _mapper.Map<OrderMainViewModel>(order);
-        ordersVM.Add(oVM);
-      }
-      return ordersVM;
+        {
+            if (String.IsNullOrEmpty(srch))
+                orders = orderRepo.Get(filter: (o => o.UserId == userId));
+            else
+            {
+                var orderSearch = JsonConvert.DeserializeObject<OrderSearch>(srch);
+                if (orderSearch != null)
+                {
+                        orders = orderRepo.Get(filter:
+                              (o => (!string.IsNullOrEmpty(orderSearch.Order) ? o.OrderId.Contains(orderSearch.Order) : true)
+                                  && (!string.IsNullOrEmpty(orderSearch.CustomerName) ? (o.FirstName + " " + o.LastName).Contains(orderSearch.CustomerName) : true)
+                                  && (!string.IsNullOrEmpty(orderSearch.Email) ? o.Email.Contains(orderSearch.Email) : true)
+                                  && (!string.IsNullOrEmpty(orderSearch.Event) ? o.EventID.ToString().Contains(orderSearch.Event) || o.Name.Contains(orderSearch.Event) : true)
+                                  && (orderSearch.OrderDate != null ? DbFunctions.TruncateTime(o.OrderDateTime) == orderSearch.OrderDate : true)
+                              )
+                           );
+                }
+                else
+                    orders = orderRepo.Get(filter: (o => (o.UserId == userId) &&
+                        (o.OrderId.Contains(srch) || o.Email.Contains(srch) || o.FirstName.Contains(srch)
+                        || o.LastName.Contains(srch) || o.Name.Contains(srch) || (o.EventID.ToString() == srch))));
+            }
+        }
+        foreach (var order in orders)
+        {
+            oVM = _mapper.Map<OrderMainViewModel>(order);
+            ordersVM.Add(oVM);
+        }
+        return ordersVM;
     }
 
     private IEnumerable<OrderMainViewModel> GetUpcomingOrdersForUser(string userId, string searchStr)
@@ -149,10 +181,12 @@ namespace CMS.Service
     }
 
 
-    public OrderDetailsViewModel GetOrderDetails(string orderId)
+    public OrderDetailsViewModel GetOrderDetails(string orderId, long eventId)
     {
       IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
+      IRepository<EventTicket_View> EventTicketRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
 
+      var TicketNames = EventTicketRepo.Get(filter: (t => t.EventID == eventId && t.OrderId == orderId)).Select(t => t.TicketName);
       var order = orderRepo.Get(filter: (o => ((o.O_Order_Id == orderId)))).FirstOrDefault();
       if (order == null)
         return null;
@@ -174,6 +208,8 @@ namespace CMS.Service
       IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
       foreach (var att in attRepo.Get(filter: (tb => ((tb.OrderId == orderId) && (tb.UserId == order.O_User_Id)))))
         details.Attendees.Add(_mapper.Map<AttendeeViewModel>(att));
+
+      details.TicketNames = (TicketNames == null ? "" : string.Join(", ", TicketNames.ToArray()));
 
       return details;
     }

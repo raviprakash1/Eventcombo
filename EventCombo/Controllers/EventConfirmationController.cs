@@ -120,7 +120,7 @@ namespace EventCombo.Controllers
                 var url = Request.Url;
                 var baseurl = url.GetLeftPart(UriPartial.Authority);
                 string title = Regex.Replace(cms.Title.Trim().Replace(" ", " - "), "[^ a - zA - Z0 - 9_ -] + ", "");
-                cms.url = baseurl + Url.Action("ViewEvent", "ViewEvent") + "?strEventDs= " + title + "&strEventId=" + EventId + "";
+                cms.url = baseurl + Url.Action("ViewEvent", "EventManagement") + "?strEventDs= " + title + "&strEventId=" + EventId + "";
                 cms.Descritption = Eventdetails.EventDescription;
                 cms.EventId = EventId;
                 return View(cms);

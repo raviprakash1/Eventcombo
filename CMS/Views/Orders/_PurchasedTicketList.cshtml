@@ -7,6 +7,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th class="UETableHead"><a href="javascript:void(0);">#</a></th>
         <th class="UETableHead" width="11%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.EventId')">Event Id</a></th>
         <th class="UETableHead" width="11%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.Name')">Event</a></th>
         <th class="UETableHead" width="11%"><a href="javascript:void(0);" onclick="sortBy(this, '@OrderSortBy.FullName')">Customer Name</a></th>
@@ -22,13 +23,14 @@
       @foreach (var order in Model.Orders)
       {
         <tr>
+          <td class="UETableTD">@(order.RowNumber.ToString())</td>
           <td class="UETableTD">@(order.EventId.ToString())</td>
           <td class="UETableTD">@order.Name</td>
           <td class="UETableTD">@order.FirstName @order.LastName</td>
           <td class="UETableTD">@order.Email</td>
           <td class="UETableTD">@(order.City), @order.State</td>
           <td class="UETableTD">
-            <a href="javascript:void(0)" onclick="expandEditMenu(this, 'UETableTD@(Model.OrderType)_', '@(order.OrderId)')">
+            <a href="javascript:void(0)" onclick="expandEditMenu(this, 'UETableTD@(Model.OrderType)_', '@(order.OrderId)', @(order.EventId))">
               @((order.OrderId ?? "") == "" ? "Not assigned" : order.OrderId)
             </a>
           </td>

@@ -2,7 +2,15 @@
 function FacebookShare(myhref) {
   FB.ui({
     method: 'share',
-    href: myhref,
+    href: myhref
+  }, function (response) { });
+  return false;
+}
+
+function FacebookSend(myhref) {
+  FB.ui({
+    method: 'send',
+    link: myhref
   }, function (response) { });
   return false;
 }

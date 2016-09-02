@@ -7,11 +7,14 @@ using EventCombo.Models;
 using System.Text.RegularExpressions;
 using EventCombo.Utils;
 using System.Globalization;
+using NLog;
 
 namespace EventCombo.Controllers
 {
     public class CartController : Controller
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         [HttpGet]
         public JsonResult PayPaltoken()
         {
@@ -38,7 +41,7 @@ namespace EventCombo.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
                 return Json(redirect.Token, JsonRequestBehavior.AllowGet);
             }
@@ -97,9 +100,8 @@ namespace EventCombo.Controllers
             catch (Exception ex)
             {
                 Console.Write("CheckoutReview");
-                Console.Write(ex.InnerException.ToString());  
-                ExceptionLogging.SendErrorToText(ex);
-                ExceptionLogging.SendErrorToText(ex.InnerException);
+                Console.Write(ex.InnerException.ToString());
+                logger.Error("Exception during request processing", ex);
             }
             return View();
         }
@@ -175,7 +177,7 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
+              logger.Error("Exception during request processing", ex);
             }
             return View();
         }
@@ -190,8 +192,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                strResult = "N";
+              logger.Error("Exception during request processing", ex);
+              strResult = "N";
             }
             return strResult;
         }

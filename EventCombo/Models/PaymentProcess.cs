@@ -7,12 +7,14 @@ using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Contracts.V1;
 using AuthorizeNet.Api.Controllers.Bases;
 using System.Configuration;
+using NLog;
 
 namespace EventCombo.Models
 {
     public class PaymentProcess
     {
-        public static cardtransaction CheckCreditCard(String ApiLoginID, String ApiTransactionKey, string strCardNo, string strExpDate, string strCvvCode, decimal dAmount, string strOrderNo, TicketPayment model,string strUserId)
+      private static Logger logger = LogManager.GetCurrentClassLogger();
+      public static cardtransaction CheckCreditCard(String ApiLoginID, String ApiTransactionKey, string strCardNo, string strExpDate, string strCvvCode, decimal dAmount, string strOrderNo, TicketPayment model, string strUserId)
         {
             Console.WriteLine("Charge Credit Card Sample");
             string message = "";
@@ -174,7 +176,7 @@ namespace EventCombo.Models
                 {
                     context.Database.ExecuteSqlCommand("DELETE FROM Order_Detail_T WHERE O_Order_Id ='" + strOrderNo + "'");
                 }
-                ExceptionLogging.SendErrorToText(ex);
+                logger.Error("Exception during request processing", ex);
             }
 
             return carddet;

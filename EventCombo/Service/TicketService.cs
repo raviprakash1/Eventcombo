@@ -22,6 +22,7 @@ namespace EventCombo.Service
     private IUnitOfWorkFactory _factory;
     private IMapper _mapper;
     private IDBAccessService _dbservice;
+    private INotificationService _nService;
 
     public TicketService(IUnitOfWorkFactory factory, IMapper mapper, IDBAccessService dbService)
     {
@@ -37,6 +38,7 @@ namespace EventCombo.Service
       _factory = factory;
       _mapper = mapper;
       _dbservice = dbService;
+      _nService = new NotificationService(_factory, _mapper);
     }
 
     private IEnumerable<OrderMainViewModel> GetOrdersForUser(string userId)
@@ -57,7 +59,7 @@ namespace EventCombo.Service
             OId = order.O_Id,
             Name = firstticket.Event.EventTitle,
             Quantity = ptickets.Sum(pt => pt.TPD_Purchased_Qty),
-            TotalPaid = ptickets.Sum(pt => pt.TPD_Amount),
+            TotalPaid = ptickets.Sum(pt => pt.TPD_Amount) + order.O_VariableAmount,
             EventStartDate = DateTime.Parse(firstticket.Ticket_Quantity_Detail.Publish_Event_Detail.PE_Scheduled_Date),
             EventEndDate = DateTime.Parse(firstticket.Ticket_Quantity_Detail.Publish_Event_Detail.PE_MultipleVenue_id > 0 ?
               firstticket.Ticket_Quantity_Detail.Publish_Event_Detail.PE_Scheduled_Date :
@@ -122,10 +124,12 @@ namespace EventCombo.Service
     }
 
 
-    public OrderDetailsViewModel GetOrderDetails(string orderId, string userId)
+    public OrderDetailsViewModel GetOrderDetails(string orderId, string userId, long eventId)
     {
       IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
+      IRepository<EventTicket_View> EventTicketRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
 
+      var TicketNames = EventTicketRepo.Get(filter: (t => t.EventID == eventId && t.OrderId == orderId)).Select(t => t.TicketName);
       var order = orderRepo.Get(filter: (o => ((o.O_Order_Id == orderId) && (o.O_User_Id == userId)))).FirstOrDefault();
       if (order == null)
         return null;
@@ -147,6 +151,8 @@ namespace EventCombo.Service
       IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
       foreach (var att in attRepo.Get(filter: (tb => ((tb.OrderId == orderId) && (tb.UserId == userId)))))
         details.Attendees.Add(_mapper.Map<AttendeeViewModel>(att));
+
+      details.TicketNames = (TicketNames == null ? "" : string.Join(", ", TicketNames.ToArray()));
 
       return details;
     }
@@ -270,35 +276,8 @@ namespace EventCombo.Service
       var org = ticket.Event.Event_Orgnizer_Detail.Where(od => od.DefaultOrg == "Y").FirstOrDefault();
       model.EventId = ticket.Event.EventID;
       model.OrganizerId = org == null ? null : (long?)org.OrganizerMaster_Id;
-      using (var uow = _factory.GetUnitOfWork())
-      {
-        try
-        {
-          IRepository<Event_OrganizerMessages> messRepo = new GenericRepository<Event_OrganizerMessages>(_factory.ContextFactory);
-          Event_OrganizerMessages mess = _mapper.Map<Event_OrganizerMessages>(model);
-          messRepo.Insert(mess);
-          uow.Context.SaveChanges();
 
-          string email = org.Organizer_Master.Organizer_Email ?? org.Organizer_Master.AspNetUser.Profiles.FirstOrDefault().Email;
-          string name = org.Organizer_Master.Orgnizer_Name ?? org.Organizer_Master.AspNetUser.Profiles.FirstOrDefault().FirstName;
-
-          if ((org != null) && (email != null))
-          {
-            ISendMailService sendService = CreateSendMailService();
-            sendService.Message.To.Add(new MailAddress(email, name));
-            INotification notification = new OrganizerMessageNotification(_factory, mess);
-            notification.SendNotification(sendService);
-          }
-
-          uow.Commit();
-        }
-        catch (Exception ex)
-        {
-          uow.Rollback();
-          throw new Exception("Exception in the SaveMessage. Transaction rolled back.", ex);
-        }
-      }
-
+      _nService.SendContactOrganizerMessage(model);
       return true;
     }
 

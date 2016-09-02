@@ -11,6 +11,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using NLog;
 
 namespace EventCombo.Controllers
 {
@@ -18,6 +19,7 @@ namespace EventCombo.Controllers
     public class EventController : Controller
     {
         // GET: Event
+        private static Logger logger = LogManager.GetCurrentClassLogger();
       
         public ActionResult EventCreation()
         {
@@ -576,7 +578,7 @@ namespace EventCombo.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                    logger.Error("Exception during request processing", ex);
                     pathnew = ex.Message.ToString();
                     isSavedSuccessfully = false;
                 }

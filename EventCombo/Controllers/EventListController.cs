@@ -7,6 +7,7 @@ using EventCombo.Models;
 using System.Data;
 using PagedList;
 using System.Web.UI;
+using NLog;
 
 namespace EventCombo.Controllers
 {
@@ -14,7 +15,9 @@ namespace EventCombo.Controllers
     [OutputCache(NoStore = true, Location = OutputCacheLocation.None)]
     public class EventListController : Controller
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         string UserId = string.Empty;
+
         EventComboEntities db = new EventComboEntities();
         // GET: EventList
 
@@ -128,7 +131,7 @@ namespace EventCombo.Controllers
                     ViewData["GuestLstCnt"] = 0;
             }catch(Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
+              logger.Error("Exception during request processing", ex);
             }
          
             return View();
@@ -217,7 +220,7 @@ namespace EventCombo.Controllers
             }
             catch(Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
+              logger.Error("Exception during request processing", ex);
             }
 
             return View();
@@ -235,7 +238,7 @@ namespace EventCombo.Controllers
                     ViewBag.LiveEvent = liveevnt.ToList();
                 }catch(Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
                 return liveevnt.ToList();
             }
@@ -254,7 +257,7 @@ namespace EventCombo.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
                 return savedevnt.ToList();
             }
@@ -273,7 +276,7 @@ namespace EventCombo.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
                 return pastevnt.ToList();
             }
@@ -293,7 +296,7 @@ namespace EventCombo.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
                 return guestlist.ToList();
             }

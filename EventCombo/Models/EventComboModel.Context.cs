@@ -109,7 +109,15 @@ namespace EventCombo.Models
         public virtual DbSet<ECImageType> ECImageTypes { get; set; }
         public virtual DbSet<OrderState> OrderStates { get; set; }
         public virtual DbSet<PaymentType> PaymentTypes { get; set; }
+        public virtual DbSet<BusinessPage> BusinessPages { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<V_EventsexpiredList> V_EventsexpiredList { get; set; }
         public virtual DbSet<v_OrderList> v_OrderList { get; set; }
+        public virtual DbSet<ContactEventCombo> ContactEventComboes { get; set; }
+        public virtual DbSet<EventTicket_View> EventTicket_View { get; set; }
+        public virtual DbSet<V_EventsListUpcoming> V_EventsListUpcoming { get; set; }
+        public virtual DbSet<AspNetUserCode> AspNetUserCodes { get; set; }
+        public virtual DbSet<EventECImage> EventECImages { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)

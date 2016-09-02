@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-
+using EventCombo.Utils;
 namespace EventCombo
 {
     public class RouteConfig
@@ -27,14 +27,22 @@ namespace EventCombo
             // }
             //);
 
-  
+            routes.MapRoute(
+                         name: "BusinessPages",
+                         url: "ec/{PageNameUrl}",
+                         defaults: new
+                         {
+                             controller = "BusinessPages",
+                             action = "BusinessPage"
+                         }
+                     );
 
             routes.MapRoute(
                 name: "ViewEvent",
                 url: "e/{strEventDs}-{strEventId}",
                 defaults: new
                 {
-                    controller = "ViewEvent",
+                    controller = "EventManagement",
                     action = "ViewEvent"
                 }
             );

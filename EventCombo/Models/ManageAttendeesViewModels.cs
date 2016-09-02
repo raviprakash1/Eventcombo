@@ -6,7 +6,7 @@ using System.Web;
 namespace EventCombo.Models
 {
   public enum PaymentStates { Total, Completed, Pending }
-  public enum EventOrderSortBy { Date, Price, Buyer, Order, Quantity, PaymentState }
+  public enum EventOrderSortBy { Date, Price, PricePaid, PriceNet, Buyer, TicketName, CustomerEmail, Order, Quantity, PaymentState, Address }
 
 
   public class ManageAttendeesOrdersViewModel
@@ -41,11 +41,22 @@ namespace EventCombo.Models
   {
     public string OrderId { get; set; }
     public string BuyerName { get; set; }
-    public string BuyerEmail { get; set; }
+    public string TicketName { get; set; }
+    public string BuyerEmail { get; set; }        
+    public string CustomerEmail { get; set; }
     public long Quantity { get; set; }
     public decimal Price { get; set; }
+    public decimal PricePaid { get; set; }
+    public decimal PriceNet { get; set; }
+    public decimal Fee { get; set; }
+    public decimal MerchantFee { get; set; }
+    public decimal Refunded { get; set; }
+    public decimal Cancelled { get; set; }
     public DateTime Date { get; set; }
     public PaymentStates PaymentState { get; set; }
+    public string Address { get; set; }
+    public string PromoCode { get; set; }
+    public string MailTickets { get; set; }        
   }
 
   public class EventOrderDetailViewModel

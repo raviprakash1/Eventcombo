@@ -23,12 +23,15 @@ using System.Data.Entity.SqlServer;
 using System.Web.UI;
 using System.Configuration;
 using EventCombo.ViewModels;
+using NLog;
 
 namespace EventCombo.Controllers
 {
     [OutputCache(NoStore = true, Location = OutputCacheLocation.None)]
     public class CreateEventController : Controller
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         string facebook_urlAuthorize_base = "https://graph.facebook.com/oauth/authorize";
         string facebook_urlGetToken_base = "https://graph.facebook.com/oauth/access_token";
         string facebook_AppID = "963347903739086";
@@ -225,7 +228,7 @@ namespace EventCombo.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
 
                 //EventCreation ObjEV = new EventCreation();
@@ -269,8 +272,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return strHtml.ToString();
+              logger.Error("Exception during request processing", ex);
+              return strHtml.ToString();
 
             }
 
@@ -312,8 +315,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return strHtml.ToString();
+              logger.Error("Exception during request processing", ex);
+              return strHtml.ToString();
 
             }
 
@@ -342,8 +345,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return strHtml.ToString();
+              logger.Error("Exception during request processing", ex);
+              return strHtml.ToString();
 
             }
 
@@ -369,8 +372,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return "Y";
+              logger.Error("Exception during request processing", ex);
+              return "Y";
 
             }
         }
@@ -823,6 +826,7 @@ namespace EventCombo.Controllers
                             else
                             {
                                 from = ConfigurationManager.AppSettings.Get("DefaultEmail"); 
+
                         }
                             if (!(string.IsNullOrEmpty(Emailtemplate.CC)))
                             {
@@ -924,7 +928,7 @@ namespace EventCombo.Controllers
                                         {
                                             var url = Request.Url;
                                             var baseurl = url.GetLeftPart(UriPartial.Authority);
-                                            string strUrl = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(strEventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(lEventId).ToString() });
+                                            string strUrl = baseurl + Url.Action("ViewEvent", "EventManagement", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(strEventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(lEventId).ToString() });
                                             bodyn = bodyn.Replace("¶¶DiscoverEventurl¶¶", strUrl);
                                         }
                                     }
@@ -953,8 +957,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return lEventId;
+              logger.Error("Exception during request processing", ex);
+              return lEventId;
             }
             return lEventId;
         }
@@ -1480,7 +1484,7 @@ namespace EventCombo.Controllers
                     }
                 }catch(Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
             }
 
@@ -1509,8 +1513,8 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                strForView = "N";
+              logger.Error("Exception during request processing", ex);
+              strForView = "N";
             }
             //Session["Fromname"] = "events";
             TempData["ForViewOnly"] = strForView;
@@ -1834,7 +1838,7 @@ namespace EventCombo.Controllers
                 viewEvent.Orderdetail = tickettype;
             }catch(Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
+              logger.Error("Exception during request processing", ex);
             }
             return View(viewEvent);
         }
@@ -2037,6 +2041,7 @@ namespace EventCombo.Controllers
                 msg.EventId = long.Parse(model.EventId);
                 msg.OrganizerId = long.Parse(model.organiserid);
                 msg.Message = model.mesasges;
+                msg.PhoneNo = model.PhoneNo;
                 if (Session["AppId"] != null)
                 {
                     msg.Userid = Session["AppId"].ToString();
@@ -2044,23 +2049,18 @@ namespace EventCombo.Controllers
                 else
                 {
                     msg.Userid = "";
-
                 }
 
                 db.Event_OrganizerMessages.Add(msg);
                 try {
                     int i = db.SaveChanges();
+                    Email.SendToOrganizer(msg.MessageId);
                 }catch(Exception ex)
                 {
-                    ExceptionLogging.SendErrorToText(ex);
+                  logger.Error("Exception during request processing", ex);
                 }
                 return "saved";
-
             }
-          
-          
-           
-
         }
 
      
@@ -2081,7 +2081,7 @@ namespace EventCombo.Controllers
                             objEnt.SaveChanges();
                         }catch (Exception ex)
                         {
-                            ExceptionLogging.SendErrorToText(ex);
+                          logger.Error("Exception during request processing", ex);
                         }
                     }
                     strResult = "Y";
@@ -2157,7 +2157,7 @@ namespace EventCombo.Controllers
                         context.SaveChanges();
                     }catch(Exception ex)
                     {
-                        ExceptionLogging.SendErrorToText(ex);
+                      logger.Error("Exception during request processing", ex);
                     }
                 }
                 
@@ -2266,8 +2266,8 @@ public string Checkpassword(string password ,long id)
             }
             catch (Exception exc)
             {
-                ExceptionLogging.SendErrorToText(exc);
-                Response.Write("<br /><br />ERROR : " + exc.Message);
+              logger.Error("Exception during request processing", exc);
+              Response.Write("<br /><br />ERROR : " + exc.Message);
             }
             finally
             {
@@ -2296,8 +2296,8 @@ public string Checkpassword(string password ,long id)
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                strResult = "There is some Problem.";
+              logger.Error("Exception during request processing", ex);
+              strResult = "There is some Problem.";
             }
             return strResult;
         }
@@ -2316,15 +2316,15 @@ public string Checkpassword(string password ,long id)
                     foreach (var item in EvList)
                     {
                         if (item.EventTitle != null && item.EventTitle.Trim() != "")
-                            strHtml.Append("<option>" + @Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Regex.Replace(item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", "") , strEventId = item.EventID.ToString() }) + "</option>");
+                          strHtml.Append("<option>" + @Url.Action("ViewEvent", "EventManagement", new { strEventDs = Regex.Replace(item.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = item.EventID.ToString() }) + "</option>");
                     }
                     return strHtml.ToString();
                 }
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
-                return strHtml.ToString();
+              logger.Error("Exception during request processing", ex);
+              return strHtml.ToString();
 
             }
 

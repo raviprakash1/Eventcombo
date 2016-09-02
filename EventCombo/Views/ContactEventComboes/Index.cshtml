@@ -1,0 +1,179 @@
+﻿@model IEnumerable<EventCombo.Models.ContactEventCombo>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/eventcombo.css" rel="stylesheet" />
+<link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui.js"></script>
+<link href="~/Content/ec-select.css" rel="stylesheet" />
+<script src="~/Scripts/ec-select.js"></script>
+@using (Html.BeginForm(new { autocomplete = "off" }))
+{
+    <div class="event_container event_container_480">
+        <div class="col-xs-12 mt20 mb20" id="contorganizer" >
+            <div id="orgerror" class="alert-danger" style="visibility:hidden;">Please fill out the missing information</div>
+                <form class="form-horizontal">
+                   
+                    <div class="col-xs-12 form-group mb10">
+                        <label class="col-sm-2 control-label ev_tickt_lebel">Name</label>
+                        <div class="col-sm-8">
+                            <input class="form-control evnt_inp_cont" type="text" id="nameid">
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 form-group mb10">
+                        <label class="col-sm-2 control-label ev_tickt_lebel">Email</label>
+                        <div class="col-sm-8">
+                            <input class="form-control evnt_inp_cont" type="text" id="emailid">
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 form-group mb10">
+                        <label class="col-sm-2 control-label ev_tickt_lebel">Phone</label>
+                        <div class="col-sm-8">
+                            <input class="form-control evnt_inp_cont" type="text" id="PhoneId" />
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 form-group mb10">
+                        <label class="col-sm-2 control-label ev_tickt_lebel">Category</label>
+                        <div class="col-sm-8">
+                            @Html.DropDownList("ddlEventCategory", ViewBag.EventCategories as List<SelectListItem>, new { @class = "form-control selectpicker wd600 chkvalidation" })
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 form-group mb10">
+                        <label class="col-sm-2 control-label ev_tickt_lebel">Sub Category</label>
+                        <div class="col-sm-8">
+                            <select id="ddlEventSubCategory" class="form-control selectpicker  wd600"></select>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 form-group mb10">
+                        <label class="col-sm-2 control-label ev_tickt_lebel ">Question</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" rows="4" id="QuestionId"></textarea>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </form>
+                <div class="text-center">
+                    <div class="invitation-loader" id="dvAjxLoaderOrg" style="width:auto;float:left;margin-top:7px;">
+                        <img src="~/Images/ajax-loaderMini.gif" /> Please wait ...
+                    </div>
+                    <button type="button" class="btn btn-primary btn-lg ev_add_sub_btn " id="btContactEC">SEND</button>
+                </div>
+            
+        </div>
+    </div>
+}
+
+<script src="~/Scripts/jquery.maskedinput.min.js"></script>
+<script>
+    $(document).click(function () {
+        $('#orgerror').css('visibility', 'hidden');
+
+        if ($('#orgerror').css('visibility') == 'visible') {
+            $('input').removeClass('err-bor');
+            $("#QuestionId").removeClass('err-bor');
+        }
+        $('#QuestionId').removeClass('err-bor');
+    });
+    jQuery(function ($) {
+        $("#PhoneId").mask("999-999-9999");
+    });
+
+    $("#ddlEventCategory").change(function () {
+        var vCatId = $("#ddlEventCategory").val();
+        $.ajax({
+            url: '@Url.Action("GetSubCat", "CreateEvent")',
+            data: { lECatId: vCatId },
+            type: "Post",
+            success: function (data) {
+                $("#ddlEventSubCategory").html(data);
+                $('#ddlEventSubCategory').selectpicker('refresh');
+            },
+            error: function (data) {
+            }
+        });
+    });
+
+    $('#btContactEC').click(function () {
+        var errormsg = "", erroremail = "";
+        var name = $('#nameid').val();
+        var mail = $('#emailid').val();
+        var txt = $('#QuestionId').val();
+        var Phn = $('#PhoneId').val();
+        var EvCat = $('#ddlEventCategory').val();
+        var EvSubCat = $('#ddlEventSubCategory').val();
+
+        var count = 0;
+        if (name != '') {
+            $('#nameid').removeClass('err-bor');
+        } else {
+            count++;
+            $('#nameid').addClass('err-bor');
+        }
+        if (!validateEmail(mail)) {
+            $('#emailid').addClass('err-bor');
+            errormsg += "Invalid Email</br>";
+        }
+        if (txt != '') {
+            $('#QuestionId').removeClass('err-bor');
+
+        } else {
+            count++;
+            $('#QuestionId').addClass('err-bor');
+
+        }
+        if (erroremail != "") {
+            errormsg += erroremail;
+
+        }
+        if (count > 0) {
+            errormsg = "Fill the missing details"
+        }
+        if (errormsg != "") {
+
+            $('#orgerror').css('visibility', 'visible');
+            $('#orgerror').html(errormsg);
+            return false;
+        }
+        else {
+            var model = {
+                'Email': mail,
+                'Name': name,
+                'Question': txt,
+                'Category': EvCat,
+                'SubCategory': EvSubCat,
+                'PhoneNo': Phn
+            }
+            $.ajax({
+                url: '@Url.Action("SaveAndSend", "ContactEventComboes")',
+                data: { model: model },
+                beforeSend: function () { $('#dvAjxLoaderOrg').show(); },
+                complete: function () { $('#dvAjxLoaderOrg').hide(); },
+                type: "Post",
+                success: function (response) {
+                    $('#orgerror').css('visibility', 'visible');
+                    $('#orgerror').addClass('alert-success');
+                    $('#orgerror').removeClass('alert-danger ');
+                    $('#orgerror').html("Message has been successfully sent !!!");
+                    $("#ddlEventCategory").val(0);
+                    $('#ddlEventSubCategory').val(0);
+                    $('#nameid').val('');
+                    $('#emailid').val('');
+                    $('#QuestionId').val('');
+                    $('#PhoneId').val('');
+                },
+                error: function (data) {
+                }
+            });
+        }
+    });
+
+</script>
+

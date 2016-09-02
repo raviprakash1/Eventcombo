@@ -41,6 +41,7 @@ namespace EventCombo.Models
         public string Organizer_Status { get; set; }
         public string contenttype { get; set; }
         public string Imagepath { get; set; }
+        public Nullable<long> ECImageId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event_Orgnizer_Detail> Event_Orgnizer_Detail { get; set; }

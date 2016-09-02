@@ -1,0 +1,117 @@
+﻿.eventBanner { background-color:#00cafd; background-repeat:no-repeat; background-position:center center; background-attachment:fixed; background-size:cover;}
+.eventVanue { background:rgba(255,255,255,.8); padding:15px 30px; margin-top:70px; position:relative;}
+.event-name { color:#304756; font:500 36px 'Roboto', Arial, Helvetica, sans-serif; margin:0; text-align:left;}
+.vanue-name { color:#585858; font:500 24px 'Roboto', Arial, Helvetica, sans-serif; margin-top:10px; margin-bottom:15px;}
+.donation { color:#000; text-transform:uppercase; font:bold 24px Arial, Helvetica, sans-serif;}
+.adiv { color:#304756; font:500 18px 'Roboto', Arial, Helvetica, sans-serif; margin-bottom:10px; padding-left:30px; text-align:left; position:relative;}
+.adiv i { position:absolute; left:0; top:0;}
+.adiv .black { color:#000;}
+
+.wgts { position:absolute; right:15px; bottom:15px; line-height:32px;}
+.wgts span { display:inline-block; line-height:20px; margin-right:20px; float:left;}
+.wgts a { color:#00baff; cursor:pointer;}
+.wgts .social { line-height:20px; margin-right:5px; position:relative;}
+.wgts .social a { display:inline-block;}
+.wgts .social:before { content:attr(social); color:rgb(116,116,116); font:500 11px 'Roboto', Arial, Helvetica, sans-serif; position:absolute; left:0; bottom:100%; margin-bottom:3px;}
+/****************************************************************/
+.alignText { text-align:right;}
+.text-links { margin:10px -10px; padding:0; text-align:left; display:inline-block;}
+.text-links li { margin:0; padding:0 10px; list-style:none; display:inline-block;}
+.text-links li a { display:inline-block; padding:0; color:#000; font:16px 'Roboto', Arial, Helvetica, sans-serif; text-decoration:none;}
+.text-links li a:hover { color:#00baff;}
+.eventFlyer { width:100%; display:inline-block;}
+.eventFlyer img { width:100%;}
+.eventFlyerDes { margin-top:30px; margin-bottom:30px; font:16px/26px 'Roboto', Arial, Helvetica, sans-serif;}
+.saroosh { position:relative; padding-left:85px; margin-bottom:30px;}
+.saroosh > img { width:70px; height:70px; display:inline-block; position:absolute; left:0; top:0;}
+.saroosh > div { width:100%; display:table; text-align:left; font:16px 'Roboto', Arial, Helvetica, sans-serif;}
+.saroosh p { margin-top:0; margin-bottom:15px;}
+.saroosh span { display:inline-block; line-height:20px; margin-right:30px; float:left;}
+.saroosh a { color:#00baff; cursor:pointer; text-decoration:none;}
+.saroosh span a { text-transform:uppercase; font-size:16px;}
+.saroosh a:hover { color:#000;}
+.saroosh .social { line-height:20px; margin-right:5px;}
+.saroosh .social a { display:inline-block;}
+/****************************************************************/
+.red-heading { color:#ff2693; font:bold 24px 'Roboto', Arial, Helvetica, sans-serif; margin-top:20px; margin-bottom:10px;}
+.connectFacebook { color:#00baff; cursor:pointer; text-decoration:none; font:16px 'Roboto', Arial, Helvetica, sans-serif; text-transform:uppercase;}
+.connectFacebook img { float:left; margin-right:10px;}
+/****************************************************************/
+.ticket { width:100%; display:inline-block; margin-bottom:15px; background:#fafafa; box-shadow:0 1px 2px rgba(0,0,0,.5);}
+.text24 { color:#535252; font:24px 'Roboto', Arial, Helvetica, sans-serif; text-align:left;}
+.upp { text-transform:uppercase;}
+.remain { color:#000; font:bold 18px 'Roboto', Arial, Helvetica, sans-serif;}
+.smallFee { font-size:14px; color:#666;}
+.ticdes { color:#8c8b8b; font-size:12px;}
+.ticdes p { margin:12px 0; line-height:14px;}
+.ticdetail { color:#304756; font-size:12px; line-height:14px;}
+.inputbox { width:auto; height:40px; display:inline-block; padding:5px 2px; margin:0; color:#7f7f7f; font:500 24px/24px "Roboto",Arial,Helvetica,sans-serif; background:none; border:none; border-bottom:1px solid rgba(0,0,0,.12); outline:none; -webkit-appearance:none; -moz-appearance:none; appearance:none; text-align:center;}
+.option { width:auto; height:40px; display:inline-block; padding:5px 15px; color:#7f7f7f; font:500 24px/24px "Roboto",Arial,Helvetica,sans-serif; border:none; border-bottom:1px solid #e0e0e0; outline:none; -webkit-appearance:none; -moz-appearance:none; appearance:none; background:
+url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAoCAYAAADdaosOAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MTY1NjVEQkEzMkQ5MTFFNkI3OEFDMEMyMzUyRjM0NjciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MTY1NjVEQkIzMkQ5MTFFNkI3OEFDMEMyMzUyRjM0NjciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoxNjU2NURCODMyRDkxMUU2Qjc4QUMwQzIzNTJGMzQ2NyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoxNjU2NURCOTMyRDkxMUU2Qjc4QUMwQzIzNTJGMzQ2NyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PjZT9mAAAABTSURBVHjaYvz//z8DNsDEgAOMSgyIBMv8+fP/P3z4EEVQXl6egcnR0RFDNUiMSUFBAawCWTVIjAmmAlk12A4QgawLxIZLoOsCAcbR5DM0JAACDACwfxKRywS66QAAAABJRU5ErkJggg==') no-repeat right center;}
+.wdt100 { width:100px;}
+.tot { display:inline-block; margin-bottom:15px; color:#0393ef; font:bold 24px 'Roboto', Arial, Helvetica, sans-serif;}
+.bldtext { color:#000; font:bold 16px 'Roboto', Arial, Helvetica, sans-serif; margin-top:0;}
+/****************************************************************/
+.deal_btn { display:inline-block; padding:8px 15px; box-shadow:0 1px 2px rgba(0,0,0,.5); color:#0393ef; font:500 14px/20px 'Roboto', Arial, Helvetica, sans-serif; text-transform:uppercase; text-decoration:none; cursor:pointer;}
+.deal { width:100%; position:relative; display:inline-block; min-height:120px; padding:15px; padding-left:120px; margin-bottom:15px; text-align:left; box-shadow:0 1px 2px rgba(0,0,0,.5);}
+.dealImg { width:85px; height:85px; display:inline-block; position:absolute; left:15px; top:15px;}
+.dealOff { color:#0393ef; font:30px 'Roboto', Arial, Helvetica, sans-serif; margin-right:15px;}
+.dealOffDetails { color:#000; font:12px 'Roboto', Arial, Helvetica, sans-serif;}
+.dealDes { color:#aaa; font:16px/24px 'Roboto', Arial, Helvetica, sans-serif; margin-top:10px;}
+.dealDes strong { color:#000; font-weight:500;}
+.dealThumb,.dealThumb:hover { color:#0393ef;}
+.dealLink { color:#00baff; cursor:pointer; text-decoration:none; font:500 14px 'Roboto', Arial, Helvetica, sans-serif; text-transform:uppercase; margin:0 15px;}
+.dealLink.dark { color:#0393ef;}
+.dealLink:hover { color:#000;}
+/****************************************************************/
+.buttons a { font:500 16px 'Roboto', Arial, Helvetica, sans-serif; padding:10px 30px; background:#00cafd; color:#fff; text-decoration:none; text-transform:uppercase;margin-right:25px; display:inline-block;}
+.buttonedit a { font:14px 'Roboto', Arial, Helvetica, sans-serif; padding:10px 30px; background:#00cafd; color:#fff; text-decoration:none; text-transform:uppercase;margin-right:25px; display:inline-block;}
+.buttons a.makeLive { background:#1aff1a; margin-left:30px; margin-right:0;}
+img.ng-thumb { height:100px;}
+.ng-gallery-content > .ng-thumbnails-wrapper { overflow:hidden;}
+#mapView { height:430px; margin-top:20px;}
+#owlCarousel, #owlCarousel img, .owl-carousel, .owl-carousel img { padding:2px;}
+#owlCarousel img, .owl-carousel img { cursor:pointer; max-width:300px;}
+.md-dialog-container { z-index:999 !important;}
+.md-dialog-container img { display:block; width:100%; margin-bottom:10px;}
+/*******************************************************************/
+.infoW { background:#fff; border-radius:10px 10px 0 0; overflow:hidden; color:#000; font:12px 'Roboto', Arial, Helvetica, sans-serif; height:230px;}
+.infoW .infoHead { background:#000; border-radius:11px 11px 0 0; color:#fff600; font:bold 14px 'Roboto', Arial, Helvetica, sans-serif; padding:7px 15px; margin:0;}
+.infoContent { position:relative; width:100%; padding:15px 115px 15px 15px; text-align:left;}
+.propImg { width:85px; height:85px; position:absolute; top:15px; right:15px;}
+.propTitle { color:#0393ef; font:bold 14px 'Roboto', Arial, Helvetica, sans-serif; padding-bottom:5px;}
+.addInfo, .viewInfo { display:inline-block; width:40%; color:#7dd5fe; cursor:pointer; font:700 14px/20px "Roboto", Arial, Helvetica, sans-serif; text-align:center; padding:8px; text-decoration:none; text-transform:uppercase; margin-left:15px; box-shadow:0 1px 2px rgba(0, 0, 0, 0.5);}
+.addInfo, .viewInfo:hover { color:#0393ef !important;}
+.infoButtons { margin-top:15px; text-align:center;}
+.infoContent { display:inline-block;}
+/*******************************************************************/
+.menu ul { margin: 0; padding:0;}
+.menu ul li { list-style:none;display:inline-block;}
+.menu ul li a { text-decoration:none; color:#000; font:17px 'Roboto', Arial, Helvetica, sans-serif; padding:0 15px; cursor:pointer;}
+.menu ul li a:hover { color:#00cafd;}
+
+#slider { width:100%; height:100px; display:block; overflow:hidden; position:relative;}
+.ng-gallery { width:auto; left:0; display:table; position:absolute;}
+.ng-gallery div { width:auto; height:100px; margin:0 3px; background-repeat:no-repeat; background-position:center top; background-size:auto 100%; display:inline-block; float:left; overflow:hidden;}
+/********************************************************************/
+@media screen and (min-width:991px) and (max-width:1024px)
+{
+}
+@media screen and (min-width:768px) and (max-width:991px)
+{
+	.event-name { font-size:30px;}
+}
+@media screen and (min-width:0) and (max-width:767px)
+{
+	.wgts { right:auto; left:60px;}
+	.alignText { text-align:left;}
+	.eventVanue { padding-bottom:50px;}
+	.event-name { font-size:24px;}
+	.vanue-name, .red-heading { font-size:18px;}
+	.adiv, .saroosh span a, .connectFacebook { font-size:14px;}
+	.addInfo, .viewInfo { font-size:12px;}
+	.deal { padding-left:15px; padding-top:120px;}
+	#mapView { height:300px;}
+.ticdes p { line-height:16px;}
+.ticdetail { line-height:16px;}
+}

@@ -78,6 +78,35 @@ namespace EventCombo
       CreateMap<Event_OrganizerMessages, OrganizerMessageViewModel>();
       CreateMap<EventOrdersSummuryViewModel, EventOrdersSummuryViewModel>();
       CreateMap<PaymentType, PaymentTypeViewModel>();
+      CreateMap<EventType, EventTypeViewModel>()
+        .ForMember(d => d.EventTypeId, m => m.MapFrom(s => s.EventTypeID))
+        .ForMember(d => d.EventType, m => m.MapFrom(s => s.EventType1));
+      CreateMap<EventCategory, EventCategoryViewModel>()
+        .ForMember(d => d.EventCategoryId, m => m.MapFrom(s => s.EventCategoryID))
+        .ForMember(d => d.EventCategory, m => m.MapFrom(s => s.EventCategory1));
+      CreateMap<EventSubCategory, EventSubCategoryViewModel>()
+        .ForMember(d => d.EventSubCategoryId, m => m.MapFrom(s => s.EventSubCategoryID))
+        .ForMember(d => d.EventSubCategory, m => m.MapFrom(s => s.EventSubCategory1));
+      CreateMap<Organizer_Master, OrganizerViewModel>()
+        .ForMember(d => d.OrgnizerId, m => m.MapFrom(s => s.Orgnizer_Id));
+      CreateMap<TimeZoneDetail, TimeZoneViewModel>()
+        .ForMember(d => d.TimeZoneId, m => m.MapFrom(s => s.TimeZone_Id))
+        .ForMember(d => d.TimeZoneName, m => m.MapFrom(s => s.TimeZone_Name))
+        .ForMember(d => d.TimeZoneOrder, m => m.MapFrom(s => s.Timezone_order));
+      CreateMap<Fee_Structure, FeeStructureViewModel>();
+      CreateMap<BusinessPage, BusinessPageViewModel>();
+      CreateMap<ECImage, ECImageViewModel>()
+        .ForMember(d => d.ImagePath, m => m.Ignore())
+        .ForMember(d => d.Filename, m => m.MapFrom(s => s.ImagePath))
+        .ForMember(d => d.TypeName, m => m.MapFrom(s => s.ECImageType.TypeName));
+      CreateMap<ECImageViewModel, ECImageViewModel>();
+      CreateMap<EventNotificationViewModel, OrganizerMessageViewModel>()
+        .ForMember(d => d.PhoneNo, m => m.MapFrom(s => s.Phone));
+      CreateMap<Event, EventViewModel>();
+      CreateMap<Event_VariableDesc, VariableChargesViewModel>()
+        .ForMember(d => d.VariableId, m => m.MapFrom(s => s.Variable_Id))
+        .ForMember(d => d.EventId, m => m.MapFrom(s => s.Event_Id));
+
 
       //backward maps
       CreateMap<OrderTemplateViewModel, OrderTemplate>();
@@ -100,6 +129,17 @@ namespace EventCombo
         .ForMember(d => d.TicketbearerId, m => m.Ignore());
       CreateMap<OrganizerMessageViewModel, Event_OrganizerMessages>()
         .ForMember(d => d.MessageId, m => m.Ignore());
+      CreateMap<OrganizerViewModel, Organizer_Master>();
+      CreateMap<EventViewModel, Event>()
+        .ForMember(d => d.EventID, m => m.Ignore())
+        .ForMember(d => d.EventImages, m => m.Ignore());
+      CreateMap<TicketViewModel, Ticket>()
+        .ForMember(d => d.T_Id, m => m.Ignore());
+      CreateMap<VariableChargesViewModel, Event_VariableDesc>()
+        .ForMember(d => d.Variable_Id, m => m.Ignore())
+        .ForMember(d => d.Event_Id, m => m.MapFrom(s => s.EventId));
+      CreateMap<ECImageViewModel, ECImage>()
+        .ForMember(d => d.ImagePath, m => m.MapFrom(s => s.Filename));
     }
   }
 }

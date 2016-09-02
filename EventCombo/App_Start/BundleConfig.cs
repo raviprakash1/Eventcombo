@@ -97,9 +97,55 @@ namespace EventCombo
            //));
             #endregion
 
+            bundles.Add(new StyleBundle("~/Content/angularHeader")
+              .Include( "~/Content/AMaterial/angular-material.css",
+                        "~/Content/AMaterial/gridiculous.css",
+                        "~/Content/AMaterial/docs.css",
+                        "~/Content/AMaterial/themeOm.css",
+                        "~/Content/AMaterial/header-footer.css"));
 
+            bundles.Add(new StyleBundle("~/Content/angularMain-CE")
+              .Include( "~/Content/AMaterial/angularjs-color-picker.min.css",
+                        "~/Content/AMaterial/material-datetimepicker.css",
+                        "~/Content/AMaterial/animations.css",
+                        "~/Content/AMaterial/ngGallery.css",
+                        "~/Content/AMaterial/main.css"));
+            bundles.Add(new StyleBundle("~/Content/AngularViewEvent")
+              .Include( "~/Content/font-awesome.min.css",
+                        "~/Content/AMaterial/owl.carousel.css",
+                        "~/Content/AMaterial/ViewEvent.css"));
 
-
+            bundles.Add(new ScriptBundle("~/Scripts/AMaterial/angularHeader")
+              .Include( "~/Scripts/AMaterial/angular.js",
+                        "~/Scripts/AMaterial/angular-animate.js",
+                        "~/Scripts/AMaterial/angular-route.js",
+                        "~/Scripts/AMaterial/angular-aria.js",
+                        "~/Scripts/AMaterial/angular-material.js",
+                        "~/Scripts/AMaterial/angular-messages.js",
+                        "~/Scripts/AMaterial/angular-cookies.js",
+                        "~/Scripts/AMaterial/angular-sanitize.js",
+                        "~/Scripts/AMaterial/tinymce.min.js",
+                        "~/Scripts/AMaterial/tinycolor-min.js",
+                        "~/Scripts/AMaterial/angular-tinymce/tinymce.min.js",
+                        "~/Scripts/AMaterial/themes/modern/theme.min.js",
+                        "~/Scripts/AMaterial/angularjs-color-picker.min.js",
+                        "~/Scripts/AMaterial/moment.js",
+                        "~/Scripts/AMaterial/angular-material-datetimepicker.js",
+                        "~/Scripts/AMaterial/ngGallery.js",
+                        "~/Scripts/AMaterial/demo.js",
+                        "~/Scripts/AMaterial/ngRepeatOwlCarousel.js",
+                        "~/Scripts/AMaterial/classie.js",
+                        "~/Scripts/AMaterial/EventComboApp.js",
+                        "~/Scripts/AMaterial/broadcastService.js",
+                        "~/Scripts/AMaterial/header.js",
+                        "~/Scripts/AMaterial/AccountController.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/AMaterial/viewEvent")
+              .Include("~/Scripts/AMaterial/owl.carousel.min.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/AMaterial/viewEventFooter")
+              .Include( "~/Scripts/AMaterial/infobox.js",
+                        "~/Scripts/AMaterial/map.js",
+                        "~/Scripts/AMaterial/ViewEvent.js",
+                        "~/Scripts/socialshare.js"));
         }
     }
 }

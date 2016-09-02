@@ -377,7 +377,7 @@
                     <div class="clearfix"></div>
                     <div class="col-sm-12 no_pad mb20">
                         <ul class="nav nav-tabs ft18 cap_l recent_tab_ord">
-                            <li class="active"><a data-toggle="tab" href="#home">Recent Order</a></li>
+                            <li class="active"><a data-toggle="tab" href="#home">Recent Orders</a></li>
                             <li><a data-toggle="tab" href="#menu1">Recent Attendees</a></li>
                         </ul>
                         <div class="tab-content order_attendee_tab">
@@ -410,27 +410,29 @@
                                                     @foreach (var item in (List<OrderAttendees>)Model.Order)
                                                     {
                                                         <tr>
-                                                            <td class="ev_detail"><a href="#">@item.OrderId</a></td>
+                                                            <td class="ev_detail"><a href="javascript:void(0)" onclick="expandEditMenu(this, 'UETableTDRecentOrder_', '@item.OrderId', @(Model.Eventid))">@item.OrderId</a></td>
                                                             <td>@item.Name</td>
                                                             <td>@item.Qty</td>
                                                             <td>$@item.Amount</td>
                                                             <td>@item.Date</td>
                                                             <td>Completed</td>
                                                         </tr>
+                                                        <tr id="UETableTDRecentOrder_@(item.OrderId)" data-popped="0" style="display:none;"></tr>
                                                     }
                                                 </tbody>
                                             </table>
                                             <div class="clearfix"></div>
-                                            <div class="row ev_detail recent_view_ord"><a href="#">View All</a></div>
+                                            <div class="row ev_detail recent_view_ord"><a href="@Url.Action("Orders","ManageAttendees",new { eventId=Model.Eventid})">View All</a></div>
                                         }
-                                    }
+                                   }
                                 </div>
                             </div>
                             <div id="menu1" class="tab-pane fade">
                                 <div class="order_attendee_inner">
-                                  
+
+
                                         @if (Model.Eventstatus == "Save")
-                                        {
+                                                    {
                                             <label> You haven't made your event live. Publish it to make your event live</label>
                                         }
                                         else
@@ -457,17 +459,18 @@
                                                         {
                                                             <tr>
                                                                 <td>@item.Name</td>
-                                                                <td class="ev_detail"><a href="#">@item.OrderId</a></td>
+                                                                <td class="ev_detail"><a href="javascript:void(0)" onclick="expandEditMenu(this, 'UETableTDRecentAttendee_', '@item.OrderId', @(Model.Eventid))">@item.OrderId</a></td>
                                                                 <td>@item.Qty</td>
                                                                 <td>$@item.Amount</td>
                                                                 <td>@item.Date</td>
                                                                 <td>Completed</td>
                                                             </tr>
+                                                            <tr id="UETableTDRecentAttendee_@(item.OrderId)" data-popped="0" style="display:none;"></tr>
                                                         }
                                                     </tbody>
                                                 </table>
                                                 <div class="clearfix"></div>
-                                                <div class="col-sm-12 ev_detail recent_view_ord"><a href="#">View All</a></div>
+                                                <div class="col-sm-12 ev_detail recent_view_ord"><a href="@Url.Action("Orders","ManageAttendees",new { eventId=Model.Eventid})">View All</a></div>
                                             }
                                         }
                                    
@@ -1352,7 +1355,7 @@
 
         $("#cbtview").click(function () {
 
-            window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Model.Eventtitle.Replace(" ","-") , strEventId = ValidationMessageController.GetParentEventId(Model.Eventid).ToString()})';
+            window.location.href = '@Url.Action("ViewEvent", "EventManagement", new { strEventDs = Model.Eventtitle.Replace(" ", "-"), strEventId = ValidationMessageController.GetParentEventId(Model.Eventid).ToString() })';
 
         });
         $(".aPubPrivate").click(function () {
@@ -1421,4 +1424,117 @@
     });
 
     $(document).prop('title', 'Manage @Model.Eventtitle | Eventcombo');
+
+    function expandEditMenu(obj, name, id, eId) {
+        var detail = $('#' + name + id);
+        if ($(detail).data('popped') == '0') {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("PurchasedTicketDetail", "Account")',
+                data: { OrderId: id, EventId: eId },
+                datatype: 'html',
+                success: function (data) {
+                    $(obj).parent().parent().css('background-color', '#f1f1f1');
+                    $(detail).html(data);
+                    $(detail).css('background-color', '#f1f1f1');
+                    $(detail).css('border-top', 'none');
+                    $(detail).data('popped', '1');
+                    $(detail).slideDown();
+                }
+            });
+        }
+        else {
+            $(detail).html('');
+            $(obj).parent().parent().css('background-color', '#ffffff');
+            $(detail).data('popped', '0');
+            $(detail).slideUp();
+        }
+
+    }
+
+    function editAttendees(obj) {
+        if ($(obj).parent().parent().find(".EditAttendee").attr("disabled") == undefined || $(obj).parent().parent().find(".EditAttendee").attr("disabled") == null || $(obj).parent().parent().find(".EditAttendee").attr("disabled") == "false") {
+            $(obj).parent().parent().find(".EditAttendee").attr("disabled", "true")
+        } else {
+            $(obj).parent().parent().find(".EditAttendee").removeAttr("disabled")
+        }
+    }
+
+    function saveChangeFunc(id) {
+        var query = {
+            OrderId: id,
+            SendEmail: $('#sendConfirmationEmail' + id).hasClass('basicInfoCheckBox'),
+            Attendees: []
+        };
+        $('input[id^="UETableTDSUbDivName' + id + '_"]').each(function () {
+            query.Attendees.push({
+                TicketbearerId: $(this).data('bearerid'),
+                Name: $(this).val(),
+                Email: $('#UETableTDSUbDivEmail' + id + '_' + $(this).data('bearerid')).val()
+            })
+        });
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SavePurchasedTicketDetail", "Account")",
+            data: query,
+            datatype: "html",
+            success: function (data) {
+                $('#ajaxanswer' + id).html(data);
+            }
+        });
+    }
+
+    function SendCancelOrder(obj, oId) {
+        if ($(obj).closest('table').parent().parent().data('orderstate') != 1) {
+            $('#ajaxanswer' + oId).html("Order already cancelled.");
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("CancelOrder", "Account")",
+            data: { OrderId: oId },
+            datatype: "html",
+            success: function (data) {
+                if (data > 0) {
+                    var caption = $(obj).closest('table').parent().parent().prev('tr').find('td').last();
+                    $(caption).html($(caption).html() + ' - Cancelled');
+                    $('#ajaxanswer' + oId).html("Order cancelled.");
+                }
+                else
+                    $('#ajaxanswer' + oId).html("Order wasn't cancelled.");
+            }
+        });
+    }
+
+    function SendOrganizerMessage(oId) {
+        var query = {
+            OrderId: oId,
+            Name: $('#nameContact' + oId).val(),
+            Email: $('#emailContact' + oId).val(),
+            Message: $('#messageContact' + oId).val()
+        }
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SaveMessage", "Account")",
+            data: query,
+            datatype: "html",
+            success: function (data) {
+                if (data > 0) {
+                    $('#ajaxanswer' + oId).html("Message saved.");
+                }
+                else
+                    $('#ajaxanswer' + oId).html("Message not saved.");
+            }
+        });
+    }
+
+    $(".recent_tab_ord").click(function () {
+        $(".order_attendee_tab .tab-pane table tr[id^=UETableTDRecent]").each(function () {
+            $(this).html("");
+            $(this).parent().parent().css('background-color', '#ffffff');
+            $(this).data('popped', '0');
+            $(this).slideUp();
+        });
+    });
+
 </script>

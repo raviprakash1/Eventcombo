@@ -26,6 +26,8 @@ using EventCombo.DAL;
 using EventCombo.Service;
 using EventCombo.Utils;
 using System.Configuration;
+using System.Threading;
+using EventCombo.ActionFilters;
 
 namespace EventCombo.Controllers
 {
@@ -36,6 +38,7 @@ namespace EventCombo.Controllers
     private ApplicationSignInManager _signInManager;
     private ApplicationUserManager _userManager;
     private ITicketsService _tservice;
+    private IAccountService _accService;
 
     EventComboEntities db = new EventComboEntities();
 
@@ -46,6 +49,7 @@ namespace EventCombo.Controllers
         IUnitOfWorkFactory uowFactory = new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory());
         AutoMapper.IMapper mapper = AutomapperConfig.Config.CreateMapper();
         _tservice = new TicketService(uowFactory, mapper, new DBAccessService(uowFactory, mapper));
+        _accService = new AccountService(uowFactory, mapper);
       }
     }
 
@@ -109,7 +113,7 @@ namespace EventCombo.Controllers
       string userId = Session["AppId"].ToString();
       OrderListMainViewModel olist = new OrderListMainViewModel();
       olist.OrderType = model.OrderType;
-      
+
       var orders = _tservice.GetOrdersList(model.OrderType, userId);
       switch (model.SortBy)
       {
@@ -145,13 +149,13 @@ namespace EventCombo.Controllers
     }
 
     [HttpGet]
-    public ActionResult PurchasedTicketDetail(string OrderId)
+    public ActionResult PurchasedTicketDetail(string OrderId, long EventId)
     {
       if (Session["AppId"] == null)
         return DefaultAction();
 
       string userId = Session["AppId"].ToString();
-      OrderDetailsViewModel orderInfo = _tservice.GetOrderDetails(OrderId, userId);
+      OrderDetailsViewModel orderInfo = _tservice.GetOrderDetails(OrderId, userId, EventId);
       return PartialView("_PurchasedTicketDetail", orderInfo);
     }
 
@@ -256,13 +260,13 @@ namespace EventCombo.Controllers
         userid = Session["AppId"].ToString();
       }
 
-                var modelPerm = (from Org in db.Organizer_Master
-                             where Org.Orgnizer_Id == id
-                             select Org).FirstOrDefault();
-            var Orgdesc =new HtmlString( Server.HtmlDecode(modelPerm.Organizer_Desc));
-            modelPerm.Organizer_Desc = Orgdesc.ToString();
-            if (string.IsNullOrEmpty(modelPerm.Organizer_Image))
-            {
+      var modelPerm = (from Org in db.Organizer_Master
+                       where Org.Orgnizer_Id == id
+                       select Org).FirstOrDefault();
+      var Orgdesc = new HtmlString(Server.HtmlDecode(modelPerm.Organizer_Desc));
+      modelPerm.Organizer_Desc = Orgdesc.ToString();
+      if (string.IsNullOrEmpty(modelPerm.Organizer_Image))
+      {
 
         modelPerm.Organizer_Image = "";
         modelPerm.contenttype = "";
@@ -342,30 +346,30 @@ namespace EventCombo.Controllers
           ImagePath = "/Images/Organizer/Organizer_Images/" + images[0];
         }
 
-                using (EventComboEntities db = new EventComboEntities())
-                {
-                    Organizer_Master org = (from o in db.Organizer_Master where o.Orgnizer_Id==model.Orgnizer_Id select o).FirstOrDefault();
-                    org.Orgnizer_Name = model.Orgnizer_Name;
-                    org.Organizer_Desc =Server.HtmlEncode(model.Organizer_Desc);
-                    org.Organizer_FBLink = model.Organizer_FBLink;
-                    org.Organizer_Twitter = model.Organizer_Twitter;
-                    org.Organizer_Linkedin = model.Organizer_Linkedin;
-                    org.UserId = userid;
-                    org.Organizer_Image = UserProfileImage;
-                    org.contenttype = ContentType;
-                    org.Organizer_Address1 = model.Organizer_Address1;
-                    org.Organizer_Address2 = model.Organizer_Address2;
-                    org.Organizer_City = model.Organizer_City;
-                    org.Organizer_State = model.Organizer_State;
-                    org.Organizer_CountryId = model.Organizer_CountryId;
-                    org.Organizer_Zipcode = model.Organizer_Zipcode;
-                    org.Organizer_Email = model.Organizer_Email;
-                   
-                   
-                    org.Organizer_Phoneno = model.Organizer_Phoneno;
-                    org.Organizer_Websiteurl = model.Organizer_Websiteurl;
-                    org.Organizer_Status = "A";
-                    org.Imagepath = ImagePath;
+        using (EventComboEntities db = new EventComboEntities())
+        {
+          Organizer_Master org = (from o in db.Organizer_Master where o.Orgnizer_Id == model.Orgnizer_Id select o).FirstOrDefault();
+          org.Orgnizer_Name = model.Orgnizer_Name;
+          org.Organizer_Desc = Server.HtmlEncode(model.Organizer_Desc);
+          org.Organizer_FBLink = model.Organizer_FBLink;
+          org.Organizer_Twitter = model.Organizer_Twitter;
+          org.Organizer_Linkedin = model.Organizer_Linkedin;
+          org.UserId = userid;
+          org.Organizer_Image = UserProfileImage;
+          org.contenttype = ContentType;
+          org.Organizer_Address1 = model.Organizer_Address1;
+          org.Organizer_Address2 = model.Organizer_Address2;
+          org.Organizer_City = model.Organizer_City;
+          org.Organizer_State = model.Organizer_State;
+          org.Organizer_CountryId = model.Organizer_CountryId;
+          org.Organizer_Zipcode = model.Organizer_Zipcode;
+          org.Organizer_Email = model.Organizer_Email;
+
+
+          org.Organizer_Phoneno = model.Organizer_Phoneno;
+          org.Organizer_Websiteurl = model.Organizer_Websiteurl;
+          org.Organizer_Status = "A";
+          org.Imagepath = ImagePath;
 
 
 
@@ -534,52 +538,53 @@ namespace EventCombo.Controllers
 
         return "";
 
-            }
-        }
-        [HttpGet]
-    
-        [Authorize]
-        public ActionResult MyAccount()
+      }
+    }
+    [HttpGet]
+
+    [Authorize]
+    public ActionResult MyAccount()
+    {
+      string defaultCountry = "";
+      myAccount myacc = new myAccount();
+      MyAccount myac = new MyAccount();
+
+      Session["logo"] = "account";
+      Session["Fromname"] = "account";
+      string city = "", state = "", zipcode = "", country = "";
+      if ((Session["AppId"] != null))
+      {
+        string usernme = myac.getusername();
+        if (string.IsNullOrEmpty(usernme))
         {
-            string defaultCountry = "";
-            myAccount myacc = new myAccount();
-            MyAccount myac = new MyAccount();
-          
-            Session["logo"] = "account";
-            Session["Fromname"] = "account";
-            string city = "", state = "", zipcode = "", country = "";
-            if ((Session["AppId"] != null))
-            {
-              string usernme= myac.getusername();
-                if(string.IsNullOrEmpty(usernme))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+          return RedirectToAction("Index", "Home");
+        }
 
-                try {
-                    Ip2Geo ip2Geo = new Ip2Geo();
-                    GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
-                    city = geoAddress.cityName;
-                    country = geoAddress.countryName;
-                    zipcode = geoAddress.zipCode;
-                    state = geoAddress.regionName;
-                }
-                catch (Exception ex)
-                {
-                    city = "";
-                    state = "";
-                    zipcode = "";
-                    country = "";
+        try
+        {
+          Ip2Geo ip2Geo = new Ip2Geo();
+          GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+          city = geoAddress.cityName;
+          country = geoAddress.countryName;
+          zipcode = geoAddress.zipCode;
+          state = geoAddress.regionName;
+        }
+        catch (Exception ex)
+        {
+          city = "";
+          state = "";
+          zipcode = "";
+          country = "";
 
         }
 
 
 
-                string userid = Session["AppId"].ToString();
-               
-                var accountdetail = myac.GetLoginDetails(userid);
-                if (accountdetail != null)
-                {
+        string userid = Session["AppId"].ToString();
+
+        var accountdetail = myac.GetLoginDetails(userid);
+        if (accountdetail != null)
+        {
 
           myacc = accountdetail;
         }
@@ -731,45 +736,45 @@ namespace EventCombo.Controllers
         return RedirectToAction("Index", "Home");
       }
 
-        }
-        [HttpPost]
-        [Authorize]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> MyAccount(myAccount model, HttpPostedFileBase file)
+    }
+    [HttpPost]
+    [Authorize]
+    [ValidateAntiForgeryToken]
+    public async Task<ActionResult> MyAccount(myAccount model, HttpPostedFileBase file)
+    {
+      string msg = "", errormessage = "", successmsg = "";
+      int emailchange = 0, Pwdchange = 0, mainchange = 1;
+      string to = "", from = "", cc = "", bcc = "", subjectn = "", emailname = "";
+      var bodyn = "";
+      var Emailtemplate = new Email_Template();
+      List<Email_Tag> EmailTag = new List<Email_Tag>();
+      MyAccount hmc = new MyAccount();
+      var validationresult = "";
+      if (Session["AppId"] != null)
+      {
+        string Userid = Session["AppId"].ToString();
+        string imagepresent = model.ImagePresent;
+        string LgUser = Session["AppId"].ToString();
+        using (EventComboEntities db = new EventComboEntities())
         {
-            string msg = "", errormessage = "", successmsg = "";
-            int emailchange = 0,Pwdchange=0,mainchange=1;
-            string to = "", from = "", cc = "", bcc = "", subjectn = "", emailname="";
-            var bodyn = "";
-            var Emailtemplate =new Email_Template();
-            List<Email_Tag> EmailTag = new List<Email_Tag>();
-            MyAccount hmc = new MyAccount();
-            var validationresult = "";
-            if (Session["AppId"] != null)
-            {
-                string Userid = Session["AppId"].ToString();
-                string imagepresent = model.ImagePresent;
-                string LgUser = Session["AppId"].ToString();
-                using (EventComboEntities db = new EventComboEntities())
-                {
-                    AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == LgUser);
+          AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == LgUser);
 
-                    aspuser.LastLoginTime = System.DateTime.UtcNow;
-                    db.SaveChanges();
+          aspuser.LastLoginTime = System.DateTime.UtcNow;
+          db.SaveChanges();
 
 
-                }
+        }
 
 
-                ValidationMessage vmc = new ValidationMessage();
-                MyAccount mac = new MyAccount();
-                validationresult = vmc.Index("", "");
-                var accountdetail = mac.GetLoginDetails(Userid);
-                //check validation
-                if (string.IsNullOrEmpty(model.Firstname))
-                {
-                    validationresult = vmc.Index("MyAccount", "MyAccountFnameRequiredUI");
-                    ModelState.AddModelError("Error", validationresult);
+        ValidationMessage vmc = new ValidationMessage();
+        MyAccount mac = new MyAccount();
+        validationresult = vmc.Index("", "");
+        var accountdetail = mac.GetLoginDetails(Userid);
+        //check validation
+        if (string.IsNullOrEmpty(model.Firstname))
+        {
+          validationresult = vmc.Index("MyAccount", "MyAccountFnameRequiredUI");
+          ModelState.AddModelError("Error", validationresult);
 
         }
         if (!string.IsNullOrEmpty(model.ConfirmEmail))
@@ -975,7 +980,7 @@ namespace EventCombo.Controllers
               {
                 from = ConfigurationManager.AppSettings.Get("DefaultEmail"); //ConfigurationManager.AppSettings.Get("UserName");
 
-           }
+              }
 
               if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
               {
@@ -1048,7 +1053,7 @@ namespace EventCombo.Controllers
               {
                 from = ConfigurationManager.AppSettings.Get("DefaultEmail"); //ConfigurationManager.AppSettings.Get("UserName");
 
-                            }
+              }
               if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
               {
                 emailname = Emailtemplate.From_Name;
@@ -1119,7 +1124,7 @@ namespace EventCombo.Controllers
               {
                 from = ConfigurationManager.AppSettings.Get("DefaultEmail"); //ConfigurationManager.AppSettings.Get("UserName");
 
-                            }
+              }
               if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
               {
                 emailname = Emailtemplate.From_Name;
@@ -1194,7 +1199,7 @@ namespace EventCombo.Controllers
               {
                 from = ConfigurationManager.AppSettings.Get("DefaultEmail"); //ConfigurationManager.AppSettings.Get("UserName");
 
-                            }
+              }
               if (!(string.IsNullOrEmpty(Emailtemplate.From_Name)))
               {
                 emailname = Emailtemplate.From_Name;
@@ -1561,7 +1566,7 @@ namespace EventCombo.Controllers
     }
 
 
-      
+
 
     public bool checkexternallogin(string userid)
     {
@@ -1625,10 +1630,6 @@ namespace EventCombo.Controllers
 
     public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
     {
-
-
-
-
       string url = null, city = "", state = "", zipcode = "", country = "";
       if (Session["ReturnUrl"] != null)
       {
@@ -1655,50 +1656,22 @@ namespace EventCombo.Controllers
       {
         case SignInStatus.Success:
           var User = UserManager.FindByEmail(model.Email.ToString());
+          try
+          {
 
-                    //var roleMemeber = (from r in db.AspNetRoles where r.Name.Contains("Member") select r).FirstOrDefault();
-                    //var users = db.AspNetUsers.Where(x => x.AspNetRoles.Select(y => y.Id).Contains(roleMemeber.Id)).ToList();
-                    //if (users.Find(x => x.Id == User.Id) != null)
-                    //{
-                    try
-                    {
-
-                        Ip2Geo ip2Geo = new Ip2Geo();
-                        GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
-                       city = geoAddress.cityName;
-                        country = geoAddress.countryName;
-                        zipcode = geoAddress.zipCode;
-                        state = geoAddress.regionName;
-                        //using (WebClient client = new WebClient())
-                        //{
-                        //    string ip = GetLanIPAddress().Replace("::ffff:", "");
-
-
-                        //    var json = client.DownloadString("http://freegeoip.net/json/" + ip + "");
-                        //    dynamic stuff = JsonConvert.DeserializeObject(json);
-                        //    if (stuff != null)
-                        //    {
-                        //        city = stuff.city;
-                        //        state = stuff.region_name;
-                        //        zipcode = stuff.zip_code;
-                        //        country = stuff.country_name;
-                        //    }
-                        //    else
-                        //    {
-                        //        city = "";
-                        //        state = "";
-                        //        zipcode = "";
-                        //        country = "";
-
-                        //    }
-                        //}
-                    }
-                    catch (Exception ex)
-                    {
-                        city = "";
-                        state = "";
-                        zipcode = "";
-                        country = "";
+            Ip2Geo ip2Geo = new Ip2Geo();
+            GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+            city = geoAddress.cityName;
+            country = geoAddress.countryName;
+            zipcode = geoAddress.zipCode;
+            state = geoAddress.regionName;
+          }
+          catch (Exception ex)
+          {
+            city = "";
+            state = "";
+            zipcode = "";
+            country = "";
 
           }
           var status = db.Profiles.Where(x => x.UserID == User.Id).Select(x => x.UserStatus).FirstOrDefault();
@@ -1742,8 +1715,404 @@ namespace EventCombo.Controllers
       }
     }
 
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<ActionResult> LoginAPI(string json)
+    {
+      LoginViewModel model = JsonConvert.DeserializeObject<LoginViewModel>(json);
+
+      ActionResultViewModel result = await privateLoginAPI(model);
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = result;
+      return res;
+    }
+
+    private async Task<ActionResultViewModel> privateLoginAPI(LoginViewModel model)
+    {
+      ActionResultViewModel result = new ActionResultViewModel()
+      {
+        Success = false,
+        ErrorCode = 3,
+        ErrorMessage = "Incorrect password, retry or use Forgot Password."
+      };
+
+      if (TryValidateModel(model))
+      {
+        var User = await UserManager.FindByEmailAsync(model.Email.ToString());
+
+        if (_accService.CheckUserLogin(User.Id))
+        {
+          var loginResult = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
+
+          switch (loginResult)
+          {
+            case SignInStatus.Success:
+              if (_accService.RegisterLoginAttempt(User.Id, ClientIPAddress.GetLanIPAddress(Request)))
+              {
+                Session["AppId"] = User.Id;
+                result.Success = true;
+                result.ErrorCode = 0;
+              }
+              break;
+            case SignInStatus.LockedOut:
+              result.Success = false;
+              result.ErrorCode = 1;
+              result.ErrorMessage = "Account locked out. You need to wait at least " + UserManager.DefaultAccountLockoutTimeSpan.TotalMinutes.ToString() + " minutes.";
+              break;
+            case SignInStatus.RequiresVerification:
+              result.Success = false;
+              result.ErrorCode = 2;
+              result.ErrorMessage = "Need to verify account. Proceed to Forgot Password procedure.";
+              break;
+            case SignInStatus.Failure:
+            default:
+              break;
+          }
+        }
+        else
+        {
+          result.Success = false;
+          result.ErrorCode = 3;
+          result.ErrorMessage = "Access Forbidden.";
+        }
+      }
+      return result;
+    }
+
+    [HttpPost]
+    public ActionResult LogoutAPI()
+    {
+      if (Session["AppId"] != null)
+        try
+        {
+          _accService.RegisterLogout(Session["AppId"].ToString());
+        }
+        finally
+        {
+          AuthenticationManager.SignOut();
+          Session["Fromname"] = null;
+          Session["AppId"] = null;
+          Session["ReturnUrl"] = null;
+          Session.Abandon();
+          Session.Clear();
+        }
+      JsonNetResult res = new JsonNetResult();
+      return res;
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<ActionResult> SignupAPI(string json)
+    {
+      ActionResultViewModel result = new ActionResultViewModel()
+      {
+        Success = false,
+        ErrorCode = -1,
+        ErrorMessage = "Signup error. Change your data and try again."
+      };
+
+      RegisterUserRequestViewModel model = JsonConvert.DeserializeObject<RegisterUserRequestViewModel>(json);
+
+      if (TryValidateModel(model))
+      {
+        var user = await UserManager.FindByEmailAsync(model.Email);
+        if (user == null)
+        {
+          var aUser = new ApplicationUser { UserName = model.Email, Email = model.Email };
+          var resultCreate = await UserManager.CreateAsync(aUser, model.Password);
+          user = await UserManager.FindByEmailAsync(model.Email);
+          if (resultCreate.Succeeded)
+          {
+            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+            await UserManager.AddToRoleAsync(user.Id, "Member");
+            if (_accService.RegisterNewUser(user.Id, model, ClientIPAddress.GetLanIPAddress(Request)))
+            {
+              Session["AppId"] = user.Id;
+              result.Success = true;
+              result.ErrorCode = 0;
+              result.ErrorMessage = "";
+            }
+            else
+            {
+              result.Success = false;
+              result.ErrorCode = 3;
+              result.ErrorMessage = "Error during registration. Try again later.";
+            }
+          }
+          else
+          {
+            result.Success = false;
+            result.ErrorCode = 2;
+            result.ErrorMessage = String.Join(", ", resultCreate.Errors);
+          }
+
+        }
+        else
+        {
+          result.Success = false;
+          result.ErrorCode = 1;
+          result.ErrorMessage = "User already exists.";
+        }
+      }
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = result;
+      return res;
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public async Task<ActionResult> ForgotPasswordAPI(string email)
+    {
+      ActionResultViewModel result = new ActionResultViewModel()
+      {
+        Success = false,
+        ErrorCode = 1,
+        ErrorMessage = "Error in email."
+      };
+
+      ForgotPasswordViewModel model = new ForgotPasswordViewModel() { Email = email };
+      if (TryValidateModel(model))
+      {
+        var user = await UserManager.FindByEmailAsync(model.Email);
+        if (user != null)
+          _accService.ProcessNewCode(user.Id, model.Email, _accService.GetNewCode(8));
+        result.Success = true;
+        result.ErrorCode = 0;
+        result.ErrorMessage = "";
+      }
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = result;
+      return res;
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<ActionResult> CheckCodePasswordAPI(string json)
+    {
+      ActionResultViewModel result = new ActionResultViewModel()
+      {
+        Success = false,
+        ErrorCode = 1,
+        ErrorMessage = "Password not found."
+      };
+
+      LoginViewModel model = JsonConvert.DeserializeObject<LoginViewModel>(json);
+      if (TryValidateModel(model))
+      {
+        var user = await UserManager.FindByEmailAsync(model.Email);
+
+        Random rand = new Random();
+        Thread.Sleep(rand.Next(500, 1500));
+
+        if ((user != null) && _accService.CheckCodePassword(user.Id, model.Password))
+        {
+          result.Success = true;
+          result.ErrorCode = 0;
+          result.ErrorMessage = "";
+        }
+      }
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = result;
+      return res;
+    }
 
 
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<ActionResult> ResetPasswordAPI(string json)
+    {
+      ActionResultViewModel result = new ActionResultViewModel()
+      {
+        Success = false,
+        ErrorCode = 4,
+        ErrorMessage = "Error password or code."
+      };
+
+      PasswordUpdateRequestViewModel model = JsonConvert.DeserializeObject<PasswordUpdateRequestViewModel>(json);
+      if (TryValidateModel(model))
+      {
+        if (model.Password == model.ConfirmPassword)
+        {
+          var user = await UserManager.FindByEmailAsync(model.Email);
+          if (user != null)
+          {
+            Random rand = new Random();
+            Thread.Sleep(rand.Next(500, 1500));
+            if (_accService.TryUseCode(user.Id, model.Code))
+            {
+
+              var token = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+              var resetResult = await UserManager.ResetPasswordAsync(user.Id, token, model.Password);
+
+              result.Success = resetResult.Succeeded;
+              if (result.Success)
+              {
+                _accService.SendNewPasswordNotification(user.Id, model.Email);
+
+                result = await privateLoginAPI(new LoginViewModel()
+                {
+                  Email = model.Email,
+                  Password = model.Password,
+                  RememberMe = false
+                });
+              }
+              else
+              {
+                result.ErrorCode = 7;
+                result.ErrorMessage = resetResult.Errors.ToString(); ;
+              }
+            }
+            else
+            {
+              result.Success = false;
+              result.ErrorCode = 5;
+              result.ErrorMessage = "Wrong password.";
+            }
+
+          }
+          else
+          {
+            result.Success = false;
+            result.ErrorCode = 6;
+            result.ErrorMessage = "Email not found.";
+          }
+        }
+        else
+        {
+          result.Success = false;
+          result.ErrorCode = 8;
+          result.ErrorMessage = "Passwords did not match, please retype.";
+        }
+      }
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = result;
+      return res;
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    //    public ActionResult ExternalLoginAPI(string json)
+    public ActionResult ExternalLoginAPI(string provider, string returnUrl)
+    {
+      var res = new ChallengeResult(provider, Url.Action("ExternalLoginCallbackAPI", "Account", new { ReturnUrl = returnUrl }));
+      return res;
+    }
+
+    private void GetExternalLoginInfo(RegisterUserRequestViewModel model, string provider)
+    {
+      Claim emailClaim = null;
+      Claim lastNameClaim = null;
+      Claim givenNameClaim = null;
+      var externalIdentity = HttpContext.GetOwinContext().Authentication.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+      if (provider == "Facebook")
+      {
+        emailClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:email");
+        lastNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:last_name");
+        givenNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:first_name");
+      }
+      else if (provider == "Google")
+      {
+        emailClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+        lastNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname);
+        givenNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName);
+      }
+      else if (provider == "LinkedIn")
+      {
+        emailClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:linkedin:email");
+        lastNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:linkedin:lastname");
+        givenNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:linkedin:firstname");
+      }
+
+      model.Email = (emailClaim == null || emailClaim.Value == null) ? model.Email : emailClaim.Value;
+      model.FirstName = (givenNameClaim == null || givenNameClaim.Value == null) ? "" : givenNameClaim.Value;
+      model.LastName = (lastNameClaim == null || lastNameClaim.Value == null) ? "" : lastNameClaim.Value;
+
+    }
+
+    [AllowAnonymous]
+    public async Task<ActionResult> ExternalLoginCallbackAPI(string returnUrl)
+    {
+      RegisterUserRequestViewModel model = new RegisterUserRequestViewModel();
+      var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+      if (loginInfo == null)
+      {
+        return View("LoginResult", new LoginResultViewModel(false, returnUrl));
+      }
+
+      var user = await UserManager.FindByEmailAsync(loginInfo.Email);
+      if (user == null)
+      {
+        model.Email = loginInfo.Email;
+
+        var aUser = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email };
+        var resultCreate = await UserManager.CreateAsync(aUser);
+        user = await UserManager.FindByEmailAsync(loginInfo.Email);
+        if (resultCreate.Succeeded)
+        {
+          var resultAdd = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
+          if (resultAdd.Succeeded)
+          {
+            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+            await UserManager.AddToRoleAsync(user.Id, "Member");
+
+            GetExternalLoginInfo(model, loginInfo.Login.LoginProvider);
+
+            if (_accService.RegisterNewUser(user.Id, model, ClientIPAddress.GetLanIPAddress(Request)))
+            {
+              Session["AppId"] = user.Id;
+              return View("LoginResult", new LoginResultViewModel(true, returnUrl));
+            }
+          }
+        }
+      }
+      else
+        if (_accService.CheckUserLogin(user.Id))
+        {
+          var resultLogins = await UserManager.GetLoginsAsync(user.Id);
+          var loginFound = resultLogins.Any(l => l.LoginProvider == loginInfo.Login.LoginProvider);
+          if (!loginFound)
+          {
+            var resultAdd = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
+            loginFound = resultAdd.Succeeded;
+          }
+
+          if (loginFound)
+          {
+            GetExternalLoginInfo(model, loginInfo.Login.LoginProvider);
+            var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+            if ((result == SignInStatus.Success) && (_accService.RegisterLoginAttempt(user.Id, ClientIPAddress.GetLanIPAddress(Request))))
+            {
+              Session["AppId"] = user.Id;
+              return View("LoginResult", new LoginResultViewModel(true, returnUrl));
+            }
+          }
+        }
+      return View("LoginResult", new LoginResultViewModel(false, returnUrl));
+    }
+
+
+    [HttpGet]
+    [AllowAnonymous]
+    public ActionResult CheckUserName(string userName)
+    {
+      ActionResultViewModel result = new ActionResultViewModel { Success = false };
+
+      if (!String.IsNullOrWhiteSpace(userName))
+      {
+        result.Success = _accService.CheckUserName(userName);
+        Random rand = new Random();
+        Thread.Sleep(rand.Next(500, 2500));
+      }
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = result;
+      return res;
+    }
 
 
 
@@ -2050,29 +2419,29 @@ namespace EventCombo.Controllers
       return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
     }
 
-        //
-        // GET: /Account/ExternalLoginCallback
-        [AllowAnonymous]
-        public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
-        {
-            string city = "", state = "", zipcode = "", country = "";
-            MyAccount acc = new Models.MyAccount();
-            try
-            {
+    //
+    // GET: /Account/ExternalLoginCallback
+    [AllowAnonymous]
+    public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
+    {
+      string city = "", state = "", zipcode = "", country = "";
+      MyAccount acc = new Models.MyAccount();
+      try
+      {
 
-                Ip2Geo ip2Geo = new Ip2Geo();
-                GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
-                city = geoAddress.cityName;
-                country = geoAddress.countryName;
-                zipcode = geoAddress.zipCode;
-                state = geoAddress.regionName;
-            }
-            catch (Exception ex)
-            {
-                city = "";
-                state = "";
-                zipcode = "";
-                country = "";
+        Ip2Geo ip2Geo = new Ip2Geo();
+        GeoAddress geoAddress = ip2Geo.GetAddress(ClientIPAddress.GetLanIPAddress(Request));
+        city = geoAddress.cityName;
+        country = geoAddress.countryName;
+        zipcode = geoAddress.zipCode;
+        state = geoAddress.regionName;
+      }
+      catch (Exception ex)
+      {
+        city = "";
+        state = "";
+        zipcode = "";
+        country = "";
 
       }
       var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
@@ -2152,13 +2521,13 @@ namespace EventCombo.Controllers
               firstname = givenNameClaim.Value != null ? givenNameClaim.Value : "";
               Lastnmae = lastNameClaim.Value != null ? lastNameClaim.Value : "";
 
-                        }
-                        bool getprofstatus = acc.Getprofiledetails(user1.Id);
-                        if (getprofstatus == false)
-                        {
-                            using (EventComboEntities objEntity = new EventComboEntities())
-                            {
-                                Profile prof = new Profile();
+            }
+            bool getprofstatus = acc.Getprofiledetails(user1.Id);
+            if (getprofstatus == false)
+            {
+              using (EventComboEntities objEntity = new EventComboEntities())
+              {
+                Profile prof = new Profile();
 
                 prof.FirstName = firstname;
                 prof.LastName = Lastnmae;
@@ -2168,8 +2537,8 @@ namespace EventCombo.Controllers
                 prof.IpState = state;
                 prof.Ipcity = city;
                 prof.UserStatus = "Y";
-                                prof.Organiser = "Y";
-                                objEntity.Profiles.Add(prof);
+                prof.Organiser = "Y";
+                objEntity.Profiles.Add(prof);
 
                 objEntity.SaveChanges();
 
@@ -2186,7 +2555,7 @@ namespace EventCombo.Controllers
                 AspNetUser aspuser = db.AspNetUsers.First(i => i.Id == user1.Id);
                 aspuser.LoginStatus = "Y";
                 aspuser.LastLoginTime = System.DateTime.UtcNow;
-                 db.SaveChanges();
+                db.SaveChanges();
 
               }
 
@@ -2211,12 +2580,12 @@ namespace EventCombo.Controllers
 
         }
 
-            }
-            else
-            {
-                bool getstatus = acc.GetExternalLogindetails(user.Id, loginInfo.Login.LoginProvider);
-                if (getstatus)
-                {
+      }
+      else
+      {
+        bool getstatus = acc.GetExternalLogindetails(user.Id, loginInfo.Login.LoginProvider);
+        if (getstatus)
+        {
 
 
         }
@@ -2259,24 +2628,24 @@ namespace EventCombo.Controllers
           var lastNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname);
           var givenNameClaim = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName);
 
-                    Email = emailClaim.Value!=null? emailClaim.Value:"";
-                    firstname = givenNameClaim.Value!=null? givenNameClaim.Value:"";
-                    Lastnmae = lastNameClaim.Value != null ? lastNameClaim.Value:"";
-                    ////request profile image
-                    //using (var webClient = new System.Net.WebClient())
-                    //{
-                    //    var json = webClient.DownloadString(apiRequestUri);
-                    //    dynamic me2 = JsonConvert.DeserializeObject(json);
-                    //    //userPicture = result.picture;
-                    //}
-                }
-               
-                bool getprofstatus = acc.Getprofiledetails(user.Id);
-                if (getprofstatus == false)
-                {
-                    using (EventComboEntities objEntity = new EventComboEntities())
-                    {
-                        Profile prof = new Profile();
+          Email = emailClaim.Value != null ? emailClaim.Value : "";
+          firstname = givenNameClaim.Value != null ? givenNameClaim.Value : "";
+          Lastnmae = lastNameClaim.Value != null ? lastNameClaim.Value : "";
+          ////request profile image
+          //using (var webClient = new System.Net.WebClient())
+          //{
+          //    var json = webClient.DownloadString(apiRequestUri);
+          //    dynamic me2 = JsonConvert.DeserializeObject(json);
+          //    //userPicture = result.picture;
+          //}
+        }
+
+        bool getprofstatus = acc.Getprofiledetails(user.Id);
+        if (getprofstatus == false)
+        {
+          using (EventComboEntities objEntity = new EventComboEntities())
+          {
+            Profile prof = new Profile();
 
             prof.FirstName = firstname;
             prof.LastName = Lastnmae;
@@ -2304,7 +2673,7 @@ namespace EventCombo.Controllers
             aspuser.LoginStatus = "Y";
             aspuser.LastLoginTime = System.DateTime.UtcNow;
 
-                        Profile prof = db.Profiles.First(i => i.UserID == user.Id);
+            Profile prof = db.Profiles.First(i => i.UserID == user.Id);
             prof.Ipcountry = country;
             prof.IpState = state;
             prof.Ipcity = city;
@@ -2329,27 +2698,23 @@ namespace EventCombo.Controllers
       }
     }
 
-      
 
-       
-
-      
-        [AllowAnonymous]
-        public ActionResult Confirm(string Email)
-        {
-            ViewBag.Email = Email; return View();
-        }
-        //
-        // POST: /Account/ExternalLoginConfirmation
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(LoginViewModel model, string returnUrl)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Manage");
-            }
+    [AllowAnonymous]
+    public ActionResult Confirm(string Email)
+    {
+      ViewBag.Email = Email; return View();
+    }
+    //
+    // POST: /Account/ExternalLoginConfirmation
+    [HttpPost]
+    [AllowAnonymous]
+    [ValidateAntiForgeryToken]
+    public async Task<ActionResult> ExternalLoginConfirmation(LoginViewModel model, string returnUrl)
+    {
+      if (User.Identity.IsAuthenticated)
+      {
+        return RedirectToAction("Index", "Manage");
+      }
 
       if (ModelState.IsValid)
       {
@@ -2395,8 +2760,8 @@ namespace EventCombo.Controllers
             if (aspuser != null)
             {
               aspuser.LoginStatus = "N";
-                           
-            db.SaveChanges();
+
+              db.SaveChanges();
             }
 
           }
@@ -2508,28 +2873,28 @@ namespace EventCombo.Controllers
           ImagePath = "/Images/Organizer/Organizer_Images/" + images[0];
         }
 
-                using (EventComboEntities db = new EventComboEntities())
-                {
-                    Organizer_Master org = new Organizer_Master();
-                    org.Orgnizer_Name = model.Orgnizer_Name;
-                    org.Organizer_Desc =Server.HtmlEncode(model.Organizer_Desc);
-                    org.Organizer_FBLink = model.Organizer_FBLink;
-                    org.Organizer_Twitter = model.Organizer_Twitter;
-                    org.Organizer_Linkedin = model.Organizer_Linkedin;
-                    org.UserId = userid;
-                    org.Organizer_Image = UserProfileImage;
-                    org.contenttype = ContentType;
-                    org.Organizer_Address1 = model.Organizer_Address1;
-                    org.Organizer_Address2 = model.Organizer_Address2;
-                    org.Organizer_City = model.Organizer_City;
-                    org.Organizer_State = model.Organizer_State;
-                    org.Organizer_CountryId = model.Organizer_CountryId;
-                    org.Organizer_Zipcode = model.Organizer_Zipcode;
-                    org.Organizer_Email = model.Organizer_Email;
-                    org.Organizer_Phoneno = model.Organizer_Phoneno;
-                    org.Organizer_Websiteurl = model.Organizer_Websiteurl;
-                    org.Organizer_Status = "A";
-                    org.Imagepath = ImagePath;
+        using (EventComboEntities db = new EventComboEntities())
+        {
+          Organizer_Master org = new Organizer_Master();
+          org.Orgnizer_Name = model.Orgnizer_Name;
+          org.Organizer_Desc = Server.HtmlEncode(model.Organizer_Desc);
+          org.Organizer_FBLink = model.Organizer_FBLink;
+          org.Organizer_Twitter = model.Organizer_Twitter;
+          org.Organizer_Linkedin = model.Organizer_Linkedin;
+          org.UserId = userid;
+          org.Organizer_Image = UserProfileImage;
+          org.contenttype = ContentType;
+          org.Organizer_Address1 = model.Organizer_Address1;
+          org.Organizer_Address2 = model.Organizer_Address2;
+          org.Organizer_City = model.Organizer_City;
+          org.Organizer_State = model.Organizer_State;
+          org.Organizer_CountryId = model.Organizer_CountryId;
+          org.Organizer_Zipcode = model.Organizer_Zipcode;
+          org.Organizer_Email = model.Organizer_Email;
+          org.Organizer_Phoneno = model.Organizer_Phoneno;
+          org.Organizer_Websiteurl = model.Organizer_Websiteurl;
+          org.Organizer_Status = "A";
+          org.Imagepath = ImagePath;
 
 
 

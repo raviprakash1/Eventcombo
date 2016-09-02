@@ -123,7 +123,16 @@ namespace CMS.Models
 
     public enum OrderSortBy { Name, Order, Date, Qty, Total, FullName, Email, Address, Status, OrderDate, EventId, DateDiff };
     public enum OrderTypes { Upcoming, Past };
-
+   
+    public class OrderSearch
+    {
+        public DateTime? OrderDate { get; set; }
+        public string Order { get; set; }
+        public string CustomerName { get; set; }
+        public string Email { get; set; }
+        public string Event { get; set; }
+    }
+   
     public class OrderListRequestViewModel
     {
       public OrderListRequestViewModel()
@@ -132,7 +141,7 @@ namespace CMS.Models
         OrderType = OrderTypes.Upcoming;
         PerPage = 25;
         Page = 0;
-        SortDesc = false;
+        SortDesc = true;
         Search = "";
       }
       public OrderSortBy SortBy { get; set; }
@@ -164,6 +173,7 @@ namespace CMS.Models
       public DateTime? OrderDateTime { get; set; }
       public string OrderStateName { get; set; }
       public string UserId { get; set; }
+      public int RowNumber { get; set; }
     }
 
     public class OrderListMainViewModel
@@ -218,6 +228,7 @@ namespace CMS.Models
       public string Email { get; set; }
       public string EventDate { get; set; }
       public string EventLocation { get; set; }
+      public string TicketNames { get; set; }
       public bool SendEmail { get; set; }
 
       private List<AttendeeViewModel> _attendees = new List<AttendeeViewModel>();

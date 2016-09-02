@@ -18,6 +18,7 @@ namespace EventCombo.Models
         public EventCategory()
         {
             this.EventSubCategories = new HashSet<EventSubCategory>();
+            this.Events = new HashSet<Event>();
         }
     
         public long EventCategoryID { get; set; }
@@ -25,5 +26,7 @@ namespace EventCombo.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventSubCategory> EventSubCategories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Event> Events { get; set; }
     }
 }

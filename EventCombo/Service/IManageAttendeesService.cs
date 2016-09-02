@@ -18,9 +18,13 @@ namespace EventCombo.Service
 
     EventOrderDetailViewModel GetOrderDetails(string orderId);
 
+    IEnumerable<EventOrderInfoViewModel> GetOrdersForSaleReport(PaymentStates state, long eventId);
+
     bool SendConfirmations(string orderId, string baseUrl, string filePath );
 
     MemoryStream GetDownloadableOrderList(PaymentStates state, long eventId, string format);
+
+    MemoryStream GetDownloadableSaleReport(PaymentStates state, long eventId, string format);
 
     AddAttandeeOrder PrepareAddAttendeeOrder(long eventId, string userId);
 

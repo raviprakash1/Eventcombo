@@ -55,5 +55,20 @@ namespace EventCombo.Controllers
       string appformat = "application/" + (format.ToLower() == "xls" ? "ms-excel" : format.ToLower());
       return new FileStreamResult(mem, appformat) { FileDownloadName = "OrderList_" + eventId.ToString() + "." + format };
     }
+
+    [HttpGet]
+    public FileStreamResult SaleReport(PaymentStates state, long eventId, string format)
+    {
+        if (Session["AppId"] == null)
+            return null;
+
+        string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(eventId, userId) == AccessLevel.Public)
+            return null;
+
+        MemoryStream mem = _maservice.GetDownloadableSaleReport(state, eventId, format);
+        string appformat = "application/" + (format.ToLower() == "xls" ? "ms-excel" : format.ToLower());
+        return new FileStreamResult(mem, appformat) { FileDownloadName = "SaleReport_" + eventId.ToString() + "." + format };
+    }
   }
 }

@@ -15,6 +15,7 @@ using System.Net.Mail;
 using System.Configuration;
 using EventCombo.Utils;
 using System.Web.UI;
+using NLog;
 
 
 namespace EventCombo.Controllers
@@ -23,6 +24,8 @@ namespace EventCombo.Controllers
     [OutputCache(NoStore = true, Location = OutputCacheLocation.None)]
     public class ManageEventController : Controller
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+      
         // GET: ManageEvent
         EventComboEntities db = new EventComboEntities();
 
@@ -915,7 +918,7 @@ namespace EventCombo.Controllers
                     }
                     else
                     {
-                        strResult = @Url.Action("ViewEvent", "ViewEvent", new { strEventDs = Regex.Replace(vEvent.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = vEvent.EventID.ToString() });
+                      strResult = @Url.Action("ViewEvent", "EventManagement", new { strEventDs = Regex.Replace(vEvent.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = vEvent.EventID.ToString() });
                     }
                 }
             }
@@ -1681,7 +1684,7 @@ namespace EventCombo.Controllers
                                     {
                                         var url = Request.Url;
                                         var baseurl = url.GetLeftPart(UriPartial.Authority);
-                                        string strUrl = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(strEventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(Eventid).ToString() });
+                                        string strUrl = baseurl + Url.Action("ViewEvent", "EventManagement", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(strEventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(Eventid).ToString() });
                                         bodyn = bodyn.Replace("¶¶DiscoverEventurl¶¶", strUrl);
                                     }
                                 }
@@ -2129,8 +2132,8 @@ namespace EventCombo.Controllers
                             }
                             catch (Exception ex)
                             {
-                                ExceptionLogging.SendErrorToText(ex);
-                                msg = "N";
+                              logger.Error("Exception during request processing", ex);
+                              msg = "N";
                             }
                         }
                         else
@@ -2233,8 +2236,8 @@ namespace EventCombo.Controllers
                                         }
                                         catch (Exception ex)
                                         {
-                                            ExceptionLogging.SendErrorToText(ex);
-                                            msg = "N";
+                                          logger.Error("Exception during request processing", ex);
+                                          msg = "N";
                                         }
                                     }
                                 }
@@ -2608,7 +2611,7 @@ namespace EventCombo.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionLogging.SendErrorToText(ex);
+              logger.Error("Exception during request processing", ex);
             }
 
             if (!string.IsNullOrWhiteSpace(Invalidrepeatcode))
@@ -2911,7 +2914,7 @@ namespace EventCombo.Controllers
                         var baseurl = url.GetLeftPart(UriPartial.Authority);
 
 
-                        strviewEvent = baseurl + Url.Action("ViewEvent", "ViewEvent", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(vEvent.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(lEvtId).ToString() });
+                        strviewEvent = baseurl + Url.Action("ViewEvent", "EventManagement", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(vEvent.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(lEvtId).ToString() });
                         strOrgnizerUrl = "";
                         if (vOrgnizer != null)
                             strOrgnizerUrl = baseurl + Url.Action("Index", "OrganizerInfo", new { id = vOrgnizer.Orgnizer_Id, eventid = lEvtId });
