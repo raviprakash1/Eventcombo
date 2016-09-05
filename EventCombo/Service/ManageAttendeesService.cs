@@ -879,10 +879,13 @@ namespace EventCombo.Service
 
         return selectItems;
     }
-    public IEnumerable<ScheduledEmail> GetScheduledEmailList(bool IsEmailSend)
+    public IEnumerable<ScheduledEmail> GetScheduledEmailList(long eventId, bool IsEmailSend)
     {
         IRepository<ScheduledEmail> sERepo = new GenericRepository<ScheduledEmail>(_factory.ContextFactory);
-        var ScheduledEmails = sERepo.Get(filter: s => s.EmailTypeId == 1 && s.IsEmailSend == IsEmailSend);
+        IRepository<AttendeeEmail> aERepo = new GenericRepository<AttendeeEmail>(_factory.ContextFactory);
+
+        var AttendeeEmails = aERepo.Get(filter: s => s.EventID == eventId).Select(a=>a.ScheduledEmailId);
+        var ScheduledEmails = sERepo.Get(filter: s => AttendeeEmails.Contains(s.ScheduledEmailId) && s.EmailTypeId == 1 && s.IsEmailSend == IsEmailSend);
         return ScheduledEmails;
     }
     public ScheduledEmailViewModel GetScheduledEmailDetail(long scheduledEmailId)
@@ -891,7 +894,7 @@ namespace EventCombo.Service
         var ScheduledEmail = sERepo.Get(filter: s => s.ScheduledEmailId == scheduledEmailId).ToList().FirstOrDefault();
         return _mapper.Map<ScheduledEmailViewModel>(ScheduledEmail);
     }
-    public bool SendAttendeeMail(ScheduledEmailViewModel scheduledEmail, string userId, string ticketbearerIds, DateTime scheduledDate)
+    public bool SendAttendeeMail(long eventId, ScheduledEmailViewModel scheduledEmail, string userId, string ticketbearerIds, DateTime scheduledDate)
     {
         string defaultEmail;
         defaultEmail = System.Configuration.ConfigurationManager.AppSettings.Get("DefaultEmail");
@@ -906,7 +909,7 @@ namespace EventCombo.Service
             ticketBearers = etBRepo.Get().ToList();
 
         AttendeeMailNotification attendeeMailNotification = new AttendeeMailNotification(_factory, defaultEmail, scheduledEmail, ticketBearers);
-        attendeeMailNotification.SendNotification(new SendAttendeeMailService(_factory, userId, ticketBearers, scheduledDate));
+        attendeeMailNotification.SendNotification(new SendAttendeeMailService(_factory, eventId, userId, ticketBearers, scheduledDate));
         return true;
     }
     public bool UpdateAttendeeMail(ScheduledEmailViewModel scheduledEmail)

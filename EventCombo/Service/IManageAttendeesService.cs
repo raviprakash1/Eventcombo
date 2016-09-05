@@ -30,13 +30,13 @@ namespace EventCombo.Service
 
     string CreateManualOrder(AddAttandeeOrder model, string userId);
 
-    IEnumerable<ScheduledEmail> GetScheduledEmailList(bool IsEmailSend);
+    IEnumerable<ScheduledEmail> GetScheduledEmailList(long eventId, bool IsEmailSend);
 
     ScheduledEmailViewModel GetScheduledEmailDetail(long scheduledEmailId);
 
     ScheduledEmailViewModel PrepareSendAttendeeMail(long eventId);
 
-    bool SendAttendeeMail(ScheduledEmailViewModel scheduledEmail, string userId, string ticketbearerIds, DateTime scheduledDate);
+    bool SendAttendeeMail(long eventId, ScheduledEmailViewModel scheduledEmail, string userId, string ticketbearerIds, DateTime scheduledDate);
 
     bool UpdateAttendeeMail(ScheduledEmailViewModel scheduledEmail);
 

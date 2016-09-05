@@ -16,13 +16,14 @@ namespace EventCombo.Service
         private List<TicketBearer> _ticketBearer;
         private DateTime _scheduledDate;
         private byte _emailTypeId;
+        private long _eventId;
         public DateTime ScheduledDate
         {
             get { return _scheduledDate; }
             set { _scheduledDate = value; }
         }
 
-        public SendAttendeeMailService(IUnitOfWorkFactory factory, string userId, List<TicketBearer> ticketBearer, DateTime scheduledDate)
+        public SendAttendeeMailService(IUnitOfWorkFactory factory, long eventId, string userId, List<TicketBearer> ticketBearer, DateTime scheduledDate)
         {
             if (factory == null)
                 throw new ArgumentNullException("factory");
@@ -36,6 +37,7 @@ namespace EventCombo.Service
             _ticketBearer = ticketBearer;
             _scheduledDate = scheduledDate;
             _emailTypeId = 1;
+            _eventId = eventId;
 
         }
         public MailMessage Message
@@ -77,7 +79,8 @@ namespace EventCombo.Service
                         AttendeeEmail attendeeEmail = new AttendeeEmail()
                         {
                             ScheduledEmailId = scheduledEmail.ScheduledEmailId,
-                            TicketbearerId = item.TicketbearerId
+                            TicketbearerId = item.TicketbearerId,
+                            EventID=_eventId
                         };
                         aERepo.Insert(attendeeEmail);
                     }

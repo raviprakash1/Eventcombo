@@ -332,7 +332,7 @@ namespace EventCombo.Controllers
         Session["Fromname"] = "ManageAttendees";
         Session["ReturnUrl"] = Url.Action("Orders", "ManageAttendees");
 
-        var attendeeEmails = _maservice.GetScheduledEmailList(isEmailSend);
+        var attendeeEmails = _maservice.GetScheduledEmailList(eventId, isEmailSend);
 
         return PartialView("_AttendeeEmailList", attendeeEmails);
     }
@@ -410,7 +410,7 @@ namespace EventCombo.Controllers
                     return View(scheduledEmail);
                 }
             }
-            _maservice.SendAttendeeMail(scheduledEmail, userId, scheduledEmail.TicketbearerIds, scheduledEmail.ScheduledDate);
+            _maservice.SendAttendeeMail(eventId, scheduledEmail, userId, scheduledEmail.TicketbearerIds, scheduledEmail.ScheduledDate);
 
             return RedirectToAction("AttendeeEmail", new { eventId = eventId });
         }
