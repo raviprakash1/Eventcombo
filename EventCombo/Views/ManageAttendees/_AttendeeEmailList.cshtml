@@ -5,7 +5,7 @@
 <link href="~/footable/css/footable.core.min.css" rel="stylesheet" />
 <script src="~/footable/js/footable.all.min.js"></script>
 <script src="~/footable/js/footable.filter.min.js"></script>
-<table id="AttendeeEmailListTable_@(Model.FirstOrDefault().IsEmailSend ? "Sent" : "Scheduled")" data-totalrecords="@(Model.Count())" class="table footable" data-page-navigation=".pagination" data-page-size="10">
+<table id="AttendeeEmailListTable_@(Model.Count > 0 ? Model.FirstOrDefault().IsEmailSend ? "Sent" : "Scheduled":"")" data-totalrecords="@(Model.Count())" class="table footable" data-page-navigation=".pagination" data-page-size="10">
     <thead>
         <tr>
             <th class="UETableHead"><a href="javascript:void(0);">Subject of EMail</a></th>
@@ -38,7 +38,7 @@
                 </td>
             </tr>
             <tr id="AttendeeEmail_@((sEmail.IsEmailSend ? "Sent" : "Scheduled") + "_" + sEmail.ScheduledEmailId)" style="display:none;" data-popped="0"></tr>
-    }
+        }
     </tbody>
     <tfoot class="footer-menu">
         <tr>
