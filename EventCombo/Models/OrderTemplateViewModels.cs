@@ -62,6 +62,7 @@ namespace EventCombo.Models
     public Nullable<decimal> T_Ecpercent { get; set; }
     public Nullable<decimal> T_EcAmount { get; set; }
     public long InternalId { get; set; }
+    public long PurchasedQuantity { get; set; }
 
     public TicketTypeViewModel TicketType { get; private set; }
   }

@@ -956,6 +956,7 @@
     <Content Include="Scripts\AMaterial\angular-cookies.min.js" />
     <Content Include="Scripts\AMaterial\angular-material-datetimepicker.js" />
     <Content Include="Scripts\AMaterial\angular-material.js" />
+    <Content Include="Scripts\AMaterial\angular-material.min.js" />
     <Content Include="Scripts\AMaterial\angular-messages.js" />
     <Content Include="Scripts\AMaterial\angular-messages.min.js" />
     <Content Include="Scripts\AMaterial\angular-route.js" />

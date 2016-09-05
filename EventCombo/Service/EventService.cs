@@ -317,7 +317,17 @@ namespace EventCombo.Service
         if (tDB == null)
           tDB = new Ticket();
 
+        long purchasedQuantity = ticket.T_Id == 0 ? 0 : GetPurchasedTicketQuantity(ticket.T_Id);
+
         ticket.E_Id = ev.EventID;
+        if (purchasedQuantity != 0)
+        {
+          ticket.Price = tDB.Price;
+          ticket.Qty_Available = ticket.Qty_Available < purchasedQuantity ? purchasedQuantity : ticket.Qty_Available;
+        }
+
+        UpdatePrices(ticket);
+
         _mapper.Map(ticket, tDB);
 
         DateTime? saleStart = ticket.Sale_Start_Date;
@@ -339,6 +349,32 @@ namespace EventCombo.Service
         uow.Context.SaveChanges();
         ticket.T_Id = tDB.T_Id;
       }
+    }
+
+    private void UpdatePrices(TicketViewModel ticket)
+    {
+      if (ticket.TicketTypeID != 2)
+        ticket.Price = 0;
+      else
+        ticket.Price = Math.Round(ticket.Price ?? 0, 2);
+      ticket.T_Discount = Math.Round(ticket.T_Discount ?? 0, 2);
+      IRepository<Fee_Structure> fRepo = new GenericRepository<Fee_Structure>(_factory.ContextFactory);
+      var fee = fRepo.Get(filter: (f => f.FS_Apply == "A")).FirstOrDefault();
+      if (fee != null)
+      {
+        ticket.T_Ecpercent = ticket.TicketTypeID == 2 ? fee.FS_Percentage ?? 0 : 0;
+        ticket.T_EcAmount = ticket.TicketTypeID != 1 ? fee.FS_Amount ?? 0 : 0;
+      }
+      else
+      {
+        ticket.T_Ecpercent = 0;
+        ticket.T_EcAmount = 0;
+      }
+      ticket.EC_Fee = Math.Round((ticket.Price ?? 0) * (ticket.T_Ecpercent ?? 0 / 100) + (ticket.T_EcAmount ?? 0), 2);
+      ticket.Customer_Fee = ticket.EC_Fee;
+      ticket.TotalPrice = (ticket.Price ?? 0) - (ticket.T_Discount ?? 0);
+      if (String.IsNullOrEmpty(ticket.Fees_Type) || (ticket.Fees_Type == "0"))
+        ticket.TotalPrice += ticket.EC_Fee;
     }
 
     private void SaveVarCharges(EventViewModel ev, IUnitOfWork uow)
@@ -428,15 +464,13 @@ namespace EventCombo.Service
 
       var dbECImages = ecRepo.Get(filter: (ei => ei.EventId == ev.EventID));
       foreach (var ecDBLink in dbECImages)
-      {
-        var ecLink = ev.EventImages.Where(ei => ei.ECImageId == ecDBLink.ECImageId).FirstOrDefault();
-        if (ecLink == null)
+        if (!ev.EventImages.Any(ei => ei.ECImageId == ecDBLink.ECImageId))
         {
           var imageId = ecDBLink.ECImageId;
           ecRepo.Delete(ecDBLink);
           _iservice.DeleteImage(imageId, ev.UserID, uow);
         }
-      }
+
       foreach (var ecImage in ev.EventImages)
       {
         ECImageViewModel newImage;
@@ -465,15 +499,18 @@ namespace EventCombo.Service
           IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
 
           Event evDB = null;
-          if (ev.EventID != 0)
-            evDB = eRepo.GetByID(ev.EventID);
-          if (evDB == null)
-            evDB = new Event();
 
-          if (ev.EventID == 0)
-            ev.CreateDate = DateTime.Now;
-          else
+          if (ev.EventID != 0)
+          {
+            evDB = eRepo.GetByID(ev.EventID);
             ev.ModifyDate = DateTime.Now;
+          }
+          if (evDB == null)
+          {
+            evDB = new Event();
+            ev.CreateDate = DateTime.Now;
+            ev.ModifyDate = null;
+          }
 
           _mapper.Map(ev, evDB);
           if (ev.OnlineEvent)
@@ -491,6 +528,7 @@ namespace EventCombo.Service
               _iservice.DeleteImage((evDB.ECBackgroundId ?? 0), ev.UserID, uow);
             var ecImage = _iservice.SaveToDB(ev.BGImage, ev.UserID, uow);
             evDB.ECBackgroundId = ecImage.ECImageId;
+            ev.BGImage = ecImage;
           }
           if (((evDB.ECBackgroundId ?? 0) != 0) && (ev.BGImage == null))
           {
@@ -505,6 +543,7 @@ namespace EventCombo.Service
               _iservice.DeleteImage(evDB.ECImageId ?? 0, ev.UserID, uow);
             var ecImage = _iservice.SaveToDB(ev.ECImage, ev.UserID, uow);
             evDB.ECImageId = ecImage.ECImageId;
+            ev.ECImage = ecImage;
           }
           if ((ev.ECImage == null) && ((evDB.ECImageId ?? 0) != 0))
           {
@@ -587,7 +626,7 @@ namespace EventCombo.Service
     }
 
 
-    public EventViewModel GetEventById(int id)
+    public EventViewModel GetEventById(long id)
     {
       EventViewModel ev = new EventViewModel() { EventID = id };
       IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
@@ -707,7 +746,7 @@ namespace EventCombo.Service
           DateTime.TryParse((tvm.Sale_End_Date ?? default(DateTime)).ToShortDateString() + " " + tvm.Sale_End_Time, out saleEndDate);
           tvm.Sale_End_Date = saleEndDate;
         }
-        if (tvm.Hide_Untill_Date !=null)
+        if (tvm.Hide_Untill_Date != null)
         {
           DateTime.TryParse((tvm.Hide_Untill_Date ?? default(DateTime)).ToShortDateString() + " " + tvm.Hide_Untill_Time, out hideStart);
           tvm.Hide_Untill_Date = hideStart;
@@ -720,6 +759,7 @@ namespace EventCombo.Service
 
         tvm.TicketType.TicketTypeId = Convert.ToByte(t.TicketTypeID ?? 1);
         tvm.TicketType.TicketType = tvm.TicketType.TicketTypeId == 1 ? "Free" : tvm.TicketType.TicketTypeId == 2 ? "Paid" : "Donation";
+        tvm.PurchasedQuantity = GetPurchasedTicketQuantity(tvm.T_Id);
         ev.TicketList.Add(tvm);
       }
 
@@ -730,6 +770,13 @@ namespace EventCombo.Service
       }
 
       return ev;
+    }
+
+    private long GetPurchasedTicketQuantity(long ticketId)
+    {
+      IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+      var q = tpdRepo.Get(filter: (tpd => tpd.Ticket_Quantity_Detail.TQD_Ticket_Id == ticketId)).Sum(tpd => tpd.TPD_Purchased_Qty);
+      return q ?? 0;
     }
 
     private ECImageViewModel ProcessOldEventImage(EventImage image, string userId, IUnitOfWork uow)

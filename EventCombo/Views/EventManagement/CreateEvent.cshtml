@@ -104,11 +104,6 @@
         <a href="javascript:void(0);" class="btnPreviewHeadCE" ng-click="previewEvent()">PREVIEW</a>
         <a href="javascript:void(0);" class="btnMakeLiveHeadCE" ng-click="publishEvent()">MAKE LIVE NOW</a>
       </div>
-      <div ng-show="eventInfo.ErrorEvent">
-        <div ng-repeat="message in eventInfo.ErrorMessages">
-          <span>{{message}}</span>
-        </div>
-      </div>
       <div class="eventDetailContainer" ng-style="{'background-image': 'url(' + eventInfo.BGImage.ImagePath +')', 'background-size': '100% 100%', 'background-color': eventInfo.BackgroundColor}">
         <div class="EDConInner">
           <div class="col-md-12 EDWebsiteUrlHead">
@@ -609,13 +604,17 @@
                     <div flex ng-show="ticket.TicketTypeID == 2" class="mob-m2em-bottom">
                       <md-input-container class="ticketContTxtBox qualityMdCon">
                         <label class="ticketPriceLbl">$ Price</label>
-                        <input type="text" class="ticketPriceLblTxtboxCls" name="TicketPrice" ng-model="ticket.PriceText" ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket, 'TicketForm_'+$index)" decimal-only />
+                        <input type="text" class="ticketPriceLblTxtboxCls" name="TicketPrice" ng-model="ticket.PriceText"
+                               ng-readonly="ticket.PurchasedQuantity > 0" ng-change="onPriceChange(ticket)"
+                               ng-blur="onPriceBlur(ticket, 'TicketForm_'+$index)" decimal-only />
                       </md-input-container>
                     </div>
                     <div flex ng-show="ticket.TicketTypeID == 2" class="mob-m2em-bottom">
                       <md-input-container class="ticketContTxtBox qualityMdCon">
                         <label class="ticketDiscountLbl">$ Discount</label>
-                        <input type="text" class="ticketDiscountLblTxtboxCls" name="TicketDiscount" ng-model="ticket.DiscountText" ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket, 'TicketForm_'+$index)" decimal-only />
+                        <input type="text" class="ticketDiscountLblTxtboxCls" name="TicketDiscount" ng-model="ticket.DiscountText"
+                               ng-readonly="ticket.PurchasedQuantity > 0" ng-change="onPriceChange(ticket)" 
+                               ng-blur="onPriceBlur(ticket, 'TicketForm_'+$index)" decimal-only />
                       </md-input-container>
                     </div>
                     <div flex ng-show="ticket.TicketTypeID != 2">
@@ -919,11 +918,6 @@
       <a href="javascript:void(0);" class="btnSaveHeadCE" ng-click="saveEvent()">SAVE</a>
       <a href="javascript:void(0);" class="btnPreviewHeadCE" ng-click="previewEvent()">PREVIEW</a>
       <a href="javascript:void(0);" class="btnMakeLiveHeadCE" ng-click="publishEvent()">MAKE LIVE NOW</a>
-    </div>
-    <div ng-show="eventInfo.ErrorEvent">
-      <div ng-repeat="message in eventInfo.ErrorMessages">
-        <span>{{message}}</span>
-      </div>
     </div>
   </form>
 </div>

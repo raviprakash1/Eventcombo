@@ -12,15 +12,18 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using EventCombo.ViewModels;
 using System.Text.RegularExpressions;
+using NLog;
 namespace EventCombo.Controllers
 {
   public class EventManagementController : BaseController
   {
     private IEventService _eService;
+    private ILogger _logger;
     public EventManagementController()
       : base()
     {
       _eService = new EventService(_factory, _mapper);
+      _logger = LogManager.GetCurrentClassLogger();
     }
 
     private ActionResult DefaultAction(string returnUrl = "")
@@ -89,10 +92,24 @@ namespace EventCombo.Controllers
         return null;
 
       EventViewModel ev = JsonConvert.DeserializeObject<EventViewModel>(json);
+      ev.ErrorEvent = false;
+      ev.ErrorMessages.Clear();
 
       if (_eService.ValidateEvent(ev))
       {
-        _eService.SaveEvent(ev, Server.MapPath);
+        try
+        {
+          _eService.SaveEvent(ev, Server.MapPath);
+          if (!String.IsNullOrEmpty(ev.EventStatus) && (ev.EventStatus.ToUpper() == "SAVE"))
+            ev = _eService.GetEventById(ev.EventID);
+        }
+        catch (Exception ex)
+        {
+          _logger.Error(ex, "Error during SaveEvent.", null);
+          ev.ErrorEvent = true;
+          if (ev.ErrorMessages.Count == 0)
+            ev.ErrorMessages.Add("Something went wrong. Please try again later.");
+        }
       }
 
       JsonNetResult res = new JsonNetResult();
