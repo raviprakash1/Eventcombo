@@ -1145,6 +1145,7 @@ warning 6002: The table/view 'EventCombo.dbo.EventTicket_View' does not have a p
           <Property Name="O_OrderDateTime" Type="datetime" />
           <Property Name="OrderStateId" Type="tinyint" />
           <Property Name="OrderStateName" Type="varchar" MaxLength="50" />
+          <Property Name="PaymentTypeId" Type="tinyint" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'EventCombo.dbo.V_EventsexpiredList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1863,7 +1864,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
     [EventTicket_View].[PromoCodeAmount] AS [PromoCodeAmount], 
     [EventTicket_View].[O_OrderDateTime] AS [O_OrderDateTime], 
     [EventTicket_View].[OrderStateId] AS [OrderStateId], 
-    [EventTicket_View].[OrderStateName] AS [OrderStateName]
+    [EventTicket_View].[OrderStateName] AS [OrderStateName], 
+    [EventTicket_View].[PaymentTypeId] AS [PaymentTypeId]
     FROM [dbo].[EventTicket_View] AS [EventTicket_View]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="V_EventsexpiredList" EntityType="Self.V_EventsexpiredList" store:Type="Views" store:Schema="dbo">
@@ -4636,6 +4638,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="TPD_Id" Type="Int64" Nullable="false" />
           <Property Name="TicketTypeID" Type="Int64" Nullable="false" />
           <Property Name="TicketTypeName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentTypeId" Type="Byte" />
         </EntityType>
         <EntityType Name="V_EventsListUpcoming">
           <Key>
@@ -6230,6 +6233,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="EventTicket_View">
             <EntityTypeMapping TypeName="EventComboModel.EventTicket_View">
               <MappingFragment StoreEntitySet="EventTicket_View">
+                <ScalarProperty Name="PaymentTypeId" ColumnName="PaymentTypeId" />
                 <ScalarProperty Name="TicketTypeName" ColumnName="TicketTypeName" />
                 <ScalarProperty Name="TicketTypeID" ColumnName="TicketTypeID" />
                 <ScalarProperty Name="TPD_Id" ColumnName="TPD_Id" />
