@@ -140,6 +140,7 @@
           <Property Name="AttendeeEmailId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ScheduledEmailId" Type="bigint" Nullable="false" />
           <Property Name="TicketbearerId" Type="bigint" Nullable="false" />
+          <Property Name="EventID" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="BillingAddress">
           <Key>
@@ -1402,6 +1403,18 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AttendeeEmail_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="AttendeeEmail" Type="Self.AttendeeEmail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="AttendeeEmail">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AttendeeEmail_ScheduledEmail">
           <End Role="ScheduledEmail" Type="Self.ScheduledEmail" Multiplicity="1" />
           <End Role="AttendeeEmail" Type="Self.AttendeeEmail" Multiplicity="*" />
@@ -2039,6 +2052,10 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             <End Role="Event" EntitySet="Event" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
+          <AssociationSet Name="FK_AttendeeEmail_Event" Association="Self.FK_AttendeeEmail_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="AttendeeEmail" EntitySet="AttendeeEmail" />
+          </AssociationSet>
           <AssociationSet Name="FK_AttendeeEmail_ScheduledEmail" Association="Self.FK_AttendeeEmail_ScheduledEmail">
             <End Role="ScheduledEmail" EntitySet="ScheduledEmail" />
             <End Role="AttendeeEmail" EntitySet="AttendeeEmail" />
@@ -2355,6 +2372,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <NavigationProperty Name="EventCategory" Relationship="EventComboModel.EventCategoryEvent" FromRole="Event" ToRole="EventCategory" />
           <Property Name="ECImageId" Type="Int64" />
           <NavigationProperty Name="EventECImages" Relationship="EventComboModel.EventEventECImage" FromRole="Event" ToRole="EventECImage" />
+          <NavigationProperty Name="AttendeeEmails" Relationship="EventComboModel.FK_AttendeeEmail_Event" FromRole="Event" ToRole="AttendeeEmail" />
 
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
@@ -3266,6 +3284,10 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <AssociationSet Name="FK_ScheduledEmail_EmailType" Association="EventComboModel.FK_ScheduledEmail_EmailType">
             <End Role="EmailType" EntitySet="EmailTypes" />
             <End Role="ScheduledEmail" EntitySet="ScheduledEmails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendeeEmail_Event" Association="EventComboModel.FK_AttendeeEmail_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="AttendeeEmail" EntitySet="AttendeeEmails" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
@@ -4741,6 +4763,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="TicketbearerId" Type="Int64" Nullable="false" />
           <NavigationProperty Name="ScheduledEmail" Relationship="EventComboModel.FK_AttendeeEmail_ScheduledEmail" FromRole="AttendeeEmail" ToRole="ScheduledEmail" />
           <NavigationProperty Name="TicketBearer" Relationship="EventComboModel.FK_AttendeeEmail_TicketBearer" FromRole="AttendeeEmail" ToRole="TicketBearer" />
+          <Property Name="EventID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Event" Relationship="EventComboModel.FK_AttendeeEmail_Event" FromRole="AttendeeEmail" ToRole="Event" />
         </EntityType>
         <EntityType Name="EmailType">
           <Key>
@@ -4818,6 +4842,18 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Principal>
             <Dependent Role="ScheduledEmail">
               <PropertyRef Name="EmailTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendeeEmail_Event">
+          <End Type="EventComboModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="EventComboModel.AttendeeEmail" Role="AttendeeEmail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="AttendeeEmail">
+              <PropertyRef Name="EventID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6275,6 +6311,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="AttendeeEmails">
             <EntityTypeMapping TypeName="EventComboModel.AttendeeEmail">
               <MappingFragment StoreEntitySet="AttendeeEmail">
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="TicketbearerId" ColumnName="TicketbearerId" />
                 <ScalarProperty Name="ScheduledEmailId" ColumnName="ScheduledEmailId" />
                 <ScalarProperty Name="AttendeeEmailId" ColumnName="AttendeeEmailId" />

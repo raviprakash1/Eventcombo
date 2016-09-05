@@ -17,8 +17,10 @@ namespace EventCombo.Models
         public long AttendeeEmailId { get; set; }
         public long ScheduledEmailId { get; set; }
         public long TicketbearerId { get; set; }
+        public long EventID { get; set; }
     
         public virtual ScheduledEmail ScheduledEmail { get; set; }
         public virtual TicketBearer TicketBearer { get; set; }
+        public virtual Event Event { get; set; }
     }
 }

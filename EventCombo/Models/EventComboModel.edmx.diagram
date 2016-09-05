@@ -167,6 +167,7 @@
         <AssociationConnector Association="EventComboModel.FK_AttendeeEmail_ScheduledEmail" />
         <AssociationConnector Association="EventComboModel.FK_AttendeeEmail_TicketBearer" />
         <AssociationConnector Association="EventComboModel.FK_ScheduledEmail_EmailType" />
+        <AssociationConnector Association="EventComboModel.FK_AttendeeEmail_Event" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
