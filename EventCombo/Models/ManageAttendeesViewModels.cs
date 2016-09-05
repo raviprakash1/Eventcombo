@@ -209,6 +209,11 @@ namespace EventCombo.Models
         public Nullable<System.DateTime> SendDate { get; set; }
         public bool IsEmailSend { get; set; }
         public string TicketbearerIds { get; set; }
+        [Display(Name = "Select a Date")]
+        public System.DateTime RegisteredDate { get; set; }
+        public string BeforeEvent_Days { get; set; }
+        public string BeforeEvent_Hours { get; set; }
+        public string BeforeEvent_Minutes { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<AttendeeEmail> AttendeeEmails { get; set; }
@@ -219,5 +224,22 @@ namespace EventCombo.Models
     {
         public string Name { get; set; }
         public string Value { get; set; }
+    }
+
+    public class AttendeeTicketTypeViewModel
+    {
+        public AttendeeTicketTypeViewModel()
+        {
+            TicketTypeId = 0;
+            TicketType = "";
+            Price = 0;
+            Sold = 0;
+            AttendeeCount = 0;
+        }
+        public long TicketTypeId { get; set; }
+        public string TicketType { get; set; }
+        public decimal Price { get; set; }
+        public decimal Sold { get; set; }
+        public int AttendeeCount { get; set; }
     }
 }

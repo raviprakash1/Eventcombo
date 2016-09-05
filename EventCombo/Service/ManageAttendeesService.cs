@@ -15,6 +15,7 @@ using System.Data.Entity.Core.Objects;
 using System.Net.Mime;
 using NPOI.HSSF.Util;
 using NPOI.XSSF.UserModel;
+using EventCombo.Utils;
 
 namespace EventCombo.Service
 {
@@ -839,13 +840,33 @@ namespace EventCombo.Service
         scheduledEmail.ScheduledDate = ev.E_Startdate ?? DateTime.UtcNow;
         scheduledEmail.SendFrom= System.Configuration.ConfigurationManager.AppSettings.Get("UserName");       
         scheduledEmail.SendTos = GetSendToDropdownList(eventId);
+        scheduledEmail.RegisteredDate = DateTime.UtcNow;
         return scheduledEmail;
     }
     public IEnumerable<SelectItemModel> GetSendToDropdownList(long eventId)
     {
         IRepository<TicketBearer> etBRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
-        var ticketBearers = etBRepo.Get().ToList();
+        IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+
+        var orderIds = eRVTRepo.Get(filter: (t => t.EventID == eventId)).Select(o => o.OrderId);
+        var ticketBearers = etBRepo.Get(filter: t => orderIds.Contains(t.OrderId)).ToList();
         List<SelectItemModel> selectItems = new List<SelectItemModel>();
+
+        var PaidAmount = eRVTRepo.Get(filter: (t => t.EventID == eventId &&
+                        (t.PaymentTypeId == 1 ||
+                        t.PaymentTypeId == 2 ||
+                        t.PaymentTypeId == 5 ||
+                        t.PaymentTypeId == 6 ||
+                        t.PaymentTypeId == 7 ||
+                        t.PaymentTypeId == 10))).Sum(o => o.PaidAmount);
+        var OrderAmount = eRVTRepo.Get(filter: (t => t.EventID == eventId &&
+                        (t.PaymentTypeId == 1 ||
+                        t.PaymentTypeId == 2 ||
+                        t.PaymentTypeId == 5 ||
+                        t.PaymentTypeId == 6 ||
+                        t.PaymentTypeId == 7 ||
+                        t.PaymentTypeId == 10))).Sum(o => o.OrderAmount);
+
         selectItems.Add(new SelectItemModel
         {
             Name = "All Attendees (" + ticketBearers.Count() + ")",
@@ -868,12 +889,12 @@ namespace EventCombo.Service
         });
         selectItems.Add(new SelectItemModel
         {
-            Name = "Offline Payment Not Received (0)",
+            Name = "Offline Payment Not Received (" + (OrderAmount - PaidAmount) + ")",
             Value = "PAYMENT_NOT_RECEIVED"
         });
         selectItems.Add(new SelectItemModel
         {
-            Name = "Offline Payment Received (0)",
+            Name = "Offline Payment Received (" + PaidAmount + ")",
             Value = "PAYMENT_RECEIVED"
         });
 
@@ -886,6 +907,13 @@ namespace EventCombo.Service
 
         var AttendeeEmails = aERepo.Get(filter: s => s.EventID == eventId).Select(a=>a.ScheduledEmailId);
         var ScheduledEmails = sERepo.Get(filter: s => AttendeeEmails.Contains(s.ScheduledEmailId) && s.EmailTypeId == 1 && s.IsEmailSend == IsEmailSend);
+        var id = DateTimeWithZone.Timezonedetail(eventId);
+        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(id);
+        foreach (var scheduledEmail in ScheduledEmails)
+        {
+            var dateTimeWithZone = new DateTimeWithZone(scheduledEmail.ScheduledDate, userTimeZone, true);
+            scheduledEmail.ScheduledDate = dateTimeWithZone.LocalTime;
+        }
         return ScheduledEmails;
     }
     public ScheduledEmailViewModel GetScheduledEmailDetail(long scheduledEmailId)
@@ -900,13 +928,53 @@ namespace EventCombo.Service
         defaultEmail = System.Configuration.ConfigurationManager.AppSettings.Get("DefaultEmail");
         var ticketbearerId = (string.IsNullOrEmpty(ticketbearerIds) ? new List<long>() : ticketbearerIds.Split(',').Select(Int64.Parse).ToList());
         IRepository<TicketBearer> etBRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
-        List<TicketBearer> ticketBearers;
+        IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+  
+        List <TicketBearer> ticketBearers=new List<TicketBearer>();
+
         if (scheduledEmail.SendTo == "CONFIRMED_ATTENDEES")
-            ticketBearers = etBRepo.Get().ToList();
+        {
+            var orderIds = eRVTRepo.Get(filter: (t => t.EventID == eventId)).Select(o => o.OrderId);
+            ticketBearers = etBRepo.Get(filter: (t => orderIds.Contains(t.OrderId))).ToList();
+        }
+        else if (scheduledEmail.SendTo == "ALL_ATTENDEES_DATE")
+        {
+            var orderIds = eRVTRepo.Get(filter: (t => t.EventID == eventId && System.Data.Entity.DbFunctions.TruncateTime(t.O_OrderDateTime) >= scheduledEmail.RegisteredDate)).Select(o => o.OrderId);
+            ticketBearers = etBRepo.Get(filter: (t => orderIds.Contains(t.OrderId))).ToList();
+        }
         else if (scheduledEmail.SendTo == "ATTENDEES")
+        {
             ticketBearers = etBRepo.Get(filter: r => ticketbearerId.Contains(r.TicketbearerId)).ToList();
-        else
-            ticketBearers = etBRepo.Get().ToList();
+        }
+        else if (scheduledEmail.SendTo == "TICKET_ATTENDEES")
+        {
+            var orderIds = eRVTRepo.Get(filter: (t => t.EventID == eventId && ticketbearerId.Contains(t.TicketTypeID))).Select(o => o.OrderId);
+            ticketBearers = etBRepo.Get(filter: r => ticketbearerId.Contains(r.TicketbearerId)).ToList();
+        }
+        else if (scheduledEmail.SendTo == "PAYMENT_NOT_RECEIVED")
+        {
+            var orderIds = eRVTRepo.Get(filter: (t => t.EventID == eventId &&
+                            (t.PaymentTypeId == 1 ||
+                            t.PaymentTypeId == 2 ||
+                            t.PaymentTypeId == 5 ||
+                            t.PaymentTypeId == 6 ||
+                            t.PaymentTypeId == 7 ||
+                            t.PaymentTypeId == 10) &&
+                            t.PaidAmount <= 0)).Select(o => o.OrderId);
+            ticketBearers = etBRepo.Get(filter: r => orderIds.Contains(r.OrderId)).ToList();
+        }
+        else if (scheduledEmail.SendTo == "PAYMENT_RECEIVED")
+        {
+            var orderIds = eRVTRepo.Get(filter: (t => t.EventID == eventId &&
+                                (t.PaymentTypeId == 1 ||
+                                t.PaymentTypeId == 2 ||
+                                t.PaymentTypeId == 5 ||
+                                t.PaymentTypeId == 6 ||
+                                t.PaymentTypeId == 7 ||
+                                t.PaymentTypeId == 10) &&
+                                t.PaidAmount > 0)).Select(o => o.OrderId);
+            ticketBearers = etBRepo.Get(filter: r => orderIds.Contains(r.OrderId)).ToList();
+        }
 
         AttendeeMailNotification attendeeMailNotification = new AttendeeMailNotification(_factory, defaultEmail, scheduledEmail, ticketBearers);
         attendeeMailNotification.SendNotification(new SendAttendeeMailService(_factory, eventId, userId, ticketBearers, scheduledDate));
@@ -957,9 +1025,12 @@ namespace EventCombo.Service
     }
     public List<AttendeeViewModel> GetAttendeeList(AttendeeSearchRequestViewModel request)
     {
+        IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
         IRepository<TicketBearer> sERepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+
+        var orderIds = eRVTRepo.Get(filter: (t => t.EventID == request.EventId)).Select(o => o.OrderId);
         var attendees = sERepo.Get(filter: a => (string.IsNullOrEmpty(request.Name) ? true : a.Name.Contains(request.Name))
-        && (string.IsNullOrEmpty(request.Email) ? true : a.Email.Contains(request.Email)))
+        && (string.IsNullOrEmpty(request.Email) ? true : a.Email.Contains(request.Email)) && orderIds.Contains(a.OrderId))
                 .Select((element) => new AttendeeViewModel
                 {
                     Email = element.Email,
@@ -967,6 +1038,34 @@ namespace EventCombo.Service
                     TicketbearerId = element.TicketbearerId
                 }).ToList();
         return attendees;
+    }
+    public List<AttendeeTicketTypeViewModel> GetAttendeeTicketTypeList(long eventId)
+    {
+        IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+        IRepository<TicketBearer> sERepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+        IRepository<TicketType> tTRepo = new GenericRepository<TicketType>(_factory.ContextFactory);
+
+        var attendeeTicketTypes = tTRepo.Get();
+        List<AttendeeTicketTypeViewModel> attendeeTicketTypeViewModels = new List<AttendeeTicketTypeViewModel>();
+        foreach (var ticketType in attendeeTicketTypes)
+        {
+            var eventTicketView = eRVTRepo.Get(filter: (t => t.EventID == eventId && t.TicketTypeID == ticketType.TicketTypeID));
+            var orderIds = eventTicketView.Select(o => o.OrderId);
+            var attendees = sERepo.Get(filter: a => orderIds.Contains(a.OrderId));
+            if (attendees.Count() > 0)
+            {
+                attendeeTicketTypeViewModels.Add(new AttendeeTicketTypeViewModel
+                {
+                    TicketTypeId = ticketType.TicketTypeID,
+                    TicketType = ticketType.TicketType1,
+                    Price = eventTicketView.Sum(e => e.OrderAmount) ?? 0,
+                    Sold = eventTicketView.Sum(e => e.PaidAmount) ?? 0,
+                    AttendeeCount = attendees.Count()
+                });
+            }
+        }
+        
+        return attendeeTicketTypeViewModels;
     }
 
   }

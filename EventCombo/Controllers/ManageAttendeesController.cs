@@ -367,7 +367,7 @@ namespace EventCombo.Controllers
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult SendEmail(long eventId, [Bind(Include = "SendFrom, SendTo, ReplyTo, CC, BCC, Subject, Body, ScheduledDate, TicketbearerIds, SendTo")] ScheduledEmailViewModel scheduledEmail, string SendEmail, string txtOnDateTime, string txtBeforeEventTime)
+    public ActionResult SendEmail(long eventId, [Bind(Include = "SendFrom, SendTo, ReplyTo, CC, BCC, Subject, Body, ScheduledDate, TicketbearerIds, SendTo, RegisteredDate, BeforeEvent_Days, BeforeEvent_Hours, BeforeEvent_Minutes")] ScheduledEmailViewModel scheduledEmail, string SendEmail, string txtOnDateTime, string txtBeforeEventTime)
     {
         if ((Session["AppId"] == null))
             return DefaultAction();
@@ -381,13 +381,50 @@ namespace EventCombo.Controllers
 
         if (ModelState.IsValid)
         {
+            if (scheduledEmail.SendTo == "ALL_ATTENDEES_DATE") {
+                if (scheduledEmail.RegisteredDate == null)
+                {
+                    ModelState.AddModelError("SendTo", "Please select registered date");
+                    scheduledEmail = _maservice.PrepareSendAttendeeMail(eventId);
+                    return View(scheduledEmail);
+                    }
+                    else
+                    {
+                        var id = Utils.DateTimeWithZone.Timezonedetail(eventId);
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(id);
+                        var dateTimeWithZone = new Utils.DateTimeWithZone(scheduledEmail.RegisteredDate, userTimeZone, false);
+                        scheduledEmail.RegisteredDate = dateTimeWithZone.UniversalTime;
+                    }
+            }
+            else if (scheduledEmail.SendTo == "ATTENDEES")
+            {
+                if (string.IsNullOrEmpty(scheduledEmail.TicketbearerIds))
+                {
+                    ModelState.AddModelError("SendTo", "Please select atleast one attendee");
+                    scheduledEmail = _maservice.PrepareSendAttendeeMail(eventId);
+                    return View(scheduledEmail);
+                }
+            }
+            else if (scheduledEmail.SendTo == "TICKET_ATTENDEES")
+            {
+                if (string.IsNullOrEmpty(scheduledEmail.TicketbearerIds))
+                {
+                    ModelState.AddModelError("SendTo", "Please select ticket type");
+                    scheduledEmail = _maservice.PrepareSendAttendeeMail(eventId);
+                    return View(scheduledEmail);
+                }
+            }
+
             if (SendEmail == "Now")
                 scheduledEmail.ScheduledDate = DateTime.UtcNow;
             if (SendEmail == "OnDate")
             {
                 if (txtOnDateTime != "")
                 {
-                    scheduledEmail.ScheduledDate = DateTime.Parse(txtOnDateTime);
+                        var id = Utils.DateTimeWithZone.Timezonedetail(eventId);
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(id);
+                        var dateTimeWithZone = new Utils.DateTimeWithZone(DateTime.Parse(txtOnDateTime), userTimeZone, false);
+                        scheduledEmail.ScheduledDate = dateTimeWithZone.UniversalTime;
                 }
                 else
                 {
@@ -398,9 +435,9 @@ namespace EventCombo.Controllers
             }
             if (SendEmail == "BeforeEvent")
             {
-                if (txtBeforeEventTime != "")
+                if (!string.IsNullOrEmpty(scheduledEmail.BeforeEvent_Days) && !string.IsNullOrEmpty(scheduledEmail.BeforeEvent_Hours) && !string.IsNullOrEmpty(scheduledEmail.BeforeEvent_Minutes))
                 {
-                    TimeSpan timeBeforeTimeSpan = TimeSpan.Parse(txtBeforeEventTime);
+                    TimeSpan timeBeforeTimeSpan = TimeSpan.Parse(scheduledEmail.BeforeEvent_Days + "." + scheduledEmail.BeforeEvent_Hours + ":" + scheduledEmail.BeforeEvent_Minutes + ":00");
                     scheduledEmail.ScheduledDate = scheduledEmail.ScheduledDate.Add(-timeBeforeTimeSpan);
                 }
                 else
@@ -425,14 +462,8 @@ namespace EventCombo.Controllers
     }
 
     [HttpGet]
-    public ActionResult GetAttendeeList(AttendeeSearchRequestViewModel conllection)
+    public ActionResult GetAttendeeList(AttendeeSearchRequestViewModel request)
     {
-        AttendeeSearchRequestViewModel request = new AttendeeSearchRequestViewModel()
-        {
-            Email =Request["txtAttendeeEmail"],
-            Name = Request["txtAttendeeName"],
-            EventId = Convert.ToInt64(Request["hdnEventId"])
-        };
         var attendees = _maservice.GetAttendeeList(request);
         return PartialView("_AttendeeSearchList", attendees);
     }
@@ -473,6 +504,13 @@ namespace EventCombo.Controllers
         ViewBag.EventId = eventId;
         _maservice.UpdateAttendeeMail(scheduledEmail);
         return Content("");
+    }
+
+    [HttpGet]
+    public ActionResult GetAttendeeTicketTypeList(long eventId)
+    {
+        var attendees = _maservice.GetAttendeeTicketTypeList(eventId);
+        return PartialView("_AttendeeTicketTypeList", attendees);
     }
 
   }

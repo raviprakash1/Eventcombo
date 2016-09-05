@@ -51,9 +51,13 @@
             <div class="col-md-10">
                 @Html.DropDownListFor(model=>model.SendTo, new SelectList(Model.SendTos, "Value", "Name"),new { @onChange= "GetAttendeeList(this);", @class= "form-control text-box single-line" })
                 <div id="AttendeeSearchContainer" class="AttendeeSearchContainer">
-                    
                 </div>
                 @Html.ValidationMessageFor(model => model.SendTo, "", new { @class = "text-danger" })
+                <div id="dvRegisteredDate" class="RegisteredDate" style="@(Model.SendTo != "ALL_ATTENDEES_DATE" ? "display:none;" : "display:block;")">
+                   @Html.LabelFor(model => model.RegisteredDate, htmlAttributes: new { @class = "control-label col-md-2", @type = "date" })
+                    <input id="RegisteredDate" name="RegisteredDate" type="date" value="@Model.RegisteredDate.ToString("yyyy/MM/dd")" class="form-control text-box single-line" style="width: 250px;display:initial;" />
+                    @Html.ValidationMessageFor(model => model.RegisteredDate, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
 
@@ -95,10 +99,12 @@
                         </div>
                     </li>
                     <li style="padding: 4px 4px 10px 4px;">
-                        <div>
+                        <div class="l-mar-top-2">
                             @Html.RadioButton("SendEmail", "BeforeEvent")
-                            <b>Before The Event Start</b>
-                            <input id="txtBeforeEventTime" name="txtBeforeEventTime" type="time" class="form-control text-box single-line" style="width: 150px;display:initial;" />
+                            <input type="number" id="BeforeEvent_Days" title="Event Start Date (@Model.ScheduledDate)" name="BeforeEvent_Days" value="@Model.BeforeEvent_Days" class="form-control text-box single-line" style="width: 80px;display:initial;" >&nbsp;Days&nbsp;
+                            <input type="number" min="0" max="24" id="BeforeEvent_Hours" title="Event Start Date (@Model.ScheduledDate)" name="BeforeEvent_Hours" value="@Model.BeforeEvent_Hours" class="form-control text-box single-line" style="width: 80px;display:initial;" >&nbsp;Hours&nbsp;
+                            <input type="number" min="0" max="60" id="BeforeEvent_Minutes" title="Event Start Date (@Model.ScheduledDate)" name="BeforeEvent_Minutes" value="@Model.BeforeEvent_Minutes" class="form-control text-box single-line" style="width: 80px;display:initial;" >&nbsp;Minutes&nbsp;
+                            Before the event starts
                         </div>
                     </li>
                 </ul>
@@ -197,15 +203,31 @@
 
     function GetAttendeeList(Obj) {
         $("#AttendeeSearchContainer").html("");
+        $("#dvRegisteredDate").css("display","none");
         if($(Obj).val()=="ATTENDEES"){
             var emailViewModel = {
                 Name: "",
                 Email: "",
                 eventid: @ViewBag.EventId
-            };
+                };
             $.ajax({
                 type: "get",
                 url: "@Url.Action("GetAttendeeList", "ManageAttendees")",
+                data: emailViewModel,
+                datatype: "html",
+                success: function (data) {
+                    $("#AttendeeSearchContainer").html(data);
+                }
+            });
+        }else if($(Obj).val()=="ALL_ATTENDEES_DATE"){
+            $("#dvRegisteredDate").css("display","block");
+        }else if($(Obj).val()=="TICKET_ATTENDEES"){
+            var emailViewModel = {
+                eventid: @ViewBag.EventId
+                };
+            $.ajax({
+                type: "get",
+                url: "@Url.Action("GetAttendeeTicketTypeList", "ManageAttendees")",
                 data: emailViewModel,
                 datatype: "html",
                 success: function (data) {
