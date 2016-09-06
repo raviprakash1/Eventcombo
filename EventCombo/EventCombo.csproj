@@ -627,6 +627,9 @@
     <Compile Include="Models\TicketBearer.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TicketBearer_View.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TicketDeliveryMethod.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>

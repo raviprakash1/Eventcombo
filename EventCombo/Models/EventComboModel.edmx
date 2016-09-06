@@ -1148,6 +1148,19 @@ warning 6002: The table/view 'EventCombo.dbo.EventTicket_View' does not have a p
           <Property Name="PaymentTypeId" Type="tinyint" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'EventCombo.dbo.TicketBearer_View' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TicketBearer_View">
+          <Key>
+            <PropertyRef Name="TicketbearerId" />
+          </Key>
+          <Property Name="TicketbearerId" Type="bigint" Nullable="false" />
+          <Property Name="OrderId" Type="varchar" MaxLength="1000" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="Guid" Type="nchar" MaxLength="128" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'EventCombo.dbo.V_EventsexpiredList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="V_EventsexpiredList">
           <Key>
@@ -1867,6 +1880,16 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
     [EventTicket_View].[OrderStateName] AS [OrderStateName], 
     [EventTicket_View].[PaymentTypeId] AS [PaymentTypeId]
     FROM [dbo].[EventTicket_View] AS [EventTicket_View]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TicketBearer_View" EntityType="Self.TicketBearer_View" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TicketBearer_View].[TicketbearerId] AS [TicketbearerId], 
+    [TicketBearer_View].[OrderId] AS [OrderId], 
+    [TicketBearer_View].[UserId] AS [UserId], 
+    [TicketBearer_View].[Guid] AS [Guid], 
+    [TicketBearer_View].[Name] AS [Name], 
+    [TicketBearer_View].[Email] AS [Email]
+    FROM [dbo].[TicketBearer_View] AS [TicketBearer_View]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="V_EventsexpiredList" EntityType="Self.V_EventsexpiredList" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -3291,6 +3314,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             <End Role="Event" EntitySet="Events" />
             <End Role="AttendeeEmail" EntitySet="AttendeeEmails" />
           </AssociationSet>
+          <EntitySet Name="TicketBearer_View" EntityType="EventComboModel.TicketBearer_View" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -4860,6 +4884,17 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TicketBearer_View">
+          <Key>
+            <PropertyRef Name="TicketbearerId" />
+          </Key>
+          <Property Name="TicketbearerId" Type="Int64" Nullable="false" />
+          <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6348,6 +6383,18 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
                 <ScalarProperty Name="EmailTypeId" ColumnName="EmailTypeId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="ScheduledEmailId" ColumnName="ScheduledEmailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketBearer_View">
+            <EntityTypeMapping TypeName="EventComboModel.TicketBearer_View">
+              <MappingFragment StoreEntitySet="TicketBearer_View">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="TicketbearerId" ColumnName="TicketbearerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
