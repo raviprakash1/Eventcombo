@@ -73,6 +73,12 @@ namespace EventCombo
               );
 
             routes.MapRoute(
+                  "NewCreateEvent",
+                  "CreateEvent/CreateEvent",
+                  new { controller = "EventManagement", action = "CreateEvent" }
+                );
+
+            routes.MapRoute(
                 name: "Default",
                 namespaces: new[] { "EventCombo.Controllers" },
                 url: "{controller}/{action}",

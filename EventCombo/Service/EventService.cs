@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using NLog;
 using System.IO;
 using System.Web.Hosting;
+using System.Configuration;
 
 
 namespace EventCombo.Service
@@ -458,6 +459,8 @@ namespace EventCombo.Service
 
     public void SaveEvent(EventViewModel ev, Func<string, string> mapPath)
     {
+      bool sendNotification = false;
+
       using (var uow = _factory.GetUnitOfWork())
       {
         try
@@ -465,15 +468,20 @@ namespace EventCombo.Service
           IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
 
           Event evDB = null;
-          if (ev.EventID != 0)
-            evDB = eRepo.GetByID(ev.EventID);
-          if (evDB == null)
-            evDB = new Event();
 
-          if (ev.EventID == 0)
-            ev.CreateDate = DateTime.Now;
-          else
+          if (ev.EventID != 0)
+          {
+            evDB = eRepo.GetByID(ev.EventID);
             ev.ModifyDate = DateTime.Now;
+            sendNotification = ((ev.EventStatus ?? "").ToUpper() == "LIVE") && ((evDB.EventStatus ?? "").ToUpper() != "LIVE");
+          }
+          if (evDB == null)
+          {
+            sendNotification = true;
+            evDB = new Event();
+            ev.CreateDate = DateTime.Now;
+            ev.ModifyDate = null;
+          }
 
           _mapper.Map(ev, evDB);
           if (ev.OnlineEvent)
@@ -544,6 +552,13 @@ namespace EventCombo.Service
           throw new Exception("Exception during SaveEvent.", ex);
         }
       }
+      if (sendNotification)
+      {
+        var sendEvent =  GetEventById(ev.EventID);
+        sendEvent.EventUrl = ResolveServerUrl(VirtualPathUtility.ToAbsolute(sendEvent.EventUrl), false);
+        INotification notification = new NewEventNotification(_factory, sendEvent, ConfigurationManager.AppSettings.Get("DefaultEmail"));
+        notification.SendNotification(new SendMailService());
+      }
     }
 
     public void PublishEvent(long id, string userId)
@@ -587,7 +602,7 @@ namespace EventCombo.Service
     }
 
 
-    public EventViewModel GetEventById(int id)
+    public EventViewModel GetEventById(long id)
     {
       EventViewModel ev = new EventViewModel() { EventID = id };
       IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
@@ -602,6 +617,8 @@ namespace EventCombo.Service
 
       _mapper.Map(evDB, ev);
       LoadEventDictionaries(ev);
+
+      ev.EventUrl = GetEventUrl(ev.EventID, ev.EventTitle, new UrlHelper(HttpContext.Current.Request.RequestContext));
 
       ev.OnlineEvent = ev.AddressStatus == "Online";
       var orgn = evDB.Event_Orgnizer_Detail.Where(od => od.DefaultOrg == "Y").FirstOrDefault();
