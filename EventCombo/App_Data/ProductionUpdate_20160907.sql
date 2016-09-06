@@ -1,6 +1,3 @@
-USE [EventComboProd]
-GO
-
 IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[V_EventsexpiredList]'))
 DROP VIEW [dbo].[V_EventsexpiredList]
 GO
