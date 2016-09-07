@@ -144,6 +144,19 @@ namespace CMS.Controllers
             return Content(result);
         }
 
+        private string ResolveServerUrl(string serverUrl, bool forceHttps)
+        {
+          if (serverUrl.IndexOf("://") > -1)
+            return serverUrl;
+
+          string newUrl = serverUrl;
+          Uri originalUri = System.Web.HttpContext.Current.Request.Url;
+          newUrl = (forceHttps ? "https" : originalUri.Scheme) +
+              "://" + originalUri.Authority + newUrl;
+          return newUrl;
+        }
+
+
         private string getuserImage()
         {
             if ((Session["UserID"] != null))
@@ -152,7 +165,7 @@ namespace CMS.Controllers
                 var userImage = db.Profiles.Where(x => x.UserID == userid).Select(y => y.UserProfileImage).SingleOrDefault();
                 if (userImage != null)
                 {
-                    return "http://eventcombo.kiwireader.com/Images/Profile/Profile_Images/imagepath/" + userImage;
+                  return ResolveServerUrl(VirtualPathUtility.ToAbsolute(Url.Content("~/Images/Profile/Profile_Images/imagepath/" + userImage)), false); 
                 }
                 else
                 {
