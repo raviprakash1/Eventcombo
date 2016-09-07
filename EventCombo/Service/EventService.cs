@@ -555,7 +555,7 @@ namespace EventCombo.Service
       if (sendNotification)
       {
         var sendEvent =  GetEventById(ev.EventID);
-        sendEvent.EventUrl = ResolveServerUrl(VirtualPathUtility.ToAbsolute(sendEvent.EventUrl), false);
+        sendEvent.EventPath = ResolveServerUrl(VirtualPathUtility.ToAbsolute(sendEvent.EventPath), false);
         INotification notification = new NewEventNotification(_factory, sendEvent, ConfigurationManager.AppSettings.Get("DefaultEmail"));
         notification.SendNotification(new SendMailService());
       }
@@ -618,7 +618,7 @@ namespace EventCombo.Service
       _mapper.Map(evDB, ev);
       LoadEventDictionaries(ev);
 
-      ev.EventUrl = GetEventUrl(ev.EventID, ev.EventTitle, new UrlHelper(HttpContext.Current.Request.RequestContext));
+      ev.EventPath = GetEventUrl(ev.EventID, ev.EventTitle, new UrlHelper(HttpContext.Current.Request.RequestContext));
 
       ev.OnlineEvent = ev.AddressStatus == "Online";
       var orgn = evDB.Event_Orgnizer_Detail.Where(od => od.DefaultOrg == "Y").FirstOrDefault();

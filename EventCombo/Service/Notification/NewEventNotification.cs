@@ -64,7 +64,7 @@ namespace EventCombo.Service
       }
       tagList["EventTitleId"] = _event.EventTitle;
       tagList["EventAddressID"] = _event.Address;
-      tagList["DiscoverEventurl"] = _event.EventUrl;
+      tagList["DiscoverEventurl"] = _event.EventPath;
 
       _service.Message.To.Clear();
       if (String.IsNullOrEmpty(eTemplate.To))
