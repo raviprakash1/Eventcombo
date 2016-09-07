@@ -150,16 +150,22 @@ namespace EventCombo.Controllers
     }
 
     [HttpGet]
-    public ActionResult Guests()
+    public ActionResult Guests(long eventId)
     {
-      if ((Session["AppId"] == null))
-        return DefaultAction();
+        if ((Session["AppId"] == null))
+            return DefaultAction();
 
-      string userId = Session["AppId"].ToString();
-      Session["logo"] = "events";
-      Session["Fromname"] = "ManageAttendees";
-      Session["ReturnUrl"] = Url.Action("Guests", "ManageAttendees");
-      return View();
+        string userId = Session["AppId"].ToString();
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Guests", "ManageAttendees");
+
+        ViewBag.EventId = eventId;
+        ViewBag.Title = "Guest List | Eventcombo";
+
+        var ticketTypes = _maservice.GetAttendeeTicketTypeList(eventId);
+
+        return View(ticketTypes);
     }
 
     [HttpGet]

@@ -16,6 +16,10 @@ using System.Net.Mime;
 using NPOI.HSSF.Util;
 using NPOI.XSSF.UserModel;
 using EventCombo.Utils;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using iTextSharp.text.html.simpleparser;
+using System.Text;
 
 namespace EventCombo.Service
 {
@@ -1042,7 +1046,7 @@ namespace EventCombo.Service
     public List<AttendeeTicketTypeViewModel> GetAttendeeTicketTypeList(long eventId)
     {
         IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
-        IRepository<TicketBearer> sERepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+        IRepository<TicketBearer_View> sERepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
         IRepository<TicketType> tTRepo = new GenericRepository<TicketType>(_factory.ContextFactory);
 
         var attendeeTicketTypes = tTRepo.Get();
@@ -1066,6 +1070,109 @@ namespace EventCombo.Service
         }
         
         return attendeeTicketTypeViewModels;
+    }
+    public MemoryStream GetDownloadableGuestList(string sortBy, string ticketTypeIds, string barcode, long eventId, string format)
+    {
+        format = format.Trim().ToLower();
+        if ((format != "pdf"))
+            return null;
+
+        return GuestListToPDF(sortBy, ticketTypeIds, barcode, eventId);
+    }
+
+    public MemoryStream GuestListToPDF(string sortBy, string ticketTypeIds, string barcode, long eventId)
+    {
+        IRepository<EventTicket_View> eTVRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+        IRepository<Event> EventRepo = new GenericRepository<Event>(_factory.ContextFactory);
+        IRepository<TicketBearer_View> tBVRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
+        IRepository<PaymentType> pTRepo = new GenericRepository<PaymentType>(_factory.ContextFactory);
+        
+        var tTypeIds = (!string.IsNullOrEmpty(ticketTypeIds) ? ticketTypeIds.Split(',').Select(Int64.Parse).ToList() : null);
+        var eventTickets = eTVRepo.Get(filter: (e => e.EventID == eventId));
+        if (sortBy == "TicketType")
+        {
+            eventTickets = eventTickets.OrderBy(e => e.TicketTypeName);
+        }
+        if (tTypeIds != null)
+        {
+            eventTickets = eventTickets.Where(e => tTypeIds.Contains(e.TicketTypeID));
+        }
+        var eventTitle = EventRepo.Get(filter: (e => e.EventID == eventId)).Select(x => new { x.EventTitle }).FirstOrDefault();
+        var title = (eventTitle == null ? "" : eventTitle.EventTitle);
+        StringBuilder htmlContent = new StringBuilder();
+
+        htmlContent.Append("<div style='width:100%;text-align:center;'><h1 style='font-size:22px;margin-bottom:5px;margin-top:0px;font-weight:normal;'> cause this is the event</h1></div>");
+        htmlContent.Append("<div style='width:100%;text-align:center;'><h2 style='font-size:12px;margin-bottom:5px;margin-top:0px;font-weight:normal;'> " + title + " </h2></div>");
+
+        htmlContent.Append("<table border='1' style='width:100%;'>");
+        htmlContent.Append("<tr align='left' style='color:#696564;'>");
+        htmlContent.Append("<td style='width:25%;'><b>Name</b></td>");
+        htmlContent.Append("<td style='width:5%'><b>Qty</b></td>");
+        htmlContent.Append("<td style='width:25%;'><b>Ticket Type</b></td>");
+        htmlContent.Append("<td style='width:50%;'><b>Payment Status</b></td>");
+        htmlContent.Append("</tr>");
+        foreach (var eventTicket in eventTickets)
+        {
+            var ticketBearers = tBVRepo.Get(filter: (t => t.OrderId == eventTicket.OrderId));
+            var paymentType = pTRepo.Get(filter: (p => p.PaymentTypeId == eventTicket.PaymentTypeId)).FirstOrDefault();
+            var purchasedQuantity = eventTicket.PurchasedQuantity;
+            var attendeeQuantity = ticketBearers.Count(t => t.TicketbearerId == 0);
+            if (sortBy == "Name")
+            {
+                ticketBearers = ticketBearers.OrderBy(e => e.Name);
+            }
+            foreach (var ticketBearer in ticketBearers)
+            {
+                htmlContent.Append("<tr>");
+                htmlContent.Append("<td>" + ticketBearer.Name + "</td>");
+                htmlContent.Append("<td>" + (ticketBearer.TicketbearerId == 0 ? purchasedQuantity - attendeeQuantity : 1) + "</td>");
+                htmlContent.Append("<td>" + eventTicket.TicketTypeName + "</td>");
+                if (barcode == null)
+                {
+                    htmlContent.Append("<td>" + (paymentType != null ? paymentType.PaymentTypeName : "") + "<br>Order " + eventId + "-" + eventTicket.OrderId + "</td>");
+                }
+                else if (barcode == "on")
+                {
+                    string barcodeImgTempPath = HttpContext.Current.Server.MapPath("~/Images/abr_" + eventTicket.OrderId + "_" + ticketBearer.UserId + ".Png");
+                    System.Drawing.Image img = System.Drawing.Image.FromStream(new MemoryStream(GenerateBarCode(eventTicket.OrderId)));
+                    img.Save(barcodeImgTempPath, System.Drawing.Imaging.ImageFormat.Png);
+                    htmlContent.Append("<td>" + (paymentType != null ? paymentType.PaymentTypeName : "") + "<br><img style='width:150px;' src='" + barcodeImgTempPath + "' alt='barcode'></td>");
+                }
+                htmlContent.Append("</tr>");
+            }
+        }
+        htmlContent.Append("</table>");
+
+        Document document = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
+        HTMLWorker worker = new HTMLWorker(document);
+        MemoryStream memoryStream = new MemoryStream();
+        PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
+        document.Open();
+        worker.Parse(new StringReader(htmlContent.ToString()));
+        document.Close();
+        byte[] bytes = memoryStream.ToArray();
+        memoryStream.Close();
+        foreach (var eventTicket in eventTickets)
+        {
+            var ticketBearers = tBVRepo.Get(filter: (t => t.OrderId == eventTicket.OrderId));
+            foreach (var ticketBearer in ticketBearers)
+            {
+                string barcodeImgTempPath = HttpContext.Current.Server.MapPath("~/Images/abr_" + eventTicket.OrderId + "_" + ticketBearer.UserId + ".Png");
+                if (System.IO.File.Exists(barcodeImgTempPath))
+                {
+                    System.IO.File.Delete(barcodeImgTempPath);
+                }
+            }
+        }
+        return new MemoryStream(bytes);
+    }
+
+    public byte[] GenerateBarCode(string barCodeData)
+    {
+        System.Net.WebClient wc = new System.Net.WebClient();
+        string url = "https://www.barcodesinc.com/generator/image.php?code=" + barCodeData + "&style=196&type=C128B&width=140&height=70&xres=1&font=3";
+        byte[] barImage = wc.DownloadData(url);
+        return barImage;
     }
 
   }
