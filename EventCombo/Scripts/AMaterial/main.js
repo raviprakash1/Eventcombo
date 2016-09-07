@@ -1,6 +1,6 @@
 ﻿var test;
-eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window', '$timeout', '$sanitize', 'ngGallery',
-  function ($scope, $http, $window, $timeout, $sanitize, ngGallery) {
+eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window', '$timeout', '$sanitize', 'ngGallery', 'eventIdValue',
+  function ($scope, $http, $window, $timeout, $sanitize, ngGallery, eventIdValue) {
 
     angular.element(document).ready(function () {
 
@@ -19,6 +19,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     $scope.minDate.setHours(0, 0, 0, 0);
     $scope.formValidation = false;
     $scope.gPlace;
+    $scope.sendAction = "Save";
     if ($(window).width() > 768) {
       $scope.tinymceOptions = {
         selector: "textarea",
@@ -64,7 +65,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     $scope.selectedDateTimeText = "Pick the date here";
     $scope.showDateTimeDialog = false;
 
-    $http.get('/eventmanagement/getevent', { params: { eventId: 0 } }).then(function (response) {
+    $http.get('/eventmanagement/getevent', { params: { eventId: eventIdValue } }).then(function (response) {
       $scope.eventInfo = response.data;
       $scope.prepareEventInfo();
       if ($scope.eventInfo.ErrorEvent)
@@ -139,7 +140,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         ticket.DiscountText = ticket.T_Discount ? ticket.T_Discount : "";
         $scope.onPriceChange(ticket);
       });
-
+      $scope.onCategoryChange();
       $scope.eventInfo.isPasswordRequired = $scope.eventInfo.Private_Password ? 'Y' : 'N';
     }
 
@@ -197,9 +198,14 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     $scope.showDates = function (save) {
       $scope.dateInfoTouched = true;
       $scope.tempDateInfo.occurence = "Single";
+      console.log($scope.tempDateInfo.startingDate);
+      console.log($scope.MainForm.singleStartDate.$name);
+      console.log($scope.MainForm.singleStartDate.$modelValue);
       var check = $scope.checkTempDateInfo();
-      if (check.timezone || check.singleDates)
+      console.log(check);
+      if ((check.timezone || check.singleDates) && save)
         return;
+      console.log($scope.selectedDateTimeText);
       $scope.showDateTimeDialog = false;
       var startingDate = ($scope.tempDateInfo.startingDate.getMonth() + 1) + "/" + $scope.tempDateInfo.startingDate.getDate() + "/" + $scope.tempDateInfo.startingDate.getFullYear();
       var endingDate = ($scope.tempDateInfo.endingDate.getMonth() + 1) + "/" + $scope.tempDateInfo.endingDate.getDate() + "/" + $scope.tempDateInfo.endingDate.getFullYear();
@@ -211,7 +217,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     $scope.showMultipleDates = function (save) {
       $scope.dateInfoTouched = true;
       var check = $scope.checkTempDateInfo();
-      if (check.weekdays || check.timezone || check.multiDates || check.occurence)
+      if ((check.weekdays || check.timezone || check.multiDates || check.occurence) && save)
         return;
       $scope.showDateTimeDialog = false;
 
@@ -507,8 +513,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     }
 
     $scope.deleteTicket = function (ticket) {
-      if (ticket.PurchasedQuantity > 0)
-      {
+      if (ticket.PurchasedQuantity > 0) {
         $scope.ShowErrorMessage("Can't delete ticket", "Someone already bought this ticket.");
         return;
       }
@@ -554,6 +559,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     }
 
     $scope.saveEvent = function () {
+      $scope.sendAction = "Save";
       $scope.eventInfo.EventStatus = "Save";
       $scope.sendEvent();
     }
@@ -567,6 +573,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     }
 
     $scope.publishEvent = function () {
+      $scope.sendAction = "Live";
       $scope.eventInfo.EventStatus = "Live";
       $scope.sendEvent();
     }
@@ -615,7 +622,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
           $scope.prepareEventInfo();
           $scope.ShowErrorMessage("Found errors", $scope.eventInfo.ErrorMessages.join('<br>'));
         }
-        else if ($scope.eventInfo.EventStatus == "Save") {
+        else if ($scope.sendAction == "Save") {
           $scope.eventInfo = response.data;
           $scope.prepareEventInfo();
           $scope.showLoadingMessage(false, '');

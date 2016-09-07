@@ -212,5 +212,29 @@ namespace EventCombo.Controllers
 
       return res;
     }
+
+    [HttpGet]
+    [Authorize]
+    public ActionResult EditEvent(long eventId)
+    {
+      string userId = "";
+      if (Session["AppId"] != null)
+        userId = Session["AppId"].ToString();
+      else
+        return RedirectToAction("Index", "Home", new { lat = CookieStore.GetCookie("Lat"), lng = CookieStore.GetCookie("Long"), page = "1", strParm = "Y" });
+    
+      if (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner)
+        return RedirectToAction("Index", "Home", new { lat = CookieStore.GetCookie("Lat"), lng = CookieStore.GetCookie("Long"), page = "1", strParm = "Y" });
+
+      Session["logo"] = "events";
+      Session["Fromname"] = "events";
+      var url = Url.Action("EditEvent", "EventManagement");
+      Session["ReturnUrl"] = "EditEvent~" + url;
+
+      EventViewModel ev = _eService.GetEventById(eventId);
+      PopulateBaseViewModel(ev, "Edit Event | Eventcombo");
+
+      return View("CreateEvent", ev);
+    }
   }
 }

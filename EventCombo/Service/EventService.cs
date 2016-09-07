@@ -11,6 +11,8 @@ using System.Web.Mvc;
 using NLog;
 using System.IO;
 using System.Web.Hosting;
+using System.Configuration;
+using System.Net.Mail;
 
 
 namespace EventCombo.Service
@@ -189,15 +191,18 @@ namespace EventCombo.Service
       return !ev.ErrorEvent;
     }
 
-    private long SaveAddress(EventViewModel ev, IUnitOfWork uow)
+    private bool SaveAddress(EventViewModel ev, IUnitOfWork uow)
     {
+      bool res = false;
       IRepository<Address> aRepo = new GenericRepository<Address>(_factory.ContextFactory);
       var address = aRepo.Get(filter: (a => a.EventId == ev.EventID)).FirstOrDefault();
       if (address == null)
         address = new Address();
       address.EventId = ev.EventID;
+      res = res || (address.ConsolidateAddress != ev.Address);
       address.ConsolidateAddress = ev.Address;
       address.UserId = ev.UserID;
+      res = res || (address.VenueName != ev.VenueName);
       address.VenueName = ev.VenueName ?? "";
       try
       {
@@ -208,6 +213,7 @@ namespace EventCombo.Service
       }
       catch (Exception ex)
       {
+        _logger.Error(ex, "Error during getting coordinates of event Id = {0}", ev.EventID);
         address.Latitude = "";
         address.Longitude = "";
       }
@@ -220,28 +226,37 @@ namespace EventCombo.Service
       if (address.AddressID == 0)
         aRepo.Insert(address);
       uow.Context.SaveChanges();
-      return address.AddressID;
+      ev.AddressId = address.AddressID;
+      return res;
     }
 
-    private void SaveMultiplyDates(EventViewModel ev, IUnitOfWork uow)
+    private bool SaveMultiplyDates(EventViewModel ev, IUnitOfWork uow)
     {
+      bool res = false;
       IRepository<MultipleEvent> multiRepo = new GenericRepository<MultipleEvent>(_factory.ContextFactory);
       IRepository<EventVenue> vRepo = new GenericRepository<EventVenue>(_factory.ContextFactory);
       IRepository<TimeZoneDetail> tzRepo = new GenericRepository<TimeZoneDetail>(_factory.ContextFactory);
 
       var single = vRepo.Get(filter: (e => e.EventID == ev.EventID)).ToList();
+      res = single.Count > 0;
       foreach (var se in single)
         vRepo.Delete(se);
 
       MultipleEvent me = multiRepo.Get(filter: (m => m.EventID == ev.EventID)).FirstOrDefault();
+      res = res || (me == null);
       if (me == null)
         me = new MultipleEvent();
       me.EventID = ev.EventID;
+      res = res || (me.Frequency != ev.DateInfo.Frequency.ToString());
       me.Frequency = ev.DateInfo.Frequency.ToString();
 
-      me.StartingFrom = ev.DateInfo.StartDateTime.ToString("MM/dd/yyyy"); ;
+      res = res || (me.StartingFrom != ev.DateInfo.StartDateTime.ToString("MM/dd/yyyy"));
+      me.StartingFrom = ev.DateInfo.StartDateTime.ToString("MM/dd/yyyy");
+      res = res || (me.StartTime != ev.DateInfo.StartDateTime.ToString("hh:mm tt"));
       me.StartTime = ev.DateInfo.StartDateTime.ToString("hh:mm tt");
+      res = res || (me.StartingTo != ev.DateInfo.EndDateTime.ToString("MM/dd/yyyy"));
       me.StartingTo = ev.DateInfo.EndDateTime.ToString("MM/dd/yyyy");
+      res = res || (me.EndTime != ev.DateInfo.EndDateTime.ToString("hh:mm tt"));
       me.EndTime = ev.DateInfo.EndDateTime.ToString("hh:mm tt");
 
       int tzId;
@@ -254,26 +269,35 @@ namespace EventCombo.Service
         ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.EndDateTime, userTimeZone); ;
       }
 
+      res = res || (me.M_Startfrom != ev.DateInfo.StartDateTime);
       me.M_Startfrom = ev.DateInfo.StartDateTime;
+      res = res || (me.M_StartTo != ev.DateInfo.EndDateTime);
       me.M_StartTo = ev.DateInfo.EndDateTime;
       if (ev.DateInfo.Frequency == ScheduleFrequency.Weekly)
+      {
+        res = res || (me.WeeklyDay != String.Join(",", ev.DateInfo.Weekdays));
         me.WeeklyDay = String.Join(",", ev.DateInfo.Weekdays);
+      }
       if (me.MultipleEventID == 0)
         multiRepo.Insert(me);
       uow.Context.SaveChanges();
+      return res;
     }
 
-    private void SaveSingleDate(EventViewModel ev, long addressId, IUnitOfWork uow)
+    private bool SaveSingleDate(EventViewModel ev, long addressId, IUnitOfWork uow)
     {
+      bool res = false;
       IRepository<MultipleEvent> multiRepo = new GenericRepository<MultipleEvent>(_factory.ContextFactory);
       IRepository<EventVenue> vRepo = new GenericRepository<EventVenue>(_factory.ContextFactory);
       IRepository<TimeZoneDetail> tzRepo = new GenericRepository<TimeZoneDetail>(_factory.ContextFactory);
 
       var multi = multiRepo.Get(filter: (m => m.EventID == ev.EventID)).ToList();
+      res = multi.Count() > 0;
       foreach (var me in multi)
         multiRepo.Delete(me);
 
       EventVenue se = vRepo.Get(filter: (e => e.EventID == ev.EventID)).FirstOrDefault();
+      res = res || (se == null);
       if (se == null)
         se = new EventVenue();
       se.EventID = ev.EventID;
@@ -293,12 +317,15 @@ namespace EventCombo.Service
         ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.EndDateTime, userTimeZone); ;
       }
 
+      if ((se.E_Startdate != ev.DateInfo.StartDateTime) || (se.E_Enddate != ev.DateInfo.EndDateTime) || (se.AddressId != addressId))
+        res = true;
       se.E_Startdate = ev.DateInfo.StartDateTime;
       se.E_Enddate = ev.DateInfo.EndDateTime;
       se.AddressId = addressId;
       if (se.EventVenueID == 0)
         vRepo.Insert(se);
       uow.Context.SaveChanges();
+      return res;
     }
 
     private void SaveTickets(EventViewModel ev, IUnitOfWork uow)
@@ -324,6 +351,7 @@ namespace EventCombo.Service
         {
           ticket.Price = tDB.Price;
           ticket.Qty_Available = ticket.Qty_Available < purchasedQuantity ? purchasedQuantity : ticket.Qty_Available;
+          ticket.Fees_Type = tDB.Fees_Type;
         }
 
         UpdatePrices(ticket);
@@ -492,6 +520,7 @@ namespace EventCombo.Service
 
     public void SaveEvent(EventViewModel ev, Func<string, string> mapPath)
     {
+      bool EventChanged = false;
       using (var uow = _factory.GetUnitOfWork())
       {
         try
@@ -512,11 +541,17 @@ namespace EventCombo.Service
             ev.ModifyDate = null;
           }
 
+          if (evDB.EventStatus.ToUpper() == "LIVE")
+            ev.EventStatus = "Live";
+
           _mapper.Map(ev, evDB);
+          string status;
           if (ev.OnlineEvent)
-            evDB.AddressStatus = "Online";
+            status = "Online";
           else
-            evDB.AddressStatus = "Single";
+            status = "Single";
+          EventChanged = evDB.AddressStatus != status;
+          evDB.AddressStatus = status;
           if (evDB.EventID == 0)
             eRepo.Insert(evDB);
           uow.Context.SaveChanges();
@@ -554,12 +589,12 @@ namespace EventCombo.Service
 
           SaveImages(ev, uow, mapPath);
 
-          var addressID = SaveAddress(ev, uow);
+          EventChanged = EventChanged || SaveAddress(ev, uow);
 
           if (ev.DateInfo.Frequency == ScheduleFrequency.Single)
-            SaveSingleDate(ev, addressID, uow);
+            EventChanged = EventChanged || SaveSingleDate(ev, ev.AddressId, uow);
           else
-            SaveMultiplyDates(ev, uow);
+            EventChanged = EventChanged || SaveMultiplyDates(ev, uow);
 
           SaveOrganizers(ev, uow, mapPath);
           SaveTickets(ev, uow);
@@ -582,6 +617,28 @@ namespace EventCombo.Service
           uow.Rollback();
           throw new Exception("Exception during SaveEvent.", ex);
         }
+      }
+
+      IRepository<Ticket_Purchased_Detail> tRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+      if (EventChanged && ((tRepo.Get(filter: (t => t.TPD_Event_Id == ev.EventID)).Sum(t => t.TPD_Purchased_Qty) ?? 0) > 0))
+      {
+        var eventSend = GetEventById(ev.EventID);
+        eventSend.EventPath = ResolveServerUrl(VirtualPathUtility.ToAbsolute(eventSend.EventPath), false);
+        INotification notifyBuyers = new EventChangeNotification(_factory, eventSend, ConfigurationManager.AppSettings.Get("DefaultEmail"));
+        INotificationSender sender = new NotificationSender(notifyBuyers, new SendMailService());
+        IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+        IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+        List<MailAddress> addresses = new List<MailAddress>();
+        foreach( var ticket in tpdRepo.Get(filter: (tpd => tpd.TPD_Event_Id == ev.EventID)))
+        {
+          var profile = ticket.AspNetUser.Profiles.FirstOrDefault();
+          if ((profile != null) && (!addresses.Any(a => a.Address == profile.Email)))
+            addresses.Add(new MailAddress(profile.Email, String.Format("{0} {1}", profile.FirstName, profile.LastName)));
+          foreach(var attendee in attRepo.Get(filter: (a => a.OrderId == ticket.TPD_Order_Id)))
+          if (!String.IsNullOrEmpty(attendee.Email) &&(!addresses.Any(a => a.Address == attendee.Email)))
+            addresses.Add(new MailAddress(attendee.Email, attendee.Name));
+        }
+        sender.SendSeparately(addresses);
       }
     }
 
@@ -642,6 +699,8 @@ namespace EventCombo.Service
       _mapper.Map(evDB, ev);
       LoadEventDictionaries(ev);
 
+      ev.EventPath = GetEventUrl(ev.EventID, ev.EventTitle, new UrlHelper(HttpContext.Current.Request.RequestContext));
+
       ev.OnlineEvent = ev.AddressStatus == "Online";
       var orgn = evDB.Event_Orgnizer_Detail.Where(od => od.DefaultOrg == "Y").FirstOrDefault();
       ev.OrganizerId = orgn == null ? 0 : orgn.OrganizerMaster_Id;
@@ -696,11 +755,13 @@ namespace EventCombo.Service
       var address = aRepo.Get(filter: (a => a.EventId == ev.EventID)).FirstOrDefault();
       if (address == null)
       {
+        ev.AddressId = 0;
         ev.Address = "";
         ev.VenueName = "";
       }
       else
       {
+        ev.AddressId = address.AddressID;
         ev.Address = address.ConsolidateAddress;
         ev.VenueName = address.VenueName;
       }

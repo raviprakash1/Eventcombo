@@ -24,6 +24,9 @@
 
 @section ScriptFooterSection
 {
+  <script>
+    angular.module("EventComboApp").value("eventIdValue", @(Model.EventID.ToString()));
+  </script>
 }
 
 <style type="text/css">
@@ -667,7 +670,7 @@
                   <div class="ticketChkBoxCon" ng-show="ticket.TicketTypeID == 2">
                     <md-input-container>
                       <label class="ticketDespTxtBoxLbl">Fees</label>
-                      <md-select style="width: 204px;" ng-model="ticket.Fees_Type" ng-change="onPriceChange(ticket)">
+                      <md-select style="width: 204px;" ng-model="ticket.Fees_Type" ng-change="onPriceChange(ticket)" ng-disabled="ticket.PurchasedQuantity > 0">
                         <md-option value="0">Customer pays fees</md-option>
                         <md-option value="1">I'll absorb the fees</md-option>
                       </md-select>
