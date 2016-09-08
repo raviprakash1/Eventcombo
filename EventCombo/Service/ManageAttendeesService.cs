@@ -849,7 +849,7 @@ namespace EventCombo.Service
     }
     public IEnumerable<SelectItemModel> GetSendToDropdownList(long eventId)
     {
-        IRepository<TicketBearer> etBRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+        IRepository<TicketBearer_View> etBRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
         IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
 
         var orderIds = eRVTRepo.Get(filter: (t => t.EventID == eventId)).Select(o => o.OrderId);
@@ -1030,7 +1030,7 @@ namespace EventCombo.Service
     public List<AttendeeViewModel> GetAttendeeList(AttendeeSearchRequestViewModel request)
     {
         IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
-        IRepository<TicketBearer> sERepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+        IRepository<TicketBearer_View> sERepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
 
         var orderIds = eRVTRepo.Get(filter: (t => t.EventID == request.EventId)).Select(o => o.OrderId);
         var attendees = sERepo.Get(filter: a => (string.IsNullOrEmpty(request.Name) ? true : a.Name.Contains(request.Name))
@@ -1086,7 +1086,8 @@ namespace EventCombo.Service
         IRepository<Event> EventRepo = new GenericRepository<Event>(_factory.ContextFactory);
         IRepository<TicketBearer_View> tBVRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
         IRepository<PaymentType> pTRepo = new GenericRepository<PaymentType>(_factory.ContextFactory);
-        
+        IRepository<Address> addressRepo = new GenericRepository<Address>(_factory.ContextFactory);
+
         var tTypeIds = (!string.IsNullOrEmpty(ticketTypeIds) ? ticketTypeIds.Split(',').Select(Int64.Parse).ToList() : null);
         var eventTickets = eTVRepo.Get(filter: (e => e.EventID == eventId));
         if (sortBy == "TicketType")
@@ -1097,20 +1098,61 @@ namespace EventCombo.Service
         {
             eventTickets = eventTickets.Where(e => tTypeIds.Contains(e.TicketTypeID));
         }
-        var eventTitle = EventRepo.Get(filter: (e => e.EventID == eventId)).Select(x => new { x.EventTitle }).FirstOrDefault();
-        var title = (eventTitle == null ? "" : eventTitle.EventTitle);
-        StringBuilder htmlContent = new StringBuilder();
+        var eventTitle = EventRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();
+        string title = "";
+        string subTitle = "";
+        string subTitle1 = "";
 
-        htmlContent.Append("<div style='width:100%;text-align:center;'><h1 style='font-size:22px;margin-bottom:5px;margin-top:0px;font-weight:normal;'> cause this is the event</h1></div>");
-        htmlContent.Append("<div style='width:100%;text-align:center;'><h2 style='font-size:12px;margin-bottom:5px;margin-top:0px;font-weight:normal;'> " + title + " </h2></div>");
+        if (eventTitle != null)
+        {
+            title = eventTitle.EventTitle;
+            var addressId = eventTitle.EventVenues.FirstOrDefault().AddressId;
+            var eventAddressDB = addressRepo.Get(filter: (b => b.AddressID == addressId)).FirstOrDefault();
+            DateTime eStartDateTime = eventTitle.EventVenues.FirstOrDefault().E_Startdate ?? DateTime.UtcNow;
+            DateTime eEndDateTime = eventTitle.EventVenues.FirstOrDefault().E_Enddate ?? DateTime.UtcNow;
+            subTitle = eStartDateTime.ToString("ddd, MMMM dd, yyyy") + " at " + eStartDateTime.ToString("hh:mm tt") + " - " + eEndDateTime.ToString("ddd, MMMM dd, yyyy") + " at " + eEndDateTime.ToString("hh:mm tt");
+            if (eventAddressDB != null)
+            {
+                subTitle1 = eventAddressDB.ConsolidateAddress;
+            }
+        }
+        PdfPTable tableHeader = new PdfPTable(1);
+        PdfPCell cell = new PdfPCell(new Phrase(title));
+        cell.Border =Rectangle.NO_BORDER;
+        cell.HorizontalAlignment = 1;
+        tableHeader.AddCell(cell);
+        cell = new PdfPCell(new Phrase(subTitle));
+        cell.Border = Rectangle.NO_BORDER;
+        cell.HorizontalAlignment = 1;
+        tableHeader.AddCell(cell);
+        cell = new PdfPCell(new Phrase(subTitle1));
+        cell.Border = Rectangle.NO_BORDER;
+        cell.HorizontalAlignment = 1;
+        tableHeader.AddCell(cell);
 
-        htmlContent.Append("<table border='1' style='width:100%;'>");
-        htmlContent.Append("<tr align='left' style='color:#696564;'>");
-        htmlContent.Append("<td style='width:25%;'><b>Name</b></td>");
-        htmlContent.Append("<td style='width:5%'><b>Qty</b></td>");
-        htmlContent.Append("<td style='width:25%;'><b>Ticket Type</b></td>");
-        htmlContent.Append("<td style='width:50%;'><b>Payment Status</b></td>");
-        htmlContent.Append("</tr>");
+        PdfPTable table = new PdfPTable(4);
+        float[] widths = new float[] { 3f, 1f, 3f, 5f };
+        table.SetWidths(widths);
+
+        BaseColor bgColor = new BaseColor(192, 192, 192);
+        cell = new PdfPCell(new Phrase("Name"));
+        cell.BackgroundColor = bgColor;
+        cell.BorderColor = bgColor;
+        table.AddCell(cell);
+        cell = new PdfPCell(new Phrase("Qty"));
+        cell.BackgroundColor = bgColor;
+        cell.BorderColor = bgColor;
+        table.AddCell(cell);
+        cell = new PdfPCell(new Phrase("Ticket Type"));
+        cell.BackgroundColor = bgColor;
+        cell.BorderColor = bgColor;
+        table.AddCell(cell);
+        cell = new PdfPCell(new Phrase("Payment Status"));
+        cell.BackgroundColor = bgColor;
+        cell.BorderColor = bgColor;
+        table.AddCell(cell);
+
+
         foreach (var eventTicket in eventTickets)
         {
             var ticketBearers = tBVRepo.Get(filter: (t => t.OrderId == eventTicket.OrderId));
@@ -1123,47 +1165,59 @@ namespace EventCombo.Service
             }
             foreach (var ticketBearer in ticketBearers)
             {
-                htmlContent.Append("<tr>");
-                htmlContent.Append("<td>" + ticketBearer.Name + "</td>");
-                htmlContent.Append("<td>" + (ticketBearer.TicketbearerId == 0 ? purchasedQuantity - attendeeQuantity : 1) + "</td>");
-                htmlContent.Append("<td>" + eventTicket.TicketTypeName + "</td>");
+                cell = new PdfPCell(new Phrase(ticketBearer.Name));
+                cell.Rowspan = 2;
+                cell.BorderColor = bgColor;
+                table.AddCell(cell);
+                cell = new PdfPCell(new Phrase((ticketBearer.TicketbearerId == 0 ? purchasedQuantity - attendeeQuantity : 1).ToString()));
+                cell.Rowspan = 2;
+                cell.BorderColor = bgColor;
+                table.AddCell(cell);
+                cell = new PdfPCell(new Phrase(eventTicket.TicketTypeName));
+                cell.Rowspan = 2;
+                cell.BorderColor = bgColor;
+                table.AddCell(cell);
+
                 if (barcode == null)
                 {
-                    htmlContent.Append("<td>" + (paymentType != null ? paymentType.PaymentTypeName : "") + "<br>Order " + eventId + "-" + eventTicket.OrderId + "</td>");
+                    cell = new PdfPCell(new Phrase((paymentType != null ? paymentType.PaymentTypeName : "")));
+                    cell.BorderColor = bgColor;
+                    cell.Border = Rectangle.RIGHT_BORDER;
+                    table.AddCell(cell);
+                    cell = new PdfPCell(new Phrase("Order " + eventId + " - " + eventTicket.OrderId));
+                    cell.BorderColor = bgColor;
+                    cell.Border = Rectangle.RIGHT_BORDER;
+                    cell.Border = Rectangle.BOTTOM_BORDER;
+                    table.AddCell(cell);
                 }
                 else if (barcode == "on")
                 {
-                    string barcodeImgTempPath = HttpContext.Current.Server.MapPath("~/Images/abr_" + eventTicket.OrderId + "_" + ticketBearer.UserId + ".Png");
-                    System.Drawing.Image img = System.Drawing.Image.FromStream(new MemoryStream(GenerateBarCode(eventTicket.OrderId)));
-                    img.Save(barcodeImgTempPath, System.Drawing.Imaging.ImageFormat.Png);
-                    htmlContent.Append("<td>" + (paymentType != null ? paymentType.PaymentTypeName : "") + "<br><img style='width:150px;' src='" + barcodeImgTempPath + "' alt='barcode'></td>");
+                    cell = new PdfPCell(new Phrase((paymentType != null ? paymentType.PaymentTypeName : "")));
+                    cell.BorderColor = bgColor;
+                    cell.Border = Rectangle.RIGHT_BORDER;
+                    table.AddCell(cell);
+                    iTextSharp.text.Image myImage = iTextSharp.text.Image.GetInstance(GenerateBarCode(eventTicket.OrderId));                      
+                    cell = new PdfPCell(myImage);
+                    cell.FixedHeight = 75;
+                    cell.BorderColor = bgColor;
+                    cell.PaddingLeft = 20;
+                    cell.PaddingTop = 3;
+                    cell.Border = Rectangle.RIGHT_BORDER;
+                    cell.Border = Rectangle.BOTTOM_BORDER;
+                    table.AddCell(cell);
                 }
-                htmlContent.Append("</tr>");
             }
         }
-        htmlContent.Append("</table>");
 
         Document document = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
-        HTMLWorker worker = new HTMLWorker(document);
         MemoryStream memoryStream = new MemoryStream();
         PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
         document.Open();
-        worker.Parse(new StringReader(htmlContent.ToString()));
+        document.Add(tableHeader);
+        document.Add(table);
         document.Close();
         byte[] bytes = memoryStream.ToArray();
         memoryStream.Close();
-        foreach (var eventTicket in eventTickets)
-        {
-            var ticketBearers = tBVRepo.Get(filter: (t => t.OrderId == eventTicket.OrderId));
-            foreach (var ticketBearer in ticketBearers)
-            {
-                string barcodeImgTempPath = HttpContext.Current.Server.MapPath("~/Images/abr_" + eventTicket.OrderId + "_" + ticketBearer.UserId + ".Png");
-                if (System.IO.File.Exists(barcodeImgTempPath))
-                {
-                    System.IO.File.Delete(barcodeImgTempPath);
-                }
-            }
-        }
         return new MemoryStream(bytes);
     }
 
@@ -1173,6 +1227,34 @@ namespace EventCombo.Service
         string url = "https://www.barcodesinc.com/generator/image.php?code=" + barCodeData + "&style=196&type=C128B&width=140&height=70&xres=1&font=3";
         byte[] barImage = wc.DownloadData(url);
         return barImage;
+    }
+
+    public IEnumerable<SelectItemModel> GetSelectAttendeeDropdownList(long eventId)
+    {
+        IRepository<TicketBearer_View> etBRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
+        IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+
+        var orderIds = eRVTRepo.Get(filter: (t => t.EventID == eventId)).Select(o => o.OrderId);
+        var ticketBearers = etBRepo.Get(filter: t => orderIds.Contains(t.OrderId)).ToList();
+        List<SelectItemModel> selectItems = new List<SelectItemModel>();
+
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "All Unique Attendees (" + ticketBearers.Count() + ")",
+            Value = "CONFIRMED_ATTENDEES"
+        });
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "Specific Attendees",
+            Value = "ATTENDEES"
+        });
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "Attendees by Ticket Type",
+            Value = "TICKET_ATTENDEES"
+        });
+
+        return selectItems;
     }
 
   }

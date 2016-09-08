@@ -46,6 +46,8 @@ namespace EventCombo.Service
 
     List<AttendeeTicketTypeViewModel> GetAttendeeTicketTypeList(long eventId);
 
+    IEnumerable<SelectItemModel> GetSelectAttendeeDropdownList(long eventId);
+
     IEnumerable<SelectItemModel> GetSendToDropdownList(long eventId);
 
     MemoryStream GetDownloadableGuestList(string sortBy, string ticketTypeIds, string barcode, long eventId, string format);
