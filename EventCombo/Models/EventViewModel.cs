@@ -209,6 +209,7 @@ namespace EventCombo.Models
     public bool OnlineEvent { get; set; }
     public bool ErrorEvent { get; set; }
     public long? ECImageId { get; set; }
+    public string EventPath { get; set; }
 
     private List<string> _errorMessages;
     public List<string> ErrorMessages

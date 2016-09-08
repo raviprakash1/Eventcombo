@@ -675,6 +675,7 @@
     <Compile Include="Service\ArticleService.cs" />
     <Compile Include="Service\ECImageStorage.cs" />
     <Compile Include="Service\ECImageService.cs" />
+    <Compile Include="Service\Notification\NewEventNotification.cs" />
     <Compile Include="Service\Notification\EmailToFriendsNotification.cs" />
     <Compile Include="Service\EventService.cs" />
     <Compile Include="Service\HangfireBootstrapper.cs" />
