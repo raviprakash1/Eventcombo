@@ -36,8 +36,8 @@ namespace EventCombo.Models
         public bool IsEmailSend { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual EmailType EmailType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AttendeeEmail> AttendeeEmails { get; set; }
-        public virtual EmailType EmailType { get; set; }
     }
 }

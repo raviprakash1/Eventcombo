@@ -299,6 +299,7 @@ namespace EventCombo.Models
   public class AttendeeViewModel
   {
     public long TicketbearerId { get; set; }
+    public string OrderId { get; set; }
     public string Name { get; set; }
     public string Email { get; set; }
   }

@@ -160,15 +160,14 @@
         <EntityTypeShape EntityType="EventComboModel.EventECImage" Width="1.5" PointX="27.375" PointY="0.75" />
         <AssociationConnector Association="EventComboModel.ECImageEventECImage" />
         <AssociationConnector Association="EventComboModel.EventEventECImage" />
-        <EntityTypeShape EntityType="EventComboModel.AttendeeEmail" Width="1.5" PointX="28.5" PointY="11" />
         <EntityTypeShape EntityType="EventComboModel.EmailType" Width="1.5" PointX="15" PointY="35.375" />
         <EntityTypeShape EntityType="EventComboModel.ScheduledEmail" Width="1.5" PointX="17.25" PointY="0.75" />
         <AssociationConnector Association="EventComboModel.FK_ScheduledEmail_AspNetUsers" />
-        <AssociationConnector Association="EventComboModel.FK_AttendeeEmail_ScheduledEmail" />
-        <AssociationConnector Association="EventComboModel.FK_AttendeeEmail_TicketBearer" />
         <AssociationConnector Association="EventComboModel.FK_ScheduledEmail_EmailType" />
-        <AssociationConnector Association="EventComboModel.FK_AttendeeEmail_Event" />
         <EntityTypeShape EntityType="EventComboModel.TicketBearer_View" Width="1.5" PointX="27.375" PointY="8" />
+        <EntityTypeShape EntityType="EventComboModel.AttendeeEmail" Width="1.5" PointX="30.5" PointY="10.25" />
+        <AssociationConnector Association="EventComboModel.FK_AttendeeEmail_Event" />
+        <AssociationConnector Association="EventComboModel.FK_AttendeeEmail_ScheduledEmail" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
