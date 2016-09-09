@@ -265,8 +265,8 @@ namespace EventCombo.Service
       if (tz != null)
       {
         TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(tz.TimeZone);
-        ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.StartDateTime, userTimeZone);
-        ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.EndDateTime, userTimeZone); ;
+        ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(ev.DateInfo.StartDateTime, DateTimeKind.Unspecified), userTimeZone);
+        ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(ev.DateInfo.EndDateTime, DateTimeKind.Unspecified), userTimeZone); ;
       }
 
       res = res || (me.M_Startfrom != ev.DateInfo.StartDateTime);
@@ -275,8 +275,11 @@ namespace EventCombo.Service
       me.M_StartTo = ev.DateInfo.EndDateTime;
       if (ev.DateInfo.Frequency == ScheduleFrequency.Weekly)
       {
-        res = res || (me.WeeklyDay != String.Join(",", ev.DateInfo.Weekdays));
-        me.WeeklyDay = String.Join(",", ev.DateInfo.Weekdays);
+        List<string> weekdays = new List<string>();
+        foreach (var day in ev.DateInfo.Weekdays)
+          weekdays.Add(((int)day).ToString());
+        res = res || (me.WeeklyDay != String.Join(",", weekdays));
+        me.WeeklyDay = String.Join(",", weekdays);
       }
       if (me.MultipleEventID == 0)
         multiRepo.Insert(me);
@@ -313,8 +316,8 @@ namespace EventCombo.Service
       if (tz != null)
       {
         TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(tz.TimeZone);
-        ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.StartDateTime, userTimeZone);
-        ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.EndDateTime, userTimeZone); ;
+        ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(ev.DateInfo.StartDateTime, DateTimeKind.Unspecified), userTimeZone);
+        ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(ev.DateInfo.EndDateTime, DateTimeKind.Unspecified), userTimeZone); ;
       }
 
       if ((se.E_Startdate != ev.DateInfo.StartDateTime) || (se.E_Enddate != ev.DateInfo.EndDateTime) || (se.AddressId != addressId))
@@ -398,7 +401,7 @@ namespace EventCombo.Service
         ticket.T_Ecpercent = 0;
         ticket.T_EcAmount = 0;
       }
-      ticket.EC_Fee = Math.Round((ticket.Price ?? 0) * (ticket.T_Ecpercent ?? 0 / 100) + (ticket.T_EcAmount ?? 0), 2);
+      ticket.EC_Fee = Math.Round((ticket.Price ?? 0) * ((ticket.T_Ecpercent ?? 0) / 100) + (ticket.T_EcAmount ?? 0), 2);
       ticket.Customer_Fee = ticket.EC_Fee;
       ticket.TotalPrice = (ticket.Price ?? 0) - (ticket.T_Discount ?? 0);
       if (String.IsNullOrEmpty(ticket.Fees_Type) || (ticket.Fees_Type == "0"))
@@ -541,7 +544,7 @@ namespace EventCombo.Service
             ev.ModifyDate = null;
           }
 
-          if (evDB.EventStatus.ToUpper() == "LIVE")
+          if (!String.IsNullOrEmpty(evDB.EventStatus) && (evDB.EventStatus.ToUpper() == "LIVE"))
             ev.EventStatus = "Live";
 
           _mapper.Map(ev, evDB);
@@ -589,17 +592,17 @@ namespace EventCombo.Service
 
           SaveImages(ev, uow, mapPath);
 
-          EventChanged = EventChanged || SaveAddress(ev, uow);
+          EventChanged = SaveAddress(ev, uow) || EventChanged;
 
           if (ev.DateInfo.Frequency == ScheduleFrequency.Single)
-            EventChanged = EventChanged || SaveSingleDate(ev, ev.AddressId, uow);
+            EventChanged = SaveSingleDate(ev, ev.AddressId, uow) || EventChanged;
           else
-            EventChanged = EventChanged || SaveMultiplyDates(ev, uow);
+            EventChanged = SaveMultiplyDates(ev, uow) || EventChanged;
 
           SaveOrganizers(ev, uow, mapPath);
           SaveTickets(ev, uow);
           SaveVarCharges(ev, uow);
-
+          uow.Context.SaveChanges();
 
           if (ev.EventStatus == "Live")
           {
@@ -782,11 +785,11 @@ namespace EventCombo.Service
       ev.DateInfo.StartDateTime = (multiDate == null ? singleDate.E_Startdate : multiDate.M_Startfrom) ?? DateTime.MinValue;
       ev.DateInfo.EndDateTime = (multiDate == null ? singleDate.E_Enddate : multiDate.M_StartTo) ?? DateTime.MinValue;
       if (ev.DateInfo.Frequency == ScheduleFrequency.Weekly)
-        ev.DateInfo.Weekdays.AddRange(multiDate.WeeklyDay.Split(',').Select(s => s.Trim()).ToList());
+        ev.DateInfo.Weekdays.AddRange(multiDate.WeeklyDay.Split(',').Select(s => (DayOfWeek)Enum.Parse(typeof(DayOfWeek), s.Trim())).ToList());
       if ((ev.DateInfo.StartDateTime > DateTime.MinValue) && (tz != null))
-        ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeFromUtc(ev.DateInfo.StartDateTime, tz);
+        ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(ev.DateInfo.StartDateTime, DateTimeKind.Unspecified), tz);
       if ((ev.DateInfo.EndDateTime > DateTime.MinValue) && (tz != null))
-        ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeFromUtc(ev.DateInfo.EndDateTime, tz);
+        ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(ev.DateInfo.EndDateTime, DateTimeKind.Unspecified), tz);
 
       foreach (var t in evDB.Tickets)
       {
@@ -961,11 +964,11 @@ namespace EventCombo.Service
         EndDateTime = (multiDate == null ? singleDate.E_Enddate : multiDate.M_StartTo) ?? DateTime.MinValue,
       };
       if (evi.DateInfo.Frequency == ScheduleFrequency.Weekly)
-        evi.DateInfo.Weekdays.AddRange(multiDate.WeeklyDay.Split(',').Select(s => s.Trim()).ToList());
+        evi.DateInfo.Weekdays.AddRange(multiDate.WeeklyDay.Split(',').Select(s => (DayOfWeek) Enum.Parse(typeof(DayOfWeek), s.Trim())).ToList());
       if ((evi.DateInfo.StartDateTime > DateTime.MinValue) && (tz != null))
-        evi.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeFromUtc(evi.DateInfo.StartDateTime, tz);
+        evi.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(evi.DateInfo.StartDateTime, DateTimeKind.Unspecified), tz);
       if ((evi.DateInfo.EndDateTime > DateTime.MinValue) && (tz != null))
-        evi.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeFromUtc(evi.DateInfo.EndDateTime, tz);
+        evi.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(evi.DateInfo.EndDateTime, DateTimeKind.Unspecified), tz);
 
       if ((ev.ECBackgroundId ?? 0) > 0)
         evi.BackgroundUrl = GetECImageUrl(ev.ECBackgroundId ?? 0);

@@ -80,6 +80,7 @@ namespace EventCombo.Controllers
 
       JsonNetResult res = new JsonNetResult();
       res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
+      res.SerializerSettings.Converters.Add(new StringEnumConverter());
       res.Data = ev;
 
       return res;
@@ -100,8 +101,7 @@ namespace EventCombo.Controllers
         try
         {
           _eService.SaveEvent(ev, Server.MapPath);
-          if (!String.IsNullOrEmpty(ev.EventStatus) && (ev.EventStatus.ToUpper() == "SAVE"))
-            ev = _eService.GetEventById(ev.EventID);
+          ev = _eService.GetEventById(ev.EventID);
         }
         catch (Exception ex)
         {
@@ -114,6 +114,7 @@ namespace EventCombo.Controllers
 
       JsonNetResult res = new JsonNetResult();
       res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
+      res.SerializerSettings.Converters.Add(new StringEnumConverter());
       res.Data = ev;
 
       return res;
@@ -161,6 +162,7 @@ namespace EventCombo.Controllers
 
       JsonNetResult res = new JsonNetResult();
       res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
+      res.SerializerSettings.Converters.Add(new StringEnumConverter());
       res.Data = ev;
 
       return res;

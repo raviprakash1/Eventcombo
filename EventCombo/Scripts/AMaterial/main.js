@@ -100,7 +100,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       });
       $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
         var resDT = $scope.splitDateTime(ticket.Sale_Start_Date);
-        if (resDT) {
+        if (resDT && resDT.Date) {
           ticket.localSaleStartTime = resDT.Time;
           ticket.localSaleStartDate = resDT.Date;
         } else {
@@ -109,7 +109,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         }
 
         resDT = $scope.splitDateTime(ticket.Sale_End_Date);
-        if (resDT) {
+        if (resDT && resDT.Date) {
           ticket.localSaleEndTime = resDT.Time;
           ticket.localSaleEndDate = resDT.Date;
         } else {
@@ -118,19 +118,23 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         }
 
         resDT = $scope.splitDateTime(ticket.Hide_Untill_Date);
-        if (resDT) {
+        if (resDT && resDT.Date) {
+          ticket.useUntilDate = '1';
           ticket.localHideUntilTime = resDT.Time;
           ticket.localHideUntilDate = resDT.Date;
         } else {
+          ticket.useUntilDate = '0';
           ticket.localHideUntilTime = null;
           ticket.localHideUntilDate = null;
         }
 
         resDT = $scope.splitDateTime(ticket.Hide_After_Date);
-        if (resDT) {
+        if (resDT && resDT.Date) {
+          ticket.useAfterDate = '1';
           ticket.localHideAfterTime = resDT.Time;
           ticket.localHideAfterDate = resDT.Date;
         } else {
+          ticket.useAfterDate = '0';
           ticket.localHideAfterTime = null;
           ticket.localHideAfterDate = null;
         }
@@ -198,14 +202,9 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     $scope.showDates = function (save) {
       $scope.dateInfoTouched = true;
       $scope.tempDateInfo.occurence = "Single";
-      console.log($scope.tempDateInfo.startingDate);
-      console.log($scope.MainForm.singleStartDate.$name);
-      console.log($scope.MainForm.singleStartDate.$modelValue);
       var check = $scope.checkTempDateInfo();
-      console.log(check);
       if ((check.timezone || check.singleDates) && save)
         return;
-      console.log($scope.selectedDateTimeText);
       $scope.showDateTimeDialog = false;
       var startingDate = ($scope.tempDateInfo.startingDate.getMonth() + 1) + "/" + $scope.tempDateInfo.startingDate.getDate() + "/" + $scope.tempDateInfo.startingDate.getFullYear();
       var endingDate = ($scope.tempDateInfo.endingDate.getMonth() + 1) + "/" + $scope.tempDateInfo.endingDate.getDate() + "/" + $scope.tempDateInfo.endingDate.getFullYear();

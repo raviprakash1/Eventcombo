@@ -57,7 +57,7 @@ namespace EventCombo.Models
     public EventDateViewModel()
     {
       _timeList = new List<PredefinedTimeViewModel>();
-      _weekdays = new List<string>();
+      _weekdays = new List<DayOfWeek>();
     }
 
     public bool IsNewDate { get; set; }
@@ -66,8 +66,8 @@ namespace EventCombo.Models
     public DateTime StartDateTime { get; set; }
     public DateTime EndDateTime { get; set; }
 
-    private List<string> _weekdays;
-    public List<string> Weekdays
+    private List<DayOfWeek> _weekdays;
+    public List<DayOfWeek> Weekdays
     {
       get { return _weekdays; }
       set { _weekdays = value; }
