@@ -13,7 +13,7 @@ namespace EventCombo.Service
         MailMessage _message = new MailMessage();
         private IUnitOfWorkFactory _factory;
         private string _userId;
-        private List<TicketBearer> _ticketBearer;
+        private List<TicketBearer_View> _ticketBearer;
         private DateTime _scheduledDate;
         private byte _emailTypeId;
         private long _eventId;
@@ -23,7 +23,7 @@ namespace EventCombo.Service
             set { _scheduledDate = value; }
         }
 
-        public SendAttendeeMailService(IUnitOfWorkFactory factory, long eventId, string userId, List<TicketBearer> ticketBearer, DateTime scheduledDate)
+        public SendAttendeeMailService(IUnitOfWorkFactory factory, long eventId, string userId, List<TicketBearer_View> ticketBearer, DateTime scheduledDate)
         {
             if (factory == null)
                 throw new ArgumentNullException("factory");

@@ -930,11 +930,11 @@ namespace EventCombo.Service
     {
         string defaultEmail;
         defaultEmail = System.Configuration.ConfigurationManager.AppSettings.Get("DefaultEmail");
-        var ticketbearerId = (string.IsNullOrEmpty(ticketbearerIds) ? new List<long>() : ticketbearerIds.Split(',').Select(Int64.Parse).ToList());
-        IRepository<TicketBearer> etBRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+        var ticketbearerId = (string.IsNullOrEmpty(ticketbearerIds) ? new List<string>() : ticketbearerIds.Split(',').ToList());
+        IRepository<TicketBearer_View> etBRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
         IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
   
-        List <TicketBearer> ticketBearers=new List<TicketBearer>();
+        List <TicketBearer_View> ticketBearers=new List<TicketBearer_View>();
 
         if (scheduledEmail.SendTo == "CONFIRMED_ATTENDEES")
         {
@@ -948,12 +948,12 @@ namespace EventCombo.Service
         }
         else if (scheduledEmail.SendTo == "ATTENDEES")
         {
-            ticketBearers = etBRepo.Get(filter: r => ticketbearerId.Contains(r.TicketbearerId)).ToList();
+            ticketBearers = etBRepo.Get(filter: r => ticketbearerId.Contains(r.OrderId + ":" + r.TicketbearerId)).ToList();
         }
         else if (scheduledEmail.SendTo == "TICKET_ATTENDEES")
         {
-            var orderIds = eRVTRepo.Get(filter: (t => t.EventID == eventId && ticketbearerId.Contains(t.TicketTypeID))).Select(o => o.OrderId);
-            ticketBearers = etBRepo.Get(filter: r => ticketbearerId.Contains(r.TicketbearerId)).ToList();
+            var orderIds = eRVTRepo.Get(filter: (t => t.EventID == eventId && ticketbearerId.Contains(t.TicketTypeID.ToString()))).Select(o => o.OrderId);
+            ticketBearers = etBRepo.Get(filter: (t => orderIds.Contains(t.OrderId))).ToList();
         }
         else if (scheduledEmail.SendTo == "PAYMENT_NOT_RECEIVED")
         {
@@ -1039,7 +1039,8 @@ namespace EventCombo.Service
                 {
                     Email = element.Email,
                     Name = element.Name,
-                    TicketbearerId = element.TicketbearerId
+                    TicketbearerId = element.TicketbearerId,
+                    OrderId = element.OrderId
                 }).ToList();
         return attendees;
     }

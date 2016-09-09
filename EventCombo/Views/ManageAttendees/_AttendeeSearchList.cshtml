@@ -18,7 +18,7 @@
         {
             <tr>
                 <td class="UETableTD">
-                    <input name="TicketbearerIds" class="chkTicketbearerIds" checked="checked" type="checkbox" value="@attendee.TicketbearerId" />
+                    <input name="TicketbearerIds" class="chkTicketbearerIds" checked="checked" type="checkbox" value="@(attendee.OrderId + ":" + attendee.TicketbearerId)" />
                 </td>
                 <td class="UETableTD">@attendee.Name</td>
                 <td class="UETableTD">@attendee.Email</td>
