@@ -183,7 +183,7 @@ namespace CMS.Controllers
                         objlst = objlst.OrderByDescending(s => s.Feature).ToList();
                         break;
                     default:
-                        //objlst = objlst.OrderByDescending(s => s.E_Startdate).ToList(); 
+                        objlst = objlst.OrderBy(s => Math.Abs(((s.E_Startdate ?? DateTime.Now) - DateTime.Now).TotalMinutes)).ToList(); 
                         break;
                 }
 

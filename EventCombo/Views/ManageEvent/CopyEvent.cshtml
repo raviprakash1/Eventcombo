@@ -27,7 +27,7 @@
                     data: { Eventid: vEventId, strEventTitle: vEventTitle },
                     type: "Post",
                     success: function (response) {
-                        window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+                        window.location.href = '@Url.Action("EditEvent", "EventManagement", new { })' + '?eventId=' + response;
                     }
                 });
             });

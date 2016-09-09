@@ -73,12 +73,24 @@ namespace EventCombo
               );
 
             routes.MapRoute(
+                  "NewCreateEvent",
+                  "CreateEvent/CreateEvent",
+                  new { controller = "EventManagement", action = "CreateEvent" }
+                );
+
+            routes.MapRoute(
                 name: "Default",
                 namespaces: new[] { "EventCombo.Controllers" },
                 url: "{controller}/{action}",
                 defaults: new { Controller = "Home", action = "Index"}
             );
-            //routes.MapRoute("ViewEvent", "CreateEvent/{strUrlData} ", new { controller = "CreateEvent", action = "ViewEvent", strUrlData = UrlParameter.Optional });
+
+            routes.MapRoute(
+              "NewCreateEvent",
+              "CreateEvent/CreateEvent",
+              new { controller = "EventManagement", action = "CreateEvent" }
+            );
+          //routes.MapRoute("ViewEvent", "CreateEvent/{strUrlData} ", new { controller = "CreateEvent", action = "ViewEvent", strUrlData = UrlParameter.Optional });
         }
 
         protected void Application_Start()

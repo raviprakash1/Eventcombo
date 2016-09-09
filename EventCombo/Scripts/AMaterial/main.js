@@ -1,6 +1,6 @@
 ﻿var test;
-eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window', '$timeout', '$sanitize', 'ngGallery',
-  function ($scope, $http, $window, $timeout, $sanitize, ngGallery) {
+eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window', '$timeout', '$sanitize', 'ngGallery', 'eventIdValue',
+  function ($scope, $http, $window, $timeout, $sanitize, ngGallery, eventIdValue) {
 
     angular.element(document).ready(function () {
 
@@ -19,6 +19,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     $scope.minDate.setHours(0, 0, 0, 0);
     $scope.formValidation = false;
     $scope.gPlace;
+    $scope.sendAction = "Save";
     if ($(window).width() > 768) {
       $scope.tinymceOptions = {
         selector: "textarea",
@@ -64,10 +65,30 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     $scope.selectedDateTimeText = "Pick the date here";
     $scope.showDateTimeDialog = false;
 
-    $http.get('/eventmanagement/getevent', { params: { eventId: 0 } }).then(function (response) {
+    $http.get('/eventmanagement/getevent', { params: { eventId: eventIdValue } }).then(function (response) {
       $scope.eventInfo = response.data;
       $scope.prepareEventInfo();
+      if ($scope.eventInfo.ErrorEvent)
+        $scope.ShowErrorMessage("Found errors", $scope.eventInfo.ErrorMessages.join('<br>'));
     });
+
+    $scope.splitDateTime = function (strDateTime) {
+      var result = {
+        Date: null,
+        Time: null
+      };
+      if (strDateTime) {
+        var localDateTime = new Date(strDateTime);
+        if (strDateTime.length <= 19)
+          localDateTime = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
+        var time = formatAMPM(localDateTime);
+        var ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
+        if (ctime.length > 0)
+          result.Time = ctime[0];
+        result.Date = new Date(localDateTime.getFullYear(), localDateTime.getMonth(), localDateTime.getDate());
+      }
+      return result;
+    }
 
     $scope.prepareEventInfo = function () {
       $scope.onShowDateTimeDialog(false);
@@ -78,70 +99,44 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         $scope.onVarChargeBlur(varcharge);
       });
       $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
-        if (ticket.Sale_Start_Date) {
-          var localDateTime = new Date(ticket.Sale_Start_Date);
-          if (ticket.Sale_Start_Date.length <= 19)
-            localDateTime = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
-          var time = formatAMPM(localDateTime);
-          var ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
-          if (ctime.length > 0)
-            ticket.localSaleStartTime = ctime[0];
-          else
-            ticket.localSaleStartTime = null;
-          ticket.localSaleStartDate = new Date(localDateTime.getFullYear(), localDateTime.getMonth(), localDateTime.getDate());
-        }
-        else
+        var resDT = $scope.splitDateTime(ticket.Sale_Start_Date);
+        if (resDT && resDT.Date) {
+          ticket.localSaleStartTime = resDT.Time;
+          ticket.localSaleStartDate = resDT.Date;
+        } else {
+          ticket.localSaleStartTime = null;
           ticket.localSaleStartDate = null;
-
-        if (ticket.Sale_End_Date) {
-          var localDateTime = new Date(ticket.Sale_End_Date);
-          if (ticket.Sale_End_Date.length <= 19)
-            localDateTime = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
-          var time = formatAMPM(localDateTime);
-          var ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
-          if (ctime.length > 0)
-            ticket.localSaleEndTime = ctime[0];
-          else
-            ticket.localSaleEndTime = null;
-          ticket.localSaleEndDate = new Date(localDateTime.getFullYear(), localDateTime.getMonth(), localDateTime.getDate());
         }
-        else
+
+        resDT = $scope.splitDateTime(ticket.Sale_End_Date);
+        if (resDT && resDT.Date) {
+          ticket.localSaleEndTime = resDT.Time;
+          ticket.localSaleEndDate = resDT.Date;
+        } else {
+          ticket.localSaleEndTime = null;
           ticket.localSaleEndDate = null;
+        }
 
-        if (ticket.Hide_Untill_Date) {
+        resDT = $scope.splitDateTime(ticket.Hide_Untill_Date);
+        if (resDT && resDT.Date) {
           ticket.useUntilDate = '1';
-          var localDateTime = new Date(ticket.Hide_Untill_Date);
-          if (ticket.Hide_Untill_Date.length <= 19)
-            localDateTime = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
-          var time = formatAMPM(localDateTime);
-          var ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
-          if (ctime.length > 0)
-            ticket.localHideUntilTime = ctime[0];
-          else
-            ticket.localHideUntilTime = null;
-          ticket.localHideUntilDate = new Date(localDateTime.getFullYear(), localDateTime.getMonth(), localDateTime.getDate());
-        }
-        else {
-          ticket.localHideUntilDate = null;
+          ticket.localHideUntilTime = resDT.Time;
+          ticket.localHideUntilDate = resDT.Date;
+        } else {
           ticket.useUntilDate = '0';
+          ticket.localHideUntilTime = null;
+          ticket.localHideUntilDate = null;
         }
 
-        if (ticket.Hide_After_Date) {
+        resDT = $scope.splitDateTime(ticket.Hide_After_Date);
+        if (resDT && resDT.Date) {
           ticket.useAfterDate = '1';
-          var localDateTime = new Date(ticket.Hide_After_Date);
-          if (ticket.Hide_After_Date.length <= 19)
-            localDateTime = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
-          var time = formatAMPM(localDateTime);
-          var ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
-          if (ctime.length > 0)
-            ticket.localHideAfterTime = ctime[0];
-          else
-            ticket.localHideAfterTime = null;
-          ticket.localHideAfterDate = new Date(localDateTime.getFullYear(), localDateTime.getMonth(), localDateTime.getDate());
-        }
-        else {
-          ticket.localHideAfterDate = null;
+          ticket.localHideAfterTime = resDT.Time;
+          ticket.localHideAfterDate = resDT.Date;
+        } else {
           ticket.useAfterDate = '0';
+          ticket.localHideAfterTime = null;
+          ticket.localHideAfterDate = null;
         }
 
         ticket.QtyText = ticket.Qty_Available ? ticket.Qty_Available : "";
@@ -149,7 +144,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         ticket.DiscountText = ticket.T_Discount ? ticket.T_Discount : "";
         $scope.onPriceChange(ticket);
       });
-
+      $scope.onCategoryChange();
       $scope.eventInfo.isPasswordRequired = $scope.eventInfo.Private_Password ? 'Y' : 'N';
     }
 
@@ -208,7 +203,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       $scope.dateInfoTouched = true;
       $scope.tempDateInfo.occurence = "Single";
       var check = $scope.checkTempDateInfo();
-      if (check.timezone || check.singleDates)
+      if ((check.timezone || check.singleDates) && save)
         return;
       $scope.showDateTimeDialog = false;
       var startingDate = ($scope.tempDateInfo.startingDate.getMonth() + 1) + "/" + $scope.tempDateInfo.startingDate.getDate() + "/" + $scope.tempDateInfo.startingDate.getFullYear();
@@ -221,7 +216,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     $scope.showMultipleDates = function (save) {
       $scope.dateInfoTouched = true;
       var check = $scope.checkTempDateInfo();
-      if (check.weekdays || check.timezone || check.multiDates || check.occurence)
+      if ((check.weekdays || check.timezone || check.multiDates || check.occurence) && save)
         return;
       $scope.showDateTimeDialog = false;
 
@@ -462,6 +457,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         T_Customize: 0,
         T_Ecpercent: $scope.eventInfo.FeeStruct.FS_Percentage,
         T_EcAmount: $scope.eventInfo.FeeStruct.FS_Amount,
+        PurchasedQuantity: 0,
         localSaleStartDate: null,
         localSaleEndDate: null,
         localHideUntilDate: null,
@@ -501,6 +497,10 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     $scope.onQtyBlur = function (ticket) {
       ticket.Qty_Available = parseInt(ticket.QtyText);
       ticket.Qty_Available = isNaN(ticket.Qty_Available) ? 0 : ticket.Qty_Available;
+      if (ticket.Qty_Available < ticket.PurchasedQuantity) {
+        ticket.Qty_Available = ticket.PurchasedQuantity;
+        $scope.ShowErrorMessage("Can't set less then " + ticket.PurchasedQuantity + " tickets", "Someone already bought " + ticket.PurchasedQuantity + " tickets");
+      }
       ticket.QtyText = ticket.Qty_Available > 0 ? ticket.Qty_Available : "";
     }
 
@@ -512,6 +512,10 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     }
 
     $scope.deleteTicket = function (ticket) {
+      if (ticket.PurchasedQuantity > 0) {
+        $scope.ShowErrorMessage("Can't delete ticket", "Someone already bought this ticket.");
+        return;
+      }
       var idx = $scope.eventInfo.TicketList.indexOf(ticket);
       if (idx >= 0)
         $scope.eventInfo.TicketList.splice(idx, 1);
@@ -554,6 +558,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     }
 
     $scope.saveEvent = function () {
+      $scope.sendAction = "Save";
       $scope.eventInfo.EventStatus = "Save";
       $scope.sendEvent();
     }
@@ -567,6 +572,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     }
 
     $scope.publishEvent = function () {
+      $scope.sendAction = "Live";
       $scope.eventInfo.EventStatus = "Live";
       $scope.sendEvent();
     }
@@ -613,16 +619,11 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         if ($scope.eventInfo.ErrorEvent) {
           $scope.showLoadingMessage(false, '');
           $scope.prepareEventInfo();
+          $scope.ShowErrorMessage("Found errors", $scope.eventInfo.ErrorMessages.join('<br>'));
         }
-        else if ($scope.eventInfo.EventStatus == "Save") {
+        else if ($scope.sendAction == "Save") {
           $scope.eventInfo = response.data;
-          console.log($scope.eventInfo);
-          $http.get('/eventmanagement/getevent', { params: { eventId: $scope.eventInfo.EventID } }).then(function (response) {
-            $scope.eventInfo = response.data;
-            console.log($scope.eventInfo);
-            $scope.prepareEventInfo();
-            console.log($scope.eventInfo);
-          });
+          $scope.prepareEventInfo();
           $scope.showLoadingMessage(false, '');
           $scope.ShowErrorMessage("", "Event saved");
         }
@@ -746,6 +747,8 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     }
 
     $scope.DeleteFile = function (image) {
+      if (image.ECImageId)
+        return;
       var data = {
         json: angular.toJson(image)
       };
