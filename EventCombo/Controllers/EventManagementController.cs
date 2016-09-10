@@ -12,15 +12,18 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using EventCombo.ViewModels;
 using System.Text.RegularExpressions;
+using NLog;
 namespace EventCombo.Controllers
 {
   public class EventManagementController : BaseController
   {
     private IEventService _eService;
+    private ILogger _logger;
     public EventManagementController()
       : base()
     {
       _eService = new EventService(_factory, _mapper);
+      _logger = LogManager.GetCurrentClassLogger();
     }
 
     private ActionResult DefaultAction(string returnUrl = "")
@@ -77,6 +80,7 @@ namespace EventCombo.Controllers
 
       JsonNetResult res = new JsonNetResult();
       res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
+      res.SerializerSettings.Converters.Add(new StringEnumConverter());
       res.Data = ev;
 
       return res;
@@ -89,14 +93,28 @@ namespace EventCombo.Controllers
         return null;
 
       EventViewModel ev = JsonConvert.DeserializeObject<EventViewModel>(json);
+      ev.ErrorEvent = false;
+      ev.ErrorMessages.Clear();
 
       if (_eService.ValidateEvent(ev))
       {
-        _eService.SaveEvent(ev, Server.MapPath);
+        try
+        {
+          _eService.SaveEvent(ev, Server.MapPath);
+          ev = _eService.GetEventById(ev.EventID);
+        }
+        catch (Exception ex)
+        {
+          _logger.Error(ex, "Error during SaveEvent.", null);
+          ev.ErrorEvent = true;
+          if (ev.ErrorMessages.Count == 0)
+            ev.ErrorMessages.Add("Something went wrong. Please try again later.");
+        }
       }
 
       JsonNetResult res = new JsonNetResult();
       res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
+      res.SerializerSettings.Converters.Add(new StringEnumConverter());
       res.Data = ev;
 
       return res;
@@ -144,6 +162,7 @@ namespace EventCombo.Controllers
 
       JsonNetResult res = new JsonNetResult();
       res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
+      res.SerializerSettings.Converters.Add(new StringEnumConverter());
       res.Data = ev;
 
       return res;
@@ -194,6 +213,30 @@ namespace EventCombo.Controllers
       res.Data = actionResult;
 
       return res;
+    }
+
+    [HttpGet]
+    [Authorize]
+    public ActionResult EditEvent(long eventId)
+    {
+      string userId = "";
+      if (Session["AppId"] != null)
+        userId = Session["AppId"].ToString();
+      else
+        return RedirectToAction("Index", "Home", new { lat = CookieStore.GetCookie("Lat"), lng = CookieStore.GetCookie("Long"), page = "1", strParm = "Y" });
+    
+      if (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner)
+        return RedirectToAction("Index", "Home", new { lat = CookieStore.GetCookie("Lat"), lng = CookieStore.GetCookie("Long"), page = "1", strParm = "Y" });
+
+      Session["logo"] = "events";
+      Session["Fromname"] = "events";
+      var url = Url.Action("EditEvent", "EventManagement");
+      Session["ReturnUrl"] = "EditEvent~" + url;
+
+      EventViewModel ev = _eService.GetEventById(eventId);
+      PopulateBaseViewModel(ev, String.Format("Edit {0} | Eventcombo", ev.EventTitle));
+
+      return View("CreateEvent", ev);
     }
   }
 }

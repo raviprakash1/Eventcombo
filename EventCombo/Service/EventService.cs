@@ -12,6 +12,7 @@ using NLog;
 using System.IO;
 using System.Web.Hosting;
 using System.Configuration;
+using System.Net.Mail;
 
 
 namespace EventCombo.Service
@@ -190,15 +191,18 @@ namespace EventCombo.Service
       return !ev.ErrorEvent;
     }
 
-    private long SaveAddress(EventViewModel ev, IUnitOfWork uow)
+    private bool SaveAddress(EventViewModel ev, IUnitOfWork uow)
     {
+      bool res = false;
       IRepository<Address> aRepo = new GenericRepository<Address>(_factory.ContextFactory);
       var address = aRepo.Get(filter: (a => a.EventId == ev.EventID)).FirstOrDefault();
       if (address == null)
         address = new Address();
       address.EventId = ev.EventID;
+      res = res || (address.ConsolidateAddress != ev.Address);
       address.ConsolidateAddress = ev.Address;
       address.UserId = ev.UserID;
+      res = res || (address.VenueName != ev.VenueName);
       address.VenueName = ev.VenueName ?? "";
       try
       {
@@ -209,6 +213,7 @@ namespace EventCombo.Service
       }
       catch (Exception ex)
       {
+        _logger.Error(ex, "Error during getting coordinates of event Id = {0}", ev.EventID);
         address.Latitude = "";
         address.Longitude = "";
       }
@@ -221,28 +226,37 @@ namespace EventCombo.Service
       if (address.AddressID == 0)
         aRepo.Insert(address);
       uow.Context.SaveChanges();
-      return address.AddressID;
+      ev.AddressId = address.AddressID;
+      return res;
     }
 
-    private void SaveMultiplyDates(EventViewModel ev, IUnitOfWork uow)
+    private bool SaveMultiplyDates(EventViewModel ev, IUnitOfWork uow)
     {
+      bool res = false;
       IRepository<MultipleEvent> multiRepo = new GenericRepository<MultipleEvent>(_factory.ContextFactory);
       IRepository<EventVenue> vRepo = new GenericRepository<EventVenue>(_factory.ContextFactory);
       IRepository<TimeZoneDetail> tzRepo = new GenericRepository<TimeZoneDetail>(_factory.ContextFactory);
 
       var single = vRepo.Get(filter: (e => e.EventID == ev.EventID)).ToList();
+      res = single.Count > 0;
       foreach (var se in single)
         vRepo.Delete(se);
 
       MultipleEvent me = multiRepo.Get(filter: (m => m.EventID == ev.EventID)).FirstOrDefault();
+      res = res || (me == null);
       if (me == null)
         me = new MultipleEvent();
       me.EventID = ev.EventID;
+      res = res || (me.Frequency != ev.DateInfo.Frequency.ToString());
       me.Frequency = ev.DateInfo.Frequency.ToString();
 
-      me.StartingFrom = ev.DateInfo.StartDateTime.ToString("MM/dd/yyyy"); ;
+      res = res || (me.StartingFrom != ev.DateInfo.StartDateTime.ToString("MM/dd/yyyy"));
+      me.StartingFrom = ev.DateInfo.StartDateTime.ToString("MM/dd/yyyy");
+      res = res || (me.StartTime != ev.DateInfo.StartDateTime.ToString("hh:mm tt"));
       me.StartTime = ev.DateInfo.StartDateTime.ToString("hh:mm tt");
+      res = res || (me.StartingTo != ev.DateInfo.EndDateTime.ToString("MM/dd/yyyy"));
       me.StartingTo = ev.DateInfo.EndDateTime.ToString("MM/dd/yyyy");
+      res = res || (me.EndTime != ev.DateInfo.EndDateTime.ToString("hh:mm tt"));
       me.EndTime = ev.DateInfo.EndDateTime.ToString("hh:mm tt");
 
       int tzId;
@@ -251,30 +265,42 @@ namespace EventCombo.Service
       if (tz != null)
       {
         TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(tz.TimeZone);
-        ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.StartDateTime, userTimeZone);
-        ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.EndDateTime, userTimeZone); ;
+        ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(ev.DateInfo.StartDateTime, DateTimeKind.Unspecified), userTimeZone);
+        ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(ev.DateInfo.EndDateTime, DateTimeKind.Unspecified), userTimeZone); ;
       }
 
+      res = res || (me.M_Startfrom != ev.DateInfo.StartDateTime);
       me.M_Startfrom = ev.DateInfo.StartDateTime;
+      res = res || (me.M_StartTo != ev.DateInfo.EndDateTime);
       me.M_StartTo = ev.DateInfo.EndDateTime;
       if (ev.DateInfo.Frequency == ScheduleFrequency.Weekly)
-        me.WeeklyDay = String.Join(",", ev.DateInfo.Weekdays);
+      {
+        List<string> weekdays = new List<string>();
+        foreach (var day in ev.DateInfo.Weekdays)
+          weekdays.Add(((int)day).ToString());
+        res = res || (me.WeeklyDay != String.Join(",", weekdays));
+        me.WeeklyDay = String.Join(",", weekdays);
+      }
       if (me.MultipleEventID == 0)
         multiRepo.Insert(me);
       uow.Context.SaveChanges();
+      return res;
     }
 
-    private void SaveSingleDate(EventViewModel ev, long addressId, IUnitOfWork uow)
+    private bool SaveSingleDate(EventViewModel ev, long addressId, IUnitOfWork uow)
     {
+      bool res = false;
       IRepository<MultipleEvent> multiRepo = new GenericRepository<MultipleEvent>(_factory.ContextFactory);
       IRepository<EventVenue> vRepo = new GenericRepository<EventVenue>(_factory.ContextFactory);
       IRepository<TimeZoneDetail> tzRepo = new GenericRepository<TimeZoneDetail>(_factory.ContextFactory);
 
       var multi = multiRepo.Get(filter: (m => m.EventID == ev.EventID)).ToList();
+      res = multi.Count() > 0;
       foreach (var me in multi)
         multiRepo.Delete(me);
 
       EventVenue se = vRepo.Get(filter: (e => e.EventID == ev.EventID)).FirstOrDefault();
+      res = res || (se == null);
       if (se == null)
         se = new EventVenue();
       se.EventID = ev.EventID;
@@ -290,16 +316,19 @@ namespace EventCombo.Service
       if (tz != null)
       {
         TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(tz.TimeZone);
-        ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.StartDateTime, userTimeZone);
-        ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeToUtc(ev.DateInfo.EndDateTime, userTimeZone); ;
+        ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(ev.DateInfo.StartDateTime, DateTimeKind.Unspecified), userTimeZone);
+        ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(ev.DateInfo.EndDateTime, DateTimeKind.Unspecified), userTimeZone); ;
       }
 
+      if ((se.E_Startdate != ev.DateInfo.StartDateTime) || (se.E_Enddate != ev.DateInfo.EndDateTime) || (se.AddressId != addressId))
+        res = true;
       se.E_Startdate = ev.DateInfo.StartDateTime;
       se.E_Enddate = ev.DateInfo.EndDateTime;
       se.AddressId = addressId;
       if (se.EventVenueID == 0)
         vRepo.Insert(se);
       uow.Context.SaveChanges();
+      return res;
     }
 
     private void SaveTickets(EventViewModel ev, IUnitOfWork uow)
@@ -318,7 +347,18 @@ namespace EventCombo.Service
         if (tDB == null)
           tDB = new Ticket();
 
+        long purchasedQuantity = ticket.T_Id == 0 ? 0 : GetPurchasedTicketQuantity(ticket.T_Id);
+
         ticket.E_Id = ev.EventID;
+        if (purchasedQuantity != 0)
+        {
+          ticket.Price = tDB.Price;
+          ticket.Qty_Available = ticket.Qty_Available < purchasedQuantity ? purchasedQuantity : ticket.Qty_Available;
+          ticket.Fees_Type = tDB.Fees_Type;
+        }
+
+        UpdatePrices(ticket);
+
         _mapper.Map(ticket, tDB);
 
         DateTime? saleStart = ticket.Sale_Start_Date;
@@ -340,6 +380,32 @@ namespace EventCombo.Service
         uow.Context.SaveChanges();
         ticket.T_Id = tDB.T_Id;
       }
+    }
+
+    private void UpdatePrices(TicketViewModel ticket)
+    {
+      if (ticket.TicketTypeID != 2)
+        ticket.Price = 0;
+      else
+        ticket.Price = Math.Round(ticket.Price ?? 0, 2);
+      ticket.T_Discount = Math.Round(ticket.T_Discount ?? 0, 2);
+      IRepository<Fee_Structure> fRepo = new GenericRepository<Fee_Structure>(_factory.ContextFactory);
+      var fee = fRepo.Get(filter: (f => f.FS_Apply == "A")).FirstOrDefault();
+      if (fee != null)
+      {
+        ticket.T_Ecpercent = ticket.TicketTypeID == 2 ? fee.FS_Percentage ?? 0 : 0;
+        ticket.T_EcAmount = ticket.TicketTypeID != 1 ? fee.FS_Amount ?? 0 : 0;
+      }
+      else
+      {
+        ticket.T_Ecpercent = 0;
+        ticket.T_EcAmount = 0;
+      }
+      ticket.EC_Fee = Math.Round((ticket.Price ?? 0) * ((ticket.T_Ecpercent ?? 0) / 100) + (ticket.T_EcAmount ?? 0), 2);
+      ticket.Customer_Fee = ticket.EC_Fee;
+      ticket.TotalPrice = (ticket.Price ?? 0) - (ticket.T_Discount ?? 0);
+      if (String.IsNullOrEmpty(ticket.Fees_Type) || (ticket.Fees_Type == "0"))
+        ticket.TotalPrice += ticket.EC_Fee;
     }
 
     private void SaveVarCharges(EventViewModel ev, IUnitOfWork uow)
@@ -429,15 +495,13 @@ namespace EventCombo.Service
 
       var dbECImages = ecRepo.Get(filter: (ei => ei.EventId == ev.EventID));
       foreach (var ecDBLink in dbECImages)
-      {
-        var ecLink = ev.EventImages.Where(ei => ei.ECImageId == ecDBLink.ECImageId).FirstOrDefault();
-        if (ecLink == null)
+        if (!ev.EventImages.Any(ei => ei.ECImageId == ecDBLink.ECImageId))
         {
           var imageId = ecDBLink.ECImageId;
           ecRepo.Delete(ecDBLink);
           _iservice.DeleteImage(imageId, ev.UserID, uow);
         }
-      }
+
       foreach (var ecImage in ev.EventImages)
       {
         ECImageViewModel newImage;
@@ -460,7 +524,7 @@ namespace EventCombo.Service
     public void SaveEvent(EventViewModel ev, Func<string, string> mapPath)
     {
       bool sendNotification = false;
-
+      bool EventChanged = false;
       using (var uow = _factory.GetUnitOfWork())
       {
         try
@@ -483,11 +547,17 @@ namespace EventCombo.Service
             ev.ModifyDate = null;
           }
 
+          if (!String.IsNullOrEmpty(evDB.EventStatus) && (evDB.EventStatus.ToUpper() == "LIVE"))
+            ev.EventStatus = "Live";
+
           _mapper.Map(ev, evDB);
+          string status;
           if (ev.OnlineEvent)
-            evDB.AddressStatus = "Online";
+            status = "Online";
           else
-            evDB.AddressStatus = "Single";
+            status = "Single";
+          EventChanged = evDB.AddressStatus != status;
+          evDB.AddressStatus = status;
           if (evDB.EventID == 0)
             eRepo.Insert(evDB);
           uow.Context.SaveChanges();
@@ -499,6 +569,7 @@ namespace EventCombo.Service
               _iservice.DeleteImage((evDB.ECBackgroundId ?? 0), ev.UserID, uow);
             var ecImage = _iservice.SaveToDB(ev.BGImage, ev.UserID, uow);
             evDB.ECBackgroundId = ecImage.ECImageId;
+            ev.BGImage = ecImage;
           }
           if (((evDB.ECBackgroundId ?? 0) != 0) && (ev.BGImage == null))
           {
@@ -513,6 +584,7 @@ namespace EventCombo.Service
               _iservice.DeleteImage(evDB.ECImageId ?? 0, ev.UserID, uow);
             var ecImage = _iservice.SaveToDB(ev.ECImage, ev.UserID, uow);
             evDB.ECImageId = ecImage.ECImageId;
+            ev.ECImage = ecImage;
           }
           if ((ev.ECImage == null) && ((evDB.ECImageId ?? 0) != 0))
           {
@@ -523,17 +595,17 @@ namespace EventCombo.Service
 
           SaveImages(ev, uow, mapPath);
 
-          var addressID = SaveAddress(ev, uow);
+          EventChanged = SaveAddress(ev, uow) || EventChanged;
 
           if (ev.DateInfo.Frequency == ScheduleFrequency.Single)
-            SaveSingleDate(ev, addressID, uow);
+            EventChanged = SaveSingleDate(ev, ev.AddressId, uow) || EventChanged;
           else
-            SaveMultiplyDates(ev, uow);
+            EventChanged = SaveMultiplyDates(ev, uow) || EventChanged;
 
           SaveOrganizers(ev, uow, mapPath);
           SaveTickets(ev, uow);
           SaveVarCharges(ev, uow);
-
+          uow.Context.SaveChanges();
 
           if (ev.EventStatus == "Live")
           {
@@ -552,12 +624,35 @@ namespace EventCombo.Service
           throw new Exception("Exception during SaveEvent.", ex);
         }
       }
+
       if (sendNotification)
       {
         var sendEvent =  GetEventById(ev.EventID);
         sendEvent.EventPath = ResolveServerUrl(VirtualPathUtility.ToAbsolute(sendEvent.EventPath), false);
         INotification notification = new NewEventNotification(_factory, sendEvent, ConfigurationManager.AppSettings.Get("DefaultEmail"));
         notification.SendNotification(new SendMailService());
+      }
+
+      IRepository<Ticket_Purchased_Detail> tRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+      if (EventChanged && ((tRepo.Get(filter: (t => t.TPD_Event_Id == ev.EventID)).Sum(t => t.TPD_Purchased_Qty) ?? 0) > 0))
+      {
+        var eventSend = GetEventById(ev.EventID);
+        eventSend.EventPath = ResolveServerUrl(VirtualPathUtility.ToAbsolute(eventSend.EventPath), false);
+        INotification notifyBuyers = new EventChangeNotification(_factory, eventSend, ConfigurationManager.AppSettings.Get("DefaultEmail"));
+        INotificationSender sender = new NotificationSender(notifyBuyers, new SendMailService());
+        IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+        IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+        List<MailAddress> addresses = new List<MailAddress>();
+        foreach( var ticket in tpdRepo.Get(filter: (tpd => tpd.TPD_Event_Id == ev.EventID)))
+        {
+          var profile = ticket.AspNetUser.Profiles.FirstOrDefault();
+          if ((profile != null) && (!addresses.Any(a => a.Address == profile.Email)))
+            addresses.Add(new MailAddress(profile.Email, String.Format("{0} {1}", profile.FirstName, profile.LastName)));
+          foreach(var attendee in attRepo.Get(filter: (a => a.OrderId == ticket.TPD_Order_Id)))
+          if (!String.IsNullOrEmpty(attendee.Email) &&(!addresses.Any(a => a.Address == attendee.Email)))
+            addresses.Add(new MailAddress(attendee.Email, attendee.Name));
+        }
+        sender.SendSeparately(addresses);
       }
     }
 
@@ -674,11 +769,13 @@ namespace EventCombo.Service
       var address = aRepo.Get(filter: (a => a.EventId == ev.EventID)).FirstOrDefault();
       if (address == null)
       {
+        ev.AddressId = 0;
         ev.Address = "";
         ev.VenueName = "";
       }
       else
       {
+        ev.AddressId = address.AddressID;
         ev.Address = address.ConsolidateAddress;
         ev.VenueName = address.VenueName;
       }
@@ -699,11 +796,11 @@ namespace EventCombo.Service
       ev.DateInfo.StartDateTime = (multiDate == null ? singleDate.E_Startdate : multiDate.M_Startfrom) ?? DateTime.MinValue;
       ev.DateInfo.EndDateTime = (multiDate == null ? singleDate.E_Enddate : multiDate.M_StartTo) ?? DateTime.MinValue;
       if (ev.DateInfo.Frequency == ScheduleFrequency.Weekly)
-        ev.DateInfo.Weekdays.AddRange(multiDate.WeeklyDay.Split(',').Select(s => s.Trim()).ToList());
+        ev.DateInfo.Weekdays.AddRange(multiDate.WeeklyDay.Split(',').Select(s => (DayOfWeek)Enum.Parse(typeof(DayOfWeek), s.Trim())).ToList());
       if ((ev.DateInfo.StartDateTime > DateTime.MinValue) && (tz != null))
-        ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeFromUtc(ev.DateInfo.StartDateTime, tz);
+        ev.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(ev.DateInfo.StartDateTime, DateTimeKind.Unspecified), tz);
       if ((ev.DateInfo.EndDateTime > DateTime.MinValue) && (tz != null))
-        ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeFromUtc(ev.DateInfo.EndDateTime, tz);
+        ev.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(ev.DateInfo.EndDateTime, DateTimeKind.Unspecified), tz);
 
       foreach (var t in evDB.Tickets)
       {
@@ -724,7 +821,7 @@ namespace EventCombo.Service
           DateTime.TryParse((tvm.Sale_End_Date ?? default(DateTime)).ToShortDateString() + " " + tvm.Sale_End_Time, out saleEndDate);
           tvm.Sale_End_Date = saleEndDate;
         }
-        if (tvm.Hide_Untill_Date !=null)
+        if (tvm.Hide_Untill_Date != null)
         {
           DateTime.TryParse((tvm.Hide_Untill_Date ?? default(DateTime)).ToShortDateString() + " " + tvm.Hide_Untill_Time, out hideStart);
           tvm.Hide_Untill_Date = hideStart;
@@ -737,6 +834,7 @@ namespace EventCombo.Service
 
         tvm.TicketType.TicketTypeId = Convert.ToByte(t.TicketTypeID ?? 1);
         tvm.TicketType.TicketType = tvm.TicketType.TicketTypeId == 1 ? "Free" : tvm.TicketType.TicketTypeId == 2 ? "Paid" : "Donation";
+        tvm.PurchasedQuantity = GetPurchasedTicketQuantity(tvm.T_Id);
         ev.TicketList.Add(tvm);
       }
 
@@ -747,6 +845,13 @@ namespace EventCombo.Service
       }
 
       return ev;
+    }
+
+    private long GetPurchasedTicketQuantity(long ticketId)
+    {
+      IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+      var q = tpdRepo.Get(filter: (tpd => tpd.Ticket_Quantity_Detail.TQD_Ticket_Id == ticketId)).Sum(tpd => tpd.TPD_Purchased_Qty);
+      return q ?? 0;
     }
 
     private ECImageViewModel ProcessOldEventImage(EventImage image, string userId, IUnitOfWork uow)
@@ -870,11 +975,11 @@ namespace EventCombo.Service
         EndDateTime = (multiDate == null ? singleDate.E_Enddate : multiDate.M_StartTo) ?? DateTime.MinValue,
       };
       if (evi.DateInfo.Frequency == ScheduleFrequency.Weekly)
-        evi.DateInfo.Weekdays.AddRange(multiDate.WeeklyDay.Split(',').Select(s => s.Trim()).ToList());
+        evi.DateInfo.Weekdays.AddRange(multiDate.WeeklyDay.Split(',').Select(s => (DayOfWeek) Enum.Parse(typeof(DayOfWeek), s.Trim())).ToList());
       if ((evi.DateInfo.StartDateTime > DateTime.MinValue) && (tz != null))
-        evi.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeFromUtc(evi.DateInfo.StartDateTime, tz);
+        evi.DateInfo.StartDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(evi.DateInfo.StartDateTime, DateTimeKind.Unspecified), tz);
       if ((evi.DateInfo.EndDateTime > DateTime.MinValue) && (tz != null))
-        evi.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeFromUtc(evi.DateInfo.EndDateTime, tz);
+        evi.DateInfo.EndDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(evi.DateInfo.EndDateTime, DateTimeKind.Unspecified), tz);
 
       if ((ev.ECBackgroundId ?? 0) > 0)
         evi.BackgroundUrl = GetECImageUrl(ev.ECBackgroundId ?? 0);
