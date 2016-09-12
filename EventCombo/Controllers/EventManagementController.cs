@@ -234,7 +234,7 @@ namespace EventCombo.Controllers
       Session["ReturnUrl"] = "EditEvent~" + url;
 
       EventViewModel ev = _eService.GetEventById(eventId);
-      PopulateBaseViewModel(ev, "Edit Event | Eventcombo");
+      PopulateBaseViewModel(ev, String.Format("Edit {0} | Eventcombo", ev.EventTitle));
 
       return View("CreateEvent", ev);
     }

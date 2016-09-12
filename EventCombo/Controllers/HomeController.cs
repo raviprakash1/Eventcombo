@@ -28,20 +28,25 @@ using PagedList;
 using EventCombo.Utils;
 using EventCombo.ViewModels;
 using NLog;
+using EventCombo.Service;
+using EventCombo.DAL;
+using AutoMapper;
 
 namespace EventCombo.Controllers
 {
 
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
 
         private static Logger logger = LogManager.GetCurrentClassLogger();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IECImageService _iservice;
 
         EventComboEntities db = new EventComboEntities();
-        public HomeController()
+        public HomeController(): base()
         {
+          _iservice = new ECImageService(_factory, _mapper, new ECImageStorage(_mapper));
         }
         public ApplicationSignInManager SignInManager
         {
@@ -176,7 +181,7 @@ namespace EventCombo.Controllers
                             bool getprofstatus = acc.Getprofiledetails(user1.Id);
                             if (getprofstatus == false)
                             {
-                                Profile prof = new Profile();
+                                EventCombo.Models.Profile prof = new EventCombo.Models.Profile();
 
                                 prof.FirstName = Strfirstname;
                                 prof.LastName = Strlastnmae;
@@ -240,7 +245,7 @@ namespace EventCombo.Controllers
                     if (getprofstatus == false)
                     {
 
-                        Profile prof = new Profile();
+                        EventCombo.Models.Profile prof = new EventCombo.Models.Profile();
                         prof.FirstName = Strfirstname;
                         prof.LastName = Strlastnmae;
                         prof.Email = email;
@@ -251,7 +256,7 @@ namespace EventCombo.Controllers
                     }
                     else
                     {
-                        Profile prof = db.Profiles.First(i => i.UserID == user.Id);
+                        EventCombo.Models.Profile prof = db.Profiles.First(i => i.UserID == user.Id);
                         prof.Ipcountry = country;
                         prof.IpState = state;
                         prof.Ipcity = city;
@@ -770,16 +775,26 @@ namespace EventCombo.Controllers
                         //}
 
 
-
-                        strImageUrl = cs.GetImages(lEventId).FirstOrDefault();
-
-                        if (strImageUrl != null && strImageUrl != "")
+                        var mainImage = _iservice.GetImageById(objEv.ECImageId ?? 0);
+                        if (mainImage != null)
                         {
-                            if (!System.IO.File.Exists(Server.MapPath(strImageUrl)))
-                                strImageUrl = "/Images/default_event_image.jpg";
+                          if (!System.IO.File.Exists(mainImage.FilePath))
+                            strImageUrl = "/Images/default_event_image.jpg";
+                          else
+                            strImageUrl = mainImage.ImagePath;
                         }
                         else
+                        {
+                          strImageUrl = cs.GetImages(lEventId).FirstOrDefault();
+
+                          if (strImageUrl != null && strImageUrl != "")
+                          {
+                            if (!System.IO.File.Exists(Server.MapPath(strImageUrl)))
+                              strImageUrl = "/Images/default_event_image.jpg";
+                          }
+                          else
                             strImageUrl = "/Images/default_event_image.jpg";
+                        }
 
                         objDisEv = new DiscoverEvent();
                         objDisEv.EventId = lEventId;
@@ -826,19 +841,20 @@ namespace EventCombo.Controllers
                             {
                                 objDisEv.EventAddress = objDisEv.EventAddress.Substring(0, 135) + "...";
                             }
+                            if (bflag == true)
+                            {
+                              strNearLat = vAddress.Latitude;
+                              strNearLong = vAddress.Longitude;
+                              bflag = false;
+                            }
                         }
                         else
                         {
                             objDisEv.EventDistance = double.MaxValue;
                             objDisEv.EventAddress = "Online";
-                        }
-
-                        if (bflag == true)
-                        {
-                            strNearLat = vAddress.Latitude;
-                            strNearLong = vAddress.Longitude;
                             bflag = false;
                         }
+
                         var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == objEv.TimeZone select ev).FirstOrDefault();
                         DateTimeWithZone dtzstart, dzend, dtznewstart, dtzCreated;
 
@@ -1090,15 +1106,26 @@ namespace EventCombo.Controllers
                     foreach (Event objEv in vEventList)
                     {
                         long lEventId = vmc.GetLatestEventId(objEv.EventID);
-                        strImageUrl = objCEv.GetImages(lEventId).FirstOrDefault();
-
-                        if (strImageUrl != null && strImageUrl != "")
+                        var mainImage = _iservice.GetImageById(objEv.ECImageId ?? 0);
+                        if (mainImage != null)
                         {
-                            if (!System.IO.File.Exists(Server.MapPath(strImageUrl)))
-                                strImageUrl = "/Images/default_event_image.jpg";
+                          if (!System.IO.File.Exists(mainImage.FilePath))
+                            strImageUrl = "/Images/default_event_image.jpg";
+                          else
+                            strImageUrl = mainImage.ImagePath;
                         }
                         else
+                        {
+                          strImageUrl = objCEv.GetImages(lEventId).FirstOrDefault();
+
+                          if (strImageUrl != null && strImageUrl != "")
+                          {
+                            if (!System.IO.File.Exists(Server.MapPath(strImageUrl)))
+                              strImageUrl = "/Images/default_event_image.jpg";
+                          }
+                          else
                             strImageUrl = "/Images/default_event_image.jpg";
+                        }
 
                         objDisEv = new DiscoverEvent();
                         objDisEv.EventId = lEventId;
@@ -1163,6 +1190,7 @@ namespace EventCombo.Controllers
                         {
                             objDisEv.EventDistance = double.MaxValue;
                             objDisEv.EventAddress = "Online";
+                            bflag = false;
                         }
 
 
@@ -2167,7 +2195,7 @@ namespace EventCombo.Controllers
                             country = "";
 
                         }
-                        Profile prof = new Profile();
+                        EventCombo.Models.Profile prof = new EventCombo.Models.Profile();
 
                         prof.Email = model.Email;
 
