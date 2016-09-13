@@ -1,0 +1,48 @@
+﻿@using System.Collections.Generic;
+@using System.Linq;
+@using EventCombo.Models;
+@model EventOrderInfoListViewModel
+@{
+    Layout = null;
+}
+<div id="purchasedTicketContainer">
+    <div class="table-responsive tableResponsiveOrderList">
+        <table class="table" cellspacing="0" border="1" width="100%">
+            <thead>
+                <tr>
+                    <th>Order #</th>
+                    <th>Ticket Buyer</th>
+                    <th>Ticket Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Price Paid</th>
+                    <th>Net Price</th>
+                    <th>Customer Email</th>
+                    <th>Address</th>
+                    <th>Date</th>
+                    <th>Payment</th>
+                </tr>
+            </thead>
+            <tbody class="tableRecorsTBody">
+                @foreach (var order in Model.Orders)
+                {
+                    <tr>
+                        <td class="UETableTD">
+                            @order.OrderId
+                        </td>
+                        <td class="UETableTD">@order.BuyerName</td>
+                        <td class="UETableTD">@order.TicketName</td>
+                        <td class="UETableTD">@order.Quantity</td>
+                        <td class="UETableTD">$@order.Price</td>
+                        <td class="UETableTD">$@order.PricePaid</td>
+                        <td class="UETableTD">$@order.PriceNet</td>
+                        <td class="UETableTD">@order.CustomerEmail</td>
+                        <td class="UETableTD">@order.Address</td>
+                        <td class="UETableTD">@(order.Date.ToLongDateString())</td>
+                        <td class="UETableTD">@(order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString())</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -365,35 +365,22 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Authenticationclass.cs" />
+    <Compile Include="Models\BillingAddress.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\BusinessPage.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BusinessPageViewModel.cs" />
+    <Compile Include="Models\CardDetail.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\City.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ContactEventCombo.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ECImageViewModel.cs" />
-    <Compile Include="Models\EmailType.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EventECImage.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EventTicket_View.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Footer.cs" />
-    <Compile Include="Models\IBaseViewModel.cs" />
-    <Compile Include="Models\BillingAddress.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CardDetail.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CommanClasses.cs" />
     <Compile Include="Models\ControlType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -415,6 +402,10 @@
     <Compile Include="Models\ECImageType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ECImageViewModel.cs" />
+    <Compile Include="Models\EmailType.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Email_Tag.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -427,34 +418,22 @@
     <Compile Include="Models\EventCategory.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventComboModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EventComboModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EventComboModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
+    <Compile Include="Models\EventECImage.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventComboModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EventComboModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EventConfirmation.cs" />
-    <Compile Include="Models\EventCreation.cs" />
     <Compile Include="Models\EventFavourite.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EventImage.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventListTemplate.cs" />
     <Compile Include="Models\EventSubCategory.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Events_Hit.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventTicket_View.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EventType.cs">
@@ -463,7 +442,6 @@
     <Compile Include="Models\EventVenue.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\EventVote.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -482,14 +460,13 @@
     <Compile Include="Models\Event_VariableDesc.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ExternalLogin.cs" />
     <Compile Include="Models\Fee_Structure.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Footer.cs" />
     <Compile Include="Models\func_Split_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\GetEventData.cs" />
     <Compile Include="Models\GetEventDateList_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -508,6 +485,29 @@
     <Compile Include="Models\Hash.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\IBaseViewModel.cs" />
+    <Compile Include="Models\CommanClasses.cs" />
+    <Compile Include="Models\EventComboModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventComboModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventComboModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventComboModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventComboModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventConfirmation.cs" />
+    <Compile Include="Models\EventCreation.cs" />
+    <Compile Include="Models\EventListTemplate.cs" />
+    <Compile Include="Models\EventViewModel.cs" />
+    <Compile Include="Models\ExternalLogin.cs" />
+    <Compile Include="Models\GetEventData.cs" />
     <Compile Include="Models\Html2Pdf.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IOpenGraphProtocol.cs" />
@@ -1784,6 +1784,8 @@
     <Content Include="Views\ManageAttendees\_AttendeeSearchList.cshtml" />
     <Content Include="Views\ManageAttendees\EditEmail.cshtml" />
     <Content Include="Views\ManageAttendees\_AttendeeTicketTypeList.cshtml" />
+    <Content Include="Views\ManageAttendees\Badges.cshtml" />
+    <Content Include="Views\Download\_OrderList.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

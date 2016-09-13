@@ -128,6 +128,8 @@ namespace EventCombo.Service
             order.PricePaid = order.PricePaid + (orderDB.O_VariableAmount ?? 0);
             order.PriceNet = order.PricePaid - order.Fee;
             order.CustomerEmail = orderDB.O_Email;
+            order.Refunded = ((orderDB.OrderStateId ?? 0) == 3 ? (-order.PricePaid) : 0);
+            order.Cancelled = ((orderDB.OrderStateId ?? 0) == 2 ? (-order.PricePaid) : 0);
             if (billingAddressDB != null)
             {
                 var countryDB = countryRepo.Get(filter: (c => c.CountryID.ToString() == billingAddressDB.Country));
@@ -369,13 +371,13 @@ namespace EventCombo.Service
         AddStyledCell(row, 1, style).SetCellValue(order.BuyerName);
         AddStyledCell(row, 2, style).SetCellValue(order.TicketName);
         AddStyledCell(row, 3, style).SetCellValue(order.Quantity);
-        AddStyledCell(row, 4, style).SetCellValue((double)order.Price);
-        AddStyledCell(row, 5, style).SetCellValue((double)order.PricePaid);
-        AddStyledCell(row, 6, style).SetCellValue((double)order.PriceNet);
+        AddStyledCell(row, 4, style).SetCellValue("$" + (double)order.Price);
+        AddStyledCell(row, 5, style).SetCellValue("$" + (double)order.PricePaid);
+        AddStyledCell(row, 6, style).SetCellValue("$" + (double)order.PriceNet);
         AddStyledCell(row, 7, datestyle).SetCellValue(order.CustomerEmail);
         AddStyledCell(row, 8, datestyle).SetCellValue(order.Address);
         AddStyledCell(row, 9, datestyle).SetCellValue(order.Date);
-        AddStyledCell(row, 10, style).SetCellValue(order.PaymentState.ToString());
+        AddStyledCell(row, 10, style).SetCellValue(order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString());
       }
       for (i = 0; i <= 5; i++)
       {
@@ -418,11 +420,11 @@ namespace EventCombo.Service
         rw.Write(str + new String(' ', 28 - str.Length) + "|");
         str = order.Quantity.ToString();
         rw.Write(str + new String(' ', 10 - str.Length) + "|");
-        str = order.Price.ToString("N2");
+        str = "$" + order.Price.ToString("N2");
         rw.Write(str + new String(' ', 9 - str.Length) + "|");
-        str = order.PricePaid.ToString("N2");
+        str = "$" + order.PricePaid.ToString("N2");
         rw.Write(str + new String(' ', 10 - str.Length) + "|");
-        str = order.PriceNet.ToString("N2");
+        str = "$" + order.PriceNet.ToString("N2");
         rw.Write(str + new String(' ', 9 - str.Length) + "|");
         str = order.CustomerEmail;
         while (str.Length > 28)
@@ -444,7 +446,7 @@ namespace EventCombo.Service
         rw.Write(str + new String(' ', 28 - str.Length) + "|");
         str = order.Date.ToShortDateString();
         rw.Write(str + new String(' ', 10 - str.Length) + "|");
-        str = order.PaymentState.ToString();
+        str = order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString();
         rw.Write(str);
         rw.WriteLine();
       }
@@ -485,7 +487,7 @@ namespace EventCombo.Service
         rw.Write(order.CustomerEmail + delimiter);
         rw.Write( order.Address + delimiter);
         rw.Write(order.Date.ToShortDateString() + delimiter);
-        rw.Write(order.PaymentState.ToString());
+        rw.Write(order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString());
         rw.WriteLine();
       }
 
@@ -683,15 +685,15 @@ namespace EventCombo.Service
             AddStyledCell(row, 2, style).SetCellValue(order.BuyerName);
             AddStyledCell(row, 3, style).SetCellValue(order.TicketName);
             AddStyledCell(row, 4, style).SetCellValue(order.Quantity);
-            AddStyledCell(row, 5, style).SetCellValue((double)order.PricePaid);
-            AddStyledCell(row, 6, style).SetCellValue((double)order.PriceNet);
-            AddStyledCell(row, 7, style).SetCellValue((double)order.Fee);
-            AddStyledCell(row, 8, style).SetCellValue((double)order.MerchantFee);
+            AddStyledCell(row, 5, style).SetCellValue("$" + (double)order.PricePaid);
+            AddStyledCell(row, 6, style).SetCellValue("$" + (double)order.PriceNet);
+            AddStyledCell(row, 7, style).SetCellValue("$" + (double)order.Fee);
+            AddStyledCell(row, 8, style).SetCellValue("$" + (double)order.MerchantFee);
             AddStyledCell(row, 9, style).SetCellValue(order.PromoCode);
-            AddStyledCell(row, 10, style).SetCellValue((double)order.Refunded);
-            AddStyledCell(row, 11, style).SetCellValue((double)order.Cancelled);
+            AddStyledCell(row, 10, style).SetCellValue((order.Refunded > 0 ? "Yes" : ""));
+            AddStyledCell(row, 11, style).SetCellValue((order.Cancelled > 0 ? "Yes" : ""));
             AddStyledCell(row, 12, style).SetCellValue("");
-            AddStyledCell(row, 13, style).SetCellValue(order.CustomerEmail);
+            AddStyledCell(row, 13, style).SetCellValue(order.BuyerEmail);
             AddStyledCell(row, 14, style).SetCellValue(order.Address);
             AddStyledCell(row, 15, style).SetCellValue(order.MailTickets.ToString());
         }
@@ -740,19 +742,19 @@ namespace EventCombo.Service
             rw.Write(str + new String(' ', 28 - str.Length) + "|");
             str = order.Quantity.ToString();
             rw.Write(str + new String(' ', 10 - str.Length) + "|");
-            str = order.PricePaid.ToString("N2");
+            str = "$" + order.PricePaid.ToString("N2");
             rw.Write(str + new String(' ', 14 - str.Length) + "|");
-            str = order.PriceNet.ToString("N2");
+            str = "$" + order.PriceNet.ToString("N2");
             rw.Write(str + new String(' ', 16 - str.Length) + "|");
-            str = order.Fee.ToString("N2");
+            str = "$" + order.Fee.ToString("N2");
             rw.Write(str + new String(' ', 14 - str.Length) + "|");
-            str = order.MerchantFee.ToString("N2");
+            str = "$" + order.MerchantFee.ToString("N2");
             rw.Write(str + new String(' ', 23 - str.Length) + "|");
             str = order.PromoCode.ToString();
             rw.Write(str + new String(' ', 10 - str.Length) + "|");
-            str = order.Refunded.ToString("N2");
+            str = (order.Refunded > 0 ? "Yes" : "");
             rw.Write(str + new String(' ', 8 - str.Length) + "|");
-            str = order.Cancelled.ToString("N2");
+            str = (order.Cancelled > 0 ? "Yes" : "");
             rw.Write(str + new String(' ', 9 - str.Length) + "|");
             str = "";
             rw.Write(str + new String(' ', 15 - str.Length) + "|");
@@ -822,10 +824,10 @@ namespace EventCombo.Service
             rw.Write("$" + order.Fee.ToString("N2") + delimiter);
             rw.Write("$" + order.MerchantFee.ToString("N2") + delimiter);
             rw.Write(order.PromoCode + delimiter);
-            rw.Write((order.Refunded == 0 ? "" : "$" + order.Refunded.ToString("N2")) + delimiter);
-            rw.Write((order.Cancelled == 0 ? "" : "$" + order.Cancelled.ToString("N2")) + delimiter);
+            rw.Write((order.Refunded > 0 ? "Yes" : "") + delimiter);
+            rw.Write((order.Cancelled > 0 ? "Yes" : "") + delimiter);
             rw.Write("" + delimiter);
-            rw.Write(order.CustomerEmail + delimiter);
+            rw.Write(order.BuyerEmail + delimiter);
             rw.Write("\"" + order.Address + "\"" + delimiter);
             rw.Write("\"" + order.MailTickets.ToString() + "\"");
             rw.WriteLine();

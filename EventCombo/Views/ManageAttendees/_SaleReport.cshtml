@@ -36,8 +36,8 @@
                         <td class="UETableTD">$@order.Fee</td>
                         <td class="UETableTD">$@order.MerchantFee</td>
                         <td class="UETableTD">@order.PromoCode</td>
-                        <td class="UETableTD">@(order.Refunded == 0 ? "" : "$" + order.Refunded.ToString("N2"))</td>
-                        <td class="UETableTD">@(order.Cancelled == 0 ? "" : "$" + order.Cancelled.ToString("N2"))</td>
+                        <td class="UETableTD">@(order.Refunded > 0 ? "Yes" : "")</td>
+                        <td class="UETableTD">@(order.Cancelled > 0 ? "Yes" : "")</td>
                         <td class="UETableTD"></td>
                         <td class="UETableTD">@order.BuyerEmail</td>
                         <td class="UETableTD">@order.Address</td>

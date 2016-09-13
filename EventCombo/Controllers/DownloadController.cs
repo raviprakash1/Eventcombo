@@ -42,7 +42,7 @@ namespace EventCombo.Controllers
     }
 
     [HttpGet]
-    public FileStreamResult OrderList(PaymentStates state, long eventId, string format)
+    public ActionResult OrderList(PaymentStates state, long eventId, string format)
     {
       if (Session["AppId"] == null)
         return null;
@@ -50,7 +50,15 @@ namespace EventCombo.Controllers
       string userId = Session["AppId"].ToString();
       if (_dbservice.GetEventAccess(eventId, userId) == AccessLevel.Public)
         return null;
-      
+      if (format.ToLower() == "html")
+      {
+        EventOrderInfoListViewModel model = new EventOrderInfoListViewModel();
+        model.EventId = eventId;
+        model.PaymentState = state;
+        var orders = _maservice.GetOrdersForEvent(state, eventId);
+        model.Orders.AddRange(orders);
+        return View("_OrderList", model);
+      }
       MemoryStream mem = _maservice.GetDownloadableOrderList(state, eventId, format);
       string appformat = "application/" + (format.ToLower() == "xls" ? "ms-excel" : format.ToLower());
       return new FileStreamResult(mem, appformat) { FileDownloadName = "OrderList_" + eventId.ToString() + "." + format };
