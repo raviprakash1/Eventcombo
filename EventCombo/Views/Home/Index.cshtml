@@ -1,139 +1,229 @@
-﻿@using EventCombo.ViewModels
+﻿@using EventCombo.Models
+@using EventCombo.Service
+@model BaseViewModel
 @{
-    ViewBag.Title = "EventCombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free";
+  Layout = "~/Views/Shared/_AngularLayout.cshtml";
 }
 
-<div class="container-fluid cont_margin no-padding con_scr0l_home" id="scrollhome">
-    <div id="dvEventListing" class="col-sm-9 col-xs-12 ot_main_pad mb10">
-       @{Html.RenderPartial("~/Views/Home/HomeEventList.cshtml"); }
-    </div>
+@section CSSSection
+{
+  @Styles.Render("~/Content/AMaterial/homePage.css")
+}
 
-    <div class="col-sm-3 col-xs-12 ot_main_pad">
-      @{ Html.RenderAction("ShowLastArticles", "Article"); }
-    </div>
+@section ScriptSection
+{
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/TweenLite.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/plugins/CSSPlugin.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/plugins/TextPlugin.min.js"></script>
+}
 
-</div>
-
-
-<div class="modal fade" id="UserOrgnizer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
-        <div class="modal-content">
-            <form id="contactForm" class="fullw1 add">
-                <div class="modal-body text-center pv50 txt-msg">
-                    <h4 class="msg" id="hId">You are not authorized to create an event. Please contact admin@eventcombo.com</h4>
-                </div>
-                <div class="modal-footer msg-action-btn ok">
-                    <button type="button" class="btn btn-primary yes ok" id="btMessOk" data-dismiss="modal">OK</button>
-                </div>
-            </form>
-        </div>
-    </div><!-- confirm-msg -->
-</div>
-
-<div>
-    <a class="td-btn" id="btOkMes" type="button" data-backdrop="static" data-keyboard="false" href="#UserOrgnizer" data-toggle="modal" style="display:none">
-    </a>
-</div>
-
-
-<script>
-    $(document).prop('title', 'Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free');
-    var getUrlParameter = function getUrlParameter(sParam) {
-        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-            sURLVariables = sPageURL.split('&'),
-            sParameterName,
-            i;
-
-        for (i = 0; i < sURLVariables.length; i++) {
-            sParameterName = sURLVariables[i].split('=');
-
-            if (sParameterName[0] === sParam) {
-                return sParameterName[1] === undefined ? true : sParameterName[1];
-            }
-        }
-    };
-
-    $(document).ready(function () {
-        //url = url.replace("-parameter", vEventId);
-        
-        if ('@ViewBag.UserOrg' == "Y")
-        {
-            $("#btOkMes").click();
-        }
-
-      
-        
-        var pg = getUrlParameter('page');
-        if (!pg) {
-            var Lat = @CookieStore.GetCookie("Lat");
-            var Lng = @CookieStore.GetCookie("Long");
-            Lat  = parseFloat(Lat);
-            Lng = parseFloat(Lng);
-            if (isNaN(Lat) == true) Lat = 0;
-            if (isNaN(Lng) == true) Lng = 0;
-         //   alert(Lat);
-            if (Lat > 0)
-            {
-                var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = CookieStore.GetCookie("Lat"), lng = CookieStore.GetCookie("Long"), page = "1"}))';
-                window.location.replace(vUrl);
-            }
-            else
-            {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function (p) {
-                        var LatLng = new google.maps.LatLng(p.coords.latitude,p.coords.longitude);
-                        var geocoder = new google.maps.Geocoder;
-                        var infowindow = new google.maps.InfoWindow;
-
-                        var mapOptions = {
-                            center: { lat: p.coords.latitude, lng: p.coords.longitude },
-                            zoom: 13,
-                            mapTypeId: google.maps.MapTypeId.ROADMAP
-                        };
-                        var vLat = p.coords.latitude;
-                        var vLong = p.coords.longitude;
-
-                        //$.cookie("Lat", vLat, { expire: 365 });
-                        //$.cookie("Long", vLong, { expire: 365 });
-
-                        var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat= "strLat", lng= "strLong", page = "1"}))';
-                        vUrl = vUrl.replace("strLat", vLat);
-                        vUrl = vUrl.replace("strLong", vLong);
-                        window.location.replace(vUrl);
-
-                    }, function (p) {
-                        var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = "", lng = "", page = "1" }))';
-                        window.location.replace(vUrl);
-                    });
-
-                } else {
-                    var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = "", lng = "", page = "1" }))';
-                    window.location.replace(vUrl);
-                }
-            }
-
-        }
-
-        
-
-
-
-        @*$.ajax({
-            url: '@Url.Action("GetEventURL", "CreateEvent")',
-            type: "Post",
-            success: function (data) {
-                if (data != "")
-                    $("#dllEventList").html(data);
-           },
-        });
-        $("#dllEventList").change(function () {
-            window.location.href = $("#dllEventList").val();
-        });
-        $("#btTest").click(function () {
-           // alert("button click");
-            window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = "a", strEventId = "74" })';
-
-        });*@
+@section ScriptFooterSection
+{
+  <script src="@Url.Content("~/Scripts/AMaterial/texttyper.js")"></script>
+  <script type="text/javascript">
+    var cntWd, sldWd, tb;
+    $(document).ready(function() {
+      $('#featured').mouseenter(function (ent) {
+        cntWd = $('#featured').innerWidth();
+        tb = $('#featured-scrollbox');
+        sldWd = tb.outerWidth();
+      });
+      $('#featured').mousemove(function (ev) {
+        tb.css({ left: ((cntWd - sldWd) * ((ev.pageX / cntWd).toFixed(3))).toFixed(1) + "px" });
+      });
     });
+  </script>
+  <script type="text/javascript">
+    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
 
-</script>
+    // init the FB JS SDK
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: fbappid,                        // App ID from the app dashboard
+        status: true,                          // Check Facebook Login status
+        xfbml: true,                           // Look for social plugins on the page
+        version: '2.7'
+      });
+
+    };
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) { return; }
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+}
+<!--***************************-->
+<div class="hero">
+  <div class="hero1">
+    <div>Go beyond just tickets</div>
+    <div class="pretext">Rock your <span id="ContainerEl_2"></span></div>
+  </div>
+</div>
+
+<div class="citylist clearfix">
+  <div class="row">
+    <div class="c3 city">N.Y.</div>
+    <div class="c3 city">L.A</div>
+    <div class="c3 city">D.C</div>
+    <div class="c3 city">Chicago</div>
+  </div>
+  <div class="row">
+    <div class="c3 city">Atlanta</div>
+    <div class="c3 city">Philly</div>
+    <div class="c3 city">Miami</div>
+    <div class="c3 city">San Francisco</div>
+  </div>
+  <div class="row">
+    <div class="c3 city">Dallas</div>
+    <div class="c3 city">Houston</div>
+    <div class="c3 city">Boston</div>
+    <div class="c3 city all">All the cities</div>
+  </div>
+</div>
+<div class="eventlist clearfix">
+  <div class="row">
+    <div class="c3 event">Comedy Show</div>
+    <div class="c3 event">Film</div>
+    <div class="c3 event">Workshop</div>
+    <div class="c3 event">Music Festival</div>
+  </div>
+  <div class="row">
+    <div class="c3 event">Party</div>
+    <div class="c3 event">Concert</div>
+    <div class="c3 event">Competition</div>
+    <div class="c3 event">Sports & Fitness</div>
+  </div>
+  <div class="row">
+    <div class="c3 event">Travel</div>
+    <div class="c3 event">Theater</div>
+    <div class="c3 event">Outdoor</div>
+    <div class="c3 event all">All the events</div>
+  </div>
+</div>
+
+<div id="featured">
+  <div id="featured-scrollbox">
+    <div class="featuredbox">
+      <a href="#" class="img"><img src="http://placekitten.com/300/400" alt="This is event name that is petty decent length"></a>
+      <div class="info">
+        <h3><a href="#">This is event name that is petty decent length name that is pettyname that is pettyname that is pettyname that is petty</a></h3>
+        <div class="date">July 10, 2016</div>
+        <div class="location">Webster Hall, New York</div>
+        <div class="price">$30-$60</div>
+        <div class="homShare">
+          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
+          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
+        </div>
+      </div>
+    </div>
+    <div class="featuredbox">
+      <a href="#" class="img"><img src="http://placekitten.com/300/400" alt="This is event name that is petty decent length"></a>
+      <div class="info">
+        <h3><a href="#">This is event name that is petty decent length.</a></h3>
+        <div class="date">July 10, 2016</div>
+        <div class="location">Webster Hall, New York</div>
+        <div class="price">$300-$900</div>
+        <div class="homShare">
+          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
+          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
+        </div>
+      </div>
+    </div>
+    <div class="featuredbox">
+      <a href="#" class="img"><img src="http://placekitten.com/300/300" alt="Another event that rocks"></a>
+      <div class="info">
+        <h3><a href="#">This is event name that is petty decent length.</a></h3>
+        <div class="date">July 10, 2016</div>
+        <div class="location">Webster Hall, New York</div>
+        <div class="price free">FREE</div>
+        <div class="homShare">
+          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
+          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
+        </div>
+      </div>
+    </div>
+    <div class="featuredbox">
+      <a href="#" class="img"><img src="http://placekitten.com/300/400" alt="This is event name that is petty decent length"></a>
+      <div class="info">
+        <h3><a href="#">This is event name that is petty decent length name that is pettyname that is pettyname that is pettyname that is petty</a></h3>
+        <div class="date">July 10, 2016</div>
+        <div class="location">Webster Hall, New York</div>
+        <div class="price">$30-$60</div>
+        <div class="homShare">
+          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
+          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
+        </div>
+      </div>
+    </div>
+    <div class="featuredbox">
+      <a href="#" class="img"><img src="http://placekitten.com/300/400" alt="This is event name that is petty decent length"></a>
+      <div class="info">
+        <h3><a href="#">This is event name that is petty decent length.</a></h3>
+        <div class="date">July 10, 2016</div>
+        <div class="location">Webster Hall, New York</div>
+        <div class="price">$300-$900</div>
+        <div class="homShare">
+          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
+          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
+        </div>
+      </div>
+    </div>
+    <div class="featuredbox">
+      <a href="#" class="img"><img src="http://placekitten.com/300/300" alt="Another event that rocks"></a>
+      <div class="info">
+        <h3><a href="#">This is event name that is petty decent length.</a></h3>
+        <div class="date">July 10, 2016</div>
+        <div class="location">Webster Hall, New York</div>
+        <div class="price free">FREE</div>
+        <div class="homShare">
+          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
+          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
+        </div>
+      </div>
+    </div>
+    <div class="featuredbox">
+      <a href="#" class="img"><img src="http://placekitten.com/300/400" alt="This is event name that is petty decent length"></a>
+      <div class="info">
+        <h3><a href="#">This is event name that is petty decent length name that is pettyname that is pettyname that is pettyname that is petty</a></h3>
+        <div class="date">July 10, 2016</div>
+        <div class="location">Webster Hall, New York</div>
+        <div class="price">$30-$60</div>
+        <div class="homShare">
+          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
+          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
+        </div>
+      </div>
+    </div>
+    <div class="featuredbox">
+      <a href="#" class="img"><img src="http://placekitten.com/300/400" alt="This is event name that is petty decent length"></a>
+      <div class="info">
+        <h3><a href="#">This is event name that is petty decent length.</a></h3>
+        <div class="date">July 10, 2016</div>
+        <div class="location">Webster Hall, New York</div>
+        <div class="price">$300-$900</div>
+        <div class="homShare">
+          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
+          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
+        </div>
+      </div>
+    </div>
+    <div class="featuredbox">
+      <a href="#" class="img"><img src="http://placekitten.com/300/400" alt="Another event that rocks"></a>
+      <div class="info">
+        <h3><a href="#">This is event name that is petty decent length.</a></h3>
+        <div class="date">July 10, 2016</div>
+        <div class="location">Webster Hall, New York</div>
+        <div class="price free">FREE</div>
+        <div class="homShare">
+          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
+          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--***************************-->

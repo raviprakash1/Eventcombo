@@ -769,10 +769,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ForgetPassword.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Home\Index.generated.cs">
+    <Compile Include="Views\Home\IndexOld.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Index.cshtml</DependentUpon>
+      <DependentUpon>IndexOld.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Home\PasswordReset.generated.cs">
       <AutoGen>True</AutoGen>
@@ -827,11 +827,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\AMaterial\angular-material.css" />
+    <Content Include="Content\AMaterial\angular-material.min.css" />
     <Content Include="Content\AMaterial\angularjs-color-picker.min.css" />
     <Content Include="Content\AMaterial\animations.css" />
     <Content Include="Content\AMaterial\docs.css" />
     <Content Include="Content\AMaterial\gridiculous.css" />
     <Content Include="Content\AMaterial\header-footer.css" />
+    <Content Include="Content\AMaterial\homePage.css" />
     <Content Include="Content\AMaterial\main.css" />
     <Content Include="Content\AMaterial\material-datetimepicker.css" />
     <Content Include="Content\AMaterial\ngGallery.css" />
@@ -888,6 +890,7 @@
     <Content Include="Images\AMaterial\marker-pink.png" />
     <Content Include="Images\AMaterial\plusIcon.png" />
     <Content Include="Images\AMaterial\popimg.jpg" />
+    <Content Include="Images\AMaterial\RecordBackgroundFinal_1000.gif" />
     <Content Include="Images\AMaterial\saroosh.jpg" />
     <Content Include="Images\AMaterial\square-facebook.svg" />
     <Content Include="Images\AMaterial\square-linkedin.svg" />
@@ -1061,6 +1064,7 @@
     <Content Include="Scripts\AMaterial\skins\lightgray\skin.min.css" />
     <Content Include="Scripts\AMaterial\sortable.js" />
     <Content Include="Scripts\AMaterial\svg-assets-cache.js" />
+    <Content Include="Scripts\AMaterial\texttyper.js" />
     <Content Include="Scripts\AMaterial\themes\modern\theme.min.js" />
     <Content Include="Scripts\AMaterial\tinycolor-min.js" />
     <Content Include="Scripts\AMaterial\tinymce.min.js" />
@@ -1492,9 +1496,9 @@
     <Content Include="Views\Home\Contact.cshtml">
       <Generator>RazorGenerator</Generator>
     </Content>
-    <Content Include="Views\Home\Index.cshtml">
+    <Content Include="Views\Home\IndexOld.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Index.generated.cs</LastGenOutput>
+      <LastGenOutput>IndexOld.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Shared\_ExternalLoginsListPartial.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1745,6 +1749,7 @@
     <Content Include="Views\ManageAttendees\_SaleReport.cshtml" />
     <Content Include="Views\EventManagement\ViewEvent.cshtml" />
     <Content Include="Views\EventManagement\EmptyTemplate.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
