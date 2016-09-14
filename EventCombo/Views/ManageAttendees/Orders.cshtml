@@ -290,32 +290,6 @@
     }
   }
 
-  @*function expandEditMenu(obj, page, id) {
-    var detail = $('#OrderDetail' + page + id);
-    if ($(detail).data('popped') == '0') {
-      $.ajax({
-        type: "GET",
-        url: "@Url.Action("GetOrderDetail", "ManageAttendees")",
-        data: { OrderId: id },
-        datatype: "html",
-        success: function (data) {
-          $(obj).parent().parent().css('background-color', '#f1f1f1');
-          $(detail).html(data);
-          $(detail).css('background-color', '#f1f1f1');
-          $(detail).css('border-top', 'none');
-          $(detail).data('popped', '1');
-          $(detail).slideDown();
-        }
-      });
-    }
-    else {
-      $(detail).html('');
-      $(obj).parent().parent().css('background-color', '#ffffff');
-      $(detail).data('popped', '0');
-      $(detail).slideUp();
-    }
-  }*@
-
   function formatDateTime(date) {
     var cdate = new Date(date);
     var day = cdate.getDate();
@@ -372,7 +346,7 @@
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("PurchasedTicketDetail", "Account")',
-                data: { OrderId: id, EventId: eId },
+                data: { OrderId: id, EventId: eId, colSpan: 11 },
                 datatype: 'html',
                 success: function (data) {
                     $(obj).parent().parent().css('background-color', '#f1f1f1');
