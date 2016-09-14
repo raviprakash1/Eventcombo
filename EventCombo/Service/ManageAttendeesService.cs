@@ -379,7 +379,7 @@ namespace EventCombo.Service
         AddStyledCell(row, 9, datestyle).SetCellValue(order.Date);
         AddStyledCell(row, 10, style).SetCellValue(order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString());
       }
-      for (i = 0; i <= 5; i++)
+      for (i = 0; i <= 10; i++)
       {
         sheet.AutoSizeColumn(i);
         sheet.SetColumnWidth(i, sheet.GetColumnWidth(i) + 1024);
@@ -697,7 +697,7 @@ namespace EventCombo.Service
             AddStyledCell(row, 14, style).SetCellValue(order.Address);
             AddStyledCell(row, 15, style).SetCellValue(order.MailTickets.ToString());
         }
-        for (i = 0; i <= 14; i++)
+        for (i = 0; i <= 15; i++)
         {
             sheet.AutoSizeColumn(i);
             sheet.SetColumnWidth(i, sheet.GetColumnWidth(i) + 1024);
