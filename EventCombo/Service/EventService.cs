@@ -1090,11 +1090,16 @@ namespace EventCombo.Service
             Minimum = Decimal.ToInt64(tq.Ticket.Min_T_Qty ?? 1),
             Maximum = (tq.Ticket.Max_T_Qty ?? 0) == 0 ? (tq.TQD_Remaining_Quantity ?? 0) : Decimal.ToInt64(tq.Ticket.Max_T_Qty ?? 0),
             Price = (tq.Ticket.Price ?? 0) - (tq.Ticket.T_Discount ?? 0),
-            TotalPrice = tq.Ticket.TicketTypeID == 2 ? tq.Ticket.TotalPrice ?? 0 : 0,
+            //TotalPrice = tq.Ticket.TicketTypeID == 2 ? tq.Ticket.TotalPrice ?? 0 : 0,
+            TotalPrice = tq.Ticket.TicketTypeID == 2 ? (tq.Ticket.Price ?? 0) - (tq.Ticket.T_Discount ?? 0) : 0,
             StartDate = ticketDate,
             VenueName = evi.OnlineEvent ? "Online" : tq.Address == null ? "Unknown" : tq.Address.VenueName,
-            ShowFee = tq.Ticket.Fees_Type != "1",
-            Fee = tq.Ticket.Fees_Type != "1" ? (tq.Ticket.TotalPrice ?? 0) - (tq.Ticket.Price ?? 0) + (tq.Ticket.T_Discount ?? 0) : 0,
+            /*Removed until EC1-414 will be implemented
+            * ShowFee = tq.Ticket.Fees_Type != "1",
+            * Fee = tq.Ticket.Fees_Type != "1" ? (tq.Ticket.TotalPrice ?? 0) - (tq.Ticket.Price ?? 0) + (tq.Ticket.T_Discount ?? 0) : 0,
+            */
+            ShowFee = false,
+            Fee = 0,
             ShowRemaining = tq.Ticket.T_Displayremaining == "1",
             RemainingQuantity = tq.Ticket.T_Displayremaining == "1" ? tq.TQD_Remaining_Quantity ?? 0 : 0,
             SoldOut = (tq.Ticket.T_Mark_SoldOut == "1") || ((tq.TQD_Remaining_Quantity ?? 0) <= 0)
