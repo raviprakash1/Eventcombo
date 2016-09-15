@@ -5,6 +5,13 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#00cafd">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#00cafd">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <meta name="google-site-verification" content="@(System.Configuration.ConfigurationManager.AppSettings.Get("GoogleAPIKey"))" />
   @RenderSection("SeoMeta", false)
@@ -18,7 +25,7 @@
     <meta property="og:description" content="@ViewBag.FBDescription" />
     <meta property="og:image" content="@ViewBag.FBImage" />
   }
-     <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
     <link href="~/Images/FabIcon/ios-57x57.png" rel="apple-touch-icon" />
     <link href="~/Images/FabIcon/ios-76x76.png" rel="apple-touch-icon" sizes="76x76" />
     <link href="~/Images/FabIcon/ios-120x120.png" rel="apple-touch-icon" sizes="120x120" />
