@@ -380,6 +380,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Footer.cs" />
+    <Compile Include="Models\GetNearestEvents_Result.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IBaseViewModel.cs" />
     <Compile Include="Models\BillingAddress.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
@@ -977,6 +980,7 @@
     <Content Include="Scripts\AMaterial\demo.js" />
     <Content Include="Scripts\AMaterial\EventComboApp.js" />
     <Content Include="Scripts\AMaterial\header.js" />
+    <Content Include="Scripts\AMaterial\Homepage.js" />
     <Content Include="Scripts\AMaterial\infobox.js" />
     <Content Include="Scripts\AMaterial\broadcastService.js" />
     <Content Include="Scripts\AMaterial\jquery-1.12.3.min.js" />

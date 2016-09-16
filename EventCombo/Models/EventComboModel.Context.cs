@@ -304,5 +304,26 @@ namespace EventCombo.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PublishSingleEvent1", eventIdParameter);
         }
+    
+        public virtual ObjectResult<GetNearestEvents_Result> GetNearestEvents(Nullable<double> lng, Nullable<double> lat, Nullable<double> distance, Nullable<bool> filterUpcoming)
+        {
+            var lngParameter = lng.HasValue ?
+                new ObjectParameter("lng", lng) :
+                new ObjectParameter("lng", typeof(double));
+    
+            var latParameter = lat.HasValue ?
+                new ObjectParameter("lat", lat) :
+                new ObjectParameter("lat", typeof(double));
+    
+            var distanceParameter = distance.HasValue ?
+                new ObjectParameter("distance", distance) :
+                new ObjectParameter("distance", typeof(double));
+    
+            var filterUpcomingParameter = filterUpcoming.HasValue ?
+                new ObjectParameter("filterUpcoming", filterUpcoming) :
+                new ObjectParameter("filterUpcoming", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetNearestEvents_Result>("GetNearestEvents", lngParameter, latParameter, distanceParameter, filterUpcomingParameter);
+        }
     }
 }

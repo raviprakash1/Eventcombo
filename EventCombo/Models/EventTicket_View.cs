@@ -38,5 +38,6 @@ namespace EventCombo.Models
         public long TPD_Id { get; set; }
         public long TicketTypeID { get; set; }
         public string TicketTypeName { get; set; }
+        public Nullable<byte> PaymentTypeId { get; set; }
     }
 }

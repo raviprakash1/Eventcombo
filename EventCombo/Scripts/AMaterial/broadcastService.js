@@ -28,12 +28,17 @@
       broadcastMessage('LoginProcessed', param);
     }
 
+    var currentCoordinatesChanged = function (param) {
+      broadcastMessage('CurrentCoordinatesChanged', param)
+    }
+
     return {
       EventInfoLoaded: eventInfoLoaded,
       ErrorExternalLogin: errorExternalLogin,
       CallLogin: callLogin,
       CompleteExternalLogin: completeExternalLogin,
       LoggedIn: loggedIn,
-      LoginProcessed: loginProcessed
+      LoginProcessed: loginProcessed,
+      CurrentCoordinatesChanged: currentCoordinatesChanged
     }
   }]);

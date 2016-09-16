@@ -20,9 +20,10 @@
 @section ScriptFooterSection
 {
   <script src="@Url.Content("~/Scripts/AMaterial/texttyper.js")"></script>
+  <script src="@Url.Content("~/Scripts/AMaterial/Homepage.js")"></script>
   <script type="text/javascript">
     var cntWd, sldWd, tb;
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('#featured').mouseenter(function (ent) {
         cntWd = $('#featured').innerWidth();
         tb = $('#featured-scrollbox');
@@ -63,167 +64,112 @@
     <div class="pretext">Rock your <span id="ContainerEl_2"></span></div>
   </div>
 </div>
+<div ng-controller="HomeController" ng-cloak>
+  <div class="citylist clearfix">
+    <div class="row">
+      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 10}" ng-click="OnCityChange(40.712784, -74.0059413, 10)">N.Y.</div>
+      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 7}" ng-click="OnCityChange(34.052234, -118.243685, 7)">L.A</div>
+      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 15}" ng-click="OnCityChange(38.907192, -77.036871, 15)">D.C</div>
+      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 5}" ng-click="OnCityChange(41.878114, -87.629798, 5)">Chicago</div>
+    </div>
+    <div class="row">
+      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 1}" ng-click="OnCityChange(33.748995, -84.387982, 1)">Atlanta</div>
+      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 12}" ng-click="OnCityChange(39.952584, -75.165222, 12)">Philly</div>
+      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 14}" ng-click="OnCityChange(47.606210, -122.332071, 14)">Seattle</div>
+      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 13}" ng-click="OnCityChange(37.774930, -122.419416, 13)">San Francisco</div>
+    </div>
+    <div class="row">
+      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 2}" ng-click="OnCityChange(32.776664, -96.796988, 2)">Dallas</div>
+      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 6}" ng-click="OnCityChange(29.760427, -95.369803, 6)">Houston</div>
+      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 3}" ng-click="OnCityChange(42.360083, -71.058880, 3)">Boston</div>
+      <div ng-class="{'c3': true, 'city': true, 'cityselected': allCities, 'all': true}" ng-click="OnCityChange(200, 200, -1)">All the cities</div>
+    </div>
+  </div>
+  <div class="eventlist clearfix">
+    <div class="row">
+      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 1}" ng-click="OnEventTypeChange(1)">Concert or Performance</div>
+      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 2}" ng-click="OnEventTypeChange(2)">Holiday</div>
+      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 5}" ng-click="OnEventTypeChange(5)">Music</div>
+      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 20}" ng-click="OnEventTypeChange(20)">Festival</div>
+    </div>
+    <div class="row">
+      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 7}" ng-click="OnEventTypeChange(7)">Attraction</div>
+      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 8}" ng-click="OnEventTypeChange(8)">Retreat</div>
+      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 18}" ng-click="OnEventTypeChange(18)">Tour</div>
+      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 6}" ng-click="OnEventTypeChange(6)">Appearance or Signing</div>
+    </div>
+    <div class="row">
+      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 9}" ng-click="OnEventTypeChange(9)">Class or Workshop</div>
+      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 24}" ng-click="OnEventTypeChange(24)">Race</div>
+      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 11}" ng-click="OnEventTypeChange(11)">Other</div>
+      <div ng-class="{'c3': true, 'event': true, 'eventselected': allEventTypes, 'all': true}" ng-click="OnEventTypeChange(-1)">All the events</div>
+    </div>
+  </div>
 
-<div class="citylist clearfix">
-  <div class="row">
-    <div class="c3 city">N.Y.</div>
-    <div class="c3 city">L.A</div>
-    <div class="c3 city">D.C</div>
-    <div class="c3 city">Chicago</div>
-  </div>
-  <div class="row">
-    <div class="c3 city">Atlanta</div>
-    <div class="c3 city">Philly</div>
-    <div class="c3 city">Miami</div>
-    <div class="c3 city">San Francisco</div>
-  </div>
-  <div class="row">
-    <div class="c3 city">Dallas</div>
-    <div class="c3 city">Houston</div>
-    <div class="c3 city">Boston</div>
-    <div class="c3 city all">All the cities</div>
-  </div>
-</div>
-<div class="eventlist clearfix">
-  <div class="row">
-    <div class="c3 event">Comedy Show</div>
-    <div class="c3 event">Film</div>
-    <div class="c3 event">Workshop</div>
-    <div class="c3 event">Music Festival</div>
-  </div>
-  <div class="row">
-    <div class="c3 event">Party</div>
-    <div class="c3 event">Concert</div>
-    <div class="c3 event">Competition</div>
-    <div class="c3 event">Sports & Fitness</div>
-  </div>
-  <div class="row">
-    <div class="c3 event">Travel</div>
-    <div class="c3 event">Theater</div>
-    <div class="c3 event">Outdoor</div>
-    <div class="c3 event all">All the events</div>
-  </div>
-</div>
-
-<div id="featured">
-  <div id="featured-scrollbox">
-    <div class="featuredbox">
-      <a href="#" class="img"><img src="http://placekitten.com/300/400" alt="This is event name that is petty decent length"></a>
-      <div class="info">
-        <h3><a href="#">This is event name that is petty decent length name that is pettyname that is pettyname that is pettyname that is petty</a></h3>
-        <div class="date">July 10, 2016</div>
-        <div class="location">Webster Hall, New York</div>
-        <div class="price">$30-$60</div>
-        <div class="homShare">
-          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
-          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
-        </div>
-      </div>
-    </div>
-    <div class="featuredbox">
-      <a href="#" class="img"><img src="http://placekitten.com/300/400" alt="This is event name that is petty decent length"></a>
-      <div class="info">
-        <h3><a href="#">This is event name that is petty decent length.</a></h3>
-        <div class="date">July 10, 2016</div>
-        <div class="location">Webster Hall, New York</div>
-        <div class="price">$300-$900</div>
-        <div class="homShare">
-          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
-          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
-        </div>
-      </div>
-    </div>
-    <div class="featuredbox">
-      <a href="#" class="img"><img src="http://placekitten.com/300/300" alt="Another event that rocks"></a>
-      <div class="info">
-        <h3><a href="#">This is event name that is petty decent length.</a></h3>
-        <div class="date">July 10, 2016</div>
-        <div class="location">Webster Hall, New York</div>
-        <div class="price free">FREE</div>
-        <div class="homShare">
-          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
-          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
-        </div>
-      </div>
-    </div>
-    <div class="featuredbox">
-      <a href="#" class="img"><img src="http://placekitten.com/300/400" alt="This is event name that is petty decent length"></a>
-      <div class="info">
-        <h3><a href="#">This is event name that is petty decent length name that is pettyname that is pettyname that is pettyname that is petty</a></h3>
-        <div class="date">July 10, 2016</div>
-        <div class="location">Webster Hall, New York</div>
-        <div class="price">$30-$60</div>
-        <div class="homShare">
-          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
-          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
-        </div>
-      </div>
-    </div>
-    <div class="featuredbox">
-      <a href="#" class="img"><img src="http://placekitten.com/300/400" alt="This is event name that is petty decent length"></a>
-      <div class="info">
-        <h3><a href="#">This is event name that is petty decent length.</a></h3>
-        <div class="date">July 10, 2016</div>
-        <div class="location">Webster Hall, New York</div>
-        <div class="price">$300-$900</div>
-        <div class="homShare">
-          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
-          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
-        </div>
-      </div>
-    </div>
-    <div class="featuredbox">
-      <a href="#" class="img"><img src="http://placekitten.com/300/300" alt="Another event that rocks"></a>
-      <div class="info">
-        <h3><a href="#">This is event name that is petty decent length.</a></h3>
-        <div class="date">July 10, 2016</div>
-        <div class="location">Webster Hall, New York</div>
-        <div class="price free">FREE</div>
-        <div class="homShare">
-          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
-          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
-        </div>
-      </div>
-    </div>
-    <div class="featuredbox">
-      <a href="#" class="img"><img src="http://placekitten.com/300/400" alt="This is event name that is petty decent length"></a>
-      <div class="info">
-        <h3><a href="#">This is event name that is petty decent length name that is pettyname that is pettyname that is pettyname that is petty</a></h3>
-        <div class="date">July 10, 2016</div>
-        <div class="location">Webster Hall, New York</div>
-        <div class="price">$30-$60</div>
-        <div class="homShare">
-          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
-          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
-        </div>
-      </div>
-    </div>
-    <div class="featuredbox">
-      <a href="#" class="img"><img src="http://placekitten.com/300/400" alt="This is event name that is petty decent length"></a>
-      <div class="info">
-        <h3><a href="#">This is event name that is petty decent length.</a></h3>
-        <div class="date">July 10, 2016</div>
-        <div class="location">Webster Hall, New York</div>
-        <div class="price">$300-$900</div>
-        <div class="homShare">
-          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
-          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
-        </div>
-      </div>
-    </div>
-    <div class="featuredbox">
-      <a href="#" class="img"><img src="http://placekitten.com/300/400" alt="Another event that rocks"></a>
-      <div class="info">
-        <h3><a href="#">This is event name that is petty decent length.</a></h3>
-        <div class="date">July 10, 2016</div>
-        <div class="location">Webster Hall, New York</div>
-        <div class="price free">FREE</div>
-        <div class="homShare">
-          <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
-          <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
+  <div id="featured">
+    <div id="featured-scrollbox">
+      <div class="featuredbox" ng-repeat="ev in eventsList">
+        <a href="{{ev.EventPath}}" class="img"><img ng-src="{{ev.ImageUrl}}" alt="{{ev.ImageAlt}}"></a>
+        <div class="info">
+          <h3><a href="{{ev.EventPath}}">{{ev.EventTitle}}</a></h3>
+          <div class="date">{{ev.EventDates}}</div>
+          <div class="location">{{ev.Address}}</div>
+          <div class="price">{{ev.PriceRange}}</div>
+          <div class="evActions homEV">
+            <a href="#" class="hashLink">#{{ev.EventType}}</a>
+            <a href="#" class="hashLink">#{{ev.EventCategory}}</a>
+            <div class="matBox">
+              <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
+              <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <!--***************************-->
+<section style="display:none;" ng-style="{'display': displayVEPopups}">
+  <div class="popOverlay" ng-show="popVEShareWithFriends">
+    <div class="popBox">
+      <form name="VEShareWithFriendsForm" novalidate>
+        <a class="popClose" ng-click="popVEShareWithFriends=false"><i class="material-icons">clear</i></a>
+        <h3 class="red-heading" style="text-align: center">Share event with friends</h3>
+        <md-input-container class="md-block">
+          <label>Friend's email</label>
+          <input type="email" ng-maxlength="255" required name="email" ng-model="VEMessage.Email" ng-pattern="/^.+@("@").+\..+$/" ng-keypress="submitted=false" />
+          <div ng-messages="VEShareWithFriendsForm.email.$error" role="alert">
+            <div ng-message="required">Please enter friend's email.</div>
+            <div ng-message="pattern">Please use valid email format.</div>
+            <div ng-message="maxlength">Your email is too long.</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+          <label>Message</label>
+          <textarea ng-maxlength="255" required name="message" ng-model="VEMessage.Message" style="min-height:50px"></textarea>
+          <div ng-messages="VEShareWithFriendsForm.message.$error">
+            <div ng-message="required">Please enter your message.</div>
+            <div ng-message="maxlength">Your message is too long. Only 255 characters allowed.</div>
+          </div>
+        </md-input-container>
+        <div class="clear">
+          <button type="reset" class="popLink margin-1em-top gray lFloat" ng-click="popVEShareWithFriends=false">CANCEL</button>
+          <button class="popLink margin-1em-top rFloat" ng-click="TrySendShareWithFriendsMessage(VEShareWithFriendsForm)">SEND</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="popOverlay" ng-show="popLoading">
+    <div class="popBox">
+      <h3 class="blue-heading text-center">{{LoadingMessage}}</h3>
+      <img src="~/Images/ajaxloader1.gif" />
+    </div>
+  </div>
+  <div class="popOverlay" ng-show="popInfoMessage">
+    <div class="popBox">
+      <a class="popClose" ng-click="popInfoMessage=false"><i class="material-icons">clear</i></a>
+      <div class="blue-heading text-center">{{InfoMessage}}</div>
+      <div class="text-center margin-2em-top"><a class="popLink" ng-click="popInfoMessage=false">CONTINUE TO SITE</a></div>
+    </div>
+  </div>
+</section>

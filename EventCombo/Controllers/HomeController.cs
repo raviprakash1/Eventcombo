@@ -31,6 +31,7 @@ using NLog;
 using EventCombo.Service;
 using EventCombo.DAL;
 using AutoMapper;
+using Newtonsoft.Json.Converters;
 
 namespace EventCombo.Controllers
 {
@@ -42,12 +43,16 @@ namespace EventCombo.Controllers
     private ApplicationSignInManager _signInManager;
     private ApplicationUserManager _userManager;
     private IECImageService _iservice;
+    private IEventService _eService;
+    private ILogger _logger;
 
     EventComboEntities db = new EventComboEntities();
     public HomeController()
       : base()
     {
       _iservice = new ECImageService(_factory, _mapper, new ECImageStorage(_mapper));
+      _eService = new EventService(_factory, _mapper);
+      _logger = LogManager.GetCurrentClassLogger();
     }
     public ApplicationSignInManager SignInManager
     {
@@ -2243,13 +2248,40 @@ namespace EventCombo.Controllers
       }
     }
 
+    // ************************************************************************************************
     // Reworked code
+    // ************************************************************************************************
 
     [HttpGet]
     [AllowAnonymous]
     public ActionResult Index()
     {
-      return View();
+      Session["logo"] = "events";
+      Session["Fromname"] = "events";
+      var url = Url.Action("Index", "Home");
+      Session["ReturnUrl"] = "EditEvent~" + url;
+
+      IBaseViewModel b = new BaseViewModel();
+
+      PopulateBaseViewModel(b,"EventCombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free");
+
+      return View(b);
+    }
+
+    public ActionResult GetEventsList(decimal lat, decimal lng)
+    {
+      string userId = "";
+      if (Session["AppId"] != null)
+        userId = Session["AppId"].ToString();
+
+      IEnumerable<ShortEventInfoViewModel> eList = _eService.GetEventListByCoords(lat, lng, userId);
+
+      JsonNetResult res = new JsonNetResult();
+      res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
+      res.SerializerSettings.Converters.Add(new StringEnumConverter());
+      res.Data = eList;
+
+      return res;
     }
   }
 }

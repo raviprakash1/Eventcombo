@@ -346,6 +346,29 @@ namespace EventCombo.Models
     public decimal TotalPrice { get; set; }
   }
 
+  public class ShortEventInfoViewModel
+  {
+    public long EventId { get; set; }
+    public string EventTitle { get; set; }
+    public string EventShortDesc { get; set; }
+    public string VenueName { get; set; }
+    public string Address { get; set; }
+    public string Latitude { get; set; }
+    public string Longitude { get; set; }
+    public string EventType { get; set; }
+    public string EventCategory { get; set; }
+    public string EventSubCategory { get; set; }
+    public long FavoriteCount { get; set; }
+    public bool UserFavorite { get; set; }
+    public long VoteCount { get; set; }
+    public bool UserVote { get; set; }
+    public string ImageUrl { get; set; }
+    public string ImageAlt { get; set; }
+    public string EventPath { get; set; }
+    public string PriceRange { get; set; }
+    public string EventDates { get; set; }
+  }
+
   public class EventInfoViewModel : IBaseViewModel, IOpenGraphProtocol
   {
     // IBaseViewModel interface implementation
@@ -361,7 +384,7 @@ namespace EventCombo.Models
     public string OGPDescription { get; set; }
 
     public long EventId { get; set; }
-    public String EventTitle { get; set; }
+    public string EventTitle { get; set; }
     public string EventDescription { get; set; }
     public string EventShortDesc { get; set; }
     public string VenueName { get; set; }
@@ -418,5 +441,17 @@ namespace EventCombo.Models
   {
     public bool Processed { get; set; }
     public long Count { get; set; }
+  }
+
+  public enum EventTicketState { Price = 0, NotAvailable = 1, SoldOut = 2, RegistrationClosed = 3 }
+
+  public class EventTicketSummary
+  {
+    public EventTicketState State { get; set; }
+    public bool Paid { get; set; }
+    public bool Free { get; set; }
+    public bool Donate { get; set; }
+    public decimal MinPrice { get; set; }
+    public decimal MaxPrice { get; set; }
   }
 }

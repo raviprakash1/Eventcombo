@@ -49,15 +49,19 @@ eventComboApp.controller('HamburgerController', ['$scope', '$window', 'MenuServi
   }]);
 
 
-eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http', '$q', '$cookies',
-  function ($scope, $window, $http, $q, $cookies) {
+eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http', '$q', '$cookies', 'broadcastService', 
+  function ($scope, $window, $http, $q, $cookies, broadcastService) {
 
     $scope.eventString = '';
     $scope.selectedEvent = null;
     $scope.cityString = '';
     $scope.selectedCity = null;
 
-    $scope.geocoords = $cookies.getObject('ECGeoCoordinates');
+    $scope.geocoords = $cookies.getObject('ECCurrentCoordinates');
+    console.logSearchEventController
+    console.log($scope.geocoords.latitude);
+    if (!$scope.geocoords)
+      $scope.geocoords = $cookies.getObject('ECGeoCoordinates');
     var cdate = new Date();
     cdate.setDate(cdate.getDate() + 365);
     if (!$scope.geocoords) {
@@ -80,6 +84,13 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
         $cookies.putObject('ECGeoCoordinates', $scope.geocoords, { path: "/", expires: cdate });
       }
     }
+
+    var cCoords = $cookies.getObject('ECCurrentCoordinates');
+    if (!cCoords) {
+      $cookies.putObject('ECCurrentCoordinates', $scope.geocoords, { path: "/" });
+      broadcastService.CurrentCoordinatesChanged();
+    }
+
 
     $scope.foundCities = [];
 
@@ -135,7 +146,11 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
       }
 
       $scope.placeService.getDetails({ placeId: $scope.selectedCity.place_id }, function (city) {
-        $window.location = '/et/evt/evc/all/page/' + city.geometry.location.lat() + '/' + city.geometry.location.lng() + '/rel/none';
+        $scope.geocoords.latitude = city.geometry.location.lat();
+        $scope.geocoords.longitude = city.geometry.location.lng();
+        $cookies.putObject('ECCurrentCoordinates', $scope.geocoords, { path: "/" });
+        broadcastService.CurrentCoordinatesChanged();
+        $window.location = '/et/evt/evc/all/page/' + $scope.geocoords.latitude + '/' + $scope.geocoords.longitude + '/rel/none';
       })
     }
 
