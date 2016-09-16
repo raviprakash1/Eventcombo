@@ -1260,5 +1260,355 @@ namespace EventCombo.Service
         return selectItems;
     }
 
+    public MemoryStream GetBadgesPreview(long eventId, string format, string UserID)
+    {
+        string pdfPath;
+        format = format.Trim().ToLower();
+        if ((format != "pdf"))
+            return null;
+        MemoryStream memoryStream = new MemoryStream();
+
+        pdfPath = "/TempDoc/NameBadges/preview_" + eventId + "_" + UserID + ".pdf";
+
+        if (File.Exists(HttpContext.Current.Server.MapPath(pdfPath)))
+        {
+            FileStream file = new FileStream(HttpContext.Current.Server.MapPath(pdfPath), FileMode.Open);
+
+            file.CopyTo(memoryStream);
+            file.Close();
+        }
+        byte[] bytes = memoryStream.ToArray();
+        memoryStream.Close();
+        return new MemoryStream(bytes);
+    }
+
+    public string GetBadgesPreviewPath(BadgesViewModel badgesViewModel, string format, string UserID)
+    {
+        string pdfPath;
+        format = format.Trim().ToLower();
+        if ((format != "pdf"))
+            return null;
+
+        pdfPath = "/TempDoc/NameBadges";
+        if (!Directory.Exists(HttpContext.Current.Server.MapPath(pdfPath)))
+        {
+            Directory.CreateDirectory(HttpContext.Current.Server.MapPath(pdfPath));
+        }
+        MemoryStream memoryStream = BadgesListPreviewToPDF(badgesViewModel);
+        pdfPath += "/preview_" + badgesViewModel.EventId + "_" + UserID + ".pdf";
+        FileStream file = new FileStream(HttpContext.Current.Server.MapPath(pdfPath), FileMode.Create, FileAccess.Write);
+        memoryStream.WriteTo(file);
+        file.Close();
+        memoryStream.Close();
+        return "~" + pdfPath;
+    }
+
+    public MemoryStream GetBadgesList(long eventId, string format, string UserID)
+    {
+        string pdfPath;
+        format = format.Trim().ToLower();
+        if ((format != "pdf"))
+            return null;
+        MemoryStream memoryStream = new MemoryStream();
+
+        pdfPath = "/TempDoc/NameBadges/badges_" + eventId + "_" + UserID + ".pdf";
+
+        if (File.Exists(HttpContext.Current.Server.MapPath(pdfPath)))
+        {
+            FileStream file = new FileStream(HttpContext.Current.Server.MapPath(pdfPath), FileMode.Open);
+
+            file.CopyTo(memoryStream);
+            file.Close();
+        }
+        byte[] bytes = memoryStream.ToArray();
+        memoryStream.Close();
+        return new MemoryStream(bytes);
+    }
+
+    public string GetBadgesListPath(BadgesViewModel badgesViewModel, string format, string UserID)
+    {
+        string pdfPath;
+        format = format.Trim().ToLower();
+        if ((format != "pdf"))
+            return null;
+
+        pdfPath = "/TempDoc/NameBadges";
+        if (!Directory.Exists(HttpContext.Current.Server.MapPath(pdfPath)))
+        {
+            Directory.CreateDirectory(HttpContext.Current.Server.MapPath(pdfPath));
+        }
+        MemoryStream memoryStream = BadgesListToPDF(badgesViewModel);
+        pdfPath += "/badges_" + badgesViewModel.EventId + "_" + UserID + ".pdf";
+        FileStream file = new FileStream(HttpContext.Current.Server.MapPath(pdfPath), FileMode.Create, FileAccess.Write);
+        memoryStream.WriteTo(file);
+        file.Close();
+        memoryStream.Close();
+        return "~" + pdfPath;
+    }
+
+    private MemoryStream BadgesListPreviewToPDF(BadgesViewModel badgesViewModel)
+    {
+
+        PdfPTable table = new PdfPTable(1);
+        PdfPTable tableChild = new PdfPTable(1);
+        float inchUnit = 72.00f;
+        float badgeWidth = inchUnit * 4;
+        float badgeHeight = inchUnit * 3;
+
+        if (badgesViewModel.BadgeStyle == "5361")
+        {
+            badgeWidth = inchUnit * 3.25f;
+            badgeHeight = inchUnit * 2;
+        }
+        else if(badgesViewModel.BadgeStyle == "5384" || 
+                badgesViewModel.BadgeStyle == "74459" || 
+                badgesViewModel.BadgeStyle == "74536" || 
+                badgesViewModel.BadgeStyle == "74540" || 
+                badgesViewModel.BadgeStyle == "74540" || 
+                badgesViewModel.BadgeStyle == "74541")
+        {
+            badgeWidth = inchUnit * 4f;
+            badgeHeight = inchUnit * 3;
+        }
+        else if (badgesViewModel.BadgeStyle == "5390")
+        {
+            badgeWidth = inchUnit * 3.50f;
+            badgeHeight = inchUnit * 2.25f;
+        }
+        else if (badgesViewModel.BadgeStyle == "8395")
+        {
+            badgeWidth = inchUnit * 3.38f;
+            badgeHeight = inchUnit * 2.33f;
+        }
+        else if (badgesViewModel.BadgeStyle == "L7418")
+        {
+            badgeWidth = inchUnit * 3.39f;
+            badgeHeight = inchUnit * 2.17f;
+        }
+
+        foreach (BadgesLayout badgesLayout in badgesViewModel.BadgesLayouts.OrderBy(x => x.LineNumber))
+        {
+            var font = FontFactory.GetFont(badgesLayout.Font, badgesLayout.FontSize, BaseColor.BLACK);
+            if (string.IsNullOrEmpty(badgesLayout.LineText))
+                font = FontFactory.GetFont(badgesLayout.Font, badgesLayout.FontSize, BaseColor.WHITE);
+            var text = string.IsNullOrEmpty(badgesLayout.LineText) ? "." : badgesLayout.LineText;
+
+            if (badgesLayout.LineText == "name")
+            {
+                text = "Name Name";
+            }else if (badgesLayout.LineText == "event_name")
+            {
+                text = "Event Name";
+            }
+            else if (badgesLayout.LineText == "ticket_name")
+            {
+                text = "Ticket Name";
+            }
+            else if (badgesLayout.LineText == "email_address")
+            {
+                text = "Email Address";
+            }
+            else if (badgesLayout.LineText == "bill")
+            {
+                text = "Billing Address";
+            }
+                
+            PdfPCell cell = new PdfPCell(new Phrase(text, font));
+            cell.Border = Rectangle.NO_BORDER;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            if (badgesLayout.Align.ToLower() == "right")
+                cell.HorizontalAlignment = 2;
+            else if (badgesLayout.Align.ToLower() == "center")
+                cell.HorizontalAlignment = 1;
+            else
+                cell.HorizontalAlignment = 0;
+            tableChild.AddCell(cell);
+        }
+
+        PdfPCell cellChild = new PdfPCell(tableChild);
+        cellChild.HorizontalAlignment = Element.ALIGN_CENTER;
+        cellChild.Border = Rectangle.NO_BORDER;
+        cellChild.FixedHeight = badgeHeight;            
+        cellChild.VerticalAlignment = Element.ALIGN_MIDDLE;
+        table.AddCell(cellChild);
+        table.SetWidths(new float[] { badgeWidth });
+
+        Document document = new Document(new Rectangle(badgeWidth, badgeHeight), 0.00f, 0.00f, 0.00f, 0.00f);
+        MemoryStream memoryStream = new MemoryStream();
+        PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
+        document.Open();
+        document.Add(table);
+        document.Close();
+        byte[] bytes = memoryStream.ToArray();
+        memoryStream.Close();
+        return new MemoryStream(bytes);
+    }
+
+    private MemoryStream BadgesListToPDF(BadgesViewModel badgesViewModel)
+    {
+        IRepository<Event> EventRepo = new GenericRepository<Event>(_factory.ContextFactory);
+        IRepository<PaymentType> pTRepo = new GenericRepository<PaymentType>(_factory.ContextFactory);
+        IRepository<Address> addressRepo = new GenericRepository<Address>(_factory.ContextFactory);
+
+        var ticketbearerId = (string.IsNullOrEmpty(badgesViewModel.TicketbearerIds) ? new List<string>() : badgesViewModel.TicketbearerIds.Split(',').ToList());
+        IRepository<TicketBearer_View> etBRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
+        IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+
+        List<TicketBearer_View> ticketBearers = new List<TicketBearer_View>();
+
+        if (badgesViewModel.AttendeeSelect == "CONFIRMED_ATTENDEES")
+        {
+            var orderIds = eRVTRepo.Get(filter: (t => t.EventID == badgesViewModel.EventId)).Select(o => o.OrderId);
+            ticketBearers = etBRepo.Get(filter: (t => orderIds.Contains(t.OrderId))).ToList();
+        }
+        else if (badgesViewModel.AttendeeSelect == "ATTENDEES")
+        {
+            ticketBearers = etBRepo.Get(filter: r => ticketbearerId.Contains(r.OrderId + ":" + r.TicketbearerId)).ToList();
+        }
+        else if (badgesViewModel.AttendeeSelect == "TICKET_ATTENDEES")
+        {
+            var orderIds = eRVTRepo.Get(filter: (t => t.EventID == badgesViewModel.EventId && ticketbearerId.Contains(t.TicketTypeID.ToString()))).Select(o => o.OrderId);
+            ticketBearers = etBRepo.Get(filter: (t => orderIds.Contains(t.OrderId))).ToList();
+        }
+
+        var eventTickets = eRVTRepo.Get(filter: (e => e.EventID == badgesViewModel.EventId));
+        if (badgesViewModel.SortBy == "TicketType")
+        {
+            eventTickets = eventTickets.OrderBy(e => e.TicketTypeName);
+        }
+        var eventTitle = EventRepo.Get(filter: (e => e.EventID == badgesViewModel.EventId)).FirstOrDefault();
+        string title = "";
+        string subTitle = "";
+        string subTitle1 = "";
+
+        if (eventTitle != null)
+        {
+            title = eventTitle.EventTitle;
+            var addressId = eventTitle.EventVenues.FirstOrDefault().AddressId;
+            var eventAddressDB = addressRepo.Get(filter: (b => b.AddressID == addressId)).FirstOrDefault();
+            DateTime eStartDateTime = eventTitle.EventVenues.FirstOrDefault().E_Startdate ?? DateTime.UtcNow;
+            DateTime eEndDateTime = eventTitle.EventVenues.FirstOrDefault().E_Enddate ?? DateTime.UtcNow;
+            subTitle = eStartDateTime.ToString("ddd, MMMM dd, yyyy") + " at " + eStartDateTime.ToString("hh:mm tt") + " - " + eEndDateTime.ToString("ddd, MMMM dd, yyyy") + " at " + eEndDateTime.ToString("hh:mm tt");
+            if (eventAddressDB != null)
+            {
+                subTitle1 = eventAddressDB.ConsolidateAddress;
+            }
+        }
+
+        Document document = new Document(PageSize.LETTER, 10f, 10f, 10f, 0f);
+        if (badgesViewModel.BadgeStyle == "L7418")
+        {
+            document = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
+        }
+        MemoryStream memoryStream = new MemoryStream();
+        PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
+        document.Open();
+
+        PdfPTable table = new PdfPTable(2);
+        PdfPTable tableChild = new PdfPTable(1);
+        float inchUnit = 72.00f;
+        float badgeWidth = inchUnit * 4;
+        float badgeHeight = inchUnit * 3;
+
+        if (badgesViewModel.BadgeStyle == "5361")
+        {
+            badgeWidth = inchUnit * 3.25f;
+            badgeHeight = inchUnit * 2;
+        }
+        else if (badgesViewModel.BadgeStyle == "5384" ||
+                badgesViewModel.BadgeStyle == "74459" ||
+                badgesViewModel.BadgeStyle == "74536" ||
+                badgesViewModel.BadgeStyle == "74540" ||
+                badgesViewModel.BadgeStyle == "74540" ||
+                badgesViewModel.BadgeStyle == "74541")
+        {
+            badgeWidth = inchUnit * 4f;
+            badgeHeight = inchUnit * 3;
+        }
+        else if (badgesViewModel.BadgeStyle == "5390")
+        {
+            badgeWidth = inchUnit * 3.50f;
+            badgeHeight = inchUnit * 2.25f;
+        }
+        else if (badgesViewModel.BadgeStyle == "8395")
+        {
+            badgeWidth = inchUnit * 3.38f;
+            badgeHeight = inchUnit * 2.33f;
+        }
+        else if (badgesViewModel.BadgeStyle == "L7418")
+        {
+            badgeWidth = inchUnit * 3.39f;
+            badgeHeight = inchUnit * 2.17f;
+        }
+
+        foreach (var eventTicket in eventTickets.Take(1))
+        {
+            if (badgesViewModel.SortBy == "Name")
+            {
+                ticketBearers = ticketBearers.OrderBy(e => e.Name).ToList();
+            }
+            table = new PdfPTable(2);
+            table.HorizontalAlignment = Element.ALIGN_CENTER;
+
+            foreach (var ticketBearer in ticketBearers)
+            {
+                PdfPCell cellChild = new PdfPCell();
+                cellChild.Border = Rectangle.NO_BORDER;
+                tableChild = new PdfPTable(1);              
+
+                foreach (BadgesLayout badgesLayout in badgesViewModel.BadgesLayouts.OrderBy(x => x.LineNumber))
+                {
+                    var font = FontFactory.GetFont(badgesLayout.Font, badgesLayout.FontSize, BaseColor.BLACK);
+                    if (string.IsNullOrEmpty(badgesLayout.LineText))
+                        font = FontFactory.GetFont(badgesLayout.Font, badgesLayout.FontSize, BaseColor.WHITE);
+                    var text = string.IsNullOrEmpty(badgesLayout.LineText) ? "." : badgesLayout.LineText;
+
+                    if (badgesLayout.LineText == "name")
+                    {
+                        text = ticketBearer.Name;
+                    }
+                    else if (badgesLayout.LineText == "event_name")
+                    {
+                        text = eventTitle.EventTitle;
+                    }
+                    else if (badgesLayout.LineText == "ticket_name")
+                    {
+                        text = eventTicket.TicketName;
+                    }
+                    else if (badgesLayout.LineText == "email_address")
+                    {
+                        text = ticketBearer.Email;
+                    }
+                    else if (badgesLayout.LineText == "bill")
+                    {
+                        text = subTitle1;
+                    }
+
+                    PdfPCell cell = new PdfPCell(new Phrase(text, font));
+                    cell.Border = Rectangle.NO_BORDER;
+                    if (badgesLayout.Align.ToLower() == "right")
+                        cell.HorizontalAlignment = 2;
+                    else if (badgesLayout.Align.ToLower() == "center")
+                        cell.HorizontalAlignment = 1;
+                    else
+                        cell.HorizontalAlignment = 0;
+                    tableChild.AddCell(cell);
+                }
+                cellChild = new PdfPCell(tableChild);
+                cellChild.HorizontalAlignment = Element.ALIGN_CENTER;
+                cellChild.Border = Rectangle.NO_BORDER;
+                cellChild.FixedHeight = badgeHeight;
+                cellChild.VerticalAlignment = Element.ALIGN_MIDDLE;
+                table.AddCell(cellChild);
+                document.Add(table);
+            }
+        }
+        if (document.IsOpen())
+            document.Close();
+        byte[] bytes = memoryStream.ToArray();
+        memoryStream.Close();
+        return new MemoryStream(bytes);
+    }
+
   }
 }

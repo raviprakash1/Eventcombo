@@ -240,4 +240,28 @@ namespace EventCombo.Models
         public decimal Sold { get; set; }
         public int AttendeeCount { get; set; }
     }
+
+    public class BadgesViewModel
+    {
+        public long EventId { get; set; }
+        public string AttendeeSelect { get; set; }
+        public string TicketbearerIds { get; set; }
+        public string SortBy { get; set; }
+        public string BadgeStyle { get; set; }
+        private List<BadgesLayout> _BadgesLayouts = new List<BadgesLayout>();
+        public List<BadgesLayout> BadgesLayouts
+        {
+            get { return _BadgesLayouts; }
+            set { _BadgesLayouts = value; }
+        }
+    }
+
+    public class BadgesLayout
+    {
+        public int LineNumber { get; set; }
+        public string LineText { get; set; }
+        public string Font { get; set; }
+        public int FontSize { get; set; }
+        public string Align { get; set; }
+    }
 }

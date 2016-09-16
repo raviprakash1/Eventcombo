@@ -93,5 +93,34 @@ namespace EventCombo.Controllers
         string appformat = "application/" + (format.ToLower() == "xls" ? "ms-excel" : format.ToLower());
         return new FileStreamResult(mem, appformat) { FileDownloadName = "attendees_" + eventId.ToString() + "." + format };
     }
+
+    public ActionResult AttendeeNameBadgesPreview(long eventId, string format)
+    {
+        if (Session["AppId"] == null)
+            return null;
+
+        string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(eventId, userId) == AccessLevel.Public)
+            return null;
+
+        MemoryStream mem = _maservice.GetBadgesPreview(eventId, format, userId);
+        string appformat = "application/" + (format.ToLower() == "xls" ? "ms-excel" : format.ToLower());
+        return File(mem, appformat);
+    }
+
+    public ActionResult AttendeeNameBadgesList(long eventId, string format)
+    {
+        if (Session["AppId"] == null)
+            return null;
+
+        string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(eventId, userId) == AccessLevel.Public)
+            return null;
+
+        MemoryStream mem = _maservice.GetBadgesList(eventId, format, userId);
+        string appformat = "application/" + (format.ToLower() == "xls" ? "ms-excel" : format.ToLower());
+        return new FileStreamResult(mem, appformat) { FileDownloadName = "attendeesbadges_" + eventId.ToString() + "." + format };
+    }
+
   }
 }

@@ -169,16 +169,21 @@ namespace EventCombo.Controllers
     }
 
     [HttpGet]
-    public ActionResult Badges()
+    public ActionResult Badges(long eventId)
     {
-      if ((Session["AppId"] == null))
-        return DefaultAction();
+        if ((Session["AppId"] == null))
+            return DefaultAction();
 
-      string userId = Session["AppId"].ToString();
-      Session["logo"] = "events";
-      Session["Fromname"] = "ManageAttendees";
-      Session["ReturnUrl"] = Url.Action("Badges", "ManageAttendees");
-      return View();
+        string userId = Session["AppId"].ToString();
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Badges", "ManageAttendees");
+
+        ViewBag.EventId = eventId;
+        ViewBag.Title = "Name Badges | Eventcombo";
+        var model = _maservice.GetSelectAttendeeDropdownList(eventId);
+
+        return View(model);
     }
 
     [HttpGet]
@@ -220,9 +225,17 @@ namespace EventCombo.Controllers
         startDate = new DateTime(startDate.Year, startDate.Month, 1);
       }
       if (String.IsNullOrWhiteSpace(req.Search))
-        orders = orders.Where(o => (o.Date >= startDate));
+      {
+          if (startDate.Year != 1900)
+              orders = orders.Where(o => (o.Date >= startDate));
+      }
       else
-        orders = orders.Where(o => ((o.Date >= startDate) && ((o.OrderId.Contains(req.Search.Trim())) || (o.BuyerName.Contains(req.Search.Trim())) || (o.BuyerEmail.Contains(req.Search.Trim())))));
+      {
+          if (startDate.Year == 1900)
+              orders = orders.Where(o => (((o.OrderId.Contains(req.Search.Trim())) || (o.BuyerName.Contains(req.Search.Trim())) || (o.BuyerEmail.Contains(req.Search.Trim())))));
+          else
+              orders = orders.Where(o => ((o.Date >= startDate) && ((o.OrderId.Contains(req.Search.Trim())) || (o.BuyerName.Contains(req.Search.Trim())) || (o.BuyerEmail.Contains(req.Search.Trim())))));
+      }
       res.Total = orders.Count();
 
       switch (req.SortBy)
@@ -519,5 +532,32 @@ namespace EventCombo.Controllers
         return PartialView("_AttendeeTicketTypeList", attendees);
     }
 
+    [HttpPost]
+    public ActionResult AttendeeNameBadgesPreview(BadgesViewModel badgesViewModel, string format)
+    {
+        if (Session["AppId"] == null)
+            return null;
+
+        string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(badgesViewModel.EventId, userId) == AccessLevel.Public)
+            return null;
+
+        string path = _maservice.GetBadgesPreviewPath(badgesViewModel, format, userId);
+        return Content(path);
+    }
+
+    [HttpPost]
+    public ActionResult AttendeeNameBadgesList(BadgesViewModel badgesViewModel, string format)
+    {
+        if (Session["AppId"] == null)
+            return null;
+
+        string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(badgesViewModel.EventId, userId) == AccessLevel.Public)
+            return null;
+
+        string path = _maservice.GetBadgesListPath(badgesViewModel, format, userId);
+        return Content(path);
+    }
   }
 }

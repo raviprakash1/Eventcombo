@@ -51,5 +51,13 @@ namespace EventCombo.Service
     IEnumerable<SelectItemModel> GetSendToDropdownList(long eventId);
 
     MemoryStream GetDownloadableGuestList(string sortBy, string ticketTypeIds, string barcode, long eventId, string format);
+
+    MemoryStream GetBadgesPreview(long eventId, string format, string UserID);
+
+    string GetBadgesPreviewPath(BadgesViewModel badgesViewModel, string format, string UserID);
+
+    string GetBadgesListPath(BadgesViewModel badgesViewModel, string format, string UserID);
+
+    MemoryStream GetBadgesList(long eventId, string format, string UserID);
   }
 }

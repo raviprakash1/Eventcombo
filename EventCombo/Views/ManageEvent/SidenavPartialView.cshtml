@@ -73,9 +73,8 @@
               <p>@Html.ActionLink("Orders", "Orders", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
               <p>@Html.ActionLink("Add Attendees", "Add", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
               <p>@Html.ActionLink("Emails to Attendees", "AttendeeEmail", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
-              <p class="invite_nav"></p>
               <p class="invite_nav">@Html.ActionLink("Guest List", "Guests", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
-              <p class="invite_nav">Name Badges</p>
+              <p class="invite_nav">@Html.ActionLink("Name Badges", "Badges", "ManageAttendees", new { eventId = Model.EventId }, null)</p>
               <p class="invite_nav">Check-in</p>
             </div>
           </div>
