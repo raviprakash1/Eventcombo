@@ -252,7 +252,7 @@
                             {
                                 if (Model.EventExpired == "N")
                                 {
-                                    <li>@Html.ActionLink("Edit Event", "ModifyEvent", "EditEvent", new { Eventid = ValidationMessageController.GetParentEventId(Model.Eventid) }, new { }) </li>
+                                    <li>@Html.ActionLink("Edit Event", "EditEvent", "EventManagement", new { eventId = ValidationMessageController.GetParentEventId(Model.Eventid) }, new { }) </li>
                                 }
                             }
                         </ul>
@@ -734,18 +734,9 @@
                 data: { Eventid: vEventId, strEventTitle: vEventTitle },
                 type: "Post",
                 success: function (response) {
-                    window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
+                  window.location.href = '@Url.Action("EditEvent", "EventManagement", new { })' + '?eventId=' + response;
                 }
             });
-
-            @*$.ajax({
-                        url: '@Url.Action("SaveEvent", "ManageEvent")',
-                        data: { Eventid: vEventId, strEventTitle: vEventTitle },
-                        type: "Post",
-                        success: function (response) {
-                            window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + response;
-                        }
-                    });*@
         });
 
 
@@ -1364,10 +1355,7 @@
                 url: '@Url.Action("SetScrollTemp", "ManageEvent")',
                 type: "Post",
                 success: function (response) {
-
-                    @*window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { })' + '?Eventid=' + EventId;*@
-                    window.location.href = '@Url.Action("ModifyEvent", "EditEvent", new { Eventid = ValidationMessageController.GetParentEventId(Model.Eventid).ToString() })';
-
+                    window.location.href = '@Url.Action("EditEvent", "EventManagement", new { eventId = ValidationMessageController.GetParentEventId(Model.Eventid).ToString() })';
                 }
             });
 

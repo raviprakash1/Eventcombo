@@ -51,10 +51,8 @@ namespace EventCombo.Controllers
       string userId = Session["AppId"].ToString();
       ECImageViewModel image = JsonConvert.DeserializeObject<ECImageViewModel>(json);
 
-      if (image.ECImageId != 0) // not temporary image
-        return null;
-
-      _iservice.DeleteImage(image, userId);
+      if (image.ECImageId == 0) // delete only temporary images
+        _iservice.DeleteImage(image, userId);
 
       JsonNetResult res = new JsonNetResult();
       return res;

@@ -48,7 +48,6 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
 
     $scope.onPriceChange = function (ticket) {
       if (ticket) {
-        console.log(ticket.PriceText);
         ticket.Amount = parseFloat(ticket.PriceText);
         ticket.Amount = isNaN(ticket.Amount) ? 0 : ticket.Amount;
       }

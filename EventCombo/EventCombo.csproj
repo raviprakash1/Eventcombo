@@ -687,6 +687,8 @@
     <Compile Include="Service\ArticleService.cs" />
     <Compile Include="Service\ECImageStorage.cs" />
     <Compile Include="Service\ECImageService.cs" />
+    <Compile Include="Service\Notification\NewEventNotification.cs" />
+    <Compile Include="Service\Notification\EventChangeNotification.cs" />
     <Compile Include="Service\Notification\EmailToFriendsNotification.cs" />
     <Compile Include="Service\EventService.cs" />
     <Compile Include="Service\HangfireBootstrapper.cs" />
@@ -987,6 +989,7 @@
     <Content Include="Scripts\AMaterial\angular-cookies.min.js" />
     <Content Include="Scripts\AMaterial\angular-material-datetimepicker.js" />
     <Content Include="Scripts\AMaterial\angular-material.js" />
+    <Content Include="Scripts\AMaterial\angular-material.min.js" />
     <Content Include="Scripts\AMaterial\angular-messages.js" />
     <Content Include="Scripts\AMaterial\angular-messages.min.js" />
     <Content Include="Scripts\AMaterial\angular-route.js" />

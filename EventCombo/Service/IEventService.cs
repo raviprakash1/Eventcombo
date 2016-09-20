@@ -12,7 +12,7 @@ namespace EventCombo.Service
   {
     EventViewModel CreateEvent(string userId);
     void SaveEvent(EventViewModel ev, Func<string, string> mapPath);
-    EventViewModel GetEventById(int id);
+    EventViewModel GetEventById(long id);
     bool ValidateEvent(EventViewModel ev);
     void PublishEvent(long id, string userId);
     IEnumerable<EventSearchViewModel> Search(string searchStr);
