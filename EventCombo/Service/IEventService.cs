@@ -23,5 +23,6 @@ namespace EventCombo.Service
     IncrementResultViewModel AddFavorite(long eventId, string userId);
     IncrementResultViewModel VoteEvent(long eventId, string userId);
     IEnumerable<ShortEventInfoViewModel> GetEventListByCoords(decimal lat, decimal lng, string userId);
+    HomepageInfoViewModel GetHomepageInfo();
   }
 }

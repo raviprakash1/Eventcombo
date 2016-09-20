@@ -2261,11 +2261,11 @@ namespace EventCombo.Controllers
       var url = Url.Action("Index", "Home");
       Session["ReturnUrl"] = "EditEvent~" + url;
 
-      IBaseViewModel b = new BaseViewModel();
+      var model = _eService.GetHomepageInfo();
 
-      PopulateBaseViewModel(b,"EventCombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free");
+      PopulateBaseViewModel(model, "EventCombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free");
 
-      return View(b);
+      return View(model);
     }
 
     public ActionResult GetEventsList(decimal lat, decimal lng)

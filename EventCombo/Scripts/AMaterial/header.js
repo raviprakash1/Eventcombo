@@ -58,8 +58,6 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
     $scope.selectedCity = null;
 
     $scope.geocoords = $cookies.getObject('ECCurrentCoordinates');
-    console.logSearchEventController
-    console.log($scope.geocoords.latitude);
     if (!$scope.geocoords)
       $scope.geocoords = $cookies.getObject('ECGeoCoordinates');
     var cdate = new Date();

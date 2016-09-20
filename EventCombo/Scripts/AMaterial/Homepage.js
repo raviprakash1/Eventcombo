@@ -25,8 +25,6 @@
 
     $scope.UpdateEventList = function () {
       var c = $cookies.getObject('ECCurrentCoordinates');
-      console.log(c.latitude);
-      console.log($scope.coords.latitude);
       if (!c || ((c.latitude == $scope.coords.latitude) && (c.longitude == $scope.coords.longitude))) {
         return;
       }
@@ -44,7 +42,6 @@
     $scope.UpdateEventList();
 
     $scope.$on('CurrentCoordinatesChanged', function (val) {
-      console.log("CurrentCoordinatesChanged");
       $scope.UpdateEventList();
     });
 

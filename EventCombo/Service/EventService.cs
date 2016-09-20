@@ -1407,5 +1407,21 @@ namespace EventCombo.Service
       return res;
     }
 
+    public HomepageInfoViewModel GetHomepageInfo()
+    {
+      HomepageInfoViewModel res = new HomepageInfoViewModel();
+
+      var fList = Directory.GetFiles(HostingEnvironment.MapPath("/Images/Video"), "*.gif");
+
+      if ((fList != null) && fList.Any())
+      {
+        var rnd = new Random();
+        res.ImageUrl = "/Images/Video/" + Path.GetFileName(fList[rnd.Next(fList.Count())]);
+      }
+      else
+        res.ImageUrl = "/Images/AMaterial/RecordBackgroundFinal_1000.gif";
+
+      return res;
+    }
   }
 }

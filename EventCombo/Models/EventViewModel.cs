@@ -454,4 +454,27 @@ namespace EventCombo.Models
     public decimal MinPrice { get; set; }
     public decimal MaxPrice { get; set; }
   }
+
+  public class CityViewModel
+  {
+    public long CityID { get; set; }
+    public string CityName { get; set; }
+    public string Latitude { get; set; }
+    public string Longitude { get; set; }
+  }
+
+  public class HomepageInfoViewModel : IBaseViewModel
+  {
+    // IBaseViewModel interface implementation
+    public string BaseTitle { get; set; }
+    public string BaseUserId { get; set; }
+    public string BaseUserName { get; set; }
+    public string BaseUserEmail { get; set; }
+
+
+    public string ImageUrl { get; set; }
+    public IEnumerable<string> KeyWords { get; set; }
+    public IEnumerable<CityViewModel> Cities { get; set; }
+    public IEnumerable<EventTypeViewModel> EventTypes { get; set; }
+  }
 }
