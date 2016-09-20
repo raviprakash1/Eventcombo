@@ -187,16 +187,24 @@ namespace EventCombo.Controllers
     }
 
     [HttpGet]
-    public ActionResult Checkin()
+    public ActionResult Checkin(long eventId)
     {
-      if ((Session["AppId"] == null))
-        return DefaultAction();
+        if ((Session["AppId"] == null))
+            return DefaultAction();
 
-      string userId = Session["AppId"].ToString();
-      Session["logo"] = "events";
-      Session["Fromname"] = "ManageAttendees";
-      Session["ReturnUrl"] = Url.Action("Checkin", "ManageAttendees");
-      return View();
+        string userId = Session["AppId"].ToString();
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Checkin", "ManageAttendees");
+
+        ViewBag.EventId = eventId;
+        ViewBag.Title = "Checkin | Eventcombo";
+
+        AttendeeSearchRequestViewModel attendeeSearchRequest = new AttendeeSearchRequestViewModel();
+        attendeeSearchRequest.EventId = eventId;
+        var attendees = _maservice.GetAttendeeCheckinList(attendeeSearchRequest);
+
+        return View(attendees);
     }
 
     [HttpGet]

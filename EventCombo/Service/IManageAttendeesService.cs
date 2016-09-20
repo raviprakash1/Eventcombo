@@ -44,6 +44,8 @@ namespace EventCombo.Service
 
     List<AttendeeViewModel> GetAttendeeList(AttendeeSearchRequestViewModel request);
 
+    List<CheckinViewModel> GetAttendeeCheckinList(AttendeeSearchRequestViewModel request);
+
     List<AttendeeTicketTypeViewModel> GetAttendeeTicketTypeList(long eventId);
 
     IEnumerable<SelectItemModel> GetSelectAttendeeDropdownList(long eventId);

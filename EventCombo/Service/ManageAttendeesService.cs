@@ -1046,6 +1046,29 @@ namespace EventCombo.Service
                 }).ToList();
         return attendees;
     }
+    public List<CheckinViewModel> GetAttendeeCheckinList(AttendeeSearchRequestViewModel request)
+    {
+        IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+        IRepository<TicketBearer_View> sERepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
+
+        var orderIds = eRVTRepo.Get(filter: (t => t.EventID == request.EventId)).Select(o => o.OrderId);
+        var attendees = sERepo.Get(filter: a => (string.IsNullOrEmpty(request.Name) ? true : a.Name.Contains(request.Name))
+        && (string.IsNullOrEmpty(request.Email) ? true : a.Email.Contains(request.Email)) && orderIds.Contains(a.OrderId))
+                .Select((element) => new CheckinViewModel
+                {
+                    Email = element.Email,
+                    Name = element.Name,
+                    TicketbearerId = element.TicketbearerId,
+                    OrderId = element.OrderId
+                }).ToList();
+
+        foreach (var attendee in attendees)
+        {
+                attendee.TicketType = "";
+                attendee.CheckinStatus = false;
+        }
+        return attendees;
+    }
     public List<AttendeeTicketTypeViewModel> GetAttendeeTicketTypeList(long eventId)
     {
         IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);

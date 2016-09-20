@@ -264,4 +264,14 @@ namespace EventCombo.Models
         public int FontSize { get; set; }
         public string Align { get; set; }
     }
+
+    public class CheckinViewModel
+    {
+        public long TicketbearerId { get; set; }
+        public string OrderId { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string TicketType { get; set; }
+        public bool CheckinStatus { get; set; }
+    }
 }
