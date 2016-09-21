@@ -674,16 +674,16 @@ namespace EventCombo.Service
 
       evList.AddRange(etRepo.Get(filter: (et => et.EventType1.Contains(searchStr))).Select(et => new EventSearchViewModel()
         {
-          EventId = 0,
+          EventId = et.EventTypeID,
           RecordTypeId = 1,
-          EventTitle = et.EventType1
+          EventTitle = et.EventType1 + " (Event Type)"
         }));
 
       evList.AddRange(ecRepo.Get(filter: (ec => ec.EventCategory1.Contains(searchStr))).Select(ec => new EventSearchViewModel()
       {
-        EventId = 0,
+        EventId = ec.EventCategoryID,
         RecordTypeId = 2,
-        EventTitle = ec.EventCategory1
+        EventTitle = ec.EventCategory1 + " (Event Category)"
       }));
 
       return evList.OrderBy(e => e.EventTitle);

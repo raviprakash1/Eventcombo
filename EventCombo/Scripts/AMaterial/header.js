@@ -106,15 +106,24 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
 
     $scope.DiscoverByEvent = function () {
       if ($scope.eventString) {
-        var lat = $scope.geocoords.latitude;
-        var lng = $scope.geocoords.longitude;
-        var srchStr = $scope.eventString;
-        if ($scope.selectedEvent) {
-          lat = $scope.selectedEvent.Latitude ? $scope.selectedEvent.Latitude : lat;
-          lng = $scope.selectedEvent.Longitude ? $scope.selectedEvent.Longitude : lng;
-          srchStr = $scope.selectedEvent.RecordTypeId == 0 ? srchStr.substring(0, 53) : srchStr.substring(0, 16);
+        var data = {
+          EventId: 0,
+          RecordTypeId: 0,
+          EventTitle: $scope.eventString,
+          Latitude: $scope.geocoords.latitude,
+          Longitude: $scope.geocoords.longitude,
         }
-        $window.location = '/et/evt/evc/all/page/' + lat + '/' + lng + '/rel/none/' + encodeURIComponent(srchStr);
+        if ($scope.selectedEvent) {
+          data.EventId = $scope.selectedEvent.EventId;
+          data.EventId = $scope.selectedEvent.EventId;
+          data.RecordTypeId = $scope.selectedEvent.RecordTypeId;
+        }
+
+        console.log(data);
+        $http.get('/home/SearchEvents', { params: { json: angular.toJson(data) } }).then(function (response) {
+          if (response.data)
+            $window.location = response.data;
+        }, function (error) { });
       }
     }
 

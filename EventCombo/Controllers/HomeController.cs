@@ -32,6 +32,7 @@ using EventCombo.Service;
 using EventCombo.DAL;
 using AutoMapper;
 using Newtonsoft.Json.Converters;
+using System.Text.RegularExpressions;
 
 namespace EventCombo.Controllers
 {
@@ -1440,7 +1441,7 @@ namespace EventCombo.Controllers
       Session["Fromname"] = "ForgetPassword";
       return View();
     }
-    
+
     [HttpPost]
     public ActionResult ForgetPassword(ForgetPassword model)
     {
@@ -2282,6 +2283,58 @@ namespace EventCombo.Controllers
       res.Data = eList;
 
       return res;
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public string SearchEvents(string json)
+    {
+      EventSearchViewModel eSearch = JsonConvert.DeserializeObject<EventSearchViewModel>(json);
+      if (eSearch.RecordTypeId == 0)
+      {
+        var eList = _eService.Search(eSearch.EventTitle);
+        if (eList.Count(e => e.RecordTypeId == 0) > 1)
+          return Url.Action("DiscoverEvents", new
+            {
+              strEt = "evt",
+              strEc = "evc",
+              strPrice = "all",
+              strPageIndex = "page",
+              strLat = String.IsNullOrEmpty(eSearch.Latitude) ? "lat" : eSearch.Latitude,
+              strLong = String.IsNullOrEmpty(eSearch.Longitude) ? "lng" : eSearch.Longitude,
+              strSort = "rel",
+              strDateFilter = "none",
+              strTextSearch = eSearch.EventTitle
+            });
+        else
+          return Url.Action("ViewEvent", "EventManagement", new { strEventDs = Regex.Replace(eSearch.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = eSearch.EventId });
+      }
+      else if (eSearch.RecordTypeId == 1)
+        return Url.Action("DiscoverEvents", new
+        {
+          strEt = eSearch.EventId.ToString(),
+          strEc = "evc",
+          strPrice = "all",
+          strPageIndex = "page",
+          strLat = String.IsNullOrEmpty(eSearch.Latitude) ? "lat" : eSearch.Latitude,
+          strLong = String.IsNullOrEmpty(eSearch.Longitude) ? "lng" : eSearch.Longitude,
+          strSort = "rel",
+          strDateFilter = "none",
+          strTextSearch = ""
+        });
+      else
+        return Url.Action("DiscoverEvents", new
+        {
+          strEt = "evt",
+          strEc = eSearch.EventId.ToString(),
+          strPrice = "all",
+          strPageIndex = "page",
+          strLat = String.IsNullOrEmpty(eSearch.Latitude) ? "lat" : eSearch.Latitude,
+          strLong = String.IsNullOrEmpty(eSearch.Longitude) ? "lng" : eSearch.Longitude,
+          strSort = "rel",
+          strDateFilter = "none",
+          strTextSearch = ""
+        });
     }
   }
 }
