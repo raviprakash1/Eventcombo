@@ -170,15 +170,7 @@ md-ink-bar { bottom:12px !important;}
 /*end date picker floating text*/
 .ticketStartEndDate { margin-bottom:15px;}
 .myAccountDiv { padding-left:15px; box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26);}
-/*FOOTER CSS*/
-footer { position:relative; bottom:-400px; right:0px; font-weight:200; line-height:1.4em;}
-.footer-right { float:right; bottom:100px; right:50px; position:absolute;}
-.footer-left { float:left; bottom:100px; left:50px; position:absolute;}
-.footerlogo { text-align:center; width:100%; height:40vh; background:url(../../Images/AMaterial/EventComboLogo.svg) center no-repeat; background-size:700vw; overflow:hidden; background-position:top;}
-.footerwhite { background:rgba(255, 255, 255, 0.5); width:100%; height:77%;}
-/*HEADER CSS*/
 .headerlogo { margin:34px 10px 50px 34px; width:30vw; max-width:360px; min-width:100px;}
-header { background:url(../../Images/AMaterial/stripes.png) repeat-x;}
 .headerCEHeadBtn { text-align:right; margin:10px 70px 19px 0px;}
 .btnSaveHeadCE { color:#fff; border:0px; background-color:rgb(0, 202, 253); padding:10px 40px; font-size:14px; border-radius:5px; display:inline-block; font-family:'Roboto', Arial, Helvetica, sans-serif; margin:4px 0;}
 .btnPreviewHeadCE { color:#fff; border:0px; background-color:rgb(0, 202, 253); padding:10px 40px; font-size:14px; font-family:'Roboto'; border-radius:5px; display:inline-block; margin:5px;}
@@ -193,7 +185,7 @@ header { background:url(../../Images/AMaterial/stripes.png) repeat-x;}
 .websiteURLTxtboxCls { color:#fff !important; border-color:#fff !important; font-size:18px !important; font-weight:500;}
 .websiteURLTxtLblCls { color:#fff !important; font-size:18px !important; font-weight:500;}
 .eventcombo_com { color:rgba(255, 255, 255, .6); font-family:'Roboto', Arial, Helvetica, sans-serif; font-size:18px; font-weight:500;}
-.eventDetailTxtFields { background:#FFFFFF; padding:20px 10px 10px 20px; display:block; clear:both; opacity:0.8;}
+.eventDetailTxtFields { background:#fff; padding:20px 10px 10px 20px; display:block; clear:both; opacity:0.8;}
 .EDTxtENTxtBox { width:100%; border:none; font-size:36px; font-family:'Roboto', Arial, Helvetica, sans-serif; font-weight:500; background:none; color:#304756; margin-bottom:10px;}
 .EDTxtENTxtBox::-moz-placeholder { opacity:1; color:#304756;}
 .EDTxtENTxtBox:-moz-placeholder { opacity:1; color:#304756;}
@@ -221,7 +213,6 @@ header { background:url(../../Images/AMaterial/stripes.png) repeat-x;}
 .EDTxtEventDateTime { color:#304756; font:500 18px/26px "Roboto", Arial, Helvetica, sans-serif; cursor:pointer;}
 .pickuptimeTxt { padding-left:12px; margin-left:20px;}
 .pickuptimeIcon { font-size:16px;}
-md-checkbox.md-checked.blue .md-icon { background-color:#00BCD4;}
 .bold .md-label { color:#000; font-size:15px; margin-left:35px;}
 .EDTxtEventChkBxCon { font:15px/24px "Roboto", Arial, Helvetica, sans-serif; color:rgb(0, 0, 0); margin-top:20px;}
 .eventDtkHeadCon { padding-left:15px;}
@@ -264,7 +255,6 @@ md-checkbox.md-checked.blue .md-icon { background-color:#00BCD4;}
 .tellus_pics { display:inline-block; position:relative; margin-left:5px;}
 md-tabs-canvas { margin-left:30px;}
 md-tabs-wrapper { border:none !important;}
-md-dialog { width:800px;}
 .md-tab { color:#888 !important;}
 .md-tab.md-active { color:rgb(0, 202, 253) !important;}
 .pickupDateContainer { min-width:380px; border:1px solid #c1c1c1; margin:0px auto; position:absolute; background:#fff; z-index:2; box-shadow:2px 2px 5px 0px #c1c1c1; margin-top:-65px; margin-left:15px; font-family:'Roboto', Arial, Helvetica, sans-serif;}
@@ -273,7 +263,7 @@ md-dialog { width:800px;}
 .ticketPriceLbl { z-index:1;}
 .buyerInfo { position:absolute !important; border:1px solid #888; width:160px; max-width:100%; text-align:right; position:relative; background-color:#888; color:white; top:-130px; left:62px; z-index:100; padding:5px 10px;}
 .buyerInfo:before { position:absolute; content:''; width:0px; height:0px; border-left:15px solid transparent; border-right:15px solid transparent; border-top:15px solid#888; border-bottom:15px solid transparent; bottom:-30px; left:65px;}
-.validation-datepicker-messages { font-size:12px; font-weight:normal; color:#dd2c00; margin:10px 0;}
+.validation-datepicker-messages { font-size:12px; font-weight:normal; color:#dd2c00; margin:5px 0;}
 .validation-standard-messages { font-size:12px; font-weight:normal; color:#dd2c00; margin:6px 0 6px 0; text-align:left;}
 .clearfix { clear:both;}
 /* CATALYST CSS*/
@@ -287,29 +277,6 @@ md-dialog { width:800px;}
 .OrganizerBody .addTicketBtnCls span, .variabeDetails span { float:none !important;}
 .socialMediaIcon { width:100%; display:inline-block;}
 .socialMediaIcon img { height:25px; float:left; margin:23px 10px}
-
-.md-datepicker-button { display:none;}
-.md-datepicker-triangle-button { transform:translateY(-10%) translateX(45%);}
-.md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle, .md-datepicker-triangle-button .md-datepicker-expand-triangle { border-width:5px; border-top-width:6px; border-top-color:rgba(0, 0, 0, 0.5);}
-.md-default-theme .md-datepicker-input, .md-datepicker-input { color:rgba(0, 0, 0, 0.9);}
-md-select.md-default-theme .md-select-value.md-select-placeholder, md-select .md-select-value.md-select-placeholder, md-input-container.md-default-theme label, md-input-container label, md-input-container.md-default-theme .md-placeholder, md-input-container .md-placeholder { color:rgba(0, 0, 0, 0.5);}
-.mce-container, .mce-container *, .mce-widget, .mce-widget *, .mce-reset { white-space:normal;}
-md-checkbox .md-container { top:2px; transform:none;}
- input:-webkit-autofill { -webkit-box-shadow:0 0 0px 1000px white inset;}
- md-input-container.md-default-theme.md-input-focused:not(.md-input-invalid) label, md-input-container.md-input-focused:not(.md-input-invalid) label, md-select-menu.md-default-theme md-option[selected], md-select-menu md-option[selected], md-select-menu.md-default-theme md-option[selected]:focus, md-select-menu md-option[selected]:focus, md-tabs.md-default-theme .md-tab.md-active, md-tabs .md-tab.md-active, md-tabs.md-default-theme .md-tab.md-active md-icon, md-tabs .md-tab.md-active md-icon, md-tabs.md-default-theme .md-tab.md-focused, md-tabs .md-tab.md-focused, md-tabs.md-default-theme .md-tab.md-focused md-icon, md-tabs .md-tab.md-focused md-icon { color:rgb(0,202,253);}
- md-input-container.md-default-theme.md-input-focused:not(.md-input-invalid) .md-input, md-input-container.md-input-focused:not(.md-input-invalid) .md-input, md-radio-group.md-default-theme:not([disabled]) .md-primary .md-checked .md-off, md-radio-group:not([disabled]) .md-primary .md-checked .md-off, md-radio-group.md-default-theme:not([disabled]) .md-primary.md-checked .md-off, md-radio-group:not([disabled]) .md-primary.md-checked .md-off, md-radio-group.md-default-theme.md-primary:not([disabled]) .md-checked .md-off, md-radio-group.md-primary:not([disabled]) .md-checked .md-off, md-radio-group.md-default-theme.md-primary.md-checked:not([disabled]) .md-off, md-radio-group.md-primary.md-checked:not([disabled]) .md-off, md-radio-button.md-default-theme:not([disabled]) .md-primary .md-checked .md-off, md-radio-button:not([disabled]) .md-primary .md-checked .md-off, md-radio-button.md-default-theme:not([disabled]) .md-primary.md-checked .md-off, md-radio-button:not([disabled]) .md-primary.md-checked .md-off, md-radio-button.md-default-theme.md-primary:not([disabled]) .md-checked .md-off, md-radio-button.md-primary:not([disabled]) .md-checked .md-off, md-radio-button.md-default-theme.md-primary.md-checked:not([disabled]) .md-off, md-radio-button.md-primary.md-checked:not([disabled]) .md-off { border-color:rgb(0, 202, 253);}
- md-select.md-default-theme:focus:not([disabled]) .md-select-value, md-select:focus:not([disabled]) .md-select-value, .md-default-theme .md-datepicker-input-container.md-datepicker-focused, .md-datepicker-input-container.md-datepicker-focused { border-bottom-color:rgb(0,202,253);}
- md-radio-group.md-default-theme:not([disabled]) .md-primary .md-on, md-radio-group:not([disabled]) .md-primary .md-on, md-radio-group.md-default-theme.md-primary:not([disabled]) .md-on, md-radio-group.md-primary:not([disabled]) .md-on, md-radio-button.md-default-theme:not([disabled]) .md-primary .md-on, md-radio-button:not([disabled]) .md-primary .md-on, md-radio-button.md-default-theme.md-primary:not([disabled]) .md-on, md-radio-button.md-primary:not([disabled]) .md-on, .md-checkbox-enabled.md-default-theme[selected] .md-icon, .md-checkbox-enabled[selected] .md-icon, ._md-checkbox-enabled.md-default-theme[selected] ._md-icon, ._md-checkbox-enabled[selected] ._md-icon { background-color:rgb(0, 202, 253);}
-md-select-menu.md-default-theme md-content md-option[selected], md-select-menu md-content md-option[selected], md-select-menu.md-default-theme md-content md-option[selected]:focus, md-select-menu md-content md-option[selected]:focus { color:rgb(0, 202, 253);}
-md-radio-group.md-default-theme:not([disabled]) .md-primary .md-checked ._md-off, md-radio-group:not([disabled]) .md-primary .md-checked ._md-off, md-radio-group.md-default-theme:not([disabled]) .md-primary.md-checked ._md-off, md-radio-group:not([disabled]) .md-primary.md-checked ._md-off, md-radio-group.md-default-theme.md-primary:not([disabled]) .md-checked ._md-off, md-radio-group.md-primary:not([disabled]) .md-checked ._md-off, md-radio-group.md-default-theme.md-primary.md-checked:not([disabled]) ._md-off, md-radio-group.md-primary.md-checked:not([disabled]) ._md-off, md-radio-button.md-default-theme:not([disabled]) .md-primary .md-checked ._md-off, md-radio-button:not([disabled]) .md-primary .md-checked ._md-off, md-radio-button.md-default-theme:not([disabled]) .md-primary.md-checked ._md-off, md-radio-button:not([disabled]) .md-primary.md-checked ._md-off, md-radio-button.md-default-theme.md-primary:not([disabled]) .md-checked ._md-off, md-radio-button.md-primary:not([disabled]) .md-checked ._md-off, md-radio-button.md-default-theme.md-primary.md-checked:not([disabled]) ._md-off, md-radio-button.md-primary.md-checked:not([disabled]) ._md-off { border-color:rgba(0, 202, 253, 0.87);}
-md-radio-group.md-default-theme:not([disabled]) .md-primary ._md-on, md-radio-group:not([disabled]) .md-primary ._md-on, md-radio-group.md-default-theme.md-primary:not([disabled]) ._md-on, md-radio-group.md-primary:not([disabled]) ._md-on, md-radio-button.md-default-theme:not([disabled]) .md-primary ._md-on, md-radio-button:not([disabled]) .md-primary ._md-on, md-radio-button.md-default-theme.md-primary:not([disabled]) ._md-on, md-radio-button.md-primary:not([disabled]) ._md-on { background-color:rgba(0, 202, 253, 0.87);}
-md-select.md-default-theme:focus:not([disabled]) ._md-select-value, md-select:focus:not([disabled]) ._md-select-value { border-bottom-color:rgb(0, 202, 253);}
-md-select.md-default-theme ._md-select-value._md-select-placeholder, md-select ._md-select-value._md-select-placeholder, md-select.md-default-theme .md-select-value.md-select-placeholder, md-select .md-select-value.md-select-placeholder, md-input-container.md-default-theme label, md-input-container label, md-input-container.md-default-theme .md-placeholder, md-input-container .md-placeholder { color:rgba(0, 0, 0, 0.46); font-size:16px; font-weight:500;}
-._md-select-value ._md-select-icon { color:rgba(0, 0, 0, 0.5);}
-.md-default-theme .md-datepicker-input::-moz-placeholder, .md-datepicker-input::-moz-placeholder { opacity:1; color:rgba(0,0,0,.46);}
-.md-default-theme .md-datepicker-input:-moz-placeholder, .md-datepicker-input:-moz-placeholder { opacity:1; color:rgba(0,0,0,.46);}
-.md-default-theme .md-datepicker-input::-webkit-input-placeholder, .md-datepicker-input::-webkit-input-placeholder { opacity:1; color:rgba(0,0,0,.46);}
-.md-default-theme .md-datepicker-input:-ms-input-placeholder, .md-datepicker-input:-ms-input-placeholder { opacity:1; color:rgba(0,0,0,.46);}
 @media (min-width:0) and (max-width:767px)
 {
 	.addTicketsButtons { text-align:center;}
