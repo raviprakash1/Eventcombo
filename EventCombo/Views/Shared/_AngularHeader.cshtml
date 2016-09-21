@@ -61,24 +61,16 @@
     <nav>
       <ul class="nav">
         <li class="drop">
-          <span><i class="material-icons orange600">account_circle</i> @(String.IsNullOrEmpty(Model.BaseUserName) ? "Log In / Sign Up" : Model.BaseUserName) </span>
-          @if (!String.IsNullOrEmpty(Model.BaseUserId))
-          {
-            <ul>
-              <li><a href="@Url.Action("MyAccount", "Account")"><i class="material-icons">account_balance_wallet</i> Account</a></li>
-              <li><a href="@Url.Action("EventList", "EventList")"><i class="material-icons">event</i> My Events</a></li>
+          <span ng-show="!UserRegistered()"><a href="javascript:void(0)" ng-click="showLoginForm()"><i class="material-icons orange600">account_circle</i> {{UserName()}} </a></span>
+          <span ng-show="UserRegistered()"><i class="material-icons orange600">account_circle</i> {{UserName()}} </span>
+          <ul ng-show="UserRegistered()">
+            <li><a href="@Url.Action("MyAccount", "Account")"><i class="material-icons">account_balance_wallet</i> Account</a></li>
+            <li><a href="@Url.Action("EventList", "EventList")"><i class="material-icons">event</i> My Events</a></li>
             @*<li><a href="@Url.Action("DealsDashboard", "Account")"><i class="material-icons">shop</i> My Deals</a></li>*@
-              <li><a href="@Url.Action("PurchasedTicket", "Account")"><i class="material-icons">local_play</i> My Tickets</a></li>
-              <li><a href="@Url.Action("OrganizerProfile", "Account")"><i class="material-icons">group</i> Organizers</a></li>
-              <li><a href="javascript:void(0)" ng-click="logout()"><i class="material-icons">exit_to_app</i> Log Out</a></li>
-            </ul>
-          }
-          else
-          {
-            <ul>
-              <li><a href="javascript:void(0)" ng-click="showLoginForm()"><i class="material-icons">lock_outline</i> Log In</a></li>
-            </ul>
-          }
+            <li><a href="@Url.Action("PurchasedTicket", "Account")"><i class="material-icons">local_play</i> My Tickets</a></li>
+            <li><a href="@Url.Action("OrganizerProfile", "Account")"><i class="material-icons">group</i> Organizers</a></li>
+            <li><a href="javascript:void(0)" ng-click="logout()"><i class="material-icons">exit_to_app</i> Log Out</a></li>
+          </ul>
         </li>
       </ul>
     </nav>

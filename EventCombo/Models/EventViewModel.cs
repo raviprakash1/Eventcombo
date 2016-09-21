@@ -440,6 +440,7 @@ namespace EventCombo.Models
   public class IncrementResultViewModel
   {
     public bool Processed { get; set; }
+    public bool AlreadyProcessed { get; set; }
     public long Count { get; set; }
   }
 
@@ -461,6 +462,8 @@ namespace EventCombo.Models
     public string CityName { get; set; }
     public string Latitude { get; set; }
     public string Longitude { get; set; }
+    public string ShortName { get; set; }
+    public string StateId { get; set; }
   }
 
   public class HomepageInfoViewModel : IBaseViewModel

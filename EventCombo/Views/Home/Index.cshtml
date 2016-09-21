@@ -1,5 +1,6 @@
 ﻿@using EventCombo.Models
 @using EventCombo.Service
+@using System.Linq
 @model HomepageInfoViewModel
 @{
   Layout = "~/Views/Shared/_AngularLayout.cshtml";
@@ -19,10 +20,12 @@
 
 @section ScriptFooterSection
 {
-  <script src="@Url.Content("~/Scripts/AMaterial/texttyper.js")"></script>
-  <script src="@Url.Content("~/Scripts/AMaterial/flexcroll.js")"></script>
-  <script src="@Url.Content("~/Scripts/AMaterial/flexcrollWrapper.js")"></script>
-  <script src="@Url.Content("~/Scripts/AMaterial/Homepage.js")"></script>
+  <script src="~/Scripts/AMaterial/texttyper.js"></script>
+  <script src="~/Scripts/AMaterial/flexcroll.js"></script>
+  <script src="~/Scripts/AMaterial/flexcrollWrapper.js"></script>
+  <script src="~/Scripts/AMaterial/eventFavoriteService.js"></script>
+  <script src="~/Scripts/AMaterial/socialService.js"></script>
+  <script src="~/Scripts/AMaterial/Homepage.js"></script>
   <script type="text/javascript">
     var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
 
@@ -44,6 +47,19 @@
       js.src = "//connect.facebook.net/en_US/all.js";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
+
+    // Text typer
+    var rotating = new gsapTypeIt({
+      el: document.getElementById('ContainerEl_2'),
+      rotateWords: true,
+      autoPlay: true,
+      rotateWordsOptions: {
+        wordsList: [@for (var i = 0; i < Model.KeyWords.Count(); i++) { @(Html.Raw((i == 0 ? "" : ", ") + "'" + Model.KeyWords.ElementAt(i) + "'")) }],
+        cycle: true,
+        clear: true
+      }
+    });
+
   </script>
 }
 <!--***************************-->
@@ -55,46 +71,51 @@
 </div>
 <div ng-controller="HomeController" ng-cloak>
   <div class="citylist clearfix">
-    <div class="row">
-      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 10}" ng-click="OnCityChange(40.712784, -74.0059413, 10)">N.Y.</div>
-      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 7}" ng-click="OnCityChange(34.052234, -118.243685, 7)">L.A</div>
-      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 15}" ng-click="OnCityChange(38.907192, -77.036871, 15)">D.C</div>
-      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 5}" ng-click="OnCityChange(41.878114, -87.629798, 5)">Chicago</div>
-    </div>
-    <div class="row">
-      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 1}" ng-click="OnCityChange(33.748995, -84.387982, 1)">Atlanta</div>
-      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 12}" ng-click="OnCityChange(39.952584, -75.165222, 12)">Philly</div>
-      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 14}" ng-click="OnCityChange(47.606210, -122.332071, 14)">Seattle</div>
-      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 13}" ng-click="OnCityChange(37.774930, -122.419416, 13)">San Francisco</div>
-    </div>
-    <div class="row">
-      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 2}" ng-click="OnCityChange(32.776664, -96.796988, 2)">Dallas</div>
-      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 6}" ng-click="OnCityChange(29.760427, -95.369803, 6)">Houston</div>
-      <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == 3}" ng-click="OnCityChange(42.360083, -71.058880, 3)">Boston</div>
-      <div ng-class="{'c3': true, 'city': true, 'cityselected': allCities, 'all': true}" ng-click="OnCityChange(200, 200, -1)">All the cities</div>
-    </div>
+    @{
+      int cityCount = Model.Cities.Count();
+      cityCount = cityCount < 11 ? cityCount : 11;
+      int etCount = Model.EventTypes.Count();
+      etCount = etCount < 11 ? etCount : 11;
+    }
+    @for (int i = 0; i < 3; i++)
+    {
+      <div class="row">
+        @for (int j = 0; j < 4; j++)
+        {
+          int idx = i * 4 + j;
+          if (idx < cityCount)
+          {
+            var city = Model.Cities.ElementAt(idx);
+            <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == @city.CityID}" ng-click="OnCityChange(@city.Latitude, @city.Longitude, @city.CityID)">@city.ShortName</div>
+          }
+          else if (idx == cityCount)
+          {
+            <div ng-class="{'c3': true, 'city': true, 'cityselected': allCities, 'all': true}" ng-click="OnCityChange(200, 200, -1)">All the cities</div>
+          }
+        }
+      </div>
+    }
   </div>
   <div class="eventlist clearfix">
-    <div class="row">
-      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 1}" ng-click="OnEventTypeChange(1)">Concert or Performance</div>
-      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 2}" ng-click="OnEventTypeChange(2)">Holiday</div>
-      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 5}" ng-click="OnEventTypeChange(5)">Music</div>
-      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 20}" ng-click="OnEventTypeChange(20)">Festival</div>
-    </div>
-    <div class="row">
-      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 7}" ng-click="OnEventTypeChange(7)">Attraction</div>
-      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 8}" ng-click="OnEventTypeChange(8)">Retreat</div>
-      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 18}" ng-click="OnEventTypeChange(18)">Tour</div>
-      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 6}" ng-click="OnEventTypeChange(6)">Appearance or Signing</div>
-    </div>
-    <div class="row">
-      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 9}" ng-click="OnEventTypeChange(9)">Class or Workshop</div>
-      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 24}" ng-click="OnEventTypeChange(24)">Race</div>
-      <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == 11}" ng-click="OnEventTypeChange(11)">Other</div>
-      <div ng-class="{'c3': true, 'event': true, 'eventselected': allEventTypes, 'all': true}" ng-click="OnEventTypeChange(-1)">All the events</div>
-    </div>
+    @for (int i = 0; i < 3; i++)
+    {
+      <div class="row">
+        @for (int j = 0; j < 4; j++)
+        {
+          int idx = i * 4 + j;
+          if (idx < etCount)
+          {
+            var etype = Model.EventTypes.ElementAt(idx);
+            <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == @etype.EventTypeId}" ng-click="OnEventTypeChange(@etype.EventTypeId)">@etype.EventType</div>
+          }
+          else if (idx == etCount)
+          {
+            <div ng-class="{'c3': true, 'event': true, 'eventselected': allEventTypes, 'all': true}" ng-click="OnEventTypeChange(-1)">All the events</div>
+          }
+        }
+      </div>
+    }
   </div>
-
   <div id="featured" flexcroll datasource="eventsList">
     <div id="featured-scrollbox">
       <div class="featuredbox" ng-repeat="ev in eventsList">
@@ -105,60 +126,77 @@
           <div class="location">{{ev.Address}}</div>
           <div class="price">{{ev.PriceRange}}</div>
           <div class="evActions homEV">
-            <a href="#" class="hashLink">#{{ev.EventType}}</a>
-            <a href="#" class="hashLink">#{{ev.EventCategory}}</a>
+            <a class="hashLink" href="{{ev.EventPath}}">{{FormatHashTags(ev.EventType, ev.EventCategory)}}</a>
             <div class="matBox">
-              <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
-              <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
+              <a class="matIcon" ng-click="OnShareEvent(ev)"><i class="material-icons">share</i></a>
+              <a ng-class="{ 'matVisible': ev.UserFavorite }" class="matIcon active" ng-click="OnAddFavorite(ev)"><i class="material-icons">favorite</i></a>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<!--***************************-->
-<section style="display:none;" ng-style="{'display': displayVEPopups}">
-  <div class="popOverlay" ng-show="popVEShareWithFriends">
-    <div class="popBox">
-      <form name="VEShareWithFriendsForm" novalidate>
-        <a class="popClose" ng-click="popVEShareWithFriends=false"><i class="material-icons">clear</i></a>
-        <h3 class="red-heading" style="text-align: center">Share event with friends</h3>
-        <md-input-container class="md-block">
-          <label>Friend's email</label>
-          <input type="email" ng-maxlength="255" required name="email" ng-model="VEMessage.Email" ng-pattern="/^.+@("@").+\..+$/" ng-keypress="submitted=false" />
-          <div ng-messages="VEShareWithFriendsForm.email.$error" role="alert">
-            <div ng-message="required">Please enter friend's email.</div>
-            <div ng-message="pattern">Please use valid email format.</div>
-            <div ng-message="maxlength">Your email is too long.</div>
+  <!--***************************-->
+  <section style="display:none;" ng-style="{'display': displayVEPopups}">
+    <div class="popOverlay" ng-show="popHomeShareWithFriends">
+      <div class="popBox">
+        <form name="VEShareWithFriendsForm" novalidate>
+          <a class="popClose" ng-click="popVEShareWithFriends=false"><i class="material-icons">clear</i></a>
+          <h3 class="red-heading" style="text-align: center">Share event with friends</h3>
+          <md-input-container class="md-block">
+            <label>Friend's email</label>
+            <input type="email" ng-maxlength="255" required name="email" ng-model="VEMessage.Email" ng-pattern="/^.+@("@").+\..+$/" ng-keypress="submitted=false" />
+            <div ng-messages="VEShareWithFriendsForm.email.$error" role="alert">
+              <div ng-message="required">Please enter friend's email.</div>
+              <div ng-message="pattern">Please use valid email format.</div>
+              <div ng-message="maxlength">Your email is too long.</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Message</label>
+            <textarea ng-maxlength="255" required name="message" ng-model="VEMessage.Message" style="min-height:50px"></textarea>
+            <div ng-messages="VEShareWithFriendsForm.message.$error">
+              <div ng-message="required">Please enter your message.</div>
+              <div ng-message="maxlength">Your message is too long. Only 255 characters allowed.</div>
+            </div>
+          </md-input-container>
+          <div class="clear">
+            <button type="reset" class="popLink margin-1em-top gray lFloat" ng-click="popVEShareWithFriends=false">CANCEL</button>
+            <button class="popLink margin-1em-top rFloat" ng-click="TrySendShareWithFriendsMessage(VEShareWithFriendsForm)">SEND</button>
           </div>
-        </md-input-container>
-        <md-input-container class="md-block">
-          <label>Message</label>
-          <textarea ng-maxlength="255" required name="message" ng-model="VEMessage.Message" style="min-height:50px"></textarea>
-          <div ng-messages="VEShareWithFriendsForm.message.$error">
-            <div ng-message="required">Please enter your message.</div>
-            <div ng-message="maxlength">Your message is too long. Only 255 characters allowed.</div>
-          </div>
+        </form>
+      </div>
+    </div>
+    <div class="popOverlay" ng-show="popHomeShareDialog">
+      <div class="popBox">
+        <a class="popClose" ng-click="popHomeShareDialog=false"><i class="material-icons">clear</i></a>
+        <h3 class="red-heading text-center">Share event</h3>
+        <div class="social text-center">
+          <a href="javascript:void(0)" title="Share {{shareEvent.EventTitle}} on Facebook" ng-click="FacebookShare(shareEvent.EventPath)"><img width="32" alt="Share {{shareEvent.eventTitle}} on Facebook" src="~/Images/AMaterial/facebook.svg"></a>
+          <a href="javascript:void(0)" title="Share {{shareEvent.EventTitle}} on Twitter" ng-click="TwitterShare(shareEvent.EventTitle, shareEvent.EventPath)"><img width="32" alt="Share {{shareEvent.eventTitle}} on Twitter" src="~/Images/AMaterial/twitter.svg"></a>
+          <a href="javascript:void(0)" title="Share {{shareEvent.EventTitle}} on LinkedIn" ng-click="LinkedInShare(shareEvent.EventTitle, shareEvent.EventPath, shareEvent.EventShortDesc)"><img width="32" alt="Share {{shareEvent.eventTitle}} on LinkedIn" src="~/Images/AMaterial/linkedin.svg"></a>
+        </div>
+        <md-input-container class="md-block" style="margin-top: 40px;">
+          <label>Event URL</label>
+          <input type="text" ng-maxlength="255" name="shareUrl" ng-model="shareEvent.EventPath" ng-readonly="true" />
         </md-input-container>
         <div class="clear">
-          <button type="reset" class="popLink margin-1em-top gray lFloat" ng-click="popVEShareWithFriends=false">CANCEL</button>
-          <button class="popLink margin-1em-top rFloat" ng-click="TrySendShareWithFriendsMessage(VEShareWithFriendsForm)">SEND</button>
+          <button type="reset" class="popLink margin-1em-top gray rFloat" ng-click="popHomeShareDialog=false">CANCEL</button>
         </div>
-      </form>
+      </div>
     </div>
-  </div>
-  <div class="popOverlay" ng-show="popLoading">
-    <div class="popBox">
-      <h3 class="blue-heading text-center">{{LoadingMessage}}</h3>
-      <img src="~/Images/ajaxloader1.gif" />
+    <div class="popOverlay" ng-show="popLoading">
+      <div class="popBox">
+        <h3 class="blue-heading text-center">{{LoadingMessage}}</h3>
+        <img src="~/Images/ajaxloader1.gif" />
+      </div>
     </div>
-  </div>
-  <div class="popOverlay" ng-show="popInfoMessage">
-    <div class="popBox">
-      <a class="popClose" ng-click="popInfoMessage=false"><i class="material-icons">clear</i></a>
-      <div class="blue-heading text-center">{{InfoMessage}}</div>
-      <div class="text-center margin-2em-top"><a class="popLink" ng-click="popInfoMessage=false">CONTINUE TO SITE</a></div>
+    <div class="popOverlay" ng-show="popInfoMessage">
+      <div class="popBox">
+        <a class="popClose" ng-click="popInfoMessage=false"><i class="material-icons">clear</i></a>
+        <div class="blue-heading text-center">{{InfoMessage}}</div>
+        <div class="text-center margin-2em-top"><a class="popLink" ng-click="popInfoMessage=false">CONTINUE TO SITE</a></div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>

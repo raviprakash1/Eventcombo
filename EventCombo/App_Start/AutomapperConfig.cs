@@ -110,6 +110,7 @@ namespace EventCombo
       CreateMap<GetNearestEvents_Result, ShortEventInfoViewModel>()
         .ForMember(d => d.EventId, m => m.MapFrom(s => s.EventID))
         .ForMember(d => d.Address, m => m.MapFrom(s => String.IsNullOrEmpty(s.AddressStatus) || (s.AddressStatus.ToUpper() == "ONLINE") ? "ONLINE" : s.ConsolidateAddress));
+      CreateMap<City, CityViewModel>();
 
       //backward maps
       CreateMap<OrderTemplateViewModel, OrderTemplate>();

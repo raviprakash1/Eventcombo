@@ -24,6 +24,8 @@ namespace EventCombo.Models
         public string EventType1 { get; set; }
         public string EventHide { get; set; }
         public bool IsOnFooter { get; set; }
+        public bool IsOnHomepage { get; set; }
+        public short Position { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event> Events { get; set; }

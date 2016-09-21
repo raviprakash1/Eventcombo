@@ -140,6 +140,7 @@ namespace EventCombo
                         "~/Scripts/AMaterial/classie.js",
                         "~/Scripts/AMaterial/EventComboApp.js",
                         "~/Scripts/AMaterial/broadcastService.js",
+                        "~/Scripts/AMaterial/accountService.js",
                         "~/Scripts/AMaterial/header.js",
                         "~/Scripts/AMaterial/AccountController.js"));
             bundles.Add(new ScriptBundle("~/Scripts/AMaterial/viewEvent")

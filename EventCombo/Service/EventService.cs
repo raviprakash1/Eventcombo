@@ -1196,19 +1196,19 @@ namespace EventCombo.Service
     public IncrementResultViewModel AddFavorite(long eventId, string userId)
     {
       IRepository<EventFavourite> fRepo = new GenericRepository<EventFavourite>(_factory.ContextFactory);
-      long cnt = fRepo.Get(filter: (f => f.eventId == eventId)).Count();
-
       IncrementResultViewModel res = new IncrementResultViewModel()
       {
-        Count = cnt,
-        Processed = false
+        Count = 0,
+        Processed = false,
+        AlreadyProcessed = false
       };
       IRepository<AspNetUser> uRepo = new GenericRepository<AspNetUser>(_factory.ContextFactory);
       var user = uRepo.GetByID(userId);
       if (user != null)
       {
         var fav = fRepo.Get(filter: (f => (f.eventId == eventId) && (f.UserID == userId))).FirstOrDefault();
-        if (fav == null)
+        res.AlreadyProcessed = fav != null;
+        if (!res.AlreadyProcessed)
         {
           fav = new EventFavourite()
           {
@@ -1219,9 +1219,9 @@ namespace EventCombo.Service
           fRepo.Insert(fav);
           _factory.ContextFactory.GetContext().SaveChanges();
           res.Processed = true;
-          res.Count = fRepo.Get(filter: (f => f.eventId == eventId)).Count();
         }
       }
+      res.Count = fRepo.Get(filter: (f => f.eventId == eventId)).Count();
       return res;
     }
 
@@ -1279,6 +1279,7 @@ namespace EventCombo.Service
         ev.ImageAlt = ev.EventTitle;
         ev.EventShortDesc = HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(evDB.EventDescription), 80, 150, ".");
         ev.EventPath = GetEventUrl(evDB.EventID, evDB.EventTitle, new UrlHelper(HttpContext.Current.Request.RequestContext));
+        ev.EventPath = ResolveServerUrl(VirtualPathUtility.ToAbsolute(ev.EventPath), false);
 
         TimeZoneInfo tz = GetTimeZoneInfo(evDB.TimeZone);
         if (evDB.E_Startdate != null)
@@ -1410,9 +1411,11 @@ namespace EventCombo.Service
     public HomepageInfoViewModel GetHomepageInfo()
     {
       HomepageInfoViewModel res = new HomepageInfoViewModel();
+      IRepository<City> cRepo = new GenericRepository<City>(_factory.ContextFactory);
+      IRepository<EventType> etRepo = new GenericRepository<EventType>(_factory.ContextFactory);
+      IRepository<HomepageWord> wRepo = new GenericRepository<HomepageWord>(_factory.ContextFactory);
 
       var fList = Directory.GetFiles(HostingEnvironment.MapPath("/Images/Video"), "*.gif");
-
       if ((fList != null) && fList.Any())
       {
         var rnd = new Random();
@@ -1420,6 +1423,20 @@ namespace EventCombo.Service
       }
       else
         res.ImageUrl = "/Images/AMaterial/RecordBackgroundFinal_1000.gif";
+
+      var cities = cRepo.Get(filter: (c => c.IsOnHomepage), orderBy: (query => query.OrderBy(ct => ct.Position)));
+      List<CityViewModel> resCities = new List<CityViewModel>();
+      foreach (var city in cities)
+        resCities.Add(_mapper.Map<CityViewModel>(city));
+      res.Cities = resCities;
+
+      var eTypes = etRepo.Get(filter: (et => et.IsOnHomepage), orderBy: (query => query.OrderBy(t => t.Position)));
+      List<EventTypeViewModel> resETypes = new List<EventTypeViewModel>();
+      foreach (var eType in eTypes)
+        resETypes.Add(_mapper.Map<EventTypeViewModel>(eType));
+      res.EventTypes = resETypes;
+
+      res.KeyWords = wRepo.Get().Select(w => w.Word);
 
       return res;
     }

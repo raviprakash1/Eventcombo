@@ -194,6 +194,10 @@
           <Property Name="IsOnFooter" Type="bit" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="IsOnHomepage" Type="bit" Nullable="false" />
+          <Property Name="StateId" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Position" Type="smallint" />
         </EntityType>
         <EntityType Name="ContactEventCombo">
           <Key>
@@ -425,6 +429,8 @@
           <Property Name="EventType" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="IsOnFooter" Type="bit" Nullable="false" />
           <Property Name="EventHide" Type="char" MaxLength="1" />
+          <Property Name="IsOnHomepage" Type="bit" Nullable="false" />
+          <Property Name="Position" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="EventVenue">
           <Key>
@@ -457,6 +463,13 @@
           <Property Name="FS_Amount" Type="numeric" Precision="18" Scale="2" />
           <Property Name="FS_Percentage" Type="numeric" Precision="18" Scale="2" />
           <Property Name="FS_Apply" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="HomepageWord">
+          <Key>
+            <PropertyRef Name="HomepageWordId" />
+          </Key>
+          <Property Name="HomepageWordId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Word" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Language">
           <Key>
@@ -1700,6 +1713,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="EventVenue" EntityType="Self.EventVenue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventVote" EntityType="Self.EventVote" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fee_Structure" EntityType="Self.Fee_Structure" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HomepageWord" EntityType="Self.HomepageWord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MultipleEvent" EntityType="Self.MultipleEvent" Schema="dbo" store:Type="Tables" />
@@ -2342,6 +2356,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="EventHide" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IsOnFooter" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Events" Relationship="EventComboModel.EventTypeEvent" FromRole="EventType" ToRole="Event" />
+          <Property Name="IsOnHomepage" Type="Boolean" Nullable="false" />
+          <Property Name="Position" Type="Int16" Nullable="false" />
         </EntityType>
         <EntityType Name="EventVote">
           <Key>
@@ -3158,6 +3174,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             <Parameter Name="distance" Mode="In" Type="Double" />
             <Parameter Name="filterUpcoming" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <EntitySet Name="HomepageWords" EntityType="EventComboModel.HomepageWord" />
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -4400,6 +4417,10 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="IsOnFooter" Type="Boolean" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsOnHomepage" Type="Boolean" Nullable="false" />
+          <Property Name="StateId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="Int16" />
         </EntityType>
         <EntityType Name="V_EventsexpiredList">
           <Key>
@@ -4679,6 +4700,13 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Type="String" Name="EventCategory" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="EventSubCategory" Nullable="true" MaxLength="200" />
         </ComplexType>
+        <EntityType Name="HomepageWord">
+          <Key>
+            <PropertyRef Name="HomepageWordId" />
+          </Key>
+          <Property Name="HomepageWordId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Word" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4961,6 +4989,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="EventTypes">
             <EntityTypeMapping TypeName="EventComboModel.EventType">
               <MappingFragment StoreEntitySet="EventType">
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="IsOnHomepage" ColumnName="IsOnHomepage" />
                 <ScalarProperty Name="IsOnFooter" ColumnName="IsOnFooter" />
                 <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
                 <ScalarProperty Name="EventType1" ColumnName="EventType" />
@@ -5971,6 +6001,10 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="Cities">
             <EntityTypeMapping TypeName="EventComboModel.City">
               <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="IsOnHomepage" ColumnName="IsOnHomepage" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="IsOnFooter" ColumnName="IsOnFooter" />
@@ -6190,6 +6224,14 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="HomepageWords">
+            <EntityTypeMapping TypeName="EventComboModel.HomepageWord">
+              <MappingFragment StoreEntitySet="HomepageWord">
+                <ScalarProperty Name="Word" ColumnName="Word" />
+                <ScalarProperty Name="HomepageWordId" ColumnName="HomepageWordId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

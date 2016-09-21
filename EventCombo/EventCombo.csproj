@@ -383,6 +383,9 @@
     <Compile Include="Models\GetNearestEvents_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\HomepageWord.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IBaseViewModel.cs" />
     <Compile Include="Models\BillingAddress.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
@@ -964,6 +967,7 @@
       <LastGenOutput>EventComboModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\AMaterial\AccountController.js" />
+    <Content Include="Scripts\AMaterial\AccountService.js" />
     <Content Include="Scripts\AMaterial\angular-animate.js" />
     <Content Include="Scripts\AMaterial\angular-animate.min.js" />
     <Content Include="Scripts\AMaterial\angular-aria.js" />
@@ -1074,6 +1078,7 @@
     <Content Include="Scripts\AMaterial\skins\lightgray\img\trans.gif" />
     <Content Include="Scripts\AMaterial\skins\lightgray\skin.ie7.min.css" />
     <Content Include="Scripts\AMaterial\skins\lightgray\skin.min.css" />
+    <Content Include="Scripts\AMaterial\socialService.js" />
     <Content Include="Scripts\AMaterial\sortable.js" />
     <Content Include="Scripts\AMaterial\svg-assets-cache.js" />
     <Content Include="Scripts\AMaterial\texttyper.js" />
@@ -1083,6 +1088,7 @@
     <Content Include="Scripts\AMaterial\ViewEvent.js" />
     <Content Include="Scripts\custom-scroll.js" />
     <Content Include="Scripts\DateTimePicker.js" />
+    <Content Include="Scripts\AMaterial\EventFavoriteService.js" />
     <Content Include="Scripts\gmap.js" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.countdownTimer.css" />

@@ -9,8 +9,8 @@
   };
 });
 
-eventComboApp.controller('HamburgerController', ['$scope', '$window', 'MenuService', '$mdDialog', '$mdMenu', 'broadcastService',
-  function ($scope, $window, MenuService, $mdDialog, $mdMenu, broadcastService) {
+eventComboApp.controller('HamburgerController', ['$scope', '$window', 'MenuService', '$mdDialog', '$mdMenu', 'broadcastService', 'accountService',
+  function ($scope, $window, MenuService, $mdDialog, $mdMenu, broadcastService, accountService) {
 
     $scope.navigation = MenuService.navigation;
     var originatorEv;
@@ -39,10 +39,18 @@ eventComboApp.controller('HamburgerController', ['$scope', '$window', 'MenuServi
       }
     });
 
+    $scope.$on('LoggedIn', function (event, param) {
+      var paramArray = param.split('_');
+      var link = paramArray[paramArray.length - 1];
+      if (paramArray[0] === 'HeaderHamburger') {
+        broadcastService.ReloadPage(link);
+      }
+    });
+
     $scope.clickLink = function (link, e) {
       if (!link || $scope.userRegistered)
         return;
-      broadcastService.CallLogin({ RedirectUrl: link });
+      accountService.StartLogin('HeaderHamburger_' + link);
       e.preventDefault();
     }
 

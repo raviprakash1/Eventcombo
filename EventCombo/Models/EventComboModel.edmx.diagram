@@ -160,6 +160,7 @@
         <EntityTypeShape EntityType="EventComboModel.EventECImage" Width="1.5" PointX="27.375" PointY="0.75" />
         <AssociationConnector Association="EventComboModel.ECImageEventECImage" />
         <AssociationConnector Association="EventComboModel.EventEventECImage" />
+        <EntityTypeShape EntityType="EventComboModel.HomepageWord" Width="1.5" PointX="27.375" PointY="6.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

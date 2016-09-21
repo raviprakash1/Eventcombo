@@ -21,12 +21,14 @@
 /* HOMEPAGE PROPER */
 .city { font-size:calc( 15px + 1vw); font-weight:100; color:#FFF; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-align:center; text-transform:uppercase; outline:none !important;}
 .city:hover { color:#000 !important; background-color:#ffc42c !important; cursor:pointer;}
+.cityselected { color:#000 !important; background-color:#ffc42c !important; cursor:pointer;}
 .citylist { background-color:#0393ef; width:100%;}
 .citylist .row { max-width:1200px; margin:10px auto !important;}
 .citylist .all { font-weight:700;}
 
 .event { font-size:calc( 15px + 1vw); font-weight:100; color:#000; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-align:center; text-transform:uppercase; outline:none !important;}
 .event:hover { color:#FFF !important; background-color:#0393ef !important; cursor:pointer;}
+.eventselected { color:#FFF !important; background-color:#0393ef !important; cursor:pointer;}
 .eventlist { background-color:#ffc42c; width:100%;}
 .eventlist .row { max-width:1200px; margin:10px auto !important;}
 .eventlist .all { font-weight:700;}
@@ -51,6 +53,7 @@
 .evActions .matBox { float:right; display:inline-block;}
 .evActions .matIcon { color:#444; margin-left:5px; cursor:pointer; opacity:0;}
 .featuredbox:hover .evActions .matIcon { opacity:1;}
+.featuredbox .evActions .matVisible { opacity:1;}
 .evActions .matIcon i { margin:0;}
 .evActions .matIcon:hover, .evActions .matIcon.active { color:#0bf;}
 

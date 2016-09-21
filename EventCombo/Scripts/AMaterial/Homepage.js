@@ -1,16 +1,18 @@
-﻿eventComboApp.controller('HomeController', ['$scope', '$window', '$cookies', '$http', 'broadcastService',
-  function ($scope, $window, $cookies, $http, broadcastService) {
+﻿eventComboApp.controller('HomeController', ['$scope', '$window', '$cookies', '$http', 'broadcastService', 'eventFavoriteService', 'socialService',
+  function ($scope, $window, $cookies, $http, broadcastService, eventFavoriteService, socialService) {
 
     $scope.eventsList = {};
     $scope.coords = { longitude: 0.0, latitude: 0.0 };
     $scope.displayVEPopups = 'block';
     $scope.popLoading = false;
     $scope.popInfoMessage = false;
+    $scope.popHomeShareDialog = false;
     $scope.curCity = { longitude: 0.0, latitude: 0.0 };
     $scope.curEventType = 0;
     $scope.allCities = false;
     $scope.allEventTypes = false;
     $scope.curCityId = 0;
+    $scope.shareEvent = null;
 
 
     $scope.showLoadingMessage = function (show, message) {
@@ -24,14 +26,8 @@
     }
 
     $scope.UpdateEventList = function () {
-      var c = $cookies.getObject('ECCurrentCoordinates');
-      if (!c || ((c.latitude == $scope.coords.latitude) && (c.longitude == $scope.coords.longitude))) {
-        return;
-      }
-
       $scope.showLoadingMessage(false, 'Update events info');
-      $scope.coords = c;
-      $http.get('/home/GetEventsList', { params: { lat: c.latitude, lng: c.longitude } }).then(function (response) {
+      $http.get('/home/GetEventsList', { params: { lat: $scope.coords.latitude, lng: $scope.coords.longitude } }).then(function (response) {
         $scope.showLoadingMessage(false, '');
         $scope.eventsList = response.data;
       }, function (error) {
@@ -39,11 +35,38 @@
       });
     };
 
-    $scope.UpdateEventList();
+    $scope.CheckCoordinates = function () {
+      var c = $cookies.getObject('ECCurrentCoordinates');
+      if (!c || ((c.latitude == $scope.coords.latitude) && (c.longitude == $scope.coords.longitude))) {
+        return;
+      }
+      $scope.coords = c;
+      $scope.UpdateEventList();
+    }
 
-    $scope.$on('CurrentCoordinatesChanged', function (val) {
+    $scope.CheckCoordinates();
+
+    $scope.ProcessAddedFavorite = function (val) {
+      if (val.Processed && $scope.eventsList)
+        $scope.eventsList.forEach(function (entry, index) {
+          if (entry.EventId == val.EventId) {
+            entry.UserFavorite = true;
+          }
+        });
+    }
+
+    $scope.$on('CurrentCoordinatesChanged', function (event, val) {
+      $scope.CheckCoordinates();
+    });
+
+    $scope.$on('AddFavoriteWithLoginProcessed', function (event, val) {
       $scope.UpdateEventList();
     });
+
+    $scope.$on('AddFavoriteProcessed', function (event, val) {
+      $scope.ProcessAddedFavorite(val);
+    });
+
 
     $scope.CallDiscoveryEvents = function () {
       if ((($scope.curCity && $scope.curCity.latitude && $scope.curCity.longitude) || $scope.allCities) &&
@@ -57,6 +80,7 @@
     };
 
     $scope.OnCityChange = function (lat, lng, id) {
+      console.log(id);
       $scope.allCities = (Math.abs(lat) > 90) && (Math.abs(lng) > 180);
       $scope.curCity.latitude = $scope.allCities ? 0 : lat;
       $scope.curCity.longitude = $scope.allCities ? 0 : lng;
@@ -70,4 +94,47 @@
       $scope.CallDiscoveryEvents();
     }
 
+    $scope.OnAddFavorite = function (ev) {
+      if (ev.UserFavorite)
+        return;
+      eventFavoriteService.AddFavorite(ev.EventId);
+    };
+
+    $scope.OnShareEvent = function (ev) {
+      $scope.shareEvent = ev;
+      $scope.popHomeShareDialog = true;
+      console.log($scope.shareEvent.EventPath);
+    }
+
+    $scope.FormatHashTags = function (tag1, tag2) {
+      tag1 = tag1 ? tag1 : "";
+      tag2 = tag2 ? tag2 : "";
+      if ((tag1.length + tag2.length) == 0)
+        return '';
+      if ((tag1.length + tag2.length) > 24) {
+        if ((tag1.length > 13) && (tag2.length > 13)) {
+          tag1 = tag1.substr(0, 10) + '\u2026';
+          tag2 = tag2.substr(0, 10) + '\u2026';
+        } else if (tag1.length > 13) {
+          tag1 = tag1.substr(0, 22 - tag2.length) + '\u2026'
+        } else {
+          tag2 = tag2.substr(0, 22 - tag1.length) + '\u2026'
+        }
+      }
+
+      return '#' + tag1 + '\u00A0\u00A0#' + tag2;
+    }
+
+
+    $scope.FacebookShare = function (href) {
+      socialService.FacebookShare(href);
+    }
+
+    $scope.TwitterShare = function (title, href) {
+      socialService.TwitterShare(title, href);
+    }
+
+    $scope.LinkedInShare = function (title, href, desc) {
+      socialService.LinkedInShare(title, href, desc);
+    }
   }]);

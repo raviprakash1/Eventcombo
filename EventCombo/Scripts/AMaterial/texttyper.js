@@ -217,16 +217,3 @@
       }
 
     }
-
-    var rotating = new gsapTypeIt({
-      el: document.getElementById('ContainerEl_2'),
-      rotateWords: true,
-      autoPlay: true,
-      rotateWordsOptions: {
-        wordsList: ['city', 'sales', 'life', 'entertainment', 'show', 'movie', 'vacation', 'Saroosh', 'savings', 'dinner', 'swag', 'fun', 'New York'],
-        cycle: true,
-        clear: true
-
-      }
-
-    });
