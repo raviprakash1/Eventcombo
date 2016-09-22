@@ -309,3 +309,13 @@ md-input-container label:not(._md-container-ignore).md-required:after { content:
 @media screen and (max-width:490px) {
 	header nav .drop > span { max-width:150px;}
 }
+.cntTitle {
+    font: 300 28px 'Roboto',Arial,sans-serif;
+    color: #000;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+.cntSubtitle {
+    font: 300 16px 'Roboto',Arial,sans-serif;
+    text-align: left;
+}

@@ -381,6 +381,7 @@
     <Compile Include="Models\ContactEventCombo.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ContactMessageViewModel.cs" />
     <Compile Include="Models\ControlType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -718,6 +719,7 @@
     <Compile Include="Service\ManageEventService.cs" />
     <Compile Include="Service\Notification\OrderNotification.cs" />
     <Compile Include="Service\Notification\OrderCancelNotification.cs" />
+    <Compile Include="Service\Notification\ContactMessageNotification.cs" />
     <Compile Include="Service\Notification\SendAttendeeMailService.cs" />
     <Compile Include="Service\OrderOptionsService.cs" />
     <Compile Include="Service\Notification\SendMailService.cs" />
@@ -1080,6 +1082,7 @@
     <Content Include="Scripts\AMaterial\plugins\visualblocks\plugin.min.js" />
     <Content Include="Scripts\AMaterial\plugins\visualchars\plugin.min.js" />
     <Content Include="Scripts\AMaterial\plugins\wordcount\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\Service\FooterService.js" />
     <Content Include="Scripts\AMaterial\skins\lightgray\content.inline.min.css" />
     <Content Include="Scripts\AMaterial\skins\lightgray\content.min.css" />
     <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce-small.svg" />
@@ -1098,6 +1101,7 @@
     <Content Include="Scripts\AMaterial\ViewEvent.js" />
     <Content Include="Scripts\custom-scroll.js" />
     <Content Include="Scripts\DateTimePicker.js" />
+    <Content Include="Scripts\AMaterial\Controller\FooterController.js" />
     <Content Include="Scripts\gmap.js" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.countdownTimer.css" />

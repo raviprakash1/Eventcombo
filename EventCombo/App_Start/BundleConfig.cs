@@ -146,6 +146,9 @@ namespace EventCombo
                         "~/Scripts/AMaterial/map.js",
                         "~/Scripts/AMaterial/ViewEvent.js",
                         "~/Scripts/socialshare.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/AMaterial/AngularFooter")
+                .Include("~/Scripts/AMaterial/Service/FooterService.js",
+                         "~/Scripts/AMaterial/Controller/FooterController.js"));
         }
     }
 }

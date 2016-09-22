@@ -1,5 +1,5 @@
 ﻿@model EventCombo.Models.Footer
-<footer>
+<footer id="footerController" ng-controller="footerController as footCtrl" ng-cloak>
   <div class="footer-left">
     <div>
       <strong>Cities</strong><br>
@@ -39,10 +39,69 @@
     {
       <a href="@Url.Action("BusinessPage", "BusinessPages", new { PageNameUrl = page.PageNameUrl })">@page.PageName</a> <span>|</span>
     }
-    <a href="@Url.Action("CreateEvent", "EventManagement")">Create an Event</a>
+    <a href="@Url.Action("CreateEvent", "EventManagement")">Create an Event</a> <span>|</span>
+    <a ng-click="contactEventcombo($event)">Contact Eventcombo</a> <span>|</span>
   </div>
   <div id="footerlogo" style="background-position: -414vh 0px;">
     <div class="footerwhite"></div>
   </div>
+    <script type="text/ng-template" id="eventcombo.tmpl.html">
+        <md-dialog aria-label="Contact Eventcombo" data-ng-app="eventComboApp">
+            <form name="eventcomboForm" novalidate>
+                <md-dialog-content>
+                    <div class="md-dialog-content">
+                        <h2 class="cntTitle">Need to get in touch? We're listening.</h2>
+                        <p class="cntSubtitle">There's a good chance we have an answer in our <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="ticket-purchase-faq"})">F.A.Q.</a> <br />Didn't find what you're looking for? Complete the form below and we'll get back to you right away.</p>
+                        <md-input-container class="md-block margin-2em-bottom max350">
+                            <label>Name</label>
+                            <input md-no-asterisk name="cntName" ng-model="cntName" required ng-keypress="submitted=false">
+                            <div ng-messages="eventcomboForm.cntName.$error">
+                                <div ng-message="required">Please enter your Name!</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block margin-2em-bottom max350">
+                            <label>Email</label>
+                            <input type="email" required name="cntEmail" ng-model="cntEmail" ng-pattern="/^.+@("@").+\..+$/" ng-keypress="submitted=false" />
+                            <div ng-messages="eventcomboForm.cntEmail.$error" role="alert">
+                                <div ng-message="required">Please enter your Email Address!</div>
+                                <div ng-message="pattern">Please use valid email format!</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block max350">
+                            <label>Phone</label>
+                            <input tel-mask name="cntPhone" ng-model="cntPhone" ng-pattern="/^[0-9]{3}-[0-9]{3}-[0-9]{4,5}$/" />
+                            <div ng-messages="eventcomboForm.cntPhone.$error">
+                                <div ng-message="pattern">Please enter a valid phone number pattern - ###-###-####</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="width160">
+                            <label>Category</label>
+                            <md-select ng-model="cntCategory" ng-change="getSubCategories()">
+                                <md-option ng-repeat="category in Categories">
+                                    {{category}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="width160">
+                            <label>Sub Category</label>
+                            <md-select ng-model="cntSubCategory">
+                                <md-option ng-repeat="subcategory in SubCategories">
+                                   {{subcategory}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Message</label>
+                            <textarea ng-model="cntMessage" rows="3" md-select-on-focus></textarea>
+                        </md-input-container>
+                        <md-dialog-actions layout="row">
+                            <md-button class="cntButton" ng-click="cancel()">Cancel</md-button>
+                            <md-button class="cntButton" type="submit" ng-click="sendContactMessageEventcombo('eventcomboForm')">Submit</md-button>
+                        </md-dialog-actions>
+                    </div>
+                </md-dialog-content>
+            </form>
+        </md-dialog>
+    </script>
 </footer>
 
