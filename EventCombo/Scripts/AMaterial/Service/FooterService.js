@@ -1,13 +1,13 @@
 ﻿eventComboApp.service("footerService", function ($http) {
 
     this.getCategory = function () {
-        return $http.get("/Home/GetCategory");
+        return $http.get("/NotificationAPI/GetCategory");
     };
 
     this.getSubCategory = function (category) {
         var response = $http({
             method: "get",
-            url: "/Home/GetSubCategory",
+            url: "/NotificationAPI/GetSubCategory",
             params: {
                 category: category
             }
@@ -18,7 +18,7 @@
     this.sendContactMessage = function (contactMessageViewModel) {
         var response = $http({
             method: "post",
-            url: "/Home/SendContactEmail",
+            url: "/NotificationAPI/SendContactEmail",
             data: JSON.stringify(contactMessageViewModel),
             dataType: "json"
         });

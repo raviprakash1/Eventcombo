@@ -82,6 +82,76 @@ namespace EventCombo.Controllers
         res.Data = result;
         return res;
       }
+        [HttpGet]
+        [AllowAnonymous]
+        public JsonResult GetCategory()
+        {
+            return Json(new string[] { "Event Organizer", "Event Attendee", "General" }, JsonRequestBehavior.AllowGet);
+        }
 
-  }
+        [HttpGet]
+        [AllowAnonymous]
+        public JsonResult GetSubCategory(string category)
+        {
+            string[] subCategorys;
+
+            if (category == "Event Organizer")
+            {
+                subCategorys = new string[]
+                {
+                    "Fees (SubCat)",
+                    "Payouts & Invoices",
+                    "Tickets & Inventory",
+                    "Event Listing",
+                    "Managing Orders & Attendees",
+                    "Attendee Info",
+                    "Invitations & Promo Tools",
+                    "Reporting & Analytics",
+                    "Equipment & Partnerships",
+                    "Trust & Safety",
+                    "Account Settings"
+                };
+            }
+            else if (category == "Event Attendee")
+            {
+                subCategorys = new string[]
+                {
+                    "Tickets and Refunds",
+                    "Managing My Order",
+                    "Questions About Event",
+                    "Buying Tickets or Registering",
+                    "Profile & Account",
+                    "Trust and Safety",
+                    "Unrecognized Charge"
+                };
+            }
+            else
+            {
+                subCategorys = new string[]
+                {
+                    "API & Developer Info",
+                    "Legal or Security"
+                };
+            }
+
+            return Json(subCategorys, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult SendContactEmail(ContactMessageViewModel contactMessageViewModel)
+        {
+            string defaultEmail;
+
+            defaultEmail = System.Configuration.ConfigurationManager.AppSettings.Get("DefaultEmail");
+            ContactMessageNotification notification = new ContactMessageNotification(
+                                                        new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory()),
+                                                        contactMessageViewModel,
+                                                        defaultEmail
+                                                        );
+            notification.SendNotification(new SendMailService());
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+
+    }
 }
