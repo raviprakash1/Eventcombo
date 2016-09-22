@@ -143,6 +143,7 @@ namespace EventCombo.Service
       ev.Ticket_DAdress = "N";
       ev.Ticket_showremain = "N";
       ev.Ticket_showvariable = "N";
+      ev.Ticket_variabletype = "O";
       ev.EventCancel = "N";
       LoadEventDictionaries(ev);
       if (ev.OrganizerList.Count > 0)
@@ -703,6 +704,8 @@ namespace EventCombo.Service
         throw new ArgumentException(String.Format("Event {0} not found.", ev.EventID));
 
       _mapper.Map(evDB, ev);
+      if (String.IsNullOrEmpty(ev.Ticket_variabletype))
+        ev.Ticket_variabletype = "O";
       LoadEventDictionaries(ev);
 
       ev.EventPath = GetEventUrl(ev.EventID, ev.EventTitle, new UrlHelper(HttpContext.Current.Request.RequestContext));
