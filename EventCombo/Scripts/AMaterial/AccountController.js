@@ -159,9 +159,8 @@
         }).then(function (response) {
           $scope.showLoadingMessage(false, '');
           var result = response.data.Success;
-          if (result) {
-            $scope.popLoginCongrats = true;
-          }
+          if (result) 
+            $scope.finishLogin();
           else {
             $scope.popLoginPassword = true;
             $scope.loginError = response.data.ErrorMessage;
@@ -287,7 +286,6 @@
       $scope.popCreatePassword = false;
       $scope.popCreatePasswordCongrats = false;
       $scope.popRegisterCongrats = false;
-      $scope.popLoginCongrats = false;
       $scope.popLoading = false;
       $scope.popServerError = false;
       $scope.popInfoMessage = false;
