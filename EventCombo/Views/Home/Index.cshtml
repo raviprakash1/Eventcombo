@@ -21,11 +21,22 @@
 @section ScriptFooterSection
 {
   <script src="~/Scripts/AMaterial/texttyper.js"></script>
-  <script src="~/Scripts/AMaterial/flexcroll.js"></script>
-  <script src="~/Scripts/AMaterial/flexcrollWrapper.js"></script>
   <script src="~/Scripts/AMaterial/eventFavoriteService.js"></script>
   <script src="~/Scripts/AMaterial/socialService.js"></script>
   <script src="~/Scripts/AMaterial/Homepage.js"></script>
+  <script type="text/javascript">
+    var cntWd, sldWd, tb;
+    $(document).ready(function () {
+      $('#featured').mouseenter(function (ent) {
+        cntWd = $('#featured').innerWidth();
+        tb = $('#featured-scrollbox');
+        sldWd = tb.outerWidth();
+      });
+      $('#featured').mousemove(function (ev) {
+        tb.css({ left: ((cntWd - sldWd) * ((ev.pageX / cntWd).toFixed(3))).toFixed(1) + "px" });
+      });
+    });
+  </script>
   <script type="text/javascript">
     var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
 
@@ -65,7 +76,7 @@
 <!--***************************-->
 <div class="hero" style="background-image: url(@(Model.ImageUrl));">
   <div class="hero1">
-    <div>Go beyond just tickets</div>
+    <div>Go beyond tickets</div>
     <div class="pretext">Rock your <span id="ContainerEl_2"></span></div>
   </div>
 </div>
@@ -116,7 +127,7 @@
       </div>
     }
   </div>
-  <div id="featured" flexcroll datasource="eventsList">
+  <div id="featured">
     <div id="featured-scrollbox">
       <div class="featuredbox" ng-repeat="ev in eventsList">
         <a href="{{ev.EventPath}}" class="img"><img ng-src="{{ev.ImageUrl}}" alt="{{ev.ImageAlt}}"></a>

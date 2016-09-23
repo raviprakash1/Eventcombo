@@ -20,6 +20,7 @@
 
 /* HOMEPAGE PROPER */
 .city { font-size:calc( 15px + 1vw); font-weight:100; color:#FFF; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-align:center; text-transform:uppercase; outline:none !important;}
+.cityselected { color:#000 !important; background-color:#ffc42c !important; cursor:pointer;}
 .city:hover { color:#000 !important; background-color:#ffc42c !important; cursor:pointer;}
 .cityselected { color:#000 !important; background-color:#ffc42c !important; cursor:pointer;}
 .citylist { background-color:#0393ef; width:100%;}
@@ -27,6 +28,7 @@
 .citylist .all { font-weight:700;}
 
 .event { font-size:calc( 15px + 1vw); font-weight:100; color:#000; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-align:center; text-transform:uppercase; outline:none !important;}
+.eventselected { color:#FFF !important; background-color:#0393ef !important; cursor:pointer;}
 .event:hover { color:#FFF !important; background-color:#0393ef !important; cursor:pointer;}
 .eventselected { color:#FFF !important; background-color:#0393ef !important; cursor:pointer;}
 .eventlist { background-color:#ffc42c; width:100%;}
@@ -60,22 +62,16 @@
 .featuredbox .free { color:#00A947;}
 .featuredbox .date { color:#2744CD;}
 .featuredbox .location { font-size:16px;}
-/* Flexcroll CSS */
-.scrollgeneric { line-height:1px; font-size:1px; position:absolute; top:0; left:0;}
-.hscrollerbase { height:17px; background:none;}
-.hscrollerbar { height:12px; background:#0393ef; cursor:e-resize; opacity:.5;}
-.hscrollerbar:hover { opacity:1;}
-/*******************************************************/
 @media screen and (min-width:768px) and (max-width:960px)
 {
-  .city, .event { width:50% !important;}
+  .city, .event, .cityselected, .eventselected { width:50% !important;}
   #featured { height:auto; overflow:visible;}
   #featured-scrollbox { width:100%; height:auto; overflow:visible; white-space:normal; position:relative; left:auto; top:auto;}
 }
 @media screen and (min-width:0) and (max-width:768px)
 {
 	.hero1 { font-size:30px !important;}
-  #featured,.mcontentwrapper { height:auto !important; overflow:visible !important;}
-  #featured-scrollbox { width:100%; height:auto !important; overflow:visible !important; white-space:normal; position:relative; left:auto; top:auto;}
+  #featured { height:auto; overflow:visible;}
+  #featured-scrollbox { width:100%; height:auto; overflow:visible; white-space:normal; position:relative; left:auto; top:auto;}
   .featuredbox { max-width:90%;}
 }
