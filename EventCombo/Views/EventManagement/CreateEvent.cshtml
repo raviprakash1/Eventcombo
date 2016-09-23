@@ -529,25 +529,25 @@
                   Include organizer social media links
                 </md-checkbox>
                 <div ng-show="eventInfo.CurrentOrganizer.IncludeSocialLinks">
-                  <div class="socialMediaIcon" style="margin-left: 15px">
-                    <img src="~/Images/AMaterial/facebook.svg" style="height: 25px;" />
+                  <div class="socialMediaIcon">
+                    <img src="~/Images/AMaterial/facebook.svg"/>
                     <md-input-container>
                       <label class="organizerText">Facebook URL</label>
-                      <input class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_FBLink" style="width: 250px;" />
+                      <input class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_FBLink" style="width: 220px;" />
                     </md-input-container>
                   </div>
-                  <div class="socialMediaIcon" style="margin-left: 15px">
-                    <img src="~/Images/AMaterial/twitter.svg" style="height: 25px;" />
+                  <div class="socialMediaIcon">
+                    <img src="~/Images/AMaterial/twitter.svg"/>
                     <md-input-container>
                       <label class="organizerText">Twitter URL</label>
-                      <input class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_Twitter" style="width: 250px;" />
+                      <input class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_Twitter" style="width: 220px;" />
                     </md-input-container>
                   </div>
-                  <div class="socialMediaIcon" style="margin-left: 15px">
-                    <img src="~/Images/AMaterial/linkedin.svg" style="height: 25px;" />
+                  <div class="socialMediaIcon">
+                    <img src="~/Images/AMaterial/linkedin.svg"/>
                     <md-input-container>
                       <label class="organizerText">LinkedIn URL</label>
-                      <input class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_Linkedin" style="width: 250px;" />
+                      <input class="btn-text" ng-model="eventInfo.CurrentOrganizer.Organizer_Linkedin" style="width: 220px;" />
                     </md-input-container>
                   </div>
                 </div>
@@ -787,9 +787,6 @@
           </div>
         </div>
 
-
-
-
         <div class="addTicketsButtons">
           <div class="ticketButtonDiv">
             <md-button ng-click="addTicket(2)" class="md-raised addTicketBtnCls">
@@ -826,12 +823,15 @@
         <md-checkbox class="blue" style="font-weight: unset !important; display:block;" ng-model="eventInfo.Ticket_showremain" ng-true-value="'Y'" ng-false-value="'N'">
           Show remaining tickets
         </md-checkbox>
-        <md-checkbox class="blue" style="font-weight: unset !important;" ng-model="eventInfo.Ticket_showvariable" ng-true-value="'Y'" ng-false-value="'N'">
+        <md-checkbox class="blue" style="font-weight: unset !important; margin-bottom:0;" ng-model="eventInfo.Ticket_showvariable" ng-true-value="'Y'" ng-false-value="'N'">
           Add variable charges
         </md-checkbox>
 
       </div>
       <div class="variabeDetails" style="max-width: 1100px;margin: 0px auto;padding: 5px 0px;" ng-show="eventInfo.Ticket_showvariable == 'Y'">
+        <md-radio-group class="margin-1em-left" ng-model="eventInfo.Ticket_variabletype" style="display:inline-block;">
+          <md-radio-button class="md-primary margin-2em-right" style="display:inline-block;" ng-repeat="type in vartypes" ng-value="type.varId" aria-label="{{type.varName}}">{{type.varName}}</md-radio-button>
+        </md-radio-group>
         <md-button class="md-raised addTicketBtnCls" ng-click="addVarCharge()" style="margin-bottom:15px !important; margin-left:15px;">
           ADD
         </md-button>
@@ -842,7 +842,7 @@
                 <i class="material-icons">reorder</i>
               </span>
               <div class="variableClass">
-                <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 200px;">
+                <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 300px;">
                   <label class="ticketDespTxtBoxLbl">Variable charge description</label>
                   <input class="ticketDespTxtBoxCls" name="variableChargeDescription" ng-model="varCharge.VariableDesc"
                          required ng-maxlength="256" ec-maxlength="256" />
@@ -851,15 +851,6 @@
                     <div ng-show="{{'VarChargeForm_'+$index}}.variableChargeDescription.$error.maxlength">maximum length is 256 characters</div>
                   </div>
                 </md-input-container>
-              </div>
-              <div class="variableClass">
-                <md-input-container class="ticketDespTxtBoxCon variableType" style="margin-left: 20px; width:150px">
-                  <label class="ticketDespTxtBoxLbl">Type</label>
-                  <md-select class="ticketDespTxtBoxCls" ng-model="varCharge.Optional">
-                    <md-option ng-repeat="type in vartypes" value="{{type.varId}}">{{type.varName}}</md-option>
-                  </md-select>
-                </md-input-container>
-
               </div>
               <div class="variableClass">
                 <md-input-container class="ticketDespTxtBoxCon" style="margin-left: 20px; width: 150px;">

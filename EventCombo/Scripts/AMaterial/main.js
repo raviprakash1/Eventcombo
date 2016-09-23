@@ -39,8 +39,8 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       }
     }
     $scope.vartypes = [
-      { varId: false, varName: "Required" },
-      { varId: true, varName: "Optional" }
+      { varId: "R", varName: "Required" },
+      { varId: "O", varName: "Optional" }
     ];
 
     $scope.occurences = [
@@ -92,6 +92,8 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
 
     $scope.prepareEventInfo = function () {
       $scope.onShowDateTimeDialog(false);
+      if (!$scope.eventInfo.Ticket_variabletype)
+        $scope.eventInfo.Ticket_variabletype = 'O';
       if ($scope.eventInfo.VariableChargesList.length <= 0)
         $scope.addVarCharge();
       $scope.eventInfo.VariableChargesList.forEach(function (varcharge, i, arr) {
@@ -549,6 +551,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         Optional: false
       }
       $scope.eventInfo.VariableChargesList.push(vcharge);
+      console.log($scope.eventInfo);
     }
 
     $scope.deleteVarCharge = function (vcharge) {

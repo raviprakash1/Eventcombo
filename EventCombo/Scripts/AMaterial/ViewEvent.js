@@ -1,5 +1,5 @@
-eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '$attrs', 'eventInfoService', 'broadcastService',
-  function ($scope, $http, $window, $attrs, eventInfoService, broadcastService) {
+eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '$attrs', 'eventInfoService', 'broadcastService', 'accountService',
+  function ($scope, $http, $window, $attrs, eventInfoService, broadcastService, accountService) {
     $scope.favStyle = { "color": "white" };
     $scope.voteStyle = { "color": "white" };
     $scope.eventInfo = {};
@@ -38,11 +38,11 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
     $scope.$on('LoggedIn', function (event, param) {
       if (param === 'VEFav' + $scope.eventInfo.EventId) {
         eventInfoService.addFavorite($scope.UpdateStyles);
-        broadcastService.LoginProcessed();
+        broadcastService.ReloadPage();
       }
       else if (param === 'VEVote' + $scope.eventInfo.EventId) {
         eventInfoService.voteEvent($scope.UpdateStyles);
-        broadcastService.LoginProcessed();
+        broadcastService.ReloadPage();
       }
     });
 
@@ -69,8 +69,8 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
     }
 
     $scope.AddToFavorite = function () {
-      if (!$scope.userRegistered) {
-        $scope.StartLogin({ callerId: 'VEFav' + $scope.eventInfo.EventId });
+      if (!accountService.UserRegistered()) {
+        accountService.StartLogin('VEFav' + $scope.eventInfo.EventId);
       }
       if ((!$scope.eventInfo) || ($scope.eventInfo.UserFavorite == true))
         return;
@@ -78,8 +78,8 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
     }
 
     $scope.VoteEvent = function () {
-      if (!$scope.userRegistered) {
-        $scope.StartLogin({ callerId: 'VEVote' + $scope.eventInfo.EventId });
+      if (!accountService.UserRegistered()) {
+        accountService.StartLogin('VEVote' + $scope.eventInfo.EventId);
       }
       if ((!$scope.eventInfo) || ($scope.eventInfo.UserVote == true))
         return;

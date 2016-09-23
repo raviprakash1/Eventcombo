@@ -79,21 +79,26 @@ h1,h2,h3,h4,h5,h6 { text-align:initial;}
 .scroll::-webkit-scrollbar-thumb{ background:rgba(220,225,225,.6);}
 .scroll:hover::-webkit-scrollbar{ background:rgba(220,225,225,.4);}
 /********************************************************************/
-@media screen and (min-width:991px) and (max-width:1024px)
+@media screen and (min-width:960px) and (max-width:1024px)
 {
 }
-@media screen and (min-width:768px) and (max-width:991px)
+@media screen and (min-width:768px) and (max-width:960px)
 {
+  body	{ padding-top:100px !important;}
 }
-@media screen and (min-width:0) and (max-width:767px)
+@media screen and (min-width:0) and (max-width:768px)
 {
 	.col-half, .col-oneThird, .col-twoThird, .col-oneFourth { width:100%; margin-bottom:10px;}
 	.hide768 { display:none;}
-  body	{ padding-top:60px !important;}
+  body	{ padding-top:70px !important;}
 
 }
 @media screen and (max-width:600px)
 {
 	.mob-m1em-bottom { margin-bottom:15px;}
 	.mob-m2em-bottom { margin-bottom:30px;}
+}
+@media screen and (max-width:490px)
+{
+  body	{ padding-top:60px !important;}
 }

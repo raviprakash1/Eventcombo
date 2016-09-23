@@ -1,12 +1,12 @@
 ﻿@model EventCombo.Models.Footer
-<footer>
+<footer ng-controller="FooterController">
   <div class="footer-left">
     <div>
       <strong>Cities</strong><br>
       <p>
         @foreach (var city in Model.Cities)
         {
-          <a href="~/et/evt/evc/all/page/@city.Latitude/@city.Longitude/rel/none">@city.CityName</a><br>
+          <a href="~/et/evt/evc/all/page/@city.Latitude/@city.Longitude/rel/none" ng-click="onCityClick(@city.Latitude, @city.Longitude)">@city.CityName</a><br>
         }
       </p>
       <div class="social">
@@ -21,14 +21,7 @@
         <p>
           @foreach (var eventType in Model.EventTypes)
           {
-            if (ViewData["UserLatitude"].ToString() != "")
-            {
-              <a href="~/et/@(eventType.EventTypeID.ToString())/evt/evc/all/page/@ViewData["UserLatitude"]/@ViewData["UserLongitude"]/rel/none">@eventType.EventType1</a><br>
-            }
-            else
-            {
-              <a href="~/et/@(eventType.EventTypeID.ToString())/evc/ALL/page/lat/long/rel/none">@eventType.EventType1</a><br>
-            }
+              <a href="~/et/@(eventType.EventTypeID.ToString())/evc/all/page/{{cCoords.latitude}}/{{cCoords.longitude}}/rel/none">@eventType.EventType1</a><br>
           }
         </p>
       </div>
