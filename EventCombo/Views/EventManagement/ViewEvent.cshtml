@@ -73,7 +73,7 @@
               <span><a href="javascript:void(0)" title="Vote for EventTitle" ng-click="VoteEvent();"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
             }
             <span class="social" social="SHARE THIS">
-              <a href="javascript:void(0)" title="Share @Model.EventTitle via Email" ng-click="SendMessageTo(1)"><img width="20px" alt="Share @Model.EventTitle via Email" src="~/Images/AMaterial/mail-square.svg"></a>
+              <a href="javascript:void(0)" title="Share @Model.EventTitle via Email" ng-click="forwardFriend($event,'@Model.EventTitle','Event')"><img width="20px" alt="Share @Model.EventTitle via Email" src="~/Images/AMaterial/mail-square.svg"></a>
               <a href="javascript:void(0)" title="Share @Model.EventTitle on Facebook" onclick="FacebookShare('@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Facebook" src="~/Images/AMaterial/square-facebook.svg"></a>
               <a href="javascript:void(0)" title="Share @Model.EventTitle on Twitter" onclick="TwitterShare('@Model.EventTitle.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Twitter" src="~/Images/AMaterial/square-twitter.svg"></a>
               <a href="javascript:void(0)" title="Share @Model.EventTitle on LinkedIn" onclick="LinkedInShare('@Model.EventTitle.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)', '@(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Html.Raw(Model.EventDescription!=null ?Model.EventDescription : "").ToString()), 200, 250, ".").Replace("'", @"\'"))')"><img width="20px" alt="Share @Model.EventTitle on LinkedIn" src="~/Images/AMaterial/square-linkedin.svg"></a>
@@ -195,7 +195,7 @@
             </p>
           </div>
           <div>
-            <span><a href="javascript:void(0)" ng-click="SendMessageTo(2)">Contact</a></span>
+            <span><a href="javascript:void(0)" ng-click="contactOrganizer($event,'@Model.EventTitle','@Model.Organizer.OrganizerName')">Contact</a></span>
             <span><a href="@Url.Action("Index", "OrganizerInfo", new { id = Model.Organizer.OrganizerId, eventId = Model.EventId })">Profile</a></span>
             <span class="social">
               @if (!String.IsNullOrEmpty(Model.Organizer.FBLink))

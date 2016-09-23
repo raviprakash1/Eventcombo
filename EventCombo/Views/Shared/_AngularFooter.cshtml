@@ -103,5 +103,108 @@
             </form>
         </md-dialog>
     </script>
+    <script type="text/ng-template" id="forwardfriend.tmpl.html">
+        <md-dialog aria-label="Forward to Friend">
+            <form name="forwardfriendForm" novalidate>
+                <md-dialog-content>
+                    <div class="md-dialog-content">
+                        <h2 class="cntTitle">{{CMessage.Title}} - Forward to Friend(s)</h2>
+                        <input type="hidden" name="Id" ng-model="Id" value="{{CMessage.Id}}" />
+                        <md-input-container class="md-block margin-2em-bottom max350">
+                            <label>My Name</label>
+                            <input md-no-asterisk name="myName" ng-model="CMessage.Name" required ng-keypress="submitted=false">
+                            <div ng-messages="forwardfriendForm.myName.$error">
+                                <div ng-message="required">Please enter your Name!</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block margin-2em-bottom max350">
+                            <label>My Email Address</label>
+                            <input type="email" required name="myEmail" ng-model="CMessage.Email" ng-pattern="/^.+@("@").+\..+$/" ng-keypress="submitted=false" />
+                            <div ng-messages="forwardfriendForm.myEmail.$error" role="alert">
+                                <div ng-message="required">Please enter your Email Address!</div>
+                                <div ng-message="pattern">Please use valid email format!</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container layout="column">
+                            <label>Send to</label>
+                            <md-chips class="sendTo" ng-model="CMessage.To" ng-init="keys=[13,188]" md-separator-keys="keys" placeholder="Enter an email address" type="email" md-transform-chip="chipValidation($chip)" md-require-match="true" md-add-on-blur="true"></md-chips>
+                            <ng-messages class="showError" ng-show="isEmailValid">Please use valid email format!</ng-messages>
+                            <div ng-messages="forwardfriendForm.sendTo.$error" role="alert">
+                                <div ng-message="pattern">Please use valid email format!</div>
+                            </div>
+                            <div class="hint showHint">Allow to enter multiple email addresses by separating by comma</div>
+                        </md-input-container>
+                        <md-input-container class="md-block margin-2em-bottom max350">
+                            <label>Subject</label>
+                            <input name="Subject" ng-model="CMessage.Subject" required value="{{CMessage.Title}}" />
+                            <div ng-messages="forwardfriendForm.Subject.$error">
+                                <div ng-message="required">Please enter Subject!</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Message</label>
+                            <textarea name="cntMessage" ng-model="CMessage.Message" required rows="3" md-select-on-focus></textarea>
+                            <div ng-messages="forwardfriendForm.cntMessage.$error">
+                                <div ng-message="required">Please enter message!</div>
+                            </div>
+                        </md-input-container>
+                        <md-dialog-actions layout="row">
+                            <md-button class="cntButton" ng-click="cancel()">Cancel</md-button>
+                            <md-button class="cntButton" type="submit" ng-click="sendFriendMessage('forwardfriendForm')">Send</md-button>
+                        </md-dialog-actions>
+                    </div>
+                </md-dialog-content>
+            </form>
+        </md-dialog>
+    </script>
+    <script type="text/ng-template" id="organizer.tmpl.html">
+        <md-dialog aria-label="Contact Organizer">
+            <form name="organizerForm" novalidate>
+                <md-dialog-content>
+                    <div class="md-dialog-content">
+                        <h2 class="cntTitle">Contact {{CMessage.OrganizerName}} for {{CMessage.EventName}}</h2>
+                        <p class="cntSubtitle">Contact {{CMessage.OrganizerName}} if you have any questions or comments regarding their event</p>
+                        <input type="hidden" name="EventId" ng-model="CMessage.EventId" value="{{CMessage.EventId}}" />
+                        <input type="hidden" name="OrganizerId" ng-model="CMessage.OrganizerId" value="{{CMessage.OrganizerId}}" />
+                        <md-input-container class="md-block margin-2em-bottom max350">
+                            <label>Name</label>
+                            <input md-no-asterisk name="cntName" ng-model="CMessage.Name" required ng-keypress="submitted=false">
+                            <div ng-messages="organizerForm.cntName.$error">
+                                <div ng-message="required">Please enter your Name!</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block margin-2em-bottom max350">
+                            <label>Email</label>
+                            <input type="email" required name="cntEmail" ng-model="CMessage.Email" ng-pattern="/^.+@("@").+\..+$/" ng-keypress="submitted=false" />
+                            <div ng-messages="organizerForm.cntEmail.$error" role="alert">
+                                <div ng-message="required">Please enter your Email Address!</div>
+                                <div ng-message="pattern">Please use valid email format!</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block margin-2em-bottom max350">
+                            <label>Phone</label>
+                            <input tel-mask name="cntPhone" ng-model="CMessage.Phone" required ng-pattern="/^[0-9]{3}-[0-9]{3}-[0-9]{4,5}$/" />
+                            <div ng-messages="organizerForm.cntPhone.$error">
+                                <div ng-message="required">Please enter your Phone!</div>
+                                <div ng-message="pattern">Please enter a valid phone number pattern - ###-###-####</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Message</label>
+                            <textarea name="cntMessage" ng-model="CMessage.Message" required rows="3" md-select-on-focus></textarea>
+                            <div ng-messages="forwardfriendForm.cntMessage.$error">
+                                <div ng-message="required">Please enter message!</div>
+                            </div>
+                        </md-input-container>
+                        <md-dialog-actions layout="row">
+                            <md-button class="cntButton" ng-click="cancel()">Cancel</md-button>
+                            <md-button class="cntButton" type="submit" ng-click="sendOrganizerMessage('organizerForm')">Send</md-button>
+                        </md-dialog-actions>
+                    </div>
+                </md-dialog-content>
+            </form>
+        </md-dialog>
+    </script>
+
 </footer>
 

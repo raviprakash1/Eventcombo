@@ -25,4 +25,24 @@
         return response;
     }
 
+    this.sendOrganizerMessage = function (contactMessageViewModel) {
+        var response = $http({
+            method: "post",
+            url: "/NotificationAPI/SendOrganizer",
+            data: JSON.stringify(contactMessageViewModel),
+            dataType: "json"
+        });
+        return response;
+    }
+
+    this.sendFriendsMessage = function (friendNotificationViewModel) {
+        var response = $http({
+            method: "post",
+            url: "/NotificationAPI/ShareFriends",
+            data: JSON.stringify(friendNotificationViewModel),
+            dataType: "json"
+        });
+        return response;
+    }
+
 });

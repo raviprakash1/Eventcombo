@@ -1,5 +1,5 @@
-eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '$attrs', 'eventInfoService', 'broadcastService',
-  function ($scope, $http, $window, $attrs, eventInfoService, broadcastService) {
+eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '$attrs', 'eventInfoService', 'broadcastService', '$mdDialog',
+  function ($scope, $http, $window, $attrs, eventInfoService, broadcastService, $mdDialog) {
     $scope.favStyle = { "color": "white" };
     $scope.voteStyle = { "color": "white" };
     $scope.eventInfo = {};
@@ -100,6 +100,37 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
       $scope.popInfoMessage = show;
       $scope.InfoMessage = message;
     }
+
+    $scope.contactOrganizer = function (event, eventName, organizerName) {
+        $mdDialog.show({
+            controller: DialogContactOrganizerController,
+            templateUrl: 'organizer.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            clickOutsideToClose: true,
+            locals: {
+                eventId: $scope.eventInfo.EventId,
+                organizerId: $scope.eventInfo.organizerId,
+                eventName: eventName,
+                organizerName: organizerName
+            }
+        });
+    };
+
+    $scope.forwardFriend = function (event, mTitle, mType) {
+        $mdDialog.show({
+            controller: DialogForwardFriendController,
+            templateUrl: 'forwardfriend.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            clickOutsideToClose: true,
+            locals: {
+                id: $scope.eventInfo.EventId,
+                title: mTitle,
+                type: mType
+            }
+        });
+    };
 
     $scope.SendMessageTo = function (mtype) {
       $scope.VEMessage.Email = '';

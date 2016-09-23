@@ -3,8 +3,18 @@
 function footerController($scope, $mdDialog) {
 
     $scope.contactOrganizer = function (event) {
+        $scope.CMessage = {
+            Email: '',
+            Name: '',
+            Phone: '',
+            Message: '',
+            EventId: 0,
+            OrganizerId: 0,
+            EventName: '',
+            OrganizerName: ''
+        }
         $mdDialog.show({
-            controller: DialogController,
+            controller: DialogContactOrganizerController,
             templateUrl: 'organizer.tmpl.html',
             parent: angular.element(document.body),
             targetEvent: event,
@@ -14,7 +24,7 @@ function footerController($scope, $mdDialog) {
 
     $scope.contactEventcombo = function (event) {
         $mdDialog.show({
-            controller: DialogController,
+            controller: DialogContactEventComboController,
             templateUrl: 'eventcombo.tmpl.html',
             parent: angular.element(document.body),
             targetEvent: event,
@@ -24,7 +34,7 @@ function footerController($scope, $mdDialog) {
 
     $scope.forwardFriend = function (event) {
         $mdDialog.show({
-            controller: DialogController,
+            controller: DialogForwardFriendController,
             templateUrl: 'forwardfriend.tmpl.html',
             parent: angular.element(document.body),
             targetEvent: event,
@@ -43,7 +53,67 @@ function footerController($scope, $mdDialog) {
     };
 };
 
-function DialogController($scope, $mdDialog, $mdConstant, footerService) {
+function DialogContactOrganizerController($scope, $mdDialog, $mdConstant, footerService, eventId, organizerId, eventName, organizerName) {
+    $scope.currencyVal;
+    $scope.showHints = true;
+    $scope.submitted = false;
+    $scope.sendTo = [];
+    $scope.CMessage = {
+        Email: '',
+        Name: '',
+        Phone: '',
+        Message: '',
+        EventId: 0,
+        OrganizerId: 0,
+        EventName: '',
+        OrganizerName: ''
+    }
+    $scope.CMessage.EventId = eventId;
+    $scope.CMessage.OrganizerId = organizerId;
+    $scope.CMessage.EventName = eventName;
+    $scope.CMessage.OrganizerName = organizerName;
+
+    $scope.sendOrganizerMessage = function (form) {
+        if ($scope[form].$valid) {
+            $mdDialog.hide();
+            var data = {
+                json: angular.toJson($scope.CMessage)
+            };
+
+            var getMessageData = footerService.sendOrganizerMessage(data);
+            getMessageData.then(function (d) {
+                alert("Successfully Send!");
+            }, function () {
+
+            });
+        } else {
+            $scope.submitted = true;
+        }
+    };
+
+    $scope.hide = function () {
+        $mdDialog.hide();
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+
+    $scope.chipValidation = function (chipText) {
+        console.log("chipValidation Called");
+        var reg = /^.+@("@").+\..+$/;
+        if (reg.test(chipText)) {
+            $scope.isEmailValid = false;
+            return chipText;
+        }
+        else {
+            $scope.isEmailValid = true;
+            return null;
+        }
+    }
+}
+
+function DialogContactEventComboController($scope, $mdDialog, $mdConstant, footerService) {
     $scope.currencyVal;
     $scope.showHints = true;
     $scope.submitted = false;
@@ -88,7 +158,125 @@ function DialogController($scope, $mdDialog, $mdConstant, footerService) {
             getMessageData.then(function (d) {
                 alert("Successfully Send!");
             }, function () {
+
+            });
+        } else {
+            $scope.submitted = true;
+        }
+    };
+
+    $scope.hide = function () {
+        $mdDialog.hide();
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+
+    $scope.chipValidation = function (chipText) {
+        console.log("chipValidation Called");
+        var reg = /^.+@("@").+\..+$/;
+        if (reg.test(chipText)) {
+            $scope.isEmailValid = false;
+            return chipText;
+        }
+        else {
+            $scope.isEmailValid = true;
+            return null;
+        }
+    }
+}
+
+function DialogForwardFriendController($scope, $mdDialog, $mdConstant, footerService, id, title, type) {
+    $scope.currencyVal;
+    $scope.showHints = true;
+    $scope.submitted = false;
+    $scope.sendTo = [];
+    $scope.CMessage = {
+        Email: '',
+        Name: '',
+        Phone: '',
+        Message: '',
+        Id: 0,
+        Type: '',
+        Subject: '',
+        To: ''
+    }
+    $scope.CMessage.Id = id;
+    $scope.CMessage.Type = type;
+    $scope.CMessage.Title = title;
+    $scope.CMessage.Subject = title;
+
+    $scope.sendFriendMessage = function (form) {
+        if ($scope[form].$valid) {
+            $mdDialog.hide();
+            var data = {
+                json: angular.toJson($scope.CMessage)
+            };
+            var getMessageData = footerService.sendFriendsMessage(data);
+            getMessageData.then(function (d) {
+                alert("Successfully Send!");
+            }, function () {
                
+            });
+        } else {
+            $scope.submitted = true;
+        }
+    };
+
+    $scope.hide = function () {
+        $mdDialog.hide();
+    };
+
+    $scope.cancel = function () {
+        $mdDialog.cancel();
+    };
+
+    $scope.answer = function (form) {
+        if ($scope[form].$valid) {
+            $mdDialog.hide();
+            alert("Successfully Send!");
+        } else {
+            $scope.submitted = true;
+        }
+    };
+
+    $scope.chipValidation = function (chipText) {
+        console.log("chipValidation Called");
+        var reg = /^.+@("@").+\..+$/;
+        if (reg.test(chipText)) {
+            $scope.isEmailValid = false;
+            return chipText;
+        }
+        else {
+            $scope.isEmailValid = true;
+            return null;
+        }
+    }
+}
+
+function DialogEventSubmitController($scope, $mdDialog, $mdConstant, footerService) {
+    $scope.currencyVal;
+    $scope.showHints = true;
+    $scope.submitted = false;
+    $scope.sendTo = [];
+
+    $scope.sendContactMessageEventcombo = function (form) {
+        if ($scope[form].$valid) {
+            $mdDialog.hide();
+            var contactMessageViewModel = {
+                Name: $scope.cntName,
+                Email: $scope.cntEmail,
+                PhoneNo: $scope.cntPhone,
+                Category: $scope.cntCategory,
+                SubCategory: $scope.cntSubCategory,
+                Message: $scope.cntMessage
+            };
+            var getMessageData = footerService.sendContactMessage(contactMessageViewModel);
+            getMessageData.then(function (d) {
+                alert("Successfully Send!");
+            }, function () {
+
             });
         } else {
             $scope.submitted = true;
