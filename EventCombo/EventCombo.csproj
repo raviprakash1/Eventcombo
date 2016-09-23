@@ -991,6 +991,8 @@
     <Content Include="Scripts\AMaterial\controller.js" />
     <Content Include="Scripts\AMaterial\demo.js" />
     <Content Include="Scripts\AMaterial\EventComboApp.js" />
+    <Content Include="Scripts\AMaterial\footer.js" />
+    <Content Include="Scripts\AMaterial\geoService.js" />
     <Content Include="Scripts\AMaterial\header.js" />
     <Content Include="Scripts\AMaterial\Homepage.js" />
     <Content Include="Scripts\AMaterial\infobox.js" />

@@ -2123,27 +2123,6 @@ namespace EventCombo.Controllers
     public ActionResult Footer()
     {
       Footer footer = new Footer();
-      string User = "";
-      string UserLatitude = "";
-      string UserLongitude = "";
-
-      if (Session["AppId"] != null)
-      {
-        User = Session["AppId"].ToString();
-      }
-      var aspuser = db.Profiles.FirstOrDefault(i => i.UserID == User);
-      if (aspuser != null)
-      {
-        var city = db.Cities.FirstOrDefault(c => c.CityName == aspuser.City);
-        if (city != null)
-        {
-          UserLatitude = city.Latitude;
-          UserLongitude = city.Longitude;
-        }
-      }
-      ViewData["UserLatitude"] = UserLatitude;
-      ViewData["UserLongitude"] = UserLongitude;
-
       var businessPages = db.BusinessPages.Where(x => x.IsOnFooter == true).OrderBy(x => x.PageOrder).ToList();
       if (businessPages != null)
       {

@@ -57,61 +57,41 @@ eventComboApp.controller('HamburgerController', ['$scope', '$window', 'MenuServi
   }]);
 
 
-eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http', '$q', '$cookies', 'broadcastService', 
-  function ($scope, $window, $http, $q, $cookies, broadcastService) {
+eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http', '$q', '$cookies', 'broadcastService', 'geoService', 
+  function ($scope, $window, $http, $q, $cookies, broadcastService, geoService) {
 
     $scope.eventString = '';
     $scope.selectedEvent = null;
     $scope.cityString = '';
     $scope.selectedCity = null;
-
-    $scope.geocoords = $cookies.getObject('ECCurrentCoordinates');
-    if (!$scope.geocoords)
-      $scope.geocoords = $cookies.getObject('ECGeoCoordinates');
-    var cdate = new Date();
-    cdate.setDate(cdate.getDate() + 365);
-    if (!$scope.geocoords) {
-      $scope.geocoords = {
-        latitude: '40.712784',
-        longitude: '-74.0059413'
-      }
-      if ($window.navigator.geolocation) {
-        $window.navigator.geolocation.getCurrentPosition(function (pos) {
-          $scope.geocoords = {
-            latitude: pos.coords.latitude,
-            longitude: pos.coords.longitude
-          };
-          $cookies.putObject('ECGeoCoordinates', $scope.geocoords, { path: "/", expires: cdate });
-        }, function (err) {
-          $cookies.putObject('ECGeoCoordinates', $scope.geocoords, { path: "/", expires: cdate });
-        });
-      }
-      else {
-        $cookies.putObject('ECGeoCoordinates', $scope.geocoords, { path: "/", expires: cdate });
-      }
-    }
-
-    var cCoords = $cookies.getObject('ECCurrentCoordinates');
-    if (!cCoords) {
-      $cookies.putObject('ECCurrentCoordinates', $scope.geocoords, { path: "/" });
-      broadcastService.CurrentCoordinatesChanged();
-    }
-
-
     $scope.foundCities = [];
 
     $scope.gmapsService = new google.maps.places.AutocompleteService();
     $scope.placeService = new google.maps.places.PlacesService(document.getElementById('search').appendChild(document.createElement('div')));
 
+    $scope.setCity = function (cityname) {
+      $scope.cityString = cityname;
+    }
+
+    function setCityByCoordinates(lat, lng) {
+      geoService.GetCityByCoordinates(lat, lng, $scope.setCity);
+    }
+
+    $scope.$on('CurrentCoordinatesChanged', function (event, val) {
+      $scope.cityString = geoService.GetCurrentCity($scope.setCity);
+    });
+
+    $scope.cityString = geoService.GetCurrentCity($scope.setCity);
 
     $scope.DiscoverByEvent = function () {
+      var coords = geoService.GetCoordinates();
       if ($scope.eventString) {
         var data = {
           EventId: 0,
           RecordTypeId: 0,
           EventTitle: $scope.eventString,
-          Latitude: $scope.geocoords.latitude,
-          Longitude: $scope.geocoords.longitude,
+          Latitude: coords.latitude,
+          Longitude: coords.longitude,
         }
         if ($scope.selectedEvent) {
           data.EventId = $scope.selectedEvent.EventId;
@@ -119,7 +99,6 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
           data.RecordTypeId = $scope.selectedEvent.RecordTypeId;
         }
 
-        console.log(data);
         $http.get('/home/SearchEvents', { params: { json: angular.toJson(data) } }).then(function (response) {
           if (response.data)
             $window.location = response.data;
@@ -161,11 +140,8 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
       }
 
       $scope.placeService.getDetails({ placeId: $scope.selectedCity.place_id }, function (city) {
-        $scope.geocoords.latitude = city.geometry.location.lat();
-        $scope.geocoords.longitude = city.geometry.location.lng();
-        $cookies.putObject('ECCurrentCoordinates', $scope.geocoords, { path: "/" });
-        broadcastService.CurrentCoordinatesChanged();
-        $window.location = '/et/evt/evc/all/page/' + $scope.geocoords.latitude + '/' + $scope.geocoords.longitude + '/rel/none';
+        var coords = geoService.SetCoordinates(city.geometry.location.lat(), city.geometry.location.lng(), true);
+        $window.location = '/et/evt/evc/all/page/' + coords.latitude + '/' + coords.longitude + '/rel/none';
       })
     }
 

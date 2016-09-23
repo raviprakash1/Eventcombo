@@ -140,8 +140,10 @@ namespace EventCombo
                         "~/Scripts/AMaterial/classie.js",
                         "~/Scripts/AMaterial/EventComboApp.js",
                         "~/Scripts/AMaterial/broadcastService.js",
+                        "~/Scripts/AMaterial/geoService.js",
                         "~/Scripts/AMaterial/accountService.js",
                         "~/Scripts/AMaterial/header.js",
+                        "~/Scripts/AMaterial/footer.js",
                         "~/Scripts/AMaterial/AccountController.js"));
             bundles.Add(new ScriptBundle("~/Scripts/AMaterial/viewEvent")
               .Include("~/Scripts/AMaterial/owl.carousel.min.js"));

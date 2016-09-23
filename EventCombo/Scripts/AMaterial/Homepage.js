@@ -1,8 +1,8 @@
-﻿eventComboApp.controller('HomeController', ['$scope', '$window', '$cookies', '$http', 'broadcastService', 'eventFavoriteService', 'socialService',
-  function ($scope, $window, $cookies, $http, broadcastService, eventFavoriteService, socialService) {
+﻿eventComboApp.controller( 'HomeController', ['$scope', '$window', '$cookies', '$http', 'broadcastService',
+                          'eventFavoriteService', 'socialService', 'geoService',
+  function ($scope, $window, $cookies, $http, broadcastService, eventFavoriteService, socialService, geoService) {
 
     $scope.eventsList = {};
-    $scope.coords = { longitude: 0.0, latitude: 0.0 };
     $scope.displayVEPopups = 'block';
     $scope.popLoading = false;
     $scope.popInfoMessage = false;
@@ -27,7 +27,8 @@
 
     $scope.UpdateEventList = function () {
       $scope.showLoadingMessage(false, 'Update events info');
-      $http.get('/home/GetEventsList', { params: { lat: $scope.coords.latitude, lng: $scope.coords.longitude } }).then(function (response) {
+      var coords = geoService.GetCoordinates();
+      $http.get('/home/GetEventsList', { params: { lat: coords.latitude, lng: coords.longitude } }).then(function (response) {
         $scope.showLoadingMessage(false, '');
         $scope.eventsList = response.data;
       }, function (error) {
@@ -35,16 +36,7 @@
       });
     };
 
-    $scope.CheckCoordinates = function () {
-      var c = $cookies.getObject('ECCurrentCoordinates');
-      if (!c || ((c.latitude == $scope.coords.latitude) && (c.longitude == $scope.coords.longitude))) {
-        return;
-      }
-      $scope.coords = c;
-      $scope.UpdateEventList();
-    }
-
-    $scope.CheckCoordinates();
+    $scope.UpdateEventList();
 
     $scope.ProcessAddedFavorite = function (val) {
       if (val.Processed && $scope.eventsList)
@@ -56,7 +48,7 @@
     }
 
     $scope.$on('CurrentCoordinatesChanged', function (event, val) {
-      $scope.CheckCoordinates();
+      $scope.UpdateEventList();
     });
 
     $scope.$on('AddFavoriteWithLoginProcessed', function (event, val) {
@@ -73,14 +65,13 @@
            ($scope.curEventType || $scope.allEventTypes)) {
         var et = $scope.allEventTypes ? 'evt' : $scope.curEventType;
         var coords = $scope.allCities ? 'lat/lng' : $scope.curCity.latitude + '/' + $scope.curCity.longitude;
-        if ($scope.curCity && $scope.curCity.latitude && $scope.curCity.longitude)
-          $cookies.putObject('ECCurrentCoordinates', $scope.curCity, { path: "/" });
+        if ($scope.curCity && $scope.curCity.latitude && $scope.curCity.longitude) 
+          geoService.SetCoordinates($scope.curCity.latitude, $scope.curCity.longitude, true);
         $window.location.href = '/et/' + et + '/evc/all/page/' + coords + '/rel/none';
       }
     };
 
     $scope.OnCityChange = function (lat, lng, id) {
-      console.log(id);
       $scope.allCities = (Math.abs(lat) > 90) && (Math.abs(lng) > 180);
       $scope.curCity.latitude = $scope.allCities ? 0 : lat;
       $scope.curCity.longitude = $scope.allCities ? 0 : lng;
