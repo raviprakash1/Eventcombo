@@ -66,8 +66,8 @@ namespace EventCombo.Controllers
         };
 
         try 
-        { 
-          EventNotificationViewModel en = JsonConvert.DeserializeObject<EventNotificationViewModel>(json);
+        {
+          FriendNotificationViewModel en = JsonConvert.DeserializeObject<FriendNotificationViewModel>(json);
           _nService.SendEmailFreindsMessage(en);
           result.Success = true;
           result.ErrorCode = 0;

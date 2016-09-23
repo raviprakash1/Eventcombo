@@ -13,10 +13,10 @@ namespace EventCombo.Service
   public class EmailToFriendsNotification : INotification
   {
     private IUnitOfWorkFactory _factory;
-    private EventNotificationViewModel _message;
+    private FriendNotificationViewModel _message;
     private string _defaultEmail;
 
-    public EmailToFriendsNotification(IUnitOfWorkFactory factory, EventNotificationViewModel message, string defaultEmail)
+    public EmailToFriendsNotification(IUnitOfWorkFactory factory, FriendNotificationViewModel message, string defaultEmail)
     {
       if (factory == null)
         throw new ArgumentNullException("factory");
@@ -49,43 +49,67 @@ namespace EventCombo.Service
 
     public void SendNotification(ISendMailService _service)
     {
-      IRepository<Email_Template> etRepo = new GenericRepository<Email_Template>(_factory.ContextFactory);
-      IRepository<Event> evRepo = new GenericRepository<Event>(_factory.ContextFactory);
-      var eTemplate = etRepo.Get(filter: (et => et.Template_Tag == "email_friend")).SingleOrDefault();
-      if (eTemplate == null)
-        throw new Exception("Email template 'email_friend' not found.");
+        IRepository<Email_Template> etRepo = new GenericRepository<Email_Template>(_factory.ContextFactory);
+        IRepository<Event> evRepo = new GenericRepository<Event>(_factory.ContextFactory);
+        IRepository<Article> articleRepo = new GenericRepository<Article>(_factory.ContextFactory);
 
-      var ev = evRepo.GetByID(_message.EventId);
-      if (ev == null)
-        throw new Exception("Event nof found for ID = " + _message.EventId.ToString());
+        var eTemplate = etRepo.Get(filter: (et => et.Template_Tag == "email_friend")).SingleOrDefault();
+        if (eTemplate == null)
+            throw new Exception("Email template 'email_friend' not found.");
+
+        string Title = "";
+        string url = "";
+        Event ev = null;
+        Article ar = null;
+
+        if (_message.Type.ToLower() == "event")
+        {
+            ev = evRepo.GetByID(_message.Id);
+            Title = ev.EventTitle;
+
+            var baseurl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+            var urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            url = baseurl + urlHelper.Action("ViewEvent", "EventManagement", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(Title.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ev.EventID.ToString() });
+        }
+        else
+        {
+            ar = articleRepo.GetByID(_message.Id);
+            Title = ar.Title;
+            url = ArticleService.GetArticleUrl(ar.ArticleId, ar.Title);
+        }
+        if (ev == null && ar == null)
+            throw new Exception("Event not found for ID = " + _message.Id.ToString());
+
+        var tagList = LoadTagList();
+        tagList["UserFirstNameID"] = _message.Name;
+        tagList["UserPhone"] = _message.Phone;
+        tagList["FriendsEmail"] = _message.To;
+        tagList["EventTitleId"] = Title;
+        tagList["MessageBody"] = _message.Message;
+        tagList["DiscoverEventurl"] = url;
 
 
-      var tagList = LoadTagList();
-      tagList["FriendsEmail"] = _message.Email;
-      tagList["EventTitleId"] = ev.EventTitle;
-      tagList["MessageBody"] = _message.Message;
+        _service.Message.To.Clear();
+        if (!String.IsNullOrEmpty(_message.To))
+            _service.Message.To.Add(_message.To);
+        else
+            _service.Message.To.Add(ReplaceTags(eTemplate.To, tagList));
 
-      _service.Message.To.Clear();
-      if (String.IsNullOrEmpty(eTemplate.To))
-        _service.Message.To.Add(_message.Email);
-      else
-        _service.Message.To.Add(ReplaceTags(eTemplate.To, tagList));
+        string fromAddress = String.IsNullOrEmpty(eTemplate.From) ? _defaultEmail : ReplaceTags(eTemplate.From, tagList);
+        _service.Message.From = new MailAddress(fromAddress, String.IsNullOrEmpty(eTemplate.From_Name) ? fromAddress : ReplaceTags(eTemplate.From_Name, tagList));
 
-      string fromAddress = String.IsNullOrEmpty(eTemplate.From) ? _defaultEmail : ReplaceTags(eTemplate.From, tagList);
-      _service.Message.From = new MailAddress(fromAddress, String.IsNullOrEmpty(eTemplate.From_Name) ? fromAddress : ReplaceTags(eTemplate.From_Name, tagList));
+        _service.Message.CC.Clear();
+        if (!String.IsNullOrEmpty(eTemplate.CC))
+            _service.Message.CC.Add(new MailAddress(ReplaceTags(eTemplate.CC, tagList)));
 
-      _service.Message.CC.Clear();
-      if (!String.IsNullOrEmpty(eTemplate.CC))
-        _service.Message.CC.Add(new MailAddress(ReplaceTags(eTemplate.CC, tagList)));
+        _service.Message.Bcc.Clear();
+        if (!String.IsNullOrEmpty(eTemplate.Bcc))
+            _service.Message.Bcc.Add(new MailAddress(ReplaceTags(eTemplate.Bcc, tagList)));
 
-      _service.Message.Bcc.Clear();
-      if (!String.IsNullOrEmpty(eTemplate.Bcc))
-        _service.Message.Bcc.Add(new MailAddress(ReplaceTags(eTemplate.Bcc, tagList)));
-
-      _service.Message.Subject = ReplaceTags(eTemplate.Subject, tagList);
-      _service.Message.IsBodyHtml = true;
-      _service.Message.Body = ReplaceTags(new MvcHtmlString(HttpUtility.HtmlDecode(eTemplate.TemplateHtml)).ToHtmlString(), tagList);
-      _service.SendMail();
+        _service.Message.Subject = (string.IsNullOrEmpty(_message.Subject) ? ReplaceTags(eTemplate.Subject, tagList) : _message.Subject);
+        _service.Message.IsBodyHtml = true;
+        _service.Message.Body = ReplaceTags(new MvcHtmlString(HttpUtility.HtmlDecode(eTemplate.TemplateHtml)).ToHtmlString(), tagList);
+        _service.SendMail();
     }
 
     private string _receiver;
