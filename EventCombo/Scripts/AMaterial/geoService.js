@@ -34,11 +34,20 @@
     }
 
     var getCoordinates = function () {
-      var coord = $cookies.getObject('ECGeoCoordinates');
-      return {
-        latitude: coord.latitude,
-        longitude: coord.longitude
-      }
+        if (typeof $cookies.getObject('ECGeoCoordinates') === 'undefined') {
+            //no cookie
+            return {
+                latitude: '40.712784',
+                longitude: '-74.0059413'
+            }
+        } else {
+            //have cookie
+            var coord = $cookies.getObject('ECGeoCoordinates');
+            return {
+                latitude: coord.latitude,
+                longitude: coord.longitude
+            }
+        }
     }
 
     var saveCoordinates = function (lat, lng, preventBroadcast) {
