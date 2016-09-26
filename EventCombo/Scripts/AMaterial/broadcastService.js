@@ -24,8 +24,28 @@
       broadcastMessage('LoggedIn', param);
     }
 
+    var loggedOut = function (param) {
+      broadcastMessage('LoggedOut', param);
+    }
+
     var loginProcessed = function (param) {
       broadcastMessage('LoginProcessed', param);
+    }
+
+    var addFavoriteProcessed = function (param) {
+      broadcastMessage('AddFavoriteProcessed', param);
+    }
+
+    var addFavoriteWithLoginProcessed = function (param) {
+      broadcastMessage('AddFavoriteWithLoginProcessed', param);
+    }
+
+    var currentCoordinatesChanged = function (param) {
+      broadcastMessage('CurrentCoordinatesChanged', param)
+    }
+
+    var reloadPage = function (param) {
+      broadcastMessage('ReloadPage', param);
     }
 
     return {
@@ -34,6 +54,11 @@
       CallLogin: callLogin,
       CompleteExternalLogin: completeExternalLogin,
       LoggedIn: loggedIn,
-      LoginProcessed: loginProcessed
+      LoggedOut: loggedOut,
+      LoginProcessed: loginProcessed,
+      AddFavoriteProcessed: addFavoriteProcessed,
+      AddFavoriteWithLoginProcessed: addFavoriteWithLoginProcessed,
+      CurrentCoordinatesChanged: currentCoordinatesChanged,
+      ReloadPage: reloadPage
     }
   }]);

@@ -33,7 +33,7 @@ namespace EventCombo.Controllers
 {
   [Authorize]
 
-  public class AccountController : Controller
+  public class AccountController : BaseController
   {
     private ApplicationSignInManager _signInManager;
     private ApplicationUserManager _userManager;
@@ -2095,6 +2095,19 @@ namespace EventCombo.Controllers
         }
       return View("LoginResult", new LoginResultViewModel(false, returnUrl));
     }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public ActionResult GetStatus()
+    {
+      BaseViewModel result = new BaseViewModel();
+      PopulateBaseViewModel(result);
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = result;
+      return res;
+    }
+
 
 
     [HttpGet]

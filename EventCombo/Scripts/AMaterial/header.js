@@ -9,8 +9,8 @@
   };
 });
 
-eventComboApp.controller('HamburgerController', ['$scope', '$window', 'MenuService', '$mdDialog', '$mdMenu', 'broadcastService',
-  function ($scope, $window, MenuService, $mdDialog, $mdMenu, broadcastService) {
+eventComboApp.controller('HamburgerController', ['$scope', '$window', 'MenuService', '$mdDialog', '$mdMenu', 'broadcastService', 'accountService',
+  function ($scope, $window, MenuService, $mdDialog, $mdMenu, broadcastService, accountService) {
 
     $scope.navigation = MenuService.navigation;
     var originatorEv;
@@ -39,65 +39,70 @@ eventComboApp.controller('HamburgerController', ['$scope', '$window', 'MenuServi
       }
     });
 
+    $scope.$on('LoggedIn', function (event, param) {
+      var paramArray = param.split('_');
+      var link = paramArray[paramArray.length - 1];
+      if (paramArray[0] === 'HeaderHamburger') {
+        broadcastService.ReloadPage(link);
+      }
+    });
+
     $scope.clickLink = function (link, e) {
       if (!link || $scope.userRegistered)
         return;
-      broadcastService.CallLogin({ RedirectUrl: link });
+      accountService.StartLogin('HeaderHamburger_' + link);
       e.preventDefault();
     }
 
   }]);
 
 
-eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http', '$q', '$cookies',
-  function ($scope, $window, $http, $q, $cookies) {
+eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http', '$q', '$cookies', 'broadcastService', 'geoService', 
+  function ($scope, $window, $http, $q, $cookies, broadcastService, geoService) {
 
     $scope.eventString = '';
     $scope.selectedEvent = null;
     $scope.cityString = '';
     $scope.selectedCity = null;
-
-    $scope.geocoords = $cookies.getObject('ECGeoCoordinates');
-    var cdate = new Date();
-    cdate.setDate(cdate.getDate() + 365);
-    if (!$scope.geocoords) {
-      $scope.geocoords = {
-        latitude: '40.712784',
-        longitude: '-74.0059413'
-      }
-      if ($window.navigator.geolocation) {
-        $window.navigator.geolocation.getCurrentPosition(function (pos) {
-          $scope.geocoords = {
-            latitude: pos.coords.latitude,
-            longitude: pos.coords.longitude
-          };
-          $cookies.putObject('ECGeoCoordinates', $scope.geocoords, { path: "/", expires: cdate });
-        }, function (err) {
-          $cookies.putObject('ECGeoCoordinates', $scope.geocoords, { path: "/", expires: cdate });
-        });
-      }
-      else {
-        $cookies.putObject('ECGeoCoordinates', $scope.geocoords, { path: "/", expires: cdate });
-      }
-    }
-
     $scope.foundCities = [];
 
     $scope.gmapsService = new google.maps.places.AutocompleteService();
     $scope.placeService = new google.maps.places.PlacesService(document.getElementById('search').appendChild(document.createElement('div')));
 
+    $scope.setCity = function (cityname) {
+      $scope.cityString = cityname;
+    }
+
+    function setCityByCoordinates(lat, lng) {
+      geoService.GetCityByCoordinates(lat, lng, $scope.setCity);
+    }
+
+    $scope.$on('CurrentCoordinatesChanged', function (event, val) {
+      $scope.cityString = geoService.GetCurrentCity($scope.setCity);
+    });
+
+    $scope.cityString = geoService.GetCurrentCity($scope.setCity);
 
     $scope.DiscoverByEvent = function () {
+      var coords = geoService.GetCoordinates();
       if ($scope.eventString) {
-        var lat = $scope.geocoords.latitude;
-        var lng = $scope.geocoords.longitude;
-        var srchStr = $scope.eventString;
-        if ($scope.selectedEvent) {
-          lat = $scope.selectedEvent.Latitude ? $scope.selectedEvent.Latitude : lat;
-          lng = $scope.selectedEvent.Longitude ? $scope.selectedEvent.Longitude : lng;
-          srchStr = $scope.selectedEvent.RecordTypeId == 0 ? srchStr.substring(0, 53) : srchStr.substring(0, 16);
+        var data = {
+          EventId: 0,
+          RecordTypeId: 0,
+          EventTitle: $scope.eventString,
+          Latitude: coords.latitude,
+          Longitude: coords.longitude,
         }
-        $window.location = '/et/evt/evc/all/page/' + lat + '/' + lng + '/rel/none/' + encodeURIComponent(srchStr);
+        if ($scope.selectedEvent) {
+          data.EventId = $scope.selectedEvent.EventId;
+          data.EventId = $scope.selectedEvent.EventId;
+          data.RecordTypeId = $scope.selectedEvent.RecordTypeId;
+        }
+
+        $http.get('/home/SearchEvents', { params: { json: angular.toJson(data) } }).then(function (response) {
+          if (response.data)
+            $window.location = response.data;
+        }, function (error) { });
       }
     }
 
@@ -135,7 +140,8 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
       }
 
       $scope.placeService.getDetails({ placeId: $scope.selectedCity.place_id }, function (city) {
-        $window.location = '/et/evt/evc/all/page/' + city.geometry.location.lat() + '/' + city.geometry.location.lng() + '/rel/none';
+        var coords = geoService.SetCoordinates(city.geometry.location.lat(), city.geometry.location.lng(), true);
+        $window.location = '/et/evt/evc/all/page/' + coords.latitude + '/' + coords.longitude + '/rel/none';
       })
     }
 

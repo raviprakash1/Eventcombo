@@ -9,6 +9,13 @@
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <meta name="description" content="">
   <meta name="author" content="">
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#6E6E6E">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#6E6E6E">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta property="fb:app_id" content="@(System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"])" />
   @if (Model is IOpenGraphProtocol)
   {
@@ -59,7 +66,10 @@
   <script src="~/Scripts/AMaterial/jquery-1.12.3.min.js"></script>
   <script src="~/Scripts/bootstrap.min.js"></script>
 
-  @Scripts.Render("~/Scripts/AMaterial/angularHeader")
+  @Scripts.Render("~/Scripts/AMaterial/angularHeader1")
+  @Scripts.Render("~/Scripts/AMaterial/angularHeader2")
+  @Scripts.Render("~/Scripts/AMaterial/angularHeader3")
+  @Scripts.Render("~/Scripts/AMaterial/angularHeader4")
   @RenderSection("ScriptSection")
   <script src="https://maps.googleapis.com/maps/api/js?key=@(System.Configuration.ConfigurationManager.AppSettings.Get("GoogleAPIKey"))&v=3.exp&sensor=true&libraries=places"></script>
 

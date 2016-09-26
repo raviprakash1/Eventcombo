@@ -378,6 +378,13 @@
     <Compile Include="Models\City.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Footer.cs" />
+    <Compile Include="Models\GetNearestEvents_Result.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HomepageWord.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ContactEventCombo.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -464,7 +471,6 @@
     <Compile Include="Models\Fee_Structure.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Footer.cs" />
     <Compile Include="Models\func_Split_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -785,10 +791,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ForgetPassword.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Home\Index.generated.cs">
+    <Compile Include="Views\Home\IndexOld.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Index.cshtml</DependentUpon>
+      <DependentUpon>IndexOld.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Home\PasswordReset.generated.cs">
       <AutoGen>True</AutoGen>
@@ -843,11 +849,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\AMaterial\angular-material.css" />
+    <Content Include="Content\AMaterial\angular-material.min.css" />
     <Content Include="Content\AMaterial\angularjs-color-picker.min.css" />
     <Content Include="Content\AMaterial\animations.css" />
     <Content Include="Content\AMaterial\docs.css" />
     <Content Include="Content\AMaterial\gridiculous.css" />
     <Content Include="Content\AMaterial\header-footer.css" />
+    <Content Include="Content\AMaterial\homePage.css" />
     <Content Include="Content\AMaterial\main.css" />
     <Content Include="Content\AMaterial\material-datetimepicker.css" />
     <Content Include="Content\AMaterial\ngGallery.css" />
@@ -921,6 +929,7 @@
     <Content Include="Images\AMaterial\marker-pink.png" />
     <Content Include="Images\AMaterial\plusIcon.png" />
     <Content Include="Images\AMaterial\popimg.jpg" />
+    <Content Include="Images\AMaterial\RecordBackgroundFinal_1000.gif" />
     <Content Include="Images\AMaterial\saroosh.jpg" />
     <Content Include="Images\AMaterial\square-facebook.svg" />
     <Content Include="Images\AMaterial\square-linkedin.svg" />
@@ -972,6 +981,14 @@
     <Content Include="Images\search.png" />
     <Content Include="Images\twitter.png" />
     <Content Include="Images\unchecked.png" />
+    <Content Include="Images\Video\Burning-Candle-Gif.gif" />
+    <Content Include="Images\Video\City-Skyline-Gif.gif" />
+    <Content Include="Images\Video\Empty-Theater-Stage-Gif.gif" />
+    <Content Include="Images\Video\FilmStrip-Gif.gif" />
+    <Content Include="Images\Video\LA-Night-Gif.gif" />
+    <Content Include="Images\Video\NYC-30-Rock-Gif.gif" />
+    <Content Include="Images\Video\Times-Square-Night-Gif.gif" />
+    <Content Include="Images\Video\Turning-Record-Gif.gif" />
     <Content Include="Models\EventComboModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EventComboModel.edmx</DependentUpon>
@@ -983,6 +1000,7 @@
       <LastGenOutput>EventComboModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\AMaterial\AccountController.js" />
+    <Content Include="Scripts\AMaterial\AccountService.js" />
     <Content Include="Scripts\AMaterial\angular-animate.js" />
     <Content Include="Scripts\AMaterial\angular-animate.min.js" />
     <Content Include="Scripts\AMaterial\angular-aria.js" />
@@ -1006,7 +1024,10 @@
     <Content Include="Scripts\AMaterial\controller.js" />
     <Content Include="Scripts\AMaterial\demo.js" />
     <Content Include="Scripts\AMaterial\EventComboApp.js" />
+    <Content Include="Scripts\AMaterial\footer.js" />
+    <Content Include="Scripts\AMaterial\geoService.js" />
     <Content Include="Scripts\AMaterial\header.js" />
+    <Content Include="Scripts\AMaterial\Homepage.js" />
     <Content Include="Scripts\AMaterial\infobox.js" />
     <Content Include="Scripts\AMaterial\broadcastService.js" />
     <Content Include="Scripts\AMaterial\jquery-1.12.3.min.js" />
@@ -1093,8 +1114,10 @@
     <Content Include="Scripts\AMaterial\skins\lightgray\img\trans.gif" />
     <Content Include="Scripts\AMaterial\skins\lightgray\skin.ie7.min.css" />
     <Content Include="Scripts\AMaterial\skins\lightgray\skin.min.css" />
+    <Content Include="Scripts\AMaterial\socialService.js" />
     <Content Include="Scripts\AMaterial\sortable.js" />
     <Content Include="Scripts\AMaterial\svg-assets-cache.js" />
+    <Content Include="Scripts\AMaterial\texttyper.js" />
     <Content Include="Scripts\AMaterial\themes\modern\theme.min.js" />
     <Content Include="Scripts\AMaterial\tinycolor-min.js" />
     <Content Include="Scripts\AMaterial\tinymce.min.js" />
@@ -1102,6 +1125,7 @@
     <Content Include="Scripts\custom-scroll.js" />
     <Content Include="Scripts\DateTimePicker.js" />
     <Content Include="Scripts\AMaterial\Controller\FooterController.js" />
+    <Content Include="Scripts\AMaterial\EventFavoriteService.js" />
     <Content Include="Scripts\gmap.js" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.countdownTimer.css" />
@@ -1531,9 +1555,9 @@
     <Content Include="Views\Home\Contact.cshtml">
       <Generator>RazorGenerator</Generator>
     </Content>
-    <Content Include="Views\Home\Index.cshtml">
+    <Content Include="Views\Home\IndexOld.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Index.generated.cs</LastGenOutput>
+      <LastGenOutput>IndexOld.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Shared\_ExternalLoginsListPartial.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1793,6 +1817,7 @@
     <Content Include="Views\ManageAttendees\_AttendeeTicketTypeList.cshtml" />
     <Content Include="Views\ManageAttendees\Badges.cshtml" />
     <Content Include="Views\Download\_OrderList.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
