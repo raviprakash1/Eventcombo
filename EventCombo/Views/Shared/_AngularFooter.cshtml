@@ -129,7 +129,7 @@
                             <label>Send to</label>
                             <md-chips class="sendTo" ng-model="CMessage.To" ng-init="keys=[13,188]" md-separator-keys="keys" placeholder="Enter an email address" type="email" md-transform-chip="chipValidation($chip)" md-require-match="true" md-add-on-blur="true"></md-chips>
                             <ng-messages class="showError" ng-show="isEmailValid">Please use valid email format!</ng-messages>
-                            <div ng-messages="forwardfriendForm.sendTo.$error" role="alert">
+                            <div ng-messages="CMessage.To.$error" role="alert">
                                 <div ng-message="pattern">Please use valid email format!</div>
                             </div>
                             <div class="hint showHint">Allow to enter multiple email addresses by separating by comma</div>

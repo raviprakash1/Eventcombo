@@ -83,15 +83,20 @@ namespace EventCombo.Service
         var tagList = LoadTagList();
         tagList["UserFirstNameID"] = _message.Name;
         tagList["UserPhone"] = _message.Phone;
-        tagList["FriendsEmail"] = _message.To;
+        tagList["FriendsEmail"] = string.Join(";", _message.To);
         tagList["EventTitleId"] = Title;
         tagList["MessageBody"] = _message.Message;
         tagList["DiscoverEventurl"] = url;
 
 
         _service.Message.To.Clear();
-        if (!String.IsNullOrEmpty(_message.To))
-            _service.Message.To.Add(_message.To);
+        if (_message.To.Count() > 0)
+        {
+            foreach (var to in _message.To)
+            {
+                _service.Message.To.Add(to);
+            }
+        }
         else
             _service.Message.To.Add(ReplaceTags(eTemplate.To, tagList));
 

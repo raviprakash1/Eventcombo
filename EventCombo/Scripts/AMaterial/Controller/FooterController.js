@@ -101,7 +101,7 @@ function DialogContactOrganizerController($scope, $mdDialog, $mdConstant, footer
 
     $scope.chipValidation = function (chipText) {
         console.log("chipValidation Called");
-        var reg = /^.+@("@").+\..+$/;
+        var reg = /^.+@.+\..+$/;
         if (reg.test(chipText)) {
             $scope.isEmailValid = false;
             return chipText;
@@ -175,7 +175,7 @@ function DialogContactEventComboController($scope, $mdDialog, $mdConstant, foote
 
     $scope.chipValidation = function (chipText) {
         console.log("chipValidation Called");
-        var reg = /^.+@("@").+\..+$/;
+        var reg = /^.+@.+\..+$/;
         if (reg.test(chipText)) {
             $scope.isEmailValid = false;
             return chipText;
@@ -191,7 +191,6 @@ function DialogForwardFriendController($scope, $mdDialog, $mdConstant, footerSer
     $scope.currencyVal;
     $scope.showHints = true;
     $scope.submitted = false;
-    $scope.sendTo = [];
     $scope.CMessage = {
         Email: '',
         Name: '',
@@ -200,7 +199,7 @@ function DialogForwardFriendController($scope, $mdDialog, $mdConstant, footerSer
         Id: 0,
         Type: '',
         Subject: '',
-        To: ''
+        To: []
     }
     $scope.CMessage.Id = id;
     $scope.CMessage.Type = type;
@@ -232,18 +231,9 @@ function DialogForwardFriendController($scope, $mdDialog, $mdConstant, footerSer
         $mdDialog.cancel();
     };
 
-    $scope.answer = function (form) {
-        if ($scope[form].$valid) {
-            $mdDialog.hide();
-            alert("Successfully Send!");
-        } else {
-            $scope.submitted = true;
-        }
-    };
-
     $scope.chipValidation = function (chipText) {
         console.log("chipValidation Called");
-        var reg = /^.+@("@").+\..+$/;
+        var reg = /^.+@.+\..+$/;
         if (reg.test(chipText)) {
             $scope.isEmailValid = false;
             return chipText;
@@ -302,7 +292,7 @@ function DialogEventSubmitController($scope, $mdDialog, $mdConstant, footerServi
 
     $scope.chipValidation = function (chipText) {
         console.log("chipValidation Called");
-        var reg = /^.+@("@").+\..+$/;
+        var reg = /^.+@.+\..+$/;
         if (reg.test(chipText)) {
             $scope.isEmailValid = false;
             return chipText;
