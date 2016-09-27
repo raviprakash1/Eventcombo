@@ -1427,7 +1427,13 @@ namespace EventCombo.Service
       if ((fList != null) && fList.Any())
       {
         var rnd = new Random();
-        res.ImageUrl = "/Images/Video/" + Path.GetFileName(fList[rnd.Next(fList.Count())]);
+        int fileNum = rnd.Next(fList.Count());
+        res.ImageUrl = "/Images/Video/" + Path.GetFileName(fList[fileNum]);
+        string jpegFile = Path.ChangeExtension(fList[fileNum], ".jpg");
+        if (File.Exists(jpegFile))
+          res.StartImageUrl = "/Images/Video/" + Path.GetFileName(jpegFile);
+        else
+          res.StartImageUrl = "";
       }
       else
         res.ImageUrl = "/Images/AMaterial/RecordBackgroundFinal_1000.gif";

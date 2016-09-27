@@ -275,8 +275,8 @@
     </div>
     <div style="width: 40%; float:left; margin-left: 5%">
       <md-autocomplete md-no-cache="false" md-selected-item="selectedCity" md-search-text="cityString" md-delay="500"
-                       md-items="item in citySearch(cityString)" md-selected-item-change="DiscoverByCity()" md-select-on-focus
-                       md-item-text="item.description" md-min-length="2" placeholder="City" press-enter="DiscoverByCity()">
+                       md-items="item in citySearch(cityString)" md-selected-item-change="DiscoverByCitySelect()" md-select-on-focus
+                       md-item-text="item.description" md-min-length="2" placeholder="City" press-enter="DiscoverByCityEnter()">
         <md-item-template>
           <span md-highlight-text="cityString" md-highlight-flags="i">{{item.description}}</span>
         </md-item-template>

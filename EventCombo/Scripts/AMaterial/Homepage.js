@@ -1,4 +1,4 @@
-﻿eventComboApp.controller( 'HomeController', ['$scope', '$window', '$cookies', '$http', 'broadcastService',
+﻿eventComboApp.controller('HomeController', ['$scope', '$window', '$cookies', '$http', 'broadcastService',
                           'eventFavoriteService', 'socialService', 'geoService',
   function ($scope, $window, $cookies, $http, broadcastService, eventFavoriteService, socialService, geoService) {
 
@@ -13,6 +13,7 @@
     $scope.allEventTypes = false;
     $scope.curCityId = 0;
     $scope.shareEvent = null;
+    $scope.bgImageStyle = {};
 
 
     $scope.showLoadingMessage = function (show, message) {
@@ -65,18 +66,19 @@
            ($scope.curEventType || $scope.allEventTypes)) {
         var et = $scope.allEventTypes ? 'evt' : $scope.curEventType;
         var coords = $scope.allCities ? 'lat/lng' : $scope.curCity.latitude + '/' + $scope.curCity.longitude;
-        if ($scope.curCity && $scope.curCity.latitude && $scope.curCity.longitude) 
+        if ($scope.curCity && $scope.curCity.latitude && $scope.curCity.longitude)
           geoService.SetCoordinates($scope.curCity.latitude, $scope.curCity.longitude, true);
         $window.location.href = '/et/' + et + '/evc/all/page/' + coords + '/rel/none';
       }
     };
 
-    $scope.OnCityChange = function (lat, lng, id) {
+    $scope.OnCityChange = function (lat, lng, id, el) {
       $scope.allCities = (Math.abs(lat) > 90) && (Math.abs(lng) > 180);
       $scope.curCity.latitude = $scope.allCities ? 0 : lat;
       $scope.curCity.longitude = $scope.allCities ? 0 : lng;
       $scope.curCityId = id;
       $scope.CallDiscoveryEvents();
+      onCityClick(el);
     };
 
     $scope.OnEventTypeChange = function (et) {
@@ -116,6 +118,23 @@
       return '#' + tag1 + '\u00A0\u00A0#' + tag2;
     }
 
+    $scope.InitBGImages = function (startImage, realImage) {
+      if (startImage)
+        $scope.bgImageStyle = { "background-image": "url(" + startImage + ")" }
+      else
+        $scope.bgImageStyle = { "background-image": "url(" + realImage + ")" }
+
+      if (!startImage)
+        return;
+
+      var img = new Image();
+      img.onload = function () {
+        $scope.bgImageStyle = { "background-image": "url(" + img.src + ")" }
+        $scope.$apply();
+      }
+      img.src = realImage;
+    }
+
 
     $scope.FacebookShare = function (href) {
       socialService.FacebookShare(href);
@@ -129,3 +148,12 @@
       socialService.LinkedInShare(title, href, desc);
     }
   }]);
+
+function onCityClick(el) {
+  $('.cityPicker').fadeOut();
+  $('#' + el).children('.cityPicker').fadeIn('slow', function () {
+    $('html,body').animate({
+      scrollTop: $("#eventlist").offset().top - 100
+    }, 'slow');
+  });
+}

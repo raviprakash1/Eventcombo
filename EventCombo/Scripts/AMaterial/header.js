@@ -78,10 +78,10 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
     }
 
     $scope.$on('CurrentCoordinatesChanged', function (event, val) {
-      $scope.cityString = geoService.GetCurrentCity($scope.setCity);
+      geoService.GetCurrentCity($scope.setCity);
     });
 
-    $scope.cityString = geoService.GetCurrentCity($scope.setCity);
+    geoService.GetCurrentCity($scope.setCity);
 
     $scope.DiscoverByEvent = function () {
       var coords = geoService.GetCoordinates();
@@ -117,6 +117,12 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
       $scope.getCitySearchResults(str).then(
         function (predictions) {
           $scope.foundCities = predictions ? predictions : [];
+          $scope.foundCities.forEach(function (res) {
+            if (res.terms.length > 1) {
+              var pos = res.terms[res.terms.length - 1].offset;
+              res.description = res.description.substring(0, pos - 2);
+            }
+          });
           deferred.resolve($scope.foundCities);
         }
       );
@@ -125,23 +131,31 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
 
     $scope.getCitySearchResults = function (str) {
       var deferred = $q.defer();
-      $scope.gmapsService.getPlacePredictions({ input: str, types: ['(cities)'] }, function (data) {
+      $scope.gmapsService.getPlacePredictions({
+        input: str, types: ['(cities)'], componentRestrictions: { country: 'us' }
+      }, function (data) {
         deferred.resolve(data);
       });
       return deferred.promise;
     }
 
-    $scope.DiscoverByCity = function () {
-      if ((!$scope.foundCities) || (!Array.isArray($scope.foundCities)) || (!$scope.foundCities.length))
+    $scope.DiscoverByCitySelect = function () {
+      if ((!$scope.foundCities) || (!Array.isArray($scope.foundCities)) || (!$scope.foundCities.length) || (!$scope.selectedCity))
         return;
 
-      if (!$scope.selectedCity) {
-        $scope.selectedCity = $scope.foundCities[0];
-      }
-
       $scope.placeService.getDetails({ placeId: $scope.selectedCity.place_id }, function (city) {
-        var coords = geoService.SetCoordinates(city.geometry.location.lat(), city.geometry.location.lng(), true);
-        $window.location = '/et/evt/evc/all/page/' + coords.latitude + '/' + coords.longitude + '/rel/none';
+        geoService.SetCoordinates(city.geometry.location.lat(), city.geometry.location.lng(), false);
+      })
+    }
+
+    $scope.DiscoverByCityEnter = function () {
+      if (!$scope.cityString)
+        return;
+      var promise = $scope.citySearch($scope.cityString);
+      promise.then(function (result) {
+        if (Array.isArray(result) && (result.length)) {
+          $scope.selectedCity = result[0];
+        }
       })
     }
 
@@ -162,4 +176,5 @@ eventComboApp.directive('pressEnter', function () {
     }
   }
 });
+
 

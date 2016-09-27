@@ -476,6 +476,7 @@ namespace EventCombo.Models
 
 
     public string ImageUrl { get; set; }
+    public string StartImageUrl { get; set; }
     public IEnumerable<string> KeyWords { get; set; }
     public IEnumerable<CityViewModel> Cities { get; set; }
     public IEnumerable<EventTypeViewModel> EventTypes { get; set; }
