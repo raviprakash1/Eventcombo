@@ -24,5 +24,6 @@ namespace EventCombo.Service
     IncrementResultViewModel VoteEvent(long eventId, string userId);
     IEnumerable<ShortEventInfoViewModel> GetEventListByCoords(decimal lat, decimal lng, string userId);
     HomepageInfoViewModel GetHomepageInfo();
+    EventViewModel GetEventBySubDomain(string subDomain);
   }
 }

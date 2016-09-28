@@ -278,6 +278,7 @@
     <Compile Include="ActionFilters\AllowCrossSiteAttribute.cs" />
     <Compile Include="ActionFilters\CustomHandleErrorAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\CustomRoute.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\HangfirePreload.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -1872,7 +1873,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>10159</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:10259/</IISUrl>
+          <IISUrl>http://localhost:10359/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

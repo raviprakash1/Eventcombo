@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using EventCombo.Utils;
+
 namespace EventCombo
 {
     public class RouteConfig
@@ -13,7 +13,7 @@ namespace EventCombo
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.LowercaseUrls = true;
-
+            routes.Add(new CustomRoute());
             routes.MapRoute(
                          name: "BusinessPages",
                          url: "ec/{PageNameUrl}",
