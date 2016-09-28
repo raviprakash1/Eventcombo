@@ -102,7 +102,8 @@ namespace EventCombo
                         "~/Content/AMaterial/gridiculous.css",
                         "~/Content/AMaterial/docs.css",
                         "~/Content/AMaterial/themeOm.css",
-                        "~/Content/AMaterial/header-footer.css"));
+                        "~/Content/AMaterial/header-footer.css",
+                        "~/Content/AMaterial/angucomplete-alt.css"));
 
             bundles.Add(new StyleBundle("~/Content/angularMain-CE")
               .Include( "~/Content/AMaterial/angularjs-color-picker.min.css",
@@ -110,6 +111,7 @@ namespace EventCombo
                         "~/Content/AMaterial/animations.css",
                         "~/Content/AMaterial/ngGallery.css",
                         "~/Content/AMaterial/main.css"));
+
             bundles.Add(new StyleBundle("~/Content/AngularViewEvent")
               .Include( "~/Content/font-awesome.min.css",
                         "~/Content/AMaterial/owl.carousel.css",
@@ -128,16 +130,17 @@ namespace EventCombo
                         "~/Scripts/AMaterial/angular-sanitize.js",
                         "~/Scripts/AMaterial/tinymce.min.js",
                         "~/Scripts/AMaterial/tinycolor-min.js",
-                        "~/Scripts/AMaterial/angular-tinymce/tinymce.min.js"));
+                        "~/Scripts/AMaterial/angular-tinymce/tinymce.min.js",
+                        "~/Scripts/AMaterial/themes/modern/theme.min.js"));
             bundles.Add(new ScriptBundle("~/Scripts/AMaterial/angularHeader4")
-              .Include("~/Scripts/AMaterial/themes/modern/theme.min.js",
-                        "~/Scripts/AMaterial/angularjs-color-picker.min.js",
+              .Include( "~/Scripts/AMaterial/angularjs-color-picker.min.js",
                         "~/Scripts/AMaterial/moment.js",
                         "~/Scripts/AMaterial/angular-material-datetimepicker.js",
                         "~/Scripts/AMaterial/ngGallery.js",
                         "~/Scripts/AMaterial/demo.js",
                         "~/Scripts/AMaterial/ngRepeatOwlCarousel.js",
                         "~/Scripts/AMaterial/classie.js",
+                        "~/Scripts/AMaterial/angucomplete-alt.js",
                         "~/Scripts/AMaterial/EventComboApp.js",
                         "~/Scripts/AMaterial/broadcastService.js",
                         "~/Scripts/AMaterial/geoService.js",

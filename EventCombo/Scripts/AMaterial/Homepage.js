@@ -38,6 +38,7 @@
     };
 
     $scope.UpdateEventList();
+    broadcastService.SetCitySearchRedirect(false);
 
     $scope.ProcessAddedFavorite = function (val) {
       if (val.Processed && $scope.eventsList)

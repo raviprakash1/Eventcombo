@@ -260,29 +260,18 @@
 </header>
 
 <div id="search" ng-controller="SearchEventController">
-  <md-content>
-    <i class="material-icons">search</i>
-    <div style="width: 40%; float: left;">
-      <md-autocomplete md-no-cache="false" md-selected-item="selectedEvent" md-search-text="eventString" md-delay="500"
-                       md-items="item in eventSearch(eventString)" md-item-text="item.EventTitle" md-min-length="1"
-                       placeholder="Search" md-selected-item-change="DiscoverByEvent()" md-select-on-focus
-                       press-enter="DiscoverByEvent()">
-        <md-item-template>
-          <span md-highlight-text="eventString" md-highlight-flags="i">{{item.EventTitle}}</span>
-        </md-item-template>
-        <md-not-found> No matching were found. </md-not-found>
-      </md-autocomplete>
+  <i class="material-icons">search</i>
+  <div style="width: 40%; float: left;">
+    <div angucomplete-alt id="acEventSearch" placeholder="Search" pause="500" minlength="1" override-suggestions="true"
+         input-class="form-control form-control-small" match-class="highlight"
+         selected-object="DiscoverByEvent" title-field="EventTitle" remote-api-handler="eventSearch">
     </div>
-    <div style="width: 40%; float:left; margin-left: 5%">
-      <md-autocomplete md-no-cache="false" md-selected-item="selectedCity" md-search-text="cityString" md-delay="500"
-                       md-items="item in citySearch(cityString)" md-selected-item-change="DiscoverByCitySelect()" md-select-on-focus
-                       md-item-text="item.description" md-min-length="2" placeholder="City" press-enter="DiscoverByCityEnter()">
-        <md-item-template>
-          <span md-highlight-text="cityString" md-highlight-flags="i">{{item.description}}</span>
-        </md-item-template>
-        <md-not-found> No matching were found. </md-not-found>
-      </md-autocomplete>
+  </div>
+  <div style="width: 40%; float:left; margin-left: 5%">
+    <div angucomplete-alt id="acCitySearch" placeholder="City" pause="500" minlength="2" override-suggestions="true"
+         input-class="form-control form-control-small" match-class="highlight"
+         selected-object="DiscoverByCity" title-field="description" remote-api-handler="citySearch">
     </div>
-  </md-content>
+  </div>
 </div>
 

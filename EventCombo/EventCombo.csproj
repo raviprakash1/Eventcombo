@@ -832,6 +832,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AMaterial\angucomplete-alt.css" />
     <Content Include="Content\AMaterial\angular-material.css" />
     <Content Include="Content\AMaterial\angular-material.min.css" />
     <Content Include="Content\AMaterial\angularjs-color-picker.min.css" />
@@ -974,6 +975,7 @@
     </Content>
     <Content Include="Scripts\AMaterial\AccountController.js" />
     <Content Include="Scripts\AMaterial\AccountService.js" />
+    <Content Include="Scripts\AMaterial\angucomplete-alt.js" />
     <Content Include="Scripts\AMaterial\angular-animate.js" />
     <Content Include="Scripts\AMaterial\angular-animate.min.js" />
     <Content Include="Scripts\AMaterial\angular-aria.js" />

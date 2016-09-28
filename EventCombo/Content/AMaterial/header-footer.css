@@ -152,7 +152,6 @@ header.smaller nav { margin-top:0px;}
 #search md-content { background:none;}
 #search md-content i { color:#999; float:left; padding:0; line-height:35px;}
 #search input { color:#333; border:0; width:40%; font-size:100%; padding:0 6px; height:35px; line-height:35px;}
-#search div div { float:right; width:50%;}
 .search2 { top:55px !important; left:1vw !important; position:fixed !important; padding:4px; color:#ff008a !important; font-size:1.3em !important; width:40px !important; height:40px !important; overflow:hidden !important; z-index:99 !important;}
 .search2.srhFocus, .search2:hover { top:55px !important; color:#999; background:#FFF; font-size:1.3em; max-width:600px; width:90% !important; min-height:46px; border-radius:3px; -webkit-box-shadow:0px 3px 9px 0px rgba(0,0,0,.5); -moz-box-shadow:0px 3px 9px 0px rgba(0,0,0,.5); box-shadow:0px 3px 9px 0px rgba(0,0,0,.5); cursor:pointer; -webkit-transition:width .5s; -moz-transition:width .5s; -ms-transition:width .5s; -o-transition:width .5s; transition:width .5s;}
 #search.search2 md-content i { color:#ff008a; padding:0 9px; margin-right:0;}
