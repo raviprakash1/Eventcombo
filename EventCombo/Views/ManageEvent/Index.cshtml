@@ -744,10 +744,11 @@
         $("#dvLblurl").show();
         $("#btEditUrl").click(function () {
             var text = $("#spEventUrl").html();
-            if (text.indexOf("/") > 0) {
+            if (text.indexOf(".") > 0) {
                 var full = text.length;
-                var start = text.lastIndexOf("/");
-                text = text.substr(start + 1, full - start);
+                var start = text.lastIndexOf("//");
+                var endIndex = text.indexOf(".");
+                text = text.substr(start + 2, endIndex - start - 2);
 
             }
             $("#txtEventURl").val(text);
@@ -776,7 +777,7 @@
             if (vEvUrl.indexOf("/") > 0) {
                 VPath = pathname + vEvUrl;
             } else {
-                VPath = pathname + '/ev/' + vEvUrl;
+                VPath = window.location.protocol + "//" + vEvUrl + "." + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
             }
 
             $.ajax({
