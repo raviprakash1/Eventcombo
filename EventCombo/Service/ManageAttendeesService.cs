@@ -157,8 +157,10 @@ namespace EventCombo.Service
         IRepository<ShippingAddress> shipRepo = new GenericRepository<ShippingAddress>(_factory.ContextFactory);
         IRepository<Country> countryRepo = new GenericRepository<Country>(_factory.ContextFactory);
         IRepository<TicketBearer> tbRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+        IRepository<Event_VariableDesc> evdRepo = new GenericRepository<Event_VariableDesc>(_factory.ContextFactory);
 
         var attendees = tbRepo.Get();
+        var vairableChages = evdRepo.Get(filter: (t => t.Event_Id == eventId));
 
         IEnumerable<EventOrderInfoViewModel> res = EventTicketRepo.Get(filter: (t => t.EventID == eventId))
         .Select(ticket => new EventOrderInfoViewModel()
@@ -179,8 +181,17 @@ namespace EventCombo.Service
             Date = ticket.O_OrderDateTime ?? DateTime.Today,
             PromoCode = ticket.PromoCode ?? "",
             Address = "",
-            MailTickets = "N"
+            MailTickets = "N",
+            VariableChages = vairableChages.ToList().Select((element) => new Event_VariableDesc
+            {
+                Variable_Id = element.Variable_Id,
+                Price = (ticket.VariableIds.Split(',').Select(Int64.Parse).Contains(element.Variable_Id) ? element.Price : 0),
+                Event_Id = element.Event_Id,
+                VariableDesc = element.VariableDesc
+            }).ToList(),
+            VariableIds = ticket.VariableIds
         }).ToList();
+
         foreach (var order in res)
         {
             var billingAddressDB = billRepo.Get(filter: (b => b.OrderId == order.OrderId)).FirstOrDefault();
@@ -676,7 +687,14 @@ namespace EventCombo.Service
         AddStyledCell(row, 13, hstyle).SetCellValue("ATTENDEE EMAIL");
         AddStyledCell(row, 14, hstyle).SetCellValue("BILLING ADDRESS");
         AddStyledCell(row, 15, hstyle).SetCellValue("MAIL TICKETS");
+        var variableCount = 0;
+        foreach (var variable in orders.FirstOrDefault().VariableChages)
+        {
+            variableCount += 1;
+            AddStyledCell(row, 15 + variableCount, hstyle).SetCellValue(variable.VariableDesc);
+        }            
         var i = 2;
+        string tempOrderId = "";
         foreach (var order in orders)
         {
             row = sheet.CreateRow(i++);
@@ -685,10 +703,10 @@ namespace EventCombo.Service
             AddStyledCell(row, 2, style).SetCellValue(order.BuyerName);
             AddStyledCell(row, 3, style).SetCellValue(order.TicketName);
             AddStyledCell(row, 4, style).SetCellValue(order.Quantity);
-            AddStyledCell(row, 5, style).SetCellValue("$" + (double)order.PricePaid);
-            AddStyledCell(row, 6, style).SetCellValue("$" + (double)order.PriceNet);
-            AddStyledCell(row, 7, style).SetCellValue("$" + (double)order.Fee);
-            AddStyledCell(row, 8, style).SetCellValue("$" + (double)order.MerchantFee);
+            AddStyledCell(row, 5, style).SetCellValue("$" + order.PricePaid.ToString("N2"));
+            AddStyledCell(row, 6, style).SetCellValue("$" + order.PriceNet.ToString("N2"));
+            AddStyledCell(row, 7, style).SetCellValue("$" + order.Fee.ToString("N2"));
+            AddStyledCell(row, 8, style).SetCellValue("$" + order.MerchantFee.ToString("N2"));
             AddStyledCell(row, 9, style).SetCellValue(order.PromoCode);
             AddStyledCell(row, 10, style).SetCellValue((order.Refunded > 0 ? "Yes" : ""));
             AddStyledCell(row, 11, style).SetCellValue((order.Cancelled > 0 ? "Yes" : ""));
@@ -696,8 +714,26 @@ namespace EventCombo.Service
             AddStyledCell(row, 13, style).SetCellValue(order.BuyerEmail);
             AddStyledCell(row, 14, style).SetCellValue(order.Address);
             AddStyledCell(row, 15, style).SetCellValue(order.MailTickets.ToString());
+            variableCount = 0;
+            if (tempOrderId != order.OrderId)
+            {
+                foreach (var variable in order.VariableChages)
+                {
+                    variableCount += 1;
+                    AddStyledCell(row, 15 + variableCount, style).SetCellValue("$" + (variable.Price ?? 0).ToString("N2"));
+                }
+                tempOrderId = order.OrderId;
+            }
+            else
+            {
+                foreach (var variable in order.VariableChages)
+                {
+                    variableCount += 1;
+                    AddStyledCell(row, 15 + variableCount, style).SetCellValue("");
+                }
+            }
         }
-        for (i = 0; i <= 15; i++)
+        for (i = 0; i <= 15 + variableCount; i++)
         {
             sheet.AutoSizeColumn(i);
             sheet.SetColumnWidth(i, sheet.GetColumnWidth(i) + 1024);
@@ -714,9 +750,17 @@ namespace EventCombo.Service
 
         rw.Write(ReportTitle);
         rw.WriteLine();
-        rw.Write("  ORDER #  |    DATE     |          ATTENDEE          |        TICKET NAME         | QUANTITY |  GROSS PAID  |NET EVENT REVENUE|EVENTCOMBO FEE|EVENTCOMBO MERCHANT FEE|PROMO CODE|REFUNDED|CANCELLED|ATTENDEE NUMBER|       ATTENDEE EMAIL       |          ADDRESS           |          MAIL TICKETS      ");
+        var variableCount = 0;
+        var variableStr = "";
+        foreach (var variable in orders.FirstOrDefault().VariableChages)
+        {
+            variableCount += 1;
+            variableStr += " | " + variable.VariableDesc + (variable.VariableDesc.Length < (variable.Price ?? 0).ToString("N2").Length + 1 ? new String(' ', (variable.Price ?? 0).ToString("N2").Length + 1 - variable.VariableDesc.Length) : "");
+        }
+        rw.Write("  ORDER #  |    DATE     |          ATTENDEE          |        TICKET NAME         | QUANTITY |  GROSS PAID  |NET EVENT REVENUE|EVENTCOMBO FEE|EVENTCOMBO MERCHANT FEE|PROMO CODE|REFUNDED|CANCELLED|ATTENDEE NUMBER|       ATTENDEE EMAIL       |          ADDRESS           |          MAIL TICKETS      " + variableStr);
         rw.WriteLine();
         string str = "";
+        string tempOrderId = "";
         foreach (var order in orders)
         {
             rw.Write(order.OrderId + new String(' ', 11 - order.OrderId.Length) + "|");
@@ -759,7 +803,7 @@ namespace EventCombo.Service
             str = "";
             rw.Write(str + new String(' ', 15 - str.Length) + "|");
             str = order.BuyerEmail.ToString();
-            rw.Write(str + new String(' ', 28 - str.Length) + "|");
+            rw.Write(str + new String(' ', 28 - (str.Length > 28 ? 28 : str.Length)) + "|");
             str = order.Address;
             while (str.Length > 28)
             {
@@ -778,6 +822,26 @@ namespace EventCombo.Service
                 str = str.Substring(28, str.Length - 28);
             }
             rw.Write(str + new String(' ', 28 - str.Length) + "");
+            variableCount = 0;
+            if (tempOrderId != order.OrderId)
+            {
+                foreach (var variable in order.VariableChages)
+                {
+                    variableCount += 1;
+                    str = "$" + (variable.Price ?? 0).ToString("N2");
+                    rw.Write(str + new String(' ', (variable.VariableDesc.Length > str.Length ? variable.VariableDesc.Length - str.Length : 2)) + "|");
+                }
+                tempOrderId = order.OrderId;
+            }
+            else
+            {
+                foreach (var variable in order.VariableChages)
+                {
+                    variableCount += 1;
+                    str = "";
+                    rw.Write(str + new String(' ', (variable.VariableDesc.Length > str.Length ? variable.VariableDesc.Length - str.Length : 2)) + "|");
+                }
+            }
             rw.WriteLine();
         }
 
@@ -809,9 +873,17 @@ namespace EventCombo.Service
         rw.Write("ATTENDEE NUMBER" + delimiter);
         rw.Write("ATTENDEE EMAIL" + delimiter);
         rw.Write("BILLING ADDRESS" + delimiter);
-        rw.Write("MAIL TICKETS");
+        rw.Write("MAIL TICKETS" + delimiter);
+        var variableCount = 0;
+        var variableTotalCount = orders.FirstOrDefault().VariableChages.Count();
+        foreach (var variable in orders.FirstOrDefault().VariableChages)
+        {
+            variableCount += 1;
+            rw.Write(variable.VariableDesc + (variableCount < variableTotalCount ? delimiter : ""));
+        }
         rw.WriteLine();
 
+        string tempOrderId = "";
         foreach (var order in orders)
         {
             rw.Write(order.OrderId + delimiter);
@@ -829,7 +901,25 @@ namespace EventCombo.Service
             rw.Write("" + delimiter);
             rw.Write(order.BuyerEmail + delimiter);
             rw.Write("\"" + order.Address + "\"" + delimiter);
-            rw.Write("\"" + order.MailTickets.ToString() + "\"");
+            rw.Write("\"" + order.MailTickets.ToString() + "\"" + delimiter);
+            variableCount = 0;
+            if (tempOrderId != order.OrderId)
+            {
+                foreach (var variable in order.VariableChages)
+                {
+                    variableCount += 1;
+                    rw.Write("$" + (variable.Price ?? 0).ToString("N2") + (variableCount < variableTotalCount ? delimiter : ""));
+                }
+                tempOrderId = order.OrderId;
+            }
+            else
+            {
+                foreach (var variable in order.VariableChages)
+                {
+                    variableCount += 1;
+                    rw.Write("" + (variableCount < variableTotalCount ? delimiter : ""));
+                }
+            }
             rw.WriteLine();
         }
 

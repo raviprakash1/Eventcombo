@@ -58,7 +58,14 @@ namespace EventCombo.Models
     public PaymentStates PaymentState { get; set; }
     public string Address { get; set; }
     public string PromoCode { get; set; }
-    public string MailTickets { get; set; }        
+    public string MailTickets { get; set; }   
+    private List<Event_VariableDesc> _variableChages = new List<Event_VariableDesc>();     
+    public List<Event_VariableDesc> VariableChages
+    {
+        get { return _variableChages; }
+        set { _variableChages = value; }
+    }
+    public string VariableIds { get; set; }
   }
 
   public class EventOrderDetailViewModel

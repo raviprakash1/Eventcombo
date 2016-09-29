@@ -1144,6 +1144,7 @@ warning 6002: The table/view 'EventCombo.dbo.EventTicket_View' does not have a p
           <Property Name="Email" Type="varchar" MaxLength="100" />
           <Property Name="OrderAmount" Type="numeric" Precision="18" Scale="2" />
           <Property Name="VariableAmount" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="VariableIds" Type="varchar" MaxLength="500" />
           <Property Name="TotalQuantity" Type="bigint" />
           <Property Name="PurchasedQuantity" Type="bigint" />
           <Property Name="PaidAmount" Type="numeric" Precision="9" Scale="2" />
@@ -1872,6 +1873,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
     [EventTicket_View].[Email] AS [Email], 
     [EventTicket_View].[OrderAmount] AS [OrderAmount], 
     [EventTicket_View].[VariableAmount] AS [VariableAmount], 
+    [EventTicket_View].[VariableIds] AS [VariableIds], 
     [EventTicket_View].[TotalQuantity] AS [TotalQuantity], 
     [EventTicket_View].[PurchasedQuantity] AS [PurchasedQuantity], 
     [EventTicket_View].[PaidAmount] AS [PaidAmount], 
@@ -4675,6 +4677,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="TicketTypeID" Type="Int64" Nullable="false" />
           <Property Name="TicketTypeName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="PaymentTypeId" Type="Byte" />
+          <Property Name="VariableIds" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="V_EventsListUpcoming">
           <Key>
@@ -6335,6 +6338,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="EventTicket_View">
             <EntityTypeMapping TypeName="EventComboModel.EventTicket_View">
               <MappingFragment StoreEntitySet="EventTicket_View">
+                <ScalarProperty Name="VariableIds" ColumnName="VariableIds" />
                 <ScalarProperty Name="PaymentTypeId" ColumnName="PaymentTypeId" />
                 <ScalarProperty Name="TicketTypeName" ColumnName="TicketTypeName" />
                 <ScalarProperty Name="TicketTypeID" ColumnName="TicketTypeID" />
