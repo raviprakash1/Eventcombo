@@ -79,13 +79,16 @@
       $scope.curCity.longitude = $scope.allCities ? 0 : lng;
       $scope.curCityId = id;
       $scope.CallDiscoveryEvents();
-      onCityClick(el);
+      if (!$scope.allEventTypes && !$scope.curEventType)
+        onCityClick(el);
     };
 
-    $scope.OnEventTypeChange = function (et) {
+    $scope.OnEventTypeChange = function (et, el) {
       $scope.allEventTypes = et < 0;
       $scope.curEventType = $scope.allEventTypes ? 0 : et;
       $scope.CallDiscoveryEvents();
+      if (!$scope.allCities && !$scope.curCityId)
+        onEventTypeClick(el);
     }
 
     $scope.OnAddFavorite = function (ev) {
@@ -152,9 +155,20 @@
 
 function onCityClick(el) {
   $('.cityPicker').fadeOut();
+  $('.eventPicker').fadeOut();
   $('#' + el).children('.cityPicker').fadeIn('slow', function () {
     $('html,body').animate({
       scrollTop: $("#eventlist").offset().top - 100
+    }, 'slow');
+  });
+}
+
+function onEventTypeClick(el) {
+  $('.cityPicker').fadeOut();
+  $('.eventPicker').fadeOut();
+  $('#' + el).children('.eventPicker').fadeIn('slow', function () {
+    $('html,body').animate({
+      scrollTop: $("#citylist").offset().top - 100
     }, 'slow');
   });
 }

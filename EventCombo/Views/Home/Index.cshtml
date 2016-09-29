@@ -81,7 +81,7 @@
       <div class="pretext">Rock your <span id="ContainerEl_2"></span></div>
     </div>
   </div>
-  <div class="citylist clearfix">
+  <div class="citylist clearfix" id="citylist">
     @{
       int cityCount = Model.Cities.Count();
       cityCount = cityCount < 11 ? cityCount : 11;
@@ -97,7 +97,6 @@
           if (idx < cityCount)
           {
             var city = Model.Cities.ElementAt(idx);
-            @*<div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == @city.CityID}" ng-click="OnCityChange(@city.Latitude, @city.Longitude, @city.CityID)" title="@city.CityName">*@
             <div class="c3 city" id="@("city_" + idx.ToString())" ng-click="OnCityChange(@city.Latitude, @city.Longitude, @city.CityID, '@("city_" + idx.ToString())')" title="@city.CityName">
               <a>@city.ShortName</a>
               <span class="cityPicker">
@@ -109,8 +108,8 @@
           }
           else if (idx == cityCount)
           {
-            <div class="c3 city all" id="allCities" ng-click="OnCityChange(200, 200, -1, 'allCities')" title="All the cities">
-              <a>All the cities</a>
+            <div class="c3 city all" id="allCities" ng-click="OnCityChange(200, 200, -1, 'allCities')" title="All cities">
+              <a>All cities</a>
               <span class="cityPicker">
                 <big>All the cities</big>
                 <small>pick an event type</small>
@@ -132,11 +131,25 @@
           if (idx < etCount)
           {
             var etype = Model.EventTypes.ElementAt(idx);
-            <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == @etype.EventTypeId}" ng-click="OnEventTypeChange(@etype.EventTypeId)" title="@etype.EventType">@etype.EventType</div>
+            <div class="c3 event" id="@("etype_" + idx.ToString())" ng-click="OnEventTypeChange(@etype.EventTypeId, '@("etype_" + idx.ToString())')" title="@etype.EventType">
+              <a>@etype.EventType</a>
+              <span class="eventPicker">
+                <i class="material-icons">arrow_upward</i>
+                <small>pick a city</small>
+                <big>@etype.EventType</big>
+              </span>
+            </div>
           }
           else if (idx == etCount)
           {
-            <div ng-class="{'c3': true, 'event': true, 'eventselected': allEventTypes, 'all': true}" ng-click="OnEventTypeChange(-1)" title="All the events">All the events</div>
+            <div class="c3 event all" id="allETypes" ng-click="OnEventTypeChange(-1, 'allETypes')" title="All events">
+              <a>All events</a>
+              <span class="eventPicker">
+                <i class="material-icons">arrow_upward</i>
+                <small>pick a city</small>
+                <big>All events</big>
+              </span>
+            </div>
           }
         }
       </div>
