@@ -1454,7 +1454,7 @@ namespace EventCombo.Service
         EventViewModel ev = new EventViewModel();
         IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
 
-        Event evDB = eRepo.Get(filter: (e => e.EventUrl.Contains(subDomain + "."))).FirstOrDefault();
+        Event evDB = eRepo.Get(filter: (e => e.EventUrl == subDomain)).FirstOrDefault();
 
         _mapper.Map(evDB, ev);
         return ev;

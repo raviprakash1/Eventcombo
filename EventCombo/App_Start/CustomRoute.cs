@@ -40,8 +40,11 @@ namespace EventCombo
                 routeData.Values.Add("Domain", domain);
                 return routeData;
             }
-
-            return null;
+            else
+            {
+                httpContext.Response.StatusCode = 404;
+                return null;
+            }
         }
 
         public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values)
