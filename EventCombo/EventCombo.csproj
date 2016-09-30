@@ -1815,7 +1815,6 @@
     <Content Include="Views\ContactEventComboes\Index.cshtml" />
     <Content Include="Views\ManageAttendees\_SaleReport.cshtml" />
     <Content Include="Views\EventManagement\ViewEvent.cshtml" />
-    <Content Include="Views\EventManagement\EmptyTemplate.cshtml" />
     <Content Include="Views\ManageAttendees\AttendeeEmail.cshtml" />
     <Content Include="Views\ManageAttendees\_AttendeeEmailList.cshtml" />
     <Content Include="Views\ManageAttendees\_AttendeeEmailDetail.cshtml" />
