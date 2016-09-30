@@ -19,7 +19,7 @@ namespace EventCombo
                 return null;
 
             var subDomain = url[0];
-            var domain = url[1];
+            var domain = url[1] + (url.Length > 2 ? "." + url[2] : "");
 
             string ReserveSubDomains = "," + ConfigurationManager.AppSettings["ReserveSubDomains"] + ",";
             if (ReserveSubDomains.Contains("," + subDomain + ","))
