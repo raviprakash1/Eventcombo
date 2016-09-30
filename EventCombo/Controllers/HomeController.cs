@@ -2272,7 +2272,7 @@ namespace EventCombo.Controllers
       if (eSearch.RecordTypeId == 0)
       {
         var eList = _eService.Search(eSearch.EventTitle);
-        if (eList.Count(e => e.RecordTypeId == 0) > 1)
+        if (eList.Count(e => e.RecordTypeId == 0) != 1)
           return Url.Action("DiscoverEvents", new
             {
               strEt = "evt",
@@ -2286,7 +2286,7 @@ namespace EventCombo.Controllers
               strTextSearch = eSearch.EventTitle
             });
         else
-          return Url.Action("ViewEvent", "EventManagement", new { strEventDs = Regex.Replace(eSearch.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = eSearch.EventId });
+          return Url.Action("ViewEvent", "EventManagement", new { strEventDs = Regex.Replace(eSearch.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = eList.First().EventId });
       }
       else if (eSearch.RecordTypeId == 1)
         return Url.Action("DiscoverEvents", new

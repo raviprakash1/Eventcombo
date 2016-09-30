@@ -57,20 +57,17 @@ eventComboApp.controller('HamburgerController', ['$scope', '$window', 'MenuServi
   }]);
 
 
-eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http', '$q', '$cookies', 'broadcastService', 'geoService', 
+eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http', '$q', '$cookies', 'broadcastService', 'geoService',
   function ($scope, $window, $http, $q, $cookies, broadcastService, geoService) {
 
-    $scope.eventString = '';
-    $scope.selectedEvent = null;
-    $scope.cityString = '';
-    $scope.selectedCity = null;
     $scope.foundCities = [];
+    $scope.allowRedirect = true;
 
     $scope.gmapsService = new google.maps.places.AutocompleteService();
     $scope.placeService = new google.maps.places.PlacesService(document.getElementById('search').appendChild(document.createElement('div')));
 
     $scope.setCity = function (cityname) {
-      $scope.cityString = cityname;
+      $scope.$broadcast('angucomplete-alt:changeInput', 'acCitySearch', cityname);
     }
 
     function setCityByCoordinates(lat, lng) {
@@ -78,25 +75,38 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
     }
 
     $scope.$on('CurrentCoordinatesChanged', function (event, val) {
-      $scope.cityString = geoService.GetCurrentCity($scope.setCity);
+      if ($scope.allowRedirect) {
+        var coords = geoService.GetCoordinates();
+        if (coords) 
+          $window.location = '/et/evt/evc/all/page/' + coords.latitude + '/' + coords.longitude + '/rel/none';
+      }
+      else
+        geoService.GetCurrentCity($scope.setCity);
     });
 
-    $scope.cityString = geoService.GetCurrentCity($scope.setCity);
+    $scope.$on('SetCitySearchRedirect', function (event, val) {
+      $scope.allowRedirect = val;
+    });
 
-    $scope.DiscoverByEvent = function () {
+    geoService.GetCurrentCity($scope.setCity);
+
+    $scope.DiscoverByEvent = function (item) {
       var coords = geoService.GetCoordinates();
-      if ($scope.eventString) {
+      if (item.originalObject) {
         var data = {
           EventId: 0,
           RecordTypeId: 0,
-          EventTitle: $scope.eventString,
+          EventTitle: '',
           Latitude: coords.latitude,
           Longitude: coords.longitude,
         }
-        if ($scope.selectedEvent) {
-          data.EventId = $scope.selectedEvent.EventId;
-          data.EventId = $scope.selectedEvent.EventId;
-          data.RecordTypeId = $scope.selectedEvent.RecordTypeId;
+        if (typeof (item.originalObject) == 'object') {
+          data.EventId = item.originalObject.EventId;
+          data.EventTitle = item.originalObject.EventTitle;
+          data.RecordTypeId = item.originalObject.RecordTypeId;
+        }
+        else if (typeof (item.originalObject) == 'string') {
+          data.EventTitle = item.originalObject;
         }
 
         $http.get('/home/SearchEvents', { params: { json: angular.toJson(data) } }).then(function (response) {
@@ -106,17 +116,23 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
       }
     }
 
-    $scope.eventSearch = function (str) {
-      return $http.get("/commonAPI/FilterEventsByTitle", { params: { title: $scope.eventString } }).then(function (response) {
+    $scope.eventSearch = function (str, timeoutPromise) {
+      return $http.get("/commonAPI/FilterEventsByTitle", { params: { title: str } }).then(function (response) {
         return response.data;
       });
     }
 
-    $scope.citySearch = function (str) {
+    $scope.citySearch = function (str, timeoutPromise) {
       var deferred = $q.defer();
       $scope.getCitySearchResults(str).then(
         function (predictions) {
           $scope.foundCities = predictions ? predictions : [];
+          $scope.foundCities.forEach(function (res) {
+            if (res.terms.length > 1) {
+              var pos = res.terms[res.terms.length - 1].offset;
+              res.description = res.description.substring(0, pos - 2);
+            }
+          });
           deferred.resolve($scope.foundCities);
         }
       );
@@ -125,26 +141,33 @@ eventComboApp.controller('SearchEventController', ['$scope', '$window', '$http',
 
     $scope.getCitySearchResults = function (str) {
       var deferred = $q.defer();
-      $scope.gmapsService.getPlacePredictions({ input: str, types: ['(cities)'] }, function (data) {
+      $scope.gmapsService.getPlacePredictions({
+        input: str, types: ['(cities)'], componentRestrictions: { country: 'us' }
+      }, function (data) {
         deferred.resolve(data);
       });
       return deferred.promise;
     }
 
-    $scope.DiscoverByCity = function () {
-      if ((!$scope.foundCities) || (!Array.isArray($scope.foundCities)) || (!$scope.foundCities.length))
+    $scope.DiscoverByCity = function (item) {
+      if ((!$scope.foundCities) || (!Array.isArray($scope.foundCities)) || (!$scope.foundCities.length) || (!item) || (!item.originalObject))
         return;
 
-      if (!$scope.selectedCity) {
-        $scope.selectedCity = $scope.foundCities[0];
+      if (typeof (item.originalObject) == 'object') {
+        $scope.placeService.getDetails({ placeId: item.originalObject.place_id }, function (city) {
+          geoService.SetCoordinates(city.geometry.location.lat(), city.geometry.location.lng(), false);
+        })
+      } else if (typeof (item.originalObject) == 'string') {
+        var promise = $scope.citySearch(item.originalObject);
+        promise.then(function (result) {
+          if (Array.isArray(result) && (result.length)) {
+            $scope.placeService.getDetails({ placeId: result[0].place_id }, function (city) {
+              geoService.SetCoordinates(city.geometry.location.lat(), city.geometry.location.lng(), false);
+            })
+          }
+        })
       }
-
-      $scope.placeService.getDetails({ placeId: $scope.selectedCity.place_id }, function (city) {
-        var coords = geoService.SetCoordinates(city.geometry.location.lat(), city.geometry.location.lng(), true);
-        $window.location = '/et/evt/evc/all/page/' + coords.latitude + '/' + coords.longitude + '/rel/none';
-      })
     }
-
   }]);
 
 eventComboApp.directive('pressEnter', function () {
@@ -162,4 +185,5 @@ eventComboApp.directive('pressEnter', function () {
     }
   }
 });
+
 
