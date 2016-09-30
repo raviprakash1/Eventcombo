@@ -149,12 +149,13 @@ namespace EventCombo.Controllers
     }
 
     [HttpGet]
-    public ActionResult PurchasedTicketDetail(string OrderId, long EventId)
+    public ActionResult PurchasedTicketDetail(string OrderId, long EventId, int colSpan)
     {
       if (Session["AppId"] == null)
         return DefaultAction();
 
       string userId = Session["AppId"].ToString();
+      ViewBag.ColSpan = colSpan;
       OrderDetailsViewModel orderInfo = _tservice.GetOrderDetails(OrderId, userId, EventId);
       return PartialView("_PurchasedTicketDetail", orderInfo);
     }

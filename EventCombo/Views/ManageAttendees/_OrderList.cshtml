@@ -23,7 +23,7 @@
     {
       <tr>
         <td class="UETableTD">
-          <a href="javascript:void(0)" onclick="expandEditMenu(this, '@(Model.PaymentState.ToString())', '@(order.OrderId)')">
+          <a href="javascript:void(0)" onclick="expandEditMenu(this, 'UETableTDOrderDetail@(Model.PaymentState.ToString())', '@order.OrderId', @(Model.EventId))">
             @order.OrderId
           </a>
         </td>
@@ -33,12 +33,12 @@
         <td class="UETableTD">$@order.Price</td>
         <td class="UETableTD">$@order.PricePaid</td>
         <td class="UETableTD">$@order.PriceNet</td>
-        <td class="UETableTD">$@order.CustomerEmail</td>
-        <td class="UETableTD">$@order.Address</td>
+        <td class="UETableTD">@order.CustomerEmail</td>
+        <td class="UETableTD">@order.Address</td>
         <td class="UETableTD">@(order.Date.ToLongDateString())</td>
-        <td class="UETableTD">@(order.PaymentState.ToString())</td>        
+        <td class="UETableTD">@(order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString())</td>        
       </tr>
-      <tr id="OrderDetail@(Model.PaymentState.ToString() + order.OrderId)" style="display:none;" data-popped="0"></tr>
+      <tr id="UETableTDOrderDetail@(Model.PaymentState.ToString() + order.OrderId)" style="display:none;" data-popped="0"></tr>
     }
   </tbody>
 </table>

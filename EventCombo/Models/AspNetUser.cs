@@ -25,6 +25,7 @@ namespace EventCombo.Models
             this.Organizer_Master = new HashSet<Organizer_Master>();
             this.Order_Detail_T = new HashSet<Order_Detail_T>();
             this.AspNetUserCodes = new HashSet<AspNetUserCode>();
+            this.ScheduledEmails = new HashSet<ScheduledEmail>();
         }
     
         public string Id { get; set; }
@@ -59,5 +60,7 @@ namespace EventCombo.Models
         public virtual ICollection<Order_Detail_T> Order_Detail_T { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserCode> AspNetUserCodes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ScheduledEmail> ScheduledEmails { get; set; }
     }
 }

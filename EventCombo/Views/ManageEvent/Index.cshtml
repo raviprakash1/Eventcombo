@@ -744,10 +744,11 @@
         $("#dvLblurl").show();
         $("#btEditUrl").click(function () {
             var text = $("#spEventUrl").html();
-            if (text.indexOf("/") > 0) {
+            if (text.indexOf(".") > 0) {
                 var full = text.length;
-                var start = text.lastIndexOf("/");
-                text = text.substr(start + 1, full - start);
+                var start = text.lastIndexOf("//");
+                var endIndex = text.indexOf(".");
+                text = text.substr(start + 2, endIndex - start - 2);
 
             }
             $("#txtEventURl").val(text);
@@ -776,7 +777,7 @@
             if (vEvUrl.indexOf("/") > 0) {
                 VPath = pathname + vEvUrl;
             } else {
-                VPath = pathname + '/ev/' + vEvUrl;
+                VPath = window.location.protocol + "//" + vEvUrl + "." + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
             }
 
             $.ajax({
@@ -1419,7 +1420,7 @@
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("PurchasedTicketDetail", "Account")',
-                data: { OrderId: id, EventId: eId },
+                data: { OrderId: id, EventId: eId, colSpan: 6 },
                 datatype: 'html',
                 success: function (data) {
                     $(obj).parent().parent().css('background-color', '#f1f1f1');
@@ -1458,7 +1459,8 @@
             query.Attendees.push({
                 TicketbearerId: $(this).data('bearerid'),
                 Name: $(this).val(),
-                Email: $('#UETableTDSUbDivEmail' + id + '_' + $(this).data('bearerid')).val()
+                Email: $('#UETableTDSUbDivEmail' + id + '_' + $(this).data('bearerid')).val(),
+                OrderId: id
             })
         });
         $.ajax({

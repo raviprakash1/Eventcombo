@@ -315,3 +315,82 @@ md-input-container label:not(._md-container-ignore).md-required:after { content:
   .cntTitle { font-size:24px;}
   .scButton a { font-size:12px;}
 }
+.cntTitle {
+    font: 300 28px 'Roboto',Arial,sans-serif;
+    color: #000;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+.cntSubtitle {
+    font: 300 16px 'Roboto',Arial,sans-serif;
+    text-align: left;
+}
+/****************************************************************************************************/
+._md-open-menu-container { z-index:999 !important;}
+md-checkbox ._md-container { top:15px;}
+md-dialog { width:800px;}
+md-checkbox.md-checked.blue .md-icon { background-color:#00BCD4;}
+.md-datepicker-button { display:none;}
+.md-datepicker-triangle-button { transform:translateY(-10%) translateX(45%);}
+.md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle, .md-datepicker-triangle-button .md-datepicker-expand-triangle { border-width:5px; border-top-width:6px; border-top-color:rgba(0, 0, 0, 0.5);}
+.md-default-theme .md-datepicker-input, .md-datepicker-input { color:rgba(0, 0, 0, 0.9);}
+md-select.md-default-theme .md-select-value.md-select-placeholder, md-select .md-select-value.md-select-placeholder, md-input-container.md-default-theme label, md-input-container label, md-input-container.md-default-theme .md-placeholder, md-input-container .md-placeholder { color:rgba(0, 0, 0, 0.5);}
+.mce-container, .mce-container *, .mce-widget, .mce-widget *, .mce-reset { white-space:normal;}
+md-checkbox .md-container { top:2px; transform:none;}
+ input:-webkit-autofill { -webkit-box-shadow:0 0 0px 1000px white inset;}
+ md-input-container.md-default-theme.md-input-focused:not(.md-input-invalid) label, md-input-container.md-input-focused:not(.md-input-invalid) label, md-select-menu.md-default-theme md-option[selected], md-select-menu md-option[selected], md-select-menu.md-default-theme md-option[selected]:focus, md-select-menu md-option[selected]:focus, md-tabs.md-default-theme .md-tab.md-active, md-tabs .md-tab.md-active, md-tabs.md-default-theme .md-tab.md-active md-icon, md-tabs .md-tab.md-active md-icon, md-tabs.md-default-theme .md-tab.md-focused, md-tabs .md-tab.md-focused, md-tabs.md-default-theme .md-tab.md-focused md-icon, md-tabs .md-tab.md-focused md-icon { color:rgb(0,202,253);}
+ md-input-container.md-default-theme.md-input-focused:not(.md-input-invalid) .md-input, md-input-container.md-input-focused:not(.md-input-invalid) .md-input, md-radio-group.md-default-theme:not([disabled]) .md-primary .md-checked .md-off, md-radio-group:not([disabled]) .md-primary .md-checked .md-off, md-radio-group.md-default-theme:not([disabled]) .md-primary.md-checked .md-off, md-radio-group:not([disabled]) .md-primary.md-checked .md-off, md-radio-group.md-default-theme.md-primary:not([disabled]) .md-checked .md-off, md-radio-group.md-primary:not([disabled]) .md-checked .md-off, md-radio-group.md-default-theme.md-primary.md-checked:not([disabled]) .md-off, md-radio-group.md-primary.md-checked:not([disabled]) .md-off, md-radio-button.md-default-theme:not([disabled]) .md-primary .md-checked .md-off, md-radio-button:not([disabled]) .md-primary .md-checked .md-off, md-radio-button.md-default-theme:not([disabled]) .md-primary.md-checked .md-off, md-radio-button:not([disabled]) .md-primary.md-checked .md-off, md-radio-button.md-default-theme.md-primary:not([disabled]) .md-checked .md-off, md-radio-button.md-primary:not([disabled]) .md-checked .md-off, md-radio-button.md-default-theme.md-primary.md-checked:not([disabled]) .md-off, md-radio-button.md-primary.md-checked:not([disabled]) .md-off { border-color:rgb(0, 202, 253);}
+ md-select.md-default-theme:focus:not([disabled]) .md-select-value, md-select:focus:not([disabled]) .md-select-value, .md-default-theme .md-datepicker-input-container.md-datepicker-focused, .md-datepicker-input-container.md-datepicker-focused { border-bottom-color:rgb(0,202,253);}
+ md-radio-group.md-default-theme:not([disabled]) .md-primary .md-on, md-radio-group:not([disabled]) .md-primary .md-on, md-radio-group.md-default-theme.md-primary:not([disabled]) .md-on, md-radio-group.md-primary:not([disabled]) .md-on, md-radio-button.md-default-theme:not([disabled]) .md-primary .md-on, md-radio-button:not([disabled]) .md-primary .md-on, md-radio-button.md-default-theme.md-primary:not([disabled]) .md-on, md-radio-button.md-primary:not([disabled]) .md-on, .md-checkbox-enabled.md-default-theme[selected] .md-icon, .md-checkbox-enabled[selected] .md-icon, ._md-checkbox-enabled.md-default-theme[selected] ._md-icon, ._md-checkbox-enabled[selected] ._md-icon, md-chips.md-default-theme md-chip.md-focused, md-chips md-chip.md-focused { background-color:rgb(0, 202, 253);}
+md-select-menu.md-default-theme md-content md-option[selected], md-select-menu md-content md-option[selected], md-select-menu.md-default-theme md-content md-option[selected]:focus, md-select-menu md-content md-option[selected]:focus, md-input-container.md-default-theme.md-input-focused:not(.md-input-invalid) md-icon, md-input-container.md-input-focused:not(.md-input-invalid) md-icon { color:rgb(0, 202, 253);}
+md-radio-group.md-default-theme:not([disabled]) .md-primary .md-checked ._md-off, md-radio-group:not([disabled]) .md-primary .md-checked ._md-off, md-radio-group.md-default-theme:not([disabled]) .md-primary.md-checked ._md-off, md-radio-group:not([disabled]) .md-primary.md-checked ._md-off, md-radio-group.md-default-theme.md-primary:not([disabled]) .md-checked ._md-off, md-radio-group.md-primary:not([disabled]) .md-checked ._md-off, md-radio-group.md-default-theme.md-primary.md-checked:not([disabled]) ._md-off, md-radio-group.md-primary.md-checked:not([disabled]) ._md-off, md-radio-button.md-default-theme:not([disabled]) .md-primary .md-checked ._md-off, md-radio-button:not([disabled]) .md-primary .md-checked ._md-off, md-radio-button.md-default-theme:not([disabled]) .md-primary.md-checked ._md-off, md-radio-button:not([disabled]) .md-primary.md-checked ._md-off, md-radio-button.md-default-theme.md-primary:not([disabled]) .md-checked ._md-off, md-radio-button.md-primary:not([disabled]) .md-checked ._md-off, md-radio-button.md-default-theme.md-primary.md-checked:not([disabled]) ._md-off, md-radio-button.md-primary.md-checked:not([disabled]) ._md-off { border-color:rgba(0, 202, 253, 0.87);}
+md-radio-group.md-default-theme:not([disabled]) .md-primary ._md-on, md-radio-group:not([disabled]) .md-primary ._md-on, md-radio-group.md-default-theme.md-primary:not([disabled]) ._md-on, md-radio-group.md-primary:not([disabled]) ._md-on, md-radio-button.md-default-theme:not([disabled]) .md-primary ._md-on, md-radio-button:not([disabled]) .md-primary ._md-on, md-radio-button.md-default-theme.md-primary:not([disabled]) ._md-on, md-radio-button.md-primary:not([disabled]) ._md-on { background-color:rgba(0, 202, 253, 0.87);}
+md-select.md-default-theme:focus:not([disabled]) ._md-select-value, md-select:focus:not([disabled]) ._md-select-value { border-bottom-color:rgb(0, 202, 253);}
+md-select.md-default-theme ._md-select-value._md-select-placeholder, md-select ._md-select-value._md-select-placeholder, md-select.md-default-theme .md-select-value.md-select-placeholder, md-select .md-select-value.md-select-placeholder, md-input-container.md-default-theme label, md-input-container label, md-input-container.md-default-theme .md-placeholder, md-input-container .md-placeholder { color:rgba(0, 0, 0, 0.46); font-size:16px; font-weight:500;}
+._md-select-value ._md-select-icon { color:rgba(0, 0, 0, 0.5);}
+.md-default-theme .md-datepicker-input::-moz-placeholder, .md-datepicker-input::-moz-placeholder { opacity:1; color:rgba(0,0,0,.46);}
+.md-default-theme .md-datepicker-input:-moz-placeholder, .md-datepicker-input:-moz-placeholder { opacity:1; color:rgba(0,0,0,.46);}
+.md-default-theme .md-datepicker-input::-webkit-input-placeholder, .md-datepicker-input::-webkit-input-placeholder { opacity:1; color:rgba(0,0,0,.46);}
+.md-default-theme .md-datepicker-input:-ms-input-placeholder, .md-datepicker-input:-ms-input-placeholder { opacity:1; color:rgba(0,0,0,.46);}
+md-chips.md-default-theme .md-chips.md-focused, md-chips .md-chips.md-focused { box-shadow:0 2px rgb(0, 202, 253);}
+md-dialog.md-content-overflow .md-actions, md-dialog.md-content-overflow md-dialog-actions { border-top:none;}
+.md-button.md-focused:not([disabled]) { background:none;}
+.showHint.hint { width:100%; display:inline-block; font-size:12px; color:grey; padding-top:5px;}
+.showError { font-size:12px;}
+/****************************************************************************************************/
+.popOverlay { background:rgba(0, 0, 0, .5); width:100%; height:100%; overflow-y:auto; position:fixed; left:0; top:0; z-index:999;}
+.popBox { background:#fff; border-radius:5px; position:relative; width:400px; max-width:90%; padding:20px; margin-left:auto; margin-right:auto; margin-top:100px;}
+.popClose { display:inline-block; position:absolute; top:5px; right:5px; cursor:pointer;}
+.popClose i { margin:0;}
+.popClose:hover { color:#0077c8;}
+.blue-heading { color:#0077c8; font:500 18px 'Roboto', Arial, Helvetica, sans-serif; margin-top:0;}
+.red-heading { color:#e30076; font:500 18px 'Roboto', Arial, Helvetica, sans-serif; margin-top:0;}
+.infoText { color:#000; font:15px 'Roboto', Arial, Helvetica, sans-serif; text-align:center;}
+.inputbox { width:100%; height:40px; display:inline-block; padding:5px 0; margin-top:10px; color:#7f7f7f; font:500 16px/16px 'Roboto', Arial, Helvetica, sans-serif; border:none; border-bottom:2px solid #3f51b5; outline:none; -webkit-appearance:none; -moz-appearance:none; appearance:none;}
+.errorMessage { color:#e30076;}
+md-input-container .md-errors-spacer { min-height:inherit !important;}
+.socLogin { display:inline-block; padding:10px 30px; margin:2px; border-radius:5px; color:#fff; text-decoration:none;}
+.socLogin.fb { background:#3a589a;}
+.socLogin.in { background:#2b77a6;}
+.socLogin.gp { background:#e9544f;}
+.socLogin:hover { color:#fff; opacity:.9;}
+.popLink { color:#0077c8; font:500 15px 'Roboto', Arial, Helvetica, sans-serif; padding:5px; display:inline-block; background:none; border:none;}
+a.popLink:hover, button.popLink:hover { color:#000; cursor:pointer;}
+.popLink.gray { color:#888;}
+md-input-container label:not(._md-container-ignore).md-required:after { content:'' !important;}
+.text-left { text-align:left;}
+.text-center { text-align:center;}
+.text-right { text-align:right;}
+/****************************************************************************************************/
+.cntTitle { font:300 28px 'Roboto', Arial, sans-serif; color:#000; margin-top:0; margin-bottom:30px;}
+.cntSubtitle { font:300 16px 'Roboto', Arial, sans-serif; text-align:left;}
+.cntButton { background:none; color:#0077c8;}
+.scButton { margin:15px 0; text-align:center;}
+.scButton a { width:280px; max-width:100%; display:inline-block; padding:5px 15px; text-align:center; background:#000; color:#fff; font-size:14px; font-weight:500; text-transform:uppercase; transition:box-shadow 1s;}
+.scButton a:hover { box-shadow:300px 0 0 0 rgba(0,0,0,.2) inset;}
+.scButton a.blue { background:#0077FD;}
+.scButton a.green { background:#00FD00;}
+.scButton a.sky { background:#00CAFD;}
+.max350 { max-width:350px;}
+.width160 { width:160px; margin-right:30px;}
+/****************************************************************************************************/

@@ -13,6 +13,13 @@ using NPOI.HSSF.UserModel;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Core.Objects;
 using System.Net.Mime;
+using NPOI.HSSF.Util;
+using NPOI.XSSF.UserModel;
+using EventCombo.Utils;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using iTextSharp.text.html.simpleparser;
+using System.Text;
 
 namespace EventCombo.Service
 {
@@ -76,6 +83,7 @@ namespace EventCombo.Service
       res.OrdersSummary.Add(ordersTotal);
       res.OrdersSummary.Add(ordersCompleted);
       res.OrdersSummary.Add(ordersPending);
+      res.EventTitle = ev.EventTitle;
 
       return res;
     }
@@ -120,6 +128,8 @@ namespace EventCombo.Service
             order.PricePaid = order.PricePaid + (orderDB.O_VariableAmount ?? 0);
             order.PriceNet = order.PricePaid - order.Fee;
             order.CustomerEmail = orderDB.O_Email;
+            order.Refunded = ((orderDB.OrderStateId ?? 0) == 3 ? (-order.PricePaid) : 0);
+            order.Cancelled = ((orderDB.OrderStateId ?? 0) == 2 ? (-order.PricePaid) : 0);
             if (billingAddressDB != null)
             {
                 var countryDB = countryRepo.Get(filter: (c => c.CountryID.ToString() == billingAddressDB.Country));
@@ -147,8 +157,10 @@ namespace EventCombo.Service
         IRepository<ShippingAddress> shipRepo = new GenericRepository<ShippingAddress>(_factory.ContextFactory);
         IRepository<Country> countryRepo = new GenericRepository<Country>(_factory.ContextFactory);
         IRepository<TicketBearer> tbRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+        IRepository<Event_VariableDesc> evdRepo = new GenericRepository<Event_VariableDesc>(_factory.ContextFactory);
 
         var attendees = tbRepo.Get();
+        var vairableChages = evdRepo.Get(filter: (t => t.Event_Id == eventId));
 
         IEnumerable<EventOrderInfoViewModel> res = EventTicketRepo.Get(filter: (t => t.EventID == eventId))
         .Select(ticket => new EventOrderInfoViewModel()
@@ -169,8 +181,17 @@ namespace EventCombo.Service
             Date = ticket.O_OrderDateTime ?? DateTime.Today,
             PromoCode = ticket.PromoCode ?? "",
             Address = "",
-            MailTickets = "N"
+            MailTickets = "N",
+            VariableChages = vairableChages.ToList().Select((element) => new Event_VariableDesc
+            {
+                Variable_Id = element.Variable_Id,
+                Price = (ticket.VariableIds.Split(',').Select(Int64.Parse).Contains(element.Variable_Id) ? element.Price : 0),
+                Event_Id = element.Event_Id,
+                VariableDesc = element.VariableDesc
+            }).ToList(),
+            VariableIds = ticket.VariableIds
         }).ToList();
+
         foreach (var order in res)
         {
             var billingAddressDB = billRepo.Get(filter: (b => b.OrderId == order.OrderId)).FirstOrDefault();
@@ -361,15 +382,15 @@ namespace EventCombo.Service
         AddStyledCell(row, 1, style).SetCellValue(order.BuyerName);
         AddStyledCell(row, 2, style).SetCellValue(order.TicketName);
         AddStyledCell(row, 3, style).SetCellValue(order.Quantity);
-        AddStyledCell(row, 4, style).SetCellValue((double)order.Price);
-        AddStyledCell(row, 5, style).SetCellValue((double)order.PricePaid);
-        AddStyledCell(row, 6, style).SetCellValue((double)order.PriceNet);
+        AddStyledCell(row, 4, style).SetCellValue("$" + (double)order.Price);
+        AddStyledCell(row, 5, style).SetCellValue("$" + (double)order.PricePaid);
+        AddStyledCell(row, 6, style).SetCellValue("$" + (double)order.PriceNet);
         AddStyledCell(row, 7, datestyle).SetCellValue(order.CustomerEmail);
         AddStyledCell(row, 8, datestyle).SetCellValue(order.Address);
         AddStyledCell(row, 9, datestyle).SetCellValue(order.Date);
-        AddStyledCell(row, 10, style).SetCellValue(order.PaymentState.ToString());
+        AddStyledCell(row, 10, style).SetCellValue(order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString());
       }
-      for (i = 0; i <= 5; i++)
+      for (i = 0; i <= 10; i++)
       {
         sheet.AutoSizeColumn(i);
         sheet.SetColumnWidth(i, sheet.GetColumnWidth(i) + 1024);
@@ -410,11 +431,11 @@ namespace EventCombo.Service
         rw.Write(str + new String(' ', 28 - str.Length) + "|");
         str = order.Quantity.ToString();
         rw.Write(str + new String(' ', 10 - str.Length) + "|");
-        str = order.Price.ToString("N2");
+        str = "$" + order.Price.ToString("N2");
         rw.Write(str + new String(' ', 9 - str.Length) + "|");
-        str = order.PricePaid.ToString("N2");
+        str = "$" + order.PricePaid.ToString("N2");
         rw.Write(str + new String(' ', 10 - str.Length) + "|");
-        str = order.PriceNet.ToString("N2");
+        str = "$" + order.PriceNet.ToString("N2");
         rw.Write(str + new String(' ', 9 - str.Length) + "|");
         str = order.CustomerEmail;
         while (str.Length > 28)
@@ -436,7 +457,7 @@ namespace EventCombo.Service
         rw.Write(str + new String(' ', 28 - str.Length) + "|");
         str = order.Date.ToShortDateString();
         rw.Write(str + new String(' ', 10 - str.Length) + "|");
-        str = order.PaymentState.ToString();
+        str = order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString();
         rw.Write(str);
         rw.WriteLine();
       }
@@ -477,7 +498,7 @@ namespace EventCombo.Service
         rw.Write(order.CustomerEmail + delimiter);
         rw.Write( order.Address + delimiter);
         rw.Write(order.Date.ToShortDateString() + delimiter);
-        rw.Write(order.PaymentState.ToString());
+        rw.Write(order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString());
         rw.WriteLine();
       }
 
@@ -618,6 +639,7 @@ namespace EventCombo.Service
         style.BorderTop = BorderStyle.Thin;
         style.BorderLeft = BorderStyle.Thin;
         style.BorderRight = BorderStyle.Thin;
+
         ICellStyle hstyle = wb.CreateCellStyle();
         hstyle.BorderBottom = BorderStyle.Thin;
         hstyle.BorderTop = BorderStyle.Thin;
@@ -627,6 +649,7 @@ namespace EventCombo.Service
         IFont bfont = wb.CreateFont();
         bfont.Boldweight = (short)FontBoldWeight.Bold;
         hstyle.SetFont(bfont);
+
         ICellStyle datestyle = wb.CreateCellStyle();
         datestyle.BorderBottom = BorderStyle.Thin;
         datestyle.BorderTop = BorderStyle.Thin;
@@ -634,9 +657,17 @@ namespace EventCombo.Service
         datestyle.BorderRight = BorderStyle.Thin;
         datestyle.DataFormat = wb.CreateDataFormat().GetFormat("MMMM dd, yyyy");
 
+        ICellStyle Titlestyle = wb.CreateCellStyle();
+        Titlestyle.BorderBottom = BorderStyle.Thin;
+        Titlestyle.BorderTop = BorderStyle.Thin;
+        Titlestyle.BorderLeft = BorderStyle.Thin;
+        Titlestyle.BorderRight = BorderStyle.Thin;
+        Titlestyle.Alignment = HorizontalAlignment.Center;
+        Titlestyle.SetFont(bfont);
+
         ISheet sheet = wb.CreateSheet("Orders");
         IRow row = sheet.CreateRow(0);
-        AddStyledCell(row, 0, hstyle).SetCellValue(ReportTitle);
+        AddStyledCell(row, 0, Titlestyle).SetCellValue(ReportTitle);
         sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 15));
 
         row = sheet.CreateRow(1);
@@ -656,7 +687,14 @@ namespace EventCombo.Service
         AddStyledCell(row, 13, hstyle).SetCellValue("ATTENDEE EMAIL");
         AddStyledCell(row, 14, hstyle).SetCellValue("BILLING ADDRESS");
         AddStyledCell(row, 15, hstyle).SetCellValue("MAIL TICKETS");
+        var variableCount = 0;
+        foreach (var variable in orders.FirstOrDefault().VariableChages)
+        {
+            variableCount += 1;
+            AddStyledCell(row, 15 + variableCount, hstyle).SetCellValue(variable.VariableDesc);
+        }            
         var i = 2;
+        string tempOrderId = "";
         foreach (var order in orders)
         {
             row = sheet.CreateRow(i++);
@@ -665,19 +703,37 @@ namespace EventCombo.Service
             AddStyledCell(row, 2, style).SetCellValue(order.BuyerName);
             AddStyledCell(row, 3, style).SetCellValue(order.TicketName);
             AddStyledCell(row, 4, style).SetCellValue(order.Quantity);
-            AddStyledCell(row, 5, style).SetCellValue((double)order.PricePaid);
-            AddStyledCell(row, 6, style).SetCellValue((double)order.PriceNet);
-            AddStyledCell(row, 7, style).SetCellValue((double)order.Fee);
-            AddStyledCell(row, 8, style).SetCellValue((double)order.MerchantFee);
+            AddStyledCell(row, 5, style).SetCellValue("$" + order.PricePaid.ToString("N2"));
+            AddStyledCell(row, 6, style).SetCellValue("$" + order.PriceNet.ToString("N2"));
+            AddStyledCell(row, 7, style).SetCellValue("$" + order.Fee.ToString("N2"));
+            AddStyledCell(row, 8, style).SetCellValue("$" + order.MerchantFee.ToString("N2"));
             AddStyledCell(row, 9, style).SetCellValue(order.PromoCode);
-            AddStyledCell(row, 10, style).SetCellValue((double)order.Refunded);
-            AddStyledCell(row, 11, style).SetCellValue((double)order.Cancelled);
+            AddStyledCell(row, 10, style).SetCellValue((order.Refunded > 0 ? "Yes" : ""));
+            AddStyledCell(row, 11, style).SetCellValue((order.Cancelled > 0 ? "Yes" : ""));
             AddStyledCell(row, 12, style).SetCellValue("");
-            AddStyledCell(row, 13, style).SetCellValue(order.CustomerEmail);
+            AddStyledCell(row, 13, style).SetCellValue(order.BuyerEmail);
             AddStyledCell(row, 14, style).SetCellValue(order.Address);
             AddStyledCell(row, 15, style).SetCellValue(order.MailTickets.ToString());
+            variableCount = 0;
+            if (tempOrderId != order.OrderId)
+            {
+                foreach (var variable in order.VariableChages)
+                {
+                    variableCount += 1;
+                    AddStyledCell(row, 15 + variableCount, style).SetCellValue("$" + (variable.Price ?? 0).ToString("N2"));
+                }
+                tempOrderId = order.OrderId;
+            }
+            else
+            {
+                foreach (var variable in order.VariableChages)
+                {
+                    variableCount += 1;
+                    AddStyledCell(row, 15 + variableCount, style).SetCellValue("");
+                }
+            }
         }
-        for (i = 0; i <= 14; i++)
+        for (i = 0; i <= 15 + variableCount; i++)
         {
             sheet.AutoSizeColumn(i);
             sheet.SetColumnWidth(i, sheet.GetColumnWidth(i) + 1024);
@@ -694,9 +750,17 @@ namespace EventCombo.Service
 
         rw.Write(ReportTitle);
         rw.WriteLine();
-        rw.Write("  ORDER #  |    DATE     |          ATTENDEE          |        TICKET NAME         | QUANTITY |  GROSS PAID  |NET EVENT REVENUE|EVENTCOMBO FEE|EVENTCOMBO MERCHANT FEE|PROMO CODE|REFUNDED|CANCELLED|ATTENDEE NUMBER|       ATTENDEE EMAIL       |          ADDRESS           |          MAIL TICKETS      ");
+        var variableCount = 0;
+        var variableStr = "";
+        foreach (var variable in orders.FirstOrDefault().VariableChages)
+        {
+            variableCount += 1;
+            variableStr += " | " + variable.VariableDesc + (variable.VariableDesc.Length < (variable.Price ?? 0).ToString("N2").Length + 1 ? new String(' ', (variable.Price ?? 0).ToString("N2").Length + 1 - variable.VariableDesc.Length) : "");
+        }
+        rw.Write("  ORDER #  |    DATE     |          ATTENDEE          |        TICKET NAME         | QUANTITY |  GROSS PAID  |NET EVENT REVENUE|EVENTCOMBO FEE|EVENTCOMBO MERCHANT FEE|PROMO CODE|REFUNDED|CANCELLED|ATTENDEE NUMBER|       ATTENDEE EMAIL       |          ADDRESS           |          MAIL TICKETS      " + variableStr);
         rw.WriteLine();
         string str = "";
+        string tempOrderId = "";
         foreach (var order in orders)
         {
             rw.Write(order.OrderId + new String(' ', 11 - order.OrderId.Length) + "|");
@@ -722,24 +786,24 @@ namespace EventCombo.Service
             rw.Write(str + new String(' ', 28 - str.Length) + "|");
             str = order.Quantity.ToString();
             rw.Write(str + new String(' ', 10 - str.Length) + "|");
-            str = order.PricePaid.ToString("N2");
+            str = "$" + order.PricePaid.ToString("N2");
             rw.Write(str + new String(' ', 14 - str.Length) + "|");
-            str = order.PriceNet.ToString("N2");
+            str = "$" + order.PriceNet.ToString("N2");
             rw.Write(str + new String(' ', 16 - str.Length) + "|");
-            str = order.Fee.ToString("N2");
+            str = "$" + order.Fee.ToString("N2");
             rw.Write(str + new String(' ', 14 - str.Length) + "|");
-            str = order.MerchantFee.ToString("N2");
+            str = "$" + order.MerchantFee.ToString("N2");
             rw.Write(str + new String(' ', 23 - str.Length) + "|");
             str = order.PromoCode.ToString();
             rw.Write(str + new String(' ', 10 - str.Length) + "|");
-            str = order.Refunded.ToString("N2");
+            str = (order.Refunded > 0 ? "Yes" : "");
             rw.Write(str + new String(' ', 8 - str.Length) + "|");
-            str = order.Cancelled.ToString("N2");
+            str = (order.Cancelled > 0 ? "Yes" : "");
             rw.Write(str + new String(' ', 9 - str.Length) + "|");
             str = "";
             rw.Write(str + new String(' ', 15 - str.Length) + "|");
             str = order.BuyerEmail.ToString();
-            rw.Write(str + new String(' ', 28 - str.Length) + "|");
+            rw.Write(str + new String(' ', 28 - (str.Length > 28 ? 28 : str.Length)) + "|");
             str = order.Address;
             while (str.Length > 28)
             {
@@ -758,6 +822,26 @@ namespace EventCombo.Service
                 str = str.Substring(28, str.Length - 28);
             }
             rw.Write(str + new String(' ', 28 - str.Length) + "");
+            variableCount = 0;
+            if (tempOrderId != order.OrderId)
+            {
+                foreach (var variable in order.VariableChages)
+                {
+                    variableCount += 1;
+                    str = "$" + (variable.Price ?? 0).ToString("N2");
+                    rw.Write(str + new String(' ', (variable.VariableDesc.Length > str.Length ? variable.VariableDesc.Length - str.Length : 2)) + "|");
+                }
+                tempOrderId = order.OrderId;
+            }
+            else
+            {
+                foreach (var variable in order.VariableChages)
+                {
+                    variableCount += 1;
+                    str = "";
+                    rw.Write(str + new String(' ', (variable.VariableDesc.Length > str.Length ? variable.VariableDesc.Length - str.Length : 2)) + "|");
+                }
+            }
             rw.WriteLine();
         }
 
@@ -789,27 +873,53 @@ namespace EventCombo.Service
         rw.Write("ATTENDEE NUMBER" + delimiter);
         rw.Write("ATTENDEE EMAIL" + delimiter);
         rw.Write("BILLING ADDRESS" + delimiter);
-        rw.Write("MAIL TICKETS");
+        rw.Write("MAIL TICKETS" + delimiter);
+        var variableCount = 0;
+        var variableTotalCount = orders.FirstOrDefault().VariableChages.Count();
+        foreach (var variable in orders.FirstOrDefault().VariableChages)
+        {
+            variableCount += 1;
+            rw.Write(variable.VariableDesc + (variableCount < variableTotalCount ? delimiter : ""));
+        }
         rw.WriteLine();
 
+        string tempOrderId = "";
         foreach (var order in orders)
         {
             rw.Write(order.OrderId + delimiter);
-            rw.Write(order.Date.ToString("MMM, dd, yyyy") + delimiter);
-            rw.Write(order.BuyerName + delimiter);
-            rw.Write(order.TicketName + delimiter);
+            rw.Write("\"" + order.Date.ToString("MMM, dd, yyyy") + "\"" + delimiter);
+            rw.Write("\"" + order.BuyerName + "\"" + delimiter);
+            rw.Write("\"" + order.TicketName + "\"" + delimiter);
             rw.Write(order.Quantity.ToString() + delimiter);
             rw.Write("$" + order.PricePaid.ToString("N2") + delimiter);
             rw.Write("$" + order.PriceNet.ToString("N2") + delimiter);
             rw.Write("$" + order.Fee.ToString("N2") + delimiter);
             rw.Write("$" + order.MerchantFee.ToString("N2") + delimiter);
             rw.Write(order.PromoCode + delimiter);
-            rw.Write((order.Refunded == 0 ? "" : "$" + order.Refunded.ToString("N2")) + delimiter);
-            rw.Write((order.Cancelled == 0 ? "" : "$" + order.Cancelled.ToString("N2")) + delimiter);
+            rw.Write((order.Refunded > 0 ? "Yes" : "") + delimiter);
+            rw.Write((order.Cancelled > 0 ? "Yes" : "") + delimiter);
             rw.Write("" + delimiter);
-            rw.Write(order.CustomerEmail + delimiter);
-            rw.Write(order.Address + delimiter);
-            rw.Write(order.MailTickets.ToString());
+            rw.Write(order.BuyerEmail + delimiter);
+            rw.Write("\"" + order.Address + "\"" + delimiter);
+            rw.Write("\"" + order.MailTickets.ToString() + "\"" + delimiter);
+            variableCount = 0;
+            if (tempOrderId != order.OrderId)
+            {
+                foreach (var variable in order.VariableChages)
+                {
+                    variableCount += 1;
+                    rw.Write("$" + (variable.Price ?? 0).ToString("N2") + (variableCount < variableTotalCount ? delimiter : ""));
+                }
+                tempOrderId = order.OrderId;
+            }
+            else
+            {
+                foreach (var variable in order.VariableChages)
+                {
+                    variableCount += 1;
+                    rw.Write("" + (variableCount < variableTotalCount ? delimiter : ""));
+                }
+            }
             rw.WriteLine();
         }
 
@@ -818,5 +928,800 @@ namespace EventCombo.Service
         res.Position = 0;
         return res;
     }
+    public ScheduledEmailViewModel PrepareSendAttendeeMail(long eventId)
+    {
+        IRepository<EventVenue> eRepo = new GenericRepository<EventVenue>(_factory.ContextFactory);
+        var ev = eRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();
+        ScheduledEmailViewModel scheduledEmail = new ScheduledEmailViewModel();
+        scheduledEmail.ScheduledDate = ev.E_Startdate ?? DateTime.UtcNow;
+        scheduledEmail.SendFrom= System.Configuration.ConfigurationManager.AppSettings.Get("UserName");       
+        scheduledEmail.SendTos = GetSendToDropdownList(eventId);
+        scheduledEmail.RegisteredDate = DateTime.UtcNow;
+        return scheduledEmail;
+    }
+    public IEnumerable<SelectItemModel> GetSendToDropdownList(long eventId)
+    {
+        IRepository<TicketBearer_View> etBRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
+        IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+
+        var orderIds = eRVTRepo.Get(filter: (t => t.EventID == eventId)).Select(o => o.OrderId);
+        var ticketBearers = etBRepo.Get(filter: t => orderIds.Contains(t.OrderId)).ToList();
+        List<SelectItemModel> selectItems = new List<SelectItemModel>();
+
+        var PaidAmount = eRVTRepo.Get(filter: (t => t.EventID == eventId &&
+                        (t.PaymentTypeId == 1 ||
+                        t.PaymentTypeId == 2 ||
+                        t.PaymentTypeId == 5 ||
+                        t.PaymentTypeId == 6 ||
+                        t.PaymentTypeId == 7 ||
+                        t.PaymentTypeId == 10))).Sum(o => o.PaidAmount);
+        var OrderAmount = eRVTRepo.Get(filter: (t => t.EventID == eventId &&
+                        (t.PaymentTypeId == 1 ||
+                        t.PaymentTypeId == 2 ||
+                        t.PaymentTypeId == 5 ||
+                        t.PaymentTypeId == 6 ||
+                        t.PaymentTypeId == 7 ||
+                        t.PaymentTypeId == 10))).Sum(o => o.OrderAmount);
+
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "All Attendees (" + ticketBearers.Count() + ")",
+            Value = "CONFIRMED_ATTENDEES"
+        });
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "All Attendees Registered after Date",
+            Value = "ALL_ATTENDEES_DATE"
+        });
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "Specific Attendees",
+            Value = "ATTENDEES"
+        });
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "Attendees by Ticket Type",
+            Value = "TICKET_ATTENDEES"
+        });
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "Offline Payment Not Received (" + (OrderAmount - PaidAmount) + ")",
+            Value = "PAYMENT_NOT_RECEIVED"
+        });
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "Offline Payment Received (" + PaidAmount + ")",
+            Value = "PAYMENT_RECEIVED"
+        });
+
+        return selectItems;
+    }
+    public IEnumerable<ScheduledEmail> GetScheduledEmailList(long eventId, bool IsEmailSend)
+    {
+        IRepository<ScheduledEmail> sERepo = new GenericRepository<ScheduledEmail>(_factory.ContextFactory);
+        IRepository<AttendeeEmail> aERepo = new GenericRepository<AttendeeEmail>(_factory.ContextFactory);
+
+        var AttendeeEmails = aERepo.Get(filter: s => s.EventID == eventId).Select(a=>a.ScheduledEmailId);
+        var ScheduledEmails = sERepo.Get(filter: s => AttendeeEmails.Contains(s.ScheduledEmailId) && s.EmailTypeId == 1 && s.IsEmailSend == IsEmailSend);
+        var id = DateTimeWithZone.Timezonedetail(eventId);
+        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(id);
+        foreach (var scheduledEmail in ScheduledEmails)
+        {
+            var dateTimeWithZone = new DateTimeWithZone(scheduledEmail.ScheduledDate, userTimeZone, true);
+            scheduledEmail.ScheduledDate = dateTimeWithZone.LocalTime;
+        }
+        return ScheduledEmails;
+    }
+    public ScheduledEmailViewModel GetScheduledEmailDetail(long scheduledEmailId)
+    {
+        IRepository<ScheduledEmail> sERepo = new GenericRepository<ScheduledEmail>(_factory.ContextFactory);
+        var ScheduledEmail = sERepo.Get(filter: s => s.ScheduledEmailId == scheduledEmailId).ToList().FirstOrDefault();
+        return _mapper.Map<ScheduledEmailViewModel>(ScheduledEmail);
+    }
+    public bool SendAttendeeMail(long eventId, ScheduledEmailViewModel scheduledEmail, string userId, string ticketbearerIds, DateTime scheduledDate)
+    {
+        string defaultEmail;
+        defaultEmail = System.Configuration.ConfigurationManager.AppSettings.Get("DefaultEmail");
+        var ticketbearerId = (string.IsNullOrEmpty(ticketbearerIds) ? new List<string>() : ticketbearerIds.Split(',').ToList());
+        IRepository<TicketBearer_View> etBRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
+        IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+  
+        List <TicketBearer_View> ticketBearers=new List<TicketBearer_View>();
+
+        if (scheduledEmail.SendTo == "CONFIRMED_ATTENDEES")
+        {
+            var orderIds = eRVTRepo.Get(filter: (t => t.EventID == eventId)).Select(o => o.OrderId);
+            ticketBearers = etBRepo.Get(filter: (t => orderIds.Contains(t.OrderId))).ToList();
+        }
+        else if (scheduledEmail.SendTo == "ALL_ATTENDEES_DATE")
+        {
+            var orderIds = eRVTRepo.Get(filter: (t => t.EventID == eventId && System.Data.Entity.DbFunctions.TruncateTime(t.O_OrderDateTime) >= scheduledEmail.RegisteredDate)).Select(o => o.OrderId);
+            ticketBearers = etBRepo.Get(filter: (t => orderIds.Contains(t.OrderId))).ToList();
+        }
+        else if (scheduledEmail.SendTo == "ATTENDEES")
+        {
+            ticketBearers = etBRepo.Get(filter: r => ticketbearerId.Contains(r.OrderId + ":" + r.TicketbearerId)).ToList();
+        }
+        else if (scheduledEmail.SendTo == "TICKET_ATTENDEES")
+        {
+            var orderIds = eRVTRepo.Get(filter: (t => t.EventID == eventId && ticketbearerId.Contains(t.TicketTypeID.ToString()))).Select(o => o.OrderId);
+            ticketBearers = etBRepo.Get(filter: (t => orderIds.Contains(t.OrderId))).ToList();
+        }
+        else if (scheduledEmail.SendTo == "PAYMENT_NOT_RECEIVED")
+        {
+            var orderIds = eRVTRepo.Get(filter: (t => t.EventID == eventId &&
+                            (t.PaymentTypeId == 1 ||
+                            t.PaymentTypeId == 2 ||
+                            t.PaymentTypeId == 5 ||
+                            t.PaymentTypeId == 6 ||
+                            t.PaymentTypeId == 7 ||
+                            t.PaymentTypeId == 10) &&
+                            t.PaidAmount <= 0)).Select(o => o.OrderId);
+            ticketBearers = etBRepo.Get(filter: r => orderIds.Contains(r.OrderId)).ToList();
+        }
+        else if (scheduledEmail.SendTo == "PAYMENT_RECEIVED")
+        {
+            var orderIds = eRVTRepo.Get(filter: (t => t.EventID == eventId &&
+                                (t.PaymentTypeId == 1 ||
+                                t.PaymentTypeId == 2 ||
+                                t.PaymentTypeId == 5 ||
+                                t.PaymentTypeId == 6 ||
+                                t.PaymentTypeId == 7 ||
+                                t.PaymentTypeId == 10) &&
+                                t.PaidAmount > 0)).Select(o => o.OrderId);
+            ticketBearers = etBRepo.Get(filter: r => orderIds.Contains(r.OrderId)).ToList();
+        }
+
+        AttendeeMailNotification attendeeMailNotification = new AttendeeMailNotification(_factory, defaultEmail, scheduledEmail, ticketBearers);
+        attendeeMailNotification.SendNotification(new SendAttendeeMailService(_factory, eventId, userId, ticketBearers, scheduledDate));
+        return true;
+    }
+    public bool UpdateAttendeeMail(ScheduledEmailViewModel scheduledEmail)
+    {
+        using (var uow = _factory.GetUnitOfWork())
+            try
+            {
+                IRepository<ScheduledEmail> etBRepo = new GenericRepository<ScheduledEmail>(_factory.ContextFactory);
+                var scheduledEmaile = etBRepo.Get(filter: s => s.ScheduledEmailId == scheduledEmail.ScheduledEmailId).FirstOrDefault();
+                scheduledEmaile.Body = scheduledEmail.Body;
+                etBRepo.Update(scheduledEmaile);
+                uow.Context.SaveChanges();
+                uow.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                uow.Rollback();
+                return false;
+            }
+    }
+    public bool DeleteAttendeeMail(long scheduledEmailId)
+    {
+        using (var uow = _factory.GetUnitOfWork())
+            try
+            {
+                IRepository<ScheduledEmail> sERepo = new GenericRepository<ScheduledEmail>(_factory.ContextFactory);
+                IRepository<AttendeeEmail> aERepo = new GenericRepository<AttendeeEmail>(_factory.ContextFactory);
+                var ScheduledEmail = sERepo.GetByID(scheduledEmailId);
+                var AttendeeEmails = aERepo.Get(filter: a => a.ScheduledEmailId == ScheduledEmail.ScheduledEmailId);
+                foreach (var item in AttendeeEmails)
+                {
+                    aERepo.Delete(item.AttendeeEmailId);
+                }
+                sERepo.Delete(ScheduledEmail);
+                uow.Context.SaveChanges();
+                uow.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                uow.Rollback();
+                return false;
+            }
+    }
+    public List<AttendeeViewModel> GetAttendeeList(AttendeeSearchRequestViewModel request)
+    {
+        IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+        IRepository<TicketBearer_View> sERepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
+
+        var orderIds = eRVTRepo.Get(filter: (t => t.EventID == request.EventId)).Select(o => o.OrderId);
+        var attendees = sERepo.Get(filter: a => (string.IsNullOrEmpty(request.Name) ? true : a.Name.Contains(request.Name))
+        && (string.IsNullOrEmpty(request.Email) ? true : a.Email.Contains(request.Email)) && orderIds.Contains(a.OrderId))
+                .Select((element) => new AttendeeViewModel
+                {
+                    Email = element.Email,
+                    Name = element.Name,
+                    TicketbearerId = element.TicketbearerId,
+                    OrderId = element.OrderId
+                }).ToList();
+        return attendees;
+    }
+    public List<CheckinViewModel> GetAttendeeCheckinList(AttendeeSearchRequestViewModel request)
+    {
+        IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+        IRepository<TicketBearer_View> sERepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
+
+        var orderIds = eRVTRepo.Get(filter: (t => t.EventID == request.EventId)).Select(o => o.OrderId);
+        var attendees = sERepo.Get(filter: a => (string.IsNullOrEmpty(request.Name) ? true : a.Name.Contains(request.Name))
+        && (string.IsNullOrEmpty(request.Email) ? true : a.Email.Contains(request.Email)) && orderIds.Contains(a.OrderId))
+                .Select((element) => new CheckinViewModel
+                {
+                    Email = element.Email,
+                    Name = element.Name,
+                    TicketbearerId = element.TicketbearerId,
+                    OrderId = element.OrderId
+                }).ToList();
+
+        foreach (var attendee in attendees)
+        {
+                attendee.TicketType = "";
+                attendee.CheckinStatus = false;
+        }
+        return attendees;
+    }
+    public List<AttendeeTicketTypeViewModel> GetAttendeeTicketTypeList(long eventId)
+    {
+        IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+        IRepository<TicketBearer_View> sERepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
+        IRepository<TicketType> tTRepo = new GenericRepository<TicketType>(_factory.ContextFactory);
+
+        var attendeeTicketTypes = tTRepo.Get();
+        List<AttendeeTicketTypeViewModel> attendeeTicketTypeViewModels = new List<AttendeeTicketTypeViewModel>();
+        foreach (var ticketType in attendeeTicketTypes)
+        {
+            var eventTicketView = eRVTRepo.Get(filter: (t => t.EventID == eventId && t.TicketTypeID == ticketType.TicketTypeID));
+            var orderIds = eventTicketView.Select(o => o.OrderId);
+            var attendees = sERepo.Get(filter: a => orderIds.Contains(a.OrderId));
+            if (attendees.Count() > 0)
+            {
+                attendeeTicketTypeViewModels.Add(new AttendeeTicketTypeViewModel
+                {
+                    TicketTypeId = ticketType.TicketTypeID,
+                    TicketType = ticketType.TicketType1,
+                    Price = eventTicketView.Sum(e => e.OrderAmount) ?? 0,
+                    Sold = eventTicketView.Sum(e => e.PaidAmount) ?? 0,
+                    AttendeeCount = attendees.Count()
+                });
+            }
+        }
+        
+        return attendeeTicketTypeViewModels;
+    }
+    public MemoryStream GetDownloadableGuestList(string sortBy, string ticketTypeIds, string barcode, long eventId, string format)
+    {
+        format = format.Trim().ToLower();
+        if ((format != "pdf"))
+            return null;
+
+        return GuestListToPDF(sortBy, ticketTypeIds, barcode, eventId);
+    }
+
+    public MemoryStream GuestListToPDF(string sortBy, string ticketTypeIds, string barcode, long eventId)
+    {
+        IRepository<EventTicket_View> eTVRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+        IRepository<Event> EventRepo = new GenericRepository<Event>(_factory.ContextFactory);
+        IRepository<TicketBearer_View> tBVRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
+        IRepository<PaymentType> pTRepo = new GenericRepository<PaymentType>(_factory.ContextFactory);
+        IRepository<Address> addressRepo = new GenericRepository<Address>(_factory.ContextFactory);
+
+        var tTypeIds = (!string.IsNullOrEmpty(ticketTypeIds) ? ticketTypeIds.Split(',').Select(Int64.Parse).ToList() : null);
+        var eventTickets = eTVRepo.Get(filter: (e => e.EventID == eventId));
+        if (sortBy == "TicketType")
+        {
+            eventTickets = eventTickets.OrderBy(e => e.TicketTypeName);
+        }
+        if (tTypeIds != null)
+        {
+            eventTickets = eventTickets.Where(e => tTypeIds.Contains(e.TicketTypeID));
+        }
+        var eventTitle = EventRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();
+        string title = "";
+        string subTitle = "";
+        string subTitle1 = "";
+
+        if (eventTitle != null)
+        {
+            title = eventTitle.EventTitle;
+            var addressId = eventTitle.EventVenues.FirstOrDefault().AddressId;
+            var eventAddressDB = addressRepo.Get(filter: (b => b.AddressID == addressId)).FirstOrDefault();
+            DateTime eStartDateTime = eventTitle.EventVenues.FirstOrDefault().E_Startdate ?? DateTime.UtcNow;
+            DateTime eEndDateTime = eventTitle.EventVenues.FirstOrDefault().E_Enddate ?? DateTime.UtcNow;
+            subTitle = eStartDateTime.ToString("ddd, MMMM dd, yyyy") + " at " + eStartDateTime.ToString("hh:mm tt") + " - " + eEndDateTime.ToString("ddd, MMMM dd, yyyy") + " at " + eEndDateTime.ToString("hh:mm tt");
+            if (eventAddressDB != null)
+            {
+                subTitle1 = eventAddressDB.ConsolidateAddress;
+            }
+        }
+        PdfPTable tableHeader = new PdfPTable(1);
+        PdfPCell cell = new PdfPCell(new Phrase(title));
+        cell.Border =Rectangle.NO_BORDER;
+        cell.HorizontalAlignment = 1;
+        tableHeader.AddCell(cell);
+        cell = new PdfPCell(new Phrase(subTitle));
+        cell.Border = Rectangle.NO_BORDER;
+        cell.HorizontalAlignment = 1;
+        tableHeader.AddCell(cell);
+        cell = new PdfPCell(new Phrase(subTitle1));
+        cell.Border = Rectangle.NO_BORDER;
+        cell.HorizontalAlignment = 1;
+        tableHeader.AddCell(cell);
+
+        PdfPTable table = new PdfPTable(4);
+        float[] widths = new float[] { 3f, 1f, 3f, 5f };
+        table.SetWidths(widths);
+
+        BaseColor bgColor = new BaseColor(192, 192, 192);
+        cell = new PdfPCell(new Phrase("Name"));
+        cell.BackgroundColor = bgColor;
+        cell.BorderColor = bgColor;
+        table.AddCell(cell);
+        cell = new PdfPCell(new Phrase("Qty"));
+        cell.BackgroundColor = bgColor;
+        cell.BorderColor = bgColor;
+        table.AddCell(cell);
+        cell = new PdfPCell(new Phrase("Ticket Type"));
+        cell.BackgroundColor = bgColor;
+        cell.BorderColor = bgColor;
+        table.AddCell(cell);
+        cell = new PdfPCell(new Phrase("Payment Status"));
+        cell.BackgroundColor = bgColor;
+        cell.BorderColor = bgColor;
+        table.AddCell(cell);
+
+
+        foreach (var eventTicket in eventTickets)
+        {
+            var ticketBearers = tBVRepo.Get(filter: (t => t.OrderId == eventTicket.OrderId));
+            var paymentType = pTRepo.Get(filter: (p => p.PaymentTypeId == eventTicket.PaymentTypeId)).FirstOrDefault();
+            var purchasedQuantity = eventTicket.PurchasedQuantity;
+            var attendeeQuantity = ticketBearers.Count(t => t.TicketbearerId == 0);
+            if (sortBy == "Name")
+            {
+                ticketBearers = ticketBearers.OrderBy(e => e.Name);
+            }
+            foreach (var ticketBearer in ticketBearers)
+            {
+                cell = new PdfPCell(new Phrase(ticketBearer.Name));
+                cell.Rowspan = 2;
+                cell.BorderColor = bgColor;
+                table.AddCell(cell);
+                cell = new PdfPCell(new Phrase((ticketBearer.TicketbearerId == 0 ? purchasedQuantity - attendeeQuantity : 1).ToString()));
+                cell.Rowspan = 2;
+                cell.BorderColor = bgColor;
+                table.AddCell(cell);
+                cell = new PdfPCell(new Phrase(eventTicket.TicketTypeName));
+                cell.Rowspan = 2;
+                cell.BorderColor = bgColor;
+                table.AddCell(cell);
+
+                if (barcode == null)
+                {
+                    cell = new PdfPCell(new Phrase((paymentType != null ? paymentType.PaymentTypeName : "")));
+                    cell.BorderColor = bgColor;
+                    cell.Border = Rectangle.RIGHT_BORDER;
+                    table.AddCell(cell);
+                    cell = new PdfPCell(new Phrase("Order " + eventId + " - " + eventTicket.OrderId));
+                    cell.BorderColor = bgColor;
+                    cell.Border = Rectangle.RIGHT_BORDER;
+                    cell.Border = Rectangle.BOTTOM_BORDER;
+                    table.AddCell(cell);
+                }
+                else if (barcode == "on")
+                {
+                    cell = new PdfPCell(new Phrase((paymentType != null ? paymentType.PaymentTypeName : "")));
+                    cell.BorderColor = bgColor;
+                    cell.Border = Rectangle.RIGHT_BORDER;
+                    table.AddCell(cell);
+                    iTextSharp.text.Image myImage = iTextSharp.text.Image.GetInstance(GenerateBarCode(eventTicket.OrderId));                      
+                    cell = new PdfPCell(myImage);
+                    cell.FixedHeight = 75;
+                    cell.BorderColor = bgColor;
+                    cell.PaddingLeft = 20;
+                    cell.PaddingTop = 3;
+                    cell.Border = Rectangle.RIGHT_BORDER;
+                    cell.Border = Rectangle.BOTTOM_BORDER;
+                    table.AddCell(cell);
+                }
+            }
+        }
+
+        Document document = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
+        MemoryStream memoryStream = new MemoryStream();
+        PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
+        document.Open();
+        document.Add(tableHeader);
+        document.Add(table);
+        document.Close();
+        byte[] bytes = memoryStream.ToArray();
+        memoryStream.Close();
+        return new MemoryStream(bytes);
+    }
+
+    public byte[] GenerateBarCode(string barCodeData)
+    {
+        System.Net.WebClient wc = new System.Net.WebClient();
+        string url = "https://www.barcodesinc.com/generator/image.php?code=" + barCodeData + "&style=196&type=C128B&width=140&height=70&xres=1&font=3";
+        byte[] barImage = wc.DownloadData(url);
+        return barImage;
+    }
+
+    public IEnumerable<SelectItemModel> GetSelectAttendeeDropdownList(long eventId)
+    {
+        IRepository<TicketBearer_View> etBRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
+        IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+
+        var orderIds = eRVTRepo.Get(filter: (t => t.EventID == eventId)).Select(o => o.OrderId);
+        var ticketBearers = etBRepo.Get(filter: t => orderIds.Contains(t.OrderId)).ToList();
+        List<SelectItemModel> selectItems = new List<SelectItemModel>();
+
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "All Unique Attendees (" + ticketBearers.Count() + ")",
+            Value = "CONFIRMED_ATTENDEES"
+        });
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "Specific Attendees",
+            Value = "ATTENDEES"
+        });
+        selectItems.Add(new SelectItemModel
+        {
+            Name = "Attendees by Ticket Type",
+            Value = "TICKET_ATTENDEES"
+        });
+
+        return selectItems;
+    }
+
+    public MemoryStream GetBadgesPreview(long eventId, string format, string UserID)
+    {
+        string pdfPath;
+        format = format.Trim().ToLower();
+        if ((format != "pdf"))
+            return null;
+        MemoryStream memoryStream = new MemoryStream();
+
+        pdfPath = "/TempDoc/NameBadges/preview_" + eventId + "_" + UserID + ".pdf";
+
+        if (File.Exists(HttpContext.Current.Server.MapPath(pdfPath)))
+        {
+            FileStream file = new FileStream(HttpContext.Current.Server.MapPath(pdfPath), FileMode.Open);
+
+            file.CopyTo(memoryStream);
+            file.Close();
+        }
+        byte[] bytes = memoryStream.ToArray();
+        memoryStream.Close();
+        return new MemoryStream(bytes);
+    }
+
+    public string GetBadgesPreviewPath(BadgesViewModel badgesViewModel, string format, string UserID)
+    {
+        string pdfPath;
+        format = format.Trim().ToLower();
+        if ((format != "pdf"))
+            return null;
+
+        pdfPath = "/TempDoc/NameBadges";
+        if (!Directory.Exists(HttpContext.Current.Server.MapPath(pdfPath)))
+        {
+            Directory.CreateDirectory(HttpContext.Current.Server.MapPath(pdfPath));
+        }
+        MemoryStream memoryStream = BadgesListPreviewToPDF(badgesViewModel);
+        pdfPath += "/preview_" + badgesViewModel.EventId + "_" + UserID + ".pdf";
+        FileStream file = new FileStream(HttpContext.Current.Server.MapPath(pdfPath), FileMode.Create, FileAccess.Write);
+        memoryStream.WriteTo(file);
+        file.Close();
+        memoryStream.Close();
+        return "~" + pdfPath;
+    }
+
+    public MemoryStream GetBadgesList(long eventId, string format, string UserID)
+    {
+        string pdfPath;
+        format = format.Trim().ToLower();
+        if ((format != "pdf"))
+            return null;
+        MemoryStream memoryStream = new MemoryStream();
+
+        pdfPath = "/TempDoc/NameBadges/badges_" + eventId + "_" + UserID + ".pdf";
+
+        if (File.Exists(HttpContext.Current.Server.MapPath(pdfPath)))
+        {
+            FileStream file = new FileStream(HttpContext.Current.Server.MapPath(pdfPath), FileMode.Open);
+
+            file.CopyTo(memoryStream);
+            file.Close();
+        }
+        byte[] bytes = memoryStream.ToArray();
+        memoryStream.Close();
+        return new MemoryStream(bytes);
+    }
+
+    public string GetBadgesListPath(BadgesViewModel badgesViewModel, string format, string UserID)
+    {
+        string pdfPath;
+        format = format.Trim().ToLower();
+        if ((format != "pdf"))
+            return null;
+
+        pdfPath = "/TempDoc/NameBadges";
+        if (!Directory.Exists(HttpContext.Current.Server.MapPath(pdfPath)))
+        {
+            Directory.CreateDirectory(HttpContext.Current.Server.MapPath(pdfPath));
+        }
+        MemoryStream memoryStream = BadgesListToPDF(badgesViewModel);
+        pdfPath += "/badges_" + badgesViewModel.EventId + "_" + UserID + ".pdf";
+        FileStream file = new FileStream(HttpContext.Current.Server.MapPath(pdfPath), FileMode.Create, FileAccess.Write);
+        memoryStream.WriteTo(file);
+        file.Close();
+        memoryStream.Close();
+        return "~" + pdfPath;
+    }
+
+    private MemoryStream BadgesListPreviewToPDF(BadgesViewModel badgesViewModel)
+    {
+
+        PdfPTable table = new PdfPTable(1);
+        PdfPTable tableChild = new PdfPTable(1);
+        float inchUnit = 72.00f;
+        float badgeWidth = inchUnit * 4;
+        float badgeHeight = inchUnit * 3;
+
+        if (badgesViewModel.BadgeStyle == "5361")
+        {
+            badgeWidth = inchUnit * 3.25f;
+            badgeHeight = inchUnit * 2;
+        }
+        else if(badgesViewModel.BadgeStyle == "5384" || 
+                badgesViewModel.BadgeStyle == "74459" || 
+                badgesViewModel.BadgeStyle == "74536" || 
+                badgesViewModel.BadgeStyle == "74540" || 
+                badgesViewModel.BadgeStyle == "74540" || 
+                badgesViewModel.BadgeStyle == "74541")
+        {
+            badgeWidth = inchUnit * 4f;
+            badgeHeight = inchUnit * 3;
+        }
+        else if (badgesViewModel.BadgeStyle == "5390")
+        {
+            badgeWidth = inchUnit * 3.50f;
+            badgeHeight = inchUnit * 2.25f;
+        }
+        else if (badgesViewModel.BadgeStyle == "8395")
+        {
+            badgeWidth = inchUnit * 3.38f;
+            badgeHeight = inchUnit * 2.33f;
+        }
+        else if (badgesViewModel.BadgeStyle == "L7418")
+        {
+            badgeWidth = inchUnit * 3.39f;
+            badgeHeight = inchUnit * 2.17f;
+        }
+
+        foreach (BadgesLayout badgesLayout in badgesViewModel.BadgesLayouts.OrderBy(x => x.LineNumber))
+        {
+            var font = FontFactory.GetFont(badgesLayout.Font, badgesLayout.FontSize, BaseColor.BLACK);
+            if (string.IsNullOrEmpty(badgesLayout.LineText))
+                font = FontFactory.GetFont(badgesLayout.Font, badgesLayout.FontSize, BaseColor.WHITE);
+            var text = string.IsNullOrEmpty(badgesLayout.LineText) ? "." : badgesLayout.LineText;
+
+            if (badgesLayout.LineText == "name")
+            {
+                text = "Name Name";
+            }else if (badgesLayout.LineText == "event_name")
+            {
+                text = "Event Name";
+            }
+            else if (badgesLayout.LineText == "ticket_name")
+            {
+                text = "Ticket Name";
+            }
+            else if (badgesLayout.LineText == "email_address")
+            {
+                text = "Email Address";
+            }
+            else if (badgesLayout.LineText == "bill")
+            {
+                text = "Billing Address";
+            }
+                
+            PdfPCell cell = new PdfPCell(new Phrase(text, font));
+            cell.Border = Rectangle.NO_BORDER;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            if (badgesLayout.Align.ToLower() == "right")
+                cell.HorizontalAlignment = 2;
+            else if (badgesLayout.Align.ToLower() == "center")
+                cell.HorizontalAlignment = 1;
+            else
+                cell.HorizontalAlignment = 0;
+            tableChild.AddCell(cell);
+        }
+
+        PdfPCell cellChild = new PdfPCell(tableChild);
+        cellChild.HorizontalAlignment = Element.ALIGN_CENTER;
+        cellChild.Border = Rectangle.NO_BORDER;
+        cellChild.FixedHeight = badgeHeight;            
+        cellChild.VerticalAlignment = Element.ALIGN_MIDDLE;
+        table.AddCell(cellChild);
+        table.SetWidths(new float[] { badgeWidth });
+
+        Document document = new Document(new Rectangle(badgeWidth, badgeHeight), 0.00f, 0.00f, 0.00f, 0.00f);
+        MemoryStream memoryStream = new MemoryStream();
+        PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
+        document.Open();
+        document.Add(table);
+        document.Close();
+        byte[] bytes = memoryStream.ToArray();
+        memoryStream.Close();
+        return new MemoryStream(bytes);
+    }
+
+    private MemoryStream BadgesListToPDF(BadgesViewModel badgesViewModel)
+    {
+        IRepository<Event> EventRepo = new GenericRepository<Event>(_factory.ContextFactory);
+        IRepository<PaymentType> pTRepo = new GenericRepository<PaymentType>(_factory.ContextFactory);
+        IRepository<Address> addressRepo = new GenericRepository<Address>(_factory.ContextFactory);
+
+        var ticketbearerId = (string.IsNullOrEmpty(badgesViewModel.TicketbearerIds) ? new List<string>() : badgesViewModel.TicketbearerIds.Split(',').ToList());
+        IRepository<TicketBearer_View> etBRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
+        IRepository<EventTicket_View> eRVTRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+
+        List<TicketBearer_View> ticketBearers = new List<TicketBearer_View>();
+
+        if (badgesViewModel.AttendeeSelect == "CONFIRMED_ATTENDEES")
+        {
+            var orderIds = eRVTRepo.Get(filter: (t => t.EventID == badgesViewModel.EventId)).Select(o => o.OrderId);
+            ticketBearers = etBRepo.Get(filter: (t => orderIds.Contains(t.OrderId))).ToList();
+        }
+        else if (badgesViewModel.AttendeeSelect == "ATTENDEES")
+        {
+            ticketBearers = etBRepo.Get(filter: r => ticketbearerId.Contains(r.OrderId + ":" + r.TicketbearerId)).ToList();
+        }
+        else if (badgesViewModel.AttendeeSelect == "TICKET_ATTENDEES")
+        {
+            var orderIds = eRVTRepo.Get(filter: (t => t.EventID == badgesViewModel.EventId && ticketbearerId.Contains(t.TicketTypeID.ToString()))).Select(o => o.OrderId);
+            ticketBearers = etBRepo.Get(filter: (t => orderIds.Contains(t.OrderId))).ToList();
+        }
+
+        var eventTickets = eRVTRepo.Get(filter: (e => e.EventID == badgesViewModel.EventId));
+        if (badgesViewModel.SortBy == "TicketType")
+        {
+            eventTickets = eventTickets.OrderBy(e => e.TicketTypeName);
+        }
+        var eventTitle = EventRepo.Get(filter: (e => e.EventID == badgesViewModel.EventId)).FirstOrDefault();
+        string title = "";
+        string subTitle = "";
+        string subTitle1 = "";
+
+        if (eventTitle != null)
+        {
+            title = eventTitle.EventTitle;
+            var addressId = eventTitle.EventVenues.FirstOrDefault().AddressId;
+            var eventAddressDB = addressRepo.Get(filter: (b => b.AddressID == addressId)).FirstOrDefault();
+            DateTime eStartDateTime = eventTitle.EventVenues.FirstOrDefault().E_Startdate ?? DateTime.UtcNow;
+            DateTime eEndDateTime = eventTitle.EventVenues.FirstOrDefault().E_Enddate ?? DateTime.UtcNow;
+            subTitle = eStartDateTime.ToString("ddd, MMMM dd, yyyy") + " at " + eStartDateTime.ToString("hh:mm tt") + " - " + eEndDateTime.ToString("ddd, MMMM dd, yyyy") + " at " + eEndDateTime.ToString("hh:mm tt");
+            if (eventAddressDB != null)
+            {
+                subTitle1 = eventAddressDB.ConsolidateAddress;
+            }
+        }
+
+        Document document = new Document(PageSize.LETTER, 10f, 10f, 10f, 0f);
+        if (badgesViewModel.BadgeStyle == "L7418")
+        {
+            document = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
+        }
+        MemoryStream memoryStream = new MemoryStream();
+        PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
+        document.Open();
+
+        PdfPTable table = new PdfPTable(2);
+        PdfPTable tableChild = new PdfPTable(1);
+        float inchUnit = 72.00f;
+        float badgeWidth = inchUnit * 4;
+        float badgeHeight = inchUnit * 3;
+
+        if (badgesViewModel.BadgeStyle == "5361")
+        {
+            badgeWidth = inchUnit * 3.25f;
+            badgeHeight = inchUnit * 2;
+        }
+        else if (badgesViewModel.BadgeStyle == "5384" ||
+                badgesViewModel.BadgeStyle == "74459" ||
+                badgesViewModel.BadgeStyle == "74536" ||
+                badgesViewModel.BadgeStyle == "74540" ||
+                badgesViewModel.BadgeStyle == "74540" ||
+                badgesViewModel.BadgeStyle == "74541")
+        {
+            badgeWidth = inchUnit * 4f;
+            badgeHeight = inchUnit * 3;
+        }
+        else if (badgesViewModel.BadgeStyle == "5390")
+        {
+            badgeWidth = inchUnit * 3.50f;
+            badgeHeight = inchUnit * 2.25f;
+        }
+        else if (badgesViewModel.BadgeStyle == "8395")
+        {
+            badgeWidth = inchUnit * 3.38f;
+            badgeHeight = inchUnit * 2.33f;
+        }
+        else if (badgesViewModel.BadgeStyle == "L7418")
+        {
+            badgeWidth = inchUnit * 3.39f;
+            badgeHeight = inchUnit * 2.17f;
+        }
+
+        foreach (var eventTicket in eventTickets.Take(1))
+        {
+            if (badgesViewModel.SortBy == "Name")
+            {
+                ticketBearers = ticketBearers.OrderBy(e => e.Name).ToList();
+            }
+            table = new PdfPTable(2);
+            table.HorizontalAlignment = Element.ALIGN_CENTER;
+
+            foreach (var ticketBearer in ticketBearers)
+            {
+                PdfPCell cellChild = new PdfPCell();
+                cellChild.Border = Rectangle.NO_BORDER;
+                tableChild = new PdfPTable(1);              
+
+                foreach (BadgesLayout badgesLayout in badgesViewModel.BadgesLayouts.OrderBy(x => x.LineNumber))
+                {
+                    var font = FontFactory.GetFont(badgesLayout.Font, badgesLayout.FontSize, BaseColor.BLACK);
+                    if (string.IsNullOrEmpty(badgesLayout.LineText))
+                        font = FontFactory.GetFont(badgesLayout.Font, badgesLayout.FontSize, BaseColor.WHITE);
+                    var text = string.IsNullOrEmpty(badgesLayout.LineText) ? "." : badgesLayout.LineText;
+
+                    if (badgesLayout.LineText == "name")
+                    {
+                        text = ticketBearer.Name;
+                    }
+                    else if (badgesLayout.LineText == "event_name")
+                    {
+                        text = eventTitle.EventTitle;
+                    }
+                    else if (badgesLayout.LineText == "ticket_name")
+                    {
+                        text = eventTicket.TicketName;
+                    }
+                    else if (badgesLayout.LineText == "email_address")
+                    {
+                        text = ticketBearer.Email;
+                    }
+                    else if (badgesLayout.LineText == "bill")
+                    {
+                        text = subTitle1;
+                    }
+
+                    PdfPCell cell = new PdfPCell(new Phrase(text, font));
+                    cell.Border = Rectangle.NO_BORDER;
+                    if (badgesLayout.Align.ToLower() == "right")
+                        cell.HorizontalAlignment = 2;
+                    else if (badgesLayout.Align.ToLower() == "center")
+                        cell.HorizontalAlignment = 1;
+                    else
+                        cell.HorizontalAlignment = 0;
+                    tableChild.AddCell(cell);
+                }
+                cellChild = new PdfPCell(tableChild);
+                cellChild.HorizontalAlignment = Element.ALIGN_CENTER;
+                cellChild.Border = Rectangle.NO_BORDER;
+                cellChild.FixedHeight = badgeHeight;
+                cellChild.VerticalAlignment = Element.ALIGN_MIDDLE;
+                table.AddCell(cellChild);
+                document.Add(table);
+            }
+        }
+        if (document.IsOpen())
+            document.Close();
+        byte[] bytes = memoryStream.ToArray();
+        memoryStream.Close();
+        return new MemoryStream(bytes);
+    }
+
   }
 }

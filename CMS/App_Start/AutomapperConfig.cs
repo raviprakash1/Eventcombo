@@ -47,6 +47,10 @@ namespace CMS
         .ForMember(d => d.Email, m => m.MapFrom(s => s.Email.Trim()));
       CreateMap<Event_OrganizerMessages, OrganizerMessageViewModel>();
       CreateMap<v_OrderList, OrderMainViewModel>();
+      CreateMap<ECImage, ECImageViewModel>()
+        .ForMember(d => d.ImagePath, m => m.Ignore())
+        .ForMember(d => d.Filename, m => m.MapFrom(s => s.ImagePath))
+        .ForMember(d => d.TypeName, m => m.MapFrom(s => s.ECImageType.TypeName));
 
       //backward maps
       CreateMap<ArticleFullViewModel, Article>()
@@ -57,6 +61,8 @@ namespace CMS
         .ForMember(d => d.TicketbearerId, m => m.Ignore());
       CreateMap<OrganizerMessageViewModel, Event_OrganizerMessages>()
         .ForMember(d => d.MessageId, m => m.Ignore());
+      CreateMap<ECImageViewModel, ECImage>()
+        .ForMember(d => d.ImagePath, m => m.MapFrom(s => s.Filename));
     }
   }
 }

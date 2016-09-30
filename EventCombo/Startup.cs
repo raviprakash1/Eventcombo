@@ -1,4 +1,5 @@
-﻿using EventCombo.Services;
+﻿using EventCombo.Service;
+using EventCombo.Services;
 using Hangfire;
 using Hangfire.Dashboard;
 using Hangfire.SqlServer;
@@ -37,6 +38,8 @@ namespace EventCombo
 
             LastLoginStatus loginStatus = new LastLoginStatus();
             RecurringJob.AddOrUpdate(() => loginStatus.changeloginstatus(), "*/5 * * * *");
+
+            RecurringJob.AddOrUpdate<AttendeeMailNotification>(amn => amn.Send(), "*/5 * * * *");
 
             var hfOptions = new DashboardOptions
             {

@@ -100,6 +100,7 @@ namespace EventCombo
         .ForMember(d => d.Filename, m => m.MapFrom(s => s.ImagePath))
         .ForMember(d => d.TypeName, m => m.MapFrom(s => s.ECImageType.TypeName));
       CreateMap<ECImageViewModel, ECImageViewModel>();
+      CreateMap<ScheduledEmail, ScheduledEmailViewModel>();
       CreateMap<EventNotificationViewModel, OrganizerMessageViewModel>()
         .ForMember(d => d.PhoneNo, m => m.MapFrom(s => s.Phone));
       CreateMap<Event, EventViewModel>()
@@ -144,6 +145,7 @@ namespace EventCombo
         .ForMember(d => d.Event_Id, m => m.MapFrom(s => s.EventId));
       CreateMap<ECImageViewModel, ECImage>()
         .ForMember(d => d.ImagePath, m => m.MapFrom(s => s.Filename));
+      CreateMap<ScheduledEmailViewModel, ScheduledEmail>();
     }
   }
 }

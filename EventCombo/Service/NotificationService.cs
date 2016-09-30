@@ -71,7 +71,7 @@ namespace EventCombo.Service
       }
     }
 
-    public void SendEmailFreindsMessage(EventNotificationViewModel notification)
+    public void SendEmailFreindsMessage(FriendNotificationViewModel notification)
     {
       if (notification == null)
         throw new ArgumentNullException("notification");

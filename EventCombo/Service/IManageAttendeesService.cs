@@ -29,5 +29,37 @@ namespace EventCombo.Service
     AddAttandeeOrder PrepareAddAttendeeOrder(long eventId, string userId);
 
     string CreateManualOrder(AddAttandeeOrder model, string userId);
+
+    IEnumerable<ScheduledEmail> GetScheduledEmailList(long eventId, bool IsEmailSend);
+
+    ScheduledEmailViewModel GetScheduledEmailDetail(long scheduledEmailId);
+
+    ScheduledEmailViewModel PrepareSendAttendeeMail(long eventId);
+
+    bool SendAttendeeMail(long eventId, ScheduledEmailViewModel scheduledEmail, string userId, string ticketbearerIds, DateTime scheduledDate);
+
+    bool UpdateAttendeeMail(ScheduledEmailViewModel scheduledEmail);
+
+    bool DeleteAttendeeMail(long scheduledEmailId);
+
+    List<AttendeeViewModel> GetAttendeeList(AttendeeSearchRequestViewModel request);
+
+    List<CheckinViewModel> GetAttendeeCheckinList(AttendeeSearchRequestViewModel request);
+
+    List<AttendeeTicketTypeViewModel> GetAttendeeTicketTypeList(long eventId);
+
+    IEnumerable<SelectItemModel> GetSelectAttendeeDropdownList(long eventId);
+
+    IEnumerable<SelectItemModel> GetSendToDropdownList(long eventId);
+
+    MemoryStream GetDownloadableGuestList(string sortBy, string ticketTypeIds, string barcode, long eventId, string format);
+
+    MemoryStream GetBadgesPreview(long eventId, string format, string UserID);
+
+    string GetBadgesPreviewPath(BadgesViewModel badgesViewModel, string format, string UserID);
+
+    string GetBadgesListPath(BadgesViewModel badgesViewModel, string format, string UserID);
+
+    MemoryStream GetBadgesList(long eventId, string format, string UserID);
   }
 }
