@@ -482,7 +482,6 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       ticket.Price = isNaN(ticket.Price) ? 0 : ticket.Price;
       ticket.T_Discount = isNaN(ticket.T_Discount) ? 0 : ticket.T_Discount;
       ticket.EC_Fee = ticket.Price == 0 ? 0 : ticket.Price * $scope.eventInfo.FeeStruct.FS_Percentage / 100 + $scope.eventInfo.FeeStruct.FS_Amount;
-      ticket.Customer_Fee = ticket.EC_Fee;
       ticket.TotalPrice = ticket.Price == 0 ? 0 : ticket.Price - ticket.T_Discount;
       if (ticket.Fees_Type == 0)
         ticket.TotalPrice += ticket.EC_Fee;

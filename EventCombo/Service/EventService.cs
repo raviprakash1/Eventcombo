@@ -354,6 +354,8 @@ namespace EventCombo.Service
         UpdatePrices(ticket);
 
         _mapper.Map(ticket, tDB);
+        if (tDB.T_Id == 0)
+          tDB.Customer_Fee = 0;
 
         DateTime? saleStart = ticket.Sale_Start_Date;
         DateTime? saleEnd = ticket.Sale_End_Date;
@@ -396,7 +398,6 @@ namespace EventCombo.Service
         ticket.T_EcAmount = 0;
       }
       ticket.EC_Fee = Math.Round((ticket.Price ?? 0) * ((ticket.T_Ecpercent ?? 0) / 100) + (ticket.T_EcAmount ?? 0), 2);
-      ticket.Customer_Fee = ticket.EC_Fee;
       ticket.TotalPrice = (ticket.Price ?? 0) - (ticket.T_Discount ?? 0);
       if (String.IsNullOrEmpty(ticket.Fees_Type) || (ticket.Fees_Type == "0"))
         ticket.TotalPrice += ticket.EC_Fee;
