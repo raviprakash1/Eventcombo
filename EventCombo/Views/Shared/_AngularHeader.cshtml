@@ -261,14 +261,14 @@
 
 <div id="search" ng-controller="SearchEventController">
   <i class="material-icons">search</i>
-  <div style="width: 40%; float: left;">
-    <div angucomplete-alt id="acEventSearch" placeholder="Search" pause="500" minlength="1" override-suggestions="true"
+  <div class="srhField">
+    <div angucomplete-alt id="acEventSearch" placeholder="Search" pause="100" minlength="1" override-suggestions="true"
          input-class="form-control form-control-small" match-class="highlight"
          selected-object="DiscoverByEvent" title-field="EventTitle" remote-api-handler="eventSearch">
     </div>
   </div>
-  <div style="width: 40%; float:left; margin-left: 5%">
-    <div angucomplete-alt id="acCitySearch" placeholder="City" pause="500" minlength="2" override-suggestions="true"
+  <div class="srhField">
+    <div angucomplete-alt id="acCitySearch" placeholder="City" pause="100" minlength="2" override-suggestions="true"
          input-class="form-control form-control-small" match-class="highlight"
          selected-object="DiscoverByCity" title-field="description" remote-api-handler="citySearch">
     </div>
