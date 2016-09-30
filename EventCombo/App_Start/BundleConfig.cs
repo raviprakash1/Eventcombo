@@ -98,12 +98,12 @@ namespace EventCombo
             #endregion
 
             bundles.Add(new StyleBundle("~/Content/angularHeader")
-              .Include( "~/Content/AMaterial/angular-material.css",
+              .Include("~/Content/AMaterial/angular-material.css",
+                        "~/Content/AMaterial/angucomplete-alt.css",
                         "~/Content/AMaterial/gridiculous.css",
                         "~/Content/AMaterial/docs.css",
                         "~/Content/AMaterial/themeOm.css",
-                        "~/Content/AMaterial/header-footer.css",
-                        "~/Content/AMaterial/angucomplete-alt.css"));
+                        "~/Content/AMaterial/header-footer.css"));
 
             bundles.Add(new StyleBundle("~/Content/angularMain-CE")
               .Include( "~/Content/AMaterial/angularjs-color-picker.min.css",
@@ -142,9 +142,10 @@ namespace EventCombo
                         "~/Scripts/AMaterial/classie.js",
                         "~/Scripts/AMaterial/angucomplete-alt.js",
                         "~/Scripts/AMaterial/EventComboApp.js",
-                        "~/Scripts/AMaterial/broadcastService.js",
-                        "~/Scripts/AMaterial/geoService.js",
-                        "~/Scripts/AMaterial/accountService.js",
+                        "~/Scripts/AMaterial/Service/broadcastService.js",
+                        "~/Scripts/AMaterial/Service/geoService.js",
+                        "~/Scripts/AMaterial/Service/accountService.js",
+                        "~/Scripts/AMaterial/Service/FooterService.js",
                         "~/Scripts/AMaterial/header.js",
                         "~/Scripts/AMaterial/footer.js",
                         "~/Scripts/AMaterial/AccountController.js"));
@@ -155,9 +156,6 @@ namespace EventCombo
                         "~/Scripts/AMaterial/map.js",
                         "~/Scripts/AMaterial/ViewEvent.js",
                         "~/Scripts/socialshare.js"));
-            bundles.Add(new ScriptBundle("~/Scripts/AMaterial/AngularFooter")
-                .Include("~/Scripts/AMaterial/Service/FooterService.js",
-                         "~/Scripts/AMaterial/Controller/FooterController.js"));
         }
     }
 }

@@ -1008,7 +1008,7 @@
       <LastGenOutput>EventComboModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\AMaterial\AccountController.js" />
-    <Content Include="Scripts\AMaterial\AccountService.js" />
+    <Content Include="Scripts\AMaterial\Service\AccountService.js" />
     <Content Include="Scripts\AMaterial\angucomplete-alt.js" />
     <Content Include="Scripts\AMaterial\angular-animate.js" />
     <Content Include="Scripts\AMaterial\angular-animate.min.js" />
@@ -1034,11 +1034,11 @@
     <Content Include="Scripts\AMaterial\demo.js" />
     <Content Include="Scripts\AMaterial\EventComboApp.js" />
     <Content Include="Scripts\AMaterial\footer.js" />
-    <Content Include="Scripts\AMaterial\geoService.js" />
+    <Content Include="Scripts\AMaterial\Service\geoService.js" />
     <Content Include="Scripts\AMaterial\header.js" />
     <Content Include="Scripts\AMaterial\Homepage.js" />
     <Content Include="Scripts\AMaterial\infobox.js" />
-    <Content Include="Scripts\AMaterial\broadcastService.js" />
+    <Content Include="Scripts\AMaterial\Service\broadcastService.js" />
     <Content Include="Scripts\AMaterial\jquery-1.12.3.min.js" />
     <Content Include="Scripts\AMaterial\main.js" />
     <Content Include="Scripts\AMaterial\map.js" />
@@ -1123,7 +1123,7 @@
     <Content Include="Scripts\AMaterial\skins\lightgray\img\trans.gif" />
     <Content Include="Scripts\AMaterial\skins\lightgray\skin.ie7.min.css" />
     <Content Include="Scripts\AMaterial\skins\lightgray\skin.min.css" />
-    <Content Include="Scripts\AMaterial\socialService.js" />
+    <Content Include="Scripts\AMaterial\Service\socialService.js" />
     <Content Include="Scripts\AMaterial\sortable.js" />
     <Content Include="Scripts\AMaterial\svg-assets-cache.js" />
     <Content Include="Scripts\AMaterial\texttyper.js" />
@@ -1133,8 +1133,7 @@
     <Content Include="Scripts\AMaterial\ViewEvent.js" />
     <Content Include="Scripts\custom-scroll.js" />
     <Content Include="Scripts\DateTimePicker.js" />
-    <Content Include="Scripts\AMaterial\Controller\FooterController.js" />
-    <Content Include="Scripts\AMaterial\EventFavoriteService.js" />
+    <Content Include="Scripts\AMaterial\Service\EventFavoriteService.js" />
     <Content Include="Scripts\gmap.js" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.countdownTimer.css" />
@@ -1838,6 +1837,7 @@
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
     <Folder Include="Properties\assets\" />
+    <Folder Include="Scripts\AMaterial\Controller\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\EmailServices\" />
     <Folder Include="Views\Html2Pdf\" />
