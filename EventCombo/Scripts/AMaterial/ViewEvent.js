@@ -272,7 +272,7 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
       var total = 0.0;
       angular.forEach(eventInfo.Tickets, function (ticket, key) {
         if (ticket.TicketTypeId == 2)
-          total = total + ticket.Quantity * ticket.TotalPrice;
+          total = total + ticket.Quantity * ticket.Price;
         else if (ticket.TicketTypeId == 3) {
           ticket.Amount = isNaN(ticket.Amount) || ticket.Amount < 0 ? 0 : ticket.Amount;
           total = total + (isNaN(ticket.Amount) || (ticket.Amount == null ? 0 : ticket.Amount));

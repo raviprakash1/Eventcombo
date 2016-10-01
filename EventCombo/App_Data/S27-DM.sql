@@ -219,6 +219,297 @@ GO
 ALTER TABLE [dbo].[ScheduledEmail] CHECK CONSTRAINT [FK_ScheduledEmail_EmailType]
 GO
 
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+--[GetSelectedTicketListing '8e55c866-ef64-4249-8a3e-b81679052fd6', 96] 
+
+ALTER PROC [dbo].[GetSelectedTicketListing]
+(
+	@GUID varchar(1000),
+	@EventId bigint
+)
+AS 
+BEGIN
+
+DECLARE @Html varchar(MAX) DECLARE @RowIndex int DECLARE @RowCount int Set @RowCount =0 Set @RowIndex =1
+DECLARE @RInd int DECLARE @RCnt int Set @RCnt =0 Set @RInd =1
+
+DECLARE @tblPublish TABLE (Id INT IDENTITY,P_Id BIGINT)
+INSERT INTO @tblPublish SELECT PE_Id FROM Publish_Event_Detail WHERE PE_Event_Id =@EventId
+AND PE_Id in (
+SELECT TQD_PE_ID FROM Ticket_Quantity_Detail TQD INNER JOIN Ticket_Locked_Detail TLD ON TQD.TQD_Id = TLD.TLD_TQD_Id
+Where TLD.TLD_GUID =@GUID)
+SET @RCnt= @@ROWCOUNT
+
+DECLARE @tblMain TABLE (Id INT IDENTITY,QTY_Id BIGINT)
+DECLARE @PublishId bigint SET @PublishId=0
+DECLARE @NextPublishId bigint SET @NextPublishId = 0
+DECLARE @AddId bigint Set @AddId =0 DECLARE @NextAddId bigint  Set @NextAddId=0 
+DECLARE @TicId bigint DECLARE @TicTypeId int
+DECLARE @StartDate varchar(50)
+DECLARE @Addess varchar(4000)
+DECLARE @TQTY_Id bigint
+DECLARE @QtyIds varchar(1000)
+DECLARE @selectedQty bigint 
+DECLARE @AddIdss varchar(500)
+DECLARE @RunningTotal decimal(18,2) Set @RunningTotal=0
+DECLARE @TQty Bigint DECLARE @Option Bigint DECLARE @RemQty Bigint DECLARE @TicketSaleEnd varchar(100) DECLARE @TicketDesc nvarchar(2000)
+DECLARE @TotalPrice decimal(18,2) SET @TotalPrice =0 
+DECLARE @IsShowDesc int SET @IsShowDesc =0 DECLARE @donation decimal
+DECLARE @HideTicket int Set @HideTicket=0 
+DECLARE @HideUntillDate DATETIME DECLARE @HideToDate DATETIME
+DECLARE @HideUntillFromTime TIME DECLARE @HideUntillToTime TIME
+DECLARE @Discount decimal(9,2) SET @Discount =0
+DECLARE @PaidTicketQty bigint SET @PaidTicketQty =0
+DECLARE @TIds varchar(MAX) SET @TIds =''
+SET @QtyIds =''
+
+
+DECLARE @T_Name nvarchar(1000) DECLARE @T_Price DECIMAL(18,2) DECLARE @T_Fee decimal(18,2)
+--table-striped evnt_tkt_list_tbl
+SET @Html = '<div class="col-sm-12 mt10 no_pad">'
+--select * From Ticket_Quantity_Detail order by TQD_PE_Id
+WHILE (@RCnt>0)
+BEGIN
+	SELECT @PublishId = P_Id FROM @tblPublish WHERE Id= @RInd
+--	Select @PublishId
+	SELECT @StartDate = (ISNULL(PE_Scheduled_Date,'') + ', ' + ISNULL(PE_Start_Time,'')), @AddIdss=isnull(PE_Address_Ids,'')
+	FROM Publish_Event_Detail WHERE PE_Id = @PublishId
+	--SET @Html = CONCAT(@Html,'<thead class="tkt_tbl_head">')
+	
+	
+
+	SET @Html = CONCAT(@Html,'<div class="col-sm-12 col-xs-12 no_pad divticketdate">',@StartDate, '' ,'</div>')
+
+	if (RTRIM(LTRIM(@AddIdss)) ='')
+	BEGIN
+		SET @Html = CONCAT(@Html,'<div class="divTable">')
+			SET @Html = CONCAT(@Html,'<div class="divTablehead">')
+				SET @Html = CONCAT(@Html,'<div class="divTableCell">Ticket Type</div>')
+				SET @Html = CONCAT(@Html,'<div class="divTableCell text-right">', 'Price','</div>')
+				SET @Html =	CONCAT(@Html,'<div class="divTableCell text-right">Fee</div>')
+				SET @Html = CONCAT(@Html,'<div class="divTableCell text-right">Qty</div>')
+			SET @Html = CONCAT(@Html,'</div>')
+		SET @Html = CONCAT(@Html,'</div>')
+	END
+
+	INSERT INTO @tblMain 
+	SELECT TQD_Id FROM Ticket_Quantity_Detail TQD  
+	INNER JOIN Ticket_Locked_Detail TLD ON TQD.TQD_Id = TLD.TLD_TQD_Id 
+	WHERE TQD_PE_Id=@PublishId AND TLD.TLD_GUID = @GUID
+	SET @RowCount = @@ROWCOUNT
+
+	WHILE (@RowCount>0)
+	BEGIN
+		SELECT @TQTY_Id = QTY_Id FROM @tblMain WHERE Id= @RowIndex
+		SELECT @AddId = TQD_AddressId, @TicId = TQD_Ticket_Id 
+		FROM Ticket_Quantity_Detail WHERE TQD_ID = @TQTY_Id
+		--Select concat(@AddId,@NextAddId)
+		IF (@QtyIds='') SET @QtyIds = CONCAT(@QtyIds,@TQTY_Id)  ELSE SET @QtyIds = CONCAT(@QtyIds,',',@TQTY_Id) 
+		
+		SELECT @T_Name = T_name,@T_Price=isnull(Price,0),@TotalPrice = isnull(TotalPrice,0), @TQty= Qty_Available, @TicketSaleEnd = CONCAT(CONVERT(VARCHAR,Sale_End_Date,107),Sale_End_Time)
+		, @TicTypeId = TicketTypeID,@TicketDesc=T_Desc,@IsShowDesc = Show_T_Desc,@HideTicket = Hide_Ticket ,
+		@HideUntillDate = Hide_untill_Date, @HideUntillFromTime = Hide_Untill_Time,@HideToDate= Hide_After_Date,@HideUntillToTime=Hide_After_Time,
+		@Discount = ISNULL(T_Discount ,0)
+		FROM Ticket WHERE T_id= @TicId
+
+		
+
+		IF (@NextAddId != @AddId)	
+		BEGIN
+			SET @NextAddId = @AddId 
+			SELECT @Addess = ConsolidateAddress FROM ADDRESS WHERE AddressID = @AddId
+			
+			SET @Html = CONCAT(@Html,'<div class="col-sm-12 col-xs-12 no_pad divticketaddres word-brk-tilt">',@Addess,'</div>')
+			
+			SET @Html = CONCAT(@Html,'<div class="divTable">')
+			SET @Html = CONCAT(@Html,'<div class="divTablehead">')
+				SET @Html = CONCAT(@Html,'<div class="divTableCell">Ticket Type</div>')
+				SET @Html = CONCAT(@Html,'<div class="divTableCell text-right">', 'Price','</div>')
+				SET @Html =	CONCAT(@Html,'<div class="divTableCell text-right">Fee</div>')
+				SET @Html = CONCAT(@Html,'<div class="divTableCell text-right">Qty</div>')
+			SET @Html = CONCAT(@Html,'</div>')
+		SET @Html = CONCAT(@Html,'</div>')
+		END
+		
+
+		
+		SELECT @RemQty = TQD_Remaining_Quantity FROM Ticket_Quantity_Detail WHERE TQD_Id = @TQTY_Id
+		Set @donation=0
+		SELECT @selectedQty=TLD_Locked_Qty,@donation = ISNULL(TLD_Donate,0) FROM Ticket_Locked_Detail 
+		WHERE TLD_GUID = @GUID and TLD_TQD_Id = @TQTY_Id
+
+		SET @T_Fee = (@TotalPrice - @T_Price +@Discount)
+		
+		IF (@TicTypeId = 2 or @TicTypeId = 1)  
+		Begin
+			SET @PaidTicketQty = @PaidTicketQty + @selectedQty
+		END
+
+
+		if (@TIds = '')
+		BEGIN
+			SET @TIds = CONCAT(@TIds,@TicId)
+		END
+		ELSE
+		BEGIN
+			SET @TIds = CONCAT(@TIds,',',@TicId)
+		END
+
+		SET @Html = CONCAT(@Html,'<div class="col-sm-12 col-xs-12 no_pad">')
+		SET @Html = CONCAT(@Html,'<div class="divTable">')
+		SET @Html = CONCAT(@Html,'<div class="divTableRow">')
+
+
+		SET @Html = CONCAT(@Html,'<div class="midtablecell">', @T_Name,'</div>')
+
+		if (@donation>0) SET @Html = CONCAT(@Html,'<div class="midtablecell text-right">$',@donation,'</div>')
+		
+		Else 
+			BEGIN 
+				if (@Discount>0)
+				BEGIN
+					SET @Html = CONCAT(@Html,'<div class="midtablecell text-right">','<strike>',@T_Price ,'</strike> $',(@T_Price - @Discount),'</div>') 
+				END
+				ELSE
+				BEGIN
+					SET @Html = CONCAT(@Html,'<div class="midtablecell text-right">$',@T_Price,'</div>') 
+				END
+			END
+		SET @Html = CONCAT(@Html,'<span style="display:none;" id="spPrice_', @TQTY_Id,'">',@T_Price-@Discount,'</span>') 
+		SET @Html = CONCAT(@Html,'<span style="display:none;" id="spQty_', @TQTY_Id,'">',@selectedQty,'</span>') 
+		SET @Html = CONCAT(@Html,'<span style="display:none;" id="spFee_', @TQTY_Id,'">',@T_Fee,'</span>') 
+		SET @Html = CONCAT(@Html,'<span style="display:none;" id="spDonation_', @TQTY_Id,'">',@donation,'</span>') 
+		SET @Html = CONCAT(@Html,'<span style="display:none;" id="spTQDId_', @TQTY_Id,'">',@TQTY_Id,'</span>') 
+
+		SET @Html = CONCAT(@Html,'<div class="midtablecell text-right">$',@T_Fee,'</div>')
+		SET @Html = CONCAT(@Html,'<div class="midtablecell text-right">',@selectedQty,'</div>')
+		SET @RunningTotal = @RunningTotal  + (@selectedQty * @TotalPrice) + @donation
+		SET @Html = CONCAT(@Html,'</div></div></div>')
+
+		SET @RowCount = @RowCount  -1
+		SET @RowIndex = @RowIndex  +1
+	END
+
+
+	SET @RCnt = @RCnt -1
+	SET @RInd = @RInd +1
+END
+
+
+
+DECLARE @VariableChanges DECIMAL(18,2) SET @VariableChanges =0 DECLARE @VariableIds varchar(500) SET @VariableIds =''
+DECLARE @VariableName nvarchar(512) SET @VariableName =''
+DECLARE @VariableDesc nvarchar(512) SET @VariableDesc =''
+DECLARE @VariableType nvarchar(512) SET @VariableType =''
+
+DECLARE @VariablePrice DECIMAL(18,2) SET @VariablePrice=0
+DECLARE @GrandTotal DECIMAL(18,2) SET @GrandTotal =0
+DECLARE @VarHTML nvarchar(MAX) SET @VarHTML = ''
+DECLARE @TblVar TABLE (Id INT IDENTITY,vDec NVARCHAR(512),Price numeric(18,2),VariableId bigint) 
+DECLARE @RowCnt int  SET @RowCnt =0
+Select  @VariableDesc =ISNULL(Ticket_variabledesc,'') ,@VariableType = LTRIM(RTRIM(ISNULL(Ticket_variabletype,''))) From Event where EventID = @EventId
+
+INSERT INTO @TblVar select VariableDesc,Price,Variable_Id From Event_VariableDesc WHERE Event_Id = @EventId  
+SET @RowCount = @@ROWCOUNT
+SET @RowIndex =1
+SET @RowCnt = @RowCount
+if (@RowCount>0)
+BEGIN
+	
+	SET @VarHTML = CONCAT(@VarHTML,'<div class="divTable">')
+	SET @VarHTML = CONCAT(@VarHTML,'<div class="divticketdate">')
+		SET @VarHTML = CONCAT(@VarHTML,'<p class="ticketsubtotal text-left">', @VariableDesc ,'</p>')
+
+END
+DECLARE @DefaultVarIdOptional BIGINT SET @DefaultVarIdOptional=0
+DECLARE @VarId bigint
+WHILE (@RowCount>0)
+BEGIN
+	SELECT @VariableName = ISNULL(vDec,''),@VariablePrice = ISNULL(Price ,0),@VarId=VariableId FROM @TblVar WHERE Id= @RowIndex
+	if (@VariableIds = '')
+		Set @VariableIds = @VarId
+	else
+		Set @VariableIds = CONCAT(@VariableIds,',',@VarId)
+
+	if (@VariableType = 'R')
+	BEGIN
+		if (@RowIndex=1)
+		BEGIN
+			SET @VarHTML = CONCAT(@VarHTML,'<p class="ticketsubtotal text-right">','<input type="radio" onclick="calculateTickTotal(',@VariablePrice,',',@VarId,')" id="rd_',@VarId,'" name="VChanges" checked="checked" /> ', @VariableName , ' $ ',@VariablePrice ,'</p>') 
+			--SET @VarHTML = CONCAT(@VarHTML,'<p class="ticketsubtotal text-right">$',@VariablePrice,'</p>') 
+			SET @VariableChanges = @VariablePrice
+			SET @DefaultVarIdOptional = @VarId
+		END
+		ELSE
+		BEGIN
+			SET @VarHTML = CONCAT(@VarHTML,'<p class="ticketsubtotal text-right">','<input type="radio" onclick="calculateTickTotal(',@VariablePrice, ',',@VarId,')" id="rd_',@VarId,'" name="VChanges" /> ',@VariableName , ' $ ', @VariablePrice,'</p>') 
+			--SET @VarHTML = CONCAT(@VarHTML,'<p class="ticketsubtotal text-right">$',@VariablePrice,'</p>') 
+		END
+	END
+	ELSE
+	BEGIN
+		BEGIN
+			SET @VarHTML = CONCAT(@VarHTML,'<p class="ticketsubtotal text-right">','<input type="checkbox" onclick="calculateTickTotalOptional(',@RowCnt,')" id="chk_',@VarId,'" name="VChanges"/> ', @VariableName , ' $ ', '<span id="sp_',@VarId,'">',@VariablePrice,'</span>' , '</p>') 
+			--SET @VarHTML = CONCAT(@VarHTML,'<p class="ticketsubtotal text-right">$','<span id="sp_',@VarId,'">',@VariablePrice,'</span>','</p>') 
+		END
+	END
+	
+
+	--SELECT @VariableChanges = ISNULL(SUM(ISNULL(Price,0)),0) FROM Event_VariableDesc WHERE Event_Id = @EventId 
+
+	SET @RowCount = @RowCount -1
+	SET @RowIndex = @RowIndex +1
+END
+
+
+--SELECT @VariableChanges = ISNULL(SUM(ISNULL(Price,0)),0) FROM Event_VariableDesc WHERE Event_Id = @EventId 
+SET @GrandTotal = @RunningTotal + @VariableChanges
+
+
+
+if (RTRIM(LTRIM(@VarHTML)) != '')
+BEGIN
+	SET @Html = CONCAT(@Html,'<p class="ticketsubtotal text-right">','<b>','Order Total : $ ' , CONVERT(NUMERIC(18,2),@RunningTotal) ,'</b>','</p>') 
+		SET @Html = CONCAT(@Html,@VarHTML)
+	SET @Html = CONCAT(@Html,'</div></div>')
+END
+ELSE
+BEGIN
+	SET @VarHTML = CONCAT(@VarHTML,'<div class="divTable">')
+	SET @VarHTML = CONCAT(@VarHTML,'<div class="divticketdate">')
+		SET @Html = CONCAT(@Html,'<p class="ticketsubtotal text-right">','<b>','Order Total : $ ' , CONVERT(NUMERIC(18,2),@RunningTotal) ,'</b>','</p>') 
+END
+ 
+
+SET @Html = CONCAT(@Html,'<p id="dvHash" class="ticketsubtotal text-right">','<b>', 'Sub Total : $ ' ,'<span id="spSubTotal">' , CONVERT(NUMERIC(18,2),(@RunningTotal+@VariableChanges)) ,'</span></b>','</p>') 
+SET @Html = CONCAT(@Html,'<p class="ticketsubtotal text-right">', 'Promo Code ','<input type="text" class="form-control evnt_inp_cont table_promo_input" maxlength="20" placeholder="" id="txtPromoCode','" value="" /> <input type="button" id="btApply" class="btn def_btn acnt_btn promo_code_btn" value="Apply" onclick="CalculatePromoCode();" name="Apply" /> <input type="button" style="display:none;" id="btCancel" class="btn def_btn acnt_btn promo_code_btn" value="Cancel" onclick="CancelPromoCode();" name="Cancel" />','</p>') 
+SET @Html = CONCAT(@Html,'<p class="ticketsubtotalerror text-right">', '','<span class="promoerror" id="spValidation"></span>' ,'</p>') 
+SET @Html = CONCAT(@Html,'<p class="ticketsubtotal text-right">','<b>', 'Grand Total : $ ', '<span id="spGrdTotal">',CONVERT(NUMERIC(18,2),@GrandTotal) ,'</span></b>','</p>')
+
+SET @Html = CONCAT(@Html,'<input id="hdIds" type="hidden" value=', @QtyIds ,' />')
+SET @Html = CONCAT(@Html,'<input id="hdOrderTotal" type="hidden" value=', @RunningTotal ,' />')
+SET @Html = CONCAT(@Html,'<input id="hdGrandTotal" type="hidden" value=', @GrandTotal ,' />')
+SET @Html = CONCAT(@Html,'<input id="hdGrandTotalWithoutPromo" type="hidden" value=', @GrandTotal ,' />')
+SET @Html = CONCAT(@Html,'<input id="hdPromoId" type="hidden" value=', '0' ,' />')
+SET @Html = CONCAT(@Html,'<input id="hdVarChanges" type="hidden" value=', @VariableChanges ,' />')
+SET @Html = CONCAT(@Html,'<input id="hdVarId" type="hidden" value="', @VariableIds ,'" />')
+SET @Html = CONCAT(@Html,'<input id="hidQty" type="hidden" value=', @PaidTicketQty ,' />')
+SET @Html = CONCAT(@Html,'<input id="hidTicketIds" type="hidden" value=', @TIds ,' />')
+SET @Html = CONCAT(@Html,'<input id="hdVChg" type="hidden" value=', @DefaultVarIdOptional ,' />')
+
+--<img class"PromoLoaderHide" id="imgPromoLoader"  src="~/Images/PromoCodeLoader.gif" />
+SET @Html = CONCAT(@Html,'</div></div>')
+Select @Html as Ticket
+
+
+END
+
+
 /* To prevent any potential data loss issues, you should review this script in detail before running it outside the context of the database designer.*/
 BEGIN TRANSACTION
 SET QUOTED_IDENTIFIER ON

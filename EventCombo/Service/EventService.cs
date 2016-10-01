@@ -351,6 +351,7 @@ namespace EventCombo.Service
           ticket.Fees_Type = tDB.Fees_Type;
         }
 
+        ticket.Customer_Fee = tDB.Customer_Fee ?? 0; // don't update Customer_Fee
         UpdatePrices(ticket);
 
         _mapper.Map(ticket, tDB);
@@ -398,7 +399,7 @@ namespace EventCombo.Service
         ticket.T_EcAmount = 0;
       }
       ticket.EC_Fee = Math.Round((ticket.Price ?? 0) * ((ticket.T_Ecpercent ?? 0) / 100) + (ticket.T_EcAmount ?? 0), 2);
-      ticket.TotalPrice = (ticket.Price ?? 0) - (ticket.T_Discount ?? 0);
+      ticket.TotalPrice = (ticket.Price ?? 0) - (ticket.T_Discount ?? 0) + (ticket.Customer_Fee ?? 0);
       if (String.IsNullOrEmpty(ticket.Fees_Type) || (ticket.Fees_Type == "0"))
         ticket.TotalPrice += ticket.EC_Fee;
     }
@@ -1079,8 +1080,7 @@ namespace EventCombo.Service
             Minimum = Decimal.ToInt64(tq.Ticket.Min_T_Qty ?? 1),
             Maximum = (tq.Ticket.Max_T_Qty ?? 0) == 0 ? (tq.TQD_Remaining_Quantity ?? 0) : Decimal.ToInt64(tq.Ticket.Max_T_Qty ?? 0),
             Price = (tq.Ticket.Price ?? 0) - (tq.Ticket.T_Discount ?? 0),
-            //TotalPrice = tq.Ticket.TicketTypeID == 2 ? tq.Ticket.TotalPrice ?? 0 : 0,
-            TotalPrice = tq.Ticket.TicketTypeID == 2 ? (tq.Ticket.Price ?? 0) - (tq.Ticket.T_Discount ?? 0) : 0,
+            TotalPrice = tq.Ticket.TicketTypeID == 2 ? tq.Ticket.TotalPrice ?? 0 : 0,
             StartDate = ticketDate,
             VenueName = evi.OnlineEvent ? "Online" : tq.Address == null ? "Unknown" : tq.Address.VenueName,
             /*Removed until EC1-414 will be implemented
@@ -1103,8 +1103,8 @@ namespace EventCombo.Service
                             tiVM.SoldOut);
           if (tiVM.TicketTypeId != 3)
           {
-            minTicketPrice = minTicketPrice > tiVM.TotalPrice ? tiVM.TotalPrice : minTicketPrice;
-            maxTicketPrice = maxTicketPrice < tiVM.TotalPrice ? tiVM.TotalPrice : maxTicketPrice;
+            minTicketPrice = minTicketPrice > tiVM.Price ? tiVM.Price : minTicketPrice;
+            maxTicketPrice = maxTicketPrice < tiVM.Price ? tiVM.Price : maxTicketPrice;
           }
           switch (tiVM.TicketTypeId)
           {
@@ -1158,7 +1158,7 @@ namespace EventCombo.Service
       else
       {
         evi.ButtonText = "Get Tickets";
-        evi.PriceRange = String.Format("${0:N2} - ${1:N2}", minTicketPrice, maxTicketPrice);
+        evi.PriceRange = minTicketPrice == maxTicketPrice ? String.Format("${0:N2}", minTicketPrice) : String.Format("${0:N2} - ${1:N2}", minTicketPrice, maxTicketPrice);
         evi.CheckoutText = "Checkout";
       }
 
