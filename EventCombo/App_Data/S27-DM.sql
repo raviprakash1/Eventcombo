@@ -534,3 +534,11 @@ GO
 UPDATE Ticket
 SET Customer_Fee = 0
 WHERE EC_Fee = Customer_Fee
+
+UPDATE tpd
+SET tpd.TPD_Amount = t.TotalPrice * tpd.TPD_Purchased_Qty 
+FROM Ticket_Purchased_Detail tpd
+INNER JOIN Ticket_Quantity_Detail tqd ON tqd.TQD_Id = tpd.TPD_TQD_Id
+INNER JOIN Ticket t ON t.T_Id = tqd.TQD_Ticket_Id
+INNER JOIN Order_Detail_T o ON o.O_Order_Id = tpd.TPD_Order_Id and o.O_OrderDateTime >= '20160915'
+WHERE (t.TotalPrice * tpd.TPD_Purchased_Qty) <> tpd.TPD_Amount
