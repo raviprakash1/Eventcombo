@@ -21,8 +21,8 @@
 @section ScriptFooterSection
 {
   <script src="~/Scripts/AMaterial/texttyper.js"></script>
-  <script src="~/Scripts/AMaterial/eventFavoriteService.js"></script>
-  <script src="~/Scripts/AMaterial/socialService.js"></script>
+  <script src="~/Scripts/AMaterial/Service/eventFavoriteService.js"></script>
+  <script src="~/Scripts/AMaterial/Service/socialService.js"></script>
   <script src="~/Scripts/AMaterial/Homepage.js"></script>
   <script type="text/javascript">
     var cntWd, sldWd, tb;
@@ -74,14 +74,14 @@
   </script>
 }
 <!--***************************-->
-<div class="hero" style="background-image: url(@(Model.ImageUrl));">
-  <div class="hero1">
-    <div>Go beyond tickets</div>
-    <div class="pretext">Rock your <span id="ContainerEl_2"></span></div>
-  </div>
-</div>
 <div ng-controller="HomeController" ng-cloak>
-  <div class="citylist clearfix">
+  <div class="hero" ng-style="bgImageStyle" ng-init="InitBGImages('@(Model.StartImageUrl)', '@(Model.ImageUrl)')">
+    <div class="hero1">
+      <div>Go beyond tickets</div>
+      <div class="pretext">Rock your <span id="ContainerEl_2"></span></div>
+    </div>
+  </div>
+  <div class="citylist clearfix" id="citylist">
     @{
       int cityCount = Model.Cities.Count();
       cityCount = cityCount < 11 ? cityCount : 11;
@@ -97,17 +97,31 @@
           if (idx < cityCount)
           {
             var city = Model.Cities.ElementAt(idx);
-            <div ng-class="{'c3': true, 'city': true, 'cityselected': curCityId == @city.CityID}" ng-click="OnCityChange(@city.Latitude, @city.Longitude, @city.CityID)">@city.ShortName</div>
+            <div class="c3 city" id="@("city_" + idx.ToString())" ng-click="OnCityChange(@city.Latitude, @city.Longitude, @city.CityID, '@("city_" + idx.ToString())')" title="@city.CityName">
+              <a>@city.ShortName</a>
+              <span class="cityPicker">
+                <big>@city.ShortName</big>
+                <small>pick an event type</small>
+                <i class="material-icons">arrow_downward</i>
+              </span>
+            </div>
           }
           else if (idx == cityCount)
           {
-            <div ng-class="{'c3': true, 'city': true, 'cityselected': allCities, 'all': true}" ng-click="OnCityChange(200, 200, -1)">All the cities</div>
+            <div class="c3 city all" id="allCities" ng-click="OnCityChange(200, 200, -1, 'allCities')" title="All cities">
+              <a>All cities</a>
+              <span class="cityPicker">
+                <big>All cities</big>
+                <small>pick an event type</small>
+                <i class="material-icons">arrow_downward</i>
+              </span>
+            </div>
           }
         }
       </div>
     }
   </div>
-  <div class="eventlist clearfix">
+  <div class="eventlist clearfix" id="eventlist">
     @for (int i = 0; i < 3; i++)
     {
       <div class="row">
@@ -117,31 +131,43 @@
           if (idx < etCount)
           {
             var etype = Model.EventTypes.ElementAt(idx);
-            <div ng-class="{'c3': true, 'event': true, 'eventselected': curEventType == @etype.EventTypeId}" ng-click="OnEventTypeChange(@etype.EventTypeId)">@etype.EventType</div>
+            <div class="c3 event" id="@("etype_" + idx.ToString())" ng-click="OnEventTypeChange(@etype.EventTypeId, '@("etype_" + idx.ToString())')" title="@etype.EventType">
+              <a>@etype.EventType</a>
+              <span class="eventPicker">
+                <i class="material-icons">arrow_upward</i>
+                <small>pick a city</small>
+                <big>@etype.EventType</big>
+              </span>
+            </div>
           }
           else if (idx == etCount)
           {
-            <div ng-class="{'c3': true, 'event': true, 'eventselected': allEventTypes, 'all': true}" ng-click="OnEventTypeChange(-1)">All the events</div>
+            <div class="c3 event all" id="allETypes" ng-click="OnEventTypeChange(-1, 'allETypes')" title="All events">
+              <a>All events</a>
+              <span class="eventPicker">
+                <i class="material-icons">arrow_upward</i>
+                <small>pick a city</small>
+                <big>All events</big>
+              </span>
+            </div>
           }
         }
       </div>
     }
   </div>
   <div id="featured">
-    <div id="featured-scrollbox">
-      <div class="featuredbox" ng-repeat="ev in eventsList">
-        <a href="{{ev.EventPath}}" class="img"><img ng-src="{{ev.ImageUrl}}" alt="{{ev.ImageAlt}}"></a>
-        <div class="info">
-          <h3><a href="{{ev.EventPath}}">{{ev.EventTitle}}</a></h3>
-          <div class="date">{{ev.EventDates}}</div>
-          <div class="location">{{ev.Address}}</div>
-          <div class="price">{{ev.PriceRange}}</div>
-          <div class="evActions homEV">
-            <a class="hashLink" href="{{ev.EventPath}}">{{FormatHashTags(ev.EventType, ev.EventCategory)}}</a>
-            <div class="matBox">
-              <a class="matIcon" ng-click="OnShareEvent(ev)"><i class="material-icons">share</i></a>
-              <a ng-class="{ 'matVisible': ev.UserFavorite }" class="matIcon active" ng-click="OnAddFavorite(ev)"><i class="material-icons">favorite</i></a>
-            </div>
+    <div class="featuredbox" ng-repeat="ev in eventsList" title="{{ev.EventTitle}}">
+      <a href="{{ev.EventPath}}" class="img"><img ng-src="{{ev.ImageUrl}}" alt="{{ev.ImageAlt}}"></a>
+      <div class="info">
+        <h3><a href="{{ev.EventPath}}">{{ev.EventTitle}}</a></h3>
+        <div class="date">{{ev.EventDates}}</div>
+        <div class="location">{{ev.Address}}</div>
+        <div class="price">{{ev.PriceRange}}</div>
+        <div class="evActions homEV">
+          <a class="hashLink" href="{{ev.EventPath}}" title="{{'#' + ev.EventType + ' #' + ev.EventCategory}}">{{FormatHashTags(ev.EventType, ev.EventCategory)}}</a>
+          <div class="matBox">
+            <a class="matIcon" ng-click="OnShareEvent(ev)"><i class="material-icons">share</i></a>
+            <a ng-class="{ 'matVisible': ev.UserFavorite }" class="matIcon active" ng-click="OnAddFavorite(ev)"><i class="material-icons">favorite</i></a>
           </div>
         </div>
       </div>

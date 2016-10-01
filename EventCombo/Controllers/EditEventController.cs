@@ -3493,7 +3493,7 @@ namespace EventCombo.Controllers
 
                                 ticket.T_Customize = "0";
                                 var mainfee = (from db in objEnt.Fee_Structure select db).FirstOrDefault();
-                                ticket.EC_Fee = tick.Customer_Fee;
+                                ticket.EC_Fee = tick.EC_Fee;
                                 ticket.T_Ecpercent = mainfee.FS_Percentage;
                                 ticket.T_EcAmount = mainfee.FS_Amount;
                                 if (tick.TicketTypeID == 2)
