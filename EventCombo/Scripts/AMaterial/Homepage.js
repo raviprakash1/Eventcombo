@@ -108,14 +108,14 @@
       tag2 = tag2 ? tag2 : "";
       if ((tag1.length + tag2.length) == 0)
         return '';
-      if ((tag1.length + tag2.length) > 24) {
+      if ((tag1.length + tag2.length) > 23) {
         if ((tag1.length > 13) && (tag2.length > 13)) {
-          tag1 = tag1.substr(0, 10) + '\u2026';
-          tag2 = tag2.substr(0, 10) + '\u2026';
+          tag1 = tag1.substr(0, 09) + '\u2026';
+          tag2 = tag2.substr(0, 09) + '\u2026';
         } else if (tag1.length > 13) {
-          tag1 = tag1.substr(0, 22 - tag2.length) + '\u2026'
+          tag1 = tag1.substr(0, 21 - tag2.length) + '\u2026'
         } else {
-          tag2 = tag2.substr(0, 22 - tag1.length) + '\u2026'
+          tag2 = tag2.substr(0, 21 - tag1.length) + '\u2026'
         }
       }
 
