@@ -633,34 +633,49 @@ namespace EventCombo.Service
         }
       }
 
-      if (sendNotification)
+      try
       {
-        var sendEvent = GetEventById(ev.EventID);
-        sendEvent.EventPath = ResolveServerUrl(VirtualPathUtility.ToAbsolute(sendEvent.EventPath), false);
-        INotification notification = new NewEventNotification(_factory, sendEvent, ConfigurationManager.AppSettings.Get("DefaultEmail"));
-        notification.SendNotification(new SendMailService());
+        if (sendNotification)
+        {
+          var sendEvent = GetEventById(ev.EventID);
+          sendEvent.EventPath = ResolveServerUrl(VirtualPathUtility.ToAbsolute(sendEvent.EventPath), false);
+          INotification notification = new NewEventNotification(_factory, sendEvent, ConfigurationManager.AppSettings.Get("DefaultEmail"));
+          notification.SendNotification(new SendMailService());
+        }
+
+      } 
+      catch (Exception ex)
+      {
+        _logger.Error(ex, "Error during send notification about new event.");
       }
 
-      IRepository<Ticket_Purchased_Detail> tRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
-      if (EventChanged && ((tRepo.Get(filter: (t => t.TPD_Event_Id == ev.EventID)).Sum(t => t.TPD_Purchased_Qty) ?? 0) > 0))
+      try
       {
-        var eventSend = GetEventById(ev.EventID);
-        eventSend.EventPath = ResolveServerUrl(VirtualPathUtility.ToAbsolute(eventSend.EventPath), false);
-        INotification notifyBuyers = new EventChangeNotification(_factory, eventSend, ConfigurationManager.AppSettings.Get("DefaultEmail"));
-        INotificationSender sender = new NotificationSender(notifyBuyers, new SendMailService());
-        IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
-        IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
-        List<MailAddress> addresses = new List<MailAddress>();
-        foreach (var ticket in tpdRepo.Get(filter: (tpd => tpd.TPD_Event_Id == ev.EventID)))
+        IRepository<Ticket_Purchased_Detail> tRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+        if (EventChanged && ((tRepo.Get(filter: (t => t.TPD_Event_Id == ev.EventID)).Sum(t => t.TPD_Purchased_Qty) ?? 0) > 0))
         {
-          var profile = ticket.AspNetUser.Profiles.FirstOrDefault();
-          if ((profile != null) && (!addresses.Any(a => a.Address == profile.Email)))
-            addresses.Add(new MailAddress(profile.Email, String.Format("{0} {1}", profile.FirstName, profile.LastName)));
-          foreach (var attendee in attRepo.Get(filter: (a => a.OrderId == ticket.TPD_Order_Id)))
-            if (!String.IsNullOrEmpty(attendee.Email) && (!addresses.Any(a => a.Address == attendee.Email)))
-              addresses.Add(new MailAddress(attendee.Email, attendee.Name));
+          var eventSend = GetEventById(ev.EventID);
+          eventSend.EventPath = ResolveServerUrl(VirtualPathUtility.ToAbsolute(eventSend.EventPath), false);
+          INotification notifyBuyers = new EventChangeNotification(_factory, eventSend, ConfigurationManager.AppSettings.Get("DefaultEmail"));
+          INotificationSender sender = new NotificationSender(notifyBuyers, new SendMailService());
+          IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+          IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+          List<MailAddress> addresses = new List<MailAddress>();
+          foreach (var ticket in tpdRepo.Get(filter: (tpd => tpd.TPD_Event_Id == ev.EventID)))
+          {
+            var profile = ticket.AspNetUser.Profiles.FirstOrDefault();
+            if ((profile != null) && (!addresses.Any(a => a.Address == profile.Email)))
+              addresses.Add(new MailAddress(profile.Email, String.Format("{0} {1}", profile.FirstName, profile.LastName)));
+            foreach (var attendee in attRepo.Get(filter: (a => a.OrderId == ticket.TPD_Order_Id)))
+              if (!String.IsNullOrEmpty(attendee.Email) && (!addresses.Any(a => a.Address == attendee.Email)))
+                addresses.Add(new MailAddress(attendee.Email, attendee.Name));
+          }
+          sender.SendSeparately(addresses);
         }
-        sender.SendSeparately(addresses);
+      }
+      catch (Exception ex)
+      {
+        _logger.Error(ex, "Error during send notification about event change.");
       }
     }
 
