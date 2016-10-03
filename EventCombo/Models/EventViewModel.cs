@@ -211,6 +211,7 @@ namespace EventCombo.Models
     public long? ECImageId { get; set; }
     public long AddressId { get; set; }
     public string EventPath { get; set; }
+    public bool IsAdmin { get; set; }
 
     private List<string> _errorMessages;
     public List<string> ErrorMessages
