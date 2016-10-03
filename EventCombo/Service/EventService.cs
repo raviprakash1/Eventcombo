@@ -351,13 +351,9 @@ namespace EventCombo.Service
           ticket.Fees_Type = tDB.Fees_Type;
         }
 
-        ticket.Customer_Fee = tDB.Customer_Fee ?? 0; // don't update Customer_Fee
-        UpdatePrices(ticket);
+        UpdatePrices(ticket, tDB, ev.IsAdmin);
 
         _mapper.Map(ticket, tDB);
-        if (tDB.T_Id == 0)
-          tDB.Customer_Fee = 0;
-
         DateTime? saleStart = ticket.Sale_Start_Date;
         DateTime? saleEnd = ticket.Sale_End_Date;
         DateTime? hideUntil = ticket.Hide_Untill_Date;
@@ -379,24 +375,37 @@ namespace EventCombo.Service
       }
     }
 
-    private void UpdatePrices(TicketViewModel ticket)
+    private void UpdatePrices(TicketViewModel ticket, Ticket ticketDB, bool isAdmin)
     {
       if (ticket.TicketTypeID != 2)
         ticket.Price = 0;
       else
         ticket.Price = Math.Round(ticket.Price ?? 0, 2);
       ticket.T_Discount = Math.Round(ticket.T_Discount ?? 0, 2);
-      IRepository<Fee_Structure> fRepo = new GenericRepository<Fee_Structure>(_factory.ContextFactory);
-      var fee = fRepo.Get(filter: (f => f.FS_Apply == "A")).FirstOrDefault();
-      if (fee != null)
+      if (!isAdmin)
       {
-        ticket.T_Ecpercent = ticket.TicketTypeID == 2 ? fee.FS_Percentage ?? 0 : 0;
-        ticket.T_EcAmount = ticket.TicketTypeID != 1 ? fee.FS_Amount ?? 0 : 0;
-      }
-      else
-      {
-        ticket.T_Ecpercent = 0;
-        ticket.T_EcAmount = 0;
+        if (ticketDB.T_Id == 0)
+        {
+          IRepository<Fee_Structure> fRepo = new GenericRepository<Fee_Structure>(_factory.ContextFactory);
+          var fee = fRepo.Get(filter: (f => f.FS_Apply == "A")).FirstOrDefault();
+          if (fee != null)
+          {
+            ticket.T_Ecpercent = ticket.TicketTypeID == 2 ? fee.FS_Percentage ?? 0 : 0;
+            ticket.T_EcAmount = ticket.TicketTypeID != 1 ? fee.FS_Amount ?? 0 : 0;
+          }
+          else
+          {
+            ticket.T_Ecpercent = 0;
+            ticket.T_EcAmount = 0;
+          }
+          ticket.Customer_Fee = 0;
+        }
+        else
+        {
+          ticket.T_Ecpercent = ticketDB.T_Ecpercent;
+          ticket.T_EcAmount = ticketDB.T_EcAmount;
+          ticket.Customer_Fee = ticketDB.Customer_Fee;
+        }
       }
       ticket.EC_Fee = Math.Round((ticket.Price ?? 0) * ((ticket.T_Ecpercent ?? 0) / 100) + (ticket.T_EcAmount ?? 0), 2);
       ticket.TotalPrice = (ticket.Price ?? 0) - (ticket.T_Discount ?? 0) + (ticket.Customer_Fee ?? 0);
@@ -407,6 +416,9 @@ namespace EventCombo.Service
     private void SaveVarCharges(EventViewModel ev, IUnitOfWork uow)
     {
       IRepository<Event_VariableDesc> vcRepo = new GenericRepository<Event_VariableDesc>(_factory.ContextFactory);
+
+      if (String.IsNullOrEmpty(ev.Ticket_showvariable) || (ev.Ticket_showvariable.ToUpper() != "Y"))
+        ev.VariableChargesList.Clear();
 
       foreach (var vcDB in vcRepo.Get(filter: (vc => vc.Event_Id == ev.EventID)))
         if (!ev.VariableChargesList.Any(vcVM => vcVM.VariableId == vcDB.Variable_Id))
@@ -440,7 +452,7 @@ namespace EventCombo.Service
           oDB = orgRepo.GetByID(org.OrgnizerId);
         if (oDB == null)
         {
-          oDB = orgRepo.Get(filter: (o => ((o.Orgnizer_Name == org.Orgnizer_Name) && (o.Organizer_Email == org.Organizer_Email)))).FirstOrDefault();
+          oDB = orgRepo.Get(filter: (o => ((o.Orgnizer_Name == org.Orgnizer_Name) && (o.Organizer_Email == org.Organizer_Email) && (o.UserId == ev.UserID)))).FirstOrDefault();
           if (oDB == null)
             oDB = new Organizer_Master();
         }
@@ -621,34 +633,49 @@ namespace EventCombo.Service
         }
       }
 
-      if (sendNotification)
+      try
       {
-        var sendEvent = GetEventById(ev.EventID);
-        sendEvent.EventPath = ResolveServerUrl(VirtualPathUtility.ToAbsolute(sendEvent.EventPath), false);
-        INotification notification = new NewEventNotification(_factory, sendEvent, ConfigurationManager.AppSettings.Get("DefaultEmail"));
-        notification.SendNotification(new SendMailService());
+        if (sendNotification)
+        {
+          var sendEvent = GetEventById(ev.EventID);
+          sendEvent.EventPath = ResolveServerUrl(VirtualPathUtility.ToAbsolute(sendEvent.EventPath), false);
+          INotification notification = new NewEventNotification(_factory, sendEvent, ConfigurationManager.AppSettings.Get("DefaultEmail"));
+          notification.SendNotification(new SendMailService());
+        }
+
+      } 
+      catch (Exception ex)
+      {
+        _logger.Error(ex, "Error during send notification about new event.");
       }
 
-      IRepository<Ticket_Purchased_Detail> tRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
-      if (EventChanged && ((tRepo.Get(filter: (t => t.TPD_Event_Id == ev.EventID)).Sum(t => t.TPD_Purchased_Qty) ?? 0) > 0))
+      try
       {
-        var eventSend = GetEventById(ev.EventID);
-        eventSend.EventPath = ResolveServerUrl(VirtualPathUtility.ToAbsolute(eventSend.EventPath), false);
-        INotification notifyBuyers = new EventChangeNotification(_factory, eventSend, ConfigurationManager.AppSettings.Get("DefaultEmail"));
-        INotificationSender sender = new NotificationSender(notifyBuyers, new SendMailService());
-        IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
-        IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
-        List<MailAddress> addresses = new List<MailAddress>();
-        foreach (var ticket in tpdRepo.Get(filter: (tpd => tpd.TPD_Event_Id == ev.EventID)))
+        IRepository<Ticket_Purchased_Detail> tRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+        if (EventChanged && ((tRepo.Get(filter: (t => t.TPD_Event_Id == ev.EventID)).Sum(t => t.TPD_Purchased_Qty) ?? 0) > 0))
         {
-          var profile = ticket.AspNetUser.Profiles.FirstOrDefault();
-          if ((profile != null) && (!addresses.Any(a => a.Address == profile.Email)))
-            addresses.Add(new MailAddress(profile.Email, String.Format("{0} {1}", profile.FirstName, profile.LastName)));
-          foreach (var attendee in attRepo.Get(filter: (a => a.OrderId == ticket.TPD_Order_Id)))
-            if (!String.IsNullOrEmpty(attendee.Email) && (!addresses.Any(a => a.Address == attendee.Email)))
-              addresses.Add(new MailAddress(attendee.Email, attendee.Name));
+          var eventSend = GetEventById(ev.EventID);
+          eventSend.EventPath = ResolveServerUrl(VirtualPathUtility.ToAbsolute(eventSend.EventPath), false);
+          INotification notifyBuyers = new EventChangeNotification(_factory, eventSend, ConfigurationManager.AppSettings.Get("DefaultEmail"));
+          INotificationSender sender = new NotificationSender(notifyBuyers, new SendMailService());
+          IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+          IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+          List<MailAddress> addresses = new List<MailAddress>();
+          foreach (var ticket in tpdRepo.Get(filter: (tpd => tpd.TPD_Event_Id == ev.EventID)))
+          {
+            var profile = ticket.AspNetUser.Profiles.FirstOrDefault();
+            if ((profile != null) && (!addresses.Any(a => a.Address == profile.Email)))
+              addresses.Add(new MailAddress(profile.Email, String.Format("{0} {1}", profile.FirstName, profile.LastName)));
+            foreach (var attendee in attRepo.Get(filter: (a => a.OrderId == ticket.TPD_Order_Id)))
+              if (!String.IsNullOrEmpty(attendee.Email) && (!addresses.Any(a => a.Address == attendee.Email)))
+                addresses.Add(new MailAddress(attendee.Email, attendee.Name));
+          }
+          sender.SendSeparately(addresses);
         }
-        sender.SendSeparately(addresses);
+      }
+      catch (Exception ex)
+      {
+        _logger.Error(ex, "Error during send notification about event change.");
       }
     }
 

@@ -134,13 +134,13 @@ namespace EventCombo
         .ForMember(d => d.TicketbearerId, m => m.Ignore());
       CreateMap<OrganizerMessageViewModel, Event_OrganizerMessages>()
         .ForMember(d => d.MessageId, m => m.Ignore());
-      CreateMap<OrganizerViewModel, Organizer_Master>();
+      CreateMap<OrganizerViewModel, Organizer_Master>()
+        .ForMember(d => d.Orgnizer_Id, m => m.Ignore());
       CreateMap<EventViewModel, Event>()
         .ForMember(d => d.EventID, m => m.Ignore())
         .ForMember(d => d.EventImages, m => m.Ignore());
       CreateMap<TicketViewModel, Ticket>()
-        .ForMember(d => d.T_Id, m => m.Ignore())
-        .ForMember(d => d.Customer_Fee, m => m.Ignore());
+        .ForMember(d => d.T_Id, m => m.Ignore());
       CreateMap<VariableChargesViewModel, Event_VariableDesc>()
         .ForMember(d => d.Variable_Id, m => m.Ignore())
         .ForMember(d => d.Event_Id, m => m.MapFrom(s => s.EventId));
