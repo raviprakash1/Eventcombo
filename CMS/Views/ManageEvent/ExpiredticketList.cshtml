@@ -270,7 +270,7 @@
                                                         </td>
                                                         <td>@obj.EventAddress</td>
                                                         <td>
-                                                            <a href="#" class="btn btn-success br2 btn-xs fs12" onclick="EditEvent('@obj.EventID','@obj.UserID');"><i class="fa fa-edit"></i> </a>
+                                                            <a href="#" class="btn btn-success br2 btn-xs fs12" onclick="EditEvent('@obj.EventID');"><i class="fa fa-edit"></i> </a>
                                                             @if (Double.Parse(obj.Purchasedqty) <= 0)
                                                             {
                                                                 <a class="td-btn" type="button" onclick="ConfirmDelete('@obj.EventID');" href="#confirm-delete-ok" data-toggle="modal" id="adelete-@i">
@@ -443,7 +443,7 @@
     function EditEvent(eventId, UserID) {
         var appSetting = '@(System.Configuration.ConfigurationManager.AppSettings["EventComboClientDomain"].ToString())';
 
-        var url = appSetting + '/CMS/Index?id=' + eventId + '&e=' + UserID;
+        var url = appSetting + '/EventManagement/CMSEditEvent?EventId=' + eventId;
         //alert(url);
         var w = 960, h = 600,
         left = Number((screen.width / 2) - (w / 2)), tops = Number((screen.height / 2) - (h / 2)),
