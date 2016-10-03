@@ -223,16 +223,32 @@ namespace EventCombo.Controllers
 
     [HttpGet]
     [Authorize]
+    public async Task<ActionResult> CMSEditEvent(long eventId)
+    {
+      if (User.Identity.IsAuthenticated)
+      {
+        ApplicationUserManager um = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+        var user = await um.FindByNameAsync(User.Identity.Name);
+        Session["AppId"] = user.Id;
+      }
+      else
+        throw new UnauthorizedAccessException("Unauthorized access from CMS.");
+
+      return EditEvent(eventId);
+    }
+
+    [HttpGet]
+    [Authorize]
     public ActionResult EditEvent(long eventId)
     {
       string userId = "";
       if (Session["AppId"] != null)
         userId = Session["AppId"].ToString();
       else
-        return RedirectToAction("Index", "Home", new { lat = CookieStore.GetCookie("Lat"), lng = CookieStore.GetCookie("Long"), page = "1", strParm = "Y" });
+        return RedirectToAction("Index", "Home");
     
-      if (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner)
-        return RedirectToAction("Index", "Home", new { lat = CookieStore.GetCookie("Lat"), lng = CookieStore.GetCookie("Long"), page = "1", strParm = "Y" });
+      if ((_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner) && !User.IsInRole(SARole))
+        return RedirectToAction("Index", "Home");
 
       Session["logo"] = "events";
       Session["Fromname"] = "events";
