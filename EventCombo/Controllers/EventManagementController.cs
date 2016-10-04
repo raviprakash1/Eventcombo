@@ -234,6 +234,8 @@ namespace EventCombo.Controllers
       else
         throw new UnauthorizedAccessException("Unauthorized access from CMS.");
 
+      ViewBag.CMSCall = true;
+
       return EditEvent(eventId);
     }
 

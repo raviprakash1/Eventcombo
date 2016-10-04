@@ -656,7 +656,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
           $scope.prepareEventInfo();
           $scope.ShowErrorMessage("Found errors", $scope.eventInfo.ErrorMessages.join('<br>'));
         }
-        else if ($scope.sendAction == "Save") {
+        else if (($scope.sendAction == "Save") || ($scope.preventLeave)) {
           $scope.eventInfo = response.data;
           $scope.prepareEventInfo();
           $scope.showLoadingMessage(false, '');
