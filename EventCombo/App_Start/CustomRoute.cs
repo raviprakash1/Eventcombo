@@ -13,13 +13,18 @@ namespace EventCombo
 
         public override RouteData GetRouteData(HttpContextBase httpContext)
         {
-            var url = httpContext.Request.Headers["HOST"].Split('.');
+            var url = httpContext.Request.Headers["HOST"].Replace("www.", "").Replace("WWW.", "").Split('.');
 
             if (url.Length < 2)
                 return null;
 
             var subDomain = url[0];
-            var domain = url[1] + (url.Length > 2 ? "." + url[2] : "");
+            var domain = url[1];
+
+            for (int i = 2; i < url.Length; i++)
+            {
+                domain += "." + url[i];
+            }
 
             string ReserveSubDomains = "," + ConfigurationManager.AppSettings["ReserveSubDomains"] + ",";
             if (ReserveSubDomains.Contains("," + subDomain + ","))
