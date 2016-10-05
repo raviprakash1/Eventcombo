@@ -156,6 +156,9 @@ namespace EventCombo.Controllers
             return DefaultAction();
 
         string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner)
+            return new EmptyResult();
+
         Session["logo"] = "events";
         Session["Fromname"] = "ManageAttendees";
         Session["ReturnUrl"] = Url.Action("Guests", "ManageAttendees");
@@ -175,6 +178,9 @@ namespace EventCombo.Controllers
             return DefaultAction();
 
         string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner)
+            return new EmptyResult();
+
         Session["logo"] = "events";
         Session["Fromname"] = "ManageAttendees";
         Session["ReturnUrl"] = Url.Action("Badges", "ManageAttendees");
@@ -193,6 +199,9 @@ namespace EventCombo.Controllers
             return DefaultAction();
 
         string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner)
+            return new EmptyResult();
+
         Session["logo"] = "events";
         Session["Fromname"] = "ManageAttendees";
         Session["ReturnUrl"] = Url.Action("Checkin", "ManageAttendees");
@@ -384,6 +393,9 @@ namespace EventCombo.Controllers
             return DefaultAction();
 
         string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner)
+            return new EmptyResult();
+
         Session["logo"] = "events";
         Session["Fromname"] = "ManageAttendees";
         Session["ReturnUrl"] = Url.Action("Email", "ManageAttendees");
@@ -509,6 +521,9 @@ namespace EventCombo.Controllers
             return DefaultAction();
 
         string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner)
+            return new EmptyResult();
+
         Session["logo"] = "events";
         Session["Fromname"] = "ManageAttendees";
         Session["ReturnUrl"] = Url.Action("Email", "ManageAttendees");
@@ -525,6 +540,9 @@ namespace EventCombo.Controllers
             return DefaultAction();
 
         string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner)
+            return new EmptyResult();
+
         Session["logo"] = "events";
         Session["Fromname"] = "ManageAttendees";
         Session["ReturnUrl"] = Url.Action("Email", "ManageAttendees");
