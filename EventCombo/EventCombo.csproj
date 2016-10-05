@@ -1837,6 +1837,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Properties\assets\" />
     <Folder Include="Scripts\AMaterial\Controller\" />
+    <Folder Include="TempDoc\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\EmailServices\" />
     <Folder Include="Views\Html2Pdf\" />
