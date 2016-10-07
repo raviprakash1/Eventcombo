@@ -157,6 +157,8 @@ namespace EventCombo.Service
     public bool ValidateEvent(EventViewModel ev)
     {
       ev.ErrorMessages.Clear();
+      if (IsEventSubDomainExists(ev.EventUrl, ev.EventID))
+        ev.ErrorMessages.Add("Sorry "+ ev.EventUrl + ".Eventcombo.com already exists, try another URL");
       if (String.IsNullOrWhiteSpace(ev.EventTitle))
         ev.ErrorMessages.Add("Event must have title.");
       if (!ev.OnlineEvent && (String.IsNullOrWhiteSpace(ev.Address)))
@@ -1492,6 +1494,16 @@ namespace EventCombo.Service
 
         _mapper.Map(evDB, ev);
         return ev;
+    }
+
+    private bool IsEventSubDomainExists(string subDomain, long eventId = 0)
+    {
+        EventViewModel ev = new EventViewModel();
+        IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
+
+        var evDB = eRepo.Get(filter: (e => e.EventUrl == subDomain && (eventId == 0 ? true : e.EventID != eventId)));
+
+        return evDB.Count() > 0 ? true : false;
     }
   }
 }
