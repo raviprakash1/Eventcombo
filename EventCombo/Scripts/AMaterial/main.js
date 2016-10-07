@@ -39,8 +39,8 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       }
     }
     $scope.vartypes = [
-      { varId: false, varName: "Required" },
-      { varId: true, varName: "Optional" }
+      { varId: "R", varName: "Required" },
+      { varId: "O", varName: "Optional" }
     ];
 
     $scope.occurences = [
@@ -92,6 +92,8 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
 
     $scope.prepareEventInfo = function () {
       $scope.onShowDateTimeDialog(false);
+      if (!$scope.eventInfo.Ticket_variabletype)
+        $scope.eventInfo.Ticket_variabletype = 'O';
       if ($scope.eventInfo.VariableChargesList.length <= 0)
         $scope.addVarCharge();
       $scope.eventInfo.VariableChargesList.forEach(function (varcharge, i, arr) {
@@ -142,6 +144,9 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         ticket.QtyText = ticket.Qty_Available ? ticket.Qty_Available : "";
         ticket.PriceText = ticket.Price ? ticket.Price : "";
         ticket.DiscountText = ticket.T_Discount ? ticket.T_Discount : "";
+        ticket.ECFeePercentText = ticket.T_Ecpercent ? ticket.T_Ecpercent : "";
+        ticket.ECFeeAmountText = ticket.T_EcAmount ? ticket.T_EcAmount : "";
+        ticket.CustomerFeeText = ticket.Customer_Fee ? ticket.Customer_Fee : "";
         $scope.onPriceChange(ticket);
       });
       $scope.onCategoryChange();
@@ -422,6 +427,8 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       var i = 0;
       if ($scope.eventInfo.TicketList.length > 0)
         Math.max.apply(Math, $scope.eventInfo.TicketList.map(function (o) { return o.InternalId; }));
+      var ecPerc = parseFloat($scope.eventInfo.FeeStruct.FS_Percentage);
+      var ecAmount = parseFloat($scope.eventInfo.FeeStruct.FS_Amount);
       var newticket = {
         T_Id: 0,
         InternalId: i + 1,
@@ -455,8 +462,8 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         },
         TotalPrice: 0,
         T_Customize: 0,
-        T_Ecpercent: $scope.eventInfo.FeeStruct.FS_Percentage,
-        T_EcAmount: $scope.eventInfo.FeeStruct.FS_Amount,
+        T_Ecpercent: ecPerc,
+        T_EcAmount: ecAmount,
         PurchasedQuantity: 0,
         localSaleStartDate: null,
         localSaleEndDate: null,
@@ -468,10 +475,22 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         localHideAfterTime: null,
         QtyText: "",
         PriceText: "",
-        DiscountText: ""
+        DiscountText: "",
+        ECFeePercentText: ecPerc.toFixed(2),
+        ECFeeAmountText: ecAmount.toFixed(2),
+        CustomerFeeText: ""
       }
       $scope.onPriceChange(newticket);
+      $scope.onFeeChange(newticket);
       $scope.eventInfo.TicketList.push(newticket);
+    }
+
+    $scope.calcPrices = function (ticket) {
+      ticket.EC_Fee = ticket.Price == 0 ? 0 : ticket.Price * ticket.T_Ecpercent / 100 + ticket.T_EcAmount;
+      ticket.TotalPrice = ticket.Price == 0 ? 0 : ticket.Price - ticket.T_Discount + 
+        ($scope.eventInfo.IsAdmin ? ticket.Customer_Fee : 0);
+      if (ticket.Fees_Type == 0)
+        ticket.TotalPrice += ticket.EC_Fee;
     }
 
     $scope.onPriceChange = function (ticket) {
@@ -479,11 +498,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       ticket.T_Discount = parseFloat(ticket.DiscountText);
       ticket.Price = isNaN(ticket.Price) ? 0 : ticket.Price;
       ticket.T_Discount = isNaN(ticket.T_Discount) ? 0 : ticket.T_Discount;
-      ticket.EC_Fee = ticket.Price == 0 ? 0 : ticket.Price * $scope.eventInfo.FeeStruct.FS_Percentage / 100 + $scope.eventInfo.FeeStruct.FS_Amount;
-      ticket.Customer_Fee = ticket.EC_Fee;
-      ticket.TotalPrice = ticket.Price == 0 ? 0 : ticket.Price - ticket.T_Discount;
-      if (ticket.Fees_Type == 0)
-        ticket.TotalPrice += ticket.EC_Fee;
+      $scope.calcPrices(ticket);
     }
 
     $scope.onPriceBlur = function (ticket, formname) {
@@ -491,7 +506,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       ticket.T_Discount = isNaN(ticket.T_Discount) || (ticket.T_Discount < 0 || !ticket.T_Discount) ? 0 : ticket.T_Discount > ticket.Price ? ticket.Price : ticket.T_Discount;
       ticket.PriceText = ticket.Price > 0 ? ticket.Price.toFixed(2) : "";
       ticket.DiscountText = ticket.T_Discount > 0 ? ticket.T_Discount.toFixed(2) : "";
-      $scope.onPriceChange(ticket);
+      $scope.calcPrices(ticket);
     }
 
     $scope.onQtyBlur = function (ticket) {
@@ -502,6 +517,26 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         $scope.ShowErrorMessage("Can't set less then " + ticket.PurchasedQuantity + " tickets", "Someone already bought " + ticket.PurchasedQuantity + " tickets");
       }
       ticket.QtyText = ticket.Qty_Available > 0 ? ticket.Qty_Available : "";
+    }
+
+    $scope.onFeeChange = function (ticket) {
+      ticket.T_Ecpercent = parseFloat(ticket.ECFeePercentText);
+      ticket.T_EcAmount = parseFloat(ticket.ECFeeAmountText);
+      ticket.Customer_Fee = parseFloat(ticket.CustomerFeeText);
+      ticket.T_Ecpercent = isNaN(ticket.T_Ecpercent) ? 0 : ticket.T_Ecpercent;
+      ticket.T_EcAmount = isNaN(ticket.T_EcAmount) ? 0 : ticket.T_EcAmount;
+      ticket.Customer_Fee = isNaN(ticket.Customer_Fee) ? 0 : ticket.Customer_Fee;
+      $scope.calcPrices(ticket);
+    }
+
+    $scope.onFeeBlur = function (ticket) {
+      ticket.T_Ecpercent = (ticket.T_Ecpercent < 0) || isNaN(ticket.T_Ecpercent) || !ticket.T_Ecpercent ? 0 : ticket.T_Ecpercent;
+      ticket.T_EcAmount = (ticket.T_EcAmount < 0) || isNaN(ticket.T_EcAmount) || !ticket.T_EcAmount ? 0 : ticket.T_EcAmount;
+      ticket.Customer_Fee = (ticket.Customer_Fee < 0) || isNaN(ticket.Customer_Fee) || !ticket.Customer_Fee ? 0 : ticket.Customer_Fee;
+      ticket.ECFeePercentText = ticket.T_Ecpercent > 0 ? ticket.T_Ecpercent.toFixed(2) : "";
+      ticket.ECFeeAmountText = ticket.T_EcAmount > 0 ? ticket.T_EcAmount.toFixed(2) : "";
+      ticket.CustomerFeeText = ticket.Customer_Fee > 0 ? ticket.Customer_Fee.toFixed(2) : "";
+      $scope.calcPrices(ticket);
     }
 
     $scope.onVarChargeBlur = function (varCharge) {
@@ -621,7 +656,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
           $scope.prepareEventInfo();
           $scope.ShowErrorMessage("Found errors", $scope.eventInfo.ErrorMessages.join('<br>'));
         }
-        else if ($scope.sendAction == "Save") {
+        else if (($scope.sendAction == "Save") || ($scope.preventLeave)) {
           $scope.eventInfo = response.data;
           $scope.prepareEventInfo();
           $scope.showLoadingMessage(false, '');

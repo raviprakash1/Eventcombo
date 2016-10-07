@@ -33,6 +33,7 @@
 .saroosh .social { line-height:20px; margin-right:5px;}
 .saroosh .social a { display:inline-block;}
 /****************************************************************/
+.pageTitle { font:bold 24px 'Roboto', Arial, Helvetica, sans-serif; color:rgb(255, 0, 138); text-transform:uppercase; margin:0; padding:15px 20px;}
 .red-heading { color:#ff2693; font:bold 24px 'Roboto', Arial, Helvetica, sans-serif; margin-top:20px; margin-bottom:10px;}
 .connectFacebook { color:#00baff; cursor:pointer; text-decoration:none; font:16px 'Roboto', Arial, Helvetica, sans-serif; text-transform:uppercase;}
 .connectFacebook img { float:left; margin-right:10px;}
@@ -89,10 +90,27 @@ img.ng-thumb { height:100px;}
 .menu ul li { list-style:none;display:inline-block;}
 .menu ul li a { text-decoration:none; color:#000; font:17px 'Roboto', Arial, Helvetica, sans-serif; padding:0 15px; cursor:pointer;}
 .menu ul li a:hover { color:#00cafd;}
-
+/*******************************************************************/
 #slider { width:100%; height:100px; display:block; overflow:hidden; position:relative;}
 .ng-gallery { width:auto; left:0; display:table; position:absolute;}
 .ng-gallery div { width:auto; height:100px; margin:0 3px; background-repeat:no-repeat; background-position:center top; background-size:auto 100%; display:inline-block; float:left; overflow:hidden;}
+/********************************************************************/
+.orderDetails { width:100%; display:inline-block; margin:15px 0; background:#fafafa; color:#535252; box-shadow:0 1px 2px rgba(0,0,0,.5);}
+.orderId { padding:15px;}
+.orderNumber { margin:0; font-size:24px; line-height:normal;}
+.orderSbuline { margin:0; font-size:13px; text-align:left;}
+.orderSbuline span, .orderSbuline a { display:inline-block;}
+.semiBold { font-weight:500;}
+.evtLink { color:#00baff; font-size:13px; font-weight:500; text-decoration:none; text-transform:uppercase; cursor:pointer;}
+.evtLink:hover { color:#000;}
+.orderList .orderBox { padding:5px 50px 5px 15px; position:relative;}
+.orderList .orderBox:nth-child(odd) { background:#ededed;}
+.orderTitle { font-size:18px; margin:0; text-align:left;}
+.nextLink { display:inline-block; padding:10px 15px; color:#00baff; font-size:14px; font-weight:500; text-decoration:none; text-transform:uppercase; cursor:pointer;}
+.nextLink:hover { color:#000;}
+.genAdmission { font-size:13px; line-height:28px; margin-left:15px !important;}
+.shareLink { display:inline-block;}
+.flRightN { width:10%; display:inline-block; position:absolute; right:0; top:15px; font-size:24px; text-align:center;}
 /********************************************************************/
 @media screen and (min-width:991px) and (max-width:1024px)
 {
@@ -112,6 +130,7 @@ img.ng-thumb { height:100px;}
 	.addInfo, .viewInfo { font-size:12px;}
 	.deal { padding-left:15px; padding-top:120px;}
 	#mapView { height:300px;}
-.ticdes p { line-height:16px;}
-.ticdetail { line-height:16px;}
+  .ticdes p { line-height:16px;}
+  .ticdetail { line-height:16px;}
+  .flRightN { font-size:18px;}
 }

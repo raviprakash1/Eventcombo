@@ -66,7 +66,10 @@
   <script src="~/Scripts/AMaterial/jquery-1.12.3.min.js"></script>
   <script src="~/Scripts/bootstrap.min.js"></script>
 
-  @Scripts.Render("~/Scripts/AMaterial/angularHeader")
+  @Scripts.Render("~/Scripts/AMaterial/angularHeader1")
+  @Scripts.Render("~/Scripts/AMaterial/angularHeader2")
+  @Scripts.Render("~/Scripts/AMaterial/angularHeader3")
+  @Scripts.Render("~/Scripts/AMaterial/angularHeader4")
   @RenderSection("ScriptSection")
   <script src="https://maps.googleapis.com/maps/api/js?key=@(System.Configuration.ConfigurationManager.AppSettings.Get("GoogleAPIKey"))&v=3.exp&sensor=true&libraries=places"></script>
 

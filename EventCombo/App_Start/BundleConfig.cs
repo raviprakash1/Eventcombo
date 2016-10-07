@@ -98,7 +98,8 @@ namespace EventCombo
             #endregion
 
             bundles.Add(new StyleBundle("~/Content/angularHeader")
-              .Include( "~/Content/AMaterial/angular-material.css",
+              .Include("~/Content/AMaterial/angular-material.css",
+                        "~/Content/AMaterial/angucomplete-alt.css",
                         "~/Content/AMaterial/gridiculous.css",
                         "~/Content/AMaterial/docs.css",
                         "~/Content/AMaterial/themeOm.css",
@@ -110,34 +111,43 @@ namespace EventCombo
                         "~/Content/AMaterial/animations.css",
                         "~/Content/AMaterial/ngGallery.css",
                         "~/Content/AMaterial/main.css"));
+
             bundles.Add(new StyleBundle("~/Content/AngularViewEvent")
               .Include( "~/Content/font-awesome.min.css",
                         "~/Content/AMaterial/owl.carousel.css",
                         "~/Content/AMaterial/ViewEvent.css"));
 
-            bundles.Add(new ScriptBundle("~/Scripts/AMaterial/angularHeader")
-              .Include( "~/Scripts/AMaterial/angular.js",
-                        "~/Scripts/AMaterial/angular-animate.js",
+            bundles.Add(new ScriptBundle("~/Scripts/AMaterial/angularHeader1")
+              .Include("~/Scripts/AMaterial/angular.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/AMaterial/angularHeader2")
+              .Include( "~/Scripts/AMaterial/angular-animate.js",
                         "~/Scripts/AMaterial/angular-route.js",
                         "~/Scripts/AMaterial/angular-aria.js",
-                        "~/Scripts/AMaterial/angular-material.js",
-                        "~/Scripts/AMaterial/angular-messages.js",
+                        "~/Scripts/AMaterial/angular-material.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/AMaterial/angularHeader3")
+              .Include( "~/Scripts/AMaterial/angular-messages.js",
                         "~/Scripts/AMaterial/angular-cookies.js",
                         "~/Scripts/AMaterial/angular-sanitize.js",
                         "~/Scripts/AMaterial/tinymce.min.js",
                         "~/Scripts/AMaterial/tinycolor-min.js",
                         "~/Scripts/AMaterial/angular-tinymce/tinymce.min.js",
-                        "~/Scripts/AMaterial/themes/modern/theme.min.js",
-                        "~/Scripts/AMaterial/angularjs-color-picker.min.js",
+                        "~/Scripts/AMaterial/themes/modern/theme.min.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/AMaterial/angularHeader4")
+              .Include( "~/Scripts/AMaterial/angularjs-color-picker.min.js",
                         "~/Scripts/AMaterial/moment.js",
                         "~/Scripts/AMaterial/angular-material-datetimepicker.js",
                         "~/Scripts/AMaterial/ngGallery.js",
                         "~/Scripts/AMaterial/demo.js",
                         "~/Scripts/AMaterial/ngRepeatOwlCarousel.js",
                         "~/Scripts/AMaterial/classie.js",
+                        "~/Scripts/AMaterial/angucomplete-alt.js",
                         "~/Scripts/AMaterial/EventComboApp.js",
-                        "~/Scripts/AMaterial/broadcastService.js",
+                        "~/Scripts/AMaterial/Service/broadcastService.js",
+                        "~/Scripts/AMaterial/Service/geoService.js",
+                        "~/Scripts/AMaterial/Service/accountService.js",
+                        "~/Scripts/AMaterial/Service/FooterService.js",
                         "~/Scripts/AMaterial/header.js",
+                        "~/Scripts/AMaterial/footer.js",
                         "~/Scripts/AMaterial/AccountController.js"));
             bundles.Add(new ScriptBundle("~/Scripts/AMaterial/viewEvent")
               .Include("~/Scripts/AMaterial/owl.carousel.min.js"));

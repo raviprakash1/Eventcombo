@@ -1,0 +1,18 @@
+﻿@using System.Collections.Generic;
+@using System.Linq;
+@using EventCombo.Models;
+@model ScheduledEmailViewModel
+<td colspan="4" style="padding:0px;">
+    <div><h3>
+        Preview of Email @(Model.IsEmailSend?"Sent":"Scheduled")
+        </h3></div>
+    <div style="border:1px solid #c1c0c0;background-color:#ffffff!important;">
+        <div>
+            <b>@Model.Subject</b>
+        </div>        
+        <div>
+            @Html.Raw(Model.Body)
+        </div>
+    </div>
+</td>
+

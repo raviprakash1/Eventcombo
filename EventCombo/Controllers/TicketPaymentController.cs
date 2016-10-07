@@ -789,11 +789,14 @@ namespace EventCombo.Controllers
                                 objTPD.TPD_User_Id = Userid;
                                 if (objTPD.TPD_Amount > 0)
                                 {
-                                    objTPD.TPD_EC_Fee = GetCurrentECFee(TLD.TLD_TQD_Id);
+                                  var fees = GetCurrentECFee(TLD.TLD_TQD_Id);
+                                  objTPD.TPD_EC_Fee = fees.Item1;
+                                  objTPD.Customer_Fee = fees.Item2;
                                 }
                                 else
                                 {
                                     objTPD.TPD_EC_Fee = 0;
+                                    objTPD.Customer_Fee = 0;
                                 }
                                 objTPD.TPD_PromoCodeID = TLD.TLD_PromoCodeId;
                                 objTPD.TPD_PromoCodeAmount = TLD.TLD_PromoCodeAmount;
@@ -945,9 +948,9 @@ namespace EventCombo.Controllers
 
         }
 
-        public decimal GetCurrentECFee(long? lTQDId)
+        public Tuple<decimal, decimal> GetCurrentECFee(long? lTQDId)
         {
-            decimal dResult = 0;
+            Tuple<decimal, decimal> dResult = new Tuple<decimal,decimal>(0, 0);
             try
             {
                 using (EventComboEntities objECE = new EventComboEntities())
@@ -956,17 +959,16 @@ namespace EventCombo.Controllers
                                      where myRow.TQD_Id == lTQDId
                                      select myRow.TQD_Ticket_Id).FirstOrDefault();
 
-                    var vECFee = (from myRow in objECE.Tickets
-                                  where myRow.T_Id == vTicketId
-                                  select myRow.EC_Fee).FirstOrDefault();
+                    var ticket = objECE.Tickets.Where(t => t.T_Id == vTicketId).FirstOrDefault();
 
-                    dResult = (vECFee != null ? Convert.ToDecimal(vECFee) : 0);
+                  if (ticket != null)
+                    dResult = new Tuple<decimal, decimal>(ticket.EC_Fee ?? 0, ticket.Customer_Fee ?? 0);
                 }
             }
             catch (Exception ex)
             {
-                dResult = 0;
-                logger.Error("Exception during request processing", ex);
+              dResult = new Tuple<decimal, decimal>(0, 0);
+              logger.Error("Exception during request processing", ex);
             }
 
 

@@ -1,8 +1,67 @@
-﻿
+﻿@using System.Collections.Generic;
+@using System.Linq;
+@using EventCombo.Models;
+@model List<AttendeeTicketTypeViewModel>
 @{
-    ViewBag.Title = "Guests";
-    Layout = "~/Views/Shared/_ManageEventLayout.cshtml";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
+<link href="~/Content/manageattendees.css" rel="stylesheet" />
 
-<h2>Guests</h2>
+@section sidenav{
+    <div id="sidebar" class="nav nav-stacked">
+        @Html.Action("Sidenav", "ManageEvent", new { eventid = ViewBag.EventId, CurrentItem = "manageattendees" })
+    </div>
+}
+@using (Html.BeginForm("GuestList", "Download", FormMethod.Get))
+{
+    <input type="hidden" name="eventid" value="@ViewBag.EventId" />
+    <input type="hidden" name="format" value="pdf" />
+    <div id="purchasedTicketContainer">
+        <div class="headerPurchasedTicket">
+            <div class="col-sm-6 col-xs-6">
+                <h2 class="purchasedTitleHead">Guest List</h2>
+            </div>
+            <div class="col-sm-6 col-xs-6 searchTxtOrderContainerCls">
+                <label id="PageMessage"></label>
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-md-6">Pre-sort your guest list on the field that works for your door:</label>
+                <div class="col-md-6">
+                    <select class="form-control text-box single-line" style="width:150px;" name="sortby">
+                        <option value="Name" selected="selected">Name</option>
+                        <option value="TicketType">Ticket Type</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-6">Select the ticket types to include in the guest list:</label>
+                <div class="col-md-6">
+                    <ul>
+                        @foreach (var ticketType in Model)
+                        {
+                            <li style="list-style:none;">
+                                <input type="checkbox" value="@ticketType.TicketTypeId" name="ticketTypeIds" checked="checked" />
+                                @ticketType.TicketType
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-6">Include barcode on guest list for scanners</label>
+                <div class="col-md-6 mt10">
+                    <input type="checkbox" value="on" id="barcode" name="barcode">
+                    <label class="custom-input--delegate" for="barcode"></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-6 col-md-10">
+                    <button type="submit" name="btnDownloadPDF" value="DownloadPDF" class="btn btn-info articleBtnCls">Download list as a PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 

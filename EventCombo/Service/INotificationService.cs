@@ -11,6 +11,6 @@ namespace EventCombo.Service
   {
     void SendContactOrganizerMessage(EventNotificationViewModel notification, string userId);
     void SendContactOrganizerMessage(OrganizerMessageViewModel notification);
-    void SendEmailFreindsMessage(EventNotificationViewModel notification);
+    void SendEmailFreindsMessage(FriendNotificationViewModel notification);
   }
 }

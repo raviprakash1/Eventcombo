@@ -13,12 +13,17 @@ using Newtonsoft.Json.Converters;
 using EventCombo.ViewModels;
 using System.Text.RegularExpressions;
 using NLog;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.Owin;
+
 namespace EventCombo.Controllers
 {
   public class EventManagementController : BaseController
   {
     private IEventService _eService;
     private ILogger _logger;
+
+    public static string SARole = "Super Admin";
     public EventManagementController()
       : base()
     {
@@ -59,6 +64,8 @@ namespace EventCombo.Controllers
       EventViewModel ev = _eService.CreateEvent(userId);
       PopulateBaseViewModel(ev, "Create Event | Eventcombo");
 
+      ev.IsAdmin = User.IsInRole(SARole);
+
       return View(ev);
     }
 
@@ -70,6 +77,9 @@ namespace EventCombo.Controllers
 
       string userId = Session["AppId"].ToString();
 
+      if ((eventId > 0) && (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner) && !User.IsInRole(SARole))
+        return new EmptyResult();
+      
       EventViewModel ev;
       if (eventId == 0)
         ev = _eService.CreateEvent(userId);
@@ -77,6 +87,8 @@ namespace EventCombo.Controllers
         ev = _eService.GetEventById(eventId);
 
       PopulateBaseViewModel(ev, "Create Event | Eventcombo");
+
+      ev.IsAdmin = User.IsInRole(SARole);
 
       JsonNetResult res = new JsonNetResult();
       res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
@@ -92,6 +104,8 @@ namespace EventCombo.Controllers
       if (Session["AppId"] == null)
         return null;
 
+      string userId = Session["AppId"].ToString();
+
       EventViewModel ev = JsonConvert.DeserializeObject<EventViewModel>(json);
       ev.ErrorEvent = false;
       ev.ErrorMessages.Clear();
@@ -100,8 +114,15 @@ namespace EventCombo.Controllers
       {
         try
         {
-          _eService.SaveEvent(ev, Server.MapPath);
-          ev = _eService.GetEventById(ev.EventID);
+          if ((ev.EventID == 0) || (_dbservice.GetEventAccess(ev.EventID, userId) == AccessLevel.EventOwner) || User.IsInRole(SARole))
+          {
+            ev.IsAdmin = User.IsInRole(SARole);
+            _eService.SaveEvent(ev, Server.MapPath);
+            ev = _eService.GetEventById(ev.EventID);
+            ev.IsAdmin = User.IsInRole(SARole);
+          }
+          else
+            throw new UnauthorizedAccessException(String.Format("User {0} have not access to edit EventId = {1}", userId, ev.EventID));
         }
         catch (Exception ex)
         {
@@ -168,21 +189,6 @@ namespace EventCombo.Controllers
       return res;
     }
 
-    [HttpGet]
-    public ActionResult EmptyTemplate()
-    {
-      string userId = "";
-      if (Session["AppId"] != null)
-        userId = Session["AppId"].ToString();
-
-      BaseViewModel ev = new BaseViewModel();
-      PopulateBaseViewModel(ev, "Empty Template | Eventcombo");
-
-      Session["ReturnUrl"] = Url.Action("EmptyTemplate");
-
-      return View(ev);
-    }
-
     [HttpPost]
     [Authorize]
     public ActionResult AddFavorite(long eventId)
@@ -217,16 +223,34 @@ namespace EventCombo.Controllers
 
     [HttpGet]
     [Authorize]
+    public async Task<ActionResult> CMSEditEvent(long eventId)
+    {
+      if (User.Identity.IsAuthenticated)
+      {
+        ApplicationUserManager um = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+        var user = await um.FindByNameAsync(User.Identity.Name);
+        Session["AppId"] = user.Id;
+      }
+      else
+        throw new UnauthorizedAccessException("Unauthorized access from CMS.");
+
+      ViewBag.CMSCall = true;
+
+      return EditEvent(eventId);
+    }
+
+    [HttpGet]
+    [Authorize]
     public ActionResult EditEvent(long eventId)
     {
       string userId = "";
       if (Session["AppId"] != null)
         userId = Session["AppId"].ToString();
       else
-        return RedirectToAction("Index", "Home", new { lat = CookieStore.GetCookie("Lat"), lng = CookieStore.GetCookie("Long"), page = "1", strParm = "Y" });
+        return RedirectToAction("Index", "Home");
     
-      if (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner)
-        return RedirectToAction("Index", "Home", new { lat = CookieStore.GetCookie("Lat"), lng = CookieStore.GetCookie("Long"), page = "1", strParm = "Y" });
+      if ((_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner) && !User.IsInRole(SARole))
+        return RedirectToAction("Index", "Home");
 
       Session["logo"] = "events";
       Session["Fromname"] = "events";
@@ -235,6 +259,8 @@ namespace EventCombo.Controllers
 
       EventViewModel ev = _eService.GetEventById(eventId);
       PopulateBaseViewModel(ev, String.Format("Edit {0} | Eventcombo", ev.EventTitle));
+
+      ev.IsAdmin = User.IsInRole(SARole);
 
       return View("CreateEvent", ev);
     }

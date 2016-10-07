@@ -1,139 +1,239 @@
-﻿@using EventCombo.ViewModels
+﻿@using EventCombo.Models
+@using EventCombo.Service
+@using System.Linq
+@model HomepageInfoViewModel
 @{
-    ViewBag.Title = "EventCombo - Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free";
+  Layout = "~/Views/Shared/_AngularLayout.cshtml";
 }
 
-<div class="container-fluid cont_margin no-padding con_scr0l_home" id="scrollhome">
-    <div id="dvEventListing" class="col-sm-9 col-xs-12 ot_main_pad mb10">
-       @{Html.RenderPartial("~/Views/Home/HomeEventList.cshtml"); }
-    </div>
+@section CSSSection
+{
+  @Styles.Render("~/Content/AMaterial/homePage.css")
+}
 
-    <div class="col-sm-3 col-xs-12 ot_main_pad">
-      @{ Html.RenderAction("ShowLastArticles", "Article"); }
-    </div>
+@section ScriptSection
+{
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/TweenLite.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/plugins/CSSPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/plugins/TextPlugin.min.js"></script>
+}
 
-</div>
-
-
-<div class="modal fade" id="UserOrgnizer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-sm confirm-msg ok-msg custom">
-        <div class="modal-content">
-            <form id="contactForm" class="fullw1 add">
-                <div class="modal-body text-center pv50 txt-msg">
-                    <h4 class="msg" id="hId">You are not authorized to create an event. Please contact admin@eventcombo.com</h4>
-                </div>
-                <div class="modal-footer msg-action-btn ok">
-                    <button type="button" class="btn btn-primary yes ok" id="btMessOk" data-dismiss="modal">OK</button>
-                </div>
-            </form>
-        </div>
-    </div><!-- confirm-msg -->
-</div>
-
-<div>
-    <a class="td-btn" id="btOkMes" type="button" data-backdrop="static" data-keyboard="false" href="#UserOrgnizer" data-toggle="modal" style="display:none">
-    </a>
-</div>
-
-
-<script>
-    $(document).prop('title', 'Find and Enjoy Cool Events, Create Your Own, Sell Tickets For Free');
-    var getUrlParameter = function getUrlParameter(sParam) {
-        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-            sURLVariables = sPageURL.split('&'),
-            sParameterName,
-            i;
-
-        for (i = 0; i < sURLVariables.length; i++) {
-            sParameterName = sURLVariables[i].split('=');
-
-            if (sParameterName[0] === sParam) {
-                return sParameterName[1] === undefined ? true : sParameterName[1];
-            }
-        }
-    };
-
+@section ScriptFooterSection
+{
+  <script src="~/Scripts/AMaterial/texttyper.js"></script>
+  <script src="~/Scripts/AMaterial/Service/eventFavoriteService.js"></script>
+  <script src="~/Scripts/AMaterial/Service/socialService.js"></script>
+  <script src="~/Scripts/AMaterial/Homepage.js"></script>
+  <script type="text/javascript">
+    var cntWd, sldWd, tb;
     $(document).ready(function () {
-        //url = url.replace("-parameter", vEventId);
-        
-        if ('@ViewBag.UserOrg' == "Y")
-        {
-            $("#btOkMes").click();
-        }
+      $('#featured').mouseenter(function (ent) {
+        cntWd = $('#featured').innerWidth();
+        tb = $('#featured-scrollbox');
+        sldWd = tb.outerWidth();
+      });
+      $('#featured').mousemove(function (ev) {
+        tb.css({ left: ((cntWd - sldWd) * ((ev.pageX / cntWd).toFixed(3))).toFixed(1) + "px" });
+      });
+    });
+  </script>
+  <script type="text/javascript">
+    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
 
-      
-        
-        var pg = getUrlParameter('page');
-        if (!pg) {
-            var Lat = @CookieStore.GetCookie("Lat");
-            var Lng = @CookieStore.GetCookie("Long");
-            Lat  = parseFloat(Lat);
-            Lng = parseFloat(Lng);
-            if (isNaN(Lat) == true) Lat = 0;
-            if (isNaN(Lng) == true) Lng = 0;
-         //   alert(Lat);
-            if (Lat > 0)
-            {
-                var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = CookieStore.GetCookie("Lat"), lng = CookieStore.GetCookie("Long"), page = "1"}))';
-                window.location.replace(vUrl);
-            }
-            else
-            {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function (p) {
-                        var LatLng = new google.maps.LatLng(p.coords.latitude,p.coords.longitude);
-                        var geocoder = new google.maps.Geocoder;
-                        var infowindow = new google.maps.InfoWindow;
+    // init the FB JS SDK
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: fbappid,                        // App ID from the app dashboard
+        status: true,                          // Check Facebook Login status
+        xfbml: true,                           // Look for social plugins on the page
+        version: '2.7'
+      });
 
-                        var mapOptions = {
-                            center: { lat: p.coords.latitude, lng: p.coords.longitude },
-                            zoom: 13,
-                            mapTypeId: google.maps.MapTypeId.ROADMAP
-                        };
-                        var vLat = p.coords.latitude;
-                        var vLong = p.coords.longitude;
+    };
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) { return; }
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 
-                        //$.cookie("Lat", vLat, { expire: 365 });
-                        //$.cookie("Long", vLong, { expire: 365 });
-
-                        var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat= "strLat", lng= "strLong", page = "1"}))';
-                        vUrl = vUrl.replace("strLat", vLat);
-                        vUrl = vUrl.replace("strLong", vLong);
-                        window.location.replace(vUrl);
-
-                    }, function (p) {
-                        var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = "", lng = "", page = "1" }))';
-                        window.location.replace(vUrl);
-                    });
-
-                } else {
-                    var vUrl = '@Html.Raw(Url.Action("Index", "Home", new {lat = "", lng = "", page = "1" }))';
-                    window.location.replace(vUrl);
-                }
-            }
-
-        }
-
-        
-
-
-
-        @*$.ajax({
-            url: '@Url.Action("GetEventURL", "CreateEvent")',
-            type: "Post",
-            success: function (data) {
-                if (data != "")
-                    $("#dllEventList").html(data);
-           },
-        });
-        $("#dllEventList").change(function () {
-            window.location.href = $("#dllEventList").val();
-        });
-        $("#btTest").click(function () {
-           // alert("button click");
-            window.location.href = '@Url.Action("ViewEvent", "ViewEvent", new { strEventDs = "a", strEventId = "74" })';
-
-        });*@
+    // Text typer
+    var rotating = new gsapTypeIt({
+      el: document.getElementById('ContainerEl_2'),
+      rotateWords: true,
+      autoPlay: true,
+      rotateWordsOptions: {
+        wordsList: [@for (var i = 0; i < Model.KeyWords.Count(); i++) { @(Html.Raw((i == 0 ? "" : ", ") + "'" + Model.KeyWords.ElementAt(i) + "'")) }],
+        cycle: true,
+        clear: true
+      }
     });
 
-</script>
+  </script>
+}
+<!--***************************-->
+<div ng-controller="HomeController" ng-cloak>
+  <div class="hero" ng-style="bgImageStyle" ng-init="InitBGImages('@(Model.StartImageUrl)', '@(Model.ImageUrl)')">
+    <div class="hero1">
+      <div>Go beyond tickets</div>
+      <div class="pretext">Rock your <span id="ContainerEl_2"></span></div>
+    </div>
+  </div>
+  <div class="citylist clearfix" id="citylist">
+    @{
+      int cityCount = Model.Cities.Count();
+      cityCount = cityCount < 11 ? cityCount : 11;
+      int etCount = Model.EventTypes.Count();
+      etCount = etCount < 11 ? etCount : 11;
+    }
+    @for (int i = 0; i < 3; i++)
+    {
+      <div class="row">
+        @for (int j = 0; j < 4; j++)
+        {
+          int idx = i * 4 + j;
+          if (idx < cityCount)
+          {
+            var city = Model.Cities.ElementAt(idx);
+            <div class="c3 city" id="@("city_" + idx.ToString())" ng-click="OnCityChange(@city.Latitude, @city.Longitude, @city.CityID, '@("city_" + idx.ToString())')" title="@city.CityName">
+              <a>@city.ShortName</a>
+              <span class="cityPicker">
+                <big>@city.ShortName</big>
+                <small>pick an event type</small>
+                <i class="material-icons">arrow_downward</i>
+              </span>
+            </div>
+          }
+          else if (idx == cityCount)
+          {
+            <div class="c3 city all" id="allCities" ng-click="OnCityChange(200, 200, -1, 'allCities')" title="All cities">
+              <a>All cities</a>
+              <span class="cityPicker">
+                <big>All cities</big>
+                <small>pick an event type</small>
+                <i class="material-icons">arrow_downward</i>
+              </span>
+            </div>
+          }
+        }
+      </div>
+    }
+  </div>
+  <div class="eventlist clearfix" id="eventlist">
+    @for (int i = 0; i < 3; i++)
+    {
+      <div class="row">
+        @for (int j = 0; j < 4; j++)
+        {
+          int idx = i * 4 + j;
+          if (idx < etCount)
+          {
+            var etype = Model.EventTypes.ElementAt(idx);
+            <div class="c3 event" id="@("etype_" + idx.ToString())" ng-click="OnEventTypeChange(@etype.EventTypeId, '@("etype_" + idx.ToString())')" title="@etype.EventType">
+              <a>@etype.EventType</a>
+              <span class="eventPicker">
+                <i class="material-icons">arrow_upward</i>
+                <small>pick a city</small>
+                <big>@etype.EventType</big>
+              </span>
+            </div>
+          }
+          else if (idx == etCount)
+          {
+            <div class="c3 event all" id="allETypes" ng-click="OnEventTypeChange(-1, 'allETypes')" title="All events">
+              <a>All events</a>
+              <span class="eventPicker">
+                <i class="material-icons">arrow_upward</i>
+                <small>pick a city</small>
+                <big>All events</big>
+              </span>
+            </div>
+          }
+        }
+      </div>
+    }
+  </div>
+  <div id="featured">
+    <div class="featuredbox" ng-repeat="ev in eventsList" title="{{ev.EventTitle}}">
+      <a href="{{ev.EventPath}}" class="img"><img ng-src="{{ev.ImageUrl}}" alt="{{ev.ImageAlt}}"></a>
+      <div class="info">
+        <h3><a href="{{ev.EventPath}}">{{ev.EventTitle}}</a></h3>
+        <div class="date">{{ev.EventDates}}</div>
+        <div class="location">{{ev.Address}}</div>
+        <div class="price">{{ev.PriceRange}}</div>
+        <div class="evActions homEV">
+          <a class="hashLink" href="{{ev.EventPath}}" title="{{'#' + ev.EventType + ' #' + ev.EventCategory}}">{{FormatHashTags(ev.EventType, ev.EventCategory)}}</a>
+          <div class="matBox">
+            <a class="matIcon" ng-click="OnShareEvent(ev)"><i class="material-icons">share</i></a>
+            <a ng-class="{ 'matVisible': ev.UserFavorite }" class="matIcon active" ng-click="OnAddFavorite(ev)"><i class="material-icons">favorite</i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--***************************-->
+  <section style="display:none;" ng-style="{'display': displayVEPopups}">
+    <div class="popOverlay" ng-show="popHomeShareWithFriends">
+      <div class="popBox">
+        <form name="VEShareWithFriendsForm" novalidate>
+          <a class="popClose" ng-click="popVEShareWithFriends=false"><i class="material-icons">clear</i></a>
+          <h3 class="red-heading" style="text-align: center">Share event with friends</h3>
+          <md-input-container class="md-block">
+            <label>Friend's email</label>
+            <input type="email" ng-maxlength="255" required name="email" ng-model="VEMessage.Email" ng-pattern="/^.+@("@").+\..+$/" ng-keypress="submitted=false" />
+            <div ng-messages="VEShareWithFriendsForm.email.$error" role="alert">
+              <div ng-message="required">Please enter friend's email.</div>
+              <div ng-message="pattern">Please use valid email format.</div>
+              <div ng-message="maxlength">Your email is too long.</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Message</label>
+            <textarea ng-maxlength="255" required name="message" ng-model="VEMessage.Message" style="min-height:50px"></textarea>
+            <div ng-messages="VEShareWithFriendsForm.message.$error">
+              <div ng-message="required">Please enter your message.</div>
+              <div ng-message="maxlength">Your message is too long. Only 255 characters allowed.</div>
+            </div>
+          </md-input-container>
+          <div class="clear">
+            <button type="reset" class="popLink margin-1em-top gray lFloat" ng-click="popVEShareWithFriends=false">CANCEL</button>
+            <button class="popLink margin-1em-top rFloat" ng-click="TrySendShareWithFriendsMessage(VEShareWithFriendsForm)">SEND</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="popOverlay" ng-show="popHomeShareDialog">
+      <div class="popBox">
+        <a class="popClose" ng-click="popHomeShareDialog=false"><i class="material-icons">clear</i></a>
+        <h3 class="red-heading text-center">Share event</h3>
+        <div class="social text-center">
+          <a href="javascript:void(0)" title="Share {{shareEvent.EventTitle}} on Facebook" ng-click="FacebookShare(shareEvent.EventPath)"><img width="32" alt="Share {{shareEvent.eventTitle}} on Facebook" src="~/Images/AMaterial/facebook.svg"></a>
+          <a href="javascript:void(0)" title="Share {{shareEvent.EventTitle}} on Twitter" ng-click="TwitterShare(shareEvent.EventTitle, shareEvent.EventPath)"><img width="32" alt="Share {{shareEvent.eventTitle}} on Twitter" src="~/Images/AMaterial/twitter.svg"></a>
+          <a href="javascript:void(0)" title="Share {{shareEvent.EventTitle}} on LinkedIn" ng-click="LinkedInShare(shareEvent.EventTitle, shareEvent.EventPath, shareEvent.EventShortDesc)"><img width="32" alt="Share {{shareEvent.eventTitle}} on LinkedIn" src="~/Images/AMaterial/linkedin.svg"></a>
+        </div>
+        <md-input-container class="md-block" style="margin-top: 40px;">
+          <label>Event URL</label>
+          <input type="text" ng-maxlength="255" name="shareUrl" ng-model="shareEvent.EventPath" ng-readonly="true" />
+        </md-input-container>
+        <div class="clear">
+          <button type="reset" class="popLink margin-1em-top gray rFloat" ng-click="popHomeShareDialog=false">CANCEL</button>
+        </div>
+      </div>
+    </div>
+    <div class="popOverlay" ng-show="popLoading">
+      <div class="popBox">
+        <h3 class="blue-heading text-center">{{LoadingMessage}}</h3>
+        <img src="~/Images/ajaxloader1.gif" />
+      </div>
+    </div>
+    <div class="popOverlay" ng-show="popInfoMessage">
+      <div class="popBox">
+        <a class="popClose" ng-click="popInfoMessage=false"><i class="material-icons">clear</i></a>
+        <div class="blue-heading text-center">{{InfoMessage}}</div>
+        <div class="text-center margin-2em-top"><a class="popLink" ng-click="popInfoMessage=false">CONTINUE TO SITE</a></div>
+      </div>
+    </div>
+  </section>
+</div>

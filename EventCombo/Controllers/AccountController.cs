@@ -33,7 +33,7 @@ namespace EventCombo.Controllers
 {
   [Authorize]
 
-  public class AccountController : Controller
+  public class AccountController : BaseController
   {
     private ApplicationSignInManager _signInManager;
     private ApplicationUserManager _userManager;
@@ -149,12 +149,13 @@ namespace EventCombo.Controllers
     }
 
     [HttpGet]
-    public ActionResult PurchasedTicketDetail(string OrderId, long EventId)
+    public ActionResult PurchasedTicketDetail(string OrderId, long EventId, int colSpan)
     {
       if (Session["AppId"] == null)
         return DefaultAction();
 
       string userId = Session["AppId"].ToString();
+      ViewBag.ColSpan = colSpan;
       OrderDetailsViewModel orderInfo = _tservice.GetOrderDetails(OrderId, userId, EventId);
       return PartialView("_PurchasedTicketDetail", orderInfo);
     }
@@ -2094,6 +2095,19 @@ namespace EventCombo.Controllers
         }
       return View("LoginResult", new LoginResultViewModel(false, returnUrl));
     }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public ActionResult GetStatus()
+    {
+      BaseViewModel result = new BaseViewModel();
+      PopulateBaseViewModel(result);
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = result;
+      return res;
+    }
+
 
 
     [HttpGet]

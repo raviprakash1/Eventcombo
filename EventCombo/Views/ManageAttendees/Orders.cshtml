@@ -4,7 +4,6 @@
 @model ManageAttendeesOrdersViewModel
 
 @{
-  ViewBag.Title = "Manage Attendees - Orders";
   Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
@@ -38,7 +37,7 @@
       <div id="@(order.PaymentState.ToString())" class="tab-pane fade@(order.PaymentState == PaymentStates.Total ? " in active" : "")">
         <div class="dateTimeForm">
           <a id="oneDayDate@(order.PaymentState.ToString())" class="dateTopHeaderCls" href="javascript:void(0)" onclick="setSelectedDate('oneDayDate', 1, '@(order.PaymentState.ToString())' )">1 DAY</a>
-          <a id="oneWeekDate@(order.PaymentState.ToString())" class="dateTopHeaderCls dateTopHeaderClsSelected" href="javascript:void(0)" onclick="setSelectedDate('oneWeekDate', 2, '@(order.PaymentState.ToString())')">1 WEEK</a>
+          <a id="oneWeekDate@(order.PaymentState.ToString())" class="dateTopHeaderCls" href="javascript:void(0)" onclick="setSelectedDate('oneWeekDate', 2, '@(order.PaymentState.ToString())')">1 WEEK</a>
           <a id="oneMonthDate@(order.PaymentState.ToString())" class="dateTopHeaderCls" href="javascript:void(0)" onclick="setSelectedDate('oneMonthDate', 3, '@(order.PaymentState.ToString())')">1 MONTH</a>
           <a id="oneYearDate@(order.PaymentState.ToString())" class="dateTopHeaderCls" href="javascript:void(0)" onclick="setSelectedDate('oneYearDate', 4, '@(order.PaymentState.ToString())')">1 YEAR</a>
           <a id="customDate@(order.PaymentState.ToString())" class="dateTopHeaderCls" href="javascript:void(0)">CUSTOM: <input type="text" id="datepicker@(order.PaymentState.ToString())" class="datePickerCustomCls"></a>
@@ -51,18 +50,15 @@
             </div>
             <div class="col-xs-6 paddingBootstrap">
               <span class="ticketSoldSaleReport" style="float:left;">Sale Report</span>
-                <div class="dropdown" style="width: 92px;display: block;float: right;padding-top:10px;">
-                    <button style="width: 100%;text-align: left; font-size: 19px;" class="btn btn-default dropdown-toggle questionsBtn" type="button" id="exportSaleReport" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-ptid="1">
-                        <span class="text">Export</span>
-                        <span class="caret" style="float: right;margin-top: 8px;"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="exportSaleReport">
-                        <li><a href="javascript:window.open('@Url.Action("SaleReport", "ManageAttendees", new {eventId = Model.EventId})','');" class="linkReportHead">HTML Web Page Display</a></li>
-                        <li><a href="@Url.Action("SaleReport", "Download", new { state = order.PaymentState, eventId = Model.EventId, format = "csv"})" class="linkReportHead">CSV</a></li>
-                        <li><a href="@Url.Action("SaleReport", "Download", new { state = order.PaymentState, eventId = Model.EventId, format = "txt"})" class="linkReportHead">TXT</a></li>
-                        <li><a href="@Url.Action("SaleReport", "Download", new { state = order.PaymentState, eventId = Model.EventId, format = "xls"})" class="linkReportHead">EXL</a></li>
-                    </ul>
-                </div>  
+                <div style="width: 92px;display: block;float: right;padding-top:10px;padding-left: 10px;">
+                    <select class="form-control text-box single-line" onchange="saleExport(this);">
+                        <option value="">Export</option>
+                        <option value="HTML">HTML</option>
+                        <option value="@Url.Action("SaleReport", "Download", new { state = order.PaymentState, eventId = Model.EventId, format = "csv"})">CSV</option>
+                        <option value="@Url.Action("SaleReport", "Download", new { state = order.PaymentState, eventId = Model.EventId, format = "txt"})">TXT</option>
+                        <option value="@Url.Action("SaleReport", "Download", new { state = order.PaymentState, eventId = Model.EventId, format = "xls"})">EXL</option>
+                    </select>
+                </div>
             </div>
             <div class="col-xs-12 mainContainerLoading">
               <div class="filledContainer" style="width: @(perc.ToString("F0"))%;">
@@ -87,6 +83,7 @@
             <div class="col-sm-6 col-xs-12 orderTxtHead">ORDER LIST</div>
             <div class="col-sm-6 col-xs-12 orderTxtExport">
               Export to:
+              <a href="@Url.Action("OrderList", "Download", new { state = order.PaymentState, eventId = Model.EventId, format = "html"})" target="_blank" class="linkReportHead">HTML</a>
               <a href="@Url.Action("OrderList", "Download", new { state = order.PaymentState, eventId = Model.EventId, format = "csv"})" class="linkReportHead">CSV</a>
               <a href="@Url.Action("OrderList", "Download", new { state = order.PaymentState, eventId = Model.EventId, format = "txt"})" class="linkReportHead">TXT</a>
               <a href="@Url.Action("OrderList", "Download", new { state = order.PaymentState, eventId = Model.EventId, format = "xls"})" class="linkReportHead">EXL</a>
@@ -293,32 +290,6 @@
     }
   }
 
-  function expandEditMenu(obj, page, id) {
-    var detail = $('#OrderDetail' + page + id);
-    if ($(detail).data('popped') == '0') {
-      $.ajax({
-        type: "GET",
-        url: "@Url.Action("GetOrderDetail", "ManageAttendees")",
-        data: { OrderId: id },
-        datatype: "html",
-        success: function (data) {
-          $(obj).parent().parent().css('background-color', '#f1f1f1');
-          $(detail).html(data);
-          $(detail).css('background-color', '#f1f1f1');
-          $(detail).css('border-top', 'none');
-          $(detail).data('popped', '1');
-          $(detail).slideDown();
-        }
-      });
-    }
-    else {
-      $(detail).html('');
-      $(obj).parent().parent().css('background-color', '#ffffff');
-      $(detail).data('popped', '0');
-      $(detail).slideUp();
-    }
-  }
-
   function formatDateTime(date) {
     var cdate = new Date(date);
     var day = cdate.getDate();
@@ -359,5 +330,127 @@
       }
     });
   }
+
+    function saleExport(selectObj) {
+        var optionVal = $(selectObj).val();
+        if (optionVal == "HTML") {
+            window.open('@Url.Action("SaleReport", "ManageAttendees", new {eventId = Model.EventId})', '');
+        } else if (optionVal != "") {
+            window.location = optionVal;
+        }
+    }
+
+    function expandEditMenu(obj, name, id, eId) {
+        var detail = $('#' + name + id);
+        if ($(detail).data('popped') == '0') {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("PurchasedTicketDetail", "Account")',
+                data: { OrderId: id, EventId: eId, colSpan: 11 },
+                datatype: 'html',
+                success: function (data) {
+                    $(obj).parent().parent().css('background-color', '#f1f1f1');
+                    $(detail).html(data);
+                    $(detail).css('background-color', '#f1f1f1');
+                    $(detail).css('border-top', 'none');
+                    $(detail).data('popped', '1');
+                    $(detail).slideDown();
+                }
+            });
+        }
+        else {
+            $(detail).html('');
+            $(obj).parent().parent().css('background-color', '#ffffff');
+            $(detail).data('popped', '0');
+            $(detail).slideUp();
+        }
+
+    }
+
+    function editAttendees(obj) {
+        if ($(obj).parent().parent().find(".EditAttendee").attr("disabled") == undefined || $(obj).parent().parent().find(".EditAttendee").attr("disabled") == null || $(obj).parent().parent().find(".EditAttendee").attr("disabled") == "false") {
+            $(obj).parent().parent().find(".EditAttendee").attr("disabled", "true")
+        } else {
+            $(obj).parent().parent().find(".EditAttendee").removeAttr("disabled")
+        }
+    }
+
+    function saveChangeFunc(id) {
+        var query = {
+            OrderId: id,
+            SendEmail: $('#sendConfirmationEmail' + id).hasClass('basicInfoCheckBox'),
+            Attendees: []
+        };
+        $('input[id^="UETableTDSUbDivName' + id + '_"]').each(function () {
+            query.Attendees.push({
+                TicketbearerId: $(this).data('bearerid'),
+                Name: $(this).val(),
+                Email: $('#UETableTDSUbDivEmail' + id + '_' + $(this).data('bearerid')).val(),
+                OrderId: id
+            })
+        });
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SavePurchasedTicketDetail", "Account")",
+            data: query,
+            datatype: "html",
+            success: function (data) {
+                $('#ajaxanswer' + id).html(data);
+            }
+        });
+    }
+
+    function SendCancelOrder(obj, oId) {
+        if ($(obj).closest('table').parent().parent().data('orderstate') != 1) {
+            $('#ajaxanswer' + oId).html("Order already cancelled.");
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("CancelOrder", "Account")",
+            data: { OrderId: oId },
+            datatype: "html",
+            success: function (data) {
+                if (data > 0) {
+                    var caption = $(obj).closest('table').parent().parent().prev('tr').find('td').last();
+                    $(caption).html($(caption).html() + ' - Cancelled');
+                    $('#ajaxanswer' + oId).html("Order cancelled.");
+                }
+                else
+                    $('#ajaxanswer' + oId).html("Order wasn't cancelled.");
+            }
+        });
+    }
+
+    function SendOrganizerMessage(oId) {
+        var query = {
+            OrderId: oId,
+            Name: $('#nameContact' + oId).val(),
+            Email: $('#emailContact' + oId).val(),
+            Message: $('#messageContact' + oId).val()
+        }
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SaveMessage", "Account")",
+            data: query,
+            datatype: "html",
+            success: function (data) {
+                if (data > 0) {
+                    $('#ajaxanswer' + oId).html("Message saved.");
+                }
+                else
+                    $('#ajaxanswer' + oId).html("Message not saved.");
+            }
+        });
+    }
+
+    $(".purchaseTicketHeaderTabs").click(function () {
+        $(".tab-content .tab-pane table tr[id^=UETableTDOrderDetail]").each(function () {
+            $(this).html("");
+            $(this).parent().parent().css('background-color', '#ffffff');
+            $(this).data('popped', '0');
+            $(this).slideUp();
+        });
+    });
 
 </script>

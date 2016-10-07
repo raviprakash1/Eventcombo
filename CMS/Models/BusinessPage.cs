@@ -14,6 +14,12 @@ namespace CMS.Models
     
     public partial class BusinessPage
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public BusinessPage()
+        {
+            this.BusinessPageECImages = new HashSet<BusinessPageECImage>();
+        }
+    
         public long BusinessPageID { get; set; }
         public string PageName { get; set; }
         public string PageNameUrl { get; set; }
@@ -23,5 +29,8 @@ namespace CMS.Models
         public int PageOrder { get; set; }
         public bool IsOnFooter { get; set; }
         public Nullable<int> ResponseCode { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BusinessPageECImage> BusinessPageECImages { get; set; }
     }
 }

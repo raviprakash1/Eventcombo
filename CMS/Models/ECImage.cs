@@ -20,6 +20,7 @@ namespace CMS.Models
             this.ArticleAuthors = new HashSet<ArticleAuthor>();
             this.ArticleImages = new HashSet<ArticleImage>();
             this.Articles = new HashSet<Article>();
+            this.BusinessPageECImages = new HashSet<BusinessPageECImage>();
         }
     
         public string ImagePath { get; set; }
@@ -33,5 +34,7 @@ namespace CMS.Models
         public virtual ICollection<ArticleImage> ArticleImages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Article> Articles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BusinessPageECImage> BusinessPageECImages { get; set; }
     }
 }

@@ -69,6 +69,7 @@ namespace CMS.Models
         public Nullable<System.DateTime> FeatureUpdateDate { get; set; }
         public Nullable<long> ECBackgroundId { get; set; }
         public string BackgroundColor { get; set; }
+        public Nullable<long> ECImageId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Addresses { get; set; }

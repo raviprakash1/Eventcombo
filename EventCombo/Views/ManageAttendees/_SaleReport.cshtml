@@ -1,7 +1,7 @@
 ﻿@model List<EventCombo.Models.EventOrderInfoViewModel>
 <div id="purchasedTicketContainer">
     <div class="table-responsive tableResponsiveOrderList">
-        <table class="table" border="1">
+        <table class="table" cellspacing="0" border="1">
             <thead>
                 <tr>
                     <th>Order #</th>
@@ -20,6 +20,10 @@
                     <th>Attendee Email</th>
                     <th>Billing Address</th>
                     <th>Mail Tickets</th>
+                    @foreach (var variable in Model.FirstOrDefault().VariableChages)
+                    {
+                        <th>@variable.VariableDesc</th>
+                    }
                 </tr>
             </thead>
             <tbody class="tableRecorsTBody">
@@ -31,17 +35,21 @@
                         <td class="UETableTD">@order.BuyerName</td>
                         <td class="UETableTD">@order.TicketName</td>
                         <td class="UETableTD">@order.Quantity</td>
-                        <td class="UETableTD">$@order.PricePaid</td>
-                        <td class="UETableTD">$@order.PriceNet</td>
-                        <td class="UETableTD">$@order.Fee</td>
-                        <td class="UETableTD">$@order.MerchantFee</td>
+                        <td class="UETableTD">$@order.PricePaid.ToString("N2")</td>
+                        <td class="UETableTD">$@order.PriceNet.ToString("N2")</td>
+                        <td class="UETableTD">$@order.Fee.ToString("N2")</td>
+                        <td class="UETableTD">$@order.MerchantFee.ToString("N2")</td>
                         <td class="UETableTD">@order.PromoCode</td>
-                        <td class="UETableTD">@(order.Refunded == 0 ? "" : "$" + order.Refunded.ToString("N2"))</td>
-                        <td class="UETableTD">@(order.Cancelled == 0 ? "" : "$" + order.Cancelled.ToString("N2"))</td>
+                        <td class="UETableTD">@(order.Refunded > 0 ? "Yes" : "")</td>
+                        <td class="UETableTD">@(order.Cancelled > 0 ? "Yes" : "")</td>
                         <td class="UETableTD"></td>
                         <td class="UETableTD">@order.BuyerEmail</td>
                         <td class="UETableTD">@order.Address</td>
                         <td class="UETableTD">@order.MailTickets</td>
+                        @foreach (var variable in order.VariableChages)
+                        {
+                            <td class="UETableTD">$@((variable.Price ?? 0).ToString("N2"))</td>
+                        }
                     </tr>
                 }
             </tbody>

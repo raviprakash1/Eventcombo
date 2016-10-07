@@ -1,0 +1,241 @@
+﻿@model EventCombo.Models.ScheduledEmailViewModel
+
+@{
+    ViewBag.Title = "SendEmail";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/manageattendees.css" rel="stylesheet" />
+<script src="https://cdn.ckeditor.com/4.5.2/standard-all/ckeditor.js"></script>
+<link href='~/Content/jquery-te-1.4.0.css' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="~/Scripts/jquery-te-1.4.0.js"></script>
+
+@section sidenav{
+    <div id="sidebar" class="nav nav-stacked">
+        @Html.Action("Sidenav", "ManageEvent", new { eventid = ViewBag.EventId, CurrentItem = "manageattendees" })
+    </div>
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Schedule Email</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.CC)
+        @Html.HiddenFor(model => model.BCC)
+        @Html.HiddenFor(model => model.ScheduledDate)
+        @Html.Hidden("TimeBeforeEventStart", "00:00:00")
+       
+
+        <div class="form-group">
+            @Html.LabelFor(model=>model.SendFrom, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SendFrom, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.SendFrom, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model=>model.ReplyTo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ReplyTo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ReplyTo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SendTo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model=>model.SendTo, new SelectList(Model.SendTos, "Value", "Name"),new { @onChange= "GetAttendeeList(this);", @class= "form-control text-box single-line" })
+                <div id="AttendeeSearchContainer" class="AttendeeSearchContainer">
+                </div>
+                @Html.ValidationMessageFor(model => model.SendTo, "", new { @class = "text-danger" })
+                <div id="dvRegisteredDate" class="RegisteredDate" style="@(Model.SendTo != "ALL_ATTENDEES_DATE" ? "display:none;" : "display:block;")">
+                   @Html.LabelFor(model => model.RegisteredDate, htmlAttributes: new { @class = "control-label col-md-2", @type = "date" })
+                    <input id="RegisteredDate" name="RegisteredDate" type="date" value="@Model.RegisteredDate.ToString("yyyy/MM/dd")" class="form-control text-box single-line" style="width: 250px;display:initial;" />
+                    @Html.ValidationMessageFor(model => model.RegisteredDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "editor jqte-test", @id = "Body" } })
+                @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Send Test Message To", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input id="txtAttendeeTestMessage" name="txtAttendeeTestMessage" type="text" class="form-control text-box single-line" placeholder="Test Email Id" style="width: 250px;display:initial;" />
+                <input type="button" onclick="sendTestMessage();" value="Send Test" class="btn btn-info articleBtnCls" />
+                <label id="lblTestEmailMessage" style="color:green;"></label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Send Email", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <ul class="list-unstyled">
+                    <li style="padding: 4px 4px 10px 4px;">@Html.RadioButton("SendEmail", "Now", true) <b>Now</b></li>
+                    <li style="padding: 4px 4px 10px 4px;">
+                        <div>
+                            @Html.RadioButton("SendEmail", "OnDate")
+                            <b>At</b>
+                            <input id="txtOnDateTime" name="txtOnDateTime" type="datetime-local" class="form-control text-box single-line" style="width: 250px;display:initial;"/>
+                        </div>
+                    </li>
+                    <li style="padding: 4px 4px 10px 4px;">
+                        <div class="l-mar-top-2">
+                            @Html.RadioButton("SendEmail", "BeforeEvent")
+                            <input type="number" id="BeforeEvent_Days" title="Event Start Date (@Model.ScheduledDate)" name="BeforeEvent_Days" value="@Model.BeforeEvent_Days" class="form-control text-box single-line" style="width: 80px;display:initial;" >&nbsp;Days&nbsp;
+                            <input type="number" min="0" max="24" id="BeforeEvent_Hours" title="Event Start Date (@Model.ScheduledDate)" name="BeforeEvent_Hours" value="@Model.BeforeEvent_Hours" class="form-control text-box single-line" style="width: 80px;display:initial;" >&nbsp;Hours&nbsp;
+                            <input type="number" min="0" max="60" id="BeforeEvent_Minutes" title="Event Start Date (@Model.ScheduledDate)" name="BeforeEvent_Minutes" value="@Model.BeforeEvent_Minutes" class="form-control text-box single-line" style="width: 80px;display:initial;" >&nbsp;Minutes&nbsp;
+                            Before the event starts
+                        </div>
+                    </li>
+                </ul>
+                @Html.ValidationMessageFor(model => model.SendDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" name="btnCreate" value="Create" class="btn btn-info articleBtnCls" >Create</button>
+                @Html.ActionLink("Cancel", "AttendeeEmail", new { eventid = ViewBag.EventId }, new { @class = "btn btn-info articleBtnCls" })
+            </div>
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Back to List", "AttendeeEmail", new { eventid = ViewBag.EventId },new { @class = "btn btn-info articleBtnCls" })
+</div>
+
+<link href="~/fancybox/jquery.fancybox.css" rel="stylesheet" />
+<script src="~/fancybox/jquery.fancybox.js"></script>
+<script>
+    $(function () {
+        $("#Body").jqte();
+
+    });
+    CKEDITOR.disableAutoInline = true;
+    $('#anchorAttendeeSearchBox').fancybox({
+        maxWidth: 800,
+        maxHeight: 600,
+        fitToView: false,
+        width: '50%',
+        height: '50%',
+        autoSize: false,
+        closeClick: false,
+        openEffect: 'none',
+        closeEffect: 'none'
+    });
+
+    function ValidateEmail() {
+        var IsValidated = false;
+        if ($("#TicketbearerIds").val() != "") {
+            IsValidated = true;
+        } else {
+            alert('Please select atleast one attendee');
+        }
+        return IsValidated;
+    }
+
+    function ValidateAttendee() {
+        if ($('.chkTicketbearerIds:checked').size() > 0) {
+            $("#TicketbearerIds").val($('.chkTicketbearerIds:checked').map(function () { return this.value; }).get().join(','));
+            $("#SendTo").val("Attendee(" + $('.chkTicketbearerIds:checked').size() + ")");
+            $.fancybox.close();
+        } else {
+            alert('Please select atleast one attendee');
+            $("#SendTo").val("Attendee(0)");
+        }
+    }
+
+    function CheckAll(chk) {
+        if (chk.checked) {
+            $('.chkTicketbearerIds').prop('checked', true);
+        } else {
+            $('.chkTicketbearerIds').attr('checked', false);
+        }
+    }
+
+    function sendTestMessage() {
+        var htmlBody = $("#Body").val();
+        var emailViewModel = {
+            SendTo: $("#txtAttendeeTestMessage").val(),
+            ReplyTo: $("#ReplyTo").val(),
+            Subject: $("#Subject").val(),
+            Body: htmlBody
+        };
+        if ($("#txtAttendeeTestMessage").val() == "") {
+            alert('Please enter test email');
+        } else if ($("#ReplyTo").val() == "") {
+            alert('Please enter Reply To');
+        } else if ($("#Subject").val() == "") {
+            alert('Please enter Subject');
+        } else if ($("#Body").val() == "") {
+            alert('Please enter Message');
+        } else {
+            $.ajax({
+                type: "post",
+                url: "@Url.Action("SendTestEmail", "ManageAttendees")",
+                data: emailViewModel,
+                datatype: "html",
+                success: function (data) {
+                    $("#lblTestEmailMessage").html("Test Message sent successfully...")
+                }
+            });
+        }
+    }
+
+    function GetAttendeeList(Obj) {
+        $("#AttendeeSearchContainer").html("");
+        $("#dvRegisteredDate").css("display","none");
+        if($(Obj).val()=="ATTENDEES"){
+            var emailViewModel = {
+                Name: "",
+                Email: "",
+                eventid: @ViewBag.EventId
+                };
+            $.ajax({
+                type: "get",
+                url: "@Url.Action("GetAttendeeList", "ManageAttendees")",
+                data: emailViewModel,
+                datatype: "html",
+                success: function (data) {
+                    $("#AttendeeSearchContainer").html(data);
+                }
+            });
+        }else if($(Obj).val()=="ALL_ATTENDEES_DATE"){
+            $("#dvRegisteredDate").css("display","block");
+        }else if($(Obj).val()=="TICKET_ATTENDEES"){
+            var emailViewModel = {
+                eventid: @ViewBag.EventId
+                };
+            $.ajax({
+                type: "get",
+                url: "@Url.Action("GetAttendeeTicketTypeList", "ManageAttendees")",
+                data: emailViewModel,
+                datatype: "html",
+                success: function (data) {
+                    $("#AttendeeSearchContainer").html(data);
+                }
+            });
+        }
+    }
+
+</script>
+

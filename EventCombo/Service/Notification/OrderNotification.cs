@@ -147,17 +147,19 @@ namespace EventCombo.Service
       if (order.O_TotalAmount > 0)
       {
         IRepository<BillingAddress> baRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
+        IRepository<PaymentType> paymentTypeRepo = new GenericRepository<PaymentType>(_factory.ContextFactory);
         var myBillingdeatils = baRepo.Get(filter: (ba => ba.OrderId == _orderId)).FirstOrDefault();
+        var paymentType = paymentTypeRepo.Get(filter: (p => p.PaymentTypeId == order.PaymentTypeId)).FirstOrDefault();
         if (myBillingdeatils != null)
         {
           EncryptDecrypt encryptor = new EncryptDecrypt();
           string cardtype = encryptor.DecryptText(myBillingdeatils.card_type);
           string cardId = encryptor.DecryptText(myBillingdeatils.CardId);
-          cardtext = "Charge to : " + cardtype.First().ToString().ToUpper() + cardtype.Substring(1) + " XXXX-XXXX-XXXX-" + cardId.Substring(cardId.Length - 4);
+          cardtext = " - "+cardtype.First().ToString().ToUpper() + cardtype.Substring(1) + " XXXX-XXXX-XXXX-" + cardId.Substring(cardId.Length - 4);
         }
-        else
+        if (paymentType != null)
         {
-          cardtext = "Charge to : Paypal";
+            cardtext = "Charge to : " + paymentType.PaymentTypeName + "" + cardtext;
         }
       }
 

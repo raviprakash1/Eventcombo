@@ -225,7 +225,7 @@ namespace EventCombo.Controllers
             }
             else
             {
-                Mevent.url = baseurl + "/ev/" + urldb;
+                Mevent.url = Request.Url.Scheme + System.Uri.SchemeDelimiter + urldb + "." + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
             }
 
             Mevent.Descritption = Edetails.EventDescription;

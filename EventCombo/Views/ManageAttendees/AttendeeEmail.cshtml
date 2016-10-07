@@ -1,0 +1,163 @@
+﻿@using System.Collections.Generic;
+@using System.Linq;
+@using EventCombo.Models;
+
+@{
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/manageattendees.css" rel="stylesheet" />
+<script src="https://cdn.ckeditor.com/4.5.2/standard-all/ckeditor.js"></script>
+<link href='~/Content/jquery-te-1.4.0.css' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="~/Scripts/jquery-te-1.4.0.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@section sidenav{
+    <div id="sidebar" class="nav nav-stacked">
+        @Html.Action("Sidenav", "ManageEvent", new { eventid = ViewBag.EventId, CurrentItem = "manageattendees" })
+    </div>
+}
+
+<div id="purchasedTicketContainer">
+    <div class="headerPurchasedTicket">
+        <div class="col-sm-6 col-xs-6">
+            <h2 class="purchasedTitleHead">Email to Attendees</h2>
+        </div>
+        <div class="col-sm-6 col-xs-6 searchTxtOrderContainerCls">
+            <label id="PageMessage"></label>
+        </div>
+    </div>
+    <ul class="nav nav-tabs purchaseTicketHeaderTabs">
+        <li class="active"><a data-toggle="tab" href="#EmailScheduled">Email Scheduled (<label id="lblScheduledCount">0</label>) </a></li>
+        <li><a data-toggle="tab" href="#EmailSent">Email Sent</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="EmailScheduled" class="tab-pane fad in active">
+            <div id="AttendeeEmailListDivEmailScheduled" class="table-responsive tableResponsiveOrderList">
+                @{Html.RenderAction("AttendeeEmailList", "ManageAttendees", new { eventId = ViewBag.EventId, isEmailSend = false });}
+            </div>
+        </div>
+        <div id="EmailSent" class="tab-pane fad">
+            <div id="AttendeeEmailListDivEmailSent" class="table-responsive tableResponsiveOrderList">
+                @{Html.RenderAction("AttendeeEmailList", "ManageAttendees", new { eventId = ViewBag.EventId, isEmailSend = true });}
+            </div>
+        </div>
+    </div>
+    <div id="spinner" class="spinner" style="display:none;">
+        <img id="img-spinner" src="~/Images/ajaxloader1.gif" alt="Loading" />
+    </div>
+    <div class="articleItemCon">
+        @Html.ActionLink("Create New Attendee Email", "SendEmail", "ManageAttendees", new { eventId = ViewBag.EventId }, new { @class = "btn btn-info articleBtnCls" })
+    </div>
+</div>
+<a id="anchorOpenEditWindow" href="#AttendeeSearchContainer"></a>
+<div id="AttendeeSearchContainer" class="AttendeeSearchContainer" style="display:none;">
+   
+</div>
+<link href="~/fancybox/jquery.fancybox.css" rel="stylesheet" />
+<script src="~/fancybox/jquery.fancybox.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        $(document).on({
+            ajaxStart: function () { $("#spinner").show(); },
+            ajaxStop: function () { $("#spinner").hide(); }
+        });
+    });
+
+    function showPreview(obj, page, id) {
+        var detail = $('#AttendeeEmail_' + page +'_'+ id);
+        if ($(detail).data('popped') == '0') {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("AttendeeEmailDetail", "ManageAttendees")",
+                data: { eventId: @ViewBag.EventId, scheduledEmailId: id },
+                datatype: "html",
+                success: function (data) {
+                    $(obj).parent().parent().css('background-color', '#f1f1f1');
+                    $(detail).html(data);
+                    $(detail).css('background-color', '#f1f1f1');
+                    $(detail).css('border-top', 'none');
+                    $(detail).slideDown();
+                    $('#AttendeeEmail_' + page +'_'+ id).fancybox({
+                        maxWidth: 800,
+                        maxHeight: 600,
+                        fitToView: false,
+                        width: '70%',
+                        height: '70%',
+                        autoSize: false,
+                        closeClick: false,
+                        openEffect: 'none',
+                        closeEffect: 'none'
+                    });
+                    $('#AttendeeEmail_' + page +'_'+ id).click();
+                }
+            });
+        }
+        else {
+            $(detail).html('');
+            $(obj).parent().parent().css('background-color', '#ffffff');
+            $(detail).data('popped', '0');
+            $(detail).slideUp();
+        }
+    }
+
+    function formatDateTime(date) {
+        var cdate = new Date(date);
+        var day = cdate.getDate();
+        var month = cdate.getMonth() + 1;
+        var year = cdate.getFullYear();
+        var res = month + "/" + day + "/" + year;
+        return res;
+    }
+
+    function deleteAttendeeEmail(obj, page, id) {
+        $.ajax({
+            type: "post",
+            url: "@Url.Action("DeleteEmail", "ManageAttendees")",
+            data: { scheduledEmailId: id },
+            datatype: "html",
+            success: function (data) {
+                if(data){
+                    $(obj).parent().parent().remove();
+                    $("#PageMessage").html("Successfully deleted.");
+                    $("#PageMessage").css("color","green");
+                }else{
+                    $(obj).parent().parent().css("color","red");
+                    $("#PageMessage").html("Unable to delete! Please try again.");
+                    $("#PageMessage").css("color","red");
+                }
+            }
+        });
+    }
+
+    function EditEmailMessage(id){
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("EditEmail", "ManageAttendees")",
+            data: { eventId: @ViewBag.EventId, scheduledEmailId: id },
+            datatype: "html",
+            success: function (data) {
+                $("#AttendeeSearchContainer").html(data);
+                $('#anchorOpenEditWindow').fancybox({
+                    maxWidth: 800,
+                    maxHeight: 600,
+                    fitToView: false,
+                    width: '70%',
+                    height: '70%',
+                    autoSize: false,
+                    closeClick: false,
+                    openEffect: 'none',
+                    closeEffect: 'none'
+                });
+                $("#anchorOpenEditWindow").click();
+            }
+        });
+    }
+    function onEditSuccess() {
+        $.fancybox.close();
+    }
+    $(document).ready(function(){
+        $("#lblScheduledCount").html($("#AttendeeEmailListTable_Scheduled tbody tr").size()/2);
+    });
+</script>

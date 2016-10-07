@@ -42,7 +42,7 @@ namespace EventCombo.Controllers
     }
 
     [HttpGet]
-    public FileStreamResult OrderList(PaymentStates state, long eventId, string format)
+    public ActionResult OrderList(PaymentStates state, long eventId, string format)
     {
       if (Session["AppId"] == null)
         return null;
@@ -50,7 +50,15 @@ namespace EventCombo.Controllers
       string userId = Session["AppId"].ToString();
       if (_dbservice.GetEventAccess(eventId, userId) == AccessLevel.Public)
         return null;
-      
+      if (format.ToLower() == "html")
+      {
+        EventOrderInfoListViewModel model = new EventOrderInfoListViewModel();
+        model.EventId = eventId;
+        model.PaymentState = state;
+        var orders = _maservice.GetOrdersForEvent(state, eventId);
+        model.Orders.AddRange(orders);
+        return View("_OrderList", model);
+      }
       MemoryStream mem = _maservice.GetDownloadableOrderList(state, eventId, format);
       string appformat = "application/" + (format.ToLower() == "xls" ? "ms-excel" : format.ToLower());
       return new FileStreamResult(mem, appformat) { FileDownloadName = "OrderList_" + eventId.ToString() + "." + format };
@@ -70,5 +78,49 @@ namespace EventCombo.Controllers
         string appformat = "application/" + (format.ToLower() == "xls" ? "ms-excel" : format.ToLower());
         return new FileStreamResult(mem, appformat) { FileDownloadName = "SaleReport_" + eventId.ToString() + "." + format };
     }
+
+    [HttpGet]
+    public FileStreamResult GuestList(string sortBy, string ticketTypeIds, string barcode, long eventId, string format)
+    {
+        if (Session["AppId"] == null)
+            return null;
+
+        string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(eventId, userId) == AccessLevel.Public)
+            return null;
+
+        MemoryStream mem = _maservice.GetDownloadableGuestList(sortBy, ticketTypeIds, barcode, eventId, format);
+        string appformat = "application/" + (format.ToLower() == "xls" ? "ms-excel" : format.ToLower());
+        return new FileStreamResult(mem, appformat) { FileDownloadName = "attendees_" + eventId.ToString() + "." + format };
+    }
+
+    public ActionResult AttendeeNameBadgesPreview(long eventId, string format)
+    {
+        if (Session["AppId"] == null)
+            return null;
+
+        string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(eventId, userId) == AccessLevel.Public)
+            return null;
+
+        MemoryStream mem = _maservice.GetBadgesPreview(eventId, format, userId);
+        string appformat = "application/" + (format.ToLower() == "xls" ? "ms-excel" : format.ToLower());
+        return File(mem, appformat);
+    }
+
+    public ActionResult AttendeeNameBadgesList(long eventId, string format)
+    {
+        if (Session["AppId"] == null)
+            return null;
+
+        string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(eventId, userId) == AccessLevel.Public)
+            return null;
+
+        MemoryStream mem = _maservice.GetBadgesList(eventId, format, userId);
+        string appformat = "application/" + (format.ToLower() == "xls" ? "ms-excel" : format.ToLower());
+        return new FileStreamResult(mem, appformat) { FileDownloadName = "attendeesbadges_" + eventId.ToString() + "." + format };
+    }
+
   }
 }

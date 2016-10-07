@@ -1,5 +1,5 @@
-eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '$attrs', 'eventInfoService', 'broadcastService',
-  function ($scope, $http, $window, $attrs, eventInfoService, broadcastService) {
+eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '$attrs', 'eventInfoService', 'broadcastService', 'accountService', '$mdDialog',
+  function ($scope, $http, $window, $attrs, eventInfoService, broadcastService, accountService, $mdDialog) {
     $scope.favStyle = { "color": "white" };
     $scope.voteStyle = { "color": "white" };
     $scope.eventInfo = {};
@@ -38,11 +38,11 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
     $scope.$on('LoggedIn', function (event, param) {
       if (param === 'VEFav' + $scope.eventInfo.EventId) {
         eventInfoService.addFavorite($scope.UpdateStyles);
-        broadcastService.LoginProcessed();
+        broadcastService.ReloadPage();
       }
       else if (param === 'VEVote' + $scope.eventInfo.EventId) {
         eventInfoService.voteEvent($scope.UpdateStyles);
-        broadcastService.LoginProcessed();
+        broadcastService.ReloadPage();
       }
     });
 
@@ -69,8 +69,8 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
     }
 
     $scope.AddToFavorite = function () {
-      if (!$scope.userRegistered) {
-        $scope.StartLogin({ callerId: 'VEFav' + $scope.eventInfo.EventId });
+      if (!accountService.UserRegistered()) {
+        accountService.StartLogin('VEFav' + $scope.eventInfo.EventId);
       }
       if ((!$scope.eventInfo) || ($scope.eventInfo.UserFavorite == true))
         return;
@@ -78,8 +78,8 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
     }
 
     $scope.VoteEvent = function () {
-      if (!$scope.userRegistered) {
-        $scope.StartLogin({ callerId: 'VEVote' + $scope.eventInfo.EventId });
+      if (!accountService.UserRegistered()) {
+        accountService.StartLogin('VEVote' + $scope.eventInfo.EventId);
       }
       if ((!$scope.eventInfo) || ($scope.eventInfo.UserVote == true))
         return;
@@ -100,6 +100,37 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
       $scope.popInfoMessage = show;
       $scope.InfoMessage = message;
     }
+
+    $scope.contactOrganizer = function (event, eventName, organizerName) {
+        $mdDialog.show({
+            controller: DialogContactOrganizerController,
+            templateUrl: 'organizer.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            clickOutsideToClose: true,
+            locals: {
+                eventId: $scope.eventInfo.EventId,
+                organizerId: $scope.eventInfo.organizerId,
+                eventName: eventName,
+                organizerName: organizerName
+            }
+        });
+    };
+
+    $scope.forwardFriend = function (event, mTitle, mType) {
+        $mdDialog.show({
+            controller: DialogForwardFriendController,
+            templateUrl: 'forwardfriend.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            clickOutsideToClose: true,
+            locals: {
+                id: $scope.eventInfo.EventId,
+                title: mTitle,
+                type: mType
+            }
+        });
+    };
 
     $scope.SendMessageTo = function (mtype) {
       $scope.VEMessage.Email = '';
@@ -241,7 +272,7 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
       var total = 0.0;
       angular.forEach(eventInfo.Tickets, function (ticket, key) {
         if (ticket.TicketTypeId == 2)
-          total = total + ticket.Quantity * ticket.TotalPrice;
+          total = total + ticket.Quantity * ticket.Price;
         else if (ticket.TicketTypeId == 3) {
           ticket.Amount = isNaN(ticket.Amount) || ticket.Amount < 0 ? 0 : ticket.Amount;
           total = total + (isNaN(ticket.Amount) || (ticket.Amount == null ? 0 : ticket.Amount));

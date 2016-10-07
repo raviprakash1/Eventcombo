@@ -29,6 +29,7 @@ namespace EventCombo.Models
             this.Ticket_Purchased_Detail = new HashSet<Ticket_Purchased_Detail>();
             this.EventFavourites = new HashSet<EventFavourite>();
             this.EventECImages = new HashSet<EventECImage>();
+            this.AttendeeEmails = new HashSet<AttendeeEmail>();
         }
     
         public long EventID { get; set; }
@@ -99,5 +100,7 @@ namespace EventCombo.Models
         public virtual EventCategory EventCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventECImage> EventECImages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AttendeeEmail> AttendeeEmails { get; set; }
     }
 }

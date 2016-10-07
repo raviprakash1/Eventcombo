@@ -31,7 +31,7 @@
         <span class="view_evnt fs26 col-sm-6">Add Business page</span>
     </div>
     <div id="content" class="animated fadeIn">
-        @using (Html.BeginForm()) {
+        @using (Html.BeginForm("Create", "BusinessPages", FormMethod.Post, new { enctype = "multipart/form-data" })) {
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
@@ -60,6 +60,22 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    @Html.LabelFor(model => model.BusinessPageECImages, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.BusinessPageECImages, new { htmlAttributes = new { @class = "editor jqte-test", @id = "PageContent" } })
+                        @Html.ValidationMessageFor(model => model.BusinessPageECImages, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="BusinessPageECImages">Images</label>
+                    <div class="col-md-10">
+                        <div id="formdiv"> 
+                            <div id="filediv"><input name="file[]" type="file" id="file" /></div>
+                            <input type="button" id="add_more" class="btn btn-info articleBtnCls" value="Add More Images" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="Save" class="btn btn-info articleBtnCls" />
                     </div>
@@ -78,4 +94,110 @@
         $("#PageContent").jqte();
 
     });
+
+    var ImageCount = 0;
+    $(document).ready(function () {
+        $('#add_more').click(function () {
+            $(this).before($("<div/>", {
+                id: 'filediv'
+            }).fadeIn('slow').append($("<input/>", {
+                name: 'file[]',
+                type: 'file',
+                id: 'file'
+            }), $("<br/>")));
+        });
+        $('body').on('change', '#file', function () {
+            if (this.files && this.files[0]) {
+                ImageCount += 1;
+                var z = ImageCount - 1;
+                var x = $(this).parent().find('#previewimg' + z).remove();
+                $(this).before("<div id='dvThumbImage" + ImageCount + "' class='dvThumbImage'><img id='previewimg" + ImageCount + "' src=''/></div>");
+                var reader = new FileReader();
+                reader.onload = imageIsLoaded;
+                reader.readAsDataURL(this.files[0]);
+                $(this).hide();
+                $("#dvThumbImage" + ImageCount).append($("<img/>", {
+                    id: 'img',
+                    src: '@Url.Content("~/assets/img/delete.png")',
+                    alt: 'delete'
+                }).click(function () {
+                    $(this).parent().parent().remove();
+                }));
+            }
+        });
+        function imageIsLoaded(e) {
+            $('#previewimg' + ImageCount).attr('src', e.target.result);
+        };
+        $('#upload').click(function (e) {
+            var name = $(":file").val();
+            if (!name) {
+                alert("First Image Must Be Selected");
+                e.preventDefault();
+            }
+        });
+    });
 </script>
+<style>
+    form {
+        background-color: #fff;
+    }
+
+    #formdiv {
+        float: left;
+        text-align: center;
+    }
+
+    #filediv {
+        float: left;
+    }
+
+    form {
+        padding: 40px 20px;
+        box-shadow: 0 0 10px;
+        border-radius: 2px;
+    }
+
+    #file {
+        color: green;
+        padding: 5px;
+        border: 1px dashed #123456;
+        background-color: #f9ffe5;
+    }
+
+    #upload {
+        margin-left: 45px;
+    }
+
+    #noerror {
+        color: green;
+        text-align: left;
+    }
+
+    #error {
+        color: red;
+        text-align: left;
+    }
+
+    #img {
+        width: 25px;
+        border: none;
+        height: 29px;
+        margin-left: -20px;
+        margin-bottom: 91px;
+    }
+
+    .dvThumbImage {
+        text-align: center;
+    }
+
+        .dvThumbImage img {
+            height: 100px;
+            width: 100px;
+            padding: 5px;
+            border: 1px solid #e8debd;
+        }
+
+    b {
+        color: red;
+    }
+</style>

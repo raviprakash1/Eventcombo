@@ -100,6 +100,7 @@ namespace EventCombo
         .ForMember(d => d.Filename, m => m.MapFrom(s => s.ImagePath))
         .ForMember(d => d.TypeName, m => m.MapFrom(s => s.ECImageType.TypeName));
       CreateMap<ECImageViewModel, ECImageViewModel>();
+      CreateMap<ScheduledEmail, ScheduledEmailViewModel>();
       CreateMap<EventNotificationViewModel, OrganizerMessageViewModel>()
         .ForMember(d => d.PhoneNo, m => m.MapFrom(s => s.Phone));
       CreateMap<Event, EventViewModel>()
@@ -107,7 +108,10 @@ namespace EventCombo
       CreateMap<Event_VariableDesc, VariableChargesViewModel>()
         .ForMember(d => d.VariableId, m => m.MapFrom(s => s.Variable_Id))
         .ForMember(d => d.EventId, m => m.MapFrom(s => s.Event_Id));
-
+      CreateMap<GetNearestEvents_Result, ShortEventInfoViewModel>()
+        .ForMember(d => d.EventId, m => m.MapFrom(s => s.EventID))
+        .ForMember(d => d.Address, m => m.MapFrom(s => String.IsNullOrEmpty(s.AddressStatus) || (s.AddressStatus.ToUpper() == "ONLINE") ? "ONLINE" : s.ConsolidateAddress));
+      CreateMap<City, CityViewModel>();
 
       //backward maps
       CreateMap<OrderTemplateViewModel, OrderTemplate>();
@@ -130,7 +134,8 @@ namespace EventCombo
         .ForMember(d => d.TicketbearerId, m => m.Ignore());
       CreateMap<OrganizerMessageViewModel, Event_OrganizerMessages>()
         .ForMember(d => d.MessageId, m => m.Ignore());
-      CreateMap<OrganizerViewModel, Organizer_Master>();
+      CreateMap<OrganizerViewModel, Organizer_Master>()
+        .ForMember(d => d.Orgnizer_Id, m => m.Ignore());
       CreateMap<EventViewModel, Event>()
         .ForMember(d => d.EventID, m => m.Ignore())
         .ForMember(d => d.EventImages, m => m.Ignore());
@@ -141,6 +146,7 @@ namespace EventCombo
         .ForMember(d => d.Event_Id, m => m.MapFrom(s => s.EventId));
       CreateMap<ECImageViewModel, ECImage>()
         .ForMember(d => d.ImagePath, m => m.MapFrom(s => s.Filename));
+      CreateMap<ScheduledEmailViewModel, ScheduledEmail>();
     }
   }
 }

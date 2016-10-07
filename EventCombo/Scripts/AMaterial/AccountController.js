@@ -1,10 +1,12 @@
-﻿eventComboApp.controller('AccountController', ['$scope', '$http', '$window', '$attrs', '$filter', 'broadcastService',
-  function ($scope, $http, $window, $attrs, $filter, broadcastService) {
+﻿eventComboApp.controller('AccountController', ['$scope', '$http', '$window', '$attrs', '$filter', 'broadcastService', 'accountService',
+  function ($scope, $http, $window, $attrs, $filter, broadcastService, accountService) {
     $scope.displayPopups = 'block';
     $scope.email = '';
     $scope.loginPassword = '';
     $scope.loginError = 'Incorrect password, retry or use Forgot Password.';
-    $scope.loginInfo = null;
+    $scope.callerId = null;
+    $scope.UserName = accountService.UserName;
+    $scope.UserRegistered = accountService.UserRegistered;
 
     $window.loginCallback = function (success, returnUrl) {
       if (success) {
@@ -33,14 +35,14 @@
       $scope.showLoginForm(param);
     });
 
-    $scope.$on('LoginProcessed', function (event, param) {
-      $scope.reloadPage();
+    $scope.$on('ReloadPage', function (event, param) {
+      $scope.reloadPage(param);
     });
 
     $scope.finishLogin = function () {
       $scope.closeLightBoxWithEsc();
-      if ($scope.loginInfo && $scope.loginInfo.callerId)
-        broadcastService.LoggedIn($scope.loginInfo.callerId);
+      if ($scope.callerId)
+        broadcastService.LoggedIn($scope.callerId);
       else
         $scope.reloadPage();
     }
@@ -60,19 +62,18 @@
       form.$setUntouched();
     }
 
-    $scope.reloadPage = function () {
-      if ($scope.loginInfo && $scope.loginInfo.RedirectUrl)
-        window.location.href = $scope.loginInfo.RedirectUrl;
+    $scope.reloadPage = function (redirectUrl) {
+      if (redirectUrl)
+        window.location.href = redirectUrl;
       else
         $window.location.reload();
-      $scope.loginInfo = null;
     }
 
     $scope.showLoginForm = function (info) {
       if (info)
-        $scope.loginInfo = info;
+        $scope.callerId = info;
       else
-        $scope.loginInfo = null;
+        $scope.callerId = null;
       $scope.popLogin = true;
     }
 
@@ -117,11 +118,11 @@
       $scope.showLoadingMessage(true, 'Logging out');
       $http.post('/account/logoutAPI', {}).then(function (response) {
         $scope.showLoadingMessage(false, '');
-        $scope.loginInfo = null;
+        $scope.callerId = null;
         $scope.reloadPage();
       }, function (response) {
         $scope.showLoadingMessage(false, '');
-        $scope.loginInfo = null;
+        $scope.callerId = null;
         $scope.reloadPage();
       });
     }
@@ -158,9 +159,8 @@
         }).then(function (response) {
           $scope.showLoadingMessage(false, '');
           var result = response.data.Success;
-          if (result) {
-            $scope.popLoginCongrats = true;
-          }
+          if (result) 
+            $scope.finishLogin();
           else {
             $scope.popLoginPassword = true;
             $scope.loginError = response.data.ErrorMessage;
@@ -286,7 +286,6 @@
       $scope.popCreatePassword = false;
       $scope.popCreatePasswordCongrats = false;
       $scope.popRegisterCongrats = false;
-      $scope.popLoginCongrats = false;
       $scope.popLoading = false;
       $scope.popServerError = false;
       $scope.popInfoMessage = false;

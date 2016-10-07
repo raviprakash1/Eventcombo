@@ -142,7 +142,7 @@
       $.ajax({
         type: 'GET',
         url: '@Url.Action("PurchasedTicketDetail", "Account")',
-        data: { OrderId: id, EventId: eId },
+        data: { OrderId: id, EventId: eId, colSpan: 6 },
         datatype: 'html',
         success: function (data) {
           $(obj).parent().parent().css('background-color', '#f1f1f1');

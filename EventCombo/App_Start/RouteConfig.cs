@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using EventCombo.Utils;
+
 namespace EventCombo
 {
     public class RouteConfig
@@ -12,21 +12,8 @@ namespace EventCombo
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-           // routes.MapMvcAttributeRoutes();
             routes.LowercaseUrls = true;
-            //AreaRegistration.RegisterAllAreas();
-            //AreaRegistration.RegisterAllAreas();
-            //routes.MapRoute(
-            //name: "ViewEvent",
-            //url: "CreateEvent",
-            //defaults: new
-            // {
-            //     controller = "CreateEvent",
-            //     action = "ViewEvent",
-            //    strUrlData = UrlParameter.Optional
-            // }
-            //);
-
+            routes.Add(new CustomRoute());
             routes.MapRoute(
                          name: "BusinessPages",
                          url: "ec/{PageNameUrl}",

@@ -278,6 +278,7 @@
     <Compile Include="ActionFilters\AllowCrossSiteAttribute.cs" />
     <Compile Include="ActionFilters\CustomHandleErrorAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\CustomRoute.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\HangfirePreload.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -361,33 +362,34 @@
     <Compile Include="Models\AspNetUserLogin.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AttendeeEmail.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Authenticationclass.cs" />
+    <Compile Include="Models\BillingAddress.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\BusinessPage.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BusinessPageViewModel.cs" />
+    <Compile Include="Models\CardDetail.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\City.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Footer.cs" />
+    <Compile Include="Models\GetNearestEvents_Result.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HomepageWord.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ContactEventCombo.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ECImageViewModel.cs" />
-    <Compile Include="Models\EventECImage.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EventTicket_View.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Footer.cs" />
-    <Compile Include="Models\IBaseViewModel.cs" />
-    <Compile Include="Models\BillingAddress.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CardDetail.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CommanClasses.cs" />
+    <Compile Include="Models\ContactMessageViewModel.cs" />
     <Compile Include="Models\ControlType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -409,6 +411,10 @@
     <Compile Include="Models\ECImageType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ECImageViewModel.cs" />
+    <Compile Include="Models\EmailType.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Email_Tag.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -421,34 +427,22 @@
     <Compile Include="Models\EventCategory.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventComboModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EventComboModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EventComboModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
+    <Compile Include="Models\EventECImage.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventComboModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EventComboModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EventConfirmation.cs" />
-    <Compile Include="Models\EventCreation.cs" />
     <Compile Include="Models\EventFavourite.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EventImage.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventListTemplate.cs" />
     <Compile Include="Models\EventSubCategory.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Events_Hit.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventTicket_View.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EventType.cs">
@@ -457,7 +451,6 @@
     <Compile Include="Models\EventVenue.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\EventVote.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -476,14 +469,12 @@
     <Compile Include="Models\Event_VariableDesc.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ExternalLogin.cs" />
     <Compile Include="Models\Fee_Structure.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\func_Split_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\GetEventData.cs" />
     <Compile Include="Models\GetEventDateList_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -502,6 +493,29 @@
     <Compile Include="Models\Hash.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\IBaseViewModel.cs" />
+    <Compile Include="Models\CommanClasses.cs" />
+    <Compile Include="Models\EventComboModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventComboModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventComboModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventComboModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventComboModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventConfirmation.cs" />
+    <Compile Include="Models\EventCreation.cs" />
+    <Compile Include="Models\EventListTemplate.cs" />
+    <Compile Include="Models\EventViewModel.cs" />
+    <Compile Include="Models\ExternalLogin.cs" />
+    <Compile Include="Models\GetEventData.cs" />
     <Compile Include="Models\Html2Pdf.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IOpenGraphProtocol.cs" />
@@ -594,6 +608,9 @@
     <Compile Include="Models\QuestionTypeGroup.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ScheduledEmail.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Schema.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -616,6 +633,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TicketBearer.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TicketBearer_View.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TicketDeliveryMethod.cs">
@@ -690,6 +710,7 @@
     <Compile Include="Service\IEventService.cs" />
     <Compile Include="Service\IManageAttendeesService.cs" />
     <Compile Include="Service\IManageEventService.cs" />
+    <Compile Include="Service\Notification\AttendeeMailNotification.cs" />
     <Compile Include="Service\INotificationService.cs" />
     <Compile Include="Service\NotificationService.cs" />
     <Compile Include="Service\Notification\ForgotPasswordNotification.cs" />
@@ -705,6 +726,8 @@
     <Compile Include="Service\ManageEventService.cs" />
     <Compile Include="Service\Notification\OrderNotification.cs" />
     <Compile Include="Service\Notification\OrderCancelNotification.cs" />
+    <Compile Include="Service\Notification\ContactMessageNotification.cs" />
+    <Compile Include="Service\Notification\SendAttendeeMailService.cs" />
     <Compile Include="Service\OrderOptionsService.cs" />
     <Compile Include="Service\Notification\SendMailService.cs" />
     <Compile Include="Service\Notification\OrganizerMessageNotification.cs" />
@@ -769,10 +792,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ForgetPassword.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Home\Index.generated.cs">
+    <Compile Include="Views\Home\IndexOld.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Index.cshtml</DependentUpon>
+      <DependentUpon>IndexOld.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Home\PasswordReset.generated.cs">
       <AutoGen>True</AutoGen>
@@ -826,12 +849,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AMaterial\angucomplete-alt.css" />
     <Content Include="Content\AMaterial\angular-material.css" />
+    <Content Include="Content\AMaterial\angular-material.min.css" />
     <Content Include="Content\AMaterial\angularjs-color-picker.min.css" />
     <Content Include="Content\AMaterial\animations.css" />
     <Content Include="Content\AMaterial\docs.css" />
     <Content Include="Content\AMaterial\gridiculous.css" />
     <Content Include="Content\AMaterial\header-footer.css" />
+    <Content Include="Content\AMaterial\homePage.css" />
     <Content Include="Content\AMaterial\main.css" />
     <Content Include="Content\AMaterial\material-datetimepicker.css" />
     <Content Include="Content\AMaterial\ngGallery.css" />
@@ -856,7 +882,24 @@
     <Content Include="Content\OrderFormDesign.css" />
     <Content Include="Content\PurchasedTicket.css" />
     <Content Include="email-content-pdf%281%29.html" />
+    <Content Include="fancybox\jquery.fancybox.css" />
+    <Content Include="fancybox\jquery.fancybox.js" />
     <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="footable\css\fonts\footable.svg" />
+    <Content Include="footable\css\footable.core.css" />
+    <Content Include="footable\css\footable.core.min.css" />
+    <Content Include="footable\css\footable.metro.css" />
+    <Content Include="footable\css\footable.metro.min.css" />
+    <Content Include="footable\css\footable.standalone.css" />
+    <Content Include="footable\css\footable.standalone.min.css" />
+    <Content Include="footable\js\footable.all.min.js" />
+    <Content Include="footable\js\footable.bookmarkable.min.js" />
+    <Content Include="footable\js\footable.filter.min.js" />
+    <Content Include="footable\js\footable.grid.min.js" />
+    <Content Include="footable\js\footable.min.js" />
+    <Content Include="footable\js\footable.paginate.min.js" />
+    <Content Include="footable\js\footable.sort.min.js" />
+    <Content Include="footable\js\footable.striping.min.js" />
     <Content Include="html\error.html" />
     <Content Include="Images\ajax-loader.gif" />
     <Content Include="Images\ajax-loaderMini.gif" />
@@ -888,6 +931,7 @@
     <Content Include="Images\AMaterial\marker-pink.png" />
     <Content Include="Images\AMaterial\plusIcon.png" />
     <Content Include="Images\AMaterial\popimg.jpg" />
+    <Content Include="Images\AMaterial\RecordBackgroundFinal_1000.gif" />
     <Content Include="Images\AMaterial\saroosh.jpg" />
     <Content Include="Images\AMaterial\square-facebook.svg" />
     <Content Include="Images\AMaterial\square-linkedin.svg" />
@@ -939,6 +983,20 @@
     <Content Include="Images\search.png" />
     <Content Include="Images\twitter.png" />
     <Content Include="Images\unchecked.png" />
+    <Content Include="Images\Video\Burning-Candle-Gif.gif" />
+    <Content Include="Images\Video\Burning-Candle-Gif.jpg" />
+    <Content Include="Images\Video\City-Skyline-Gif.gif" />
+    <Content Include="Images\Video\City-Skyline-Gif.jpg" />
+    <Content Include="Images\Video\Empty-Theater-Stage-Gif.gif" />
+    <Content Include="Images\Video\Empty-Theater-Stage-Gif.jpg" />
+    <Content Include="Images\Video\FilmStrip-Gif.gif" />
+    <Content Include="Images\Video\FilmStrip-Gif.jpg" />
+    <Content Include="Images\Video\LA-Night-Gif.gif" />
+    <Content Include="Images\Video\NYC-30-Rock-Gif.gif" />
+    <Content Include="Images\Video\Times-Square-Night-Gif.gif" />
+    <Content Include="Images\Video\Times-Square-Night-Gif.jpg" />
+    <Content Include="Images\Video\Turning-Record-Gif.gif" />
+    <Content Include="Images\Video\Turning-Record-Gif.jpg" />
     <Content Include="Models\EventComboModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EventComboModel.edmx</DependentUpon>
@@ -950,6 +1008,8 @@
       <LastGenOutput>EventComboModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\AMaterial\AccountController.js" />
+    <Content Include="Scripts\AMaterial\Service\AccountService.js" />
+    <Content Include="Scripts\AMaterial\angucomplete-alt.js" />
     <Content Include="Scripts\AMaterial\angular-animate.js" />
     <Content Include="Scripts\AMaterial\angular-animate.min.js" />
     <Content Include="Scripts\AMaterial\angular-aria.js" />
@@ -973,9 +1033,12 @@
     <Content Include="Scripts\AMaterial\controller.js" />
     <Content Include="Scripts\AMaterial\demo.js" />
     <Content Include="Scripts\AMaterial\EventComboApp.js" />
+    <Content Include="Scripts\AMaterial\footer.js" />
+    <Content Include="Scripts\AMaterial\Service\geoService.js" />
     <Content Include="Scripts\AMaterial\header.js" />
+    <Content Include="Scripts\AMaterial\Homepage.js" />
     <Content Include="Scripts\AMaterial\infobox.js" />
-    <Content Include="Scripts\AMaterial\broadcastService.js" />
+    <Content Include="Scripts\AMaterial\Service\broadcastService.js" />
     <Content Include="Scripts\AMaterial\jquery-1.12.3.min.js" />
     <Content Include="Scripts\AMaterial\main.js" />
     <Content Include="Scripts\AMaterial\map.js" />
@@ -1049,6 +1112,7 @@
     <Content Include="Scripts\AMaterial\plugins\visualblocks\plugin.min.js" />
     <Content Include="Scripts\AMaterial\plugins\visualchars\plugin.min.js" />
     <Content Include="Scripts\AMaterial\plugins\wordcount\plugin.min.js" />
+    <Content Include="Scripts\AMaterial\Service\FooterService.js" />
     <Content Include="Scripts\AMaterial\skins\lightgray\content.inline.min.css" />
     <Content Include="Scripts\AMaterial\skins\lightgray\content.min.css" />
     <Content Include="Scripts\AMaterial\skins\lightgray\fonts\tinymce-small.svg" />
@@ -1059,14 +1123,17 @@
     <Content Include="Scripts\AMaterial\skins\lightgray\img\trans.gif" />
     <Content Include="Scripts\AMaterial\skins\lightgray\skin.ie7.min.css" />
     <Content Include="Scripts\AMaterial\skins\lightgray\skin.min.css" />
+    <Content Include="Scripts\AMaterial\Service\socialService.js" />
     <Content Include="Scripts\AMaterial\sortable.js" />
     <Content Include="Scripts\AMaterial\svg-assets-cache.js" />
+    <Content Include="Scripts\AMaterial\texttyper.js" />
     <Content Include="Scripts\AMaterial\themes\modern\theme.min.js" />
     <Content Include="Scripts\AMaterial\tinycolor-min.js" />
     <Content Include="Scripts\AMaterial\tinymce.min.js" />
     <Content Include="Scripts\AMaterial\ViewEvent.js" />
     <Content Include="Scripts\custom-scroll.js" />
     <Content Include="Scripts\DateTimePicker.js" />
+    <Content Include="Scripts\AMaterial\Service\EventFavoriteService.js" />
     <Content Include="Scripts\gmap.js" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.countdownTimer.css" />
@@ -1356,6 +1423,9 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="footable\css\fonts\footable.eot" />
+    <Content Include="footable\css\fonts\footable.ttf" />
+    <Content Include="footable\css\fonts\footable.woff" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1452,6 +1522,7 @@
     <Content Include="Scripts\jquery.slides.min.js" />
     <Content Include="Scripts\jquery.timepicker.js" />
     <Content Include="Scripts\jquery.timepicker.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1492,9 +1563,9 @@
     <Content Include="Views\Home\Contact.cshtml">
       <Generator>RazorGenerator</Generator>
     </Content>
-    <Content Include="Views\Home\Index.cshtml">
+    <Content Include="Views\Home\IndexOld.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Index.generated.cs</LastGenOutput>
+      <LastGenOutput>IndexOld.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Shared\_ExternalLoginsListPartial.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1744,7 +1815,16 @@
     <Content Include="Views\ContactEventComboes\Index.cshtml" />
     <Content Include="Views\ManageAttendees\_SaleReport.cshtml" />
     <Content Include="Views\EventManagement\ViewEvent.cshtml" />
-    <Content Include="Views\EventManagement\EmptyTemplate.cshtml" />
+    <Content Include="Views\ManageAttendees\AttendeeEmail.cshtml" />
+    <Content Include="Views\ManageAttendees\_AttendeeEmailList.cshtml" />
+    <Content Include="Views\ManageAttendees\_AttendeeEmailDetail.cshtml" />
+    <Content Include="Views\ManageAttendees\SendEmail.cshtml" />
+    <Content Include="Views\ManageAttendees\_AttendeeSearchList.cshtml" />
+    <Content Include="Views\ManageAttendees\EditEmail.cshtml" />
+    <Content Include="Views\ManageAttendees\_AttendeeTicketTypeList.cshtml" />
+    <Content Include="Views\ManageAttendees\Badges.cshtml" />
+    <Content Include="Views\Download\_OrderList.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -1756,6 +1836,7 @@
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
     <Folder Include="Properties\assets\" />
+    <Folder Include="Scripts\AMaterial\Controller\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\EmailServices\" />
     <Folder Include="Views\Html2Pdf\" />
@@ -1799,7 +1880,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>10159</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:10259/</IISUrl>
+          <IISUrl>http://localhost:10359/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

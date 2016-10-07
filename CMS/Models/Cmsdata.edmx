@@ -159,6 +159,14 @@
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
           <Property Name="ResponseCode" Type="int" />
         </EntityType>
+        <EntityType Name="BusinessPageECImage">
+          <Key>
+            <PropertyRef Name="BusinessPageECImageId" />
+          </Key>
+          <Property Name="BusinessPageECImageId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BusinessPageId" Type="bigint" Nullable="false" />
+          <Property Name="ECImageId" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="CardDetails">
           <Key>
             <PropertyRef Name="CardId" />
@@ -279,6 +287,7 @@
           <Property Name="FeatureUpdateDate" Type="datetime" />
           <Property Name="ECBackgroundId" Type="bigint" />
           <Property Name="BackgroundColor" Type="varchar" MaxLength="10" />
+          <Property Name="ECImageId" Type="bigint" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -1063,6 +1072,30 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_BusinessPageECImage_BusinessPage">
+          <End Role="BusinessPage" Type="Self.BusinessPage" Multiplicity="1" />
+          <End Role="BusinessPageECImage" Type="Self.BusinessPageECImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusinessPage">
+              <PropertyRef Name="BusinessPageID" />
+            </Principal>
+            <Dependent Role="BusinessPageECImage">
+              <PropertyRef Name="BusinessPageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessPageECImage_ECImage">
+          <End Role="ECImage" Type="Self.ECImage" Multiplicity="1" />
+          <End Role="BusinessPageECImage" Type="Self.BusinessPageECImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ECImage">
+              <PropertyRef Name="ECImageId" />
+            </Principal>
+            <Dependent Role="BusinessPageECImage">
+              <PropertyRef Name="ECImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1319,6 +1352,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BillingAddress" EntityType="Self.BillingAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BusinessPage" EntityType="Self.BusinessPage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BusinessPageECImage" EntityType="Self.BusinessPageECImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CardDetails" EntityType="Self.CardDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
@@ -1587,6 +1621,14 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <AssociationSet Name="FK_Address_Event" Association="Self.FK_Address_Event">
             <End Role="Event" EntitySet="Event" />
             <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessPageECImage_BusinessPage" Association="Self.FK_BusinessPageECImage_BusinessPage">
+            <End Role="BusinessPage" EntitySet="BusinessPage" />
+            <End Role="BusinessPageECImage" EntitySet="BusinessPageECImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessPageECImage_ECImage" Association="Self.FK_BusinessPageECImage_ECImage">
+            <End Role="ECImage" EntitySet="ECImage" />
+            <End Role="BusinessPageECImage" EntitySet="BusinessPageECImage" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1860,6 +1902,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <NavigationProperty Name="EventFavourites" Relationship="Cmsdata.EventEventFavourite" FromRole="Event" ToRole="EventFavourite" />
           <Property Name="ECBackgroundId" Type="Int64" />
           <Property Name="BackgroundColor" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ECImageId" Type="Int64" />
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
           <Key>
@@ -2655,7 +2698,16 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="BusinessPages" EntityType="Cmsdata.BusinessPage" />
           <EntitySet Name="Cities" EntityType="Cmsdata.City" />
           <EntitySet Name="EventTicket_View" EntityType="Cmsdata.EventTicket_View" />
-        </EntityContainer>
+          <EntitySet Name="BusinessPageECImages" EntityType="Cmsdata.BusinessPageECImage" />
+          <AssociationSet Name="FK_BusinessPageECImage_BusinessPage" Association="Cmsdata.FK_BusinessPageECImage_BusinessPage">
+            <End Role="BusinessPage" EntitySet="BusinessPages" />
+            <End Role="BusinessPageECImage" EntitySet="BusinessPageECImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessPageECImage_ECImage" Association="Cmsdata.FK_BusinessPageECImage_ECImage">
+            <End Role="ECImage" EntitySet="ECImages" />
+            <End Role="BusinessPageECImage" EntitySet="BusinessPageECImages" />
+          </AssociationSet>
+          </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="Datefrom" Nullable="true" MaxLength="30" />
@@ -2994,6 +3046,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <NavigationProperty Name="ArticleAuthors" Relationship="Cmsdata.ECImageArticleAuthor" FromRole="ECImage" ToRole="ArticleAuthor" />
           <NavigationProperty Name="ArticleImages" Relationship="Cmsdata.ECImageArticleImage" FromRole="ECImage" ToRole="ArticleImage" />
           <NavigationProperty Name="Articles" Relationship="Cmsdata.ECImageArticle" FromRole="ECImage" ToRole="Article" />
+          <NavigationProperty Name="BusinessPageECImages" Relationship="Cmsdata.FK_BusinessPageECImage_ECImage" FromRole="ECImage" ToRole="BusinessPageECImage" />
         </EntityType>
         <EntityType Name="ECImageType">
           <Key>
@@ -3375,6 +3428,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="PageOrder" Type="Int32" Nullable="false" />
           <Property Name="IsOnFooter" Type="Boolean" Nullable="false" />
           <Property Name="ResponseCode" Type="Int32" />
+          <NavigationProperty Name="BusinessPageECImages" Relationship="Cmsdata.FK_BusinessPageECImage_BusinessPage" FromRole="BusinessPage" ToRole="BusinessPageECImage" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -3420,7 +3474,41 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="TicketTypeID" Type="Int64" Nullable="false" />
           <Property Name="TicketTypeName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
-      </Schema>
+        <EntityType Name="BusinessPageECImage">
+          <Key>
+            <PropertyRef Name="BusinessPageECImageId" />
+          </Key>
+          <Property Name="BusinessPageECImageId" Type="Int64" Nullable="false" />
+          <Property Name="BusinessPageId" Type="Int64" Nullable="false" />
+          <Property Name="ECImageId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="BusinessPage" Relationship="Cmsdata.FK_BusinessPageECImage_BusinessPage" FromRole="BusinessPageECImage" ToRole="BusinessPage" />
+          <NavigationProperty Name="ECImage" Relationship="Cmsdata.FK_BusinessPageECImage_ECImage" FromRole="BusinessPageECImage" ToRole="ECImage" />
+        </EntityType>
+        <Association Name="FK_BusinessPageECImage_BusinessPage">
+          <End Type="Cmsdata.BusinessPage" Role="BusinessPage" Multiplicity="1" />
+          <End Type="Cmsdata.BusinessPageECImage" Role="BusinessPageECImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusinessPage">
+              <PropertyRef Name="BusinessPageID" />
+            </Principal>
+            <Dependent Role="BusinessPageECImage">
+              <PropertyRef Name="BusinessPageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessPageECImage_ECImage">
+          <End Type="Cmsdata.ECImage" Role="ECImage" Multiplicity="1" />
+          <End Type="Cmsdata.BusinessPageECImage" Role="BusinessPageECImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ECImage">
+              <PropertyRef Name="ECImageId" />
+            </Principal>
+            <Dependent Role="BusinessPageECImage">
+              <PropertyRef Name="ECImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -3577,6 +3665,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="Cmsdata.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="ECImageId" ColumnName="ECImageId" />
                 <ScalarProperty Name="BackgroundColor" ColumnName="BackgroundColor" />
                 <ScalarProperty Name="ECBackgroundId" ColumnName="ECBackgroundId" />
                 <ScalarProperty Name="FeatureUpdateDate" ColumnName="FeatureUpdateDate" />
@@ -4515,6 +4604,15 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
                 <ScalarProperty Name="OId" ColumnName="OId" />
                 <ScalarProperty Name="TicketName" ColumnName="TicketName" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BusinessPageECImages">
+            <EntityTypeMapping TypeName="Cmsdata.BusinessPageECImage">
+              <MappingFragment StoreEntitySet="BusinessPageECImage">
+                <ScalarProperty Name="ECImageId" ColumnName="ECImageId" />
+                <ScalarProperty Name="BusinessPageId" ColumnName="BusinessPageId" />
+                <ScalarProperty Name="BusinessPageECImageId" ColumnName="BusinessPageECImageId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

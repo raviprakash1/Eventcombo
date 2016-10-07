@@ -118,6 +118,11 @@ namespace EventCombo.Models
         public virtual DbSet<V_EventsListUpcoming> V_EventsListUpcoming { get; set; }
         public virtual DbSet<AspNetUserCode> AspNetUserCodes { get; set; }
         public virtual DbSet<EventECImage> EventECImages { get; set; }
+        public virtual DbSet<EmailType> EmailTypes { get; set; }
+        public virtual DbSet<ScheduledEmail> ScheduledEmails { get; set; }
+        public virtual DbSet<TicketBearer_View> TicketBearer_View { get; set; }
+        public virtual DbSet<AttendeeEmail> AttendeeEmails { get; set; }
+        public virtual DbSet<HomepageWord> HomepageWords { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)
@@ -303,6 +308,27 @@ namespace EventCombo.Models
                 new ObjectParameter("EventId", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PublishSingleEvent1", eventIdParameter);
+        }
+    
+        public virtual ObjectResult<GetNearestEvents_Result> GetNearestEvents(Nullable<double> lng, Nullable<double> lat, Nullable<double> distance, Nullable<bool> filterUpcoming)
+        {
+            var lngParameter = lng.HasValue ?
+                new ObjectParameter("lng", lng) :
+                new ObjectParameter("lng", typeof(double));
+    
+            var latParameter = lat.HasValue ?
+                new ObjectParameter("lat", lat) :
+                new ObjectParameter("lat", typeof(double));
+    
+            var distanceParameter = distance.HasValue ?
+                new ObjectParameter("distance", distance) :
+                new ObjectParameter("distance", typeof(double));
+    
+            var filterUpcomingParameter = filterUpcoming.HasValue ?
+                new ObjectParameter("filterUpcoming", filterUpcoming) :
+                new ObjectParameter("filterUpcoming", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetNearestEvents_Result>("GetNearestEvents", lngParameter, latParameter, distanceParameter, filterUpcomingParameter);
         }
     }
 }

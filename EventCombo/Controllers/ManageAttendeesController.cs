@@ -53,6 +53,8 @@ namespace EventCombo.Controllers
 
       ManageAttendeesOrdersViewModel commonInfo = _maservice.GetEventOrdersSummary(eventId);
 
+      ViewBag.Title = "Manage Attendees for Event-" + commonInfo.EventTitle + " | Eventcombo";
+
       return View(commonInfo);
     }
 
@@ -148,42 +150,61 @@ namespace EventCombo.Controllers
     }
 
     [HttpGet]
-    public ActionResult Guests()
+    public ActionResult Guests(long eventId)
     {
-      if ((Session["AppId"] == null))
-        return DefaultAction();
+        if ((Session["AppId"] == null))
+            return DefaultAction();
 
-      string userId = Session["AppId"].ToString();
-      Session["logo"] = "events";
-      Session["Fromname"] = "ManageAttendees";
-      Session["ReturnUrl"] = Url.Action("Guests", "ManageAttendees");
-      return View();
+        string userId = Session["AppId"].ToString();
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Guests", "ManageAttendees");
+
+        ViewBag.EventId = eventId;
+        ViewBag.Title = "Guest List | Eventcombo";
+
+        var ticketTypes = _maservice.GetAttendeeTicketTypeList(eventId);
+
+        return View(ticketTypes);
     }
 
     [HttpGet]
-    public ActionResult Badges()
+    public ActionResult Badges(long eventId)
     {
-      if ((Session["AppId"] == null))
-        return DefaultAction();
+        if ((Session["AppId"] == null))
+            return DefaultAction();
 
-      string userId = Session["AppId"].ToString();
-      Session["logo"] = "events";
-      Session["Fromname"] = "ManageAttendees";
-      Session["ReturnUrl"] = Url.Action("Badges", "ManageAttendees");
-      return View();
+        string userId = Session["AppId"].ToString();
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Badges", "ManageAttendees");
+
+        ViewBag.EventId = eventId;
+        ViewBag.Title = "Name Badges | Eventcombo";
+        var model = _maservice.GetSelectAttendeeDropdownList(eventId);
+
+        return View(model);
     }
 
     [HttpGet]
-    public ActionResult Checkin()
+    public ActionResult Checkin(long eventId)
     {
-      if ((Session["AppId"] == null))
-        return DefaultAction();
+        if ((Session["AppId"] == null))
+            return DefaultAction();
 
-      string userId = Session["AppId"].ToString();
-      Session["logo"] = "events";
-      Session["Fromname"] = "ManageAttendees";
-      Session["ReturnUrl"] = Url.Action("Checkin", "ManageAttendees");
-      return View();
+        string userId = Session["AppId"].ToString();
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Checkin", "ManageAttendees");
+
+        ViewBag.EventId = eventId;
+        ViewBag.Title = "Checkin | Eventcombo";
+
+        AttendeeSearchRequestViewModel attendeeSearchRequest = new AttendeeSearchRequestViewModel();
+        attendeeSearchRequest.EventId = eventId;
+        var attendees = _maservice.GetAttendeeCheckinList(attendeeSearchRequest);
+
+        return View(attendees);
     }
 
     [HttpGet]
@@ -212,9 +233,17 @@ namespace EventCombo.Controllers
         startDate = new DateTime(startDate.Year, startDate.Month, 1);
       }
       if (String.IsNullOrWhiteSpace(req.Search))
-        orders = orders.Where(o => (o.Date >= startDate));
+      {
+          if (startDate.Year != 1900)
+              orders = orders.Where(o => (o.Date >= startDate));
+      }
       else
-        orders = orders.Where(o => ((o.Date >= startDate) && ((o.OrderId.Contains(req.Search.Trim())) || (o.BuyerName.Contains(req.Search.Trim())) || (o.BuyerEmail.Contains(req.Search.Trim())))));
+      {
+          if (startDate.Year == 1900)
+              orders = orders.Where(o => (((o.OrderId.Contains(req.Search.Trim())) || (o.BuyerName.Contains(req.Search.Trim())) || (o.BuyerEmail.Contains(req.Search.Trim())))));
+          else
+              orders = orders.Where(o => ((o.Date >= startDate) && ((o.OrderId.Contains(req.Search.Trim())) || (o.BuyerName.Contains(req.Search.Trim())) || (o.BuyerEmail.Contains(req.Search.Trim())))));
+      }
       res.Total = orders.Count();
 
       switch (req.SortBy)
@@ -295,6 +324,248 @@ namespace EventCombo.Controllers
         ViewData["EventID"] = EventId;
         IEnumerable<EventOrderInfoViewModel> orders = _maservice.GetOrdersForSaleReport(PaymentStates.Completed, EventId);
         return PartialView("_SaleReport", orders);
+    }
+
+    [HttpGet]
+    public ActionResult AttendeeEmail(long eventId)
+    {
+        if ((Session["AppId"] == null))
+            return DefaultAction();
+
+        string userId = Session["AppId"].ToString();
+
+        if (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner)
+            return DefaultAction();
+
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Orders", "ManageAttendees");
+        ViewBag.EventId = eventId;
+        ViewBag.Title = "Email to Attendees | Eventcombo";
+
+        return View();
+    }
+    [HttpGet]
+    public ActionResult AttendeeEmailList(long eventId, bool isEmailSend)
+    {
+        if ((Session["AppId"] == null))
+            return new EmptyResult();
+
+        string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner)
+            return new EmptyResult();
+
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Orders", "ManageAttendees");
+
+        var attendeeEmails = _maservice.GetScheduledEmailList(eventId, isEmailSend);
+
+        return PartialView("_AttendeeEmailList", attendeeEmails);
+    }
+
+    [HttpGet]
+    public ActionResult AttendeeEmailDetail(long eventId, long scheduledEmailId)
+    {
+        if ((Session["AppId"] == null))
+            return new EmptyResult();
+
+        string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(eventId, userId) == AccessLevel.Public)
+            return new EmptyResult();
+
+        var attendeeEmail = _maservice.GetScheduledEmailDetail(scheduledEmailId);
+        return PartialView("_AttendeeEmailDetail", attendeeEmail);
+     }
+
+    public ActionResult SendEmail(long eventId)
+    {
+        if ((Session["AppId"] == null))
+            return DefaultAction();
+
+        string userId = Session["AppId"].ToString();
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Email", "ManageAttendees");
+        ViewBag.EventId = eventId;
+        ScheduledEmailViewModel scheduledEmail = _maservice.PrepareSendAttendeeMail(eventId);
+        return View(scheduledEmail);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult SendEmail(long eventId, [Bind(Include = "SendFrom, SendTo, ReplyTo, CC, BCC, Subject, Body, ScheduledDate, TicketbearerIds, SendTo, RegisteredDate, BeforeEvent_Days, BeforeEvent_Hours, BeforeEvent_Minutes")] ScheduledEmailViewModel scheduledEmail, string SendEmail, string txtOnDateTime, string txtBeforeEventTime)
+    {
+        if ((Session["AppId"] == null))
+            return DefaultAction();
+
+        string userId = Session["AppId"].ToString();
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Email", "ManageAttendees");
+        ViewBag.EventId = eventId;
+        scheduledEmail.SendTos = _maservice.GetSendToDropdownList(eventId);
+
+        if (ModelState.IsValid)
+        {
+            if (scheduledEmail.SendTo == "ALL_ATTENDEES_DATE") {
+                if (scheduledEmail.RegisteredDate == null)
+                {
+                    ModelState.AddModelError("SendTo", "Please select registered date");
+                    scheduledEmail = _maservice.PrepareSendAttendeeMail(eventId);
+                    return View(scheduledEmail);
+                    }
+                    else
+                    {
+                        var id = Utils.DateTimeWithZone.Timezonedetail(eventId);
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(id);
+                        var dateTimeWithZone = new Utils.DateTimeWithZone(scheduledEmail.RegisteredDate, userTimeZone, false);
+                        scheduledEmail.RegisteredDate = dateTimeWithZone.UniversalTime;
+                    }
+            }
+            else if (scheduledEmail.SendTo == "ATTENDEES")
+            {
+                if (string.IsNullOrEmpty(scheduledEmail.TicketbearerIds))
+                {
+                    ModelState.AddModelError("SendTo", "Please select atleast one attendee");
+                    scheduledEmail = _maservice.PrepareSendAttendeeMail(eventId);
+                    return View(scheduledEmail);
+                }
+            }
+            else if (scheduledEmail.SendTo == "TICKET_ATTENDEES")
+            {
+                if (string.IsNullOrEmpty(scheduledEmail.TicketbearerIds))
+                {
+                    ModelState.AddModelError("SendTo", "Please select ticket type");
+                    scheduledEmail = _maservice.PrepareSendAttendeeMail(eventId);
+                    return View(scheduledEmail);
+                }
+            }
+
+            if (SendEmail == "Now")
+                scheduledEmail.ScheduledDate = DateTime.UtcNow;
+            if (SendEmail == "OnDate")
+            {
+                if (txtOnDateTime != "")
+                {
+                        var id = Utils.DateTimeWithZone.Timezonedetail(eventId);
+                        TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(id);
+                        var dateTimeWithZone = new Utils.DateTimeWithZone(DateTime.Parse(txtOnDateTime), userTimeZone, false);
+                        scheduledEmail.ScheduledDate = dateTimeWithZone.UniversalTime;
+                }
+                else
+                {
+                    ModelState.AddModelError("SendDate", "Date or Time can not be blank.");
+                    scheduledEmail = _maservice.PrepareSendAttendeeMail(eventId);
+                    return View(scheduledEmail);
+                }
+            }
+            if (SendEmail == "BeforeEvent")
+            {
+                if (!string.IsNullOrEmpty(scheduledEmail.BeforeEvent_Days) && !string.IsNullOrEmpty(scheduledEmail.BeforeEvent_Hours) && !string.IsNullOrEmpty(scheduledEmail.BeforeEvent_Minutes))
+                {
+                    TimeSpan timeBeforeTimeSpan = TimeSpan.Parse(scheduledEmail.BeforeEvent_Days + "." + scheduledEmail.BeforeEvent_Hours + ":" + scheduledEmail.BeforeEvent_Minutes + ":00");
+                    scheduledEmail.ScheduledDate = scheduledEmail.ScheduledDate.Add(-timeBeforeTimeSpan);
+                }
+                else
+                {
+                    ModelState.AddModelError("SendDate", "Date or Time can not be blank.");
+                    scheduledEmail = _maservice.PrepareSendAttendeeMail(eventId);
+                    return View(scheduledEmail);
+                }
+            }
+            _maservice.SendAttendeeMail(eventId, scheduledEmail, userId, scheduledEmail.TicketbearerIds, scheduledEmail.ScheduledDate);
+
+            return RedirectToAction("AttendeeEmail", new { eventId = eventId });
+        }
+        return View(scheduledEmail);
+    }
+
+    [HttpPost]
+    public ActionResult DeleteEmail(long scheduledEmailId)
+    {
+        var IsDeleted = _maservice.DeleteAttendeeMail(scheduledEmailId);
+        return Json(IsDeleted, JsonRequestBehavior.AllowGet);
+    }
+
+    [HttpGet]
+    public ActionResult GetAttendeeList(AttendeeSearchRequestViewModel request)
+    {
+        var attendees = _maservice.GetAttendeeList(request);
+        return PartialView("_AttendeeSearchList", attendees);
+    }
+
+    [HttpPost]
+    public ActionResult SendTestEmail(ScheduledEmailViewModel emailViewModel)
+    {
+        AttendeeMailNotification AttendeeMailNotification = new AttendeeMailNotification();
+        AttendeeMailNotification.SendTestEmail(emailViewModel.SendTo, emailViewModel.ReplyTo, emailViewModel.Subject, emailViewModel.Body);
+        return Json("true", JsonRequestBehavior.AllowGet);
+    }
+
+    public ActionResult EditEmail(long eventId, long scheduledEmailId)
+    {
+        if ((Session["AppId"] == null))
+            return DefaultAction();
+
+        string userId = Session["AppId"].ToString();
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Email", "ManageAttendees");
+        ViewBag.EventId = eventId;
+        ScheduledEmailViewModel scheduledEmail = _maservice.GetScheduledEmailDetail(scheduledEmailId);
+        return View(scheduledEmail);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult EditEmail(long eventId, [Bind(Include = "ScheduledEmailId,Body")] ScheduledEmailViewModel scheduledEmail)
+    {
+        if ((Session["AppId"] == null))
+            return DefaultAction();
+
+        string userId = Session["AppId"].ToString();
+        Session["logo"] = "events";
+        Session["Fromname"] = "ManageAttendees";
+        Session["ReturnUrl"] = Url.Action("Email", "ManageAttendees");
+        ViewBag.EventId = eventId;
+        _maservice.UpdateAttendeeMail(scheduledEmail);
+        return Content("");
+    }
+
+    [HttpGet]
+    public ActionResult GetAttendeeTicketTypeList(long eventId)
+    {
+        var attendees = _maservice.GetAttendeeTicketTypeList(eventId);
+        return PartialView("_AttendeeTicketTypeList", attendees);
+    }
+
+    [HttpPost]
+    public ActionResult AttendeeNameBadgesPreview(BadgesViewModel badgesViewModel, string format)
+    {
+        if (Session["AppId"] == null)
+            return null;
+
+        string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(badgesViewModel.EventId, userId) == AccessLevel.Public)
+            return null;
+
+        string path = _maservice.GetBadgesPreviewPath(badgesViewModel, format, userId);
+        return Content(path);
+    }
+
+    [HttpPost]
+    public ActionResult AttendeeNameBadgesList(BadgesViewModel badgesViewModel, string format)
+    {
+        if (Session["AppId"] == null)
+            return null;
+
+        string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(badgesViewModel.EventId, userId) == AccessLevel.Public)
+            return null;
+
+        string path = _maservice.GetBadgesListPath(badgesViewModel, format, userId);
+        return Content(path);
     }
   }
 }

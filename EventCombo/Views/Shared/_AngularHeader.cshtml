@@ -61,24 +61,16 @@
     <nav>
       <ul class="nav">
         <li class="drop">
-          <span><i class="material-icons orange600">account_circle</i> @(String.IsNullOrEmpty(Model.BaseUserName) ? "Log In / Sign Up" : Model.BaseUserName) </span>
-          @if (!String.IsNullOrEmpty(Model.BaseUserId))
-          {
-            <ul>
-              <li><a href="@Url.Action("MyAccount", "Account")"><i class="material-icons">account_balance_wallet</i> Account</a></li>
-              <li><a href="@Url.Action("EventList", "EventList")"><i class="material-icons">event</i> My Events</a></li>
+          <span ng-show="!UserRegistered()"><a href="javascript:void(0)" ng-click="showLoginForm()"><i class="material-icons orange600">account_circle</i> {{UserName()}} </a></span>
+          <span ng-show="UserRegistered()"><i class="material-icons orange600">account_circle</i> {{UserName()}} </span>
+          <ul ng-show="UserRegistered()">
+            <li><a href="@Url.Action("MyAccount", "Account")"><i class="material-icons">account_balance_wallet</i> Account</a></li>
+            <li><a href="@Url.Action("EventList", "EventList")"><i class="material-icons">event</i> My Events</a></li>
             @*<li><a href="@Url.Action("DealsDashboard", "Account")"><i class="material-icons">shop</i> My Deals</a></li>*@
-              <li><a href="@Url.Action("PurchasedTicket", "Account")"><i class="material-icons">local_play</i> My Tickets</a></li>
-              <li><a href="@Url.Action("OrganizerProfile", "Account")"><i class="material-icons">group</i> Organizers</a></li>
-              <li><a href="javascript:void(0)" ng-click="logout()"><i class="material-icons">exit_to_app</i> Log Out</a></li>
-            </ul>
-          }
-          else
-          {
-            <ul>
-              <li><a href="javascript:void(0)" ng-click="showLoginForm()"><i class="material-icons">lock_outline</i> Log In</a></li>
-            </ul>
-          }
+            <li><a href="@Url.Action("PurchasedTicket", "Account")"><i class="material-icons">local_play</i> My Tickets</a></li>
+            <li><a href="@Url.Action("OrganizerProfile", "Account")"><i class="material-icons">group</i> Organizers</a></li>
+            <li><a href="javascript:void(0)" ng-click="logout()"><i class="material-icons">exit_to_app</i> Log Out</a></li>
+          </ul>
         </li>
       </ul>
     </nav>
@@ -238,13 +230,6 @@
             <div class="text-center margin-2em-top"><a class="popLink" ng-click="finishLogin()">CONTINUE TO SITE</a></div>
           </div>
         </div>
-        <div class="popOverlay" ng-show="popLoginCongrats">
-          <div class="popBox">
-            <a class="popClose" ng-click="finishLogin()"><i class="material-icons">clear</i></a>
-            <h3 class="red-heading">Congrats, you have successfully Login!</h3>
-            <div class="text-center margin-2em-top"><a class="popLink" ng-click="finishLogin()">CONTINUE TO SITE</a></div>
-          </div>
-        </div>
         <div class="popOverlay" ng-show="popLoading">
           <div class="popBox">
             <h3 class="blue-heading text-center">{{LoadingMessage}}</h3>
@@ -275,29 +260,18 @@
 </header>
 
 <div id="search" ng-controller="SearchEventController">
-  <md-content>
-    <i class="material-icons">search</i>
-    <div style="width: 40%; float: left;">
-      <md-autocomplete md-no-cache="false" md-selected-item="selectedEvent" md-search-text="eventString" md-delay="500"
-                       md-items="item in eventSearch(eventString)" md-item-text="item.EventTitle" md-min-length="1"
-                       placeholder="Search" md-selected-item-change="DiscoverByEvent()" md-select-on-focus
-                       press-enter="DiscoverByEvent()">
-        <md-item-template>
-          <span md-highlight-text="eventString" md-highlight-flags="i">{{item.EventTitle}}</span>
-        </md-item-template>
-        <md-not-found> No matching were found. </md-not-found>
-      </md-autocomplete>
+  <i class="material-icons">search</i>
+  <div class="srhField">
+    <div angucomplete-alt id="acEventSearch" placeholder="Search" pause="100" minlength="1" override-suggestions="true"
+         input-class="form-control form-control-small" match-class="highlight"
+         selected-object="DiscoverByEvent" title-field="EventTitle" remote-api-handler="eventSearch">
     </div>
-    <div style="width: 40%; float:left; margin-left: 5%">
-      <md-autocomplete md-no-cache="false" md-selected-item="selectedCity" md-search-text="cityString" md-delay="500"
-                       md-items="item in citySearch(cityString)" md-selected-item-change="DiscoverByCity()" md-select-on-focus
-                       md-item-text="item.description" md-min-length="2" placeholder="City" press-enter="DiscoverByCity()">
-        <md-item-template>
-          <span md-highlight-text="cityString" md-highlight-flags="i">{{item.description}}</span>
-        </md-item-template>
-        <md-not-found> No matching were found. </md-not-found>
-      </md-autocomplete>
+  </div>
+  <div class="srhField">
+    <div angucomplete-alt id="acCitySearch" placeholder="City" pause="100" minlength="2" override-suggestions="true"
+         input-class="form-control form-control-small" match-class="highlight"
+         selected-object="DiscoverByCity" title-field="description" remote-api-handler="citySearch">
     </div>
-  </md-content>
+  </div>
 </div>
 

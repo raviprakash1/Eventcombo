@@ -18,6 +18,7 @@ namespace EventCombo.DAL
     void Delete(object id);
     void Delete(TEntity entityToDelete);
     void Reload(TEntity entityToReload);
+    IEnumerable<TEntity> SQLQuery(string sql, params object[] parameters);
   }
 
   public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
@@ -118,6 +119,11 @@ namespace EventCombo.DAL
     public virtual  void Reload(TEntity entityToReload)
     {
       _context.Entry(entityToReload).Reload();
+    }
+
+    public IEnumerable<TEntity> SQLQuery(string sql, params object[] parameters)
+    {
+      return _context.Database.SqlQuery<TEntity>(sql, parameters);
     }
 
   }
