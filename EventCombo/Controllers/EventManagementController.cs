@@ -77,7 +77,7 @@ namespace EventCombo.Controllers
       string userId = Session["AppId"].ToString();
       AccessLevel eventAccess = _dbservice.GetEventAccess(eventId, userId);
 
-      if ((eventId <= 0) || ((eventAccess != AccessLevel.EventOwner) && (eventAccess != AccessLevel.EventAdmin)))
+      if ((eventId > 0) && (eventAccess != AccessLevel.EventOwner) && (eventAccess != AccessLevel.EventAdmin))
         return new EmptyResult();
       
       EventViewModel ev;
