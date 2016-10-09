@@ -23,7 +23,6 @@ namespace EventCombo.Controllers
     private IEventService _eService;
     private ILogger _logger;
 
-    public static string SARole = "Super Admin";
     public EventManagementController()
       : base()
     {
@@ -64,7 +63,7 @@ namespace EventCombo.Controllers
       EventViewModel ev = _eService.CreateEvent(userId);
       PopulateBaseViewModel(ev, "Create Event | Eventcombo");
 
-      ev.IsAdmin = User.IsInRole(SARole);
+      ev.IsAdmin = _dbservice.GetEventAccess(ev.EventID, userId) == AccessLevel.EventAdmin;
 
       return View(ev);
     }
@@ -76,8 +75,9 @@ namespace EventCombo.Controllers
         return null;
 
       string userId = Session["AppId"].ToString();
+      AccessLevel eventAccess = _dbservice.GetEventAccess(eventId, userId);
 
-      if ((eventId > 0) && (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner) && !User.IsInRole(SARole))
+      if ((eventId <= 0) || ((eventAccess != AccessLevel.EventOwner) && (eventAccess != AccessLevel.EventAdmin)))
         return new EmptyResult();
       
       EventViewModel ev;
@@ -88,7 +88,7 @@ namespace EventCombo.Controllers
 
       PopulateBaseViewModel(ev, "Create Event | Eventcombo");
 
-      ev.IsAdmin = User.IsInRole(SARole);
+      ev.IsAdmin = eventAccess == AccessLevel.EventAdmin;
 
       JsonNetResult res = new JsonNetResult();
       res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
@@ -114,12 +114,13 @@ namespace EventCombo.Controllers
       {
         try
         {
-          if ((ev.EventID == 0) || (_dbservice.GetEventAccess(ev.EventID, userId) == AccessLevel.EventOwner) || User.IsInRole(SARole))
+          AccessLevel eventAccess = _dbservice.GetEventAccess(ev.EventID, userId);
+          if ((ev.EventID == 0) || (eventAccess == AccessLevel.EventOwner) || (eventAccess == AccessLevel.EventAdmin))
           {
-            ev.IsAdmin = User.IsInRole(SARole);
+            ev.IsAdmin = eventAccess == AccessLevel.EventAdmin;
             _eService.SaveEvent(ev, Server.MapPath);
             ev = _eService.GetEventById(ev.EventID);
-            ev.IsAdmin = User.IsInRole(SARole);
+            ev.IsAdmin = eventAccess == AccessLevel.EventAdmin;
           }
           else
             throw new UnauthorizedAccessException(String.Format("User {0} have not access to edit EventId = {1}", userId, ev.EventID));
@@ -248,8 +249,10 @@ namespace EventCombo.Controllers
         userId = Session["AppId"].ToString();
       else
         return RedirectToAction("Index", "Home");
-    
-      if ((_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner) && !User.IsInRole(SARole))
+
+      AccessLevel eventAccess = _dbservice.GetEventAccess(eventId, userId);
+
+      if ((eventAccess != AccessLevel.EventOwner) && (eventAccess != AccessLevel.EventAdmin))
         return RedirectToAction("Index", "Home");
 
       Session["logo"] = "events";
@@ -260,7 +263,7 @@ namespace EventCombo.Controllers
       EventViewModel ev = _eService.GetEventById(eventId);
       PopulateBaseViewModel(ev, String.Format("Edit {0} | Eventcombo", ev.EventTitle));
 
-      ev.IsAdmin = User.IsInRole(SARole);
+      ev.IsAdmin = eventAccess == AccessLevel.EventAdmin;
 
       return View("CreateEvent", ev);
     }

@@ -4,7 +4,7 @@ using EventCombo.Models;
 
 namespace EventCombo.Service
 {
-  public enum AccessLevel { EventOwner, OrderOwner, Public }
+  public enum AccessLevel { EventOwner, OrderOwner, Public, EventAdmin }
 
   public interface IDBAccessService
   {

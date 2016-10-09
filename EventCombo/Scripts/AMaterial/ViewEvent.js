@@ -387,7 +387,7 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
 eventComboApp.controller('gallery', ['$scope', 'eventInfoService', '$mdDialog', '$mdMedia',
   function ($scope, eventInfoService, $mdDialog, $mdMedia) {
     $scope.images = GetImageList(eventInfoService.getEventInfo());
-    $scope.$on('ECEventInfoLoaded', function (val) {
+    $scope.$on('EventInfoLoaded', function (val) {
       $scope.images = GetImageList(eventInfoService.getEventInfo());
     });
 
