@@ -1496,12 +1496,15 @@ namespace EventCombo.Service
 
     private bool IsEventSubDomainExists(string subDomain, long eventId = 0)
     {
+        if (String.IsNullOrWhiteSpace(subDomain))
+          return false;
+
         EventViewModel ev = new EventViewModel();
         IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
 
         var evDB = eRepo.Get(filter: (e => e.EventUrl == subDomain && (eventId == 0 ? true : e.EventID != eventId)));
 
-        return evDB.Count() > 0 ? true : false;
+        return evDB.Count() > 0;
     }
   }
 }
