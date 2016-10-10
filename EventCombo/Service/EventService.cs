@@ -347,11 +347,7 @@ namespace EventCombo.Service
 
         ticket.E_Id = ev.EventID;
         if (purchasedQuantity != 0)
-        {
-          ticket.Price = tDB.Price;
           ticket.Qty_Available = ticket.Qty_Available < purchasedQuantity ? purchasedQuantity : ticket.Qty_Available;
-          ticket.Fees_Type = tDB.Fees_Type;
-        }
 
         UpdatePrices(ticket, tDB, ev.IsAdmin);
 
@@ -823,7 +819,7 @@ namespace EventCombo.Service
       if ((ev.DateInfo.EndDateTime > DateTime.MinValue) && (tz != null))
         ev.DateInfo.EndDateTime = ConvertTimeFromUtc(ev.DateInfo.EndDateTime, tz);
 
-      foreach (var t in evDB.Tickets)
+      foreach (var t in evDB.Tickets.OrderBy(t => t.T_order ?? 0))
       {
         TicketViewModel tvm = _mapper.Map<TicketViewModel>(t);
 
@@ -1057,7 +1053,7 @@ namespace EventCombo.Service
       }
 
       var tickets = new List<TicketInfoViewModel>();
-      var tqDB = tqdRepo.Get(filter: (tqd => (tqd.TQD_Event_Id == evi.EventId)));
+      var tqDB = tqdRepo.Get(filter: (tqd => (tqd.TQD_Event_Id == evi.EventId)), orderBy: (q => q.OrderBy(t => t.Ticket.T_order ?? 0)));
       bool allSoldOut = true;
       bool allUnavailable = true;
       decimal minTicketPrice = decimal.MaxValue;
@@ -1075,8 +1071,6 @@ namespace EventCombo.Service
         DateTime saleStartDate;
         DateTime saleEndDate;
         DateTime.TryParse(tq.TQD_StartDate + " " + tq.TQD_StartTime, out ticketDate);
-        //if (ticketDate != default(DateTime))
-        //  ticketDate = ConvertTimeFromUtc(ticketDate, tz);
         DateTime.TryParse((tq.Ticket.Sale_Start_Date ?? default(DateTime)).ToShortDateString() + " " + tq.Ticket.Sale_Start_Time, out saleStartDate);
         DateTime.TryParse((tq.Ticket.Sale_End_Date ?? default(DateTime)).ToShortDateString() + " " + tq.Ticket.Sale_End_Time, out saleEndDate);
 
@@ -1208,8 +1202,7 @@ namespace EventCombo.Service
 
     private void PopulateOGPData(EventInfoViewModel evi)
     {
-
-      evi.OGPDescription = evi.EventDescription;
+      evi.OGPDescription = HtmlProcessing.GetShortString(HtmlProcessing.PrepareString(evi.EventDescription), 300, 400, ".");
       evi.OGPImage = String.IsNullOrEmpty(evi.ImageUrl) ? "" : ResolveServerUrl(VirtualPathUtility.ToAbsolute(evi.ImageUrl), false);
       evi.OGPTitle = evi.EventTitle + " | Eventcombo";
       evi.OGPType = "article";
@@ -1498,12 +1491,15 @@ namespace EventCombo.Service
 
     private bool IsEventSubDomainExists(string subDomain, long eventId = 0)
     {
+        if (String.IsNullOrWhiteSpace(subDomain))
+          return false;
+
         EventViewModel ev = new EventViewModel();
         IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
 
         var evDB = eRepo.Get(filter: (e => e.EventUrl == subDomain && (eventId == 0 ? true : e.EventID != eventId)));
 
-        return evDB.Count() > 0 ? true : false;
+        return evDB.Count() > 0;
     }
   }
 }

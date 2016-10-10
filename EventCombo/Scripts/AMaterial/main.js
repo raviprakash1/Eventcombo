@@ -639,6 +639,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
           ? null : $scope.getDateTime(ticket.localHideUntilDate, ticket.localHideUntilTime);
         ticket.Hide_After_Date = !ticket.localHideAfterDate || (ticket.useAfterDate == 0)
           ? null : $scope.getDateTime(ticket.localHideAfterDate, ticket.localHideAfterTime);
+        ticket.T_order = i;
       });
       $scope.eventInfo.CurrentEventType = null;
       $scope.eventInfo.CurrentEventCategory = null;
