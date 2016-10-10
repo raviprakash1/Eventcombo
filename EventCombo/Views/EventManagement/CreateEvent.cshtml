@@ -608,16 +608,14 @@
                       <md-input-container class="ticketContTxtBox qualityMdCon">
                         <label class="ticketPriceLbl">$ Price</label>
                         <input type="text" class="ticketPriceLblTxtboxCls" name="TicketPrice" ng-model="ticket.PriceText"
-                               ng-readonly="ticket.PurchasedQuantity > 0" ng-change="onPriceChange(ticket)"
-                               ng-blur="onPriceBlur(ticket, 'TicketForm_'+$index)" decimal-only />
+                               ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket, 'TicketForm_'+$index)" decimal-only />
                       </md-input-container>
                     </div>
                     <div flex ng-show="ticket.TicketTypeID == 2" class="mob-m2em-bottom">
                       <md-input-container class="ticketContTxtBox qualityMdCon">
                         <label class="ticketDiscountLbl">$ Discount</label>
                         <input type="text" class="ticketDiscountLblTxtboxCls" name="TicketDiscount" ng-model="ticket.DiscountText"
-                               ng-readonly="ticket.PurchasedQuantity > 0" ng-change="onPriceChange(ticket)"
-                               ng-blur="onPriceBlur(ticket, 'TicketForm_'+$index)" decimal-only />
+                               ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket, 'TicketForm_'+$index)" decimal-only />
                       </md-input-container>
                     </div>
                     <div flex ng-show="ticket.TicketTypeID != 2">

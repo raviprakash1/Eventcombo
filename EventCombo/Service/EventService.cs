@@ -347,11 +347,7 @@ namespace EventCombo.Service
 
         ticket.E_Id = ev.EventID;
         if (purchasedQuantity != 0)
-        {
-          ticket.Price = tDB.Price;
           ticket.Qty_Available = ticket.Qty_Available < purchasedQuantity ? purchasedQuantity : ticket.Qty_Available;
-          ticket.Fees_Type = tDB.Fees_Type;
-        }
 
         UpdatePrices(ticket, tDB, ev.IsAdmin);
 
