@@ -93,7 +93,9 @@ namespace EventCombo.Models
       PerPage = 20;
       Page = 0;
       SortDesc = true;
-      DateFrom = "01/01/1900";
+      DateTime now = DateTime.Today;
+      now = now.AddYears(-1);
+      DateFrom = now.Month.ToString() + "/" + now.Day.ToString() + "/" + now.Year.ToString();
     }
     public long EventId { get; set; }
     public EventOrderSortBy SortBy { get; set; }
