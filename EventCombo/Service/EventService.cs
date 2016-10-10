@@ -1206,8 +1206,7 @@ namespace EventCombo.Service
 
     private void PopulateOGPData(EventInfoViewModel evi)
     {
-
-      evi.OGPDescription = evi.EventDescription;
+      evi.OGPDescription = HtmlProcessing.GetShortString(HtmlProcessing.PrepareString(evi.EventDescription), 300, 400, ".");
       evi.OGPImage = String.IsNullOrEmpty(evi.ImageUrl) ? "" : ResolveServerUrl(VirtualPathUtility.ToAbsolute(evi.ImageUrl), false);
       evi.OGPTitle = evi.EventTitle + " | Eventcombo";
       evi.OGPType = "article";
