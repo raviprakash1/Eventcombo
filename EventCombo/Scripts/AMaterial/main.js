@@ -91,6 +91,10 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     }
 
     $scope.prepareEventInfo = function () {
+      if ($scope.eventInfo.EventID)
+        $scope.TitleText = "Edit Event";
+      else
+        $scope.TitleText = "Create Event";
       $scope.onShowDateTimeDialog(false);
       if (!$scope.eventInfo.Ticket_variabletype)
         $scope.eventInfo.Ticket_variabletype = 'O';

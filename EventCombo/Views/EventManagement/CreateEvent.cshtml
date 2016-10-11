@@ -101,7 +101,7 @@
 
   <form name="MainForm" novalidate>
     <div>
-      <div class="headerCEHead createEvent">Create Event</div>
+      <div class="headerCEHead createEvent" ng-init="TitleText = '@(Model.EventID == 0 ? "Create Event" : "Edit Event")'">{{TitleText}}</div>
       <div class="headerCEHeadBtn topButtons">
         <a href="javascript:void(0);" class="btnSaveHeadCE" ng-click="saveEvent()">SAVE</a>
         <a href="javascript:void(0);" class="btnPreviewHeadCE" ng-click="previewEvent()">PREVIEW</a>
