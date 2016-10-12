@@ -837,7 +837,7 @@ namespace EventCombo.Controllers
                 else if (strAmtType == "NETSALE")
                 {
 
-                    string strQueryec = "SELECT isnull(sum(TPD_EC_Fee),0) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
+                    string strQueryec = "SELECT isnull(sum(TPD_EC_Fee * TPD_Purchased_Qty), 0) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
                     var vEcFee = objEnt.Database.SqlQuery<decimal>(strQueryec).FirstOrDefault();
 
                     //var vEcFee = (from myRow in objEnt.Ticket_Purchased_Detail
