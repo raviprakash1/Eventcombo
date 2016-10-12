@@ -1,6 +1,3 @@
-USE [EventCombo]
-GO
-
 /****** Object:  View [dbo].[EventTicket_View]    Script Date: 12-Oct-16 2:42:43 PM ******/
 SET ANSI_NULLS ON
 GO
