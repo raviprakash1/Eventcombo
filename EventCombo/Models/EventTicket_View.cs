@@ -28,7 +28,7 @@ namespace EventCombo.Models
         public Nullable<decimal> PaidAmount { get; set; }
         public Nullable<decimal> ECFeePerTicket { get; set; }
         public Nullable<decimal> MerchantFeePerTicket { get; set; }
-        public Nullable<decimal> Customer_Fee { get; set; }
+        public decimal Customer_Fee { get; set; }
         public Nullable<int> PromoCodeID { get; set; }
         public string PromoCode { get; set; }
         public Nullable<decimal> PromoCodeAmount { get; set; }
@@ -40,5 +40,6 @@ namespace EventCombo.Models
         public string TicketTypeName { get; set; }
         public Nullable<byte> PaymentTypeId { get; set; }
         public string VariableIds { get; set; }
+        public bool IsManualOrder { get; set; }
     }
 }
