@@ -14,6 +14,11 @@ namespace EventCombo.Service
     private IUnitOfWorkFactory _factory;
     private IMapper _mapper;
 
+    public static string UserRoleSA = "1";
+    public static string UserRoleAdmin = "2";
+    public static string UserRoleUser = "3";
+    public static int UserPermissionEvents = 4;
+
     public DBAccessService(IUnitOfWorkFactory factory, IMapper mapper)
     {
       if (factory == null)
@@ -108,9 +113,22 @@ namespace EventCombo.Service
     public AccessLevel GetEventAccess(long eventId, string userId)
     {
       if (String.IsNullOrWhiteSpace(userId))
-        throw new ArgumentNullException("userId");
+        return AccessLevel.Public;
 
       IRepository<Event> evRepo = new GenericRepository<Event>(_factory.ContextFactory);
+      IRepository<AspNetUser> uRepo = new GenericRepository<AspNetUser>(_factory.ContextFactory);
+      var user = uRepo.Get(filter: (u => u.Id == userId)).FirstOrDefault();
+      if (user == null)
+        return AccessLevel.Public;
+      if (user.AspNetRoles.Any(ur => ur.Id == UserRoleSA))
+        return AccessLevel.EventAdmin;
+      if (user.AspNetRoles.Any(ur => ur.Id == UserRoleAdmin))
+      {
+        IRepository<User_Permission_Detail> upRepo = new GenericRepository<User_Permission_Detail>(_factory.ContextFactory);
+        if (upRepo.Get(filter: (up => (up.UP_User_Id == userId) && (up.UP_Permission_Id == UserPermissionEvents))).Any())
+          return AccessLevel.EventAdmin;
+      }
+
       Event ev = evRepo.Get(filter: (e => e.EventID == eventId)).SingleOrDefault();
       if (ev == null)
         return AccessLevel.Public;

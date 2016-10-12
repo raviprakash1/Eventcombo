@@ -17,6 +17,16 @@ namespace EventCombo.Service
       return _htmlRegex.Replace(source, string.Empty);
     }
 
+    public static string PrepareString(string source)
+    {
+      return HttpUtility.JavaScriptStringEncode(
+        StripTagsRegex(
+          HttpUtility.HtmlDecode(
+            source.Replace("\n", String.Empty)
+            .Replace("\r", String.Empty)
+            .Replace("\t", String.Empty))));
+    }
+
     public static string GetShortString(string source, int minLength, int maxLength, string delimiter)
     {
       if (String.IsNullOrEmpty(source))

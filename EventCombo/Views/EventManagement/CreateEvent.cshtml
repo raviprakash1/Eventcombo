@@ -608,16 +608,14 @@
                       <md-input-container class="ticketContTxtBox qualityMdCon">
                         <label class="ticketPriceLbl">$ Price</label>
                         <input type="text" class="ticketPriceLblTxtboxCls" name="TicketPrice" ng-model="ticket.PriceText"
-                               ng-readonly="ticket.PurchasedQuantity > 0" ng-change="onPriceChange(ticket)"
-                               ng-blur="onPriceBlur(ticket, 'TicketForm_'+$index)" decimal-only />
+                               ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket, 'TicketForm_'+$index)" decimal-only />
                       </md-input-container>
                     </div>
                     <div flex ng-show="ticket.TicketTypeID == 2" class="mob-m2em-bottom">
                       <md-input-container class="ticketContTxtBox qualityMdCon">
                         <label class="ticketDiscountLbl">$ Discount</label>
                         <input type="text" class="ticketDiscountLblTxtboxCls" name="TicketDiscount" ng-model="ticket.DiscountText"
-                               ng-readonly="ticket.PurchasedQuantity > 0" ng-change="onPriceChange(ticket)"
-                               ng-blur="onPriceBlur(ticket, 'TicketForm_'+$index)" decimal-only />
+                               ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket, 'TicketForm_'+$index)" decimal-only />
                       </md-input-container>
                     </div>
                     <div flex ng-show="ticket.TicketTypeID != 2">
@@ -747,9 +745,8 @@
                     <div>
                       <div class="date-picker-row dateP167" flex-gt-sm style="float:left; margin-top: 21px;">
                         <label>Sales Start Date</label>
-                        <md-datepicker name="ticketStartDate" md-placeholder="MM/DD/YYYY" ng-model="ticket.localSaleStartDate" md-date="minDate" md-open-on-focus></md-datepicker>
+                        <md-datepicker name="ticketStartDate" md-placeholder="MM/DD/YYYY" ng-model="ticket.localSaleStartDate" md-open-on-focus></md-datepicker>
                         <div class="validation-datepicker-messages" ng-show="{{'TicketForm_'+$index}}.ticketStartDate.$touched || !{{'TicketForm_'+$index}}.ticketStartDate.$pristine || formValidation || ticket.ticketValidation">
-                          <div ng-show="{{'TicketForm_'+$index}}.ticketStartDate.$error.mindate">This date has passed</div>
                           <div ng-show="{{'TicketForm_'+$index}}.ticketStartDate.$error.valid">Enter date or leave empty</div>
                         </div>
                       </div>
@@ -764,9 +761,8 @@
                     <div style="clear: both;">
                       <div class="date-picker-row dateP167" flex-gt-sm style="float:left; margin-top: 21px;">
                         <label>Sales End Date</label>
-                        <md-datepicker name="ticketEndDate" md-placeholder="MM/DD/YYYY" ng-model="ticket.localSaleEndDate" md-min-date="minDate" md-open-on-focus></md-datepicker>
+                        <md-datepicker name="ticketEndDate" md-placeholder="MM/DD/YYYY" ng-model="ticket.localSaleEndDate" md-open-on-focus></md-datepicker>
                         <div class="validation-datepicker-messages" ng-show="{{'TicketForm_'+$index}}.ticketEndDate.$touched || !{{'TicketForm_'+$index}}.ticketEndDate.$pristine || formValidation || ticket.ticketValidation">
-                          <div ng-show="{{'TicketForm_'+$index}}.ticketEndDate.$error.mindate">This date has passed</div>
                           <div ng-show="{{'TicketForm_'+$index}}.ticketEndDate.$error.valid">Enter date or leave empty</div>
                         </div>
                       </div>
@@ -791,10 +787,9 @@
                     <div class="date-picker-row" style="margin-left: 0px; float:left; margin-top: 21px;" flex-gt-sm>
                       <label style="margin-left: 35px">Hide Until Date</label>
                       <md-checkbox class="blue" ng-model="ticket.useUntilDate" ng-true-value="'1'" ng-false-value="'0'"></md-checkbox>
-                      <md-datepicker ng-model="ticket.localHideUntilDate" md-placeholder="MM/DD/YYYY" name="ticketHideUntilDate" style="width: 300px !important;" md-min-date="minDate"></md-datepicker>
+                      <md-datepicker ng-model="ticket.localHideUntilDate" md-placeholder="MM/DD/YYYY" name="ticketHideUntilDate" style="width: 300px !important;"></md-datepicker>
                       <div class="validation-datepicker-messages" ng-show="({{'TicketForm_'+$index}}.ticketHideUntilDate.$touched  || !{{'TicketForm_'+$index}}.ticketHideUntilDate.$pristine || formValidation || ticket.ticketValidation)">
                         <div ng-show="(ticket.useUntilDate == 1) && (!ticket.localHideUntilDate)">Select date</div>
-                        <div ng-show="({{'TicketForm_'+$index}}.ticketHideUntilDate.$error.mindate)">This date has passed</div>
                         <div ng-show="(ticket.useUntilDate != 1) && (ticket.useAfterDate != 1)">Select at least one date</div>
                         <div ng-show="{{'TicketForm_'+$index}}.ticketHideUntilDate.$error.valid">Enter date</div>
                       </div>
@@ -809,10 +804,9 @@
                     <div class="date-picker-row" style="margin-left: 0px; float:left; margin-top: 21px;" flex-gt-sm>
                       <label style="margin-left: 35px">Hide After Date</label>
                       <md-checkbox class="blue" ng-model="ticket.useAfterDate" ng-true-value="'1'" ng-false-value="'0'"></md-checkbox>
-                      <md-datepicker ng-model="ticket.localHideAfterDate" md-placeholder="MM/DD/YYYY" name="ticketHideAfterDate" style="width: 300px !important;" md-min-date="minDate"></md-datepicker>
+                      <md-datepicker ng-model="ticket.localHideAfterDate" md-placeholder="MM/DD/YYYY" name="ticketHideAfterDate" style="width: 300px !important;"></md-datepicker>
                       <div class="validation-datepicker-messages" ng-show="({{'TicketForm_'+$index}}.ticketHideUntilDate.$touched  || !{{'TicketForm_'+$index}}.ticketHideUntilDate.$pristine  || formValidation || ticket.ticketValidation)">
                         <div ng-show="(ticket.useAfterDate == 1) && (!ticket.localHideAfterDate)">Select date</div>
-                        <div ng-show="({{'TicketForm_'+$index}}.ticketHideAfterDate.$error.mindate)">This date has passed</div>
                         <div ng-show="(ticket.useUntilDate != 1) && (ticket.useAfterDate != 1)">Select at least one date</div>
                         <div ng-show="{{'TicketForm_'+$index}}.ticketHideAfterDate.$error.valid">Enter date</div>
                       </div>

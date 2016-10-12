@@ -73,16 +73,12 @@
               <span><a href="javascript:void(0)" title="Vote for EventTitle" ng-click="VoteEvent();"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
             }
             <span class="social" social="SHARE THIS">
-              <a href="javascript:void(0)" title="Share @Model.EventTitle via Email" ng-click="forwardFriend($event,'@Model.EventTitle','Event')"><img width="20px" alt="Share @Model.EventTitle via Email" src="~/Images/AMaterial/mail-square.svg"></a>
+              <a href="javascript:void(0)" title="Share @Model.EventTitle via Email" ng-click="forwardFriend($event,'@HtmlProcessing.PrepareString(Model.EventTitle)','Event')"><img width="20px" alt="Share @Model.EventTitle via Email" src="~/Images/AMaterial/mail-square.svg"></a>
               <a href="javascript:void(0)" title="Share @Model.EventTitle on Facebook" onclick="FacebookShare('@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Facebook" src="~/Images/AMaterial/square-facebook.svg"></a>
-              <a href="javascript:void(0)" title="Share @Model.EventTitle on Twitter" onclick="TwitterShare('@Model.EventTitle.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Twitter" src="~/Images/AMaterial/square-twitter.svg"></a>
-              <a href="javascript:void(0)" title="Share @Model.EventTitle on LinkedIn" onclick="LinkedInShare('@Model.EventTitle.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)', '@(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Html.Raw(Model.EventDescription!=null ?Model.EventDescription : "").ToString()), 200, 250, ".").Replace("'", @"\'"))')"><img width="20px" alt="Share @Model.EventTitle on LinkedIn" src="~/Images/AMaterial/square-linkedin.svg"></a>
+              <a href="javascript:void(0)" title="Share @Model.EventTitle on Twitter" onclick="TwitterShare('@HtmlProcessing.PrepareString(Model.EventTitle)','@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Twitter" src="~/Images/AMaterial/square-twitter.svg"></a>
+              <a href="javascript:void(0)" title="Share @Model.EventTitle on LinkedIn" onclick="LinkedInShare('@HtmlProcessing.PrepareString(Model.EventTitle)','@(Request.Url.AbsoluteUri)', '@(Model.OGPDescription)')"><img width="20px" alt="Share @Model.EventTitle on LinkedIn" src="~/Images/AMaterial/square-linkedin.svg"></a>
               <a href="javascript:void(0)" title="Share @Model.EventTitle on Facebook Messenger" ng-show="false" onclick="FacebookSend('@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Facebook Messenger" src="~/Images/AMaterial/fb_messenger.svg"></a>
             </span>
-            @*<div class="fb-send"
-                   data-href="@(Request.Url.AbsoluteUri)"
-                   data-layout="button_count">
-              </div>*@
           </div>
         </div>
       </div>
