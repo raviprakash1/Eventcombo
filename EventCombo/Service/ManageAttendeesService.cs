@@ -58,9 +58,10 @@ namespace EventCombo.Service
       IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
       IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
       IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
-      var tickets = tpdRepo.Get(filter: (t => t.TPD_Event_Id == eventId));
-      var ev = eRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();
-      var order = orderRepo.Get();
+      var order = orderRepo.Get(filter: o => o.IsManualOrder == false);
+      var OrderIds = order.Select(oo => oo.O_Order_Id);
+      var tickets = tpdRepo.Get(filter: (t => t.TPD_Event_Id == eventId && OrderIds.Contains(t.TPD_Order_Id)));
+      var ev = eRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();      
 
       EventOrdersSummuryViewModel ordersTotal = new EventOrdersSummuryViewModel()
       {
@@ -100,9 +101,11 @@ namespace EventCombo.Service
       IRepository<Ticket> ticketRepo = new GenericRepository<Ticket>(_factory.ContextFactory);
       IRepository<Country> countryRepo = new GenericRepository<Country>(_factory.ContextFactory);
 
+      var orderList = orderRepo.Get(filter: o => o.IsManualOrder == false);
+      var OrderIds = orderList.Select(oo => oo.O_Order_Id);
       var tickets = ticketRepo.Get(filter: (t => t.E_Id == eventId));
 
-      IEnumerable<EventOrderInfoViewModel> res = tpdRepo.Get(filter: (t => t.TPD_Event_Id == eventId))
+      IEnumerable<EventOrderInfoViewModel> res = tpdRepo.Get(filter: (t => t.TPD_Event_Id == eventId && OrderIds.Contains(t.TPD_Order_Id)))
         .GroupBy(tt => tt.TPD_Order_Id)
         .Select(ticket => new EventOrderInfoViewModel()
         {
@@ -156,19 +159,19 @@ namespace EventCombo.Service
         IRepository<BillingAddress> billRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
         IRepository<ShippingAddress> shipRepo = new GenericRepository<ShippingAddress>(_factory.ContextFactory);
         IRepository<Country> countryRepo = new GenericRepository<Country>(_factory.ContextFactory);
-        IRepository<TicketBearer> tbRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+        IRepository<TicketBearer_View> tbRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
         IRepository<Event_VariableDesc> evdRepo = new GenericRepository<Event_VariableDesc>(_factory.ContextFactory);
 
         var attendees = tbRepo.Get();
         var vairableChages = evdRepo.Get(filter: (t => t.Event_Id == eventId));
 
-        IEnumerable<EventOrderInfoViewModel> res = EventTicketRepo.Get(filter: (t => t.EventID == eventId))
+        IEnumerable<EventOrderInfoViewModel> res = EventTicketRepo.Get(filter: (t => t.EventID == eventId && t.IsManualOrder == false))
         .Select(ticket => new EventOrderInfoViewModel()
         {
             OrderId = ticket.OrderId,
             PaymentState = PaymentStates.Completed,
             TicketName = ticket.TicketName,
-            BuyerName = ticket.FirstName + " " + ticket.LastName + ", " + string.Join(", ", attendees.Where(a => a.OrderId == ticket.OrderId).Select(a => a.Name.Trim()).ToArray()),
+            BuyerName = string.Join(", ", attendees.Where(a => a.OrderId == ticket.OrderId).Select(a => a.Name.Trim()).ToArray()),
             BuyerEmail = (string.IsNullOrEmpty(ticket.Email) ? "" : ticket.Email + ", ") + string.Join(", ", attendees.Where(a => a.OrderId == ticket.OrderId).Select(a => a.Email.Trim()).ToArray()),
             Quantity = ticket.PurchasedQuantity ?? 0,
             Price = ticket.OrderAmount ?? 0,
@@ -270,11 +273,7 @@ namespace EventCombo.Service
         return false;
 
       List<MailAddress> addresses = new List<MailAddress>();
-      var profile = order.AspNetUser.Profiles.FirstOrDefault();
-      if ((profile != null) && (!String.IsNullOrWhiteSpace(profile.Email)))
-        addresses.Add(new MailAddress(profile.Email, profile.FirstName + " " + profile.LastName));
-
-      IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+      IRepository<TicketBearer_View> attRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
       foreach (var attendee in attRepo.Get(filter: (a => a.OrderId == orderId)))
         if (!String.IsNullOrWhiteSpace(attendee.Email))
           if (!addresses.Any(a => a.Address == attendee.Email))
@@ -574,6 +573,7 @@ namespace EventCombo.Service
           O_VariableId = "0",
           O_VariableAmount = 0,
           O_PromoCodeId = 0,
+          IsManualOrder = true,
         };
         oRepo.Insert(order);
         uow.Context.SaveChanges();
@@ -685,11 +685,14 @@ namespace EventCombo.Service
         AddStyledCell(row, 14, hstyle).SetCellValue("BILLING ADDRESS");
         AddStyledCell(row, 15, hstyle).SetCellValue("MAIL TICKETS");
         var variableCount = 0;
-        foreach (var variable in orders.FirstOrDefault().VariableChages)
+        if (orders.FirstOrDefault() != null)
         {
-            variableCount += 1;
-            AddStyledCell(row, 15 + variableCount, hstyle).SetCellValue(variable.VariableDesc);
-        }            
+            foreach (var variable in orders.FirstOrDefault().VariableChages)
+            {
+                variableCount += 1;
+                AddStyledCell(row, 15 + variableCount, hstyle).SetCellValue(variable.VariableDesc);
+            }
+        }
         var i = 2;
         string tempOrderId = "";
         foreach (var order in orders)
@@ -749,10 +752,13 @@ namespace EventCombo.Service
         rw.WriteLine();
         var variableCount = 0;
         var variableStr = "";
-        foreach (var variable in orders.FirstOrDefault().VariableChages)
+        if (orders.FirstOrDefault() != null)
         {
-            variableCount += 1;
-            variableStr += " | " + variable.VariableDesc + (variable.VariableDesc.Length < (variable.Price ?? 0).ToString("N2").Length + 1 ? new String(' ', (variable.Price ?? 0).ToString("N2").Length + 1 - variable.VariableDesc.Length) : "");
+            foreach (var variable in orders.FirstOrDefault().VariableChages)
+            {
+                variableCount += 1;
+                variableStr += " | " + variable.VariableDesc + (variable.VariableDesc.Length < (variable.Price ?? 0).ToString("N2").Length + 1 ? new String(' ', (variable.Price ?? 0).ToString("N2").Length + 1 - variable.VariableDesc.Length) : "");
+            }
         }
         rw.Write("  ORDER #  |    DATE     |          ATTENDEE          |        TICKET NAME         | QUANTITY |  GROSS PAID  |NET EVENT REVENUE|EVENTCOMBO FEE|EVENTCOMBO MERCHANT FEE|PROMO CODE|REFUNDED|CANCELLED|ATTENDEE NUMBER|       ATTENDEE EMAIL       |          ADDRESS           |          MAIL TICKETS      " + variableStr);
         rw.WriteLine();
@@ -872,11 +878,15 @@ namespace EventCombo.Service
         rw.Write("BILLING ADDRESS" + delimiter);
         rw.Write("MAIL TICKETS" + delimiter);
         var variableCount = 0;
-        var variableTotalCount = orders.FirstOrDefault().VariableChages.Count();
-        foreach (var variable in orders.FirstOrDefault().VariableChages)
+        var variableTotalCount = 0;
+        if (orders.FirstOrDefault() != null)
         {
-            variableCount += 1;
-            rw.Write(variable.VariableDesc + (variableCount < variableTotalCount ? delimiter : ""));
+            variableTotalCount = orders.FirstOrDefault().VariableChages.Count();
+            foreach (var variable in orders.FirstOrDefault().VariableChages)
+            {
+                variableCount += 1;
+                rw.Write(variable.VariableDesc + (variableCount < variableTotalCount ? delimiter : ""));
+            }
         }
         rw.WriteLine();
 

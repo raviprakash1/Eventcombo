@@ -92,7 +92,9 @@ namespace EventCombo.Service
         eventname = eAddresses.Select(a => a.ConsolidateAddress).FirstOrDefault();
 
       IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+      IRepository<TicketBearer_View> tbRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
       var tickets = tpdRepo.Get(filter: (t => t.TPD_Order_Id == _orderId));
+      var attendees = tbRepo.Get(a => (a.OrderId == _orderId));
       foreach (var ticket in tickets.Select(tp => new
       {
         AddressId = tp.Ticket_Quantity_Detail.TQD_AddressId,
@@ -114,7 +116,7 @@ namespace EventCombo.Service
           .OrderBy(o => o.Ticket_Quantity_Detail.TQD_Ticket_Id))
         {
           strHTML.Append("<tr align='left' style='color:#696564;'> ");
-          strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + item.AspNetUser.Profiles.FirstOrDefault().FirstName + "</td>");
+          strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + string.Join(", ", attendees.Select(a => a.Name.Trim()).ToArray()) + "</td>");
           strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + item.Ticket_Quantity_Detail.Ticket.T_name + "</td>");
           strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + item.TPD_Purchased_Qty + "</td>");
           strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + (item.TPD_Amount > 0 ? "$ " + item.TPD_Amount.ToString() : item.TPD_Donate > 0 ? "$ " + item.TPD_Donate.ToString() : "Free") + "</td>");
@@ -167,8 +169,6 @@ namespace EventCombo.Service
       strHTML.Append("<td colspan='4' style='font-size:15px; padding:10px 5px;'>" + cardtext + " </td></tr>");
       strHTML.Append("<tr align='center'><td colspan='4' style='font-size:15px;'>");
       strHTML.Append("<p style='background:#fff9cf; padding:10px 15px; display:inline-block; margin:0px;'>This charge will appear on your card statement as Eventcombo * { " + cEvent.EventTitle + "}</p>");
-      strHTML.Append("<p style='color:#696564;' >This order is subject to Eventcombo '");
-      strHTML.Append("<a href='#' style='color:#0f90ba;'>Terms of Service </a> , <a style='color:#0f90ba;' href='#'>Privacy Policy </a> and <a style='color:#0f90ba;' href='#'>Cookie Policy </a></p>");
       strHTML.Append("</td></tr></table > ");
 
       string Imagecode = "<img style = 'width:200px;height:200px;' src ='http://maps.google.com/maps/api/staticmap?center=" + eventname + "&zoom=14&size=400x400&maptype=roadmap&markers=color:red|color:red|label:C|" + eventname + "&sensor=false' alt = 'Map Image' />";

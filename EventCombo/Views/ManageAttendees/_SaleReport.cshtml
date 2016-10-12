@@ -20,9 +20,12 @@
                     <th>Attendee Email</th>
                     <th>Billing Address</th>
                     <th>Mail Tickets</th>
-                    @foreach (var variable in Model.FirstOrDefault().VariableChages)
+                    @if (Model.FirstOrDefault() != null)
                     {
-                        <th>@variable.VariableDesc</th>
+                        foreach (var variable in Model.FirstOrDefault().VariableChages)
+                        {
+                            <th>@variable.VariableDesc</th>
+                        }
                     }
                 </tr>
             </thead>
