@@ -35,7 +35,7 @@
         <td class="UETableTD">$@order.PriceNet</td>
         <td class="UETableTD">@order.CustomerEmail</td>
         <td class="UETableTD">@order.Address</td>
-        <td class="UETableTD">@(order.Date.ToLongDateString())</td>
+        <td class="UETableTD">@(order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt"))</td>
         <td class="UETableTD">@(order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString())</td>        
       </tr>
       <tr id="UETableTDOrderDetail@(Model.PaymentState.ToString() + order.OrderId)" style="display:none;" data-popped="0"></tr>

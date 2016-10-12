@@ -54,7 +54,7 @@
 
   <div class="addAttendeessStaticTxt">* Eventcombo does not charge any fees for manual orders.</div>
 
-  <div class="form-group" style="margin: 20px 0px; ">
+  <div class="form-group" style="margin: 20px 0px; display:none;">
     <div style="font-size: 18px; font-weight: bold;">
       PLEASE ENTER YOUR ACCOUNT INFORMATION
     </div>
@@ -136,9 +136,6 @@
   });
 
   function sendOrder() {
-
-    if (!validateOrder())
-      return;
 
     var collectedTickets = [];
     var attendees = [];

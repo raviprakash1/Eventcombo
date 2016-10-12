@@ -1970,6 +1970,9 @@ namespace EventCombo.Controllers
                                 eventname = "";
                             }
                         }
+
+                        var attendees = string.Join(", ", db.TicketBearer_View.Where(t => t.OrderId == guid).Select(a => a.Name.Trim()).ToArray());
+
                         if (myAddress.Count() == 1)
                         {
 
@@ -2010,11 +2013,10 @@ namespace EventCombo.Controllers
 
                                         foreach (var qty in itemtoadd)
                                         {
-
                                             if (qty.Promocode != null && qty.Promocode != 0)
                                             {
                                                 strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + (!string.IsNullOrEmpty(fname) ? fname : qty.username) + "</td>");
+                                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + attendees + "</td>");
                                                 strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
                                                 strHTML.Append("<td style='width:10%font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
                                                 strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Price + "</td>");
@@ -2029,7 +2031,7 @@ namespace EventCombo.Controllers
                                             else
                                             {
                                                 strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + (!string.IsNullOrEmpty(fname) ? fname : qty.username) + "</td>");
+                                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + attendees + "</td>");
                                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
                                                 strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
                                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
@@ -2081,7 +2083,7 @@ namespace EventCombo.Controllers
                                             if (qty.Promocode != null && qty.Promocode != 0)
                                             {
                                                 strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + (!string.IsNullOrEmpty(fname) ? fname : qty.username) + "</td>");
+                                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + attendees + "</td>");
                                                 strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
                                                 strHTML.Append("<td style='width:10%font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
                                                 strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Price + "</td>");
@@ -2096,7 +2098,7 @@ namespace EventCombo.Controllers
                                             else
                                             {
                                                 strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + (!string.IsNullOrEmpty(fname) ? fname : qty.username) + "</td>");
+                                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + attendees + "</td>");
                                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
                                                 strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
                                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
@@ -2163,7 +2165,7 @@ namespace EventCombo.Controllers
                                     if (qty.Promocode != null && qty.Promocode != 0)
                                     {
                                         strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                                        strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + (!string.IsNullOrEmpty(fname) ? fname : qty.username) + "</td>");
+                                        strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + attendees + "</td>");
                                         strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
                                         strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
                                         strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.Price + "</td>");
@@ -2178,7 +2180,7 @@ namespace EventCombo.Controllers
                                     else
                                     {
                                         strHTML.Append("<tr align='left' style='color:#696564;'> ");
-                                        strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + (!string.IsNullOrEmpty(fname) ? fname : qty.username) + "</td>");
+                                        strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + attendees + "</td>");
                                         strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
                                         strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
                                         strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
@@ -2294,8 +2296,6 @@ namespace EventCombo.Controllers
                         strHTML.Append("<td colspan='4' style='font-size:15px; padding:10px 5px;'>" + cardtext + " </td></tr>");
                         strHTML.Append("<tr align='center'><td colspan='4' style='font-size:15px;'>");
                         strHTML.Append("<p style='background:#fff9cf; padding:10px 15px; display:inline-block; margin:0px;'>This charge will appear on your card statement as Eventcombo * { " + Edtails.EventTitle + "}</p>");
-                        strHTML.Append("<p style='color:#696564;' >This order is subject to Eventcombo '");
-                        strHTML.Append("<a href='#' style='color:#0f90ba;'>Terms of Service </a> , <a style='color:#0f90ba;' href='#'>Privacy Policy </a> and <a style='color:#0f90ba;' href='#'>Cookie Policy </a></p>");
                         strHTML.Append("</td></tr></table > ");
 
 

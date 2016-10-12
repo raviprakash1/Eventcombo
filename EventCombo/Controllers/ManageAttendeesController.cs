@@ -243,15 +243,11 @@ namespace EventCombo.Controllers
       }
       if (String.IsNullOrWhiteSpace(req.Search))
       {
-          if (startDate.Year != 1900)
-              orders = orders.Where(o => (o.Date >= startDate));
+        orders = orders.Where(o => (o.Date >= startDate));
       }
       else
       {
-          if (startDate.Year == 1900)
-              orders = orders.Where(o => (((o.OrderId.Contains(req.Search.Trim())) || (o.BuyerName.Contains(req.Search.Trim())) || (o.BuyerEmail.Contains(req.Search.Trim())))));
-          else
-              orders = orders.Where(o => ((o.Date >= startDate) && ((o.OrderId.Contains(req.Search.Trim())) || (o.BuyerName.Contains(req.Search.Trim())) || (o.BuyerEmail.Contains(req.Search.Trim())))));
+        orders = orders.Where(o => ((o.Date >= startDate) && ((o.OrderId.ToLower().Contains(req.Search.ToLower().Trim())) || (o.BuyerName.ToLower().Contains(req.Search.ToLower().Trim())) || (o.BuyerEmail.ToLower().Contains(req.Search.ToLower().Trim())))));
       }
       res.Total = orders.Count();
 
