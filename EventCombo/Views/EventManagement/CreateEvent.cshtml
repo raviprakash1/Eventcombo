@@ -80,7 +80,7 @@
   var link_publish = "@Url.Action("EventConfirmation", "EventConfirmation", new { })";
 </script>
 
-<div id="createEventContainer" ng-controller="CreateEventController" ng-cloak ng-init="preventLeave = '@(ViewBag.CMSCall == null ? "false" : "true")'">
+<div id="createEventContainer" ng-controller="CreateEventController" ng-cloak ng-init="preventLeave = @(ViewBag.CMSCall == null ? "false" : "true")">
   <div style="display:none;" ng-style="{'display': displayPopups}">
     <div class="popOverlay" ng-show="popLoading">
       <div class="popBox">

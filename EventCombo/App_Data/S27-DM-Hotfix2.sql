@@ -1,11 +1,30 @@
+
+/* To prevent any potential data loss issues, you should review this script in detail before running it outside the context of the database designer.*/
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+GO
+ALTER TABLE dbo.Order_Detail_T ADD
+	IsManualOrder bit NOT NULL CONSTRAINT DF_Order_Detail_T_IsManualOrder DEFAULT 0
+GO
+ALTER TABLE dbo.Order_Detail_T SET (LOCK_ESCALATION = TABLE)
+GO
+COMMIT
+
+GO
 /****** Object:  View [dbo].[EventTicket_View]    Script Date: 12-Oct-16 2:42:43 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
-
-
 
 ALTER VIEW [dbo].[EventTicket_View]
 AS
@@ -46,8 +65,6 @@ INNER JOIN TicketType ON TicketType.TicketTypeID=Ticket.TicketTypeID
 INNER JOIN Profile ON Profile.UserID = Ticket_Purchased_Detail.TPD_User_Id
 INNER JOIN OrderState ON ISNULL(Order_Detail_T.OrderStateId, 1) = OrderState.OrderStateId
 LEFT OUTER JOIN Promo_Code ON Promo_Code.PC_id=Ticket_Purchased_Detail.TPD_PromoCodeID
-
-
 
 GO
 

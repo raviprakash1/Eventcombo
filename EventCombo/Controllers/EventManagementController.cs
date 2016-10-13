@@ -63,7 +63,7 @@ namespace EventCombo.Controllers
       EventViewModel ev = _eService.CreateEvent(userId);
       PopulateBaseViewModel(ev, "Create Event | Eventcombo");
 
-      ev.IsAdmin = _dbservice.GetEventAccess(ev.EventID, userId) == AccessLevel.EventAdmin;
+      ev.IsAdmin = _dbservice.IsEventAdmin(userId);
 
       return View(ev);
     }
@@ -75,9 +75,10 @@ namespace EventCombo.Controllers
         return null;
 
       string userId = Session["AppId"].ToString();
-      AccessLevel eventAccess = _dbservice.GetEventAccess(eventId, userId);
 
-      if ((eventId > 0) && (eventAccess != AccessLevel.EventOwner) && (eventAccess != AccessLevel.EventAdmin))
+      bool isAdmin = _dbservice.IsEventAdmin(userId);
+
+      if ((eventId > 0) && !isAdmin && (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner))
         return new EmptyResult();
       
       EventViewModel ev;
@@ -88,7 +89,7 @@ namespace EventCombo.Controllers
 
       PopulateBaseViewModel(ev, "Create Event | Eventcombo");
 
-      ev.IsAdmin = eventAccess == AccessLevel.EventAdmin;
+      ev.IsAdmin = isAdmin;
 
       JsonNetResult res = new JsonNetResult();
       res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
@@ -114,13 +115,13 @@ namespace EventCombo.Controllers
       {
         try
         {
-          AccessLevel eventAccess = _dbservice.GetEventAccess(ev.EventID, userId);
-          if ((ev.EventID == 0) || (eventAccess == AccessLevel.EventOwner) || (eventAccess == AccessLevel.EventAdmin))
+          bool isAdmin = _dbservice.IsEventAdmin(userId);
+          if ((ev.EventID == 0) || isAdmin || (_dbservice.GetEventAccess(ev.EventID, userId) == AccessLevel.EventOwner))
           {
-            ev.IsAdmin = eventAccess == AccessLevel.EventAdmin;
+            ev.IsAdmin = isAdmin;
             _eService.SaveEvent(ev, Server.MapPath);
             ev = _eService.GetEventById(ev.EventID);
-            ev.IsAdmin = eventAccess == AccessLevel.EventAdmin;
+            ev.IsAdmin = isAdmin;
           }
           else
             throw new UnauthorizedAccessException(String.Format("User {0} have not access to edit EventId = {1}", userId, ev.EventID));
@@ -250,9 +251,9 @@ namespace EventCombo.Controllers
       else
         return RedirectToAction("Index", "Home");
 
-      AccessLevel eventAccess = _dbservice.GetEventAccess(eventId, userId);
+      bool isAdmin = _dbservice.IsEventAdmin(userId);
 
-      if ((eventAccess != AccessLevel.EventOwner) && (eventAccess != AccessLevel.EventAdmin))
+      if (!isAdmin && (_dbservice.GetEventAccess(eventId, userId) != AccessLevel.EventOwner))
         return RedirectToAction("Index", "Home");
 
       Session["logo"] = "events";
@@ -263,7 +264,7 @@ namespace EventCombo.Controllers
       EventViewModel ev = _eService.GetEventById(eventId);
       PopulateBaseViewModel(ev, String.Format("Edit {0} | Eventcombo", ev.EventTitle));
 
-      ev.IsAdmin = eventAccess == AccessLevel.EventAdmin;
+      ev.IsAdmin = isAdmin;
 
       return View("CreateEvent", ev);
     }
