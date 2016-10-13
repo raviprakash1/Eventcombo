@@ -1971,7 +1971,7 @@ namespace EventCombo.Controllers
                             }
                         }
 
-                        var attendees = string.Join(", ", db.TicketBearer_View.Where(t => t.OrderId == guid).Select(a => a.Name.Trim()).ToArray());
+                        var attendees = string.Join(", ", db.TicketBearer_View.Where(t => t.OrderId == item.T_Order_Id).Select(a => a.Name.Trim()).ToArray());
 
                         if (myAddress.Count() == 1)
                         {
