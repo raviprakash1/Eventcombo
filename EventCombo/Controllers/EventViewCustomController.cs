@@ -38,7 +38,6 @@ namespace EventCombo.Controllers
                 TempData["EventName"] = Regex.Replace(objEv.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", "");
                 TempData["EventId"] = objEv.EventID.ToString();
                 return RedirectToAction("ViewEvent", "EventManagement", new { strEventDs = Regex.Replace(objEv.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = objEv.EventID.ToString() });
-                //return View();
             }
             else {
                 return RedirectToAction("Index", "");
@@ -58,8 +57,7 @@ namespace EventCombo.Controllers
             if (Session["AppId"] != null)
                 userId = Session["AppId"].ToString();
 
-            EventInfoViewModel ev = _eService.GetEventInfo(eventId, userId, Url);
-            PopulateBaseViewModel(ev, String.Format("{0} | Eventcombo", ev.EventTitle));
+            EventInfoViewModel ev = _eService.GetBasicEventInfo(eventId, Url);
 
             var url = Url.RouteUrl("ViewEvent", new { strEventDs = Regex.Replace(ev.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ev.EventId.ToString() });
             Session["ReturnUrl"] = "ViewEvent~" + url;

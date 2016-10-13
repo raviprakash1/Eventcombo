@@ -19,6 +19,8 @@ namespace EventCombo.Service
 
     public static string PrepareString(string source)
     {
+      if (String.IsNullOrEmpty(source))
+        return source;
       return HttpUtility.JavaScriptStringEncode(
         StripTagsRegex(
           HttpUtility.HtmlDecode(

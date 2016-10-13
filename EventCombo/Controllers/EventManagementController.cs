@@ -79,7 +79,7 @@ namespace EventCombo.Controllers
 
       if ((eventId > 0) && (eventAccess != AccessLevel.EventOwner) && (eventAccess != AccessLevel.EventAdmin))
         return new EmptyResult();
-      
+
       EventViewModel ev;
       if (eventId == 0)
         ev = _eService.CreateEvent(userId);
@@ -143,25 +143,84 @@ namespace EventCombo.Controllers
     }
 
     [HttpGet]
-    public ActionResult ViewEvent(string strEventDs, string strEventId)
+    public ActionResult ViewEvent(string strEventDs, string strEventId, string InviteId)
     {
       long eventId;
       if (!Int64.TryParse(strEventId, out eventId))
         return RedirectToAction("Index", "Home");
 
+      PrivateEventRequest req = new PrivateEventRequest() { EventId = eventId, InviteCode = InviteId };
+      EventInfoViewModel ev;
+
       string userId = "";
       if (Session["AppId"] != null)
         userId = Session["AppId"].ToString();
 
-      EventInfoViewModel ev = _eService.GetEventInfo(eventId, userId, Url);
-      PopulateBaseViewModel(ev, String.Format("{0} | Eventcombo", ev.EventTitle));
-
       Session["Fromname"] = "events";
       Session["logo"] = "events";
-      var url = Url.RouteUrl("ViewEvent", new { strEventDs = Regex.Replace(ev.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ev.EventId.ToString() });
-      Session["ReturnUrl"] = "ViewEvent~" + url;
 
-      return View(ev);
+      LoadPrivateState(req);
+      _eService.CheckEventAccess(req);
+      SavePrivateState(req);
+      ViewData["PrivateRequest"] = req;
+
+      if (req.InviteValid && req.PasswordValid)
+      {
+        ev = _eService.GetPrivateEventInfo(req.EventId, userId, Url);
+        PopulateBaseViewModel(ev, String.Format("{0} | Eventcombo", ev.EventTitle));
+        var url = Url.RouteUrl("ViewEvent", new { strEventDs = Regex.Replace(ev.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ev.EventId.ToString() });
+        Session["ReturnUrl"] = "ViewEvent~" + url;
+        return View(ev);
+      }
+      else 
+      {
+        ev = _eService.GetBasicEventInfo(req.EventId, Url);
+        PopulateBaseViewModel(ev, String.Format("{0} | Eventcombo", ev.EventTitle));
+        var url = Url.RouteUrl("ViewEvent", new { strEventDs = Regex.Replace(ev.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ev.EventId.ToString() });
+        Session["ReturnUrl"] = "ViewEvent~" + url;
+        return View(ev);
+      }
+    }
+
+    [HttpPost]
+    public ActionResult CheckPrivateEventAccess(string json)
+    {
+      ActionResultViewModel res = new ActionResultViewModel() { Success = true, ErrorCode = 0, ErrorMessage = "" };
+      PrivateEventRequest req = JsonConvert.DeserializeObject<PrivateEventRequest>(json);
+      LoadPrivateState(req);
+      _eService.CheckEventAccess(req);
+      SavePrivateState(req);
+      if (!req.PasswordValid)
+      {
+        res.Success = false;
+        res.ErrorCode = 1;
+        res.ErrorMessage = "Password don't match";
+      }
+
+      JsonNetResult result = new JsonNetResult();
+      result.Data = res;
+      return result;
+    }
+
+    private void LoadPrivateState(PrivateEventRequest req)
+    {
+      if ((Session["PrivateEventId"] != null) && ((long)Session["PrivateEventId"]) == req.EventId)
+      {
+        req.PasswordValid = (Session["PrivatePasswordValid"] != null) && (bool)Session["PrivatePasswordValid"];
+        req.InviteValid = (Session["PrivateInviteValid"] != null) && (bool)Session["PrivateInviteValid"];
+      }
+      else
+      {
+        req.PasswordValid = false;
+        req.InviteValid = false;
+      }
+    }
+
+    private void SavePrivateState(PrivateEventRequest req)
+    {
+      Session["PrivateEventId"] = req.EventId;
+      Session["PrivatePasswordValid"] = req.PasswordValid;
+      Session["PrivateInviteValid"] = req.InviteValid;
     }
 
     [HttpPost]
@@ -180,7 +239,14 @@ namespace EventCombo.Controllers
       if (Session["AppId"] != null)
         userId = Session["AppId"].ToString();
 
-      EventInfoViewModel ev = _eService.GetEventInfo(eventId, userId, Url);
+      PrivateEventRequest req = new PrivateEventRequest { EventId = eventId };
+      LoadPrivateState(req);
+
+      EventInfoViewModel ev;
+      if (req.InviteValid && req.PasswordValid)
+        ev = _eService.GetPrivateEventInfo(eventId, userId, Url);
+      else
+        ev = _eService.GetEventInfo(eventId, userId, Url);
 
       JsonNetResult res = new JsonNetResult();
       res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());

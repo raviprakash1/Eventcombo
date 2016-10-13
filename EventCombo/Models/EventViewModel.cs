@@ -422,6 +422,7 @@ namespace EventCombo.Models
     public string ButtonText { get; set; }
     public string CheckoutText { get; set; }
     public string PriceRange { get; set; }
+    public bool AllowPrivateShare { get; set; }
 
 
     public OrganizerInfoViewModel Organizer { get; set; }
@@ -481,5 +482,14 @@ namespace EventCombo.Models
     public IEnumerable<string> KeyWords { get; set; }
     public IEnumerable<CityViewModel> Cities { get; set; }
     public IEnumerable<EventTypeViewModel> EventTypes { get; set; }
+  }
+
+  public class PrivateEventRequest
+  {
+    public long EventId { get; set; }
+    public string Password { get; set; }
+    public string InviteCode { get; set; }
+    public bool PasswordValid { get; set; }
+    public bool InviteValid { get; set; }
   }
 }

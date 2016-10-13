@@ -46,44 +46,54 @@
   </script>
 }
 
+@{
+  var req = (PrivateEventRequest)ViewData["PrivateRequest"];
+}
+
+
 <div ng-controller="ViewEventController" eventid="@Model.EventId.ToString()">
-  <div class="buttons padding-1em-top padding-1em-bottom padding-2em-right text-right hide768"
-       ng-init="userRegistered = @(String.IsNullOrEmpty(Model.BaseUserId) ? "false" : "true")">
-    <a href="#ticketSection" class="makeLive">@Model.ButtonText</a>
-  </div>
-  <section class="eventBanner" style="@((!String.IsNullOrEmpty(Model.BackgroundUrl) ? "background-image:url(" + Model.BackgroundUrl + ");" : "") +
+  @if (req.InviteValid && req.PasswordValid)
+  {
+    <div class="buttons padding-1em-top padding-1em-bottom padding-2em-right text-right hide768">
+      <a href="#ticketSection" class="makeLive">@(Model.ButtonText ?? "CHECKOUT")</a>
+    </div>
+    <section class="eventBanner" style="@((!String.IsNullOrEmpty(Model.BackgroundUrl) ? "background-image:url(" + Model.BackgroundUrl + ");" : "") +
         (!String.IsNullOrEmpty(Model.BackgroundColor) ? "background-color:" + Model.BackgroundColor : ""))">
-    <div class="grid w960">
-      <div class="row">
-        <div class="c12 eventVanue">
-          <h2 class="event-name">@Model.EventTitle</h2>
-          <h3 class="vanue-name">@Model.VenueName</h3>
-          <div class="adiv"><i class="material-icons black">location_on</i> @Model.Address</div>
-          <div class="adiv"><i class="material-icons">schedule</i> {{eventInfo.EventDateTimeInfoString}}</div>
-          <div class="adiv">@Model.PriceRange</div>
-          <div class="wgts">
-            @if (!String.IsNullOrEmpty(Model.BaseUserId))
-            {
-              <span><a href="javascript:void(0)" title="Add EventTitle to your favorites" ng-click="AddToFavorite();"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
-              <span><a href="javascript:void(0)" title="Vote for EventTitle" ng-click="VoteEvent();"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
-            }
-            else
-            {
-              <span><a href="javascript:void(0)" title="Add EventTitle to your favorites" ng-click="AddToFavorite();"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
-              <span><a href="javascript:void(0)" title="Vote for EventTitle" ng-click="VoteEvent();"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
-            }
-            <span class="social" social="SHARE THIS">
-              <a href="javascript:void(0)" title="Share @Model.EventTitle via Email" ng-click="forwardFriend($event,'@HtmlProcessing.PrepareString(Model.EventTitle)','Event')"><img width="20px" alt="Share @Model.EventTitle via Email" src="~/Images/AMaterial/mail-square.svg"></a>
-              <a href="javascript:void(0)" title="Share @Model.EventTitle on Facebook" onclick="FacebookShare('@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Facebook" src="~/Images/AMaterial/square-facebook.svg"></a>
-              <a href="javascript:void(0)" title="Share @Model.EventTitle on Twitter" onclick="TwitterShare('@HtmlProcessing.PrepareString(Model.EventTitle)','@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Twitter" src="~/Images/AMaterial/square-twitter.svg"></a>
-              <a href="javascript:void(0)" title="Share @Model.EventTitle on LinkedIn" onclick="LinkedInShare('@HtmlProcessing.PrepareString(Model.EventTitle)','@(Request.Url.AbsoluteUri)', '@(Model.OGPDescription)')"><img width="20px" alt="Share @Model.EventTitle on LinkedIn" src="~/Images/AMaterial/square-linkedin.svg"></a>
-              <a href="javascript:void(0)" title="Share @Model.EventTitle on Facebook Messenger" ng-show="false" onclick="FacebookSend('@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Facebook Messenger" src="~/Images/AMaterial/fb_messenger.svg"></a>
-            </span>
+      <div class="grid w960">
+        <div class="row">
+          <div class="c12 eventVanue">
+            <h2 class="event-name">@Model.EventTitle</h2>
+            <h3 class="vanue-name">@(Model.VenueName ?? "")</h3>
+            <div class="adiv"><i class="material-icons black">location_on</i> @(Model.Address ?? "")</div>
+            <div class="adiv"><i class="material-icons">schedule</i> {{eventInfo.EventDateTimeInfoString}}</div>
+            <div class="adiv">@(Model.PriceRange ?? "")</div>
+            <div class="wgts">
+              @if (!String.IsNullOrEmpty(Model.BaseUserId))
+              {
+                <span><a href="javascript:void(0)" title="Add EventTitle to your favorites" ng-click="AddToFavorite();"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
+                <span><a href="javascript:void(0)" title="Vote for EventTitle" ng-click="VoteEvent();"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
+              }
+              else
+              {
+                <span><a href="javascript:void(0)" title="Add EventTitle to your favorites" ng-click="AddToFavorite();"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
+                <span><a href="javascript:void(0)" title="Vote for EventTitle" ng-click="VoteEvent();"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
+              }
+              @if (Model.AllowPrivateShare)
+              {
+                <span class="social" social="SHARE THIS">
+                  <a href="javascript:void(0)" title="Share @Model.EventTitle via Email" ng-click="forwardFriend($event,'@HtmlProcessing.PrepareString(Model.EventTitle)','Event')"><img width="20px" alt="Share @Model.EventTitle via Email" src="~/Images/AMaterial/mail-square.svg"></a>
+                  <a href="javascript:void(0)" title="Share @Model.EventTitle on Facebook" onclick="FacebookShare('@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Facebook" src="~/Images/AMaterial/square-facebook.svg"></a>
+                  <a href="javascript:void(0)" title="Share @Model.EventTitle on Twitter" onclick="TwitterShare('@HtmlProcessing.PrepareString(Model.EventTitle)','@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Twitter" src="~/Images/AMaterial/square-twitter.svg"></a>
+                  <a href="javascript:void(0)" title="Share @Model.EventTitle on LinkedIn" onclick="LinkedInShare('@HtmlProcessing.PrepareString(Model.EventTitle)','@(Request.Url.AbsoluteUri)', '@(Model.OGPDescription)')"><img width="20px" alt="Share @Model.EventTitle on LinkedIn" src="~/Images/AMaterial/square-linkedin.svg"></a>
+                  <a href="javascript:void(0)" title="Share @Model.EventTitle on Facebook Messenger" ng-show="false" onclick="FacebookSend('@(Request.Url.AbsoluteUri)')"><img width="20px" alt="Share @Model.EventTitle on Facebook Messenger" src="~/Images/AMaterial/fb_messenger.svg"></a>
+                </span>
+              }
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  }
   <!--****************************************************************************************************************************-->
   <section style="display:none;" ng-style="{'display': displayVEPopups}">
     <div class="popOverlay" ng-show="popVEShareWithFriends">
@@ -160,176 +170,209 @@
     </div>
     <div class="popOverlay" ng-show="popInfoMessage">
       <div class="popBox">
-        <a class="popClose" ng-click="popInfoMessage=false"><i class="material-icons">clear</i></a>
+        <a class="popClose" ng-click="CloseInfoMessage()"><i class="material-icons">clear</i></a>
         <div class="blue-heading text-center">{{InfoMessage}}</div>
-        <div class="text-center margin-2em-top"><a class="popLink" ng-click="popInfoMessage=false">CONTINUE TO SITE</a></div>
+        <div class="text-center margin-2em-top"><a class="popLink" ng-click="CloseInfoMessage()">CONTINUE TO SITE</a></div>
       </div>
     </div>
-  </section>
-  <!--****************************************************************************************************************************-->
-  <article class="grid w960">
-    <div class="row">
-      <div class="c10 s1">
-        <div class="alignText">
-          <ul class="text-links">
-            <li><a href="~/et/@(Model.EventTypeId.ToString())/evc/ALL/page/lat/long/rel/none">#@Model.EventType</a></li>
-            <li><a href="~/et/evt/@(Model.EventCategoryId.ToString())/ALL/page/lat/long/rel/none">#@Model.EventCategory</a></li>
-            <li>#@Model.EventSubCategory</li>
-          </ul>
-        </div>
-        <a href="#" class="eventFlyer" title="@Model.ImageAlt"><img src="@Model.ImageUrl" alt="@Model.ImageAlt"></a>
-        <p class="eventFlyerDes">@Html.Raw(HttpUtility.HtmlDecode(Model.EventDescription))</p>
-        <div class="saroosh">
-          <img src="@(Url.Content(String.IsNullOrEmpty(Model.Organizer.ImageUrl) ? "~/Images/default_org_image.jpg" : Model.Organizer.ImageUrl))" alt="@Model.Organizer.OrganizerName">
-          <div>
-            <p>
-              @Model.Organizer.OrganizerName
-              @if (!String.IsNullOrEmpty(Model.Organizer.WebsiteUrl))
-              {
-                <br><a title="@Model.Organizer.WebsiteUrl" href="@Model.Organizer.WebsiteUrl" target="_blank">@Model.Organizer.WebsiteUrl</a>
-              }
-            </p>
+    <div class="popOverlay" ng-show="popVEPassword">
+      <div class="popBox">
+        <form name="eventPasswordForm" novalidate>
+          <a class="popClose" ng-click="CancelPassword()"><i class="material-icons">clear</i></a>
+          <h3 class="blue-heading">This is private event, please enter the password</h3>
+          <md-input-container class="md-block">
+            <label>Password</label>
+            <input type="password" required md-no-asterisk name="eventPassword" ng-model="eventPassword" ng-keypress="eventPasswordRequired=false; incorrectPassword=false">
+            <div ng-messages="eventPasswordForm.eventPassword.$error">
+              <div ng-message="required">Please enter password!</div>
+              <div ng-show="incorrectPassword">{{privateLoginError}}</div>
+            </div>
+          </md-input-container>
+          <div class="clear">
+            <button type="reset" class="popLink margin-1em-top gray lFloat" ng-click="CancelPassword()">CANCEL</button>
+            <button class="popLink margin-1em-top rFloat" ng-click="eventPasswordProcessing('eventPasswordForm')">GET ACCESS</button>
           </div>
-          <div>
-            <span><a href="javascript:void(0)" ng-click="contactOrganizer($event,'@Model.EventTitle','@Model.Organizer.OrganizerName')">Contact</a></span>
-            <span><a href="@Url.Action("Index", "OrganizerInfo", new { id = Model.Organizer.OrganizerId, eventId = Model.EventId })">Profile</a></span>
-            <span class="social">
-              @if (!String.IsNullOrEmpty(Model.Organizer.FBLink))
-              {
-                <a href="@Model.Organizer.FBLink"><img width="20px" alt="Facebook" src="~/Images/AMaterial/square-facebook.svg"></a>
-
-              }
-              @if (!String.IsNullOrEmpty(Model.Organizer.TwitterLink))
-              {
-                <a href="@Model.Organizer.TwitterLink"><img width="20px" alt="Twitter" src="~/Images/AMaterial/square-twitter.svg"></a>
-              }
-              @if (!String.IsNullOrEmpty(Model.Organizer.LinkdeInLink))
-              {
-                <a href="@Model.Organizer.LinkdeInLink"><img width="20px" alt="LinkedIn" src="~/Images/AMaterial/square-linkedin.svg"></a>
-              }
-            </span>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
-  </article>
-  <!--****************************************************************************************************************************-->
-  <section class="grid wfull" ng-controller="gallery as tCtrl">
-    <div id="owlCarousel">
-      <img ng-repeat="i in images" ng-repeat-owl-carousel carousel-init="carouselInitializer" ng-src="{{ i.thumb }}" alt="{{ i.title }}" ng-click="showAdvanced($event, i.id)">
-    </div>
-  </section>
-  <!--****************************************************************************************************************************-->
-  <script type="text/ng-template" id="dialog1.tmpl.html">
-    <md-dialog aria-label="Image Title" ng-cloak>
-      <md-toolbar>
-        <div class="md-toolbar-tools">
-          <h2>Image Gallery</h2>
-          <span flex></span>
-          <md-button class="md-icon-button" ng-click="cancel()">
-            <i class="material-icons">clear</i>
-          </md-button>
-        </div>
-      </md-toolbar>
 
-      <md-dialog-content>
-        <div class="md-dialog-content">
-          <img ng-repeat="i in images" ng-if="i.id>=image.id" ng-src="{{ i.img }}" alt="{{ i.title }}" tabindex="0">
-          <img ng-repeat="i in images" ng-if="i.id<image.id" ng-src="{{ i.img }}" alt="{{ i.title }}" tabindex="0">
-        </div>
-      </md-dialog-content>
-    </md-dialog>
-  </script>
-  <!--****************************************************************************************************************************-->
-  <section class="grid w960" ng-show="false">
-    <div class="row">
-      <div class="c12 margin-1em-bottom">
-        <h2 class="red-heading">See who's going</h2>
-        <a class="connectFacebook" href="#"><img width="20px" alt="Facebook" src="~/Images/AMaterial/square-facebook.svg"> Connect with Facebook</a>
-      </div>
-    </div>
   </section>
   <!--****************************************************************************************************************************-->
-  <div>
-    <section class="grid w960" id="ticketSection">
+  @if (req.InviteValid && req.PasswordValid)
+  {
+
+    <article class="grid w960">
       <div class="row">
-        <div class="c12">
-          <h2 class="red-heading">
-            Choose tickets
-            <span class="remain" ng-show="eventInfo.ShowRemainingTickets">
-              ({{eventInfo.RemainingTickets}} remain)
-            </span>
-          </h2>
-
-          <div class="ticket padding-1em-top padding-1em-bottom" ng-repeat="ticket in eventInfo.Tickets">
-            <div class="c6 text24">{{ticket.TicketName}}</div>
-            <div class="c3 text24 upp">
-              {{ticket.TypeName}}
-              <span class="smallFee" ng-show="((ticket.TicketTypeId == 2) && (ticket.ShowFee))">(+${{ticket.Fee.toFixed(2)}} FEE)</span>
-            </div>
-            <div class="c3 text-right" ng-show="((ticket.TicketTypeId != 3) && !ticket.SoldOut)">
-              <select class="option" ng-model="ticket.Quantity" ng-options="item for item in ticket.Quants" 
-                      ng-change="onPriceChange()" style="width:80px;"></select>
-            </div>
-            <div class="c3 text-right" ng-show="((ticket.TicketTypeId == 3) && !ticket.SoldOut)">
-              <input type="text" class="inputbox" style="width:80px;" ng-model="ticket.PriceText"
-                     ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket)" decimal-only>
-            </div>
-            <div class="c3 text24 upp" style="text-align:right;" ng-show="(ticket.SoldOut)">
-              Sold OUT
-            </div>
-            <div class="c12">
-              <span class="c3 padded ticdetail">{{ticket.VenueName}}</span>
-              <span class="c3 padded ticdetail">{{ticket.StartDateFormatted}}</span>
-            </div>
-            <div class="c12 ticdes" ng-hide="!ticket.TicketDescription"><p>{{ticket.TicketDescription}}</p></div>
+        <div class="c10 s1">
+          <div class="alignText">
+            <ul class="text-links">
+              <li><a href="~/et/@(Model.EventTypeId.ToString())/evc/ALL/page/lat/long/rel/none">@(String.IsNullOrEmpty(Model.EventType) ? "" : "#" + Model.EventType)</a></li>
+              <li><a href="~/et/evt/@(Model.EventCategoryId.ToString())/ALL/page/lat/long/rel/none">@(String.IsNullOrEmpty(Model.EventCategory) ? "" : "#" + Model.EventCategory)</a></li>
+              <li>@(String.IsNullOrEmpty(Model.EventSubCategory) ? "" : "#" + Model.EventSubCategory)</li>
+            </ul>
           </div>
-
-          <div id="cartDeals">
-            <div class="deal padding-1em-top padding-1em-bottom" ng-repeat="cartDeal in cartDeals">
-              <img class="dealImg" ng-src="{{ cartDeal.dealimg }}">
+          <a href="#" class="eventFlyer" title="@(Model.ImageAlt ?? "")"><img src="@(Model.ImageUrl ?? "")" alt="@(Model.ImageAlt ?? "")"></a>
+          <p class="eventFlyerDes">@(Html.Raw(HttpUtility.HtmlDecode(Model.EventDescription)))</p>
+          <div class="saroosh">
+            @if (Model.Organizer != null)
+            {
+              <img src="@(Url.Content(String.IsNullOrEmpty(Model.Organizer.ImageUrl) ? "~/Images/default_org_image.jpg" : Model.Organizer.ImageUrl))" alt="@(Model.Organizer.OrganizerName ?? "")">
               <div>
-                <span class="dealOff">{{ cartDeal.dealoff }}</span>
-                <span class="dealOffDetails">{{ cartDeal.dealdetails }}</span>
+                <p>
+                  @(Model.Organizer.OrganizerName ?? "")
+                  @if (!String.IsNullOrEmpty(Model.Organizer.WebsiteUrl))
+                  {
+                    <br><a title="@Model.Organizer.WebsiteUrl" href="@Model.Organizer.WebsiteUrl" target="_blank">@Model.Organizer.WebsiteUrl</a>
+                  }
+                </p>
               </div>
-              <div class="dealDes">
-                <strong>{{ cartDeal.dealdesbold }}</strong> {{ cartDeal.dealdessmall }}<br>
-                <a class="dealThumb"><i class="material-icons">thumb_up</i></a> {{ cartDeal.dealthumbsup }}
-              </div>
-              <div class="text-right">
-                <a href="#" class="dealLink">Details</a>
-                <a class="dealLink dark" ng-click="removeFormCart(cartDeal.dealid); cartDeals.splice($index, 1)">Remove from cart</a>
-              </div>
-            </div>
-          </div>
-
-          <div id="cartDealsMap">
-            <div class="deal padding-1em-top padding-1em-bottom" ng-repeat="cartDealMap in cartDealsMap">
-              <img class="dealImg" ng-src="{{ cartDealMap.dealimg }}">
               <div>
-                <span class="dealOff">{{ cartDealMap.dealoff }}</span>
-                <span class="dealOffDetails">{{ cartDealMap.dealdetails }}</span>
-              </div>
-              <div class="dealDes">
-                <strong>{{ cartDealMap.dealdesbold }}</strong> {{ cartDealMap.dealdessmall }}<br>
-                <a class="dealThumb"><i class="material-icons">thumb_up</i></a> {{ cartDealMap.dealthumbsup }}
-              </div>
-              <div class="text-right">
-                <a href="#" class="dealLink">Details</a>
-                <a class="dealLink dark" ng-click="cartDealsMap.splice($index, 1); id.splice($index, 1)">Remove from cart</a>
-              </div>
-            </div>
-          </div>
+                <span><a href="javascript:void(0)" ng-click="contactOrganizer($event,'@Model.EventTitle','@Model.Organizer.OrganizerName')">Contact</a></span>
+                <span><a href="@Url.Action("Index", "OrganizerInfo", new { id = Model.Organizer.OrganizerId, eventId = Model.EventId })">Profile</a></span>
+                <span class="social">
+                  @if (!String.IsNullOrEmpty(Model.Organizer.FBLink))
+                  {
+                    <a href="@Model.Organizer.FBLink"><img width="20px" alt="Facebook" src="~/Images/AMaterial/square-facebook.svg"></a>
 
+                  }
+                  @if (!String.IsNullOrEmpty(Model.Organizer.TwitterLink))
+                  {
+                    <a href="@Model.Organizer.TwitterLink"><img width="20px" alt="Twitter" src="~/Images/AMaterial/square-twitter.svg"></a>
+                  }
+                  @if (!String.IsNullOrEmpty(Model.Organizer.LinkdeInLink))
+                  {
+                    <a href="@Model.Organizer.LinkdeInLink"><img width="20px" alt="LinkedIn" src="~/Images/AMaterial/square-linkedin.svg"></a>
+                  }
+                </span>
+              </div>
+            }
+          </div>
         </div>
-        <div class="c12 buttons text-right">
-          <span class="tot text-right">Total: ${{eventInfo.TotalPrice.toFixed(2)}}</span>
-        </div>
-        <div class="c12 buttons text-right">
-          <a href="javascript:void(0)" class="makeLive" ng-click="OrderCheckout();">@Model.CheckoutText</a>
+      </div>
+    </article>
+  <!--****************************************************************************************************************************-->
+    <section class="grid wfull" ng-controller="gallery as tCtrl">
+      <div id="owlCarousel">
+        <img ng-repeat="i in images" ng-repeat-owl-carousel carousel-init="carouselInitializer" ng-src="{{ i.thumb }}" alt="{{ i.title }}" ng-click="showAdvanced($event, i.id)">
+      </div>
+    </section>
+  <!--****************************************************************************************************************************-->
+    <script type="text/ng-template" id="dialog1.tmpl.html">
+      <md-dialog aria-label="Image Title" ng-cloak>
+        <md-toolbar>
+          <div class="md-toolbar-tools">
+            <h2>Image Gallery</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+              <i class="material-icons">clear</i>
+            </md-button>
+          </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+          <div class="md-dialog-content">
+            <img ng-repeat="i in images" ng-if="i.id>=image.id" ng-src="{{ i.img }}" alt="{{ i.title }}" tabindex="0">
+            <img ng-repeat="i in images" ng-if="i.id<image.id" ng-src="{{ i.img }}" alt="{{ i.title }}" tabindex="0">
+          </div>
+        </md-dialog-content>
+      </md-dialog>
+    </script>
+  <!--****************************************************************************************************************************-->
+    <section class="grid w960" ng-show="false">
+      <div class="row">
+        <div class="c12 margin-1em-bottom">
+          <h2 class="red-heading">See who's going</h2>
+          <a class="connectFacebook" href="#"><img width="20px" alt="Facebook" src="~/Images/AMaterial/square-facebook.svg"> Connect with Facebook</a>
         </div>
       </div>
     </section>
+  <!--****************************************************************************************************************************-->
+
+  }
+  <div>
+    @if (req.InviteValid && req.PasswordValid)
+    {
+
+      <section class="grid w960" id="ticketSection">
+        <div class="row">
+          <div class="c12">
+            <h2 class="red-heading">
+              Choose tickets
+              <span class="remain" ng-show="eventInfo.ShowRemainingTickets">
+                ({{eventInfo.RemainingTickets}} remain)
+              </span>
+            </h2>
+
+            <div class="ticket padding-1em-top padding-1em-bottom" ng-repeat="ticket in eventInfo.Tickets">
+              <div class="c6 text24">{{ticket.TicketName}}</div>
+              <div class="c3 text24 upp">
+                {{ticket.TypeName}}
+                <span class="smallFee" ng-show="((ticket.TicketTypeId == 2) && (ticket.ShowFee))">(+${{ticket.Fee.toFixed(2)}} FEE)</span>
+              </div>
+              <div class="c3 text-right" ng-show="((ticket.TicketTypeId != 3) && !ticket.SoldOut)">
+                <select class="option" ng-model="ticket.Quantity" ng-options="item for item in ticket.Quants"
+                        ng-change="onPriceChange()" style="width:80px;"></select>
+              </div>
+              <div class="c3 text-right" ng-show="((ticket.TicketTypeId == 3) && !ticket.SoldOut)">
+                <input type="text" class="inputbox" style="width:80px;" ng-model="ticket.PriceText"
+                       ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket)" decimal-only>
+              </div>
+              <div class="c3 text24 upp" style="text-align:right;" ng-show="(ticket.SoldOut)">
+                Sold OUT
+              </div>
+              <div class="c12">
+                <span class="c3 padded ticdetail">{{ticket.VenueName}}</span>
+                <span class="c3 padded ticdetail">{{ticket.StartDateFormatted}}</span>
+              </div>
+              <div class="c12 ticdes" ng-hide="!ticket.TicketDescription"><p>{{ticket.TicketDescription}}</p></div>
+            </div>
+
+            <div id="cartDeals">
+              <div class="deal padding-1em-top padding-1em-bottom" ng-repeat="cartDeal in cartDeals">
+                <img class="dealImg" ng-src="{{ cartDeal.dealimg }}">
+                <div>
+                  <span class="dealOff">{{ cartDeal.dealoff }}</span>
+                  <span class="dealOffDetails">{{ cartDeal.dealdetails }}</span>
+                </div>
+                <div class="dealDes">
+                  <strong>{{ cartDeal.dealdesbold }}</strong> {{ cartDeal.dealdessmall }}<br>
+                  <a class="dealThumb"><i class="material-icons">thumb_up</i></a> {{ cartDeal.dealthumbsup }}
+                </div>
+                <div class="text-right">
+                  <a href="#" class="dealLink">Details</a>
+                  <a class="dealLink dark" ng-click="removeFormCart(cartDeal.dealid); cartDeals.splice($index, 1)">Remove from cart</a>
+                </div>
+              </div>
+            </div>
+
+            <div id="cartDealsMap">
+              <div class="deal padding-1em-top padding-1em-bottom" ng-repeat="cartDealMap in cartDealsMap">
+                <img class="dealImg" ng-src="{{ cartDealMap.dealimg }}">
+                <div>
+                  <span class="dealOff">{{ cartDealMap.dealoff }}</span>
+                  <span class="dealOffDetails">{{ cartDealMap.dealdetails }}</span>
+                </div>
+                <div class="dealDes">
+                  <strong>{{ cartDealMap.dealdesbold }}</strong> {{ cartDealMap.dealdessmall }}<br>
+                  <a class="dealThumb"><i class="material-icons">thumb_up</i></a> {{ cartDealMap.dealthumbsup }}
+                </div>
+                <div class="text-right">
+                  <a href="#" class="dealLink">Details</a>
+                  <a class="dealLink dark" ng-click="cartDealsMap.splice($index, 1); id.splice($index, 1)">Remove from cart</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="c12 buttons text-right">
+            <span class="tot text-right">Total: ${{eventInfo.TotalPrice.toFixed(2)}}</span>
+          </div>
+          <div class="c12 buttons text-right">
+            <a href="javascript:void(0)" class="makeLive" ng-click="OrderCheckout();">@Model.CheckoutText</a>
+          </div>
+        </div>
+      </section>
+    }
     @Html.AntiForgeryToken()
     <!--****************************************************************************************************************************-->
     @if (false)
@@ -366,5 +409,6 @@
     <section class="grid wfull margin-2em-top" id="mapView"></section>
     <div id="addDealMap"></div>
   </div>
+  <div ng-init="initController(@(!req.InviteValid ? "1" : !req.PasswordValid ? "2" : "0"))"></div>
 </div>
 <!-- controller closed -->
