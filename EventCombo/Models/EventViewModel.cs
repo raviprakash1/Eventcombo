@@ -340,6 +340,8 @@ namespace EventCombo.Models
     public bool ShowRemaining { get; set; }
     public long RemainingQuantity { get; set; }
     public decimal TotalPrice { get; set; }
+    public bool Available { get; set; }
+    public string DateInfoString { get; set; }
   }
 
   public class ShortEventInfoViewModel

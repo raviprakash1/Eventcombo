@@ -1178,16 +1178,17 @@ namespace EventCombo.Service
             Fee = 0,
             ShowRemaining = tq.Ticket.T_Displayremaining == "1",
             RemainingQuantity = tq.Ticket.T_Displayremaining == "1" ? tq.TQD_Remaining_Quantity ?? 0 : 0,
-            SoldOut = (tq.Ticket.T_Mark_SoldOut == "1") || ((tq.TQD_Remaining_Quantity ?? 0) <= 0)
+            SoldOut = (tq.Ticket.T_Mark_SoldOut == "1") || ((tq.TQD_Remaining_Quantity ?? 0) <= 0),
+            Available = ((saleStartDate < eventNow) && ((saleEndDate == default(DateTime)) || (saleEndDate >= eventNow)))
           };
+          if (!tiVM.SoldOut && !tiVM.Available)
+            tiVM.DateInfoString = (saleStartDate != default(DateTime) ? "Sales start " + saleStartDate.ToString("MMM dd, yyyy hh:mm tt") : "") 
+              + ". " + (saleEndDate != default(DateTime) ? "Sales end " + saleEndDate.ToString("MMM dd, yyyy hh:mm tt") : "");
           if (tiVM.Maximum > (tq.TQD_Remaining_Quantity ?? 0))
             tiVM.Maximum = (tq.TQD_Remaining_Quantity ?? 0);
 
           allSoldOut = allSoldOut && tiVM.SoldOut;
-          allUnavailable = allUnavailable &&
-                            ((saleStartDate >= eventNow) ||
-                            ((saleEndDate != default(DateTime)) && (saleEndDate < eventNow)) ||
-                            tiVM.SoldOut);
+          allUnavailable = allUnavailable && (!tiVM.Available || tiVM.SoldOut);
           if (tiVM.TicketTypeId != 3)
           {
             minTicketPrice = minTicketPrice > tiVM.Price ? tiVM.Price : minTicketPrice;
@@ -1212,13 +1213,13 @@ namespace EventCombo.Service
       }
       evi.Tickets = tickets;
       allSoldOut = allSoldOut && (tickets.Count() > 0);
-      if (allSoldOut)
+      if (allSoldOut && (evi.Tickets.Count() > 0))
       {
         evi.ButtonText = "Sold Out";
         evi.PriceRange = evi.ButtonText;
         evi.CheckoutText = evi.ButtonText;
       }
-      else if (allUnavailable)
+      else if (evi.Tickets.Count() == 0)
       {
         evi.ButtonText = "Registration Closed";
         evi.PriceRange = evi.ButtonText;

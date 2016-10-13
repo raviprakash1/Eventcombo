@@ -311,11 +311,11 @@
               </div>
               <div class="c3 text-right" ng-show="((ticket.TicketTypeId != 3) && !ticket.SoldOut)">
                 <select class="option" ng-model="ticket.Quantity" ng-options="item for item in ticket.Quants"
-                        ng-change="onPriceChange()" style="width:80px;"></select>
+                        ng-change="onPriceChange()" style="width:80px;" ng-disabled="!ticket.Available"></select>
               </div>
               <div class="c3 text-right" ng-show="((ticket.TicketTypeId == 3) && !ticket.SoldOut)">
                 <input type="text" class="inputbox" style="width:80px;" ng-model="ticket.PriceText"
-                       ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket)" decimal-only>
+                       ng-change="onPriceChange(ticket)" ng-blur="onPriceBlur(ticket)" ng-readonly="!ticket.Available" decimal-only>
               </div>
               <div class="c3 text24 upp" style="text-align:right;" ng-show="(ticket.SoldOut)">
                 Sold OUT
@@ -323,6 +323,7 @@
               <div class="c12">
                 <span class="c3 padded ticdetail">{{ticket.VenueName}}</span>
                 <span class="c3 padded ticdetail">{{ticket.StartDateFormatted}}</span>
+                <span class="c4 padded ticdetail" style="font-weight: bold;">{{ticket.DateInfoString}}</span>
               </div>
               <div class="c12 ticdes" ng-hide="!ticket.TicketDescription"><p>{{ticket.TicketDescription}}</p></div>
             </div>
