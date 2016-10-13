@@ -25,6 +25,11 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
+                if (!String.IsNullOrEmpty(Eventdetails.EventPrivacy) && (Eventdetails.EventPrivacy.ToUpper() == "PRIVATE"))
+                {
+                  return RedirectToAction("CreateInvitations", "ManageEvent", new { lId = 0, lEvtId = Eventdetails.EventID, strMode = "C" });
+                }
+
                 MyAccount hmc = new MyAccount();
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
