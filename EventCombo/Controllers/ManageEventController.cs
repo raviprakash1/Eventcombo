@@ -16,6 +16,8 @@ using System.Configuration;
 using EventCombo.Utils;
 using System.Web.UI;
 using NLog;
+using EventCombo.DAL;
+using EventCombo.Service;
 
 
 namespace EventCombo.Controllers
@@ -28,6 +30,17 @@ namespace EventCombo.Controllers
       
         // GET: ManageEvent
         EventComboEntities db = new EventComboEntities();
+
+        IECImageService _iservice;
+        IEventService _eservice;
+
+        public ManageEventController()
+        {
+          var mapper = AutomapperConfig.Config.CreateMapper();
+          var factory = new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory());
+          _iservice = new ECImageService(factory, mapper, new ECImageStorage(mapper));
+          _eservice = new EventService(factory, mapper);
+        }
 
         private string GetNewInvitationCode()
         {
@@ -2758,8 +2771,10 @@ namespace EventCombo.Controllers
             int iElistCnt = 0;
             string strPassword = "";
             string strDateTime = "";
-            string strviewEvent = "";
+            string strViewEvent = "";
+            string strViewEventShort = "";
             string strOrgnizerUrl = "";
+            int privateType = 0;
             Session["logo"] = "events";
             Session["Fromname"] = "Invitation";
             string strOrderText = "Attend";
@@ -2855,35 +2870,41 @@ namespace EventCombo.Controllers
                         var baseurl = url.GetLeftPart(UriPartial.Authority);
 
 
-                        strviewEvent = baseurl + Url.Action("ViewEvent", "EventManagement", new 
+                        strViewEvent = baseurl + Url.Action("ViewEvent", "EventManagement", new 
                           { 
                             strEventDs = System.Text.RegularExpressions.Regex.Replace(vEvent.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), 
                             strEventId = ValidationMessageController.GetParentEventId(lEvtId).ToString(),
                             InviteId = objEEI.Code
                           });
+                        strViewEventShort = baseurl + Url.Action("ViewEvent", "EventManagement", new
+                        {
+                          strEventDs = System.Text.RegularExpressions.Regex.Replace(vEvent.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""),
+                          strEventId = ValidationMessageController.GetParentEventId(lEvtId).ToString()
+                        });
                         strOrgnizerUrl = "";
                         if (vOrgnizer != null)
                             strOrgnizerUrl = baseurl + Url.Action("Index", "OrganizerInfo", new { id = vOrgnizer.Orgnizer_Id, eventid = lEvtId });
 
                     }
 
-
-
-                    EventCreation objCEv = new EventCreation();
-                    string strImageUrl = objCEv.GetImages(lEvtId).FirstOrDefault();
-                    if (strImageUrl != null && strImageUrl != "")
+                    string strImageUrl = String.Empty;
+                    if ((vEvent.ECImageId ?? 0) > 0)
                     {
-                        if (!System.IO.File.Exists(Server.MapPath(strImageUrl))) // Need to check on server
-                            strImageUrl = "/Images/default_event_image.jpg";
+                      var img = _iservice.GetImageById(vEvent.ECImageId ?? 0);
+                      if ((img != null) && (System.IO.File.Exists(img.FilePath)))
+                        strImageUrl = img.ImagePath;
                     }
-                    else
-                        strImageUrl = "/Images/default_event_image.jpg";
+                    objEEI.EventImg = String.IsNullOrEmpty(strImageUrl) ? "/Images/default_event_image.jpg" : strImageUrl;
 
-                    objEEI.EventImg = strImageUrl;
-
-
-                    //@Url.Action("Index", "OrganizerInfo", new { id = Model.organizerid, eventid = Model.eventId })
-
+                    if (!String.IsNullOrEmpty(vEvent.EventPrivacy) && (vEvent.EventPrivacy.ToUpper() == "PRIVATE"))
+                    {
+                      if (!String.IsNullOrEmpty(vEvent.Private_Password))
+                        privateType = 2;
+                      else
+                        privateType = 1;
+                      if (vEvent.Private_GuestOnly == "Y")
+                        privateType += 2;
+                    }
                 }
             }
 
@@ -2892,7 +2913,8 @@ namespace EventCombo.Controllers
             TempData["baseurl"] = vbaseurl;
             TempData["OrderText"] = strOrderText;
             TempData["OrgnizerUrl"] = strOrgnizerUrl;
-            TempData["ViewEventUrl"] = strviewEvent;
+            TempData["ViewEventUrl"] = strViewEventShort;
+            TempData["InviteUrl"] = strViewEvent;
             TempData["Lat"] = (objEEI.EventLat != null ? objEEI.EventLat.Trim() : "");
             TempData["Long"] = (objEEI.EventLong != null ? objEEI.EventLong.Trim() : "");
             TempData["lId"] = lId;
@@ -2901,6 +2923,7 @@ namespace EventCombo.Controllers
             TempData["PPassword"] = strPassword;
             TempData["EventIMode"] = strMode;
             TempData["InviteId"] = objEEI.Code;
+            TempData["PrivacyType"] = privateType;
             return View(objEEI);
         }
 

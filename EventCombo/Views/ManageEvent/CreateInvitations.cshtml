@@ -166,15 +166,6 @@
                                 </p>
 
                             </div>
-                            <div class="col-xs-12 no_pad mb10">
-                                @*<p class="inv_mail_date ">Share:</p>
-                                    <p>
-                                        <a href="#"><img src="~/images/fb.png" /></a>
-                                        <a href="#"><img src="~/images/tw.png" /></a>
-                                        <a href="#"><img src="~/images/linkid.png" /></a>
-                                        <a href="#"><img src="~/images/msg.png" /></a>
-                                    </p>*@
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -183,10 +174,9 @@
             <div class="clearfix"></div>
             <div class="col-sm-12 col-xs-12 mt20 text-center ">
                 <div class="col-sm-12 col-xs-12 invite_email_btn_bor ">
-                    <a href="@TempData["ViewEventUrl"]" style="text-decoration:none; background:#00adef; box-shadow:none; border:0px; border-radius:5px; padding:8px 15px; color:#fff; font-size:2em; " title="" type="button">
+                    <a href="@TempData["InviteUrl"]" style="text-decoration:none; background:#00adef; box-shadow:none; border:0px; border-radius:5px; padding:8px 15px; color:#fff; font-size:2em; " title="" type="button">
                         @TempData["OrderText"]
                     </a>
-                    @*<button class="btn def_btn acnt_btn invite_email_attend_btn " title="" type="button">Attend</button>*@
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -196,10 +186,46 @@
                 {
                     <p class="inv_mail_abt mb0"> Your event password : @TempData["PPassword"].ToString()</p>
                 }
-                <p>
-                    ( Event registration is by invitation only with the provided password. Register with your email address
-                    and the password above to attend this event. )
+              @if ((int)TempData["PrivacyType"] == 0)
+              {
+                <p style="font-size: 13px; color: #686868;">
+                  ( This is public event and you can use link from this invitation to attend this event. )
                 </p>
+              }
+              else if ((int)TempData["PrivacyType"] == 1)
+              {
+                <p style="font-size: 13px; color: #686868;">
+                  ( This is private event and you can use link from this invitation to attend this event. )
+                </p>
+              }
+              else if ((int)TempData["PrivacyType"] == 2)
+              {
+                <p style="font-size: 13px; color: #686868;">
+                  ( Event registration is by password only. Register with password above to attend this event. )
+                </p>
+              }
+              else if ((int)TempData["PrivacyType"] == 3)
+              {
+                <p style="font-size: 13px; color: #686868;">
+                  ( Event registration is by invitation only. You can attend this event only by using link from this invitation. )
+                </p>
+              }
+              else if ((int)TempData["PrivacyType"] == 4)
+              {
+                <p style="font-size: 13px; color: #686868;">
+                  ( Event registration is by invitation only with the provided password. Register using link and the password above to attend this event. )
+                </p>
+              }
+              @if (Model != null && !String.IsNullOrEmpty(Model.I_EditableContent))
+              {
+                <div id="dvemailcontentmail" style="color:#000;font-size:16px;">
+                  @Model.I_EditableContent
+                </div>
+              }
+              else
+              {
+                <div id="dvemailcontentmail" style="color:#000;font-size:16px;"></div>
+              }
                 <p>
                     <button class="btn theme-btn def_btn acnt_btn edit_editor_btn" type="button" title="" data-toggle="modal" id="btEditEditor" data-target="#invite_email_desc">Edit</button>
                 </p>
@@ -499,7 +525,7 @@
         <div style="width: 96%; float:left; margin-top: 20px; text-align: center; margin-left: 2%;">
             <div style="width: 100%; float:left; border-bottom: 1px solid #9e9e9e; border-top: 1px solid #9e9e9e; padding-bottom: 20px; padding-top: 20px; ">
 
-                <a href="@TempData["ViewEventUrl"]" style="text-decoration:none; background:#00adef; box-shadow:none; border:0px; border-radius:5px; padding:8px 15px; color:#fff; font-size:2em; " title="" type="button">
+                <a href="@TempData["InviteUrl"]" style="text-decoration:none; background:#00adef; box-shadow:none; border:0px; border-radius:5px; padding:8px 15px; color:#fff; font-size:2em; " title="" type="button">
                     @TempData["OrderText"]
                 </a>
             </div>
@@ -512,10 +538,36 @@
                 <p style="color: #686868; font-size: 20px; margin-top: 5px; margin-bottom: 0px;"> Your event password : @TempData["PPassword"].ToString()</p>
             }
 
-            <p style="font-size: 13px; color: #686868;">
-                ( Event registration is by invitation only with the provided password. Register with your email address
-                and the password above to attend this event. )
-            </p>
+              @if ((int)TempData["PrivacyType"] == 0)
+              {
+                <p style="font-size: 13px; color: #686868;">
+                  ( This is public event and you can use link from this invitation to attend this event. )
+                </p>
+              }
+              else if ((int)TempData["PrivacyType"] == 1)
+              {
+                <p style="font-size: 13px; color: #686868;">
+                  ( This is private event and you can use link from this invitation to attend this event. )
+                </p>
+              }
+              else if ((int)TempData["PrivacyType"] == 2)
+              {
+                <p style="font-size: 13px; color: #686868;">
+                  ( Event registration is by password only. Register with password above to attend this event. )
+                </p>
+              }
+              else if ((int)TempData["PrivacyType"] == 3)
+              {
+                <p style="font-size: 13px; color: #686868;">
+                  ( Event registration is by invitation only. You can attend this event only by using link from this invitation. )
+                </p>
+              }
+              else if ((int)TempData["PrivacyType"] == 4)
+              {
+                <p style="font-size: 13px; color: #686868;">
+                  ( Event registration is by invitation only with the provided password. Register using link and the password above to attend this event. )
+                </p>
+              }
             @if (Model != null && !String.IsNullOrEmpty(Model.I_EditableContent))
             {
                 <div id="dvemailcontentmail" style="color:#000;font-size:16px;">
