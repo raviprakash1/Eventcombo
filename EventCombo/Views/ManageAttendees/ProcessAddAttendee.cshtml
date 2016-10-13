@@ -179,7 +179,7 @@
       datatype: "html",
       success: function (data) {
         if (data >= 0)
-          window.location.replace("@(Url.Action("Orders", "ManageAttendees", new { eventId = Model.EventId }))");
+          window.location.replace("@Html.Raw(Url.Action("RedirectAddPage", "ManageAttendees", new { eventId = Model.EventId, successMessage = "Your attendees were added successfully." }))");
         else {
           $('#sendError').attr('data-errormessage', "Error while processing your order. Order not saved.");
           showAllErrors();

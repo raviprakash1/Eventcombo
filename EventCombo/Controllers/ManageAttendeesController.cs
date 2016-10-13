@@ -78,6 +78,13 @@ namespace EventCombo.Controllers
       return View(addAttendee);
     }
 
+    [HttpGet]
+    public ActionResult RedirectAddPage(long eventId, string successMessage)
+    {
+        TempData["SuccessMessage"] = successMessage;
+        return RedirectToAction("Add", new { eventId = eventId });
+    }
+
     [HttpPost]
     public ActionResult ProcessAddAttendee(AddAttandeeOrder model)
     {
