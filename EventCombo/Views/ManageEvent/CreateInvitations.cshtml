@@ -391,6 +391,7 @@
             <input type="hidden" id="hdId" value="@Model.I_Id" />
             <input type="hidden" id="hdEventId" value="@TempData["Eventid"]" />
             <input type="hidden" id="hdEventIMode" value="@TempData["EventIMode"]" />
+            <input type="hidden" id="hdInviteId" value="@TempData["InviteId"]" />
 
 
             @if (Model != null && !String.IsNullOrEmpty(Model.I_EditableContent))
@@ -971,9 +972,9 @@
                 'I_ScheduleDate': $("#txtSchDate").val(),
                 'I_EditableContent': $("#dvemailcontentmail").html(),
                 'I_Mode': Mode,
+                'Code': $("#hdInviteId").val(),
                 'EmailList': EmailList
             };
-
             $.ajax({
                 url: '@Url.Action("SaveInvitation", "ManageEvent")',
                 data: { model: model },

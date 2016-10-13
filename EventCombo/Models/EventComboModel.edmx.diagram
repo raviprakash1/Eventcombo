@@ -170,6 +170,7 @@
         <AssociationConnector Association="EventComboModel.FK_AttendeeEmail_ScheduledEmail" />
         <EntityTypeShape EntityType="EventComboModel.HomepageWord" Width="1.5" PointX="27.375" PointY="6.75" />
         <AssociationConnector Association="EventComboModel.FK_AttendeeEmail_TicketBearer" />
+        <AssociationConnector Association="EventComboModel.EventEvent_Email_Invitation" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
