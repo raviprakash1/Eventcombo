@@ -47,7 +47,6 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
     }
 
     $scope.initController = function (state) {
-      console.log(state);
       if (state == 1)
         $scope.ShowPrivateInvateMessage();
       else if (state == 2)
@@ -73,7 +72,6 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
           })
         }).then(function (response) {
           $scope.showLoadingMessage(false, '');
-          console.log(response.data);
           if (response.data.Success)
             broadcastService.ReloadPage();
           else {
@@ -323,7 +321,6 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
     var loadInfo = function (eventId) {
       $http.get('/eventmanagement/geteventinfo', { params: { eventId: eventId } }).then(function (response) {
         eventInfo = response.data;
-        console.log(eventInfo);
         angular.forEach(eventInfo.Tickets, function (ticket, key) {
           if (ticket.TicketTypeId == 1)
             ticket.TypeName = 'FREE'

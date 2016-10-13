@@ -83,11 +83,6 @@ namespace EventCombo.Models
 
   public class OrganizerViewModel
   {
-    public OrganizerViewModel()
-    {
-      Image = new ECImageViewModel();
-    }
-
     public long OrgnizerId { get; set; }
     public string Orgnizer_Name { get; set; }
     public string Organizer_Desc { get; set; }

@@ -299,7 +299,9 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     };
 
     $scope.callImageClick = function (imgctrl) {
-      document.getElementById(imgctrl).click();
+      setTimeout(function () {
+        document.getElementById(imgctrl).click();
+      }, 0);
     }
 
     $scope.organizerAdd = function () {
@@ -408,12 +410,18 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         org[0].Organizer_FBLink = org[0].IncludeSocialLinks ? $scope.eventInfo.CurrentOrganizer.Organizer_FBLink : null;
         org[0].Organizer_Twitter = org[0].IncludeSocialLinks ? $scope.eventInfo.CurrentOrganizer.Organizer_Twitter : null;
         org[0].Organizer_Linkedin = org[0].IncludeSocialLinks ? $scope.eventInfo.CurrentOrganizer.Organizer_Linkedin : null;
-        org[0].Image.ECImageId = $scope.eventInfo.CurrentOrganizer.Image.ECImageId;
-        org[0].Image.TypeName = $scope.eventInfo.CurrentOrganizer.Image.TypeName;
-        org[0].Image.Filename = $scope.eventInfo.CurrentOrganizer.Image.Filename;
-        org[0].Image.ImagePath = $scope.eventInfo.CurrentOrganizer.Image.ImagePath;
-        org[0].Image.ECImageTypeId = $scope.eventInfo.CurrentOrganizer.Image.ECImageTypeId;
+        if ($scope.eventInfo.CurrentOrganizer.Image) {
+          if (!org[0].Image)
+            org[0].Image = {};
+          org[0].Image.ECImageId = $scope.eventInfo.CurrentOrganizer.Image.ECImageId;
+          org[0].Image.TypeName = $scope.eventInfo.CurrentOrganizer.Image.TypeName;
+          org[0].Image.Filename = $scope.eventInfo.CurrentOrganizer.Image.Filename;
+          org[0].Image.ImagePath = $scope.eventInfo.CurrentOrganizer.Image.ImagePath;
+          org[0].Image.ECImageTypeId = $scope.eventInfo.CurrentOrganizer.Image.ECImageTypeId;
+        } else
+          org[0].Image = null;
       };
+      $scope.eventInfo.CurrentOrganizer = null;
       $scope.organizerEditState = "Saved";
     }
 

@@ -86,6 +86,8 @@ namespace EventCombo.Service
             || !String.IsNullOrWhiteSpace(orgVM.Organizer_Twitter);
           if ((org.ECImageId ?? 0) > 0)
             orgVM.Image = _iservice.GetImageById((org.ECImageId ?? 0));
+          else
+            orgVM.Image = null;
           ev.OrganizerList.Add(orgVM);
         }
       }
@@ -459,8 +461,10 @@ namespace EventCombo.Service
 
         _mapper.Map(org, oDB);
 
-        if ((org.Image != null) && (org.Image.ECImageId != 0))
+        if ((org.Image != null) && (org.Image.ECImageId == 0))
         {
+          if (org.ECImageId != 0)
+            _iservice.DeleteImage((org.ECImageId ?? 0), ev.UserID, uow);
           org.Image = _iservice.SaveToDB(org.Image, ev.UserID, uow);
           oDB.ECImageId = org.Image.ECImageId;
           org.ECImageId = org.Image.ECImageId;
@@ -468,7 +472,7 @@ namespace EventCombo.Service
           org.Imagepath = org.Image.ImagePath;
         }
 
-        if (((oDB.ECImageId ?? 0) != 0) && (org.Image != null))
+        if (((oDB.ECImageId ?? 0) != 0) && (org.Image == null))
         {
           _iservice.DeleteImage(org.Image, ev.UserID, uow);
           oDB.ECImageId = 0;
