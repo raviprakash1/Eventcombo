@@ -20,9 +20,12 @@
                     <th>Attendee Email</th>
                     <th>Billing Address</th>
                     <th>Mail Tickets</th>
-                    @foreach (var variable in Model.FirstOrDefault().VariableChages)
+                    @if (Model.FirstOrDefault() != null)
                     {
-                        <th>@variable.VariableDesc</th>
+                        foreach (var variable in Model.FirstOrDefault().VariableChages)
+                        {
+                            <th>@variable.VariableDesc</th>
+                        }
                     }
                 </tr>
             </thead>
@@ -31,7 +34,7 @@
                 {
                     <tr>
                         <td class="UETableTD"> @order.OrderId </td>
-                        <td class="UETableTD">@(order.Date.Date.ToString("MMM, dd, yyyy"))</td>
+                        <td class="UETableTD">@(order.Date.Date.ToString("MMM, dd, yyyy hh:mm:ss tt"))</td>
                         <td class="UETableTD">@order.BuyerName</td>
                         <td class="UETableTD">@order.TicketName</td>
                         <td class="UETableTD">@order.Quantity</td>

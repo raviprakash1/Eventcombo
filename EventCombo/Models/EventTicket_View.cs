@@ -40,5 +40,6 @@ namespace EventCombo.Models
         public string TicketTypeName { get; set; }
         public Nullable<byte> PaymentTypeId { get; set; }
         public string VariableIds { get; set; }
+        public bool IsManualOrder { get; set; }
     }
 }

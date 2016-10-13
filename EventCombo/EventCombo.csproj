@@ -379,17 +379,9 @@
     <Compile Include="Models\City.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Footer.cs" />
-    <Compile Include="Models\GetNearestEvents_Result.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\HomepageWord.cs">
-      <DependentUpon>EventComboModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ContactEventCombo.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ContactMessageViewModel.cs" />
     <Compile Include="Models\ControlType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -411,7 +403,6 @@
     <Compile Include="Models\ECImageType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ECImageViewModel.cs" />
     <Compile Include="Models\EmailType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -472,6 +463,9 @@
     <Compile Include="Models\Fee_Structure.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Footer.cs" />
+    <Compile Include="Models\ContactMessageViewModel.cs" />
+    <Compile Include="Models\ECImageViewModel.cs" />
     <Compile Include="Models\func_Split_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -487,10 +481,16 @@
     <Compile Include="Models\GetEventsListByStatus_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetNearestEvents_Result.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GetOrganizerEventid_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Hash.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HomepageWord.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IBaseViewModel.cs" />

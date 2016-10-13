@@ -34,6 +34,7 @@ namespace EventCombo.Models
         public Nullable<byte> OrderStateId { get; set; }
         public Nullable<byte> PaymentTypeId { get; set; }
         public string Note { get; set; }
+        public bool IsManualOrder { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual OrderState OrderState { get; set; }

@@ -4,7 +4,7 @@ using EventCombo.Models;
 
 namespace EventCombo.Service
 {
-  public enum AccessLevel { EventOwner, OrderOwner, Public, EventAdmin }
+  public enum AccessLevel { EventOwner, OrderOwner, Public }
 
   public interface IDBAccessService
   {
@@ -15,5 +15,6 @@ namespace EventCombo.Service
     AccessLevel GetOrderAccess(string orderId, string userId);
     Profile GetUserProfileByEmail(string email);
     Profile GetUserProfileById(string userId);
+    bool IsEventAdmin(string userId);
   }
 }

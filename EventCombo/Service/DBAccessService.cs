@@ -116,18 +116,6 @@ namespace EventCombo.Service
         return AccessLevel.Public;
 
       IRepository<Event> evRepo = new GenericRepository<Event>(_factory.ContextFactory);
-      IRepository<AspNetUser> uRepo = new GenericRepository<AspNetUser>(_factory.ContextFactory);
-      var user = uRepo.Get(filter: (u => u.Id == userId)).FirstOrDefault();
-      if (user == null)
-        return AccessLevel.Public;
-      if (user.AspNetRoles.Any(ur => ur.Id == UserRoleSA))
-        return AccessLevel.EventAdmin;
-      if (user.AspNetRoles.Any(ur => ur.Id == UserRoleAdmin))
-      {
-        IRepository<User_Permission_Detail> upRepo = new GenericRepository<User_Permission_Detail>(_factory.ContextFactory);
-        if (upRepo.Get(filter: (up => (up.UP_User_Id == userId) && (up.UP_Permission_Id == UserPermissionEvents))).Any())
-          return AccessLevel.EventAdmin;
-      }
 
       Event ev = evRepo.Get(filter: (e => e.EventID == eventId)).SingleOrDefault();
       if (ev == null)
@@ -165,6 +153,27 @@ namespace EventCombo.Service
     {
       IRepository<EventCombo.Models.Profile> pRepo = new GenericRepository<EventCombo.Models.Profile>(_factory.ContextFactory);
       return pRepo.Get(filter: (pr => pr.UserID == userId)).FirstOrDefault();
+    }
+
+    public bool IsEventAdmin(string userId)
+    {
+      IRepository<AspNetUser> uRepo = new GenericRepository<AspNetUser>(_factory.ContextFactory);
+      var user = uRepo.Get(filter: (u => u.Id == userId)).FirstOrDefault();
+
+      if (user == null)
+        return false;
+
+      if (user.AspNetRoles.Any(ur => ur.Id == UserRoleSA))
+        return true;
+
+      if (user.AspNetRoles.Any(ur => ur.Id == UserRoleAdmin))
+      {
+        IRepository<User_Permission_Detail> upRepo = new GenericRepository<User_Permission_Detail>(_factory.ContextFactory);
+        if (upRepo.Get(filter: (up => (up.UP_User_Id == userId) && (up.UP_Permission_Id == UserPermissionEvents))).Any())
+          return true;
+      }
+
+      return false;
     }
   }
 }

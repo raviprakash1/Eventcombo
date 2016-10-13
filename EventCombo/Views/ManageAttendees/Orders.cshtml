@@ -39,7 +39,7 @@
           <a id="oneDayDate@(order.PaymentState.ToString())" class="dateTopHeaderCls" href="javascript:void(0)" onclick="setSelectedDate('oneDayDate', 1, '@(order.PaymentState.ToString())' )">1 DAY</a>
           <a id="oneWeekDate@(order.PaymentState.ToString())" class="dateTopHeaderCls" href="javascript:void(0)" onclick="setSelectedDate('oneWeekDate', 2, '@(order.PaymentState.ToString())')">1 WEEK</a>
           <a id="oneMonthDate@(order.PaymentState.ToString())" class="dateTopHeaderCls" href="javascript:void(0)" onclick="setSelectedDate('oneMonthDate', 3, '@(order.PaymentState.ToString())')">1 MONTH</a>
-          <a id="oneYearDate@(order.PaymentState.ToString())" class="dateTopHeaderCls" href="javascript:void(0)" onclick="setSelectedDate('oneYearDate', 4, '@(order.PaymentState.ToString())')">1 YEAR</a>
+          <a id="oneYearDate@(order.PaymentState.ToString())" class="dateTopHeaderCls dateTopHeaderClsSelected" href="javascript:void(0)" onclick="setSelectedDate('oneYearDate', 4, '@(order.PaymentState.ToString())')">1 YEAR</a>
           <a id="customDate@(order.PaymentState.ToString())" class="dateTopHeaderCls" href="javascript:void(0)">CUSTOM: <input type="text" id="datepicker@(order.PaymentState.ToString())" class="datePickerCustomCls"></a>
         </div>
         @{ double perc = order.TicketsTotal == 0 ? 0.00 : ((double)order.TicketsSold * 100) / order.TicketsTotal; }

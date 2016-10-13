@@ -15,7 +15,7 @@
   </div>
 }
 
-<div id="purchasedTicketContainer" class="midd_cont">
+<div id="purchasedTicketContainer">
   <div class="addAttendessTxt">
     <h1>Add Attendees</h1>
   </div>
@@ -25,7 +25,8 @@
   <input type="hidden" id="UFirstName" value="@(Model.FirstName)" />
   <input type="hidden" id="ULastName" value="@(Model.LastName)" />
 
-  <div class="table-responsive attendeesAddTable">
+  <div class="table-responsive">
+    <div>To Add Additional Tickets, please go to Edit your Event and Add Tickets to your Event. You can add and hide tickets on the Event Page, but they will still appear here for your use.</div>
     <table class="table" style="width:100%;">
       <thead>
         <tr class="attendeesAddTableTHTR">
