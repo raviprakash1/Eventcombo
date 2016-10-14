@@ -35,7 +35,7 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
-                if (!String.IsNullOrEmpty(Eventdetails.EventPrivacy) && (Eventdetails.EventPrivacy.ToUpper() == "PRIVATE"))
+                if (!String.IsNullOrEmpty(Eventdetails.EventPrivacy) && (Eventdetails.EventPrivacy.ToUpper() == "PRIVATE") && (Eventdetails.Private_GuestOnly == "Y"))
                 {
                   return RedirectToAction("CreateInvitations", "ManageEvent", new { lId = 0, lEvtId = Eventdetails.EventID, strMode = "C" });
                 }

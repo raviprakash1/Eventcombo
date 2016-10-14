@@ -190,31 +190,31 @@
               @if ((int)TempData["PrivacyType"] == 0)
               {
                 <p style="font-size: 13px; color: #686868;">
-                  ( This is public event and you can use link from this invitation to attend this event. )
+                  (This event is public. You can use the link from this invitation to view this event.)
                 </p>
               }
               else if ((int)TempData["PrivacyType"] == 1)
               {
                 <p style="font-size: 13px; color: #686868;">
-                  ( This is private event and you can use link from this invitation to attend this event. )
+                  (This event is private. You can use the link from this invitation to view this event.)
                 </p>
               }
               else if ((int)TempData["PrivacyType"] == 2)
               {
                 <p style="font-size: 13px; color: #686868;">
-                  ( Event registration is by password only. Register with password above to attend this event. )
+                  (This event is private and requires a password. Use the password to view this event.)
                 </p>
               }
               else if ((int)TempData["PrivacyType"] == 3)
               {
                 <p style="font-size: 13px; color: #686868;">
-                  ( Event registration is by invitation only. You can attend this event only by using link from this invitation. )
+                  (This event is invite only. You can only view this event by using the link from this invitation.)
                 </p>
               }
               else if ((int)TempData["PrivacyType"] == 4)
               {
                 <p style="font-size: 13px; color: #686868;">
-                  ( Event registration is by invitation only with the provided password. Register using link and the password above to attend this event. )
+                  (This event is private and requires an invitation along with the password. Use the link from this invitation and the password to view this event.)
                 </p>
               }
               @if (Model != null && !String.IsNullOrEmpty(Model.I_EditableContent))
@@ -542,31 +542,31 @@
               @if ((int)TempData["PrivacyType"] == 0)
               {
                 <p style="font-size: 13px; color: #686868;">
-                  ( This is public event and you can use link from this invitation to attend this event. )
+                  (This event is public. You can use the link from this invitation to view this event.)
                 </p>
               }
               else if ((int)TempData["PrivacyType"] == 1)
               {
                 <p style="font-size: 13px; color: #686868;">
-                  ( This is private event and you can use link from this invitation to attend this event. )
+                  (This event is private. You can use the link from this invitation to view this event.)
                 </p>
               }
               else if ((int)TempData["PrivacyType"] == 2)
               {
                 <p style="font-size: 13px; color: #686868;">
-                  ( Event registration is by password only. Register with password above to attend this event. )
+                  (This event is private and requires a password. Use the password to view this event.)
                 </p>
               }
               else if ((int)TempData["PrivacyType"] == 3)
               {
                 <p style="font-size: 13px; color: #686868;">
-                  ( Event registration is by invitation only. You can attend this event only by using link from this invitation. )
+                  (This event is invite only. You can only view this event by using the link from this invitation.)
                 </p>
               }
               else if ((int)TempData["PrivacyType"] == 4)
               {
                 <p style="font-size: 13px; color: #686868;">
-                  ( Event registration is by invitation only with the provided password. Register using link and the password above to attend this event. )
+                  (This event is private and requires an invitation along with the password. Use the link from this invitation and the password to view this event.)
                 </p>
               }
             @if (Model != null && !String.IsNullOrEmpty(Model.I_EditableContent))

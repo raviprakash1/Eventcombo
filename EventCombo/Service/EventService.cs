@@ -1181,16 +1181,15 @@ namespace EventCombo.Service
             SoldOut = (tq.Ticket.T_Mark_SoldOut == "1") || ((tq.TQD_Remaining_Quantity ?? 0) <= 0),
             Available = ((saleStartDate < eventNow) && ((saleEndDate == default(DateTime)) || (saleEndDate >= eventNow)))
           };
-          if (!tiVM.SoldOut && !tiVM.Available)
+
+          tiVM.DateInfoString1 = ((saleStartDate != default(DateTime)) && (saleStartDate > eventNow) ? "Sales Start " + saleStartDate.ToString("MMM dd, yyyy @ h:mm tt") : "");
+          tiVM.DateInfoString2 = (saleEndDate != default(DateTime) ? "Sales End " + saleEndDate.ToString("MMM dd, yyyy @ h:mm tt") : "");
+          if (String.IsNullOrEmpty(tiVM.DateInfoString1) && !String.IsNullOrEmpty(tiVM.DateInfoString2))
           {
-            tiVM.DateInfoString1 = (saleStartDate != default(DateTime) ? "Sales Start " + saleStartDate.ToString("MMM dd, yyyy @ h:mm tt") : "");
-            tiVM.DateInfoString2 = (saleEndDate != default(DateTime) ? "Sales End " + saleEndDate.ToString("MMM dd, yyyy @ h:mm tt") : "");
-            if (String.IsNullOrEmpty(tiVM.DateInfoString1) && !String.IsNullOrEmpty(tiVM.DateInfoString2))
-            {
-              tiVM.DateInfoString1 = tiVM.DateInfoString2;
-              tiVM.DateInfoString2 = "";
-            }
+            tiVM.DateInfoString1 = tiVM.DateInfoString2;
+            tiVM.DateInfoString2 = "";
           }
+
           if (tiVM.Maximum > (tq.TQD_Remaining_Quantity ?? 0))
             tiVM.Maximum = (tq.TQD_Remaining_Quantity ?? 0);
 
