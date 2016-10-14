@@ -12,15 +12,16 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Ticket_Purchased_Detail
+    public partial class TicketAttendee_View
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Ticket_Purchased_Detail()
-        {
-            this.TicketAttendees = new HashSet<TicketAttendee>();
-        }
-    
-        public long TPD_Id { get; set; }
+        public long TicketAttendeeId { get; set; }
+        public long TicketBearerId { get; set; }
+        public string UserId { get; set; }
+        public string OrderId { get; set; }
+        public string Guid { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public long PurchasedTicketId { get; set; }
         public string TPD_User_Id { get; set; }
         public string TPD_Order_Id { get; set; }
         public Nullable<long> TPD_Purchased_Qty { get; set; }
@@ -33,11 +34,7 @@ namespace EventCombo.Models
         public Nullable<int> TPD_PromoCodeID { get; set; }
         public Nullable<decimal> TPD_PromoCodeAmount { get; set; }
         public decimal Customer_Fee { get; set; }
-    
-        public virtual Event Event { get; set; }
-        public virtual AspNetUser AspNetUser { get; set; }
-        public virtual Ticket_Quantity_Detail Ticket_Quantity_Detail { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TicketAttendee> TicketAttendees { get; set; }
+        public long Quantity { get; set; }
+        public string T_name { get; set; }
     }
 }
