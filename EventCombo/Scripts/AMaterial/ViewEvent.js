@@ -101,7 +101,7 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
     }
 
     $scope.ShowPrivateInvateMessage = function () {
-      $scope.InfoMessage = "This is private event. You need invitation to view it. If you already have invitation, please, use link from it."
+      $scope.InfoMessage = "You need an invitation to view this private event. If you already have an invitation, please use that invitation link."
       $scope.CloseInfoMessage = $scope.PrivateIniteCloseMessage;
       $scope.popInfoMessage = true;
     }

@@ -195,7 +195,7 @@ namespace EventCombo.Controllers
       {
         res.Success = false;
         res.ErrorCode = 1;
-        res.ErrorMessage = "Password don't match";
+        res.ErrorMessage = "Password doesn't match";
       }
 
       JsonNetResult result = new JsonNetResult();

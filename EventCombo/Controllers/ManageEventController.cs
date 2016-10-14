@@ -2924,6 +2924,7 @@ namespace EventCombo.Controllers
             TempData["EventIMode"] = strMode;
             TempData["InviteId"] = objEEI.Code;
             TempData["PrivacyType"] = privateType;
+            ViewBag.Title = "Create Email Invite for " + objEEI.EventTitle + " | Eventcombo";
             return View(objEEI);
         }
 

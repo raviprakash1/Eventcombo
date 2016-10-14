@@ -36,6 +36,7 @@
     <h3 class="acnt_title inv_eml_title">Great! your private event is now live.</h3>
     <p class="inv_em_url">The URL for the event is <a href="@TempData["ViewEventUrl"]" target="_blank">@TempData["ViewEventUrl"]</a></p>
     <p class="inv_em_url">Don't forget to send out email invitations to your guests, below. </p>
+    <p class="inv_em_url">Please Note: Your guests will not be able to use your invitation code until you "Save Draft" or "Send Now." </p>
 </div>
 <div class="clearfix"></div>
 <div class="col-sm-10 mb10 col-xs-12" id="diverro1acc" style="display:none ">
@@ -699,7 +700,7 @@
 
 
         $("#txtSenderName").on("input", function () {
-            var regexp = /[^a-zA-Z ]/g;
+            var regexp = /[^a-zA-Z0-9'"\s\-,.]/g;
             if ($(this).val().match(regexp)) {
                 $(this).val($(this).val().replace(regexp, ''));
             }

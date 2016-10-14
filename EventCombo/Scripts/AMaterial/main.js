@@ -658,6 +658,11 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       $scope.eventInfo.CurrentEventSubCategory = null;
       $scope.eventInfo.CurrentOrganizer = null;
       $scope.eventInfo.CurrentInternalOrganizer = null;
+      if (($scope.eventInfo.EventPrivacy == 'Private') && ($scope.eventInfo.isPasswordRequired == 'Y'))
+        $scope.eventInfo.Private_Password = $scope.eventInfo.Private_Password.trim();
+      else
+        $scope.eventInfo.Private_Password = '';
+
       var data = {
         json: angular.toJson($scope.eventInfo)
       };
@@ -744,7 +749,6 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
           }
         });
       if (($scope.eventInfo.EventPrivacy == 'Private') && ($scope.eventInfo.isPasswordRequired == 'Y') && (!$scope.eventInfo.Private_Password || !$scope.eventInfo.Private_Password.trim())) {
-        $scope.eventInfo.Private_Password = $scope.eventInfo.Private_Password.trim();
         elem.valid = false;
         elem.messages.push('Need to set password for private Event');
       }
