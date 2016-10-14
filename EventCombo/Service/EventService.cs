@@ -1182,8 +1182,15 @@ namespace EventCombo.Service
             Available = ((saleStartDate < eventNow) && ((saleEndDate == default(DateTime)) || (saleEndDate >= eventNow)))
           };
           if (!tiVM.SoldOut && !tiVM.Available)
-            tiVM.DateInfoString = (saleStartDate != default(DateTime) ? "Sales start " + saleStartDate.ToString("MMM dd, yyyy hh:mm tt") : "") 
-              + ". " + (saleEndDate != default(DateTime) ? "Sales end " + saleEndDate.ToString("MMM dd, yyyy hh:mm tt") : "");
+          {
+            tiVM.DateInfoString1 = (saleStartDate != default(DateTime) ? "Sales start " + saleStartDate.ToString("MMM dd, yyyy @ h:mm tt") + "." : "");
+            tiVM.DateInfoString2 = (saleEndDate != default(DateTime) ? "Sales end " + saleEndDate.ToString("MMM dd, yyyy @ h:mm tt") + "." : "");
+            if (String.IsNullOrEmpty(tiVM.DateInfoString1) && !String.IsNullOrEmpty(tiVM.DateInfoString2))
+            {
+              tiVM.DateInfoString1 = tiVM.DateInfoString2;
+              tiVM.DateInfoString2 = "";
+            }
+          }
           if (tiVM.Maximum > (tq.TQD_Remaining_Quantity ?? 0))
             tiVM.Maximum = (tq.TQD_Remaining_Quantity ?? 0);
 

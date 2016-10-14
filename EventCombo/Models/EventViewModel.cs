@@ -341,7 +341,8 @@ namespace EventCombo.Models
     public long RemainingQuantity { get; set; }
     public decimal TotalPrice { get; set; }
     public bool Available { get; set; }
-    public string DateInfoString { get; set; }
+    public string DateInfoString1 { get; set; }
+    public string DateInfoString2 { get; set; }
   }
 
   public class ShortEventInfoViewModel

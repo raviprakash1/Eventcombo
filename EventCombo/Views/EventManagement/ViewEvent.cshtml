@@ -323,7 +323,7 @@
               <div class="c12">
                 <span class="c3 padded ticdetail">{{ticket.VenueName}}</span>
                 <span class="c3 padded ticdetail">{{ticket.StartDateFormatted}}</span>
-                <span class="c4 padded ticdetail" style="font-weight: bold;">{{ticket.DateInfoString}}</span>
+                <span class="c4 padded ticdetail" style="font-weight: bold;">{{ticket.DateInfoString1}}<br ng-show="ticket.DateInfoString2" />{{ticket.DateInfoString2}}</span>
               </div>
               <div class="c12 ticdes" ng-hide="!ticket.TicketDescription"><p>{{ticket.TicketDescription}}</p></div>
             </div>
