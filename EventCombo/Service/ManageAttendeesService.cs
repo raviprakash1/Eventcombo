@@ -172,7 +172,7 @@ namespace EventCombo.Service
             PaymentState = PaymentStates.Completed,
             TicketName = ticket.TicketName,
             BuyerName = string.Join(", ", attendees.Where(a => a.OrderId == ticket.OrderId).Select(a => a.Name.Trim()).ToArray()),
-            BuyerEmail = (string.IsNullOrEmpty(ticket.Email) ? "" : ticket.Email + ", ") + string.Join(", ", attendees.Where(a => a.OrderId == ticket.OrderId).Select(a => a.Email.Trim()).ToArray()),
+            BuyerEmail = string.Join(", ", attendees.Where(a => a.OrderId == ticket.OrderId).Select(a => a.Email.Trim()).ToArray()),
             Quantity = ticket.PurchasedQuantity ?? 0,
             Price = ticket.OrderAmount ?? 0,
             PricePaid = ticket.PaidAmount ?? 0,
