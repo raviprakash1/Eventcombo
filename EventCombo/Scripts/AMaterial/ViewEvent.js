@@ -7,13 +7,14 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
     $scope.displayVEPopups = 'block';
     $scope.popVEShareWithFriends = false;
     $scope.popVEOrganizerMessage = false;
+    $scope.popVEPassword = false;
     $scope.VEMessage = {
       Email: '',
       Name: '',
       Phone: '',
       Message: '',
       EventId: 0
-  }
+    }
 
     if (!$attrs.eventid) throw new Error("No event ID defined");
 
@@ -31,9 +32,79 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
         addEventMarker($scope.eventInfo, $scope.map);
       }
       $scope.UpdateStyles();
+      $scope.eventInfoLoaded = true;
     });
 
-    eventInfoService.loadInfo($attrs.eventid);
+    $scope.resetForm = function (form) {
+      form.$setPristine();
+      form.$setUntouched();
+    }
+
+    $scope.showPasswordForm = function () {
+      $scope.eventPassword = '';
+      $scope.resetForm($scope.eventPasswordForm);
+      $scope.popVEPassword = true;
+    }
+
+    $scope.initController = function (state) {
+      if (state == 1)
+        $scope.ShowPrivateInvateMessage();
+      else if (state == 2)
+        $scope.showPasswordForm();
+      else
+        eventInfoService.loadInfo($attrs.eventid);
+    }
+
+    $scope.CancelPassword = function () {
+      $scope.popVEPassword = false;
+      broadcastService.ReloadPage('/');
+    }
+
+    $scope.eventPasswordProcessing = function (form) {
+      if ($scope[form].$valid) {
+        $scope.popVEPassword = false;
+        $scope.showLoadingMessage(true, 'Checking...');
+        $http.post('/eventmanagement/CheckPrivateEventAccess', {
+          json: angular.toJson({
+            EventId: $attrs.eventid,
+            Password: $scope.eventPassword,
+            IniteId: ''
+          })
+        }).then(function (response) {
+          $scope.showLoadingMessage(false, '');
+          if (response.data.Success)
+            broadcastService.ReloadPage();
+          else {
+            $scope.incorrectPassword = true;
+            $scope.privateLoginError = response.data.ErrorMessage;
+            $scope.popVEPassword = true;
+          }
+        }, function (error) {
+          $scope.showLoadingMessage(false, '');
+          $scope.showPasswordForm();
+        });
+      }
+      else {
+        if ($scope[form].eventPassword.$error.required) { $scope.eventPasswordRequired = true; }
+      }
+    };
+
+    $scope.CommonCloseInfoMessage = function () {
+      $scope.popInfoMessage = false;
+    }
+
+    $scope.CloseInfoMessage = $scope.CommonCloseInfoMessage;
+
+    $scope.PrivateIniteCloseMessage = function () {
+      $scope.popInfoMessage = false;
+      broadcastService.ReloadPage('/');
+    }
+
+    $scope.ShowPrivateInvateMessage = function () {
+      $scope.InfoMessage = "You need an invitation to view this private event. If you already have an invitation, please use that invitation link."
+      $scope.CloseInfoMessage = $scope.PrivateIniteCloseMessage;
+      $scope.popInfoMessage = true;
+    }
 
     $scope.$on('LoggedIn', function (event, param) {
       if (param === 'VEFav' + $scope.eventInfo.EventId) {
@@ -64,7 +135,7 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
       eventInfoService.postTickets();
     }
 
-    $scope.StartLogin = function(loginInfo){
+    $scope.StartLogin = function (loginInfo) {
       broadcastService.CallLogin(loginInfo);
     }
 
@@ -97,39 +168,40 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
     }
 
     $scope.showInfoMessage = function (show, message) {
-      $scope.popInfoMessage = show;
+      $scope.CloseInfoMessage = $scope.CommonCloseInfoMessage;
       $scope.InfoMessage = message;
+      $scope.popInfoMessage = show;
     }
 
     $scope.contactOrganizer = function (event, eventName, organizerName) {
-        $mdDialog.show({
-            controller: DialogContactOrganizerController,
-            templateUrl: 'organizer.tmpl.html',
-            parent: angular.element(document.body),
-            targetEvent: event,
-            clickOutsideToClose: true,
-            locals: {
-                eventId: $scope.eventInfo.EventId,
-                organizerId: $scope.eventInfo.organizerId,
-                eventName: eventName,
-                organizerName: organizerName
-            }
-        });
+      $mdDialog.show({
+        controller: DialogContactOrganizerController,
+        templateUrl: 'organizer.tmpl.html',
+        parent: angular.element(document.body),
+        targetEvent: event,
+        clickOutsideToClose: true,
+        locals: {
+          eventId: $scope.eventInfo.EventId,
+          organizerId: $scope.eventInfo.organizerId,
+          eventName: eventName,
+          organizerName: organizerName
+        }
+      });
     };
 
     $scope.forwardFriend = function (event, mTitle, mType) {
-        $mdDialog.show({
-            controller: DialogForwardFriendController,
-            templateUrl: 'forwardfriend.tmpl.html',
-            parent: angular.element(document.body),
-            targetEvent: event,
-            clickOutsideToClose: true,
-            locals: {
-                id: $scope.eventInfo.EventId,
-                title: mTitle,
-                type: mType
-            }
-        });
+      $mdDialog.show({
+        controller: DialogForwardFriendController,
+        templateUrl: 'forwardfriend.tmpl.html',
+        parent: angular.element(document.body),
+        targetEvent: event,
+        clickOutsideToClose: true,
+        locals: {
+          id: $scope.eventInfo.EventId,
+          title: mTitle,
+          type: mType
+        }
+      });
     };
 
     $scope.SendMessageTo = function (mtype) {
@@ -167,7 +239,7 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
           $scope.showInfoMessage(true, "Error while sending message. Try again later.");
         });
       } else {
-        $scope.submitted = true; 
+        $scope.submitted = true;
       }
     }
 

@@ -18,6 +18,8 @@ using System.Data;
 
 namespace EventCombo.Service
 {
+  public enum EventPrivacy { Public, Private, WeakPrivate, StrongPrivate };
+
   public class EventService : IEventService
   {
     private IUnitOfWorkFactory _factory;
@@ -84,6 +86,8 @@ namespace EventCombo.Service
             || !String.IsNullOrWhiteSpace(orgVM.Organizer_Twitter);
           if ((org.ECImageId ?? 0) > 0)
             orgVM.Image = _iservice.GetImageById((org.ECImageId ?? 0));
+          else
+            orgVM.Image = null;
           ev.OrganizerList.Add(orgVM);
         }
       }
@@ -158,7 +162,7 @@ namespace EventCombo.Service
     {
       ev.ErrorMessages.Clear();
       if (IsEventSubDomainExists(ev.EventUrl, ev.EventID))
-        ev.ErrorMessages.Add("Sorry "+ ev.EventUrl + ".Eventcombo.com already exists, try another URL");
+        ev.ErrorMessages.Add("Sorry " + ev.EventUrl + ".Eventcombo.com already exists, try another URL");
       if (String.IsNullOrWhiteSpace(ev.EventTitle))
         ev.ErrorMessages.Add("Event must have title.");
       if (!ev.OnlineEvent && (String.IsNullOrWhiteSpace(ev.Address)))
@@ -457,8 +461,10 @@ namespace EventCombo.Service
 
         _mapper.Map(org, oDB);
 
-        if ((org.Image != null) && (org.Image.ECImageId != 0))
+        if ((org.Image != null) && (org.Image.ECImageId == 0))
         {
+          if (org.ECImageId != 0)
+            _iservice.DeleteImage((org.ECImageId ?? 0), ev.UserID, uow);
           org.Image = _iservice.SaveToDB(org.Image, ev.UserID, uow);
           oDB.ECImageId = org.Image.ECImageId;
           org.ECImageId = org.Image.ECImageId;
@@ -466,7 +472,7 @@ namespace EventCombo.Service
           org.Imagepath = org.Image.ImagePath;
         }
 
-        if (((oDB.ECImageId ?? 0) != 0) && (org.Image != null))
+        if (((oDB.ECImageId ?? 0) != 0) && (org.Image == null))
         {
           _iservice.DeleteImage(org.Image, ev.UserID, uow);
           oDB.ECImageId = 0;
@@ -641,7 +647,7 @@ namespace EventCombo.Service
           notification.SendNotification(new SendMailService());
         }
 
-      } 
+      }
       catch (Exception ex)
       {
         _logger.Error(ex, "Error during send notification about new event.");
@@ -894,15 +900,41 @@ namespace EventCombo.Service
 
     }
 
-    public EventInfoViewModel GetEventInfo(long eventId, string userId, UrlHelper url)
+    public EventInfoViewModel GetBasicEventInfo(long eventId, UrlHelper url)
     {
       EventInfoViewModel evi = new EventInfoViewModel();
       evi.EventId = eventId;
 
-      UpdateEventInfo(evi, userId, url);
+      IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
+      Event ev = eRepo.Get(filter: (e => e.EventID == eventId)).SingleOrDefault();
+      if (ev == null)
+        throw new ArgumentException(String.Format("Event {0} not found.", evi.EventId));
+
+      UpdateBasicEventInfo(evi, ev, url, false);
 
       return evi;
     }
+
+    public EventInfoViewModel GetEventInfo(long eventId, string userId, UrlHelper url)
+    {
+      return GetEventInfoExt(eventId, userId, url, false);
+    }
+
+    public EventInfoViewModel GetPrivateEventInfo(long eventId, string userId, UrlHelper url)
+    {
+      return GetEventInfoExt(eventId, userId, url, true);
+    }
+
+    private EventInfoViewModel GetEventInfoExt(long eventId, string userId, UrlHelper url, bool loadPrivate)
+    {
+      EventInfoViewModel evi = new EventInfoViewModel();
+      evi.EventId = eventId;
+
+      UpdateEventInfo(evi, userId, url, loadPrivate);
+
+      return evi;
+    }
+
 
     private string GetECImageUrl(long ImageId)
     {
@@ -913,9 +945,51 @@ namespace EventCombo.Service
         return "";
     }
 
-    public void UpdateEventInfo(EventInfoViewModel evi, string userId, UrlHelper url)
+    private void UpdateBasicEventInfo(EventInfoViewModel evi, Event ev, UrlHelper url, bool loadPrivate)
+    {
+      if (evi == null)
+        throw new ArgumentNullException("EventInfoViewModel evi");
+      if (ev == null)
+        throw new ArgumentNullException("Event ev");
+      if (ev == null)
+        throw new ArgumentNullException("UrlHelper url");
+
+      EventPrivacy privacy = GetEventPrivacy(ev);
+      evi.EventPrivacy = ev.EventPrivacy;
+      evi.UsePrivatePassword = !String.IsNullOrEmpty(ev.Private_Password);
+      evi.AllowPrivateShare = (privacy == EventPrivacy.Public) || (ev.Private_ShareOnFB == "Y");
+      if (!loadPrivate && (privacy == EventPrivacy.StrongPrivate))
+      {
+        evi.EventTitle = "Private Event";
+        evi.EventDescription = "";
+      }
+      else
+      {
+        evi.EventTitle = ev.EventTitle;
+        evi.EventDescription = ev.EventDescription;
+        if ((ev.ECImageId ?? 0) > 0)
+        {
+          evi.ImageUrl = GetECImageUrl(ev.ECImageId ?? 0);
+          evi.ImageAlt = evi.EventTitle;
+        }
+      }
+      evi.EventUrl = GetEventUrl(evi.EventId, evi.EventTitle, url);
+      PopulateOGPData(evi);
+    }
+
+    public void UpdateEventInfo(EventInfoViewModel evi, string userId, UrlHelper url, bool loadPrivate)
     {
       IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
+
+      Event ev = eRepo.Get(filter: (e => e.EventID == evi.EventId)).SingleOrDefault();
+      if (ev == null)
+        throw new ArgumentException(String.Format("Event {0} not found.", evi.EventId));
+
+      UpdateBasicEventInfo(evi, ev, url, loadPrivate);
+      EventPrivacy privacy = GetEventPrivacy(ev);
+      if (!loadPrivate && ((privacy == EventPrivacy.WeakPrivate) || (privacy == EventPrivacy.StrongPrivate)))
+        return;
+
       IRepository<EventSubCategory> escRepo = new GenericRepository<EventSubCategory>(_factory.ContextFactory);
       IRepository<EventImage> iRepo = new GenericRepository<EventImage>(_factory.ContextFactory);
       IRepository<EventECImage> eciRepo = new GenericRepository<EventECImage>(_factory.ContextFactory);
@@ -923,14 +997,8 @@ namespace EventCombo.Service
       IRepository<EventFavourite> favRepo = new GenericRepository<EventFavourite>(_factory.ContextFactory);
       IRepository<EventVote> voteRepo = new GenericRepository<EventVote>(_factory.ContextFactory);
 
-      Event ev = eRepo.Get(filter: (e => e.EventID == evi.EventId)).SingleOrDefault();
-      if (ev == null)
-        throw new ArgumentException(String.Format("Event {0} not found.", evi.EventId));
-
       evi.ErrorEvent = false;
       evi.ErrorMessages = new List<string>();
-      evi.EventTitle = ev.EventTitle;
-      evi.EventDescription = ev.EventDescription;
       evi.EventShortDesc = HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(HttpUtility.HtmlDecode(String.IsNullOrEmpty(evi.EventDescription) ? "" : evi.EventDescription)), 90, 150, ".");
       evi.OnlineEvent = ev.AddressStatus == "Online";
       evi.EventTypeId = ev.EventTypeID;
@@ -940,7 +1008,6 @@ namespace EventCombo.Service
       evi.DisplayStartTime = ev.DisplayStartTime == "Y";
       evi.DisplayEndTime = ev.DisplayEndTime == "Y";
       evi.BackgroundColor = ev.BackgroundColor;
-      evi.EventUrl = GetEventUrl(evi.EventId, evi.EventTitle, url);
       evi.EventSubCategoryId = ev.EventSubCategoryID;
       var esc = escRepo.Get(filter: (esub => esub.EventSubCategoryID == ev.EventSubCategoryID)).SingleOrDefault();
       if (esc != null)
@@ -994,9 +1061,6 @@ namespace EventCombo.Service
 
       if ((ev.ECBackgroundId ?? 0) > 0)
         evi.BackgroundUrl = GetECImageUrl(ev.ECBackgroundId ?? 0);
-
-      if ((ev.ECImageId ?? 0) > 0)
-        evi.ImageUrl = GetECImageUrl(ev.ECImageId ?? 0);
 
       var dbImages = iRepo.Get(filter: (im => im.EventID == evi.EventId));
       var ecImages = eciRepo.Get(filter: (eci => eci.EventId == evi.EventId), orderBy: (query => query.OrderBy(im => im.ECImageId)));
@@ -1114,16 +1178,24 @@ namespace EventCombo.Service
             Fee = 0,
             ShowRemaining = tq.Ticket.T_Displayremaining == "1",
             RemainingQuantity = tq.Ticket.T_Displayremaining == "1" ? tq.TQD_Remaining_Quantity ?? 0 : 0,
-            SoldOut = (tq.Ticket.T_Mark_SoldOut == "1") || ((tq.TQD_Remaining_Quantity ?? 0) <= 0)
+            SoldOut = (tq.Ticket.T_Mark_SoldOut == "1") || ((tq.TQD_Remaining_Quantity ?? 0) <= 0),
+            Available = ((saleStartDate < eventNow) && ((saleEndDate == default(DateTime)) || (saleEndDate >= eventNow)))
           };
+          if (!tiVM.SoldOut && !tiVM.Available)
+          {
+            tiVM.DateInfoString1 = (saleStartDate != default(DateTime) ? "Sales Start " + saleStartDate.ToString("MMM dd, yyyy @ h:mm tt") : "");
+            tiVM.DateInfoString2 = (saleEndDate != default(DateTime) ? "Sales End " + saleEndDate.ToString("MMM dd, yyyy @ h:mm tt") : "");
+            if (String.IsNullOrEmpty(tiVM.DateInfoString1) && !String.IsNullOrEmpty(tiVM.DateInfoString2))
+            {
+              tiVM.DateInfoString1 = tiVM.DateInfoString2;
+              tiVM.DateInfoString2 = "";
+            }
+          }
           if (tiVM.Maximum > (tq.TQD_Remaining_Quantity ?? 0))
             tiVM.Maximum = (tq.TQD_Remaining_Quantity ?? 0);
 
           allSoldOut = allSoldOut && tiVM.SoldOut;
-          allUnavailable = allUnavailable &&
-                            ((saleStartDate >= eventNow) ||
-                            ((saleEndDate != default(DateTime)) && (saleEndDate < eventNow)) ||
-                            tiVM.SoldOut);
+          allUnavailable = allUnavailable && (!tiVM.Available || tiVM.SoldOut);
           if (tiVM.TicketTypeId != 3)
           {
             minTicketPrice = minTicketPrice > tiVM.Price ? tiVM.Price : minTicketPrice;
@@ -1148,13 +1220,13 @@ namespace EventCombo.Service
       }
       evi.Tickets = tickets;
       allSoldOut = allSoldOut && (tickets.Count() > 0);
-      if (allSoldOut)
+      if (allSoldOut && (evi.Tickets.Count() > 0))
       {
         evi.ButtonText = "Sold Out";
         evi.PriceRange = evi.ButtonText;
         evi.CheckoutText = evi.ButtonText;
       }
-      else if (allUnavailable)
+      else if (evi.Tickets.Count() == 0)
       {
         evi.ButtonText = "Registration Closed";
         evi.PriceRange = evi.ButtonText;
@@ -1184,8 +1256,6 @@ namespace EventCombo.Service
         evi.PriceRange = minTicketPrice == maxTicketPrice ? String.Format("${0:N2}", minTicketPrice) : String.Format("${0:N2} - ${1:N2}", minTicketPrice, maxTicketPrice);
         evi.CheckoutText = "Checkout";
       }
-
-      PopulateOGPData(evi);
     }
 
     private string ResolveServerUrl(string serverUrl, bool forceHttps)
@@ -1204,7 +1274,7 @@ namespace EventCombo.Service
     {
       evi.OGPDescription = HtmlProcessing.GetShortString(HtmlProcessing.PrepareString(evi.EventDescription), 300, 400, ".");
       evi.OGPImage = String.IsNullOrEmpty(evi.ImageUrl) ? "" : ResolveServerUrl(VirtualPathUtility.ToAbsolute(evi.ImageUrl), false);
-      evi.OGPTitle = evi.EventTitle + " | Eventcombo";
+      evi.OGPTitle = evi.EventTitle;
       evi.OGPType = "article";
       evi.OGPUrl = ResolveServerUrl(VirtualPathUtility.ToAbsolute(evi.EventUrl), false);
     }
@@ -1390,7 +1460,7 @@ namespace EventCombo.Service
         State = EventTicketState.RegistrationClosed
       };
 
-      foreach(var tq in tickets)
+      foreach (var tq in tickets)
       {
         DateTime ticketDate;
         DateTime startDate;
@@ -1480,26 +1550,72 @@ namespace EventCombo.Service
 
     public EventViewModel GetEventBySubDomain(string subDomain)
     {
-        EventViewModel ev = new EventViewModel();
-        IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
+      EventViewModel ev = new EventViewModel();
+      IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
 
-        Event evDB = eRepo.Get(filter: (e => e.EventUrl == subDomain)).FirstOrDefault();
+      Event evDB = eRepo.Get(filter: (e => e.EventUrl == subDomain)).FirstOrDefault();
 
-        _mapper.Map(evDB, ev);
-        return ev;
+      _mapper.Map(evDB, ev);
+      return ev;
     }
 
     private bool IsEventSubDomainExists(string subDomain, long eventId = 0)
     {
-        if (String.IsNullOrWhiteSpace(subDomain))
-          return false;
+      if (String.IsNullOrWhiteSpace(subDomain))
+        return false;
 
-        EventViewModel ev = new EventViewModel();
-        IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
+      EventViewModel ev = new EventViewModel();
+      IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
 
-        var evDB = eRepo.Get(filter: (e => e.EventUrl == subDomain && (eventId == 0 ? true : e.EventID != eventId)));
+      var evDB = eRepo.Get(filter: (e => e.EventUrl == subDomain && (eventId == 0 ? true : e.EventID != eventId)));
 
-        return evDB.Count() > 0;
+      return evDB.Count() > 0;
     }
+
+    private EventPrivacy GetEventPrivacy(Event e)
+    {
+      if (String.IsNullOrEmpty(e.EventPrivacy) || (e.EventPrivacy.ToUpper() != "PRIVATE"))
+        return EventPrivacy.Public;
+      if (!String.IsNullOrEmpty(e.Private_Password) || (e.Private_GuestOnly == "Y"))
+        if (e.Private_ShareOnFB == "Y")
+          return EventPrivacy.WeakPrivate;
+        else
+          return EventPrivacy.StrongPrivate;
+      else
+        return EventPrivacy.Private;
+    }
+
+    public void CheckEventAccess(PrivateEventRequest req)
+    {
+      if (req == null)
+        throw new ArgumentNullException("req");
+
+      if (req.InviteValid && req.PasswordValid)
+        return;
+
+      IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
+
+      var ev = eRepo.Get(filter: (e => e.EventID == req.EventId)).FirstOrDefault();
+
+      if (ev != null)
+      {
+        req.InviteValid = req.InviteValid || String.IsNullOrEmpty(ev.EventPrivacy) || (ev.EventPrivacy.ToUpper() != "PRIVATE") || (ev.Private_GuestOnly != "Y");
+        if (!req.InviteValid)
+        {
+          var invite = ev.Event_Email_Invitation.Where(ei => ei.Code == req.InviteCode).FirstOrDefault();
+          if (invite != null)
+          {
+            invite.LastUsed = DateTime.UtcNow;
+            _factory.ContextFactory.GetContext().SaveChanges();
+            req.InviteValid = true;
+          }
+        }
+
+        req.PasswordValid = req.PasswordValid || String.IsNullOrEmpty(ev.EventPrivacy) || (ev.EventPrivacy.ToUpper() != "PRIVATE")
+          || String.IsNullOrEmpty(ev.Private_Password) || (ev.Private_Password == req.Password);
+
+      }
+    }
+
   }
 }

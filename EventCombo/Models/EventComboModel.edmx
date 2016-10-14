@@ -348,6 +348,8 @@
           <Property Name="I_ModifyDate" Type="datetime" />
           <Property Name="I_Mode" Type="varchar" MaxLength="1" />
           <Property Name="I_EditableContent" Type="nvarchar(max)" />
+          <Property Name="Code" Type="varchar" MaxLength="50" />
+          <Property Name="LastUsed" Type="datetime" />
         </EntityType>
         <EntityType Name="Event_Email_List">
           <Key>
@@ -2410,6 +2412,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="ECImageId" Type="Int64" />
           <NavigationProperty Name="EventECImages" Relationship="EventComboModel.EventEventECImage" FromRole="Event" ToRole="EventECImage" />
           <NavigationProperty Name="AttendeeEmails" Relationship="EventComboModel.FK_AttendeeEmail_Event" FromRole="Event" ToRole="AttendeeEmail" />
+          <NavigationProperty Name="Event_Email_Invitation" Relationship="EventComboModel.EventEvent_Email_Invitation" FromRole="Event" ToRole="Event_Email_Invitation" />
 
         </EntityType>
         <EntityType Name="Event_OrganizerMessages">
@@ -3332,6 +3335,10 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             <End Role="ScheduledEmail" EntitySet="ScheduledEmails" />
             <End Role="AttendeeEmail" EntitySet="AttendeeEmails" />
           </AssociationSet>
+          <AssociationSet Name="EventEvent_Email_Invitation" Association="EventComboModel.EventEvent_Email_Invitation">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Event_Email_Invitation" EntitySet="Event_Email_Invitation" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -3884,6 +3891,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="I_Mode" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Event_Email_List" Relationship="EventComboModel.FK_Event_Email_List_Event_Email_Invitation" FromRole="Event_Email_Invitation" ToRole="Event_Email_List" />
           <Property Name="I_EditableContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Event" Relationship="EventComboModel.EventEvent_Email_Invitation" FromRole="Event_Email_Invitation" ToRole="Event" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastUsed" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Event_Email_List">
           <Key>
@@ -4969,6 +4979,18 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="EventEvent_Email_Invitation">
+          <End Type="EventComboModel.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="EventComboModel.Event_Email_Invitation" Role="Event_Email_Invitation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventID" />
+            </Principal>
+            <Dependent Role="Event_Email_Invitation">
+              <PropertyRef Name="I_Event_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5910,6 +5932,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="Event_Email_Invitation">
             <EntityTypeMapping TypeName="EventComboModel.Event_Email_Invitation">
               <MappingFragment StoreEntitySet="Event_Email_Invitation">
+                <ScalarProperty Name="LastUsed" ColumnName="LastUsed" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="I_EditableContent" ColumnName="I_EditableContent" />
                 <ScalarProperty Name="I_Mode" ColumnName="I_Mode" />
                 <ScalarProperty Name="I_ModifyDate" ColumnName="I_ModifyDate" />

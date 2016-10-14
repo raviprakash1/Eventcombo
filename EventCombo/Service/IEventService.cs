@@ -17,7 +17,9 @@ namespace EventCombo.Service
     void PublishEvent(long id, string userId);
     IEnumerable<EventSearchViewModel> Search(string searchStr);
     EventInfoViewModel GetEventInfo(long eventId, string userId, UrlHelper url);
-    void UpdateEventInfo(EventInfoViewModel ev, string userId, UrlHelper url);
+    EventInfoViewModel GetBasicEventInfo(long eventId, UrlHelper url);
+    EventInfoViewModel GetPrivateEventInfo(long eventId, string userId, UrlHelper url);
+    void UpdateEventInfo(EventInfoViewModel ev, string userId, UrlHelper url, bool loadPrivate);
     void ValidateEventInfo(EventInfoViewModel evi);
     string GetEventUrl(long eventId, string eventTitle, UrlHelper url);
     IncrementResultViewModel AddFavorite(long eventId, string userId);
@@ -25,5 +27,6 @@ namespace EventCombo.Service
     IEnumerable<ShortEventInfoViewModel> GetEventListByCoords(decimal lat, decimal lng, string userId);
     HomepageInfoViewModel GetHomepageInfo();
     EventViewModel GetEventBySubDomain(string subDomain);
+    void CheckEventAccess(PrivateEventRequest req);
   }
 }

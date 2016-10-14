@@ -91,6 +91,10 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     }
 
     $scope.prepareEventInfo = function () {
+      if ($scope.eventInfo.EventID)
+        $scope.TitleText = "Edit Event";
+      else
+        $scope.TitleText = "Create Event";
       $scope.onShowDateTimeDialog(false);
       if (!$scope.eventInfo.Ticket_variabletype)
         $scope.eventInfo.Ticket_variabletype = 'O';
@@ -295,7 +299,9 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     };
 
     $scope.callImageClick = function (imgctrl) {
-      document.getElementById(imgctrl).click();
+      setTimeout(function () {
+        document.getElementById(imgctrl).click();
+      }, 0);
     }
 
     $scope.organizerAdd = function () {
@@ -404,12 +410,18 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         org[0].Organizer_FBLink = org[0].IncludeSocialLinks ? $scope.eventInfo.CurrentOrganizer.Organizer_FBLink : null;
         org[0].Organizer_Twitter = org[0].IncludeSocialLinks ? $scope.eventInfo.CurrentOrganizer.Organizer_Twitter : null;
         org[0].Organizer_Linkedin = org[0].IncludeSocialLinks ? $scope.eventInfo.CurrentOrganizer.Organizer_Linkedin : null;
-        org[0].Image.ECImageId = $scope.eventInfo.CurrentOrganizer.Image.ECImageId;
-        org[0].Image.TypeName = $scope.eventInfo.CurrentOrganizer.Image.TypeName;
-        org[0].Image.Filename = $scope.eventInfo.CurrentOrganizer.Image.Filename;
-        org[0].Image.ImagePath = $scope.eventInfo.CurrentOrganizer.Image.ImagePath;
-        org[0].Image.ECImageTypeId = $scope.eventInfo.CurrentOrganizer.Image.ECImageTypeId;
+        if ($scope.eventInfo.CurrentOrganizer.Image) {
+          if (!org[0].Image)
+            org[0].Image = {};
+          org[0].Image.ECImageId = $scope.eventInfo.CurrentOrganizer.Image.ECImageId;
+          org[0].Image.TypeName = $scope.eventInfo.CurrentOrganizer.Image.TypeName;
+          org[0].Image.Filename = $scope.eventInfo.CurrentOrganizer.Image.Filename;
+          org[0].Image.ImagePath = $scope.eventInfo.CurrentOrganizer.Image.ImagePath;
+          org[0].Image.ECImageTypeId = $scope.eventInfo.CurrentOrganizer.Image.ECImageTypeId;
+        } else
+          org[0].Image = null;
       };
+      $scope.eventInfo.CurrentOrganizer = null;
       $scope.organizerEditState = "Saved";
     }
 
@@ -646,6 +658,11 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
       $scope.eventInfo.CurrentEventSubCategory = null;
       $scope.eventInfo.CurrentOrganizer = null;
       $scope.eventInfo.CurrentInternalOrganizer = null;
+      if (($scope.eventInfo.EventPrivacy == 'Private') && ($scope.eventInfo.isPasswordRequired == 'Y'))
+        $scope.eventInfo.Private_Password = $scope.eventInfo.Private_Password.trim();
+      else
+        $scope.eventInfo.Private_Password = '';
+
       var data = {
         json: angular.toJson($scope.eventInfo)
       };
@@ -732,7 +749,6 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
           }
         });
       if (($scope.eventInfo.EventPrivacy == 'Private') && ($scope.eventInfo.isPasswordRequired == 'Y') && (!$scope.eventInfo.Private_Password || !$scope.eventInfo.Private_Password.trim())) {
-        $scope.eventInfo.Private_Password = $scope.eventInfo.Private_Password.trim();
         elem.valid = false;
         elem.messages.push('Need to set password for private Event');
       }

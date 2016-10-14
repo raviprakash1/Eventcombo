@@ -101,7 +101,7 @@
 
   <form name="MainForm" novalidate>
     <div>
-      <div class="headerCEHead createEvent">Create Event</div>
+      <div class="headerCEHead createEvent" ng-init="TitleText = '@(Model.EventID == 0 ? "Create Event" : "Edit Event")'">{{TitleText}}</div>
       <div class="headerCEHeadBtn topButtons">
         <a href="javascript:void(0);" class="btnSaveHeadCE" ng-click="saveEvent()">SAVE</a>
         <a href="javascript:void(0);" class="btnPreviewHeadCE" ng-click="previewEvent()">PREVIEW</a>
@@ -125,7 +125,8 @@
                             color-picker-inline="false"
                             color-picker-on-change="onBGColorChange()"></color-picker>
             </div>
-            <span style="float: right; margin-right:10px; margin-top:10px; cursor: pointer; height:30px; font-size:15px; line-height:30px;" ng-click="callImageClick('bannerImage'); $event.stopPropagation();" class="noOutline designBanner desMyBanner">Design your Banner<i class="material-icons bannerPic" style="margin-left: 10px;color:rgba(0,0,0,.5); float:right;">add_a_photo</i><input type="file" name="bannerimage" id="bannerImage" accept="image/*" style="display: none;" ng-click="$event.stopPropagation();" custom-on-change="uploadBGImage" /></span>
+            <input type="file" name="bannerimage" id="bannerImage" accept="image/*" style="display: none;" ng-click="$event.stopPropagation();" custom-on-change="uploadBGImage" />
+            <span style="float: right; margin-right:10px; margin-top:10px; cursor: pointer; height:30px; font-size:15px; line-height:30px;" ng-click="callImageClick('bannerImage'); $event.stopPropagation();" class="noOutline designBanner desMyBanner">Design your Banner<i class="material-icons bannerPic" style="margin-left: 10px;color:rgba(0,0,0,.5); float:right;">add_a_photo</i></span>
 
             <div class="URLDiv" style="display:inline-block; float: left; margin-top:10px;">
               <md-input-container class="URLinputContainer">
@@ -417,10 +418,10 @@
             </div>
 
             <div class="col-oneThird padded">
+              <input type="file" name="tellusimage" id="tellusImage" accept="image/*" style="display: none;" ng-click="$event.stopPropagation();" custom-on-change="uploadFlyerImage" />
               <span style="cursor:pointer; display:block; margin-top:24px;" ng-click="callImageClick('tellusImage'); $event.stopPropagation();" class="noOutline defaultFilter icBox">
                 <span style="display: inline-block;float: left;padding-right: 15px; font-size:14px;">Have a flyer? Upload it here</span>
                 <i class="material-icons" style="color: #858585;display: inline-block; float:right;">add_a_photo</i>
-                <input type="file" name="tellusimage" id="tellusImage" accept="image/*" style="display: none;" ng-click="$event.stopPropagation();" custom-on-change="uploadFlyerImage" />
               </span>
               <div class="imageGallery" style="clear: both; padding-top: 5px; margin-bottom:15px; display:inline-block; padding-right:20px; width:100%;" ng-show="eventInfo.ECImage">
                 <div style="float:right; text-align:right;" class="tellus_pics">
@@ -442,9 +443,9 @@
               <span class="wholegallery icBox" style="margin-right:0; margin-top:0; float: right;">
                 <i data-ng-click='openGallery()' class="material-icons" style="cursor:pointer;color: #858585;display: inline-block;float:right;">collections</i>
               </span>
+              <input type="file" name="galleryImage" id="galleryImage" accept="image/*" style="display: none;" ng-click="$event.stopPropagation();" custom-on-change="uploadEventImage" />
               <span style="text-transform:uppercase; cursor: pointer; float: right; margin-right:10px;" ng-click="callImageClick('galleryImage'); $event.stopPropagation();" class="noOutline">
                 <i class="material-icons" style="margin-left: -10px;color: #858585; float:right;">add_a_photo</i>
-                <input type="file" name="galleryImage" id="galleryImage" accept="image/*" style="display: none;" ng-click="$event.stopPropagation();" custom-on-change="uploadEventImage" />
               </span>
             </div>
             <div class="imageGallery" style="clear: both; padding-top: 5px;">
@@ -510,7 +511,7 @@
 
                 <div class="tellus_pics" style="float:right; margin-right:20px; margin-bottom:20px;" ng-show="eventInfo.CurrentOrganizer.Image">
                   <i class="material-icons closeIconImage" ng-click="deleteOrganizerImage()" style="cursor:pointer;">clear</i>
-                  <img ng-src="{{eventInfo.CurrentOrganizer.Image.ImagePath}}" style="height:80px; width: 80px" />
+                  <img ng-src="{{eventInfo.CurrentOrganizer.Image.ImagePath}}" style="height:80px; width: 80px"/>
                 </div>
               </div>
               <div class="More">
@@ -518,10 +519,10 @@
                   Enter organizer description
                 </textarea>
               </div>
+              <input type="file" name="image" id="organiserImage" accept="image/*" style="display: none;" ng-click="$event.stopPropagation();" custom-on-change="uploadOrganizerImage" />
               <span class="newOrganiserBottomText noOutline icBox" style="margin-top: 15px;cursor: pointer;" ng-click="callImageClick('organiserImage'); $event.stopPropagation();">
                 <span style="display: inline-block;float: left;padding-right:15px; font-size:14px;">Have a logo or picture?</span>
                 <i class="material-icons" style="color: #858585;display: inline-block;float:right;">add_a_photo</i>
-                <input type="file" name="image" id="organiserImage" accept="image/*" style="display: none;" ng-click="$event.stopPropagation();" custom-on-change="uploadOrganizerImage" />
               </span>
 
               <div class="organiserbottomDiv" style="margin-top:10px">

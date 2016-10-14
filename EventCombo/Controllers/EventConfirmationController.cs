@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using EventCombo.Models;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using EventCombo.DAL;
+using EventCombo.Service;
 
 namespace EventCombo.Controllers
 {
@@ -14,6 +16,14 @@ namespace EventCombo.Controllers
     {
         // GET: EventConfirmation
         EventComboEntities db = new EventComboEntities();
+        ECImageService _iservice;
+        
+        public EventConfirmationController()
+        {
+          var mapper = AutomapperConfig.Config.CreateMapper();
+          _iservice = new ECImageService(new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory()), mapper, new ECImageStorage(mapper));
+        }
+
         public ActionResult EventConfirmation(string EventId)
         {
             if (Session["AppId"] != null)
@@ -25,6 +35,11 @@ namespace EventCombo.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
+                if (!String.IsNullOrEmpty(Eventdetails.EventPrivacy) && (Eventdetails.EventPrivacy.ToUpper() == "PRIVATE"))
+                {
+                  return RedirectToAction("CreateInvitations", "ManageEvent", new { lId = 0, lEvtId = Eventdetails.EventID, strMode = "C" });
+                }
+
                 MyAccount hmc = new MyAccount();
                 string usernme = hmc.getusername();
                 if (string.IsNullOrEmpty(usernme))
@@ -34,14 +49,15 @@ namespace EventCombo.Controllers
                 EventConfirmation cms = new EventConfirmation();
                 var Image = db.EventImages.Where(x => x.EventID.ToString() == EventId.ToString()).FirstOrDefault();
                 
-                if (Image != null)
+                if ((Eventdetails.ECImageId ?? 0) > 0)
                 {
-                    cms.Imageurl = "/Images/events/event_flyers/imagepath/" + Image.EventImageUrl;
+                  var img = _iservice.GetImageById(Eventdetails.ECImageId ?? 0);
+                  if ((img != null) && (System.IO.File.Exists(img.FilePath)))
+                    cms.Imageurl = img.ImagePath;
                 }
-                else
-                {
-                    cms.Imageurl = "/Images/default_event_image.jpg";
-                }
+
+                cms.Imageurl = String.IsNullOrEmpty(cms.Imageurl) ? "/Images/default_event_image.jpg" : cms.Imageurl;
+
                 cms.Title = Eventdetails.EventTitle.ToString();
                 cms.urlTitle = Regex.Replace(Eventdetails.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""); ;
                 var evid = long.Parse(EventId);
