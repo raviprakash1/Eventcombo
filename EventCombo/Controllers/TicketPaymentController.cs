@@ -2696,7 +2696,7 @@ namespace EventCombo.Controllers
                                                              attendeeName = tb.Name,
                                                              Ticketname = t.T_name,
                                                              Quantity = ta.Quantity,
-                                                             Price = TP.TPD_Amount > 0 ? "$ " + ta.Quantity * TP.TPD_Amount / TP.TPD_Purchased_Qty : TP.TPD_Donate > 0 ? "$ " + ta.Quantity * TP.TPD_Donate / TP.TPD_Purchased_Qty : "Free"
+                                                             Price = TP.TPD_Amount > 0 ? "$ " + Math.Round(ta.Quantity * TP.TPD_Amount / TP.TPD_Purchased_Qty ?? 0, 2) : TP.TPD_Donate > 0 ? "$ " + Math.Round(ta.Quantity * TP.TPD_Donate / TP.TPD_Purchased_Qty ?? 0, 2) : "Free"
 
                                                          }).ToList();
 
@@ -2709,7 +2709,7 @@ namespace EventCombo.Controllers
                                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.attendeeName + "</td>");
                                                 strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
                                                 strHTML.Append("<td style='width:10%font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
-                                                strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + Math.Round(Convert.ToDecimal(qty.Price), 2) + "</td>");
+                                                strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Price + "</td>");
                                                 strHTML.Append("</tr>");
                                                 var promocode = (from v in db.Promo_Code where v.PC_Eventid == qty.eventid && v.PC_id == qty.Promocode select v.PC_Code).FirstOrDefault();
                                                 strHTML.Append("<tr align='left'>");
@@ -2724,7 +2724,7 @@ namespace EventCombo.Controllers
                                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.attendeeName + "</td>");
                                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
                                                 strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
-                                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + Math.Round(Convert.ToDecimal(qty.Price), 2) + "</td>");
+                                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
                                                 strHTML.Append("</tr>");
                                             }
 
@@ -2757,7 +2757,7 @@ namespace EventCombo.Controllers
                                                              attendeeName = tb.Name,
                                                              Ticketname = t.T_name,
                                                              Quantity = ta.Quantity,
-                                                             Price = TP.TPD_Amount > 0 ? "$ " + ta.Quantity * TP.TPD_Amount / TP.TPD_Purchased_Qty : TP.TPD_Donate > 0 ? "$ " + ta.Quantity * TP.TPD_Donate / TP.TPD_Purchased_Qty : "Free"
+                                                             Price = TP.TPD_Amount > 0 ? "$ " + Math.Round(ta.Quantity * TP.TPD_Amount / TP.TPD_Purchased_Qty ?? 0, 2) : TP.TPD_Donate > 0 ? "$ " + Math.Round(ta.Quantity * TP.TPD_Donate / TP.TPD_Purchased_Qty ?? 0, 2) : "Free"
 
                                                          }).ToList();
 
@@ -2777,7 +2777,7 @@ namespace EventCombo.Controllers
                                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.attendeeName + "</td>");
                                                 strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
                                                 strHTML.Append("<td style='width:10%font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
-                                                strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + Math.Round(Convert.ToDecimal(qty.Price), 2) + "</td>");
+                                                strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Price + "</td>");
                                                 strHTML.Append("</tr>");
                                                 var promocode = (from v in db.Promo_Code where v.PC_Eventid == qty.eventid && v.PC_id == qty.Promocode select v.PC_Code).FirstOrDefault();
                                                 strHTML.Append("<tr align='left'>");
@@ -2792,7 +2792,7 @@ namespace EventCombo.Controllers
                                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.attendeeName + "</td>");
                                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
                                                 strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
-                                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + Math.Round(Convert.ToDecimal(qty.Price), 2) + "</td>");
+                                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
                                                 strHTML.Append("</tr>");
                                             }
 
@@ -2834,7 +2834,7 @@ namespace EventCombo.Controllers
                                                      attendeeName = tb.Name,
                                                      Ticketname = t.T_name,
                                                      Quantity = ta.Quantity,
-                                                     Price = TP.TPD_Amount > 0 ? "$ " + ta.Quantity * TP.TPD_Amount / TP.TPD_Purchased_Qty : TP.TPD_Donate > 0 ? "$ " + ta.Quantity * TP.TPD_Donate / TP.TPD_Purchased_Qty : "Free"
+                                                     Price = TP.TPD_Amount > 0 ? "$ " + Math.Round(ta.Quantity * TP.TPD_Amount / TP.TPD_Purchased_Qty ?? 0, 2) : TP.TPD_Donate > 0 ? "$ " + Math.Round(ta.Quantity * TP.TPD_Donate / TP.TPD_Purchased_Qty ?? 0, 2) : "Free"
 
                                                  }).ToList();
 
@@ -2860,7 +2860,7 @@ namespace EventCombo.Controllers
                                         strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.attendeeName + "</td>");
                                         strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
                                         strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
-                                        strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + Math.Round(Convert.ToDecimal(qty.Price), 2) + "</td>");
+                                        strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.Price + "</td>");
                                         strHTML.Append("</tr>");
                                         var promocode = (from v in db.Promo_Code where v.PC_Eventid == qty.eventid && v.PC_id == qty.Promocode select v.PC_Code).FirstOrDefault();
                                         strHTML.Append("<tr align='left'>");
@@ -2875,7 +2875,7 @@ namespace EventCombo.Controllers
                                         strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.attendeeName + "</td>");
                                         strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
                                         strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
-                                        strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + Math.Round(Convert.ToDecimal(qty.Price), 2) + "</td>");
+                                        strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Price + "</td>");
                                         strHTML.Append("</tr>");
                                     }
                                 }
@@ -2989,106 +2989,6 @@ namespace EventCombo.Controllers
                         strHTML.Append("<tr align='center'><td colspan='4' style='font-size:15px;'>");
                         strHTML.Append("<p style='background:#fff9cf; padding:10px 15px; display:inline-block; margin:0px;'>This charge will appear on your card statement as Eventcombo * { " + Edtails.EventTitle + "}</p>");
                         strHTML.Append("</td></tr></table > ");
-
-
-
-                        //var query = (from p in db.Ticket_Purchased_Detail
-                        //             join o in db.Ticket_Quantity_Detail on p.TPD_TQD_Id equals o.TQD_Id
-                        //             join t in db.Tickets on o.TQD_Ticket_Id equals t.T_Id
-                        //             where p.TPD_GUID == guid && p.TPD_Event_Id == eventid
-                        //             group new {p.TPD_Event_Id,p.TPD_PromoCodeAmount,p.TPD_PromoCodeID, t.T_Id, p.TPD_Purchased_Qty, t.TotalPrice, t.T_Discount, t.T_name, t.TicketTypeID, p.TPD_Donate }
-                        //             by new { p.TPD_Event_Id, p.TPD_PromoCodeAmount, p.TPD_PromoCodeID, t.T_Id, p.TPD_Purchased_Qty, t.TotalPrice, t.T_Discount, t.T_name, t.TicketTypeID, p.TPD_Donate } into g
-                        //             select new
-                        //             {
-                        //                 Qty = g.Sum(x => x.TPD_Purchased_Qty),
-                        //                 amount = (g.Key.TotalPrice == null ? 0 : g.Key.TotalPrice) - (g.Key.T_Discount == null ? 0 : g.Key.T_Discount),
-                        //                 Tname = g.Key.T_name,
-                        //                 TicketType = g.Key.TicketTypeID,
-                        //                 donate = g.Sum(x => x.TPD_Donate),
-                        //                 ticketid = g.Key.T_Id,
-                        //                 Promocodeamt=g.Key.TPD_PromoCodeAmount,
-                        //                 Promocode=g.Key.TPD_PromoCodeID,
-                        //                 eventid=g.Key.TPD_Event_Id
-                        //             }).ToList();
-                        //string orderdet = "", freetype = "", paidtype = "", donatertype = "";
-                        //orderdet = " " + Ticketorderdetail.O_First_Name!=null? Ticketorderdetail.O_First_Name:userdetail.FirstName + " has  ";
-                        //foreach (var i in query)
-                        //{
-                        //    var promocode = (from v in db.Promo_Code where v.PC_Eventid == i.eventid && v.PC_id == i.Promocode select v.PC_Code).FirstOrDefault();
-                        //    if (i.TicketType == 1)
-                        //    {
-                        //        if(!string.IsNullOrEmpty(freetype))
-                        //        {
-                        //            freetype = freetype + " , ";
-                        //        }
-                        //        freetype = freetype + " " + i.Qty + " * " + i.Tname + " free type for $0.00 ";
-                        //        if(i.Promocode != null && i.Promocode!=0)
-                        //        {
-
-                        //            freetype = freetype + " after applying promotion code "+ promocode+"  per ticket ";
-                        //        }
-                        //    }
-                        //    if (i.TicketType == 2)
-                        //    {
-                        //        if(!string.IsNullOrEmpty(paidtype))
-                        //        {
-                        //            paidtype = paidtype + " , ";
-                        //        }
-                        //        paidtype = paidtype+ " " + i.Qty + " * " + i.Tname + " paid type for $ " + i.amount;
-                        //        if (i.Promocode != null && i.Promocode != 0)
-                        //        {
-
-                        //            paidtype = paidtype + " after applying promotion code " + promocode + "  per ticket ";
-                        //        }
-
-                        //    }
-                        //    if (i.TicketType == 3)
-                        //    {
-                        //        if (!string.IsNullOrEmpty(donatertype))
-                        //        {
-                        //            donatertype = donatertype + " , ";
-                        //        }
-                        //        donatertype = donatertype+ "  Donated for " + i.Tname + " type for $ " + i.donate;
-                        //        if (i.Promocode != null && i.Promocode != 0)
-                        //        {
-
-                        //            donatertype = donatertype + " after applying promotion code " + promocode + "  per ticket ";
-                        //        }
-                        //    }
-
-                        //}
-                        //if (!string.IsNullOrEmpty(paidtype) && !string.IsNullOrEmpty(freetype) && !string.IsNullOrEmpty(donatertype))
-                        //{
-                        //    orderdet = orderdet + paidtype + " , " + freetype + " and " + donatertype;
-                        //}
-                        //if (!string.IsNullOrEmpty(paidtype) && !string.IsNullOrEmpty(freetype) && string.IsNullOrEmpty(donatertype))
-                        //{
-                        //    orderdet = orderdet + paidtype + " and " + freetype;
-                        //}
-                        //if (string.IsNullOrEmpty(paidtype) && !string.IsNullOrEmpty(freetype) && !string.IsNullOrEmpty(donatertype))
-                        //{
-                        //    orderdet = orderdet + freetype + " and " + donatertype;
-                        //}
-                        //if (string.IsNullOrEmpty(paidtype) && !string.IsNullOrEmpty(freetype) && string.IsNullOrEmpty(donatertype))
-                        //{
-                        //    orderdet = orderdet + freetype;
-                        //}
-                        //if (!string.IsNullOrEmpty(paidtype) && string.IsNullOrEmpty(freetype) && !string.IsNullOrEmpty(donatertype))
-                        //{
-                        //    orderdet = orderdet + paidtype + " and " + donatertype;
-                        //}
-                        //if (!string.IsNullOrEmpty(paidtype) && string.IsNullOrEmpty(freetype) && string.IsNullOrEmpty(donatertype))
-                        //{
-                        //    orderdet = orderdet + paidtype;
-                        //}
-                        //if (string.IsNullOrEmpty(paidtype) && string.IsNullOrEmpty(freetype) && !string.IsNullOrEmpty(donatertype))
-                        //{
-                        //    orderdet = orderdet + donatertype;
-                        //}
-                        //var totorder = (from o in db.Order_Detail_T where o.O_Order_Id == TPurchasedetail.TPD_Order_Id select o.O_TotalAmount).FirstOrDefault();
-
-                        //orderdet = orderdet + " for a total of $ " + totorder;
-                        //Order Details
 
                         htmlText += wc.DownloadString(htmlPath + "/email.html");
 
@@ -3987,7 +3887,7 @@ namespace EventCombo.Controllers
                                     strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + (!string.IsNullOrEmpty(username) ? username : qty.username) + "</td>");
                                     strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
                                     strHTML.Append("<td style='width:10%font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
-                                    strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + Math.Round(Convert.ToDecimal(qty.Price), 2) + "</td>");
+                                    strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Price + "</td>");
                                     strHTML.Append("</tr>");
                                     var promocode = (from v in db.Promo_Code where v.PC_Eventid == qty.eventid && v.PC_id == qty.Promocode select v.PC_Code).FirstOrDefault();
                                     strHTML.Append("<tr align='left'>");

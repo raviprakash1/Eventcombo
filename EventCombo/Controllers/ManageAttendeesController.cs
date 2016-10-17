@@ -121,7 +121,24 @@ namespace EventCombo.Controllers
       string orderId;
       try
       {
-        orderId = _maservice.CreateManualOrder(model, userId);
+            int validationStatus = 0;
+            foreach (var ticket in model.Tickets)
+            {
+                var attendeeTicketCount = model.Attendees.Where(a => a.TicketId == ticket.Ticket.T_Id).Sum(s => s.Quantity);
+                if (ticket.Quantity != attendeeTicketCount)
+                {
+                    validationStatus = -2;
+                    break;
+                }
+            }
+            if (validationStatus == 0)
+            {
+                orderId = _maservice.CreateManualOrder(model, userId);
+            }
+            else
+            {
+                return validationStatus;
+            }
       }
       catch (Exception ex)
       {

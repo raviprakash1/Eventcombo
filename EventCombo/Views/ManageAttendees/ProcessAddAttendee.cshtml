@@ -200,12 +200,15 @@
       data: att,
       datatype: "html",
       success: function (data) {
-        if (data >= 0)
-          window.location.replace("@Html.Raw(Url.Action("RedirectAddPage", "ManageAttendees", new { eventId = Model.EventId, successMessage = "Your attendees were added successfully." }))");
-        else {
-          $('#sendError').attr('data-errormessage', "Error while processing your order. Order not saved.");
-          showAllErrors();
-        }
+          if (data >= 0) {
+              window.location.replace("@Html.Raw(Url.Action("RedirectAddPage", "ManageAttendees", new { eventId = Model.EventId, successMessage = "Your attendees were added successfully." }))");
+          } else if (data == -2) {
+              $('#sendError').attr('data-errormessage', "Ticket allocation not correct. Order not saved.");
+              showAllErrors();
+          } else {
+              $('#sendError').attr('data-errormessage', "Error while processing your order. Order not saved.");
+              showAllErrors();
+          }
       }
     });
   }
