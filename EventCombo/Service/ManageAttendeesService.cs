@@ -291,6 +291,9 @@ namespace EventCombo.Service
         ISendMailService sendService = new SendMailService();
         INotificationSender sender = new NotificationSender(notification, sendService);
         sender.SendSeparately(addresses);
+        INotification organizerNotification = new OrderOrganizerNotification(_factory, _dbservice, orderId, baseUrl, attach, true);
+        INotificationSender organizerSender = new NotificationSender(organizerNotification, sendService);
+        organizerNotification.SendNotification(new SendMailService());
         return true;
       }
 

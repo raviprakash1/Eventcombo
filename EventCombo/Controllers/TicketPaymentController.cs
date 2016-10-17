@@ -2446,7 +2446,6 @@ namespace EventCombo.Controllers
         public MemoryStream generateTicketPDFManualOrder(string guid, long eventid, List<Email_Tag> emailtag, string fname, string htmlPath)
         {
 
-            // System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) => { return true; };
             WebClient wc = new WebClient();
             MemoryStream mms = new MemoryStream();
             EncryptDecrypt Ecode = new EncryptDecrypt();
@@ -2468,7 +2467,6 @@ namespace EventCombo.Controllers
 
                         string qrImgPath = htmlPath + "/Images/QR_" + item.T_Id + ".Png";
 
-                        // Ticket and event details
                         var TQtydetail = (from tQty in db.Ticket_Quantity_Detail
                                           where tQty.TQD_Id.ToString() == (from t in db.TicketOrderDetails
                                                                            where t.T_Id == item.T_Id
@@ -2570,6 +2568,10 @@ namespace EventCombo.Controllers
 
                         var myAddress = (from p in db.Ticket_Quantity_Detail where itemQuery.Contains(p.TQD_Id) select p.TQD_AddressId).ToList().Distinct();
                         var myaddress = (from p in db.Ticket_Quantity_Detail where itemQuery.Contains(p.TQD_Id) select p).ToList();
+
+                        var ticketAttendee = db.TicketAttendee_View.Where(ta => ta.OrderId == item.T_Order_Id && ta.PurchasedTicketId == TPurchasedetail.TPD_Id).FirstOrDefault();
+                        if (ticketAttendee != null)
+                            fname = ticketAttendee.Name;
 
                         strHTML.Append("<table style='width: 100 %;'>");
                         var eventtype = "";
@@ -2696,7 +2698,7 @@ namespace EventCombo.Controllers
                                                              attendeeName = tb.Name,
                                                              Ticketname = t.T_name,
                                                              Quantity = ta.Quantity,
-                                                             Price = TP.TPD_Amount > 0 ? "$ " + Math.Round(ta.Quantity * TP.TPD_Amount / TP.TPD_Purchased_Qty ?? 0, 2) : TP.TPD_Donate > 0 ? "$ " + Math.Round(ta.Quantity * TP.TPD_Donate / TP.TPD_Purchased_Qty ?? 0, 2) : "Free"
+                                                             Price = TP.TPD_Amount > 0 ? "$ " + decimal.Round(ta.Quantity * TP.TPD_Amount / TP.TPD_Purchased_Qty ?? 0, 2) : TP.TPD_Donate > 0 ? "$ " + decimal.Round(ta.Quantity * TP.TPD_Donate / TP.TPD_Purchased_Qty ?? 0, 2) : "Free"
 
                                                          }).ToList();
 
@@ -2757,7 +2759,7 @@ namespace EventCombo.Controllers
                                                              attendeeName = tb.Name,
                                                              Ticketname = t.T_name,
                                                              Quantity = ta.Quantity,
-                                                             Price = TP.TPD_Amount > 0 ? "$ " + Math.Round(ta.Quantity * TP.TPD_Amount / TP.TPD_Purchased_Qty ?? 0, 2) : TP.TPD_Donate > 0 ? "$ " + Math.Round(ta.Quantity * TP.TPD_Donate / TP.TPD_Purchased_Qty ?? 0, 2) : "Free"
+                                                             Price = TP.TPD_Amount > 0 ? "$ " + decimal.Round(ta.Quantity * TP.TPD_Amount / TP.TPD_Purchased_Qty ?? 0, 2) : TP.TPD_Donate > 0 ? "$ " + decimal.Round(ta.Quantity * TP.TPD_Donate / TP.TPD_Purchased_Qty ?? 0, 2) : "Free"
 
                                                          }).ToList();
 
@@ -2834,7 +2836,7 @@ namespace EventCombo.Controllers
                                                      attendeeName = tb.Name,
                                                      Ticketname = t.T_name,
                                                      Quantity = ta.Quantity,
-                                                     Price = TP.TPD_Amount > 0 ? "$ " + Math.Round(ta.Quantity * TP.TPD_Amount / TP.TPD_Purchased_Qty ?? 0, 2) : TP.TPD_Donate > 0 ? "$ " + Math.Round(ta.Quantity * TP.TPD_Donate / TP.TPD_Purchased_Qty ?? 0, 2) : "Free"
+                                                     Price = TP.TPD_Amount > 0 ? "$ " + decimal.Round(ta.Quantity * TP.TPD_Amount / TP.TPD_Purchased_Qty ?? 0, 2) : TP.TPD_Donate > 0 ? "$ " + decimal.Round(ta.Quantity * TP.TPD_Donate / TP.TPD_Purchased_Qty ?? 0, 2) : "Free"
 
                                                  }).ToList();
 

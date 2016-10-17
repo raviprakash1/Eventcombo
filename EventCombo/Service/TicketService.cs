@@ -295,13 +295,16 @@ namespace EventCombo.Service
       if ((ticket == null) || (order == null))
         return null;
 
-      var user = ticket.AspNetUser.Profiles.FirstOrDefault();
-      string name = !String.IsNullOrWhiteSpace(order.O_First_Name) ? order.O_First_Name : (user == null ? "" : user.FirstName);
-
       if (IsManualOrder)
-          return tpc.generateTicketPDFManualOrder(ticket.TPD_GUID, ticket.TPD_Event_Id ?? 0, null, name, filePath);
+      {
+        return tpc.generateTicketPDFManualOrder(ticket.TPD_GUID, ticket.TPD_Event_Id ?? 0, null, "", filePath);
+      }
       else
-          return tpc.generateTicketPDF(ticket.TPD_GUID, ticket.TPD_Event_Id ?? 0, null, name, filePath);
+      {
+        var user = ticket.AspNetUser.Profiles.FirstOrDefault();
+        string name = !String.IsNullOrWhiteSpace(order.O_First_Name) ? order.O_First_Name : (user == null ? "" : user.FirstName);
+        return tpc.generateTicketPDF(ticket.TPD_GUID, ticket.TPD_Event_Id ?? 0, null, name, filePath);
+      }
     }
   }
 }

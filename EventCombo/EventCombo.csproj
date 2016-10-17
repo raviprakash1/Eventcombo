@@ -730,6 +730,7 @@
     <Compile Include="Service\Notification\ISendMailService.cs" />
     <Compile Include="Service\ITicketsService.cs" />
     <Compile Include="Service\ManageEventService.cs" />
+    <Compile Include="Service\Notification\OrderOrganizerNotification.cs" />
     <Compile Include="Service\Notification\OrderNotification.cs" />
     <Compile Include="Service\Notification\OrderCancelNotification.cs" />
     <Compile Include="Service\Notification\ContactMessageNotification.cs" />
