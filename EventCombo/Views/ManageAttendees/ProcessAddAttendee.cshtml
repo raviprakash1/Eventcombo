@@ -83,22 +83,40 @@
   </div>
 
   <div class="form-group" style="margin: 20px 0px; ">
-    <table class="table" style="width:80%;">
+    <table class="table" style="width:100%;">
       <thead>
         <tr class="attendeesAddTableTHTR">
           <th class="attendeesAddTableTH">#</th>
           <th class="attendeesAddTableTH">Attendee Name</th>
           <th class="attendeesAddTableTH">Attendee Email</th>
+          <th class="attendeesAddTableTH">Ticket Type</th>
+          <th class="attendeesAddTableTH">Quantity</th>
         </tr>
       </thead>
       <tbody id="AttendeeTable">
         @for (var i = 0; i < Model.Tickets.Sum(t => t.Quantity); i++)
         {
-          <tr>
-            <td class="attendeesAddTableTD" width="10%">@((i + 1).ToString())</td>
-            <td class="attendeesAddTableTD" width="45%"><input type="text" value="" id="aname@(i.ToString())" class="attenTableQuantityCls" placeholder="Name" /></td>
-            <td class="attendeesAddTableTD" width="45%"><input type="text" value="" id="aemail@(i.ToString())" class="attenTableQuantityCls" placeholder="Email" onblur="checkEmail(this, true);" /></td>
-          </tr>
+            <tr>
+                <td class="attendeesAddTableTD" width="10%">@((i + 1).ToString())</td>
+                <td class="attendeesAddTableTD" width="30%"><input type="text" value="" id="aname@(i.ToString())" class="attenTableQuantityCls" placeholder="Name" /></td>
+                <td class="attendeesAddTableTD" width="30%"><input type="text" value="" id="aemail@(i.ToString())" class="attenTableQuantityCls" placeholder="Email" onblur="checkEmail(this, true);" /></td>
+                <td class="attendeesAddTableTD" width="20%">
+                    <select id="aticket@(i.ToString())" class="attenTableQuantityCls">
+                        @foreach (var ticket in Model.Tickets)
+                        {
+                            <option value="@ticket.Ticket.T_Id">@ticket.Ticket.T_name</option>
+                        }
+                    </select>
+                </td>
+                <td class="attendeesAddTableTD" width="10%">
+                    <select id="aquantity@(i.ToString())" class="attenTableQuantityCls">
+                        @for (var j = 0; j < Model.Tickets.Sum(t => t.Quantity); j++)
+                        {
+                            <option value="@(j + 1)">@(j + 1)</option>
+                        }
+                    </select>
+                </td>
+            </tr>
         }
       </tbody>
     </table>
@@ -154,10 +172,14 @@
     $('#AttendeeTable tr').each(function (idx) {
       var aname = $(this).find('input[id^="aname"]').val();
       var aemail = $(this).find('input[id^="aemail"]').val();
+      var aticket = $(this).find('select[id^="aticket"]').val();
+      var aquantity = $(this).find('select[id^="aquantity"]').val();
       if ((aname) || (aemail))
         attendees.push({
           Name: aname,
-          Email: aemail
+          Email: aemail,
+          TicketId: aticket,
+          Quantity: aquantity
         });
     });
 
@@ -178,12 +200,15 @@
       data: att,
       datatype: "html",
       success: function (data) {
-        if (data >= 0)
-          window.location.replace("@(Url.Action("Orders", "ManageAttendees", new { eventId = Model.EventId }))");
-        else {
-          $('#sendError').attr('data-errormessage', "Error while processing your order. Order not saved.");
-          showAllErrors();
-        }
+          if (data >= 0) {
+              window.location.replace("@Html.Raw(Url.Action("RedirectAddPage", "ManageAttendees", new { eventId = Model.EventId, successMessage = "Your attendees were added successfully." }))");
+          } else if (data == -2) {
+              $('#sendError').attr('data-errormessage', "Ticket allocation not correct. Order not saved.");
+              showAllErrors();
+          } else {
+              $('#sendError').attr('data-errormessage', "Error while processing your order. Order not saved.");
+              showAllErrors();
+          }
       }
     });
   }

@@ -22,6 +22,6 @@ namespace EventCombo.Service
 
     bool SaveMessage(OrganizerMessageViewModel model);
 
-    MemoryStream GetDownloadableTicket(string orderId, string format, string filePath);
+    MemoryStream GetDownloadableTicket(string orderId, string format, string filePath, bool IsManualOrder = false);
   }
 }

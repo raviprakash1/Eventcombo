@@ -20,6 +20,7 @@ using iTextSharp.text.pdf;
 using iTextSharp.text;
 using iTextSharp.text.html.simpleparser;
 using System.Text;
+using EventCombo.Controllers;
 
 namespace EventCombo.Service
 {
@@ -172,7 +173,7 @@ namespace EventCombo.Service
             PaymentState = PaymentStates.Completed,
             TicketName = ticket.TicketName,
             BuyerName = string.Join(", ", attendees.Where(a => a.OrderId == ticket.OrderId).Select(a => a.Name.Trim()).ToArray()),
-            BuyerEmail = (string.IsNullOrEmpty(ticket.Email) ? "" : ticket.Email + ", ") + string.Join(", ", attendees.Where(a => a.OrderId == ticket.OrderId).Select(a => a.Email.Trim()).ToArray()),
+            BuyerEmail = string.Join(", ", attendees.Where(a => a.OrderId == ticket.OrderId).Select(a => a.Email.Trim()).ToArray()),
             Quantity = ticket.PurchasedQuantity ?? 0,
             Price = ticket.OrderAmount ?? 0,
             PricePaid = ticket.PaidAmount ?? 0,
@@ -274,7 +275,7 @@ namespace EventCombo.Service
 
       List<MailAddress> addresses = new List<MailAddress>();
       IRepository<TicketBearer_View> attRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
-      foreach (var attendee in attRepo.Get(filter: (a => a.OrderId == orderId)))
+      foreach (var attendee in attRepo.Get(filter: (a => a.OrderId == orderId && a.TicketbearerId != 0)))
         if (!String.IsNullOrWhiteSpace(attendee.Email))
           if (!addresses.Any(a => a.Address == attendee.Email))
             addresses.Add(new MailAddress(attendee.Email, attendee.Name));
@@ -283,16 +284,38 @@ namespace EventCombo.Service
         return false;
       else
       {
-        var mem = _tservice.GetDownloadableTicket(orderId, "pdf", filePath);
+        var mem = _tservice.GetDownloadableTicket(orderId, "pdf", filePath, true);
         Attachment attach = new Attachment(mem, new ContentType(MediaTypeNames.Application.Pdf));
         attach.ContentDisposition.FileName = "Ticket_EventCombo.pdf";
-        INotification notification = new OrderNotification(_factory, _dbservice, orderId, baseUrl, attach);
+        INotification notification = new OrderNotification(_factory, _dbservice, orderId, baseUrl, attach, true);
         ISendMailService sendService = new SendMailService();
         INotificationSender sender = new NotificationSender(notification, sendService);
         sender.SendSeparately(addresses);
+        INotification organizerNotification = new OrderOrganizerNotification(_factory, _dbservice, orderId, baseUrl, attach, true);
+        INotificationSender organizerSender = new NotificationSender(organizerNotification, sendService);
+        organizerNotification.SendNotification(new SendMailService());
         return true;
       }
 
+    }
+
+    public MemoryStream GetDownloadableTicket(string orderId, string format, string filePath)
+    {
+      TicketPaymentController tpc = new TicketPaymentController();
+
+      IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+      IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
+
+      var ticket = tpdRepo.Get(filter: (t => t.TPD_Order_Id == orderId)).FirstOrDefault();
+      var order = orderRepo.Get(filter: (o => o.O_Order_Id == orderId)).FirstOrDefault();
+
+      if ((ticket == null) || (order == null))
+        return null;
+
+      var user = ticket.AspNetUser.Profiles.FirstOrDefault();
+      string name = !String.IsNullOrWhiteSpace(order.O_First_Name) ? order.O_First_Name : (user == null ? "" : user.FirstName);
+
+      return tpc.generateTicketPDF(ticket.TPD_GUID, ticket.TPD_Event_Id ?? 0, null, name, filePath);
     }
 
     public MemoryStream GetDownloadableOrderList(PaymentStates state, long eventId, string format)
@@ -557,6 +580,7 @@ namespace EventCombo.Service
         IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
         IRepository<Ticket_Quantity_Detail> tqdRepo = new GenericRepository<Ticket_Quantity_Detail>(_factory.ContextFactory);
         IRepository<TicketBearer> tbRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+        IRepository<TicketAttendee> taRepo = new GenericRepository<TicketAttendee>(_factory.ContextFactory);
         Guid guidId = Guid.NewGuid();
         Order_Detail_T order = new Order_Detail_T()
         {
@@ -603,20 +627,40 @@ namespace EventCombo.Service
           };
           tpdRepo.Insert(tpd);
         }
-
-        foreach(var attendee in model.Attendees)
+        uow.Context.SaveChanges();
+        foreach (var attendee in model.Attendees)
         {
-          TicketBearer tb = new TicketBearer()
-          {
-            OrderId = newOrderId,
-            Name = attendee.Name,
-            Email = attendee.Email,
-            Guid = guidId.ToString(),
-            UserId = userId
-          };
-          tbRepo.Insert(tb);
-        }
+            long ticketBearerId;
+            TicketBearer tb = new TicketBearer()
+            {
+                OrderId = newOrderId,
+                Name = attendee.Name,
+                Email = attendee.Email,
+                Guid = guidId.ToString(),
+                UserId = userId
+            };
+            tbRepo.Insert(tb);
+            uow.Context.SaveChanges();
+            ticketBearerId = tb.TicketbearerId;
+            var tQ = tqdRepo.Get(filter: (tqd => (tqd.TQD_Ticket_Id == attendee.TicketId))).FirstOrDefault();
+            long purchasedTicketId = 0;
+            if (tQ != null)
+            {
+                var tPD = tpdRepo.Get(filter: (tqd => (tqd.TPD_TQD_Id == tQ.TQD_Id && tqd.TPD_GUID == guidId.ToString()))).FirstOrDefault();
+                if (tPD != null)
+                {
+                    purchasedTicketId = tPD.TPD_Id;
+                }
+            }
 
+            TicketAttendee ta = new TicketAttendee()
+            {
+                PurchasedTicketId = purchasedTicketId,
+                TicketBearerId = ticketBearerId,
+                Quantity = attendee.Quantity
+            };
+            taRepo.Insert(ta);
+        }
         uow.Context.SaveChanges();
         uow.Commit();
       }

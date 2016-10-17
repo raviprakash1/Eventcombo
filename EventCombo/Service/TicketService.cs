@@ -282,7 +282,7 @@ namespace EventCombo.Service
     }
 
 
-    public MemoryStream GetDownloadableTicket(string orderId, string format, string filePath)
+    public MemoryStream GetDownloadableTicket(string orderId, string format, string filePath, bool IsManualOrder = false)
     {
       TicketPaymentController tpc = new TicketPaymentController();
 
@@ -295,10 +295,16 @@ namespace EventCombo.Service
       if ((ticket == null) || (order == null))
         return null;
 
-      var user = ticket.AspNetUser.Profiles.FirstOrDefault();
-      string name = !String.IsNullOrWhiteSpace(order.O_First_Name) ? order.O_First_Name : (user == null ? "" : user.FirstName);
-
-      return tpc.generateTicketPDF(ticket.TPD_GUID, ticket.TPD_Event_Id ?? 0, null, name, filePath);
+      if (IsManualOrder)
+      {
+        return tpc.generateTicketPDFManualOrder(ticket.TPD_GUID, ticket.TPD_Event_Id ?? 0, null, "", filePath);
+      }
+      else
+      {
+        var user = ticket.AspNetUser.Profiles.FirstOrDefault();
+        string name = !String.IsNullOrWhiteSpace(order.O_First_Name) ? order.O_First_Name : (user == null ? "" : user.FirstName);
+        return tpc.generateTicketPDF(ticket.TPD_GUID, ticket.TPD_Event_Id ?? 0, null, name, filePath);
+      }
     }
   }
 }
