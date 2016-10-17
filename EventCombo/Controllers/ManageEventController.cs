@@ -16,6 +16,8 @@ using System.Configuration;
 using EventCombo.Utils;
 using System.Web.UI;
 using NLog;
+using EventCombo.DAL;
+using EventCombo.Service;
 
 
 namespace EventCombo.Controllers
@@ -28,6 +30,23 @@ namespace EventCombo.Controllers
       
         // GET: ManageEvent
         EventComboEntities db = new EventComboEntities();
+
+        IECImageService _iservice;
+        IEventService _eservice;
+
+        public ManageEventController()
+        {
+          var mapper = AutomapperConfig.Config.CreateMapper();
+          var factory = new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory());
+          _iservice = new ECImageService(factory, mapper, new ECImageStorage(mapper));
+          _eservice = new EventService(factory, mapper);
+        }
+
+        private string GetNewInvitationCode()
+        {
+          var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(Guid.NewGuid().ToString());
+          return System.Convert.ToBase64String(plainTextBytes);
+        }
 
         [Authorize]
         public ActionResult Index(long Eventlid = 0, string type = "")
@@ -43,8 +62,6 @@ namespace EventCombo.Controllers
 
                 aspuser.LastLoginTime = System.DateTime.UtcNow;
                 db.SaveChanges();
-
-
             }
             if (Eventlid == 0)
             {
@@ -273,38 +290,6 @@ namespace EventCombo.Controllers
             }
             Mevent.Order = Order;
             Mevent.Attendess = Order;
-
-            //Mevent.Attendess = (from o in db.Order_Detail_T
-            //                    join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
-            //                    join a in db.Profiles on p.TPD_User_Id equals a.UserID
-            //                    where p.TPD_Event_Id == Eventid
-            //                    group new
-            //                    {
-            //                        OrderId = o.O_Order_Id,
-            //                        Price = o.O_TotalAmount,
-            //                        Qty = p.TPD_Purchased_Qty,
-            //                        Name = a.FirstName + " " + a.LastName,
-            //                        Date = o.O_OrderDateTime
-            //                    }
-            //                    by new
-            //                    {
-            //                        o.O_Order_Id,
-            //                        o.O_TotalAmount,
-            //                        p.TPD_Purchased_Qty,
-            //                        a.FirstName,
-            //                        a.LastName,
-            //                        o.O_OrderDateTime
-            //                    } into gc
-            //                    orderby gc.Key.O_Order_Id descending, gc.Key.FirstName ascending
-            //                    select new OrderAttendees()
-            //                    {
-            //                        OrderId = gc.Key.O_Order_Id,
-            //                        Amount = gc.Key.O_TotalAmount.ToString(),
-            //                        Qty = gc.ToList().Sum(a => a.Qty).ToString(),
-            //                        Name = gc.Key.FirstName + " " + gc.Key.LastName,
-            //                        Date = gc.Key.O_OrderDateTime.ToString()
-            //                    }).Take(3).ToList();
-
 
             DateTime dt = DateTime.Today.AddDays(-30);
             StringBuilder strDates = new StringBuilder();
@@ -840,10 +825,6 @@ namespace EventCombo.Controllers
                     string strQueryec = "SELECT isnull(sum(TPD_EC_Fee * TPD_Purchased_Qty), 0) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
                     var vEcFee = objEnt.Database.SqlQuery<decimal>(strQueryec).FirstOrDefault();
 
-                    //var vEcFee = (from myRow in objEnt.Ticket_Purchased_Detail
-                    //              where myRow.TPD_Event_Id == lEventId
-                    //              select myRow.TPD_EC_Fee).Sum();
-
                     double dResult = Math.Round(Convert.ToDouble(vTotalAmt - vEcFee), 2);
                     strResult = dResult.ToString("N", us);
                 }
@@ -949,13 +930,6 @@ namespace EventCombo.Controllers
                     db.Events_Hit.RemoveRange(db.Events_Hit.Where(x => x.EventHit_EventId == eventid).ToList());
                     db.Tickets.RemoveRange(db.Tickets.Where(x => x.E_Id == eventid).ToList());
                     db.Events.RemoveRange(db.Events.Where(x => x.EventID == eventid).ToList());
-
-
-
-
-
-
-
 
                     db.SaveChanges();
                     transaction.Commit();
@@ -1274,10 +1248,6 @@ namespace EventCombo.Controllers
                 using (EventComboEntities objEnt = new EventComboEntities())
                 {
                     var vEvent = (from myEnt in objEnt.Events where myEnt.EventID == Eventid select myEnt).FirstOrDefault();
-                    //vEvent.EventTitle = strEventTitle;
-                    //vEvent.EventStatus = "Save";
-                    //vEvent.EventID = 0;
-                    //objEnt.Events.Add(vEvent);
                     if (strEventTitle.Trim().Equals("")) strEventTitle = vEvent.EventTitle;
                     Event ObjEC = new Event();
                     var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == vEvent.TimeZone select ev).FirstOrDefault();
@@ -1356,11 +1326,6 @@ namespace EventCombo.Controllers
                             objEnt.Addresses.Add(ObjAdd);
                             address= objA.ConsolidateAddress;
                         }
-                        //foreach (Address objAdd in vAddress)
-                        //{
-                        //    objAdd.EventId = ObjEC.EventID;
-                        //    objEnt.Addresses.Add(objAdd);
-                        //}
                     }
 
                     var vEventVenue = (from myEnt in objEnt.EventVenues where myEnt.EventID == Eventid select myEnt).ToList();
@@ -1798,15 +1763,6 @@ namespace EventCombo.Controllers
                                 select x).ToList();
 
                 }
-                //select new Promocode
-                //{
-                //    code = x.PC_Code,
-                //    Amount = (x.PC_Amount != null || x.PC_Percentage != null) ? (x.PC_Amount != null ? "$" + x.PC_Amount.ToString() : x.PC_Percentage + "%") : "-",
-                //    Start = (x.PC_Startdatetype != null && x.PC_Startdatetype == "1") ? x.PC_Start + " before event" : SqlFunctions.DateDiff("s", new DateTimeWithZone(Convert.ToDateTime(x.P_Startdate), userTimeZone, true).LocalTime, dtzCreated.LocalTime) == 0 ? "Started" : new DateTimeWithZone(Convert.ToDateTime(x.P_Startdate), userTimeZone, true).LocalTime.ToString("MM-dd-yyyy hh:mm tt"),
-                //    End = (x.Pc_Enddatetype != null && x.Pc_Enddatetype == "1") ? x.PC_End + " before event" : new DateTimeWithZone(Convert.ToDateTime(x.P_Enddate), userTimeZone, true).LocalTime.ToString("MM-dd-yyyy hh:mm tt"),
-                //    Limit = x.PC_Uses != null ? x.PC_Uses.ToString() : "No Limit",
-                //    PCID = x.PC_id,
-                //    Orderpromo = (from v in db.Order_Detail_T where v.O_PromoCodeId == x.PC_id select v).Count()
                 foreach (var item in lstpromo)
                 {
                     Promocode pr = new Promocode();
@@ -2791,12 +2747,6 @@ namespace EventCombo.Controllers
 
 
         #region EmailInvitations
-        //[Authorize]
-        //public ActionResult EmailInvitations()
-        //{
-
-        //    return View();
-        //}
 
         [Authorize]
         public ActionResult CreateInvitations(long lId, long lEvtId, string strMode)
@@ -2821,8 +2771,10 @@ namespace EventCombo.Controllers
             int iElistCnt = 0;
             string strPassword = "";
             string strDateTime = "";
-            string strviewEvent = "";
+            string strViewEvent = "";
+            string strViewEventShort = "";
             string strOrgnizerUrl = "";
+            int privateType = 0;
             Session["logo"] = "events";
             Session["Fromname"] = "Invitation";
             string strOrderText = "Attend";
@@ -2858,6 +2810,10 @@ namespace EventCombo.Controllers
 
                     if (objEEI.I_ScheduleDate != null)
                         objEEI.I_ScheduleDate = dtz.LocalTime; // DateTime.SpecifyKind(Convert.ToDateTime(objEEI.I_ScheduleDate), DateTimeKind.Local);
+                }
+                else
+                {
+                  objEEI.Code = GetNewInvitationCode();
                 }
                 iElistCnt = (objEEI.Event_Email_List != null ? objEEI.Event_Email_List.Count() : 0);
                 // lEvtId = (objEEI.I_Event_Id != null ? Convert.ToInt64(objEEI.I_Event_Id):0);
@@ -2914,30 +2870,41 @@ namespace EventCombo.Controllers
                         var baseurl = url.GetLeftPart(UriPartial.Authority);
 
 
-                        strviewEvent = baseurl + Url.Action("ViewEvent", "EventManagement", new { strEventDs = System.Text.RegularExpressions.Regex.Replace(vEvent.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = ValidationMessageController.GetParentEventId(lEvtId).ToString() });
+                        strViewEvent = baseurl + Url.Action("ViewEvent", "EventManagement", new 
+                          { 
+                            strEventDs = System.Text.RegularExpressions.Regex.Replace(vEvent.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), 
+                            strEventId = ValidationMessageController.GetParentEventId(lEvtId).ToString(),
+                            InviteId = objEEI.Code
+                          });
+                        strViewEventShort = baseurl + Url.Action("ViewEvent", "EventManagement", new
+                        {
+                          strEventDs = System.Text.RegularExpressions.Regex.Replace(vEvent.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""),
+                          strEventId = ValidationMessageController.GetParentEventId(lEvtId).ToString()
+                        });
                         strOrgnizerUrl = "";
                         if (vOrgnizer != null)
                             strOrgnizerUrl = baseurl + Url.Action("Index", "OrganizerInfo", new { id = vOrgnizer.Orgnizer_Id, eventid = lEvtId });
 
                     }
 
-
-
-                    EventCreation objCEv = new EventCreation();
-                    string strImageUrl = objCEv.GetImages(lEvtId).FirstOrDefault();
-                    if (strImageUrl != null && strImageUrl != "")
+                    string strImageUrl = String.Empty;
+                    if ((vEvent.ECImageId ?? 0) > 0)
                     {
-                        if (!System.IO.File.Exists(Server.MapPath(strImageUrl))) // Need to check on server
-                            strImageUrl = "/Images/default_event_image.jpg";
+                      var img = _iservice.GetImageById(vEvent.ECImageId ?? 0);
+                      if ((img != null) && (System.IO.File.Exists(img.FilePath)))
+                        strImageUrl = img.ImagePath;
                     }
-                    else
-                        strImageUrl = "/Images/default_event_image.jpg";
+                    objEEI.EventImg = String.IsNullOrEmpty(strImageUrl) ? "/Images/default_event_image.jpg" : strImageUrl;
 
-                    objEEI.EventImg = strImageUrl;
-
-
-                    //@Url.Action("Index", "OrganizerInfo", new { id = Model.organizerid, eventid = Model.eventId })
-
+                    if (!String.IsNullOrEmpty(vEvent.EventPrivacy) && (vEvent.EventPrivacy.ToUpper() == "PRIVATE"))
+                    {
+                      if (!String.IsNullOrEmpty(vEvent.Private_Password))
+                        privateType = 2;
+                      else
+                        privateType = 1;
+                      if (vEvent.Private_GuestOnly == "Y")
+                        privateType += 2;
+                    }
                 }
             }
 
@@ -2946,7 +2913,8 @@ namespace EventCombo.Controllers
             TempData["baseurl"] = vbaseurl;
             TempData["OrderText"] = strOrderText;
             TempData["OrgnizerUrl"] = strOrgnizerUrl;
-            TempData["ViewEventUrl"] = strviewEvent;
+            TempData["ViewEventUrl"] = strViewEventShort;
+            TempData["InviteUrl"] = strViewEvent;
             TempData["Lat"] = (objEEI.EventLat != null ? objEEI.EventLat.Trim() : "");
             TempData["Long"] = (objEEI.EventLong != null ? objEEI.EventLong.Trim() : "");
             TempData["lId"] = lId;
@@ -2954,14 +2922,12 @@ namespace EventCombo.Controllers
             TempData["Eventid"] = lEvtId;
             TempData["PPassword"] = strPassword;
             TempData["EventIMode"] = strMode;
+            TempData["InviteId"] = objEEI.Code;
+            TempData["PrivacyType"] = privateType;
+            ViewBag.Title = "Create Email Invite for " + objEEI.EventTitle + " | Eventcombo";
             return View(objEEI);
         }
 
-        //public string TestMethod(EmailContent model)
-        //{
-
-        //    return "Test";
-        //}
         public void SendHtmlFormattedEmail(EmailContent model)
         {
             MailMessage mailMessage = new MailMessage();
@@ -3000,6 +2966,7 @@ namespace EventCombo.Controllers
 
         }
 
+        [HttpPost]
         public long SaveInvitation(Event_Email_Invitation Model)
         {
             long lResult = 0;
@@ -3013,6 +2980,7 @@ namespace EventCombo.Controllers
                         Event_Email_Invitation objEInt = new Event_Email_Invitation();
                         objEInt.I_SenderName = Model.I_SenderName;
                         objEInt.I_SubjectLine = Model.I_SubjectLine;
+                        objEInt.Code = Model.Code;
                         objEInt.I_Event_Id = ValidationMessageController.GetParentEventId((Model.I_Event_Id != null ? Convert.ToInt64(Model.I_Event_Id) : 0));
 
 
@@ -3163,6 +3131,7 @@ namespace EventCombo.Controllers
                         objEInt.I_SubjectLine = Model.I_SubjectLine;
                         objEInt.I_Event_Id = Model.I_Event_Id;
                         objEInt.I_EmailContent = Model.I_EmailContent;
+                        objEInt.Code = GetNewInvitationCode();
                         if (Model.I_ScheduleDate != null)
                             objEInt.I_ScheduleDate = DateTime.SpecifyKind(Convert.ToDateTime(Model.I_ScheduleDate), DateTimeKind.Utc);
                         else

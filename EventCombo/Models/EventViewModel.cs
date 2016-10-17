@@ -83,11 +83,6 @@ namespace EventCombo.Models
 
   public class OrganizerViewModel
   {
-    public OrganizerViewModel()
-    {
-      Image = new ECImageViewModel();
-    }
-
     public long OrgnizerId { get; set; }
     public string Orgnizer_Name { get; set; }
     public string Organizer_Desc { get; set; }
@@ -345,6 +340,9 @@ namespace EventCombo.Models
     public bool ShowRemaining { get; set; }
     public long RemainingQuantity { get; set; }
     public decimal TotalPrice { get; set; }
+    public bool Available { get; set; }
+    public string DateInfoString1 { get; set; }
+    public string DateInfoString2 { get; set; }
   }
 
   public class ShortEventInfoViewModel
@@ -422,6 +420,7 @@ namespace EventCombo.Models
     public string ButtonText { get; set; }
     public string CheckoutText { get; set; }
     public string PriceRange { get; set; }
+    public bool AllowPrivateShare { get; set; }
 
 
     public OrganizerInfoViewModel Organizer { get; set; }
@@ -481,5 +480,14 @@ namespace EventCombo.Models
     public IEnumerable<string> KeyWords { get; set; }
     public IEnumerable<CityViewModel> Cities { get; set; }
     public IEnumerable<EventTypeViewModel> EventTypes { get; set; }
+  }
+
+  public class PrivateEventRequest
+  {
+    public long EventId { get; set; }
+    public string Password { get; set; }
+    public string InviteCode { get; set; }
+    public bool PasswordValid { get; set; }
+    public bool InviteValid { get; set; }
   }
 }
