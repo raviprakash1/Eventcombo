@@ -630,36 +630,38 @@ namespace EventCombo.Service
         uow.Context.SaveChanges();
         foreach (var attendee in model.Attendees)
         {
-            long ticketBearerId;
-            TicketBearer tb = new TicketBearer()
-            {
-                OrderId = newOrderId,
-                Name = attendee.Name,
-                Email = attendee.Email,
-                Guid = guidId.ToString(),
-                UserId = userId
-            };
-            tbRepo.Insert(tb);
-            uow.Context.SaveChanges();
-            ticketBearerId = tb.TicketbearerId;
-            var tQ = tqdRepo.Get(filter: (tqd => (tqd.TQD_Ticket_Id == attendee.TicketId))).FirstOrDefault();
-            long purchasedTicketId = 0;
-            if (tQ != null)
-            {
-                var tPD = tpdRepo.Get(filter: (tqd => (tqd.TPD_TQD_Id == tQ.TQD_Id && tqd.TPD_GUID == guidId.ToString()))).FirstOrDefault();
-                if (tPD != null)
-                {
-                    purchasedTicketId = tPD.TPD_Id;
-                }
-            }
+          if (attendee.Quantity <= 0)
+            continue;
+          long ticketBearerId;
+          TicketBearer tb = new TicketBearer()
+          {
+              OrderId = newOrderId,
+              Name = attendee.Name,
+              Email = attendee.Email,
+              Guid = guidId.ToString(),
+              UserId = userId
+          };
+          tbRepo.Insert(tb);
+          uow.Context.SaveChanges();
+          ticketBearerId = tb.TicketbearerId;
+          var tQ = tqdRepo.Get(filter: (tqd => (tqd.TQD_Ticket_Id == attendee.TicketId))).FirstOrDefault();
+          long purchasedTicketId = 0;
+          if (tQ != null)
+          {
+              var tPD = tpdRepo.Get(filter: (tqd => (tqd.TPD_TQD_Id == tQ.TQD_Id && tqd.TPD_GUID == guidId.ToString()))).FirstOrDefault();
+              if (tPD != null)
+              {
+                  purchasedTicketId = tPD.TPD_Id;
+              }
+          }
 
-            TicketAttendee ta = new TicketAttendee()
-            {
-                PurchasedTicketId = purchasedTicketId,
-                TicketBearerId = ticketBearerId,
-                Quantity = attendee.Quantity
-            };
-            taRepo.Insert(ta);
+          TicketAttendee ta = new TicketAttendee()
+          {
+              PurchasedTicketId = purchasedTicketId,
+              TicketBearerId = ticketBearerId,
+              Quantity = attendee.Quantity
+          };
+          taRepo.Insert(ta);
         }
         uow.Context.SaveChanges();
         uow.Commit();
