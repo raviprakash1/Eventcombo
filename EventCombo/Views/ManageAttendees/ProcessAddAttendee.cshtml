@@ -91,12 +91,14 @@
           <th class="attendeesAddTableTH">Attendee Email</th>
           <th class="attendeesAddTableTH">Ticket Type</th>
           <th class="attendeesAddTableTH">Quantity</th>
+          <th class="attendeesAddTableTH"></th>
+          <th class="attendeesAddTableTH"><input id="hdnAttendeeCount" type="hidden" value="0" /><input id="hdnAttendeeTotalCount" type="hidden" value="@Model.Tickets.Sum(t => t.Quantity)" /></th>
         </tr>
       </thead>
       <tbody id="AttendeeTable">
         @for (var i = 0; i < Model.Tickets.Sum(t => t.Quantity); i++)
         {
-            <tr>
+            <tr id="trAttendee_@i" @(i == 0 ? "" : " style=display:none; ")>
                 <td class="attendeesAddTableTD" width="10%">@((i + 1).ToString())</td>
                 <td class="attendeesAddTableTD" width="30%"><input type="text" value="" id="aname@(i.ToString())" class="attenTableQuantityCls" placeholder="Name" /></td>
                 <td class="attendeesAddTableTD" width="30%"><input type="text" value="" id="aemail@(i.ToString())" class="attenTableQuantityCls" placeholder="Email" onblur="checkEmail(this, true);" /></td>
@@ -110,11 +112,28 @@
                 </td>
                 <td class="attendeesAddTableTD" width="10%">
                     <select id="aquantity@(i.ToString())" class="attenTableQuantityCls">
+                        @if (i > 0)
+                        {
+                            
+                        }
+                        <option value="0">Select</option>
                         @for (var j = 0; j < Model.Tickets.Sum(t => t.Quantity); j++)
                         {
-                            <option value="@(j + 1)">@(j + 1)</option>
+                            <option value="@(j + 1)" @(i == 0 && j==0? " selected=true ":"")>@(j + 1)</option>
                         }
                     </select>
+                </td>
+                <td>
+                    @if (i == 0)
+                    {
+                        <a href="javascript:hideShowAttendeeAdd(true);"><img src="~/Images/minus.png"/></a>
+                    }
+                </td>
+                <td>
+                    @if (i == 0)
+                    {
+                        <a href="javascript:hideShowAttendeeAdd(false);"><img src="~/Images/plus.png" /></a>
+                    }
                 </td>
             </tr>
         }
@@ -278,6 +297,27 @@
     if (showError)
       showAllErrors();
     return res;
+  }
+
+  function hideShowAttendeeAdd(isHide) {
+      var attendeeCount = parseInt($("#hdnAttendeeCount").val());
+      var attendeeTotalCount = parseInt($("#hdnAttendeeTotalCount").val());
+      
+      if (isHide) {
+          if (attendeeCount != 0) {
+              $("#trAttendee_" + attendeeCount).css("display", "none");
+              $("#aname" + attendeeCount).val("");
+              $("#aemail" + attendeeCount).val("");
+              $("#aquantity" + attendeeCount).val("0");              
+              attendeeCount = attendeeCount - 1;
+          }
+      } else {
+          if (attendeeCount != attendeeTotalCount - 1) {
+              attendeeCount = attendeeCount + 1;
+          }
+          $("#trAttendee_" + attendeeCount).css("display", "");
+      }
+      $("#hdnAttendeeCount").val(attendeeCount);
   }
 
 </script>
