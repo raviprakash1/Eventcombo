@@ -283,4 +283,15 @@ namespace EventCombo.Models
         public string TicketType { get; set; }
         public bool CheckinStatus { get; set; }
     }
+
+    public class TicketAttendeeWithSingleQty
+    {
+        public string TicketAttendeeAutoId { get; set; }
+        public long TicketAttendeeId { get; set; }
+        public long TicketBearerId { get; set; }
+        public string OrderId { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public long PurchasedTicketId { get; set; }
+    }
 }
