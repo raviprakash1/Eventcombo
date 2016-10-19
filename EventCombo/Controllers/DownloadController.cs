@@ -122,5 +122,28 @@ namespace EventCombo.Controllers
         return new FileStreamResult(mem, appformat) { FileDownloadName = "attendeesbadges_" + eventId.ToString() + "." + format };
     }
 
+    [HttpGet]
+    public ActionResult ManualOrderList(PaymentStates state, long eventId, string format)
+    {
+      if (Session["AppId"] == null)
+        return null;
+
+      string userId = Session["AppId"].ToString();
+      if (_dbservice.GetEventAccess(eventId, userId) == AccessLevel.Public)
+        return null;
+      if (format.ToLower() == "html")
+      {
+        EventOrderInfoListViewModel model = new EventOrderInfoListViewModel();
+        model.EventId = eventId;
+        model.PaymentState = state;
+        var orders = _maservice.GetManualOrdersForEvent(state, eventId);
+        model.Orders.AddRange(orders);
+        return View("_ManualOrderList", model);
+      }
+      MemoryStream mem = _maservice.GetDownloadableManualOrderList(state, eventId, format);
+      string appformat = "application/" + (format.ToLower() == "xls" ? "ms-excel" : format.ToLower());
+      return new FileStreamResult(mem, appformat) { FileDownloadName = "ManualOrderList_" + eventId.ToString() + "." + format };
+    }
+
   }
 }

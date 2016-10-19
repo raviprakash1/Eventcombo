@@ -89,6 +89,7 @@
           <th class="attendeesAddTableTH">#</th>
           <th class="attendeesAddTableTH">Attendee Name</th>
           <th class="attendeesAddTableTH">Attendee Email</th>
+          <th class="attendeesAddTableTH">Attendee Phone</th>
           <th class="attendeesAddTableTH">Ticket Type</th>
           <th class="attendeesAddTableTH">Quantity</th>
           <th class="attendeesAddTableTH"></th>
@@ -102,6 +103,7 @@
                 <td class="attendeesAddTableTD" width="10%">@((i + 1).ToString())</td>
                 <td class="attendeesAddTableTD" width="30%"><input type="text" value="" id="aname@(i.ToString())" class="attenTableQuantityCls" placeholder="Name" /></td>
                 <td class="attendeesAddTableTD" width="30%"><input type="text" value="" id="aemail@(i.ToString())" class="attenTableQuantityCls" placeholder="Email" onblur="checkEmail(this, true);" /></td>
+                <td class="attendeesAddTableTD" width="30%"><input type="text" value="" id="aphonenumber@(i.ToString())" class="attenTableQuantityCls" placeholder="Phone" /></td>
                 <td class="attendeesAddTableTD" width="20%">
                     <select id="aticket@(i.ToString())" class="attenTableQuantityCls">
                         @foreach (var ticket in Model.Tickets)
@@ -191,12 +193,14 @@
     $('#AttendeeTable tr').each(function (idx) {
       var aname = $(this).find('input[id^="aname"]').val();
       var aemail = $(this).find('input[id^="aemail"]').val();
+      var aphonenumber = $(this).find('input[id^="aphonenumber"]').val();
       var aticket = $(this).find('select[id^="aticket"]').val();
       var aquantity = $(this).find('select[id^="aquantity"]').val();
       if ((aname) || (aemail))
         attendees.push({
           Name: aname,
           Email: aemail,
+          PhoneNumber: aphonenumber,
           TicketId: aticket,
           Quantity: aquantity
         });
@@ -308,6 +312,7 @@
               $("#trAttendee_" + attendeeCount).css("display", "none");
               $("#aname" + attendeeCount).val("");
               $("#aemail" + attendeeCount).val("");
+              $("#aphonenumber" + attendeeCount).val("");
               $("#aquantity" + attendeeCount).val("0");              
               attendeeCount = attendeeCount - 1;
           }

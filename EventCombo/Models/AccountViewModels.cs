@@ -302,6 +302,7 @@ namespace EventCombo.Models
     public string OrderId { get; set; }
     public string Name { get; set; }
     public string Email { get; set; }
+    public string PhoneNumber { get; set; }
     public long TicketId { get; set; }
     public long Quantity { get; set; }
   }
