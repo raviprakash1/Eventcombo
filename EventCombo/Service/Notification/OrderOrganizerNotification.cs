@@ -92,6 +92,7 @@ namespace EventCombo.Service
             tagList["TicketQty"] = (ticketPurchasedDetail.Sum(s => s.TPD_Purchased_Qty) ?? 0).ToString();
             tagList["EventOrderNO"] = _orderId;
             tagList["EventTitleId"] = ticketPurchasedDetail.FirstOrDefault().Event.EventTitle;
+            tagList["ClickHere"] = _baseUrl + "/Home/Index";
 
             _service.Message.To.Clear();
             if (String.IsNullOrEmpty(eTemplate.To))
