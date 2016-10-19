@@ -61,5 +61,9 @@ namespace EventCombo.Service
     string GetBadgesListPath(BadgesViewModel badgesViewModel, string format, string UserID);
 
     MemoryStream GetBadgesList(long eventId, string format, string UserID);
+
+    MemoryStream GetDownloadableManualOrderList(PaymentStates state, long eventId, string format);
+
+    IEnumerable<EventOrderInfoViewModel> GetManualOrdersForEvent(PaymentStates state, long eventId);
   }
 }

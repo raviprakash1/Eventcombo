@@ -986,6 +986,7 @@
           <Property Name="Guid" Type="nchar" MaxLength="128" />
           <Property Name="Name" Type="nchar" MaxLength="128" />
           <Property Name="Email" Type="nchar" MaxLength="256" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="TicketDeliveryMethod">
           <Key>
@@ -1183,6 +1184,7 @@ warning 6002: The table/view 'EventCombo.dbo.TicketAttendee_View' does not have 
           <Key>
             <PropertyRef Name="TicketAttendeeId" />
             <PropertyRef Name="TicketBearerId" />
+            <PropertyRef Name="PhoneNumber" />
             <PropertyRef Name="PurchasedTicketId" />
             <PropertyRef Name="Customer_Fee" />
             <PropertyRef Name="Quantity" />
@@ -1194,6 +1196,7 @@ warning 6002: The table/view 'EventCombo.dbo.TicketAttendee_View' does not have 
           <Property Name="Guid" Type="nchar" MaxLength="128" />
           <Property Name="Name" Type="nchar" MaxLength="128" />
           <Property Name="Email" Type="nchar" MaxLength="256" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="PurchasedTicketId" Type="bigint" Nullable="false" />
           <Property Name="TPD_User_Id" Type="nvarchar" MaxLength="256" />
           <Property Name="TPD_Order_Id" Type="varchar" MaxLength="11" />
@@ -1975,6 +1978,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
     [TicketAttendee_View].[Guid] AS [Guid], 
     [TicketAttendee_View].[Name] AS [Name], 
     [TicketAttendee_View].[Email] AS [Email], 
+    [TicketAttendee_View].[PhoneNumber] AS [PhoneNumber], 
     [TicketAttendee_View].[PurchasedTicketId] AS [PurchasedTicketId], 
     [TicketAttendee_View].[TPD_User_Id] AS [TPD_User_Id], 
     [TicketAttendee_View].[TPD_Order_Id] AS [TPD_Order_Id], 
@@ -2853,6 +2857,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="Name" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="TicketAttendees" Relationship="EventComboModel.FK_TicketAttendee_TicketBearer" FromRole="TicketBearer" ToRole="TicketAttendee" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TicketDeliveryMethod">
           <Key>
@@ -5134,6 +5139,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             <PropertyRef Name="PurchasedTicketId" />
             <PropertyRef Name="Customer_Fee" />
             <PropertyRef Name="Quantity" />
+            <PropertyRef Name="PhoneNumber" />
           </Key>
           <Property Name="TicketAttendeeId" Type="Int64" Nullable="false" />
           <Property Name="TicketBearerId" Type="Int64" Nullable="false" />
@@ -5157,6 +5163,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="Customer_Fee" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Quantity" Type="Int64" Nullable="false" />
           <Property Name="T_name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="EventEvent_Email_Invitation">
           <End Type="EventComboModel.Event" Role="Event" Multiplicity="0..1" />
@@ -5703,6 +5710,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="TicketBearers">
             <EntityTypeMapping TypeName="EventComboModel.TicketBearer">
               <MappingFragment StoreEntitySet="TicketBearer">
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="TicketbearerId" ColumnName="TicketbearerId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
@@ -6765,6 +6773,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="TicketAttendee_View">
             <EntityTypeMapping TypeName="EventComboModel.TicketAttendee_View">
               <MappingFragment StoreEntitySet="TicketAttendee_View">
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="T_name" ColumnName="T_name" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="Customer_Fee" ColumnName="Customer_Fee" />

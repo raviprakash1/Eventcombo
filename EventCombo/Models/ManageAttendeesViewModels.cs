@@ -66,6 +66,7 @@ namespace EventCombo.Models
         set { _variableChages = value; }
     }
     public string VariableIds { get; set; }
+    public string PhoneNumber { get; set; }
   }
 
   public class EventOrderDetailViewModel

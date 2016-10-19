@@ -36,5 +36,6 @@ namespace EventCombo.Models
         public decimal Customer_Fee { get; set; }
         public long Quantity { get; set; }
         public string T_name { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }
