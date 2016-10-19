@@ -21,7 +21,7 @@
           <h2 class="purchasedTitleHead">Add Attendees</h2>
       </div>
       <div class="col-sm-6 col-xs-6 searchTxtOrderContainerCls">
-          Export to:
+          Manual Order Report:
           <a href="@Url.Action("ManualOrderList", "Download", new { state = PaymentStates.Completed, eventId = Model.EventId, format = "html"})" target="_blank" class="linkReportHead">HTML</a>
           <a href="@Url.Action("ManualOrderList", "Download", new { state = PaymentStates.Completed, eventId = Model.EventId, format = "xls"})" class="linkReportHead">EXL</a>
       </div>

@@ -246,6 +246,7 @@ namespace EventCombo.Service
                 eventOrderInfoViewModel.TicketName = eventTicket.TicketName;
                 eventOrderInfoViewModel.BuyerName = ticketAttendee.Name.Trim();
                 eventOrderInfoViewModel.BuyerEmail = ticketAttendee.Email.Trim();
+                eventOrderInfoViewModel.PhoneNumber = ticketAttendee.PhoneNumber;
                 eventOrderInfoViewModel.Quantity = ticketAttendee.Quantity;
                 eventOrderInfoViewModel.Price = ticketAttendee.Quantity * ticketAttendee.TPD_Amount ?? 0 / ticketAttendee.TPD_Purchased_Qty ?? 1;
                 eventOrderInfoViewModel.PricePaid = ticketAttendee.Quantity * ticketAttendee.TPD_Amount ?? 0 / ticketAttendee.TPD_Purchased_Qty ?? 1;
@@ -670,6 +671,7 @@ namespace EventCombo.Service
               OrderId = newOrderId,
               Name = attendee.Name,
               Email = attendee.Email,
+              PhoneNumber = attendee.PhoneNumber,
               Guid = guidId.ToString(),
               UserId = userId
           };
