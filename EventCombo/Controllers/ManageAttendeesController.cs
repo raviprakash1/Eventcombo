@@ -350,7 +350,9 @@ namespace EventCombo.Controllers
         if (_dbservice.GetEventAccess(EventId, userId) != AccessLevel.EventOwner)
             return DefaultAction();
 
+        var eventSummary = _maservice.GetEventOrdersSummary(EventId);
         ViewData["EventID"] = EventId;
+        ViewData["EventTitle"] = eventSummary.EventTitle;
         IEnumerable<EventOrderInfoViewModel> orders = _maservice.GetOrdersForSaleReport(PaymentStates.Completed, EventId);
         return PartialView("_SaleReport", orders);
     }

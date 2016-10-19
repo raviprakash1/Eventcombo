@@ -1,7 +1,15 @@
 ﻿@model List<EventCombo.Models.EventOrderInfoViewModel>
+<style>
+  .reportTableContainer { width:100%; display:inline-block; overflow:auto; max-height:400px; font:14px "Roboto",sans serif;}
+  .reportHeading { padding:7px; font:14px "Roboto",sans serif; background:#c2d69a; text-align:center;}
+  .reportTable { background:#eaf1dd; border-left:1px solid #000;}
+  .reportTable tr td, .reportTable tr th { font:14px "Roboto",sans serif; border-right:1px solid #000; border-bottom:1px solid #000;}
+  .reportTable tr th { font-weight:500; white-space:nowrap;}
+</style>
 <div id="purchasedTicketContainer">
-    <div class="table-responsive tableResponsiveOrderList">
-        <table class="table" cellspacing="0" border="1">
+    <div class="reportHeading">Ticket Sales for "@(ViewData["EventTitle"])" on <script>var dt = new Date(); document.write(dt.getMonth() + 1 + '/' + dt.getDate() + '/' + dt.getFullYear())</script></div>
+    <div class="reportTableContainer">
+        <table class="table reportTable" border="0" cellpadding="5">
             <thead>
                 <tr>
                     <th>Order #</th>

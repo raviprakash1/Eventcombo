@@ -53,8 +53,10 @@ namespace EventCombo.Controllers
       if (format.ToLower() == "html")
       {
         EventOrderInfoListViewModel model = new EventOrderInfoListViewModel();
+        var eventSummary = _maservice.GetEventOrdersSummary(eventId);
         model.EventId = eventId;
         model.PaymentState = state;
+        model.Title = eventSummary.EventTitle;
         var orders = _maservice.GetOrdersForEvent(state, eventId);
         model.Orders.AddRange(orders);
         return View("_OrderList", model);
