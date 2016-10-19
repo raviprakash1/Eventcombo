@@ -16,8 +16,15 @@
 }
 
 <div id="purchasedTicketContainer">
-  <div class="addAttendessTxt">
-    <h1>Add Attendees</h1>
+  <div class="headerPurchasedTicket">
+      <div class="col-sm-6 col-xs-6">
+          <h2 class="purchasedTitleHead">Add Attendees</h2>
+      </div>
+      <div class="col-sm-6 col-xs-6 searchTxtOrderContainerCls">
+          Export to:
+          <a href="@Url.Action("ManualOrderList", "Download", new { state = PaymentStates.Completed, eventId = Model.EventId, format = "html"})" target="_blank" class="linkReportHead">HTML</a>
+          <a href="@Url.Action("ManualOrderList", "Download", new { state = PaymentStates.Completed, eventId = Model.EventId, format = "xls"})" class="linkReportHead">EXL</a>
+      </div>
   </div>
 
   <input type="hidden" id="EventId" value="@(Model.EventId.ToString())" />

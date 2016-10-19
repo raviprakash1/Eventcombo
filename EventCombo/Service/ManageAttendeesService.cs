@@ -224,6 +224,38 @@ namespace EventCombo.Service
         return res;
     }
 
+    public IEnumerable<EventOrderInfoViewModel> GetManualOrdersForEvent(PaymentStates state, long eventId)
+    {
+        if (state == PaymentStates.Pending)
+            return new List<EventOrderInfoViewModel>();
+
+        IRepository<EventTicket_View> EventTicketRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+        IRepository<TicketAttendee_View> tbRepo = new GenericRepository<TicketAttendee_View>(_factory.ContextFactory);
+        var attendees = tbRepo.Get();
+        var eventTickets = EventTicketRepo.Get(filter: (t => t.EventID == eventId && t.IsManualOrder == true));
+        List<EventOrderInfoViewModel> eventOrderInfoViewModelList = new List<EventOrderInfoViewModel>();
+        EventOrderInfoViewModel eventOrderInfoViewModel;
+        foreach (var eventTicket in eventTickets)
+        {
+            var ticketAttendees = tbRepo.Get(a => (a.OrderId == eventTicket.OrderId && a.PurchasedTicketId == eventTicket.TPD_Id && a.TicketBearerId != 0));
+            foreach (var ticketAttendee in ticketAttendees)
+            {
+                eventOrderInfoViewModel = new EventOrderInfoViewModel();
+                eventOrderInfoViewModel.OrderId = eventTicket.OrderId;
+                eventOrderInfoViewModel.PaymentState = PaymentStates.Completed;
+                eventOrderInfoViewModel.TicketName = eventTicket.TicketName;
+                eventOrderInfoViewModel.BuyerName = ticketAttendee.Name.Trim();
+                eventOrderInfoViewModel.BuyerEmail = ticketAttendee.Email.Trim();
+                eventOrderInfoViewModel.Quantity = ticketAttendee.Quantity;
+                eventOrderInfoViewModel.Price = ticketAttendee.Quantity * ticketAttendee.TPD_Amount ?? 0 / ticketAttendee.TPD_Purchased_Qty ?? 1;
+                eventOrderInfoViewModel.PricePaid = ticketAttendee.Quantity * ticketAttendee.TPD_Amount ?? 0 / ticketAttendee.TPD_Purchased_Qty ?? 1;
+                eventOrderInfoViewModel.Date = eventTicket.O_OrderDateTime ?? DateTime.Today;
+                eventOrderInfoViewModelList.Add(eventOrderInfoViewModel);
+            }
+        }
+        return eventOrderInfoViewModelList;
+    }
+
     public EventOrderDetailViewModel GetEventOrderDetail(string orderId)
     {
       IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
@@ -1774,6 +1806,101 @@ namespace EventCombo.Service
         byte[] bytes = memoryStream.ToArray();
         memoryStream.Close();
         return new MemoryStream(bytes);
+    }
+
+    public MemoryStream GetDownloadableManualOrderList(PaymentStates state, long eventId, string format)
+    {
+      format = format.Trim().ToLower();
+      if (format != "xls")
+        return null;
+      IEnumerable<EventOrderInfoViewModel> orders = GetManualOrdersForEvent(state, eventId);
+      IRepository<Event> EventRepo = new GenericRepository<Event>(_factory.ContextFactory);
+      var eventTitle = EventRepo.Get(filter: (e => e.EventID == eventId)).Select(x => new { x.EventTitle }).FirstOrDefault();
+      var ReportTitle = (eventTitle == null ? "" : "Manual Order List for " + eventTitle.EventTitle);
+      return ManualOrderListToXLS(orders, ReportTitle);
+    }
+
+    private MemoryStream ManualOrderListToXLS(IEnumerable<EventOrderInfoViewModel> orders, string ReportTitle)
+    {
+        MemoryStream res = new MemoryStream();
+        IWorkbook wb = new HSSFWorkbook();
+        ICellStyle style = wb.CreateCellStyle();
+        style.BorderBottom = BorderStyle.Thin;
+        style.BorderTop = BorderStyle.Thin;
+        style.BorderLeft = BorderStyle.Thin;
+        style.BorderRight = BorderStyle.Thin;
+
+        ICellStyle hstyle = wb.CreateCellStyle();
+        hstyle.BorderBottom = BorderStyle.Thin;
+        hstyle.BorderTop = BorderStyle.Thin;
+        hstyle.BorderLeft = BorderStyle.Thin;
+        hstyle.BorderRight = BorderStyle.Thin;
+        hstyle.Alignment = HorizontalAlignment.Center;
+        IFont bfont = wb.CreateFont();
+        bfont.Boldweight = (short)FontBoldWeight.Bold;
+        hstyle.SetFont(bfont);
+
+        ICellStyle datestyle = wb.CreateCellStyle();
+        datestyle.BorderBottom = BorderStyle.Thin;
+        datestyle.BorderTop = BorderStyle.Thin;
+        datestyle.BorderLeft = BorderStyle.Thin;
+        datestyle.BorderRight = BorderStyle.Thin;
+        datestyle.DataFormat = wb.CreateDataFormat().GetFormat("MMMM dd, yyyy");
+
+        ICellStyle Titlestyle = wb.CreateCellStyle();
+        Titlestyle.BorderBottom = BorderStyle.Thin;
+        Titlestyle.BorderTop = BorderStyle.Thin;
+        Titlestyle.BorderLeft = BorderStyle.Thin;
+        Titlestyle.BorderRight = BorderStyle.Thin;
+        Titlestyle.Alignment = HorizontalAlignment.Center;
+        Titlestyle.SetFont(bfont);
+
+        ISheet sheet = wb.CreateSheet("Orders");
+        IRow row = sheet.CreateRow(0);
+        AddStyledCell(row, 0, Titlestyle).SetCellValue(ReportTitle);
+        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 15));
+
+        row = sheet.CreateRow(1);
+        AddStyledCell(row, 0, hstyle).SetCellValue("Order Number");
+        AddStyledCell(row, 1, hstyle).SetCellValue("Order Date & Time");
+        AddStyledCell(row, 2, hstyle).SetCellValue("Attendee Name");
+        AddStyledCell(row, 3, hstyle).SetCellValue("Attendee Email");
+        AddStyledCell(row, 4, hstyle).SetCellValue("Attendee Phone");
+        AddStyledCell(row, 5, hstyle).SetCellValue("Ticket Name");
+        AddStyledCell(row, 6, hstyle).SetCellValue("Quantity");
+        AddStyledCell(row, 7, hstyle).SetCellValue("Manual Price Paid");
+
+        var i = 2;
+        string tempOrderId = "";
+        foreach (var order in orders)
+        {
+            row = sheet.CreateRow(i++);
+            if (tempOrderId != order.OrderId)
+            {
+                AddStyledCell(row, 0, style).SetCellValue(order.OrderId);
+                AddStyledCell(row, 1, datestyle).SetCellValue(order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt"));
+                tempOrderId = order.OrderId;
+            }
+            else
+            {
+                AddStyledCell(row, 0, style).SetCellValue("");
+                AddStyledCell(row, 1, datestyle).SetCellValue("");
+            }
+            AddStyledCell(row, 2, style).SetCellValue(order.BuyerName);
+            AddStyledCell(row, 3, style).SetCellValue(order.BuyerEmail);
+            AddStyledCell(row, 4, style).SetCellValue(order.PhoneNumber);
+            AddStyledCell(row, 5, style).SetCellValue(order.TicketName);
+            AddStyledCell(row, 6, style).SetCellValue(order.Quantity);
+            AddStyledCell(row, 7, style).SetCellValue("$" + order.PricePaid.ToString("N2"));
+        }
+        for (i = 0; i <= 7; i++)
+        {
+            sheet.AutoSizeColumn(i);
+            sheet.SetColumnWidth(i, sheet.GetColumnWidth(i) + 1024);
+        }
+        wb.Write(res);
+        res.Position = 0;
+        return res;
     }
 
   }
