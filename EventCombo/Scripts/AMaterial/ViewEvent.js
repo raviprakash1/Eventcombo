@@ -297,17 +297,17 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
       var result = "";
       if (dateInfo.Frequency.toLowerCase() == "single") {
         result = FormatDateTimeWithWeekday(dateInfo.StartDateTime);
-        if (dateInfo.EndDateTime > dateInfo.StartDateTime)
+        if (dateInfo.EndDateTime != dateInfo.StartDateTime)
           result = result + ' to ' + FormatDateTimeWithWeekday(dateInfo.EndDateTime);
       }
       else if (dateInfo.Frequency.toLowerCase() == "monthly") {
         result = "Monthly, " + FormatDateTime(dateInfo.StartDateTime);
-        if (dateInfo.EndDateTime > dateInfo.StartDateTime)
+        if (dateInfo.EndDateTime != dateInfo.StartDateTime)
           result = result + ' to ' + FormatDateTime(dateInfo.EndDateTime);
       }
       else if (dateInfo.Frequency.toLowerCase() == "daily") {
         result = "Daily, " + FormatTime(dateInfo.StartDateTime);
-        if (dateInfo.EndDateTime > dateInfo.StartDateTime)
+        if (dateInfo.EndDateTime != dateInfo.StartDateTime)
           result = result + ' to ' + FormatTime(dateInfo.EndDateTime);
       }
       else {
@@ -321,6 +321,8 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
     var loadInfo = function (eventId) {
       $http.get('/eventmanagement/geteventinfo', { params: { eventId: eventId } }).then(function (response) {
         eventInfo = response.data;
+        eventInfo.DateInfo.StartDateTime = setUTC(eventInfo.DateInfo.StartDateTime);
+        eventInfo.DateInfo.EndDateTime = setUTC(eventInfo.DateInfo.EndDateTime);
         angular.forEach(eventInfo.Tickets, function (ticket, key) {
           if (ticket.TicketTypeId == 1)
             ticket.TypeName = 'FREE'
@@ -331,6 +333,7 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
           ticket.Quants = [0];
           for (i = ticket.Minimum; i <= ticket.Maximum; i++)
             ticket.Quants.push(i);
+          ticket.StartDate = setUTC(ticket.StartDate);
           ticket.StartDateFormatted = FormatDateTimeWithWeekday(ticket.StartDate);
         });
 
@@ -599,9 +602,10 @@ function FormatDateTime(date) {
 }
 
 function FormatDateTimeWithWeekday(date) {
-  var myDate = new Date(date);
-  myDate = new Date(myDate.getTime() + myDate.getTimezoneOffset() * 60000);
+  var oldDate = new Date(date);
+  var myDate = new Date(oldDate.getTime() + oldDate.getTimezoneOffset() * 60000);
   var options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+  var res = myDate.toLocaleDateString('en-US', options);
   return myDate.toLocaleDateString('en-US', options);
 }
 
@@ -610,4 +614,10 @@ function FormatTime(date) {
   myDate = new Date(myDate.getTime() + myDate.getTimezoneOffset() * 60000);
   var options = { hour: 'numeric', minute: 'numeric' };
   return myDate.toLocaleTimeString('en-US', options);
+}
+
+function setUTC(date) {
+  if (date.length == 19)
+    return date + "Z";
+  return date;
 }

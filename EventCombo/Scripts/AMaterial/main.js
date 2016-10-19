@@ -78,9 +78,7 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         Time: null
       };
       if (strDateTime) {
-        var localDateTime = new Date(strDateTime);
-        if (strDateTime.length <= 19)
-          localDateTime = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
+        var localDateTime = parseDateTime(strDateTime);
         var time = formatAMPM(localDateTime);
         var ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
         if (ctime.length > 0)
@@ -158,12 +156,8 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
     }
 
     $scope.onShowDateTimeDialog = function (showDialog) {
-      var startDateTime = new Date($scope.eventInfo.DateInfo.StartDateTime);
-      if ($scope.eventInfo.DateInfo.StartDateTime.length <= 19)
-        startDateTime = new Date(startDateTime.getTime() + startDateTime.getTimezoneOffset() * 60000);
-      var endDateTime = new Date($scope.eventInfo.DateInfo.EndDateTime);
-      if ($scope.eventInfo.DateInfo.EndDateTime.length <= 19)
-        endDateTime = new Date(endDateTime.getTime() + endDateTime.getTimezoneOffset() * 60000);
+      var startDateTime = parseDateTime($scope.eventInfo.DateInfo.StartDateTime);
+      var endDateTime = parseDateTime($scope.eventInfo.DateInfo.EndDateTime);
       var time = formatAMPM(startDateTime);
       var ctime = $scope.eventInfo.DateInfo.TimeList.filter(function (obj) { return obj.TimeString == time; });
       if (ctime.length > 0)
@@ -642,7 +636,6 @@ eventComboApp.controller('CreateEventController', ['$scope', '$http', '$window',
         return;
       }
       $scope.eventInfo.TicketList.forEach(function (ticket, i, arr) {
-
         ticket.Sale_Start_Date = !ticket.localSaleStartDate
           ? null : $scope.getDateTime(ticket.localSaleStartDate, ticket.localSaleStartTime);
         ticket.Sale_End_Date = !ticket.localSaleEndDate
@@ -1181,4 +1174,13 @@ function formatDateTime(date) {
 
 function isEmptyOrSpaces(str) {
   return str === null || str.match(/^ *$/) !== null;
+}
+
+function parseDateTime(strDateTime) {
+  if (strDateTime.length == 19)
+    strDateTime = strDateTime + "Z";
+  var localDateTime = new Date(strDateTime);
+  if (strDateTime.length <= 20)
+    localDateTime = new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000);
+  return localDateTime;
 }
