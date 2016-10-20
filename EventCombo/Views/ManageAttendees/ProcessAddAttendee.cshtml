@@ -16,6 +16,7 @@
 <link href="~/Content/manageattendees.css" rel="stylesheet" />
 <link href="~/Content/flipclock.css" rel="stylesheet" />
 <link href="~/Content/eventcombo-new.css" rel="stylesheet" />
+@Scripts.Render("~/bundles/masked_input")
 <div id="purchasedTicketContainer" class="midd_cont">
   <div class="addAttendessTxt">
     <h1>Add Attendees</h1>
@@ -164,7 +165,14 @@
   <input type="hidden" id="sendError" value=""/>
 
 </div>
-
+@for (var i = 0; i < Model.Tickets.Sum(t => t.Quantity); i++)
+{
+    <script>
+        jQuery(function ($) {
+            $("#aphonenumber@(i.ToString())").mask("999-999-9999");
+        });
+    </script>
+}
 <script type="text/javascript">
 
   $(function () {
