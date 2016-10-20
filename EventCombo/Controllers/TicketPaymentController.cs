@@ -2737,7 +2737,7 @@ namespace EventCombo.Controllers
                                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.attendeeName + "</td>");
                                                 strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
                                                 strHTML.Append("<td style='width:10%font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
-                                                strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + (qty.TPD_Amount > 0 ? "$ " + decimal.Truncate(decimal.Round(qty.Quantity * qty.TPD_Amount / qty.TPD_Purchased_Qty ?? 0, 2) * 100) / 100 : qty.TPD_Donate > 0 ? "$ " + decimal.Truncate(decimal.Round(qty.Quantity * qty.TPD_Donate / qty.TPD_Purchased_Qty ?? 0, 2) * 100) / 100 : "Free") + "</td>");
+                                                strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + (qty.TPD_Amount > 0 ? "$ " + decimal.Truncate((qty.Quantity * qty.TPD_Amount / qty.TPD_Purchased_Qty ?? 0) * 100) / 100 : qty.TPD_Donate > 0 ? "$ " + decimal.Truncate((qty.Quantity * qty.TPD_Donate / qty.TPD_Purchased_Qty ?? 0) * 100) / 100 : "Free") + "</td>");
                                                 strHTML.Append("</tr>");
                                                 var promocode = (from v in db.Promo_Code where v.PC_Eventid == qty.eventid && v.PC_id == qty.Promocode select v.PC_Code).FirstOrDefault();
                                                 strHTML.Append("<tr align='left'>");
@@ -2752,7 +2752,7 @@ namespace EventCombo.Controllers
                                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.attendeeName + "</td>");
                                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
                                                 strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
-                                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + (qty.TPD_Amount > 0 ? "$ " + decimal.Truncate(decimal.Round(qty.Quantity * qty.TPD_Amount / qty.TPD_Purchased_Qty ?? 0, 2) * 100) / 100 : qty.TPD_Donate > 0 ? "$ " + decimal.Truncate(decimal.Round(qty.Quantity * qty.TPD_Donate / qty.TPD_Purchased_Qty ?? 0, 2) * 100) / 100 : "Free") + "</td>");
+                                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + (qty.TPD_Amount > 0 ? "$ " + decimal.Truncate((qty.Quantity * qty.TPD_Amount / qty.TPD_Purchased_Qty ?? 0) * 100) / 100 : qty.TPD_Donate > 0 ? "$ " + decimal.Truncate((qty.Quantity * qty.TPD_Donate / qty.TPD_Purchased_Qty ?? 0) * 100) / 100 : "Free") + "</td>");
                                                 strHTML.Append("</tr>");
                                             }
 
@@ -2807,7 +2807,7 @@ namespace EventCombo.Controllers
                                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.attendeeName + "</td>");
                                                 strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
                                                 strHTML.Append("<td style='width:10%font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
-                                                strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + (qty.TPD_Amount > 0 ? "$ " + decimal.Truncate(decimal.Round(qty.Quantity * qty.TPD_Amount / qty.TPD_Purchased_Qty ?? 0, 2) * 100) / 100 : qty.TPD_Donate > 0 ? "$ " + decimal.Truncate(decimal.Round(qty.Quantity * qty.TPD_Donate / qty.TPD_Purchased_Qty ?? 0, 2) * 100) / 100 : "Free") + "</td>");
+                                                strHTML.Append("<td style='width:30%;font-size:15px; padding: 10px 5px;'>" + (qty.TPD_Amount > 0 ? "$ " + decimal.Truncate((qty.Quantity * qty.TPD_Amount / qty.TPD_Purchased_Qty ?? 0) * 100) / 100 : qty.TPD_Donate > 0 ? "$ " + decimal.Truncate((qty.Quantity * qty.TPD_Donate / qty.TPD_Purchased_Qty ?? 0) * 100) / 100 : "Free") + "</td>");
                                                 strHTML.Append("</tr>");
                                                 var promocode = (from v in db.Promo_Code where v.PC_Eventid == qty.eventid && v.PC_id == qty.Promocode select v.PC_Code).FirstOrDefault();
                                                 strHTML.Append("<tr align='left'>");
@@ -2822,7 +2822,7 @@ namespace EventCombo.Controllers
                                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.attendeeName + "</td>");
                                                 strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
                                                 strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
-                                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + (qty.TPD_Amount > 0 ? "$ " + decimal.Truncate(decimal.Round(qty.Quantity * qty.TPD_Amount / qty.TPD_Purchased_Qty ?? 0, 2) * 100) / 100 : qty.TPD_Donate > 0 ? "$ " + decimal.Truncate(decimal.Round(qty.Quantity * qty.TPD_Donate / qty.TPD_Purchased_Qty ?? 0, 2) * 100) / 100 : "Free") + "</td>");
+                                                strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + (qty.TPD_Amount > 0 ? "$ " + decimal.Truncate((qty.Quantity * qty.TPD_Amount / qty.TPD_Purchased_Qty ?? 0) * 100) / 100 : qty.TPD_Donate > 0 ? "$ " + decimal.Truncate((qty.Quantity * qty.TPD_Donate / qty.TPD_Purchased_Qty ?? 0) * 100) / 100 : "Free") + "</td>");
                                                 strHTML.Append("</tr>");
                                             }
 
@@ -2892,7 +2892,7 @@ namespace EventCombo.Controllers
                                         strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.attendeeName + "</td>");
                                         strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + qty.Ticketname + "</td>");
                                         strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px;'>" + qty.Quantity + "</td>");
-                                        strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + (qty.TPD_Amount > 0 ? "$ " + decimal.Truncate(decimal.Round(qty.Quantity * qty.TPD_Amount / qty.TPD_Purchased_Qty ?? 0, 2) * 100) / 100 : qty.TPD_Donate > 0 ? "$ " + decimal.Truncate(decimal.Round(qty.Quantity * qty.TPD_Donate / qty.TPD_Purchased_Qty ?? 0, 2) * 100) / 100 : "Free") + "</td>");
+                                        strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px;'>" + (qty.TPD_Amount > 0 ? "$ " + decimal.Truncate((qty.Quantity * qty.TPD_Amount / qty.TPD_Purchased_Qty ?? 0) * 100) / 100 : qty.TPD_Donate > 0 ? "$ " + decimal.Truncate((qty.Quantity * qty.TPD_Donate / qty.TPD_Purchased_Qty ?? 0) * 100) / 100 : "Free") + "</td>");
                                         strHTML.Append("</tr>");
                                         var promocode = (from v in db.Promo_Code where v.PC_Eventid == qty.eventid && v.PC_id == qty.Promocode select v.PC_Code).FirstOrDefault();
                                         strHTML.Append("<tr align='left'>");
@@ -2907,7 +2907,7 @@ namespace EventCombo.Controllers
                                         strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.attendeeName + "</td>");
                                         strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Ticketname + "</td>");
                                         strHTML.Append("<td style='width:10%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + qty.Quantity + "</td>");
-                                        strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + (qty.TPD_Amount > 0 ? "$ " + decimal.Truncate(decimal.Round(qty.Quantity * qty.TPD_Amount / qty.TPD_Purchased_Qty ?? 0, 2) * 100) / 100 : qty.TPD_Donate > 0 ? "$ " + decimal.Truncate(decimal.Round(qty.Quantity * qty.TPD_Donate / qty.TPD_Purchased_Qty ?? 0, 2) * 100) / 100 : "Free") + "</td>");
+                                        strHTML.Append("<td style='width:30%; font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + (qty.TPD_Amount > 0 ? "$ " + decimal.Truncate((qty.Quantity * qty.TPD_Amount / qty.TPD_Purchased_Qty ?? 0) * 100) / 100 : qty.TPD_Donate > 0 ? "$ " + decimal.Truncate((qty.Quantity * qty.TPD_Donate / qty.TPD_Purchased_Qty ?? 0) * 100) / 100 : "Free") + "</td>");
                                         strHTML.Append("</tr>");
                                     }
                                 }
@@ -3219,6 +3219,7 @@ namespace EventCombo.Controllers
                     //
                     var TicketPurchasedDetail = db.Ticket_Purchased_Detail.Where(i => i.TPD_GUID == strGUID && i.TPD_Event_Id == Eventid).ToList();
                     long sumqty = 0;
+                    decimal sumAmount = 0;
                     var bodyn = "";
                     var ticketP = "";
                     var eventdetail = db.Events.FirstOrDefault(i => i.EventID == Eventid);
@@ -3238,6 +3239,7 @@ namespace EventCombo.Controllers
                         var tQntydetail = db.Ticket_Quantity_Detail.FirstOrDefault(i => i.TQD_Id == item.TPD_TQD_Id);
                         var address = db.Addresses.FirstOrDefault(i => i.AddressID == tQntydetail.TQD_AddressId);
                         sumqty = sumqty + (item.TPD_Purchased_Qty??0);
+                        sumAmount = (item.TPD_Amount ?? 0)+ (item.TPD_Donate ?? 0);
 
                         if (tQntydetail.TQD_StartDate != null)
                         {
@@ -3480,6 +3482,11 @@ namespace EventCombo.Controllers
                                         subjectn = subjectn.Replace("¶¶TicketQty¶¶", sumqty.ToString ());
 
                                     }
+                                    if (EmailTag[i].Tag_Name == "TicketPrice")
+                                    {
+                                        subjectn = subjectn.Replace("¶¶TicketPrice¶¶", sumAmount.ToString());
+
+                                    }
                                     if (EmailTag[i].Tag_Name == "EventTitleId")
                                     {
                                         subjectn = subjectn.Replace("¶¶EventTitleId¶¶", eventdetail.EventTitle);
@@ -3514,6 +3521,11 @@ namespace EventCombo.Controllers
                                     if (EmailTag[i].Tag_Name == "TicketQty")
                                     {
                                         bodyn = bodyn.Replace("¶¶TicketQty¶¶", sumqty.ToString());
+
+                                    }
+                                    if (EmailTag[i].Tag_Name == "TicketPrice")
+                                    {
+                                        bodyn = bodyn.Replace("¶¶TicketPrice¶¶", sumAmount.ToString());
 
                                     }
                                     if (EmailTag[i].Tag_Name == "EventTitleId")
