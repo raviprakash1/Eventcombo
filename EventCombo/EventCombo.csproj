@@ -1017,6 +1017,7 @@
       <DependentUpon>EventComboModel.edmx</DependentUpon>
       <LastGenOutput>EventComboModel.cs</LastGenOutput>
     </Content>
+    <Content Include="newemailtemplate.html" />
     <Content Include="Scripts\AMaterial\AccountController.js" />
     <Content Include="Scripts\AMaterial\Service\AccountService.js" />
     <Content Include="Scripts\AMaterial\angucomplete-alt.js" />
