@@ -120,6 +120,7 @@ namespace EventCombo.Models
       get { return _orders; }
       private set { _orders = value; }
     }
+    public string EventTitle { get; set; }
   }
 
   public class PaymentTypeViewModel

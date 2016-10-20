@@ -124,7 +124,7 @@ namespace EventCombo.Service
           strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + item.Name + "</td>");
           strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + item.T_name + "</td>");
           strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + item.Quantity + "</td>");
-          strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + (item.TPD_Amount > 0 ? "$ " + item.Quantity * item.TPD_Amount / item.TPD_Purchased_Qty : item.TPD_Donate > 0 ? "$ " + item.Quantity *  item.TPD_Donate / item.TPD_Purchased_Qty : "Free") + "</td>");
+          strHTML.Append("<td style='font-size:15px; padding: 10px 5px; border-bottom:1px dashed #ccc;'>" + (item.TPD_Amount > 0 ? "$ " + decimal.Truncate((item.Quantity * (item.TPD_Amount ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : item.TPD_Donate > 0 ? "$ " + decimal.Truncate((item.Quantity * (item.TPD_Donate ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : "Free") + "</td>");
           strHTML.Append("</tr>");
         }
       }

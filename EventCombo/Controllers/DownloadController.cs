@@ -136,6 +136,7 @@ namespace EventCombo.Controllers
         EventOrderInfoListViewModel model = new EventOrderInfoListViewModel();
         model.EventId = eventId;
         model.PaymentState = state;
+        model.EventTitle = _maservice.GetEventTitle(eventId);
         var orders = _maservice.GetManualOrdersForEvent(state, eventId);
         model.Orders.AddRange(orders);
         return View("_ManualOrderList", model);

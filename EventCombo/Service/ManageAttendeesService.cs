@@ -248,8 +248,15 @@ namespace EventCombo.Service
                 eventOrderInfoViewModel.BuyerEmail = ticketAttendee.Email.Trim();
                 eventOrderInfoViewModel.PhoneNumber = ticketAttendee.PhoneNumber;
                 eventOrderInfoViewModel.Quantity = ticketAttendee.Quantity;
-                eventOrderInfoViewModel.Price = ticketAttendee.Quantity * ticketAttendee.TPD_Amount ?? 0 / ticketAttendee.TPD_Purchased_Qty ?? 1;
-                eventOrderInfoViewModel.PricePaid = ticketAttendee.Quantity * ticketAttendee.TPD_Amount ?? 0 / ticketAttendee.TPD_Purchased_Qty ?? 1;
+                if(eventTicket.TicketTypeID == 3)
+                {
+                    eventOrderInfoViewModel.PricePaid = ticketAttendee.Quantity * (ticketAttendee.TPD_Donate ?? 0) / (ticketAttendee.TPD_Purchased_Qty ?? 0);
+                }
+                else
+                {
+                    eventOrderInfoViewModel.PricePaid = ticketAttendee.Quantity * (ticketAttendee.TPD_Amount ?? 0) / (ticketAttendee.TPD_Purchased_Qty ?? 0);
+                }
+                eventOrderInfoViewModel.PricePaid = decimal.Truncate(eventOrderInfoViewModel.PricePaid * 100) / 100;
                 eventOrderInfoViewModel.Date = eventTicket.O_OrderDateTime ?? DateTime.Today;
                 eventOrderInfoViewModelList.Add(eventOrderInfoViewModel);
             }
@@ -671,7 +678,7 @@ namespace EventCombo.Service
               OrderId = newOrderId,
               Name = attendee.Name,
               Email = attendee.Email,
-              PhoneNumber = attendee.PhoneNumber,
+              PhoneNumber = (string.IsNullOrEmpty(attendee.PhoneNumber) ? "" : attendee.PhoneNumber),
               Guid = guidId.ToString(),
               UserId = userId
           };
@@ -1903,6 +1910,13 @@ namespace EventCombo.Service
         wb.Write(res);
         res.Position = 0;
         return res;
+    }
+
+    public string GetEventTitle(long eventId)
+    {
+        IRepository<Event> EventRepo = new GenericRepository<Event>(_factory.ContextFactory);
+        var eventTitle = EventRepo.Get(filter: (e => e.EventID == eventId)).Select(x => new { x.EventTitle }).FirstOrDefault();
+        return (eventTitle == null ? "" : eventTitle.EventTitle);
     }
 
   }
