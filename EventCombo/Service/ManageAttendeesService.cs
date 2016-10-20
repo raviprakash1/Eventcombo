@@ -1912,5 +1912,12 @@ namespace EventCombo.Service
         return res;
     }
 
+    public string GetEventTitle(long eventId)
+    {
+        IRepository<Event> EventRepo = new GenericRepository<Event>(_factory.ContextFactory);
+        var eventTitle = EventRepo.Get(filter: (e => e.EventID == eventId)).Select(x => new { x.EventTitle }).FirstOrDefault();
+        return (eventTitle == null ? "" : eventTitle.EventTitle);
+    }
+
   }
 }

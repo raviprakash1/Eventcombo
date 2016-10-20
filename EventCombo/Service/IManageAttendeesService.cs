@@ -65,5 +65,7 @@ namespace EventCombo.Service
     MemoryStream GetDownloadableManualOrderList(PaymentStates state, long eventId, string format);
 
     IEnumerable<EventOrderInfoViewModel> GetManualOrdersForEvent(PaymentStates state, long eventId);
+
+    string GetEventTitle(long eventId);
   }
 }
