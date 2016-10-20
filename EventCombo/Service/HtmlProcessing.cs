@@ -52,5 +52,25 @@ namespace EventCombo.Service
       }
       return res.Substring(0, pos + 1) + append;
     }
+
+    public static string ResolveServerUrl(string serverUrl, bool forceHttps)
+    {
+      if (serverUrl.IndexOf("://") > -1)
+        return serverUrl;
+
+      string newUrl = serverUrl;
+      Uri originalUri = System.Web.HttpContext.Current.Request.Url;
+      newUrl = (forceHttps ? "https" : originalUri.Scheme) +
+          "://" + originalUri.Authority + newUrl;
+      return newUrl;
+    }
+
+    public static string PrepareForUrl(string str, int maxLength)
+    {
+      string res = System.Text.RegularExpressions.Regex.Replace(str.Trim().ToLower().Replace(" ", "-"), "[^a-zA-Z0-9_-]+", "");
+      res = res.Substring(0, Math.Min(res.Length, maxLength));
+      return res;
+    }
+
   }
 }

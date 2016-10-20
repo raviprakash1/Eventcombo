@@ -4,279 +4,134 @@
 @using System.Configuration
 @model ArticleFullViewModel
 @{
-  ViewBag.Title = Model.Title + " | Eventcombo";
-  ViewBag.FBUrl = Request.Url.AbsoluteUri;
-  ViewBag.FBType = "article";
-  ViewBag.FBTitle = Model.Title;
-  ViewBag.FBDescription = HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Model.Body), 200, 250, ".");
-
-  var urlBuilder =
-    new System.UriBuilder(Request.Url.AbsoluteUri)
-    {
-      Path = Url.Content("~" + Model.ArticleImageUrl),
-      Query = null,
-    };
-  ViewBag.FBImage = urlBuilder.ToString();
+  Layout = "~/Views/Shared/_AngularLayout.cshtml";
 }
 
-<style type="text/css">
-  .entrmntHeaderImg {
-    height: 165px;
-    border: 1px solid #c1c1c1;
-  }
+@section CSSSection
+{
+  <link href="/Content/AMaterial/ArticlePages.css" rel="stylesheet" />
+}
 
-    .entrmntHeaderImg img {
-      width: 100%;
-      height: 100%;
-    }
+@section ScriptSection
+{
+  <script type="text/javascript">
+  </script>
+}
 
-  .entrmentPersonName {
-    font-weight: bold;
-    font-size: 35px;
-  }
-
-  .entrmentFollowTwitter {
-    font-size: 16px;
-    margin-top: 21px;
-  }
-
-  .entrmentHeaderQuestionContainer {
-    margin-top: 10px;
-  }
-
-  .entrmentHeaderQuestion {
-    font-weight: bold;
-  }
-
-  .entrmentHeaderAnswerContainer {
-    margin-bottom: 20px;
-  }
-
-  .entrmentHeaderAnswer {
-    font-size: 17px;
-    text-align: justify;
-  }
-
-  .entrmntLastestNewsTxt {
-    font-size: 20px;
-    margin: 0px 15px 20px 15px;
-    background-color: #00CAFD;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0px;
-  }
-
-  .newsContentImg img {
-    width: 100%;
-  }
-
-  .newsContentText {
-    color: #333;
-    font-size: 15px;
-    margin-top: 10px;
-    font-weight: bold;
-  }
-
-  .newsContentInnerCon {
-    border: 1px solid #888;
-    padding: 5px;
-    display: block;
-    max-width: 250px;
-    text-align: center;
-    margin: 0px auto;
-  }
-
-  .newsContentDetailCon {
-    margin-bottom: 20px;
-  }
-
-  .photoGallaryContainerTxt {
-    font-size: 20px;
-    background-color: #00CAFD;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0px;
-  }
-
-  .discussionFbContainerTxt {
-    font-size: 20px;
-    background-color: #00CAFD;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0px;
-  }
-
-  .photoGallaryContent img {
-    width: 100%;
-    height: 100%;
-  }
-
-  .photoGallaryContent {
-    padding-left: 0px;
-    margin: 20px 0px;
-    height: 250px;
-    overflow: hidden;
-  }
-
-  .imageGallaryAnchorCls {
-    display: block;
-    max-width: 250px;
-    text-align: center;
-    margin: 0px auto;
-  }
-
-  .sliderImgGallary {
-    width: 100%;
-    height: 100%;
-  }
-
-  .fb-comments, .fb-comments iframe[style], .fb-comments span {
-    width: 100% !important;
-  }
-
-  .fb-page, .fb-page iframe[style], .fb-page span {
-    width: 100% !important;
-  }
-
-  .articleImageDiv {
-    width: 300px;
-    height: 300px;
-    float: left;
-    margin: 10px 20px 20px 0px;
-  }
-
-    .articleImageDiv img {
-      width: 100%;
-      height: 100%;
-    }
-
-  .entrmSocialDiv img {
-    width: 65px;
-    height: 45px;
-  }
-
-  .entrmntSocialIcon {
-    margin-top: 10px;
-  }
-
-  .entrmSocialDiv {
-    padding: 0px;
-    margin: 0px 5px 0px 0px;
-    display: inline-block;
-  }
-</style>
-
-<meta property="fb:app_id" content="@(ConfigurationManager.AppSettings["FacebookAppId"])" />
-
-<script type="text/javascript">
-  $(document).on("click", ".imageGallaryAnchorCls", function () {
-    var imageID = $(this).data('id');
-    $('.gallarySliderClass').removeClass('active');
-    $("#gallarySlider" + imageID).addClass('active');
-  });
-
-</script>
-
-<script type="text/javascript">
-  window.fbAsyncInit = function () {
-    // init the FB JS SDK
-    FB.init({
-      appId: fbappid,                        // App ID from the app dashboard
-      status: true,                          // Check Facebook Login status
-      xfbml: true,                           // Look for social plugins on the page
-      version: '2.7'
+@section ScriptFooterSection
+{
+  <script src="~/Scripts/socialshare.js"></script>
+  <script type="text/javascript">
+    $(document).on("click", ".imageGallaryAnchorCls", function () {
+      var imageID = $(this).data('id');
+      $('.gallarySliderClass').removeClass('active');
+      $("#gallarySlider" + imageID).addClass('active');
     });
+  </script>
 
-  };
+  <script type="text/javascript">
+    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
+    window.fbAsyncInit = function () {
+      // init the FB JS SDK
+      FB.init({
+        appId: fbappid,                        // App ID from the app dashboard
+        status: true,                          // Check Facebook Login status
+        xfbml: true,                           // Look for social plugins on the page
+        version: '2.7'
+      });
+    };
 
-  // Load the SDK asynchronously
-  (function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) { return; }
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-</script>
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) { return; }
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+}<!--****************************************************************************************************************************-->
+<meta property="fb:app_id" content="@(ConfigurationManager.AppSettings["FacebookAppId"])" />
+<!--****************************************************************************************************************************-->
+<section>
+  <div class="grid wfull">
+    <div class="row">
+      <div class="c8 md-c6 sm-c8">
 
-<div class="container-fluid cont_margin no-padding con_scr0l_home" id="entertainmentContainer">
-  <div class="col-md-8 col-sm-8 col-xs-12 entrmentDetailContent">
-    <div class="entrnmtHeaderContainer">
-      <div class="col-md-3 col-sm-3 col-xs-5 entrmntHeaderImg">
-        <img src="@(String.IsNullOrWhiteSpace(Model.AuthorImage) ? @Url.Content("~/Images/mrblank.jpg") : Model.AuthorImage)" />
-      </div>
-      <div class="col-md-9 col-sm-9 col-xs-7 entrmntHeaderName">
-        <div class="entrmentPersonName">@Model.AuthorName</div>
-        <div class="entrmentNameTime">@Model.CreateDate.ToLongTimeString() @Model.CreateDate.ToString("MMMM dd, yyyy")</div>
-        <div class="entrmentFollowTwitter">follow me on <a href="@(String.IsNullOrWhiteSpace(Model.AuthorTwitterUrl) ? "javascript:void(0)" : Model.AuthorTwitterUrl)" class="followOnTwitterAnchor">Twitter</a></div>
-        <div class="entrmntSocialIcon">
-          <a href="javascript:void(0)" class="entrmSocialDiv" onclick="FacebookShare('@(Request.Url.AbsoluteUri)')"><img src="~/Images/facebook.png" /></a>
-          <a href="javascript:void(0)" class="entrmSocialDiv" onclick="TwitterShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)')"><img src="~/Images/twitter.png" /></a>
-          <a href="javascript:void(0)" class="entrmSocialDiv" onclick="LinkedInShare('@Model.Title.Replace("'", @"\'")','@(Request.Url.AbsoluteUri)', '@(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Model.Body), 200, 250, ".").Replace("'", @"\'"))')"><img src="~/Images/linkedIn.png" /></a>
-        </div>
-      </div>
-      <div class="col-md-12 col-sm-12 col-xs-12 entrmentHeaderQuestionContainer">
         <h1 class="entrmentHeaderQuestion">@Model.Title</h1>
-      </div>
-      <div class="col-md-12 col-sm-12 col-xs-12 entrmentHeaderAnswerContainer">
-        <div class="articleImageDiv"><img src="@Model.ArticleImageUrl" /></div>
-        <h5 class="entrmentHeaderAnswer">
-          @Html.Raw(Model.Body)
-        </h5>
-      </div>
-    </div>
 
-    @if (Model.Images.Count > 0)
-    {
-      <div class="col-md-6 col-sm-6 col-xs-12 photoGallaryContainer">
-        <div class="photoGallaryContainerTxt">Photo Gallary</div>
-        @for (var i = 0; i < Model.Images.Count; i++)
-        {
-          <div class="col-md-6 col-sm-6 col-xs-12 photoGallaryContent">
-            <a href="javascript:void(0)" data-id="@((i + 1).ToString())" data-toggle="modal" data-target=".bs-example-modal-md" class="imageGallaryAnchorCls">
-              <img src="@(Model.Images[i])" />
-            </a>
+        <div class="userbox">
+          <img src="@(String.IsNullOrWhiteSpace(Model.AuthorImage) ? @Url.Content("~/Images/mrblank.jpg") : Model.AuthorImage)">
+          <div>
+            <article-author class="articleAuthor" href="profile-page-moments.html" target="_blank" class="link">@Model.AuthorName</article-author>
+            <span class="articleDate" title="@Model.CreateDate.ToLongTimeString() @Model.CreateDate.ToString("MMMM dd, yyyy")">1hour ago</span>
           </div>
-        }
+          <div class="authorTwitter">follow me on <a class="twitterLink" href="@(String.IsNullOrWhiteSpace(Model.AuthorTwitterUrl) ? "javascript:void(0)" : Model.AuthorTwitterUrl)" target="_blank">Twitter</a></div>
+          <div class="authorIcons">
+            <a href="#" title="Share with Social Media"><i class="material-icons">share</i></a>
+            <a href="#" title="Forwards to Friends"><i class="material-icons">contact_mail</i></a>
+          </div>
+        </div>
 
-        <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-md">
-            <div class="modal-content">
-              <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                  @for (var i = 0; i < Model.Images.Count; i++)
-                  {
-                    <div id="gallarySlider@((i + 1).ToString())" class="gallarySliderClass item active">
-                      <img class="img-responsive sliderImgGallary" src="@(Model.Images[i])">
+        <div class="articleBody">
+          <div class="articleImageDiv"><img src="@Model.ArticleImageUrl" /></div>
+          <div class="entrmentHeaderAnswer">
+            @Html.Raw(Model.Body)
+          </div>
+        </div>
+        
+        @if (Model.Images.Count > 0)
+        {
+          <div class="col-md-6 col-sm-6 col-xs-12 photoGallaryContainer">
+            <div class="photoGallaryContainerTxt">Photo Gallary</div>
+            @for (var i = 0; i < Model.Images.Count; i++)
+        {
+              <div class="col-md-6 col-sm-6 col-xs-12 photoGallaryContent">
+                <a href="javascript:void(0)" data-id="@((i + 1).ToString())" data-toggle="modal" data-target=".bs-example-modal-md" class="imageGallaryAnchorCls">
+                  <img src="@(Model.Images[i])" />
+                </a>
+              </div>
+            }
+
+            <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                      @for (var i = 0; i < Model.Images.Count; i++)
+                      {
+                        <div id="gallarySlider@((i + 1).ToString())" class="gallarySliderClass item active">
+                          <img class="img-responsive sliderImgGallary" src="@(Model.Images[i])">
+                        </div>
+                      }
                     </div>
-                  }
-                </div>
 
-                <!-- Controls -->
-                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" style="top:50%;">
-                  <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" style="top:50%;">
-                  <span class="glyphicon glyphicon-chevron-right"></span>
-                </a>
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" style="top:50%;">
+                      <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" style="top:50%;">
+                      <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+        }
+
+        <div class="@(Model.Images.Count == 0 ? "col-md-12" : "col-md-6") col-sm-6 col-xs-12 discussionFbContainer">
+          <div class="discussionFbContainerTxt">Discussion</div>
+          <div id="fb-root"></div>
+          <div class="fb-comments" data-href="@Request.Url.AbsoluteUri" data-width="404" data-numposts="5"></div>
         </div>
+
       </div>
-    }
-
-    <div class="@(Model.Images.Count == 0 ? "col-md-12" : "col-md-6") col-sm-6 col-xs-12 discussionFbContainer">
-      <div class="discussionFbContainerTxt">Discussion</div>
-      <div id="fb-root"></div>
-      <div class="fb-comments" data-href="@Request.Url.AbsoluteUri" data-width="404" data-numposts="5"></div>
-
+      <!--********************-->
+      <div class="c4 md-c6 sm-c4 entrmntLastestNews">
+        @{ Html.RenderAction("ShowPopularArticles", "Article"); }
+      </div>
     </div>
   </div>
-
-  <div class="col-md-4 col-sm-4 col-xs-12 entrmntLastestNews">
-    @{ Html.RenderAction("ShowPopularArticles", "Article"); }
-  </div>
+</section>
 </div>
-
-<script src="~/Scripts/socialshare.js"></script>

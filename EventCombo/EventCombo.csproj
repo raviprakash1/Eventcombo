@@ -861,6 +861,8 @@
     <Content Include="Content\AMaterial\angular-material.min.css" />
     <Content Include="Content\AMaterial\angularjs-color-picker.min.css" />
     <Content Include="Content\AMaterial\animations.css" />
+    <Content Include="Content\AMaterial\ArticlePages.css" />
+    <Content Include="Content\AMaterial\discoverEvent.css" />
     <Content Include="Content\AMaterial\docs.css" />
     <Content Include="Content\AMaterial\gridiculous.css" />
     <Content Include="Content\AMaterial\header-footer.css" />
@@ -936,6 +938,7 @@
     <Content Include="Images\AMaterial\marker-green2.png" />
     <Content Include="Images\AMaterial\marker-green_old.png" />
     <Content Include="Images\AMaterial\marker-pink.png" />
+    <Content Include="Images\AMaterial\No_image_available.svg" />
     <Content Include="Images\AMaterial\plusIcon.png" />
     <Content Include="Images\AMaterial\popimg.jpg" />
     <Content Include="Images\AMaterial\RecordBackgroundFinal_1000.gif" />

@@ -13,6 +13,7 @@ namespace EventCombo.Service
   {
     private IUnitOfWorkFactory _factory;
     private IMapper _mapper;
+    private IECImageService _iservice;
 
     public ArticleService(IUnitOfWorkFactory factory, IMapper mapper)
     {
@@ -23,6 +24,7 @@ namespace EventCombo.Service
 
       _factory = factory;
       _mapper = mapper;
+      _iservice = new ECImageService(factory, mapper, new ECImageStorage(mapper));
     }
 
     public IEnumerable<Models.ArticleShortViewModel> GetList(string urlPath)
@@ -72,6 +74,12 @@ namespace EventCombo.Service
       foreach (var file in article.ArticleImages)
         if (!String.IsNullOrWhiteSpace(file.ECImage.ImagePath))
           artVM.Images.Add(urlPath + file.ECImage.ImagePath);
+
+      artVM.OGPType = "article";
+      artVM.OGPTitle = artVM.Title;
+      artVM.OGPUrl = HtmlProcessing.ResolveServerUrl(VirtualPathUtility.ToAbsolute(GetArticleUrl(artVM.ArticleId, artVM.Title)), false);
+      artVM.OGPImage = HtmlProcessing.ResolveServerUrl(VirtualPathUtility.ToAbsolute(artVM.ArticleImageUrl), false);
+      artVM.OGPDescription = HtmlProcessing.GetShortString(artVM.Body, 150, 250, " ");
 
       return artVM;
     }
@@ -242,7 +250,7 @@ namespace EventCombo.Service
       if (!String.IsNullOrWhiteSpace(articleVM.AuthorImage))
         articleVM.AuthorImage = urlPath + articleVM.AuthorImage;
       if (!String.IsNullOrWhiteSpace(articleVM.ArticleImage))
-        articleVM.ArticleImage = urlPath + articleVM.ArticleImage;
+        articleVM.ArticleImage = GetImageUrl(article.ECImageId ?? 0, "/Images/AMaterial/No_image_available.svg");
       return articleVM;
     }
 
@@ -264,7 +272,16 @@ namespace EventCombo.Service
 
     public static string GetArticleUrl(long articleId, string articleTitle)
     {
-      return String.Format("~/a/{0}/{1}", articleId.ToString(), System.Text.RegularExpressions.Regex.Replace(articleTitle.Trim().ToLower().Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""));
+      return String.Format("~/a/{0}/{1}", articleId.ToString(), HtmlProcessing.PrepareForUrl(articleTitle, 60));
+    }
+
+    private string GetImageUrl(long imageId, string defaultImageUrl)
+    {
+      string res = defaultImageUrl;
+      ECImageViewModel image = _iservice.GetImageById(imageId);
+      if ((image != null) && (File.Exists(image.FilePath)))
+        res = image.ImagePath;
+      return res;
     }
   }
 }

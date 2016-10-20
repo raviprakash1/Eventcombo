@@ -10,7 +10,7 @@ using AutoMapper;
 
 namespace EventCombo.Controllers
 {
-  public class ArticleController : Controller
+  public class ArticleController : BaseController
   {
     private IArticleService _service;
     public ArticleController()
@@ -27,6 +27,8 @@ namespace EventCombo.Controllers
       string realUrl = ArticleService.GetArticleUrl(article.ArticleId, article.Title);
       if (curUrl != realUrl)
         return RedirectPermanent(realUrl);
+
+      PopulateBaseViewModel(article, article.Title + " | Eventcombo");
       return View(article);
     }
 
@@ -47,7 +49,8 @@ namespace EventCombo.Controllers
     [HttpGet]
     public ActionResult Buzz()
     {
-      TwoListsOfSomething<ArticleShortViewModel> articles = new TwoListsOfSomething<ArticleShortViewModel>(); 
+      TwoListsViewModel<ArticleShortViewModel> articles = new TwoListsViewModel<ArticleShortViewModel>();
+      PopulateBaseViewModel(articles, "Event Info, Event Buzz, Interviews, Features, Hot Event and Ticketing News | Eventcombo");
       articles.FirstList = _service.GetPopularArticles(Url.Content(_service.ImagePath), 9, true).ToList();
       articles.SecondList = _service.GetLastArticles(Url.Content(_service.ImagePath), 20).ToList();
       return View(articles);
