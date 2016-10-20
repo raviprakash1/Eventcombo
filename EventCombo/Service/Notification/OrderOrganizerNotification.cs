@@ -89,11 +89,11 @@ namespace EventCombo.Service
             tagList["EventOrganiserName"] = userName;
             tagList["UserEmailID"] = emailOrder;
             tagList["UserFirstNameID"] = userName;
-            tagList["TicketQty"] = (ticketPurchasedDetail.Sum(s => (s.TPD_Purchased_Qty ?? 0))).ToString();
+            tagList["TicketQty"] = (ticketPurchasedDetail.Sum(s => s.TPD_Purchased_Qty) ?? 0).ToString();
+            tagList["TicketPrice"] = ((ticketPurchasedDetail.Sum(s => s.TPD_Amount) ?? 0) + (ticketPurchasedDetail.Sum(s => s.TPD_Donate) ?? 0)).ToString();
             tagList["EventOrderNO"] = _orderId;
             tagList["EventTitleId"] = ticketPurchasedDetail.FirstOrDefault().Event.EventTitle;
             tagList["ClickHere"] = _baseUrl + "/Home/Index";
-            tagList["TicketPrice"] = (ticketPurchasedDetail.Sum(s => (s.TPD_Amount ?? 0))).ToString();
 
             _service.Message.To.Clear();
             if (String.IsNullOrEmpty(eTemplate.To))

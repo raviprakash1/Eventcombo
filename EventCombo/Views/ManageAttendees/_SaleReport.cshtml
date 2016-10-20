@@ -6,8 +6,9 @@
   .reportTable tr td, .reportTable tr th { font:14px "Roboto",sans serif; border-right:1px solid #000; border-bottom:1px solid #000;}
   .reportTable tr th { font-weight:500; white-space:nowrap;}
 </style>
+<title>HTML Order Report for @ViewData["PageTitle"] | Eventcombo</title>
 <div id="purchasedTicketContainer">
-    <div class="reportHeading">Ticket Sales for "@(ViewData["EventTitle"])" on <script>var dt = new Date(); document.write(dt.getMonth() + 1 + '/' + dt.getDate() + '/' + dt.getFullYear())</script></div>
+    <div class="reportHeading">HTML Order Report for "@(ViewData["PageTitle"])" on <script>var dt = new Date(); document.write(dt.getMonth() + 1 + '/' + dt.getDate() + '/' + dt.getFullYear())</script></div>
     <div class="reportTableContainer">
         <table class="table reportTable" border="0" cellpadding="5">
             <thead>

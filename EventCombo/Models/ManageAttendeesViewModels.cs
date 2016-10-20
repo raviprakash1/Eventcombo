@@ -111,7 +111,6 @@ namespace EventCombo.Models
   public class EventOrderInfoListViewModel
   {
     public long EventId { get; set; }
-    public string Title { get; set; }
     public int Total { get; set; }
     public PaymentStates PaymentState { get; set; }
 
@@ -121,6 +120,7 @@ namespace EventCombo.Models
       get { return _orders; }
       private set { _orders = value; }
     }
+    public string EventTitle { get; set; }
   }
 
   public class PaymentTypeViewModel
