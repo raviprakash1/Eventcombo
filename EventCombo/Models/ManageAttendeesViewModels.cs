@@ -7,7 +7,7 @@ using System.Web;
 namespace EventCombo.Models
 {
   public enum PaymentStates { Total, Completed, Pending }
-  public enum EventOrderSortBy { Date, Price, PricePaid, PriceNet, Buyer, TicketName, CustomerEmail, Order, Quantity, PaymentState, Address }
+  public enum EventOrderSortBy { Date, Price, PricePaid, PriceNet, Buyer, TicketName, CustomerEmail, Order, Quantity, PaymentState, Address, DateOrder }
 
 
   public class ManageAttendeesOrdersViewModel
@@ -41,6 +41,7 @@ namespace EventCombo.Models
 
   public class EventOrderInfoViewModel
   {
+    public long OId { get; set; }
     public string OrderId { get; set; }
     public string BuyerName { get; set; }
     public string TicketName { get; set; }
@@ -89,7 +90,7 @@ namespace EventCombo.Models
     public EventOrdersListRequestViewModel()
     {
       EventId = 0;
-      SortBy = EventOrderSortBy.Date;
+      SortBy = EventOrderSortBy.DateOrder;
       PaymentState = PaymentStates.Total;
       PerPage = 20;
       Page = 0;
