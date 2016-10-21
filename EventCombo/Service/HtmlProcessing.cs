@@ -67,6 +67,8 @@ namespace EventCombo.Service
 
     public static string PrepareForUrl(string str, int maxLength)
     {
+      if (String.IsNullOrEmpty(str))
+        return str;
       string res = System.Text.RegularExpressions.Regex.Replace(str.Trim().ToLower().Replace(" ", "-"), "[^a-zA-Z0-9_-]+", "");
       res = res.Substring(0, Math.Min(res.Length, maxLength));
       return res;

@@ -727,7 +727,7 @@ namespace EventCombo.Controllers
             if (vAddress != null)
             {
               objDisEv.EventDistance = GetDiscoverEventLatLongDis(Convert.ToDouble((strLat != "" ? strLat : "0")), Convert.ToDouble((strLong != "" ? strLong : "0")), Convert.ToDouble((vAddress.Latitude != "" ? vAddress.Latitude : "0")), Convert.ToDouble((vAddress.Longitude != "" ? vAddress.Longitude : "0")));
-              if (vAddress.ConsolidateAddress.Trim() != string.Empty)
+              if (!String.IsNullOrWhiteSpace(vAddress.ConsolidateAddress))
               {
                 objDisEv.EventAddress = vAddress.ConsolidateAddress;
               }
