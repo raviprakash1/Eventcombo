@@ -6,22 +6,16 @@
   Layout = null;
 }
 <div class="entrmntLastestNewsTxt">Popular Stories</div>
-<div class="entrmntLastestNewsContent">
-
-  @foreach (var article in Model)
-  {
-
-    <div class="col-md-6 col-sm-6 col-xs-12 newsContentDetailCon">
-      <div class="newsContentInnerCon">
-        <a href="@(Url.Content(ArticleService.GetArticleUrl(article.ArticleId, article.Title)))">
-          <div class="newsContentImg">
-            <img src="@article.ArticleImage" alt="@article.Title"/>
-          </div>
-          <div class="newsContentText">
-            @article.Title
-          </div>
+<div class="popularStories">
+  <div class="storiesBox">
+    @foreach (var article in Model)
+    {
+      <div class="popularStory">
+        <a href="@(Url.Content(ArticleService.GetArticleUrl(article.ArticleId, article.Title)))" title="@article.Title">
+          <div class="storyImg"><img src="@article.ArticleImage" alt="@article.Title" /></div>
+          <div class="storyTitle">@article.Title</div>
         </a>
       </div>
-    </div>
-  }
+    }
+  </div>
 </div>

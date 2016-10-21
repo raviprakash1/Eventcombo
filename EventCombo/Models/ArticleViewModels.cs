@@ -18,8 +18,21 @@ namespace EventCombo.Models
     public string ArticleImage { get; set; }
   }
 
-  public class ArticleFullViewModel
+  public class ArticleFullViewModel: IBaseViewModel, IOpenGraphProtocol
   {
+    // IBaseViewModel interface implementation
+    public string BaseTitle { get; set; }
+    public string BaseUserId { get; set; }
+    public string BaseUserName { get; set; }
+    public string BaseUserEmail { get; set; }
+    // IOpenGraphProtocol interface implementation
+    public string OGPTitle { get; set; }
+    public string OGPType { get; set; }
+    public string OGPUrl { get; set; }
+    public string OGPImage { get; set; }
+    public string OGPDescription { get; set; }
+
+
     public long ArticleId { get; set; }
     public string Title { get; set; }
     public string ArticleImageUrl { get; set; }
@@ -48,8 +61,14 @@ namespace EventCombo.Models
     public IEnumerable<HttpPostedFileBase> ImageFiles { get; set; }
   }
 
-  public class TwoListsOfSomething<T>
+  public class TwoListsViewModel<T> : IBaseViewModel
   {
+    // IBaseViewModel interface implementation
+    public string BaseTitle { get; set; }
+    public string BaseUserId { get; set; }
+    public string BaseUserName { get; set; }
+    public string BaseUserEmail { get; set; }
+    
     private List<T> _firstList;
     public List<T> FirstList
     {

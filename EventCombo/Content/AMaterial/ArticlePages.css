@@ -1,0 +1,122 @@
+﻿/* ARTICLE HOME OLD CSS */
+.articleCarousalCls { position:relative; display:block;}
+.carItemConDivAnc { display:block; text-align:left;}
+.carItemConDivAnc img { max-width:100%; max-height:100%;}
+.carItemConDiv { width:100%; display:inline-block; padding:0 10px;}
+.carItemConDiv img { width:100%;}
+wrap-owlcarousel { width:100%; display:inline-block; position:relative; margin-bottom:15px;}
+wrap-owlcarousel .owl-controls { width:100%; height:32px; display:inline-block; position:absolute; top:30%; left:0;}
+wrap-owlcarousel .owl-prev, wrap-owlcarousel .owl-next { background:#0cf; display:inline-block; width:40px; height:40px; line-height:40px; text-align:center; border-radius:50%; color:#fff; position:absolute; top:0;}
+wrap-owlcarousel .owl-prev { left:-10px;}
+wrap-owlcarousel .owl-next { right:-10px;}
+.articleNewsCon { margin-top:20px;}
+.articleConMainHeading { background:#00cafd; color:#fff; padding:8px 15px; font:500 18px "Roboto",sans serif; text-transform:uppercase; margin-bottom:15px;}
+.articleTwitterFeedsHead { background:#ffcf1d; color:#fff; padding:8px 15px; font:500 18px "Roboto",sans serif; text-transform:uppercase; margin-bottom:15px;}
+.articleNewsInner a { display:block; overflow:hidden;}
+.articleNewsInnerImg img { width:100%; height:100%; border:1px solid #888;}
+.articleNewsInnerTitle { display:block; color:#000; font-weight:bold; font-size:20px; margin:0 0 10px 0;}
+.articleNewsInnerDesp { display:block; color:#888; font-size:14px;}
+.articleNewsInner { margin-bottom:15px;}
+.articleNewsCon { margin-top:20px; clear:both; overflow:hidden;}
+#myCarousel { clear:both; overflow:hidden; margin-bottom:20px;}
+.artImgBoxOuter { width:100%; display:table; text-align:center; margin-bottom:15px;}
+.artImgBox { background:#eee; height:200px; display:table-cell; vertical-align:middle;}
+.carousel-control .glyphicon-chevron-left, .carousel-control .glyphicon-chevron-right, .carousel-control .icon-prev, .carousel-control .icon-next { margin-top:-15px;}
+media only screen and (min-width:960px) and (max-width:1024px) {
+	.artImgBox { height:150px;}
+}
+media handheld, only screen and (max-width:768px), only screen and (max-device-width:768px) and (max-aspect-ratio:13/9) {
+	.artImgBox { height:100px;}
+}
+/****************************************************************************************************/
+/* SHOW ARTICLE OLD CSS */
+.entrmntHeaderImg { height:165px; border:1px solid #c1c1c1;}
+.entrmntHeaderImg img { width:100%; height:100%;}
+.entrmentPersonName { font-weight:bold; font-size:35px;}
+.entrmentFollowTwitter { font-size:16px; margin-top:21px;}
+.entrmentHeaderQuestionContainer { margin-top:10px;}
+.entrmentHeaderQuestion { font:500 36px "Roboto", Arial, Helvetica, sans-serif; color:#000; margin-top:0;}
+.entrmentHeaderAnswerContainer { margin-bottom:20px;}
+.entrmentHeaderAnswer { font-size:16px; text-align:justify;}
+.entrmentHeaderAnswer img { max-width:100%;}
+.newsContentImg img { width:100%;}
+.newsContentText { color:#333; font-size:15px; margin-top:10px; font-weight:bold;}
+.newsContentInnerCon { border:1px solid #888; padding:5px; display:block; max-width:250px; text-align:center; margin:0px auto;}
+.newsContentDetailCon { margin-bottom:20px;}
+.photoGallaryContainerTxt { font-size:20px; background-color:#00CAFD; color:#fff; text-align:center; padding:10px 0px;}
+.discussionFbContainerTxt, .entrmntLastestNewsTxt { background:#00CAFD; font:500 18px "Roboto", Arial, Helvetica, sans-serif; color:#fff; text-transform:uppercase; padding:10px 15px;}
+.discussionFbContainer { margin-bottom:15px;}
+.entrmntLastestNewsTxt { margin-bottom:15px;}
+.photoGallaryContent img { width:100%; height:100%;}
+.photoGallaryContent { padding-left:0px; margin:20px 0px; height:250px; overflow:hidden;}
+.imageGallaryAnchorCls { display:block; max-width:250px; text-align:center; margin:0px auto;}
+.sliderImgGallary { width:100%; height:100%;}
+.fb-comments, .fb-comments iframe[style], .fb-comments span { width:100% !important;}
+.fb-page, .fb-page iframe[style], .fb-page span { width:100% !important;}
+.articleImageDiv { width:40%; float:left; margin:10px 20px 10px 0;}
+.articleImageDiv img { width:100%; height:100%;}
+.entrmSocialDiv img { width:65px; height:45px;}
+.entrmntSocialIcon { margin-top:10px;}
+.entrmSocialDiv { padding:0px; margin:0px 5px 0px 0px; display:inline-block;}
+/****************************************************************************************************/
+/* ARTICLE BOX */
+.articleContainer { margin:10px -10px; overflow:hidden; clear:both;}
+.articleOuter { padding:10px;}
+.invisible { position:relative; box-shadow:none !important;}
+.invisible:after { content:""; display:inline-block; width:100%; height:100%; background:rgba(255, 255, 255, .9); position:absolute; left:0; top:0; z-index:1;}
+.articleMain { background:#fff; box-shadow:0 0 1px rgba(0, 0, 0, .2);}
+.articleMain:hover { box-shadow:1px 1px 2px rgba(0, 0, 0, .3);}
+.articleBox { width:100%; display:inline-block; padding:15px;}
+.articleLeft { width:30%; display:inline-block; float:left; text-align:center;}
+.articleRight { width:70%; display:inline-block; float:right; padding-left:15px;}
+.articleImg { max-width:100%; max-height:125px; display:block;}
+.articleTitle { color:#000; font:18px/20px 'Roboto Condensed', Arial, Helvetica, sans-serif; text-align:left; margin:0; height:40px; overflow:hidden;}
+.articleTitle { color:#000; text-decoration:none; cursor:pointer;}
+.articleTitle:hover { color:#0bf;}
+.articleBody { width:100%; display:inline-block; overflow:hidden;}
+.articleDes { color:#888; font:13px/18px 'Roboto', Arial, Helvetica, sans-serif; text-align:left; height:54px; overflow:hidden;}
+.articleActions { background:rgba(0, 0, 0, 0); padding:10px 15px;}
+.articleMain:hover .articleActions { background:rgba(0, 0, 0, .04);}
+.articleActions .hashLink { font:500 14px 'Roboto', Arial, Helvetica, sans-serif; color:#333; opacity:0.4; margin-right:10px; cursor:pointer; text-decoration:none;}
+.articleMain:hover .articleActions .hashLink { opacity:1;}
+.articleActions .hashLink:hover { color:#0bf;}
+.articleActions .matBox { float:right; display:inline-block;}
+.articleActions .matIcon { color:#444; margin-left:10px; cursor:pointer; opacity:0;}
+.articleMain:hover .articleActions .matIcon { opacity:1;}
+.articleActions .matIcon i { margin:0;}
+.articleActions .matIcon:hover, .articleActions .matIcon.active { color:#0bf;}
+/****************************************************************************************************/
+.userbox { position:relative; min-height:130px; background:#f8f8f8; border:1px solid #f5f5f5; padding:15px 15px 15px 130px; margin-bottom:15px; text-align:left;}
+.userbox img { background:#c8c8c8; width:100px; height:100px; display:inline-block; border-radius:50%; position:absolute; left:15px; top:15px;}
+.userbox .articleAuthor { font:500 24px "Roboto", Arial, Helvetica, sans-serif; color:#0cf;}
+.userbox .articleDate { display:inline-block; font:14px "Roboto", Arial, Helvetica, sans-serif; color:#aaafb9;}
+.userbox .authorTwitter { font:14px "Roboto", Arial, Helvetica, sans-serif; color:#40505a;}
+.userbox .twitterLink  { color:#0cf;}
+.userbox .twitterLink:hover  { color:#0393ef;}
+.authorIcons { margin-top:15px;}
+.authorIcons a { color:#40505a; margin-right:10px;}
+.authorIcons a:hover { color:#0cf;}
+
+.popularStories { margin-left:-10px; margin-right:-10px;}
+.storiesBox { width:100%; display:inline-block;}
+.popularStory { width:50%; display:inline-block; padding:5px 10px; float:left;}
+.popularStory a { width:100%; display:inline-block; background:rgba(0, 0, 0, .04); box-shadow:0 0 1px rgba(0, 0, 0, .2);}
+.popularStory .storyImg { display:flex; width:100%; height:120px; overflow:hidden; vertical-align:middle;}
+.popularStory .storyImg img { width:100%; display:inline-block;}
+.popularStory .storyTitle { font:500 14px 'Roboto', Arial, Helvetica, sans-serif; color:#333; padding:10px; cursor:pointer; text-decoration:none; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;}
+.popularStory:hover .storyTitle { color:#0cf;}
+/****************************************************************************************************/
+@media screen and (min-width:768px) and (max-width:960px)
+{
+  .popularStory { width:100%; float:none;}
+}
+@media screen and (min-width:0) and (max-width:768px)
+{
+	.entrmentHeaderQuestion { font-size:24px; margin-top:15px;}
+	.userbox .articleAuthor { font-size:18px;}
+  .userbox { min-height:90px; padding:10px 10px 10px 90px;}
+  .userbox img { width:70px; height:70px;  left:10px; top:10px;}
+  .authorIcons { margin-top:0;}
+  .articleImageDiv { display:inline-block; width:100%; float:none; margin:0;}
+  wrap-owlcarousel { margin-top:15px;}
+}
