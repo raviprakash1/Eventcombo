@@ -2,7 +2,7 @@
 <style>
   .reportTableContainer { width:100%; display:inline-block; overflow:auto; max-height:400px; font:14px "Roboto",sans serif;}
   .reportHeading { padding:7px; font:14px "Roboto",sans serif; background:#c2d69a; text-align:center;}
-  .reportTable { background:#eaf1dd; border-left:1px solid #000;}
+  .reportTable { width: 100%;background:#eaf1dd; border-left:1px solid #000;}
   .reportTable tr td, .reportTable tr th { font:14px "Roboto",sans serif; border-right:1px solid #000; border-bottom:1px solid #000;}
   .reportTable tr th { font-weight:500; white-space:nowrap;}
 </style>
@@ -20,8 +20,6 @@
                     <th>Quantity</th>
                     <th>Gross Paid</th>
                     <th>Net Event Revenue</th>
-                    <th>EventCombo Fee</th>
-                    <th>EventCombo Merchant Fee</th>
                     <th>Promo Code</th>
                     <th>Refunded</th>
                     <th>Cancelled</th>
@@ -49,8 +47,6 @@
                         <td class="UETableTD">@order.Quantity</td>
                         <td class="UETableTD">$@order.PricePaid.ToString("N2")</td>
                         <td class="UETableTD">$@order.PriceNet.ToString("N2")</td>
-                        <td class="UETableTD">$@order.Fee.ToString("N2")</td>
-                        <td class="UETableTD">$@order.MerchantFee.ToString("N2")</td>
                         <td class="UETableTD">@order.PromoCode</td>
                         <td class="UETableTD">@(order.Refunded > 0 ? "Yes" : "")</td>
                         <td class="UETableTD">@(order.Cancelled > 0 ? "Yes" : "")</td>
