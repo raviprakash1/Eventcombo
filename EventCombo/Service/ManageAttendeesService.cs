@@ -133,8 +133,10 @@ namespace EventCombo.Service
             order.PricePaid = order.PricePaid + (orderDB.O_VariableAmount ?? 0);
             order.PriceNet = order.PricePaid - order.Fee;
             order.CustomerEmail = orderDB.O_Email;
-            order.Refunded = ((orderDB.OrderStateId ?? 0) == 3 ? order.PricePaid : 0);
-            order.Cancelled = ((orderDB.OrderStateId ?? 0) == 2 ? order.PricePaid : 0);
+            order.Refunded = ((orderDB.OrderStateId ?? 0) == 3 ? order.PricePaid - order.Fee : 0);
+            order.Cancelled = ((orderDB.OrderStateId ?? 0) == 2 ? order.PricePaid - order.Fee : 0);
+            order.PricePaid = order.PricePaid - order.Refunded - order.Cancelled;
+            order.PriceNet = order.PriceNet - order.Refunded - order.Cancelled;
             if (billingAddressDB != null)
             {
                 var countryDB = countryRepo.Get(filter: (c => c.CountryID.ToString() == billingAddressDB.Country));
@@ -221,6 +223,8 @@ namespace EventCombo.Service
                     ", " + billingAddressDB.State +
                     " " + billingAddressDB.Zip ;
             }
+            order.PricePaid = order.PricePaid - order.Refunded - order.Cancelled;
+            order.PriceNet = order.PriceNet - order.Refunded - order.Cancelled;
         }
         res = res.OrderByDescending(oo => oo.Date.Date).ThenBy(oo => oo.OId);
         return res;
