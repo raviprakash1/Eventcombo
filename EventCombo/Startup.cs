@@ -41,6 +41,8 @@ namespace EventCombo
 
             RecurringJob.AddOrUpdate<AttendeeMailNotification>(amn => amn.Send(), "*/5 * * * *");
 
+            RecurringJob.AddOrUpdate<PurchasingService>(ps => ps.DeleteExpiredLocks(10), "*/1 * * * *");
+
             var hfOptions = new DashboardOptions
             {
               AuthorizationFilters = new[]

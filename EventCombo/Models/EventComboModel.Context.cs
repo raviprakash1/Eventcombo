@@ -120,11 +120,14 @@ namespace EventCombo.Models
         public virtual DbSet<EventECImage> EventECImages { get; set; }
         public virtual DbSet<EmailType> EmailTypes { get; set; }
         public virtual DbSet<ScheduledEmail> ScheduledEmails { get; set; }
-        public virtual DbSet<TicketBearer_View> TicketBearer_View { get; set; }
         public virtual DbSet<HomepageWord> HomepageWords { get; set; }
         public virtual DbSet<AttendeeEmail> AttendeeEmails { get; set; }
         public virtual DbSet<TicketAttendee> TicketAttendees { get; set; }
         public virtual DbSet<TicketAttendee_View> TicketAttendee_View { get; set; }
+        public virtual DbSet<AvailableTicket_View> AvailableTicket_View { get; set; }
+        public virtual DbSet<TicketBearer_View> TicketBearer_View { get; set; }
+        public virtual DbSet<LockOrder> LockOrders { get; set; }
+        public virtual DbSet<LockTicket> LockTickets { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)
@@ -331,6 +334,15 @@ namespace EventCombo.Models
                 new ObjectParameter("filterUpcoming", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetNearestEvents_Result>("GetNearestEvents", lngParameter, latParameter, distanceParameter, filterUpcomingParameter);
+        }
+    
+        public virtual int DeleteExpiredLocks(Nullable<int> minutes)
+        {
+            var minutesParameter = minutes.HasValue ?
+                new ObjectParameter("minutes", minutes) :
+                new ObjectParameter("minutes", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteExpiredLocks", minutesParameter);
         }
     }
 }

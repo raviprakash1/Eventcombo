@@ -14,11 +14,13 @@ namespace EventCombo.Models
     
     public partial class TicketBearer_View
     {
+        public long JustId { get; set; }
         public long TicketbearerId { get; set; }
         public string OrderId { get; set; }
         public string UserId { get; set; }
         public string Guid { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

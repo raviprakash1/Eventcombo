@@ -52,6 +52,10 @@
       broadcastMessage('SetCitySearchRedirect', param);
     }
 
+    var showMessage = function (param) {
+      broadcastMessage('ShowMessage', param);
+    }
+
     return {
       EventInfoLoaded: eventInfoLoaded,
       ErrorExternalLogin: errorExternalLogin,
@@ -64,6 +68,7 @@
       AddFavoriteWithLoginProcessed: addFavoriteWithLoginProcessed,
       CurrentCoordinatesChanged: currentCoordinatesChanged,
       ReloadPage: reloadPage,
-      SetCitySearchRedirect: setCitySearchRedirect
+      SetCitySearchRedirect: setCitySearchRedirect,
+      ShowMessage: showMessage
     }
   }]);
