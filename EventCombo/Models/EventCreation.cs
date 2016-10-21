@@ -212,6 +212,7 @@ namespace EventCombo.Models
         public string OrderId { get; set; }
         public string Name { get; set; }
         public string Date { get; set; }
+        public string Status { get; set; }
     }
 
     public class Organiserevent

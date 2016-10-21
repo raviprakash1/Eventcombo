@@ -271,14 +271,15 @@ namespace EventCombo.Controllers
             OrderAttendees CO = new OrderAttendees();
             var Order = (from o in db.Order_Detail_T
                          join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
-                         where p.TPD_Event_Id == Eventid
+                         where p.TPD_Event_Id == Eventid && o.IsManualOrder == false
                          select new OrderAttendees()
                          {
                              OrderId = o.O_Order_Id,
                              Amount = o.O_TotalAmount.ToString(),
                              Qty = "0",
                              Name = o.O_First_Name + " " + o.O_Last_Name,
-                             Date = o.O_OrderDateTime.ToString()
+                             Date = o.O_OrderDateTime.ToString(),
+                             Status = o.OrderState.OrderStateName
                          }).Distinct().Take(3).ToList();
 
 
