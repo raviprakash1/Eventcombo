@@ -133,8 +133,8 @@ namespace EventCombo.Service
             order.PricePaid = order.PricePaid + (orderDB.O_VariableAmount ?? 0);
             order.PriceNet = order.PricePaid - order.Fee;
             order.CustomerEmail = orderDB.O_Email;
-            order.Refunded = ((orderDB.OrderStateId ?? 0) == 3 ? (-order.PricePaid) : 0);
-            order.Cancelled = ((orderDB.OrderStateId ?? 0) == 2 ? (-order.PricePaid) : 0);
+            order.Refunded = ((orderDB.OrderStateId ?? 0) == 3 ? order.PricePaid : 0);
+            order.Cancelled = ((orderDB.OrderStateId ?? 0) == 2 ? order.PricePaid : 0);
             if (billingAddressDB != null)
             {
                 var countryDB = countryRepo.Get(filter: (c => c.CountryID.ToString() == billingAddressDB.Country));
@@ -182,8 +182,8 @@ namespace EventCombo.Service
             PriceNet = (ticket.PaidAmount ?? 0) - ((ticket.ECFeePerTicket ?? 0) * (ticket.PurchasedQuantity ?? 0)) - ((ticket.MerchantFeePerTicket ?? 0) * (ticket.PurchasedQuantity ?? 0)),
             Fee = (ticket.ECFeePerTicket ?? 0) * (ticket.PurchasedQuantity ?? 0),
             MerchantFee = (ticket.MerchantFeePerTicket ?? 0) * (ticket.PurchasedQuantity ?? 0),
-            Refunded = ((ticket.OrderStateId ?? 0) == 3 ? (-ticket.PaidAmount ?? 0) : 0),
-            Cancelled = ((ticket.OrderStateId ?? 0) == 2 ? (-ticket.PaidAmount ?? 0) : 0),
+            Refunded = ((ticket.OrderStateId ?? 0) == 3 ? (ticket.PaidAmount ?? 0) : 0),
+            Cancelled = ((ticket.OrderStateId ?? 0) == 2 ? (ticket.PaidAmount ?? 0) : 0),
             Date = ticket.O_OrderDateTime ?? DateTime.Today,
             PromoCode = ticket.PromoCode ?? "",
             Address = "",
