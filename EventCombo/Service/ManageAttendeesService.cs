@@ -127,6 +127,7 @@ namespace EventCombo.Service
 
         if (orderDB != null)
         {
+            order.OId = orderDB.O_Id;
             order.Date = orderDB.O_OrderDateTime ?? DateTime.Today;
             order.Price = orderDB.O_TotalAmount ?? 0;
             order.PricePaid = order.PricePaid + (orderDB.O_VariableAmount ?? 0);
@@ -147,7 +148,7 @@ namespace EventCombo.Service
             }
         }
       }
-
+      res = res.OrderByDescending(oo => oo.Date.Date).ThenBy(oo => oo.OId);
       return res;
     }
 
@@ -169,6 +170,7 @@ namespace EventCombo.Service
         IEnumerable<EventOrderInfoViewModel> res = EventTicketRepo.Get(filter: (t => t.EventID == eventId && t.IsManualOrder == false))
         .Select(ticket => new EventOrderInfoViewModel()
         {
+            OId = ticket.OId,
             OrderId = ticket.OrderId,
             PaymentState = PaymentStates.Completed,
             TicketName = ticket.TicketName,
@@ -220,7 +222,7 @@ namespace EventCombo.Service
                     " " + billingAddressDB.Zip ;
             }
         }
-
+        res = res.OrderByDescending(oo => oo.Date.Date).ThenBy(oo => oo.OId);
         return res;
     }
 

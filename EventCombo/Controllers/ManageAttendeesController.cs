@@ -292,8 +292,11 @@ namespace EventCombo.Controllers
         case EventOrderSortBy.PaymentState:
           orders = req.SortDesc ? orders.OrderByDescending(o => o.PaymentState) : orders.OrderBy(o => o.PaymentState);
           break;
+        case EventOrderSortBy.DateOrder:
+          orders = orders.OrderByDescending(o => o.Date.Date).ThenBy(o => o.OId);
+          break;
         default:
-          orders = req.SortDesc ? orders.OrderByDescending(o => o.Quantity) : orders.OrderBy(o => o.Quantity);
+          orders = orders.OrderByDescending(o => o.Date.Date).ThenBy(o => o.OId);
           break;
       };
 
