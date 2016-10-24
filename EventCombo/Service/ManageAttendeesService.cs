@@ -59,7 +59,7 @@ namespace EventCombo.Service
       IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
       IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
       IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
-      var order = orderRepo.Get(filter: o => o.IsManualOrder == false);
+      var order = orderRepo.Get(filter: o => o.IsManualOrder == false && o.OrderStateId != 2 && o.OrderStateId != 3);
       var OrderIds = order.Select(oo => oo.O_Order_Id);
       var tickets = tpdRepo.Get(filter: (t => t.TPD_Event_Id == eventId && OrderIds.Contains(t.TPD_Order_Id)));
       var ev = eRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();      
