@@ -38,7 +38,7 @@
                             @if(tempOrderId != order.OrderId)
                             {
                                 <td class="UETableTD">@order.OrderId</td>
-                                <td class="UETableTD">@(order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt"))</td>
+                                <td class="UETableTD">@(order.Date.ToString("MMM dd, yyyy hh:mm:ss tt"))</td>
                                 tempOrderId = order.OrderId;
                             }
                             else

@@ -464,7 +464,7 @@ namespace EventCombo.Service
         AddStyledCell(row, 6, style).SetCellValue("$" + (double)order.PriceNet);
         AddStyledCell(row, 7, datestyle).SetCellValue(order.CustomerEmail);
         AddStyledCell(row, 8, datestyle).SetCellValue(order.Address);
-        AddStyledCell(row, 9, datestyle).SetCellValue(order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt"));
+        AddStyledCell(row, 9, datestyle).SetCellValue(order.Date.ToString("MMM dd, yyyy hh:mm:ss tt"));
         AddStyledCell(row, 10, style).SetCellValue(order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString());
       }
       for (i = 0; i <= 10; i++)
@@ -532,7 +532,7 @@ namespace EventCombo.Service
             str = str.Substring(28, str.Length - 28);
         }
         rw.Write(str + new String(' ', 28 - str.Length) + "|");
-        str = order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt");
+        str = order.Date.ToString("MMM dd, yyyy hh:mm:ss tt");
         rw.Write(str + new String(' ', 10 - str.Length) + "|");
         str = order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString();
         rw.Write(str);
@@ -574,7 +574,7 @@ namespace EventCombo.Service
         rw.Write("$" + order.PriceNet.ToString("N2") + delimiter);
         rw.Write(order.CustomerEmail + delimiter);
         rw.Write( order.Address + delimiter);
-        rw.Write("\"" + order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt") + "\"" + delimiter);
+        rw.Write("\"" + order.Date.ToString("MMM dd, yyyy hh:mm:ss tt") + "\"" + delimiter);
         rw.Write(order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString());
         rw.WriteLine();
       }
@@ -802,7 +802,7 @@ namespace EventCombo.Service
         {
             row = sheet.CreateRow(i++);
             AddStyledCell(row, 0, style).SetCellValue(order.OrderId);
-            AddStyledCell(row, 1, datestyle).SetCellValue(order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt"));
+            AddStyledCell(row, 1, datestyle).SetCellValue(order.Date.ToString("MMM dd, yyyy hh:mm:ss tt"));
             AddStyledCell(row, 2, style).SetCellValue(order.BuyerName);
             AddStyledCell(row, 3, style).SetCellValue(order.TicketName);
             AddStyledCell(row, 4, style).SetCellValue(order.Quantity);
@@ -868,7 +868,7 @@ namespace EventCombo.Service
         foreach (var order in orders)
         {
             rw.Write(order.OrderId + new String(' ', 11 - order.OrderId.Length) + "|");
-            str = order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt");
+            str = order.Date.ToString("MMM dd, yyyy hh:mm:ss tt");
             rw.Write(str + new String(' ', 26 - str.Length) + "|");
             str = order.BuyerName;
             while (str.Length > 28)
@@ -989,7 +989,7 @@ namespace EventCombo.Service
         foreach (var order in orders)
         {
             rw.Write(order.OrderId + delimiter);
-            rw.Write("\"" + order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt") + "\"" + delimiter);
+            rw.Write("\"" + order.Date.ToString("MMM dd, yyyy hh:mm:ss tt") + "\"" + delimiter);
             rw.Write("\"" + order.BuyerName + "\"" + delimiter);
             rw.Write("\"" + order.TicketName + "\"" + delimiter);
             rw.Write(order.Quantity.ToString() + delimiter);
@@ -1893,7 +1893,7 @@ namespace EventCombo.Service
             if (tempOrderId != order.OrderId)
             {
                 AddStyledCell(row, 0, style).SetCellValue(order.OrderId);
-                AddStyledCell(row, 1, datestyle).SetCellValue(order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt"));
+                AddStyledCell(row, 1, datestyle).SetCellValue(order.Date.ToString("MMM dd, yyyy hh:mm:ss tt"));
                 tempOrderId = order.OrderId;
             }
             else
