@@ -191,6 +191,10 @@
           <Property Name="IsOnFooter" Type="bit" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="IsOnHomepage" Type="bit" Nullable="false" />
+          <Property Name="StateId" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Position" Type="smallint" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -370,6 +374,8 @@
           <Property Name="EventType" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="IsOnFooter" Type="bit" Nullable="false" />
           <Property Name="EventHide" Type="char" MaxLength="1" />
+          <Property Name="IsOnHomepage" Type="bit" Nullable="false" />
+          <Property Name="Position" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="EventVenue">
           <Key>
@@ -454,6 +460,7 @@
           <Property Name="OrderStateId" Type="tinyint" />
           <Property Name="PaymentTypeId" Type="tinyint" />
           <Property Name="Note" Type="nvarchar" MaxLength="2000" />
+          <Property Name="IsManualOrder" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="OrderState">
           <Key>
@@ -693,6 +700,7 @@
           <Property Name="TPD_EC_Fee" Type="numeric" Precision="18" Scale="2" />
           <Property Name="TPD_PromoCodeID" Type="int" />
           <Property Name="TPD_PromoCodeAmount" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Customer_Fee" Type="numeric" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Ticket_Quantity_Detail">
           <Key>
@@ -707,6 +715,15 @@
           <Property Name="TQD_Remaining_Quantity" Type="bigint" />
           <Property Name="TQD_StartDate" Type="varchar" MaxLength="50" />
           <Property Name="TQD_StartTime" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TicketAttendee">
+          <Key>
+            <PropertyRef Name="TicketAttendeeId" />
+          </Key>
+          <Property Name="TicketAttendeeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TicketBearerId" Type="bigint" Nullable="false" />
+          <Property Name="PurchasedTicketId" Type="bigint" Nullable="false" />
+          <Property Name="Quantity" Type="bigint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'EventCombo.dbo.TicketBack2015' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -760,6 +777,7 @@ warning 6002: The table/view 'EventCombo.dbo.TicketBack2015' does not have a pri
           <Property Name="Guid" Type="nchar" MaxLength="128" />
           <Property Name="Name" Type="nchar" MaxLength="128" />
           <Property Name="Email" Type="nchar" MaxLength="256" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="TicketDeliveryMethod">
           <Key>
@@ -824,8 +842,10 @@ warning 6002: The table/view 'EventCombo.dbo.EventTicket_View' does not have a p
           <Key>
             <PropertyRef Name="TPD_Id" />
             <PropertyRef Name="OId" />
+            
             <PropertyRef Name="TicketTypeID" />
             <PropertyRef Name="TicketTypeName" />
+            <PropertyRef Name="IsManualOrder" />
           </Key>
           <Property Name="TPD_Id" Type="bigint" Nullable="false" />
           <Property Name="EventID" Type="bigint" />
@@ -837,12 +857,13 @@ warning 6002: The table/view 'EventCombo.dbo.EventTicket_View' does not have a p
           <Property Name="Email" Type="varchar" MaxLength="100" />
           <Property Name="OrderAmount" Type="numeric" Precision="18" Scale="2" />
           <Property Name="VariableAmount" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="VariableIds" Type="varchar" MaxLength="500" />
           <Property Name="TotalQuantity" Type="bigint" />
           <Property Name="PurchasedQuantity" Type="bigint" />
           <Property Name="PaidAmount" Type="numeric" Precision="9" Scale="2" />
-          <Property Name="ECFeePerTicket" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="ECFeePerTicket" Type="numeric" Precision="19" Scale="2" />
           <Property Name="MerchantFeePerTicket" Type="decimal" Precision="9" Scale="2" />
-          <Property Name="Customer_Fee" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="Customer_Fee" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TicketTypeID" Type="bigint" Nullable="false" />
           <Property Name="TicketTypeName" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="PromoCodeID" Type="int" />
@@ -851,6 +872,56 @@ warning 6002: The table/view 'EventCombo.dbo.EventTicket_View' does not have a p
           <Property Name="O_OrderDateTime" Type="datetime" />
           <Property Name="OrderStateId" Type="tinyint" />
           <Property Name="OrderStateName" Type="varchar" MaxLength="50" />
+          <Property Name="PaymentTypeId" Type="tinyint" />
+          <Property Name="IsManualOrder" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EventCombo.dbo.TicketAttendee_View' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TicketAttendee_View">
+          <Key>
+            <PropertyRef Name="TicketAttendeeId" />
+            <PropertyRef Name="TicketBearerId" />
+            <PropertyRef Name="PhoneNumber" />
+            <PropertyRef Name="PurchasedTicketId" />
+            <PropertyRef Name="Customer_Fee" />
+            <PropertyRef Name="Quantity" />
+          </Key>
+          <Property Name="TicketAttendeeId" Type="bigint" Nullable="false" />
+          <Property Name="TicketBearerId" Type="bigint" Nullable="false" />
+          <Property Name="UserId" Type="nchar" MaxLength="128" />
+          <Property Name="OrderId" Type="varchar" MaxLength="1000" />
+          <Property Name="Guid" Type="nchar" MaxLength="128" />
+          <Property Name="Name" Type="nchar" MaxLength="128" />
+          <Property Name="Email" Type="nchar" MaxLength="256" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="PurchasedTicketId" Type="bigint" Nullable="false" />
+          <Property Name="TPD_User_Id" Type="nvarchar" MaxLength="256" />
+          <Property Name="TPD_Order_Id" Type="varchar" MaxLength="11" />
+          <Property Name="TPD_Purchased_Qty" Type="bigint" />
+          <Property Name="TPD_TQD_Id" Type="bigint" />
+          <Property Name="TPD_Event_Id" Type="bigint" />
+          <Property Name="TPD_Amount" Type="numeric" Precision="9" Scale="2" />
+          <Property Name="TPD_Donate" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TPD_GUID" Type="varchar" MaxLength="1000" />
+          <Property Name="TPD_EC_Fee" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="TPD_PromoCodeID" Type="int" />
+          <Property Name="TPD_PromoCodeAmount" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Customer_Fee" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Quantity" Type="bigint" Nullable="false" />
+          <Property Name="T_name" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EventCombo.dbo.TicketBearer_View' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TicketBearer_View">
+          <Key>
+            <PropertyRef Name="TicketbearerId" />
+          </Key>
+          <Property Name="TicketbearerId" Type="bigint" Nullable="false" />
+          <Property Name="OrderId" Type="varchar" MaxLength="1000" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="Guid" Type="nchar" MaxLength="128" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'EventCombo.dbo.V_EventsexpiredList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1272,6 +1343,30 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TicketAttendee_Ticket_Purchased_Detail">
+          <End Role="Ticket_Purchased_Detail" Type="Self.Ticket_Purchased_Detail" Multiplicity="1" />
+          <End Role="TicketAttendee" Type="Self.TicketAttendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket_Purchased_Detail">
+              <PropertyRef Name="TPD_Id" />
+            </Principal>
+            <Dependent Role="TicketAttendee">
+              <PropertyRef Name="PurchasedTicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketAttendee_TicketBearer">
+          <End Role="TicketBearer" Type="Self.TicketBearer" Multiplicity="1" />
+          <End Role="TicketAttendee" Type="Self.TicketAttendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketBearer">
+              <PropertyRef Name="TicketbearerId" />
+            </Principal>
+            <Dependent Role="TicketAttendee">
+              <PropertyRef Name="TicketBearerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="Distance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
           <Parameter Name="lat1" Type="float" Mode="In" />
           <Parameter Name="long1" Type="float" Mode="In" />
@@ -1390,6 +1485,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="Ticket_Locked_Detail" EntityType="Self.Ticket_Locked_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket_Purchased_Detail" EntityType="Self.Ticket_Purchased_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket_Quantity_Detail" EntityType="Self.Ticket_Quantity_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TicketAttendee" EntityType="Self.TicketAttendee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketBearer" EntityType="Self.TicketBearer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketDeliveryMethod" EntityType="Self.TicketDeliveryMethod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketOrderDetail" EntityType="Self.TicketOrderDetail" Schema="dbo" store:Type="Tables" />
@@ -1448,6 +1544,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
     [EventTicket_View].[Email] AS [Email], 
     [EventTicket_View].[OrderAmount] AS [OrderAmount], 
     [EventTicket_View].[VariableAmount] AS [VariableAmount], 
+    [EventTicket_View].[VariableIds] AS [VariableIds], 
     [EventTicket_View].[TotalQuantity] AS [TotalQuantity], 
     [EventTicket_View].[PurchasedQuantity] AS [PurchasedQuantity], 
     [EventTicket_View].[PaidAmount] AS [PaidAmount], 
@@ -1461,8 +1558,47 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
     [EventTicket_View].[PromoCodeAmount] AS [PromoCodeAmount], 
     [EventTicket_View].[O_OrderDateTime] AS [O_OrderDateTime], 
     [EventTicket_View].[OrderStateId] AS [OrderStateId], 
-    [EventTicket_View].[OrderStateName] AS [OrderStateName]
+    [EventTicket_View].[OrderStateName] AS [OrderStateName], 
+    [EventTicket_View].[PaymentTypeId] AS [PaymentTypeId], 
+    [EventTicket_View].[IsManualOrder] AS [IsManualOrder]
     FROM [dbo].[EventTicket_View] AS [EventTicket_View]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TicketAttendee_View" EntityType="Self.TicketAttendee_View" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TicketAttendee_View].[TicketAttendeeId] AS [TicketAttendeeId], 
+    [TicketAttendee_View].[TicketBearerId] AS [TicketBearerId], 
+    [TicketAttendee_View].[UserId] AS [UserId], 
+    [TicketAttendee_View].[OrderId] AS [OrderId], 
+    [TicketAttendee_View].[Guid] AS [Guid], 
+    [TicketAttendee_View].[Name] AS [Name], 
+    [TicketAttendee_View].[Email] AS [Email], 
+    [TicketAttendee_View].[PhoneNumber] AS [PhoneNumber], 
+    [TicketAttendee_View].[PurchasedTicketId] AS [PurchasedTicketId], 
+    [TicketAttendee_View].[TPD_User_Id] AS [TPD_User_Id], 
+    [TicketAttendee_View].[TPD_Order_Id] AS [TPD_Order_Id], 
+    [TicketAttendee_View].[TPD_Purchased_Qty] AS [TPD_Purchased_Qty], 
+    [TicketAttendee_View].[TPD_TQD_Id] AS [TPD_TQD_Id], 
+    [TicketAttendee_View].[TPD_Event_Id] AS [TPD_Event_Id], 
+    [TicketAttendee_View].[TPD_Amount] AS [TPD_Amount], 
+    [TicketAttendee_View].[TPD_Donate] AS [TPD_Donate], 
+    [TicketAttendee_View].[TPD_GUID] AS [TPD_GUID], 
+    [TicketAttendee_View].[TPD_EC_Fee] AS [TPD_EC_Fee], 
+    [TicketAttendee_View].[TPD_PromoCodeID] AS [TPD_PromoCodeID], 
+    [TicketAttendee_View].[TPD_PromoCodeAmount] AS [TPD_PromoCodeAmount], 
+    [TicketAttendee_View].[Customer_Fee] AS [Customer_Fee], 
+    [TicketAttendee_View].[Quantity] AS [Quantity], 
+    [TicketAttendee_View].[T_name] AS [T_name]
+    FROM [dbo].[TicketAttendee_View] AS [TicketAttendee_View]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TicketBearer_View" EntityType="Self.TicketBearer_View" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TicketBearer_View].[TicketbearerId] AS [TicketbearerId], 
+    [TicketBearer_View].[OrderId] AS [OrderId], 
+    [TicketBearer_View].[UserId] AS [UserId], 
+    [TicketBearer_View].[Guid] AS [Guid], 
+    [TicketBearer_View].[Name] AS [Name], 
+    [TicketBearer_View].[Email] AS [Email]
+    FROM [dbo].[TicketBearer_View] AS [TicketBearer_View]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="V_EventsexpiredList" EntityType="Self.V_EventsexpiredList" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1685,6 +1821,14 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <AssociationSet Name="FK_Ticket_Quantity_Info_Ticket" Association="Self.FK_Ticket_Quantity_Info_Ticket">
             <End Role="Ticket" EntitySet="Ticket" />
             <End Role="Ticket_Quantity_Detail" EntitySet="Ticket_Quantity_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketAttendee_Ticket_Purchased_Detail" Association="Self.FK_TicketAttendee_Ticket_Purchased_Detail">
+            <End Role="Ticket_Purchased_Detail" EntitySet="Ticket_Purchased_Detail" />
+            <End Role="TicketAttendee" EntitySet="TicketAttendee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketAttendee_TicketBearer" Association="Self.FK_TicketAttendee_TicketBearer">
+            <End Role="TicketBearer" EntitySet="TicketBearer" />
+            <End Role="TicketAttendee" EntitySet="TicketAttendee" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -1974,6 +2118,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <NavigationProperty Name="Events" Relationship="Self.FK_Event_EventType" FromRole="EventType" ToRole="Event" />
           <Property Name="EventHide" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IsOnFooter" Type="Boolean" Nullable="false" />
+          <Property Name="IsOnHomepage" Type="Boolean" Nullable="false" />
+          <Property Name="Position" Type="Int16" Nullable="false" />
         </EntityType>
         <EntityType Name="EventVenue">
           <Key>
@@ -2201,6 +2347,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <NavigationProperty Name="Event" Relationship="Cmsdata.EventTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="Event" />
           <NavigationProperty Name="AspNetUser" Relationship="Cmsdata.AspNetUserTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="AspNetUser" />
           <NavigationProperty Name="Ticket_Quantity_Detail" Relationship="Cmsdata.Ticket_Quantity_DetailTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="Ticket_Quantity_Detail" />
+          <Property Name="Customer_Fee" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="TicketAttendees" Relationship="Cmsdata.FK_TicketAttendee_Ticket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="TicketAttendee" />
         </EntityType>
         <EntityType Name="Ticket_Quantity_Detail">
           <Key>
@@ -2230,6 +2378,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="true" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TicketAttendees" Relationship="Cmsdata.FK_TicketAttendee_TicketBearer" FromRole="TicketBearer" ToRole="TicketAttendee" />
         </EntityType>
         <EntityType Name="TicketDeliveryMethod">
           <Key>
@@ -2707,6 +2857,17 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             <End Role="ECImage" EntitySet="ECImages" />
             <End Role="BusinessPageECImage" EntitySet="BusinessPageECImages" />
           </AssociationSet>
+          <EntitySet Name="TicketAttendees" EntityType="Cmsdata.TicketAttendee" />
+          <EntitySet Name="TicketAttendee_View" EntityType="Cmsdata.TicketAttendee_View" />
+          <EntitySet Name="TicketBearer_View" EntityType="Cmsdata.TicketBearer_View" />
+          <AssociationSet Name="FK_TicketAttendee_Ticket_Purchased_Detail" Association="Cmsdata.FK_TicketAttendee_Ticket_Purchased_Detail">
+            <End Role="Ticket_Purchased_Detail" EntitySet="Ticket_Purchased_Detail" />
+            <End Role="TicketAttendee" EntitySet="TicketAttendees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketAttendee_TicketBearer" Association="Cmsdata.FK_TicketAttendee_TicketBearer">
+            <End Role="TicketBearer" EntitySet="TicketBearers" />
+            <End Role="TicketAttendee" EntitySet="TicketAttendees" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -2816,6 +2977,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="OrderStateId" Type="Byte" />
           <Property Name="PaymentTypeId" Type="Byte" />
           <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="IsManualOrder" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Fee_Structure">
           <Key>
@@ -3441,6 +3603,10 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="IsOnFooter" Type="Boolean" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsOnHomepage" Type="Boolean" Nullable="false" />
+          <Property Name="StateId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="Int16" />
         </EntityType>
         <EntityType Name="EventTicket_View">
           <Key>
@@ -3448,6 +3614,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             <PropertyRef Name="TPD_Id" />
             <PropertyRef Name="TicketTypeID" />
             <PropertyRef Name="TicketTypeName" />
+            <PropertyRef Name="IsManualOrder" />
           </Key>
           <Property Name="EventID" Type="Int64" />
           <Property Name="TicketName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
@@ -3461,9 +3628,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="TotalQuantity" Type="Int64" />
           <Property Name="PurchasedQuantity" Type="Int64" />
           <Property Name="PaidAmount" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="ECFeePerTicket" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ECFeePerTicket" Type="Decimal" Precision="19" Scale="2" />
           <Property Name="MerchantFeePerTicket" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="Customer_Fee" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="Customer_Fee" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="PromoCodeID" Type="Int32" />
           <Property Name="PromoCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PromoCodeAmount" Type="Decimal" Precision="18" Scale="2" />
@@ -3473,6 +3640,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="TPD_Id" Type="Int64" Nullable="false" />
           <Property Name="TicketTypeID" Type="Int64" Nullable="false" />
           <Property Name="TicketTypeName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VariableIds" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentTypeId" Type="Byte" />
+          <Property Name="IsManualOrder" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="BusinessPageECImage">
           <Key>
@@ -3505,6 +3675,85 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Principal>
             <Dependent Role="BusinessPageECImage">
               <PropertyRef Name="ECImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TicketAttendee">
+          <Key>
+            <PropertyRef Name="TicketAttendeeId" />
+          </Key>
+          <Property Name="TicketAttendeeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketBearerId" Type="Int64" Nullable="false" />
+          <Property Name="PurchasedTicketId" Type="Int64" Nullable="false" />
+          <Property Name="Quantity" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Ticket_Purchased_Detail" Relationship="Cmsdata.FK_TicketAttendee_Ticket_Purchased_Detail" FromRole="TicketAttendee" ToRole="Ticket_Purchased_Detail" />
+          <NavigationProperty Name="TicketBearer" Relationship="Cmsdata.FK_TicketAttendee_TicketBearer" FromRole="TicketAttendee" ToRole="TicketBearer" />
+        </EntityType>
+        <EntityType Name="TicketAttendee_View">
+          <Key>
+            <PropertyRef Name="TicketAttendeeId" />
+            <PropertyRef Name="TicketBearerId" />
+            <PropertyRef Name="PhoneNumber" />
+            <PropertyRef Name="PurchasedTicketId" />
+            <PropertyRef Name="Customer_Fee" />
+            <PropertyRef Name="Quantity" />
+          </Key>
+          <Property Name="TicketAttendeeId" Type="Int64" Nullable="false" />
+          <Property Name="TicketBearerId" Type="Int64" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="true" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PurchasedTicketId" Type="Int64" Nullable="false" />
+          <Property Name="TPD_User_Id" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TPD_Order_Id" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="TPD_Purchased_Qty" Type="Int64" />
+          <Property Name="TPD_TQD_Id" Type="Int64" />
+          <Property Name="TPD_Event_Id" Type="Int64" />
+          <Property Name="TPD_Amount" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="TPD_Donate" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TPD_GUID" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="TPD_EC_Fee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TPD_PromoCodeID" Type="Int32" />
+          <Property Name="TPD_PromoCodeAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Customer_Fee" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Quantity" Type="Int64" Nullable="false" />
+          <Property Name="T_name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TicketBearer_View">
+          <Key>
+            <PropertyRef Name="TicketbearerId" />
+          </Key>
+          <Property Name="TicketbearerId" Type="Int64" Nullable="false" />
+          <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_TicketAttendee_Ticket_Purchased_Detail">
+          <End Type="Cmsdata.Ticket_Purchased_Detail" Role="Ticket_Purchased_Detail" Multiplicity="1" />
+          <End Type="Cmsdata.TicketAttendee" Role="TicketAttendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket_Purchased_Detail">
+              <PropertyRef Name="TPD_Id" />
+            </Principal>
+            <Dependent Role="TicketAttendee">
+              <PropertyRef Name="PurchasedTicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketAttendee_TicketBearer">
+          <End Type="Cmsdata.TicketBearer" Role="TicketBearer" Multiplicity="1" />
+          <End Type="Cmsdata.TicketAttendee" Role="TicketAttendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketBearer">
+              <PropertyRef Name="TicketbearerId" />
+            </Principal>
+            <Dependent Role="TicketAttendee">
+              <PropertyRef Name="TicketBearerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3772,6 +4021,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="EventTypes">
             <EntityTypeMapping TypeName="Cmsdata.EventType">
               <MappingFragment StoreEntitySet="EventType">
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="IsOnHomepage" ColumnName="IsOnHomepage" />
                 <ScalarProperty Name="IsOnFooter" ColumnName="IsOnFooter" />
                 <ScalarProperty Name="EventHide" ColumnName="EventHide" />
                 <ScalarProperty Name="EventTypeID" ColumnName="EventTypeID" />
@@ -3988,6 +4239,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="Ticket_Purchased_Detail">
             <EntityTypeMapping TypeName="Cmsdata.Ticket_Purchased_Detail">
               <MappingFragment StoreEntitySet="Ticket_Purchased_Detail">
+                <ScalarProperty Name="Customer_Fee" ColumnName="Customer_Fee" />
                 <ScalarProperty Name="TPD_PromoCodeAmount" ColumnName="TPD_PromoCodeAmount" />
                 <ScalarProperty Name="TPD_PromoCodeID" ColumnName="TPD_PromoCodeID" />
                 <ScalarProperty Name="TPD_EC_Fee" ColumnName="TPD_EC_Fee" />
@@ -4021,6 +4273,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="TicketBearers">
             <EntityTypeMapping TypeName="Cmsdata.TicketBearer">
               <MappingFragment StoreEntitySet="TicketBearer">
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="TicketbearerId" ColumnName="TicketbearerId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
@@ -4173,6 +4426,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="Order_Detail_T">
             <EntityTypeMapping TypeName="Cmsdata.Order_Detail_T">
               <MappingFragment StoreEntitySet="Order_Detail_T">
+                <ScalarProperty Name="IsManualOrder" ColumnName="IsManualOrder" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="PaymentTypeId" ColumnName="PaymentTypeId" />
                 <ScalarProperty Name="OrderStateId" ColumnName="OrderStateId" />
@@ -4567,6 +4821,10 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="Cities">
             <EntityTypeMapping TypeName="Cmsdata.City">
               <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="IsOnHomepage" ColumnName="IsOnHomepage" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="IsOnFooter" ColumnName="IsOnFooter" />
@@ -4580,6 +4838,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="EventTicket_View">
             <EntityTypeMapping TypeName="Cmsdata.EventTicket_View">
               <MappingFragment StoreEntitySet="EventTicket_View">
+                <ScalarProperty Name="IsManualOrder" ColumnName="IsManualOrder" />
+                <ScalarProperty Name="PaymentTypeId" ColumnName="PaymentTypeId" />
+                <ScalarProperty Name="VariableIds" ColumnName="VariableIds" />
                 <ScalarProperty Name="TicketTypeName" ColumnName="TicketTypeName" />
                 <ScalarProperty Name="TicketTypeID" ColumnName="TicketTypeID" />
                 <ScalarProperty Name="TPD_Id" ColumnName="TPD_Id" />
@@ -4613,6 +4874,57 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
                 <ScalarProperty Name="ECImageId" ColumnName="ECImageId" />
                 <ScalarProperty Name="BusinessPageId" ColumnName="BusinessPageId" />
                 <ScalarProperty Name="BusinessPageECImageId" ColumnName="BusinessPageECImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketAttendees">
+            <EntityTypeMapping TypeName="Cmsdata.TicketAttendee">
+              <MappingFragment StoreEntitySet="TicketAttendee">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="PurchasedTicketId" ColumnName="PurchasedTicketId" />
+                <ScalarProperty Name="TicketBearerId" ColumnName="TicketBearerId" />
+                <ScalarProperty Name="TicketAttendeeId" ColumnName="TicketAttendeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketAttendee_View">
+            <EntityTypeMapping TypeName="Cmsdata.TicketAttendee_View">
+              <MappingFragment StoreEntitySet="TicketAttendee_View">
+                <ScalarProperty Name="T_name" ColumnName="T_name" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Customer_Fee" ColumnName="Customer_Fee" />
+                <ScalarProperty Name="TPD_PromoCodeAmount" ColumnName="TPD_PromoCodeAmount" />
+                <ScalarProperty Name="TPD_PromoCodeID" ColumnName="TPD_PromoCodeID" />
+                <ScalarProperty Name="TPD_EC_Fee" ColumnName="TPD_EC_Fee" />
+                <ScalarProperty Name="TPD_GUID" ColumnName="TPD_GUID" />
+                <ScalarProperty Name="TPD_Donate" ColumnName="TPD_Donate" />
+                <ScalarProperty Name="TPD_Amount" ColumnName="TPD_Amount" />
+                <ScalarProperty Name="TPD_Event_Id" ColumnName="TPD_Event_Id" />
+                <ScalarProperty Name="TPD_TQD_Id" ColumnName="TPD_TQD_Id" />
+                <ScalarProperty Name="TPD_Purchased_Qty" ColumnName="TPD_Purchased_Qty" />
+                <ScalarProperty Name="TPD_Order_Id" ColumnName="TPD_Order_Id" />
+                <ScalarProperty Name="TPD_User_Id" ColumnName="TPD_User_Id" />
+                <ScalarProperty Name="PurchasedTicketId" ColumnName="PurchasedTicketId" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TicketBearerId" ColumnName="TicketBearerId" />
+                <ScalarProperty Name="TicketAttendeeId" ColumnName="TicketAttendeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketBearer_View">
+            <EntityTypeMapping TypeName="Cmsdata.TicketBearer_View">
+              <MappingFragment StoreEntitySet="TicketBearer_View">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="TicketbearerId" ColumnName="TicketbearerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

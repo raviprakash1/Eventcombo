@@ -218,6 +218,9 @@ namespace CMS.Models
       public long TicketbearerId { get; set; }
       public string Name { get; set; }
       public string Email { get; set; }
+      public string PhoneNumber { get; set; }
+      public long TicketId { get; set; }
+      public long Quantity { get; set; }
     }
 
     public class OrderDetailsViewModel

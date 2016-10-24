@@ -21,5 +21,9 @@ namespace CMS.Models
         public bool IsOnFooter { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public System.DateTime UpdateDate { get; set; }
+        public bool IsOnHomepage { get; set; }
+        public string StateId { get; set; }
+        public string ShortName { get; set; }
+        public Nullable<short> Position { get; set; }
     }
 }

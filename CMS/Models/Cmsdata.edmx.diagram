@@ -105,6 +105,11 @@
         <EntityTypeShape EntityType="Cmsdata.BusinessPageECImage" Width="1.5" PointX="9.625" PointY="30.375" />
         <AssociationConnector Association="Cmsdata.FK_BusinessPageECImage_BusinessPage" />
         <AssociationConnector Association="Cmsdata.FK_BusinessPageECImage_ECImage" />
+        <EntityTypeShape EntityType="Cmsdata.TicketAttendee" Width="1.5" PointX="17.25" PointY="27.25" />
+        <EntityTypeShape EntityType="Cmsdata.TicketAttendee_View" Width="1.5" PointX="14.375" PointY="26.75" />
+        <EntityTypeShape EntityType="Cmsdata.TicketBearer_View" Width="1.5" PointX="25.375" PointY="4.75" />
+        <AssociationConnector Association="Cmsdata.FK_TicketAttendee_Ticket_Purchased_Detail" />
+        <AssociationConnector Association="Cmsdata.FK_TicketAttendee_TicketBearer" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
