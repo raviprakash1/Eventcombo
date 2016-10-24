@@ -401,7 +401,7 @@
     }
 
     function SendCancelOrder(obj, oId) {
-        if ($(obj).closest('table').parent().parent().data('orderstate') != 1) {
+        if ($(obj).closest('table').parent().parent().data('orderstate') == 1) {
             $('#ajaxanswer' + oId).html("Order already cancelled.");
             return;
         }
