@@ -100,7 +100,7 @@ namespace EventCombo.Service
       IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
       IRepository<BillingAddress> billRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
       IRepository<Ticket> ticketRepo = new GenericRepository<Ticket>(_factory.ContextFactory);
-      IRepository<Country> countryRepo = new GenericRepository<Country>(_factory.ContextFactory);
+      IRepository<City> cityRepo = new GenericRepository<City>(_factory.ContextFactory);
 
       var orderList = orderRepo.Get(filter: o => o.IsManualOrder == false);
       var OrderIds = orderList.Select(oo => oo.O_Order_Id);
@@ -139,14 +139,17 @@ namespace EventCombo.Service
             order.PriceNet = order.PriceNet - order.Refunded - order.Cancelled;
             if (billingAddressDB != null)
             {
-                var countryDB = countryRepo.Get(filter: (c => c.CountryID.ToString() == billingAddressDB.Country));
-
+                string stateAbr = "";
+                var cityDB = cityRepo.Get(filter: (c => c.CityName.Trim().ToString() == billingAddressDB.City.Trim())).FirstOrDefault();
+                if (cityDB != null)
+                {
+                    stateAbr = cityDB.StateId;
+                }
                 order.Address = billingAddressDB.Address1 +
                     " " + billingAddressDB.Address2 +
                     ", " + billingAddressDB.City +
-                    "-" + billingAddressDB.Zip +
-                    " " + billingAddressDB.State +
-                    " (" + (countryDB.FirstOrDefault().Country1) + ")";
+                    ", " + stateAbr +
+                    " " + billingAddressDB.Zip;
             }
         }
       }
@@ -162,7 +165,7 @@ namespace EventCombo.Service
         IRepository<EventTicket_View> EventTicketRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
         IRepository<BillingAddress> billRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
         IRepository<ShippingAddress> shipRepo = new GenericRepository<ShippingAddress>(_factory.ContextFactory);
-        IRepository<Country> countryRepo = new GenericRepository<Country>(_factory.ContextFactory);
+        IRepository<City> cityRepo = new GenericRepository<City>(_factory.ContextFactory);
         IRepository<TicketBearer_View> tbRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
         IRepository<Event_VariableDesc> evdRepo = new GenericRepository<Event_VariableDesc>(_factory.ContextFactory);
 
@@ -206,22 +209,31 @@ namespace EventCombo.Service
             var shippingAddressDB = shipRepo.Get(filter: (b => b.OrderId == order.OrderId)).FirstOrDefault();
             if (shippingAddressDB != null)
             {
-                var countryDB = countryRepo.Get(filter: (c => c.CountryID.ToString() == shippingAddressDB.Country));
-
+                string stateAbr = "";
+                var cityDB = cityRepo.Get(filter: (c => c.CityName.Trim().ToString() == shippingAddressDB.City.Trim())).FirstOrDefault();
+                if (cityDB != null)
+                {
+                    stateAbr = cityDB.StateId;
+                }
                 order.MailTickets = shippingAddressDB.Address1 +
-                    " " + shippingAddressDB.Address2 +
-                    ", " + shippingAddressDB.City +
-                    "-" + shippingAddressDB.Zip +
-                    " " + shippingAddressDB.State +
-                    " (" + (countryDB.FirstOrDefault().Country1) + ")";
+                " " + shippingAddressDB.Address2 +
+                ", " + shippingAddressDB.City +
+                ", " + stateAbr +
+                " " + shippingAddressDB.Zip;
             }
             if (billingAddressDB != null)
             {
+                string stateAbr = "";
+                var cityDB = cityRepo.Get(filter: (c => c.CityName.Trim().ToString() == billingAddressDB.City.Trim())).FirstOrDefault();
+                if (cityDB != null)
+                {
+                    stateAbr = cityDB.StateId;
+                }
                 order.Address = billingAddressDB.Address1 +
-                    " " + billingAddressDB.Address2 +
-                    ", " + billingAddressDB.City +
-                    ", " + billingAddressDB.State +
-                    " " + billingAddressDB.Zip ;
+                " " + billingAddressDB.Address2 +
+                ", " + billingAddressDB.City +
+                ", " + stateAbr +
+                " " + billingAddressDB.Zip ;
             }
             order.PricePaid = order.PricePaid - order.Refunded - order.Cancelled;
             order.PriceNet = order.PriceNet - order.Refunded - order.Cancelled;
