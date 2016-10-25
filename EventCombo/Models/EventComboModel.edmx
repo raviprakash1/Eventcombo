@@ -1225,6 +1225,7 @@ warning 6002: The table/view 'EventCombo.dbo.TicketBearer_View' does not have a 
           <Property Name="Guid" Type="nchar" MaxLength="128" />
           <Property Name="Name" Type="nvarchar" MaxLength="128" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'EventCombo.dbo.V_EventsexpiredList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -2003,7 +2004,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
     [TicketBearer_View].[UserId] AS [UserId], 
     [TicketBearer_View].[Guid] AS [Guid], 
     [TicketBearer_View].[Name] AS [Name], 
-    [TicketBearer_View].[Email] AS [Email]
+    [TicketBearer_View].[Email] AS [Email], 
+    [TicketBearer_View].[PhoneNumber] AS [PhoneNumber]
     FROM [dbo].[TicketBearer_View] AS [TicketBearer_View]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="V_EventsexpiredList" EntityType="Self.V_EventsexpiredList" store:Type="Views" store:Schema="dbo">
@@ -4999,6 +5001,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <ComplexType Name="GetNearestEvents_Result">
           <Property Type="Int64" Name="EventID" Nullable="false" />
@@ -6674,6 +6677,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="TicketBearer_View">
             <EntityTypeMapping TypeName="EventComboModel.TicketBearer_View">
               <MappingFragment StoreEntitySet="TicketBearer_View">
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Guid" ColumnName="Guid" />
