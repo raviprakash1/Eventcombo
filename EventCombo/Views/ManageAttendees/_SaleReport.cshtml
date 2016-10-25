@@ -41,7 +41,7 @@
                 {
                     <tr>
                         <td class="UETableTD"> @order.OrderId </td>
-                        <td class="UETableTD">@(order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt"))</td>
+                        <td class="UETableTD">@(order.Date.ToString("MMM dd, yyyy hh:mm:ss tt"))</td>
                         <td class="UETableTD">@order.BuyerName</td>
                         <td class="UETableTD">@order.TicketName</td>
                         <td class="UETableTD">@order.Quantity</td>
@@ -50,7 +50,7 @@
                         <td class="UETableTD">@order.PromoCode</td>
                         <td class="UETableTD">@(order.Refunded > 0 ? "Yes" : "")</td>
                         <td class="UETableTD">@(order.Cancelled > 0 ? "Yes" : "")</td>
-                        <td class="UETableTD"></td>
+                        <td class="UETableTD">@order.PhoneNumber</td>
                         <td class="UETableTD">@order.BuyerEmail</td>
                         <td class="UETableTD">@order.Address</td>
                         <td class="UETableTD">@order.MailTickets</td>

@@ -7,20 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EventCombo.Models
+namespace CMS.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class TicketBearer_View
+    public partial class TicketAttendee
     {
-        public long TicketbearerId { get; set; }
-        public string OrderId { get; set; }
-        public string UserId { get; set; }
-        public string Guid { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public long JustId { get; set; }
+        public long TicketAttendeeId { get; set; }
+        public long TicketBearerId { get; set; }
+        public long PurchasedTicketId { get; set; }
+        public long Quantity { get; set; }
+    
+        public virtual Ticket_Purchased_Detail Ticket_Purchased_Detail { get; set; }
+        public virtual TicketBearer TicketBearer { get; set; }
     }
 }

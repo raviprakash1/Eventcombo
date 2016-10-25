@@ -437,10 +437,19 @@
     <Compile Include="Models\Ticket.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TicketAttendee.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TicketAttendee_View.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TicketBack2015.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TicketBearer.cs">
+      <DependentUpon>Cmsdata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TicketBearer_View.cs">
       <DependentUpon>Cmsdata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TicketDeliveryMethod.cs">

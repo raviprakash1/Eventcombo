@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EventCombo.Models
+namespace CMS.Models
 {
     using System;
     using System.Collections.Generic;
@@ -20,7 +20,5 @@ namespace EventCombo.Models
         public string Guid { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public long JustId { get; set; }
     }
 }

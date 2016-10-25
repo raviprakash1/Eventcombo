@@ -59,7 +59,7 @@ namespace EventCombo.Service
       IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
       IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
       IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
-      var order = orderRepo.Get(filter: o => o.IsManualOrder == false);
+      var order = orderRepo.Get(filter: o => o.IsManualOrder == false && o.OrderStateId != 2 && o.OrderStateId != 3);
       var OrderIds = order.Select(oo => oo.O_Order_Id);
       var tickets = tpdRepo.Get(filter: (t => t.TPD_Event_Id == eventId && OrderIds.Contains(t.TPD_Order_Id)));
       var ev = eRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();      
@@ -100,7 +100,6 @@ namespace EventCombo.Service
       IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
       IRepository<BillingAddress> billRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
       IRepository<Ticket> ticketRepo = new GenericRepository<Ticket>(_factory.ContextFactory);
-      IRepository<Country> countryRepo = new GenericRepository<Country>(_factory.ContextFactory);
 
       var orderList = orderRepo.Get(filter: o => o.IsManualOrder == false);
       var OrderIds = orderList.Select(oo => oo.O_Order_Id);
@@ -139,14 +138,11 @@ namespace EventCombo.Service
             order.PriceNet = order.PriceNet - order.Refunded - order.Cancelled;
             if (billingAddressDB != null)
             {
-                var countryDB = countryRepo.Get(filter: (c => c.CountryID.ToString() == billingAddressDB.Country));
-
                 order.Address = billingAddressDB.Address1 +
                     " " + billingAddressDB.Address2 +
                     ", " + billingAddressDB.City +
-                    "-" + billingAddressDB.Zip +
-                    " " + billingAddressDB.State +
-                    " (" + (countryDB.FirstOrDefault().Country1) + ")";
+                    ", " + billingAddressDB.State +
+                    " " + billingAddressDB.Zip;
             }
         }
       }
@@ -162,11 +158,9 @@ namespace EventCombo.Service
         IRepository<EventTicket_View> EventTicketRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
         IRepository<BillingAddress> billRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
         IRepository<ShippingAddress> shipRepo = new GenericRepository<ShippingAddress>(_factory.ContextFactory);
-        IRepository<Country> countryRepo = new GenericRepository<Country>(_factory.ContextFactory);
         IRepository<TicketBearer_View> tbRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
         IRepository<Event_VariableDesc> evdRepo = new GenericRepository<Event_VariableDesc>(_factory.ContextFactory);
 
-        var attendees = tbRepo.Get();
         var vairableChages = evdRepo.Get(filter: (t => t.Event_Id == eventId));
 
         IEnumerable<EventOrderInfoViewModel> res = EventTicketRepo.Get(filter: (t => t.EventID == eventId && t.IsManualOrder == false))
@@ -176,8 +170,9 @@ namespace EventCombo.Service
             OrderId = ticket.OrderId,
             PaymentState = PaymentStates.Completed,
             TicketName = ticket.TicketName,
-            BuyerName = string.Join(", ", attendees.Where(a => a.OrderId == ticket.OrderId).Select(a => a.Name.Trim()).ToArray()),
-            BuyerEmail = string.Join(", ", attendees.Where(a => a.OrderId == ticket.OrderId).Select(a => a.Email.Trim()).ToArray()),
+            BuyerName = string.Join(", ", tbRepo.Get(a => a.OrderId.Trim() == ticket.OrderId.Trim()).Select(a => a.Name.Trim()).ToArray()),
+            BuyerEmail = string.Join(", ", tbRepo.Get(a => a.OrderId.Trim() == ticket.OrderId.Trim()).Select(a => a.Email.Trim()).ToArray()),
+            PhoneNumber = string.Join(", ", tbRepo.Get(a => a.OrderId.Trim() == ticket.OrderId.Trim() && a.PhoneNumber != null && a.PhoneNumber != "").Select(a => a.PhoneNumber).ToArray()),
             Quantity = ticket.PurchasedQuantity ?? 0,
             Price = ticket.OrderAmount ?? 0,
             PricePaid = ticket.PaidAmount ?? 0,
@@ -206,22 +201,19 @@ namespace EventCombo.Service
             var shippingAddressDB = shipRepo.Get(filter: (b => b.OrderId == order.OrderId)).FirstOrDefault();
             if (shippingAddressDB != null)
             {
-                var countryDB = countryRepo.Get(filter: (c => c.CountryID.ToString() == shippingAddressDB.Country));
-
                 order.MailTickets = shippingAddressDB.Address1 +
-                    " " + shippingAddressDB.Address2 +
-                    ", " + shippingAddressDB.City +
-                    "-" + shippingAddressDB.Zip +
-                    " " + shippingAddressDB.State +
-                    " (" + (countryDB.FirstOrDefault().Country1) + ")";
+                " " + shippingAddressDB.Address2 +
+                ", " + shippingAddressDB.City +
+                ", " + shippingAddressDB.State +
+                " " + shippingAddressDB.Zip;
             }
             if (billingAddressDB != null)
             {
                 order.Address = billingAddressDB.Address1 +
-                    " " + billingAddressDB.Address2 +
-                    ", " + billingAddressDB.City +
-                    ", " + billingAddressDB.State +
-                    " " + billingAddressDB.Zip ;
+                " " + billingAddressDB.Address2 +
+                ", " + billingAddressDB.City +
+                ", " + billingAddressDB.State +
+                " " + billingAddressDB.Zip ;
             }
             order.PricePaid = order.PricePaid - order.Refunded - order.Cancelled;
             order.PriceNet = order.PriceNet - order.Refunded - order.Cancelled;
@@ -452,7 +444,7 @@ namespace EventCombo.Service
         AddStyledCell(row, 6, style).SetCellValue("$" + (double)order.PriceNet);
         AddStyledCell(row, 7, datestyle).SetCellValue(order.CustomerEmail);
         AddStyledCell(row, 8, datestyle).SetCellValue(order.Address);
-        AddStyledCell(row, 9, datestyle).SetCellValue(order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt"));
+        AddStyledCell(row, 9, datestyle).SetCellValue(order.Date.ToString("MMM dd, yyyy hh:mm:ss tt"));
         AddStyledCell(row, 10, style).SetCellValue(order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString());
       }
       for (i = 0; i <= 10; i++)
@@ -520,7 +512,7 @@ namespace EventCombo.Service
             str = str.Substring(28, str.Length - 28);
         }
         rw.Write(str + new String(' ', 28 - str.Length) + "|");
-        str = order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt");
+        str = order.Date.ToString("MMM dd, yyyy hh:mm:ss tt");
         rw.Write(str + new String(' ', 10 - str.Length) + "|");
         str = order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString();
         rw.Write(str);
@@ -562,7 +554,7 @@ namespace EventCombo.Service
         rw.Write("$" + order.PriceNet.ToString("N2") + delimiter);
         rw.Write(order.CustomerEmail + delimiter);
         rw.Write( order.Address + delimiter);
-        rw.Write("\"" + order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt") + "\"" + delimiter);
+        rw.Write("\"" + order.Date.ToString("MMM dd, yyyy hh:mm:ss tt") + "\"" + delimiter);
         rw.Write(order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString());
         rw.WriteLine();
       }
@@ -790,7 +782,7 @@ namespace EventCombo.Service
         {
             row = sheet.CreateRow(i++);
             AddStyledCell(row, 0, style).SetCellValue(order.OrderId);
-            AddStyledCell(row, 1, datestyle).SetCellValue(order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt"));
+            AddStyledCell(row, 1, datestyle).SetCellValue(order.Date.ToString("MMM dd, yyyy hh:mm:ss tt"));
             AddStyledCell(row, 2, style).SetCellValue(order.BuyerName);
             AddStyledCell(row, 3, style).SetCellValue(order.TicketName);
             AddStyledCell(row, 4, style).SetCellValue(order.Quantity);
@@ -799,7 +791,7 @@ namespace EventCombo.Service
             AddStyledCell(row, 7, style).SetCellValue(order.PromoCode);
             AddStyledCell(row, 8, style).SetCellValue((order.Refunded > 0 ? "Yes" : ""));
             AddStyledCell(row, 9, style).SetCellValue((order.Cancelled > 0 ? "Yes" : ""));
-            AddStyledCell(row, 10, style).SetCellValue("");
+            AddStyledCell(row, 10, style).SetCellValue(order.PhoneNumber);
             AddStyledCell(row, 11, style).SetCellValue(order.BuyerEmail);
             AddStyledCell(row, 12, style).SetCellValue(order.Address);
             AddStyledCell(row, 13, style).SetCellValue(order.MailTickets.ToString());
@@ -856,7 +848,7 @@ namespace EventCombo.Service
         foreach (var order in orders)
         {
             rw.Write(order.OrderId + new String(' ', 11 - order.OrderId.Length) + "|");
-            str = order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt");
+            str = order.Date.ToString("MMM dd, yyyy hh:mm:ss tt");
             rw.Write(str + new String(' ', 26 - str.Length) + "|");
             str = order.BuyerName;
             while (str.Length > 28)
@@ -888,7 +880,7 @@ namespace EventCombo.Service
             rw.Write(str + new String(' ', 8 - str.Length) + "|");
             str = (order.Cancelled > 0 ? "Yes" : "");
             rw.Write(str + new String(' ', 9 - str.Length) + "|");
-            str = "";
+            str = order.PhoneNumber;
             rw.Write(str + new String(' ', 15 - str.Length) + "|");
             str = order.BuyerEmail.ToString();
             rw.Write(str + new String(' ', 28 - (str.Length > 28 ? 28 : str.Length)) + "|");
@@ -977,7 +969,7 @@ namespace EventCombo.Service
         foreach (var order in orders)
         {
             rw.Write(order.OrderId + delimiter);
-            rw.Write("\"" + order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt") + "\"" + delimiter);
+            rw.Write("\"" + order.Date.ToString("MMM dd, yyyy hh:mm:ss tt") + "\"" + delimiter);
             rw.Write("\"" + order.BuyerName + "\"" + delimiter);
             rw.Write("\"" + order.TicketName + "\"" + delimiter);
             rw.Write(order.Quantity.ToString() + delimiter);
@@ -986,7 +978,7 @@ namespace EventCombo.Service
             rw.Write(order.PromoCode + delimiter);
             rw.Write((order.Refunded > 0 ? "Yes" : "") + delimiter);
             rw.Write((order.Cancelled > 0 ? "Yes" : "") + delimiter);
-            rw.Write("" + delimiter);
+            rw.Write(order.PhoneNumber + delimiter);
             rw.Write(order.BuyerEmail + delimiter);
             rw.Write("\"" + order.Address + "\"" + delimiter);
             rw.Write("\"" + order.MailTickets.ToString() + "\"" + delimiter);
@@ -1881,7 +1873,7 @@ namespace EventCombo.Service
             if (tempOrderId != order.OrderId)
             {
                 AddStyledCell(row, 0, style).SetCellValue(order.OrderId);
-                AddStyledCell(row, 1, datestyle).SetCellValue(order.Date.ToString("MMM, dd, yyyy hh:mm:ss tt"));
+                AddStyledCell(row, 1, datestyle).SetCellValue(order.Date.ToString("MMM dd, yyyy hh:mm:ss tt"));
                 tempOrderId = order.OrderId;
             }
             else
