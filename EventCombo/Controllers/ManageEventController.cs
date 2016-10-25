@@ -269,26 +269,19 @@ namespace EventCombo.Controllers
                 TempData["Success"] = null;
             }
             OrderAttendees CO = new OrderAttendees();
-            var Order = (from o in db.Order_Detail_T
-                         join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
-                         where p.TPD_Event_Id == Eventid && o.IsManualOrder == false
+            var Order = (from o in db.EventTicket_View
+                         where o.EventID == Eventid && o.IsManualOrder == false
                          select new OrderAttendees()
                          {
-                             OrderId = o.O_Order_Id,
-                             Amount = o.O_TotalAmount.ToString(),
-                             Qty = "0",
-                             Name = o.O_First_Name + " " + o.O_Last_Name,
+                             OrderId = o.OrderId,
+                             Amount = ((o.OrderStateId ?? 0) == 3 || (o.OrderStateId ?? 0) == 2 ? 0 : (o.PaidAmount ?? 0) + (o.VariableAmount ?? 0)).ToString(),
+                             NetAmount = ((o.PaidAmount ?? 0) + (o.VariableAmount ?? 0) - ((o.OrderStateId ?? 0) == 3 ? o.PaidAmount + (o.VariableAmount ?? 0) - o.ECFeePerTicket * (o.PurchasedQuantity ?? 0) - o.MerchantFeePerTicket * (o.PurchasedQuantity ?? 0) : 0) - ((o.OrderStateId ?? 0) == 2 ? o.PaidAmount + (o.VariableAmount ?? 0) - o.ECFeePerTicket * (o.PurchasedQuantity ?? 0) - o.MerchantFeePerTicket * (o.PurchasedQuantity ?? 0) : 0)).ToString(),
+                             Qty = (o.PurchasedQuantity ?? 0).ToString(),
+                             Name = o.FirstName + " " + o.LastName,
                              Date = o.O_OrderDateTime.ToString(),
-                             Status = o.OrderState.OrderStateName
+                             Status = o.OrderStateName
                          }).Distinct().Take(3).ToList();
 
-
-            foreach (var item in Order)
-            {
-
-                var qty = (from p in db.Ticket_Purchased_Detail where p.TPD_Order_Id == item.OrderId select p.TPD_Purchased_Qty).Sum();
-                item.Qty = qty.ToString();
-            }
             Mevent.Order = Order;
             Mevent.Attendess = Order;
 
@@ -807,27 +800,26 @@ namespace EventCombo.Controllers
             CultureInfo us = new CultureInfo("en-US");
             using (EventComboEntities objEnt = new EventComboEntities())
             {
-                var ticketid = (from v in db.Tickets where v.E_Id == lEventId select v.T_Id).ToList();
-                string joined = string.Join(",", ticketid.ToArray());
-                string strQuery = "SELECT (isnull(sum(TPD_Amount),0) + convert(numeric,isnull(sum(TPD_Donate),0))) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
-                var vTotalAmt = objEnt.Database.SqlQuery<decimal>(strQuery).FirstOrDefault();
-
-                //var vTotalAmt = (from myRow in objEnt.Ticket_Purchased_Detail
-                //                 where myRow.TPD_Event_Id == lEventId
-                //                 select myRow.TPD_Amount).Sum();
+                var Order = (from o in db.EventTicket_View
+                             where o.EventID == lEventId && o.IsManualOrder == false
+                             select new OrderAttendees()
+                             {
+                                 OrderId = o.OrderId,
+                                 Amount = ((o.OrderStateId ?? 0) == 3 || (o.OrderStateId ?? 0) == 2 ? 0 : (o.PaidAmount ?? 0) + (o.VariableAmount ?? 0)).ToString(),
+                                 NetAmount = ((o.PaidAmount ?? 0) + (o.VariableAmount ?? 0) - ((o.OrderStateId ?? 0) == 3 ? o.PaidAmount + (o.VariableAmount ?? 0) - o.ECFeePerTicket * (o.PurchasedQuantity ?? 0) - o.MerchantFeePerTicket * (o.PurchasedQuantity ?? 0) : 0) - ((o.OrderStateId ?? 0) == 2 ? o.PaidAmount + (o.VariableAmount ?? 0) - o.ECFeePerTicket * (o.PurchasedQuantity ?? 0) - o.MerchantFeePerTicket * (o.PurchasedQuantity ?? 0) : 0)).ToString(),
+                                 Qty = (o.PurchasedQuantity ?? 0).ToString(),
+                                 Name = o.FirstName + " " + o.LastName,
+                                 Date = o.O_OrderDateTime.ToString(),
+                                 Status = o.OrderStateName
+                             }).ToList();
 
                 if (strAmtType == "FORSALE")
                 {
-                    strResult = Math.Round(vTotalAmt, 2).ToString("N", us);
+                    strResult = Math.Round(Order.Sum(oo=> decimal.Parse(oo.Amount)), 2).ToString("N", us);
                 }
                 else if (strAmtType == "NETSALE")
                 {
-
-                    string strQueryec = "SELECT isnull(sum(TPD_EC_Fee * TPD_Purchased_Qty), 0) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
-                    var vEcFee = objEnt.Database.SqlQuery<decimal>(strQueryec).FirstOrDefault();
-
-                    double dResult = Math.Round(Convert.ToDouble(vTotalAmt - vEcFee), 2);
-                    strResult = dResult.ToString("N", us);
+                    strResult = Math.Round(Order.Sum(oo => decimal.Parse(oo.NetAmount)), 2).ToString("N", us);
                 }
             }
             return strResult;
