@@ -100,7 +100,6 @@ namespace EventCombo.Service
       IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
       IRepository<BillingAddress> billRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
       IRepository<Ticket> ticketRepo = new GenericRepository<Ticket>(_factory.ContextFactory);
-      IRepository<City> cityRepo = new GenericRepository<City>(_factory.ContextFactory);
 
       var orderList = orderRepo.Get(filter: o => o.IsManualOrder == false);
       var OrderIds = orderList.Select(oo => oo.O_Order_Id);
@@ -139,16 +138,10 @@ namespace EventCombo.Service
             order.PriceNet = order.PriceNet - order.Refunded - order.Cancelled;
             if (billingAddressDB != null)
             {
-                string stateAbr = "";
-                var cityDB = cityRepo.Get(filter: (c => c.CityName.Trim().ToString() == billingAddressDB.City.Trim())).FirstOrDefault();
-                if (cityDB != null)
-                {
-                    stateAbr = cityDB.StateId;
-                }
                 order.Address = billingAddressDB.Address1 +
                     " " + billingAddressDB.Address2 +
                     ", " + billingAddressDB.City +
-                    ", " + stateAbr +
+                    ", " + billingAddressDB.State +
                     " " + billingAddressDB.Zip;
             }
         }
@@ -165,11 +158,9 @@ namespace EventCombo.Service
         IRepository<EventTicket_View> EventTicketRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
         IRepository<BillingAddress> billRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
         IRepository<ShippingAddress> shipRepo = new GenericRepository<ShippingAddress>(_factory.ContextFactory);
-        IRepository<City> cityRepo = new GenericRepository<City>(_factory.ContextFactory);
         IRepository<TicketBearer_View> tbRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
         IRepository<Event_VariableDesc> evdRepo = new GenericRepository<Event_VariableDesc>(_factory.ContextFactory);
 
-        var attendees = tbRepo.Get();
         var vairableChages = evdRepo.Get(filter: (t => t.Event_Id == eventId));
 
         IEnumerable<EventOrderInfoViewModel> res = EventTicketRepo.Get(filter: (t => t.EventID == eventId && t.IsManualOrder == false))
@@ -179,8 +170,9 @@ namespace EventCombo.Service
             OrderId = ticket.OrderId,
             PaymentState = PaymentStates.Completed,
             TicketName = ticket.TicketName,
-            BuyerName = string.Join(", ", attendees.Where(a => a.OrderId == ticket.OrderId).Select(a => a.Name.Trim()).ToArray()),
-            BuyerEmail = string.Join(", ", attendees.Where(a => a.OrderId == ticket.OrderId).Select(a => a.Email.Trim()).ToArray()),
+            BuyerName = string.Join(", ", tbRepo.Get(a => a.OrderId.Trim() == ticket.OrderId.Trim()).Select(a => a.Name.Trim()).ToArray()),
+            BuyerEmail = string.Join(", ", tbRepo.Get(a => a.OrderId.Trim() == ticket.OrderId.Trim()).Select(a => a.Email.Trim()).ToArray()),
+            PhoneNumber = string.Join(", ", tbRepo.Get(a => a.OrderId.Trim() == ticket.OrderId.Trim() && a.PhoneNumber != null && a.PhoneNumber != "").Select(a => a.PhoneNumber).ToArray()),
             Quantity = ticket.PurchasedQuantity ?? 0,
             Price = ticket.OrderAmount ?? 0,
             PricePaid = ticket.PaidAmount ?? 0,
@@ -209,30 +201,18 @@ namespace EventCombo.Service
             var shippingAddressDB = shipRepo.Get(filter: (b => b.OrderId == order.OrderId)).FirstOrDefault();
             if (shippingAddressDB != null)
             {
-                string stateAbr = "";
-                var cityDB = cityRepo.Get(filter: (c => c.CityName.Trim().ToString() == shippingAddressDB.City.Trim())).FirstOrDefault();
-                if (cityDB != null)
-                {
-                    stateAbr = cityDB.StateId;
-                }
                 order.MailTickets = shippingAddressDB.Address1 +
                 " " + shippingAddressDB.Address2 +
                 ", " + shippingAddressDB.City +
-                ", " + stateAbr +
+                ", " + shippingAddressDB.State +
                 " " + shippingAddressDB.Zip;
             }
             if (billingAddressDB != null)
             {
-                string stateAbr = "";
-                var cityDB = cityRepo.Get(filter: (c => c.CityName.Trim().ToString() == billingAddressDB.City.Trim())).FirstOrDefault();
-                if (cityDB != null)
-                {
-                    stateAbr = cityDB.StateId;
-                }
                 order.Address = billingAddressDB.Address1 +
                 " " + billingAddressDB.Address2 +
                 ", " + billingAddressDB.City +
-                ", " + stateAbr +
+                ", " + billingAddressDB.State +
                 " " + billingAddressDB.Zip ;
             }
             order.PricePaid = order.PricePaid - order.Refunded - order.Cancelled;
@@ -811,7 +791,7 @@ namespace EventCombo.Service
             AddStyledCell(row, 7, style).SetCellValue(order.PromoCode);
             AddStyledCell(row, 8, style).SetCellValue((order.Refunded > 0 ? "Yes" : ""));
             AddStyledCell(row, 9, style).SetCellValue((order.Cancelled > 0 ? "Yes" : ""));
-            AddStyledCell(row, 10, style).SetCellValue("");
+            AddStyledCell(row, 10, style).SetCellValue(order.PhoneNumber);
             AddStyledCell(row, 11, style).SetCellValue(order.BuyerEmail);
             AddStyledCell(row, 12, style).SetCellValue(order.Address);
             AddStyledCell(row, 13, style).SetCellValue(order.MailTickets.ToString());
@@ -900,7 +880,7 @@ namespace EventCombo.Service
             rw.Write(str + new String(' ', 8 - str.Length) + "|");
             str = (order.Cancelled > 0 ? "Yes" : "");
             rw.Write(str + new String(' ', 9 - str.Length) + "|");
-            str = "";
+            str = order.PhoneNumber;
             rw.Write(str + new String(' ', 15 - str.Length) + "|");
             str = order.BuyerEmail.ToString();
             rw.Write(str + new String(' ', 28 - (str.Length > 28 ? 28 : str.Length)) + "|");
@@ -998,7 +978,7 @@ namespace EventCombo.Service
             rw.Write(order.PromoCode + delimiter);
             rw.Write((order.Refunded > 0 ? "Yes" : "") + delimiter);
             rw.Write((order.Cancelled > 0 ? "Yes" : "") + delimiter);
-            rw.Write("" + delimiter);
+            rw.Write(order.PhoneNumber + delimiter);
             rw.Write(order.BuyerEmail + delimiter);
             rw.Write("\"" + order.Address + "\"" + delimiter);
             rw.Write("\"" + order.MailTickets.ToString() + "\"" + delimiter);
