@@ -139,7 +139,7 @@ namespace EventCombo.Service
             if (billingAddressDB != null)
             {
                 order.Address = billingAddressDB.Address1 +
-                    " " + billingAddressDB.Address2 +
+                    "" + (string.IsNullOrEmpty(billingAddressDB.Address2) ? "" : " " + billingAddressDB.Address2) +
                     ", " + billingAddressDB.City +
                     ", " + billingAddressDB.State +
                     " " + billingAddressDB.Zip;
@@ -202,7 +202,7 @@ namespace EventCombo.Service
             if (shippingAddressDB != null)
             {
                 order.MailTickets = shippingAddressDB.Address1 +
-                " " + shippingAddressDB.Address2 +
+                "" + (string.IsNullOrEmpty(shippingAddressDB.Address2) ? "" : " " + shippingAddressDB.Address2) +
                 ", " + shippingAddressDB.City +
                 ", " + shippingAddressDB.State +
                 " " + shippingAddressDB.Zip;
@@ -210,7 +210,7 @@ namespace EventCombo.Service
             if (billingAddressDB != null)
             {
                 order.Address = billingAddressDB.Address1 +
-                " " + billingAddressDB.Address2 +
+                "" + (string.IsNullOrEmpty(billingAddressDB.Address2) ? "" : " " + billingAddressDB.Address2) +
                 ", " + billingAddressDB.City +
                 ", " + billingAddressDB.State +
                 " " + billingAddressDB.Zip ;
