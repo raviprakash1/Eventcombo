@@ -801,12 +801,12 @@ namespace EventCombo.Controllers
             using (EventComboEntities objEnt = new EventComboEntities())
             {
                 var Order = (from o in db.EventTicket_View
-                             where o.EventID == lEventId && o.IsManualOrder == false
+                             where o.EventID == lEventId && o.IsManualOrder == false && o.OrderStateId != 3 && o.OrderStateId != 2
                              select new OrderAttendees()
                              {
                                  OrderId = o.OrderId,
-                                 Amount = ((o.OrderStateId ?? 0) == 3 || (o.OrderStateId ?? 0) == 2 ? 0 : (o.PaidAmount ?? 0) + (o.VariableAmount ?? 0)).ToString(),
-                                 NetAmount = ((o.PaidAmount ?? 0) + (o.VariableAmount ?? 0) - ((o.OrderStateId ?? 0) == 3 ? o.PaidAmount + (o.VariableAmount ?? 0) - o.ECFeePerTicket * (o.PurchasedQuantity ?? 0) - o.MerchantFeePerTicket * (o.PurchasedQuantity ?? 0) : 0) - ((o.OrderStateId ?? 0) == 2 ? o.PaidAmount + (o.VariableAmount ?? 0) - o.ECFeePerTicket * (o.PurchasedQuantity ?? 0) - o.MerchantFeePerTicket * (o.PurchasedQuantity ?? 0) : 0)).ToString(),
+                                 Amount = ((o.PaidAmount ?? 0) + (o.VariableAmount ?? 0) + (o.Donation ?? 0) + (o.Customer_Fee) * (o.PurchasedQuantity ?? 0)+(o.MerchantFeePerTicket) * (o.PurchasedQuantity ?? 0) + (o.ECFeePerTicket) * (o.PurchasedQuantity ?? 0)).ToString(),
+                                 NetAmount = ((o.PaidAmount ?? 0) + (o.VariableAmount ?? 0) + (o.Donation ?? 0) + (o.Customer_Fee) * (o.PurchasedQuantity ?? 0)).ToString(),
                                  Qty = (o.PurchasedQuantity ?? 0).ToString(),
                                  Name = o.FirstName + " " + o.LastName,
                                  Date = o.O_OrderDateTime.ToString(),

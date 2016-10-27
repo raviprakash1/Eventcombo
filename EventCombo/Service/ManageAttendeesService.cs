@@ -68,7 +68,7 @@ namespace EventCombo.Service
       {
         PaymentState = PaymentStates.Total,
         TicketsSold = tickets.Sum(t => t.TPD_Purchased_Qty) ?? 0,
-        Amount = (tickets.Sum(t=>t.TPD_Amount) ?? 0) + (order.Where(o=>(tickets.Select(t=>t.TPD_Order_Id).Contains(o.O_Order_Id))).Sum(os=>os.O_VariableAmount) ?? 0),
+        Amount = (tickets.Sum(t=>t.TPD_Amount) ?? 0) + (order.Where(o=>(tickets.Select(t=>t.TPD_Order_Id).Contains(o.O_Order_Id))).Sum(os=>os.O_VariableAmount) ?? 0) + (tickets.Sum(t => t.Customer_Fee * t.TPD_Purchased_Qty) ?? 0) + (tickets.Sum(t => t.TPD_Donate) ?? 0),
         TicketsTotal = ev.Tickets.Sum(tt => tt.Ticket_Quantity_Detail.Sum(q => q.TQD_Quantity)) ?? 0,
         Count = tickets.Select(t => t.TPD_Order_Id).Distinct().Count()
       };
@@ -546,14 +546,14 @@ namespace EventCombo.Service
       foreach (var order in orders)
       {
         rw.Write(order.OrderId + delimiter);
-        rw.Write(order.BuyerName + delimiter);
-        rw.Write(order.TicketName + delimiter);
+        rw.Write("\"" + order.BuyerName + "\"" + delimiter);
+        rw.Write("\"" + order.TicketName + "\"" + delimiter);
         rw.Write(order.Quantity.ToString() + delimiter);
         rw.Write("$" + order.Price.ToString("N2") + delimiter);
         rw.Write("$" + order.PricePaid.ToString("N2") + delimiter);
         rw.Write("$" + order.PriceNet.ToString("N2") + delimiter);
-        rw.Write(order.CustomerEmail + delimiter);
-        rw.Write( order.Address + delimiter);
+        rw.Write("\"" + order.CustomerEmail + "\"" + delimiter);
+        rw.Write("\"" + order.Address + "\"" + delimiter);
         rw.Write("\"" + order.Date.ToString("MMM dd, yyyy hh:mm:ss tt") + "\"" + delimiter);
         rw.Write(order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString());
         rw.WriteLine();
@@ -979,7 +979,7 @@ namespace EventCombo.Service
             rw.Write((order.Refunded > 0 ? "Yes" : "") + delimiter);
             rw.Write((order.Cancelled > 0 ? "Yes" : "") + delimiter);
             rw.Write(order.PhoneNumber + delimiter);
-            rw.Write(order.BuyerEmail + delimiter);
+            rw.Write("\"" + order.BuyerEmail + "\"" + delimiter);
             rw.Write("\"" + order.Address + "\"" + delimiter);
             rw.Write("\"" + order.MailTickets.ToString() + "\"" + delimiter);
             variableCount = 0;
