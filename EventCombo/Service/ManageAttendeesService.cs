@@ -68,7 +68,7 @@ namespace EventCombo.Service
       {
         PaymentState = PaymentStates.Total,
         TicketsSold = tickets.Sum(t => t.TPD_Purchased_Qty) ?? 0,
-        Amount = (tickets.Sum(t=>t.TPD_Amount) ?? 0) + (order.Where(o=>(tickets.Select(t=>t.TPD_Order_Id).Contains(o.O_Order_Id))).Sum(os=>os.O_VariableAmount) ?? 0),
+        Amount = (tickets.Sum(t=>t.TPD_Amount) ?? 0) + (order.Where(o=>(tickets.Select(t=>t.TPD_Order_Id).Contains(o.O_Order_Id))).Sum(os=>os.O_VariableAmount) ?? 0) + (tickets.Sum(t => t.Customer_Fee * t.TPD_Purchased_Qty) ?? 0) + (tickets.Sum(t => t.TPD_Donate) ?? 0),
         TicketsTotal = ev.Tickets.Sum(tt => tt.Ticket_Quantity_Detail.Sum(q => q.TQD_Quantity)) ?? 0,
         Count = tickets.Select(t => t.TPD_Order_Id).Distinct().Count()
       };
@@ -111,7 +111,7 @@ namespace EventCombo.Service
         {
           OrderId = ticket.Key,
           PaymentState = PaymentStates.Completed,
-          TicketName = String.Join(", ", tickets.Where(t => t.T_Id == (ticket.FirstOrDefault().Ticket_Quantity_Detail.TQD_Ticket_Id ?? 0)).Select(t => t.T_name).ToArray()),
+          TicketName = String.Join(", ", tickets.Where(t => ticket.Select(tt => tt.Ticket_Quantity_Detail.TQD_Ticket_Id).Contains(t.T_Id)).Select(t => t.T_name).ToArray()),
           Fee = ticket.Sum(t => t.TPD_EC_Fee * t.TPD_Purchased_Qty) ?? 0,
           PricePaid = ticket.Sum(t=>t.TPD_Amount) ?? 0,
           BuyerName = ticket.FirstOrDefault().AspNetUser.Profiles.Select(p => p.FirstName + " " + p.LastName).FirstOrDefault(),
@@ -139,7 +139,7 @@ namespace EventCombo.Service
             if (billingAddressDB != null)
             {
                 order.Address = billingAddressDB.Address1 +
-                    " " + billingAddressDB.Address2 +
+                    "" + (string.IsNullOrEmpty(billingAddressDB.Address2) ? "" : " " + billingAddressDB.Address2) +
                     ", " + billingAddressDB.City +
                     ", " + billingAddressDB.State +
                     " " + billingAddressDB.Zip;
@@ -202,7 +202,7 @@ namespace EventCombo.Service
             if (shippingAddressDB != null)
             {
                 order.MailTickets = shippingAddressDB.Address1 +
-                " " + shippingAddressDB.Address2 +
+                "" + (string.IsNullOrEmpty(shippingAddressDB.Address2) ? "" : " " + shippingAddressDB.Address2) +
                 ", " + shippingAddressDB.City +
                 ", " + shippingAddressDB.State +
                 " " + shippingAddressDB.Zip;
@@ -210,7 +210,7 @@ namespace EventCombo.Service
             if (billingAddressDB != null)
             {
                 order.Address = billingAddressDB.Address1 +
-                " " + billingAddressDB.Address2 +
+                "" + (string.IsNullOrEmpty(billingAddressDB.Address2) ? "" : " " + billingAddressDB.Address2) +
                 ", " + billingAddressDB.City +
                 ", " + billingAddressDB.State +
                 " " + billingAddressDB.Zip ;
@@ -546,14 +546,14 @@ namespace EventCombo.Service
       foreach (var order in orders)
       {
         rw.Write(order.OrderId + delimiter);
-        rw.Write(order.BuyerName + delimiter);
-        rw.Write(order.TicketName + delimiter);
+        rw.Write("\"" + order.BuyerName + "\"" + delimiter);
+        rw.Write("\"" + order.TicketName + "\"" + delimiter);
         rw.Write(order.Quantity.ToString() + delimiter);
         rw.Write("$" + order.Price.ToString("N2") + delimiter);
         rw.Write("$" + order.PricePaid.ToString("N2") + delimiter);
         rw.Write("$" + order.PriceNet.ToString("N2") + delimiter);
-        rw.Write(order.CustomerEmail + delimiter);
-        rw.Write( order.Address + delimiter);
+        rw.Write("\"" + order.CustomerEmail + "\"" + delimiter);
+        rw.Write("\"" + order.Address + "\"" + delimiter);
         rw.Write("\"" + order.Date.ToString("MMM dd, yyyy hh:mm:ss tt") + "\"" + delimiter);
         rw.Write(order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString());
         rw.WriteLine();
@@ -979,7 +979,7 @@ namespace EventCombo.Service
             rw.Write((order.Refunded > 0 ? "Yes" : "") + delimiter);
             rw.Write((order.Cancelled > 0 ? "Yes" : "") + delimiter);
             rw.Write(order.PhoneNumber + delimiter);
-            rw.Write(order.BuyerEmail + delimiter);
+            rw.Write("\"" + order.BuyerEmail + "\"" + delimiter);
             rw.Write("\"" + order.Address + "\"" + delimiter);
             rw.Write("\"" + order.MailTickets.ToString() + "\"" + delimiter);
             variableCount = 0;
