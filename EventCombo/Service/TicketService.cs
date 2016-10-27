@@ -129,14 +129,13 @@ namespace EventCombo.Service
       IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
       IRepository<EventTicket_View> EventTicketRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
 
-      var access = _dbservice.GetOrderAccess(orderId, userId);
-      if ((access != AccessLevel.OrderOwner) && (access != AccessLevel.EventOwner))
-        return null;
+      if (_dbservice.GetOrderAccess(orderId, userId) != AccessLevel.OrderOwner)
+        throw new UnauthorizedAccessException(String.Format("Unathorized access to Order {0}. User {1}", orderId, userId));
 
       var TicketNames = EventTicketRepo.Get(filter: (t => t.EventID == eventId && t.OrderId == orderId)).Select(t => t.TicketName);
       var order = orderRepo.Get(filter: (o => o.O_Order_Id == orderId)).FirstOrDefault();
       if (order == null)
-        return null;
+        throw new NullReferenceException(String.Format("Order {0} not found.", orderId));
 
       OrderDetailsViewModel details = new OrderDetailsViewModel() { OrderId = orderId };
       details.Payment = _dbservice.GetPaymentInfo(orderId);
