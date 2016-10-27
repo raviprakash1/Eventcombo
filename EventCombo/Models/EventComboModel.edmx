@@ -1167,6 +1167,7 @@ warning 6002: The table/view 'EventCombo.dbo.EventTicket_View' does not have a p
           <Property Name="ECFeePerTicket" Type="numeric" Precision="19" Scale="2" />
           <Property Name="MerchantFeePerTicket" Type="decimal" Precision="9" Scale="2" />
           <Property Name="Customer_Fee" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Donation" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TicketTypeID" Type="bigint" Nullable="false" />
           <Property Name="TicketTypeName" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="PromoCodeID" Type="int" />
@@ -1960,6 +1961,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
     [EventTicket_View].[ECFeePerTicket] AS [ECFeePerTicket], 
     [EventTicket_View].[MerchantFeePerTicket] AS [MerchantFeePerTicket], 
     [EventTicket_View].[Customer_Fee] AS [Customer_Fee], 
+    [EventTicket_View].[Donation] AS [Donation], 
     [EventTicket_View].[TicketTypeID] AS [TicketTypeID], 
     [EventTicket_View].[TicketTypeName] AS [TicketTypeName], 
     [EventTicket_View].[PromoCodeID] AS [PromoCodeID], 
@@ -4821,6 +4823,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="PaymentTypeId" Type="Byte" />
           <Property Name="VariableIds" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="IsManualOrder" Type="Boolean" Nullable="false" />
+          <Property Name="Donation" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="V_EventsListUpcoming">
           <Key>
@@ -6569,6 +6572,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="EventTicket_View">
             <EntityTypeMapping TypeName="EventComboModel.EventTicket_View">
               <MappingFragment StoreEntitySet="EventTicket_View">
+                <ScalarProperty Name="Donation" ColumnName="Donation" />
                 <ScalarProperty Name="IsManualOrder" ColumnName="IsManualOrder" />
                 <ScalarProperty Name="VariableIds" ColumnName="VariableIds" />
                 <ScalarProperty Name="PaymentTypeId" ColumnName="PaymentTypeId" />

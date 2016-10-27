@@ -41,5 +41,6 @@ namespace EventCombo.Models
         public Nullable<byte> PaymentTypeId { get; set; }
         public string VariableIds { get; set; }
         public bool IsManualOrder { get; set; }
+        public Nullable<decimal> Donation { get; set; }
     }
 }
