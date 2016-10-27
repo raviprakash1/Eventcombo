@@ -129,10 +129,13 @@ namespace EventCombo.Service
       IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
       IRepository<EventTicket_View> EventTicketRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
 
+      if (_dbservice.GetOrderAccess(orderId, userId) != AccessLevel.OrderOwner)
+        throw new UnauthorizedAccessException(String.Format("Unathorized access to Order {0}. User {1}", orderId, userId));
+
       var TicketNames = EventTicketRepo.Get(filter: (t => t.EventID == eventId && t.OrderId == orderId)).Select(t => t.TicketName);
-      var order = orderRepo.Get(filter: (o => ((o.O_Order_Id == orderId) && (o.O_User_Id == userId)))).FirstOrDefault();
+      var order = orderRepo.Get(filter: (o => o.O_Order_Id == orderId)).FirstOrDefault();
       if (order == null)
-        return null;
+        throw new NullReferenceException(String.Format("Order {0} not found.", orderId));
 
       OrderDetailsViewModel details = new OrderDetailsViewModel() { OrderId = orderId };
       details.Payment = _dbservice.GetPaymentInfo(orderId);
@@ -307,5 +310,54 @@ namespace EventCombo.Service
         return tpc.generateTicketPDF(ticket.TPD_GUID, ticket.TPD_Event_Id ?? 0, null, name, filePath);
       }
     }
+
+    public IEnumerable<OrderSummaryViewModel> GetEventOrdersSummaryCalculation(long eventId)
+    {
+      IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+      IRepository<Order_Detail_T> oRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
+
+      var tpd = tpdRepo.Get(t => (t.TPD_Event_Id ?? 0) == eventId);
+      var orderIds = tpd.Select(t => t.TPD_Order_Id).Distinct();
+      var orders = oRepo.Get(o => orderIds.Contains(o.O_Order_Id));
+      return orders.Select(o => new OrderSummaryViewModel()
+      {
+        EventId = eventId,
+        OId = o.O_Id,
+        OrderId = o.O_Order_Id,
+        Date = o.O_OrderDateTime ?? default(DateTime),
+        Quantity = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TPD_Purchased_Qty) ?? 0,
+        Price = o.O_TotalAmount ?? 0,
+        PriceNet = (o.O_TotalAmount ?? 0) - (tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TPD_EC_Fee) ?? 0),
+        Fee = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TPD_EC_Fee) ?? 0,
+        CustomerFee = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.Customer_Fee),
+        Cancelled = (o.OrderStateId == 2) ? (o.O_TotalAmount ?? 0) : 0,
+        Refunded = (o.OrderStateId == 3) ? (o.O_TotalAmount ?? 0) : 0,
+        VarChargesAmount = o.O_VariableAmount ?? 0,
+        IsCancelled = o.OrderStateId == 2,
+        IsRefunded = o.OrderStateId == 3
+      });
+
+    }
+
+    public EventSummaryViewModel GetEventSummaryCalculation(long eventId)
+    {
+      var orders = GetEventOrdersSummaryCalculation(eventId);
+      if (orders == null)
+        throw new NullReferenceException(String.Format("Event not found for id = {0}", eventId));
+      return orders.GroupBy(o => new { o.EventId }).Select(os => new EventSummaryViewModel()
+      {
+        EventId = eventId,
+        OrderQuantity = os.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : 1)),
+        TicketQuantity = os.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : x.Quantity)),
+        Price = os.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : x.Price)),
+        PriceNet = os.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : x.PriceNet)),
+        Fee = os.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : x.Fee)),
+        CustomerFee = os.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : x.CustomerFee)),
+        Cancelled = os.Sum(x => x.Cancelled),
+        Refunded = os.Sum(x => x.Refunded),
+        VarChargesAmount = os.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : x.VarChargesAmount))
+      }).FirstOrDefault();
+    }
+
   }
 }

@@ -759,11 +759,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OrganizerProfile.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Account\PurchasedTicket.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PurchasedTicket.cshtml</DependentUpon>
-    </Compile>
     <Compile Include="Views\CreateEvent\ViewCreateEvent.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

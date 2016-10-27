@@ -33,6 +33,7 @@ namespace EventCombo.Controllers
 
         IECImageService _iservice;
         IEventService _eservice;
+        ITicketsService _tservice;
 
         public ManageEventController()
         {
@@ -40,6 +41,7 @@ namespace EventCombo.Controllers
           var factory = new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory());
           _iservice = new ECImageService(factory, mapper, new ECImageStorage(mapper));
           _eservice = new EventService(factory, mapper);
+          _tservice = new TicketService(factory, mapper, new DBAccessService(factory, mapper));
         }
 
         private string GetNewInvitationCode()
@@ -325,18 +327,22 @@ namespace EventCombo.Controllers
                 }
                 dt = dt.AddDays(1);
             }
+
+            CultureInfo us = new CultureInfo("en-US");
+            var eInfo = _tservice.GetEventSummaryCalculation(Eventid);
+
             TempData["EventHits"] = strDates.ToString();
             TempData["SaleQty"] = strSaleQty.ToString();
             TempData["TicketSalePer"] = GetSalePer(Eventid);
 
-            TempData["RemQty"] = GetQuantity(Eventid, "R");
+            TempData["RemQty"] = eInfo.TicketQuantity;
             TempData["TotalQty"] = GetQuantity(Eventid, "T");
             TempData["PaidTicket"] = GetTicketQtyPer(Eventid, "P");
             TempData["FreeTicket"] = GetTicketQtyPer(Eventid, "F");
             TempData["EventUrl"] = GetEventURL(Eventid);
 
-            TempData["ForSale"] = GetSaleAmount(Eventid, "FORSALE");
-            TempData["NETSale"] = GetSaleAmount(Eventid, "NETSALE");
+            TempData["ForSale"] = Math.Round(eInfo.Price, 2).ToString("N", us);
+            TempData["NETSale"] = Math.Round(eInfo.PriceNet, 2).ToString("N", us);
 
             return View(Mevent);
         }
@@ -751,10 +757,10 @@ namespace EventCombo.Controllers
                         strResult.Append("<td>"); strResult.Append("0/0"); strResult.Append("</td>");
                     }
 
-                    strHideUntil = (obj.Hide_Untill_Date != null ? obj.Hide_Untill_Date.ToString() : "");
+                    strHideUntil = (obj.Hide_Untill_Date != null ? (obj.Hide_Untill_Date ?? default(DateTime)).ToString("d") : "");
                     strHideUntilTime = (obj.Hide_Untill_Time != null ? obj.Hide_Untill_Time.ToString() : "");
 
-                    strHideAfter = (obj.Hide_After_Date != null ? obj.Hide_After_Date.ToString() : "");
+                    strHideAfter = (obj.Hide_After_Date != null ? (obj.Hide_After_Date ?? default(DateTime)).ToString("d") : "");
                     strHideAfterTime = (obj.Hide_After_Time != null ? obj.Hide_After_Time.ToString() : "");
 
                     if (!strHideUntil.Equals(string.Empty))
@@ -794,36 +800,6 @@ namespace EventCombo.Controllers
             return strResult.ToString();
         }
 
-        public string GetSaleAmount(long lEventId, string strAmtType)
-        {
-            string strResult = "";
-            CultureInfo us = new CultureInfo("en-US");
-            using (EventComboEntities objEnt = new EventComboEntities())
-            {
-                var Order = (from o in db.EventTicket_View
-                             where o.EventID == lEventId && o.IsManualOrder == false && o.OrderStateId != 3 && o.OrderStateId != 2
-                             select new OrderAttendees()
-                             {
-                                 OrderId = o.OrderId,
-                                 Amount = ((o.PaidAmount ?? 0) + (o.VariableAmount ?? 0) + (o.Donation ?? 0) + (o.Customer_Fee) * (o.PurchasedQuantity ?? 0)+(o.MerchantFeePerTicket) * (o.PurchasedQuantity ?? 0) + (o.ECFeePerTicket) * (o.PurchasedQuantity ?? 0)).ToString(),
-                                 NetAmount = ((o.PaidAmount ?? 0) + (o.VariableAmount ?? 0) + (o.Donation ?? 0) + (o.Customer_Fee) * (o.PurchasedQuantity ?? 0)).ToString(),
-                                 Qty = (o.PurchasedQuantity ?? 0).ToString(),
-                                 Name = o.FirstName + " " + o.LastName,
-                                 Date = o.O_OrderDateTime.ToString(),
-                                 Status = o.OrderStateName
-                             }).ToList();
-
-                if (strAmtType == "FORSALE")
-                {
-                    strResult = Math.Round(Order.Sum(oo=> decimal.Parse(oo.Amount)), 2).ToString("N", us);
-                }
-                else if (strAmtType == "NETSALE")
-                {
-                    strResult = Math.Round(Order.Sum(oo => decimal.Parse(oo.NetAmount)), 2).ToString("N", us);
-                }
-            }
-            return strResult;
-        }
         public string SaveEventUrl(long lEventId, string strEventUrl)
         {
             string strResult = "N";
