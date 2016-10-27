@@ -70,6 +70,38 @@ namespace EventCombo.Models
     public string PhoneNumber { get; set; }
   }
 
+  public class OrderSummaryViewModel
+  {
+    public long OId { get; set; }
+    public string OrderId { get; set; }
+    public long EventId { get; set; }
+    public long Quantity { get; set; }
+    public decimal Price { get; set; }
+    public decimal PriceNet { get; set; }
+    public decimal Fee { get; set; }
+    public decimal CustomerFee { get; set; }
+    public decimal VarChargesAmount { get; set; }
+    public decimal Refunded { get; set; }
+    public decimal Cancelled { get; set; }
+    public DateTime Date { get; set; }
+    public bool IsCancelled { get; set; }
+    public bool IsRefunded { get; set; }
+  }
+
+  public class EventSummaryViewModel
+  {
+    public long EventId { get; set; }
+    public long OrderQuantity { get; set; }
+    public long TicketQuantity { get; set; }
+    public decimal Price { get; set; }
+    public decimal PriceNet { get; set; }
+    public decimal Fee { get; set; }
+    public decimal CustomerFee { get; set; }
+    public decimal VarChargesAmount { get; set; }
+    public decimal Refunded { get; set; }
+    public decimal Cancelled { get; set; }
+  }
+
   public class EventOrderDetailViewModel
   {
     public string OrderId { get; set; }

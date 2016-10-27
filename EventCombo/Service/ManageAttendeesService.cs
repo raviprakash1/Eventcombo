@@ -56,22 +56,20 @@ namespace EventCombo.Service
       ManageAttendeesOrdersViewModel res = new ManageAttendeesOrdersViewModel();
       res.EventId = eventId;
 
-      IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
       IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
-      IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
-      var order = orderRepo.Get(filter: o => o.IsManualOrder == false && o.OrderStateId != 2 && o.OrderStateId != 3);
-      var OrderIds = order.Select(oo => oo.O_Order_Id);
-      var tickets = tpdRepo.Get(filter: (t => t.TPD_Event_Id == eventId && OrderIds.Contains(t.TPD_Order_Id)));
-      var ev = eRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();      
+      var ev = eRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();
+
+      var eInfo = _tservice.GetEventSummaryCalculation(eventId);
 
       EventOrdersSummuryViewModel ordersTotal = new EventOrdersSummuryViewModel()
       {
         PaymentState = PaymentStates.Total,
-        TicketsSold = tickets.Sum(t => t.TPD_Purchased_Qty) ?? 0,
-        Amount = (tickets.Sum(t=>t.TPD_Amount) ?? 0) + (order.Where(o=>(tickets.Select(t=>t.TPD_Order_Id).Contains(o.O_Order_Id))).Sum(os=>os.O_VariableAmount) ?? 0),
+        TicketsSold = eInfo.TicketQuantity,
+        Amount = eInfo.Price,
         TicketsTotal = ev.Tickets.Sum(tt => tt.Ticket_Quantity_Detail.Sum(q => q.TQD_Quantity)) ?? 0,
-        Count = tickets.Select(t => t.TPD_Order_Id).Distinct().Count()
+        Count = eInfo.OrderQuantity
       };
+
       EventOrdersSummuryViewModel ordersCompleted = _mapper.Map<EventOrdersSummuryViewModel>(ordersTotal);
       ordersCompleted.PaymentState = PaymentStates.Completed;
       EventOrdersSummuryViewModel ordersPending = new EventOrdersSummuryViewModel()

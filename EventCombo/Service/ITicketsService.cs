@@ -23,5 +23,10 @@ namespace EventCombo.Service
     bool SaveMessage(OrganizerMessageViewModel model);
 
     MemoryStream GetDownloadableTicket(string orderId, string format, string filePath, bool IsManualOrder = false);
+
+    IEnumerable<OrderSummaryViewModel> GetEventOrdersSummaryCalculation(long eventId);
+    
+    EventSummaryViewModel GetEventSummaryCalculation(long eventId);
+
   }
 }
