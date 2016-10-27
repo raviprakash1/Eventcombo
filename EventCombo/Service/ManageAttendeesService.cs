@@ -111,7 +111,7 @@ namespace EventCombo.Service
         {
           OrderId = ticket.Key,
           PaymentState = PaymentStates.Completed,
-          TicketName = String.Join(", ", tickets.Where(t => t.T_Id == (ticket.FirstOrDefault().Ticket_Quantity_Detail.TQD_Ticket_Id ?? 0)).Select(t => t.T_name).ToArray()),
+          TicketName = String.Join(", ", tickets.Where(t => ticket.Select(tt => tt.Ticket_Quantity_Detail.TQD_Ticket_Id).Contains(t.T_Id)).Select(t => t.T_name).ToArray()),
           Fee = ticket.Sum(t => t.TPD_EC_Fee * t.TPD_Purchased_Qty) ?? 0,
           PricePaid = ticket.Sum(t=>t.TPD_Amount) ?? 0,
           BuyerName = ticket.FirstOrDefault().AspNetUser.Profiles.Select(p => p.FirstName + " " + p.LastName).FirstOrDefault(),
