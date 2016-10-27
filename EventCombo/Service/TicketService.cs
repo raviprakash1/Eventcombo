@@ -129,8 +129,12 @@ namespace EventCombo.Service
       IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
       IRepository<EventTicket_View> EventTicketRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
 
+      var access = _dbservice.GetOrderAccess(orderId, userId);
+      if ((access != AccessLevel.OrderOwner) && (access != AccessLevel.EventOwner))
+        return null;
+
       var TicketNames = EventTicketRepo.Get(filter: (t => t.EventID == eventId && t.OrderId == orderId)).Select(t => t.TicketName);
-      var order = orderRepo.Get(filter: (o => ((o.O_Order_Id == orderId) && (o.O_User_Id == userId)))).FirstOrDefault();
+      var order = orderRepo.Get(filter: (o => o.O_Order_Id == orderId)).FirstOrDefault();
       if (order == null)
         return null;
 
