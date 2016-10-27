@@ -415,6 +415,13 @@ namespace EventCombo.Service
       datestyle.BorderLeft = BorderStyle.Thin;
       datestyle.BorderRight = BorderStyle.Thin;
       datestyle.DataFormat = wb.CreateDataFormat().GetFormat("MMMM dd, yyyy");
+      ICellStyle currencyStyle = wb.CreateCellStyle();
+      currencyStyle.BorderBottom = BorderStyle.Thin;
+      currencyStyle.BorderTop = BorderStyle.Thin;
+      currencyStyle.BorderLeft = BorderStyle.Thin;
+      currencyStyle.BorderRight = BorderStyle.Thin;
+      currencyStyle.DataFormat = wb.CreateDataFormat().GetFormat("$#,##0.00");
+
 
       ISheet sheet = wb.CreateSheet("Orders");
       IRow row = sheet.CreateRow(0);
@@ -437,9 +444,9 @@ namespace EventCombo.Service
         AddStyledCell(row, 1, style).SetCellValue(order.BuyerName);
         AddStyledCell(row, 2, style).SetCellValue(order.TicketName);
         AddStyledCell(row, 3, style).SetCellValue(order.Quantity);
-        AddStyledCell(row, 4, style).SetCellValue("$" + (double)order.Price);
-        AddStyledCell(row, 5, style).SetCellValue("$" + (double)order.PricePaid);
-        AddStyledCell(row, 6, style).SetCellValue("$" + (double)order.PriceNet);
+        AddStyledCell(row, 4, currencyStyle).SetCellValue((double)order.Price);
+        AddStyledCell(row, 5, currencyStyle).SetCellValue((double)order.PricePaid);
+        AddStyledCell(row, 6, currencyStyle).SetCellValue((double)order.PriceNet);
         AddStyledCell(row, 7, datestyle).SetCellValue(order.CustomerEmail);
         AddStyledCell(row, 8, datestyle).SetCellValue(order.Address);
         AddStyledCell(row, 9, datestyle).SetCellValue(order.Date.ToString("MMM dd, yyyy hh:mm:ss tt"));
@@ -737,6 +744,13 @@ namespace EventCombo.Service
         datestyle.BorderRight = BorderStyle.Thin;
         datestyle.DataFormat = wb.CreateDataFormat().GetFormat("MMMM dd, yyyy");
 
+        ICellStyle currencyStyle = wb.CreateCellStyle();
+        currencyStyle.BorderBottom = BorderStyle.Thin;
+        currencyStyle.BorderTop = BorderStyle.Thin;
+        currencyStyle.BorderLeft = BorderStyle.Thin;
+        currencyStyle.BorderRight = BorderStyle.Thin;
+        currencyStyle.DataFormat = wb.CreateDataFormat().GetFormat("$#,##0.00");
+
         ICellStyle Titlestyle = wb.CreateCellStyle();
         Titlestyle.BorderBottom = BorderStyle.Thin;
         Titlestyle.BorderTop = BorderStyle.Thin;
@@ -784,8 +798,8 @@ namespace EventCombo.Service
             AddStyledCell(row, 2, style).SetCellValue(order.BuyerName);
             AddStyledCell(row, 3, style).SetCellValue(order.TicketName);
             AddStyledCell(row, 4, style).SetCellValue(order.Quantity);
-            AddStyledCell(row, 5, style).SetCellValue("$" + order.PricePaid.ToString("N2"));
-            AddStyledCell(row, 6, style).SetCellValue("$" + order.PriceNet.ToString("N2"));
+            AddStyledCell(row, 5, currencyStyle).SetCellValue((double)order.PricePaid);
+            AddStyledCell(row, 6, currencyStyle).SetCellValue((double)order.PriceNet);
             AddStyledCell(row, 7, style).SetCellValue(order.PromoCode);
             AddStyledCell(row, 8, style).SetCellValue((order.Refunded > 0 ? "Yes" : ""));
             AddStyledCell(row, 9, style).SetCellValue((order.Cancelled > 0 ? "Yes" : ""));
@@ -799,7 +813,7 @@ namespace EventCombo.Service
                 foreach (var variable in order.VariableChages)
                 {
                     variableCount += 1;
-                    AddStyledCell(row, 13 + variableCount, style).SetCellValue("$" + (variable.Price ?? 0).ToString("N2"));
+                    AddStyledCell(row, 13 + variableCount, currencyStyle).SetCellValue((double)(variable.Price ?? 0));
                 }
                 tempOrderId = order.OrderId;
             }
@@ -808,7 +822,7 @@ namespace EventCombo.Service
                 foreach (var variable in order.VariableChages)
                 {
                     variableCount += 1;
-                    AddStyledCell(row, 13 + variableCount, style).SetCellValue("");
+                    AddStyledCell(row, 13 + variableCount, currencyStyle).SetCellValue(0.0);
                 }
             }
         }
