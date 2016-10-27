@@ -751,10 +751,10 @@ namespace EventCombo.Controllers
                         strResult.Append("<td>"); strResult.Append("0/0"); strResult.Append("</td>");
                     }
 
-                    strHideUntil = (obj.Hide_Untill_Date != null ? obj.Hide_Untill_Date.ToString() : "");
+                    strHideUntil = (obj.Hide_Untill_Date != null ? (obj.Hide_Untill_Date ?? default(DateTime)).ToString("d") : "");
                     strHideUntilTime = (obj.Hide_Untill_Time != null ? obj.Hide_Untill_Time.ToString() : "");
 
-                    strHideAfter = (obj.Hide_After_Date != null ? obj.Hide_After_Date.ToString() : "");
+                    strHideAfter = (obj.Hide_After_Date != null ? (obj.Hide_After_Date ?? default(DateTime)).ToString("d") : "");
                     strHideAfterTime = (obj.Hide_After_Time != null ? obj.Hide_After_Time.ToString() : "");
 
                     if (!strHideUntil.Equals(string.Empty))
