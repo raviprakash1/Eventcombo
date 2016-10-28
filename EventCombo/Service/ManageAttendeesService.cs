@@ -277,28 +277,41 @@ namespace EventCombo.Service
       return res;
     }
 
-    public EventOrderDetailViewModel GetOrderDetails(string orderId)
+    public EventOrderDetailViewModel GetOrderDetails(string orderId, long eventId)
     {
-      IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
-      var order = orderRepo.Get(filter: (o => (o.O_Order_Id == orderId))).FirstOrDefault();
-      if (order == null)
-        return null;
+        IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
+        IRepository<EventTicket_View> EventTicketRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
 
-      EventOrderDetailViewModel details = new EventOrderDetailViewModel() { OrderId = orderId };
-      details.Payment = _dbservice.GetPaymentInfo(orderId);
+        var order = orderRepo.Get(filter: (o => o.O_Order_Id == orderId)).FirstOrDefault();
+        if (order == null)
+            throw new NullReferenceException(String.Format("Order {0} not found.", orderId));
 
-      IRepository<EventCombo.Models.Profile> userRepo = new GenericRepository<EventCombo.Models.Profile>(_factory.ContextFactory);
-      var user = userRepo.Get(filter: (u => u.UserID == order.O_User_Id)).First();
-      details.Email = user.Email;
+        var TicketNames = EventTicketRepo.Get(filter: (t => t.EventID == eventId && t.OrderId == orderId)).Select(t => t.TicketName);
 
-      IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
-      foreach (var att in attRepo.Get(filter: (tb => ((tb.OrderId == orderId) && (tb.UserId == order.O_User_Id)))))
-        details.Attendees.Add(_mapper.Map<AttendeeViewModel>(att));
+        EventOrderDetailViewModel details = new EventOrderDetailViewModel() { OrderId = orderId };
+        details.Payment = _dbservice.GetPaymentInfo(orderId);
 
-      return details;
+        IRepository<EventCombo.Models.Profile> userRepo = new GenericRepository<EventCombo.Models.Profile>(_factory.ContextFactory);
+        var user = userRepo.Get(filter: (u => u.UserID == order.O_User_Id)).First();
+        details.Email = user.Email;
+
+        IRepository<Ticket_Purchased_Detail> ptRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+        var tickets = ptRepo.Get(filter: (t => ((t.TPD_Order_Id == orderId) && (t.TPD_User_Id == order.O_User_Id))));
+        details.EventLocation = String.Join("; ", tickets.Select(t => t.Ticket_Quantity_Detail.Address.ConsolidateAddress).Distinct().ToArray());
+        details.EventDate = String.Join("; ", tickets.Select(t => t.Ticket_Quantity_Detail.Publish_Event_Detail.PE_MultipleVenue_id > 0 ?
+                t.Ticket_Quantity_Detail.Publish_Event_Detail.MultipleEvent.StartingFrom :
+                t.Ticket_Quantity_Detail.Publish_Event_Detail.EventVenue.EventStartDate).Distinct().ToArray());
+
+        IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+        foreach (var att in attRepo.Get(filter: (tb => ((tb.OrderId == orderId) && (tb.UserId == order.O_User_Id)))))
+            details.Attendees.Add(_mapper.Map<AttendeeViewModel>(att));
+
+        details.TicketNames = (TicketNames == null ? "" : string.Join(", ", TicketNames.ToArray()));
+
+        return details;
     }
 
-    public bool SendConfirmations(string orderId, string baseUrl, string filePath)
+    public bool SendConfirmations(string orderId, string baseUrl, string filePath, bool IsManualOrder = false)
     {
       if (String.IsNullOrWhiteSpace(orderId))
         throw new ArgumentNullException("orderId");
@@ -319,14 +332,14 @@ namespace EventCombo.Service
         return false;
       else
       {
-        var mem = _tservice.GetDownloadableTicket(orderId, "pdf", filePath, true);
+        var mem = _tservice.GetDownloadableTicket(orderId, "pdf", filePath, IsManualOrder);
         Attachment attach = new Attachment(mem, new ContentType(MediaTypeNames.Application.Pdf));
         attach.ContentDisposition.FileName = "Ticket_EventCombo.pdf";
-        INotification notification = new OrderNotification(_factory, _dbservice, orderId, baseUrl, attach, true);
+        INotification notification = new OrderNotification(_factory, _dbservice, orderId, baseUrl, attach, IsManualOrder);
         ISendMailService sendService = new SendMailService();
         INotificationSender sender = new NotificationSender(notification, sendService);
         sender.SendSeparately(addresses);
-        INotification organizerNotification = new OrderOrganizerNotification(_factory, _dbservice, orderId, baseUrl, attach, true);
+        INotification organizerNotification = new OrderOrganizerNotification(_factory, _dbservice, orderId, baseUrl, attach, IsManualOrder);
         INotificationSender organizerSender = new NotificationSender(organizerNotification, sendService);
         organizerNotification.SendNotification(new SendMailService());
         return true;
@@ -1914,6 +1927,71 @@ namespace EventCombo.Service
         IRepository<Event> EventRepo = new GenericRepository<Event>(_factory.ContextFactory);
         var eventTitle = EventRepo.Get(filter: (e => e.EventID == eventId)).Select(x => new { x.EventTitle }).FirstOrDefault();
         return (eventTitle == null ? "" : eventTitle.EventTitle);
+    }
+
+    public bool SaveOrderDetails(EventOrderDetailViewModel model, string userId, string baseUrl, string filePath)
+    {
+      bool res = true;
+      using (var uow = _factory.GetUnitOfWork())
+      {
+        try
+        {
+          IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+          List<AttendeeViewModel> selected = new List<AttendeeViewModel>();
+          foreach (var attendee in attRepo.Get(filter: (a => ((a.OrderId == model.OrderId) && (a.UserId == userId)))))
+          {
+            var attVM = model.Attendees.Where(a => a.TicketbearerId == attendee.TicketbearerId).SingleOrDefault();
+            if (attVM != null)
+            {
+              if (
+                ((!String.IsNullOrWhiteSpace(attVM.Name) || !String.IsNullOrWhiteSpace(attendee.Name))
+                  && ((attVM.Name ?? "").Trim() != (attendee.Name ?? "").Trim()))
+                || ((!String.IsNullOrWhiteSpace(attVM.Email) || !String.IsNullOrWhiteSpace(attendee.Email)))
+                  && ((attVM.Email ?? "").Trim() != (attendee.Email ?? "").Trim()))
+              {
+                attVM.PhoneNumber = attendee.PhoneNumber;
+                _mapper.Map(attVM, attendee);
+                if (model.SendEmail && (!selected.Where(a => a.Email == attVM.Email).Any()))
+                  selected.Add(attVM);
+              }
+            }
+            else
+              res = false;
+          }
+          uow.Context.SaveChanges();
+          if (selected.Count > 0)
+          {
+            var mem = GetDownloadableTicket(model.OrderId, "pdf", filePath);
+            Attachment attach = new Attachment(mem, new ContentType(MediaTypeNames.Application.Pdf));
+            attach.ContentDisposition.FileName = "Ticket_EventCombo.pdf";
+            OrderNotification notification = new OrderNotification(_factory, _dbservice, model.OrderId, baseUrl, attach);
+            ISendMailService sendService = CreateSendMailService();
+            foreach (var att in selected)
+              if (!String.IsNullOrWhiteSpace(att.Email))
+              {
+                notification.ReceiverName = att.Name;
+                sendService.Message.To.Clear();
+                sendService.Message.To.Add(new MailAddress(att.Email, att.Name));
+                notification.SendNotification(sendService);
+              }
+          }
+          uow.Commit();
+        }
+        catch (Exception ex)
+        {
+          uow.Rollback();
+          throw new Exception("Exception in the SaveOrderDetails. Transaction rolled back.", ex);
+        }
+      }
+      return res;
+    }
+
+    private ISendMailService CreateSendMailService()
+    {
+      ISendMailService service = new SendMailService();
+      service.Message.From = new MailAddress("noreply@eventcombo.com");
+      service.Message.ReplyToList.Add(new MailAddress("noreply@eventcombo.com"));
+      return service;
     }
 
   }

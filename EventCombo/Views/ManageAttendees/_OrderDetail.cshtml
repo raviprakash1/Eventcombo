@@ -3,51 +3,122 @@
 @using EventCombo.Models;
 @model EventOrderDetailViewModel
 <td colspan="11" style="padding:0px;">
-  <table class="table" style="margin-bottom:0px;">
-    @if (Model.Attendees.Count > 0)
-    {
-      for (var i = 0; i < Model.Attendees.Count; i++)
-      {
+    <table class="table" style="margin-bottom:0px;">
         <tr class="UETableTDSUbDivBackColor">
-          <td class="subTableInnerTD">@Html.Raw(i == 0 ? "<b>Attendees</b>" : "")</td>
-          <td class="subTableInnerTD">@(Model.Attendees[i].Name) (<span style="color:#00CAFD;">@(Model.Attendees[i].Email)</span>)</td>
-          <td class="subTableInnerTD"></td>
+            <td class="subTableInnerTD"><b>Payment</b></td>
+            <td class="subTableInnerTD">Paid by @Model.Payment</td>
+            <td class="subTableInnerTD"><b>Attendees</b></td>
+            <td class="subTableInnerTD"></td>
+            <td class="subTableInnerTD"></td>
         </tr>
 
-      }
-    }
-    else
-    {
-      <tr class="UETableTDSUbDivBackColor">
-        <td class="subTableInnerTD"><b>No attendees</b></td>
-        <td class="subTableInnerTD"></td>
-        <td class="subTableInnerTD"></td>
-      </tr>
-    }
+        <tr class="UETableTDSUbDivBackColor">
+            <td class="subTableInnerTD"><b>Buyer Email:</b></td>
+            <td class="subTableInnerTD"><span class="emailAddressUETble">@Model.Email</span></td>
+            <td class="subTableInnerTD"><b>Name</b></td>
+            <td class="subTableInnerTD"><b>Email</b></td>
+            <td class="subTableInnerTD"></td>
+        </tr>
 
-    <tr class="UETableTDSUbDivBackColor">
-      <td class="subTableInnerTD"><b>Payment</b></td>
-      <td class="subTableInnerTD">Pay by @(Model.Payment)</td>
-      <td class="subTableInnerTD subContainerLastPadding"><b>Buyer Email: </b><span style="color:#00CAFD;">@(Model.Email)</span></td>
-    </tr>
-
-    <tr class="UETableTDSUbDivBackColor">
-      <td id="ajaxanswer@(Model.OrderId)" class="subTableInnerTD" colspan="3"></td>
-    </tr>
-
-    <tr class="UETableTDSUbDivBackColorFooter">
-      <td colspan="3">
-        <table style="width:100%;">
-          <tr>
-            <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubEdit()">EDIT</td>
-            <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubRefund()">REFUND</td>
-            <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubViewReport()">VIEW Report</td>
-            <td class="UETableTDSUbDivFooterLinks">@(Html.ActionLink("PRINT TICKETS", "Ticket", "Download", new { OrderId = Model.OrderId, format = "pdf" }, null))</td>
-            <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubResend('@(Model.OrderId)')">RE-SEND CONFIRMATION</td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+        @for (var i = 0; i < (Model.Attendees.Count > 2 ? Model.Attendees.Count : 2); i++)
+        {
+            if (i == 0)
+            {
+                <tr class="UETableTDSUbDivBackColor">
+                    <td class="subTableInnerTD"><b>Event Date:</b></td>
+                    <td class="subTableInnerTD">@(Model.EventDate)</td>
+                    @if (Model.Attendees.Count > 0)
+                    {
+                        <td class="subTableInnerTD">
+                            <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Name" />
+                        </td>
+                        <td class="subTableInnerTD">
+                            <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Email" />
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="subTableInnerTD">
+                            <b>No attendees</b>
+                        </td>
+                        <td class="subTableInnerTD"></td>
+                    }
+                    <td class="subTableInnerTD"></td>
+                </tr>
+            }
+            else if (i == 1)
+            {
+                <tr class="UETableTDSUbDivBackColor" style="height: 85px;">
+                    <td class="subTableInnerTD"><b>Event Location:</b></td>
+                    <td class="subTableInnerTD">@(Model.EventLocation)</td>
+                    @if (Model.Attendees.Count > 1)
+                    {
+                        <td class="subTableInnerTD">
+                            <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Name" />
+                        </td>
+                        <td class="subTableInnerTD">
+                            <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Email" />
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="subTableInnerTD"></td>
+                        <td class="subTableInnerTD"></td>
+                    }
+                    <td class="subTableInnerTD"></td>
+                </tr>
+            }
+            else
+            {
+                <tr class="UETableTDSUbDivBackColor" style="height: 85px;">
+                    <td class="subTableInnerTD" colspan="2"></td>
+                    <td class="subTableInnerTD">
+                        <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Name" />
+                    </td>
+                    <td class="subTableInnerTD">
+                        <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Email" />
+                    </td>
+                    <td class="subTableInnerTD"></td>
+                </tr>
+            }
+        }
+        <tr class="UETableTDSUbDivBackColor" style="height: 55px;">
+            <td class="subTableInnerTD"><b>Ticket Names:</b></td>
+            <td class="subTableInnerTD" colspan="3">
+                @Model.TicketNames
+            </td>
+            <td class="subTableInnerTD"></td>
+        </tr>
+        @if (Model.Attendees.Count > 0)
+        {
+            <tr class="UETableTDSUbDivBackColor" style="height: 85px;">
+                <td class="subTableInnerTD" colspan="2"></td>
+                <td class="subTableInnerTD" colspan="2">
+                    <div class="basicInfoUnCheckBox" id="sendConfirmationEmail@(Model.OrderId)" onclick="setCheckBoxChecked(this);">Send confirmation email to new attendee</div>
+                </td>
+                <td class="subTableInnerTD"></td>
+            </tr>
+        }
+        <tr class="UETableTDSUbDivBackColor" style="height: 85px;">
+            <td class="subTableInnerTD" colspan="4">
+                <div id="ajaxanswer@(Model.OrderId)"></div>
+            </td>
+            <td class="subTableInnerTD"></td>
+        </tr>
+        <tr class="UETableTDSUbDivBackColorFooter">
+            <td colspan="5">
+                <table>
+                    <tr>
+                        <td class="UETableTDSUbDivFooterLinks" @(Model.Attendees.Count > 0 ? "onclick=editAttendees(this);" : "")>@(Model.Attendees.Count > 0 ? "EDIT" : "")</td>
+                        <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubRefund()">REFUND</td>
+                        <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubViewReport()">VIEW Report</td>
+                        <td class="UETableTDSUbDivFooterLinks">@(Html.ActionLink("PRINT TICKETS", "Ticket", "Download", new { OrderId = Model.OrderId, format = "pdf" }, null))</td>
+                        <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubResend('@(Model.OrderId)')">RE-SEND CONFIRMATION</td>
+                        <td class="UETableTDSUbDivFooterLinks" onclick="saveChangeFunc('@(Model.OrderId)')">SAVE CHANGES</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </td>
 
