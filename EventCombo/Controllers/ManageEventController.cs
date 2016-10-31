@@ -329,7 +329,7 @@ namespace EventCombo.Controllers
             }
 
             CultureInfo us = new CultureInfo("en-US");
-            var eInfo = _tservice.GetEventSummaryCalculation(Eventid);
+            var eInfo = _tservice.GetEventSummaryCalculation(Eventid, FilterByOrderType.Regular);
 
             TempData["EventHits"] = strDates.ToString();
             TempData["SaleQty"] = strSaleQty.ToString();
@@ -1060,8 +1060,7 @@ namespace EventCombo.Controllers
                     {
                         //var vtotalty = (from myRow in objEnt.Ticket_Quantity_Detail where myRow.TQD_Event_Id == eventId select myRow.TQD_Quantity).Sum();
                         //lResult = (vtotalty != null ? Convert.ToInt64(vtotalty) : 0);
-                        var ticType = new long?[] { 1, 2 };
-                        var vtotalty = (from myRow in objEnt.Tickets where myRow.E_Id == eventId && (ticType.Contains(myRow.TicketTypeID)) select myRow.Qty_Available).Sum();
+                        var vtotalty = (from myRow in objEnt.Tickets where myRow.E_Id == eventId select myRow.Qty_Available).Sum();
                         lResult = vtotalty;
                     }
                 }
