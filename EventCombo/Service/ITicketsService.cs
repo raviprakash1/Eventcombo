@@ -25,8 +25,8 @@ namespace EventCombo.Service
     MemoryStream GetDownloadableTicket(string orderId, string format, string filePath, bool IsManualOrder = false);
 
     IEnumerable<OrderSummaryViewModel> GetEventOrdersSummaryCalculation(long eventId);
-    
-    EventSummaryViewModel GetEventSummaryCalculation(long eventId);
+
+    EventSummaryViewModel GetEventSummaryCalculation(long eventId, FilterByOrderType filter);
 
   }
 }

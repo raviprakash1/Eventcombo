@@ -59,7 +59,7 @@ namespace EventCombo.Service
       IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
       var ev = eRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();
 
-      var eInfo = _tservice.GetEventSummaryCalculation(eventId);
+      var eInfo = _tservice.GetEventSummaryCalculation(eventId, FilterByOrderType.Regular);
 
       EventOrdersSummuryViewModel ordersTotal = new EventOrdersSummuryViewModel()
       {

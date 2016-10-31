@@ -17,6 +17,8 @@ using EventCombo.Utils;
 
 namespace EventCombo.Service
 {
+  public enum FilterByOrderType { All, Regular, Manual}
+
   public class TicketService : ITicketsService
   {
     private IUnitOfWorkFactory _factory;
@@ -334,17 +336,20 @@ namespace EventCombo.Service
         Refunded = (o.OrderStateId == 3) ? (o.O_TotalAmount ?? 0) : 0,
         VarChargesAmount = o.O_VariableAmount ?? 0,
         IsCancelled = o.OrderStateId == 2,
-        IsRefunded = o.OrderStateId == 3
+        IsRefunded = o.OrderStateId == 3,
+        IsManualOrder = o.IsManualOrder
       });
 
     }
 
-    public EventSummaryViewModel GetEventSummaryCalculation(long eventId)
+    public EventSummaryViewModel GetEventSummaryCalculation(long eventId, FilterByOrderType filter)
     {
       var orders = GetEventOrdersSummaryCalculation(eventId);
       if (orders == null)
         throw new NullReferenceException(String.Format("Event not found for id = {0}", eventId));
-      return orders.GroupBy(o => new { o.EventId }).Select(os => new EventSummaryViewModel()
+      return orders
+              .Where(ord => (filter == FilterByOrderType.All) || ((filter == FilterByOrderType.Manual) && ord.IsManualOrder) || ((filter == FilterByOrderType.Regular) && !ord.IsManualOrder))
+              .GroupBy(o => new { o.EventId }).Select(os => new EventSummaryViewModel()
       {
         EventId = eventId,
         OrderQuantity = os.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : 1)),

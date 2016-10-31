@@ -86,6 +86,7 @@ namespace EventCombo.Models
     public DateTime Date { get; set; }
     public bool IsCancelled { get; set; }
     public bool IsRefunded { get; set; }
+    public bool IsManualOrder { get; set; }
   }
 
   public class EventSummaryViewModel
