@@ -2237,9 +2237,9 @@ namespace EventCombo.Controllers
     public ActionResult Index()
     {
       Session["logo"] = "events";
-      Session["Fromname"] = "events";
+      Session["Fromname"] = "Home";
       var url = Url.Action("Index", "Home");
-      Session["ReturnUrl"] = "EditEvent~" + url;
+      Session["ReturnUrl"] = "Home~" + url;
 
       var model = _eService.GetHomepageInfo();
 

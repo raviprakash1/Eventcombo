@@ -91,6 +91,9 @@ namespace CMS.Models
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<EventTicket_View> EventTicket_View { get; set; }
         public virtual DbSet<BusinessPageECImage> BusinessPageECImages { get; set; }
+        public virtual DbSet<TicketAttendee> TicketAttendees { get; set; }
+        public virtual DbSet<TicketAttendee_View> TicketAttendee_View { get; set; }
+        public virtual DbSet<TicketBearer_View> TicketBearer_View { get; set; }
     
         [DbFunction("EmsEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)

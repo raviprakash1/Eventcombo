@@ -16,11 +16,11 @@ namespace EventCombo.Service
 
     EventOrderDetailViewModel GetEventOrderDetail(string orderId);
 
-    EventOrderDetailViewModel GetOrderDetails(string orderId);
+    EventOrderDetailViewModel GetOrderDetails(string orderId, long eventId);
 
     IEnumerable<EventOrderInfoViewModel> GetOrdersForSaleReport(PaymentStates state, long eventId);
 
-    bool SendConfirmations(string orderId, string baseUrl, string filePath );
+    bool SendConfirmations(string orderId, string baseUrl, string filePath, bool IsManualOrder = false);
 
     MemoryStream GetDownloadableOrderList(PaymentStates state, long eventId, string format);
 
@@ -67,5 +67,7 @@ namespace EventCombo.Service
     IEnumerable<EventOrderInfoViewModel> GetManualOrdersForEvent(PaymentStates state, long eventId);
 
     string GetEventTitle(long eventId);
+
+    bool SaveOrderDetails(EventOrderDetailViewModel model, string userId, string baseUrl, string filePath);
   }
 }

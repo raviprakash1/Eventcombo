@@ -7,7 +7,7 @@ using System.Web;
 namespace EventCombo.Models
 {
   public enum PaymentStates { Total, Completed, Pending }
-  public enum EventOrderSortBy { Date, Price, PricePaid, PriceNet, Buyer, TicketName, CustomerEmail, Order, Quantity, PaymentState, Address }
+  public enum EventOrderSortBy { Date, Price, PricePaid, PriceNet, Buyer, TicketName, CustomerEmail, Order, Quantity, PaymentState, Address, DateOrder }
 
 
   public class ManageAttendeesOrdersViewModel
@@ -41,6 +41,7 @@ namespace EventCombo.Models
 
   public class EventOrderInfoViewModel
   {
+    public long OId { get; set; }
     public string OrderId { get; set; }
     public string BuyerName { get; set; }
     public string TicketName { get; set; }
@@ -69,9 +70,49 @@ namespace EventCombo.Models
     public string PhoneNumber { get; set; }
   }
 
+  public class OrderSummaryViewModel
+  {
+    public long OId { get; set; }
+    public string OrderId { get; set; }
+    public long EventId { get; set; }
+    public long Quantity { get; set; }
+    public decimal Price { get; set; }
+    public decimal PriceNet { get; set; }
+    public decimal Fee { get; set; }
+    public decimal CustomerFee { get; set; }
+    public decimal VarChargesAmount { get; set; }
+    public decimal Refunded { get; set; }
+    public decimal Cancelled { get; set; }
+    public DateTime Date { get; set; }
+    public bool IsCancelled { get; set; }
+    public bool IsRefunded { get; set; }
+    public bool IsManualOrder { get; set; }
+  }
+
+  public class EventSummaryViewModel
+  {
+    public long EventId { get; set; }
+    public long OrderQuantity { get; set; }
+    public long TicketQuantity { get; set; }
+    public decimal Price { get; set; }
+    public decimal PriceNet { get; set; }
+    public decimal Fee { get; set; }
+    public decimal CustomerFee { get; set; }
+    public decimal VarChargesAmount { get; set; }
+    public decimal Refunded { get; set; }
+    public decimal Cancelled { get; set; }
+  }
+
   public class EventOrderDetailViewModel
   {
+    public long OId { get; set; }
     public string OrderId { get; set; }
+    public string Payment { get; set; }
+    public string Email { get; set; }
+    public string EventDate { get; set; }
+    public string EventLocation { get; set; }
+    public string TicketNames { get; set; }
+    public bool SendEmail { get; set; }
 
     private List<AttendeeViewModel> _attendees = new List<AttendeeViewModel>();
     public List<AttendeeViewModel> Attendees
@@ -79,9 +120,6 @@ namespace EventCombo.Models
       get { return _attendees; }
       private set { _attendees = value; }
     }
-
-    public string Payment { get; set; }
-    public string Email { get; set; }
   }
 
   public class EventOrdersListRequestViewModel
@@ -89,7 +127,7 @@ namespace EventCombo.Models
     public EventOrdersListRequestViewModel()
     {
       EventId = 0;
-      SortBy = EventOrderSortBy.Date;
+      SortBy = EventOrderSortBy.DateOrder;
       PaymentState = PaymentStates.Total;
       PerPage = 20;
       Page = 0;

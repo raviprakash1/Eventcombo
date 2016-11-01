@@ -139,7 +139,7 @@
           </Key>
           <Property Name="AttendeeEmailId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ScheduledEmailId" Type="bigint" Nullable="false" />
-          <Property Name="TicketbearerId" Type="bigint" Nullable="false" />
+          <Property Name="TicketbearerId" Type="bigint" />
           <Property Name="EventID" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="BillingAddress">
@@ -496,31 +496,6 @@
           </Key>
           <Property Name="LanguageId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LanguageName" Type="nvarchar" MaxLength="200" Nullable="false" />
-        </EntityType>
-        <EntityType Name="LockOrder">
-          <Key>
-            <PropertyRef Name="LockOrderId" />
-          </Key>
-          <Property Name="LockOrderId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="EventId" Type="bigint" Nullable="false" />
-          <Property Name="Locktime" Type="datetime" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
-          <Property Name="IP" Type="varchar" MaxLength="15" Nullable="false" />
-        </EntityType>
-        <EntityType Name="LockTicket">
-          <Key>
-            <PropertyRef Name="LockTicketId" />
-          </Key>
-          <Property Name="LockTicketId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LockOrderId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="TicketQuantityDetailId" Type="bigint" Nullable="false" />
-          <Property Name="Quantity" Type="int" Nullable="false" />
-          <Property Name="Donate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="ECFeeAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="ECFeePercent" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="ECFeeType" Type="int" Nullable="false" />
-          <Property Name="CustomerFee" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Messages">
           <Key>
@@ -1165,22 +1140,6 @@
           <Property Name="Data" Type="nvarchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'EventCombo.dbo.AvailableTicket_View' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="AvailableTicket_View">
-          <Key>
-            <PropertyRef Name="TQD_Id" />
-          </Key>
-          <Property Name="TQD_Id" Type="bigint" Nullable="false" />
-          <Property Name="TQD_Event_Id" Type="bigint" />
-          <Property Name="TQD_AddressId" Type="bigint" />
-          <Property Name="TQD_PE_Id" Type="bigint" />
-          <Property Name="TQD_Quantity" Type="bigint" />
-          <Property Name="RemainingQuantity" Type="bigint" />
-          <Property Name="TQD_StartDate" Type="varchar" MaxLength="50" />
-          <Property Name="TQD_StartTime" Type="varchar" MaxLength="50" />
-          <Property Name="TQD_Ticket_Id" Type="bigint" />
-        </EntityType>
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'EventCombo.dbo.EventTicket_View' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="EventTicket_View">
           <Key>
@@ -1552,18 +1511,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AttendeeEmail_TicketBearer">
-          <End Role="TicketBearer" Type="Self.TicketBearer" Multiplicity="1" />
-          <End Role="AttendeeEmail" Type="Self.AttendeeEmail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TicketBearer">
-              <PropertyRef Name="TicketbearerId" />
-            </Principal>
-            <Dependent Role="AttendeeEmail">
-              <PropertyRef Name="TicketbearerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1828,9 +1775,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="DeleteExpiredLocks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="minutes" Type="int" Mode="In" />
-        </Function>
         <Function Name="Distance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
           <Parameter Name="lat1" Type="float" Mode="In" />
           <Parameter Name="long1" Type="float" Mode="In" />
@@ -1951,8 +1895,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="Fee_Structure" EntityType="Self.Fee_Structure" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HomepageWord" EntityType="Self.HomepageWord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LockOrder" EntityType="Self.LockOrder" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LockTicket" EntityType="Self.LockTicket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MultipleEvent" EntityType="Self.MultipleEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Detail_T" EntityType="Self.Order_Detail_T" Schema="dbo" store:Type="Tables" />
@@ -2000,19 +1942,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="Server" EntityType="Self.Server" Schema="HangFire" store:Type="Tables" />
           <EntitySet Name="Set" EntityType="Self.Set" Schema="HangFire" store:Type="Tables" />
           <EntitySet Name="State" EntityType="Self.State" Schema="HangFire" store:Type="Tables" />
-          <EntitySet Name="AvailableTicket_View" EntityType="Self.AvailableTicket_View" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [AvailableTicket_View].[TQD_Id] AS [TQD_Id], 
-    [AvailableTicket_View].[TQD_Event_Id] AS [TQD_Event_Id], 
-    [AvailableTicket_View].[TQD_AddressId] AS [TQD_AddressId], 
-    [AvailableTicket_View].[TQD_PE_Id] AS [TQD_PE_Id], 
-    [AvailableTicket_View].[TQD_Quantity] AS [TQD_Quantity], 
-    [AvailableTicket_View].[RemainingQuantity] AS [RemainingQuantity], 
-    [AvailableTicket_View].[TQD_StartDate] AS [TQD_StartDate], 
-    [AvailableTicket_View].[TQD_StartTime] AS [TQD_StartTime], 
-    [AvailableTicket_View].[TQD_Ticket_Id] AS [TQD_Ticket_Id]
-    FROM [dbo].[AvailableTicket_View] AS [AvailableTicket_View]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="EventTicket_View" EntityType="Self.EventTicket_View" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [EventTicket_View].[TPD_Id] AS [TPD_Id], 
@@ -2276,10 +2205,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           </AssociationSet>
           <AssociationSet Name="FK_AttendeeEmail_ScheduledEmail" Association="Self.FK_AttendeeEmail_ScheduledEmail">
             <End Role="ScheduledEmail" EntitySet="ScheduledEmail" />
-            <End Role="AttendeeEmail" EntitySet="AttendeeEmail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AttendeeEmail_TicketBearer" Association="Self.FK_AttendeeEmail_TicketBearer">
-            <End Role="TicketBearer" EntitySet="TicketBearer" />
             <End Role="AttendeeEmail" EntitySet="AttendeeEmail" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -2940,7 +2865,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="TicketAttendees" Relationship="EventComboModel.FK_TicketAttendee_TicketBearer" FromRole="TicketBearer" ToRole="TicketAttendee" />
           <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AttendeeEmails" Relationship="EventComboModel.FK_AttendeeEmail_TicketBearer" FromRole="TicketBearer" ToRole="AttendeeEmail" />
         </EntityType>
         <EntityType Name="TicketDeliveryMethod">
           <Key>
@@ -3508,6 +3432,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             <End Role="EmailType" EntitySet="EmailTypes" />
             <End Role="ScheduledEmail" EntitySet="ScheduledEmails" />
           </AssociationSet>
+          <EntitySet Name="TicketBearer_View" EntityType="EventComboModel.TicketBearer_View" />
           <FunctionImport Name="GetNearestEvents" ReturnType="Collection(EventComboModel.GetNearestEvents_Result)">
             <Parameter Name="lng" Mode="In" Type="Double" />
             <Parameter Name="lat" Mode="In" Type="Double" />
@@ -3537,21 +3462,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <AssociationSet Name="EventEvent_Email_Invitation" Association="EventComboModel.EventEvent_Email_Invitation">
             <End Role="Event" EntitySet="Events" />
             <End Role="Event_Email_Invitation" EntitySet="Event_Email_Invitation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AttendeeEmail_TicketBearer" Association="EventComboModel.FK_AttendeeEmail_TicketBearer">
-            <End Role="TicketBearer" EntitySet="TicketBearers" />
-            <End Role="AttendeeEmail" EntitySet="AttendeeEmails" />
-          </AssociationSet>
-          <EntitySet Name="AvailableTicket_View" EntityType="EventComboModel.AvailableTicket_View" />
-          <EntitySet Name="TicketBearer_View" EntityType="EventComboModel.TicketBearer_View" />
-          <FunctionImport Name="DeleteExpiredLocks">
-          <Parameter Name="minutes" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="LockOrders" EntityType="EventComboModel.LockOrder" />
-          <EntitySet Name="LockTickets" EntityType="EventComboModel.LockTicket" />
-          <AssociationSet Name="LockOrderLockTicket" Association="EventComboModel.LockOrderLockTicket">
-            <End Role="LockOrder" EntitySet="LockOrders" />
-            <End Role="LockTicket" EntitySet="LockTickets" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
@@ -5087,6 +4997,20 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TicketBearer_View">
+          <Key>
+            <PropertyRef Name="TicketbearerId" />
+            <PropertyRef Name="JustId" />
+          </Key>
+          <Property Name="TicketbearerId" Type="Int64" Nullable="false" />
+          <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="JustId" Type="Int64" Nullable="false" />
+        </EntityType>
         <ComplexType Name="GetNearestEvents_Result">
           <Property Type="Int64" Name="EventID" Nullable="false" />
           <Property Type="Int64" Name="EventTypeID" Nullable="false" />
@@ -5155,11 +5079,10 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           </Key>
           <Property Name="AttendeeEmailId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ScheduledEmailId" Type="Int64" Nullable="false" />
-          <Property Name="TicketbearerId" Type="Int64" Nullable="false" />
+          <Property Name="TicketbearerId" Type="Int64" />
           <Property Name="EventID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Event" Relationship="EventComboModel.FK_AttendeeEmail_Event" FromRole="AttendeeEmail" ToRole="Event" />
           <NavigationProperty Name="ScheduledEmail" Relationship="EventComboModel.FK_AttendeeEmail_ScheduledEmail" FromRole="AttendeeEmail" ToRole="ScheduledEmail" />
-          <NavigationProperty Name="TicketBearer" Relationship="EventComboModel.FK_AttendeeEmail_TicketBearer" FromRole="AttendeeEmail" ToRole="TicketBearer" />
         </EntityType>
         <Association Name="FK_AttendeeEmail_Event">
           <End Type="EventComboModel.Event" Role="Event" Multiplicity="1" />
@@ -5262,85 +5185,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Principal>
             <Dependent Role="Event_Email_Invitation">
               <PropertyRef Name="I_Event_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AttendeeEmail_TicketBearer">
-          <End Type="EventComboModel.TicketBearer" Role="TicketBearer" Multiplicity="1" />
-          <End Type="EventComboModel.AttendeeEmail" Role="AttendeeEmail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TicketBearer">
-              <PropertyRef Name="TicketbearerId" />
-            </Principal>
-            <Dependent Role="AttendeeEmail">
-              <PropertyRef Name="TicketbearerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="AvailableTicket_View">
-          <Key>
-            <PropertyRef Name="TQD_Id" />
-          </Key>
-          <Property Name="TQD_Id" Type="Int64" Nullable="false" />
-          <Property Name="TQD_Event_Id" Type="Int64" />
-          <Property Name="TQD_AddressId" Type="Int64" />
-          <Property Name="TQD_PE_Id" Type="Int64" />
-          <Property Name="TQD_Quantity" Type="Int64" />
-          <Property Name="RemainingQuantity" Type="Int64" />
-          <Property Name="TQD_StartDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TQD_StartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TQD_Ticket_Id" Type="Int64" />
-        </EntityType>
-        <EntityType Name="TicketBearer_View">
-          <Key>
-            <PropertyRef Name="JustId" />
-            <PropertyRef Name="TicketbearerId" />
-          </Key>
-          <Property Name="JustId" Type="Int64" Nullable="false" />
-          <Property Name="TicketbearerId" Type="Int64" Nullable="false" />
-          <Property Name="OrderId" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Guid" Type="String" MaxLength="128" FixedLength="true" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="LockOrder">
-          <Key>
-            <PropertyRef Name="LockOrderId" />
-          </Key>
-          <Property Name="LockOrderId" Type="Guid" Nullable="false" />
-          <Property Name="EventId" Type="Int64" Nullable="false" />
-          <Property Name="Locktime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="IP" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="LockTickets" Relationship="EventComboModel.LockOrderLockTicket" FromRole="LockOrder" ToRole="LockTicket" />
-        </EntityType>
-        <EntityType Name="LockTicket">
-          <Key>
-            <PropertyRef Name="LockTicketId" />
-          </Key>
-          <Property Name="LockTicketId" Type="Int64" Nullable="false" />
-          <Property Name="LockOrderId" Type="Guid" Nullable="false" />
-          <Property Name="TicketQuantityDetailId" Type="Int64" Nullable="false" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="Donate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="ECFeeAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="ECFeePercent" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="ECFeeType" Type="Int32" Nullable="false" />
-          <Property Name="CustomerFee" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <NavigationProperty Name="LockOrder" Relationship="EventComboModel.LockOrderLockTicket" FromRole="LockTicket" ToRole="LockOrder" />
-        </EntityType>
-        <Association Name="LockOrderLockTicket">
-          <End Type="EventComboModel.LockOrder" Role="LockOrder" Multiplicity="1" />
-          <End Type="EventComboModel.LockTicket" Role="LockTicket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LockOrder">
-              <PropertyRef Name="LockOrderId" />
-            </Principal>
-            <Dependent Role="LockTicket">
-              <PropertyRef Name="LockOrderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6839,6 +6683,20 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TicketBearer_View">
+            <EntityTypeMapping TypeName="EventComboModel.TicketBearer_View">
+              <MappingFragment StoreEntitySet="TicketBearer_View">
+                <ScalarProperty Name="JustId" ColumnName="JustId" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="TicketbearerId" ColumnName="TicketbearerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetNearestEvents" FunctionName="EventComboModel.Store.GetNearestEvents">
             <ResultMapping>
               <ComplexTypeMapping TypeName="EventComboModel.GetNearestEvents_Result">
@@ -6952,63 +6810,6 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="TicketBearerId" ColumnName="TicketBearerId" />
                 <ScalarProperty Name="TicketAttendeeId" ColumnName="TicketAttendeeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AvailableTicket_View">
-            <EntityTypeMapping TypeName="EventComboModel.AvailableTicket_View">
-              <MappingFragment StoreEntitySet="AvailableTicket_View">
-                <ScalarProperty Name="TQD_Ticket_Id" ColumnName="TQD_Ticket_Id" />
-                <ScalarProperty Name="TQD_StartTime" ColumnName="TQD_StartTime" />
-                <ScalarProperty Name="TQD_StartDate" ColumnName="TQD_StartDate" />
-                <ScalarProperty Name="RemainingQuantity" ColumnName="RemainingQuantity" />
-                <ScalarProperty Name="TQD_Quantity" ColumnName="TQD_Quantity" />
-                <ScalarProperty Name="TQD_PE_Id" ColumnName="TQD_PE_Id" />
-                <ScalarProperty Name="TQD_AddressId" ColumnName="TQD_AddressId" />
-                <ScalarProperty Name="TQD_Event_Id" ColumnName="TQD_Event_Id" />
-                <ScalarProperty Name="TQD_Id" ColumnName="TQD_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TicketBearer_View">
-            <EntityTypeMapping TypeName="EventComboModel.TicketBearer_View">
-              <MappingFragment StoreEntitySet="TicketBearer_View">
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Guid" ColumnName="Guid" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="TicketbearerId" ColumnName="TicketbearerId" />
-                <ScalarProperty Name="JustId" ColumnName="JustId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="DeleteExpiredLocks" FunctionName="EventComboModel.Store.DeleteExpiredLocks" />
-          <EntitySetMapping Name="LockOrders">
-            <EntityTypeMapping TypeName="EventComboModel.LockOrder">
-              <MappingFragment StoreEntitySet="LockOrder">
-                <ScalarProperty Name="IP" ColumnName="IP" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Locktime" ColumnName="Locktime" />
-                <ScalarProperty Name="EventId" ColumnName="EventId" />
-                <ScalarProperty Name="LockOrderId" ColumnName="LockOrderId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LockTickets">
-            <EntityTypeMapping TypeName="EventComboModel.LockTicket">
-              <MappingFragment StoreEntitySet="LockTicket">
-                <ScalarProperty Name="CustomerFee" ColumnName="CustomerFee" />
-                <ScalarProperty Name="ECFeeType" ColumnName="ECFeeType" />
-                <ScalarProperty Name="ECFeePercent" ColumnName="ECFeePercent" />
-                <ScalarProperty Name="ECFeeAmount" ColumnName="ECFeeAmount" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Donate" ColumnName="Donate" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="TicketQuantityDetailId" ColumnName="TicketQuantityDetailId" />
-                <ScalarProperty Name="LockOrderId" ColumnName="LockOrderId" />
-                <ScalarProperty Name="LockTicketId" ColumnName="LockTicketId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

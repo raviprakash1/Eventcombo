@@ -33,6 +33,7 @@ namespace EventCombo.Controllers
 
         IECImageService _iservice;
         IEventService _eservice;
+        ITicketsService _tservice;
 
         public ManageEventController()
         {
@@ -40,6 +41,7 @@ namespace EventCombo.Controllers
           var factory = new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory());
           _iservice = new ECImageService(factory, mapper, new ECImageStorage(mapper));
           _eservice = new EventService(factory, mapper);
+          _tservice = new TicketService(factory, mapper, new DBAccessService(factory, mapper));
         }
 
         private string GetNewInvitationCode()
@@ -269,25 +271,19 @@ namespace EventCombo.Controllers
                 TempData["Success"] = null;
             }
             OrderAttendees CO = new OrderAttendees();
-            var Order = (from o in db.Order_Detail_T
-                         join p in db.Ticket_Purchased_Detail on o.O_Order_Id equals p.TPD_Order_Id
-                         where p.TPD_Event_Id == Eventid
+            var Order = (from o in db.EventTicket_View
+                         where o.EventID == Eventid && o.IsManualOrder == false
                          select new OrderAttendees()
                          {
-                             OrderId = o.O_Order_Id,
-                             Amount = o.O_TotalAmount.ToString(),
-                             Qty = "0",
-                             Name = o.O_First_Name + " " + o.O_Last_Name,
-                             Date = o.O_OrderDateTime.ToString()
+                             OrderId = o.OrderId,
+                             Amount = ((o.OrderStateId ?? 0) == 3 || (o.OrderStateId ?? 0) == 2 ? 0 : (o.PaidAmount ?? 0) + (o.VariableAmount ?? 0)).ToString(),
+                             NetAmount = ((o.PaidAmount ?? 0) + (o.VariableAmount ?? 0) - ((o.OrderStateId ?? 0) == 3 ? o.PaidAmount + (o.VariableAmount ?? 0) - o.ECFeePerTicket * (o.PurchasedQuantity ?? 0) - o.MerchantFeePerTicket * (o.PurchasedQuantity ?? 0) : 0) - ((o.OrderStateId ?? 0) == 2 ? o.PaidAmount + (o.VariableAmount ?? 0) - o.ECFeePerTicket * (o.PurchasedQuantity ?? 0) - o.MerchantFeePerTicket * (o.PurchasedQuantity ?? 0) : 0)).ToString(),
+                             Qty = (o.PurchasedQuantity ?? 0).ToString(),
+                             Name = o.FirstName + " " + o.LastName,
+                             Date = o.O_OrderDateTime.ToString(),
+                             Status = o.OrderStateName
                          }).Distinct().Take(3).ToList();
 
-
-            foreach (var item in Order)
-            {
-
-                var qty = (from p in db.Ticket_Purchased_Detail where p.TPD_Order_Id == item.OrderId select p.TPD_Purchased_Qty).Sum();
-                item.Qty = qty.ToString();
-            }
             Mevent.Order = Order;
             Mevent.Attendess = Order;
 
@@ -331,18 +327,22 @@ namespace EventCombo.Controllers
                 }
                 dt = dt.AddDays(1);
             }
+
+            CultureInfo us = new CultureInfo("en-US");
+            var eInfo = _tservice.GetEventSummaryCalculation(Eventid, FilterByOrderType.Regular);
+
             TempData["EventHits"] = strDates.ToString();
             TempData["SaleQty"] = strSaleQty.ToString();
             TempData["TicketSalePer"] = GetSalePer(Eventid);
 
-            TempData["RemQty"] = GetQuantity(Eventid, "R");
+            TempData["RemQty"] = eInfo.TicketQuantity;
             TempData["TotalQty"] = GetQuantity(Eventid, "T");
             TempData["PaidTicket"] = GetTicketQtyPer(Eventid, "P");
             TempData["FreeTicket"] = GetTicketQtyPer(Eventid, "F");
             TempData["EventUrl"] = GetEventURL(Eventid);
 
-            TempData["ForSale"] = GetSaleAmount(Eventid, "FORSALE");
-            TempData["NETSale"] = GetSaleAmount(Eventid, "NETSALE");
+            TempData["ForSale"] = Math.Round(eInfo.Price, 2).ToString("N", us);
+            TempData["NETSale"] = Math.Round(eInfo.PriceNet, 2).ToString("N", us);
 
             return View(Mevent);
         }
@@ -757,10 +757,10 @@ namespace EventCombo.Controllers
                         strResult.Append("<td>"); strResult.Append("0/0"); strResult.Append("</td>");
                     }
 
-                    strHideUntil = (obj.Hide_Untill_Date != null ? obj.Hide_Untill_Date.ToString() : "");
+                    strHideUntil = (obj.Hide_Untill_Date != null ? (obj.Hide_Untill_Date ?? default(DateTime)).ToString("d") : "");
                     strHideUntilTime = (obj.Hide_Untill_Time != null ? obj.Hide_Untill_Time.ToString() : "");
 
-                    strHideAfter = (obj.Hide_After_Date != null ? obj.Hide_After_Date.ToString() : "");
+                    strHideAfter = (obj.Hide_After_Date != null ? (obj.Hide_After_Date ?? default(DateTime)).ToString("d") : "");
                     strHideAfterTime = (obj.Hide_After_Time != null ? obj.Hide_After_Time.ToString() : "");
 
                     if (!strHideUntil.Equals(string.Empty))
@@ -800,37 +800,6 @@ namespace EventCombo.Controllers
             return strResult.ToString();
         }
 
-        public string GetSaleAmount(long lEventId, string strAmtType)
-        {
-            string strResult = "";
-            CultureInfo us = new CultureInfo("en-US");
-            using (EventComboEntities objEnt = new EventComboEntities())
-            {
-                var ticketid = (from v in db.Tickets where v.E_Id == lEventId select v.T_Id).ToList();
-                string joined = string.Join(",", ticketid.ToArray());
-                string strQuery = "SELECT (isnull(sum(TPD_Amount),0) + convert(numeric,isnull(sum(TPD_Donate),0))) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
-                var vTotalAmt = objEnt.Database.SqlQuery<decimal>(strQuery).FirstOrDefault();
-
-                //var vTotalAmt = (from myRow in objEnt.Ticket_Purchased_Detail
-                //                 where myRow.TPD_Event_Id == lEventId
-                //                 select myRow.TPD_Amount).Sum();
-
-                if (strAmtType == "FORSALE")
-                {
-                    strResult = Math.Round(vTotalAmt, 2).ToString("N", us);
-                }
-                else if (strAmtType == "NETSALE")
-                {
-
-                    string strQueryec = "SELECT isnull(sum(TPD_EC_Fee * TPD_Purchased_Qty), 0) as SaleQty FROM Ticket_Purchased_Detail a inner join  [Ticket_Quantity_Detail] b on a.TPD_TQD_Id=b.TQD_Id where   b.TQD_Ticket_Id in (" + joined + ") ";
-                    var vEcFee = objEnt.Database.SqlQuery<decimal>(strQueryec).FirstOrDefault();
-
-                    double dResult = Math.Round(Convert.ToDouble(vTotalAmt - vEcFee), 2);
-                    strResult = dResult.ToString("N", us);
-                }
-            }
-            return strResult;
-        }
         public string SaveEventUrl(long lEventId, string strEventUrl)
         {
             string strResult = "N";
@@ -1091,8 +1060,7 @@ namespace EventCombo.Controllers
                     {
                         //var vtotalty = (from myRow in objEnt.Ticket_Quantity_Detail where myRow.TQD_Event_Id == eventId select myRow.TQD_Quantity).Sum();
                         //lResult = (vtotalty != null ? Convert.ToInt64(vtotalty) : 0);
-                        var ticType = new long?[] { 1, 2 };
-                        var vtotalty = (from myRow in objEnt.Tickets where myRow.E_Id == eventId && (ticType.Contains(myRow.TicketTypeID)) select myRow.Qty_Available).Sum();
+                        var vtotalty = (from myRow in objEnt.Tickets where myRow.E_Id == eventId select myRow.Qty_Available).Sum();
                         lResult = vtotalty;
                     }
                 }
