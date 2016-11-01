@@ -14,6 +14,8 @@ using System.IO;
 using System.Net.Mime;
 using EventCombo.Controllers;
 using EventCombo.Utils;
+using NPOI.SS.UserModel;
+using NPOI.HSSF.UserModel;
 
 namespace EventCombo.Service
 {
@@ -335,6 +337,7 @@ namespace EventCombo.Service
         Cancelled = (o.OrderStateId == 2) ? (o.O_TotalAmount ?? 0) : 0,
         Refunded = (o.OrderStateId == 3) ? (o.O_TotalAmount ?? 0) : 0,
         VarChargesAmount = o.O_VariableAmount ?? 0,
+        PromoCodeAmount = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TPD_PromoCodeAmount) ?? 0,
         IsCancelled = o.OrderStateId == 2,
         IsRefunded = o.OrderStateId == 3,
         IsManualOrder = o.IsManualOrder
@@ -362,6 +365,187 @@ namespace EventCombo.Service
         Refunded = os.Sum(x => x.Refunded),
         VarChargesAmount = os.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : x.VarChargesAmount))
       }).FirstOrDefault();
+    }
+
+    public TicketSaleViewModel GetEventTicketSale(long eventId, FilterByOrderType filter)
+    {
+        IRepository<EventTicket_View> etvRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
+        TicketSaleViewModel ticketSaleViewModel = new TicketSaleViewModel();
+
+        var tickets = etvRepo.Get(t => t.EventID == eventId);
+        var orders = GetEventOrdersSummaryCalculation(eventId);
+        if (orders == null)
+            throw new NullReferenceException(String.Format("Event not found for id = {0}", eventId));
+
+        orders = orders.Where(ord => (filter == FilterByOrderType.All) ||
+                                    ((filter == FilterByOrderType.Manual) && ord.IsManualOrder) ||
+                                    ((filter == FilterByOrderType.Regular) && !ord.IsManualOrder)
+                                );
+        ticketSaleViewModel.VarChargesAmount = orders.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : x.VarChargesAmount));
+        ticketSaleViewModel.PromoCodeAmount = orders.Sum(x => x.PromoCodeAmount);
+        ticketSaleViewModel.ECFee = orders.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : x.Fee));
+        ticketSaleViewModel.Refunded = orders.Sum(x => x.Refunded);
+        ticketSaleViewModel.TicketSales = tickets
+                                        .Where(ord => (filter == FilterByOrderType.All) ||
+                                            ((filter == FilterByOrderType.Manual) && ord.IsManualOrder) ||
+                                            ((filter == FilterByOrderType.Regular) && !ord.IsManualOrder))                                        
+                                        .Select(ticket => new TicketSales()
+                                        {
+                                            TicketId = 0,
+                                            TicketName = ticket.TicketName,
+                                            TicketTypeId=ticket.TicketTypeID,
+                                            TicketTypeName=ticket.TicketTypeName,
+                                            Quantity = ticket.PurchasedQuantity ?? 0,
+                                            PricePerTicket = decimal.Round(((ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0)) / (ticket.PurchasedQuantity ?? 1), 2) -
+                                                                (ticket.ECFeePerTicket ?? 0 + ticket.MerchantFeePerTicket ?? 0) -
+                                                                (ticket.PromoCodeAmount ?? 0) -
+                                                                ticket.Customer_Fee,
+                                            PricePaid = (ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0),
+                                            PriceNet = 0
+                                        }).ToList();
+            ticketSaleViewModel.TicketSales = ticketSaleViewModel.TicketSales.Select(x => new TicketSales()
+            {
+                TicketId = x.TicketId,
+                TicketName = x.TicketName,
+                TicketTypeId = x.TicketTypeId,
+                TicketTypeName = x.TicketTypeName,
+                Quantity = x.Quantity,
+                PricePerTicket = x.PricePerTicket,
+                PricePaid = x.PricePaid,
+                PriceNet = x.Quantity * x.PricePerTicket
+            }).OrderBy(oo => oo.TicketTypeId).ToList();
+
+        return ticketSaleViewModel;
+    }
+
+    public MemoryStream GetDownloadableEventTicketSale(FilterByOrderType filter, long eventId, string format)
+    {
+        format = format.Trim().ToLower();
+        if (format != "xls")
+            return null;
+        TicketSaleViewModel ticketSaleViewModel = GetEventTicketSale(eventId, filter);
+        return EventTicketSaleToXLS(ticketSaleViewModel);
+    }
+
+    private MemoryStream EventTicketSaleToXLS(TicketSaleViewModel ticketSales)
+    {
+        MemoryStream res = new MemoryStream();
+        IWorkbook wb = new HSSFWorkbook();
+        ICellStyle style = wb.CreateCellStyle();
+        style.BorderBottom = BorderStyle.Thin;
+        style.BorderTop = BorderStyle.Thin;
+        style.BorderLeft = BorderStyle.Thin;
+        style.BorderRight = BorderStyle.Thin;
+
+        ICellStyle hstyle = wb.CreateCellStyle();
+        hstyle.BorderBottom = BorderStyle.Thin;
+        hstyle.BorderTop = BorderStyle.Thin;
+        hstyle.BorderLeft = BorderStyle.Thin;
+        hstyle.BorderRight = BorderStyle.Thin;
+        hstyle.Alignment = HorizontalAlignment.Center;
+        IFont bfont = wb.CreateFont();
+        bfont.Boldweight = (short)FontBoldWeight.Bold;
+        hstyle.SetFont(bfont);
+
+        ICellStyle hRightStyle = wb.CreateCellStyle();
+        hRightStyle.BorderBottom = BorderStyle.Thin;
+        hRightStyle.BorderTop = BorderStyle.Thin;
+        hRightStyle.BorderLeft = BorderStyle.Thin;
+        hRightStyle.BorderRight = BorderStyle.Thin;
+        hRightStyle.Alignment = HorizontalAlignment.Right;
+        bfont = wb.CreateFont();
+        bfont.Boldweight = (short)FontBoldWeight.Bold;
+        hRightStyle.SetFont(bfont);
+
+        ICellStyle datestyle = wb.CreateCellStyle();
+        datestyle.BorderBottom = BorderStyle.Thin;
+        datestyle.BorderTop = BorderStyle.Thin;
+        datestyle.BorderLeft = BorderStyle.Thin;
+        datestyle.BorderRight = BorderStyle.Thin;
+        datestyle.DataFormat = wb.CreateDataFormat().GetFormat("MMMM dd, yyyy");
+
+        ICellStyle currencyStyle = wb.CreateCellStyle();
+        currencyStyle.BorderBottom = BorderStyle.Thin;
+        currencyStyle.BorderTop = BorderStyle.Thin;
+        currencyStyle.BorderLeft = BorderStyle.Thin;
+        currencyStyle.BorderRight = BorderStyle.Thin;
+        currencyStyle.DataFormat = wb.CreateDataFormat().GetFormat("$#,##0.00");
+
+        ICellStyle Titlestyle = wb.CreateCellStyle();
+        Titlestyle.BorderBottom = BorderStyle.Thin;
+        Titlestyle.BorderTop = BorderStyle.Thin;
+        Titlestyle.BorderLeft = BorderStyle.Thin;
+        Titlestyle.BorderRight = BorderStyle.Thin;
+        Titlestyle.Alignment = HorizontalAlignment.Center;
+        Titlestyle.SetFont(bfont);
+
+        ISheet sheet = wb.CreateSheet("TicketSale");
+
+        IRow row = sheet.CreateRow(0);
+        AddStyledCell(row, 0, hstyle).SetCellValue("Ticket Type");
+        AddStyledCell(row, 1, hstyle).SetCellValue("Ticket Price");
+        AddStyledCell(row, 2, hstyle).SetCellValue("Quantity");
+        AddStyledCell(row, 3, hstyle).SetCellValue("Total Sales + Fees");
+        AddStyledCell(row, 4, hstyle).SetCellValue("Total Net");
+        var i = 1;
+        foreach (var ticketSale in ticketSales.TicketSales)
+        {
+            row = sheet.CreateRow(i++);
+            AddStyledCell(row, 0, style).SetCellValue(ticketSale.TicketName);
+            AddStyledCell(row, 1, currencyStyle).SetCellValue((double)ticketSale.PricePerTicket);
+            AddStyledCell(row, 2, style).SetCellValue(ticketSale.Quantity);
+            AddStyledCell(row, 3, currencyStyle).SetCellValue((double)ticketSale.PricePaid);
+            AddStyledCell(row, 4, currencyStyle).SetCellValue((double)ticketSale.PriceNet);
+        }
+        i += 1;
+        row = sheet.CreateRow(i++);
+        AddStyledCell(row, 3, hRightStyle).SetCellValue("Variable Charges");
+        AddStyledCell(row, 4, currencyStyle).SetCellValue((double)ticketSales.VarChargesAmount);
+
+        row = sheet.CreateRow(i++);
+        AddStyledCell(row, 3, hRightStyle).SetCellValue("Discounted Tickets");
+        AddStyledCell(row, 4, currencyStyle).SetCellValue((double)ticketSales.Discount);
+
+        row = sheet.CreateRow(i++);
+        AddStyledCell(row, 3, hRightStyle).SetCellValue("Promo Codes");
+        AddStyledCell(row, 4, currencyStyle).SetCellValue((double)ticketSales.PromoCodeAmount);
+
+        row = sheet.CreateRow(i++);
+        AddStyledCell(row, 3, hRightStyle).SetCellValue("Total Gross");
+        AddStyledCell(row, 4, currencyStyle).SetCellValue((double)(ticketSales.TicketSales.Sum(x => x.PricePaid) + ticketSales.VarChargesAmount - ticketSales.Discount - ticketSales.PromoCodeAmount));
+
+        row = sheet.CreateRow(i++);
+        AddStyledCell(row, 3, hRightStyle).SetCellValue("Refunds");
+        AddStyledCell(row, 4, currencyStyle).SetCellValue((double)ticketSales.Refunded);
+
+        row = sheet.CreateRow(i++);
+        AddStyledCell(row, 3, hRightStyle).SetCellValue("Total Gross After Refunds");
+        AddStyledCell(row, 4, currencyStyle).SetCellValue((double)(ticketSales.TicketSales.Sum(x => x.PricePaid) + ticketSales.VarChargesAmount - ticketSales.Discount - ticketSales.PromoCodeAmount- ticketSales.Refunded));
+
+        row = sheet.CreateRow(i++);
+        AddStyledCell(row, 3, hRightStyle).SetCellValue("Total Net Payout");
+        AddStyledCell(row, 4, currencyStyle).SetCellValue((double)(ticketSales.TicketSales.Sum(x => x.PriceNet) + ticketSales.VarChargesAmount - ticketSales.Discount - ticketSales.PromoCodeAmount - ticketSales.Refunded));
+
+        i += 4;
+        row = sheet.CreateRow(i++);
+        AddStyledCell(row, 3, hRightStyle).SetCellValue("Eventcombo Fees");
+        AddStyledCell(row, 4, currencyStyle).SetCellValue((double)(ticketSales.ECFee));
+
+        for (i = 0; i <= 4; i++)
+        {
+            sheet.AutoSizeColumn(i);
+            sheet.SetColumnWidth(i, sheet.GetColumnWidth(i) + 1024);
+        }
+        wb.Write(res);
+        res.Position = 0;
+        return res;
+    }
+
+    private ICell AddStyledCell(IRow row, int cellnum, ICellStyle style, CellType ctype = CellType.String)
+    {
+      ICell cell = row.CreateCell(cellnum, ctype);
+      cell.CellStyle = style;
+      return cell;
     }
 
   }

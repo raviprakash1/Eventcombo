@@ -83,6 +83,7 @@ namespace EventCombo.Models
     public decimal VarChargesAmount { get; set; }
     public decimal Refunded { get; set; }
     public decimal Cancelled { get; set; }
+    public decimal PromoCodeAmount { get; set; }
     public DateTime Date { get; set; }
     public bool IsCancelled { get; set; }
     public bool IsRefunded { get; set; }
