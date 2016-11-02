@@ -78,7 +78,10 @@ namespace EventCombo.Models
     public long Quantity { get; set; }
     public decimal Price { get; set; }
     public decimal PriceNet { get; set; }
+    public decimal Discount { get; set; }
     public decimal Fee { get; set; }
+    public decimal EventComboFee { get; set; }
+    public decimal MerchantFee { get; set; }
     public decimal CustomerFee { get; set; }
     public decimal VarChargesAmount { get; set; }
     public decimal Refunded { get; set; }

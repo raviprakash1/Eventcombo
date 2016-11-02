@@ -12,7 +12,8 @@ namespace EventCombo.Models
         public decimal PromoCodeAmount { get; set; }
         public decimal Refunded { get; set; }
         public decimal Discount { get; set; }
-        public decimal ECFee { get; set; }
+        public decimal EventComboFee { get; set; }
+        public decimal MerchantFee { get; set; }
         private List<TicketSales> _ticketSales = new List<TicketSales>();
         public List<TicketSales> TicketSales
         {

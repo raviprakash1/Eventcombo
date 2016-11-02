@@ -332,7 +332,10 @@ namespace EventCombo.Service
         Quantity = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TPD_Purchased_Qty) ?? 0,
         Price = o.O_TotalAmount ?? 0,
         PriceNet = (o.O_TotalAmount ?? 0) - (tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TPD_EC_Fee) ?? 0),
+        Discount = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TicketDiscount),
         Fee = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TPD_EC_Fee) ?? 0,
+        EventComboFee = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TicketECFee),
+        MerchantFee = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TicketMerchantFee),
         CustomerFee = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.Customer_Fee),
         Cancelled = (o.OrderStateId == 2) ? (o.O_TotalAmount ?? 0) : 0,
         Refunded = (o.OrderStateId == 3) ? (o.O_TotalAmount ?? 0) : 0,
@@ -372,48 +375,51 @@ namespace EventCombo.Service
         IRepository<EventTicket_View> etvRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
         TicketSaleViewModel ticketSaleViewModel = new TicketSaleViewModel();
 
-        var tickets = etvRepo.Get(t => t.EventID == eventId);
+        var tickets = etvRepo.Get(t => t.EventID == eventId && t.OrderStateId != 2);
         var orders = GetEventOrdersSummaryCalculation(eventId);
         if (orders == null)
             throw new NullReferenceException(String.Format("Event not found for id = {0}", eventId));
 
-        orders = orders.Where(ord => (filter == FilterByOrderType.All) ||
+        orders = orders.Where(ord => ((filter == FilterByOrderType.All) ||
                                     ((filter == FilterByOrderType.Manual) && ord.IsManualOrder) ||
-                                    ((filter == FilterByOrderType.Regular) && !ord.IsManualOrder)
+                                    ((filter == FilterByOrderType.Regular) && !ord.IsManualOrder)) && ord.IsCancelled == false
                                 );
-        ticketSaleViewModel.VarChargesAmount = orders.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : x.VarChargesAmount));
+        ticketSaleViewModel.VarChargesAmount = orders.Sum(x => x.VarChargesAmount);
         ticketSaleViewModel.PromoCodeAmount = orders.Sum(x => x.PromoCodeAmount);
-        ticketSaleViewModel.ECFee = orders.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : x.Fee));
+        ticketSaleViewModel.EventComboFee = orders.Sum(x => x.EventComboFee);
+        ticketSaleViewModel.Discount = orders.Sum(x => x.Discount);
+        ticketSaleViewModel.MerchantFee = orders.Sum(x => x.MerchantFee);
         ticketSaleViewModel.Refunded = orders.Sum(x => x.Refunded);
         ticketSaleViewModel.TicketSales = tickets
                                         .Where(ord => (filter == FilterByOrderType.All) ||
                                             ((filter == FilterByOrderType.Manual) && ord.IsManualOrder) ||
-                                            ((filter == FilterByOrderType.Regular) && !ord.IsManualOrder))                                        
+                                            ((filter == FilterByOrderType.Regular) && !ord.IsManualOrder))
                                         .Select(ticket => new TicketSales()
                                         {
-                                            TicketId = 0,
+                                            TicketId = ticket.TicketId,
                                             TicketName = ticket.TicketName,
-                                            TicketTypeId=ticket.TicketTypeID,
-                                            TicketTypeName=ticket.TicketTypeName,
+                                            TicketTypeId = ticket.TicketTypeID,
+                                            TicketTypeName = ticket.TicketTypeName,
                                             Quantity = ticket.PurchasedQuantity ?? 0,
-                                            PricePerTicket = decimal.Round(((ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0)) / (ticket.PurchasedQuantity ?? 1), 2) -
-                                                                (ticket.ECFeePerTicket ?? 0 + ticket.MerchantFeePerTicket ?? 0) -
-                                                                (ticket.PromoCodeAmount ?? 0) -
-                                                                ticket.Customer_Fee,
-                                            PricePaid = (ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0),
-                                            PriceNet = 0
+                                            PricePerTicket = ticket.TicketPrice,
+                                            PricePaid = ticket.TicketPrice * (ticket.PurchasedQuantity ?? 0)
+                                                        + ticket.ECFeePerTicket * (ticket.PurchasedQuantity ?? 0)
+                                                        + ticket.MerchantFeePerTicket * (ticket.PurchasedQuantity ?? 0)
+                                                        + ticket.Customer_Fee * (ticket.PurchasedQuantity ?? 0),
+                                            PriceNet = ticket.TicketPrice * (ticket.PurchasedQuantity ?? 0)
                                         }).ToList();
-            ticketSaleViewModel.TicketSales = ticketSaleViewModel.TicketSales.Select(x => new TicketSales()
-            {
-                TicketId = x.TicketId,
-                TicketName = x.TicketName,
-                TicketTypeId = x.TicketTypeId,
-                TicketTypeName = x.TicketTypeName,
-                Quantity = x.Quantity,
-                PricePerTicket = x.PricePerTicket,
-                PricePaid = x.PricePaid,
-                PriceNet = x.Quantity * x.PricePerTicket
-            }).OrderBy(oo => oo.TicketTypeId).ToList();
+
+        ticketSaleViewModel.TicketSales = ticketSaleViewModel.TicketSales.GroupBy(g => new { g.TicketId }).Select(x => new TicketSales()
+        {
+            TicketId = x.FirstOrDefault().TicketId,
+            TicketName = x.FirstOrDefault().TicketName,
+            TicketTypeId = x.FirstOrDefault().TicketTypeId,
+            TicketTypeName = x.FirstOrDefault().TicketTypeName,
+            Quantity = x.Sum(t => t.Quantity),
+            PricePerTicket = x.FirstOrDefault().PricePerTicket,
+            PricePaid = x.Sum(t => t.PricePaid),
+            PriceNet = x.Sum(t => t.PriceNet)
+        }).OrderBy(oo => oo.TicketTypeId).ToList();
 
         return ticketSaleViewModel;
     }
@@ -471,6 +477,26 @@ namespace EventCombo.Service
         currencyStyle.BorderRight = BorderStyle.Thin;
         currencyStyle.DataFormat = wb.CreateDataFormat().GetFormat("$#,##0.00");
 
+        ICellStyle currencyRedStyle = wb.CreateCellStyle();
+        currencyRedStyle.BorderBottom = BorderStyle.Thin;
+        currencyRedStyle.BorderTop = BorderStyle.Thin;
+        currencyRedStyle.BorderLeft = BorderStyle.Thin;
+        currencyRedStyle.BorderRight = BorderStyle.Thin;
+        currencyRedStyle.DataFormat = wb.CreateDataFormat().GetFormat("[red]-$#,##0.00");
+        bfont = wb.CreateFont();
+        bfont.Color = (short)FontColor.Red;
+        currencyRedStyle.SetFont(bfont);
+
+        ICellStyle currencyBoldStyle = wb.CreateCellStyle();
+        currencyBoldStyle.BorderBottom = BorderStyle.Thin;
+        currencyBoldStyle.BorderTop = BorderStyle.Thin;
+        currencyBoldStyle.BorderLeft = BorderStyle.Thin;
+        currencyBoldStyle.BorderRight = BorderStyle.Thin;
+        currencyBoldStyle.DataFormat = wb.CreateDataFormat().GetFormat("$#,##0.00");
+        bfont = wb.CreateFont();
+        bfont.Boldweight = (short)FontBoldWeight.Bold;
+        currencyBoldStyle.SetFont(bfont);
+
         ICellStyle Titlestyle = wb.CreateCellStyle();
         Titlestyle.BorderBottom = BorderStyle.Thin;
         Titlestyle.BorderTop = BorderStyle.Thin;
@@ -504,19 +530,19 @@ namespace EventCombo.Service
 
         row = sheet.CreateRow(i++);
         AddStyledCell(row, 3, hRightStyle).SetCellValue("Discounted Tickets");
-        AddStyledCell(row, 4, currencyStyle).SetCellValue((double)ticketSales.Discount);
+        AddStyledCell(row, 4, currencyRedStyle).SetCellValue((double)ticketSales.Discount);
 
         row = sheet.CreateRow(i++);
         AddStyledCell(row, 3, hRightStyle).SetCellValue("Promo Codes");
-        AddStyledCell(row, 4, currencyStyle).SetCellValue((double)ticketSales.PromoCodeAmount);
+        AddStyledCell(row, 4, currencyRedStyle).SetCellValue((double)ticketSales.PromoCodeAmount);
 
         row = sheet.CreateRow(i++);
         AddStyledCell(row, 3, hRightStyle).SetCellValue("Total Gross");
-        AddStyledCell(row, 4, currencyStyle).SetCellValue((double)(ticketSales.TicketSales.Sum(x => x.PricePaid) + ticketSales.VarChargesAmount - ticketSales.Discount - ticketSales.PromoCodeAmount));
+        AddStyledCell(row, 4, currencyBoldStyle).SetCellValue((double)(ticketSales.TicketSales.Sum(x => x.PricePaid) + ticketSales.VarChargesAmount - ticketSales.Discount - ticketSales.PromoCodeAmount));
 
         row = sheet.CreateRow(i++);
         AddStyledCell(row, 3, hRightStyle).SetCellValue("Refunds");
-        AddStyledCell(row, 4, currencyStyle).SetCellValue((double)ticketSales.Refunded);
+        AddStyledCell(row, 4, currencyRedStyle).SetCellValue((double)ticketSales.Refunded);
 
         row = sheet.CreateRow(i++);
         AddStyledCell(row, 3, hRightStyle).SetCellValue("Total Gross After Refunds");
@@ -524,12 +550,12 @@ namespace EventCombo.Service
 
         row = sheet.CreateRow(i++);
         AddStyledCell(row, 3, hRightStyle).SetCellValue("Total Net Payout");
-        AddStyledCell(row, 4, currencyStyle).SetCellValue((double)(ticketSales.TicketSales.Sum(x => x.PriceNet) + ticketSales.VarChargesAmount - ticketSales.Discount - ticketSales.PromoCodeAmount - ticketSales.Refunded));
+        AddStyledCell(row, 4, currencyBoldStyle).SetCellValue((double)(ticketSales.TicketSales.Sum(x => x.PriceNet) + ticketSales.VarChargesAmount - ticketSales.Discount - ticketSales.PromoCodeAmount - ticketSales.Refunded));
 
         i += 4;
         row = sheet.CreateRow(i++);
         AddStyledCell(row, 3, hRightStyle).SetCellValue("Eventcombo Fees");
-        AddStyledCell(row, 4, currencyStyle).SetCellValue((double)(ticketSales.ECFee));
+        AddStyledCell(row, 4, currencyStyle).SetCellValue((double)(ticketSales.EventComboFee));
 
         for (i = 0; i <= 4; i++)
         {
