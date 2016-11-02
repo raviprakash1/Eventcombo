@@ -64,10 +64,10 @@ namespace EventCombo.Service
       EventOrdersSummuryViewModel ordersTotal = new EventOrdersSummuryViewModel()
       {
         PaymentState = PaymentStates.Total,
-        TicketsSold = eInfo.TicketQuantity,
-        Amount = eInfo.Price,
+        TicketsSold = (eInfo != null ? eInfo.TicketQuantity : 0),
+        Amount = (eInfo != null ? eInfo.Price : 0),
         TicketsTotal = ev.Tickets.Sum(tt => tt.Ticket_Quantity_Detail.Sum(q => q.TQD_Quantity)) ?? 0,
-        Count = eInfo.OrderQuantity
+        Count = (eInfo != null ? eInfo.OrderQuantity : 0)
       };
       EventOrdersSummuryViewModel ordersCompleted = _mapper.Map<EventOrdersSummuryViewModel>(ordersTotal);
       ordersCompleted.PaymentState = PaymentStates.Completed;
