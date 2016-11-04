@@ -89,18 +89,63 @@
             </td>
             <td class="subTableInnerTD"></td>
         </tr>
+        <tr class="UETableTDSUbDivBackColor" style="height: 55px;">
+            <td class="subTableInnerTD" colspan="5" style="border-top: 0px;">
+                <table style='width:100%;' class="table-bordered">
+                    @foreach (var addressDateItem in Model.TicketAttendees.Select(x => new { x.Address, x.StartDate }).Distinct())
+                    {
+                        <tr><td colspan="4"><p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'>@addressDateItem.Address<span style='float:right;'>@addressDateItem.StartDate.ToLongDateString() </span></p></td></tr>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>QTY</th>
+                            <th style="text-align:right;">Price</th>
+                        </tr>
+                        foreach (var item in Model.TicketAttendees.Where(x => x.Address == addressDateItem.Address && x.StartDate == addressDateItem.StartDate))
+                        {
+                            <tr>
+                                <td style="@(!string.IsNullOrEmpty(item.PromoCode) && item.PromoCodePrice > 0?"border-bottom:0px;":"")">@item.AttendeeName</td>
+                                <td style="@(!string.IsNullOrEmpty(item.PromoCode) && item.PromoCodePrice > 0?"border-bottom:0px;":"")">@item.TicketName</td>
+                                <td style="@(!string.IsNullOrEmpty(item.PromoCode) && item.PromoCodePrice > 0?"border-bottom:0px;":"")">@item.Quantity</td>
+                                <td style="text-align:right;@(!string.IsNullOrEmpty(item.PromoCode) && item.PromoCodePrice > 0?"border-bottom:0px;":"")">@item.PriceStr</td>
+                            </tr>
+                            if (!string.IsNullOrEmpty(item.PromoCode) && item.PromoCodePrice > 0)
+                            {
+                                <tr>
+                                    <td colspan="3" style="text-align: center;color: green;">@item.PromoCode</td>
+                                    <td style="text-align:right;border-top:0px;color: green;">-$@item.PromoCodePrice</td>
+                                </tr>
+                            }
+                        }
+                    }
+                    @foreach (var item in Model.VariableChages)
+                    {
+                        <tr>
+                            <td colspan="2">&nbsp;</td>
+                            <td>@item.VariableDesc</td>
+                            <td style="text-align:right;">$@item.Price</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="2">&nbsp;</td>
+                        <td>Total</td>
+                        <td style="text-align:right;">$@(Model.OrderTotalAmount)</td>
+                    </tr>
+                </table>
+            </td>                       
+        </tr>
         @if (Model.Attendees.Count > 0)
         {
             <tr class="UETableTDSUbDivBackColor" style="height: 85px;">
-                <td class="subTableInnerTD" colspan="2"></td>
-                <td class="subTableInnerTD" colspan="2">
+                <td class="subTableInnerTD" colspan="2" style="border-top: 0px;"></td>
+                <td class="subTableInnerTD" colspan="2" style="border-top: 0px;">
                     <div class="basicInfoUnCheckBox" id="sendConfirmationEmail@(Model.OrderId)" onclick="setCheckBoxChecked(this);">Send confirmation email to new attendee</div>
                 </td>
-                <td class="subTableInnerTD"></td>
+                <td class="subTableInnerTD" style="border-top: 0px;"></td>
             </tr>
         }
         <tr class="UETableTDSUbDivBackColor" style="height: 85px;">
-            <td class="subTableInnerTD" colspan="4">
+            <td class="subTableInnerTD" colspan="4" >
                 <div id="ajaxanswer@(Model.OrderId)"></div>
             </td>
             <td class="subTableInnerTD"></td>
