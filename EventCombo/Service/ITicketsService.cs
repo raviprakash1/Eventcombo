@@ -28,5 +28,9 @@ namespace EventCombo.Service
 
     EventSummaryViewModel GetEventSummaryCalculation(long eventId, FilterByOrderType filter);
 
+    TicketSaleViewModel GetEventTicketSale(long eventId, FilterByOrderType filter);
+
+    MemoryStream GetDownloadableEventTicketSale(FilterByOrderType filter, long eventId, string format);
+
   }
 }

@@ -285,7 +285,7 @@
                                                                 <button class="pay_dollar_btn" data-effect="mfp-flipInY" onclick="LoadPaymentInfo('@obj.EventID');" id="btnRoles" type="button">$</button>
                                                             </a>
                                                         </td>
-                                                        <td>@obj.Purchasedqty</td>
+                                                        <td><a href="@Url.Action("EventTicketTotalSale", "Download", new { eventId = obj.EventID, format = "xls"})" class="linkReportHead">@obj.Purchasedqty</a></td>
                                                         <td>
                                                             <div class="view_sel_wid">
                                                                 @if (obj.Feature == 1)

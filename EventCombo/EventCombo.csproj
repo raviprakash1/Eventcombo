@@ -654,6 +654,7 @@
     <Compile Include="Models\TicketType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TicketViewModels.cs" />
     <Compile Include="Models\Ticket_Locked_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>

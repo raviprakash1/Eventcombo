@@ -266,7 +266,7 @@
                     <div class="col-sm-12 col-xs-12 no_pad">
                         <div class="col-sm-6 col-xs-12 no_pad for_total">
                             <p class="col-sm-6 col-xs-6 no_pad ft22 mb0 evnt_mg_word_brack">@TempData["TicketSalePer"]% Ticket Sold </p>
-                            <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail "><a href="@Url.Action("Orders","ManageAttendees",new { eventId=Model.Eventid})">Sales Report</a></p>
+                            <p class="col-sm-6 col-xs-6 text-right ft18 mb0 ev_detail "><a href="@Url.Action("EventTicketTotalSale", "Download", new { eventId = Model.Eventid, format = "xls"})" class="linkReportHead">Total Sales Data</a> | <a href="@Url.Action("Orders","ManageAttendees",new { eventId=Model.Eventid})">Sales Report</a></p>
                             <div class="col-sm-12 col-xs-12 no_pad">
 
                                 <figure id="tickets_sold_graph">

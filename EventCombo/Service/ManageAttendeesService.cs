@@ -64,10 +64,10 @@ namespace EventCombo.Service
       EventOrdersSummuryViewModel ordersTotal = new EventOrdersSummuryViewModel()
       {
         PaymentState = PaymentStates.Total,
-        TicketsSold = eInfo.TicketQuantity,
-        Amount = eInfo.Price,
+        TicketsSold = (eInfo != null ? eInfo.TicketQuantity : 0),
+        Amount = (eInfo != null ? eInfo.Price : 0),
         TicketsTotal = ev.Tickets.Sum(tt => tt.Ticket_Quantity_Detail.Sum(q => q.TQD_Quantity)) ?? 0,
-        Count = eInfo.OrderQuantity
+        Count = (eInfo != null ? eInfo.OrderQuantity : 0)
       };
       EventOrdersSummuryViewModel ordersCompleted = _mapper.Map<EventOrdersSummuryViewModel>(ordersTotal);
       ordersCompleted.PaymentState = PaymentStates.Completed;
@@ -173,9 +173,9 @@ namespace EventCombo.Service
             Quantity = ticket.PurchasedQuantity ?? 0,
             Price = ticket.OrderAmount ?? 0,
             PricePaid = ticket.PaidAmount ?? 0,
-            PriceNet = (ticket.PaidAmount ?? 0) - ((ticket.ECFeePerTicket ?? 0) * (ticket.PurchasedQuantity ?? 0)) - ((ticket.MerchantFeePerTicket ?? 0) * (ticket.PurchasedQuantity ?? 0)),
-            Fee = (ticket.ECFeePerTicket ?? 0) * (ticket.PurchasedQuantity ?? 0),
-            MerchantFee = (ticket.MerchantFeePerTicket ?? 0) * (ticket.PurchasedQuantity ?? 0),
+            PriceNet = (ticket.PaidAmount ?? 0) - (ticket.ECFeePerTicket * (ticket.PurchasedQuantity ?? 0)) - (ticket.MerchantFeePerTicket * (ticket.PurchasedQuantity ?? 0)),
+            Fee = ticket.ECFeePerTicket * (ticket.PurchasedQuantity ?? 0),
+            MerchantFee = ticket.MerchantFeePerTicket * (ticket.PurchasedQuantity ?? 0),
             Refunded = ((ticket.OrderStateId ?? 0) == 3 ? (ticket.PaidAmount ?? 0) : 0),
             Cancelled = ((ticket.OrderStateId ?? 0) == 2 ? (ticket.PaidAmount ?? 0) : 0),
             Date = ticket.O_OrderDateTime ?? DateTime.Today,
