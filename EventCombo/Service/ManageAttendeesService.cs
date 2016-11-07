@@ -291,9 +291,16 @@ namespace EventCombo.Service
         EventOrderDetailViewModel details = new EventOrderDetailViewModel() { OrderId = orderId };
         details.Payment = _dbservice.GetPaymentInfo(orderId);
 
-        IRepository<EventCombo.Models.Profile> userRepo = new GenericRepository<EventCombo.Models.Profile>(_factory.ContextFactory);
+        IRepository<Models.Profile> userRepo = new GenericRepository<Models.Profile>(_factory.ContextFactory);
         var user = userRepo.Get(filter: (u => u.UserID == order.O_User_Id)).First();
+        details.Name = user.FirstName + (string.IsNullOrEmpty(user.LastName) ? "" : " " + user.LastName);
         details.Email = user.Email;
+        details.PhoneNumber = user.MainPhone;
+        details.Address = user.StreetAddressLine1 +
+                        "" + (string.IsNullOrEmpty(user.StreetAddressLine2) ? "" : " " + user.StreetAddressLine1) +
+                        "" + (string.IsNullOrEmpty(user.City) ? "" : ", " + user.City) +
+                        "" + (string.IsNullOrEmpty(user.State) ? "" : ", " + user.State) +
+                        " " + user.Zip;
 
         IRepository<Ticket_Purchased_Detail> ptRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
         var tickets = ptRepo.Get(filter: (t => ((t.TPD_Order_Id == orderId) && (t.TPD_User_Id == order.O_User_Id))));
@@ -307,6 +314,86 @@ namespace EventCombo.Service
             details.Attendees.Add(_mapper.Map<AttendeeViewModel>(att));
 
         details.TicketNames = (TicketNames == null ? "" : string.Join(", ", TicketNames.ToArray()));
+
+        IRepository<TicketAttendee_View> tbRepo = new GenericRepository<TicketAttendee_View>(_factory.ContextFactory);
+        IRepository<Promo_Code> pcRepo = new GenericRepository<Promo_Code>(_factory.ContextFactory);
+
+        List<TicketAttendeeViewModel> ticketAttendeeList = new List<TicketAttendeeViewModel>();
+        TicketAttendeeViewModel ticketAttendeeViewModel;
+        if (order.IsManualOrder)
+        {
+            var ticketAttendees = tbRepo.Get(a => (a.OrderId == orderId && a.TicketBearerId != 0));
+            var ticketAll = tickets.Select(tp => new
+            {
+                AddressId = tp.Ticket_Quantity_Detail.TQD_AddressId,
+                ConsolidateAddress = tp.Ticket_Quantity_Detail.TQD_AddressId == 0 ? "" : tp.Ticket_Quantity_Detail.Address.ConsolidateAddress,
+                StartDateStr = tp.Ticket_Quantity_Detail.TQD_StartDate,
+                StartDate = DateTime.Parse(tp.Ticket_Quantity_Detail.TQD_StartDate)
+            }).Distinct().OrderBy(s => s.StartDate);
+
+            foreach (var ticket in ticketAll)
+            {
+                foreach (var item in ticketAttendees.Where(ta => tickets.Where(t => ((t.Ticket_Quantity_Detail.TQD_AddressId == ticket.AddressId) && (t.Ticket_Quantity_Detail.TQD_StartDate == ticket.StartDateStr)))
+                                                    .OrderBy(o => o.Ticket_Quantity_Detail.TQD_Ticket_Id).Select(tt => tt.TPD_Id).Contains(ta.PurchasedTicketId)))
+                {
+                    ticketAttendeeViewModel = new TicketAttendeeViewModel();
+                    ticketAttendeeViewModel.Address = ticket.ConsolidateAddress;
+                    ticketAttendeeViewModel.StartDate = ticket.StartDate;
+                    ticketAttendeeViewModel.TicketId = item.PurchasedTicketId;
+                    ticketAttendeeViewModel.TicketName = item.T_name;
+                    ticketAttendeeViewModel.AttendeeName = item.Name;
+                    ticketAttendeeViewModel.AttendeeEmail = item.Email;
+                    ticketAttendeeViewModel.AttendeePhone = item.PhoneNumber;
+                    ticketAttendeeViewModel.Quantity = item.Quantity;
+                    ticketAttendeeViewModel.Price = (item.TPD_Amount > 0 ? decimal.Truncate((item.Quantity * (item.TPD_Amount ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : item.TPD_Donate > 0 ? decimal.Truncate((item.Quantity * (item.TPD_Donate ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : 0);
+                    ticketAttendeeViewModel.PriceStr = (item.TPD_Amount > 0 ? "$" + decimal.Truncate((item.Quantity * (item.TPD_Amount ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : item.TPD_Donate > 0 ? "$" + decimal.Truncate((item.Quantity * (item.TPD_Donate ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : "Free");
+                    var PromoCode = pcRepo.Get(filter: p => p.PC_id == item.TPD_PromoCodeID && p.PC_Eventid == item.TPD_Event_Id).Select(pc => pc.PC_Code).FirstOrDefault();
+                    ticketAttendeeViewModel.PromoCode = (string.IsNullOrEmpty(PromoCode) ? "" : PromoCode);
+                    ticketAttendeeViewModel.PromoCodePrice = item.TPD_PromoCodeAmount ?? 0;
+                    ticketAttendeeList.Add(ticketAttendeeViewModel);
+                }
+            }
+        }
+        else
+        {
+            var ticketAll = tickets.Select(tp => new
+            {
+                AddressId = tp.Ticket_Quantity_Detail.TQD_AddressId,
+                ConsolidateAddress = tp.Ticket_Quantity_Detail.TQD_AddressId == 0 ? "" : tp.Ticket_Quantity_Detail.Address.ConsolidateAddress,
+                StartDateStr = tp.Ticket_Quantity_Detail.TQD_StartDate,
+                StartDate = DateTime.Parse(tp.Ticket_Quantity_Detail.TQD_StartDate)
+            }).Distinct().OrderBy(s => s.StartDate);
+
+            foreach (var ticket in ticketAll)
+            {
+                foreach (var item in tickets.Where(t => ((t.Ticket_Quantity_Detail.TQD_AddressId == ticket.AddressId) && (t.Ticket_Quantity_Detail.TQD_StartDate == ticket.StartDateStr)))
+                                            .OrderBy(o => o.Ticket_Quantity_Detail.TQD_Ticket_Id))
+                {
+                    ticketAttendeeViewModel = new TicketAttendeeViewModel();
+                    ticketAttendeeViewModel.Address = ticket.ConsolidateAddress;
+                    ticketAttendeeViewModel.StartDate = ticket.StartDate;
+                    ticketAttendeeViewModel.TicketId = item.Ticket_Quantity_Detail.Ticket.T_Id;
+                    ticketAttendeeViewModel.TicketName = item.Ticket_Quantity_Detail.Ticket.T_name;
+                    ticketAttendeeViewModel.AttendeeName = item.AspNetUser.Profiles.FirstOrDefault().FirstName;
+                    ticketAttendeeViewModel.AttendeeEmail = item.AspNetUser.Profiles.FirstOrDefault().Email;
+                    ticketAttendeeViewModel.AttendeePhone = item.AspNetUser.Profiles.FirstOrDefault().MainPhone;
+                    ticketAttendeeViewModel.Quantity = item.TPD_Purchased_Qty ?? 0;
+                    ticketAttendeeViewModel.Price = (item.TPD_Amount > 0 ? decimal.Truncate(((item.TPD_Purchased_Qty ?? 0) * (item.TPD_Amount ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : item.TPD_Donate > 0 ? decimal.Truncate(((item.TPD_Purchased_Qty ?? 0) * (item.TPD_Donate ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : 0);
+                    ticketAttendeeViewModel.PriceStr = (item.TPD_Amount > 0 ? "$" + decimal.Truncate(((item.TPD_Purchased_Qty ?? 0) * (item.TPD_Amount ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : item.TPD_Donate > 0 ? "$" + decimal.Truncate(((item.TPD_Purchased_Qty ?? 0) * (item.TPD_Donate ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : "Free");
+                    var PromoCode = pcRepo.Get(filter: p => p.PC_id == item.TPD_PromoCodeID && p.PC_Eventid == item.TPD_Event_Id).Select(pc => pc.PC_Code).FirstOrDefault();
+                    ticketAttendeeViewModel.PromoCode = (string.IsNullOrEmpty(PromoCode) ? "" : PromoCode);
+                    ticketAttendeeViewModel.PromoCodePrice = item.TPD_PromoCodeAmount ?? 0;
+                    ticketAttendeeList.Add(ticketAttendeeViewModel);
+                }
+            }
+        }
+        details.TicketAttendees = ticketAttendeeList;
+        details.OrderTotalAmount = order.O_TotalAmount ?? 0;
+        IRepository<Event_VariableDesc> evdRepo = new GenericRepository<Event_VariableDesc>(_factory.ContextFactory);
+
+        var variableChages = evdRepo.Get(filter: (t => t.Event_Id == eventId));
+
+        details.VariableChages = variableChages.Where(x => order.O_VariableId.Split(',').Select(Int64.Parse).Contains(x.Variable_Id)).ToList();
 
         return details;
     }
@@ -1947,9 +2034,11 @@ namespace EventCombo.Service
                 ((!String.IsNullOrWhiteSpace(attVM.Name) || !String.IsNullOrWhiteSpace(attendee.Name))
                   && ((attVM.Name ?? "").Trim() != (attendee.Name ?? "").Trim()))
                 || ((!String.IsNullOrWhiteSpace(attVM.Email) || !String.IsNullOrWhiteSpace(attendee.Email)))
-                  && ((attVM.Email ?? "").Trim() != (attendee.Email ?? "").Trim()))
+                  && ((attVM.Email ?? "").Trim() != (attendee.Email ?? "").Trim())
+                || ((!String.IsNullOrWhiteSpace(attVM.PhoneNumber) || !String.IsNullOrWhiteSpace(attendee.PhoneNumber)))
+                  && ((attVM.PhoneNumber ?? "").Trim() != (attendee.PhoneNumber ?? "").Trim()))
               {
-                attVM.PhoneNumber = attendee.PhoneNumber;
+                attVM.PhoneNumber = (string.IsNullOrEmpty(attVM.PhoneNumber) ? "" : attVM.PhoneNumber);
                 _mapper.Map(attVM, attendee);
                 if (model.SendEmail && (!selected.Where(a => a.Email == attVM.Email).Any()))
                   selected.Add(attVM);
