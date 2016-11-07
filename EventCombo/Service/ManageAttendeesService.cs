@@ -293,7 +293,14 @@ namespace EventCombo.Service
 
         IRepository<Models.Profile> userRepo = new GenericRepository<Models.Profile>(_factory.ContextFactory);
         var user = userRepo.Get(filter: (u => u.UserID == order.O_User_Id)).First();
+        details.Name = user.FirstName + (string.IsNullOrEmpty(user.LastName) ? "" : " " + user.LastName);
         details.Email = user.Email;
+        details.PhoneNumber = user.MainPhone;
+        details.Address = user.StreetAddressLine1 +
+                        "" + (string.IsNullOrEmpty(user.StreetAddressLine2) ? "" : " " + user.StreetAddressLine1) +
+                        "" + (string.IsNullOrEmpty(user.City) ? "" : ", " + user.City) +
+                        "" + (string.IsNullOrEmpty(user.State) ? "" : ", " + user.State) +
+                        " " + user.Zip;
 
         IRepository<Ticket_Purchased_Detail> ptRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
         var tickets = ptRepo.Get(filter: (t => ((t.TPD_Order_Id == orderId) && (t.TPD_User_Id == order.O_User_Id))));
@@ -2027,9 +2034,11 @@ namespace EventCombo.Service
                 ((!String.IsNullOrWhiteSpace(attVM.Name) || !String.IsNullOrWhiteSpace(attendee.Name))
                   && ((attVM.Name ?? "").Trim() != (attendee.Name ?? "").Trim()))
                 || ((!String.IsNullOrWhiteSpace(attVM.Email) || !String.IsNullOrWhiteSpace(attendee.Email)))
-                  && ((attVM.Email ?? "").Trim() != (attendee.Email ?? "").Trim()))
+                  && ((attVM.Email ?? "").Trim() != (attendee.Email ?? "").Trim())
+                || ((!String.IsNullOrWhiteSpace(attVM.PhoneNumber) || !String.IsNullOrWhiteSpace(attendee.PhoneNumber)))
+                  && ((attVM.PhoneNumber ?? "").Trim() != (attendee.PhoneNumber ?? "").Trim()))
               {
-                attVM.PhoneNumber = attendee.PhoneNumber;
+                attVM.PhoneNumber = (string.IsNullOrEmpty(attVM.PhoneNumber) ? "" : attVM.PhoneNumber);
                 _mapper.Map(attVM, attendee);
                 if (model.SendEmail && (!selected.Where(a => a.Email == attVM.Email).Any()))
                   selected.Add(attVM);
