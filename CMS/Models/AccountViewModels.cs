@@ -228,7 +228,11 @@ namespace CMS.Models
       public long OId { get; set; }
       public string OrderId { get; set; }
       public string Payment { get; set; }
+      public string Name { get; set; }
       public string Email { get; set; }
+      public string PhoneNumber { get; set; }
+      public string Address { get; set; }
+      public string MailingAddress { get; set; }
       public string EventDate { get; set; }
       public string EventLocation { get; set; }
       public string TicketNames { get; set; }
