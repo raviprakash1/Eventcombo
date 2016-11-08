@@ -120,14 +120,15 @@ namespace EventCombo.Models
         public virtual DbSet<EventECImage> EventECImages { get; set; }
         public virtual DbSet<EmailType> EmailTypes { get; set; }
         public virtual DbSet<ScheduledEmail> ScheduledEmails { get; set; }
+        public virtual DbSet<TicketBearer_View> TicketBearer_View { get; set; }
         public virtual DbSet<HomepageWord> HomepageWords { get; set; }
         public virtual DbSet<AttendeeEmail> AttendeeEmails { get; set; }
         public virtual DbSet<TicketAttendee> TicketAttendees { get; set; }
         public virtual DbSet<TicketAttendee_View> TicketAttendee_View { get; set; }
-        public virtual DbSet<AvailableTicket_View> AvailableTicket_View { get; set; }
-        public virtual DbSet<TicketBearer_View> TicketBearer_View { get; set; }
         public virtual DbSet<LockOrder> LockOrders { get; set; }
         public virtual DbSet<LockTicket> LockTickets { get; set; }
+        public virtual DbSet<AvailableTicket_View> AvailableTicket_View { get; set; }
+        public virtual DbSet<GeoState> GeoState { get; set; }
     
         [DbFunction("EventComboEntities", "func_Split")]
         public virtual IQueryable<func_Split_Result> func_Split(string delimitedString, string delimiter)
@@ -343,6 +344,15 @@ namespace EventCombo.Models
                 new ObjectParameter("minutes", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteExpiredLocks", minutesParameter);
+        }
+    
+        public virtual int RecalcTicketQuantity(Nullable<long> eventId)
+        {
+            var eventIdParameter = eventId.HasValue ?
+                new ObjectParameter("EventId", eventId) :
+                new ObjectParameter("EventId", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RecalcTicketQuantity", eventIdParameter);
         }
     }
 }

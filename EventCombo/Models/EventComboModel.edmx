@@ -139,7 +139,7 @@
           </Key>
           <Property Name="AttendeeEmailId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ScheduledEmailId" Type="bigint" Nullable="false" />
-          <Property Name="TicketbearerId" Type="bigint" />
+          <Property Name="TicketbearerId" Type="bigint" Nullable="false" />
           <Property Name="EventID" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="BillingAddress">
@@ -496,6 +496,32 @@
           </Key>
           <Property Name="LanguageId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LanguageName" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LockOrder">
+          <Key>
+            <PropertyRef Name="LockOrderId" />
+          </Key>
+          <Property Name="LockOrderId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="EventId" Type="bigint" Nullable="false" />
+          <Property Name="Locktime" Type="datetime" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="IP" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LockTicket">
+          <Key>
+            <PropertyRef Name="LockTicketId" />
+          </Key>
+          <Property Name="LockTicketId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LockOrderId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TicketQuantityDetailId" Type="bigint" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Donate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ECFeeAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ECFeePercent" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ECFeeType" Type="int" Nullable="false" />
+          <Property Name="CustomerFee" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Discount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Messages">
           <Key>
@@ -869,6 +895,15 @@
           <Property Name="Zip" Type="varchar" MaxLength="256" />
           <Property Name="Country" Type="varchar" MaxLength="26" />
         </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="StateShortName" Type="nvarchar" MaxLength="200" />
+          <Property Name="CountryId" Type="tinyint" Nullable="false" />
+        </EntityType>
         <EntityType Name="Status">
           <Key>
             <PropertyRef Name="StatusID" />
@@ -1128,7 +1163,7 @@
           <Property Name="Value" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="ExpireAt" Type="datetime" />
         </EntityType>
-        <EntityType Name="State">
+        <EntityType Name="State1">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -1138,6 +1173,22 @@
           <Property Name="Reason" Type="nvarchar" MaxLength="100" />
           <Property Name="CreatedAt" Type="datetime" Nullable="false" />
           <Property Name="Data" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EventCombo.dbo.AvailableTicket_View' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AvailableTicket_View">
+          <Key>
+            <PropertyRef Name="TQD_Id" />
+          </Key>
+          <Property Name="TQD_Id" Type="bigint" Nullable="false" />
+          <Property Name="TQD_Event_Id" Type="bigint" />
+          <Property Name="TQD_AddressId" Type="bigint" />
+          <Property Name="TQD_PE_Id" Type="bigint" />
+          <Property Name="TQD_Quantity" Type="bigint" />
+          <Property Name="RemainingQuantity" Type="bigint" />
+          <Property Name="TQD_StartDate" Type="varchar" MaxLength="50" />
+          <Property Name="TQD_StartTime" Type="varchar" MaxLength="50" />
+          <Property Name="TQD_Ticket_Id" Type="bigint" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'EventCombo.dbo.EventTicket_View' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1511,6 +1562,18 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AttendeeEmail_TicketBearer">
+          <End Role="TicketBearer" Type="Self.TicketBearer" Multiplicity="1" />
+          <End Role="AttendeeEmail" Type="Self.AttendeeEmail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketBearer">
+              <PropertyRef Name="TicketbearerId" />
+            </Principal>
+            <Dependent Role="AttendeeEmail">
+              <PropertyRef Name="TicketbearerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1669,12 +1732,12 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <End Role="Job" Type="Self.Job" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="State" Type="Self.State" Multiplicity="*" />
+          <End Role="State1" Type="Self.State1" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Job">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="State">
+            <Dependent Role="State1">
               <PropertyRef Name="JobId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1775,6 +1838,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DeleteExpiredLocks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="minutes" Type="int" Mode="In" />
+        </Function>
         <Function Name="Distance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
           <Parameter Name="lat1" Type="float" Mode="In" />
           <Parameter Name="long1" Type="float" Mode="In" />
@@ -1848,6 +1914,9 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
         <Function Name="PublishSingleEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EventId" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="RecalcTicketQuantity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EventId" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="ReturnDayOfWeek" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
           <Parameter Name="dtDate" Type="datetime" Mode="In" />
         </Function>
@@ -1895,6 +1964,8 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="Fee_Structure" EntityType="Self.Fee_Structure" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HomepageWord" EntityType="Self.HomepageWord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LockOrder" EntityType="Self.LockOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LockTicket" EntityType="Self.LockTicket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MultipleEvent" EntityType="Self.MultipleEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Detail_T" EntityType="Self.Order_Detail_T" Schema="dbo" store:Type="Tables" />
@@ -1918,6 +1989,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="QuestionTypeGroup" EntityType="Self.QuestionTypeGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ScheduledEmail" EntityType="Self.ScheduledEmail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShippingAddress" EntityType="Self.ShippingAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket_Locked_Detail" EntityType="Self.Ticket_Locked_Detail" Schema="dbo" store:Type="Tables" />
@@ -1941,7 +2013,20 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySet Name="Schema" EntityType="Self.Schema" Schema="HangFire" store:Type="Tables" />
           <EntitySet Name="Server" EntityType="Self.Server" Schema="HangFire" store:Type="Tables" />
           <EntitySet Name="Set" EntityType="Self.Set" Schema="HangFire" store:Type="Tables" />
-          <EntitySet Name="State" EntityType="Self.State" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="State1" EntityType="Self.State1" Schema="HangFire" Table="State" store:Type="Tables" />
+          <EntitySet Name="AvailableTicket_View" EntityType="Self.AvailableTicket_View" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AvailableTicket_View].[TQD_Id] AS [TQD_Id], 
+    [AvailableTicket_View].[TQD_Event_Id] AS [TQD_Event_Id], 
+    [AvailableTicket_View].[TQD_AddressId] AS [TQD_AddressId], 
+    [AvailableTicket_View].[TQD_PE_Id] AS [TQD_PE_Id], 
+    [AvailableTicket_View].[TQD_Quantity] AS [TQD_Quantity], 
+    [AvailableTicket_View].[RemainingQuantity] AS [RemainingQuantity], 
+    [AvailableTicket_View].[TQD_StartDate] AS [TQD_StartDate], 
+    [AvailableTicket_View].[TQD_StartTime] AS [TQD_StartTime], 
+    [AvailableTicket_View].[TQD_Ticket_Id] AS [TQD_Ticket_Id]
+    FROM [dbo].[AvailableTicket_View] AS [AvailableTicket_View]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="EventTicket_View" EntityType="Self.EventTicket_View" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [EventTicket_View].[TPD_Id] AS [TPD_Id], 
@@ -2207,6 +2292,10 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             <End Role="ScheduledEmail" EntitySet="ScheduledEmail" />
             <End Role="AttendeeEmail" EntitySet="AttendeeEmail" />
           </AssociationSet>
+          <AssociationSet Name="FK_AttendeeEmail_TicketBearer" Association="Self.FK_AttendeeEmail_TicketBearer">
+            <End Role="TicketBearer" EntitySet="TicketBearer" />
+            <End Role="AttendeeEmail" EntitySet="AttendeeEmail" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -2257,7 +2346,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           </AssociationSet>
           <AssociationSet Name="FK_HangFire_State_Job" Association="Self.FK_HangFire_State_Job">
             <End Role="Job" EntitySet="Job" />
-            <End Role="State" EntitySet="State" />
+            <End Role="State1" EntitySet="State1" />
           </AssociationSet>
           <AssociationSet Name="FK_MultipleEvent_Event" Association="Self.FK_MultipleEvent_Event">
             <End Role="Event" EntitySet="Event" />
@@ -2431,6 +2520,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           </Key>
           <Property Name="CountryID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Country1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="States" Relationship="EventComboModel.CountryGeoState" FromRole="Country" ToRole="GeoState" />
         </EntityType>
         <EntityType Name="DeliveryMethod">
           <Key>
@@ -2865,6 +2955,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="TicketAttendees" Relationship="EventComboModel.FK_TicketAttendee_TicketBearer" FromRole="TicketBearer" ToRole="TicketAttendee" />
           <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AttendeeEmails" Relationship="EventComboModel.FK_AttendeeEmail_TicketBearer" FromRole="TicketBearer" ToRole="AttendeeEmail" />
         </EntityType>
         <EntityType Name="TicketDeliveryMethod">
           <Key>
@@ -3462,6 +3553,28 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <AssociationSet Name="EventEvent_Email_Invitation" Association="EventComboModel.EventEvent_Email_Invitation">
             <End Role="Event" EntitySet="Events" />
             <End Role="Event_Email_Invitation" EntitySet="Event_Email_Invitation" />
+          </AssociationSet>
+          <EntitySet Name="LockOrders" EntityType="EventComboModel.LockOrder" />
+          <EntitySet Name="LockTickets" EntityType="EventComboModel.LockTicket" />
+          <EntitySet Name="AvailableTicket_View" EntityType="EventComboModel.AvailableTicket_View" />
+          <AssociationSet Name="FK_AttendeeEmail_TicketBearer" Association="EventComboModel.FK_AttendeeEmail_TicketBearer">
+            <End Role="TicketBearer" EntitySet="TicketBearers" />
+            <End Role="AttendeeEmail" EntitySet="AttendeeEmails" />
+          </AssociationSet>
+          <FunctionImport Name="DeleteExpiredLocks">
+          <Parameter Name="minutes" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RecalcTicketQuantity">
+          <Parameter Name="EventId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <AssociationSet Name="LockOrderLockTicket" Association="EventComboModel.LockOrderLockTicket">
+            <End Role="LockOrder" EntitySet="LockOrders" />
+            <End Role="LockTicket" EntitySet="LockTickets" />
+          </AssociationSet>
+          <EntitySet Name="GeoState" EntityType="EventComboModel.GeoState" />
+          <AssociationSet Name="CountryGeoState" Association="EventComboModel.CountryGeoState">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="GeoState" EntitySet="GeoState" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
@@ -5079,10 +5192,11 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           </Key>
           <Property Name="AttendeeEmailId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ScheduledEmailId" Type="Int64" Nullable="false" />
-          <Property Name="TicketbearerId" Type="Int64" />
+          <Property Name="TicketbearerId" Type="Int64" Nullable="false" />
           <Property Name="EventID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Event" Relationship="EventComboModel.FK_AttendeeEmail_Event" FromRole="AttendeeEmail" ToRole="Event" />
           <NavigationProperty Name="ScheduledEmail" Relationship="EventComboModel.FK_AttendeeEmail_ScheduledEmail" FromRole="AttendeeEmail" ToRole="ScheduledEmail" />
+          <NavigationProperty Name="TicketBearer" Relationship="EventComboModel.FK_AttendeeEmail_TicketBearer" FromRole="AttendeeEmail" ToRole="TicketBearer" />
         </EntityType>
         <Association Name="FK_AttendeeEmail_Event">
           <End Type="EventComboModel.Event" Role="Event" Multiplicity="1" />
@@ -5185,6 +5299,94 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Principal>
             <Dependent Role="Event_Email_Invitation">
               <PropertyRef Name="I_Event_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LockOrder">
+          <Key>
+            <PropertyRef Name="LockOrderId" />
+          </Key>
+          <Property Name="LockOrderId" Type="Guid" Nullable="false" />
+          <Property Name="EventId" Type="Int64" Nullable="false" />
+          <Property Name="Locktime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IP" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="LockTickets" Relationship="EventComboModel.LockOrderLockTicket" FromRole="LockOrder" ToRole="LockTicket" />
+        </EntityType>
+        <EntityType Name="LockTicket">
+          <Key>
+            <PropertyRef Name="LockTicketId" />
+          </Key>
+          <Property Name="LockTicketId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LockOrderId" Type="Guid" Nullable="false" />
+          <Property Name="TicketQuantityDetailId" Type="Int64" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Donate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ECFeeAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ECFeePercent" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ECFeeType" Type="Int32" Nullable="false" />
+          <Property Name="CustomerFee" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="LockOrder" Relationship="EventComboModel.LockOrderLockTicket" FromRole="LockTicket" ToRole="LockOrder" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Discount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="AvailableTicket_View">
+          <Key>
+            <PropertyRef Name="TQD_Id" />
+          </Key>
+          <Property Name="TQD_Id" Type="Int64" Nullable="false" />
+          <Property Name="TQD_Event_Id" Type="Int64" />
+          <Property Name="TQD_AddressId" Type="Int64" />
+          <Property Name="TQD_PE_Id" Type="Int64" />
+          <Property Name="TQD_Quantity" Type="Int64" />
+          <Property Name="RemainingQuantity" Type="Int64" />
+          <Property Name="TQD_StartDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TQD_StartTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TQD_Ticket_Id" Type="Int64" />
+        </EntityType>
+        <Association Name="FK_AttendeeEmail_TicketBearer">
+          <End Type="EventComboModel.TicketBearer" Role="TicketBearer" Multiplicity="1" />
+          <End Type="EventComboModel.AttendeeEmail" Role="AttendeeEmail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketBearer">
+              <PropertyRef Name="TicketbearerId" />
+            </Principal>
+            <Dependent Role="AttendeeEmail">
+              <PropertyRef Name="TicketbearerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LockOrderLockTicket">
+          <End Type="EventComboModel.LockOrder" Role="LockOrder" Multiplicity="1" />
+          <End Type="EventComboModel.LockTicket" Role="LockTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LockOrder">
+              <PropertyRef Name="LockOrderId" />
+            </Principal>
+            <Dependent Role="LockTicket">
+              <PropertyRef Name="LockOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="GeoState">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StateShortName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CountryId" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Country" Relationship="EventComboModel.CountryGeoState" FromRole="GeoState" ToRole="Country" />
+        </EntityType>
+        <Association Name="CountryGeoState">
+          <End Type="EventComboModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="EventComboModel.GeoState" Role="GeoState" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="GeoState">
+              <PropertyRef Name="CountryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6257,7 +6459,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           </EntitySetMapping>
           <EntitySetMapping Name="States">
             <EntityTypeMapping TypeName="EventComboModel.State">
-              <MappingFragment StoreEntitySet="State">
+              <MappingFragment StoreEntitySet="State1">
                 <ScalarProperty Name="Data" ColumnName="Data" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
                 <ScalarProperty Name="Reason" ColumnName="Reason" />
@@ -6810,6 +7012,61 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="TicketBearerId" ColumnName="TicketBearerId" />
                 <ScalarProperty Name="TicketAttendeeId" ColumnName="TicketAttendeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LockOrders">
+            <EntityTypeMapping TypeName="EventComboModel.LockOrder">
+              <MappingFragment StoreEntitySet="LockOrder">
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Locktime" ColumnName="Locktime" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="LockOrderId" ColumnName="LockOrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LockTickets">
+            <EntityTypeMapping TypeName="EventComboModel.LockTicket">
+              <MappingFragment StoreEntitySet="LockTicket">
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="CustomerFee" ColumnName="CustomerFee" />
+                <ScalarProperty Name="ECFeeType" ColumnName="ECFeeType" />
+                <ScalarProperty Name="ECFeePercent" ColumnName="ECFeePercent" />
+                <ScalarProperty Name="ECFeeAmount" ColumnName="ECFeeAmount" />
+                <ScalarProperty Name="Donate" ColumnName="Donate" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="TicketQuantityDetailId" ColumnName="TicketQuantityDetailId" />
+                <ScalarProperty Name="LockOrderId" ColumnName="LockOrderId" />
+                <ScalarProperty Name="LockTicketId" ColumnName="LockTicketId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AvailableTicket_View">
+            <EntityTypeMapping TypeName="EventComboModel.AvailableTicket_View">
+              <MappingFragment StoreEntitySet="AvailableTicket_View">
+                <ScalarProperty Name="TQD_Ticket_Id" ColumnName="TQD_Ticket_Id" />
+                <ScalarProperty Name="TQD_StartTime" ColumnName="TQD_StartTime" />
+                <ScalarProperty Name="TQD_StartDate" ColumnName="TQD_StartDate" />
+                <ScalarProperty Name="RemainingQuantity" ColumnName="RemainingQuantity" />
+                <ScalarProperty Name="TQD_Quantity" ColumnName="TQD_Quantity" />
+                <ScalarProperty Name="TQD_PE_Id" ColumnName="TQD_PE_Id" />
+                <ScalarProperty Name="TQD_AddressId" ColumnName="TQD_AddressId" />
+                <ScalarProperty Name="TQD_Event_Id" ColumnName="TQD_Event_Id" />
+                <ScalarProperty Name="TQD_Id" ColumnName="TQD_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DeleteExpiredLocks" FunctionName="EventComboModel.Store.DeleteExpiredLocks" />
+          <FunctionImportMapping FunctionImportName="RecalcTicketQuantity" FunctionName="EventComboModel.Store.RecalcTicketQuantity" />
+          <EntitySetMapping Name="GeoState">
+            <EntityTypeMapping TypeName="EventComboModel.GeoState">
+              <MappingFragment StoreEntitySet="State">
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StateShortName" ColumnName="StateShortName" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

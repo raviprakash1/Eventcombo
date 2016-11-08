@@ -56,6 +56,22 @@
       broadcastMessage('ShowMessage', param);
     }
 
+    var purchaseInfoLoaded = function (param) {
+      broadcastMessage('PurchaseInfoLoaded', param);
+    }
+
+    var showLoadingMessage = function (param) {
+      broadcastMessage('ShowLoadingMessage', param);
+    }
+
+    var purchaseSuccess = function (param) {
+      broadcastMessage('PurchaseSuccess', param);
+    }
+
+    var purchaseError = function (param) {
+      broadcastMessage('PurchaseError', param);
+    }
+
     return {
       EventInfoLoaded: eventInfoLoaded,
       ErrorExternalLogin: errorExternalLogin,
@@ -69,6 +85,10 @@
       CurrentCoordinatesChanged: currentCoordinatesChanged,
       ReloadPage: reloadPage,
       SetCitySearchRedirect: setCitySearchRedirect,
-      ShowMessage: showMessage
+      ShowMessage: showMessage,
+      PurchaseInfoLoaded: purchaseInfoLoaded,
+      ShowLoadingMessage: showLoadingMessage,
+      PurchaseSuccess: purchaseSuccess,
+      PurchaseError: purchaseError
     }
   }]);

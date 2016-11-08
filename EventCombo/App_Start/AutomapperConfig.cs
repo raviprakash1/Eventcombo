@@ -113,6 +113,8 @@ namespace EventCombo
         .ForMember(d => d.Address, m => m.MapFrom(s => String.IsNullOrEmpty(s.AddressStatus) || (s.AddressStatus.ToUpper() == "ONLINE") ? "ONLINE" : s.ConsolidateAddress));
       CreateMap<City, CityViewModel>();
       CreateMap<LockTicket, TicketLockViewModel>();
+      CreateMap<GeoState, StateViewModel>()
+        .ForMember(d => d.CountryName, m => m.MapFrom(s => s.Country.Country1));
 
       //backward maps
       CreateMap<OrderTemplateViewModel, OrderTemplate>();

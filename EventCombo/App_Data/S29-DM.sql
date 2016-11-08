@@ -60,55 +60,6 @@ GO
 
 
 
-IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LockTicket_CustomerFee]') AND type = 'D')
-BEGIN
-ALTER TABLE [dbo].[LockTicket] DROP CONSTRAINT [DF_LockTicket_CustomerFee]
-END
-
-GO
-
-IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LockTicket_ECFeeType]') AND type = 'D')
-BEGIN
-ALTER TABLE [dbo].[LockTicket] DROP CONSTRAINT [DF_LockTicket_ECFeeType]
-END
-
-GO
-
-IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LockTicket_ECFeePercent]') AND type = 'D')
-BEGIN
-ALTER TABLE [dbo].[LockTicket] DROP CONSTRAINT [DF_LockTicket_ECFeePercent]
-END
-
-GO
-
-IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LockTicket_ECFeeAmount]') AND type = 'D')
-BEGIN
-ALTER TABLE [dbo].[LockTicket] DROP CONSTRAINT [DF_LockTicket_ECFeeAmount]
-END
-
-GO
-
-IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LockTicket_Amount]') AND type = 'D')
-BEGIN
-ALTER TABLE [dbo].[LockTicket] DROP CONSTRAINT [DF_LockTicket_Amount]
-END
-
-GO
-
-IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LockTicket_Donate]') AND type = 'D')
-BEGIN
-ALTER TABLE [dbo].[LockTicket] DROP CONSTRAINT [DF_LockTicket_Donate]
-END
-
-GO
-
-IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LockTicket_Quantity]') AND type = 'D')
-BEGIN
-ALTER TABLE [dbo].[LockTicket] DROP CONSTRAINT [DF_LockTicket_Quantity]
-END
-
-GO
-
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[LockTicket]') AND type in (N'U'))
 DROP TABLE [dbo].[LockTicket]
 GO
@@ -125,68 +76,20 @@ CREATE TABLE [dbo].[LockTicket](
 	[LockTicketId] [bigint] IDENTITY(1,1) NOT NULL,
 	[LockOrderId] [uniqueidentifier] NOT NULL,
 	[TicketQuantityDetailId] [bigint] NOT NULL,
-	[Quantity] [int] NOT NULL,
-	[Donate] [decimal](18, 2) NOT NULL,
-	[Amount] [decimal](18, 2) NOT NULL,
-	[ECFeeAmount] [decimal](18, 2) NOT NULL,
-	[ECFeePercent] [decimal](18, 2) NOT NULL,
-	[ECFeeType] [int] NOT NULL,
-	[CustomerFee] [decimal](18, 2) NOT NULL,
+	[Quantity] [int] NOT NULL CONSTRAINT [DF_LockTicket_Quantity]  DEFAULT ((0)),
+	[Donate] [decimal](18, 2) NOT NULL CONSTRAINT [DF_LockTicket_Donate]  DEFAULT ((0)),
+	[Price] [decimal](18, 2) NOT NULL CONSTRAINT [DF_LockTicket_Amount]  DEFAULT ((0)),
+	[ECFeeAmount] [decimal](18, 2) NOT NULL CONSTRAINT [DF_LockTicket_ECFeeAmount]  DEFAULT ((0)),
+	[ECFeePercent] [decimal](18, 2) NOT NULL CONSTRAINT [DF_LockTicket_ECFeePercent]  DEFAULT ((0)),
+	[ECFeeType] [int] NOT NULL CONSTRAINT [DF_LockTicket_ECFeeType]  DEFAULT ((0)),
+	[CustomerFee] [decimal](18, 2) NOT NULL CONSTRAINT [DF_LockTicket_CustomerFee]  DEFAULT ((0)),
+	[Discount] [decimal](18, 2) NOT NULL CONSTRAINT [DF_LockTicket_Discount]  DEFAULT ((0)),
  CONSTRAINT [PK_LockTicket] PRIMARY KEY CLUSTERED 
 (
 	[LockTicketId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 END
-GO
-
-IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LockTicket_Quantity]') AND type = 'D')
-BEGIN
-ALTER TABLE [dbo].[LockTicket] ADD  CONSTRAINT [DF_LockTicket_Quantity]  DEFAULT ((0)) FOR [Quantity]
-END
-
-GO
-
-IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LockTicket_Donate]') AND type = 'D')
-BEGIN
-ALTER TABLE [dbo].[LockTicket] ADD  CONSTRAINT [DF_LockTicket_Donate]  DEFAULT ((0)) FOR [Donate]
-END
-
-GO
-
-IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LockTicket_Amount]') AND type = 'D')
-BEGIN
-ALTER TABLE [dbo].[LockTicket] ADD  CONSTRAINT [DF_LockTicket_Amount]  DEFAULT ((0)) FOR [Amount]
-END
-
-GO
-
-IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LockTicket_ECFeeAmount]') AND type = 'D')
-BEGIN
-ALTER TABLE [dbo].[LockTicket] ADD  CONSTRAINT [DF_LockTicket_ECFeeAmount]  DEFAULT ((0)) FOR [ECFeeAmount]
-END
-
-GO
-
-IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LockTicket_ECFeePercent]') AND type = 'D')
-BEGIN
-ALTER TABLE [dbo].[LockTicket] ADD  CONSTRAINT [DF_LockTicket_ECFeePercent]  DEFAULT ((0)) FOR [ECFeePercent]
-END
-
-GO
-
-IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LockTicket_ECFeeType]') AND type = 'D')
-BEGIN
-ALTER TABLE [dbo].[LockTicket] ADD  CONSTRAINT [DF_LockTicket_ECFeeType]  DEFAULT ((0)) FOR [ECFeeType]
-END
-
-GO
-
-IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LockTicket_CustomerFee]') AND type = 'D')
-BEGIN
-ALTER TABLE [dbo].[LockTicket] ADD  CONSTRAINT [DF_LockTicket_CustomerFee]  DEFAULT ((0)) FOR [CustomerFee]
-END
-
 GO
 
 IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[AvailableTicket_View]'))
@@ -315,6 +218,109 @@ INNER JOIN Ticket t ON t.T_Id = tqd.TQD_Ticket_Id
 
 GO
 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[State]') AND type in (N'U'))
+DROP TABLE [dbo].[State]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[State]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[State](
+	[StateId] [int] IDENTITY(1,1) NOT NULL,
+	[StateName] [nvarchar](200) NOT NULL,
+	[StateShortName] [nvarchar](200) NULL,
+	[CountryId] [tinyint] NOT NULL,
+ CONSTRAINT [PK_State] PRIMARY KEY CLUSTERED 
+(
+	[StateId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
 
 
+TRUNCATE TABLE [State]
+GO
+SET IDENTITY_INSERT [State] ON
+GO
+INSERT INTO [State] (StateId, StateName, StateShortName, CountryId) 
+VALUES 
+(1, 'Alabama', 'AL', 1),
+(2, 'Alaska', 'AK', 1),
+(3, 'Arizona', 'AZ', 1),
+(4, 'Arkansas', 'AR', 1),
+(5, 'California', 'CA', 1),
+(6, 'Colorado', 'CO', 1),
+(7, 'Connecticut', 'CT', 1),
+(8, 'Delaware', 'DE', 1),
+(9, 'Florida', 'FL', 1),
+(10, 'Georgia', 'GA', 1),
+(11, 'Hawaii', 'HI', 1),
+(12, 'Idaho', 'ID', 1),
+(13, 'Illinois', 'IL', 1),
+(14, 'Indiana', 'IN', 1),
+(15, 'Iowa', 'IA', 1),
+(16, 'Kansas', 'KS', 1),
+(17, 'Kentucky', 'KY', 1),
+(18, 'Louisiana', 'LA', 1),
+(19, 'Maine', 'ME', 1),
+(20, 'Maryland', 'MD', 1),
+(21, 'Massachusetts', 'MA', 1),
+(22, 'Michigan', 'MI', 1),
+(23, 'Minnesota', 'MN', 1),
+(24, 'Mississippi', 'MS', 1),
+(25, 'Missouri', 'MO', 1),
+(26, 'Montana', 'MT', 1),
+(27, 'Nebraska', 'NE', 1),
+(28, 'Nevada', 'NV', 1),
+(29, 'New Hampshire', 'NH', 1),
+(30, 'New Jersey', 'NJ', 1),
+(31, 'New Mexico', 'NM', 1),
+(32, 'New York', 'NY', 1),
+(33, 'North Carolina', 'NC', 1),
+(34, 'North Dakota', 'ND', 1),
+(35, 'Ohio', 'OH', 1),
+(36, 'Oklahoma', 'OK', 1),
+(37, 'Oregon', 'OR', 1),
+(38, 'Pennsylvania', 'PA', 1),
+(39, 'Rhode Island', 'RI', 1),
+(40, 'South Carolina', 'SC', 1),
+(41, 'South Dakota', 'SD', 1),
+(42, 'Tennessee', 'TN', 1),
+(43, 'Texas', 'TX', 1),
+(44, 'Utah', 'UT', 1),
+(45, 'Vermont', 'VT', 1),
+(46, 'Virginia', 'VA', 1),
+(47, 'Washington', 'WA', 1),
+(48, 'West Virginia', 'WV', 1),
+(49, 'Wisconsin', 'WI', 1),
+(50, 'Wyoming', 'WY', 1),
+(51, 'Washington DC', 'DC', 1),
+(52, 'Puerto Rico', 'PR', 1),
+(53, 'U.S. Virgin Islands', 'VI', 1),
+(54, 'American Samoa', 'AS', 1),
+(55, 'Guam', 'GU', 1),
+(56, 'Northern Mariana Islands', 'MP', 1),
+(60, 'Alberta', 'AB', 2),
+(61, 'British Columbia', 'BC', 2),
+(62, 'Manitoba', 'MB', 2),
+(63, 'New Brunswick', 'NB', 2),
+(64, 'Newfoundland and Labrador', 'NL', 2),
+(65, 'Nova Scotia', 'NS', 2),
+(66, 'Ontario', 'ON', 2),
+(67, 'Prince Edward Island', 'PE', 2),
+(68, 'Quebec', 'QC', 2),
+(69, 'Saskatchewan', 'SK', 2),
+(70, 'Northwest Territories', 'NT', 2),
+(71, 'Nunavut', 'NU', 2),
+(72, 'Yukon Territory', 'YT', 2)
+
+GO
+SET IDENTITY_INSERT [State] OFF
+GO
 

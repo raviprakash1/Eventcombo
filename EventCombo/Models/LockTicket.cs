@@ -19,11 +19,12 @@ namespace EventCombo.Models
         public long TicketQuantityDetailId { get; set; }
         public int Quantity { get; set; }
         public decimal Donate { get; set; }
-        public decimal Amount { get; set; }
         public decimal ECFeeAmount { get; set; }
         public decimal ECFeePercent { get; set; }
         public int ECFeeType { get; set; }
         public decimal CustomerFee { get; set; }
+        public decimal Price { get; set; }
+        public decimal Discount { get; set; }
     
         public virtual LockOrder LockOrder { get; set; }
     }

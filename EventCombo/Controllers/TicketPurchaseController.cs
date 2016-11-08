@@ -9,17 +9,20 @@ using Newtonsoft.Json.Converters;
 using EventCombo.Service;
 using EventCombo.DAL;
 using EventCombo.Utils;
+using NLog;
 
 namespace EventCombo.Controllers
 {
   public class TicketPurchaseController : BaseController
   {
     private IPurchasingService _pService;
+    private ILogger _logger;
 
     public TicketPurchaseController()
       : base()
     {
       _pService = new PurchasingService(_factory, _mapper);
+      _logger = LogManager.GetCurrentClassLogger();
     }
 
     [HttpPost]
@@ -32,7 +35,7 @@ namespace EventCombo.Controllers
         req.UserId = Session["AppId"].ToString();
       else
         req.UserId = "";
-      
+
 
       TicketLockResult tres = _pService.TryLockTickets(req);
 
@@ -46,9 +49,77 @@ namespace EventCombo.Controllers
     [HttpGet]
     public ActionResult Checkout(string lockId)
     {
-      IBaseViewModel model = new BaseViewModel();
-      PopulateBaseViewModel(model, String.Format("{0} | Eventcombo", "Event name must be here"));
+      string IP = ClientIPAddress.GetLanIPAddress(Request);
+
+      EventPurchaseInfoViewModel model = _pService.GetEventPurchaseInfo(lockId, IP);
+      if (model.EventId == 0)
+        return RedirectToAction("Index", "Home");
+      PopulateBaseViewModel(model, String.Format("{0} | Eventcombo", model.EventTitle));
       return View(model);
     }
+
+    [HttpGet]
+    public ActionResult GetPurchaseInfo(string lockId)
+    {
+      string IP = ClientIPAddress.GetLanIPAddress(Request);
+
+      EventPurchaseInfoViewModel model = _pService.GetEventPurchaseInfo(lockId, IP);
+
+      JsonNetResult res = new JsonNetResult();
+      res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
+      res.Data = model;
+      return res;
+    }
+
+    [HttpPost]
+    public ActionResult ReleaseTickets(string lockId)
+    {
+      var IP = ClientIPAddress.GetLanIPAddress(Request);
+      var result = _pService.DeleteTicketLock(lockId, IP);
+      JsonNetResult res = new JsonNetResult();
+      res.Data = result;
+      return res;
+    }
+
+    [HttpGet]
+    public ActionResult Confirmation(string orderId)
+    {
+      return RedirectToAction("Index", "Home");
+    }
+
+    [HttpPost]
+    public ActionResult SavePurchaseInfo(string json)
+    {
+
+      string userId;
+      var IP = ClientIPAddress.GetLanIPAddress(Request);
+      if (Session["AppId"] != null)
+        userId = Session["AppId"].ToString();
+      else
+        userId = "";
+      PurchaseResult pres = new PurchaseResult() { Success = false, Message = "", OrderId = "" };
+      if (String.IsNullOrEmpty(userId))
+      {
+        pres.Message = "Login or register, please.";
+      }
+      else
+        try
+        {
+          PurchasingInfoViewModel model = JsonConvert.DeserializeObject<PurchasingInfoViewModel>(json);
+          pres.OrderId = _pService.SavePurchaseInfo(model);
+          pres.Success = !String.IsNullOrEmpty(pres.OrderId);
+        }
+        catch (Exception ex)
+        {
+          _logger.Error(ex, "Error during SavePurchaseInfo processing.");
+          pres.Message = "Something went wrong. Please try again later";
+          pres.Success = false;
+        }
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = pres;
+      return res;
+    }
+
   }
 }
