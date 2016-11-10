@@ -6,9 +6,9 @@ Company Website	: www.thecatalystindia.in
 */
 /****************************************************************************/
 eventComboApp
-    .controller('checkoutController', ['$scope', '$mdDialog', '$attrs', '$timeout', '$window', 'purchaseInfoService', checkoutController]);
+    .controller('checkoutController', ['$scope', '$mdDialog', '$attrs', '$timeout', '$window', 'purchaseInfoService', 'accountService', checkoutController]);
 
-function checkoutController($scope, $mdDialog, $attrs, $timeout, $window, purchaseInfoService) {
+function checkoutController($scope, $mdDialog, $attrs, $timeout, $window, purchaseInfoService, accountService) {
   $scope.purchaseInfo = {};
   $scope.Timer = { RemainingTime: '10:00' };
 
@@ -60,6 +60,7 @@ function checkoutController($scope, $mdDialog, $attrs, $timeout, $window, purcha
 
   $scope.$on('PurchaseInfoLoaded', function (val) {
     $scope.purchaseInfo = purchaseInfoService.getPurchaseInfo();
+    console.log($scope.purchaseInfo);
     if (!$scope.purchaseInfo.EventId) {
       $window.location.href = "/";
       return;
@@ -68,8 +69,13 @@ function checkoutController($scope, $mdDialog, $attrs, $timeout, $window, purcha
     $scope.purchaseInfoLoaded = true;
   });
 
-  $scope.$on('PurchaseSuccess', function (event, orderId) {
-    $window.location.href = "/TicketPurchase/Confirmation?OrderId="+orderId;
+  $scope.$on('PurchaseSuccess', function (event, res) {
+    if (res.Success && res.Url) {
+      $window.location.href = res.Url;
+      return;
+    }
+    if (res.Success)
+      $window.location.href = "/TicketPurchase/Confirmation?OrderId=" + res.OrderId;
   });
 
   $scope.$on('PurchaseError', function (event, mess) {
@@ -77,9 +83,21 @@ function checkoutController($scope, $mdDialog, $attrs, $timeout, $window, purcha
     $scope.popInfoMessage = true;
   });
 
+  $scope.$on('ShowLoadingMessage', function (event, state) {
+    $scope.popLoading = state;
+  }); 
+
   $scope.initController = function () {
     purchaseInfoService.loadPurchaseInfo($attrs.lockid);
   };
+
+  $scope.Login = function () {
+    accountService.StartLogin(null);
+  }
+
+  $scope.Logout = function () {
+    accountService.StartLogout(null);
+  }
 
   $scope.VarChargeChanged = function (id) {
     $scope.purchaseInfo.PurchaseInfo.VariableChargeGroups.forEach(function (item) {
@@ -90,18 +108,21 @@ function checkoutController($scope, $mdDialog, $attrs, $timeout, $window, purcha
         });
       }
     });
-
-    $scope.StateChanged = function (payinfo) {
-      if (payinfo.SelectedState) {
-        payinfo.CountryId = payinfo.SelectedState.CountryId;
-        payinfo.Country = payinfo.SelectedState.Country;
-        payinfo.StateId = payinfo.SelectedState.StateId;
-        payinfo.State = payinfo.SelectedState.StateName;
-      }
-    }
-
     purchaseInfoService.recalcTotal();
   };
+
+  $scope.StateChanged = function (payinfo) {
+    if (payinfo.StateId) {
+      $scope.purchaseInfo.StateList.forEach(function (item) {
+        if (item.StateId == payinfo.StateId) {
+          payinfo.CountryId = item.CountryId;
+          payinfo.Country = item.CountryName;
+          payinfo.State = item.StateName;
+        }
+      });
+    }
+    console.log($scope.purchaseInfo);
+  }
 
   $scope.goBack = function () {
     $window.location.href = $scope.purchaseInfo.EventUrl;
@@ -125,8 +146,11 @@ function checkoutController($scope, $mdDialog, $attrs, $timeout, $window, purcha
   };
 
   $scope.creditcardSubmit = function (form) {
+    console.log($scope.purchaseInfo);
+    console.log($scope[form]);
     if ($scope[form].$valid) {
-      $scope.status = 'Credit card detail was submitted successfully.';
+      $scope.purchaseInfo.PurchaseInfo.CardType = $scope.crCardType;
+      purchaseInfoService.savePurchaseInfo();
     }
     else {
       $scope.submitted = true;
@@ -407,21 +431,6 @@ eventComboApp.service('purchaseInfoService', ['$http', 'broadcastService',
         purchaseInfo.Tickets.forEach(function (item) {
           item.ShowAttendees = false;
         });
-        if (purchaseInfo.PurchaseInfo.BillingAddress.StateId) {
-          purchaseInfo.PurchaseInfo.BillingAddress.SelectedState = {};
-          purchaseInfo.StateList.forEach(function (item) {
-            if (item.StateId == purchaseInfo.PurchaseInfo.BillingAddress.StateId)
-              purchaseInfo.PurchaseInfo.BillingAddress.SelectedState = item;
-          });
-        }
-
-        if (purchaseInfo.PurchaseInfo.ShippingAddress.StateId) {
-          purchaseInfo.PurchaseInfo.ShippingAddress.SelectedState = {};
-          purchaseInfo.StateList.forEach(function (item) {
-            if (item.StateId == purchaseInfo.PurchaseInfo.ShippingAddress.StateId)
-              purchaseInfo.PurchaseInfo.ShippingAddress.SelectedState = item;
-          });
-        }
 
         recalcTotal();
         broadcastService.PurchaseInfoLoaded();
@@ -450,11 +459,11 @@ eventComboApp.service('purchaseInfoService', ['$http', 'broadcastService',
     var savePurchaseInfo = function () {
       broadcastService.ShowLoadingMessage(true);
       $http.post('/ticketpurchase/savePurchaseInfo', {
-        json: angular.toJson(purchaseInfo.PurchaseInfo)
+        json: angular.toJson(purchaseInfo)
       }).then(function (response) {
         broadcastService.ShowLoadingMessage(false);
         if (response.data.Success)
-          broadcastService.PurchaseSuccess(response.data.OrderId);
+          broadcastService.PurchaseSuccess(response.data);
         else
           broadcastService.PurchaseError(response.data.Message);
       }, function (error) {

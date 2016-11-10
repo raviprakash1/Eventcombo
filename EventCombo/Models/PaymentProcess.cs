@@ -188,5 +188,6 @@ namespace EventCombo.Models
         public string message { get; set; }
         public string Transactionhash { get; set; }
         public string TransactionId { get; set; }
+        public bool Success { get; set; }
     }
 }

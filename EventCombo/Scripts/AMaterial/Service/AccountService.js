@@ -44,10 +44,15 @@
       return userName;
     }
 
+    var startLogout = function (param) {
+      broadcastService.CallLogout(param);
+    }
+
     return {
       UserRegistered: getUserRegistered,
       UserId: getUserId,
       UserName: getUserName,
-      StartLogin: startLogin
+      StartLogin: startLogin,
+      StartLogout: startLogout
     }
   }]);

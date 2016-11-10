@@ -14,7 +14,8 @@ namespace EventCombo.Service
     TicketLockResult TryLockTickets(TicketLockRequest req);
     bool DeleteTicketLock(string lockId, string ip);
     bool DeleteTicketLock(string lockId, string ip, IUnitOfWork uow);
-    EventPurchaseInfoViewModel GetEventPurchaseInfo(string lockId, string ip);
-    string SavePurchaseInfo(PurchasingInfoViewModel model);
+    EventPurchaseInfoViewModel GetEventPurchaseInfo(string lockId, string userId, string ip);
+    PurchaseResult SavePurchaseInfo(EventPurchaseInfoViewModel model, string userId, string ip);
+    void CompletePayPalPayment(string orderId, string paymentId, string tokenId, string payerId);
   }
 }

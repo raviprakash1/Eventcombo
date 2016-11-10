@@ -16,6 +16,10 @@
       broadcastMessage('CallLogin', param);
     }
 
+    var callLogout = function (param) {
+      broadcastMessage('CallLogout', param);
+    }
+
     var completeExternalLogin = function (param) {
       broadcastMessage('CompleteExternalLogin', param);
     }
@@ -76,6 +80,7 @@
       EventInfoLoaded: eventInfoLoaded,
       ErrorExternalLogin: errorExternalLogin,
       CallLogin: callLogin,
+      CallLogout: callLogout,
       CompleteExternalLogin: completeExternalLogin,
       LoggedIn: loggedIn,
       LoggedOut: loggedOut,

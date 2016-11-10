@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace EventCombo.Models
 {
@@ -44,6 +45,7 @@ namespace EventCombo.Models
       Attendees = new List<AttendeeViewModel>();
     }
 
+    public long LockTicketId { get; set; }
     public long TicketTypeId { get; set; }
     public string Name { get; set; }
     public string VenueName { get; set; }
@@ -106,6 +108,7 @@ namespace EventCombo.Models
     public string Email { get; set; }
     public string CardNumber { get; set; }
     public string CardName { get; set; }
+    public string CardType { get; set; }
     public string ExpirationDate { get; set; }
     public string SecurityCode { get; set; }
     public bool ShippingSame { get; set; }
@@ -176,6 +179,9 @@ namespace EventCombo.Models
     public bool Success { get; set; }
     public string Message { get; set; }
     public string OrderId { get; set; }
+    public string Url { get; set; }
+    [JsonIgnore]
+    public string PayPalId { get; set; }
   }
 
 }

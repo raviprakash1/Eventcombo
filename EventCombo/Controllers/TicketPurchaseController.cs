@@ -50,8 +50,13 @@ namespace EventCombo.Controllers
     public ActionResult Checkout(string lockId)
     {
       string IP = ClientIPAddress.GetLanIPAddress(Request);
+      string userId;
+      if (Session["AppId"] != null)
+        userId = Session["AppId"].ToString();
+      else
+        userId = "";
 
-      EventPurchaseInfoViewModel model = _pService.GetEventPurchaseInfo(lockId, IP);
+      EventPurchaseInfoViewModel model = _pService.GetEventPurchaseInfo(lockId, userId, IP);
       if (model.EventId == 0)
         return RedirectToAction("Index", "Home");
       PopulateBaseViewModel(model, String.Format("{0} | Eventcombo", model.EventTitle));
@@ -62,8 +67,13 @@ namespace EventCombo.Controllers
     public ActionResult GetPurchaseInfo(string lockId)
     {
       string IP = ClientIPAddress.GetLanIPAddress(Request);
+      string userId;
+      if (Session["AppId"] != null)
+        userId = Session["AppId"].ToString();
+      else
+        userId = "";
 
-      EventPurchaseInfoViewModel model = _pService.GetEventPurchaseInfo(lockId, IP);
+      EventPurchaseInfoViewModel model = _pService.GetEventPurchaseInfo(lockId, userId, IP);
 
       JsonNetResult res = new JsonNetResult();
       res.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
@@ -84,7 +94,7 @@ namespace EventCombo.Controllers
     [HttpGet]
     public ActionResult Confirmation(string orderId)
     {
-      return RedirectToAction("Index", "Home");
+      return RedirectToAction("PurchasedTicket", "Account");
     }
 
     [HttpPost]
@@ -105,9 +115,13 @@ namespace EventCombo.Controllers
       else
         try
         {
-          PurchasingInfoViewModel model = JsonConvert.DeserializeObject<PurchasingInfoViewModel>(json);
-          pres.OrderId = _pService.SavePurchaseInfo(model);
-          pres.Success = !String.IsNullOrEmpty(pres.OrderId);
+          EventPurchaseInfoViewModel model = JsonConvert.DeserializeObject<EventPurchaseInfoViewModel>(json);
+          pres = _pService.SavePurchaseInfo(model, userId, IP);
+          if (pres.Success && !String.IsNullOrEmpty(pres.PayPalId))
+          {
+            Session.Add("PP" + pres.OrderId, pres.PayPalId);
+            pres.PayPalId = "";
+          }
         }
         catch (Exception ex)
         {
@@ -119,6 +133,18 @@ namespace EventCombo.Controllers
       JsonNetResult res = new JsonNetResult();
       res.Data = pres;
       return res;
+    }
+
+    [HttpGet]
+    public ActionResult CompletePayment(string orderId, string paymentId, string token, string PayerId)
+    {
+      if ((Session["PP" + orderId] != null) && (Session["PP" + orderId].ToString() == paymentId))
+      {
+        _pService.CompletePayPalPayment(orderId, paymentId, token, PayerId);
+        return RedirectToAction("Confirmation");
+      }
+      else
+        return RedirectToAction("Index", "Home");
     }
 
   }

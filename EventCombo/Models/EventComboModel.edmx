@@ -987,6 +987,11 @@
           <Property Name="TPD_PromoCodeID" Type="int" />
           <Property Name="TPD_PromoCodeAmount" Type="numeric" Precision="18" Scale="2" />
           <Property Name="Customer_Fee" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TicketDiscount" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TicketPrice" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TicketECFee" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TicketMerchantFee" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TicketFeeType" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Ticket_Quantity_Detail">
           <Key>
@@ -4308,6 +4313,11 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <NavigationProperty Name="Ticket_Quantity_Detail" Relationship="EventComboModel.Ticket_Quantity_DetailTicket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="Ticket_Quantity_Detail" />
           <Property Name="Customer_Fee" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <NavigationProperty Name="TicketAttendees" Relationship="EventComboModel.FK_TicketAttendee_Ticket_Purchased_Detail" FromRole="Ticket_Purchased_Detail" ToRole="TicketAttendee" />
+          <Property Name="TicketDiscount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TicketPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TicketECFee" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TicketMerchantFee" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TicketFeeType" Type="Byte" Nullable="false" />
         </EntityType>
         <EntityType Name="EventVenue">
           <Key>
@@ -6472,6 +6482,11 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="Ticket_Purchased_Detail">
             <EntityTypeMapping TypeName="EventComboModel.Ticket_Purchased_Detail">
               <MappingFragment StoreEntitySet="Ticket_Purchased_Detail">
+                <ScalarProperty Name="TicketFeeType" ColumnName="TicketFeeType" />
+                <ScalarProperty Name="TicketMerchantFee" ColumnName="TicketMerchantFee" />
+                <ScalarProperty Name="TicketECFee" ColumnName="TicketECFee" />
+                <ScalarProperty Name="TicketPrice" ColumnName="TicketPrice" />
+                <ScalarProperty Name="TicketDiscount" ColumnName="TicketDiscount" />
                 <ScalarProperty Name="Customer_Fee" ColumnName="Customer_Fee" />
                 <ScalarProperty Name="TPD_PromoCodeAmount" ColumnName="TPD_PromoCodeAmount" />
                 <ScalarProperty Name="TPD_PromoCodeID" ColumnName="TPD_PromoCodeID" />

@@ -35,6 +35,10 @@
       $scope.showLoginForm(param);
     });
 
+    $scope.$on('CallLogout', function (event, param) {
+      $scope.logout();
+    });
+
     $scope.$on('ReloadPage', function (event, param) {
       $scope.reloadPage(param);
     });

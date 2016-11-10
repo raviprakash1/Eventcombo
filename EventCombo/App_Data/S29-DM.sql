@@ -324,3 +324,11 @@ GO
 SET IDENTITY_INSERT [State] OFF
 GO
 
+DELETE FROM OrderState
+WHERE OrderStateId = 4
+
+SET IDENTITY_INSERT OrderState ON
+INSERT INTO OrderState(OrderStateId, OrderStateName)
+VALUES (4, 'Pending for payment')
+SET IDENTITY_INSERT OrderState OFF
+
