@@ -146,6 +146,7 @@ namespace EventCombo
                         "~/Scripts/AMaterial/Service/geoService.js",
                         "~/Scripts/AMaterial/Service/accountService.js",
                         "~/Scripts/AMaterial/Service/FooterService.js",
+                        "~/Scripts/AMaterial/Service/OrganizerService.js",
                         "~/Scripts/AMaterial/header.js",
                         "~/Scripts/AMaterial/footer.js",
                         "~/Scripts/AMaterial/AccountController.js"));
