@@ -1616,5 +1616,53 @@ namespace EventCombo.Service
       }
     }
 
+    public string GetTicketPrice(long eventId)
+    {
+        string strResult = "";
+
+        IRepository<Ticket> tRepo = new GenericRepository<Ticket>(_factory.ContextFactory);
+
+        var vFree = tRepo.Get(filter: t => t.E_Id == eventId && t.TicketTypeID == 1).FirstOrDefault();
+        var vDonate = tRepo.Get(filter: t => t.E_Id == eventId && t.TicketTypeID == 3).FirstOrDefault();
+        var vMinPrice = tRepo.Get(filter: t => t.E_Id == eventId && t.TicketTypeID == 2).Select(x => x.TotalPrice).Min();
+        var vMaxPrice = tRepo.Get(filter: t => t.E_Id == eventId && t.TicketTypeID == 2).Select(x => x.TotalPrice).Max();
+
+        if (vMaxPrice == null) vMaxPrice = 0;
+        if (vMinPrice == null) vMinPrice = 0;
+        if (vFree != null && vDonate == null && vMaxPrice == 0 && vMinPrice == 0)
+        {
+            strResult = "FREE";
+        }
+        else if (vFree == null && vDonate != null && vMaxPrice == 0 && vMinPrice == 0)
+        {
+            strResult = "DONATE";
+        }
+        else if (vFree == null && vDonate == null && vMaxPrice == vMinPrice)
+        {
+            strResult = "$" + vMaxPrice.ToString();
+        }
+        else if (vFree == null && vDonate == null && vMaxPrice > vMinPrice)
+        {
+            strResult = "$" + vMinPrice.ToString() + " - $" + vMaxPrice.ToString();
+        }
+        else if (vFree != null && vDonate == null && vMaxPrice > 0)
+        {
+            strResult = "$0 - $" + vMaxPrice.ToString();
+        }
+        else if (vFree != null && vDonate != null && vMaxPrice > 0)
+        {
+            strResult = "$0 - $" + vMaxPrice.ToString();
+        }
+        else if (vFree == null && vDonate != null && vMaxPrice > vMinPrice)
+        {
+            strResult = "$" + vMinPrice.ToString() + " - $" + vMaxPrice.ToString();
+        }
+        else if (vFree != null && vDonate != null && vMaxPrice <= 0)
+        {
+            strResult = "FREE";
+        }
+        return strResult;
+    }
+
   }
 }
