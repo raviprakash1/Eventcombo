@@ -145,8 +145,9 @@ namespace EventCombo
                         "~/Scripts/AMaterial/Service/broadcastService.js",
                         "~/Scripts/AMaterial/Service/geoService.js",
                         "~/Scripts/AMaterial/Service/accountService.js",
-                        "~/Scripts/AMaterial/Service/FooterService.js",
-                        "~/Scripts/AMaterial/header.js",
+                        "~/Scripts/AMaterial/Service/FooterService.js"));
+            bundles.Add(new Bundle("~/Scripts/AMaterial/angularHeader5") // issue with minification of footer.js
+              .Include( "~/Scripts/AMaterial/header.js",
                         "~/Scripts/AMaterial/footer.js",
                         "~/Scripts/AMaterial/AccountController.js"));
             bundles.Add(new ScriptBundle("~/Scripts/AMaterial/viewEvent")
