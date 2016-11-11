@@ -12,12 +12,12 @@
 
 @section ScriptSection
 {
-  
+  @Scripts.Render("~/Scripts/AMaterial/viewEvent")
 }
 
 @section ScriptFooterSection
 {
-  <script src="@Url.Content("~/Scripts/AMaterial/discoverEventArrayData.js")"></script>
+  @Scripts.Render("~/Scripts/AMaterial/viewEventFooter")
   <script src="@Url.Content("~/Scripts/AMaterial/organizerInfo.js")"></script>
   <script type="text/javascript">
     var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
@@ -52,8 +52,8 @@
         <div class="c3">
           <h2 class="getInTouch">Get in touch</h2>
           <i class="material-icons">phone</i> @Model.Organizer_Phoneno<br>
-          <a href="#" target="_blank"><i class="material-icons">open_in_browser</i> promoterwebsite.com</a><br>
-          <a href="#"><i class="material-icons">email</i> Contact</a><br>
+          <a href="@Model.Organizer_Websiteurl" target="_blank"><i class="material-icons">open_in_browser</i> @Model.Organizer_Websiteurl</a><br>
+          <a href="javascript:void(0)" ng-click="contactOrganizer(null,'any inquiry','@Model.Orgnizer_Name',@Model.Orgnizer_Id)"><i class="material-icons">email</i> Contact</a><br>
           <br>
           <div class="social">
             <a href="@Model.Organizer_FBLink" target="_blank"><img src="~/Images/AMaterial/square-facebook.svg" width="20px" alt="Facebook"> Facebook</a><br>
@@ -69,18 +69,18 @@
     <md-tab label="Upcoming Events" md-on-select="onTabSelected('Upcoming Events',@Model.Orgnizer_Id)">
       <md-content>
         <div class="featuredbox" title="{{event.EventTitle}}" ng-repeat="event in pagedEvents[currentPage]">
-          <a href="#" class="img"><img src="" alt="{{event.EventTitle}}"></a>
+          <a href="{{event.EventPath}}" class="img"><img ng-src="{{event.EventImg}}" alt="{{event.EventTitle}}"></a>
           <div class="info">
-            <h3><a href="#">{{event.EventTitle}}</a></h3>
-            <div class="date">{{event.EventDate}}</div>
-            <div class="location">{{event.EventDes}}</div>
+            <h3><a href="{{event.EventPath}}">{{event.EventTitle}}</a></h3>
+            <div class="date">{{event.DateOfEvent}}</div>
+            <div class="location">{{event.Venue}}</div>
             <div class="price" ng-class="event.EventPrice == 'Free' ? 'free' : ''">{{event.EventPrice}}</div>
             <div class="evActions homEV">
-              <a href="#" class="hashLink">#party</a>
-              <a href="#" class="hashLink">#concert</a>
+              <a href="javascript:void(0);" class="hashLink">{{event.EventyType}}</a>
+              <a href="javascript:void(0);" class="hashLink">{{event.EventCat}}</a>
               <div class="matBox">
-                <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
-                <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
+                  <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
+                  <span><a id="btnfavourite-{{event.EventId}}" href="javascript:void(0)" title="Add EventTitle to your favorites" ng-click="AddToFavorite(event);"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{event.FavoriteCount}}</span>
               </div>
             </div>
           </div>
@@ -96,19 +96,19 @@
     <md-tab label="Previous Events" md-on-select="onTabSelected('Previous Events',@Model.Orgnizer_Id)">
       <md-content class="md-padding">
         <div class="featuredbox" title="{{event.EventTitle}}" ng-repeat="event in pagedEvents[currentPage]">
-          <a href="#" class="img"><img src="~/Images/default_event_image.jpg" alt="{{event.EventTitle}}"></a>
+            <a href="{{event.EventPath}}" class="img"><img ng-src="{{event.EventImg}}" alt="{{event.EventTitle}}"></a>
           <div class="info">
             <h3><a href="#">{{event.EventTitle}}</a></h3>
             <div class="date">{{event.EventDate}}</div>
             <div class="location">{{event.EventDes}}</div>
             <div class="price" ng-class="event.EventPrice == 'Free' ? 'free' : ''">{{event.EventPrice}}</div>
             <div class="evActions homEV">
-              <a href="#" class="hashLink">#party</a>
-              <a href="#" class="hashLink">#concert</a>
-              <div class="matBox">
-                <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
-                <a class="matIcon active" onclick="alert('Test')"><i class="material-icons">favorite</i></a>
-              </div>
+                <a href="javascript:void(0);" class="hashLink">{{event.EventyType}}</a>
+                <a href="javascript:void(0);" class="hashLink">{{event.EventCat}}</a>
+                <div class="matBox">
+                    <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
+                    <span><a id="btnfavourite-{{event.EventId}}" href="javascript:void(0)" title="Add EventTitle to your favorites" ng-click="AddToFavorite(event);"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{event.FavoriteCount}}</span>
+                </div>
             </div>
           </div>
         </div>
@@ -126,7 +126,7 @@
         <div class="c12" id="fbComments" Heading="Facebook Comments">
           <div id="fb-root"></div>
           <script>
-(function(d, s, id) {
+            (function(d, s, id) {
               var js, fjs = d.getElementsByTagName(s)[0];
               if (d.getElementById(id)) return;
               js = d.createElement(s); js.id = id;

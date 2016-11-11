@@ -7,70 +7,80 @@ using EventCombo.Models;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using EventCombo.Utils;
+using EventCombo.Service;
+using NLog;
 
 namespace EventCombo.Controllers
 {
-    public class OrganizerInfoController : Controller
+    public class OrganizerInfoController : BaseController
     {
-        EventComboEntities db = new EventComboEntities();
-        // GET: OrganizerInfo
-        public ActionResult Index(int id, long eventid)
+        private IEventService _eService;
+        private ILogger _logger;
+
+        public OrganizerInfoController()
+            : base()
         {
+            _eService = new EventService(_factory, _mapper);
+            _logger = LogManager.GetCurrentClassLogger();
+        }
+        EventComboEntities db = new EventComboEntities();
+
+        public ActionResult OrganizerInfo(string organizerName, long organizerId)
+        {
+
+            Session["logo"] = "Organizer";
+            Organizer_Master mst = (from x in db.Organizer_Master where x.Orgnizer_Id == organizerId select x).FirstOrDefault();
+
+            mst.Imagepath = !string.IsNullOrEmpty(mst.Imagepath) ? mst.Imagepath : "/Images/default_org_image.jpg";
+            mst.Organizer_Desc = Server.HtmlDecode(mst.Organizer_Desc);
+
+            return View(mst);
+        }
+
+        [HttpGet]
+        public JsonResult OrganizerEvent(bool isUpcomingEvent, long organizerId)
+        {
+            List<OrganizerEvnetViewModel> organizerEvents = new List<OrganizerEvnetViewModel>();
             var TopAddress = "";
             var Topvenue = "";
-            Session["logo"] = "Organizer";
             string sDate_new = "", eDate_new = "";
             string startday = "", endday = "", starttime = "", endtime = "";
+            DateTime dateTime = new DateTime();
             DateTime ENDATE = new DateTime();
             DateTime SDATEN = new DateTime();
             DateTime eDate = new DateTime();
-            DateTime dateTime = new DateTime();
-            Organizer_Master mst = (from x in db.Organizer_Master where x.Orgnizer_Id == id select x).FirstOrDefault();
 
-            mst.Imagepath = !string.IsNullOrEmpty(mst.Imagepath) ? mst.Imagepath : "Images/default_org_image.jpg";
-            mst.Eventid = eventid;
-            mst.Organizer_Desc = Server.HtmlDecode(mst.Organizer_Desc);
-            var OrganizerEvents =  db.GetOrganizerEventid(id).Select(x=>x.Orgnizer_Event_Id).ToList();
-            mst.pastevent = new List<Organiserevent>();
-            mst.presentevent = new List<Organiserevent>();
+            var OrganizerEvents = db.GetOrganizerEventid(organizerId).Select(x => x.Orgnizer_Event_Id).ToList();
 
             foreach (var item in OrganizerEvents)
             {
-                Organiserevent orgev = new Organiserevent();
+                OrganizerEvnetViewModel OrganizerEvnet = new OrganizerEvnetViewModel();
                 EventCreation cms = new EventCreation();
-                long ?Eventid = item;
-                var EventDetail = cms.GetEventdetail(Eventid??0);
-               
+                long? Eventid = item;
+                var EventDetail = cms.GetEventdetail(Eventid ?? 0);
+
                 var image = cms.GetImages(Eventid ?? 0).FirstOrDefault();
                 if (image != null)
                 {
-                    orgev.FirstImage = image;
+                    OrganizerEvnet.EventImg = image;
                 }
                 else
                 {
-                    orgev.FirstImage = "/Images/default_event_image.jpg";
+                    OrganizerEvnet.EventImg = "/Images/default_event_image.jpg";
                 }
-
-               
                 var timezone = "";
-                var Timezonedetail = (from ev in db.TimeZoneDetails where ev.TimeZone_Id.ToString() == EventDetail.TimeZone select ev).FirstOrDefault();
+                var Timezonedetail = (from t in db.TimeZoneDetails where t.TimeZone_Id.ToString() == EventDetail.TimeZone select t).FirstOrDefault();
                 if (Timezonedetail != null)
                 {
                     timezone = Timezonedetail.TimeZone;
                     TimeZoneInfo timeZoneInfo;
-
-
                     timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timezone);
                     dateTime = TimeZoneInfo.ConvertTime(DateTime.Now, timeZoneInfo);
-                    //Timezone value
-
                 }
-
-                //Address
                 var Addresstype = EventDetail.AddressStatus;
                 if (Addresstype == "PastLocation")
                 {
-                    var evAdress = (from ev in db.Addresses where ev.AddressID == EventDetail.LastLocationAddress select ev).FirstOrDefault();
+                    var evAdress = (from a in db.Addresses where a.AddressID == EventDetail.LastLocationAddress select a).FirstOrDefault();
                     if (evAdress != null)
                     {
                         TopAddress = evAdress.ConsolidateAddress;
@@ -79,7 +89,7 @@ namespace EventCombo.Controllers
                 }
                 else
                 {
-                    var evAdress = (from ev in db.Addresses where ev.EventId == item select ev).FirstOrDefault();
+                    var evAdress = (from a in db.Addresses where a.EventId == item select a).FirstOrDefault();
                     if (evAdress != null)
                     {
                         TopAddress = evAdress.ConsolidateAddress;
@@ -87,15 +97,13 @@ namespace EventCombo.Controllers
 
                     }
                 }
-                orgev.Venue = TopAddress;
+                OrganizerEvnet.Venue = TopAddress;
                 DateTimeWithZone dtzstart, dzend, dtzCreated;
-                var eventype = (from ev in db.MultipleEvents where ev.EventID == item select ev).Count();
+                var eventype = (from e in db.MultipleEvents where e.EventID == item select e).Count();
                 if (eventype > 0)
                 {
-                    var evschdetails = (from ev in db.MultipleEvents where ev.EventID == item select ev).FirstOrDefault();
-                    
-                   
-                 
+                    var evschdetails = (from e in db.MultipleEvents where e.EventID == item select e).FirstOrDefault();
+
                     if (Timezonedetail != null)
                     {
                         TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(Timezonedetail.TimeZone);
@@ -112,29 +120,23 @@ namespace EventCombo.Controllers
                     }
 
                     dateTime = dtzCreated.LocalTime;
-
                     DateTime sDate = new DateTime();
                     sDate = dtzstart.LocalTime;
                     startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
-
                     sDate_new = sDate.ToString("MMM dd, yyyy");
-                  
-
-                 
                     eDate = dzend.LocalTime;
                     endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
                     eDate_new = eDate.ToString("MMM dd, yyyy");
-
                     starttime = sDate.ToString("h:mm tt").Trim().Replace(" ", ""); ; ;
                     endtime = eDate.ToString("h:mm tt").Trim().Replace(" ", ""); ;
                     ENDATE = dzend.LocalTime;
-                    SDATEN= dtzstart.LocalTime;
-                    orgev.Dateofevent = startday + "," + sDate_new + "," + starttime + "-" + endday + "," + eDate_new + "," + endtime;
+                    SDATEN = dtzstart.LocalTime;
+                    OrganizerEvnet.DateOfEvent = startday + " " + sDate_new + " " + starttime + "-" + endday + " " + eDate_new + " " + endtime;
 
                 }
                 else
                 {
-                    var evschdetails = (from ev in db.EventVenues where ev.EventID == item select ev).FirstOrDefault();
+                    var evschdetails = (from e in db.EventVenues where e.EventID == item select e).FirstOrDefault();
                     if (evschdetails != null)
                     {
                         if (Timezonedetail != null)
@@ -149,70 +151,51 @@ namespace EventCombo.Controllers
                             dtzstart = new DateTimeWithZone(Convert.ToDateTime(evschdetails.E_Startdate), userTimeZone, true);
                             dzend = new DateTimeWithZone(Convert.ToDateTime(evschdetails.E_Enddate), userTimeZone, true);
                         }
-
-
                         DateTime sDate = new DateTime();
                         sDate = dtzstart.LocalTime;
                         startday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(sDate).ToString();
-
                         sDate_new = sDate.ToString("MMM dd, yyyy");
-
-
-                       
                         eDate = dzend.LocalTime;
                         endday = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(eDate).ToString();
                         eDate_new = eDate.ToString("MMM dd, yyyy");
-
                         starttime = sDate.ToString("h:mm tt").Trim().Replace(" ", ""); ; ;
                         endtime = eDate.ToString("h:mm tt").Trim().Replace(" ", ""); ;
                         ENDATE = dzend.LocalTime;
                         SDATEN = dtzstart.LocalTime;
-                        orgev.Dateofevent = startday + "," + sDate_new + "," + starttime ;
-
-
+                        OrganizerEvnet.DateOfEvent = startday + " " + sDate_new + " " + starttime;
                     }
-
-                  
                 }
-                orgev.Eventtitle = EventDetail.EventTitle;
-                orgev.Dateofeventsort = SDATEN;
-                orgev.eventpath = Url.Action("ViewEvent", "EventManagement", new { strEventDs = Regex.Replace(EventDetail.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = EventDetail.EventID.ToString() });
+                OrganizerEvnet.EventTitle = EventDetail.EventTitle;
+                OrganizerEvnet.EventPrice = _eService.GetTicketPrice(EventDetail.EventID);
+                OrganizerEvnet.EventType = EventDetail.EventType.EventType1;
+                OrganizerEvnet.EventCat = EventDetail.EventCategory.EventCategory1;
+                OrganizerEvnet.EventId = EventDetail.EventID;
+                OrganizerEvnet.EventPrivacy = "Y";
+                if (EventDetail.EventPrivacy.Trim().ToLower() == "private" && EventDetail.Private_ShareOnFB.Trim() == "N")
+                {
+                    OrganizerEvnet.EventPrivacy = "N";
+                }
+                OrganizerEvnet.EventLike = _eService.GetEventFavLikes(EventDetail.EventID, EventDetail.UserID);
+                OrganizerEvnet.EventDate = SDATEN;
+                OrganizerEvnet.EventPath = Url.Action("ViewEvent", "EventManagement", new { strEventDs = Regex.Replace(EventDetail.EventTitle.Replace(" ", "-"), "[^a-zA-Z0-9_-]+", ""), strEventId = EventDetail.EventID.ToString() });
                 if (!string.IsNullOrEmpty(eDate_new))
                 {
-                  
-                    if (eDate < dateTime)
+                    if (eDate.Date < dateTime.Date && !isUpcomingEvent)
                     {
-
-                        mst.pastevent.Add(orgev);
+                        organizerEvents.Add(OrganizerEvnet);
                     }
-                    else
+                    else if (isUpcomingEvent)
                     {
-                        mst.presentevent.Add(orgev);
+                        organizerEvents.Add(OrganizerEvnet);
                     }
                 }
-                else
+                else if (!isUpcomingEvent)
                 {
-                    mst.pastevent.Add(orgev);
+                    organizerEvents.Add(OrganizerEvnet);
                 }
-
-
             }
-            mst.pasteventcount = mst.pastevent.Count();
-            mst.presentevtcount = mst.presentevent.Count();
-            mst.maxsetcount = 20;
-            if (mst.presentevent != null)
-            {
-                mst.presentevent= mst.presentevent.Take(mst.maxsetcount).OrderBy(x => x.Dateofeventsort).ToList().ToList();
-            }
-            if (mst.pastevent != null)
-            {
-                mst.pastevent= mst.pastevent.Take(mst.maxsetcount).OrderBy(x => x.Dateofeventsort).ToList().ToList();
-            }
-
-
-            return View(mst);
+            return Json(organizerEvents, JsonRequestBehavior.AllowGet);
         }
-
 
         public PartialViewResult Organiserlist(int OrganizerID,int lengthorg,string type)
         {

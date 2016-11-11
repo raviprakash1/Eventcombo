@@ -1664,5 +1664,15 @@ namespace EventCombo.Service
         return strResult;
     }
 
+    public string GetEventFavLikes(long eventId, string strUserId)
+    {
+        IRepository<EventFavourite> efRepo = new GenericRepository<EventFavourite>(_factory.ContextFactory);
+        using (EventComboEntities db = new EventComboEntities())
+        {
+            var vfav = efRepo.Get(filter: e => e.eventId == eventId && e.UserID == strUserId).Select(x => x.UserID).FirstOrDefault();
+            if (vfav != null && vfav.Trim() != "") return "I";
+            else return "D";
+        }
+    }
   }
 }
