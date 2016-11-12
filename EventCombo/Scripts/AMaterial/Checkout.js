@@ -75,7 +75,7 @@ function checkoutController($scope, $mdDialog, $attrs, $timeout, $window, purcha
       return;
     }
     if (res.Success)
-      $window.location.href = "/TicketPurchase/Confirmation?OrderId=" + res.OrderId;
+      $window.location.href = "/TicketPurchase/Confirmation?orderId=" + res.OrderId;
   });
 
   $scope.$on('PurchaseError', function (event, mess) {
@@ -128,26 +128,7 @@ function checkoutController($scope, $mdDialog, $attrs, $timeout, $window, purcha
     $window.location.href = $scope.purchaseInfo.EventUrl;
   }
 
-  $scope.paypalConfirm = function (ev) {
-    var confirm = $mdDialog.confirm()
-      .title('Please Confirm to continue')
-      .textContent('Amount: $3,022.30')
-      .ariaLabel('Checkout Confirmation')
-      .targetEvent(ev)
-      .ok('Confirm')
-      .cancel('Cancel');
-    $mdDialog.show(confirm).then(function () {
-      $scope.status = 'Paypal payment is processed.';
-    },
-    function () {
-      $scope.paymentMethod = 'creditcard'
-      $scope.status = 'Paypal payment was canceled.';
-    });
-  };
-
   $scope.creditcardSubmit = function (form) {
-    console.log($scope.purchaseInfo);
-    console.log($scope[form]);
     if ($scope[form].$valid) {
       $scope.purchaseInfo.PurchaseInfo.CardType = $scope.crCardType;
       purchaseInfoService.savePurchaseInfo();
@@ -159,7 +140,6 @@ function checkoutController($scope, $mdDialog, $attrs, $timeout, $window, purcha
   };
 
   $scope.paypalSubmit = function (form, event) {
-    console.log($scope.purchaseInfo);
     if ($scope[form].$valid) {
       $mdDialog.hide();
       $scope.paypalConfirm(event);

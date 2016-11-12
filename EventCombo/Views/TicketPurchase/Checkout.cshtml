@@ -70,7 +70,7 @@
               <div class="c12 padded" ng-repeat="attendee in ticket.Attendees">
                 <div class="c4">
                   <md-input-container class="block100">
-                    <label>Attendee {{$index}}</label>
+                    <label>Attendee {{$index + 1}}</label>
                     <input ng-model="attendee.Name">
                   </md-input-container>
                 </div>
@@ -137,8 +137,8 @@
     </form>
     <!--****************************-->
     <div class="row margin-1em-bottom">
-      <div class="c12 margin-1em-bottom"><h2 class="red-heading">Payment Method</h2></div>
-      <div class="c12 paymentSpace">
+      <div class="c12 margin-1em-bottom" ng-show="purchaseInfo.PurchaseInfo.TotalOrder > 0"><h2 class="red-heading">Payment Method</h2></div>
+      <div class="c12 paymentSpace" ng-show="purchaseInfo.PurchaseInfo.TotalOrder > 0">
         <md-radio-group ng-model="purchaseInfo.PurchaseInfo.Method" class="paymentMethod">
           <md-radio-button ng-value="0" class="md-primary margin-2em-right" aria-label="Credit Card">
             <img src="~/Images/AMaterial/credit-card.jpg">
@@ -183,9 +183,9 @@
               <div ng-message="pattern">Use valid email format</div>
             </div>
           </md-input-container>
-          <md-input-container class="block100">
+          <md-input-container class="block100" ng-show="purchaseInfo.PurchaseInfo.TotalOrder > 0">
             <label>Card Number</label>
-            <input credit-card name="checkoutCardNumber" ng-model="purchaseInfo.PurchaseInfo.CardNumber" ng-minlength="15" ng-required="true">
+            <input credit-card name="checkoutCardNumber" ng-model="purchaseInfo.PurchaseInfo.CardNumber" ng-minlength="15" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0">
             @foreach (var ctype in Model.AcceptedCards)
             {
               <img class="cardType" ng-show="crCardType=='@(ctype.TypeName)'" src="@(ctype.ImageUrl)">
@@ -197,24 +197,26 @@
               <div ng-message="amexMessage">We do not accept AMEX</div>
             </div>
           </md-input-container>
-          <md-input-container class="block100">
+          <md-input-container class="block100" ng-show="purchaseInfo.PurchaseInfo.TotalOrder > 0">
             <label>Name on Card</label>
-            <input name="checkoutNameOnCard" ng-model="purchaseInfo.PurchaseInfo.CardName" ng-required="true">
+            <input name="checkoutNameOnCard" ng-model="purchaseInfo.PurchaseInfo.CardName" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0">
             <div ng-messages="creditcardForm.checkoutNameOnCard.$error" role="alert">
               <div ng-message="required">Enter name on card</div>
             </div>
           </md-input-container>
-          <md-input-container class="block100">
+          <md-input-container class="block100" ng-show="purchaseInfo.PurchaseInfo.TotalOrder > 0">
             <label>Expiration Date</label>
-            <input expiration-date name="checkoutExpirationDate" ng-model="purchaseInfo.PurchaseInfo.ExpirationDate" ng-pattern="/^((0[1-9])|(1[0-2]))\/([0-9]{2,4})$/" ng-required="true">
+            <input expiration-date name="checkoutExpirationDate" ng-model="purchaseInfo.PurchaseInfo.ExpirationDate"
+                   ng-pattern="/^((0[1-9])|(1[0-2]))\/([0-9]{2,4})$/" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0">
             <div ng-messages="creditcardForm.checkoutExpirationDate.$error" role="alert">
               <div ng-message="required">Enter expiration date</div>
               <div ng-message="pattern">Enter a valid expiration date in MM/YY format</div>
             </div>
           </md-input-container>
-          <md-input-container class="block100">
+          <md-input-container class="block100" ng-show="purchaseInfo.PurchaseInfo.TotalOrder > 0">
             <label>Security Code</label>
-            <input security-code name="checkoutSecurityCode" ng-model="purchaseInfo.PurchaseInfo.SecurityCode" ng-pattern="/^[0-9]{3,4}$/" ng-required="true">
+            <input security-code name="checkoutSecurityCode" ng-model="purchaseInfo.PurchaseInfo.SecurityCode"
+                   ng-pattern="/^[0-9]{3,4}$/" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0">
             <span class="cvv_info">
               <i class="material-icons">info</i>
               <span class="cv_card"><img ng-src="~/Images/AMaterial/cv_card.gif"></span>
@@ -226,19 +228,19 @@
           </md-input-container>
         </div>
 
-        <div class="c6 paymentSpace">
+        <div class="c6 paymentSpace" ng-show="purchaseInfo.PurchaseInfo.TotalOrder > 0">
           <md-checkbox ng-model="purchaseInfo.PurchaseInfo.ShippingSame" ng-true-value="true" ng-false-value="false" aria-label="Billing Address" class="blueCheckbox">Billing address is the same as shipping</md-checkbox>
           <div class="block100"><strong>Billing Information</strong></div>
           <md-input-container class="block30">
             <label>Zip Code</label>
-            <input name="checkoutBillingZipCode" ng-model="purchaseInfo.PurchaseInfo.BillingAddress.ZipCode" ng-required="true">
+            <input name="checkoutBillingZipCode" ng-model="purchaseInfo.PurchaseInfo.BillingAddress.ZipCode" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0">
             <div ng-messages="creditcardForm.checkoutBillingZipCode.$error" role="alert">
               <div ng-message="required">Enter billing zip</div>
             </div>
           </md-input-container>
           <md-input-container class="block30">
             <label>City</label>
-            <input name="checkoutBillingCity" ng-model="purchaseInfo.PurchaseInfo.BillingAddress.City" ng-required="true">
+            <input name="checkoutBillingCity" ng-model="purchaseInfo.PurchaseInfo.BillingAddress.City" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0">
             <div ng-messages="creditcardForm.checkoutBillingCity.$error" role="alert">
               <div ng-message="required">Enter billing city</div>
             </div>
@@ -247,9 +249,9 @@
             <label>State</label>
             <md-select name="checkoutBillingState" ng-model="purchaseInfo.PurchaseInfo.BillingAddress.StateId"
                        ng-change="StateChanged(purchaseInfo.PurchaseInfo.BillingAddress)"
-                       ng-required="true">
+                       ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0">
               <md-option ng-value="state.StateId" ng-repeat="state in purchaseInfo.StateList">
-                {{state.StateShowName}}
+                {{state.StateName}}
               </md-option>
             </md-select>
             <div ng-messages="creditcardForm.checkoutBillingState.$error" role="alert">
@@ -258,7 +260,7 @@
           </md-input-container>
           <md-input-container class="block100">
             <label>Billing Street Address</label>
-            <input name="checkoutBillingAddress" ng-model="purchaseInfo.PurchaseInfo.BillingAddress.Address1" ng-required="true">
+            <input name="checkoutBillingAddress" ng-model="purchaseInfo.PurchaseInfo.BillingAddress.Address1" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0">
             <div ng-messages="creditcardForm.checkoutBillingAddress.$error" role="alert">
               <div ng-message="required">Enter billing street address</div>
             </div>
@@ -269,7 +271,8 @@
           </md-input-container>
           <md-input-container class="block100">
             <label>Phone Number</label>
-            <input tel-mask name="checkoutPhone" ng-model="purchaseInfo.PurchaseInfo.BillingAddress.PhoneNumber" ng-pattern="/^[0-9]{3}-[0-9]{3}-[0-9]{4,5}$/" ng-required="true" />
+            <input tel-mask name="checkoutPhone" ng-model="purchaseInfo.PurchaseInfo.BillingAddress.PhoneNumber"
+                   ng-pattern="/^[0-9]{3}-[0-9]{3}-[0-9]{4,5}$/" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0" />
             <div ng-messages="creditcardForm.checkoutPhone.$error">
               <div ng-message="required">Enter phone number</div>
               <div ng-message="pattern">Enter a valid phone number - ###-###-####</div>
@@ -278,14 +281,16 @@
           <div class="block100" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame"><strong>Shipping Information</strong></div>
           <md-input-container class="block30" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
             <label>Zip Code</label>
-            <input name="checkoutShippingZipCode" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.ZipCode" ng-required="!purchaseInfo.PurchaseInfo.ShippingSame">
+            <input name="checkoutShippingZipCode" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.ZipCode"
+                   ng-required="!purchaseInfo.PurchaseInfo.ShippingSame && (purchaseinfo.purchaseinfo.totalorder> 0)">
             <div ng-messages="creditcardForm.checkoutShippingZipCode.$error" role="alert">
               <div ng-message="required">Enter shipping zip</div>
             </div>
           </md-input-container>
           <md-input-container class="block30" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
             <label>City</label>
-            <input name="checkoutShippingCity" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.City" ng-required="!purchaseInfo.PurchaseInfo.ShippingSame">
+            <input name="checkoutShippingCity" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.City"
+                   ng-required="!purchaseInfo.PurchaseInfo.ShippingSame && (purchaseinfo.purchaseinfo.totalorder> 0)">
             <div ng-messages="creditcardForm.checkoutShippingCity.$error" role="alert">
               <div ng-message="required">Enter shipping city</div>
             </div>
@@ -293,9 +298,10 @@
           <md-input-container class="block30" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
             <label>State</label>
             <md-select name="checkoutShippingState" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.StateId"
-                       ng-change="StateChanged(purchaseInfo.PurchaseInfo.ShippingAddress)" ng-required="!purchaseInfo.PurchaseInfo.ShippingSame">
+                       ng-change="StateChanged(purchaseInfo.PurchaseInfo.ShippingAddress)"
+                       ng-required="!purchaseInfo.PurchaseInfo.ShippingSame && (purchaseinfo.purchaseinfo.totalorder> 0)">
               <md-option ng-value="state.StateId" ng-repeat="state in purchaseInfo.StateList">
-                {{state.StateShowName}}
+                {{state.StateName}}
               </md-option>
             </md-select>
             <div ng-messages="creditcardForm.checkoutShippingState.$error" role="alert">
@@ -304,7 +310,8 @@
           </md-input-container>
           <md-input-container class="block100" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
             <label>Shipping Street Address</label>
-            <input name="checkoutShippingAddress" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.Address1" ng-required="!purchaseInfo.PurchaseInfo.ShippingSame">
+            <input name="checkoutShippingAddress" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.Address1"
+                   ng-required="!purchaseInfo.PurchaseInfo.ShippingSame && (purchaseinfo.purchaseinfo.totalorder> 0)">
             <div ng-messages="creditcardForm.checkoutShippingAddress.$error" role="alert">
               <div ng-message="required">Enter shipping street address</div>
             </div>
@@ -355,44 +362,44 @@
         </div>
         <div class="c6 paymentSpace">
           <md-checkbox ng-model="purchaseInfo.PurchaseInfo.ShippingSame" aria-label="Shipping Address" class="blueCheckbox">Shipping address is the same as PayPal</md-checkbox>
-          <md-input-container class="block30">
+          <md-input-container class="block30" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
             <label>Zip Code</label>
             <input name="paypalShippingZipCode" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.ZipCode" ng-required="!purchaseInfo.PurchaseInfo.ShippingSame">
             <div ng-messages="paypalForm.paypalShippingZipCode.$error" role="alert">
               <div ng-message="required">Enter shipping zip</div>
             </div>
           </md-input-container>
-          <md-input-container class="block30">
+          <md-input-container class="block30" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
             <label>City</label>
             <input name="paypalShippingCity" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.City" ng-required="!purchaseInfo.PurchaseInfo.ShippingSame">
             <div ng-messages="paypalForm.paypalShippingCity.$error" role="alert">
               <div ng-message="required">Enter shipping city</div>
             </div>
           </md-input-container>
-          <md-input-container class="block30">
+          <md-input-container class="block30" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
             <label>State</label>
             <md-select name="checkoutShippingState" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.StateId"
                        ng-change="StateChanged(purchaseInfo.PurchaseInfo.ShippingAddress)" ng-required="!purchaseInfo.PurchaseInfo.ShippingSame">
               <md-option ng-value="state.StateId" ng-repeat="state in purchaseInfo.StateList">
-                {{state.StateShowName}}
+                {{state.StateName}}
               </md-option>
             </md-select>
             <div ng-messages="creditcardForm.checkoutShippingState.$error" role="alert">
               <div ng-message="required">Enter shipping state</div>
             </div>
           </md-input-container>
-          <md-input-container class="block100">
+          <md-input-container class="block100" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
             <label>Shipping Street Address</label>
             <input name="paypalShippingAddress" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.Address1" ng-required="!purchaseInfo.PurchaseInfo.ShippingSame">
             <div ng-messages="paypalForm.paypalShippingAddress.$error" role="alert">
               <div ng-message="required">Enter shipping street address</div>
             </div>
           </md-input-container>
-          <md-input-container class="block100">
+          <md-input-container class="block100" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
             <label>Apt., Floor, Unit (optional)</label>
             <input ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.Address2">
           </md-input-container>
-          <md-input-container class="block100">
+          <md-input-container class="block100" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
             <label>Phone Number</label>
             <input tel-mask name="paypalPhone" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.PhoneNumber" ng-pattern="/^[0-9]{3}-[0-9]{3}-[0-9]{4,5}$/" ng-required="!purchaseInfo.PurchaseInfo.ShippingSame" />
             <div ng-messages="paypalForm.paypalPhone.$error">

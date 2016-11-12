@@ -53,8 +53,9 @@ namespace EventCombo.Models
     public decimal Price { get; set; }
     public decimal SourcePrice { get; set; }
     public decimal TotalFee { get; set; }
-    public int Quantity { get; set; }
+    public long Quantity { get; set; }
     public decimal TotalPrice { get; set; }
+    public byte Sort { get; set; }
 
     public IEnumerable<AttendeeViewModel> Attendees { get; set; }
   }
@@ -182,6 +183,32 @@ namespace EventCombo.Models
     public string Url { get; set; }
     [JsonIgnore]
     public string PayPalId { get; set; }
+  }
+
+  public class OrderConfirmationViewModel : IBaseViewModel
+  {
+    public string BaseTitle { get; set; }
+    public string BaseUserId { get; set; }
+    public string BaseUserName { get; set; }
+    public string BaseUserEmail { get; set; }
+    public OrderConfirmationViewModel()
+    {
+      Tickets = new List<TicketPurchaseInfoViewModel>();
+    }
+    public string OrderId { get; set; }
+    public long EventId { get; set; }
+    public string EventUrl { get; set; }
+    public string BGImageUrl { get; set; }
+    public string BGColor { get; set; }
+    public string EventTitle { get; set; }
+    public string VenueName { get; set; }
+    public string Address { get; set; }
+    public string StartDate { get; set; }
+    public decimal TotalAmount { get; set; }
+    public string Email { get; set; }
+    public long OrganizerId { get; set; }
+
+    public IEnumerable<TicketPurchaseInfoViewModel> Tickets { get; set; }
   }
 
 }

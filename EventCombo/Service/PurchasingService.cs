@@ -104,7 +104,7 @@ namespace EventCombo.Service
           lTicket.LockOrderId = lOrder.LockOrderId;
           lTicket.Price = tDB.Ticket.Price ?? 0;
           lTicket.CustomerFee = tDB.Ticket.Customer_Fee ?? 0;
-          lTicket.ECFeeAmount = tDB.Ticket.T_EcAmount ?? 0;
+          lTicket.ECFeeAmount = tDB.Ticket.TicketTypeID == 1 ? 0 : tDB.Ticket.T_EcAmount ?? 0;
           lTicket.ECFeePercent = (tDB.Ticket.Price ?? 0) * (tDB.Ticket.T_Ecpercent ?? 0) / 100;
           lTicket.Discount = tDB.Ticket.T_Discount ?? 0;
           if ((tDB.Ticket.TicketTypeID ?? 0) == 3)
@@ -283,6 +283,7 @@ namespace EventCombo.Service
           TotalFee = (lTicket.ECFeeType == 0 ? lTicket.ECFeeAmount + lTicket.ECFeePercent : 0) + lTicket.CustomerFee,
           TotalPrice = lTicket.Quantity * (lTicket.Price - lTicket.Discount +
                       (lTicket.ECFeeType == 0 ? lTicket.ECFeeAmount + lTicket.ECFeePercent : 0) + lTicket.CustomerFee),
+          Sort = tq.Ticket.T_order ?? 0,
           Attendees = attendees
         };
         if (ticket.TicketTypeId == 1)
@@ -302,7 +303,7 @@ namespace EventCombo.Service
         res.TotalAmount += ticket.TotalPrice;
         ticketList.Add(ticket);
       }
-      res.Tickets = ticketList;
+      res.Tickets = ticketList.OrderBy(t => t.Sort);
 
       List<VariableChargeGroup> vcGroupList = new List<VariableChargeGroup>();
       VariableChargeGroup cGroup = new VariableChargeGroup()
@@ -492,6 +493,12 @@ namespace EventCombo.Service
             quantity = 0;
             var cTicket = model.Tickets.Where(t => t.LockTicketId == lTicket.LockTicketId).FirstOrDefault();
             if (cTicket != null)
+            {
+              //For future use in PayPal payment
+              cTicket.Name = tqd.Ticket.T_name;
+              cTicket.TotalPrice = (tpd.TPD_Amount ?? 0) + (tpd.TPD_Donate ?? 0);
+              cTicket.Price = tpd.TicketPrice + (tpd.TPD_Donate ?? 0);
+              //Save Attendees
               foreach (var att in cTicket.Attendees)
               {
                 if (!String.IsNullOrEmpty(att.Email))
@@ -522,6 +529,7 @@ namespace EventCombo.Service
                   quantity++;
                 }
               }
+            }
             if ((tpd.TPD_Purchased_Qty ?? 0) > quantity) // need to add Buyer to attendee
             {
               tb = tbList.Where(b => (b.Email == ord.O_Email) && (b.Name == (ord.O_First_Name + ' ' + ord.O_Last_Name))).FirstOrDefault();
@@ -574,8 +582,38 @@ namespace EventCombo.Service
           ord.O_VariableAmount = vcAmount;
           ord.O_VariableId = String.Join(",", vcList);
 
+          // Save shipping address if necessary
+          if (!model.PurchaseInfo.ShippingSame)
+          {
+            IRepository<EventCombo.Models.ShippingAddress> saRepo = new GenericRepository<EventCombo.Models.ShippingAddress>(_factory.ContextFactory);
+            EventCombo.Models.ShippingAddress sa = new EventCombo.Models.ShippingAddress()
+            {
+              OrderId = ord.O_Order_Id,
+              UserId = userId,
+              Guid = model.PurchaseInfo.LockId,
+              Fname = model.PurchaseInfo.FirstName,
+              Lname = model.PurchaseInfo.LastName,
+              Zip = model.PurchaseInfo.ShippingAddress.ZipCode,
+              Country = model.PurchaseInfo.ShippingAddress.CountryId.ToString(),
+              State = model.PurchaseInfo.ShippingAddress.State,
+              City = model.PurchaseInfo.ShippingAddress.City,
+              Address1 = model.PurchaseInfo.ShippingAddress.Address1,
+              Address2 = model.PurchaseInfo.ShippingAddress.Address2,
+              Phone_Number = model.PurchaseInfo.ShippingAddress.PhoneNumber
+            };
+            saRepo.Insert(sa);
+          }
           uow.Context.SaveChanges();
-          if (model.PurchaseInfo.Method == PaymentMethod.Card)
+
+          // Payment processing
+          StringBuilder bilder = new StringBuilder();
+          foreach (var t in lOrder.LockTickets)
+          {
+            tqd = tqdRepo.GetByID(t.TicketQuantityDetailId);
+            bilder.AppendFormat("{0}{1} x {2}", bilder.Length > 0 ? ", " : "", tqd.Ticket.T_name, t.Quantity);
+          }
+          string desc = bilder.Length > 0 ? "Purchased tickets: " + bilder.ToString() : "";
+          if ((model.PurchaseInfo.Method == PaymentMethod.Card) && ((ord.O_TotalAmount ?? 0) > 0))
           {
             // Save billing address
             IRepository<BillingAddress> baRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
@@ -602,39 +640,8 @@ namespace EventCombo.Service
             };
             baRepo.Insert(ba);
 
-            // Save shipping address
-            if (!model.PurchaseInfo.ShippingSame)
-            {
-              IRepository<EventCombo.Models.ShippingAddress> saRepo = new GenericRepository<EventCombo.Models.ShippingAddress>(_factory.ContextFactory);
-              EventCombo.Models.ShippingAddress sa = new EventCombo.Models.ShippingAddress()
-              {
-                OrderId = ord.O_Order_Id,
-                UserId = userId,
-                Guid = model.PurchaseInfo.LockId,
-                Fname = model.PurchaseInfo.FirstName,
-                Lname = model.PurchaseInfo.LastName,
-                Zip = model.PurchaseInfo.ShippingAddress.ZipCode,
-                Country = model.PurchaseInfo.ShippingAddress.CountryId.ToString(),
-                State = model.PurchaseInfo.ShippingAddress.State,
-                City = model.PurchaseInfo.ShippingAddress.City,
-                Address1 = model.PurchaseInfo.ShippingAddress.Address1,
-                Address2 = model.PurchaseInfo.ShippingAddress.Address2,
-                Phone_Number = model.PurchaseInfo.ShippingAddress.PhoneNumber
-              };
-              saRepo.Insert(sa);
-            }
             uow.Context.SaveChanges();
-          }
-          // Payment processing
-          StringBuilder bilder = new StringBuilder();
-          foreach (var t in lOrder.LockTickets)
-          {
-            tqd = tqdRepo.GetByID(t.TicketQuantityDetailId);
-            bilder.AppendFormat("{0}{1} x {2}", bilder.Length > 0 ? ", " : "", tqd.Ticket.T_name, t.Quantity);
-          }
-          string desc = bilder.Length > 0 ? "Purchased tickets: " + bilder.ToString() : "";
-          if (model.PurchaseInfo.Method == PaymentMethod.Card)
-          {
+
             cardtransaction response;
             try
             {
@@ -657,13 +664,14 @@ namespace EventCombo.Service
               throw new Exception(String.Format("Payment for card {0} has not been committed. {1}", model.PurchaseInfo.CardNumber.Substring(model.PurchaseInfo.CardNumber.Length - 4), response.message));
             }
           }
-          else
+          else if ((ord.O_TotalAmount ?? 0) > 0)
           {
-            ord.OrderStateId = 4; // Pending for payment completion
+            ord.OrderStateId = 4;  // Pending for payment completion
+            ord.PaymentTypeId = 3; // Paid by PayPal
             Tuple<string, string> paypalRes;
             try
             {
-              paypalRes = StartPayPalPayment(model.PurchaseInfo, ord.O_TotalAmount ?? 0, ord.O_Order_Id, desc);
+              paypalRes = StartPayPalPayment(model.Tickets, ord.O_TotalAmount ?? 0, ord.O_Order_Id, desc);
               if (paypalRes != null)
               {
                 pres.Success = true;
@@ -673,7 +681,7 @@ namespace EventCombo.Service
               else
               {
                 pres.Message = "Error during creation of PayPal payment.";
-                throw new Exception("");
+                throw new Exception("Unknown error during creation of PayPal payment.");
               }
             }
             catch (Exception ex)
@@ -685,7 +693,6 @@ namespace EventCombo.Service
           uow.Commit();
           pres.Success = true;
           pres.OrderId = ord.O_Order_Id;
-          
         }
         catch (Exception ex)
         {
@@ -835,26 +842,23 @@ namespace EventCombo.Service
       return carddet;
     }
 
-    private Tuple<string, string> StartPayPalPayment(PurchasingInfoViewModel pmodel, decimal pAmount, string orderId, string description)
+    private Tuple<string, string> StartPayPalPayment(IEnumerable<TicketPurchaseInfoViewModel> tickets, decimal pAmount, string orderId, string description)
     {
-      var itemList = new ItemList()
+      var itemList = new ItemList() { items = new List<Item>() };
+      foreach (var t in tickets)
       {
-        items = new List<Item>() 
+        Item item = new Item()
         {
-          new Item()
-          {
-            name = "Tickets",
-            currency = "USD",
-            price = pAmount.ToString(),
-            quantity = "1",
-            sku = "sku"
-          }
-        }
-      };
+          name = t.Name,
+          currency = "USD",
+          price = t.Price.ToString("N2"),
+          quantity = t.Quantity.ToString(),
+          sku = ""
+        };
+        itemList.items.Add(item);
+      }
 
       var payer = new Payer() { payment_method = "paypal" };
-
-      //var guid = Convert.ToString((new Random()).Next(100000));
       var redirUrls = new RedirectUrls()
       {
         cancel_url = PayPalSettings.CancelUrl,
@@ -874,12 +878,11 @@ namespace EventCombo.Service
       });
 
       var payment = new Payment() { intent = "sale", payer = payer, transactions = transactionList, redirect_urls = redirUrls };
-
       APIContext apiContext = GetAPIContext();
       var createdPayment = payment.Create(apiContext);
       var lnk = createdPayment.links.Where(l => l.rel.ToLower().Trim().Equals("approval_url")).FirstOrDefault();
       if (lnk != null)
-        return new Tuple<string,string>(lnk.href, createdPayment.id);
+        return new Tuple<string, string>(lnk.href, createdPayment.id);
       else
         return null;
     }
@@ -904,6 +907,194 @@ namespace EventCombo.Service
       order.O_PayPal_TokenId = tokenId;
       order.O_PayPal_TrancId = paymentId;
       _factory.ContextFactory.GetContext().SaveChanges();
+      try
+      {
+        APIContext apiContext = GetAPIContext();
+        var payment = Payment.Get(apiContext, paymentId);
+        if (payment != null)
+        {
+          IRepository<BillingAddress> baRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
+          IRepository<EventCombo.Models.ShippingAddress> saRepo = new GenericRepository<EventCombo.Models.ShippingAddress>(_factory.ContextFactory);
+
+          EventCombo.Models.ShippingAddress saDB = null;
+          BillingAddress baDB = null;
+          PayPal.Api.ShippingAddress sa = null;
+
+          var tr = payment.transactions.FirstOrDefault();
+          if (tr != null)
+          {
+            sa = tr.item_list.shipping_address;
+            saDB = saRepo.Get(a => a.OrderId == orderId).FirstOrDefault();
+            if ((sa != null) && (saDB == null))
+            {
+              saDB = new Models.ShippingAddress()
+              {
+                OrderId = orderId,
+                Country = sa.country_code,
+                City = sa.city,
+                State = sa.state,
+                Address1 = sa.line1,
+                Address2 = sa.line2,
+                Phone_Number = sa.phone,
+                Zip = sa.postal_code,
+                Fname = payment.payer.payer_info.first_name,
+                Lname = payment.payer.payer_info.last_name
+              };
+              saRepo.Insert(saDB);
+              _factory.ContextFactory.GetContext().SaveChanges();
+            }
+          }
+
+          var ba = payment.payer.payer_info.billing_address;
+          if (ba != null)
+            baDB = new BillingAddress()
+            {
+              OrderId = orderId,
+              Country = ba.country_code,
+              City = ba.city,
+              State = ba.state,
+              Address1 = ba.line1,
+              Address2 = ba.line2,
+              Phone_Number = ba.phone,
+              Zip = ba.postal_code,
+              Fname = payment.payer.payer_info.first_name,
+              Lname = payment.payer.payer_info.last_name,
+              PaymentType = "P"
+            };
+          else if (sa != null)
+            baDB = new BillingAddress()
+            {
+              OrderId = orderId,
+              Country = sa.country_code,
+              City = sa.city,
+              State = sa.state,
+              Address1 = sa.line1,
+              Address2 = sa.line2,
+              Phone_Number = sa.phone,
+              Zip = sa.postal_code,
+              Fname = payment.payer.payer_info.first_name,
+              Lname = payment.payer.payer_info.last_name,
+              PaymentType = "P"
+            };
+          else if (saDB != null)
+            baDB = new BillingAddress()
+            {
+              OrderId = orderId,
+              Country = saDB.Country,
+              City = saDB.City,
+              State = saDB.State,
+              Address1 = saDB.Address1,
+              Address2 = saDB.Address2,
+              Phone_Number = saDB.Phone_Number,
+              Zip = saDB.Zip,
+              Fname = saDB.Fname,
+              Lname = saDB.Lname,
+              PaymentType = "P"
+            };
+          if (baDB != null)
+          {
+            baRepo.Insert(baDB);
+            _factory.ContextFactory.GetContext().SaveChanges();
+          }
+        }
+      }
+      catch (Exception ex)
+      {
+        _logger.Error(ex, String.Format("Exception during getting information from PayPal. Order ID: {0}, Payment ID: {1}, Payer ID: {2}", orderId, paymentId, payerId));
+      }
+    }
+
+    public OrderConfirmationViewModel GetOrderConfirmationInfo(string orderId, string userId)
+    {
+      if (String.IsNullOrEmpty(orderId))
+        throw new ArgumentNullException("orderId");
+
+      IRepository<Order_Detail_T> oRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
+      var order = oRepo.Get(o => o.O_Order_Id == orderId).FirstOrDefault();
+      if (order == null)
+        throw new Exception(String.Format("Order #{0} not found.", orderId));
+      if (order.O_User_Id == userId)
+        throw new Exception(String.Format("Order #{0} information is not available for user {1}.", orderId, userId));
+
+      OrderConfirmationViewModel res = new OrderConfirmationViewModel();
+
+      IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+      var tpdTickets = tpdRepo.Get(filter: (t => t.TPD_Order_Id == orderId), orderBy: (q => q.OrderBy(t1 => t1.Ticket_Quantity_Detail.Ticket.T_order)));
+      if ((tpdTickets == null) || (tpdTickets.Count() <= 0))
+        throw new Exception("There is no tickets for order #" + orderId);
+
+      var ev = tpdTickets.First().Event;
+      if (ev == null)
+        throw new Exception(String.Format("Event for order #{0} not found.", orderId));
+
+      if ((ev.ECBackgroundId ?? 0) > 0)
+      {
+        var img = _iService.GetImageById(ev.ECBackgroundId ?? 0);
+        if (img != null)
+          res.BGImageUrl = img.ImagePath;
+      }
+      res.BGColor = ev.BackgroundColor;
+
+      res.EventId = ev.EventID;
+      res.EventTitle = ev.EventTitle;
+      res.Email = order.O_Email;
+      res.OrderId = orderId;
+      res.EventUrl = EventService.GetEventUrl(res.EventId, res.EventTitle, new UrlHelper(HttpContext.Current.Request.RequestContext));
+
+      var org = ev.Event_Orgnizer_Detail.FirstOrDefault();
+      if (org != null)
+        res.OrganizerId = org.OrganizerMaster_Id;
+
+      var address = ev.Addresses.FirstOrDefault();
+      if (address != null)
+      {
+        res.Address = address.ConsolidateAddress;
+        res.VenueName = address.VenueName;
+      }
+      else if (ev.AddressStatus == "Online")
+        res.Address = "Online";
+
+      res.StartDate = GetEventDatesInfo(ev);
+
+      List<TicketPurchaseInfoViewModel> ticketList = new List<TicketPurchaseInfoViewModel>();
+      foreach (var tpdTicket in tpdTickets)
+      {
+        DateTime ticketDate;
+        if (!DateTime.TryParse(tpdTicket.Ticket_Quantity_Detail.TQD_StartDate + " " + tpdTicket.Ticket_Quantity_Detail.TQD_StartTime, out ticketDate))
+          ticketDate = DateTime.MinValue;
+
+        var ticket = new TicketPurchaseInfoViewModel()
+        {
+          TicketTypeId = tpdTicket.Ticket_Quantity_Detail.Ticket.TicketTypeID ?? 0,
+          Name = tpdTicket.Ticket_Quantity_Detail.Ticket.T_name,
+          VenueName = ev.AddressStatus == "Online" ? "Online" : tpdTicket.Ticket_Quantity_Detail.Address == null ? "Unknown" : tpdTicket.Ticket_Quantity_Detail.Address.VenueName,
+          DateString = ticketDate == DateTime.MinValue ? "" : ticketDate.ToString("f"),
+          Price = tpdTicket.TicketPrice - tpdTicket.TicketDiscount,
+          SourcePrice = tpdTicket.TicketPrice,
+          Quantity = tpdTicket.TPD_Purchased_Qty ?? 0,
+          TotalFee = (tpdTicket.TicketFeeType == 0 ? tpdTicket.TPD_EC_Fee ?? 0 : 0) + tpdTicket.Customer_Fee,
+          TotalPrice = (tpdTicket.TPD_Amount ?? 0) + (tpdTicket.TPD_Donate ?? 0)
+        };
+        if (ticket.TicketTypeId == 1)
+        {
+          ticket.Price = 0;
+          ticket.SourcePrice = 0;
+          ticket.TotalFee = 0;
+          ticket.TotalPrice = 0;
+        }
+        else if (ticket.TicketTypeId == 3)
+        {
+          ticket.Price = (tpdTicket.TPD_Donate ?? 0);
+          ticket.SourcePrice = ticket.Price;
+          ticket.TotalFee = 0;
+          ticket.TotalPrice = ticket.Price;
+        }
+        res.TotalAmount += ticket.TotalPrice;
+        ticketList.Add(ticket);
+      }
+      res.Tickets = ticketList;
+
+      return res;
     }
 
   }

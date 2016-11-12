@@ -10,18 +10,23 @@ using EventCombo.Service;
 using EventCombo.DAL;
 using EventCombo.Utils;
 using NLog;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace EventCombo.Controllers
 {
   public class TicketPurchaseController : BaseController
   {
+    private ApplicationUserManager _userManager;
     private IPurchasingService _pService;
+    private IAccountService _aService;
     private ILogger _logger;
 
     public TicketPurchaseController()
       : base()
     {
       _pService = new PurchasingService(_factory, _mapper);
+      _aService = new AccountService(_factory, _mapper);
       _logger = LogManager.GetCurrentClassLogger();
     }
 
@@ -94,7 +99,16 @@ namespace EventCombo.Controllers
     [HttpGet]
     public ActionResult Confirmation(string orderId)
     {
-      return RedirectToAction("PurchasedTicket", "Account");
+      string userId;
+      if (Session["buyerId"] != null)
+        userId = Session["buyerId"].ToString();
+      else
+        userId = "";
+
+      OrderConfirmationViewModel oinfo = _pService.GetOrderConfirmationInfo(orderId, userId);
+
+      PopulateBaseViewModel(oinfo, "Confirmation for Order #" + oinfo.OrderId + " | Eventcombo");
+      return View(oinfo);
     }
 
     [HttpPost]
@@ -103,37 +117,66 @@ namespace EventCombo.Controllers
 
       string userId;
       var IP = ClientIPAddress.GetLanIPAddress(Request);
+
       if (Session["AppId"] != null)
         userId = Session["AppId"].ToString();
       else
         userId = "";
+
       PurchaseResult pres = new PurchaseResult() { Success = false, Message = "", OrderId = "" };
-      if (String.IsNullOrEmpty(userId))
+      try
       {
-        pres.Message = "Login or register, please.";
+        EventPurchaseInfoViewModel model = JsonConvert.DeserializeObject<EventPurchaseInfoViewModel>(json);
+
+        if (String.IsNullOrEmpty(userId))
+          userId = GetOrCreateUser(model.PurchaseInfo.Email, model.PurchaseInfo.FirstName, model.PurchaseInfo.LastName);
+
+        pres = _pService.SavePurchaseInfo(model, userId, IP);
+        if (pres.Success)
+          Session.Add("buyerId", userId);
+        if (pres.Success && !String.IsNullOrEmpty(pres.PayPalId))
+        {
+          Session.Add("PP" + pres.OrderId, pres.PayPalId);
+          pres.PayPalId = "";
+        }
       }
-      else
-        try
-        {
-          EventPurchaseInfoViewModel model = JsonConvert.DeserializeObject<EventPurchaseInfoViewModel>(json);
-          pres = _pService.SavePurchaseInfo(model, userId, IP);
-          if (pres.Success && !String.IsNullOrEmpty(pres.PayPalId))
-          {
-            Session.Add("PP" + pres.OrderId, pres.PayPalId);
-            pres.PayPalId = "";
-          }
-        }
-        catch (Exception ex)
-        {
-          _logger.Error(ex, "Error during SavePurchaseInfo processing.");
-          pres.Message = "Something went wrong. Please try again later";
-          pres.Success = false;
-        }
+      catch (Exception ex)
+      {
+        _logger.Error(ex, "Error during SavePurchaseInfo processing.");
+        pres.Message = "Something went wrong. Please try again later";
+        pres.Success = false;
+      }
 
       JsonNetResult res = new JsonNetResult();
       res.Data = pres;
       return res;
     }
+
+    private string GetOrCreateUser(string email, string firstName, string lastName)
+    {
+      RegisterUserRequestViewModel model = new RegisterUserRequestViewModel() 
+      { 
+        Email = email, FirstName = firstName, LastName = lastName, Password = System.Web.Security.Membership.GeneratePassword(12, 0)
+      };
+
+      var user = UserManager.FindByEmail(model.Email);
+      if (user == null)
+      {
+        var aUser = new ApplicationUser { UserName = model.Email, Email = model.Email };
+        var resultCreate = UserManager.Create(aUser, model.Password);
+        user = UserManager.FindByEmail(model.Email);
+        if (resultCreate.Succeeded)
+        {
+          UserManager.AddToRole(user.Id, "Member");
+          _aService.RegisterNewUser(user.Id, model, ClientIPAddress.GetLanIPAddress(Request));
+        }
+      }
+      if (user == null)
+        return "";
+      else
+        return user.Id;
+    }
+
 
     [HttpGet]
     public ActionResult CompletePayment(string orderId, string paymentId, string token, string PayerId)
@@ -141,11 +184,22 @@ namespace EventCombo.Controllers
       if ((Session["PP" + orderId] != null) && (Session["PP" + orderId].ToString() == paymentId))
       {
         _pService.CompletePayPalPayment(orderId, paymentId, token, PayerId);
-        return RedirectToAction("Confirmation");
+        return RedirectToAction("Confirmation", new { orderId = orderId });
       }
       else
         return RedirectToAction("Index", "Home");
     }
 
+    public ApplicationUserManager UserManager
+    {
+      get
+      {
+        return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+      }
+      private set
+      {
+        _userManager = value;
+      }
+    }
   }
 }

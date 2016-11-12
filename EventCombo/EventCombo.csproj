@@ -1864,6 +1864,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Download\_ManualOrderList.cshtml" />
     <Content Include="Views\TicketPurchase\Checkout.cshtml" />
+    <Content Include="Views\TicketPurchase\Confirmation.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

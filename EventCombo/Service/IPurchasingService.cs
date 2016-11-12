@@ -17,5 +17,6 @@ namespace EventCombo.Service
     EventPurchaseInfoViewModel GetEventPurchaseInfo(string lockId, string userId, string ip);
     PurchaseResult SavePurchaseInfo(EventPurchaseInfoViewModel model, string userId, string ip);
     void CompletePayPalPayment(string orderId, string paymentId, string tokenId, string payerId);
+    OrderConfirmationViewModel GetOrderConfirmationInfo(string orderId, string userId);
   }
 }
