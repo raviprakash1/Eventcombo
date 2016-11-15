@@ -105,7 +105,9 @@ function checkoutController($scope, $mdDialog, $attrs, $timeout, $window, purcha
       if (item.GroupType == 1) {
         item.VariableCharges.forEach(function (vc) {
           if (vc.VariableId != id)
-            vc.Checked = false;;
+            vc.Checked = false;
+          else
+            vc.Checked = true;
         });
       }
     });

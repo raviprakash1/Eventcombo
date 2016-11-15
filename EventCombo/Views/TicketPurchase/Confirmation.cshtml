@@ -109,7 +109,7 @@
       <div>
         <a class="nextLink" href="javascript:void(0)" ng-click="createEvent()">Create your own event</a>
         <a class="nextLink" href="javascript:void(0)" ng-click="contactEventcombo()">Contact us</a>
-        <a class="nextLink" href="@Url.Action("Index", "OrganizerInfo", new { id = Model.OrganizerId, eventid = Model.EventId })">See organizer's profile</a>
+        <a class="nextLink" href="@Url.Action("OrganizerInfo", "OrganizerInfo", new { organizerId = Model.OrganizerId })">See organizer's profile</a>
         <a class="nextLink" href="@Url.Action("Index", "Home")">Browse more events</a>
       </div>
       <md-checkbox ng-model="genAdmission" aria-label="School General Admission" class="genAdmission" ng-show="false">Too Cool For School General Admission</md-checkbox>
