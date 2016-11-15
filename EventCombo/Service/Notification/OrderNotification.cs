@@ -279,12 +279,12 @@ namespace EventCombo.Service
             IRepository<PaymentType> paymentTypeRepo = new GenericRepository<PaymentType>(_factory.ContextFactory);
             var myBillingdeatils = baRepo.Get(filter: (ba => ba.OrderId == _orderId)).FirstOrDefault();
             var paymentType = paymentTypeRepo.Get(filter: (p => p.PaymentTypeId == order.PaymentTypeId)).FirstOrDefault();
-            if (myBillingdeatils != null)
+            if ((myBillingdeatils != null) && (order.PaymentTypeId == 8))
             {
-                EncryptDecrypt encryptor = new EncryptDecrypt();
-                string cardtype = encryptor.DecryptText(myBillingdeatils.card_type);
-                string cardId = encryptor.DecryptText(myBillingdeatils.CardId);
-                cardtext = " - " + cardtype.First().ToString().ToUpper() + cardtype.Substring(1) + " XXXX-XXXX-XXXX-" + cardId.Substring(cardId.Length - 4);
+              EncryptDecrypt encryptor = new EncryptDecrypt();
+              string cardtype = String.IsNullOrEmpty(myBillingdeatils.card_type) ? "" : encryptor.DecryptText(myBillingdeatils.card_type);
+              string cardId = String.IsNullOrEmpty(myBillingdeatils.CardId) ? "" : encryptor.DecryptText(myBillingdeatils.CardId);
+              cardtext = " - " + cardtype.First().ToString().ToUpper() + cardtype.Substring(1) + " XXXX-XXXX-XXXX-" + cardId.Substring(cardId.Length - 4);
             }
             if (paymentType != null)
             {

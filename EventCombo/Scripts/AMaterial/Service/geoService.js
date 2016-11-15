@@ -34,25 +34,25 @@
     }
 
     var getCoordinates = function () {
-        if (typeof $cookies.getObject('ECGeoCoordinates') === 'undefined') {
-            //no cookie
-            return {
-                latitude: '40.712784',
-                longitude: '-74.0059413'
-            }
-        } else {
-            //have cookie
-            var coord = $cookies.getObject('ECGeoCoordinates');
-            return {
-                latitude: coord.latitude,
-                longitude: coord.longitude
-            }
+      if (typeof $cookies.getObject('ECGeoCoordinates') === 'undefined') {
+        //no cookie
+        return {
+          latitude: '40.712784',
+          longitude: '-74.0059413'
         }
+      } else {
+        //have cookie
+        var coord = $cookies.getObject('ECGeoCoordinates');
+        return {
+          latitude: coord.latitude,
+          longitude: coord.longitude
+        }
+      }
     }
 
     var saveCoordinates = function (lat, lng, preventBroadcast) {
       var geocoords = getCoordinates();
-      if ((geocoords.latitude != lat) && (geocoords.longitude != lng)){
+      if ((geocoords.latitude != lat) && (geocoords.longitude != lng)) {
         geocoords.latitude = lat;
         geocoords.longitude = lng;
         var cdate = new Date();
@@ -88,11 +88,39 @@
       }
     }
 
+    var usZipRegEx = new RegExp(/^\d{5}(?:[-\s]\d{4})?$/);
+    var caZipRegEx = new RegExp(/^([ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ])\ {0,1}(\d[ABCEGHJKLMNPRSTVWXYZ]\d)$/);
+
+    var isUsorCanadianZipCode = function (zipCode) {
+      if (!zipCode)
+        return false;
+      var validZipCode = usZipRegEx.test(zipCode.toString()) || caZipRegEx.test(zipCode.toString().replace(/\W+/g, ''));
+      return validZipCode;
+    }
+
+    var getInfoByZip = function (zipCode, callback, param) {
+      geocoder.geocode({
+        'address': zipCode
+      }, function (results, status) {
+        if (status === google.maps.GeocoderStatus.OK) {
+          var city = getAddressPartByType(results, 'postal_code');
+          if (city && city.address_components) {
+            var cityname = getAddressPartByType(city.address_components, 'locality');
+            var statename = getAddressPartByType(city.address_components, 'administrative_area_level_1');
+            if (cityname && statename && callback)
+              callback(param, cityname.long_name, statename.short_name);
+          }
+        }
+      });
+    }
+
     return {
       GetCoordinates: getCoordinates,
       SetCoordinates: saveCoordinates,
       GetCityByCoordinates: getCityByCoordinates,
-      GetCurrentCity: getCurrentCity
+      GetCurrentCity: getCurrentCity,
+      IsUsorCanadianZipCode: isUsorCanadianZipCode,
+      GetInfoByZip: getInfoByZip
     }
 
   }]);

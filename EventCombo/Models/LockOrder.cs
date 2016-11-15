@@ -12,18 +12,21 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Country
+    public partial class LockOrder
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Country()
+        public LockOrder()
         {
-            this.States = new HashSet<GeoState>();
+            this.LockTickets = new HashSet<LockTicket>();
         }
     
-        public byte CountryID { get; set; }
-        public string Country1 { get; set; }
+        public System.Guid LockOrderId { get; set; }
+        public long EventId { get; set; }
+        public System.DateTime Locktime { get; set; }
+        public string UserId { get; set; }
+        public string IP { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GeoState> States { get; set; }
+        public virtual ICollection<LockTicket> LockTickets { get; set; }
     }
 }

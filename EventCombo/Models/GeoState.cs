@@ -12,12 +12,13 @@ namespace EventCombo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TicketOrderDetail
+    public partial class GeoState
     {
-        public Nullable<long> T_TQD_Id { get; set; }
-        public string T_Guid { get; set; }
-        public string T_Id { get; set; }
-        public string T_Order_Id { get; set; }
-        public Nullable<long> TicketAttendeeId { get; set; }
+        public int StateId { get; set; }
+        public string StateName { get; set; }
+        public string StateShortName { get; set; }
+        public byte CountryId { get; set; }
+    
+        public virtual Country Country { get; set; }
     }
 }

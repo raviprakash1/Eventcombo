@@ -16,6 +16,10 @@
       broadcastMessage('CallLogin', param);
     }
 
+    var callLogout = function (param) {
+      broadcastMessage('CallLogout', param);
+    }
+
     var completeExternalLogin = function (param) {
       broadcastMessage('CompleteExternalLogin', param);
     }
@@ -52,10 +56,31 @@
       broadcastMessage('SetCitySearchRedirect', param);
     }
 
+    var showMessage = function (param) {
+      broadcastMessage('ShowMessage', param);
+    }
+
+    var purchaseInfoLoaded = function (param) {
+      broadcastMessage('PurchaseInfoLoaded', param);
+    }
+
+    var showLoadingMessage = function (param) {
+      broadcastMessage('ShowLoadingMessage', param);
+    }
+
+    var purchaseSuccess = function (param) {
+      broadcastMessage('PurchaseSuccess', param);
+    }
+
+    var purchaseError = function (param) {
+      broadcastMessage('PurchaseError', param);
+    }
+
     return {
       EventInfoLoaded: eventInfoLoaded,
       ErrorExternalLogin: errorExternalLogin,
       CallLogin: callLogin,
+      CallLogout: callLogout,
       CompleteExternalLogin: completeExternalLogin,
       LoggedIn: loggedIn,
       LoggedOut: loggedOut,
@@ -64,6 +89,11 @@
       AddFavoriteWithLoginProcessed: addFavoriteWithLoginProcessed,
       CurrentCoordinatesChanged: currentCoordinatesChanged,
       ReloadPage: reloadPage,
-      SetCitySearchRedirect: setCitySearchRedirect
+      SetCitySearchRedirect: setCitySearchRedirect,
+      ShowMessage: showMessage,
+      PurchaseInfoLoaded: purchaseInfoLoaded,
+      ShowLoadingMessage: showLoadingMessage,
+      PurchaseSuccess: purchaseSuccess,
+      PurchaseError: purchaseError
     }
   }]);

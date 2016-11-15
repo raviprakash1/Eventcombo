@@ -29,7 +29,10 @@ namespace EventCombo.Service
       logger = LogManager.GetCurrentClassLogger();
       try
       {
-        _urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+        if (HttpContext.Current != null)
+          _urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+        else
+          _urlHelper = null;
       }
       catch (Exception ex)
       {

@@ -13,7 +13,7 @@
         <EntityTypeShape EntityType="EventComboModel.AspNetUser" Width="1.5" PointX="8" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.BillingAddress" Width="1.5" PointX="8.125" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.CardDetail" Width="1.5" PointX="12.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EventComboModel.Country" Width="1.5" PointX="8" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EventComboModel.Country" Width="1.5" PointX="27.125" PointY="29.375" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.DeliveryMethod" Width="1.5" PointX="12.75" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Email_Tag" Width="1.5" PointX="12.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EventComboModel.Email_Template" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
@@ -164,7 +164,6 @@
         <EntityTypeShape EntityType="EventComboModel.ScheduledEmail" Width="1.5" PointX="17.25" PointY="0.75" />
         <AssociationConnector Association="EventComboModel.FK_ScheduledEmail_AspNetUsers" />
         <AssociationConnector Association="EventComboModel.FK_ScheduledEmail_EmailType" />
-        <EntityTypeShape EntityType="EventComboModel.TicketBearer_View" Width="1.5" PointX="27.375" PointY="8" />
         <EntityTypeShape EntityType="EventComboModel.AttendeeEmail" Width="1.5" PointX="30.5" PointY="10.25" />
         <AssociationConnector Association="EventComboModel.FK_AttendeeEmail_Event" />
         <AssociationConnector Association="EventComboModel.FK_AttendeeEmail_ScheduledEmail" />
@@ -175,6 +174,13 @@
         <EntityTypeShape EntityType="EventComboModel.HomepageWord" Width="1.5" PointX="27.375" PointY="6.75" />
         <AssociationConnector Association="EventComboModel.FK_AttendeeEmail_TicketBearer" />
         <AssociationConnector Association="EventComboModel.EventEvent_Email_Invitation" />
+        <EntityTypeShape EntityType="EventComboModel.AvailableTicket_View" Width="1.5" PointX="22.375" PointY="27.75" />
+        <EntityTypeShape EntityType="EventComboModel.TicketBearer_View" Width="1.5" PointX="27.375" PointY="26.75" />
+        <EntityTypeShape EntityType="EventComboModel.LockOrder" Width="1.5" PointX="27.375" PointY="10.75" />
+        <EntityTypeShape EntityType="EventComboModel.LockTicket" Width="1.5" PointX="27.375" PointY="22.75" />
+        <AssociationConnector Association="EventComboModel.LockOrderLockTicket" />
+        <EntityTypeShape EntityType="EventComboModel.GeoState" Width="1.5" PointX="24.375" PointY="28.75" />
+        <AssociationConnector Association="EventComboModel.CountryGeoState" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -317,7 +317,6 @@ eventComboApp.directive('telMask', function ($filter, $browser) {
       var listener = function () {
         var value = $element.val().replace(/[^0-9]/g, '');
         $element.val($filter('tel')(value, false));
-        console.log("up" + $filter('tel')(value, false));
       };
 
       // This runs when we update the text field
@@ -351,7 +350,6 @@ eventComboApp.directive('telMask', function ($filter, $browser) {
 
 eventComboApp.filter('tel', function () {
   return function (tel) {
-    console.log(tel);
     if (!tel) { return ''; }
 
     var value = tel.toString().trim().replace(/^\+/, '');

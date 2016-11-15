@@ -1283,7 +1283,7 @@ namespace EventCombo.Service
       throw new NotImplementedException();
     }
 
-    public string GetEventUrl(long eventId, string eventTitle, UrlHelper url)
+    public static string GetEventUrl(long eventId, string eventTitle, UrlHelper url)
     {
       return url.Action("ViewEvent", "EventManagement", new
       {
