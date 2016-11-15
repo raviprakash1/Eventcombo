@@ -6,9 +6,10 @@ Company Website	: www.thecatalystindia.in
 */
 /****************************************************************************/
 eventComboApp
-    .controller('checkoutController', ['$scope', '$mdDialog', '$attrs', '$timeout', '$window', 'purchaseInfoService', 'accountService', checkoutController]);
+    .controller('checkoutController', ['$scope', '$mdDialog', '$attrs', '$timeout', '$window', 'purchaseInfoService',
+      'accountService', 'geoService', checkoutController]);
 
-function checkoutController($scope, $mdDialog, $attrs, $timeout, $window, purchaseInfoService, accountService) {
+function checkoutController($scope, $mdDialog, $attrs, $timeout, $window, purchaseInfoService, accountService, geoService) {
   $scope.purchaseInfo = {};
   $scope.Timer = { RemainingTime: '10:00' };
 
@@ -123,6 +124,24 @@ function checkoutController($scope, $mdDialog, $attrs, $timeout, $window, purcha
     }
     console.log($scope.purchaseInfo);
   }
+
+  $scope.SetCityForAddress = function (address, city, state) {
+    address.City = city;
+    var sObj = null;
+    $scope.purchaseInfo.StateList.forEach(function (item) {
+      if (item.StateShortName == state) {
+        address.CountryId = item.CountryId;
+        address.Country = item.CountryName;
+        address.StateId = item.StateId;
+        address.State = item.StateName;
+      }
+    });
+  }
+
+  $scope.GetCityByZip = function (address) {
+    geoService.GetInfoByZip(address.ZipCode, $scope.SetCityForAddress, address);
+  }
+
 
   $scope.goBack = function () {
     $window.location.href = $scope.purchaseInfo.EventUrl;
@@ -323,6 +342,21 @@ eventComboApp.directive('expirationDate', function ($filter, $browser) {
 
   };
 });
+eventComboApp.directive('echeck', function() {
+  return {
+    require: 'ngModel',
+    link: function (scope, element, attributes, ngModelCtrl) {
+      ngModelCtrl.$validators.echeck = function (modelValue) {
+        if (!modelValue || modelValue.length != 4)
+          return true;
+        var mydate = new Date();
+        var cdate = new Date(mydate.getFullYear(), mydate.getMonth(), 1);
+        var mdate = new Date('20' + modelValue.slice(-2), modelValue.slice(0, -2) - 1, 1);
+        return mdate >= cdate;
+      }
+    }
+  }
+});
 eventComboApp.filter('expiry', function () {
   return function (expiry) {
     if (!expiry) { return ''; }
@@ -344,6 +378,18 @@ eventComboApp.filter('expiry', function () {
     }
   };
 });
+eventComboApp.directive('zipcheck', ['geoService', function (geoService) {
+  return {
+    require: 'ngModel',
+    link: function (scope, element, attributes, ngModel) {
+      ngModel.$validators.zipcheck = function (modelValue) {
+        if (!modelValue)
+          return true;
+        return geoService.IsUsorCanadianZipCode(modelValue);
+      }
+    }
+  }
+}]);
 
 eventComboApp.directive('securityCode', function ($filter, $browser) {
   return {

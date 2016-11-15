@@ -207,10 +207,11 @@
           <md-input-container class="block100" ng-show="purchaseInfo.PurchaseInfo.TotalOrder > 0">
             <label>Expiration Date</label>
             <input expiration-date name="checkoutExpirationDate" ng-model="purchaseInfo.PurchaseInfo.ExpirationDate"
-                   ng-pattern="/^((0[1-9])|(1[0-2]))\/([0-9]{2,4})$/" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0">
+                   ng-pattern="/^((0[1-9])|(1[0-2]))\/([0-9]{2,4})$/" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0" echeck>
             <div ng-messages="creditcardForm.checkoutExpirationDate.$error" role="alert">
               <div ng-message="required">Enter expiration date</div>
               <div ng-message="pattern">Enter a valid expiration date in MM/YY format</div>
+              <div ng-message="echeck">Card already expired</div>
             </div>
           </md-input-container>
           <md-input-container class="block100" ng-show="purchaseInfo.PurchaseInfo.TotalOrder > 0">
@@ -233,9 +234,11 @@
           <div class="block100"><strong>Billing Information</strong></div>
           <md-input-container class="block30">
             <label>Zip Code</label>
-            <input name="checkoutBillingZipCode" ng-model="purchaseInfo.PurchaseInfo.BillingAddress.ZipCode" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0">
+            <input name="checkoutBillingZipCode" ng-model="purchaseInfo.PurchaseInfo.BillingAddress.ZipCode"
+                   ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0" zipcheck ng-blur="GetCityByZip(purchaseInfo.PurchaseInfo.BillingAddress)">
             <div ng-messages="creditcardForm.checkoutBillingZipCode.$error" role="alert">
               <div ng-message="required">Enter billing zip</div>
+              <div ng-message="zipcheck">Wrong zip</div>
             </div>
           </md-input-container>
           <md-input-container class="block30">
@@ -282,9 +285,10 @@
           <md-input-container class="block30" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
             <label>Zip Code</label>
             <input name="checkoutShippingZipCode" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.ZipCode"
-                   ng-required="!purchaseInfo.PurchaseInfo.ShippingSame && (purchaseinfo.purchaseinfo.totalorder> 0)">
+                   ng-required="!purchaseInfo.PurchaseInfo.ShippingSame && (purchaseinfo.purchaseinfo.totalorder> 0)" zipcheck ng-blur="GetCityByZip(purchaseInfo.PurchaseInfo.ShippingAddress)">
             <div ng-messages="creditcardForm.checkoutShippingZipCode.$error" role="alert">
               <div ng-message="required">Enter shipping zip</div>
+              <div ng-message="zipcheck">Wrong zip</div>
             </div>
           </md-input-container>
           <md-input-container class="block30" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
@@ -364,9 +368,11 @@
           <md-checkbox ng-model="purchaseInfo.PurchaseInfo.ShippingSame" aria-label="Shipping Address" class="blueCheckbox">Shipping address is the same as PayPal</md-checkbox>
           <md-input-container class="block30" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
             <label>Zip Code</label>
-            <input name="paypalShippingZipCode" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.ZipCode" ng-required="!purchaseInfo.PurchaseInfo.ShippingSame">
+            <input name="paypalShippingZipCode" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.ZipCode"
+                   ng-required="!purchaseInfo.PurchaseInfo.ShippingSame" zipcheck ng-blur="GetCityByZip(purchaseInfo.PurchaseInfo.ShippingAddress)">
             <div ng-messages="paypalForm.paypalShippingZipCode.$error" role="alert">
               <div ng-message="required">Enter shipping zip</div>
+              <div ng-message="zipcheck">Wrong Zip Code</div>
             </div>
           </md-input-container>
           <md-input-container class="block30" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
@@ -414,7 +420,7 @@
           </md-input-container>
         </div>
         <div class="c12 text-right">
-          <span class="tot text-right"><span style="color:#000;">Your PayPal account will be charged</span> ${{purchaseInfo.PurchaseInfo.TotalOrder}}</span>
+          <span class="tot text-right"><span style="color:#000;">Your PayPal account will be charged</span> ${{purchaseInfo.PurchaseInfo.TotalOrder.toFixed(2)}}</span>
         </div>
         <div class="c12 text-right margin-1em-top">
           <md-button class="chkBack" ng-click="goBack('@Model.EventUrl')">GO BACK</md-button>

@@ -21,12 +21,16 @@ namespace EventCombo.Controllers
     private IPurchasingService _pService;
     private IAccountService _aService;
     private ILogger _logger;
+    private ITicketsService _tService;
+    private IManageAttendeesService _maService;
 
     public TicketPurchaseController()
       : base()
     {
       _pService = new PurchasingService(_factory, _mapper);
       _aService = new AccountService(_factory, _mapper);
+      _tService = new TicketService(_factory, _mapper, _dbservice);
+      _maService = new ManageAttendeesService(_factory, _mapper, _dbservice, _tService);
       _logger = LogManager.GetCurrentClassLogger();
     }
 
@@ -105,6 +109,7 @@ namespace EventCombo.Controllers
       else
         userId = "";
 
+      _maService.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath(".."));
       OrderConfirmationViewModel oinfo = _pService.GetOrderConfirmationInfo(orderId, userId);
 
       PopulateBaseViewModel(oinfo, "Confirmation for Order #" + oinfo.OrderId + " | Eventcombo");

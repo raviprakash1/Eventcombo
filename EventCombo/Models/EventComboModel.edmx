@@ -1043,6 +1043,7 @@
           <Property Name="T_Guid" Type="varchar" MaxLength="1000" />
           <Property Name="T_Id" Type="varchar" MaxLength="12" Nullable="false" />
           <Property Name="T_Order_Id" Type="varchar" MaxLength="11" />
+          <Property Name="TicketAttendeeId" Type="bigint" />
         </EntityType>
         <EntityType Name="TicketType">
           <Key>
@@ -3611,6 +3612,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="T_Guid" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="T_Id" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="T_Order_Id" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="TicketAttendeeId" Type="Int64" />
         </EntityType>
         <EntityType Name="Fee_Structure">
           <Key>
@@ -6040,6 +6042,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <EntitySetMapping Name="TicketOrderDetails">
             <EntityTypeMapping TypeName="EventComboModel.TicketOrderDetail">
               <MappingFragment StoreEntitySet="TicketOrderDetail">
+                <ScalarProperty Name="TicketAttendeeId" ColumnName="TicketAttendeeId" />
                 <ScalarProperty Name="T_Order_Id" ColumnName="T_Order_Id" />
                 <ScalarProperty Name="T_Id" ColumnName="T_Id" />
                 <ScalarProperty Name="T_Guid" ColumnName="T_Guid" />

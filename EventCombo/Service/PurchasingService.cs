@@ -14,8 +14,11 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Mail;
+using System.Net.Mime;
 using System.Text;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 
 namespace EventCombo.Service
@@ -102,11 +105,11 @@ namespace EventCombo.Service
           if (Int32.TryParse(tDB.Ticket.Fees_Type, out feeType))
             lTicket.ECFeeType = feeType;
           lTicket.LockOrderId = lOrder.LockOrderId;
-          lTicket.Price = tDB.Ticket.Price ?? 0;
-          lTicket.CustomerFee = tDB.Ticket.Customer_Fee ?? 0;
-          lTicket.ECFeeAmount = tDB.Ticket.TicketTypeID == 1 ? 0 : tDB.Ticket.T_EcAmount ?? 0;
-          lTicket.ECFeePercent = (tDB.Ticket.Price ?? 0) * (tDB.Ticket.T_Ecpercent ?? 0) / 100;
-          lTicket.Discount = tDB.Ticket.T_Discount ?? 0;
+          lTicket.Price = Math.Round(tDB.Ticket.Price ?? 0, 2);
+          lTicket.CustomerFee = Math.Round(tDB.Ticket.Customer_Fee ?? 0, 2);
+          lTicket.ECFeeAmount = tDB.Ticket.TicketTypeID == 1 ? 0 : Math.Round(tDB.Ticket.T_EcAmount ?? 0, 2);
+          lTicket.ECFeePercent = Math.Round((tDB.Ticket.Price ?? 0) * (tDB.Ticket.T_Ecpercent ?? 0) / 100, 2);
+          lTicket.Discount = Math.Round(tDB.Ticket.T_Discount ?? 0, 2);
           if ((tDB.Ticket.TicketTypeID ?? 0) == 3)
             lTicket.Quantity = 1;
           lOrder.LockTickets.Add(lTicket);
@@ -304,6 +307,7 @@ namespace EventCombo.Service
         ticketList.Add(ticket);
       }
       res.Tickets = ticketList.OrderBy(t => t.Sort);
+      res.TotalAmount = Math.Round(res.TotalAmount, 2);
 
       List<VariableChargeGroup> vcGroupList = new List<VariableChargeGroup>();
       VariableChargeGroup cGroup = new VariableChargeGroup()
@@ -318,7 +322,7 @@ namespace EventCombo.Service
         vcList.Add(new VariableChargePurchaseInfoViewModel()
         {
           Checked = (cGroup.GroupType == 1) && !vcList.Any(),
-          Price = vcharge.Price ?? 0,
+          Price = Math.Round(vcharge.Price ?? 0, 2),
           VariableDesc = vcharge.VariableDesc,
           VariableId = vcharge.Variable_Id
         });
@@ -440,6 +444,7 @@ namespace EventCombo.Service
           if ((lOrder == null) || (lOrder.IP != ip))
           {
             pres.Message = "Order not found. Please try again";
+            pres.Url = EventService.GetEventUrl(model.EventId, model.EventTitle, new UrlHelper(HttpContext.Current.Request.RequestContext));
             return pres;
           }
           Order_Detail_T ord = new Order_Detail_T()
@@ -497,7 +502,7 @@ namespace EventCombo.Service
               //For future use in PayPal payment
               cTicket.Name = tqd.Ticket.T_name;
               cTicket.TotalPrice = (tpd.TPD_Amount ?? 0) + (tpd.TPD_Donate ?? 0);
-              cTicket.Price = tpd.TicketPrice + (tpd.TPD_Donate ?? 0);
+              cTicket.Price = CalcTicketAmount(tqd.Ticket.TicketTypeID ?? 1, lTicket.ECFeeType, lTicket.Price, lTicket.ECFeePercent, lTicket.ECFeeAmount, lTicket.CustomerFee, lTicket.Discount) + (tpd.TPD_Donate ?? 0);
               //Save Attendees
               foreach (var att in cTicket.Attendees)
               {
@@ -532,7 +537,7 @@ namespace EventCombo.Service
             }
             if ((tpd.TPD_Purchased_Qty ?? 0) > quantity) // need to add Buyer to attendee
             {
-              tb = tbList.Where(b => (b.Email == ord.O_Email) && (b.Name == (ord.O_First_Name + ' ' + ord.O_Last_Name))).FirstOrDefault();
+              tb = tbList.Where(b => (b.Email == ord.O_Email) && (b.Name == (ord.O_First_Name + " " + ord.O_Last_Name))).FirstOrDefault();
               if (tb == null)
               {
                 tb = new TicketBearer()
@@ -565,13 +570,13 @@ namespace EventCombo.Service
                 vc = vg.VariableCharges.FirstOrDefault();
               if (vc != null)
               {
-                vcAmount += vc.Price;
+                vcAmount += Math.Round(vc.Price, 2);
                 vcList.Add(vc.VariableId.ToString());
               }
             }
             else
             {
-              vcAmount += vg.VariableCharges.Where(c => c.Checked).Sum(c1 => c1.Price);
+              vcAmount += Math.Round(vg.VariableCharges.Where(c => c.Checked).Sum(c1 => c1.Price), 2);
               vcList.AddRange(vg.VariableCharges.Where(c => c.Checked).Select(c1 => c1.VariableId.ToString()));
             }
           }
@@ -581,6 +586,10 @@ namespace EventCombo.Service
           ord.O_TotalAmount = totalAmount + vcAmount;
           ord.O_VariableAmount = vcAmount;
           ord.O_VariableId = String.Join(",", vcList);
+
+          uow.Context.SaveChanges();
+
+          GenerateTicketDetails(ord.O_Order_Id, uow);
 
           // Save shipping address if necessary
           if (!model.PurchaseInfo.ShippingSame)
@@ -660,7 +669,7 @@ namespace EventCombo.Service
             }
             else
             {
-              pres.Message = "Payment has not been committed. Please, check your payment information";
+              pres.Message = "Payment was not processed. Please, check your payment information and try again.";
               throw new Exception(String.Format("Payment for card {0} has not been committed. {1}", model.PurchaseInfo.CardNumber.Substring(model.PurchaseInfo.CardNumber.Length - 4), response.message));
             }
           }
@@ -845,17 +854,32 @@ namespace EventCombo.Service
     private Tuple<string, string> StartPayPalPayment(IEnumerable<TicketPurchaseInfoViewModel> tickets, decimal pAmount, string orderId, string description)
     {
       var itemList = new ItemList() { items = new List<Item>() };
+      int i = 1;
+      decimal total = 0;
       foreach (var t in tickets)
       {
         Item item = new Item()
         {
-          name = t.Name,
+          name = String.Format("{0} x {1}", t.Name, t.Quantity),
           currency = "USD",
           price = t.Price.ToString("N2"),
           quantity = t.Quantity.ToString(),
-          sku = ""
+          sku = "Ticket#" + i++
         };
+        total += t.Price * t.Quantity; 
         itemList.items.Add(item);
+      }
+      if (pAmount != total)
+      {
+        Item remain = new Item()
+        {
+          name = "Variable charges",
+          currency = "USD",
+          price = (pAmount - total).ToString("N2"),
+          quantity = "1",
+          sku = "VarCharge"
+        };
+        itemList.items.Add(remain);
       }
 
       var payer = new Payer() { payment_method = "paypal" };
@@ -1013,7 +1037,7 @@ namespace EventCombo.Service
       var order = oRepo.Get(o => o.O_Order_Id == orderId).FirstOrDefault();
       if (order == null)
         throw new Exception(String.Format("Order #{0} not found.", orderId));
-      if (order.O_User_Id == userId)
+      if (order.O_User_Id != userId)
         throw new Exception(String.Format("Order #{0} information is not available for user {1}.", orderId, userId));
 
       OrderConfirmationViewModel res = new OrderConfirmationViewModel();
@@ -1097,6 +1121,99 @@ namespace EventCombo.Service
       return res;
     }
 
+    public void GenerateTicketDetails(string orderId, IUnitOfWork uow)
+    {
+      IRepository<Order_Detail_T> oRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
+      IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+      IRepository<TicketAttendee> taRepo = new GenericRepository<TicketAttendee>(_factory.ContextFactory);
+      IRepository<TicketBearer> tbRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+      IRepository<TicketOrderDetail> todRepo = new GenericRepository<TicketOrderDetail>(_factory.ContextFactory);
+
+      var order = oRepo.Get(o => o.O_Order_Id == orderId).FirstOrDefault();
+      if (order == null)
+        throw new ArgumentException(String.Format("Order #{0} not found.", orderId));
+
+      var tpdList = tpdRepo.Get(t => t.TPD_Order_Id == orderId).ToList();
+      foreach (var tpd in tpdList)
+      {
+        var q = taRepo.Get(ta => ta.PurchasedTicketId == tpd.TPD_Id).Sum(t => t.Quantity);
+        if (q < tpd.TPD_Purchased_Qty)
+        {
+          var tb = tbRepo.Get(t => (t.OrderId == orderId) && (t.Email == order.O_Email) && (t.Name == (order.O_First_Name + " " + order.O_Last_Name))).FirstOrDefault();
+          if (tb == null)
+          {
+            tb = new TicketBearer()
+            {
+              Email = order.O_Email,
+              Guid = tpd.TPD_GUID,
+              Name = order.O_First_Name + " " + order.O_Last_Name,
+              OrderId = order.O_Order_Id,
+              PhoneNumber = "",
+              TicketbearerId = 0,
+              UserId = order.O_User_Id
+            };
+            tbRepo.Insert(tb);
+            uow.Context.SaveChanges();
+          }
+          var ta = tb.TicketAttendees.Where(a => a.PurchasedTicketId == tpd.TPD_Id).FirstOrDefault(); ;
+          if (ta == null)
+          {
+            ta = new TicketAttendee()
+            {
+              PurchasedTicketId = tpd.TPD_Id,
+              Quantity = (tpd.TPD_Purchased_Qty ?? 0) - q,
+              TicketBearerId = tb.TicketbearerId
+            };
+            tb.TicketAttendees.Add(ta);
+          }
+          else
+            ta.Quantity = (tpd.TPD_Purchased_Qty ?? 0) - q;
+          uow.Context.SaveChanges();
+        }
+
+        var todList = todRepo.Get(tod => (tod.T_TQD_Id == tpd.TPD_TQD_Id) && (tod.T_Order_Id == orderId)).ToList();
+        foreach (var ta in taRepo.Get(t => t.PurchasedTicketId == tpd.TPD_Id).ToList())
+        {
+          var tq = todList.Where(tod => tod.TicketAttendeeId == ta.TicketAttendeeId).Count();
+          while (tq++ < ta.Quantity)
+          {
+            var tod = todList.Where(t => (t.TicketAttendeeId ?? 0) == 0).FirstOrDefault();
+            if (tod == null)
+            {
+              string todId = GetRandomString(12);
+              while (todRepo.GetByID(todId) != null)
+                todId = GetRandomString(12);
+              tod = new TicketOrderDetail()
+              {
+                T_Id = todId,
+                T_Order_Id = orderId,
+                T_TQD_Id = tpd.TPD_TQD_Id,
+                T_Guid = tpd.TPD_GUID,
+                TicketAttendeeId = ta.TicketAttendeeId
+              };
+              todRepo.Insert(tod);
+            }
+            else
+              tod.TicketAttendeeId = ta.TicketAttendeeId;
+            uow.Context.SaveChanges();
+          }
+        }
+      }
+    }
+
+    private string GetRandomString(int length)
+    {
+      var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      var random = new Random();
+      StringBuilder builder = new StringBuilder();
+      char ch;
+      for (int i = 0; i < length; i++)
+      {
+        ch = chars[random.Next(chars.Length)];
+        builder.Append(ch);
+      }
+      return builder.ToString();
+    }
   }
 
 }
