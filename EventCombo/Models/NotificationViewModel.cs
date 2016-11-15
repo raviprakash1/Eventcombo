@@ -12,6 +12,7 @@ namespace EventCombo.Models
     public string Phone { get; set; }
     public string Message { get; set; }
     public long EventId { get; set; }
+    public long OrganizerId { get; set; }
   }
   public class FriendNotificationViewModel
   {

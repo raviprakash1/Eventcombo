@@ -1018,6 +1018,7 @@
     </Content>
     <Content Include="newemailtemplate.html" />
     <Content Include="Scripts\AMaterial\AccountController.js" />
+    <Content Include="Scripts\AMaterial\organizerInfo.js" />
     <Content Include="Scripts\AMaterial\Service\AccountService.js" />
     <Content Include="Scripts\AMaterial\angucomplete-alt.js" />
     <Content Include="Scripts\AMaterial\angular-animate.js" />
@@ -1044,6 +1045,7 @@
     <Content Include="Scripts\AMaterial\demo.js" />
     <Content Include="Scripts\AMaterial\EventComboApp.js" />
     <Content Include="Scripts\AMaterial\footer.js" />
+    <Content Include="Scripts\AMaterial\Service\OrganizerService.js" />
     <Content Include="Scripts\AMaterial\Service\geoService.js" />
     <Content Include="Scripts\AMaterial\header.js" />
     <Content Include="Scripts\AMaterial\Homepage.js" />
@@ -1785,7 +1787,6 @@
     <Content Include="Views\Account\OrganizerEditPartialView.cshtml" />
     <Content Include="Views\Home\DiscoverEventsTiles.cshtml" />
     <Content Include="Views\Account\OrganizerAddPartialView.cshtml" />
-    <Content Include="Views\OrganizerInfo\Index.cshtml" />
     <Content Include="Views\OrganizerInfo\OrganiserPresentPartialView.cshtml" />
     <Content Include="Views\ManageEvent\PromotionalCodes.cshtml" />
     <Content Include="Views\ManageEvent\CreatePromotionalCodes.cshtml" />
@@ -1836,6 +1837,7 @@
     <Content Include="Views\Download\_OrderList.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Download\_ManualOrderList.cshtml" />
+    <Content Include="Views\OrganizerInfo\OrganizerInfo.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
