@@ -113,6 +113,7 @@ namespace EventCombo.Controllers
       OrderConfirmationViewModel oinfo = _pService.GetOrderConfirmationInfo(orderId, userId);
 
       PopulateBaseViewModel(oinfo, "Confirmation for Order #" + oinfo.OrderId + " | Eventcombo");
+      Session["Fromname"] = "confirmation";
       return View(oinfo);
     }
 

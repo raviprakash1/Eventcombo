@@ -257,7 +257,8 @@ namespace EventCombo.Service
       else if (ev.AddressStatus == "Online")
         res.Address = "Online";
 
-      res.StartDate = GetEventDatesInfo(ev);
+      var dates = GetEventDatesInfo(ev);
+      res.StartDate = dates.Summary;
 
       IRepository<Ticket_Quantity_Detail> tqdRepo = new GenericRepository<Ticket_Quantity_Detail>(_factory.ContextFactory);
       res.TotalAmount = 0;
@@ -389,12 +390,12 @@ namespace EventCombo.Service
       return TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(time, DateTimeKind.Unspecified), tz);
     }
 
-    private string GetEventDatesInfo(Event ev)
+    private EventDatesInfo GetEventDatesInfo(Event ev)
     {
       if (ev == null)
         throw new ArgumentNullException("ev");
 
-      string result;
+      EventDatesInfo result = new EventDatesInfo();
       string tzStr = "";
 
       TimeZoneInfo tz = GetTimeZoneInfo(ev.TimeZone);
@@ -413,17 +414,20 @@ namespace EventCombo.Service
         EndDateTime = ConvertTimeFromUtc(EndDateTime, tz);
       if (StartDateTime == DateTime.MinValue)
         StartDateTime = EndDateTime;
-      result = StartDateTime.ToString("f");
+      result.StartDate = StartDateTime;
+      result.Summary = StartDateTime.ToString("f");
+      result.EndDate = EndDateTime;
       if (EndDateTime != StartDateTime)
-        result = result + " to " + EndDateTime.ToString("f");
+        result.Summary += " to " + EndDateTime.ToString("f");
       if (multiDate != null)
       {
         var Frequency = multiDate == null ? ScheduleFrequency.Single : (ScheduleFrequency)Enum.Parse(typeof(ScheduleFrequency), multiDate.Frequency, true);
-        result = Frequency.ToString() + " " + result;
+        result.Summary = Frequency.ToString() + " " + result;
         if (Frequency == ScheduleFrequency.Weekly)
-          result = result + " (" + multiDate.WeeklyDay + ")";
+          result.Summary += " (" + multiDate.WeeklyDay + ")";
       }
-      return result + tzStr;
+      result.Summary += tzStr;
+      return result;
     }
 
     public PurchaseResult SavePurchaseInfo(EventPurchaseInfoViewModel model, string userId, string ip)
@@ -826,7 +830,7 @@ namespace EventCombo.Service
       // get the response from the service (errors contained if any)
       var response = controller.GetApiResponse();
 
-      if (response.messages.resultCode == messageTypeEnum.Ok)
+      if (response.transactionResponse.responseCode == "1") // Approved
       {
         carddet.Success = true;
         if (response.transactionResponse != null)
@@ -1061,9 +1065,11 @@ namespace EventCombo.Service
 
       res.EventId = ev.EventID;
       res.EventTitle = ev.EventTitle;
+      res.EventDescription = ev.EventDescription;
       res.Email = order.O_Email;
       res.OrderId = orderId;
       res.EventUrl = EventService.GetEventUrl(res.EventId, res.EventTitle, new UrlHelper(HttpContext.Current.Request.RequestContext));
+      res.EventUrl = ResolveServerUrl(VirtualPathUtility.ToAbsolute(res.EventUrl), false);
 
       var org = ev.Event_Orgnizer_Detail.FirstOrDefault();
       if (org != null)
@@ -1078,7 +1084,7 @@ namespace EventCombo.Service
       else if (ev.AddressStatus == "Online")
         res.Address = "Online";
 
-      res.StartDate = GetEventDatesInfo(ev);
+      res.Dates = GetEventDatesInfo(ev);
 
       List<TicketPurchaseInfoViewModel> ticketList = new List<TicketPurchaseInfoViewModel>();
       foreach (var tpdTicket in tpdTickets)
@@ -1119,6 +1125,18 @@ namespace EventCombo.Service
       res.Tickets = ticketList;
 
       return res;
+    }
+
+    private string ResolveServerUrl(string serverUrl, bool forceHttps)
+    {
+      if (serverUrl.IndexOf("://") > -1)
+        return serverUrl;
+
+      string newUrl = serverUrl;
+      Uri originalUri = System.Web.HttpContext.Current.Request.Url;
+      newUrl = (forceHttps ? "https" : originalUri.Scheme) +
+          "://" + originalUri.Authority + newUrl;
+      return newUrl;
     }
 
     public void GenerateTicketDetails(string orderId, IUnitOfWork uow)

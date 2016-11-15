@@ -194,6 +194,7 @@ namespace EventCombo.Models
     public OrderConfirmationViewModel()
     {
       Tickets = new List<TicketPurchaseInfoViewModel>();
+      Dates = new EventDatesInfo();
     }
     public string OrderId { get; set; }
     public long EventId { get; set; }
@@ -201,14 +202,22 @@ namespace EventCombo.Models
     public string BGImageUrl { get; set; }
     public string BGColor { get; set; }
     public string EventTitle { get; set; }
+    public string EventDescription { get; set; }
     public string VenueName { get; set; }
     public string Address { get; set; }
-    public string StartDate { get; set; }
+    public EventDatesInfo Dates { get; set; }
     public decimal TotalAmount { get; set; }
     public string Email { get; set; }
     public long OrganizerId { get; set; }
 
     public IEnumerable<TicketPurchaseInfoViewModel> Tickets { get; set; }
+  }
+
+  public class EventDatesInfo
+  {
+    public string Summary { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
   }
 
 }
