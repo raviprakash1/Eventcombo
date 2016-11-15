@@ -35,6 +35,12 @@ namespace EventCombo
             );
 
             routes.MapRoute(
+                "OrganizerInfo",
+                "o/{organizerName}-{organizerId}",
+                new { controller = "OrganizerInfo", action = "OrganizerInfo" }
+            );
+
+            routes.MapRoute(
             "EventViewCustom",
                 "ev/{strCustomUrl}",
                 new { controller = "EventViewCustom", action = "Index", strCustomUrl = "" }

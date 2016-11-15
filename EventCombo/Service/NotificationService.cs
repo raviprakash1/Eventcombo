@@ -35,7 +35,8 @@ namespace EventCombo.Service
 
       model.Userid = userId;
       var org = eoRepo.Get(filter: (eo => (eo.Orgnizer_Event_Id == model.EventId) && (eo.DefaultOrg == "Y"))).FirstOrDefault();
-      model.OrganizerId = org == null ? 0 : org.OrganizerMaster_Id;
+      if (model.OrganizerId == null || model.OrganizerId == 0)
+          model.OrganizerId = org == null ? 0 : org.OrganizerMaster_Id;
 
       SendContactOrganizerMessage(model);
     }

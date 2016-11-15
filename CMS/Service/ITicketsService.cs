@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CMS.Models;
 using System.IO;
+using static CMS.Service.TicketService;
 
 namespace CMS.Service
 {
@@ -23,5 +24,9 @@ namespace CMS.Service
     bool SaveMessage(OrganizerMessageViewModel model);
 
     MemoryStream GetDownloadableTicket(string orderId, string format, string filePath);
+
+    TicketSaleViewModel GetEventTicketSale(long eventId, FilterByOrderType filter);
+
+    MemoryStream GetDownloadableEventTicketSale(FilterByOrderType filter, long eventId, string format);
   }
 }

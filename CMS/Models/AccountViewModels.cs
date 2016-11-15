@@ -228,11 +228,16 @@ namespace CMS.Models
       public long OId { get; set; }
       public string OrderId { get; set; }
       public string Payment { get; set; }
+      public string Name { get; set; }
       public string Email { get; set; }
+      public string PhoneNumber { get; set; }
+      public string Address { get; set; }
+      public string MailingAddress { get; set; }
       public string EventDate { get; set; }
       public string EventLocation { get; set; }
       public string TicketNames { get; set; }
       public bool SendEmail { get; set; }
+      public decimal OrderTotalAmount { get; set; }
 
       private List<AttendeeViewModel> _attendees = new List<AttendeeViewModel>();
       public List<AttendeeViewModel> Attendees
@@ -240,6 +245,38 @@ namespace CMS.Models
         get { return _attendees; }
         private set { _attendees = value; }
       }
+
+      private List<TicketAttendeeViewModel> _ticketAttendees = new List<TicketAttendeeViewModel>();
+      public List<TicketAttendeeViewModel> TicketAttendees
+      {
+          get { return _ticketAttendees; }
+          set { _ticketAttendees = value; }
+      }
+
+      private List<Event_VariableDesc> _variableChages = new List<Event_VariableDesc>();
+      public List<Event_VariableDesc> VariableChages
+      {
+          get { return _variableChages; }
+          set { _variableChages = value; }
+      }
+    }
+
+    public class TicketAttendeeViewModel
+    {
+        public long TicketId { get; set; }
+        public string TicketName { get; set; }
+        public DateTime StartDate { get; set; }
+        public long TicketTypeId { get; set; }
+        public string TicketTypeName { get; set; }
+        public string AttendeeName { get; set; }
+        public string AttendeeEmail { get; set; }
+        public string AttendeePhone { get; set; }
+        public string Address { get; set; }
+        public long Quantity { get; set; }
+        public decimal Price { get; set; }
+        public string PriceStr { get; set; }
+        public string PromoCode { get; set; }
+        public decimal PromoCodePrice { get; set; }
     }
 
     public class StartEndDateTime

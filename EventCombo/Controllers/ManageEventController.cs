@@ -335,14 +335,14 @@ namespace EventCombo.Controllers
             TempData["SaleQty"] = strSaleQty.ToString();
             TempData["TicketSalePer"] = GetSalePer(Eventid);
 
-            TempData["RemQty"] = eInfo.TicketQuantity;
+            TempData["RemQty"] = (eInfo != null ? eInfo.TicketQuantity : 0);
             TempData["TotalQty"] = GetQuantity(Eventid, "T");
             TempData["PaidTicket"] = GetTicketQtyPer(Eventid, "P");
             TempData["FreeTicket"] = GetTicketQtyPer(Eventid, "F");
             TempData["EventUrl"] = GetEventURL(Eventid);
 
-            TempData["ForSale"] = Math.Round(eInfo.Price, 2).ToString("N", us);
-            TempData["NETSale"] = Math.Round(eInfo.PriceNet, 2).ToString("N", us);
+            TempData["ForSale"] = Math.Round((eInfo != null ? eInfo.Price : 0), 2).ToString("N", us);
+            TempData["NETSale"] = Math.Round((eInfo != null ? eInfo.PriceNet : 0), 2).ToString("N", us);
 
             return View(Mevent);
         }

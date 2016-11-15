@@ -27,5 +27,7 @@ namespace EventCombo.Service
     HomepageInfoViewModel GetHomepageInfo();
     EventViewModel GetEventBySubDomain(string subDomain);
     void CheckEventAccess(PrivateEventRequest req);
+    string GetTicketPrice(long eventId);
+    string GetEventFavLikes(long eventId, string strUserId);
   }
 }
