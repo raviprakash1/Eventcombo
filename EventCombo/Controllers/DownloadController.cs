@@ -147,5 +147,19 @@ namespace EventCombo.Controllers
       return new FileStreamResult(mem, appformat) { FileDownloadName = "ManualOrderList_" + eventId.ToString() + "." + format };
     }
 
+    [HttpGet]
+    public FileStreamResult EventTicketTotalSale(long eventId, string format)
+    {
+        if (Session["AppId"] == null)
+            return null;
+
+        string userId = Session["AppId"].ToString();
+        if (_dbservice.GetEventAccess(eventId, userId) == AccessLevel.Public)
+            return null;
+
+        MemoryStream mem = _tservice.GetDownloadableEventTicketSale(FilterByOrderType.Regular, eventId, format);
+
+        return new FileStreamResult(mem, "application/" + format.ToLower()) { FileDownloadName = "Ticket_Breakdown_" + eventId + "." + format };
+    }
   }
 }

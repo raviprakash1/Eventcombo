@@ -3,51 +3,200 @@
 @using EventCombo.Models;
 @model EventOrderDetailViewModel
 <td colspan="11" style="padding:0px;">
-  <table class="table" style="margin-bottom:0px;">
-    @if (Model.Attendees.Count > 0)
-    {
-      for (var i = 0; i < Model.Attendees.Count; i++)
-      {
+    <table class="table" style="margin-bottom:0px;">
         <tr class="UETableTDSUbDivBackColor">
-          <td class="subTableInnerTD">@Html.Raw(i == 0 ? "<b>Attendees</b>" : "")</td>
-          <td class="subTableInnerTD">@(Model.Attendees[i].Name) (<span style="color:#00CAFD;">@(Model.Attendees[i].Email)</span>)</td>
-          <td class="subTableInnerTD"></td>
+            <td class="subTableInnerTD"><b>Payment</b></td>
+            <td class="subTableInnerTD">Paid by @Model.Payment</td>
+            <td class="subTableInnerTD"><b></b></td>
+            <td class="subTableInnerTD"></td>
+            <td class="subTableInnerTD"></td>
+        </tr>
+        <tr class="UETableTDSUbDivBackColor">
+            <td class="subTableInnerTD"><b>Customer Address:</b></td>
+            <td class="subTableInnerTD" colspan="4">@Model.Address</td>
+        </tr>
+        <tr class="UETableTDSUbDivBackColor">
+            <td class="subTableInnerTD"><b>Customer Name:</b></td>
+            <td class="subTableInnerTD">@Model.Name</td>
+            <td class="subTableInnerTD"><b></b></td>
+            <td class="subTableInnerTD" colspan="2"></td>
+        </tr>
+        <tr class="UETableTDSUbDivBackColor">
+            <td class="subTableInnerTD"><b>Customer Email:</b></td>
+            <td class="subTableInnerTD"><span class="emailAddressUETble">@Model.Email</span></td>
+            <td class="subTableInnerTD"><b>Attendees</b></td>
+            <td class="subTableInnerTD"></td>
+            <td class="subTableInnerTD"></td>
+        </tr>
+        <tr class="UETableTDSUbDivBackColor">
+            <td class="subTableInnerTD"><b>Customer Phone:</b></td>
+            <td class="subTableInnerTD">@Model.PhoneNumber</td>
+            <td class="subTableInnerTD" style="background-color: rgba(128, 128, 128, 0.23);"><b>Name</b></td>
+            <td class="subTableInnerTD" style="background-color: rgba(128, 128, 128, 0.23);"><b>Email</b></td>
+            <td class="subTableInnerTD" style="background-color: rgba(128, 128, 128, 0.23);"><b>Phone</b></td>
         </tr>
 
-      }
-    }
-    else
-    {
-      <tr class="UETableTDSUbDivBackColor">
-        <td class="subTableInnerTD"><b>No attendees</b></td>
-        <td class="subTableInnerTD"></td>
-        <td class="subTableInnerTD"></td>
-      </tr>
-    }
-
-    <tr class="UETableTDSUbDivBackColor">
-      <td class="subTableInnerTD"><b>Payment</b></td>
-      <td class="subTableInnerTD">Pay by @(Model.Payment)</td>
-      <td class="subTableInnerTD subContainerLastPadding"><b>Buyer Email: </b><span style="color:#00CAFD;">@(Model.Email)</span></td>
-    </tr>
-
-    <tr class="UETableTDSUbDivBackColor">
-      <td id="ajaxanswer@(Model.OrderId)" class="subTableInnerTD" colspan="3"></td>
-    </tr>
-
-    <tr class="UETableTDSUbDivBackColorFooter">
-      <td colspan="3">
-        <table style="width:100%;">
-          <tr>
-            <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubEdit()">EDIT</td>
-            <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubRefund()">REFUND</td>
-            <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubViewReport()">VIEW Report</td>
-            <td class="UETableTDSUbDivFooterLinks">@(Html.ActionLink("PRINT TICKETS", "Ticket", "Download", new { OrderId = Model.OrderId, format = "pdf" }, null))</td>
-            <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubResend('@(Model.OrderId)')">RE-SEND CONFIRMATION</td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+        @for (var i = 0; i < (Model.Attendees.Count > 2 ? Model.Attendees.Count : 2); i++)
+        {
+            if (i == 0)
+            {
+                <tr class="UETableTDSUbDivBackColor">
+                    <td class="subTableInnerTD"><b>Event Date:</b></td>
+                    <td class="subTableInnerTD">@(Model.EventDate)</td>
+                    @if (Model.Attendees.Count > 0)
+                    {
+                        <td class="subTableInnerTD">
+                            <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Name" />
+                        </td>
+                        <td class="subTableInnerTD">
+                            <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Email" />
+                        </td>
+                        <td class="subTableInnerTD">
+                            <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivPhone@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].PhoneNumber" />
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="subTableInnerTD">
+                            <b>No attendees</b>
+                        </td>
+                        <td class="subTableInnerTD"></td>
+                        <td class="subTableInnerTD"></td>
+                    }
+                </tr>
+            }
+            else if (i == 1)
+            {
+                <tr class="UETableTDSUbDivBackColor">
+                    <td class="subTableInnerTD"><b>Event Location:</b></td>
+                    <td class="subTableInnerTD">@(Model.EventLocation)</td>
+                    @if (Model.Attendees.Count > 1)
+                    {
+                        <td class="subTableInnerTD">
+                            <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Name" />
+                        </td>
+                        <td class="subTableInnerTD">
+                            <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Email" />
+                        </td>
+                        <td class="subTableInnerTD">
+                            <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivPhone@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].PhoneNumber" />
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="subTableInnerTD"></td>
+                        <td class="subTableInnerTD"></td>
+                        <td class="subTableInnerTD"></td>
+                    }
+                </tr>
+            }
+            else
+            {
+                <tr class="UETableTDSUbDivBackColor">
+                    <td class="subTableInnerTD" colspan="2"></td>
+                    <td class="subTableInnerTD">
+                        <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivName@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Name" />
+                    </td>
+                    <td class="subTableInnerTD">
+                        <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivEmail@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].Email" />
+                    </td>
+                    <td class="subTableInnerTD">
+                        <input disabled="disabled" type="text" data-bearerid="@(Model.Attendees[i].TicketbearerId)" id="UETableTDSUbDivPhone@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)" class="UETableTDSUbDiv1NameCls EditAttendee" value="@Model.Attendees[i].PhoneNumber" />
+                    </td>
+                </tr>
+            }
+        }
+        <tr class="UETableTDSUbDivBackColor">
+            <td class="subTableInnerTD"><b>Ticket Names:</b></td>
+            <td class="subTableInnerTD" colspan="3">
+                @Model.TicketNames
+            </td>
+            <td class="subTableInnerTD"></td>
+        </tr>
+        <tr class="UETableTDSUbDivBackColor">
+            <td class="subTableInnerTD" colspan="5" style="border-top: 0px;">
+                <table style='width:100%;' class="table-bordered">
+                    @foreach (var addressDateItem in Model.TicketAttendees.Select(x => new { x.Address, x.StartDate }).Distinct())
+                    {
+                        <tr><td colspan="4"><p style='margin:0px;padding:0px;margin-bottom:5px;font-size:13px;color:#aaaaaa;'>@addressDateItem.Address<span style='float:right;'>@addressDateItem.StartDate.ToLongDateString() </span></p></td></tr>
+                        <tr style="background-color: rgba(128, 128, 128, 0.23);">
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>QTY</th>
+                            <th style="text-align:right;">Price</th>
+                        </tr>
+                        foreach (var item in Model.TicketAttendees.Where(x => x.Address == addressDateItem.Address && x.StartDate == addressDateItem.StartDate))
+                        {
+                            <tr>
+                                <td style="@(!string.IsNullOrEmpty(item.PromoCode) && item.PromoCodePrice > 0?"border-bottom:0px;":"")">@item.AttendeeName</td>
+                                <td style="@(!string.IsNullOrEmpty(item.PromoCode) && item.PromoCodePrice > 0?"border-bottom:0px;":"")">@item.TicketName</td>
+                                <td style="@(!string.IsNullOrEmpty(item.PromoCode) && item.PromoCodePrice > 0?"border-bottom:0px;":"")">@item.Quantity</td>
+                                <td style="text-align:right;@(!string.IsNullOrEmpty(item.PromoCode) && item.PromoCodePrice > 0?"border-bottom:0px;":"")">@item.PriceStr</td>
+                            </tr>
+                            if (!string.IsNullOrEmpty(item.PromoCode) && item.PromoCodePrice > 0)
+                            {
+                                <tr>
+                                    <td colspan="3" style="text-align: center;color: green;">@item.PromoCode</td>
+                                    <td style="text-align:right;border-top:0px;color: green;">-$@item.PromoCodePrice</td>
+                                </tr>
+                            }
+                        }
+                    }
+                    @foreach (var item in Model.VariableChages)
+                    {
+                        <tr>
+                            <td colspan="2">&nbsp;</td>
+                            <td>@item.VariableDesc</td>
+                            <td style="text-align:right;">$@item.Price</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="2">&nbsp;</td>
+                        <td>Total</td>
+                        <td style="text-align:right;">$@(Model.OrderTotalAmount)</td>
+                    </tr>
+                </table>
+            </td>                       
+        </tr>
+        @if (Model.Attendees.Count > 0)
+        {
+            <tr class="UETableTDSUbDivBackColor" style="height: 85px;">
+                <td class="subTableInnerTD" colspan="2" style="border-top: 0px;"></td>
+                <td class="subTableInnerTD" colspan="2" style="border-top: 0px;">
+                    <div class="basicInfoUnCheckBox" id="sendConfirmationEmail@(Model.OrderId)" onclick="setCheckBoxChecked(this);">Send confirmation email to new attendee</div>
+                </td>
+                <td class="subTableInnerTD" style="border-top: 0px;"></td>
+            </tr>
+        }
+        <tr class="UETableTDSUbDivBackColor" style="height: 85px;">
+            <td class="subTableInnerTD" colspan="4" >
+                <div id="ajaxanswer@(Model.OrderId)"></div>
+            </td>
+            <td class="subTableInnerTD"></td>
+        </tr>
+        <tr class="UETableTDSUbDivBackColorFooter">
+            <td colspan="5">
+                <table>
+                    <tr>
+                        <td class="UETableTDSUbDivFooterLinks" @(Model.Attendees.Count > 0 ? "onclick=editAttendees(this);" : "")>@(Model.Attendees.Count > 0 ? "EDIT" : "")</td>
+                        <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubRefund()">REFUND</td>
+                        <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubViewReport()">VIEW Report</td>
+                        <td class="UETableTDSUbDivFooterLinks">@(Html.ActionLink("PRINT TICKETS", "Ticket", "Download", new { OrderId = Model.OrderId, format = "pdf" }, null))</td>
+                        <td class="UETableTDSUbDivFooterLinks" onclick="orderListSubResend('@(Model.OrderId)')">RE-SEND CONFIRMATION</td>
+                        <td class="UETableTDSUbDivFooterLinks" onclick="saveChangeFunc('@(Model.OrderId)')">SAVE CHANGES</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </td>
+<script src="~/Scripts/jquery.maskedinput.min.js"></script>
+@for (var i = 0; i < Model.Attendees.Count; i++)
+{
+    <script>
+        jQuery(function ($) {
+            $("#UETableTDSUbDivPhone@(Model.OrderId)_@(Model.Attendees[i].TicketbearerId)").mask("999-999-9999");
+        });
+    </script>
+}
 

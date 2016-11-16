@@ -1,0 +1,141 @@
+﻿@using EventCombo.Models
+@using EventCombo.Service
+@model EventCombo.Models.Organizer_Master
+@{
+    Layout = "~/Views/Shared/_AngularLayout.cshtml";
+}
+
+@section CSSSection
+{
+  @Styles.Render("~/Content/AMaterial/homePage.css")
+}
+
+@section ScriptSection
+{
+  @Scripts.Render("~/Scripts/AMaterial/viewEvent")
+}
+
+@section ScriptFooterSection
+{
+  @Scripts.Render("~/Scripts/AMaterial/viewEventFooter")
+  <script src="@Url.Content("~/Scripts/AMaterial/organizerInfo.js")"></script>
+  <script type="text/javascript">
+    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: fbappid,                        
+        status: true,                          
+        xfbml: true,                           
+        version: '2.7'
+      });
+    };
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) { return; }
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+}
+<section ng-controller="organizerInfo">
+  <div class="grid wfull">
+    <div id="site-content" role="main">
+      <div class="row">
+        <div class="c12">
+          <h1 class="orgTitle">@Model.Orgnizer_Name</h1>
+        </div>
+        <div class="c3">
+          <img src="@Model.Imagepath" alt="Organizer Logo">
+        </div>
+        <div class="c6">@Html.Raw(Model.Organizer_Desc)</div>
+        <div class="c3">
+          <h2 class="getInTouch">Get in touch</h2>
+          <i class="material-icons">phone</i> @Model.Organizer_Phoneno<br>
+          <a href="@Model.Organizer_Websiteurl" target="_blank"><i class="material-icons">open_in_browser</i> @Model.Organizer_Websiteurl</a><br>
+          <a href="javascript:void(0)" ng-click="contactOrganizer(null,'any inquiry','@Model.Orgnizer_Name',@Model.Orgnizer_Id)"><i class="material-icons">email</i> Contact</a><br>
+          <br>
+          <div class="social">
+            <a href="@Model.Organizer_FBLink" target="_blank"><img src="~/Images/AMaterial/square-facebook.svg" width="20px" alt="Facebook"> Facebook</a><br>
+            <a href="@Model.Organizer_Twitter" target="_blank"><img src="~/Images/AMaterial/square-twitter.svg" width="20px" alt="Twitter"> Twitter</a><br>
+            <a href="@Model.Organizer_Linkedin" target="_blank"><img src="~/Images/AMaterial/square-linkedin.svg" width="20px" alt="LinkedIn"> LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <md-tabs md-dynamic-height class="orgEventTab" pane-changed="paneChanged(selectedPane)">
+    <md-tab label="Upcoming Events" md-on-select="onTabSelected('Upcoming Events',@Model.Orgnizer_Id)">
+      <md-content>
+        <div class="featuredbox" title="{{event.EventTitle}}" ng-repeat="event in pagedEvents[currentPage]">
+          <a href="{{event.EventPath}}" class="img"><img ng-src="{{event.EventImg}}" alt="{{event.EventTitle}}"></a>
+          <div class="info">
+            <h3><a href="{{event.EventPath}}">{{event.EventTitle}}</a></h3>
+            <div class="date">{{event.DateOfEvent}}</div>
+            <div class="location">{{event.Venue}}</div>
+            <div class="price" ng-class="event.EventPrice == 'Free' ? 'free' : ''">{{event.EventPrice}}</div>
+            <div class="evActions homEV">
+              <a href="javascript:void(0);" class="hashLink">{{event.EventyType}}</a>
+              <a href="javascript:void(0);" class="hashLink">{{event.EventCat}}</a>
+              <div class="matBox">
+                  <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
+                  <span><a id="btnfavourite-{{event.EventId}}" href="javascript:void(0)" title="Add EventTitle to your favorites" ng-click="AddToFavorite(event);"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{event.FavoriteCount}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pagination">
+          <a ng-class="{disabled: currentPage == 0}" href ng-click="prevPage()">«</a>
+          <a ng-repeat="n in range(pagedEvents.length)" ng-class="{active: n == currentPage}" ng-click="setPage()" href ng-bind="n + 1">1</a>
+          <a ng-class="{disabled: currentPage == pagedEvents.length - 1}" href ng-click="nextPage()">»</a>
+        </div>
+      </md-content>
+    </md-tab>
+
+    <md-tab label="Previous Events" md-on-select="onTabSelected('Previous Events',@Model.Orgnizer_Id)">
+      <md-content class="md-padding">
+        <div class="featuredbox" title="{{event.EventTitle}}" ng-repeat="event in pagedEvents[currentPage]">
+            <a href="{{event.EventPath}}" class="img"><img ng-src="{{event.EventImg}}" alt="{{event.EventTitle}}"></a>
+          <div class="info">
+            <h3><a href="#">{{event.EventTitle}}</a></h3>
+            <div class="date">{{event.EventDate}}</div>
+            <div class="location">{{event.EventDes}}</div>
+            <div class="price" ng-class="event.EventPrice == 'Free' ? 'free' : ''">{{event.EventPrice}}</div>
+            <div class="evActions homEV">
+                <a href="javascript:void(0);" class="hashLink">{{event.EventyType}}</a>
+                <a href="javascript:void(0);" class="hashLink">{{event.EventCat}}</a>
+                <div class="matBox">
+                    <a class="matIcon" onclick="alert('Test')"><i class="material-icons">share</i></a>
+                    <span><a id="btnfavourite-{{event.EventId}}" href="javascript:void(0)" title="Add EventTitle to your favorites" ng-click="AddToFavorite(event);"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{event.FavoriteCount}}</span>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="pagination">
+          <a ng-class="{disabled: currentPage == 0}" href ng-click="prevPage()">«</a>
+          <a ng-repeat="n in range(pagedEvents.length)" ng-class="{active: n == currentPage}" ng-click="setPage()" href ng-bind="n + 1">1</a>
+          <a ng-class="{disabled: currentPage == pagedEvents.length - 1}" href ng-click="nextPage()">»</a>
+        </div>
+      </md-content>
+    </md-tab>
+  </md-tabs>
+  <div class="grid wfull">
+    <div id="site-content" role="main">
+      <div class="row">
+        <div class="c12" id="fbComments" Heading="Facebook Comments">
+          <div id="fb-root"></div>
+          <script>
+            (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+          <div class="fb-comments" data-href="http://facebook.com/eventcombo" data-width="100%" data-numposts="6" data-colorscheme="light"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

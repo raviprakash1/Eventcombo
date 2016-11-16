@@ -18,6 +18,7 @@ namespace EventCombo.Models
         public TicketBearer()
         {
             this.TicketAttendees = new HashSet<TicketAttendee>();
+            this.AttendeeEmails = new HashSet<AttendeeEmail>();
         }
     
         public long TicketbearerId { get; set; }
@@ -30,5 +31,7 @@ namespace EventCombo.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TicketAttendee> TicketAttendees { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AttendeeEmail> AttendeeEmails { get; set; }
     }
 }

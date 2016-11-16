@@ -56,21 +56,18 @@ namespace EventCombo.Service
       ManageAttendeesOrdersViewModel res = new ManageAttendeesOrdersViewModel();
       res.EventId = eventId;
 
-      IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
       IRepository<Event> eRepo = new GenericRepository<Event>(_factory.ContextFactory);
-      IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
-      var order = orderRepo.Get(filter: o => o.IsManualOrder == false && o.OrderStateId != 2 && o.OrderStateId != 3);
-      var OrderIds = order.Select(oo => oo.O_Order_Id);
-      var tickets = tpdRepo.Get(filter: (t => t.TPD_Event_Id == eventId && OrderIds.Contains(t.TPD_Order_Id)));
-      var ev = eRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();      
+      var ev = eRepo.Get(filter: (e => e.EventID == eventId)).FirstOrDefault();
+
+      var eInfo = _tservice.GetEventSummaryCalculation(eventId, FilterByOrderType.Regular);
 
       EventOrdersSummuryViewModel ordersTotal = new EventOrdersSummuryViewModel()
       {
         PaymentState = PaymentStates.Total,
-        TicketsSold = tickets.Sum(t => t.TPD_Purchased_Qty) ?? 0,
-        Amount = (tickets.Sum(t=>t.TPD_Amount) ?? 0) + (order.Where(o=>(tickets.Select(t=>t.TPD_Order_Id).Contains(o.O_Order_Id))).Sum(os=>os.O_VariableAmount) ?? 0),
+        TicketsSold = (eInfo != null ? eInfo.TicketQuantity : 0),
+        Amount = (eInfo != null ? eInfo.Price : 0),
         TicketsTotal = ev.Tickets.Sum(tt => tt.Ticket_Quantity_Detail.Sum(q => q.TQD_Quantity)) ?? 0,
-        Count = tickets.Select(t => t.TPD_Order_Id).Distinct().Count()
+        Count = (eInfo != null ? eInfo.OrderQuantity : 0)
       };
       EventOrdersSummuryViewModel ordersCompleted = _mapper.Map<EventOrdersSummuryViewModel>(ordersTotal);
       ordersCompleted.PaymentState = PaymentStates.Completed;
@@ -111,7 +108,7 @@ namespace EventCombo.Service
         {
           OrderId = ticket.Key,
           PaymentState = PaymentStates.Completed,
-          TicketName = String.Join(", ", tickets.Where(t => t.T_Id == (ticket.FirstOrDefault().Ticket_Quantity_Detail.TQD_Ticket_Id ?? 0)).Select(t => t.T_name).ToArray()),
+          TicketName = String.Join(", ", tickets.Where(t => ticket.Select(tt => tt.Ticket_Quantity_Detail.TQD_Ticket_Id).Contains(t.T_Id)).Select(t => t.T_name).ToArray()),
           Fee = ticket.Sum(t => t.TPD_EC_Fee * t.TPD_Purchased_Qty) ?? 0,
           PricePaid = ticket.Sum(t=>t.TPD_Amount) ?? 0,
           BuyerName = ticket.FirstOrDefault().AspNetUser.Profiles.Select(p => p.FirstName + " " + p.LastName).FirstOrDefault(),
@@ -139,7 +136,7 @@ namespace EventCombo.Service
             if (billingAddressDB != null)
             {
                 order.Address = billingAddressDB.Address1 +
-                    " " + billingAddressDB.Address2 +
+                    "" + (string.IsNullOrEmpty(billingAddressDB.Address2) ? "" : " " + billingAddressDB.Address2) +
                     ", " + billingAddressDB.City +
                     ", " + billingAddressDB.State +
                     " " + billingAddressDB.Zip;
@@ -176,9 +173,9 @@ namespace EventCombo.Service
             Quantity = ticket.PurchasedQuantity ?? 0,
             Price = ticket.OrderAmount ?? 0,
             PricePaid = ticket.PaidAmount ?? 0,
-            PriceNet = (ticket.PaidAmount ?? 0) - ((ticket.ECFeePerTicket ?? 0) * (ticket.PurchasedQuantity ?? 0)) - ((ticket.MerchantFeePerTicket ?? 0) * (ticket.PurchasedQuantity ?? 0)),
-            Fee = (ticket.ECFeePerTicket ?? 0) * (ticket.PurchasedQuantity ?? 0),
-            MerchantFee = (ticket.MerchantFeePerTicket ?? 0) * (ticket.PurchasedQuantity ?? 0),
+            PriceNet = (ticket.PaidAmount ?? 0) - (ticket.ECFeePerTicket * (ticket.PurchasedQuantity ?? 0)) - (ticket.MerchantFeePerTicket * (ticket.PurchasedQuantity ?? 0)),
+            Fee = ticket.ECFeePerTicket * (ticket.PurchasedQuantity ?? 0),
+            MerchantFee = ticket.MerchantFeePerTicket * (ticket.PurchasedQuantity ?? 0),
             Refunded = ((ticket.OrderStateId ?? 0) == 3 ? (ticket.PaidAmount ?? 0) : 0),
             Cancelled = ((ticket.OrderStateId ?? 0) == 2 ? (ticket.PaidAmount ?? 0) : 0),
             Date = ticket.O_OrderDateTime ?? DateTime.Today,
@@ -202,7 +199,7 @@ namespace EventCombo.Service
             if (shippingAddressDB != null)
             {
                 order.MailTickets = shippingAddressDB.Address1 +
-                " " + shippingAddressDB.Address2 +
+                "" + (string.IsNullOrEmpty(shippingAddressDB.Address2) ? "" : " " + shippingAddressDB.Address2) +
                 ", " + shippingAddressDB.City +
                 ", " + shippingAddressDB.State +
                 " " + shippingAddressDB.Zip;
@@ -210,7 +207,7 @@ namespace EventCombo.Service
             if (billingAddressDB != null)
             {
                 order.Address = billingAddressDB.Address1 +
-                " " + billingAddressDB.Address2 +
+                "" + (string.IsNullOrEmpty(billingAddressDB.Address2) ? "" : " " + billingAddressDB.Address2) +
                 ", " + billingAddressDB.City +
                 ", " + billingAddressDB.State +
                 " " + billingAddressDB.Zip ;
@@ -280,28 +277,128 @@ namespace EventCombo.Service
       return res;
     }
 
-    public EventOrderDetailViewModel GetOrderDetails(string orderId)
+    public EventOrderDetailViewModel GetOrderDetails(string orderId, long eventId)
     {
-      IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
-      var order = orderRepo.Get(filter: (o => (o.O_Order_Id == orderId))).FirstOrDefault();
-      if (order == null)
-        return null;
+        IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
+        IRepository<EventTicket_View> EventTicketRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
 
-      EventOrderDetailViewModel details = new EventOrderDetailViewModel() { OrderId = orderId };
-      details.Payment = _dbservice.GetPaymentInfo(orderId);
+        var order = orderRepo.Get(filter: (o => o.O_Order_Id == orderId)).FirstOrDefault();
+        if (order == null)
+            throw new NullReferenceException(String.Format("Order {0} not found.", orderId));
 
-      IRepository<EventCombo.Models.Profile> userRepo = new GenericRepository<EventCombo.Models.Profile>(_factory.ContextFactory);
-      var user = userRepo.Get(filter: (u => u.UserID == order.O_User_Id)).First();
-      details.Email = user.Email;
+        var TicketNames = EventTicketRepo.Get(filter: (t => t.EventID == eventId && t.OrderId == orderId)).Select(t => t.TicketName);
 
-      IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
-      foreach (var att in attRepo.Get(filter: (tb => ((tb.OrderId == orderId) && (tb.UserId == order.O_User_Id)))))
-        details.Attendees.Add(_mapper.Map<AttendeeViewModel>(att));
+        EventOrderDetailViewModel details = new EventOrderDetailViewModel() { OrderId = orderId };
+        details.Payment = _dbservice.GetPaymentInfo(orderId);
 
-      return details;
+        IRepository<Models.Profile> userRepo = new GenericRepository<Models.Profile>(_factory.ContextFactory);
+        var user = userRepo.Get(filter: (u => u.UserID == order.O_User_Id)).First();
+        details.Name = user.FirstName + (string.IsNullOrEmpty(user.LastName) ? "" : " " + user.LastName);
+        details.Email = user.Email;
+        details.PhoneNumber = user.MainPhone;
+        details.Address = user.StreetAddressLine1 +
+                        "" + (string.IsNullOrEmpty(user.StreetAddressLine2) ? "" : " " + user.StreetAddressLine1) +
+                        "" + (string.IsNullOrEmpty(user.City) ? "" : ", " + user.City) +
+                        "" + (string.IsNullOrEmpty(user.State) ? "" : ", " + user.State) +
+                        " " + user.Zip;
+
+        IRepository<Ticket_Purchased_Detail> ptRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+        var tickets = ptRepo.Get(filter: (t => ((t.TPD_Order_Id == orderId) && (t.TPD_User_Id == order.O_User_Id))));
+        details.EventLocation = String.Join("; ", tickets.Select(t => t.Ticket_Quantity_Detail.Address.ConsolidateAddress).Distinct().ToArray());
+        details.EventDate = String.Join("; ", tickets.Select(t => t.Ticket_Quantity_Detail.Publish_Event_Detail.PE_MultipleVenue_id > 0 ?
+                t.Ticket_Quantity_Detail.Publish_Event_Detail.MultipleEvent.StartingFrom :
+                t.Ticket_Quantity_Detail.Publish_Event_Detail.EventVenue.EventStartDate).Distinct().ToArray());
+
+        IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+        foreach (var att in attRepo.Get(filter: (tb => ((tb.OrderId == orderId) && (tb.UserId == order.O_User_Id)))))
+            details.Attendees.Add(_mapper.Map<AttendeeViewModel>(att));
+
+        details.TicketNames = (TicketNames == null ? "" : string.Join(", ", TicketNames.ToArray()));
+
+        IRepository<TicketAttendee_View> tbRepo = new GenericRepository<TicketAttendee_View>(_factory.ContextFactory);
+        IRepository<Promo_Code> pcRepo = new GenericRepository<Promo_Code>(_factory.ContextFactory);
+
+        List<TicketAttendeeViewModel> ticketAttendeeList = new List<TicketAttendeeViewModel>();
+        TicketAttendeeViewModel ticketAttendeeViewModel;
+        if (order.IsManualOrder)
+        {
+            var ticketAttendees = tbRepo.Get(a => (a.OrderId == orderId && a.TicketBearerId != 0));
+            var ticketAll = tickets.Select(tp => new
+            {
+                AddressId = tp.Ticket_Quantity_Detail.TQD_AddressId,
+                ConsolidateAddress = tp.Ticket_Quantity_Detail.TQD_AddressId == 0 ? "" : tp.Ticket_Quantity_Detail.Address.ConsolidateAddress,
+                StartDateStr = tp.Ticket_Quantity_Detail.TQD_StartDate,
+                StartDate = DateTime.Parse(tp.Ticket_Quantity_Detail.TQD_StartDate)
+            }).Distinct().OrderBy(s => s.StartDate);
+
+            foreach (var ticket in ticketAll)
+            {
+                foreach (var item in ticketAttendees.Where(ta => tickets.Where(t => ((t.Ticket_Quantity_Detail.TQD_AddressId == ticket.AddressId) && (t.Ticket_Quantity_Detail.TQD_StartDate == ticket.StartDateStr)))
+                                                    .OrderBy(o => o.Ticket_Quantity_Detail.TQD_Ticket_Id).Select(tt => tt.TPD_Id).Contains(ta.PurchasedTicketId)))
+                {
+                    ticketAttendeeViewModel = new TicketAttendeeViewModel();
+                    ticketAttendeeViewModel.Address = ticket.ConsolidateAddress;
+                    ticketAttendeeViewModel.StartDate = ticket.StartDate;
+                    ticketAttendeeViewModel.TicketId = item.PurchasedTicketId;
+                    ticketAttendeeViewModel.TicketName = item.T_name;
+                    ticketAttendeeViewModel.AttendeeName = item.Name;
+                    ticketAttendeeViewModel.AttendeeEmail = item.Email;
+                    ticketAttendeeViewModel.AttendeePhone = item.PhoneNumber;
+                    ticketAttendeeViewModel.Quantity = item.Quantity;
+                    ticketAttendeeViewModel.Price = (item.TPD_Amount > 0 ? decimal.Truncate((item.Quantity * (item.TPD_Amount ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : item.TPD_Donate > 0 ? decimal.Truncate((item.Quantity * (item.TPD_Donate ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : 0);
+                    ticketAttendeeViewModel.PriceStr = (item.TPD_Amount > 0 ? "$" + decimal.Truncate((item.Quantity * (item.TPD_Amount ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : item.TPD_Donate > 0 ? "$" + decimal.Truncate((item.Quantity * (item.TPD_Donate ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : "Free");
+                    var PromoCode = pcRepo.Get(filter: p => p.PC_id == item.TPD_PromoCodeID && p.PC_Eventid == item.TPD_Event_Id).Select(pc => pc.PC_Code).FirstOrDefault();
+                    ticketAttendeeViewModel.PromoCode = (string.IsNullOrEmpty(PromoCode) ? "" : PromoCode);
+                    ticketAttendeeViewModel.PromoCodePrice = item.TPD_PromoCodeAmount ?? 0;
+                    ticketAttendeeList.Add(ticketAttendeeViewModel);
+                }
+            }
+        }
+        else
+        {
+            var ticketAll = tickets.Select(tp => new
+            {
+                AddressId = tp.Ticket_Quantity_Detail.TQD_AddressId,
+                ConsolidateAddress = tp.Ticket_Quantity_Detail.TQD_AddressId == 0 ? "" : tp.Ticket_Quantity_Detail.Address.ConsolidateAddress,
+                StartDateStr = tp.Ticket_Quantity_Detail.TQD_StartDate,
+                StartDate = DateTime.Parse(tp.Ticket_Quantity_Detail.TQD_StartDate)
+            }).Distinct().OrderBy(s => s.StartDate);
+
+            foreach (var ticket in ticketAll)
+            {
+                foreach (var item in tickets.Where(t => ((t.Ticket_Quantity_Detail.TQD_AddressId == ticket.AddressId) && (t.Ticket_Quantity_Detail.TQD_StartDate == ticket.StartDateStr)))
+                                            .OrderBy(o => o.Ticket_Quantity_Detail.TQD_Ticket_Id))
+                {
+                    ticketAttendeeViewModel = new TicketAttendeeViewModel();
+                    ticketAttendeeViewModel.Address = ticket.ConsolidateAddress;
+                    ticketAttendeeViewModel.StartDate = ticket.StartDate;
+                    ticketAttendeeViewModel.TicketId = item.Ticket_Quantity_Detail.Ticket.T_Id;
+                    ticketAttendeeViewModel.TicketName = item.Ticket_Quantity_Detail.Ticket.T_name;
+                    ticketAttendeeViewModel.AttendeeName = item.AspNetUser.Profiles.FirstOrDefault().FirstName;
+                    ticketAttendeeViewModel.AttendeeEmail = item.AspNetUser.Profiles.FirstOrDefault().Email;
+                    ticketAttendeeViewModel.AttendeePhone = item.AspNetUser.Profiles.FirstOrDefault().MainPhone;
+                    ticketAttendeeViewModel.Quantity = item.TPD_Purchased_Qty ?? 0;
+                    ticketAttendeeViewModel.Price = (item.TPD_Amount > 0 ? decimal.Truncate(((item.TPD_Purchased_Qty ?? 0) * (item.TPD_Amount ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : item.TPD_Donate > 0 ? decimal.Truncate(((item.TPD_Purchased_Qty ?? 0) * (item.TPD_Donate ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : 0);
+                    ticketAttendeeViewModel.PriceStr = (item.TPD_Amount > 0 ? "$" + decimal.Truncate(((item.TPD_Purchased_Qty ?? 0) * (item.TPD_Amount ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : item.TPD_Donate > 0 ? "$" + decimal.Truncate(((item.TPD_Purchased_Qty ?? 0) * (item.TPD_Donate ?? 0) / (item.TPD_Purchased_Qty ?? 0)) * 100) / 100 : "Free");
+                    var PromoCode = pcRepo.Get(filter: p => p.PC_id == item.TPD_PromoCodeID && p.PC_Eventid == item.TPD_Event_Id).Select(pc => pc.PC_Code).FirstOrDefault();
+                    ticketAttendeeViewModel.PromoCode = (string.IsNullOrEmpty(PromoCode) ? "" : PromoCode);
+                    ticketAttendeeViewModel.PromoCodePrice = item.TPD_PromoCodeAmount ?? 0;
+                    ticketAttendeeList.Add(ticketAttendeeViewModel);
+                }
+            }
+        }
+        details.TicketAttendees = ticketAttendeeList;
+        details.OrderTotalAmount = order.O_TotalAmount ?? 0;
+        IRepository<Event_VariableDesc> evdRepo = new GenericRepository<Event_VariableDesc>(_factory.ContextFactory);
+
+        var variableChages = evdRepo.Get(filter: (t => t.Event_Id == eventId));
+
+        details.VariableChages = variableChages.Where(x => order.O_VariableId.Split(',').Select(Int64.Parse).Contains(x.Variable_Id)).ToList();
+
+        return details;
     }
 
-    public bool SendConfirmations(string orderId, string baseUrl, string filePath)
+    public bool SendConfirmations(string orderId, string baseUrl, string filePath, bool IsManualOrder = false)
     {
       if (String.IsNullOrWhiteSpace(orderId))
         throw new ArgumentNullException("orderId");
@@ -322,14 +419,14 @@ namespace EventCombo.Service
         return false;
       else
       {
-        var mem = _tservice.GetDownloadableTicket(orderId, "pdf", filePath, true);
+        var mem = _tservice.GetDownloadableTicket(orderId, "pdf", filePath, IsManualOrder);
         Attachment attach = new Attachment(mem, new ContentType(MediaTypeNames.Application.Pdf));
         attach.ContentDisposition.FileName = "Ticket_EventCombo.pdf";
-        INotification notification = new OrderNotification(_factory, _dbservice, orderId, baseUrl, attach, true);
+        INotification notification = new OrderNotification(_factory, _dbservice, orderId, baseUrl, attach, IsManualOrder);
         ISendMailService sendService = new SendMailService();
         INotificationSender sender = new NotificationSender(notification, sendService);
         sender.SendSeparately(addresses);
-        INotification organizerNotification = new OrderOrganizerNotification(_factory, _dbservice, orderId, baseUrl, attach, true);
+        INotification organizerNotification = new OrderOrganizerNotification(_factory, _dbservice, orderId, baseUrl, attach, IsManualOrder);
         INotificationSender organizerSender = new NotificationSender(organizerNotification, sendService);
         organizerNotification.SendNotification(new SendMailService());
         return true;
@@ -417,6 +514,13 @@ namespace EventCombo.Service
       datestyle.BorderLeft = BorderStyle.Thin;
       datestyle.BorderRight = BorderStyle.Thin;
       datestyle.DataFormat = wb.CreateDataFormat().GetFormat("MMMM dd, yyyy");
+      ICellStyle currencyStyle = wb.CreateCellStyle();
+      currencyStyle.BorderBottom = BorderStyle.Thin;
+      currencyStyle.BorderTop = BorderStyle.Thin;
+      currencyStyle.BorderLeft = BorderStyle.Thin;
+      currencyStyle.BorderRight = BorderStyle.Thin;
+      currencyStyle.DataFormat = wb.CreateDataFormat().GetFormat("$#,##0.00");
+
 
       ISheet sheet = wb.CreateSheet("Orders");
       IRow row = sheet.CreateRow(0);
@@ -439,9 +543,9 @@ namespace EventCombo.Service
         AddStyledCell(row, 1, style).SetCellValue(order.BuyerName);
         AddStyledCell(row, 2, style).SetCellValue(order.TicketName);
         AddStyledCell(row, 3, style).SetCellValue(order.Quantity);
-        AddStyledCell(row, 4, style).SetCellValue("$" + (double)order.Price);
-        AddStyledCell(row, 5, style).SetCellValue("$" + (double)order.PricePaid);
-        AddStyledCell(row, 6, style).SetCellValue("$" + (double)order.PriceNet);
+        AddStyledCell(row, 4, currencyStyle).SetCellValue((double)order.Price);
+        AddStyledCell(row, 5, currencyStyle).SetCellValue((double)order.PricePaid);
+        AddStyledCell(row, 6, currencyStyle).SetCellValue((double)order.PriceNet);
         AddStyledCell(row, 7, datestyle).SetCellValue(order.CustomerEmail);
         AddStyledCell(row, 8, datestyle).SetCellValue(order.Address);
         AddStyledCell(row, 9, datestyle).SetCellValue(order.Date.ToString("MMM dd, yyyy hh:mm:ss tt"));
@@ -546,14 +650,14 @@ namespace EventCombo.Service
       foreach (var order in orders)
       {
         rw.Write(order.OrderId + delimiter);
-        rw.Write(order.BuyerName + delimiter);
-        rw.Write(order.TicketName + delimiter);
+        rw.Write("\"" + order.BuyerName + "\"" + delimiter);
+        rw.Write("\"" + order.TicketName + "\"" + delimiter);
         rw.Write(order.Quantity.ToString() + delimiter);
         rw.Write("$" + order.Price.ToString("N2") + delimiter);
         rw.Write("$" + order.PricePaid.ToString("N2") + delimiter);
         rw.Write("$" + order.PriceNet.ToString("N2") + delimiter);
-        rw.Write(order.CustomerEmail + delimiter);
-        rw.Write( order.Address + delimiter);
+        rw.Write("\"" + order.CustomerEmail + "\"" + delimiter);
+        rw.Write("\"" + order.Address + "\"" + delimiter);
         rw.Write("\"" + order.Date.ToString("MMM dd, yyyy hh:mm:ss tt") + "\"" + delimiter);
         rw.Write(order.Cancelled > 0 ? "Cancelled" : order.Refunded > 0 ? "Refunded" : order.PaymentState.ToString());
         rw.WriteLine();
@@ -739,6 +843,13 @@ namespace EventCombo.Service
         datestyle.BorderRight = BorderStyle.Thin;
         datestyle.DataFormat = wb.CreateDataFormat().GetFormat("MMMM dd, yyyy");
 
+        ICellStyle currencyStyle = wb.CreateCellStyle();
+        currencyStyle.BorderBottom = BorderStyle.Thin;
+        currencyStyle.BorderTop = BorderStyle.Thin;
+        currencyStyle.BorderLeft = BorderStyle.Thin;
+        currencyStyle.BorderRight = BorderStyle.Thin;
+        currencyStyle.DataFormat = wb.CreateDataFormat().GetFormat("$#,##0.00");
+
         ICellStyle Titlestyle = wb.CreateCellStyle();
         Titlestyle.BorderBottom = BorderStyle.Thin;
         Titlestyle.BorderTop = BorderStyle.Thin;
@@ -786,8 +897,8 @@ namespace EventCombo.Service
             AddStyledCell(row, 2, style).SetCellValue(order.BuyerName);
             AddStyledCell(row, 3, style).SetCellValue(order.TicketName);
             AddStyledCell(row, 4, style).SetCellValue(order.Quantity);
-            AddStyledCell(row, 5, style).SetCellValue("$" + order.PricePaid.ToString("N2"));
-            AddStyledCell(row, 6, style).SetCellValue("$" + order.PriceNet.ToString("N2"));
+            AddStyledCell(row, 5, currencyStyle).SetCellValue((double)order.PricePaid);
+            AddStyledCell(row, 6, currencyStyle).SetCellValue((double)order.PriceNet);
             AddStyledCell(row, 7, style).SetCellValue(order.PromoCode);
             AddStyledCell(row, 8, style).SetCellValue((order.Refunded > 0 ? "Yes" : ""));
             AddStyledCell(row, 9, style).SetCellValue((order.Cancelled > 0 ? "Yes" : ""));
@@ -801,7 +912,7 @@ namespace EventCombo.Service
                 foreach (var variable in order.VariableChages)
                 {
                     variableCount += 1;
-                    AddStyledCell(row, 13 + variableCount, style).SetCellValue("$" + (variable.Price ?? 0).ToString("N2"));
+                    AddStyledCell(row, 13 + variableCount, currencyStyle).SetCellValue((double)(variable.Price ?? 0));
                 }
                 tempOrderId = order.OrderId;
             }
@@ -810,7 +921,7 @@ namespace EventCombo.Service
                 foreach (var variable in order.VariableChages)
                 {
                     variableCount += 1;
-                    AddStyledCell(row, 13 + variableCount, style).SetCellValue("");
+                    AddStyledCell(row, 13 + variableCount, currencyStyle).SetCellValue(0.0);
                 }
             }
         }
@@ -979,7 +1090,7 @@ namespace EventCombo.Service
             rw.Write((order.Refunded > 0 ? "Yes" : "") + delimiter);
             rw.Write((order.Cancelled > 0 ? "Yes" : "") + delimiter);
             rw.Write(order.PhoneNumber + delimiter);
-            rw.Write(order.BuyerEmail + delimiter);
+            rw.Write("\"" + order.BuyerEmail + "\"" + delimiter);
             rw.Write("\"" + order.Address + "\"" + delimiter);
             rw.Write("\"" + order.MailTickets.ToString() + "\"" + delimiter);
             variableCount = 0;
@@ -1903,6 +2014,73 @@ namespace EventCombo.Service
         IRepository<Event> EventRepo = new GenericRepository<Event>(_factory.ContextFactory);
         var eventTitle = EventRepo.Get(filter: (e => e.EventID == eventId)).Select(x => new { x.EventTitle }).FirstOrDefault();
         return (eventTitle == null ? "" : eventTitle.EventTitle);
+    }
+
+    public bool SaveOrderDetails(EventOrderDetailViewModel model, string userId, string baseUrl, string filePath)
+    {
+      bool res = true;
+      using (var uow = _factory.GetUnitOfWork())
+      {
+        try
+        {
+          IRepository<TicketBearer> attRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
+          List<AttendeeViewModel> selected = new List<AttendeeViewModel>();
+          foreach (var attendee in attRepo.Get(filter: (a => ((a.OrderId == model.OrderId) && (a.UserId == userId)))))
+          {
+            var attVM = model.Attendees.Where(a => a.TicketbearerId == attendee.TicketbearerId).SingleOrDefault();
+            if (attVM != null)
+            {
+              if (
+                ((!String.IsNullOrWhiteSpace(attVM.Name) || !String.IsNullOrWhiteSpace(attendee.Name))
+                  && ((attVM.Name ?? "").Trim() != (attendee.Name ?? "").Trim()))
+                || ((!String.IsNullOrWhiteSpace(attVM.Email) || !String.IsNullOrWhiteSpace(attendee.Email)))
+                  && ((attVM.Email ?? "").Trim() != (attendee.Email ?? "").Trim())
+                || ((!String.IsNullOrWhiteSpace(attVM.PhoneNumber) || !String.IsNullOrWhiteSpace(attendee.PhoneNumber)))
+                  && ((attVM.PhoneNumber ?? "").Trim() != (attendee.PhoneNumber ?? "").Trim()))
+              {
+                attVM.PhoneNumber = (string.IsNullOrEmpty(attVM.PhoneNumber) ? "" : attVM.PhoneNumber);
+                _mapper.Map(attVM, attendee);
+                if (model.SendEmail && (!selected.Where(a => a.Email == attVM.Email).Any()))
+                  selected.Add(attVM);
+              }
+            }
+            else
+              res = false;
+          }
+          uow.Context.SaveChanges();
+          if (selected.Count > 0)
+          {
+            var mem = GetDownloadableTicket(model.OrderId, "pdf", filePath);
+            Attachment attach = new Attachment(mem, new ContentType(MediaTypeNames.Application.Pdf));
+            attach.ContentDisposition.FileName = "Ticket_EventCombo.pdf";
+            OrderNotification notification = new OrderNotification(_factory, _dbservice, model.OrderId, baseUrl, attach);
+            ISendMailService sendService = CreateSendMailService();
+            foreach (var att in selected)
+              if (!String.IsNullOrWhiteSpace(att.Email))
+              {
+                notification.ReceiverName = att.Name;
+                sendService.Message.To.Clear();
+                sendService.Message.To.Add(new MailAddress(att.Email, att.Name));
+                notification.SendNotification(sendService);
+              }
+          }
+          uow.Commit();
+        }
+        catch (Exception ex)
+        {
+          uow.Rollback();
+          throw new Exception("Exception in the SaveOrderDetails. Transaction rolled back.", ex);
+        }
+      }
+      return res;
+    }
+
+    private ISendMailService CreateSendMailService()
+    {
+      ISendMailService service = new SendMailService();
+      service.Message.From = new MailAddress("noreply@eventcombo.com");
+      service.Message.ReplyToList.Add(new MailAddress("noreply@eventcombo.com"));
+      return service;
     }
 
   }

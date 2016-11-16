@@ -1,0 +1,118 @@
+﻿@using EventCombo.Models
+@using EventCombo.Service
+@model OrderConfirmationViewModel
+@{
+  Layout = "~/Views/Shared/_AngularLayout.cshtml";
+}
+
+@section CSSSection
+{
+  @Styles.Render("~/Content/AMaterial/ViewEvent.css")
+}
+
+@section ScriptSection
+{
+}
+
+@section ScriptFooterSection
+{
+  <script type="text/javascript">
+    var fbappid = '@System.Configuration.ConfigurationManager.AppSettings["FacebookAppId"]'
+
+    // init the FB JS SDK
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: fbappid,                        // App ID from the app dashboard
+        status: true,                          // Check Facebook Login status
+        xfbml: true,                           // Look for social plugins on the page
+        version: '2.7'
+      });
+
+    };
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) { return; }
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+}
+<!--***************************-->
+<h1 class="pageTitle">THANK YOU!</h1>
+
+<section class="eventBanner" style="@((!String.IsNullOrEmpty(Model.BGImageUrl) ? "background-image:url(" + Model.BGImageUrl + ");" : "") +
+        (!String.IsNullOrEmpty(Model.BGColor) ? "background-color:" + Model.BGColor : ""))">
+  <div class="grid w960">
+    <div class="row">
+      <div class="c12 eventVanue">
+        <h2 class="event-name">@Model.EventTitle</h2>
+        <h3 class="vanue-name">@Model.VenueName</h3>
+        <div class="adiv"><i class="material-icons black">location_on</i> @Model.Address</div>
+        <div class="adiv"><i class="material-icons">schedule</i> @Model.StartDate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="grid w960">
+  <div class="row">
+    <div class="c12 margin-1em-bottom">
+      <h3 class="red-heading">Your order has been successfully processed.</h3>
+      <div class="orderDetails">
+        <div class="orderId">
+          <p class="orderNumber">Order #@Model.OrderId</p>
+          <p class="orderSbuline">Your tickets were emailed to <span class="semiBold">@Model.Email</span> and added to <a class="evtLink" href="@Url.Action("PurchasedTicket", "Account")">YOUR PURCHASES</a></p>
+        </div>
+        <div class="orderList">
+          @foreach (var ticket in Model.Tickets)
+          {
+            <div class="orderBox">
+              <p class="orderTitle">@ticket.Name</p>
+              <p class="orderSbuline">
+                <span class="margin-2em-right">@ticket.VenueName</span>
+                <span class="margin-1em-right">@ticket.DateString</span>
+                <a class="evtLink margin-1em-right" href="#">ADD TO CALENDAR</a>
+                <span class="semiBold">
+                  SHARE EVENT ON
+                  <a href="#" title="Share EventTitle via Email"><img width="16px" alt="Share EventTitle via Email" src="~/Images/AMaterial/mail-square.svg"></a>
+                  <a href="#" class="shareLink" title="Share EventTitle on Facebook"><img width="16px" alt="Share EventTitle on Facebook" src="~/Images/AMaterial/square-facebook.svg"></a>
+                  <a class="shareLink" href="#" title="Share EventTitle on Twitter"><img width="16px" alt="Share EventTitle on Twitter" src="~/Images/AMaterial/square-twitter.svg"></a>
+                  <a class="shareLink" href="#" title="Share EventTitle on LinkedIn"><img width="16px" alt="Share EventTitle on LinkedIn" src="~/Images/AMaterial/square-linkedin.svg"></a>
+                  <a href="#" title="Share EventTitle on Facebook Messenger"><img width="16px" alt="Share EventTitle on Facebook Messenger" src="~/Images/AMaterial/fb_messenger.svg"></a>
+                </span>
+              </p>
+              <span class="flRightN">@ticket.Quantity</span>
+            </div>
+          }
+          <div class="orderBox" style="display:none;">
+            <p class="orderTitle">15% off Dinner at that Italian Restaurant</p>
+            <p class="orderSbuline margin-2em-right">
+              <span class="margin-2em-right">The Italian Restaurant</span>
+              <a class="evtLink" href="#">PRINT THIS DEAL</a>
+            </p>
+            <span class="flRightN">2</span>
+          </div>
+        </div>
+        <div><a class="nextLink" href="@Url.Action("PurchasedTicket", "Account")">Go to all purchases</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="grid w960">
+  <div class="row">
+    <div class="c12 margin-1em-bottom">
+      <h3 class="red-heading">What's Next?</h3>
+      <div>
+        <a class="nextLink" href="@Url.Action("CreateEvent", "EventManagement")">Create your own event</a>
+        <a class="nextLink" href="#">Contact us</a>
+        <a class="nextLink" href="@Url.Action("Index", "OrganizerInfo", new { id = Model.OrganizerId, eventid = Model.EventId })">See organizer's profile</a>
+        <a class="nextLink" href="@Url.Action("Index", "Home")">Browse more events</a>
+      </div>
+      <md-checkbox ng-model="genAdmission" aria-label="School General Admission" class="genAdmission">Too Cool For School General Admission</md-checkbox>
+    </div>
+  </div>
+</section>
+<!--***************************-->

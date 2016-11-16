@@ -1283,7 +1283,7 @@ namespace EventCombo.Service
       throw new NotImplementedException();
     }
 
-    public string GetEventUrl(long eventId, string eventTitle, UrlHelper url)
+    public static string GetEventUrl(long eventId, string eventTitle, UrlHelper url)
     {
       return url.Action("ViewEvent", "EventManagement", new
       {
@@ -1616,5 +1616,63 @@ namespace EventCombo.Service
       }
     }
 
+    public string GetTicketPrice(long eventId)
+    {
+        string strResult = "";
+
+        IRepository<Ticket> tRepo = new GenericRepository<Ticket>(_factory.ContextFactory);
+
+        var vFree = tRepo.Get(filter: t => t.E_Id == eventId && t.TicketTypeID == 1).FirstOrDefault();
+        var vDonate = tRepo.Get(filter: t => t.E_Id == eventId && t.TicketTypeID == 3).FirstOrDefault();
+        var vMinPrice = tRepo.Get(filter: t => t.E_Id == eventId && t.TicketTypeID == 2).Select(x => x.TotalPrice).Min();
+        var vMaxPrice = tRepo.Get(filter: t => t.E_Id == eventId && t.TicketTypeID == 2).Select(x => x.TotalPrice).Max();
+
+        if (vMaxPrice == null) vMaxPrice = 0;
+        if (vMinPrice == null) vMinPrice = 0;
+        if (vFree != null && vDonate == null && vMaxPrice == 0 && vMinPrice == 0)
+        {
+            strResult = "FREE";
+        }
+        else if (vFree == null && vDonate != null && vMaxPrice == 0 && vMinPrice == 0)
+        {
+            strResult = "DONATE";
+        }
+        else if (vFree == null && vDonate == null && vMaxPrice == vMinPrice)
+        {
+            strResult = "$" + vMaxPrice.ToString();
+        }
+        else if (vFree == null && vDonate == null && vMaxPrice > vMinPrice)
+        {
+            strResult = "$" + vMinPrice.ToString() + " - $" + vMaxPrice.ToString();
+        }
+        else if (vFree != null && vDonate == null && vMaxPrice > 0)
+        {
+            strResult = "$0 - $" + vMaxPrice.ToString();
+        }
+        else if (vFree != null && vDonate != null && vMaxPrice > 0)
+        {
+            strResult = "$0 - $" + vMaxPrice.ToString();
+        }
+        else if (vFree == null && vDonate != null && vMaxPrice > vMinPrice)
+        {
+            strResult = "$" + vMinPrice.ToString() + " - $" + vMaxPrice.ToString();
+        }
+        else if (vFree != null && vDonate != null && vMaxPrice <= 0)
+        {
+            strResult = "FREE";
+        }
+        return strResult;
+    }
+
+    public string GetEventFavLikes(long eventId, string strUserId)
+    {
+        IRepository<EventFavourite> efRepo = new GenericRepository<EventFavourite>(_factory.ContextFactory);
+        using (EventComboEntities db = new EventComboEntities())
+        {
+            var vfav = efRepo.Get(filter: e => e.eventId == eventId && e.UserID == strUserId).Select(x => x.UserID).FirstOrDefault();
+            if (vfav != null && vfav.Trim() != "") return "I";
+            else return "D";
+        }
+    }
   }
 }

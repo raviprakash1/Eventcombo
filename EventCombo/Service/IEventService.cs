@@ -21,12 +21,13 @@ namespace EventCombo.Service
     EventInfoViewModel GetPrivateEventInfo(long eventId, string userId, UrlHelper url);
     void UpdateEventInfo(EventInfoViewModel ev, string userId, UrlHelper url, bool loadPrivate);
     void ValidateEventInfo(EventInfoViewModel evi);
-    string GetEventUrl(long eventId, string eventTitle, UrlHelper url);
     IncrementResultViewModel AddFavorite(long eventId, string userId);
     IncrementResultViewModel VoteEvent(long eventId, string userId);
     IEnumerable<ShortEventInfoViewModel> GetEventListByCoords(decimal lat, decimal lng, string userId);
     HomepageInfoViewModel GetHomepageInfo();
     EventViewModel GetEventBySubDomain(string subDomain);
     void CheckEventAccess(PrivateEventRequest req);
+    string GetTicketPrice(long eventId);
+    string GetEventFavLikes(long eventId, string strUserId);
   }
 }

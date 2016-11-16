@@ -37,7 +37,7 @@ namespace EventCombo.Controllers
                     var baseurl = url.GetLeftPart(UriPartial.Authority);
                     objPay.CancelUrl = baseurl + Url.Action("TicketPayment", "TicketPayment");
 
-                    redirect = PayPal.ExpressCheckout(objPay);
+                    redirect = EventCombo.Models.PayPal.ExpressCheckout(objPay);
                 }
                 catch (Exception ex)
                 {
@@ -91,7 +91,7 @@ namespace EventCombo.Controllers
                 }
                 TicketPayment TicketPayment = new TicketPayment();
                 TicketPayment = (TicketPayment)Session["TicketDatamodel"];
-                PayPal.GetCheckoutDetails(token, ref PayerID1, ref retMsg);
+                EventCombo.Models.PayPal.GetCheckoutDetails(token, ref PayerID1, ref retMsg);
                 ViewData["ReturnMessage"] = retMsg;
                 ViewData["token"] = token;
                 ViewData["PayerID"] = PayerID1;
@@ -147,7 +147,7 @@ namespace EventCombo.Controllers
                     TempData["eventdatetime"] = day + "," + Sdate + " " + time;
 
                 }
-                if (PayPal.DoCheckoutPayment(TicketPayment.strGrandTotal, token, PayerID, ref retMsg))
+                if (EventCombo.Models.PayPal.DoCheckoutPayment(TicketPayment.strGrandTotal, token, PayerID, ref retMsg))
                 {
                     ViewData["ReturnMessage"] = "";
                     ViewData["token"] = token;

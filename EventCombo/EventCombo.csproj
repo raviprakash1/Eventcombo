@@ -138,6 +138,10 @@
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PayPal, Version=1.8.0.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PayPal.1.8.0\lib\net45\PayPal.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
       <Private>True</Private>
@@ -321,6 +325,7 @@
     <Compile Include="Controllers\PayPalReturnController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\TicketPaymentController.cs" />
+    <Compile Include="Controllers\TicketPurchaseController.cs" />
     <Compile Include="Controllers\ValidationMessageController.cs" />
     <Compile Include="Controllers\ViewEventController.cs" />
     <Compile Include="DAL\ContextFactory.cs" />
@@ -366,6 +371,9 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Authenticationclass.cs" />
+    <Compile Include="Models\AvailableTicket_View.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\BillingAddress.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -469,6 +477,9 @@
     <Compile Include="Models\func_Split_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GeoState.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GetEventDateList_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -532,6 +543,12 @@
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\List.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LockOrder.cs">
+      <DependentUpon>EventComboModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LockTicket.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageAttendeesViewModels.cs" />
@@ -602,6 +619,7 @@
     <Compile Include="Models\Publish_Event_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PurchasingViewModel.cs" />
     <Compile Include="Models\QuestionType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -654,6 +672,7 @@
     <Compile Include="Models\TicketType.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TicketViewModels.cs" />
     <Compile Include="Models\Ticket_Locked_Detail.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -701,6 +720,7 @@
     <Compile Include="Service\ArticleService.cs" />
     <Compile Include="Service\ECImageStorage.cs" />
     <Compile Include="Service\ECImageService.cs" />
+    <Compile Include="Service\IPurchasingService.cs" />
     <Compile Include="Service\Notification\NewEventNotification.cs" />
     <Compile Include="Service\Notification\EventChangeNotification.cs" />
     <Compile Include="Service\Notification\EmailToFriendsNotification.cs" />
@@ -738,6 +758,7 @@
     <Compile Include="Service\OrderOptionsService.cs" />
     <Compile Include="Service\Notification\SendMailService.cs" />
     <Compile Include="Service\Notification\OrganizerMessageNotification.cs" />
+    <Compile Include="Service\PurchasingService.cs" />
     <Compile Include="Service\TicketService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\DateTimeWithZone.cs" />
@@ -758,11 +779,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>OrganizerProfile.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Account\PurchasedTicket.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PurchasedTicket.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateEvent\ViewCreateEvent.generated.cs">
       <AutoGen>True</AutoGen>
@@ -915,10 +931,14 @@
     <Content Include="Images\align_center.gif" />
     <Content Include="Images\align_left.gif" />
     <Content Include="Images\align_right.gif" />
+    <Content Include="Images\AMaterial\amex-icon.jpg" />
     <Content Include="Images\AMaterial\banner.jpg" />
     <Content Include="Images\AMaterial\ColorWheel.png" />
+    <Content Include="Images\AMaterial\credit-card.jpg" />
+    <Content Include="Images\AMaterial\cv_card.gif" />
     <Content Include="Images\AMaterial\deal1.jpg" />
     <Content Include="Images\AMaterial\deal2.jpg" />
+    <Content Include="Images\AMaterial\discover-icon.jpg" />
     <Content Include="Images\AMaterial\dream-team.jpg" />
     <Content Include="Images\AMaterial\EventComboLogo.svg" />
     <Content Include="Images\AMaterial\EventComboLogoWholePx.svg" />
@@ -938,7 +958,9 @@
     <Content Include="Images\AMaterial\marker-green2.png" />
     <Content Include="Images\AMaterial\marker-green_old.png" />
     <Content Include="Images\AMaterial\marker-pink.png" />
+    <Content Include="Images\AMaterial\master-card-icon.jpg" />
     <Content Include="Images\AMaterial\No_image_available.svg" />
+    <Content Include="Images\AMaterial\paypal.jpg" />
     <Content Include="Images\AMaterial\plusIcon.png" />
     <Content Include="Images\AMaterial\popimg.jpg" />
     <Content Include="Images\AMaterial\RecordBackgroundFinal_1000.gif" />
@@ -948,6 +970,7 @@
     <Content Include="Images\AMaterial\square-twitter.svg" />
     <Content Include="Images\AMaterial\stripes.png" />
     <Content Include="Images\AMaterial\twitter.svg" />
+    <Content Include="Images\AMaterial\visa-icon.jpg" />
     <Content Include="Images\amr-exp.png" />
     <Content Include="Images\Bar_Image.Png" />
     <Content Include="Images\checked.png" />
@@ -1022,6 +1045,8 @@
     </Content>
     <Content Include="newemailtemplate.html" />
     <Content Include="Scripts\AMaterial\AccountController.js" />
+    <Content Include="Scripts\AMaterial\Checkout.js" />
+    <Content Include="Scripts\AMaterial\organizerInfo.js" />
     <Content Include="Scripts\AMaterial\Service\AccountService.js" />
     <Content Include="Scripts\AMaterial\angucomplete-alt.js" />
     <Content Include="Scripts\AMaterial\angular-animate.js" />
@@ -1048,6 +1073,7 @@
     <Content Include="Scripts\AMaterial\demo.js" />
     <Content Include="Scripts\AMaterial\EventComboApp.js" />
     <Content Include="Scripts\AMaterial\footer.js" />
+    <Content Include="Scripts\AMaterial\Service\OrganizerService.js" />
     <Content Include="Scripts\AMaterial\Service\geoService.js" />
     <Content Include="Scripts\AMaterial\header.js" />
     <Content Include="Scripts\AMaterial\Homepage.js" />
@@ -1789,7 +1815,6 @@
     <Content Include="Views\Account\OrganizerEditPartialView.cshtml" />
     <Content Include="Views\Home\DiscoverEventsTiles.cshtml" />
     <Content Include="Views\Account\OrganizerAddPartialView.cshtml" />
-    <Content Include="Views\OrganizerInfo\Index.cshtml" />
     <Content Include="Views\OrganizerInfo\OrganiserPresentPartialView.cshtml" />
     <Content Include="Views\ManageEvent\PromotionalCodes.cshtml" />
     <Content Include="Views\ManageEvent\CreatePromotionalCodes.cshtml" />
@@ -1840,6 +1865,9 @@
     <Content Include="Views\Download\_OrderList.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Download\_ManualOrderList.cshtml" />
+    <Content Include="Views\TicketPurchase\Checkout.cshtml" />
+    <Content Include="Views\TicketPurchase\Confirmation.cshtml" />
+    <Content Include="Views\OrganizerInfo\OrganizerInfo.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

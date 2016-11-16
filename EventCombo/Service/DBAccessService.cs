@@ -134,12 +134,19 @@ namespace EventCombo.Service
       if (String.IsNullOrWhiteSpace(userId))
         throw new ArgumentNullException("userId");
 
-      IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
-      var ticket = tpdRepo.Get(filter: (t => ((t.TPD_User_Id == userId) && (t.TPD_Order_Id == orderId)))).FirstOrDefault();
-      if (ticket != null)
+      IRepository<Order_Detail_T> oRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
+      var order = oRepo.Get(o => o.O_Order_Id == orderId).FirstOrDefault();
+      if (order == null)
+        return AccessLevel.Public;
+
+      if (order.O_User_Id == userId)
         return AccessLevel.OrderOwner;
-      if (ticket.Event.UserID == userId)
+
+      IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
+      var ticket = tpdRepo.Get(filter: (t => t.TPD_Order_Id == orderId)).FirstOrDefault();
+      if ((ticket != null) && (ticket.Event.UserID == userId))
         return AccessLevel.EventOwner;
+
       return AccessLevel.Public;
     }
 

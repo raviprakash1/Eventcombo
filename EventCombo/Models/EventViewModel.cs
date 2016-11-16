@@ -490,4 +490,42 @@ namespace EventCombo.Models
     public bool PasswordValid { get; set; }
     public bool InviteValid { get; set; }
   }
+
+  public class OrganizerEvnetViewModel
+  {
+      public long EventId { get; set; }
+      public string EventTitle { get; set; }
+      public string EventImg { get; set; }
+      public string EventPrice { get; set; }
+      public string EventDes { get; set; }
+      public string EventType { get; set; }
+      public string EventCat { get; set; }
+      public DateTime EventDate { get; set; }
+      private Position _Position = new Position();
+      public Position Position
+      {
+          get
+          {
+              return _Position;
+          }
+          set
+          {
+              _Position = value;
+          }
+      }
+      public string MarkerIcon { get; set; }
+      public int MarkerWidth { get; set; }
+      public int MarkerHeight { get; set; }
+      public string Venue { get; set; }
+      public string DateOfEvent { get; set; }
+      public string EventPath { get; set; }
+      public string EventPrivacy { get; set; }
+      public string EventLike { get; set; }
+  }
+
+  public class Position
+  {
+      public decimal lat { get; set; }
+      public decimal lng { get; set; }
+  }
 }

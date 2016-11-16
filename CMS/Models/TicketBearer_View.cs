@@ -20,5 +20,7 @@ namespace CMS.Models
         public string Guid { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        public long JustId { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

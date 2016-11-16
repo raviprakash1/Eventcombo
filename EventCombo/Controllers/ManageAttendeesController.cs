@@ -149,7 +149,7 @@ namespace EventCombo.Controllers
       {
         if (String.IsNullOrWhiteSpace(orderId))
           return -1;
-        if (_maservice.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath("..")))
+        if (_maservice.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath(".."), true))
           return 1;
         else
           return 0;
@@ -312,7 +312,7 @@ namespace EventCombo.Controllers
     }
 
     [HttpGet]
-    public ActionResult GetOrderDetail(string orderId)
+    public ActionResult GetOrderDetail(string orderId, long eventId)
     {
       if ((Session["AppId"] == null))
         return new EmptyResult();
@@ -321,7 +321,7 @@ namespace EventCombo.Controllers
       if (_dbservice.GetOrderAccess(orderId, userId) == AccessLevel.Public)
         return new EmptyResult();
 
-      EventOrderDetailViewModel order = _maservice.GetOrderDetails(orderId);
+      EventOrderDetailViewModel order = _maservice.GetOrderDetails(orderId, eventId);
 
       return PartialView("_OrderDetail", order);
     }
@@ -609,5 +609,19 @@ namespace EventCombo.Controllers
         string path = _maservice.GetBadgesListPath(badgesViewModel, format, userId);
         return Content(path);
     }
+
+    [HttpPost]
+    public string SavePurchasedTicketDetail(EventOrderDetailViewModel model)
+    {
+      if (Session["AppId"] == null)
+        return "You can not save changes.";
+
+      string userId = Session["AppId"].ToString();
+      if (_maservice.SaveOrderDetails(model, userId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath("..")))
+        return "Changes saved.";
+      else
+        return "Changes not saved.";
+    }
+
   }
 }

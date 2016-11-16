@@ -49,7 +49,7 @@ namespace EventCombo.Service
 
     public void SendNotification(ISendMailService _service)
     {
-
+      string title;
       IRepository<Email_Template> etRepo = new GenericRepository<Email_Template>(_factory.ContextFactory);
       IRepository<Organizer_Master> omRepo = new GenericRepository<Organizer_Master>(_factory.ContextFactory);
       IRepository<Event> evRepo = new GenericRepository<Event>(_factory.ContextFactory);
@@ -61,8 +61,11 @@ namespace EventCombo.Service
       if (om == null)
         throw new Exception("Organizer_Master nof found for ID = " + (_message.OrganizerId ?? 0).ToString());
       var ev = evRepo.GetByID(_message.EventId);
+
       if (ev == null)
-        throw new Exception("Event nof found for ID = " + (_message.EventId ?? 0).ToString());
+          title = "Inquiry from " + om.Orgnizer_Name;
+      else
+          title = ev.EventTitle;
 
       string userEmail = om.Organizer_Email ?? om.AspNetUser.Profiles.FirstOrDefault().Email;
       string userName = om.Orgnizer_Name ?? om.AspNetUser.Profiles.FirstOrDefault().FirstName;
@@ -73,7 +76,7 @@ namespace EventCombo.Service
       tagList["UserEmailID"] = _message.Email;
       tagList["UserFirstNameID"] = _message.Name;
       tagList["UserPhone"] = _message.PhoneNo;
-      tagList["EventTitleId"] = ev.EventTitle;
+      tagList["EventTitleId"] = title;
       tagList["MessageBody"] = _message.Message;
 
       _service.Message.To.Clear();

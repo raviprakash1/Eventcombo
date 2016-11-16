@@ -35,6 +35,10 @@ eventComboApp.controller('ViewEventController', ['$scope', '$http', '$window', '
       $scope.eventInfoLoaded = true;
     });
 
+    $scope.$on('ShowMessage', function (event, val) {
+      $scope.showInfoMessage(true, val);
+    })
+
     $scope.resetForm = function (form) {
       form.$setPristine();
       form.$setUntouched();
@@ -398,49 +402,44 @@ eventComboApp.service('eventInfoService', ['$http', '$rootScope', '$cookies', '$
 
     var postTickets = function () {
       var tickets = [];
-      var selection = '';
       angular.forEach(eventInfo.Tickets, function (ticket, key) {
         var t = null;
         if ((ticket.TicketTypeId == 3) && (ticket.Amount > 0))
           t = {
-            TLD_TQD_Id: ticket.TQDId,
-            TLD_Locked_Qty: 1,
-            TLD_Event_Id: eventInfo.EventId,
-            TLD_Donate: ticket.Amount,
-            TicketAmount: ticket.Amount
+            TicketQuantityDetailId: ticket.TQDId,
+            Quantity: 1,
+            Donate: ticket.Amount,
+            Amount: ticket.Amount
           }
         else if (ticket.Quantity > 0)
           t = {
-            TLD_TQD_Id: ticket.TQDId,
-            TLD_Locked_Qty: ticket.Quantity,
-            TLD_Event_Id: eventInfo.EventId,
-            TLD_Donate: 0,
-            TicketAmount: ticket.TotalPrice * ticket.Quantity
+            TicketQuantityDetailId: ticket.TQDId,
+            Quantity: ticket.Quantity,
+            Donate: 0,
+            Amount: ticket.TotalPrice * ticket.Quantity
           }
         if (t != null) {
-          selection = (selection == '' ? '' : (selection + '¶')) + t.TLD_TQD_Id + '~' + t.TLD_Locked_Qty + '~' + t.TLD_Donate;
           tickets.push(t);
         }
       });
       if (tickets.length > 0) {
         var model = {
-          ev: angular.toJson({
-            TLD_TQD_Id: '0',
-            TLD_Locked_Qty: '0',
-            TLD_List: tickets
+          json: angular.toJson({
+            EventId: eventInfo.EventId,
+            Tickets: tickets
           })
         }
-        $http.post('/eventmanagement/StartPurchase', model).then(function (response) {
-          if (response.data == 'N') {
-            $cookies.remove("Selection");
+        $http.post('/TicketPurchase/LockTickets', model).then(function (response) {
+          var res = response.data;
+          if (!res.LockId) {
+            if (res.TicketsAvailable) {
+              broadcastService.ShowMessage("Tickets temporarily locked.")
+            } else {
+              broadcastService.ShowMessage("Tickets unavailable.")
+            }
           }
-          else if (response.data == "NOTLIVE") {
-            $cookies.remove("Selection");
-          } else {
-            var d = new Date();
-            d.setDate(d.getDate() + 1);
-            $cookies.put("Selection", selection, { expires: d });
-            $window.location.href = '/TicketPayment/TicketPayment';
+          else {
+            $window.location.href = '/TicketPurchase/Checkout?lockId=' + res.LockId;
           }
 
         });

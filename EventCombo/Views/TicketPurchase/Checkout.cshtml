@@ -1,0 +1,476 @@
+﻿@using EventCombo.Models
+@using EventCombo.Service
+@model EventPurchaseInfoViewModel
+@{
+  Layout = "~/Views/Shared/_AngularLayout.cshtml";
+}
+
+@section CSSSection
+{
+  @Styles.Render("~/Content/AMaterial/main.css", "~/Content/AMaterial/ViewEvent.css")
+}
+
+@section ScriptSection
+{
+}
+
+@section ScriptFooterSection
+{
+  <script src="@Url.Content("~/Scripts/AMaterial/Checkout.js")"></script>
+}
+<!--****************************-->
+<div ng-controller="checkoutController" lockid="@Model.PurchaseInfo.LockId" ng-cloak>
+  <h1 class="pageTitle">Checkout</h1>
+  <!--****************************-->
+  <section class="eventBanner" style="@((!String.IsNullOrEmpty(Model.BGImageUrl) ? "background-image:url(" + Model.BGImageUrl + ");" : "") +
+        (!String.IsNullOrEmpty(Model.BGColor) ? "background-color:" + Model.BGColor : ""))">
+    <div class="grid w960">
+      <div class="row">
+        <div class="c12 eventVanue">
+          <h2 class="event-name">@Model.EventTitle</h2>
+          <h3 class="vanue-name">@Model.VenueName</h3>
+          <div class="adiv"><i class="material-icons black">location_on</i> @Model.Address</div>
+          <div class="adiv"><i class="material-icons">schedule</i> @Model.StartDate</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--****************************-->
+  <section class="grid w960">
+    <form name="checkoutForm" novalidate>
+      <div class="row">
+
+        <div class="c12 margin-1em-bottom"><h2 class="red-heading">Tickets</h2></div>
+
+        <div class="c12">
+
+          <div class="ticket padding-1em-top padding-1em-bottom" ng-repeat="ticket in purchaseInfo.Tickets">
+            <div class="c6">
+              <div class="c12 padded text24">{{ticket.Name}}</div>
+              <div class="c12 padded">
+                <span class="c6 padded ticdetail">{{ticket.VenueName}}</span>
+                <span class="c6 padded ticdetail">{{ticket.DateString}}</span>
+              </div>
+            </div>
+            <div ng-show="ticket.TicketTypeId == 2">
+              <div class="c3 text24 upp"><span class="smallFee" ng-show="ticket.Price != ticket.SourcePrice"><del>${{ticket.SourcePrice.toFixed(2)}}</del><br /></span> ${{ticket.Price.toFixed(2)}} <br /><span class="smallFee" ng-show="ticket.TotalFee">(+${{ticket.TotalFee.toFixed(2)}} FEE)</span></div>
+              <div class="c1 text-right optValue">{{ticket.Quantity}}</div>
+              <div class="c2 text-right optPrice">${{ticket.TotalPrice.toFixed(2)}}</div>
+            </div>
+            <div ng-show="ticket.TicketTypeId == 1">
+              <div class="c3 text24 upp">Free</div>
+              <div class="c3 text-right optValue">{{ticket.Quantity}}</div>
+            </div>
+            <div ng-show="ticket.TicketTypeId == 3">
+              <div class="c3 text24 upp">Donate</div>
+              <div class="c3 text-right optPrice">${{ticket.TotalPrice.toFixed(2)}}</div>
+            </div>
+            <div class="c12 ticdes"><a class="attendeeInfo" ng-click="ticket.ShowAttendees = !ticket.ShowAttendees">EDIT ATTENDEE INFO</a></div>
+            <div ng-show="ticket.ShowAttendees">
+              <div class="c12 padded" ng-repeat="attendee in ticket.Attendees">
+                <div class="c4">
+                  <md-input-container class="block100">
+                    <label>Attendee {{$index + 1}}</label>
+                    <input ng-model="attendee.Name">
+                  </md-input-container>
+                </div>
+                <div class="c4">
+                  <md-input-container class="block100">
+                    <label>Email</label>
+                    <input type="email" name="ticket{{$parent.$index}}attendeeEmail{{$index}}" ng-model="attendee.Email" ng-pattern="/^.+@("@").+\..+$/" ng-keypress="submitted=false" />
+                    <div ng-messages="checkoutForm['ticket' + $parent.$index + 'attendeeEmail' + $index].$error" role="alert">
+                      <div ng-message="pattern">Use valid email format</div>
+                    </div>
+                  </md-input-container>
+                </div>
+                <div class="c4">
+                  <md-input-container class="block100">
+                    <label>Phone Number</label>
+                    <input tel-mask name="ticket{{$parent.$index}}attendeePhone{{$index}}" ng-model="attendee.PhoneNumber" ng-pattern="/^[0-9]{3}-[0-9]{3}-[0-9]{4,5}$/" />
+                    <div ng-messages="checkoutForm['ticket' + $parent.$index + 'attendeePhone' + $index].$error">
+                      <div ng-message="pattern">Enter a valid phone number - ###-###-####</div>
+                    </div>
+                  </md-input-container>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="deal checkoutDeal padding-1em-top padding-1em-bottom" ng-show="false">
+            <div class="c9 newDL">
+              <img class="dealImg" ng-src="~/Images/AMaterial/deal1.jpg">
+              <div>
+                <span class="dealOff">53% OFF</span>
+                <span class="dealOffDetails">$15 for $30 Worth of Southern Italian Dinner for Two or More at Cu Calandra</span>
+              </div>
+              <div class="dealDes"><strong>Cucina Calandra</strong> Fairfield (16.9 miles)</div>
+            </div>
+            <div class="c1 text-right optValue">3</div>
+            <div class="c2 text-right optPrice">$45.00</div>
+          </div>
+
+          <div ng-repeat="vcgroup in purchaseInfo.PurchaseInfo.VariableChargeGroups">
+            <div class="VarCharge" ng-repeat="vcharge in vcgroup.VariableCharges">
+              <div class="c10 padded">
+                <md-checkbox ng-model="vcharge.Checked" ng-true-value="true" ng-false-value="false" ng-change="VarChargeChanged(vcharge.VariableId)" aria-label="vcharge.VariableDesc" class="blueCheckbox">
+                  {{vcharge.VariableDesc}}<div class="requireVC" ng-show="vcgroup.GroupType == 1">Required</div>
+                </md-checkbox>
+              </div>
+              <div class="c2 padded text-right optPrice">${{vcharge.Price.toFixed(2)}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="c12 text-right">
+          <md-input-container class="promoCode">
+            <label>Promo Code</label>
+            <input ng-model="purchaseInfo.PromoCode">
+          </md-input-container>
+          <span class="promoDiscount margin-2em-left" ng-show="purchaseInfo.PromoCode">-${{purchaseInfo.PurchaseInfo.TotalPromo.toFixed(2)}}</span>
+        </div>
+
+        <div class="c12 buttons text-right">
+          <span class="tot text-right">Total: ${{purchaseInfo.PurchaseInfo.TotalOrder.toFixed(2)}}</span>
+        </div>
+
+      </div>
+    </form>
+    <!--****************************-->
+    <div class="row margin-1em-bottom">
+      <div class="c12 margin-1em-bottom" ng-show="purchaseInfo.PurchaseInfo.TotalOrder > 0"><h2 class="red-heading">Payment Method</h2></div>
+      <div class="c12 paymentSpace" ng-show="purchaseInfo.PurchaseInfo.TotalOrder > 0">
+        <md-radio-group ng-model="purchaseInfo.PurchaseInfo.Method" class="paymentMethod">
+          <md-radio-button ng-value="0" class="md-primary margin-2em-right" aria-label="Credit Card">
+            <img src="~/Images/AMaterial/credit-card.jpg">
+          </md-radio-button>
+          <md-radio-button ng-value="1" class="md-primary" aria-label="PayPal">
+            <img src="~/Images/AMaterial/paypal.jpg">
+          </md-radio-button>
+        </md-radio-group>
+      </div>
+      @if (!String.IsNullOrEmpty(Model.BaseUserId))
+      {
+        <div class="c12 paymentSpace logColor">Hi @(Model.BaseUserName), Not you ? <a ng-click="Logout()">Sign Out</a></div>
+      }
+      else
+      {
+        <div class="c12 paymentSpace logColor">Have you used Eventcombo before ? <a ng-click="Login()">Log In</a></div>
+      }
+    </div>
+    <!--****************************-->
+    <form name="creditcardForm" novalidate>
+      <div class="row" ng-show="purchaseInfo.PurchaseInfo.Method == 0">
+        <div class="c6 paymentSpace">
+          <md-input-container class="block45">
+            <label>First Name</label>
+            <input name="checkoutFirstName" ng-model="purchaseInfo.PurchaseInfo.FirstName" ng-keypress="submitted=false" ng-required="true">
+            <div ng-messages="creditcardForm.checkoutFirstName.$error" role="alert">
+              <div ng-message="required">Enter first name</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block45">
+            <label>Last Name</label>
+            <input name="checkoutLastName" ng-model="purchaseInfo.PurchaseInfo.LastName" ng-keypress="submitted=false" ng-required="true">
+            <div ng-messages="creditcardForm.checkoutLastName.$error" role="alert">
+              <div ng-message="required">Enter last name</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block100">
+            <label>Email</label>
+            <input type="email" name="checkoutEmail" ng-model="purchaseInfo.PurchaseInfo.Email" ng-pattern="/^.+@("@").+\..+$/" ng-keypress="submitted=false" ng-required="true" />
+            <div ng-messages="creditcardForm.checkoutEmail.$error" role="alert">
+              <div ng-message="required">Enter your email address</div>
+              <div ng-message="pattern">Use valid email format</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block100" ng-show="purchaseInfo.PurchaseInfo.TotalOrder > 0">
+            <label>Card Number</label>
+            <input credit-card name="checkoutCardNumber" ng-model="purchaseInfo.PurchaseInfo.CardNumber" ng-minlength="15" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0">
+            @foreach (var ctype in Model.AcceptedCards)
+            {
+              <img class="cardType" ng-show="crCardType=='@(ctype.TypeName)'" src="@(ctype.ImageUrl)">
+            }
+            <div ng-messages="creditcardForm.checkoutCardNumber.$error" role="alert">
+              <div ng-message="required">Enter card number</div>
+              <div ng-message="minlength">Enter a valid card number</div>
+              <div ng-message="crCardMessage">We only accept MasterCard, Visa and Discover</div>
+              <div ng-message="amexMessage">We do not accept AMEX</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block100" ng-show="purchaseInfo.PurchaseInfo.TotalOrder > 0">
+            <label>Name on Card</label>
+            <input name="checkoutNameOnCard" ng-model="purchaseInfo.PurchaseInfo.CardName" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0">
+            <div ng-messages="creditcardForm.checkoutNameOnCard.$error" role="alert">
+              <div ng-message="required">Enter name on card</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block100" ng-show="purchaseInfo.PurchaseInfo.TotalOrder > 0">
+            <label>Expiration Date</label>
+            <input expiration-date name="checkoutExpirationDate" ng-model="purchaseInfo.PurchaseInfo.ExpirationDate"
+                   ng-pattern="/^((0[1-9])|(1[0-2]))\/([0-9]{2,4})$/" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0" echeck>
+            <div ng-messages="creditcardForm.checkoutExpirationDate.$error" role="alert">
+              <div ng-message="required">Enter expiration date</div>
+              <div ng-message="pattern">Enter a valid expiration date in MM/YY format</div>
+              <div ng-message="echeck">Card already expired</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block100" ng-show="purchaseInfo.PurchaseInfo.TotalOrder > 0">
+            <label>Security Code</label>
+            <input security-code name="checkoutSecurityCode" ng-model="purchaseInfo.PurchaseInfo.SecurityCode"
+                   ng-pattern="/^[0-9]{3,4}$/" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0">
+            <span class="cvv_info">
+              <i class="material-icons">info</i>
+              <span class="cv_card"><img ng-src="~/Images/AMaterial/cv_card.gif"></span>
+            </span>
+            <div ng-messages="creditcardForm.checkoutSecurityCode.$error" role="alert">
+              <div ng-message="required">Enter security code</div>
+              <div ng-message="pattern">Enter a valid security code</div>
+            </div>
+          </md-input-container>
+        </div>
+
+        <div class="c6 paymentSpace" ng-show="purchaseInfo.PurchaseInfo.TotalOrder > 0">
+          <md-checkbox ng-model="purchaseInfo.PurchaseInfo.ShippingSame" ng-true-value="true" ng-false-value="false" aria-label="Billing Address" class="blueCheckbox">Billing address is the same as shipping</md-checkbox>
+          <div class="block100"><strong>Billing Information</strong></div>
+          <md-input-container class="block30">
+            <label>Zip Code</label>
+            <input name="checkoutBillingZipCode" ng-model="purchaseInfo.PurchaseInfo.BillingAddress.ZipCode"
+                   ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0" zipcheck ng-blur="GetCityByZip(purchaseInfo.PurchaseInfo.BillingAddress)">
+            <div ng-messages="creditcardForm.checkoutBillingZipCode.$error" role="alert">
+              <div ng-message="required">Enter billing zip</div>
+              <div ng-message="zipcheck">Wrong zip</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block30">
+            <label>City</label>
+            <input name="checkoutBillingCity" ng-model="purchaseInfo.PurchaseInfo.BillingAddress.City" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0">
+            <div ng-messages="creditcardForm.checkoutBillingCity.$error" role="alert">
+              <div ng-message="required">Enter billing city</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block30">
+            <label>State</label>
+            <md-select name="checkoutBillingState" ng-model="purchaseInfo.PurchaseInfo.BillingAddress.StateId"
+                       ng-change="StateChanged(purchaseInfo.PurchaseInfo.BillingAddress)"
+                       ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0">
+              <md-option ng-value="state.StateId" ng-repeat="state in purchaseInfo.StateList">
+                {{state.StateName}}
+              </md-option>
+            </md-select>
+            <div ng-messages="creditcardForm.checkoutBillingState.$error" role="alert">
+              <div ng-message="required">Enter billing state</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block100">
+            <label>Billing Street Address</label>
+            <input name="checkoutBillingAddress" ng-model="purchaseInfo.PurchaseInfo.BillingAddress.Address1" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0">
+            <div ng-messages="creditcardForm.checkoutBillingAddress.$error" role="alert">
+              <div ng-message="required">Enter billing street address</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block100">
+            <label>Apt., Floor, Unit (optional)</label>
+            <input ng-model="purchaseInfo.PurchaseInfo.BillingAddress.Address2">
+          </md-input-container>
+          <md-input-container class="block100">
+            <label>Phone Number</label>
+            <input tel-mask name="checkoutPhone" ng-model="purchaseInfo.PurchaseInfo.BillingAddress.PhoneNumber"
+                   ng-pattern="/^[0-9]{3}-[0-9]{3}-[0-9]{4,5}$/" ng-required="purchaseInfo.PurchaseInfo.TotalOrder > 0" />
+            <div ng-messages="creditcardForm.checkoutPhone.$error">
+              <div ng-message="required">Enter phone number</div>
+              <div ng-message="pattern">Enter a valid phone number - ###-###-####</div>
+            </div>
+          </md-input-container>
+          <div class="block100" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame"><strong>Shipping Information</strong></div>
+          <md-input-container class="block30" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
+            <label>Zip Code</label>
+            <input name="checkoutShippingZipCode" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.ZipCode"
+                   ng-required="!purchaseInfo.PurchaseInfo.ShippingSame && (purchaseinfo.purchaseinfo.totalorder> 0)" zipcheck ng-blur="GetCityByZip(purchaseInfo.PurchaseInfo.ShippingAddress)">
+            <div ng-messages="creditcardForm.checkoutShippingZipCode.$error" role="alert">
+              <div ng-message="required">Enter shipping zip</div>
+              <div ng-message="zipcheck">Wrong zip</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block30" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
+            <label>City</label>
+            <input name="checkoutShippingCity" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.City"
+                   ng-required="!purchaseInfo.PurchaseInfo.ShippingSame && (purchaseinfo.purchaseinfo.totalorder> 0)">
+            <div ng-messages="creditcardForm.checkoutShippingCity.$error" role="alert">
+              <div ng-message="required">Enter shipping city</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block30" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
+            <label>State</label>
+            <md-select name="checkoutShippingState" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.StateId"
+                       ng-change="StateChanged(purchaseInfo.PurchaseInfo.ShippingAddress)"
+                       ng-required="!purchaseInfo.PurchaseInfo.ShippingSame && (purchaseinfo.purchaseinfo.totalorder> 0)">
+              <md-option ng-value="state.StateId" ng-repeat="state in purchaseInfo.StateList">
+                {{state.StateName}}
+              </md-option>
+            </md-select>
+            <div ng-messages="creditcardForm.checkoutShippingState.$error" role="alert">
+              <div ng-message="required">Enter shipping state</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block100" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
+            <label>Shipping Street Address</label>
+            <input name="checkoutShippingAddress" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.Address1"
+                   ng-required="!purchaseInfo.PurchaseInfo.ShippingSame && (purchaseinfo.purchaseinfo.totalorder> 0)">
+            <div ng-messages="creditcardForm.checkoutShippingAddress.$error" role="alert">
+              <div ng-message="required">Enter shipping street address</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block100" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
+            <label>Apt., Floor, Unit (optional)</label>
+            <input ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.Address2">
+          </md-input-container>
+        </div>
+
+        <div class="c12 text-right margin-1em-top">
+          <md-input-container class="block100" style="margin:0;">
+            <md-checkbox ng-model="termsConditions" ng-init="termsConditions=true" ng-checked="true" aria-label="I agree to the Terms and Conditions" class="blueCheckbox" required>I agree to the Eventcombo <a href="/ec/terms" target="_blank">Terms and Conditions</a> for purchasing or registering for this event and its deals.</md-checkbox>
+          </md-input-container>
+        </div>
+        <div class="c12 text-right">
+          <md-button class="chkBack" ng-click="goBack()">GO BACK</md-button>
+          <md-button class="chkSubmit" type="submit" ng-click="creditcardSubmit('creditcardForm')">SUBMIT PAYMENT</md-button>
+        </div>
+
+      </div>
+    </form>
+    <form name="paypalForm" novalidate>
+      <div class="row" ng-show="purchaseInfo.PurchaseInfo.Method == 1">
+        <div class="c6 paymentSpace">
+          <md-input-container class="block45">
+            <label>First Name</label>
+            <input name="paypalFirstName" ng-model="purchaseInfo.PurchaseInfo.FirstName" ng-keypress="submitted=false" ng-required="true">
+            <div ng-messages="paypalForm.paypalFirstName.$error" role="alert">
+              <div ng-message="required">Enter first name</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block45">
+            <label>Last Name</label>
+            <input name="paypalLastName" ng-model="purchaseInfo.PurchaseInfo.LastName" ng-keypress="submitted=false" ng-required="true">
+            <div ng-messages="paypalForm.paypalLastName.$error" role="alert">
+              <div ng-message="required">Enter last name</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block100">
+            <label>Email</label>
+            <input type="email" name="paypalEmail" ng-model="purchaseInfo.PurchaseInfo.Email" ng-pattern="/^.+@("@").+\..+$/" ng-keypress="submitted=false" ng-required="true" />
+            <div ng-messages="paypalForm.paypalEmail.$error" role="alert">
+              <div ng-message="required">Enter your email address</div>
+              <div ng-message="pattern">Use valid email format</div>
+            </div>
+          </md-input-container>
+        </div>
+        <div class="c6 paymentSpace">
+          <md-checkbox ng-model="purchaseInfo.PurchaseInfo.ShippingSame" aria-label="Shipping Address" class="blueCheckbox">Shipping address is the same as PayPal</md-checkbox>
+          <md-input-container class="block30" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
+            <label>Zip Code</label>
+            <input name="paypalShippingZipCode" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.ZipCode"
+                   ng-required="!purchaseInfo.PurchaseInfo.ShippingSame" zipcheck ng-blur="GetCityByZip(purchaseInfo.PurchaseInfo.ShippingAddress)">
+            <div ng-messages="paypalForm.paypalShippingZipCode.$error" role="alert">
+              <div ng-message="required">Enter shipping zip</div>
+              <div ng-message="zipcheck">Wrong Zip Code</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block30" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
+            <label>City</label>
+            <input name="paypalShippingCity" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.City" ng-required="!purchaseInfo.PurchaseInfo.ShippingSame">
+            <div ng-messages="paypalForm.paypalShippingCity.$error" role="alert">
+              <div ng-message="required">Enter shipping city</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block30" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
+            <label>State</label>
+            <md-select name="checkoutShippingState" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.StateId"
+                       ng-change="StateChanged(purchaseInfo.PurchaseInfo.ShippingAddress)" ng-required="!purchaseInfo.PurchaseInfo.ShippingSame">
+              <md-option ng-value="state.StateId" ng-repeat="state in purchaseInfo.StateList">
+                {{state.StateName}}
+              </md-option>
+            </md-select>
+            <div ng-messages="creditcardForm.checkoutShippingState.$error" role="alert">
+              <div ng-message="required">Enter shipping state</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block100" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
+            <label>Shipping Street Address</label>
+            <input name="paypalShippingAddress" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.Address1" ng-required="!purchaseInfo.PurchaseInfo.ShippingSame">
+            <div ng-messages="paypalForm.paypalShippingAddress.$error" role="alert">
+              <div ng-message="required">Enter shipping street address</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="block100" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
+            <label>Apt., Floor, Unit (optional)</label>
+            <input ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.Address2">
+          </md-input-container>
+          <md-input-container class="block100" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
+            <label>Phone Number</label>
+            <input tel-mask name="paypalPhone" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.PhoneNumber" ng-pattern="/^[0-9]{3}-[0-9]{3}-[0-9]{4,5}$/" ng-required="!purchaseInfo.PurchaseInfo.ShippingSame" />
+            <div ng-messages="paypalForm.paypalPhone.$error">
+              <div ng-message="required">Enter phone number</div>
+              <div ng-message="pattern">Enter a valid phone number - ###-###-####</div>
+            </div>
+          </md-input-container>
+        </div>
+        <div class="c12 text-right margin-1em-top">
+          <md-input-container class="block100" style="margin:0;">
+            <md-checkbox ng-model="termsConditions" ng-init="paypalTermsConditions=true" ng-checked="true" aria-label="I agree to the Terms and Conditions" class="blueCheckbox" required>I agree to the Eventcombo <a href="/ec/terms" target="_blank">Terms and Conditions</a> for purchasing or registering for this event and its deals.</md-checkbox>
+          </md-input-container>
+        </div>
+        <div class="c12 text-right">
+          <span class="tot text-right"><span style="color:#000;">Your PayPal account will be charged</span> ${{purchaseInfo.PurchaseInfo.TotalOrder.toFixed(2)}}</span>
+        </div>
+        <div class="c12 text-right margin-1em-top">
+          <md-button class="chkBack" ng-click="goBack('@Model.EventUrl')">GO BACK</md-button>
+          <md-button class="chkSubmit" type="submit" ng-click="creditcardSubmit('paypalForm')">CONFIRM PAYMENT</md-button>
+        </div>
+      </div>
+    </form>
+  </section>
+  <!--****************************-->
+  <p class="text-center">{{status}}</p> <!-- PayPal Payment Confirmation Status, Remove it when page functionality done. -->
+  <!--****************************-->
+  <div class="timeBox">
+    <p class="timeMessage">
+      Please complete this purchase within 10:00 minutes.<br>
+      After 10:00 minutes, the reservation we're holding will be released to others.
+    </p>
+    <div class="timmer">{{Timer.RemainingTime}}</div>
+  </div>
+  <!--****************************-->
+  <section>
+    <div class="popOverlay" ng-show="popLoading">
+      <div class="popBox">
+        <h3 class="blue-heading text-center">{{LoadingMessage}}</h3>
+        <img src="~/Images/ajaxloader1.gif" />
+      </div>
+    </div>
+    <div class="popOverlay" ng-show="popErrorMessage">
+      <div class="popBox">
+        <a class="popClose" ng-click="popErrorMessage=false"><i class="material-icons">clear</i></a>
+        <h3 class="red-heading">{{ErrorHeading}}</h3>
+        <div class="blue-heading text-center" ng-bind-html="ErrorMessage"></div>
+        <div class="text-center margin-2em-top"><a class="popLink" ng-click="popErrorMessage=false">CONTINUE TO SITE</a></div>
+      </div>
+    </div>
+    <div class="popOverlay" ng-show="popInfoMessage">
+      <div class="popBox">
+        <a class="popClose" ng-click="popInfoMessage=false"><i class="material-icons">clear</i></a>
+        <div class="blue-heading text-center">{{InfoMessage}}</div>
+        <div class="text-center margin-2em-top"><a class="popLink" ng-click="popInfoMessage=false">CONTINUE PURCHASE</a></div>
+      </div>
+    </div>
+    <div class="popOverlay" ng-show="popTimeoutMessage">
+      <div class="popBox">
+        <a class="popClose" ng-click="goBack('@Model.EventUrl')"><i class="material-icons">clear</i></a>
+        <h3 class="red-heading text-center">Timeout expired</h3>
+        <div class="blue-heading text-center">Sorry, you took too long and we have to release your order. Please try again.</div>
+        <div class="text-center margin-2em-top"><a class="popLink" ng-click="goBack('@Model.EventUrl')">GO BACK</a></div>
+      </div>
+    </div>
+  </section>
+  <!--****************************-->
+  <div ng-init="initController()"></div>
+</div>
