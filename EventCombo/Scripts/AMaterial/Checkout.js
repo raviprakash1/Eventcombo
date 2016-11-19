@@ -88,6 +88,12 @@ function checkoutController($scope, $mdDialog, $attrs, $timeout, $window, purcha
     $scope.popLoading = state;
   }); 
 
+  $scope.$on('ShowMessage', function (event, message) {
+    $scope.ErrorHeading = 'Error';
+    $scope.ErrorMessage = message;
+    $scope.popErrorMessage = true;
+  });
+
   $scope.initController = function () {
     purchaseInfoService.loadPurchaseInfo($attrs.lockid);
   };
@@ -194,7 +200,11 @@ function checkoutController($scope, $mdDialog, $attrs, $timeout, $window, purcha
     if (eventType == 'blur' && !$scope.validTry) {
       $scope[form].checkoutCardNumber.$error.crCardMessage = true;
     }
-  };
+  }
+
+  $scope.CheckPromoCode = function () {
+    purchaseInfoService.checkPromoCode();
+  }
 };
 
 eventComboApp.directive('creditCard', function ($filter, $browser) {
@@ -452,6 +462,7 @@ eventComboApp.service('purchaseInfoService', ['$http', 'broadcastService',
   function ($http, broadcastService) {
 
     var purchaseInfo = {};
+    var promoInfo = null;
 
     var loadPurchaseInfo = function (lockId) {
       $http.get('/ticketpurchase/getpurchaseinfo', { params: { lockId: lockId } }).then(function (response) {
@@ -460,12 +471,12 @@ eventComboApp.service('purchaseInfoService', ['$http', 'broadcastService',
           item.ShowAttendees = false;
         });
 
-        recalcTotal();
+        checkPromoCode();
         broadcastService.PurchaseInfoLoaded();
       });
     }
 
-    var recalcTotal = function () {
+    var getVarChargeTotal = function () {
       var varctotal = 0;
       purchaseInfo.PurchaseInfo.VariableChargeGroups.forEach(function (item) {
         item.VariableCharges.forEach(function (vc) {
@@ -473,7 +484,34 @@ eventComboApp.service('purchaseInfoService', ['$http', 'broadcastService',
             varctotal += vc.Price;
         });
       });
-      purchaseInfo.PurchaseInfo.TotalOrder = purchaseInfo.TotalAmount + varctotal + purchaseInfo.PurchaseInfo.TotalPromo;
+      return varctotal;
+    }
+
+    var recalcTotal = function () {
+      var varctotal = getVarChargeTotal();
+      purchaseInfo.PurchaseInfo.TotalOrder = purchaseInfo.TotalAmount + varctotal - purchaseInfo.PurchaseInfo.TotalPromo;
+    }
+
+    var recalcPromo = function () {
+      var total = 0;
+      var varctotal = getVarChargeTotal();
+      console.log(promoInfo);
+      if (promoInfo) {
+        purchaseInfo.Tickets.forEach(function (ticket) {
+          if (ticket.TicketTypeId == 2) {
+            var t = promoInfo.Tickets.filter(function (obj) { return obj.TicketId == ticket.TicketId });
+            if ((t) && (t.length > 0))
+              total = total + ticket.Quantity * (t[0].Amount + t[0].Percents * ticket.Price);
+          }
+        });
+        total = total + promoInfo.Amount + promoInfo.Percents * (purchaseInfo.TotalAmount + varctotal);
+      }
+      if (total > (purchaseInfo.TotalAmount + varctotal)) {
+        purchaseInfo.PurchaseInfo.TotalPromo = 0;
+        broadcastService.ShowMessage("The discount code exceeds the total value of the order.");
+      }
+      else 
+        purchaseInfo.PurchaseInfo.TotalPromo = total;
     }
 
     var getPurchaseInfo = function () {
@@ -500,12 +538,36 @@ eventComboApp.service('purchaseInfoService', ['$http', 'broadcastService',
       });
     };
 
+    var checkPromoCode = function () {
+      if (!purchaseInfo.PurchaseInfo.PromoCode) {
+        promoInfo = null;
+        recalcTotal();
+        return;
+      }
+      $http.get('/ticketpurchase/checkpromocode', {
+        params: {
+          eventId: purchaseInfo.EventId,
+          promocode: purchaseInfo.PurchaseInfo.PromoCode
+        }
+      }).then(function (response) {
+        console.log(response);
+        promoInfo = response.data.Success ? response.data : null;
+        recalcPromo();
+        recalcTotal();
+      }, function (error) {
+        promoInfo = null;
+        recalcPromo();
+        recalcTotal();
+      });
+    }
+
     return {
       loadPurchaseInfo: loadPurchaseInfo,
       getPurchaseInfo: getPurchaseInfo,
       recalcTotal: recalcTotal,
       releaseTickets: releaseTickets,
-      savePurchaseInfo: savePurchaseInfo
+      savePurchaseInfo: savePurchaseInfo,
+      checkPromoCode: checkPromoCode
     }
   }]);
 /****************************************************************************/

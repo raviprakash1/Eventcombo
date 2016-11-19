@@ -47,6 +47,7 @@ namespace EventCombo.Models
 
     public long LockTicketId { get; set; }
     public long TicketTypeId { get; set; }
+    public long TicketId { get; set; }
     public string Name { get; set; }
     public string VenueName { get; set; }
     public string DateString { get; set; }
@@ -167,7 +168,8 @@ namespace EventCombo.Models
     public string VenueName { get; set; }
     public string Address { get; set; }
     public string StartDate { get; set; }
-    public decimal TotalAmount { get; set; } 
+    public decimal TotalAmount { get; set; }
+    public bool ShowShippingAddress { get; set; }
 
     public IEnumerable<TicketPurchaseInfoViewModel> Tickets { get; set; }
     public PurchasingInfoViewModel PurchaseInfo { get; set; }
@@ -209,6 +211,7 @@ namespace EventCombo.Models
     public decimal TotalAmount { get; set; }
     public string Email { get; set; }
     public long OrganizerId { get; set; }
+    public string OrganizerName { get; set; }
 
     public IEnumerable<TicketPurchaseInfoViewModel> Tickets { get; set; }
   }
@@ -218,6 +221,30 @@ namespace EventCombo.Models
     public string Summary { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
+  }
+
+  public class PromoTicketsInfoViewModel
+  {
+    public long TicketId { get; set; }
+    public decimal Amount { get; set; }
+    public decimal Percents { get; set; }
+  }
+
+  public class PromoCodeResponseViewModel
+  {
+    public PromoCodeResponseViewModel()
+    {
+      Tickets = new List<PromoTicketsInfoViewModel>();
+    }
+    public bool Success { get; set; }
+    public string Message { get; set; }
+    [JsonIgnore]
+    public int PromoCodeId { get; set; } 
+    public string PromoCode { get; set; }
+    public long EventId { get; set; }
+    public decimal Amount { get; set; }
+    public decimal Percents { get; set; }
+    public List<PromoTicketsInfoViewModel> Tickets { get; set; }
   }
 
 }

@@ -207,5 +207,15 @@ namespace EventCombo.Controllers
         _userManager = value;
       }
     }
+
+    [HttpGet]
+    public ActionResult CheckPromocode(long eventId, string promocode)
+    {
+      PromoCodeResponseViewModel promo = _pService.GetPromoCode(eventId, promocode);
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = promo;
+      return res;
+    }
   }
 }

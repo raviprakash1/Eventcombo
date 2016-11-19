@@ -19,5 +19,7 @@ namespace EventCombo.Service
     void CompletePayPalPayment(string orderId, string paymentId, string tokenId, string payerId);
     OrderConfirmationViewModel GetOrderConfirmationInfo(string orderId, string userId);
     void GenerateTicketDetails(string orderId, IUnitOfWork uow);
+
+    PromoCodeResponseViewModel GetPromoCode(long eventId, string promocode);
   }
 }
