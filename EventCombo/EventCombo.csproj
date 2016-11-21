@@ -988,6 +988,7 @@
     <Content Include="Images\email_loc_icn.png" />
     <Content Include="Images\email_tw.png" />
     <Content Include="Images\em_ven_time.png" />
+    <Content Include="Images\eventcombo-logo-vertical.png" />
     <Content Include="Images\evnt_lik_1.png" />
     <Content Include="Images\FabIcon\android-128x128.png" />
     <Content Include="Images\FabIcon\android-192x192.png" />
@@ -1466,6 +1467,7 @@
     <Content Include="footable\css\fonts\footable.eot" />
     <Content Include="footable\css\fonts\footable.ttf" />
     <Content Include="footable\css\fonts\footable.woff" />
+    <Content Include="Images\Barcodes\descript.ion" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1868,6 +1870,7 @@
     <Content Include="Views\TicketPurchase\Checkout.cshtml" />
     <Content Include="Views\TicketPurchase\Confirmation.cshtml" />
     <Content Include="Views\OrganizerInfo\OrganizerInfo.cshtml" />
+    <Content Include="Views\Download\_Ticket.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

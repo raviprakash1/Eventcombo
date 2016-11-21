@@ -394,7 +394,7 @@ namespace EventCombo.Service
       return TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(time, DateTimeKind.Unspecified), tz);
     }
 
-    private EventDatesInfo GetEventDatesInfo(Event ev)
+    public EventDatesInfo GetEventDatesInfo(Event ev)
     {
       if (ev == null)
         throw new ArgumentNullException("ev");
@@ -526,7 +526,7 @@ namespace EventCombo.Service
               {
                 if (!String.IsNullOrEmpty(att.Email))
                 {
-                  tb = tbList.Where(b => (b.Email == att.Email) && (b.Name == att.Name) && (b.PhoneNumber == att.PhoneNumber)).FirstOrDefault();
+                  tb = tbList.Where(b => (b.Email == att.Email) && (b.Name == att.Name) && (b.PhoneNumber == (att.PhoneNumber ?? ""))).FirstOrDefault();
                   if (tb == null)
                   {
                     tb = new TicketBearer()
@@ -694,7 +694,7 @@ namespace EventCombo.Service
             }
             catch (Exception ex)
             {
-              throw new Exception(String.Format("Error during processing of payment by credit card {0}", "XXXXXXXXXXXX", model.PurchaseInfo.CardNumber.Substring(model.PurchaseInfo.CardNumber.Length - 4)), ex);
+              throw new Exception(String.Format("Error during processing of payment by credit card XXXX-XXXX-XXXX-{0}", model.PurchaseInfo.CardNumber.Substring(model.PurchaseInfo.CardNumber.Length - 4)), ex);
             }
             if (response.Success)
             {

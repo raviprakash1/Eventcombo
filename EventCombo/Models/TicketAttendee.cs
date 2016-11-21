@@ -14,6 +14,12 @@ namespace EventCombo.Models
     
     public partial class TicketAttendee
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TicketAttendee()
+        {
+            this.TicketOrderDetails = new HashSet<TicketOrderDetail>();
+        }
+    
         public long TicketAttendeeId { get; set; }
         public long TicketBearerId { get; set; }
         public long PurchasedTicketId { get; set; }
@@ -21,5 +27,7 @@ namespace EventCombo.Models
     
         public virtual Ticket_Purchased_Detail Ticket_Purchased_Detail { get; set; }
         public virtual TicketBearer TicketBearer { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TicketOrderDetail> TicketOrderDetails { get; set; }
     }
 }

@@ -149,7 +149,7 @@ namespace EventCombo.Controllers
       {
         if (String.IsNullOrWhiteSpace(orderId))
           return -1;
-        if (_maservice.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath(".."), true))
+        if (_maservice.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath(".."), ControllerContext, true))
           return 1;
         else
           return 0;
@@ -336,7 +336,7 @@ namespace EventCombo.Controllers
       if (_dbservice.GetOrderAccess(orderId, userId) == AccessLevel.Public)
         return -1;
 
-      if (_maservice.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath("..")))
+      if (_maservice.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath(".."), ControllerContext))
         return 1;
       else
         return 0;

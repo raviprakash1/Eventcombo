@@ -167,7 +167,7 @@ namespace EventCombo.Controllers
         return "You can not save changes.";
 
       string userId = Session["AppId"].ToString();
-      if (_tservice.SaveOrderDetails(model, userId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath("..")))
+      if (_tservice.SaveOrderDetails(model, userId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath(".."), ControllerContext))
         return "Changes saved.";
       else
         return "Changes not saved.";

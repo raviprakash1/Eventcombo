@@ -21,6 +21,7 @@ using iTextSharp.text;
 using iTextSharp.text.html.simpleparser;
 using System.Text;
 using EventCombo.Controllers;
+using System.Web.Mvc;
 
 namespace EventCombo.Service
 {
@@ -398,7 +399,7 @@ namespace EventCombo.Service
         return details;
     }
 
-    public bool SendConfirmations(string orderId, string baseUrl, string filePath, bool IsManualOrder = false)
+    public bool SendConfirmations(string orderId, string baseUrl, string filePath, ControllerContext context, bool IsManualOrder = false)
     {
       if (String.IsNullOrWhiteSpace(orderId))
         throw new ArgumentNullException("orderId");
@@ -419,7 +420,7 @@ namespace EventCombo.Service
         return false;
       else
       {
-        var mem = _tservice.GetDownloadableTicket(orderId, "pdf", filePath, IsManualOrder);
+        var mem = _tservice.GetDownloadableTicket(orderId, "pdf", filePath, context, IsManualOrder);
         Attachment attach = new Attachment(mem, new ContentType(MediaTypeNames.Application.Pdf));
         attach.ContentDisposition.FileName = "Ticket_EventCombo.pdf";
         INotification notification = new OrderNotification(_factory, _dbservice, orderId, baseUrl, attach, IsManualOrder);

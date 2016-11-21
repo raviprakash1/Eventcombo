@@ -181,6 +181,7 @@
         <AssociationConnector Association="EventComboModel.LockOrderLockTicket" />
         <EntityTypeShape EntityType="EventComboModel.GeoState" Width="1.5" PointX="24.375" PointY="28.75" />
         <AssociationConnector Association="EventComboModel.CountryGeoState" />
+        <AssociationConnector Association="EventComboModel.TicketAttendeeTicketOrderDetail" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

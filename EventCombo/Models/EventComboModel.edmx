@@ -3596,6 +3596,10 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             <End Role="Country" EntitySet="Countries" />
             <End Role="GeoState" EntitySet="GeoState" />
           </AssociationSet>
+          <AssociationSet Name="TicketAttendeeTicketOrderDetail" Association="EventComboModel.TicketAttendeeTicketOrderDetail">
+            <End Role="TicketAttendee" EntitySet="TicketAttendees" />
+            <End Role="TicketOrderDetail" EntitySet="TicketOrderDetails" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="GetEventDateList_Result">
           <Property Type="String" Name="Dayofweek" Nullable="true" MaxLength="50" />
@@ -3627,6 +3631,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="T_Id" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="T_Order_Id" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
           <Property Name="TicketAttendeeId" Type="Int64" />
+          <NavigationProperty Name="TicketAttendee" Relationship="EventComboModel.TicketAttendeeTicketOrderDetail" FromRole="TicketOrderDetail" ToRole="TicketAttendee" />
         </EntityType>
         <EntityType Name="Fee_Structure">
           <Key>
@@ -5266,6 +5271,7 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
           <Property Name="Quantity" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Ticket_Purchased_Detail" Relationship="EventComboModel.FK_TicketAttendee_Ticket_Purchased_Detail" FromRole="TicketAttendee" ToRole="Ticket_Purchased_Detail" />
           <NavigationProperty Name="TicketBearer" Relationship="EventComboModel.FK_TicketAttendee_TicketBearer" FromRole="TicketAttendee" ToRole="TicketBearer" />
+          <NavigationProperty Name="TicketOrderDetails" Relationship="EventComboModel.TicketAttendeeTicketOrderDetail" FromRole="TicketAttendee" ToRole="TicketOrderDetail" />
         </EntityType>
         <Association Name="FK_TicketAttendee_Ticket_Purchased_Detail">
           <End Type="EventComboModel.Ticket_Purchased_Detail" Role="Ticket_Purchased_Detail" Multiplicity="1" />
@@ -5421,6 +5427,18 @@ warning 6002: The table/view 'EventCombo.dbo.V_Users' does not have a primary ke
             </Principal>
             <Dependent Role="GeoState">
               <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TicketAttendeeTicketOrderDetail">
+          <End Type="EventComboModel.TicketAttendee" Role="TicketAttendee" Multiplicity="0..1" />
+          <End Type="EventComboModel.TicketOrderDetail" Role="TicketOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketAttendee">
+              <PropertyRef Name="TicketAttendeeId" />
+            </Principal>
+            <Dependent Role="TicketOrderDetail">
+              <PropertyRef Name="TicketAttendeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

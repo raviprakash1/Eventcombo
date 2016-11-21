@@ -247,4 +247,73 @@ namespace EventCombo.Models
     public List<PromoTicketsInfoViewModel> Tickets { get; set; }
   }
 
+  public class ETicketTicketViewModel
+  {
+    public ETicketTicketViewModel()
+    {
+      TicketDetails = new List<string>();
+    }
+    public long PurchasedTicketId { get; set; }
+    public string TicketName { get; set; }
+    public string TicketType { get; set; }
+    public long Quantity { get; set; }
+    public decimal Price { get; set; }
+    public decimal PromoAmount { get; set; }
+    public decimal Discount { get; set; }
+    public decimal TotalPrice { get; set; }
+    public decimal TotalPromo { get; set; }
+    public List<string> TicketDetails { get; set; }
+  }
+
+  public class ETicketAttendeeViewModel
+  {
+    public ETicketAttendeeViewModel()
+    {
+      Tickets = new List<ETicketTicketViewModel>();
+    }
+    public long TicketBearerId { get; set; }
+    public string AttendeeName { get; set; }
+    public string AttendeeEmail { get; set; }
+    public decimal TotalPrice { get; set; }
+    public decimal TotalPromo { get; set; }
+    public List<ETicketTicketViewModel> Tickets { get; set; }
+  }
+
+  public class ETicketVariableChargeViewModel
+  {
+    public long VarChargeId { get; set; }
+    public string VarChargeName { get; set; }
+    public decimal VarChargePrice {get; set; }
+  }
+
+  public class ETicketOrderViewModel
+  {
+    public ETicketOrderViewModel()
+    {
+      Attendees = new List<ETicketAttendeeViewModel>();
+      VariableCharges = new List<ETicketVariableChargeViewModel>();
+    }
+    public string OrderId { get; set; }
+    public DateTime OrderDate { get; set; }
+    public long EventId { get; set; }
+    public string EventTitle { get; set; }
+    public string EventDescription { get; set; }
+    public string Address { get; set; }
+    public DateTime StartDate { get; set; }
+    public string PromoCode { get; set; }
+    public decimal PromoAmount { get; set; }
+    public string VenueName { get; set; }
+    public long OrganizerId { get; set; }
+    public string OrganizerName { get; set; }
+    public string OrganizerEmail { get; set; }
+    public string ImageUrl { get; set; }
+    public string Longitude { get; set; }
+    public string Latitude { get; set; }
+    public string PaidBy { get; set; }
+    public decimal TotalPrice { get; set; }
+
+    public List<ETicketAttendeeViewModel> Attendees { get; set; }
+    public List<ETicketVariableChargeViewModel> VariableCharges { get; set; }
+  }
+
 }

@@ -19,5 +19,7 @@ namespace EventCombo.Models
         public string T_Id { get; set; }
         public string T_Order_Id { get; set; }
         public Nullable<long> TicketAttendeeId { get; set; }
+    
+        public virtual TicketAttendee TicketAttendee { get; set; }
     }
 }

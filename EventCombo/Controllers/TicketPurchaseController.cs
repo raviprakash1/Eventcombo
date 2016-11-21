@@ -108,8 +108,10 @@ namespace EventCombo.Controllers
         userId = Session["buyerId"].ToString();
       else
         userId = "";
+      if ((Session["AppId"] != null) && String.IsNullOrEmpty(userId))
+        userId = Session["AppId"].ToString();
 
-      _maService.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath(".."));
+      _maService.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath(".."), ControllerContext);
       OrderConfirmationViewModel oinfo = _pService.GetOrderConfirmationInfo(orderId, userId);
 
       PopulateBaseViewModel(oinfo, "Confirmation for Order #" + oinfo.OrderId + " | Eventcombo");

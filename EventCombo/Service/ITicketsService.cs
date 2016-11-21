@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EventCombo.Models;
 using System.IO;
+using System.Web.Mvc;
 
 namespace EventCombo.Service
 {
@@ -16,13 +17,13 @@ namespace EventCombo.Service
 
     OrderDetailsViewModel GetOrderDetails(string orderId, string userId, long EventId);
 
-    bool SaveOrderDetails(OrderDetailsViewModel model, string userId, string baseUrl, string filePath);
+    bool SaveOrderDetails(OrderDetailsViewModel model, string userId, string baseUrl, string filePath, ControllerContext context);
 
     bool CancelOrder(string orderId, string userId);
 
     bool SaveMessage(OrganizerMessageViewModel model);
 
-    MemoryStream GetDownloadableTicket(string orderId, string format, string filePath, bool IsManualOrder = false);
+    MemoryStream GetDownloadableTicket(string orderId, string format, string filePath, ControllerContext context, bool IsManualOrder = false);
 
     IEnumerable<OrderSummaryViewModel> GetEventOrdersSummaryCalculation(long eventId);
 

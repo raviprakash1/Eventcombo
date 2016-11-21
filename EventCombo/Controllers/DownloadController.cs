@@ -36,7 +36,7 @@ namespace EventCombo.Controllers
       if (_dbservice.GetOrderAccess(OrderId, userId) == AccessLevel.Public)
         return null;
 
-      MemoryStream mem = _tservice.GetDownloadableTicket(OrderId, format, Server.MapPath(".."));
+      MemoryStream mem = _tservice.GetDownloadableTicket(OrderId, format, Server.MapPath(".."), ControllerContext);
 
       return new FileStreamResult(mem, "application/" + format.ToLower()) { FileDownloadName = "Ticket_" + OrderId + "." + format };
     }

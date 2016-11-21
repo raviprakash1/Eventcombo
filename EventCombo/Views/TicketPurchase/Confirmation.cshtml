@@ -64,7 +64,17 @@
       <div class="orderDetails">
         <div class="orderId">
           <p class="orderNumber">Order #@Model.OrderId</p>
-          <p class="orderSbuline">Your tickets were emailed to <span class="semiBold">@Model.Email</span> and added to <a class="evtLink" href="javascript:void(0)" ng-click="purchasedTickets()">YOUR PURCHASES</a></p>
+          <p class="orderSbuline">
+            Your tickets were emailed to <span class="semiBold">@Model.Email</span> and added to
+            @if (String.IsNullOrEmpty(Model.BaseUserId))
+            {
+              <a class="evtLink" href="javascript:void(0)" ng-click="purchasedTickets()">YOUR PURCHASES</a>
+            }
+            else
+            {
+              <a class="evtLink" href="@Url.Action("PurchasedTicket", "Account")">YOUR PURCHASES</a>
+            }
+          </p>
         </div>
         <div class="orderList">
           @foreach (var ticket in Model.Tickets)
@@ -96,7 +106,14 @@
             <span class="flRightN">2</span>
           </div>
         </div>
-        <div><a class="nextLink" href="javascript:void(0)" ng-click="purchasedTickets()">Go to all purchases</a></div>
+        @if (String.IsNullOrEmpty(Model.BaseUserId))
+        {
+          <div><a class="nextLink" href="javascript:void(0)" ng-click="purchasedTickets()">Go to all purchases</a></div>
+        }
+        else
+        {
+          <div><a class="nextLink" href="@Url.Action("PurchasedTicket", "Account")">Go to all purchases</a></div>
+        }
       </div>
     </div>
   </div>
@@ -107,7 +124,14 @@
     <div class="c12 margin-1em-bottom">
       <h3 class="red-heading">What's Next?</h3>
       <div>
+        @if(String.IsNullOrEmpty(Model.BaseUserId))
+        { 
         <a class="nextLink" href="javascript:void(0)" ng-click="createEvent()">Create your own event</a>
+        }
+        else
+        {
+          <a class="nextLink" href="@Url.Action("CreateEvent", "EventManagement")">Create your own event</a>
+        }
         <a class="nextLink" href="javascript:void(0)" ng-click="contactEventcombo()">Contact us</a>
         <a class="nextLink" href="@Url.Action("OrganizerInfo", "OrganizerInfo", new { organizerName = Model.OrganizerName, organizerId = Model.OrganizerId })">See organizer's profile</a>
         <a class="nextLink" href="@Url.Action("Index", "Home")">Browse more events</a>
@@ -147,13 +171,13 @@
       });
     };
 
-    $scope.callCreateEvent = function() {
+    $scope.callCreateEvent = function () {
       $window.location.href = '@Url.Action("CreateEvent", "EventManagement")';
     }
 
-    $scope.callPurchasedTickets = function() {
+    $scope.callPurchasedTickets = function () {
       $window.location.href = '@Url.Action("PurchasedTicket", "Account")';
-          }
+    }
 
     $rootScope.$on('LoggedIn', function (event, param) {
       if (param === 'ConfirmCreate')
@@ -170,8 +194,9 @@
     }
 
     $scope.purchasedTickets = function () {
-      if (accountService.UserRegistered())
+      if (accountService.UserRegistered()) {
         $scope.callPurchasedTickets();
+      }
       else
         accountService.StartLogin('ConfirmPurchases');
     }
