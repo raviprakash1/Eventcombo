@@ -1,0 +1,210 @@
+﻿@using System.Collections.Generic;
+@using System.Linq;
+@using EventCombo.Models;
+@using EventCombo.Service;
+@model ETicketOrderViewModel
+@{
+  Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>EventCombo Order Summary</title>
+</head>
+
+<body style="margin:0; padding:0; font:14px Arial, Helvetica, sans-serif; color:#5a5a5a; ">
+  @{
+    var codes = Model.Attendees.SelectMany(a => a.Tickets.SelectMany(t => t.TicketDetails)).ToList();
+  }
+  @for (int i = 0; i < codes.Count(); i++)
+  {
+    <table width="640" cellpadding="0" cellspacing="0" border="0" style="box-sizing:border-box; display:table; width:640px; margin-left:auto; margin-right:auto; font:14px Arial, Helvetica, sans-serif; color:#5a5a5a; position:relative;">
+      <tr valign="top">
+        <td style="width:15%; min-width:50px; padding:15px 3%; vertical-align:top;">
+          <div><a href="#" style="width:100%;"><img style="max-width:100%;  border:none; display:block;" src="@HtmlProcessing.ResolveServerUrl(Url.Content("~/Images/eventcombo-logo-vertical.png"), false)"></a></div>
+          <div><img style="max-width:100%; margin-top:30px;  border:none; display:block;" src="@HtmlProcessing.ResolveServerUrl(Url.Content("~" + TicketService.GetBarcodePath(codes[i])), false)"></div>
+        </td>
+
+        <td style="width:84%; font:14px Arial, Helvetica, sans-serif; color:#5a5a5a; position:relative; padding-top:15px; padding-right:10px;">
+          <table style="box-sizing:border-box; width:100%; margin-bottom:15px;">
+            <tr valign="top">
+              <td style="vertical-align:top;">
+                <h2 style="color:#00c9fc; font:bold 24px Arial, Helvetica, sans-serif; margin:0;">@Model.EventTitle</h2>
+                <p style="color:#ababab; font:12px Arial, Helvetica, sans-serif; margin-top:0;">@Model.Address</p>
+              </td>
+              <td width="200">
+                <img style="margin-left:30px; border:none; display:block;" src="@HtmlProcessing.ResolveServerUrl(Url.Content("~" + TicketService.GetQRPath(codes[i])), false)">
+              </td>
+            </tr>
+          </table>
+
+          <div style="box-sizing:border-box; width:100%; display:table; padding-top:15px; padding-bottom:15px;">
+            <div style="box-sizing:border-box; display:inline-block; width:50%; float:left;">
+              <span style="color:#5a5a5a; font:18px Arial, Helvetica, sans-serif; text-transform:uppercase;">Order #@Model.OrderId</span>
+            </div>
+            <div style="box-sizing:border-box; display:inline-block; width:50%; float:left; text-align:right;">
+              <span style="color:#5a5a5a; font:18px Arial, Helvetica, sans-serif; text-transform:uppercase;">@Model.OrderDate.ToString("d")</span>
+            </div>
+          </div>
+
+          <div style="box-sizing:border-box; width:100%; display:table;">
+            <div style="box-sizing:border-box; display:inline-block; width:100%; float:left;">
+              <table style="width:100%;" cellspacing="0" cellpadding="10">
+                <thead>
+                  <tr style="text-transform:uppercase;">
+                    <th align="left" style="border-bottom:1px dashed #ccc;">NAME</th>
+                    <th align="left" style="border-bottom:1px dashed #ccc;">TYPE</th>
+                    <th align="left" style="border-bottom:1px dashed #ccc;">QTY</th>
+                    <th align="right" style="border-bottom:1px dashed #ccc;">PRICE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach (var att in Model.Attendees)
+                  {
+                    <tr>
+                      <td style="border-bottom:1px dashed #ccc;">
+                        @att.AttendeeName<br>
+                        @foreach (var ticket in att.Tickets)
+                        {
+                          <span style="display:inline-block; margin-top:5px; padding-left:15px;">@ticket.TicketName</span><br>
+                        }
+                      </td>
+                      <td style="border-bottom:1px dashed #ccc;">
+                        <br>
+                        @foreach (var ticket in att.Tickets)
+                        {
+                          @ticket.TicketType<br>
+                        }
+                      </td>
+                      <td style="border-bottom:1px dashed #ccc;">
+                        <br>
+                        @foreach (var ticket in att.Tickets)
+                        {
+                          @ticket.Quantity.ToString()<br>
+                        }
+                      </td>
+                      <td align="right" style="border-bottom:1px dashed #ccc;">
+                        $@att.TotalPrice.ToString("N2")<br>
+                        @foreach (var ticket in att.Tickets)
+                        {
+                          <span style="display:inline-block; margin-top:5px;">$@ticket.TotalPrice.ToString("N2")</span><br>
+                        }
+                      </td>
+                    </tr>
+                  }
+                  @foreach (var vc in Model.VariableCharges)
+                  {
+                    <tr>
+                      <td colspan="3" style="border-bottom:1px dashed #ccc;">@vc.VarChargeName</td>
+                      <td align="right" style="border-bottom:1px dashed #ccc;">$@vc.VarChargePrice.ToString("N2")</td>
+                    </tr>
+                  }
+                  @if (Model.PromoAmount > 0)
+                  {
+                    <tr>
+                      <td colspan="3" style="border-bottom:1px dashed #ccc; color:#14d700;">@Model.PromoCode</td>
+                      <td align="right" style="border-bottom:1px dashed #ccc; color:#14d700;">-$@Model.PromoAmount.ToString("N2")</td>
+                    </tr>
+                  }
+                </tbody>
+                <tfoot>
+                  <tr style="font-weight:bold; font-size:18px;">
+                    <td style="padding-top:20px; padding-bottom:20px;">&nbsp;</td>
+                    <td style="padding-top:20px; padding-bottom:20px;">&nbsp;</td>
+                    <td style="padding-top:20px; padding-bottom:20px;">Total:</td>
+                    <td align="right" style="padding-top:20px; padding-bottom:20px;">$@Model.TotalPrice.ToString("N2")</td>
+                  </tr>
+                  <tr>
+                    <td colspan="4" align="right">@Model.PaidBy</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+          <hr style="border:none; border-bottom:1px solid #9e9e9e;">
+
+          <div style="box-sizing:border-box; width:100%; display:table;">
+            <div style="box-sizing:border-box; display:inline-block; width:100%; float:left;">
+              <h2 style="color:#5a5a5a; font:24px Arial, Helvetica, sans-serif;">About the event</h2>
+            </div>
+          </div>
+
+          <div style="box-sizing:border-box; width:100%; display:table;">
+            <div style="box-sizing:border-box; display:inline-block; width:100%; float:left;">
+              <table style="width:100%;">
+                <tr valign="top">
+                  <td align="right" width="100">
+                    <img style="margin-right:30px; border:none; display:block; max-width:200px;" src="@HtmlProcessing.ResolveServerUrl(Url.Content("~" + Model.ImageUrl), false)">
+                  </td>
+                  <td>
+                    <p style="margin-top:0;">
+                      <strong>Date:</strong><br>
+                      @Model.StartDate.ToString("f")
+                    </p>
+                    <p>
+                      <strong>Organizer:</strong><br>
+                      <a href="#" style="color:#00c9fc; text-decoration:none;">@Model.OrganizerName</a>
+                    </p>
+                  </td>
+                </tr>
+                <tr valign="top">
+                  <td align="right" width="100">
+                    <img style="margin-right:30px; border:none; display:block; max-width:200px;" src="https://maps.googleapis.com/maps/api/staticmap?size=320x280&scale=2&zoom=14&markers=color:0xe30076%7C@(Model.Latitude),@(Model.Longitude)&key=@(System.Configuration.ConfigurationManager.AppSettings.Get("GoogleAPIKey"))">
+                  </td>
+                  <td>
+                    <p style="margin-top:0;">
+                      <strong>@Model.VenueName</strong><br>
+                      @Model.Address
+                    </p>
+                    <p><a href="#" style="color:#00c9fc; text-decoration:none;">Get Directions</a></p>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <hr style="border:none; border-bottom:1px solid #9e9e9e;">
+
+          <div style="box-sizing:border-box; width:100%; display:table; text-align:center;">
+            <p><strong>Questions about this event? Contact organizer at <a href="mailto:@(Model.OrganizerEmail)" style="color:#00c9fc; text-decoration:none;">@Model.OrganizerEmail</a></strong></p>
+          </div>
+
+          <hr style="border:none; border-bottom:1px solid #9e9e9e;">
+
+          <div style="box-sizing:border-box; width:100%; display:table; text-align:center;">
+            <div style="box-sizing:border-box; display:inline-block; padding:5px 15px;">
+              <a href="#" style="color:#00c9fc; font:14px Arial, Helvetica, sans-serif; letter-spacing:0; text-decoration:none;">YOUR ACCOUNT</a>
+            </div>
+            <div style="box-sizing:border-box; display:inline-block; padding:5px 15px;">
+              <a href="#" style="color:#00c9fc; font:14px Arial, Helvetica, sans-serif; letter-spacing:0; text-decoration:none;">CONTACT US</a>
+            </div>
+            <div style="box-sizing:border-box; display:inline-block; padding:5px 15px;">
+              <a href="#" style="color:#00c9fc; font:14px Arial, Helvetica, sans-serif; letter-spacing:0; text-decoration:none;">CREATE YOUR OWN EVENT</a>
+            </div>
+          </div>
+
+          <div style="box-sizing:border-box; width:100%; display:table;">
+            <div style="box-sizing:border-box; display:inline-block; width:100%; float:left;">
+              <p style="color:#ababab; font:12px/18px Arial, Helvetica, sans-serif; text-align:center;">
+                @{
+                  ETicketAttendeeViewModel attendee = Model.Attendees.Where(a => a.Tickets.Any(t => t.TicketDetails.Any(td => td == codes[i]))).FirstOrDefault();
+                }
+                This email was sent to <a href="mailto:@(attendee.AttendeeEmail)" style="color:#ababab;">@attendee.AttendeeEmail</a>.<br>
+                Eventcombo, Inc. 425 Kipp st., Teaneck, NJ 07666<br>
+                &copy;2016 <a href="https://Eventcombo.com" style="color:#ababab;">Eventcombo.com</a>
+              </p>
+            </div>
+          </div>
+
+        </td>
+      </tr>
+    </table>
+    if (i < (codes.Count() - 1))
+    {
+      <div style="page-break-before: always; width: 100%; text-align: center"></div>
+    }
+  }
+</body>
+</html>

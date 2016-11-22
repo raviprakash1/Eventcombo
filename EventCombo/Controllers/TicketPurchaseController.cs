@@ -29,7 +29,7 @@ namespace EventCombo.Controllers
     {
       _pService = new PurchasingService(_factory, _mapper);
       _aService = new AccountService(_factory, _mapper);
-      _tService = new TicketService(_factory, _mapper, _dbservice);
+      _tService = new TicketService(_factory, _mapper, _dbservice, this);
       _maService = new ManageAttendeesService(_factory, _mapper, _dbservice, _tService);
       _logger = LogManager.GetCurrentClassLogger();
     }
@@ -108,11 +108,14 @@ namespace EventCombo.Controllers
         userId = Session["buyerId"].ToString();
       else
         userId = "";
+      if ((Session["AppId"] != null) && String.IsNullOrEmpty(userId))
+        userId = Session["AppId"].ToString();
 
       _maService.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath(".."));
       OrderConfirmationViewModel oinfo = _pService.GetOrderConfirmationInfo(orderId, userId);
 
       PopulateBaseViewModel(oinfo, "Confirmation for Order #" + oinfo.OrderId + " | Eventcombo");
+      Session["Fromname"] = "confirmation";
       return View(oinfo);
     }
 
@@ -205,6 +208,16 @@ namespace EventCombo.Controllers
       {
         _userManager = value;
       }
+    }
+
+    [HttpGet]
+    public ActionResult CheckPromocode(long eventId, string promocode)
+    {
+      PromoCodeResponseViewModel promo = _pService.GetPromoCode(eventId, promocode);
+
+      JsonNetResult res = new JsonNetResult();
+      res.Data = promo;
+      return res;
     }
   }
 }

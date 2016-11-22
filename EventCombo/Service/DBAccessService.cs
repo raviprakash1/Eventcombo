@@ -77,6 +77,31 @@ namespace EventCombo.Service
       return se;
     }
 
+    public StartEndDateTime GetEventStartEndUTC(long eventId)
+    {
+      IRepository<Event> evRepo = new GenericRepository<Event>(_factory.ContextFactory);
+      var cevent = evRepo.Get(filter: (ev => ev.EventID == eventId)).SingleOrDefault();
+      if (cevent == null)
+        return null;
+      StartEndDateTime se = new StartEndDateTime();
+      var svenue = cevent.EventVenues.FirstOrDefault();
+      if (svenue != null)
+      {
+        se.Start = svenue.E_Startdate ?? DateTime.MinValue;
+        se.End = svenue.E_Enddate ?? DateTime.MinValue;
+      }
+      else
+      {
+        var mvenue = cevent.MultipleEvents.FirstOrDefault();
+        if (mvenue != null)
+        {
+          se.Start = mvenue.M_Startfrom ?? DateTime.MinValue;
+          se.End = mvenue.M_StartTo ?? DateTime.MinValue;
+        }
+      }
+      return se;
+    }
+
     public string GetPaymentInfo(string orderId)
     {
       if (String.IsNullOrWhiteSpace(orderId))

@@ -70,13 +70,13 @@
             <div class="wgts">
               @if (!String.IsNullOrEmpty(Model.BaseUserId))
               {
-                <span><a href="javascript:void(0)" title="Add EventTitle to your favorites" ng-click="AddToFavorite();"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
-                <span><a href="javascript:void(0)" title="Vote for EventTitle" ng-click="VoteEvent();"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
+                <span><a href="javascript:void(0)" title="Add @Model.EventTitle to your favorites" ng-click="AddToFavorite();"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
+                <span><a href="javascript:void(0)" title="Vote for @Model.EventTitle" ng-click="VoteEvent();"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
               }
               else
               {
-                <span><a href="javascript:void(0)" title="Add EventTitle to your favorites" ng-click="AddToFavorite();"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
-                <span><a href="javascript:void(0)" title="Vote for EventTitle" ng-click="VoteEvent();"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
+                <span><a href="javascript:void(0)" title="Add @Model.EventTitle to your favorites" ng-click="AddToFavorite();"><i class="material-icons" ng-style="favStyle">favorite</i></a> {{eventInfo.FavoriteCount}}</span>
+                <span><a href="javascript:void(0)" title="Vote for @Model.EventTitle" ng-click="VoteEvent();"><i class="material-icons" ng-style="voteStyle">thumb_up</i></a> {{eventInfo.VoteCount}}</span>
               }
               @if (Model.AllowPrivateShare)
               {

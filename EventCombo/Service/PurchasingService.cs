@@ -29,6 +29,7 @@ namespace EventCombo.Service
     private IMapper _mapper;
     private ILogger _logger;
     private IECImageService _iService;
+    private IDBAccessService _dbService;
     public static readonly int MaxLockCount = 1;
     public static readonly int LockTimeout = 10;
 
@@ -45,6 +46,7 @@ namespace EventCombo.Service
       _mapper = mapper;
       _logger = LogManager.GetCurrentClassLogger();
       _iService = new ECImageService(_factory, _mapper, new ECImageStorage(_mapper));
+      _dbService = new DBAccessService(_factory, _mapper);
     }
 
 
@@ -247,6 +249,7 @@ namespace EventCombo.Service
 
       res.EventId = ev.EventID;
       res.EventTitle = ev.EventTitle;
+      res.ShowShippingAddress = (ev.Ticket_DAdress ?? "").ToUpper() == "Y";
       res.EventUrl = EventService.GetEventUrl(res.EventId, res.EventTitle, new UrlHelper(HttpContext.Current.Request.RequestContext));
       var address = ev.Addresses.FirstOrDefault();
       if (address != null)
@@ -257,7 +260,8 @@ namespace EventCombo.Service
       else if (ev.AddressStatus == "Online")
         res.Address = "Online";
 
-      res.StartDate = GetEventDatesInfo(ev);
+      var dates = GetEventDatesInfo(ev);
+      res.StartDate = dates.Summary;
 
       IRepository<Ticket_Quantity_Detail> tqdRepo = new GenericRepository<Ticket_Quantity_Detail>(_factory.ContextFactory);
       res.TotalAmount = 0;
@@ -277,6 +281,7 @@ namespace EventCombo.Service
         {
           LockTicketId = lTicket.LockTicketId,
           TicketTypeId = tq.Ticket.TicketTypeID ?? 0,
+          TicketId = tq.TQD_Ticket_Id ?? 0,
           Name = tq.Ticket.T_name,
           VenueName = ev.AddressStatus == "Online" ? "Online" : tq.Address == null ? "Unknown" : tq.Address.VenueName,
           DateString = ticketDate == DateTime.MinValue ? "" : ticketDate.ToString("f"),
@@ -389,12 +394,12 @@ namespace EventCombo.Service
       return TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(time, DateTimeKind.Unspecified), tz);
     }
 
-    private string GetEventDatesInfo(Event ev)
+    public EventDatesInfo GetEventDatesInfo(Event ev)
     {
       if (ev == null)
         throw new ArgumentNullException("ev");
 
-      string result;
+      EventDatesInfo result = new EventDatesInfo();
       string tzStr = "";
 
       TimeZoneInfo tz = GetTimeZoneInfo(ev.TimeZone);
@@ -413,17 +418,20 @@ namespace EventCombo.Service
         EndDateTime = ConvertTimeFromUtc(EndDateTime, tz);
       if (StartDateTime == DateTime.MinValue)
         StartDateTime = EndDateTime;
-      result = StartDateTime.ToString("f");
+      result.StartDate = StartDateTime;
+      result.Summary = StartDateTime.ToString("f");
+      result.EndDate = EndDateTime;
       if (EndDateTime != StartDateTime)
-        result = result + " to " + EndDateTime.ToString("f");
+        result.Summary += " to " + EndDateTime.ToString("f");
       if (multiDate != null)
       {
         var Frequency = multiDate == null ? ScheduleFrequency.Single : (ScheduleFrequency)Enum.Parse(typeof(ScheduleFrequency), multiDate.Frequency, true);
-        result = Frequency.ToString() + " " + result;
+        result.Summary = Frequency.ToString() + " " + result;
         if (Frequency == ScheduleFrequency.Weekly)
-          result = result + " (" + multiDate.WeeklyDay + ")";
+          result.Summary += " (" + multiDate.WeeklyDay + ")";
       }
-      return result + tzStr;
+      result.Summary += tzStr;
+      return result;
     }
 
     public PurchaseResult SavePurchaseInfo(EventPurchaseInfoViewModel model, string userId, string ip)
@@ -438,6 +446,7 @@ namespace EventCombo.Service
           IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
           IRepository<TicketBearer> tbRepo = new GenericRepository<TicketBearer>(_factory.ContextFactory);
           IRepository<TicketAttendee> taRepo = new GenericRepository<TicketAttendee>(_factory.ContextFactory);
+          IRepository<Promo_Code> promoRepo = new GenericRepository<Promo_Code>(_factory.ContextFactory);
           // Create Order
           var lGuid = new Guid(model.PurchaseInfo.LockId);
           var lOrder = loRepo.GetByID(lGuid);
@@ -462,17 +471,23 @@ namespace EventCombo.Service
           uow.Context.SaveChanges();
           oRepo.Reload(ord);
 
+          // Get promocode
+          var promo = GetPromoCode(model.EventId, model.PurchaseInfo.PromoCode);
+          decimal promoDiscount = 0;
+
           // Process tickets
           Ticket_Purchased_Detail tpd;
           Ticket_Quantity_Detail tqd;
           TicketBearer tb;
           List<TicketBearer> tbList = new List<TicketBearer>();
           TicketAttendee ta;
+          PromoTicketsInfoViewModel promoticket;
           long quantity;
           decimal totalAmount = 0;
           foreach (var lTicket in lOrder.LockTickets)
           {
             tqd = tqdRepo.GetByID(lTicket.TicketQuantityDetailId);
+            promoticket = (tqd.Ticket.TicketTypeID ?? 1) == 2 ? promo.Tickets.Where(t => t.TicketId == tqd.TQD_Ticket_Id).FirstOrDefault() : null;
             tpd = new Ticket_Purchased_Detail()
             {
               TPD_Event_Id = lOrder.EventId,
@@ -489,11 +504,14 @@ namespace EventCombo.Service
               TicketECFee = lTicket.ECFeePercent,
               TicketMerchantFee = lTicket.ECFeeAmount,
               TicketPrice = lTicket.Price,
-              TicketFeeType = (byte)lTicket.ECFeeType
+              TicketFeeType = (byte)lTicket.ECFeeType, 
+              TPD_PromoCodeAmount = promoticket == null ? 0 : lTicket.Quantity * Math.Round(promoticket.Amount + lTicket.Price * promoticket.Percents, 2),
+              TPD_PromoCodeID = promo.Success ? promo.PromoCodeId : 0
             };
             tpdRepo.Insert(tpd);
             tqd.TQD_Remaining_Quantity -= tpd.TPD_Purchased_Qty;
             uow.Context.SaveChanges();
+            promoDiscount += tpd.TPD_PromoCodeAmount ?? 0;
             totalAmount += (tpd.TPD_Amount ?? 0) + (tpd.TPD_Donate ?? 0);
             quantity = 0;
             var cTicket = model.Tickets.Where(t => t.LockTicketId == lTicket.LockTicketId).FirstOrDefault();
@@ -508,7 +526,7 @@ namespace EventCombo.Service
               {
                 if (!String.IsNullOrEmpty(att.Email))
                 {
-                  tb = tbList.Where(b => (b.Email == att.Email) && (b.Name == att.Name) && (b.PhoneNumber == att.PhoneNumber)).FirstOrDefault();
+                  tb = tbList.Where(b => (b.Email == att.Email) && (b.Name == att.Name) && (b.PhoneNumber == (att.PhoneNumber ?? ""))).FirstOrDefault();
                   if (tb == null)
                   {
                     tb = new TicketBearer()
@@ -581,9 +599,27 @@ namespace EventCombo.Service
             }
           }
 
+          if (promo.Success)
+          {
+            promoDiscount += promo.Amount + Math.Round((totalAmount + vcAmount) * promo.Percents, 2);
+            if (promoDiscount <= (totalAmount + vcAmount))
+            {
+              ord.O_PromoCodeId = promo.PromoCodeId;
+              var p = promoRepo.GetByID(promo.PromoCodeId);
+              int uses;
+              if ((p != null) && Int32.TryParse(p.PC_Uses, out uses))
+              {
+                uses--;
+                p.PC_Uses = uses.ToString();
+                uow.Context.SaveChanges();
+              }
+            }
+            else
+              promoDiscount = 0;
+          }
           // Order summary
           ord.O_OrderAmount = totalAmount;
-          ord.O_TotalAmount = totalAmount + vcAmount;
+          ord.O_TotalAmount = totalAmount + vcAmount - promoDiscount;
           ord.O_VariableAmount = vcAmount;
           ord.O_VariableId = String.Join(",", vcList);
 
@@ -658,7 +694,7 @@ namespace EventCombo.Service
             }
             catch (Exception ex)
             {
-              throw new Exception(String.Format("Error during processing payment by credit card {0}", "XXXXXXXXXXXX", model.PurchaseInfo.CardNumber.Substring(model.PurchaseInfo.CardNumber.Length - 4)), ex);
+              throw new Exception(String.Format("Error during processing of payment by credit card XXXX-XXXX-XXXX-{0}", model.PurchaseInfo.CardNumber.Substring(model.PurchaseInfo.CardNumber.Length - 4)), ex);
             }
             if (response.Success)
             {
@@ -669,7 +705,7 @@ namespace EventCombo.Service
             }
             else
             {
-              pres.Message = "Payment was not processed. Please, check your payment information and try again.";
+              pres.Message = response.UserMessage;
               throw new Exception(String.Format("Payment for card {0} has not been committed. {1}", model.PurchaseInfo.CardNumber.Substring(model.PurchaseInfo.CardNumber.Length - 4), response.message));
             }
           }
@@ -680,7 +716,7 @@ namespace EventCombo.Service
             Tuple<string, string> paypalRes;
             try
             {
-              paypalRes = StartPayPalPayment(model.Tickets, ord.O_TotalAmount ?? 0, ord.O_Order_Id, desc);
+              paypalRes = StartPayPalPayment(model.Tickets, ord.O_TotalAmount ?? 0, promoDiscount, ord.O_Order_Id, desc);
               if (paypalRes != null)
               {
                 pres.Success = true;
@@ -707,7 +743,7 @@ namespace EventCombo.Service
         {
           uow.Rollback();
           if (String.IsNullOrEmpty(pres.Message))
-            pres.Message = "Error during processing of purchasing. Please try again later";
+            pres.Message = "Error during processing. Please try again later";
           _logger.Fatal(ex, String.Format("Error during processing of purchasing info for LockId = {0}, EventId = {1}, Payment method = {2}.", model.PurchaseInfo.LockId, model.EventId, model.PurchaseInfo.Method));
         }
 
@@ -826,7 +862,7 @@ namespace EventCombo.Service
       // get the response from the service (errors contained if any)
       var response = controller.GetApiResponse();
 
-      if (response.messages.resultCode == messageTypeEnum.Ok)
+      if (response.transactionResponse.responseCode == "1") // Approved
       {
         carddet.Success = true;
         if (response.transactionResponse != null)
@@ -842,16 +878,21 @@ namespace EventCombo.Service
         if (response.transactionResponse != null)
         {
           StringBuilder b = new StringBuilder();
+          StringBuilder ub = new StringBuilder();
           foreach (var err in response.transactionResponse.errors)
+          {
             b.AppendLine(String.Format("Code: {0}, Message: {1}", err.errorCode, err.errorText));
+            ub.AppendLine(err.errorText);
+          }
           carddet.message = b.ToString();
+          carddet.UserMessage = String.Join(", ", ub);
         }
       }
 
       return carddet;
     }
 
-    private Tuple<string, string> StartPayPalPayment(IEnumerable<TicketPurchaseInfoViewModel> tickets, decimal pAmount, string orderId, string description)
+    private Tuple<string, string> StartPayPalPayment(IEnumerable<TicketPurchaseInfoViewModel> tickets, decimal pAmount, decimal promoDiscount, string orderId, string description)
     {
       var itemList = new ItemList() { items = new List<Item>() };
       int i = 1;
@@ -868,6 +909,19 @@ namespace EventCombo.Service
         };
         total += t.Price * t.Quantity; 
         itemList.items.Add(item);
+      }
+      if (promoDiscount != 0)
+      {
+        Item promo = new Item()
+        {
+          name = "Promo Code",
+          currency = "USD",
+          price = (-promoDiscount).ToString("N2"),
+          quantity = "1",
+          sku = "Promo"
+        };
+        itemList.items.Add(promo);
+        total -= promoDiscount;
       }
       if (pAmount != total)
       {
@@ -1061,13 +1115,18 @@ namespace EventCombo.Service
 
       res.EventId = ev.EventID;
       res.EventTitle = ev.EventTitle;
+      res.EventDescription = ev.EventDescription;
       res.Email = order.O_Email;
       res.OrderId = orderId;
       res.EventUrl = EventService.GetEventUrl(res.EventId, res.EventTitle, new UrlHelper(HttpContext.Current.Request.RequestContext));
+      res.EventUrl = ResolveServerUrl(VirtualPathUtility.ToAbsolute(res.EventUrl), false);
 
       var org = ev.Event_Orgnizer_Detail.FirstOrDefault();
       if (org != null)
+      {
         res.OrganizerId = org.OrganizerMaster_Id;
+        res.OrganizerName = org.Organizer_Master.Orgnizer_Name;
+      }
 
       var address = ev.Addresses.FirstOrDefault();
       if (address != null)
@@ -1078,7 +1137,7 @@ namespace EventCombo.Service
       else if (ev.AddressStatus == "Online")
         res.Address = "Online";
 
-      res.StartDate = GetEventDatesInfo(ev);
+      res.Dates = GetEventDatesInfo(ev);
 
       List<TicketPurchaseInfoViewModel> ticketList = new List<TicketPurchaseInfoViewModel>();
       foreach (var tpdTicket in tpdTickets)
@@ -1119,6 +1178,18 @@ namespace EventCombo.Service
       res.Tickets = ticketList;
 
       return res;
+    }
+
+    private string ResolveServerUrl(string serverUrl, bool forceHttps)
+    {
+      if (serverUrl.IndexOf("://") > -1)
+        return serverUrl;
+
+      string newUrl = serverUrl;
+      Uri originalUri = System.Web.HttpContext.Current.Request.Url;
+      newUrl = (forceHttps ? "https" : originalUri.Scheme) +
+          "://" + originalUri.Authority + newUrl;
+      return newUrl;
     }
 
     public void GenerateTicketDetails(string orderId, IUnitOfWork uow)
@@ -1214,6 +1285,81 @@ namespace EventCombo.Service
       }
       return builder.ToString();
     }
+
+    private DateTime CalcRelativeDateTime(DateTime date, string offset)
+    {
+      var vals = offset.Split(' ');
+      long minutes = 0;
+      if (vals.Count() > 0)
+        minutes = Int32.Parse(vals[0]);
+      minutes *= 24;
+      if (vals.Count() > 2)
+        minutes += Int32.Parse(vals[2]);
+      minutes *= 60;
+      if (vals.Count() > 4)
+        minutes += Int32.Parse(vals[4]);
+      return date.AddMinutes(-minutes);
+    }
+
+    public PromoCodeResponseViewModel GetPromoCode(long eventId, string promocode)
+    {
+      PromoCodeResponseViewModel res = new PromoCodeResponseViewModel() { Success = false };
+      if (String.IsNullOrEmpty(promocode))
+        return res;
+      IRepository<Promo_Code> pRepo = new GenericRepository<Promo_Code>(_factory.ContextFactory);
+      var promo = pRepo.Get(p => (p.PC_Eventid == eventId) && (p.PC_Code.ToLower() == promocode.ToLower())).FirstOrDefault();
+      if (promo == null)
+      {
+        res.Message = "Promo Code not found";
+        return res;
+      }
+      DateTime startDT;
+      DateTime endDT;
+      DateTime now = DateTime.UtcNow;
+      var dates = _dbService.GetEventStartEndUTC(eventId);
+
+      if (promo.PC_Startdatetype == "1")
+        startDT = CalcRelativeDateTime(dates.Start, promo.PC_Start);
+      else
+        startDT = promo.P_Startdate ?? DateTime.MinValue;
+      if (promo.Pc_Enddatetype == "1")
+        endDT = CalcRelativeDateTime(dates.End, promo.PC_End);
+      else
+        endDT = promo.P_Enddate ?? DateTime.MinValue;
+      if ((now > endDT) || (now < startDT) || (promo.PC_Uses == "0"))
+      {
+        res.Message = "Promo Code not available.";
+        return res;
+      }
+
+      res.Success = true;
+      res.EventId = eventId;
+      res.PromoCode = promocode;
+      res.PromoCodeId = promo.PC_id;
+      if (!String.IsNullOrEmpty(promo.PC_Apply) && (promo.PC_Apply.ToUpper() != "A"))
+      {
+        var tickets = promo.PC_Apply.Split(',');
+        foreach(var tstr in tickets)
+        {
+          long tid = 0;
+          if (Int64.TryParse(tstr, out tid))
+            res.Tickets.Add(new PromoTicketsInfoViewModel() { TicketId = tid, Amount = promo.PC_Amount ?? 0, Percents = (promo.PC_Percentage ?? 0) / 100 });
+        }
+      }
+      if (res.Tickets.Count > 0)
+      {
+        res.Amount = 0;
+        res.Percents = 0;
+      }
+      else
+      {
+        res.Amount = promo.PC_Amount ?? 0;
+        res.Percents = (promo.PC_Percentage ?? 0) / 100;
+      }
+
+      return res;
+    }
+
   }
 
 }

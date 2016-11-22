@@ -48,7 +48,7 @@ namespace EventCombo.Controllers
       {
         IUnitOfWorkFactory uowFactory = new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory());
         AutoMapper.IMapper mapper = AutomapperConfig.Config.CreateMapper();
-        _tservice = new TicketService(uowFactory, mapper, new DBAccessService(uowFactory, mapper));
+        _tservice = new TicketService(uowFactory, mapper, new DBAccessService(uowFactory, mapper), this);
         _accService = new AccountService(uowFactory, mapper);
       }
     }
@@ -61,10 +61,9 @@ namespace EventCombo.Controllers
       {
         IUnitOfWorkFactory uowFactory = new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory());
         AutoMapper.IMapper mapper = AutomapperConfig.Config.CreateMapper();
-        _tservice = new TicketService(uowFactory, mapper, new DBAccessService(uowFactory, mapper));
+        _tservice = new TicketService(uowFactory, mapper, new DBAccessService(uowFactory, mapper), this);
       }
     }
-
 
     public ActionResult CheckExistingEmail(string Email)
     {

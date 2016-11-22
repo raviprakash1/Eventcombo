@@ -124,9 +124,9 @@
         <div class="c12 text-right">
           <md-input-container class="promoCode">
             <label>Promo Code</label>
-            <input ng-model="purchaseInfo.PromoCode">
+            <input ng-model="purchaseInfo.PurchaseInfo.PromoCode" ng-blur="CheckPromoCode()" maxlength="15">
           </md-input-container>
-          <span class="promoDiscount margin-2em-left" ng-show="purchaseInfo.PromoCode">-${{purchaseInfo.PurchaseInfo.TotalPromo.toFixed(2)}}</span>
+          <span class="promoDiscount margin-2em-left" ng-show="purchaseInfo.PurchaseInfo.TotalPromo">-${{purchaseInfo.PurchaseInfo.TotalPromo.toFixed(2)}}</span>
         </div>
 
         <div class="c12 buttons text-right">
@@ -230,7 +230,8 @@
         </div>
 
         <div class="c6 paymentSpace" ng-show="purchaseInfo.PurchaseInfo.TotalOrder > 0">
-          <md-checkbox ng-model="purchaseInfo.PurchaseInfo.ShippingSame" ng-true-value="true" ng-false-value="false" aria-label="Billing Address" class="blueCheckbox">Billing address is the same as shipping</md-checkbox>
+          <md-checkbox ng-model="purchaseInfo.PurchaseInfo.ShippingSame" ng-true-value="true" ng-false-value="false"
+                       aria-label="Billing Address" class="blueCheckbox" ng-show="purchaseInfo.ShowShippingAddress">Billing address is the same as shipping</md-checkbox>
           <div class="block100"><strong>Billing Information</strong></div>
           <md-input-container class="block30">
             <label>Zip Code</label>
@@ -365,7 +366,7 @@
           </md-input-container>
         </div>
         <div class="c6 paymentSpace">
-          <md-checkbox ng-model="purchaseInfo.PurchaseInfo.ShippingSame" aria-label="Shipping Address" class="blueCheckbox">Shipping address is the same as PayPal</md-checkbox>
+          <md-checkbox ng-model="purchaseInfo.PurchaseInfo.ShippingSame" aria-label="Shipping Address" class="blueCheckbox" ng-show="purchaseInfo.ShowShippingAddress">Shipping address is the same as PayPal</md-checkbox>
           <md-input-container class="block30" ng-hide="purchaseInfo.PurchaseInfo.ShippingSame">
             <label>Zip Code</label>
             <input name="paypalShippingZipCode" ng-model="purchaseInfo.PurchaseInfo.ShippingAddress.ZipCode"
@@ -450,9 +451,9 @@
     <div class="popOverlay" ng-show="popErrorMessage">
       <div class="popBox">
         <a class="popClose" ng-click="popErrorMessage=false"><i class="material-icons">clear</i></a>
-        <h3 class="red-heading">{{ErrorHeading}}</h3>
+        <h3 class="red-heading text-center">{{ErrorHeading}}</h3>
         <div class="blue-heading text-center" ng-bind-html="ErrorMessage"></div>
-        <div class="text-center margin-2em-top"><a class="popLink" ng-click="popErrorMessage=false">CONTINUE TO SITE</a></div>
+        <div class="text-center margin-2em-top"><a class="popLink" ng-click="popErrorMessage=false">CONTINUE PURCHASE</a></div>
       </div>
     </div>
     <div class="popOverlay" ng-show="popInfoMessage">

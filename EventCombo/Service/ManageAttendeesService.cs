@@ -21,6 +21,7 @@ using iTextSharp.text;
 using iTextSharp.text.html.simpleparser;
 using System.Text;
 using EventCombo.Controllers;
+using System.Web.Mvc;
 
 namespace EventCombo.Service
 {
@@ -422,7 +423,7 @@ namespace EventCombo.Service
         var mem = _tservice.GetDownloadableTicket(orderId, "pdf", filePath, IsManualOrder);
         Attachment attach = new Attachment(mem, new ContentType(MediaTypeNames.Application.Pdf));
         attach.ContentDisposition.FileName = "Ticket_EventCombo.pdf";
-        INotification notification = new OrderNotification(_factory, _dbservice, orderId, baseUrl, attach, IsManualOrder);
+        INotification notification = new OrderNotification(_factory, _dbservice, orderId, baseUrl, attach, _tservice);
         ISendMailService sendService = new SendMailService();
         INotificationSender sender = new NotificationSender(notification, sendService);
         sender.SendSeparately(addresses);
@@ -2053,7 +2054,7 @@ namespace EventCombo.Service
             var mem = GetDownloadableTicket(model.OrderId, "pdf", filePath);
             Attachment attach = new Attachment(mem, new ContentType(MediaTypeNames.Application.Pdf));
             attach.ContentDisposition.FileName = "Ticket_EventCombo.pdf";
-            OrderNotification notification = new OrderNotification(_factory, _dbservice, model.OrderId, baseUrl, attach);
+            OrderNotification notification = new OrderNotification(_factory, _dbservice, model.OrderId, baseUrl, attach, _tservice);
             ISendMailService sendService = CreateSendMailService();
             foreach (var att in selected)
               if (!String.IsNullOrWhiteSpace(att.Email))

@@ -418,3 +418,76 @@ LEFT OUTER JOIN Promo_Code ON Promo_Code.PC_id=Ticket_Purchased_Detail.TPD_Promo
 
 
 GO
+
+/* To prevent any potential data loss issues, you should review this script in detail before running it outside the context of the database designer.*/
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+GO
+ALTER TABLE dbo.TicketBearer
+	DROP CONSTRAINT DF_TicketBearer_PhoneNumber
+GO
+CREATE TABLE dbo.Tmp_TicketBearer
+	(
+	TicketbearerId bigint NOT NULL IDENTITY (1, 1),
+	UserId nvarchar(128) NULL,
+	OrderId varchar(1000) NULL,
+	Guid nvarchar(128) NULL,
+	Name nvarchar(128) NULL,
+	Email nvarchar(256) NULL,
+	PhoneNumber varchar(20) NOT NULL
+	)  ON [PRIMARY]
+GO
+ALTER TABLE dbo.Tmp_TicketBearer SET (LOCK_ESCALATION = TABLE)
+GO
+ALTER TABLE dbo.Tmp_TicketBearer ADD CONSTRAINT
+	DF_TicketBearer_PhoneNumber DEFAULT ('') FOR PhoneNumber
+GO
+SET IDENTITY_INSERT dbo.Tmp_TicketBearer ON
+GO
+IF EXISTS(SELECT * FROM dbo.TicketBearer)
+	 EXEC('INSERT INTO dbo.Tmp_TicketBearer (TicketbearerId, UserId, OrderId, Guid, Name, Email, PhoneNumber)
+		SELECT TicketbearerId, CONVERT(nvarchar(128), RTRIM(UserId)), OrderId, CONVERT(nvarchar(128), RTRIM(Guid)), CONVERT(nvarchar(128), RTRIM(Name)), CONVERT(nvarchar(256), RTRIM(Email)), PhoneNumber FROM dbo.TicketBearer WITH (HOLDLOCK TABLOCKX)')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TicketBearer OFF
+GO
+ALTER TABLE dbo.TicketAttendee
+	DROP CONSTRAINT FK_TicketAttendee_TicketBearer
+GO
+DROP TABLE dbo.TicketBearer
+GO
+EXECUTE sp_rename N'dbo.Tmp_TicketBearer', N'TicketBearer', 'OBJECT' 
+GO
+ALTER TABLE dbo.TicketBearer ADD CONSTRAINT
+	PK_TicketBearer PRIMARY KEY CLUSTERED 
+	(
+	TicketbearerId
+	) WITH( STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+GO
+COMMIT
+BEGIN TRANSACTION
+GO
+ALTER TABLE dbo.TicketAttendee ADD CONSTRAINT
+	FK_TicketAttendee_TicketBearer FOREIGN KEY
+	(
+	TicketBearerId
+	) REFERENCES dbo.TicketBearer
+	(
+	TicketbearerId
+	) ON UPDATE  NO ACTION 
+	 ON DELETE  NO ACTION 
+	
+GO
+ALTER TABLE dbo.TicketAttendee SET (LOCK_ESCALATION = TABLE)
+GO
+COMMIT
+
+GO

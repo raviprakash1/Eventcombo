@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EventCombo.Models;
 using System.IO;
+using System.Web.Mvc;
 
 namespace EventCombo.Service
 {
@@ -31,6 +32,8 @@ namespace EventCombo.Service
     TicketSaleViewModel GetEventTicketSale(long eventId, FilterByOrderType filter);
 
     MemoryStream GetDownloadableEventTicketSale(FilterByOrderType filter, long eventId, string format);
+
+    string GetTicketsHtml(string orderId, string view);
 
   }
 }
