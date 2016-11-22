@@ -22,7 +22,7 @@ namespace EventCombo.Controllers
       IUnitOfWorkFactory uowFactory = new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory());
       AutoMapper.IMapper mapper = AutomapperConfig.Config.CreateMapper();
       _dbservice = new DBAccessService(uowFactory, mapper);
-      _tservice = new TicketService(uowFactory, mapper, _dbservice);
+      _tservice = new TicketService(uowFactory, mapper, _dbservice, this);
       _maservice = new ManageAttendeesService(uowFactory, mapper, _dbservice, _tservice);
     }
 
@@ -36,7 +36,7 @@ namespace EventCombo.Controllers
       if (_dbservice.GetOrderAccess(OrderId, userId) == AccessLevel.Public)
         return null;
 
-      MemoryStream mem = _tservice.GetDownloadableTicket(OrderId, format, Server.MapPath(".."), ControllerContext);
+      MemoryStream mem = _tservice.GetDownloadableTicket(OrderId, format, Server.MapPath(".."));
 
       return new FileStreamResult(mem, "application/" + format.ToLower()) { FileDownloadName = "Ticket_" + OrderId + "." + format };
     }

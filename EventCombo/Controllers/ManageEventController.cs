@@ -41,7 +41,7 @@ namespace EventCombo.Controllers
           var factory = new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory());
           _iservice = new ECImageService(factory, mapper, new ECImageStorage(mapper));
           _eservice = new EventService(factory, mapper);
-          _tservice = new TicketService(factory, mapper, new DBAccessService(factory, mapper));
+          _tservice = new TicketService(factory, mapper, new DBAccessService(factory, mapper), this);
         }
 
         private string GetNewInvitationCode()

@@ -35,6 +35,7 @@ namespace EventCombo.Service
     private IECImageService _iService;
     private IPurchasingService _pService;
     private ILogger _logger;
+    private ControllerBase _baseController;
     public static readonly string TicketBarcodePath = "/Images/Barcodes/";
     public static string GetBarcodePath(string code)
     {
@@ -45,7 +46,7 @@ namespace EventCombo.Service
       return String.Format("{0}QR_{1}.png", TicketBarcodePath, code);
     }
 
-    public TicketService(IUnitOfWorkFactory factory, IMapper mapper, IDBAccessService dbService)
+    public TicketService(IUnitOfWorkFactory factory, IMapper mapper, IDBAccessService dbService, ControllerBase baseController)
     {
       if (factory == null)
         throw new ArgumentNullException("factory");
@@ -56,6 +57,9 @@ namespace EventCombo.Service
       if (dbService == null)
         throw new ArgumentNullException("dbService");
 
+      if (baseController == null)
+        throw new ArgumentNullException("baseController");
+
       _factory = factory;
       _mapper = mapper;
       _dbservice = dbService;
@@ -63,6 +67,7 @@ namespace EventCombo.Service
       _iService = new ECImageService(_factory, _mapper, new ECImageStorage(_mapper));
       _pService = new PurchasingService(_factory, _mapper);
       _logger = LogManager.GetCurrentClassLogger();
+      _baseController = baseController;
 
     }
 
@@ -186,7 +191,7 @@ namespace EventCombo.Service
     }
 
 
-    public bool SaveOrderDetails(OrderDetailsViewModel model, string userId, string baseUrl, string filePath, ControllerContext context)
+    public bool SaveOrderDetails(OrderDetailsViewModel model, string userId, string baseUrl, string filePath)
     {
       bool res = true;
       using (var uow = _factory.GetUnitOfWork())
@@ -218,10 +223,10 @@ namespace EventCombo.Service
           uow.Context.SaveChanges();
           if (selected.Count > 0)
           {
-            var mem = GetDownloadableTicket(model.OrderId, "pdf", filePath, context);
+            var mem = GetDownloadableTicket(model.OrderId, "pdf", filePath);
             Attachment attach = new Attachment(mem, new ContentType(MediaTypeNames.Application.Pdf));
             attach.ContentDisposition.FileName = "Ticket_EventCombo.pdf";
-            OrderNotification notification = new OrderNotification(_factory, _dbservice, model.OrderId, baseUrl, attach);
+            OrderNotification notification = new OrderNotification(_factory, _dbservice, model.OrderId, baseUrl, attach, this);
             ISendMailService sendService = CreateSendMailService();
             foreach (var att in selected)
               if (!String.IsNullOrWhiteSpace(att.Email))
@@ -311,7 +316,7 @@ namespace EventCombo.Service
     }
 
 
-    public MemoryStream GetDownloadableTicket(string orderId, string format, string filePath, ControllerContext context, bool IsManualOrder = false)
+    public MemoryStream GetDownloadableTicket(string orderId, string format, string filePath, bool IsManualOrder = false)
     {
       TicketPaymentController tpc = new TicketPaymentController();
 
@@ -324,22 +329,20 @@ namespace EventCombo.Service
       if ((ticket == null) || (order == null))
         return null;
 
-      if (IsManualOrder)
-      {
-        return tpc.generateTicketPDFManualOrder(ticket.TPD_GUID, ticket.TPD_Event_Id ?? 0, null, "", filePath);
-      }
-      else
-      {
-        DownloadController dc = new DownloadController();
-        string htmlText = GetTicketsHtml(orderId, context);
-        var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
-        var pdfBytes = htmlToPdf.GeneratePdf(htmlText);
-        return new MemoryStream(pdfBytes);
-      }
+      DownloadController dc = new DownloadController();
+      string htmlText = GetTicketsHtml(orderId, "~/Views/Download/_Ticket.cshtml");
+      var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
+      var pdfBytes = htmlToPdf.GeneratePdf(htmlText);
+      return new MemoryStream(pdfBytes);
     }
 
-    public string GetTicketsHtml(string orderId, ControllerContext context)
+    public string GetTicketsHtml(string orderId, string view)
     {
+      if (_baseController == null)
+        throw new ArgumentNullException("ControllerContext wasn't initialized.");
+      ControllerContext context = _baseController.ControllerContext;
+      if (context == null)
+        throw new Exception("Can't get ControllerContext.");
       IRepository<Order_Detail_T> oRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
       IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
 
@@ -491,7 +494,7 @@ namespace EventCombo.Service
       PrepareTicketImages(model);
 
       context.Controller.ViewData.Model = model;
-      var viewResult = ViewEngines.Engines.FindPartialView(context, "~/Views/Download/_Ticket.cshtml");
+      var viewResult = ViewEngines.Engines.FindPartialView(context, view);
       using (var sw = new StringWriter())
       {
         var viewContext = new ViewContext(context, viewResult.View, context.Controller.ViewData, context.Controller.TempData, sw);
@@ -504,36 +507,11 @@ namespace EventCombo.Service
     private void PrepareTicketImages(ETicketOrderViewModel model)
     {
       var codes = model.Attendees.SelectMany(a => a.Tickets.SelectMany(t => t.TicketDetails));
-      string qrInfo;
       foreach (var code in codes)
       {
-        qrInfo = CreateQRInfo(model, code);
         GenerateBarCode(code, HostingEnvironment.MapPath(GetBarcodePath(code)));
-        GenerateQR(qrInfo, HostingEnvironment.MapPath(GetQRPath(code)));
+        GenerateQR(code, HostingEnvironment.MapPath(GetQRPath(code)));
       }
-    }
-
-    private string CreateQRInfo(ETicketOrderViewModel model, string ticketId)
-    {
-      var att = model.Attendees.Where(a => a.Tickets.Any(t => t.TicketDetails.Any(td => td == ticketId))).FirstOrDefault();
-      if (att == null)
-        return "";
-      var ticket = att.Tickets.Where(t => t.TicketDetails.Any(td => td == ticketId)).FirstOrDefault();
-
-      StringBuilder strInfo = new StringBuilder();
-      strInfo.Append("UniqueOrderNumber: " + ticketId);
-      strInfo.Append("TicketTypeName: " + ticket.TicketName);
-      strInfo.Append("TotalTicketQuantityPerOrder: " + 1);
-      strInfo.Append("TicketPrice: $" + (ticket.Price - ticket.Discount).ToString("N2"));
-      strInfo.Append("TicketDiscountAmount: $" + ticket.Discount.ToString("N2"));
-      strInfo.Append("TotalTicketPrice: $" + ticket.Price.ToString("N2"));
-      strInfo.Append("TicketType: " + ticket.TicketType);
-      strInfo.Append("CustomerName: " + att.AttendeeName);
-      strInfo.Append("EventName: " + model.EventTitle);
-      strInfo.Append("EventStartDate: " + model.StartDate.ToString("f"));
-      strInfo.Append("EventVenueName: " + model.VenueName);
-
-      return strInfo.ToString().Substring(0, 154);
     }
 
     public void GenerateQR(string qrdata, string qrImgPath)
@@ -541,7 +519,7 @@ namespace EventCombo.Service
       string url = "";
       try
       {
-        url = "http://chart.apis.google.com/chart?cht=qr&chs=155x155&chld=L|1&chl=" + qrdata;
+        url = "http://chart.apis.google.com/chart?cht=qr&chs=120x120&chld=H|1&chl=" + qrdata;
         WebClient wc = new WebClient();
         byte[] qrImage = wc.DownloadData(url);
         MemoryStream ms = new MemoryStream(qrImage);

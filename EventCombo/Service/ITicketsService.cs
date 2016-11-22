@@ -17,13 +17,13 @@ namespace EventCombo.Service
 
     OrderDetailsViewModel GetOrderDetails(string orderId, string userId, long EventId);
 
-    bool SaveOrderDetails(OrderDetailsViewModel model, string userId, string baseUrl, string filePath, ControllerContext context);
+    bool SaveOrderDetails(OrderDetailsViewModel model, string userId, string baseUrl, string filePath);
 
     bool CancelOrder(string orderId, string userId);
 
     bool SaveMessage(OrganizerMessageViewModel model);
 
-    MemoryStream GetDownloadableTicket(string orderId, string format, string filePath, ControllerContext context, bool IsManualOrder = false);
+    MemoryStream GetDownloadableTicket(string orderId, string format, string filePath, bool IsManualOrder = false);
 
     IEnumerable<OrderSummaryViewModel> GetEventOrdersSummaryCalculation(long eventId);
 
@@ -32,6 +32,8 @@ namespace EventCombo.Service
     TicketSaleViewModel GetEventTicketSale(long eventId, FilterByOrderType filter);
 
     MemoryStream GetDownloadableEventTicketSale(FilterByOrderType filter, long eventId, string format);
+
+    string GetTicketsHtml(string orderId, string view);
 
   }
 }

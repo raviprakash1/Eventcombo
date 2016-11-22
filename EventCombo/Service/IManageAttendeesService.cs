@@ -21,7 +21,7 @@ namespace EventCombo.Service
 
     IEnumerable<EventOrderInfoViewModel> GetOrdersForSaleReport(PaymentStates state, long eventId);
 
-    bool SendConfirmations(string orderId, string baseUrl, string filePath, ControllerContext context, bool IsManualOrder = false);
+    bool SendConfirmations(string orderId, string baseUrl, string filePath, bool IsManualOrder = false);
 
     MemoryStream GetDownloadableOrderList(PaymentStates state, long eventId, string format);
 

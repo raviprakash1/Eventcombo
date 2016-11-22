@@ -1871,6 +1871,7 @@
     <Content Include="Views\TicketPurchase\Confirmation.cshtml" />
     <Content Include="Views\OrganizerInfo\OrganizerInfo.cshtml" />
     <Content Include="Views\Download\_Ticket.cshtml" />
+    <Content Include="Views\Download\_TicketNotification.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

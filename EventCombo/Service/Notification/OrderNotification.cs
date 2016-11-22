@@ -22,22 +22,24 @@ namespace EventCombo.Service
     private string _orderId;
     private string _baseUrl;
     private Attachment _attachment;
-    private bool _isManualOrder;
+    private ITicketsService _tService;
+    //private bool _isManualOrder;
 
-    public OrderNotification(IUnitOfWorkFactory factory, IDBAccessService dbService, string orderId, string baseUrl, Attachment attachment, bool isManualOrder = false)
+    public OrderNotification(IUnitOfWorkFactory factory, IDBAccessService dbService, string orderId, string baseUrl, Attachment attachment, ITicketsService tService)
     {
       if (factory == null)
         throw new ArgumentNullException("factory");
-
       if (dbService == null)
         throw new ArgumentNullException("dbService");
+      if (tService == null)
+        throw new ArgumentNullException("tService");
 
       _factory = factory;
       _dbservice = dbService;
       _orderId = orderId;
       _baseUrl = baseUrl;
       _attachment = attachment;
-      _isManualOrder = isManualOrder;
+      _tService = tService;
     }
 
     public string ReceiverName
@@ -53,6 +55,9 @@ namespace EventCombo.Service
       _service.Message.Subject = _subject;
       _service.Message.IsBodyHtml = true;
       _service.Message.Body = _body.Replace("¶¶UserFirstNameID¶¶", ReceiverName);
+      var to = _service.Message.To.FirstOrDefault();
+      if (to != null)
+        _service.Message.Body = _body.Replace("¶¶UserEmailID¶¶", to.Address);
       _service.Message.Attachments.Clear();
       if (_attachment != null)
         _service.Message.Attachments.Add(_attachment);
@@ -71,11 +76,14 @@ namespace EventCombo.Service
         return;
 
       _subject = eTemplate.Subject.Replace("¶¶EventTitleId¶¶", ticket.Event.EventTitle).Replace("¶¶EventOrderNO¶¶", _orderId);
-      _body = new MvcHtmlString(HttpUtility.HtmlDecode(eTemplate.TemplateHtml)).ToHtmlString();
-      if (_isManualOrder)
-          PrepareBodyManualOrder();
-      else
-          PrepareBody();
+      _body = _tService.GetTicketsHtml(_orderId, "~/Views/Download/_TicketNotification.cshtml");
+      //_body = new MvcHtmlString(HttpUtility.HtmlDecode(eTemplate.TemplateHtml)).ToHtmlString();
+
+
+      //if (_isManualOrder)
+      //    PrepareBodyManualOrder();
+      //else
+      //    PrepareBody();
     }
 
     private void PrepareBodyManualOrder()

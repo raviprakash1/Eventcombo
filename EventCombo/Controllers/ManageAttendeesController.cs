@@ -26,7 +26,7 @@ namespace EventCombo.Controllers
         IUnitOfWorkFactory uowFactory = new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory());
         AutoMapper.IMapper mapper = AutomapperConfig.Config.CreateMapper();
         _dbservice = new DBAccessService(uowFactory, mapper);
-        _tservice = new TicketService(uowFactory, mapper, _dbservice);
+        _tservice = new TicketService(uowFactory, mapper, _dbservice, this);
         _maservice = new ManageAttendeesService(uowFactory, mapper, _dbservice, _tservice);
       }
 
@@ -149,7 +149,7 @@ namespace EventCombo.Controllers
       {
         if (String.IsNullOrWhiteSpace(orderId))
           return -1;
-        if (_maservice.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath(".."), ControllerContext, true))
+        if (_maservice.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath(".."), true))
           return 1;
         else
           return 0;
@@ -336,7 +336,7 @@ namespace EventCombo.Controllers
       if (_dbservice.GetOrderAccess(orderId, userId) == AccessLevel.Public)
         return -1;
 
-      if (_maservice.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath(".."), ControllerContext))
+      if (_maservice.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath("..")))
         return 1;
       else
         return 0;
