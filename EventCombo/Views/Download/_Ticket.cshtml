@@ -19,6 +19,7 @@
   }
   @for (int i = 0; i < codes.Count(); i++)
   {
+    ETicketAttendeeViewModel attendee = Model.Attendees.Where(a => a.Tickets.Any(t => t.TicketDetails.Any(td => td == codes[i]))).FirstOrDefault();
     <table width="640" cellpadding="0" cellspacing="0" border="0" style="box-sizing:border-box; display:table; width:640px; margin-left:auto; margin-right:auto; font:14px Arial, Helvetica, sans-serif; color:#5a5a5a; position:relative;">
       <tr valign="top">
         <td style="width:15%; min-width:50px; padding:15px 3%; vertical-align:top;">
@@ -32,16 +33,18 @@
               <td style="vertical-align:top;">
                 <h2 style="color:#00c9fc; font:bold 24px Arial, Helvetica, sans-serif; margin:0;">@Model.EventTitle</h2>
                 <p style="color:#ababab; font:12px Arial, Helvetica, sans-serif; margin-top:0;">@Model.Address</p>
+                <br>
+                <h2 style="font:bold 24px Arial, Helvetica, sans-serif; margin:0;">@attendee.AttendeeName</h2>
               </td>
-              <td width="200">
-                <img style="margin-left:30px; border:none; display:block;" src="@HtmlProcessing.ResolveServerUrl(Url.Content("~" + TicketService.GetQRPath(codes[i])), false)">
+              <td width="200" align="right">
+                <img style="margin-right:-8px; border:none; display:block;" src="@HtmlProcessing.ResolveServerUrl(Url.Content("~" + TicketService.GetQRPath(codes[i])), false)">
               </td>
             </tr>
           </table>
 
           <div style="box-sizing:border-box; width:100%; display:table; padding-top:15px; padding-bottom:15px;">
             <div style="box-sizing:border-box; display:inline-block; width:50%; float:left;">
-              <span style="color:#5a5a5a; font:18px Arial, Helvetica, sans-serif; text-transform:uppercase;">Order #@Model.OrderId</span>
+              <span style="color:#5a5a5a; font:18px Arial, Helvetica, sans-serif; text-transform:uppercase;">Order @Model.OrderId</span>
             </div>
             <div style="box-sizing:border-box; display:inline-block; width:50%; float:left; text-align:right;">
               <span style="color:#5a5a5a; font:18px Arial, Helvetica, sans-serif; text-transform:uppercase;">@Model.OrderDate.ToString("d")</span>
@@ -85,7 +88,7 @@
                         }
                       </td>
                       <td align="right" style="border-bottom:1px dashed #ccc;">
-                        $@att.TotalPrice.ToString("N2")<br>
+                        <br>
                         @foreach (var ticket in att.Tickets)
                         {
                           <span style="display:inline-block; margin-top:5px;">$@ticket.TotalPrice.ToString("N2")</span><br>
@@ -145,20 +148,20 @@
                     </p>
                     <p>
                       <strong>Organizer:</strong><br>
-                      <a href="#" style="color:#00c9fc; text-decoration:none;">@Model.OrganizerName</a>
+                      <a href="@HtmlProcessing.ResolveServerUrl(Url.Action("OrganizerInfo", "OrganizerInfo", new { organizerName = Model.OrganizerName, organizerId = Model.OrganizerId }), false)" style="color:#00c9fc; text-decoration:none;">@Model.OrganizerName</a>
                     </p>
                   </td>
                 </tr>
                 <tr valign="top">
                   <td align="right" width="100">
-                    <img style="margin-right:30px; border:none; display:block; max-width:200px;" src="https://maps.googleapis.com/maps/api/staticmap?size=320x280&scale=2&zoom=14&markers=color:0xe30076%7C@(Model.Latitude),@(Model.Longitude)&key=@(System.Configuration.ConfigurationManager.AppSettings.Get("GoogleAPIKey"))">
+                    <a href="https://maps.google.com?saddr=Current+Location&daddr=@(Model.Latitude),@(Model.Longitude)"><img style="margin-right:30px; border:none; display:block; max-width:200px;" src="https://maps.googleapis.com/maps/api/staticmap?size=320x280&scale=2&zoom=14&markers=color:0xe30076%7C@(Model.Latitude),@(Model.Longitude)&key=@(System.Configuration.ConfigurationManager.AppSettings.Get("GoogleAPIKey"))"></a>
                   </td>
                   <td>
                     <p style="margin-top:0;">
                       <strong>@Model.VenueName</strong><br>
                       @Model.Address
                     </p>
-                    <p><a href="#" style="color:#00c9fc; text-decoration:none;">Get Directions</a></p>
+                    <p><a href="https://maps.google.com?saddr=Current+Location&daddr=@(Model.Latitude),@(Model.Longitude)" style="color:#00c9fc; text-decoration:none;">Get Directions</a></p>
                   </td>
                 </tr>
               </table>
@@ -175,22 +178,19 @@
 
           <div style="box-sizing:border-box; width:100%; display:table; text-align:center;">
             <div style="box-sizing:border-box; display:inline-block; padding:5px 15px;">
-              <a href="#" style="color:#00c9fc; font:14px Arial, Helvetica, sans-serif; letter-spacing:0; text-decoration:none;">YOUR ACCOUNT</a>
+              <a href="@HtmlProcessing.ResolveServerUrl(@Url.Action("MyAccount", "Account"), false)" style="color:#00c9fc; font:14px Arial, Helvetica, sans-serif; letter-spacing:0; text-decoration:none;">YOUR ACCOUNT</a>
             </div>
             <div style="box-sizing:border-box; display:inline-block; padding:5px 15px;">
-              <a href="#" style="color:#00c9fc; font:14px Arial, Helvetica, sans-serif; letter-spacing:0; text-decoration:none;">CONTACT US</a>
+              <a href="mailto:tickets@eventcombo.com?subject=@(Model.OrderId) Inquiry" style="color:#00c9fc; font:14px Arial, Helvetica, sans-serif; letter-spacing:0; text-decoration:none;">CONTACT US</a>
             </div>
             <div style="box-sizing:border-box; display:inline-block; padding:5px 15px;">
-              <a href="#" style="color:#00c9fc; font:14px Arial, Helvetica, sans-serif; letter-spacing:0; text-decoration:none;">CREATE YOUR OWN EVENT</a>
+              <a href="@HtmlProcessing.ResolveServerUrl(@Url.Action("CreateEvent", "EventManagement"), false)" style="color:#00c9fc; font:14px Arial, Helvetica, sans-serif; letter-spacing:0; text-decoration:none;">CREATE YOUR OWN EVENT</a>
             </div>
           </div>
 
           <div style="box-sizing:border-box; width:100%; display:table;">
             <div style="box-sizing:border-box; display:inline-block; width:100%; float:left;">
               <p style="color:#ababab; font:12px/18px Arial, Helvetica, sans-serif; text-align:center;">
-                @{
-                  ETicketAttendeeViewModel attendee = Model.Attendees.Where(a => a.Tickets.Any(t => t.TicketDetails.Any(td => td == codes[i]))).FirstOrDefault();
-                }
                 This email was sent to <a href="mailto:@(attendee.AttendeeEmail)" style="color:#ababab;">@attendee.AttendeeEmail</a>.<br>
                 Eventcombo, Inc. 425 Kipp st., Teaneck, NJ 07666<br>
                 &copy;2016 <a href="https://Eventcombo.com" style="color:#ababab;">Eventcombo.com</a>

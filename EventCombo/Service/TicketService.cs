@@ -519,7 +519,7 @@ namespace EventCombo.Service
       string url = "";
       try
       {
-        url = "http://chart.apis.google.com/chart?cht=qr&chs=120x120&chld=H|1&chl=" + qrdata;
+        url = "http://chart.apis.google.com/chart?cht=qr&chs=102x102&chld=H|0&chl=" + qrdata;
         WebClient wc = new WebClient();
         byte[] qrImage = wc.DownloadData(url);
         MemoryStream ms = new MemoryStream(qrImage);

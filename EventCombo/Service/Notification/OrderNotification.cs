@@ -54,10 +54,10 @@ namespace EventCombo.Service
         PrepareNotification();
       _service.Message.Subject = _subject;
       _service.Message.IsBodyHtml = true;
-      _service.Message.Body = _body.Replace("¶¶UserFirstNameID¶¶", ReceiverName);
+      _service.Message.Body = _body.Replace("¶¶UserFirstNameID¶¶", ReceiverName.Trim());
       var to = _service.Message.To.FirstOrDefault();
       if (to != null)
-        _service.Message.Body = _body.Replace("¶¶UserEmailID¶¶", to.Address);
+        _service.Message.Body = _service.Message.Body.Replace("¶¶UserEmailID¶¶", to.Address);
       _service.Message.Attachments.Clear();
       if (_attachment != null)
         _service.Message.Attachments.Add(_attachment);
