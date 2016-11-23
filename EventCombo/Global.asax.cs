@@ -21,11 +21,11 @@ namespace EventCombo
       RouteConfig.RegisterRoutes(RouteTable.Routes);
       BundleConfig.RegisterBundles(BundleTable.Bundles);
       HangfireBootstrapper.Instance.Start();
-      #if DEBUG
+      /*#if DEBUG
             BundleTable.EnableOptimizations = false;
       #else
             BundleTable.EnableOptimizations = true;
-      #endif
+      #endif*/
     }
 
     protected void Application_End(object sender, EventArgs e)
