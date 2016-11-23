@@ -144,7 +144,7 @@ namespace EventCombo.Service
             }
         }
       }
-      res = res.OrderByDescending(oo => oo.Date.Date).ThenBy(oo => oo.OId);
+      res = res.OrderByDescending(oo => oo.Date).ThenByDescending(oo => oo.OId);
       return res;
     }
 
@@ -216,7 +216,7 @@ namespace EventCombo.Service
             order.PricePaid = order.PricePaid - order.Refunded - order.Cancelled;
             order.PriceNet = order.PriceNet - order.Refunded - order.Cancelled;
         }
-        res = res.OrderByDescending(oo => oo.Date.Date).ThenBy(oo => oo.OId);
+        res = res.OrderByDescending(oo => oo.Date).ThenByDescending(oo => oo.OId);
         return res;
     }
 
