@@ -139,7 +139,9 @@
               <table style="width:100%;">
                 <tr valign="top">
                   <td align="right" width="100">
-                    <img style="margin-right:30px; border:none; display:block; max-width:200px;" src="@HtmlProcessing.ResolveServerUrl(Url.Content("~" + Model.ImageUrl), false)">
+                    <a href="@HtmlProcessing.ResolveServerUrl(Url.Action("ViewEvent", "EventManagement", new { strEventDs = Model.EventTitle.Trim().Replace(' ', '-'), strEventId = Model.EventId }), false)">
+                      <img style="margin-right:30px; border:none; display:block; max-width:200px;" src="@HtmlProcessing.ResolveServerUrl(Url.Content("~" + Model.ImageUrl), false)">
+                    </a>
                   </td>
                   <td>
                     <p style="margin-top:0;">
@@ -192,7 +194,7 @@
             <div style="box-sizing:border-box; display:inline-block; width:100%; float:left;">
               <p style="color:#ababab; font:12px/18px Arial, Helvetica, sans-serif; text-align:center;">
                 This email was sent to <a href="mailto:@(attendee.AttendeeEmail)" style="color:#ababab;">@attendee.AttendeeEmail</a>.<br>
-                Eventcombo, Inc. 425 Kipp st., Teaneck, NJ 07666<br>
+                Eventcombo, Inc. 1407 Broadway, 24th Fl., New York, NY 10018<br>
                 &copy;2016 <a href="https://Eventcombo.com" style="color:#ababab;">Eventcombo.com</a>
               </p>
             </div>
