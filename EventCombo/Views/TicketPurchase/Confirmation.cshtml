@@ -88,7 +88,7 @@
                 <span class="semiBold">
                   SHARE EVENT ON
                   <a href="javascript:void(0)" title="Share @Model.EventTitle via Email" ng-click="forwardFriend($event,'@HtmlProcessing.PrepareString(Model.EventTitle)','Event')"><img width="16px" alt="Share @Model.EventTitle via Email" src="~/Images/AMaterial/mail-square.svg"></a>
-                  <a href="javascript:void(0)" class="shareLink" title="Share @Model.EventTitle on Facebook" onclick="FacebookShare('@Model.EventUrl)')"><img width="16px" alt="Share @Model.EventTitle on Facebook" src="~/Images/AMaterial/square-facebook.svg"></a>
+                  <a href="javascript:void(0)" class="shareLink" title="Share @Model.EventTitle on Facebook" onclick="FacebookShare('@Model.EventUrl')"><img width="16px" alt="Share @Model.EventTitle on Facebook" src="~/Images/AMaterial/square-facebook.svg"></a>
                   <a class="shareLink" href="javascript:void(0)" title="Share @Model.EventTitle on Twitter" onclick="TwitterShare('@HtmlProcessing.PrepareString(Model.EventTitle)','@Model.EventUrl')"><img width="16px" alt="Share @Model.EventTitle on Twitter" src="~/Images/AMaterial/square-twitter.svg"></a>
                   <a class="shareLink" href="javascript:void(0)" title="Share @Model.EventTitle on LinkedIn" onclick="LinkedInShare('@HtmlProcessing.PrepareString(Model.EventTitle)','@Model.EventUrl', '@Model.EventTitle')"><img width="16px" alt="Share @Model.EventTitle on LinkedIn" src="~/Images/AMaterial/square-linkedin.svg"></a>
                   @*<a href="#" title="Share EventTitle on Facebook Messenger"><img width="16px" alt="Share EventTitle on Facebook Messenger" src="~/Images/AMaterial/fb_messenger.svg"></a>*@
