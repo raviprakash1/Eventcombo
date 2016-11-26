@@ -116,7 +116,7 @@ namespace EventCombo.Service
         }
     }
 
-    public bool RegisterNewUser(string userId, RegisterUserRequestViewModel user, string ipAddress)
+    public bool RegisterNewUser(string userId, RegisterUserRequestViewModel user, string ipAddress, bool autoRegister = false)
     {
       bool result;
 
@@ -150,7 +150,7 @@ namespace EventCombo.Service
         }
         catch (Exception ex)
         {
-          _logger.Fatal(ex, "Error during RegisterNewUser occurs.", null);
+          _logger.Error(ex, "Error during RegisterNewUser occurs.", null);
           uow.Rollback();
           result = false;
         }
@@ -159,12 +159,16 @@ namespace EventCombo.Service
 
       try
       {
-        NewUserWelcomeMessage mess = new NewUserWelcomeMessage(_factory, user.Email, ConfigurationManager.AppSettings.Get("DefaultEmail"));
+        INotification mess = null;
+        if (autoRegister)
+          mess = new NewAutoUserNotification(_factory, userId, user.Password);
+        else
+          mess = new NewUserWelcomeMessage(_factory, user.Email, ConfigurationManager.AppSettings.Get("DefaultEmail"));
         mess.SendNotification(new SendMailService());
       }
       catch (Exception ex)
       {
-        _logger.Fatal(ex, "Exception during sending welcome message occurs.");
+        _logger.Error(ex, "Exception during sending welcome message occurs.");
       }
 
       return result;

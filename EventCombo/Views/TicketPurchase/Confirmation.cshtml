@@ -12,6 +12,7 @@
 
 @section ScriptSection
 {
+  <script src="@Url.Content("~/Scripts/AMaterial/OrderConfirm.js")"></script>
 }
 
 @section ScriptFooterSection
@@ -57,7 +58,7 @@
   </div>
 </section>
 
-<section class="grid w960" ng-controller="DialogController">
+<section class="grid w960" ng-controller="orderconfirmController">
   <div class="row">
     <div class="c12 margin-1em-bottom">
       <h3 class="red-heading">Your order has been successfully processed.</h3>
@@ -84,13 +85,13 @@
               <p class="orderSbuline">
                 <span class="margin-2em-right">@ticket.VenueName</span>
                 <span class="margin-1em-right">@ticket.DateString</span>
-                <a class="evtLink margin-1em-right" href="@Uri.EscapeUriString(String.Format("https:/www.google.com/calendar/event?action=TEMPLATE&text={0}&dates={1}/{2}&details={3}&location={4}", Model.EventTitle, Model.Dates.StartDate.ToUniversalTime().ToString("yyyyMMddThhmmssZ"), Model.Dates.EndDate.ToUniversalTime().ToString("yyyyMMddThhmmssZ"), HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Model.EventDescription), 150, 200, "."), Model.Address))" target="_blank" rel="nofollow">ADD TO CALENDAR</a>
+                <a class="evtLink margin-1em-right" ng-click="AddToCalendar($event)">ADD TO CALENDAR</a>
                 <span class="semiBold">
                   SHARE EVENT ON
                   <a href="javascript:void(0)" title="Share @Model.EventTitle via Email" ng-click="forwardFriend($event,'@HtmlProcessing.PrepareString(Model.EventTitle)','Event')"><img width="16px" alt="Share @Model.EventTitle via Email" src="~/Images/AMaterial/mail-square.svg"></a>
                   <a href="javascript:void(0)" class="shareLink" title="Share @Model.EventTitle on Facebook" onclick="FacebookShare('@Model.EventUrl')"><img width="16px" alt="Share @Model.EventTitle on Facebook" src="~/Images/AMaterial/square-facebook.svg"></a>
                   <a class="shareLink" href="javascript:void(0)" title="Share @Model.EventTitle on Twitter" onclick="TwitterShare('@HtmlProcessing.PrepareString(Model.EventTitle)','@Model.EventUrl')"><img width="16px" alt="Share @Model.EventTitle on Twitter" src="~/Images/AMaterial/square-twitter.svg"></a>
-                  <a class="shareLink" href="javascript:void(0)" title="Share @Model.EventTitle on LinkedIn" onclick="LinkedInShare('@HtmlProcessing.PrepareString(Model.EventTitle)','@Model.EventUrl', '@Model.EventTitle')"><img width="16px" alt="Share @Model.EventTitle on LinkedIn" src="~/Images/AMaterial/square-linkedin.svg"></a>
+                  <a class="shareLink" href="javascript:void(0)" title="Share @Model.EventTitle on LinkedIn" onclick="LinkedInShare('@HtmlProcessing.PrepareString(Model.EventTitle)','@Model.EventUrl', '@HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Model.EventDescription), 80, 150, ".")')"><img width="16px" alt="Share @Model.EventTitle on LinkedIn" src="~/Images/AMaterial/square-linkedin.svg"></a>
                   @*<a href="#" title="Share EventTitle on Facebook Messenger"><img width="16px" alt="Share EventTitle on Facebook Messenger" src="~/Images/AMaterial/fb_messenger.svg"></a>*@
                 </span>
               </p>
@@ -119,14 +120,14 @@
   </div>
 </section>
 
-<section class="grid w960" ng-controller="DialogController">
+<section class="grid w960" ng-controller="orderconfirmController">
   <div class="row">
     <div class="c12 margin-1em-bottom">
       <h3 class="red-heading">What's Next?</h3>
       <div>
-        @if(String.IsNullOrEmpty(Model.BaseUserId))
-        { 
-        <a class="nextLink" href="javascript:void(0)" ng-click="createEvent()">Create your own event</a>
+        @if (String.IsNullOrEmpty(Model.BaseUserId))
+        {
+          <a class="nextLink" href="javascript:void(0)" ng-click="createEvent()">Create your own event</a>
         }
         else
         {
@@ -142,64 +143,30 @@
 </section>
 <!--***************************-->
 
-<script type="text/javascript">
-  eventComboApp.controller('DialogController', ['$scope', '$mdDialog', '$rootScope', '$window', 'accountService',
-  function ($scope, $mdDialog, $rootScope, $window, accountService) {
-
-    $scope.forwardFriend = function (event, mTitle, mType, eventId) {
-      $mdDialog.show({
-        controller: DialogForwardFriendController,
-        templateUrl: 'forwardfriend.tmpl.html',
-        parent: angular.element(document.body),
-        targetEvent: event,
-        clickOutsideToClose: true,
-        locals: {
-          id: eventId,
-          title: mTitle,
-          type: mType
-        }
-      });
-    };
-
-    $scope.contactEventcombo = function (event) {
-      $mdDialog.show({
-        controller: DialogContactEventComboController,
-        templateUrl: 'eventcombo.tmpl.html',
-        parent: angular.element(document.body),
-        targetEvent: event,
-        clickOutsideToClose: true
-      });
-    };
-
-    $scope.callCreateEvent = function () {
-      $window.location.href = '@Url.Action("CreateEvent", "EventManagement")';
-    }
-
-    $scope.callPurchasedTickets = function () {
-      $window.location.href = '@Url.Action("PurchasedTicket", "Account")';
-    }
-
-    $rootScope.$on('LoggedIn', function (event, param) {
-      if (param === 'ConfirmCreate')
-        $scope.callCreateEvent();
-      else if (param === "ConfirmPurchases")
-        $scope.callPurchasedTickets();
-    });
-
-    $scope.createEvent = function () {
-      if (accountService.UserRegistered())
-        $scope.callCreateEvent();
-      else
-        accountService.StartLogin('ConfirmCreate');
-    }
-
-    $scope.purchasedTickets = function () {
-      if (accountService.UserRegistered()) {
-        $scope.callPurchasedTickets();
-      }
-      else
-        accountService.StartLogin('ConfirmPurchases');
-    }
-
-  }]);
+<script type="text/ng-template" id="addtocalander.tmpl.html">
+  <md-dialog aria-label="Add To Calendar" class="A2CDialog" data-ng-app="eventComboApp">
+    <form name="eventcomboForm" novalidate>
+      <md-dialog-content>
+        <div class="md-dialog-content">
+          <md-button class="calClose" ng-click="cancel()"><i class="material-icons">clear</i></md-button>
+          <h2 class="cntTitle">Add to Calendar</h2>
+          <ul class="calIcon">
+            @{
+              string isoStart = Model.Dates.StartDate.ToUniversalTime().ToString("yyyyMMddThhmmssZ");
+              string isoEnd = Model.Dates.EndDate.ToUniversalTime().ToString("yyyyMMddThhmmssZ");
+              int min = (int) (Model.Dates.EndDate - Model.Dates.StartDate).TotalMinutes;
+              string duration = (min / 60).ToString("D2") + (min % 60).ToString("D2");
+              string title = Server.UrlEncode(Model.EventTitle);
+              string address = Server.UrlEncode(Model.Address);
+              string description = Server.UrlEncode(HtmlProcessing.GetShortString(HtmlProcessing.StripTagsRegex(Model.EventDescription), 150, 200, "."));
+            }
+            <li><a href="@String.Format("{0}?beginDate={1}&endDate={2}&location={3}&subject={4}&description={5}", Url.Action("Calendar", "CreateEvent", new { }), isoStart, isoEnd, address, title, description)"><img src="/Images/AMaterial/windows.png" /> Microsoft Outlook</a></li>
+            <li><a href="@Uri.EscapeUriString(String.Format("https:/www.google.com/calendar/event?action=TEMPLATE&text={0}&dates={1}/{2}&details={3}&location={4}", title, isoStart, isoEnd, description, address))" target="_blank" rel="nofollow"><img src="/Images/AMaterial/google.png" /> Google Calendar</a></li>
+            <li><a href="@String.Format("{0}?beginDate={1}&endDate={2}&location={3}&subject={4}&description={5}", Url.Action("Calendar", "CreateEvent", new { }), isoStart, isoEnd, address, title, description)"><img src="/Images/AMaterial/apple.png" /> Apple iCal</a></li>
+            <li><a href="@String.Format("http://calendar.yahoo.com/?v=60&view=d&type=20&title={0}&st={1}&dur={2}&desc={3}&in_loc={4}", title, isoStart, duration, description, address)" target="_blank" rel="nofollow"><img src="/Images/AMaterial/yahoo.png" /> Yahoo Calendar</a></li>
+          </ul>
+        </div>
+      </md-dialog-content>
+    </form>
+  </md-dialog>
 </script>

@@ -1,0 +1,6 @@
+SET IDENTITY_INSERT Email_Tag ON
+INSERT INTO Email_Tag (Tag_Id, Tag_Name)
+VALUES(48, 'UserPassword')
+SET IDENTITY_INSERT Email_Tag OFF
+
+GO

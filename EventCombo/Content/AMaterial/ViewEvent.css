@@ -117,6 +117,14 @@ img.ng-thumb { height:100px;}
 .genAdmission { font-size:13px; line-height:28px; margin-left:15px !important;}
 .shareLink { display:inline-block;}
 .flRightN { width:10%; display:inline-block; position:absolute; right:0; top:15px; font-size:24px; text-align:center;}
+.calClose { position:absolute; right:0; top:15px;}
+.calClose:hover { background-color:none; color:#00cafd;}
+.calIcon { width:100%; margin:0; padding:0; display:inline-block;}
+.calIcon li { width:50%; margin:0; padding:0; list-style:none; display:inline-block; float:left;}
+.calIcon li a { display:inline-block; color:#000; padding:10px; border-radius:3px; font:18px 'Roboto', Arial, Helvetica, sans-serif;}
+.calIcon li a:hover { color:#00cafd;}
+.calIcon li a img { width:24px; float:left; margin-right:10px;}
+.A2CDialog { max-width:480px;}
 /********************************************************************/
 .checkoutDeal { padding-left:0; padding-right:0;}
 .checkoutDeal .newDL { padding-left:120px;}
@@ -180,6 +188,10 @@ md-checkbox.md-checked.blueCheckbox .md-ink-ripple { color:rgba(0, 202, 253, 0.8
   .flRightN { font-size:18px;}
   .block30 { width:100%;}
   .salestart { margin-top:10px;}
+  .EventClosedView { width:100%; margin:15px 0; padding:15px; text-align:center;}
+  .EventClosedView img { width:auto; position:relative; left:auto; top:auto;}
+  .EventClosedView p { font-size:18px; line-height:24px;}
+  .calIcon li { width:100%;}
 }
 /********************************************************************/
 .option { background-image:

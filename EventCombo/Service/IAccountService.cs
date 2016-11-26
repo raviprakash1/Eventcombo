@@ -14,7 +14,7 @@ namespace EventCombo.Service
     bool CheckUserName(string userName);
     bool RegisterLoginAttempt(string userId, string ipAddress);
     void RegisterLogout(string userId);
-    bool RegisterNewUser(string userId, RegisterUserRequestViewModel user, string ipAddress);
+    bool RegisterNewUser(string userId, RegisterUserRequestViewModel user, string ipAddress, bool autoRegister = false);
     string GetNewCode(int length);
     void ProcessNewCode(string userId, string userEmail, string code);
     bool TryUseCode(string userId, string code);

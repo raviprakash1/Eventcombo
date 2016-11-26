@@ -1092,7 +1092,10 @@ namespace EventCombo.Service
       if (order == null)
         throw new Exception(String.Format("Order #{0} not found.", orderId));
       if (order.O_User_Id != userId)
-        throw new Exception(String.Format("Order #{0} information is not available for user {1}.", orderId, userId));
+      {
+        _logger.Error(String.Format("Order #{0} information is not available for user {1}.", orderId, userId));
+        return null;        
+      }
 
       OrderConfirmationViewModel res = new OrderConfirmationViewModel();
 
