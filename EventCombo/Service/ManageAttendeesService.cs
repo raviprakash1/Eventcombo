@@ -257,7 +257,7 @@ namespace EventCombo.Service
                 eventOrderInfoViewModelList.Add(eventOrderInfoViewModel);
             }
         }
-        return eventOrderInfoViewModelList;
+        return eventOrderInfoViewModelList.OrderByDescending(o => o.Date).ThenByDescending(o1 => o1.OId);
     }
 
     public EventOrderDetailViewModel GetEventOrderDetail(string orderId)
