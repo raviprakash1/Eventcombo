@@ -211,7 +211,8 @@ namespace EventCombo.Service
                 || ((!String.IsNullOrWhiteSpace(attVM.Email) || !String.IsNullOrWhiteSpace(attendee.Email)))
                   && ((attVM.Email ?? "").Trim() != (attendee.Email ?? "").Trim()))
               {
-                attVM.PhoneNumber = attendee.PhoneNumber;
+                attVM.OrderId = model.OrderId;
+                attVM.PhoneNumber = String.IsNullOrEmpty(attVM.PhoneNumber) ? (attendee.PhoneNumber ?? "") : attVM.PhoneNumber;
                 _mapper.Map(attVM, attendee);
                 if (model.SendEmail && (!selected.Where(a => a.Email == attVM.Email).Any()))
                   selected.Add(attVM);
