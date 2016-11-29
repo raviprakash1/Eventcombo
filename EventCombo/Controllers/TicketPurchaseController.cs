@@ -113,6 +113,8 @@ namespace EventCombo.Controllers
 
       _maService.SendConfirmations(orderId, Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/"), Server.MapPath(".."));
       OrderConfirmationViewModel oinfo = _pService.GetOrderConfirmationInfo(orderId, userId);
+      if ((oinfo == null) || String.IsNullOrEmpty(oinfo.OrderId))
+        return RedirectToAction("Index", "Home");
 
       PopulateBaseViewModel(oinfo, "Confirmation for Order #" + oinfo.OrderId + " | Eventcombo");
       Session["Fromname"] = "confirmation";
@@ -176,7 +178,7 @@ namespace EventCombo.Controllers
         if (resultCreate.Succeeded)
         {
           UserManager.AddToRole(user.Id, "Member");
-          _aService.RegisterNewUser(user.Id, model, ClientIPAddress.GetLanIPAddress(Request));
+          _aService.RegisterNewUser(user.Id, model, ClientIPAddress.GetLanIPAddress(Request), true);
         }
       }
       if (user == null)

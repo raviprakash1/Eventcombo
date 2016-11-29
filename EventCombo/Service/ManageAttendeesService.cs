@@ -112,8 +112,8 @@ namespace EventCombo.Service
           TicketName = String.Join(", ", tickets.Where(t => ticket.Select(tt => tt.Ticket_Quantity_Detail.TQD_Ticket_Id).Contains(t.T_Id)).Select(t => t.T_name).ToArray()),
           Fee = ticket.Sum(t => t.TPD_EC_Fee * t.TPD_Purchased_Qty) ?? 0,
           PricePaid = ticket.Sum(t=>t.TPD_Amount) ?? 0,
-          BuyerName = ticket.FirstOrDefault().AspNetUser.Profiles.Select(p => p.FirstName + " " + p.LastName).FirstOrDefault(),
-          BuyerEmail = ticket.FirstOrDefault().AspNetUser.Profiles.Select(p => p.Email).FirstOrDefault(),
+          BuyerName = ticket.FirstOrDefault().AspNetUser == null ? "" : ticket.FirstOrDefault().AspNetUser.Profiles.Select(p => p.FirstName + " " + p.LastName).FirstOrDefault(),
+          BuyerEmail = ticket.FirstOrDefault().AspNetUser == null ? "" : ticket.FirstOrDefault().AspNetUser.Profiles.Select(p => p.Email).FirstOrDefault(),
           Quantity = ticket.Sum(t => t.TPD_Purchased_Qty) ?? 0,
           Address = ""
         }).ToList();
@@ -126,12 +126,12 @@ namespace EventCombo.Service
         {
             order.OId = orderDB.O_Id;
             order.Date = orderDB.O_OrderDateTime ?? DateTime.Today;
-            order.Price = orderDB.O_TotalAmount ?? 0;
-            order.PricePaid = order.PricePaid + (orderDB.O_VariableAmount ?? 0);
-            order.PriceNet = order.PricePaid - order.Fee;
+            order.Price = (orderDB.O_OrderAmount ?? 0) + (orderDB.O_VariableAmount ?? 0);
+            order.PricePaid = orderDB.O_TotalAmount ?? 0;
+            order.PriceNet = (order.PricePaid - order.Fee) > 0 ? order.PricePaid - order.Fee : 0;
             order.CustomerEmail = orderDB.O_Email;
-            order.Refunded = ((orderDB.OrderStateId ?? 0) == 3 ? order.PricePaid - order.Fee : 0);
-            order.Cancelled = ((orderDB.OrderStateId ?? 0) == 2 ? order.PricePaid - order.Fee : 0);
+            order.Refunded = ((orderDB.OrderStateId ?? 0) == 3 ? order.PriceNet : 0);
+            order.Cancelled = ((orderDB.OrderStateId ?? 0) == 2 ? order.PriceNet : 0);
             order.PricePaid = order.PricePaid - order.Refunded - order.Cancelled;
             order.PriceNet = order.PriceNet - order.Refunded - order.Cancelled;
             if (billingAddressDB != null)
@@ -173,12 +173,12 @@ namespace EventCombo.Service
             PhoneNumber = string.Join(", ", tbRepo.Get(a => a.OrderId.Trim() == ticket.OrderId.Trim() && a.PhoneNumber != null && a.PhoneNumber != "").Select(a => a.PhoneNumber).ToArray()),
             Quantity = ticket.PurchasedQuantity ?? 0,
             Price = ticket.OrderAmount ?? 0,
-            PricePaid = ticket.PaidAmount ?? 0,
-            PriceNet = (ticket.PaidAmount ?? 0) - (ticket.ECFeePerTicket * (ticket.PurchasedQuantity ?? 0)) - (ticket.MerchantFeePerTicket * (ticket.PurchasedQuantity ?? 0)),
+            PricePaid = (ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0) - (ticket.PromoCodeAmount ?? 0),
+            PriceNet = (ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0) - (ticket.PromoCodeAmount ?? 0) - (ticket.ECFeePerTicket * (ticket.PurchasedQuantity ?? 0)) - (ticket.MerchantFeePerTicket * (ticket.PurchasedQuantity ?? 0)),
             Fee = ticket.ECFeePerTicket * (ticket.PurchasedQuantity ?? 0),
             MerchantFee = ticket.MerchantFeePerTicket * (ticket.PurchasedQuantity ?? 0),
-            Refunded = ((ticket.OrderStateId ?? 0) == 3 ? (ticket.PaidAmount ?? 0) : 0),
-            Cancelled = ((ticket.OrderStateId ?? 0) == 2 ? (ticket.PaidAmount ?? 0) : 0),
+            Refunded = ((ticket.OrderStateId ?? 0) == 3 ? (ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0) - (ticket.PromoCodeAmount ?? 0) : 0),
+            Cancelled = ((ticket.OrderStateId ?? 0) == 2 ? (ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0) - (ticket.PromoCodeAmount ?? 0) : 0),
             Date = ticket.O_OrderDateTime ?? DateTime.Today,
             PromoCode = ticket.PromoCode ?? "",
             Address = "",
@@ -212,6 +212,8 @@ namespace EventCombo.Service
                 ", " + billingAddressDB.City +
                 ", " + billingAddressDB.State +
                 " " + billingAddressDB.Zip ;
+                if (order.MailTickets == "N")
+                  order.MailTickets = order.Address;
             }
             order.PricePaid = order.PricePaid - order.Refunded - order.Cancelled;
             order.PriceNet = order.PriceNet - order.Refunded - order.Cancelled;
@@ -257,7 +259,7 @@ namespace EventCombo.Service
                 eventOrderInfoViewModelList.Add(eventOrderInfoViewModel);
             }
         }
-        return eventOrderInfoViewModelList;
+        return eventOrderInfoViewModelList.OrderByDescending(o => o.Date).ThenByDescending(o1 => o1.OId);
     }
 
     public EventOrderDetailViewModel GetEventOrderDetail(string orderId)
@@ -2039,7 +2041,8 @@ namespace EventCombo.Service
                 || ((!String.IsNullOrWhiteSpace(attVM.PhoneNumber) || !String.IsNullOrWhiteSpace(attendee.PhoneNumber)))
                   && ((attVM.PhoneNumber ?? "").Trim() != (attendee.PhoneNumber ?? "").Trim()))
               {
-                attVM.PhoneNumber = (string.IsNullOrEmpty(attVM.PhoneNumber) ? "" : attVM.PhoneNumber);
+                attVM.OrderId = model.OrderId;
+                attVM.PhoneNumber = string.IsNullOrEmpty(attVM.PhoneNumber) ? (attendee.PhoneNumber ?? "") : attVM.PhoneNumber;
                 _mapper.Map(attVM, attendee);
                 if (model.SendEmail && (!selected.Where(a => a.Email == attVM.Email).Any()))
                   selected.Add(attVM);

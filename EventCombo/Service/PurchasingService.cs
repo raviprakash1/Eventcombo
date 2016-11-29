@@ -506,7 +506,7 @@ namespace EventCombo.Service
               TicketPrice = lTicket.Price,
               TicketFeeType = (byte)lTicket.ECFeeType, 
               TPD_PromoCodeAmount = promoticket == null ? 0 : lTicket.Quantity * Math.Round(promoticket.Amount + lTicket.Price * promoticket.Percents, 2),
-              TPD_PromoCodeID = promo.Success ? promo.PromoCodeId : 0
+              TPD_PromoCodeID = (promo.Success && (promoticket != null)) ? promo.PromoCodeId : 0
             };
             tpdRepo.Insert(tpd);
             tqd.TQD_Remaining_Quantity -= tpd.TPD_Purchased_Qty;
@@ -1092,7 +1092,10 @@ namespace EventCombo.Service
       if (order == null)
         throw new Exception(String.Format("Order #{0} not found.", orderId));
       if (order.O_User_Id != userId)
-        throw new Exception(String.Format("Order #{0} information is not available for user {1}.", orderId, userId));
+      {
+        _logger.Error(String.Format("Order #{0} information is not available for user {1}.", orderId, userId));
+        return null;        
+      }
 
       OrderConfirmationViewModel res = new OrderConfirmationViewModel();
 

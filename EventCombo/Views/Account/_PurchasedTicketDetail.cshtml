@@ -109,22 +109,6 @@
       <td class="UETableTDSUbDivFooterLinks" @(Model.Attendees.Count > 0 ? "onclick=editAttendees(this);" : "")>@(Model.Attendees.Count > 0 ? "EDIT" : "")</td>
       <td class="UETableTDSUbDivFooterLinks">@(Html.ActionLink("PRINT TICKETS", "Ticket", "Download", new { OrderId = Model.OrderId, format = "pdf" }, new { target = "_blank" }))</td>
       <td class="UETableTDSUbDivFooterLinks">
-        <a data-toggle="modal" data-target="#cancelModal@(Model.OrderId)">CANCEL ORDER</a>
-        <div class="modal fade" id="cancelModal@(Model.OrderId)" role="dialog">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header cancelOrderHeader">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h1 class="modal-title cancelOrderTitleHead">Cancel Free Order</h1>
-              </div>
-              <div class="modal-body">
-                <p class="cancelOrderBodyTxt">Are you sure you want to cancel this order?</p>
-                <button type="button" class="btn btn-primary cancelOrderBodyBtn" data-dismiss="modal" onclick="SendCancelOrder(this, '@(Model.OrderId)')">YES, CANCEL THIS ORDER</button>
-                <button type="button" class="btn btn-default cancelOrderBodyBtn" data-dismiss="modal">NO, NEVERMIND</button>
-              </div>
-            </div>
-          </div>
-        </div>
       </td>
       <td class="UETableTDSUbDivFooterLinks">
         <a data-toggle="modal" data-target="#contactModal@(Model.OrderId)">CONTACT ORGANIZER</a>

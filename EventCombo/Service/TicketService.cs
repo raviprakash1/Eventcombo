@@ -211,7 +211,8 @@ namespace EventCombo.Service
                 || ((!String.IsNullOrWhiteSpace(attVM.Email) || !String.IsNullOrWhiteSpace(attendee.Email)))
                   && ((attVM.Email ?? "").Trim() != (attendee.Email ?? "").Trim()))
               {
-                attVM.PhoneNumber = attendee.PhoneNumber;
+                attVM.OrderId = model.OrderId;
+                attVM.PhoneNumber = String.IsNullOrEmpty(attVM.PhoneNumber) ? (attendee.PhoneNumber ?? "") : attVM.PhoneNumber;
                 _mapper.Map(attVM, attendee);
                 if (model.SendEmail && (!selected.Where(a => a.Email == attVM.Email).Any()))
                   selected.Add(attVM);
@@ -571,16 +572,16 @@ namespace EventCombo.Service
         Date = o.O_OrderDateTime ?? default(DateTime),
         Quantity = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TPD_Purchased_Qty) ?? 0,
         Price = o.O_TotalAmount ?? 0,
-        PriceNet = (o.O_TotalAmount ?? 0) - (tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TPD_EC_Fee) ?? 0),
-        Discount = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TicketDiscount),
-        Fee = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TPD_EC_Fee) ?? 0,
-        EventComboFee = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TicketECFee),
-        MerchantFee = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TicketMerchantFee),
-        CustomerFee = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.Customer_Fee),
+        PriceNet = (o.O_TotalAmount ?? 0) - (tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TPD_EC_Fee * (tt.TPD_Purchased_Qty ?? 0)) ?? 0),
+        Discount = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TicketDiscount * (tt.TPD_Purchased_Qty ?? 0)),
+        Fee = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TPD_EC_Fee * (tt.TPD_Purchased_Qty ?? 0)) ?? 0,
+        EventComboFee = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TicketECFee * (tt.TPD_Purchased_Qty ?? 0)),
+        MerchantFee = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TicketMerchantFee * (tt.TPD_Purchased_Qty ?? 0)),
+        CustomerFee = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.Customer_Fee * (tt.TPD_Purchased_Qty ?? 0)),
         Cancelled = (o.OrderStateId == 2) ? (o.O_TotalAmount ?? 0) : 0,
         Refunded = (o.OrderStateId == 3) ? (o.O_TotalAmount ?? 0) : 0,
         VarChargesAmount = o.O_VariableAmount ?? 0,
-        PromoCodeAmount = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.TPD_PromoCodeAmount) ?? 0,
+        PromoCodeAmount = (o.O_OrderAmount ?? 0) + (o.O_VariableAmount ?? 0) - (o.O_TotalAmount ?? 0),
         IsCancelled = o.OrderStateId == 2,
         IsRefunded = o.OrderStateId == 3,
         IsManualOrder = o.IsManualOrder
@@ -641,12 +642,13 @@ namespace EventCombo.Service
                                         TicketTypeId = ticket.TicketTypeID,
                                         TicketTypeName = ticket.TicketTypeName,
                                         Quantity = ticket.PurchasedQuantity ?? 0,
-                                        PricePerTicket = ticket.TicketPrice,
-                                        PricePaid = ticket.TicketPrice * (ticket.PurchasedQuantity ?? 0)
-                                                    + ticket.ECFeePerTicket * (ticket.PurchasedQuantity ?? 0)
-                                                    + ticket.MerchantFeePerTicket * (ticket.PurchasedQuantity ?? 0)
-                                                    + ticket.Customer_Fee * (ticket.PurchasedQuantity ?? 0),
-                                        PriceNet = ticket.TicketPrice * (ticket.PurchasedQuantity ?? 0)
+                                        PricePerTicket = ticket.TicketPrice + (ticket.Donation ?? 0) + ticket.Customer_Fee,
+                                        PricePaid = (ticket.TicketPrice + (ticket.Donation ?? 0) 
+                                                      + ((ticket.TicketFeeType == 1) || (ticket.TicketTypeID == 3) ? 0 : ticket.ECFeePerTicket + ticket.MerchantFeePerTicket)
+                                                    ) * (ticket.PurchasedQuantity ?? 0),
+                                        PriceNet = (ticket.TicketPrice + ticket.Customer_Fee + (ticket.Donation ?? 0)
+                                                      - ((ticket.TicketFeeType == 1) || (ticket.TicketTypeID == 3) ? ticket.ECFeePerTicket + ticket.MerchantFeePerTicket : 0) 
+                                                   ) * (ticket.PurchasedQuantity ?? 0)
                                       }).ToList();
 
       ticketSaleViewModel.TicketSales = ticketSaleViewModel.TicketSales.GroupBy(g => new { g.TicketId }).Select(x => new TicketSales()
@@ -656,7 +658,7 @@ namespace EventCombo.Service
         TicketTypeId = x.FirstOrDefault().TicketTypeId,
         TicketTypeName = x.FirstOrDefault().TicketTypeName,
         Quantity = x.Sum(t => t.Quantity),
-        PricePerTicket = x.FirstOrDefault().PricePerTicket,
+        PricePerTicket = x.Average(t => t.PricePerTicket),
         PricePaid = x.Sum(t => t.PricePaid),
         PriceNet = x.Sum(t => t.PriceNet)
       }).OrderBy(oo => oo.TicketTypeId).ToList();
@@ -795,7 +797,7 @@ namespace EventCombo.Service
       i += 4;
       row = sheet.CreateRow(i++);
       AddStyledCell(row, 3, hRightStyle).SetCellValue("Eventcombo Fees");
-      AddStyledCell(row, 4, currencyStyle).SetCellValue((double)(ticketSales.EventComboFee));
+      AddStyledCell(row, 4, currencyStyle).SetCellValue((double)(ticketSales.EventComboFee + ticketSales.MerchantFee));
 
       for (i = 0; i <= 4; i++)
       {

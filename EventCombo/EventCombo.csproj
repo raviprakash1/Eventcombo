@@ -721,6 +721,7 @@
     <Compile Include="Service\ECImageStorage.cs" />
     <Compile Include="Service\ECImageService.cs" />
     <Compile Include="Service\IPurchasingService.cs" />
+    <Compile Include="Service\Notification\NewAutoUserNotification.cs" />
     <Compile Include="Service\Notification\NewEventNotification.cs" />
     <Compile Include="Service\Notification\EventChangeNotification.cs" />
     <Compile Include="Service\Notification\EmailToFriendsNotification.cs" />
@@ -932,6 +933,7 @@
     <Content Include="Images\align_left.gif" />
     <Content Include="Images\align_right.gif" />
     <Content Include="Images\AMaterial\amex-icon.jpg" />
+    <Content Include="Images\AMaterial\apple.png" />
     <Content Include="Images\AMaterial\banner.jpg" />
     <Content Include="Images\AMaterial\ColorWheel.png" />
     <Content Include="Images\AMaterial\credit-card.jpg" />
@@ -948,6 +950,7 @@
     <Content Include="Images\AMaterial\footer.png" />
     <Content Include="Images\AMaterial\ftbg.png" />
     <Content Include="Images\AMaterial\google-plus-symbol.svg" />
+    <Content Include="Images\AMaterial\google.png" />
     <Content Include="Images\AMaterial\ic_close_24px.svg" />
     <Content Include="Images\AMaterial\infobox-bg.png" />
     <Content Include="Images\AMaterial\linkedin-logo.svg" />
@@ -971,6 +974,8 @@
     <Content Include="Images\AMaterial\stripes.png" />
     <Content Include="Images\AMaterial\twitter.svg" />
     <Content Include="Images\AMaterial\visa-icon.jpg" />
+    <Content Include="Images\AMaterial\windows.png" />
+    <Content Include="Images\AMaterial\yahoo.png" />
     <Content Include="Images\amr-exp.png" />
     <Content Include="Images\Bar_Image.Png" />
     <Content Include="Images\checked.png" />
@@ -1047,6 +1052,7 @@
     <Content Include="newemailtemplate.html" />
     <Content Include="Scripts\AMaterial\AccountController.js" />
     <Content Include="Scripts\AMaterial\Checkout.js" />
+    <Content Include="Scripts\AMaterial\OrderConfirm.js" />
     <Content Include="Scripts\AMaterial\organizerInfo.js" />
     <Content Include="Scripts\AMaterial\Service\AccountService.js" />
     <Content Include="Scripts\AMaterial\angucomplete-alt.js" />
