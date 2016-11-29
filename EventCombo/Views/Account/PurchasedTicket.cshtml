@@ -243,28 +243,6 @@
     });
   }
 
-  function SendCancelOrder(obj, oId) {
-    if ($(obj).closest('table').parent().parent().data('orderstate') != 1) {
-      $('#ajaxanswer' + oId).html("Order already cancelled.");
-      return;
-    }
-    $.ajax({
-      type: "POST",
-      url: "@Url.Action("CancelOrder", "Account")",
-      data: { OrderId: oId },
-      datatype: "html",
-      success: function (data) {
-        if (data > 0) {
-          var caption = $(obj).closest('table').parent().parent().prev('tr').find('td').last();
-          $(caption).html($(caption).html() + ' - Cancelled');
-          $('#ajaxanswer' + oId).html("Order cancelled.");
-        }
-        else
-          $('#ajaxanswer' + oId).html("Order wasn't cancelled.");
-      }
-    });
-  }
-
   function SendOrganizerMessage(oId) {
     var query = {
       OrderId: oId,
