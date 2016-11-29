@@ -212,6 +212,8 @@ namespace EventCombo.Service
                 ", " + billingAddressDB.City +
                 ", " + billingAddressDB.State +
                 " " + billingAddressDB.Zip ;
+                if (order.MailTickets == "N")
+                  order.MailTickets = order.Address;
             }
             order.PricePaid = order.PricePaid - order.Refunded - order.Cancelled;
             order.PriceNet = order.PriceNet - order.Refunded - order.Cancelled;
