@@ -116,7 +116,7 @@ namespace EventCombo.Controllers
       if ((oinfo == null) || String.IsNullOrEmpty(oinfo.OrderId))
         return RedirectToAction("Index", "Home");
 
-      PopulateBaseViewModel(oinfo, "Confirmation for Order #" + oinfo.OrderId + " | Eventcombo");
+      PopulateBaseViewModel(oinfo, "Confirmation for Order " + oinfo.OrderId + " | Eventcombo");
       Session["Fromname"] = "confirmation";
       return View(oinfo);
     }

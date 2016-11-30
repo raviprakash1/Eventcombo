@@ -64,7 +64,7 @@
       <h3 class="red-heading">Your order has been successfully processed.</h3>
       <div class="orderDetails">
         <div class="orderId">
-          <p class="orderNumber">Order #@Model.OrderId</p>
+          <p class="orderNumber">Order @Model.OrderId</p>
           <p class="orderSbuline">
             Your tickets were emailed to <span class="semiBold">@Model.Email</span> and added to
             @if (String.IsNullOrEmpty(Model.BaseUserId))

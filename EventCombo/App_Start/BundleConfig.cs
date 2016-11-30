@@ -128,15 +128,11 @@ namespace EventCombo
               .Include( "~/Scripts/AMaterial/angular-messages.js",
                         "~/Scripts/AMaterial/angular-cookies.js",
                         "~/Scripts/AMaterial/angular-sanitize.js",
-                        "~/Scripts/AMaterial/tinymce.min.js",
-                        "~/Scripts/AMaterial/tinycolor-min.js",
-                        "~/Scripts/AMaterial/angular-tinymce/tinymce.min.js",
-                        "~/Scripts/AMaterial/themes/modern/theme.min.js"));
-            bundles.Add(new ScriptBundle("~/Scripts/AMaterial/angularHeader4")
-              .Include( "~/Scripts/AMaterial/angularjs-color-picker.min.js",
+                        "~/Scripts/AMaterial/angularjs-color-picker.min.js",
                         "~/Scripts/AMaterial/moment.js",
-                        "~/Scripts/AMaterial/angular-material-datetimepicker.js",
-                        "~/Scripts/AMaterial/ngGallery.js",
+                        "~/Scripts/AMaterial/angular-material-datetimepicker.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/AMaterial/angularHeader4")
+              .Include( "~/Scripts/AMaterial/ngGallery.js",
                         "~/Scripts/AMaterial/demo.js",
                         "~/Scripts/AMaterial/ngRepeatOwlCarousel.js",
                         "~/Scripts/AMaterial/classie.js",
@@ -145,8 +141,12 @@ namespace EventCombo
                         "~/Scripts/AMaterial/Service/broadcastService.js",
                         "~/Scripts/AMaterial/Service/geoService.js",
                         "~/Scripts/AMaterial/Service/accountService.js"));
-            bundles.Add(new Bundle("~/Scripts/AMaterial/angularHeader5") // issue with minification of footer.js and FooterService.js
-              .Include( "~/Scripts/AMaterial/Service/FooterService.js",
+            bundles.Add(new Bundle("~/Scripts/AMaterial/angularHeader5") // issue with minification
+              .Include( "~/Scripts/AMaterial/tinycolor-min.js", 
+                        "~/Scripts/AMaterial/tinymce.min.js",
+                        "~/Scripts/AMaterial/angular-tinymce/tinymce.min.js",
+                        "~/Scripts/AMaterial/themes/modern/theme.min.js",
+                        "~/Scripts/AMaterial/Service/FooterService.js",
                         "~/Scripts/AMaterial/Service/OrganizerService.js",
                         "~/Scripts/AMaterial/header.js",
                         "~/Scripts/AMaterial/footer.js",
