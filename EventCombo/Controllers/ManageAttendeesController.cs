@@ -355,7 +355,7 @@ namespace EventCombo.Controllers
 
         ViewData["EventID"] = EventId;
         ViewData["PageTitle"] = _maservice.GetEventTitle(EventId);
-        IEnumerable<EventOrderInfoViewModel> orders = _maservice.GetOrdersForSaleReport(PaymentStates.Completed, EventId);
+        IEnumerable<EventOrderInfoViewModel> orders = _maservice.GetOrdersForSaleReport(PaymentStates.Total, EventId);
         return PartialView("_SaleReport", orders);
     }
 

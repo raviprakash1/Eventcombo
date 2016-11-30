@@ -54,7 +54,10 @@ namespace EventCombo.Models
     public decimal Fee { get; set; }
     public decimal MerchantFee { get; set; }
     public decimal Refunded { get; set; }
+    public decimal RefundedNet { get; set; }
     public decimal Cancelled { get; set; }
+    public decimal CancelledNet { get; set; }
+    public decimal Pending { get; set; }
     public DateTime Date { get; set; }
     public PaymentStates PaymentState { get; set; }
     public string Address { get; set; }
@@ -86,10 +89,12 @@ namespace EventCombo.Models
     public decimal VarChargesAmount { get; set; }
     public decimal Refunded { get; set; }
     public decimal Cancelled { get; set; }
+    public decimal Pending { get; set; }
     public decimal PromoCodeAmount { get; set; }
     public DateTime Date { get; set; }
     public bool IsCancelled { get; set; }
     public bool IsRefunded { get; set; }
+    public bool IsPending { get; set; }
     public bool IsManualOrder { get; set; }
   }
 
@@ -97,7 +102,13 @@ namespace EventCombo.Models
   {
     public long EventId { get; set; }
     public long OrderQuantity { get; set; }
+    public long OrderCancelledQuantity { get; set; }
+    public long OrderRefundedQuantity { get; set; }
+    public long OrderPendingQuantity { get; set; }
     public long TicketQuantity { get; set; }
+    public long TicketCancelledQuantity { get; set; }
+    public long TicketRefundedQuantity { get; set; }
+    public long TicketPendingQuantity { get; set; }
     public decimal Price { get; set; }
     public decimal PriceNet { get; set; }
     public decimal Fee { get; set; }
@@ -105,6 +116,7 @@ namespace EventCombo.Models
     public decimal VarChargesAmount { get; set; }
     public decimal Refunded { get; set; }
     public decimal Cancelled { get; set; }
+    public decimal Pending { get; set; }
   }
 
   public class EventOrderDetailViewModel
