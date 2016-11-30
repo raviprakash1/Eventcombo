@@ -377,10 +377,14 @@ namespace CMS.Service
           if (order != null)
           {
             order.OrderStateId = 2;
-            uow.Context.SaveChanges();
 
             IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
-            var ev = tpdRepo.Get(filter: (t => t.TPD_Order_Id == orderId)).FirstOrDefault().Event;
+            var tickets = tpdRepo.Get(filter: (t => t.TPD_Order_Id == orderId));
+            foreach (var ticket in tickets)
+              ticket.Ticket_Quantity_Detail.TQD_Remaining_Quantity += ticket.TPD_Purchased_Qty;
+            uow.Context.SaveChanges();
+
+            var ev = tickets.FirstOrDefault().Event;
 
             var org = ev.Event_Orgnizer_Detail.Where(od => od.DefaultOrg == "Y").FirstOrDefault().Organizer_Master;
 

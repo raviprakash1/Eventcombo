@@ -65,20 +65,26 @@ namespace EventCombo.Service
       EventOrdersSummuryViewModel ordersTotal = new EventOrdersSummuryViewModel()
       {
         PaymentState = PaymentStates.Total,
+        TicketsSold = (eInfo != null ? eInfo.TicketQuantity + eInfo.TicketCancelledQuantity + eInfo.TicketRefundedQuantity : 0),
+        Amount = (eInfo != null ? eInfo.Price + eInfo.Cancelled + eInfo.Refunded : 0),
+        TicketsTotal = ev.Tickets.Sum(tt => tt.Ticket_Quantity_Detail.Sum(q => q.TQD_Quantity)) ?? 0,
+        Count = (eInfo != null ? eInfo.OrderQuantity + eInfo.OrderCancelledQuantity + eInfo.OrderRefundedQuantity : 0)
+      };
+      EventOrdersSummuryViewModel ordersCompleted = new EventOrdersSummuryViewModel()
+      {
+        PaymentState = PaymentStates.Completed,
         TicketsSold = (eInfo != null ? eInfo.TicketQuantity : 0),
         Amount = (eInfo != null ? eInfo.Price : 0),
-        TicketsTotal = ev.Tickets.Sum(tt => tt.Ticket_Quantity_Detail.Sum(q => q.TQD_Quantity)) ?? 0,
+        TicketsTotal = ordersTotal.TicketsTotal,
         Count = (eInfo != null ? eInfo.OrderQuantity : 0)
       };
-      EventOrdersSummuryViewModel ordersCompleted = _mapper.Map<EventOrdersSummuryViewModel>(ordersTotal);
-      ordersCompleted.PaymentState = PaymentStates.Completed;
       EventOrdersSummuryViewModel ordersPending = new EventOrdersSummuryViewModel()
       {
         PaymentState = PaymentStates.Pending,
-        TicketsSold = 0,
-        Amount = 0,
-        TicketsTotal = 0,
-        Count = 0
+        TicketsSold = (eInfo != null ? eInfo.TicketCancelledQuantity + eInfo.TicketRefundedQuantity : 0),
+        Amount = (eInfo != null ? eInfo.Cancelled + eInfo.Refunded : 0),
+        TicketsTotal = ordersTotal.TicketsTotal,
+        Count = (eInfo != null ? eInfo.OrderCancelledQuantity + eInfo.OrderRefundedQuantity : 0)
       };
       res.OrdersSummary.Add(ordersTotal);
       res.OrdersSummary.Add(ordersCompleted);
@@ -91,15 +97,19 @@ namespace EventCombo.Service
 
     public IEnumerable<EventOrderInfoViewModel> GetOrdersForEvent(PaymentStates state, long eventId)
     {
-      if (state == PaymentStates.Pending)
-        return new List<EventOrderInfoViewModel>();
-
       IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
       IRepository<Order_Detail_T> orderRepo = new GenericRepository<Order_Detail_T>(_factory.ContextFactory);
       IRepository<BillingAddress> billRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
       IRepository<Ticket> ticketRepo = new GenericRepository<Ticket>(_factory.ContextFactory);
 
-      var orderList = orderRepo.Get(filter: o => o.IsManualOrder == false);
+      IEnumerable<Order_Detail_T> orderList;
+      if (state == PaymentStates.Total)
+        orderList = orderRepo.Get(filter: o => o.IsManualOrder == false);
+      else if (state == PaymentStates.Completed)
+        orderList = orderRepo.Get(filter: o => (o.IsManualOrder == false) && ((o.OrderStateId ?? 1) != 2) && ((o.OrderStateId ?? 1) != 3));
+      else
+        orderList = orderRepo.Get(filter: o => (o.IsManualOrder == false) && (((o.OrderStateId ?? 1) == 2) || ((o.OrderStateId ?? 1) == 3)));
+
       var OrderIds = orderList.Select(oo => oo.O_Order_Id);
       var tickets = ticketRepo.Get(filter: (t => t.E_Id == eventId));
 
@@ -132,6 +142,7 @@ namespace EventCombo.Service
             order.CustomerEmail = orderDB.O_Email;
             order.Refunded = ((orderDB.OrderStateId ?? 0) == 3 ? order.PriceNet : 0);
             order.Cancelled = ((orderDB.OrderStateId ?? 0) == 2 ? order.PriceNet : 0);
+            order.Pending = ((orderDB.OrderStateId ?? 0) == 4 ? order.PriceNet : 0);
             order.PricePaid = order.PricePaid - order.Refunded - order.Cancelled;
             order.PriceNet = order.PriceNet - order.Refunded - order.Cancelled;
             if (billingAddressDB != null)
@@ -150,48 +161,103 @@ namespace EventCombo.Service
 
     public IEnumerable<EventOrderInfoViewModel> GetOrdersForSaleReport(PaymentStates state, long eventId)
     {
-        if (state == PaymentStates.Pending)
-            return new List<EventOrderInfoViewModel>();
-
         IRepository<EventTicket_View> EventTicketRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
         IRepository<BillingAddress> billRepo = new GenericRepository<BillingAddress>(_factory.ContextFactory);
         IRepository<ShippingAddress> shipRepo = new GenericRepository<ShippingAddress>(_factory.ContextFactory);
         IRepository<TicketBearer_View> tbRepo = new GenericRepository<TicketBearer_View>(_factory.ContextFactory);
         IRepository<Event_VariableDesc> evdRepo = new GenericRepository<Event_VariableDesc>(_factory.ContextFactory);
+        IRepository<TicketAttendee> taRepo = new GenericRepository<TicketAttendee>(_factory.ContextFactory);
 
         var vairableChages = evdRepo.Get(filter: (t => t.Event_Id == eventId));
 
-        IEnumerable<EventOrderInfoViewModel> res = EventTicketRepo.Get(filter: (t => t.EventID == eventId && t.IsManualOrder == false))
-        .Select(ticket => new EventOrderInfoViewModel()
+        List<EventOrderInfoViewModel> res = new List<EventOrderInfoViewModel>();
+        var tickets = EventTicketRepo.Get(filter: (t => t.EventID == eventId && t.IsManualOrder == false));
+        foreach (var ticket in tickets)
         {
-            OId = ticket.OId,
-            OrderId = ticket.OrderId,
-            PaymentState = PaymentStates.Completed,
-            TicketName = ticket.TicketName,
-            BuyerName = string.Join(", ", tbRepo.Get(a => a.OrderId.Trim() == ticket.OrderId.Trim()).Select(a => a.Name.Trim()).ToArray()),
-            BuyerEmail = string.Join(", ", tbRepo.Get(a => a.OrderId.Trim() == ticket.OrderId.Trim()).Select(a => a.Email.Trim()).ToArray()),
-            PhoneNumber = string.Join(", ", tbRepo.Get(a => a.OrderId.Trim() == ticket.OrderId.Trim() && a.PhoneNumber != null && a.PhoneNumber != "").Select(a => a.PhoneNumber).ToArray()),
-            Quantity = ticket.PurchasedQuantity ?? 0,
-            Price = ticket.OrderAmount ?? 0,
-            PricePaid = (ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0) - (ticket.PromoCodeAmount ?? 0),
-            PriceNet = (ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0) - (ticket.PromoCodeAmount ?? 0) - (ticket.ECFeePerTicket * (ticket.PurchasedQuantity ?? 0)) - (ticket.MerchantFeePerTicket * (ticket.PurchasedQuantity ?? 0)),
-            Fee = ticket.ECFeePerTicket * (ticket.PurchasedQuantity ?? 0),
-            MerchantFee = ticket.MerchantFeePerTicket * (ticket.PurchasedQuantity ?? 0),
-            Refunded = ((ticket.OrderStateId ?? 0) == 3 ? (ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0) - (ticket.PromoCodeAmount ?? 0) : 0),
-            Cancelled = ((ticket.OrderStateId ?? 0) == 2 ? (ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0) - (ticket.PromoCodeAmount ?? 0) : 0),
-            Date = ticket.O_OrderDateTime ?? DateTime.Today,
-            PromoCode = ticket.PromoCode ?? "",
-            Address = "",
-            MailTickets = "N",
-            VariableChages = vairableChages.ToList().Select((element) => new Event_VariableDesc
+          EventOrderInfoViewModel oInfo;
+          var vCharges = vairableChages.ToList().Select((element) => new Event_VariableDesc
+              {
+                  Variable_Id = element.Variable_Id,
+                  Price = (ticket.VariableIds.Split(',').Select(Int64.Parse).Contains(element.Variable_Id) ? element.Price : 0),
+                  Event_Id = element.Event_Id,
+                  VariableDesc = element.VariableDesc
+              }).ToList();
+          var attendees = taRepo.Get(ta => ta.PurchasedTicketId == ticket.TPD_Id);
+          if ((attendees == null) || (attendees.Count() == 0)) // Old orders
+          {
+            oInfo = new EventOrderInfoViewModel()
             {
-                Variable_Id = element.Variable_Id,
-                Price = (ticket.VariableIds.Split(',').Select(Int64.Parse).Contains(element.Variable_Id) ? element.Price : 0),
-                Event_Id = element.Event_Id,
-                VariableDesc = element.VariableDesc
-            }).ToList(),
-            VariableIds = ticket.VariableIds
-        }).ToList();
+              OId = ticket.OId,
+              OrderId = ticket.OrderId,
+              PaymentState = PaymentStates.Completed,
+              TicketName = ticket.TicketName,
+              BuyerName = string.Join(", ", tbRepo.Get(a => a.OrderId.Trim() == ticket.OrderId.Trim()).Select(a => a.Name.Trim()).ToArray()),
+              BuyerEmail = string.Join(", ", tbRepo.Get(a => a.OrderId.Trim() == ticket.OrderId.Trim()).Select(a => a.Email.Trim()).ToArray()),
+              PhoneNumber = string.Join(", ", tbRepo.Get(a => a.OrderId.Trim() == ticket.OrderId.Trim() && a.PhoneNumber != null && a.PhoneNumber != "").Select(a => a.PhoneNumber).ToArray()),
+              Quantity = ticket.PurchasedQuantity ?? 0,
+              Price = ticket.OrderAmount ?? 0,
+              PricePaid = (ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0) - (ticket.PromoCodeAmount ?? 0),
+              PriceNet = (ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0) - (ticket.PromoCodeAmount ?? 0) - (ticket.ECFeePerTicket * (ticket.PurchasedQuantity ?? 0)) - (ticket.MerchantFeePerTicket * (ticket.PurchasedQuantity ?? 0)),
+              Fee = ticket.ECFeePerTicket * (ticket.PurchasedQuantity ?? 0),
+              MerchantFee = ticket.MerchantFeePerTicket * (ticket.PurchasedQuantity ?? 0),
+              Refunded = ((ticket.OrderStateId ?? 0) == 3 ? (ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0) - (ticket.PromoCodeAmount ?? 0) : 0),
+              RefundedNet = (ticket.OrderStateId ?? 0) == 3 ? (ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0) - (ticket.PromoCodeAmount ?? 0) - (ticket.ECFeePerTicket * (ticket.PurchasedQuantity ?? 0)) - (ticket.MerchantFeePerTicket * (ticket.PurchasedQuantity ?? 0)) : 0,
+              Cancelled = ((ticket.OrderStateId ?? 0) == 2 ? (ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0) - (ticket.PromoCodeAmount ?? 0) : 0),
+              CancelledNet = (ticket.OrderStateId ?? 0) == 2 ? (ticket.PaidAmount ?? 0) + (ticket.Donation ?? 0) - (ticket.PromoCodeAmount ?? 0) - (ticket.ECFeePerTicket * (ticket.PurchasedQuantity ?? 0)) - (ticket.MerchantFeePerTicket * (ticket.PurchasedQuantity ?? 0)) : 0,
+              Date = ticket.O_OrderDateTime ?? DateTime.Today,
+              PromoCode = ticket.PromoCode ?? "",
+              Address = "",
+              MailTickets = "N",
+              VariableChages = vCharges,
+              VariableIds = ticket.VariableIds
+            };
+            res.Add(oInfo);
+          }
+          else
+            foreach(var attendee in attendees)
+            {
+              oInfo = new EventOrderInfoViewModel()
+              {
+                OId = ticket.OId,
+                OrderId = ticket.OrderId,
+                PaymentState = PaymentStates.Completed,
+                TicketName = ticket.TicketName,
+                BuyerName = attendee.TicketBearer.Name,
+                BuyerEmail = attendee.TicketBearer.Email,
+                PhoneNumber = attendee.TicketBearer.PhoneNumber,
+                Quantity = attendee.Quantity,
+                Price = ticket.OrderAmount ?? 0,
+                PricePaid = ticket.TicketPrice - ticket.TicketDiscount + ticket.Customer_Fee + (ticket.Donation ?? 0) - ((ticket.PurchasedQuantity ?? 0) == 0 ? 0 : (ticket.PromoCodeAmount ?? 0) / (ticket.PurchasedQuantity ?? 0)),
+                PriceNet = 0,
+                Fee = ticket.ECFeePerTicket * attendee.Quantity,
+                MerchantFee = ticket.MerchantFeePerTicket * attendee.Quantity,
+                Refunded = 0,
+                RefundedNet = 0,
+                Cancelled = 0,
+                CancelledNet = 0,
+                Date = ticket.O_OrderDateTime ?? DateTime.Today,
+                PromoCode = ticket.PromoCode ?? "",
+                Address = "",
+                MailTickets = "N",
+                VariableChages = vCharges,
+                VariableIds = ticket.VariableIds
+              };
+
+              oInfo.PriceNet = oInfo.PricePaid;
+              if ((ticket.TicketTypeID != 3) && (ticket.TicketFeeType != 1))
+                oInfo.PricePaid += ticket.ECFeePerTicket + ticket.MerchantFeePerTicket; 
+              else
+                oInfo.PriceNet -= ticket.ECFeePerTicket + ticket.MerchantFeePerTicket;
+              oInfo.PricePaid = oInfo.PricePaid * oInfo.Quantity;
+              oInfo.PriceNet = oInfo.PriceNet * oInfo.Quantity;
+              oInfo.Refunded = (ticket.OrderStateId ?? 0) == 3 ? oInfo.PricePaid : 0;
+              oInfo.RefundedNet = (ticket.OrderStateId ?? 0) == 3 ? oInfo.PriceNet : 0;
+              oInfo.Cancelled = (ticket.OrderStateId ?? 0) == 2 ? oInfo.PricePaid : 0;
+              oInfo.CancelledNet = (ticket.OrderStateId ?? 0) == 2 ? oInfo.PriceNet : 0;
+
+              res.Add(oInfo);
+            }
+        }
 
         foreach (var order in res)
         {
@@ -215,18 +281,13 @@ namespace EventCombo.Service
                 if (order.MailTickets == "N")
                   order.MailTickets = order.Address;
             }
-            order.PricePaid = order.PricePaid - order.Refunded - order.Cancelled;
-            order.PriceNet = order.PriceNet - order.Refunded - order.Cancelled;
+            order.PriceNet = order.PriceNet - order.RefundedNet - order.CancelledNet;
         }
-        res = res.OrderByDescending(oo => oo.Date).ThenByDescending(oo => oo.OId);
-        return res;
+        return res.OrderByDescending(oo => oo.Date).ThenByDescending(oo => oo.OId);
     }
 
     public IEnumerable<EventOrderInfoViewModel> GetManualOrdersForEvent(PaymentStates state, long eventId)
     {
-        if (state == PaymentStates.Pending)
-            return new List<EventOrderInfoViewModel>();
-
         IRepository<EventTicket_View> EventTicketRepo = new GenericRepository<EventTicket_View>(_factory.ContextFactory);
         IRepository<TicketAttendee_View> tbRepo = new GenericRepository<TicketAttendee_View>(_factory.ContextFactory);
         var attendees = tbRepo.Get();
@@ -903,8 +964,14 @@ namespace EventCombo.Service
             AddStyledCell(row, 5, currencyStyle).SetCellValue((double)order.PricePaid);
             AddStyledCell(row, 6, currencyStyle).SetCellValue((double)order.PriceNet);
             AddStyledCell(row, 7, style).SetCellValue(order.PromoCode);
-            AddStyledCell(row, 8, style).SetCellValue((order.Refunded > 0 ? "Yes" : ""));
-            AddStyledCell(row, 9, style).SetCellValue((order.Cancelled > 0 ? "Yes" : ""));
+            if (order.Refunded > 0)
+              AddStyledCell(row, 8, currencyStyle).SetCellValue((double)order.Refunded);
+            else
+              AddStyledCell(row, 8, style).SetCellValue("");
+            if (order.Cancelled > 0)
+              AddStyledCell(row, 9, currencyStyle).SetCellValue((double)order.Cancelled);
+            else
+              AddStyledCell(row, 9, style).SetCellValue("");
             AddStyledCell(row, 10, style).SetCellValue(order.PhoneNumber);
             AddStyledCell(row, 11, style).SetCellValue(order.BuyerEmail);
             AddStyledCell(row, 12, style).SetCellValue(order.Address);
@@ -990,9 +1057,9 @@ namespace EventCombo.Service
             rw.Write(str + new String(' ', 16 - str.Length) + "|");
             str = order.PromoCode.ToString();
             rw.Write(str + new String(' ', 10 - str.Length) + "|");
-            str = (order.Refunded > 0 ? "Yes" : "");
+            str = (order.Refunded > 0 ? "$" + order.Refunded.ToString("N2") : "");
             rw.Write(str + new String(' ', 8 - str.Length) + "|");
-            str = (order.Cancelled > 0 ? "Yes" : "");
+            str = (order.Cancelled > 0 ? "$" + order.Cancelled.ToString("N2") : "");
             rw.Write(str + new String(' ', 9 - str.Length) + "|");
             str = order.PhoneNumber;
             rw.Write(str + new String(' ', 15 - str.Length) + "|");
@@ -1090,8 +1157,8 @@ namespace EventCombo.Service
             rw.Write("$" + order.PricePaid.ToString("N2") + delimiter);
             rw.Write("$" + order.PriceNet.ToString("N2") + delimiter);
             rw.Write(order.PromoCode + delimiter);
-            rw.Write((order.Refunded > 0 ? "Yes" : "") + delimiter);
-            rw.Write((order.Cancelled > 0 ? "Yes" : "") + delimiter);
+            rw.Write((order.Refunded > 0 ? "$" + order.Refunded.ToString("N2") : "") + delimiter);
+            rw.Write((order.Cancelled > 0 ? "$" + order.Cancelled.ToString("N2") : "") + delimiter);
             rw.Write(order.PhoneNumber + delimiter);
             rw.Write("\"" + order.BuyerEmail + "\"" + delimiter);
             rw.Write("\"" + order.Address + "\"" + delimiter);

@@ -262,10 +262,14 @@ namespace EventCombo.Service
           if (order != null)
           {
             order.OrderStateId = 2;
-            uow.Context.SaveChanges();
 
             IRepository<Ticket_Purchased_Detail> tpdRepo = new GenericRepository<Ticket_Purchased_Detail>(_factory.ContextFactory);
-            var ev = tpdRepo.Get(filter: (t => t.TPD_Order_Id == orderId)).FirstOrDefault().Event;
+            var tickets = tpdRepo.Get(filter: (t => t.TPD_Order_Id == orderId));
+            foreach(var ticket in tickets)
+              ticket.Ticket_Quantity_Detail.TQD_Remaining_Quantity += ticket.TPD_Purchased_Qty;
+            uow.Context.SaveChanges();
+
+            var ev = tickets.FirstOrDefault().Event;
 
             var org = ev.Event_Orgnizer_Detail.Where(od => od.DefaultOrg == "Y").FirstOrDefault().Organizer_Master;
 
@@ -580,10 +584,12 @@ namespace EventCombo.Service
         CustomerFee = tpd.Where(t => t.TPD_Order_Id == o.O_Order_Id).Sum(tt => tt.Customer_Fee * (tt.TPD_Purchased_Qty ?? 0)),
         Cancelled = (o.OrderStateId == 2) ? (o.O_TotalAmount ?? 0) : 0,
         Refunded = (o.OrderStateId == 3) ? (o.O_TotalAmount ?? 0) : 0,
+        Pending = (o.OrderStateId == 4) ? (o.O_TotalAmount ?? 0) : 0,
         VarChargesAmount = o.O_VariableAmount ?? 0,
         PromoCodeAmount = (o.O_OrderAmount ?? 0) + (o.O_VariableAmount ?? 0) - (o.O_TotalAmount ?? 0),
         IsCancelled = o.OrderStateId == 2,
         IsRefunded = o.OrderStateId == 3,
+        IsPending = o.OrderStateId == 4,
         IsManualOrder = o.IsManualOrder
       });
 
@@ -600,13 +606,20 @@ namespace EventCombo.Service
       {
         EventId = eventId,
         OrderQuantity = os.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : 1)),
+        OrderCancelledQuantity = os.Where(x => x.IsCancelled).Count(),
+        OrderRefundedQuantity = os.Where(x => x.IsRefunded).Count(),
+        OrderPendingQuantity = os.Where(x => x.IsPending).Count(),
         TicketQuantity = os.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : x.Quantity)),
+        TicketCancelledQuantity = os.Where(x => x.IsCancelled).Sum(t => t.Quantity),
+        TicketRefundedQuantity = os.Where(x => x.IsRefunded).Sum(t => t.Quantity),
+        TicketPendingQuantity = os.Where(x => x.IsPending).Sum(t => t.Quantity),
         Price = os.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : x.Price)),
         PriceNet = os.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : x.PriceNet)),
         Fee = os.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : x.Fee)),
         CustomerFee = os.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : x.CustomerFee)),
         Cancelled = os.Sum(x => x.Cancelled),
         Refunded = os.Sum(x => x.Refunded),
+        Pending = os.Sum(x => x.Pending),
         VarChargesAmount = os.Sum(x => (x.IsCancelled || x.IsRefunded ? 0 : x.VarChargesAmount))
       }).FirstOrDefault();
     }
