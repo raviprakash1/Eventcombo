@@ -498,6 +498,7 @@
     <Compile Include="Models\GetOrganizerEventid_Result.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GiveAwayViewModel.cs" />
     <Compile Include="Models\Hash.cs">
       <DependentUpon>EventComboModel.tt</DependentUpon>
     </Compile>
@@ -721,6 +722,7 @@
     <Compile Include="Service\ECImageStorage.cs" />
     <Compile Include="Service\ECImageService.cs" />
     <Compile Include="Service\IPurchasingService.cs" />
+    <Compile Include="Service\Notification\GiveAwayNotification.cs" />
     <Compile Include="Service\Notification\NewAutoUserNotification.cs" />
     <Compile Include="Service\Notification\NewEventNotification.cs" />
     <Compile Include="Service\Notification\EventChangeNotification.cs" />
@@ -926,6 +928,33 @@
     <Content Include="footable\js\footable.paginate.min.js" />
     <Content Include="footable\js\footable.sort.min.js" />
     <Content Include="footable\js\footable.striping.min.js" />
+    <Content Include="GiveAway\angucomplete-alt.css" />
+    <Content Include="GiveAway\angucomplete-alt.js" />
+    <Content Include="GiveAway\angular-animate.min.js" />
+    <Content Include="GiveAway\angular-aria.min.js" />
+    <Content Include="GiveAway\angular-material.css" />
+    <Content Include="GiveAway\angular-material.js" />
+    <Content Include="GiveAway\angular-messages.min.js" />
+    <Content Include="GiveAway\angular-route.min.js" />
+    <Content Include="GiveAway\angular.min.js" />
+    <Content Include="GiveAway\favicon.ico" />
+    <Content Include="GiveAway\giveaway.css" />
+    <Content Include="GiveAway\giveaway.js" />
+    <Content Include="GiveAway\gridiculous.css" />
+    <Content Include="GiveAway\header-footer.css" />
+    <Content Include="GiveAway\home.html" />
+    <Content Include="GiveAway\images\background-v.jpg" />
+    <Content Include="GiveAway\images\background.jpg" />
+    <Content Include="GiveAway\images\baloons.png" />
+    <Content Include="GiveAway\images\logo-mobile.png" />
+    <Content Include="GiveAway\images\logo.png" />
+    <Content Include="GiveAway\images\square-facebook.svg" />
+    <Content Include="GiveAway\images\square-linkedin.svg" />
+    <Content Include="GiveAway\images\square-twitter.svg" />
+    <Content Include="GiveAway\index.html" />
+    <Content Include="GiveAway\jquery-2.1.1.min.js" />
+    <Content Include="GiveAway\thanks.html" />
+    <Content Include="GiveAway\themeOm.css" />
     <Content Include="html\error.html" />
     <Content Include="Images\ajax-loader.gif" />
     <Content Include="Images\ajax-loaderMini.gif" />

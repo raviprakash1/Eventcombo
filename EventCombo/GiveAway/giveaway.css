@@ -1,0 +1,37 @@
+﻿html, body { background:#031018 url('images/background.jpg') no-repeat center top; color:#fff;}
+html[style="overflow-y: scroll;"] body { background:none;}
+header { width:100%; height:130px; display:inline-block; background:url('images/baloons.png') repeat-x center top / auto 75%; position:absolute; top:0; left:0; z-index:111;}
+.giveawayViewbox { width:100%; max-width:650px; display:table; padding:0 30px; margin:0 auto;}
+.tenK { color:#46bdfd; font:bold 72px/72px 'Roboto', Arial, Helvetica, sans-serif; text-align:center; margin-top:30px;}
+.giveaway { color:#46bdfd; font:200 72px/72px 'Roboto', Arial, Helvetica, sans-serif; text-transform:uppercase; text-align:center;}
+.winners { color:#fff; font:200 30px 'Roboto', Arial, Helvetica, sans-serif; text-align:center; margin-top:15px;}
+.weOffer { background:rgba(255,255,255,.7); color:#000; font:300 19px 'Roboto', Arial, Helvetica, sans-serif; padding:10px 15px; margin:15px 0;}
+.weOffer a { display:inline-block; font-size:15px; text-transform:uppercase;}
+.giveawaySubmit { background:#0393ef; color:#fff; padding:5px 30px; border-radius:0;}
+.giveawaySubmit:hover { background:#00cafd;}
+.finePrint { color:#a9a9a9; font:300 13px 'Roboto', Arial, Helvetica, sans-serif;}
+.finePrint ol { padding-left:15px;}
+.return { color:#46bdfd; text-decoration:underline; margin-top:30px;}
+.return:hover { color:#46bdfd;}
+/*******************************************************************/
+md-input-container.md-default-theme .md-input, md-input-container .md-input { color:rgba(255, 255, 255, 0.87); border-color:rgba(255, 255, 255, 0.12);}
+md-select.md-default-theme ._md-select-value, md-select ._md-select-value { border-bottom-color:rgba(255, 255, 255, 0.12);}
+._md-select-value ._md-select-icon { color:rgba(255, 255, 255, 0.5);}
+md-select.md-default-theme ._md-select-value._md-select-placeholder, md-select ._md-select-value._md-select-placeholder, md-select.md-default-theme .md-select-value.md-select-placeholder, md-select .md-select-value.md-select-placeholder, md-input-container.md-default-theme label, md-input-container label, md-input-container.md-default-theme .md-placeholder, md-input-container .md-placeholder { color:rgba(255, 255, 255, 0.46);}
+md-select.md-default-theme:focus:not([disabled]) ._md-select-value._md-select-placeholder, md-select:focus:not([disabled]) ._md-select-value._md-select-placeholder, md-select.md-default-theme:focus:not([disabled]) ._md-select-value, md-select:focus:not([disabled]) ._md-select-value { color:rgba(255, 255, 255, 0.87);}
+md-input-container.md-default-theme.md-input-has-value:not(.md-input-invalid) label, md-input-container.md-input-has-value:not(.md-input-invalid) label { color:rgba(255, 255, 255, 0.54);}
+md-input-container.md-default-theme.md-input-focused:not(.md-input-invalid) label, md-input-container.md-input-focused:not(.md-input-invalid) label, md-select-menu.md-default-theme md-option[selected], md-select-menu md-option[selected], md-select-menu.md-default-theme md-option[selected]:focus, md-select-menu md-option[selected]:focus, md-tabs.md-default-theme .md-tab.md-active, md-tabs .md-tab.md-active, md-tabs.md-default-theme .md-tab.md-active md-icon, md-tabs .md-tab.md-active md-icon, md-tabs.md-default-theme .md-tab.md-focused, md-tabs .md-tab.md-focused, md-tabs.md-default-theme .md-tab.md-focused md-icon, md-tabs .md-tab.md-focused md-icon { color:rgb(0, 202, 253);}
+.md-button.md-focused:not([disabled]) { background:#0393ef;}
+.md-button.md-default-theme:hover:not([disabled]), .md-button:hover:not([disabled]) { background:#00cafd;}
+/*******************************************************************/
+@media screen and (min-width:768px) and (max-width:960px)
+{
+  header { height:100px !important; background-size:auto 80% !important;}
+}
+@media screen and (min-width:0) and (max-width:768px)
+{
+  header { height:70px !important; background-size:auto 60% !important;}
+  .giveawayViewbox { max-width:768px; display:inline-block;}
+  .tenK, .giveaway { font-size:48px; line-height:48px;}
+  .winners { font-size:24px;}
+}
