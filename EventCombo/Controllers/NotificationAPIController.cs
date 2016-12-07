@@ -144,11 +144,19 @@ namespace EventCombo.Controllers
             string defaultEmail;
 
             defaultEmail = System.Configuration.ConfigurationManager.AppSettings.Get("DefaultEmail");
-            ContactMessageNotification notification = new ContactMessageNotification(
-                                                        new EntityFrameworkUnitOfWorkFactory(new EventComboContextFactory()),
-                                                        contactMessageViewModel,
-                                                        defaultEmail
-                                                        );
+            ContactMessageNotification notification = new ContactMessageNotification(_factory, contactMessageViewModel, defaultEmail);
+            notification.SendNotification(new SendMailService());
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult SendGiveAwayEmail(GiveAwayViewModel GiveAwayViewModel)
+        {
+            string defaultEmail;
+
+            defaultEmail = System.Configuration.ConfigurationManager.AppSettings.Get("DefaultEmail");
+            GiveAwayNotification notification = new GiveAwayNotification(_factory, GiveAwayViewModel, defaultEmail);
             notification.SendNotification(new SendMailService());
             return Json("true", JsonRequestBehavior.AllowGet);
         }

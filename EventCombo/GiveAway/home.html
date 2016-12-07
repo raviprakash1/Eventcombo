@@ -1,0 +1,117 @@
+﻿<div class="winners">10 Winners of $1,000 in Facebook Advertising</div>
+<div class="weOffer">
+    <p>Eventcombo is an event platform, taking your events beyond ticketing. We offer:</p>
+    <ol>
+        <li>Free Online Ticketing</li>
+        <li>Free RSVP Platform</li>
+        <li>Free Marketing Support (We Advertise Your Events!)</li>
+        <li>All the goodies you need to Set Up, Organize and Manage Your Event and Sales Data</li>
+        <li>LOTS MORE</li>
+    </ol>
+    <div class="text-right">
+        <a href="http://www.bizbash.com/eventcombo-eventcombo-ticketing-allows-hosts-bundle-event-tickets-things-attendees/gallery/185164" target="_blank">
+            As seen on
+            <img src="images/logo-mobile.png" width="80" />
+        </a>
+    </div>
+</div>
+<form name="giveawayForm" novalidate>
+    <md-input-container class="md-block">
+        <label>Full Name</label>
+        <input name="giveawayFullName" ng-model="giveawayFullName" ng-keypress="submitted=false" ng-required="true">
+        <div ng-messages="giveawayForm.giveawayFullName.$error" role="alert">
+            <div ng-message="required">Please enter full name</div>
+        </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+        <label>Email</label>
+        <input type="email" name="giveawayEmail" ng-model="giveawayEmail" ng-pattern="/^.+@.+\..+$/" ng-keypress="submitted=false" ng-required="true" />
+        <div ng-messages="giveawayForm.giveawayEmail.$error" role="alert">
+            <div ng-message="required">Please enter email address</div>
+            <div ng-message="pattern">Use valid email format</div>
+        </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+        <label>Phone Number</label>
+        <input tel-mask name="giveawayPhone" ng-model="giveawayPhone" ng-pattern="/^[0-9]{3}-[0-9]{3}-[0-9]{4,5}$/" ng-required="true" />
+        <div ng-messages="giveawayForm.giveawayPhone.$error">
+            <div ng-message="required">Please enter a phone number</div>
+            <div ng-message="pattern">Enter a valid phone number - ###-###-####</div>
+        </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+        <label>Organization Name</label>
+        <input name="giveawayOrganizationName" ng-model="giveawayOrganizationName" ng-keypress="submitted=false" ng-required="true">
+        <div ng-messages="giveawayForm.giveawayOrganizationName.$error" role="alert">
+            <div ng-message="required">Please enter organization name</div>
+        </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+        <label>Type of Events</label>
+        <md-select name="giveawayEventType" ng-model="giveawayEventType" ng-required="true">
+            <md-option ng-repeat="type in eventType">
+                {{type}}
+            </md-option>
+        </md-select>
+        <div ng-messages="giveawayForm.giveawayEventType.$error" role="alert">
+            <div ng-message="required">Please select type of events</div>
+        </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+        <label>Frequency of Events</label>
+        <md-select name="giveawayEventFrequency" ng-model="giveawayEventFrequency" ng-required="true">
+            <md-option ng-repeat="frequency in eventFrequency">
+                {{frequency}}
+            </md-option>
+        </md-select>
+        <div ng-messages="giveawayForm.giveawayEventFrequency.$error" role="alert">
+            <div ng-message="required">Please select frequency of events</div>
+        </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+        <label>Location of Events</label>
+        <input name="giveawayEventLocation" ng-model="giveawayEventLocation" ng-keypress="submitted=false" ng-required="true">
+        <div ng-messages="giveawayForm.giveawayEventLocation.$error" role="alert">
+            <div ng-message="required">Please enter location of events</div>
+        </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+        <label>Where did you hear about this contest?</label>
+        <md-select name="giveawayWhereHear" ng-model="giveawayWhereHear" ng-required="true">
+            <md-option ng-repeat="where in whereHear">
+                {{where}}
+            </md-option>
+        </md-select>
+        <div ng-messages="giveawayForm.giveawayWhereHear.$error" role="alert">
+            <div ng-message="required">Please select where did you hear about this contest</div>
+        </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+        <div>
+            <captcha field1="{{field1}}" operator="{{operator}}" field2="{{field2}}"></captcha>
+        </div>
+        <div>
+            <input name="resultado" ng-model="resultado" maxlength="2" ng-required="true" />
+        </div>
+        <div ng-messages="giveawayForm.resultado.$error" role="alert">
+            <div ng-message="required">Please enter captcha</div>
+        </div>
+    </md-input-container>
+    <md-input-container class="md-block text-center">
+        <md-button class="giveawaySubmit" type="submit" ng-click="giveawaySubmit('giveawayForm')">I love eventcombo - Submit!</md-button>
+    </md-input-container>
+</form>
+
+<div class="padding-1em-top padding-1em-bottom">
+    <div class="finePrint">
+        <p><strong>Fine Print</strong></p>
+        <ol>
+            <li>In order to qualify, you must not be an existing client</li>
+            <li>For the selected event, you will do exclusive ticketing with Eventcombo</li>
+            <li>For the selected event, you will have the Eventcombo logo on all your promotional materials (web, print, social, etc.) and place "Buy Tickets on EventName.Eventcombo.com" on everything</li>
+            <li>There is a minimum sales threshold, but we will determine that once you tell us more about your event</li>
+            <li>For Non-Profits, we will rock out even more!</li>
+            <li>Facebook advertising for your event will be set up with your approval and assure maximum exposure for your event/brand</li>
+        </ol>
+    </div>
+</div>
