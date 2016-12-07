@@ -1,0 +1,656 @@
+﻿@{
+    ViewBag.Title = "EventCombo Labs – Committed to advancing your work experience";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <script src="~/Scripts/AMaterial/jquery-1.12.3.min.js"></script>
+    @Scripts.Render("~/Scripts/AMaterial/angularHeader1")
+    @Scripts.Render("~/Scripts/AMaterial/angularHeader2")
+    @Scripts.Render("~/Scripts/AMaterial/angularHeader3")
+    @Scripts.Render("~/Scripts/AMaterial/angularHeader4")
+    @Scripts.Render("~/Scripts/AMaterial/angularHeader5")
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/summernote.css" rel="stylesheet" />
+    <link href="~/Content/labs.css" rel="stylesheet" />
+    <link href="~/Content/AMaterial/angular-material.css" rel="stylesheet" />
+    <link href="~/Content/magnific-popup.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/jquery-migrate.min.js"></script>
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key= AIzaSyDTZMtI8hnNjf0va7dL5SYp7fo-hNuMdOs&amp;v=3.exp&amp;sensor=true&amp;libraries=places"></script>
+    <script>
+
+       
+
+        $(document).ready(function () {
+            if (location.hash.replace('#', '') == 'Labs') {
+                $('html, body').animate({
+                    scrollTop: $("#labs").offset().top - 50
+                }, 2000);
+            }
+            else if (location.hash.replace('#', '') == 'About') {
+                $('html, body').animate({
+                    scrollTop: $("#team").offset().top - 330
+                }, 2000);
+            }
+            
+                $(".slider-readmore").click(function () {
+                    $('html, body').animate({
+                        scrollTop: $("#labs").offset().top - 80
+                    }, 2000);
+                });
+                $("#menu-item-48").click(function () {
+                    $('html, body').animate({
+                        scrollTop: $("#team").offset().top - 50
+                    }, 2000);
+                });
+                $("#menu-item-30").click(function () {
+                    $('html, body').animate({
+                        scrollTop: $("#labs").offset().top - 50
+                    }, 2000);
+                });
+
+        });
+
+        //$(document).load(function () {
+        //    if (location.search.replace('?', '').split('=')[0] == "goto") {
+        //         if (location.search.replace('?', '').split('=')[1] == "about") {
+        //            $('html, body').animate({
+        //                scrollTop: $("#team").offset().top + 050
+        //            }, 2000);
+        //        }
+        //    }
+        //});
+    </script>
+    <script>
+            $(document).ready(function () {
+                var myDiv = $('#textvalue');
+                myDiv.text(myDiv.text().substring(0, 350));
+                var myDiv = $('#textvalue1');
+                myDiv.text(myDiv.text().substring(0, 350));
+                var myDiv = $('#textvalue2');
+                myDiv.text(myDiv.text().substring(0, 350));
+                var myDiv = $('#textvalue3');
+                myDiv.text(myDiv.text().substring(0, 350));
+                var myDiv = $('#textvalue4');
+                myDiv.text(myDiv.text().substring(0, 350));
+                var myDiv = $('#textvalue5');
+                myDiv.text(myDiv.text().substring(0, 350));
+            });
+    </script>
+    <style type="text/css">
+        img.wp-smiley, img.emoji {
+            display: inline !important;
+            border: none !important;
+            box-shadow: none !important;
+            height: 1em !important;
+            width: 1em !important;
+            margin: 0 .07em !important;
+            vertical-align: -0.1em !important;
+            background: none !important;
+            padding: 0 !important;
+        }
+
+        .about-btn a:hover, .bttn:hover, .icon-img-wrap:hover, .navigation .nav-links a:hover, .service_icon_class .image-wrap:hover i, .slider-readmore:before, .subscribe-form .subscribe-submit .subscribe-btn, button, input[type=button]:hover, input[type=reset]:hover, input[type=submit]:hover {
+            background: #1c98ea;
+        }
+
+        a {
+            color: #1c98ea;
+        }
+
+        .cntButton {
+            background: none;
+            color: #0077c8 !important;
+        }
+
+        #site-navigation .menu li.current-one-page-item a, #site-navigation .menu li:hover a, .about-title a:hover, .caption-title a:hover, .header-wrapper.no-slider #site-navigation .menu li.current-one-page-item a, .header-wrapper.no-slider #site-navigation .menu li:hover a, .header-wrapper.no-slider .search-icon:hover, .header-wrapper.stick #site-navigation .menu li.current-one-page-item a, .header-wrapper.stick #site-navigation .menu li:hover a, .header-wrapper.stick .search-icon:hover, .scroll-down, .search-icon:hover, .service-title a:hover {
+            color: #1c98ea;
+        }
+
+        .comments-area .comment-author-link span {
+            background-color: #1c98ea;
+        }
+
+        .slider-readmore:hover {
+            border: 1px solid #1c98ea;
+        }
+
+        .icon-wrap:hover, .image-wrap:hover, .port-link a:hover {
+            border-color: #1c98ea;
+        }
+
+        .main-title:after, .main-title:before {
+            border-top: 2px solid #1c98ea;
+        }
+
+        .blog-view, .port-link a:hover {
+            background: #1c98ea;
+        }
+
+        .port-title-wrapper .port-desc {
+            color: #1c98ea;
+        }
+
+        #top-footer a:hover, .blog-title a:hover, .entry-title a:hover, .footer-nav li a:hover, .footer-social a:hover, .widget ul li a:hover, .widget ul li:hover:before {
+            color: #1c98ea;
+        }
+
+        .contact-form-wrapper input[type=submit], .default-wp-page a:hover, .team-desc-wrapper {
+            background: #1c98ea;
+        }
+
+        .scrollup {
+            background-color: #1c98ea;
+        }
+
+        #stick-navigation li.current-one-page-item a, #stick-navigation li:hover a, .blog-hover-link a:hover, .entry-btn .btn:hover {
+            background: #1c98ea;
+        }
+
+        #secondary .widget-title:after, #top-footer .widget-title:after {
+            background: #1c98ea;
+        }
+
+        .widget-tags a:hover {
+            background: #1c98ea;
+            border: 1px solid #1c98ea;
+        }
+
+        .num-404 {
+            color: #1c98ea;
+        }
+
+        .error {
+            background: #1c98ea;
+        }
+
+        .about-title {
+            display: none;
+        }
+
+        .main-title, .caption-sub {
+            letter-spacing: normal !important;
+        }
+
+        .recentcomments a {
+            display: inline !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .dialogdemoBasicUsage #popupContainer {
+            position: relative;
+        }
+
+        .dialogdemoBasicUsage .footer {
+            width: 100%;
+            text-align: center;
+            margin-left: 20px;
+        }
+
+            .dialogdemoBasicUsage .footer, .dialogdemoBasicUsage .footer > code {
+                font-size: 0.8em;
+                margin-top: 50px;
+            }
+
+        .dialogdemoBasicUsage button {
+            width: 200px;
+        }
+
+        .dialogdemoBasicUsage div#status {
+            color: #c60008;
+        }
+
+        .dialogdemoBasicUsage .dialog-demo-prerendered md-checkbox {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+
+<body class="home blog" ng-app="EventComboApp">
+    <div id="page" class="hfeed site">
+        <header id="masthead" class="site-header clearfix" role="banner">
+            <div class="header-wrapper clearfix stick non-transparent">
+                <div class="tg-container">
+
+
+                    <div class="logo">
+                        <a href="index.html" title="EventCombo Labs" rel="home"><img src="~/Images/labslogo-1.png" alt="EventCombo Labs"></a>
+                    </div> <!-- logo-end -->
+                    <div id="header-text" class="screen-reader-text">
+                        <h1 id="site-title">
+                            <a href="http://www.spread07.com/eventcombo/" title="EventCombo Labs" rel="home">EventCombo Labs</a>
+                        </h1>
+                        <p id="site-description">Committed to advancing your work experience</p>
+                    </div><!-- #header-text -->
+
+                    <div class="menu-search-wrapper">
+
+                        <!-- home-search-end -->
+
+                        <nav id="site-navigation" class="main-navigation" role="navigation" ng-controller="FooterController">
+                            <p class="menu-toggle hide"></p>
+                            <div class="menu-primary-container">
+                                <ul id="menu-labs-menu" class="menu">
+                                    <li id="menu-item-30" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-30"><a href="javascript:void();">Labs</a></li>
+                                    <li id="menu-item-48" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-48"><a href="javascript:void();">about</a></li>
+                                    <li id="menu-item-31" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-31"><a href="#" ng-click="contactEventcombo($event)">Contact</a></li>
+                                </ul>
+                            </div>
+                        </nav> <!-- nav-end -->
+                    </div> <!-- Menu-search-wrapper end -->
+                </div><!-- tg-container -->
+            </div><!-- header-wrapepr end -->
+
+
+            <div id="home" class="slider-wrapper">
+
+                <div class="bxslider">
+                    <div class="slides">
+
+                        <div class="parallax-overlay"> </div>
+
+                        <figure>
+                            <img width="100%" height="780" src="~/Images/image1.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="image1" />
+                        </figure>
+
+                        <div class="tg-container">
+
+                            <h3 class="caption-title">
+                                <span>EventCombo Labs</span>
+                            </h3>
+                            <div class="caption-sub">
+                                Eventcombo is committed to advancing the progress of talented individuals with real world experience and guidance. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            </div>
+
+                            <a class="slider-readmore" href="javascript:void();"> Read more</a>
+                        </div>
+                    </div>
+                </div><!-- bxslider -->
+            </div>
+        </header>
+
+        <div id="content" class="site-content">
+            <section id="himalayas_service_widget-2" class="widget widget_service_block clearfix">
+                <div id="labs">
+                    <div class="section-wrapper">
+                        <div class="tg-container">
+
+                            <div class="section-title-wrapper">
+                                <h2 class="main-title">Labs</h2>
+                            </div>
+
+                            <div class="service-content-wrapper clearfix margin">
+                                <div class="tg-column-wrapper clearfix">
+
+
+                                    <div class="tg-column-3 tg-column-bottom-margin box-div">
+                                        <div class="box-one">
+                                            <div class="service_icon_class">
+                                                <div class="image-wrap">
+                                                    <i class="fa fa-money"></i>
+                                                </div>
+                                                <span class="service-title"> Eventcombo Venture Lab</span>
+                                            </div>
+
+                                            <div class="service-desc-wrap">
+
+
+                                                <div class="service-content" id="textvalue">
+                                                    <p>As a startup, Eventcombo has extensive experience on capital raising strategy and sourcing. The Eventcombo Venture Agent will learn the ins and outs of fundraising. If you're interested in learning first-hand the entire fundraising process all the way through to an exit strategy, this LAB is ideal for you. .</p>
+                                                </div>
+
+                                            </div>
+                                            <div class="team-desc-wrapper">
+                                                <h1 class="team-name">Eventcombo Venture Lab</h1>  <div class="team-content"><p>As a startup, Eventcombo has extensive experience on capital raising strategy and sourcing. The Eventcombo Venture Agent will learn the ins and outs of fundraising. This lab is ideal for aspiring entrepreneurs and individuals looking to learn about fundraising and the startup space.</p><span><a href="~/Labs/Venture" class="more ">More Info</a></span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tg-column-3 tg-column-bottom-margin box-div">
+                                        <div class="box-one">
+                                            <div class="service_icon_class">
+                                                <div class="image-wrap">
+                                                    <i class="fa fa-bullhorn"></i>
+                                                </div>
+                                                <span class="service-title"> Eventcombo Marketing Lab</span>
+                                            </div>
+
+                                            <div class="service-desc-wrap">
+
+
+                                                <div class="service-content" id="textvalue1">
+                                                    <p>An important component of any business, marketing helps create the identify of an organization. Through many pieces of the marketing puzzle, Eventcombo actively identifies creative strategies. This LAB is ideal for those interested in marketing and branding. </p>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="team-desc-wrapper title">
+                                                <h1 class="team-name">Eventcombo Marketing Lab</h1>  <div class="team-content">
+                                                    <p>
+                                                        An important component to any business, marketing creates the identity of an organization. Through many pieces of the marketing puzzle, Eventcombo actively identifies creative strategies in the marketing plan. The Eventcombo Marketing Agent will work closely with the marketing team to identify and execute strategies to further the goals of Eventcombo..<span><a href="~/Labs/marketing" class="more">More Info</a></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tg-column-3 tg-column-bottom-margin box-div">
+                                        <div class="box-one">
+                                            <div class="service_icon_class">
+                                                <div class="image-wrap">
+                                                    <i class="fa fa-thumbs-up"></i>
+                                                </div>
+                                                <span class="service-title"> Eventcombo Social Media Lab</span>
+                                            </div>
+
+                                            <div class="service-desc-wrap">
+
+
+                                                <div class="service-content" id="textvalue2">
+                                                    <p>Social Media is one of the most powerful mediums in the world. Allowing users to connect, share, exchange and create information through visuals. If you love Social Media and want to learn how to influence your peers in a positive way, this LAB is ideal for you.  </p>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="team-desc-wrapper title">
+                                                <h1 class="team-name">Eventcombo Social Media Lab</h1> <div class="team-content">
+                                                    <p>
+                                                        Social Media is one of the most powerful mediums in the world. Allowing users to connect, share, exchange and create information through visuals. Similarly, events enable people to unite and connect through varied interests. The Eventcombo Social Media Agent will learn about the many facets of social media and implement relevant strategies.<span><a href="~/Labs/Socialmedia" class="more">More Info</a></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="tg-column-3 tg-column-bottom-margin box-div">
+                                        <div class="box-one">
+                                            <div class="service_icon_class">
+                                                <div class="image-wrap">
+                                                    <i class="fa fa-line-chart"></i>
+                                                </div>
+                                                <span class="service-title">Eventcombo Sales Lab</span>
+                                            </div>
+
+                                            <div class="service-desc-wrap">
+
+
+                                                <div class="service-content" id="textvalue3">
+                                                    <p>No business can run without an effective sales approach. The Eventcombo Sales Agent will work alongside the sales team to understand what is needed to achieve goals and grow a business using deep intelligence and powerful execution.  </p>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="team-desc-wrapper title">
+                                                <h1 class="team-name">Eventcombo Sales Lab</h1>  <div class="team-content"><p>No business can run without an effective sales approach. The Eventcombo Sales Agent will work alongside the sales team to understand what is needed to make a successful sale. This mentoring approach along with real world exposure will give Agents the skills needed to succeed not only in the business world, but in other applications of everyday life.<span><a href="~/Labs/Sales" class="more">More Info</a></span></p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tg-column-3 tg-column-bottom-margin box-div">
+                                        <div class="box-one">
+                                            <div class="service_icon_class">
+                                                <div class="image-wrap">
+                                                    <i class="fa fa-diamond"></i>
+                                                </div>
+                                                <span class="service-title"> Eventcombo Design &#038; Technology Labs</span>
+                                            </div>
+
+                                            <div class="service-desc-wrap">
+
+
+                                                <div class="service-content" id="textvalue4">
+                                                    <p>Eventcombo's platform is at the forefront of technology and design, and we are always improving. We bring value and integration to our partners, allowing for scale and rapid growth. If you're interested in design or development, apply to this LAB.  </p>
+                                                </div>
+
+
+                                            </div><div class="team-desc-wrapper title">
+                                                <h1 class="team-name">Eventcombo Design & Technology Labs</h1> <div class="team-content">
+                                                    <p>
+                                                        Eventcombo's platform is at the forefront of technology and design, and we are always improving. As we bring value and integration to our partners and customers, the Eventcombo Design & Technology Agents will be at the front line of learning and applying their knowledge to build and create the engine that drives Eventcombo technology. <span><a href="~/Labs/designtechnology" class="more">More Info</a></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="tg-column-3 tg-column-bottom-margin box-div">
+                                        <div class="box-one">
+                                            <div class="service_icon_class">
+                                                <div class="image-wrap">
+                                                    <i class="fa fa-newspaper-o"></i>
+                                                </div>
+                                                <span class="service-title"> Eventcombo Content Lab</span>
+                                            </div>
+
+                                            <div class="service-desc-wrap">
+
+
+                                                <div class="service-content" id="textvalue5">
+                                                    <p>Content has become a powerful medium for users across the web to share and consume knowledge, news, humor, information, and more. Eventcombo has built a content engine, which has become a catalyst for action in the event space. If you're passionate about writing, here you go!</p>
+                                                </div>
+
+
+
+                                            </div>
+                                            <div class="team-desc-wrapper title">
+                                                <h1 class="team-name">Eventcombo Content Lab</h1> <div class="team-content">
+                                                    <p>
+                                                        Content has become a powerful medium for users across the web to share and consume knowledge, news, humor, information, and more. Eventcombo has built a powerful digital content platform that is visited by users across the world. The Agents in the Eventcombo Content Lab will work to create engaging content that is enjoyed by large audiences. This lab combines the skills of writing, editing, analytics and journalism to produce content.<span><a href="~/Labs/Content" class="more">More Info</a></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section><section id="himalayas_our_team_widget-2" class="widget widget_our_team_block clearfix">
+                <div id="team" class="parallax-section clearfix" style="background-image:url(images/image4.jpg);background-repeat:no-repeat;background-size:cover;background-attachment:fixed;">
+
+                    <div class="parallax-overlay"></div>
+                    <div class="section-wrapper">
+                        <div class="tg-container">
+
+                            <div class="section-title-wrapper paper">
+                                <h2 class="main-title">ABOUT</h2>
+                            </div>
+                            <p>The Eventcombo team is an experienced group of individuals who share a passion for evolution. We combine our knowledge and discipline in the worlds of Technology, Design, Business and Marketing to offer the absolute best experience for our clients and partners.</p>
+                            <p>Above all, we enjoy working in a space where we have the opportunity to realize our ideas by implementing them into new products and services. We want to share these wonderful experiences with students and aspiring professionals who want access to our world and the associated interactions. With Eventcombo LABS, we provide mentorship, guidance and hands-on experience in a real world startup environment. Eventcombo LABS fosters and builds leaders. You will not be getting coffee.</p>
+
+                            <div class="team-content-wrapper clearfix">
+                                <div class="tg-column-wrapper clearfix">
+
+                                    <div class="tg-column-4 tg-column-bottom-margin photo">
+                                        <div class="team-block">
+
+                                            <div class="team-img-wrapper">
+
+                                                <div class="team-img">
+                                                    <img width="400" height="350" src="~/Images/david.png" class="attachment-himalayas-portfolio-image size-himalayas-portfolio-image wp-post-image" alt="bg2" />
+                                                </div>
+
+                                                <div class="team-name">
+                                                    David
+                                                </div>
+                                            </div>
+
+                                            <div class="team-desc-wrapper">
+                                                <div class="team-content"><p>Our UX Guru and Information Architect who, needless to say, loves to design. If you give him a problem, he'll give you 14 solutions. He makes sense when you don't. David kills bad ideas while smiling.</p></div><span class="team-name">David</span>
+                                            </div>
+                                        </div><!-- .team-block -->
+                                    </div><!-- .tg-column-3 -->
+
+                                    <div class="tg-column-4 tg-column-bottom-margin photo">
+                                        <div class="team-block">
+
+                                            <div class="team-img-wrapper">
+
+                                                <div class="team-img">
+                                                    <img width="400" height="350" src="~/Images/joe.png" class="attachment-himalayas-portfolio-image size-himalayas-portfolio-image wp-post-image" alt="bg5" />
+                                                </div>
+
+                                                <div class="team-name">
+                                                    Joe
+                                                </div>
+                                            </div>
+
+                                            <div class="team-desc-wrapper">
+                                                <div class="team-content"><p>Our resident wunderkind responsible for all marketing and brand strategies. Leading the way forward, you can count on him to be ahead of the curve. Joe is fast with an output of 10x.</p></div><span class="team-name">Joe</span>
+                                            </div>
+                                        </div><!-- .team-block -->
+                                    </div><!-- .tg-column-3 -->
+
+                                    <div class="tg-column-4 tg-column-bottom-margin photo">
+                                        <div class="team-block">
+
+                                            <div class="team-img-wrapper">
+
+                                                <div class="team-img">
+                                                    <img width="400" height="350" src="~/Images/saroosh.png" class="attachment-himalayas-portfolio-image size-himalayas-portfolio-image wp-post-image" alt="bg4" />
+                                                </div>
+
+                                                <div class="team-name">
+                                                    Saroosh
+                                                </div>
+                                            </div>
+
+                                            <div class="team-desc-wrapper">
+                                                <div class="team-content"><p>Our fearless leader, who oversees our entire operation as pilot, captain and driver of all Eventcombo core initiatives. He keeps us on track one milestone at a time with laser sharp focus and guidance. Saroosh has jokes.</p></div><span class="team-name">Saroosh</span>
+                                            </div>
+                                        </div><!-- .team-block -->
+                                    </div>
+                                    <div class="tg-column-4 tg-column-bottom-margin photo">
+                                        <div class="team-block">
+
+                                            <div class="team-img-wrapper">
+
+                                                <div class="team-img">
+                                                    <img width="400" height="350" src="~/Images/syed.png" class="attachment-himalayas-portfolio-image size-himalayas-portfolio-image wp-post-image" alt="bg4" />
+                                                </div>
+
+                                                <div class="team-name">
+                                                    Syed
+                                                </div>
+                                            </div>
+
+                                            <div class="team-desc-wrapper">
+                                                <div class="team-content"><p>Our brilliant tech expert, systems architect and go to source for delivery of our crazy ideas. If we need something to be completed by "yesterday," he delivers it last week. Syed is a little too reliable, shhh.</p></div><span class="team-name">Syed</span>
+                                            </div>
+                                        </div><!-- .team-block -->
+                                    </div>
+
+
+
+                                    <!-- .tg-column-3 -->
+                                </div><!-- .tg-column-wrapper -->
+                            </div><!-- .team-content-wrapper -->
+
+
+                        </div><!-- .tg-container -->
+                    </div><!-- .section-wrapper -->
+                </div>
+
+            </section>
+
+
+        </div>
+
+
+        <footer id="colophon" class="footer-with-widget footer-layout-two">
+
+            <div class="footer-logo">
+                <a href="index.html" title="EventCombo Labs" rel="home"><img src="~/Images/labslogo-1.png" alt="EventCombo Labs"></a>
+            </div>
+
+            <div id="bottom-footer">
+                <div class="tg-container">
+
+                    <div class="copyright">
+                        <span class="copyright-text">Copyright &copy; 2016 <a href="@Url.Action("Index","Labs")" target="_blank" title="EventCombo Labs">EventCombo Labs</a>. Jump to<a href="https://www.eventcombo.com/" target="#">  Eventcombo.com</a>.</span>
+                    </div>
+                    <div class="footer-nav">
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <a href="#" class="scrollup"><i class="fa fa-angle-up"> </i> </a>
+
+    </div> <!-- #Page -->
+    <script type="text/ng-template" id="eventcombo.tmpl.html">
+        <md-dialog aria-label="Contact Eventcombo" data-ng-app="eventComboApp">
+            <form name="eventcomboForm" novalidate>
+                <md-dialog-content>
+                    <div class="md-dialog-content">
+                        <h2 class="cntTitle">Need to get in touch? We're listening.</h2>
+                        <p class="cntSubtitle">There's a good chance we have an answer in our <a href="@Url.Action("BusinessPage","BusinessPages",new { PageNameUrl="ticket-purchase-faq" })">F.A.Q.</a> <br />Didn't find what you're looking for? Complete the form below and we'll get back to you right away.</p>
+                        <md-input-container class="md-block margin-2em-bottom max350">
+                            <label>Name</label>
+                            <input md-no-asterisk name="cntName" ng-model="cntName" required ng-keypress="submitted=false">
+                            <div ng-messages="eventcomboForm.cntName.$error">
+                                <div ng-message="required">Please enter your Name!</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block margin-2em-bottom max350">
+                            <label>Email</label>
+                            <input type="email" required name="cntEmail" ng-model="cntEmail" ng-pattern="/^.+@(" @").+\..+$/" ng-keypress="submitted=false" />
+                            <div ng-messages="eventcomboForm.cntEmail.$error" role="alert">
+                                <div ng-message="required">Please enter your Email Address!</div>
+                                <div ng-message="pattern">Please use valid email format!</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block max350">
+                            <label>Phone</label>
+                            <input tel-mask name="cntPhone" ng-model="cntPhone" ng-pattern="/^[0-9]{3}-[0-9]{3}-[0-9]{4,5}$/" />
+                            <div ng-messages="eventcomboForm.cntPhone.$error">
+                                <div ng-message="pattern">Please enter a valid phone number pattern - ###-###-####</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="width160">
+                            <label>Category</label>
+                            <md-select ng-model="cntCategory" ng-change="getSubCategories()">
+                                <md-option ng-repeat="category in Categories">
+                                    {{category}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="width160">
+                            <label>Sub Category</label>
+                            <md-select ng-model="cntSubCategory">
+                                <md-option ng-repeat="subcategory in SubCategories">
+                                    {{subcategory}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Message</label>
+                            <textarea ng-model="cntMessage" rows="3" md-select-on-focus></textarea>
+                        </md-input-container>
+                        <md-dialog-actions layout="row">
+                            <md-button class="cntButton" ng-click="cancel()">Cancel</md-button>
+                            <md-button class="cntButton" type="submit" ng-click="sendContactMessageEventcombo('eventcomboForm')">Submit</md-button>
+                        </md-dialog-actions>
+                    </div>
+                </md-dialog-content>
+            </form>
+        </md-dialog>
+    </script>
+    <script type='text/javascript' src='~/Scripts/jquery.nav.js'></script>
+    <script type='text/javascript' src='~/Scripts/jquery.parallax-1.1.3.js'></script>
+    <script type='text/javascript' src='~/Scripts/parallax-setting.js'></script>
+    <script type='text/javascript' src='~/Scripts/himalayas.js'></script>
+</script>
+</body>
+</html>
