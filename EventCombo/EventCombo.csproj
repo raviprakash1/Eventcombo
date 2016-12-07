@@ -314,6 +314,7 @@
     <Compile Include="Controllers\ImageFiles.cs" />
     <Compile Include="Controllers\InbetweenController.cs" />
     <Compile Include="Controllers\JsonNetResult.cs" />
+    <Compile Include="Controllers\LabsController.cs" />
     <Compile Include="Controllers\ManageAttendeesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageEventController.cs" />
@@ -904,6 +905,8 @@
     <Content Include="Content\font.css" />
     <Content Include="Content\jquery-te-1.4.0.css" />
     <Content Include="Content\jquery-te.png" />
+    <Content Include="Content\labs.css" />
+    <Content Include="Content\magnific-popup.css" />
     <Content Include="Content\manageattendees.css" />
     <Content Include="Content\mob-footer.css" />
     <Content Include="Content\OrderForm.css" />
@@ -1010,6 +1013,7 @@
     <Content Include="Images\checked.png" />
     <Content Include="Images\cross.png" />
     <Content Include="Images\dateicon.png" />
+    <Content Include="Images\david.png" />
     <Content Include="Images\default_org_image.jpg" />
     <Content Include="Images\dgd.png" />
     <Content Include="Images\downarrow.png" />
@@ -1034,9 +1038,13 @@
     <Content Include="Images\facebook.png" />
     <Content Include="Images\free-pinstripe.png" />
     <Content Include="Images\hjsdjd.png" />
+    <Content Include="Images\image1.jpg" />
+    <Content Include="Images\image4.jpg" />
     <Content Include="Images\Imagemap.png" />
     <Content Include="Images\Imagemap_T000000199.png" />
     <Content Include="Images\info.png" />
+    <Content Include="Images\joe.png" />
+    <Content Include="Images\labslogo-1.png" />
     <Content Include="Images\leftarrow.png" />
     <Content Include="Images\linkedIn.png" />
     <Content Include="Images\loading.gif" />
@@ -1046,11 +1054,16 @@
     <Content Include="Images\online-icn.png" />
     <Content Include="Images\oops.png" />
     <Content Include="Images\paper_tic.png" />
+    <Content Include="Images\pattern-overlay.png" />
     <Content Include="Images\plus.png" />
     <Content Include="Images\PromoCodeLoader.gif" />
     <Content Include="Images\qwe.png" />
+    <Content Include="Images\saroosh.png" />
     <Content Include="Images\share_icon.png" />
     <Content Include="Images\search.png" />
+    <Content Include="Images\slider-title-new-arrow.png" />
+    <Content Include="Images\syed.png" />
+    <Content Include="Images\toggle.png" />
     <Content Include="Images\twitter.png" />
     <Content Include="Images\unchecked.png" />
     <Content Include="Images\Video\Burning-Candle-Gif.gif" />
@@ -1526,10 +1539,13 @@
     <Content Include="Scripts\filer\jquery.filer.js" />
     <Content Include="Scripts\filer\jquery.filer.min.js" />
     <Content Include="Scripts\flipclock.js" />
+    <Content Include="Scripts\himalayas.js" />
     <Content Include="Scripts\image-upload.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.11.2.min.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\jquery-migrate.min.js" />
     <Content Include="Scripts\jquery-te-1.4.0.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\external\jquery\jquery.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.custom\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -1585,15 +1601,19 @@
     <Content Include="Scripts\jquery.icalendar.pack.js" />
     <Content Include="Scripts\jquery.infinitescroll.min.js" />
     <Content Include="Scripts\jquery.isotope.min.js" />
+    <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\jquery.magnific-popup.min.js" />
     <Content Include="Scripts\jquery.masked.js" />
     <Content Include="Scripts\jquery.maskedinput.min.js" />
     <Content Include="Scripts\jquery.maskMoney.js" />
     <Content Include="Scripts\jquery.mousewheel.js" />
+    <Content Include="Scripts\jquery.nav.js" />
     <Content Include="Scripts\jquery.numberformatter-1.2.4.jsmin.js" />
     <Content Include="Scripts\jquery.nyroModal-ie6.js" />
     <Content Include="Scripts\jquery.nyroModal-ie6.min.js" />
     <Content Include="Scripts\jquery.nyroModal.custom.js" />
     <Content Include="Scripts\jquery.nyroModal.custom.min.js" />
+    <Content Include="Scripts\jquery.parallax-1.1.3.js" />
     <Content Include="Scripts\jquery.scrollto.js" />
     <Content Include="Scripts\jquery.slides.js" />
     <Content Include="Scripts\jquery.slides.min.js" />
@@ -1619,6 +1639,7 @@
     <Content Include="Scripts\nyromodal\jquery.nyroModal.custom.js" />
     <Content Include="Scripts\nyromodal\jquery.nyroModal.custom.min.js" />
     <Content Include="Scripts\nyromodal\nyroModal.css" />
+    <Content Include="Scripts\parallax-setting.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\socialshare.js" />
@@ -1907,6 +1928,13 @@
     <Content Include="Views\OrganizerInfo\OrganizerInfo.cshtml" />
     <Content Include="Views\Download\_Ticket.cshtml" />
     <Content Include="Views\Download\_TicketNotification.cshtml" />
+    <Content Include="Views\Labs\Index.cshtml" />
+    <Content Include="Views\Labs\Content.cshtml" />
+    <Content Include="Views\Labs\DesignTechnology.cshtml" />
+    <Content Include="Views\Labs\Marketing.cshtml" />
+    <Content Include="Views\Labs\Sales.cshtml" />
+    <Content Include="Views\Labs\Socialmedia.cshtml" />
+    <Content Include="Views\Labs\Venture.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
